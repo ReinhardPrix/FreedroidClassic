@@ -367,11 +367,11 @@ UpdateCountersForThisFrame ( int player_num )
 		    Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
   if ( my_speed >= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
     {
-      Me [ player_num ] . running_power -= latest_frame_time * 5.0 ;
+      Me [ player_num ] . running_power -= latest_frame_time * 3.0 ;
     }
   else
     {
-      Me [ player_num ] . running_power += latest_frame_time * 5.0 ;
+      Me [ player_num ] . running_power += latest_frame_time * 3.0 ;
       if ( Me [ player_num ] . running_power > Me [ player_num ] . max_running_power )
 	Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
 

@@ -1552,7 +1552,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     (NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
   
   // wait for as long as is usual for this weapon type until making the next shot
-  ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
+  ThisRobot -> firewait = 
+      ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
   
 
   //--------------------
@@ -1567,7 +1568,14 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       ThisRobot -> animation_type = ATTACK_ANIMATION;
       
       if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
-	DeleteBullet ( bullet_index , FALSE );
+      {
+	  DeleteBullet ( bullet_index , FALSE );
+	  //--------------------
+	  // Built-in attacks also don't use the recharge value of the
+	  // weapon item.
+	  //
+	  ThisRobot -> firewait = 1.7 ;
+      }
 
       ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
 
