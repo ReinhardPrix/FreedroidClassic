@@ -172,9 +172,8 @@ enum
 //--------------------
 // Definitions for the menu inside the in-game console
 //
-#define MENUITEMHEIGHT 		77
-#define MENUITEMLENGTH 		50*2
-#define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
+#define CONS_MENU_HEIGHT 		256
+#define CONS_MENU_LENGTH 		100
 
 //--------------------
 // dimensions of the droids as required for functions NotPassable() and CheckEnemyCollsion() )

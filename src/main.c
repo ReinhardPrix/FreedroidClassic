@@ -92,6 +92,8 @@ main (int argc, char *const argv[])
 
       GameOver = FALSE;
 
+      EnterKonsole();
+
       while (!GameOver && !QuitProgram)
 	{
 
