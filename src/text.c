@@ -478,7 +478,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
-  int speed = +4;
+  int speed = +5;
   int maxspeed = 8;
   SDL_Surface* Background;
 
@@ -513,8 +513,6 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 	    speed = maxspeed;
 	}
 
-      usleep (30000);
-
       // DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
       // MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
       // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
@@ -537,6 +535,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       InsertLine -= speed;
 
       SDL_Flip (ne_screen);
+
+      usleep (20000);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))

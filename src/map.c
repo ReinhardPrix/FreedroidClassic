@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: All map-related functions, which also includes loading of decks 
+ * and whole ships, starting the lifts and consoles if close to the 
+ * paradroid, refreshes as well as determining the map brick that contains
+ * specified coordinates are done in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,20 +31,6 @@
  *  MA  02111-1307  USA
  *
  */
-
-/* ----------------------------------------------------------------------
- * This file contains (all?) map-related functions, which also includes 
- * loading of decks and whole ships, starting the lifts and consoles if 
- * close to the paradroid, refreshes as well as determining the map brick 
- * that contains specified coordinates are done in this file.
- * ---------------------------------------------------------------------- */
-
-/*
- * This file has been checked for remains of german in the documentation.
- * They should be all out by now, and if you still find any, please do not
- * hesitate to remove them.
- */
-
 #define _map_c
 
 #include "system.h"
@@ -53,204 +48,43 @@
 #define LEVEL_NAME_STRING "Name of this level="
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
-#define MAP_END_STRING "End of pure map information for this level"
-#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
-#define STATEMENT_END_STRING "End of pure statement information for this level"
-#define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
-#define ITEMS_SECTION_END_STRING "End of pure items information for this level"
-#define ITEM_CODE_STRING "New item: type="
-#define ITEM_POS_X_STRING " X="
-#define ITEM_POS_Y_STRING " Y="
-#define ITEM_AC_BONUS_STRING " AC="
-#define ITEM_DAMAGE_STRING " DoDamage="
-#define ITEM_DAMAGE_MODIFIER_STRING " ModifyDamage="
-#define ITEM_MAX_DURATION_STRING " MaxDur="
-#define ITEM_CUR_DURATION_STRING " CurDur="
-#define ITEM_GOLD_AMOUNT_STRING " Gold="
-#define ITEM_PREFIX_CODE_STRING " PrefixCode="
-#define ITEM_SUFFIX_CODE_STRING " SuffixCode="
-#define ITEM_BONUS_TO_STR_STRING " StrBon="
-#define ITEM_BONUS_TO_DEX_STRING " StrDex="
-#define ITEM_BONUS_TO_VIT_STRING " StrVit="
-#define ITEM_BONUS_TO_MAG_STRING " StrMag="
-#define ITEM_BONUS_TO_ALLATT_STRING " StrAllAtt="
-#define ITEM_BONUS_TO_LIFE_STRING " StrLife="
-#define ITEM_BONUS_TO_FORCE_STRING " StrForce="
-#define ITEM_BONUS_TO_TOHIT_STRING " StrToHit="
-#define ITEM_BONUS_TO_ACDAM_STRING " StrACDam="
-#define ITEM_BONUS_TO_RESELE_STRING " ResEle="
-#define ITEM_BONUS_TO_RESFIR_STRING " ResFir="
-#define ITEM_BONUS_TO_RESFOR_STRING " ResFor="
-#define X_POSITION_OF_STATEMENT_STRING "PosX="
-#define Y_POSITION_OF_STATEMENT_STRING "PosY="
-#define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
 
-#define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
-#define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
-#define CODEPANEL_CODE_ANNOUNCE_STRING "Secret Code=\""
-#define POSITION_X_OF_CODEPANEL_STRING "PanelposX="
-#define POSITION_Y_OF_CODEPANEL_STRING "PanelposY="
-
-#define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
-#define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
-#define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
-#define POSITION_Y_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosY="
-#define BIG_MAP_INSERT_TYPE_STRING "BigGraphicsInsertType="
-
+symtrans Translator[ NUM_MAP_BLOCKS ] = {
+  {'.', FLOOR},
+  {'\'', VOID},
+  {'x', FLOOR},			/* A waypoint is invisible */
+  {'+', KREUZ},
+  {'-', H_WALL},
+  {'|', V_WALL},
+  {'"', H_ZUTUERE},
+  {'=', V_ZUTUERE},
+  {'[', KONSOLE_L},
+  {']', KONSOLE_R},
+  {'(', KONSOLE_O},
+  {')', KONSOLE_U},
+  {'o', LIFT},
+  {'@', REFRESH1},
+  {'a', ALERT},
+  {'1', BLOCK1},
+  {'2', BLOCK2},
+  {'3', BLOCK3},
+  {'4', BLOCK4},
+  {'5', BLOCK5},
+  {0, -1}			// marks the end
+};
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
-Level Decode_Loaded_Leveldata ( char *data );
 
-/* ----------------------------------------------------------------------
- * This function returns TRUE for blocks classified as "Walls" and false
- * otherwise.
- * ---------------------------------------------------------------------- */
-int
-IsWallBlock (int block)
-{
-  switch (block)
-    {
-    case KREUZ:
-    case H_WALL:
-    case V_WALL:
-    case H_ZUTUERE:
-    case V_ZUTUERE:
-    case LOCKED_H_ZUTUERE:
-    case LOCKED_V_ZUTUERE:
-    case ECK_LU:
-    case T_U:
-    case ECK_RU:
-    case T_L:
-    case T_R:
-    case ECK_LO:
-    case T_O:
-    case ECK_RO:
-    case BLOCK1:
-    case BLOCK2:
-    case BLOCK3:
-    case ALERT:
-    case CODEPANEL_L:
-    case CODEPANEL_R:
-    case CODEPANEL_U:
-    case CODEPANEL_D:
-      return (TRUE);
-    default:
-      return (FALSE);
-    }				// switch
-}; // int IsWallBlock( .. )
 
-/* ----------------------------------------------------------------------
- * This function collects the automap data and stores it in the Me data
- * structure.
- * ---------------------------------------------------------------------- */
-void
-CollectAutomapData ( void )
-{
-  int x , y ;
-  // finepoint ObjPos;
-  gps ObjPos;
-  static int TimePassed;
-  int level = Me [ 0 ] . pos . z ;
 
-  ObjPos . z = Me [ 0 ] . pos . z ;
+/*@Function============================================================
+  @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
+  intern-code des Elements, das sich auf (deck x/y) befindet
 
-  //--------------------
-  // Checking the whole map for passablility will surely take a lot
-  // of computation.  Therefore we only do this once every second of
-  // real time.
-  //
-  if ( TimePassed == (int) Me[0].MissionTimeElapsed ) return;
-  TimePassed = (int) Me[0].MissionTimeElapsed;
-
-  //--------------------
-  // Now we do the actual checking for visible wall components.
-  //
-  for ( y = 0 ; y < CurLevel->ylen ; y ++ )
-    {
-      for ( x = 0 ; x < CurLevel->xlen ; x ++ )
-	{
-	  if ( IsWallBlock( CurLevel->map[y][x] ) ) 
-	    {
-	      //--------------------
-	      // First we check, if there are some right sides of walls visible
-	      //
-	      ObjPos.x = x + 0.75;
-	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
-		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | RIGHT_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some left sides of walls visible
-	      //
-	      ObjPos.x = x - 0.75;
-	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos , 0 ) )
-		{
-		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | LEFT_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some southern sides of walls visible
-	      //
-	      ObjPos.x = x + 0;
-	      ObjPos.y = y + 0.75;
-	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
-		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | DOWN_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some northern sides of walls visible
-	      //
-	      ObjPos.x = x + 0.0 ;
-	      ObjPos.y = y - 0.75 ;
-	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
-		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | UP_WALL_BIT ;
-		}
-	    }
-	}
-    }
-
-}; // void CollectAutomapData ( void )
-
-/* ----------------------------------------------------------------------
- * When one of the box tiles gets hit, e.g. by a blast exploding on the
- * tile or a influencer melee hit on the tile, then the box explodes,
- * possibly leaving some goods behind.
- * ---------------------------------------------------------------------- */
-void 
-Smash_Box ( float x , float y )
-{
-  int map_x, map_y;
-
-  map_x=(int)rintf(x);
-  map_y=(int)rintf(y);
-
-  //--------------------
-  // first we see if there are any destructible map tiles, that need to
-  // be destructed this way...
-  //
-  switch ( CurLevel->map[ map_y ][ map_x ] )
-    { 
-    case BOX_4:
-    case BOX_3:
-    case BOX_2:
-    case BOX_1:
-      CurLevel->map[ map_y ][ map_x ] = FLOOR;
-      StartBlast( map_x , map_y , CurLevel->levelnum , DRUIDBLAST );
-      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
-      break;
-    default:
-      break;
-    }
-
-}; // void Smash_Box ( float x , float y );
-
-/* ----------------------------------------------------------------------
- * This function returns the map brick code of the tile that occupies the
- * given position.
- * ---------------------------------------------------------------------- */
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
 unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
@@ -285,17 +119,16 @@ GetMapBrick (Level deck, float x, float y)
       Terminate (-1);
     }
   return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
-}; // int GetMapBrick( ... ) 
- 
-/* ---------------------------------------------------------------------- 
- * This function finds the lift number what corresponds to the current
- * position of the influencer.
- *
- * A return value of  (-1) means: No lift connected to here found !!
- * Other return values contain the number of the lift in AllLifts[],
- * that has a connection to this square.
- *
- * ---------------------------------------------------------------------- */
+} /* GetMapBrick() */
+
+/*@Function============================================================
+@Desc: int GetCurrentLift: finds Lift-number to your position 
+
+@Ret: -1: 	Not found !!
+		num: 	Number of cur. Lift in AllLifts[]
+		
+@Int:
+* $Function----------------------------------------------------------*/
 int
 GetCurrentLift (void)
 {
@@ -303,8 +136,8 @@ GetCurrentLift (void)
   int curlev = CurLevel->levelnum;
   int gx, gy;
 
-  gx = rintf(Me[0].pos.x);
-  gy = rintf(Me[0].pos.y);
+  gx = rintf(Me.pos.x);
+  gy = rintf(Me.pos.y);
 
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): curlev=%d gx=%d gy=%d" , curlev, gx, gy );
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
@@ -327,112 +160,59 @@ GetCurrentLift (void)
     return -1;
   else
     return i;
-}; // int GetCurrentLift ( void )
+}; // GetCurrentLift 
 
-/* ---------------------------------------------------------------------- 
- * This function checks if something special has to be done, cause the
- * Influencer or tux has stepped on some special fields like a lifts or
- * a console or a refresh or something like that.
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: ActSpecialField: checks Influencer on SpecialFields like
+Lifts and Konsoles and acts on it 
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
-ActSpecialField ( int PlayerNum )
+ActSpecialField (float x, float y)
 {
   unsigned char MapBrick;
-  // float cx, cy;			
-  float x = Me [ PlayerNum ] . pos . x ;
-  float y = Me [ PlayerNum ] . pos . y ;
-  Level SpecialFieldLevel;
+  float cx, cy;			/* tmp: NullPunkt im Blockzentrum */
 
-  // DebugPrintf (2, "\nvoid ActSpecialField ( int PlayerNum  ) :  Real function call confirmed." ) ;
+  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
 
-  //--------------------
-  // We don't do anything for this player, if it's an
-  // inactive player.
-  //
-  if ( Me [ PlayerNum ] . status == OUT ) return;
-
-  //--------------------
-  // If the player is on the one special teleporter square, that gets
-  // the player teleported back to where he came from, we will teleport
-  // him back there...
-  //
-  if ( ( ((int) rintf(Me[0].pos.x) ) == 3 ) &&
-       ( ((int) rintf(Me[0].pos.y) ) == 7 ) &&
-       ( ((int) rintf(Me[0].pos.z) ) == 0 ) )
-    {
-      Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 );
-    }
-
-
-  SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
-
-  MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
+  MapBrick = GetMapBrick (CurLevel, x, y);
 
   switch (MapBrick)
     {
-
-      /*
     case LIFT:
-      if ( ! ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
-	       ( abs(Me[0].speed.x) <= 1) && ( abs(Me[0].speed.y) <= 1)))
+      if (!((Me.status == TRANSFERMODE) &&
+	    ( abs(Me.speed.x) <= 1) && ( abs(Me.speed.y) <= 1)))
 	break;
 
       cx = rintf(x) - x ;
       cy = rintf(y) - y ;
 
-      // only enter the lift, when approximately in the center (of the map tile)
+      /* Lift nur betreten, wenn ca. im Zentrum */
       if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
 	EnterLift ();
       break;
-      */
 
     case KONSOLE_R:
     case KONSOLE_L:
     case KONSOLE_O:
     case KONSOLE_U:
-      if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
-	   ( PlayerNum == 0 ) &&
-	   ( ! ServerMode ) )
+      if (Me.status == TRANSFERMODE)
 	{
-	  EnterKonsole ( ) ;
-	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  EnterKonsole ();
+	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
 	}
       break;
 
-      /*
-    case CODEPANEL_R:
-    case CODEPANEL_L:
-    case CODEPANEL_D:
-    case CODEPANEL_U:
-      if ( Me[0].status == TRANSFERMODE )
-	{
-	  EnterCodepanel ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
-	}
-      break;
-      */
 
-      /*
-    case IDENTIFY_R:
-    case IDENTIFY_L:
-    case IDENTIFY_D:
-    case IDENTIFY_U:
-      if (Me[0].status == TRANSFERMODE)
-	{
-	  EnterItemIdentificationBooth ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
-	}
-      break;
-      */
-
-      /*
     case REFRESH1:
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
       RefreshInfluencer ();
       break;
-      */
 
     default:
       break;
@@ -440,22 +220,32 @@ ActSpecialField ( int PlayerNum )
 
   DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
 
-}; // void ActSpecialField ( ... )
+} /* ActSpecialField */
 
-/* ----------------------------------------------------------------------
- * This function moves all the refresh fields to their next phase (if
- * it's time already).
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: 	AnimateRefresh():
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
 AnimateRefresh (void)
 {
   static float InnerWaitCounter = 0;
-  int i;
+  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
+  int i, j;
   int x, y;
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 10;
+
+  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
+  // InnerPhase ++;
+  // InnerPhase %= INNER_PHASES;
+
+  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
+
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     {
@@ -466,36 +256,50 @@ AnimateRefresh (void)
 
       CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
 
+      /* Inneres Refresh animieren */
+      for (j = 0; j < 4; j++)
+	{
+	  ;  /* nix hier noch... */
+	}			/* for */
+
     }				/* for */
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
-}; // void AnimateRefresh ( void )
+}				/* AnimateRefresh */
 
-/* ----------------------------------------------------------------------
- * This function moves all the teleporter fields to their next phase (if
- * it's time already).
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: 	AnimateRefresh():
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
 AnimateTeleports (void)
 {
   static float InnerWaitCounter = 0;
+  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
   int i, x, y;
-  Level TeleporterLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 30;
 
+  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
+  // InnerPhase ++;
+  // InnerPhase %= INNER_PHASES;
+
+  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
+
+
   for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     {
-      x = TeleporterLevel->teleporters[i].x;
-      y = TeleporterLevel->teleporters[i].y;
+      x = CurLevel->teleporters[i].x;
+      y = CurLevel->teleporters[i].y;
       if (x == 0 || y == 0)
 	break;
 
-      TeleporterLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
+      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
 
     }				/* for */
 
@@ -503,13 +307,16 @@ AnimateTeleports (void)
 
 }; // void AnimateTeleports ( void )
 
-/* ----------------------------------------------------------------------
- * This function loads the data for a whole ship
- * Possible return values are : OK and ERR
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: 	LoadShip(): loads the data for a whole ship
+
+@Ret: OK | ERR
+@Int:
+* $Function----------------------------------------------------------*/
 int
 LoadShip (char *filename)
 {
+  char *fpath;
   char *ShipData;
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
@@ -519,7 +326,8 @@ LoadShip (char *filename)
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
 
   /* Read the whole ship-data to memory */
-  ShipData = ReadAndMallocAndTerminateFile( filename , END_OF_SHIP_DATA_STRING ) ;
+  fpath = find_file (filename, MAP_DIR, FALSE);
+  ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
   //--------------------
   // Now we read the shipname information from the loaded data
@@ -548,25 +356,26 @@ LoadShip (char *filename)
 
   for (i = 0; i < curShip.num_levels; i++)
     {
-      
-      curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
+      curShip.AllLevels[i] = LevelToStruct (LevelStart[i]);
 
-      TranslateMap ( curShip . AllLevels [ i ] ) ;
+      TranslateMap (curShip.AllLevels[i]);
 
     }
 
   return OK;
 
-}; // int LoadShip ( ... ) 
+} /* LoadShip () */
 
-/* ----------------------------------------------------------------------
- * This function is intended to eliminate leading -1 entries before
- * real entries in the waypoint connection structure.
- *
- * Such leading -1 entries might cause problems later, because some
- * Enemy-Movement routines expect that the "real" entries are the
- * first entries in the connection list.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function is intended to eliminate leading -1 entries before
+       real entries in the waypoint connection structure.
+
+       Such leading -1 entries might cause problems later, because some
+       Enemy-Movement routines expect that the "real" entries are the
+       first entries in the connection list.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void CheckWaypointIntegrity(Level Lev)
 {
   int i, j , k , l ;
@@ -595,7 +404,7 @@ void CheckWaypointIntegrity(Level Lev)
 
       // At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
 
-      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUND ON LEVEL %d!! " , Lev->levelnum );
+      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUNT ON LEVEL %d!! " , Lev->levelnum );
       DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
       DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
 
@@ -618,11 +427,13 @@ void CheckWaypointIntegrity(Level Lev)
 }; // void CheckWaypointIntegrity(Level Lev)
 
 		
-/* ----------------------------------------------------------------------
- * This function generates savable text out of the current lavel data
- * ---------------------------------------------------------------------- */
-char *
-Encode_Level_For_Saving(Level Lev)
+/*@Function============================================================
+@Desc: char *StructToMem(Level Lev):
+
+@Ret: 	char *: pointer to Map in a memory field
+@Int:
+* $Function----------------------------------------------------------*/
+char *StructToMem(Level Lev)
 {
   char *LevelMem;
   int i, j;
@@ -679,233 +490,6 @@ Encode_Level_For_Saving(Level Lev)
     strcat(LevelMem, "\n");
   }
 
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  strcat(LevelMem, MAP_END_STRING);
-  strcat(LevelMem, "\n");
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->StatementList[ i ].x == (-1) ) continue;
-
-      strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
-      strcat( LevelMem , "\"\n" );
-    }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_END_STRING);
-  strcat(LevelMem, "\n");
-  
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the codepanel data
-  //
-  strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  //--------------------
-  // Now we write out the bulk of codepanel infos
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
-      strcat( LevelMem , "\"\n" );
-    }
-
-  //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
-  //
-  strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-  
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the 
-  // big graphics inserts for this map
-  //
-  strcat( LevelMem, BIG_MAP_INSERT_SECTION_BEGIN_STRING );
-  strcat( LevelMem, "\n" );
-
-  //--------------------
-  // Now we write out the bulk of big map insert infos
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-
-      if ( Lev -> MapInsertList [ i ] . type == ( -1 ) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , BIG_MAP_INSERT_TYPE_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . type );
-      strcat( LevelMem , linebuf );
-      strcat( LevelMem, "\n" );
-
-    }
-
-  //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
-  //
-  strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the items data
-  //
-  strcat(LevelMem, ITEMS_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  //--------------------
-  // Now we write out the bulk of items infos
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->ItemList[ i ].type == (-1) ) continue;
-
-      strcat( LevelMem , ITEM_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_POS_X_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_POS_Y_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_AC_BONUS_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].ac_bonus );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage_modifier );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_MAX_DURATION_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_CUR_DURATION_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].current_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].gold_amount );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].prefix_code );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].suffix_code );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the primary stat (attribute) boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_STR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_str );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_DEX_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_dex );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_VIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_vit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_MAG_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_mag );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ALLATT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_all_attributes );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the secondary stat boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_life );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_tohit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ACDAM_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_ac_or_damage );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the resistanc boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESELE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_electricity );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_fire );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , "\n" );
-    }
-  //--------------------
-  // Now we write out a marker to announce the end of the items data
-  //
-  strcat(LevelMem, ITEMS_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-  
-
   // --------------------  
   // The next thing we must do is write the waypoints of this level also
   // to disk.
@@ -950,11 +534,8 @@ Encode_Level_For_Saving(Level Lev)
 ----------------------------------------------------------------------\n\
 \n");
   
-  //--------------------
-  // So we're done now.  Did the estimate for the amount of memory hit
-  // the target or was it at least sufficient? 
-  // If not, we're in trouble...
-  //
+  /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
+  /* wenn nicht: :-(  */
   if( strlen(LevelMem) >= MemAmount) 
     {
       printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
@@ -965,24 +546,29 @@ Encode_Level_For_Saving(Level Lev)
   /* all ok : */
   return LevelMem;
   
-}; // char *Encode_Level_For_Saving ( Level Lev )
+} /* Struct to Mem */
 
+/*@Function============================================================
+@Desc: int SaveShip(void): saves ship-data to disk
 
-/* ----------------------------------------------------------------------
- * This function should save a whole ship to disk to the given filename.
- * It is not only used by the level editor, but also by the function that
- * saves whole games.
- * ---------------------------------------------------------------------- */
-int SaveShip(char *filename)
+@Ret: OK | ERR
+@Int:
+* $Function----------------------------------------------------------*/
+int SaveShip(char *shipname)
 {
   char *LevelMem;		/* linear memory for one Level */
   char *MapHeaderString;
   FILE *ShipFile;  // to this file we will save all the ship data...
+  char filename[FILENAME_LEN+1];
   int level_anz;
   int array_i, array_num;
   int i;
 
   DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
+  
+  /* Get the complete filename */
+  strcpy(filename, shipname);
+  strcat(filename, SHIP_EXT);
   
   /* count the levels */
   level_anz = 0;
@@ -1048,7 +634,7 @@ freedroid-discussion@lists.sourceforge.net\n\
   
   DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
 
-  for( i = 0 ; i < level_anz ; i++ ) 
+  for( i=0; i<level_anz; i++) 
     {
 
       //--------------------
@@ -1083,7 +669,7 @@ freedroid-discussion@lists.sourceforge.net\n\
       // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
       // then this string is wirtten to the file.  easy. simple.
       //
-      LevelMem = Encode_Level_For_Saving (curShip.AllLevels[array_num]);
+      LevelMem = StructToMem(curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
     
       free(LevelMem);
@@ -1112,24 +698,25 @@ freedroid-discussion@lists.sourceforge.net\n\
   DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
   
   return OK;
+} /* SaveShip */
 
-}; // int SaveShip ( char* filename )
 
-/* ----------------------------------------------------------------------
- * This function is for LOADING map data!
- * This function extracts the data from *data and writes them 
- * into a Level-struct:
+/*@Function============================================================
+ * @Desc: Level LevelToStruct(char *data):
+ *      This function is for LOADING map data!
+ * 	This function extracts the data from *data and writes them 
+ *      into a Level-struct:
  *
- * NOTE:  Here, the map-data are NOT yet translated to their 
- *        their internal values, like "VOID", "H_GANZTUERE" and
- *         all the other values from the defs.h file.
+ *	NOTE:  Here, the map-data are NOT yet translated to their 
+ *             their internal values, like "VOID", "H_GANZTUERE" and
+ *             all the other values from the defs.h file.
  *
- * Doors and Waypoints Arrays are initialized too
+ *	Doors and Waypoints Arrays are initialized too
  *
- * @Ret:  Level or NULL
- * ---------------------------------------------------------------------- */
+ *	@Ret:  Level or NULL
+* $Function----------------------------------------------------------*/
 Level
-Decode_Loaded_Leveldata ( char *data )
+LevelToStruct (char *data)
 {
   Level loadlevel;
   char *pos;
@@ -1142,27 +729,8 @@ Decode_Loaded_Leveldata ( char *data )
   char ThisLine[1000];
   char* ThisLinePointer;
   char* DataPointer;
-  char* StatementSectionBegin;
-  char* StatementSectionEnd;
-  char* StatementPointer;
-  char* CodepanelPointer;
-  char* CodepanelSectionBegin;
-  char* CodepanelSectionEnd;
-  char* MapInsertPointer;
-  char* MapInsertSectionBegin;
-  char* MapInsertSectionEnd;
-  char* ItemPointer;
-  char* ItemsSectionBegin;
-  char* ItemsSectionEnd;
-  int NumberOfStatementsInThisLevel;
-  int NumberOfCodepanelsInThisLevel;
-  int NumberOfMapInsertsInThisLevel;
-  int NumberOfItemsInThisLevel;
-  char Preserved_Letter;
 
-  //--------------------
-  // Get the memory for one level 
-  //
+  /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
 
   loadlevel->empty = FALSE;
@@ -1170,9 +738,7 @@ Decode_Loaded_Leveldata ( char *data )
   DebugPrintf (2, "\n-----------------------------------------------------------------");
   DebugPrintf (2, "\nStarting to process information for another level:\n");
 
-  //--------------------
-  // Read Header Data: levelnum and x/ylen 
-  //
+  /* Read Header Data: levelnum and x/ylen */
   DataPointer = strstr( data , "Levelnumber:" );
   if ( DataPointer == NULL )
     {
@@ -1188,287 +754,10 @@ Decode_Loaded_Leveldata ( char *data )
   DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
   DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
 
-  if ( loadlevel->ylen >= MAX_MAP_LINES ) 
-    {
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A maplevel Freedroid was supposed to load has more map lines than allowed\n\
-for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
-\n\
-Sorry, but unless this constant is raised, I'll refuse to load this map.\n\
-\n\
-If you receive this error message, either raise the constant yourself and recompile or\n\
-contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the map loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
-    }
-
   loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
-  //--------------------
-  // Next we extract the statments of the influencer on this level WITHOUT destroying
-  // or damaging the data in the process!
-  //
-  
-  // First we initialize the statement array with 'empty' values
-  //
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->StatementList[ i ].x = ( -1 ) ;
-      loadlevel->StatementList[ i ].y = ( -1 ) ;
-      loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
-    }
-
-  // We look for the beginning and end of the map statement section
-  StatementSectionBegin = LocateStringInData( data , STATEMENT_BEGIN_STRING );
-  StatementSectionEnd = LocateStringInData( data , STATEMENT_END_STRING );
-
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  Preserved_Letter=StatementSectionEnd[0];
-  StatementSectionEnd[0]=0;
-  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
-
-  
-
-  StatementPointer=StatementSectionBegin;
-  for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
-    {
-      StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
-      ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
-      ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
-      loadlevel->StatementList[ i ].Statement_Text = 
-	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
-		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
-    }
-
-  // Now we repair the damage done to the loaded level data
-  StatementSectionEnd[0]=Preserved_Letter;
-
-
-  //----------------------------------------------------------------------
-  // From here on we take apart the codepanel section of the loaded level...
-  //----------------------------------------------------------------------
-
-  //--------------------
-  // First we initialize the codepanel arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  CodepanelSectionBegin = LocateStringInData( data , CODEPANEL_SECTION_BEGIN_STRING );
-  CodepanelSectionEnd = LocateStringInData( data , CODEPANEL_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  Preserved_Letter=CodepanelSectionEnd[0];
-  CodepanelSectionEnd[0]=0;
-  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  CodepanelPointer=CodepanelSectionBegin;
-  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
-    {
-      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
-      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
-      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
-      loadlevel->CodepanelList[ i ].Secret_Code = 
-	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
-		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  CodepanelSectionEnd[0]=Preserved_Letter;
-
-
-
-
-
-
-  //----------------------------------------------------------------------
-  // From here on we take apart the big map graphics inserts of the 
-  // loaded level...
-  //----------------------------------------------------------------------
-
-  //--------------------
-  // First we initialize the graphics insert array with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->MapInsertList [ i ] . type = ( -1 ) ;
-      loadlevel->MapInsertList [ i ] . pos . x = ( -1 ) ;
-      loadlevel->MapInsertList [ i ] . pos . y = ( -1 ) ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  MapInsertSectionBegin = LocateStringInData( data , BIG_MAP_INSERT_SECTION_BEGIN_STRING );
-  MapInsertSectionEnd = LocateStringInData( data , BIG_MAP_INSERT_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  Preserved_Letter=MapInsertSectionEnd[0];
-  MapInsertSectionEnd[0]=0;
-  NumberOfMapInsertsInThisLevel = CountStringOccurences ( MapInsertSectionBegin , POSITION_X_OF_BIG_MAP_INSERT_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of big map inserts found in this level : %d." , NumberOfMapInsertsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  MapInsertPointer=MapInsertSectionBegin;
-  for ( i = 0 ; i < NumberOfMapInsertsInThisLevel ; i ++ )
-    {
-      MapInsertPointer = strstr ( MapInsertPointer + 1 , POSITION_X_OF_BIG_MAP_INSERT_STRING );
-      ReadValueFromString( MapInsertPointer , POSITION_X_OF_BIG_MAP_INSERT_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].pos.x) , MapInsertSectionEnd );
-      ReadValueFromString( MapInsertPointer , POSITION_Y_OF_BIG_MAP_INSERT_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].pos.y) , MapInsertSectionEnd );
-
-      ReadValueFromString( MapInsertPointer , BIG_MAP_INSERT_TYPE_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].type ) , MapInsertSectionEnd );
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d MapInsertType=%d" , loadlevel->MapInsertList[ i ].pos.x , 
-		   loadlevel->MapInsertList[ i ].pos.y , loadlevel->MapInsertList[ i ].type );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  MapInsertSectionEnd[0]=Preserved_Letter;
-
-
-
-
-  
-
-
-
-  //----------------------------------------------------------------------
-  // From here on we take apart the items section of the loaded level...
-  //----------------------------------------------------------------------
-  
-  //--------------------
-  // First we initialize the items arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
-      loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
-      loadlevel->ItemList[ i ].type = ( -1 ) ;
-      loadlevel->ItemList[ i ].currently_held_in_hand = FALSE;
-    }
-
-  // We look for the beginning and end of the items section
-  ItemsSectionBegin = LocateStringInData( data , ITEMS_SECTION_BEGIN_STRING );
-  ItemsSectionEnd = LocateStringInData( data , ITEMS_SECTION_END_STRING );
-
-  // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
-  // The damage will be restored later!
-  Preserved_Letter=ItemsSectionEnd[0];
-  ItemsSectionEnd[0]=0;
-  NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
-
-  // Now we decode all the item information
-  ItemPointer=ItemsSectionBegin;
-  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
-    {
-      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
-      ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
-			   &(loadlevel->ItemList[ i ].type) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage_modifier ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
-			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].gold_amount ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].prefix_code ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].suffix_code ) , ItemsSectionEnd );
-      // Now we read in the boni to the primary stats (attributes)
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_STR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_str ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_DEX_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_dex ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MAG_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_mag ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_VIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_vit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ALLATT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_all_attributes ) , ItemsSectionEnd );
-      // Now we read in the boni for the secondary stats
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_life ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_force ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_tohit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_ac_or_damage ) , ItemsSectionEnd );
-      // Now we read in the boni for resistances
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESELE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_electricity ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_fire ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_force ) , ItemsSectionEnd );
-
-      DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
-		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
-    }
-  
-  // Now we repair the damage done to the loaded level data
-  ItemsSectionEnd[0]=Preserved_Letter;
-
-  fflush(stdout);
-
-  //--------------------
   // find the map data
   // NOTE, that we here only set up a pointer to the map data
   // as they are stored in the file.  This is NOT the same format
@@ -1497,7 +786,7 @@ Sorry...\n\
 
   DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
 
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+  for (i=0; i<MAXWAYPOINTS ; i++)
     {
       WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
 
@@ -1522,19 +811,23 @@ Sorry...\n\
       // getchar();
     }
 
+  
+
   /* Scan the waypoint- connections */
   pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
 
   return loadlevel;
 
-}; // Level Decode_Loaded_Leveldata (char *data)
+} /* LevelToStruct */
 
-/* ----------------------------------------------------------------------
- * This function initializes the Doors array of the given level structure
- * Of course the level data must be in the structure already!!
- *
- * Return value: the number of doors found or ERR
- * ---------------------------------------------------------------------- */
+
+
+/*@Function============================================================
+@Desc: GetDoors: initializes the Doors array of the given level structure
+Of course the level data must be in the structure already!!
+
+@Ret: Number of doors found or ERR
+* $Function----------------------------------------------------------*/
 int
 GetDoors (Level Lev)
 {
@@ -1593,14 +886,14 @@ Sorry...\n\
     }				/* for */
 
   return curdoor;
-}; // int GetDoors (...)
+}				/* GetDoors */
 
-/* ----------------------------------------------------------------------
- * This function initialized the array of Refreshes for animation
- * within the level
- * 
- * Return value: the number of refreshes found or ERR
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function initialized the array of Refreshes for animation
+       within the level
+
+@Ret: Number of refreshes found or ERR
+* $Function----------------------------------------------------------*/
 int
 GetRefreshes (Level Lev)
 {
@@ -1624,7 +917,7 @@ GetRefreshes (Level Lev)
 	    Lev->refreshes[curref].x = col;
 	    Lev->refreshes[curref++].y = row;
 
-	    if (curref >= MAX_REFRESHES_ON_LEVEL)
+	    if (curref > MAX_REFRESHES_ON_LEVEL)
 	      {
 		fprintf(stderr, "\n\
 \n\
@@ -1653,14 +946,15 @@ Sorry...\n\
 	  }			/* if */
       }				/* for */
   return curref;
-}; // int GetRefreshes (Level lev)
+}				// int GetRefreshed(Level lev)
 
-/* ----------------------------------------------------------------------
- * This function initialized the array of Teleports for animation
- * within the level
- *
- * Return value:  number of refreshes found or ERR
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: This function initialized the array of Teleports for animation
+       within the level
+
+@Ret: Number of refreshes found or ERR
+* $Function----------------------------------------------------------*/
 int
 GetTeleports (Level Lev)
 {
@@ -1714,10 +1008,40 @@ Sorry...\n\
   return curref;
 }; // int GetTeleports(Level lev)
 
-/* ----------------------------------------------------------------------
+
+/*======================================================================
+  IsWallBlock():  Returns TRUE (1) for blocks classified as "Walls", 
+  		  0 otherwise
+ ======================================================================*/
+int
+IsWallBlock (int block)
+{
+  switch (block)
+    {
+    case KREUZ:
+    case H_WALL:
+    case V_WALL:
+    case H_ZUTUERE:
+    case V_ZUTUERE:
+    case ECK_LU:
+    case T_U:
+    case ECK_RU:
+    case T_L:
+    case T_R:
+    case ECK_LO:
+    case T_O:
+    case ECK_RO:
+      return (TRUE);
+    default:
+      return (FALSE);
+    }				// switch
+}				// IsWallBlock()
+
+/*----------------------------------------------------------------------
  * This function translates map data into human readable map code, that
  * can later be written to the map file on disk.
- * ---------------------------------------------------------------------- */
+ *
+ ----------------------------------------------------------------------*/
 void
 TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
@@ -1772,7 +1096,7 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 
 
 
-  // transpose the game-engine mapdata line to human readable format 
+  /* transpose the game-engine mapdata line to human readable format */
 
   HumanReadable[0]=0;  // Add a terminator at the beginning
 
@@ -1782,9 +1106,9 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
       strcat ( HumanReadable , Buffer );
     }
 
-}; // void TranslateToHumanReadable( ... )
+} // void TranslateToHumanReadable( ... )
 
-/* -----------------------------------------------------------------
+/*-----------------------------------------------------------------
  * @Desc: When the ship is loaded from disk, the data of the map 
  *        are initally in a human readable form with sensible
  *        ascii characters.  This however is NOT the format and
@@ -1811,16 +1135,19 @@ TranslateMap (Level Lev)
   for (row = 0; row < ydim  ; row++)
     {
 
-      Buffer = MyMalloc( xdim + 10 );
+      Buffer=MyMalloc( xdim + 10 );
 
       for (col = 0; col < xdim  ; col++)
 	{
+
 	  sscanf( Lev->map[row]+4*col , "%d " , &tmp);
 	  Buffer[col] = (char)tmp;
+
 	}
 
       Lev->map[row]=Buffer;
     }				/* for (row=0..) */
+
 
   /* Get Doors Array */
   GetDoors ( Lev );
@@ -1830,18 +1157,21 @@ TranslateMap (Level Lev)
   // Get Refreshes 
   GetRefreshes ( Lev );
 
-  // Get Teleports
+  // Get Refreshes 
   GetTeleports ( Lev );
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
-}; // int Translate Map( Level lev )
+}				// int Translate Map(Level lev)
 
 
-/* ----------------------------------------------------------------------
- * This function loads lift-connctions into cur-ship struct
- * Return values are OK or ERR
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: GetLiftConnections(char *ship): loads lift-connctions
+					to cur-ship struct
+
+@Ret: 	OK | ERR
+@Int:
+* $Function----------------------------------------------------------*/
 int
 GetLiftConnections (char *filename)
 {
@@ -1957,11 +1287,13 @@ GetLiftConnections (char *filename)
   return OK;
 }; // int GetLiftConnections(char *shipname)
 
-/* -----------------------------------------------------------------
- * This function initializes all enemys, which means that enemys are
- * filled in into the enemy list according to the enemys types that 
- * are to be found on each deck.
- * ----------------------------------------------------------------- */
+/*-----------------------------------------------------------------
+ * @Desc: This function initializes all enemys
+ * 
+ *
+ * @Ret: OK or ERR
+ * 
+ *-----------------------------------------------------------------*/
 int
 GetCrew (char *filename)
 {
@@ -1975,20 +1307,6 @@ GetCrew (char *filename)
 #define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
 #define DROIDS_LEVEL_DESCRIPTION_START_STRING "** Beginning of new Level **"
 #define DROIDS_LEVEL_DESCRIPTION_END_STRING "** End of this levels droid data **"
-
-
-  //--------------------
-  // There can be two cases:  Either the droids records must be read and initialized
-  // from scratch or they need not be modified in any way
-  //
-  // Which is the case?  ---  This can be controlled from the mission file by 
-  // specifying either 
-
-  if ( strcmp ( filename , "none" ) == 0 ) 
-    {
-      DebugPrintf( 0 , "\nint GetCrew( char* filename ): none received as parameter --> not reseting crew file." );
-      return (OK);
-    }
 
   /* Clear Enemy - Array */
   ClearEnemys ();
@@ -2036,166 +1354,19 @@ GetCrew (char *filename)
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = !OUT;
-      AllEnemys[i].has_greeted_influencer = FALSE ;
       Number_Of_Droids_On_Ship++;
     }
 
   return (OK);
-}; // int GetCrew ( ... ) 
-
-/* -----------------------------------------------------------------
- * Friendly droids have a list of keywords they understand and to
- * which they answer something, that is a question for the influencer,
- * which the influencer shall answer one way or the other (2 options
- * at most for now) and this function initializes these structures
- * in the Enemylist which contain the triggers of such question,
- * the questions themselves, the possible answers and the possible
- * ansers of the robot to that again plus perhaps some events 
- * that are triggered this way or some missions that are assigned
- * this way.
- * ----------------------------------------------------------------- */
-void 
-GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
-{
-
-#define FRIENDLY_DROID_DECISION_REQUEST_LIST_START_STRING "Start of Decision-Request List for this friendly droid"
-#define FRIENDLY_DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
-
-#define REQUEST_TRIGGER_START_STRING "RequestTrigger=\""
-#define REQUEST_REQUIRES_MISSION_DONE "RequestRequiresMissionDone="
-#define REQUEST_REQUIRES_MISSION_UNASSIGNED "RequestRequiredMissionUnassigned="
-#define REQUEST_TEXT_START_STRING "RequestText=\""
-#define ANSWER_YES_START_STRING "AnswerYes=\""
-#define ANSWER_NO_START_STRING "AnswerNo=\""
-#define RESPONSE_YES_START_STRING "ResponseYes=\""
-#define RESPONSE_NO_START_STRING "ResponseNo=\""
-#define ACTION_TRIGGER_START_STRING "LabelOfActionInConfirmationCase=\""
-
-  char* RequestListStart;
-  char* RequestListEnd;
-  char* NextDecisionEntry;
-  char* EndOfSearchSectionPointer;
-
-  char* TempSearchArea;
-  int DecisionNr = 0;
-  int j;
-
-  //--------------------
-  // Before we do anything else, we must make sure, that all the pointers
-  // are initialized or we might compare the entered text with some forbidden
-  // memory the uninitialized pointer points to.  So we must prevent this
-  // and do some dummy initialisation.
-  //
-  for ( j = 0 ; j < MAX_REQUESTS_PER_DROID ; j++ )
-    {
-      AllEnemys[ RobotNum ].RequestList[ j ].RequestRequiresMissionDone = -1;
-      AllEnemys[ RobotNum ].RequestList[ j ].RequestRequiresMissionUnassigned = -1;
-      AllEnemys[ RobotNum ].RequestList[ j ].RequestTrigger = "";
-      AllEnemys[ RobotNum ].RequestList[ j ].RequestText = "";
-      AllEnemys[ RobotNum ].RequestList[ j ].AnswerYes = "";
-      AllEnemys[ RobotNum ].RequestList[ j ].AnswerNo = "";
-      AllEnemys[ RobotNum ].RequestList[ j ].ResponseYes = "";
-      AllEnemys[ RobotNum ].RequestList[ j ].ResponseNo = "";
-    }
-
-  //--------------------
-  // No we can start to read in the details of this robots requests and all that...
-  //
-
-  RequestListStart = LocateStringInData( SearchPointer , FRIENDLY_DROID_DECISION_REQUEST_LIST_START_STRING );
-  RequestListEnd = LocateStringInData( SearchPointer , FRIENDLY_DROID_DECISION_REQUEST_LIST_END_STRING );
-
-  TempSearchArea = MyMalloc( RequestListEnd - RequestListStart + 1 ); // First we allocate enough memory
-  strncpy ( TempSearchArea , RequestListStart , RequestListEnd-RequestListStart ); // this copys the relevant part
-  TempSearchArea[ RequestListEnd - RequestListStart ] = 0; // This shall terminate the string
-  EndOfSearchSectionPointer=&(TempSearchArea[RequestListEnd - RequestListStart]);
-
-  NextDecisionEntry = TempSearchArea;
-  
-  while ( ( NextDecisionEntry = strstr( NextDecisionEntry , REQUEST_TRIGGER_START_STRING  ) ) != NULL )
-    {
-
-      //--------------------
-      // At first we check against writing beyond the scope of the array containing
-      // the questions and answers for the communication with this friendly droid
-      //
-      if ( DecisionNr >= MAX_CHAT_KEYWORDS_PER_DROID )
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
-The function reading and interpreting the friendly droids question-answer list\n\
-stumbled into something:\n\
-\n\
-The number of Decisions and Answers specified for one of the droids is bigger\n\
-than the array containing all these Decision and answers defined in the source.\n\
-\n\
-If you receive this error, just increase the constant MAX_CHAT_KEYWORDS_PER_DROIS\n\
-in the source code, then recompile the game and all will be fine.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the droid file reading\n\
-problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
-	}
+} /* GetCrew () */
 
 
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestTrigger = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TRIGGER_START_STRING , "\"" );
-      ReadValueFromString( NextDecisionEntry , REQUEST_REQUIRES_MISSION_DONE , "%d" , 
-			   &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestRequiresMissionDone , 
-			   EndOfSearchSectionPointer );
-      ReadValueFromString( NextDecisionEntry , REQUEST_REQUIRES_MISSION_UNASSIGNED , "%d" , 
-			   &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestRequiresMissionUnassigned , 
-			   EndOfSearchSectionPointer );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestText = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TEXT_START_STRING , "\"" );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerYes = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , ANSWER_YES_START_STRING , "\"" );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerNo = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , ANSWER_NO_START_STRING , "\"" );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseYes = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , RESPONSE_YES_START_STRING , "\"" );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseNo = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , RESPONSE_NO_START_STRING , "\"" );
-      // ReadValueFromString( NextDecisionEntry , "Action is mission assignment=" , "%d" , 
-      // &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger , EndOfLiftRectangleSection );
-      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger = 
-	ReadAndMallocStringFromData ( NextDecisionEntry , ACTION_TRIGGER_START_STRING , "\"" );
-
-      DebugPrintf( 0 , "\n\nRequest trigger entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestTrigger );
-      DebugPrintf( 0 , "RequestText entry for this request : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestText );
-      DebugPrintf( 0 , "Answer 'yes' entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerYes );
-      DebugPrintf( 0 , "Answer 'no' entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerNo );
-      DebugPrintf( 0 , "Response to 'yes' entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseYes );
-      DebugPrintf( 0 , "Response to 'no' entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseNo );
-      DebugPrintf( 0 , "Action trigger entry found : %s \n" , 
-		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger );
-
-      // Not that this entry has been read, we move all indexes up by one
-      DecisionNr++;
-      NextDecisionEntry++;
-    }
-
-  free ( TempSearchArea );
-
-}; // void GetThisRobotsDecisionRequestList( char* SearchPointer, int RobotNum );
-
-/* -----------------------------------------------------------------
+/*-----------------------------------------------------------------
  * Friendly droids have a list of keywords they understand and they
  * can answer in a predefined way.  This list must be decoded from
  * the format style of the droids file to the AllEnemys arrays
  * fields and this is exactly what this function does.
- * ----------------------------------------------------------------- */
+ *-----------------------------------------------------------------*/
 void 
 GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
 {
@@ -2268,12 +1439,16 @@ Sorry...\n\
   free ( TempSearchArea );
 }; // void GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
 
-/* ----------------------------------------------------------------------
- * This function receives a pointer to the already read in crew section
- * in a already read in droids file and decodes all the contents of that
- * droid section to fill the AllEnemys array with droid types accoriding
- * to the specifications made in the file.
- * ---------------------------------------------------------------------- */
+
+
+/*
+----------------------------------------------------------------------
+This function receives a pointer to the already read in crew section
+in a already read in droids file and decodes all the contents of that
+droid section to fill the AllEnemys array with droid types accoriding
+to the specifications made in the file.
+----------------------------------------------------------------------
+*/
 void
 GetThisLevelsDroids( char* SectionPointer )
 {
@@ -2295,10 +1470,6 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
-
-#define DROID_DECISION_REQUEST_LIST_START_STRING "Start of Decision-Request List for this friendly droid"
-#define DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
-
 
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -2386,7 +1557,7 @@ Sorry...\n\
 	}
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
-      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
 
     }  // while (enemy-limit of this level not reached) 
@@ -2462,7 +1633,7 @@ Sorry...\n\
 			    EndOfThisLevelData );
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
-      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
 
@@ -2474,122 +1645,77 @@ Sorry...\n\
       if ( AllEnemys[ FreeAllEnemysPosition ].Friendly )
 	{
 	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
-	  GetThisRobotsDecisionRequestList( SearchPointer , FreeAllEnemysPosition );
 	}
 
     } // while Special force droid found...
 
   NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
   // getchar();
-}; // void GetThisLevelsDroids( char* SectionPointer )
+}
 
-/* ---------------------------------------------------------------------- 
- * This funtion moves the level doors in the sense that they are opened
- * or closed depending on whether there is a robot close to the door or
- * not.  Initially this function did not take into account the framerate
- * and just worked every frame.  But this WASTES COMPUTATION time and it
- * DOES THE ANIMATION TOO QUICKLY.  So, the most reasonable way out seems
- * to be to operate this function only from time to time, e.g. after a
- * specified delay has passed.
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: This funtion moves the level doors in the sense that they are opened
+       or closed depending on whether there is a robot close to the door or
+       not.  Initially this function did not take into account the framerate
+       and just worked every frame.  But this WASTES COMPUTATION time and it
+       DOES THE ANIMATION TOO QUICKLY.  So, the most reasonable way out seems
+       to be to operate this function only from time to time, e.g. after a
+       specified delay has passed.
+
+@Ret: 
+* $Function----------------------------------------------------------*/
 void
-MoveLevelDoors ( int PlayerNum )
+MoveLevelDoors (void)
 {
   int i, j;
   int doorx, doory;
   float xdist, ydist;
   float dist2;
   char *Pos;
-  Level DoorLevel;
-  int one_player_close_enough = FALSE;
-  int PlayerIndex ;
 
-  DoorLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
-
-  //--------------------
   // This prevents animation going too quick.
   // The constant should be replaced by a variable, that can be
   // set from within the theme, but that may be done later...
-  //
   if ( LevelDoorsNotMovedTime < Time_For_Each_Phase_Of_Door_Movement ) return;
-  //--------------------
-  // But only the last of these function calls for each player may 
-  // reset the time counter, or the players after the first will
-  // NEVER EVER BE CHECKED!!!!
-  //
-  if ( PlayerNum == MAX_PLAYERS -1 ) LevelDoorsNotMovedTime=0;
+  LevelDoorsNotMovedTime=0;
 
-  if ( Me [ PlayerNum ] . status == OUT ) return;
 
-  // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , DoorLevel -> levelnum , Me [ PlayerNum ] . pos . z );
-
-  //--------------------
-  // Now we go through the whole prepared list of doors for this
-  // level.  This list has been prepared in advance, when the level
-  // was read in.
-  //
-  for ( i = 0 ; i < MAX_DOORS_ON_LEVEL ; i ++ )
+  for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
     {
-      doorx = ( DoorLevel -> doors [ i ] . x );
-      doory = ( DoorLevel -> doors [ i ] . y );
+      doorx = (CurLevel->doors[i].x);
+      doory = (CurLevel->doors[i].y);
 
-      // no more doors?
-      if ( ( doorx == 0 ) && ( doory == 0 ) )
+      /* Keine weiteren Tueren */
+      if (doorx == 0 && doory == 0)
 	break;
 
-      Pos = & ( DoorLevel -> map [doory] [doorx] ) ;
+      Pos = &(CurLevel->map[doory][doorx]);
 
-      //--------------------
-      // First we see if one of the players is close enough to the
-      // door, so that it would get opened.
-      //
-      one_player_close_enough = FALSE;
-      for ( PlayerIndex = 0 ; PlayerIndex < MAX_PLAYERS ; PlayerIndex ++ )
+      // NORMALISATION doorx = doorx * Block_Width + Block_Width / 2;
+      // NORMALISATION doory = doory * Block_Height + Block_Height / 2;
+
+      /* first check Influencer gegen Tuer */
+      xdist = Me.pos.x - doorx;
+      ydist = Me.pos.y - doory;
+      dist2 = xdist * xdist + ydist * ydist;
+
+      if (dist2 < DOOROPENDIST2)
 	{
-	  //--------------------
-	  // Maybe this player is on a different level, than we are 
-	  // interested now.
-	  //
-	  if ( Me [ PlayerIndex ] . pos . z != DoorLevel -> levelnum ) continue;
-
-	  //--------------------
-	  // But this player is on the right level, we need to check it's distance 
-	  // to this door.
-	  //
-	  xdist = Me [ PlayerIndex ] . pos . x - doorx ;
-	  ydist = Me [ PlayerIndex ] . pos . y - doory ;
-	  dist2 = xdist * xdist + ydist * ydist ;
-	  if ( dist2 < DOOROPENDIST2 )
-	    {
-	      one_player_close_enough = TRUE ;
-	    }
-	}
-
-      // --------------------
-      // If one of the players is close enough, the door gets opened
-      // and we are done.
-      //
-      if ( one_player_close_enough )
-	{
-	  if ( (*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE) )
+	  if ((*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE))
 	    *Pos += 1;
 	}
-      else 
+      else
 	{
-	  //--------------------
-	  // But if the influencer is not close enough, then we must
-	  // see if perhaps one of the enemys is close enough, so that
-	  // the door would still get opened instead of closed.
-	  //
-	  // for (j = 0; j < NumEnemys; j++)
+	  /* alle Enemys checken */
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if ( ( AllEnemys[j].Status == OUT ) ||
-		   ( AllEnemys[j].pos.z  != DoorLevel->levelnum ) )
+	      if (AllEnemys[j].Status == OUT ||
+		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 
-	      xdist = abs ( AllEnemys[j].pos.x - doorx ) ;
+	      xdist = abs (AllEnemys[j].pos.x - doorx);
 	      if (xdist < Block_Width)
 		{
 		  ydist = abs (AllEnemys[j].pos.y - doory);
@@ -2614,23 +1740,20 @@ MoveLevelDoors ( int PlayerNum )
 
 	}			/* else */
     }				/* for */
-}; // void MoveLevelDoors ( void )
+}				/* MoveLevelDoors */
 
-/* ----------------------------------------------------------------------
- * This function checks if the given position is passable for a droid,
- * i.e. if there is enough space to the left right up and down, so that
- * a droids center might be at this point without colliding with a wall.
- *
- * In case of a door, the direction into which the influencer has to
- * be moved in order to 'glide' through the door will be returned.
- *
- * In case of an inpassable location, a value of (-1) will be returned.
- *
- * In case of a completely passable location, the CENTER constant will
- * be returned.
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: 	int DruidPassable(int x, int y) - prueft, ob Pos x/y fuer
+Druid passierbar ist, liefert Richtungswerte, falls
+der Druid von einer Tuer "weggestossen" wird
+
+@Ret: 	-1:		Not passable
+Direction:  Druid in Richtung Direction wegschubsen
+CENTER:		Position passable
+* $Function----------------------------------------------------------*/
 int
-DruidPassable ( float x , float y , int z )
+DruidPassable (float x, float y)
 {
   finepoint testpos[DIRECTIONS + 1];
   int ret = -1;
@@ -2657,7 +1780,7 @@ DruidPassable ( float x , float y , int z )
   for (i = 0; i < DIRECTIONS; i++)
     {
 
-      ret = IsPassable ( testpos[i].x , testpos[i].y , z , i );
+      ret = IsPassable (testpos[i].x, testpos[i].y, i);
 
       if (ret != CENTER)
 	break;
@@ -2665,32 +1788,34 @@ DruidPassable ( float x , float y , int z )
     }				/* for */
 
   return ret;
+}				// int DruidPassable(int x, int y)
 
-}; // int DruidPassable( ... )
 
-/* ---------------------------------------------------------------------- 
- * This function checks if a given location lies within a wall or not.
- * The location given is like the center of a droid and the 'Checkpos'
- * refers to if the left or right or up or down borders of the droid
- * should be compared for wall collisions.
- *
- * In case of CENTER given as checkpos, no such shift is done but only
- * the collision situation at the given coordinates is returned.
- *
- * A return value of CENTER means that the location is passable in that sense.
- * while any directions and (-1) indicate that it is not so and in case
- * of a direction returned, it's the direction into which the droid
- * should be pushed to resolve the collision (with a door).
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: IsPassable(int x, int y, int Checkpos):
+prueft, ob der Punkt x/y passierbar ist
+Checkpos: Falls Druid gecheckt wird: aktuelle Check-position
+Checkpos = CENTER means: No Druid check
+			
+@Ret: CENTER: 	TRUE
+Directions + (-1) : FALSE
+
+Directions mean Push Druid if it is one, else is's not passable
+@Int:
+* $Function----------------------------------------------------------*/
 int
-IsPassable ( float x , float y , int z , int Checkpos)
+IsPassable (float x, float y, int Checkpos)
 {
   float fx, fy;
   unsigned char MapBrick;
   int ret = -1;
-  Level PassLevel = curShip . AllLevels [ z ] ;
 
-  MapBrick = GetMapBrick ( PassLevel , x , y ) ;
+  MapBrick = GetMapBrick (CurLevel, x, y);
+
+  //NORMALISATION  fx = x % Block_Width;
+  //NORMALISATION  fy = y % Block_Height;
+  // fx = x - rintf(x);
+  // fy = y - rintf(y);
 
   // ATTENTION!  
   // With the new coodinates, the position of the Influencer is an integer,
@@ -2714,10 +1839,6 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
-    case CONVEY_L:
-    case CONVEY_D:
-    case CONVEY_R:
-    case CONVEY_U:
     case TELE_1:
     case TELE_2:
     case TELE_3:
@@ -2733,65 +1854,57 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case KONSOLE_L:
-    case CODEPANEL_L:
-    case IDENTIFY_L:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fx < WALLPASS) || ( fx > ( 1 - KONSOLEPASS_X ) ) )
+      //NORMALISATION      if (fx > (Block_Width - KONSOLEPASS_X))
+      if (fx > (1 - KONSOLEPASS_X))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case KONSOLE_R:
-    case CODEPANEL_R:
-    case IDENTIFY_R:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fx < KONSOLEPASS_X) || (fx > 1 - WALLPASS) ) 
+      if (fx < KONSOLEPASS_X)
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case KONSOLE_O:
-    case CODEPANEL_U:
-    case IDENTIFY_U:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fy < WALLPASS) || (fy > ( 1 - KONSOLEPASS_Y )) )
+      //NORMALISATION if (fy > (Block_Height - KONSOLEPASS_Y))
+      if (fy > (1 - KONSOLEPASS_Y))
 	ret = CENTER;
       else
 	ret = -1;
       break;
-
 
     case KONSOLE_U:
-    case CODEPANEL_D:
-    case IDENTIFY_D:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fy < KONSOLEPASS_Y) || (fy > 1 - WALLPASS) )
+      if (fy < KONSOLEPASS_Y)
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
-
-
     case H_WALL:
+      //NORMALISATION if ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -2799,6 +1912,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case V_WALL:
+      //NORMALISATION if ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))
       if ((fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -2806,7 +1920,9 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case ECK_RO:
+      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy < WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
+	  //NORMALISATION ((fx < WALLPASS) && (fy > Block_Height - WALLPASS)))
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -2814,6 +1930,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case ECK_RU:
+      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy > Block_Height - WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -2822,7 +1939,9 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case ECK_LU:
+      //NORMALISATION if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
+	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy < WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
       else
@@ -2831,6 +1950,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case ECK_LO:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
+	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy > Block_Height - WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -2839,7 +1959,9 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case T_O:
       if ((fy < WALLPASS) ||
+	  //NORMALISATION ((fy > Block_Height - WALLPASS) &&
 	  ((fy > 1 - WALLPASS) &&
+	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2847,8 +1969,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_R:
+      //NORMALISATION if ((fx > Block_Width - WALLPASS) ||
       if ((fx > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) &&
+	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2856,8 +1980,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_U:
+      //NORMALISATION if ((fy > Block_Height - WALLPASS) ||
       if ((fy > 1 - WALLPASS) ||
 	  ((fy < WALLPASS) &&
+	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2866,7 +1992,9 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case T_L:
       if ((fx < WALLPASS) ||
+	  //NORMALISATION ((fx > Block_Width - WALLPASS) &&
 	  ((fx > 1 - WALLPASS) &&
+	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2883,26 +2011,28 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}
     case H_HALBTUERE1:
     case H_ZUTUERE:
-    case LOCKED_H_ZUTUERE:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
 	  break;
 	}
 
-      // check if the unpassable part of the door has been collided with
+      /* pruefen, ob Rand der Tuer angefahren */
+      //NORMALISATION if (((fx < H_RANDBREITE) || (fx > (Block_Width - H_RANDBREITE)))
       if (((fx < H_RANDBREITE) || (fx > (1 - H_RANDBREITE)))
+	  //NORMALISATION && ((fy >= H_RANDSPACE) && (fy <= (Block_Height - H_RANDSPACE))))
 	  && ((fy >= H_RANDSPACE) && (fy <= (1 - H_RANDSPACE))))
 	{
-	  // in case of check for droids passable only, push direction will be returned
+	  /* DRUIDS: Nur bei Fahrt durch Tuer wegstossen */
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
-	      && (Me[0].speed.y != 0))
+	      && (Me.speed.y != 0))
 	    {
 	      switch (Checkpos)
 		{
 		case RECHTSOBEN:
 		case RECHTSUNTEN:
 		case RECHTS:
+		  //NORMALISATION if (fx > Block_Width - H_RANDBREITE)
 		  if (fx > 1 - H_RANDBREITE)
 		    ret = LINKS;
 		  else
@@ -2920,19 +2050,20 @@ IsPassable ( float x , float y , int z , int Checkpos)
 		  ret = -1;
 		  break;
 		}		/* switch Checkpos */
-	    }			/* if DRUID && Me[0].speed.y != 0 */
+	    }			/* if DRUID && Me.speed.y != 0 */
 	  else
 	    ret = -1;
-	} // if side of the door has been collided with...
+	}			/* if Rand angefahren */
       else
-	{			// directily in the door
+	{			/* mitten in der Tuer */
 	  if ((MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
-	    ret = CENTER;	// door open
+	    ret = CENTER;	/* Tuer offen */
+	  //NORMALISATION else if ((fy < TUERBREITE) || (fy > Block_Height - TUERBREITE))
 	  else if ((fy < TUERBREITE) || (fy > 1 - TUERBREITE))
-	    ret = CENTER;	// door closed, but not entirely in
+	    ret = CENTER;	/* Tuer zu, aber noch nicht ganz drin */
 	  else
-	    ret = -1;		// closed door
-	}			// directly in the door
+	    ret = -1;		/* an geschlossener tuer */
+	}			/* else Mitten in der Tuer */
 
       break;
     case V_GANZTUERE:
@@ -2945,21 +2076,22 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}
     case V_HALBTUERE1:
     case V_ZUTUERE:
-    case LOCKED_V_ZUTUERE:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
 	  break;
 	}
 
-      // check if the side of the door has been collided with...
+      /* pruefen , ob Rand der Tuer angefahren */
+      //NORMALISATION if ((fy < V_RANDBREITE || fy > (Block_Height - V_RANDBREITE)) &&
       if ((fy < V_RANDBREITE || fy > (1 - V_RANDBREITE)) &&
+	  //NORMALISATION (fx >= V_RANDSPACE && fx <= (Block_Width - V_RANDSPACE)))
 	  (fx >= V_RANDSPACE && fx <= ( 1 - V_RANDSPACE)))
 	{
 
-	  // only for droids: check if droid needs to be pushed back and return push direction
+	  /* DRUIDS: bei Fahrt durch Tuer wegstossen */
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
-	      && (Me[0].speed.x != 0))
+	      && (Me.speed.x != 0))
 	    {
 	      switch (Checkpos)
 		{
@@ -2974,6 +2106,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 		case RECHTSUNTEN:
 		case LINKSUNTEN:
 		case UNTEN:
+		  //NORMALISATION if (fy > Block_Height - V_RANDBREITE)
 		  if (fy > 1 - V_RANDBREITE)
 		    ret = OBEN;
 		  else
@@ -2983,19 +2116,20 @@ IsPassable ( float x , float y , int z , int Checkpos)
 		  ret = -1;
 		  break;
 		}		/* switch Checkpos */
-	    }			/* if DRUID && Me[0].speed.x != 0 */
+	    }			/* if DRUID && Me.speed.x != 0 */
 	  else
 	    ret = -1;
-	}			// if side of door has been collided with...
+	}			/* if Rand angefahren */
       else
-	{			// directly in the door center
+	{			/* mitten in die tuer */
 	  if ((MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3))
-	    ret = CENTER;	// open door
+	    ret = CENTER;	/* Tuer offen */
+	  //NORMALISATION else if ((fx < TUERBREITE) || (fx > Block_Width - TUERBREITE))
 	  else if ((fx < TUERBREITE) || (fx > 1 - TUERBREITE))
-	    ret = CENTER;	// closed door, but not entirely there
+	    ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
 	  else
-	    ret = -1;		// closed door
-	}			// else directly in the center of the door
+	    ret = -1;		/* an geschlossener Tuer */
+	}			/* else Mitten in der Tuer */
 
       break;
 
@@ -3006,17 +2140,17 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
   return ret;
 
-}; // int IsPassable ( ... )
+}				/* IsPassable */
 
-/* ----------------------------------------------------------------------
- * This function determines wether a given object on x/y is visible to
- * the 001 or not (due to some walls or something in between
- * 
- * Return values are TRUE or FALSE accodinly
- *
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: 	IsVisible(): determines wether object on x/y is visible to
+	the 001 or not
+@Ret: TRUE/FALSE
+@Int:
+* $Function----------------------------------------------------------*/
 int
-IsVisible ( GPS objpos , int PlayerNum )
+IsVisible (Finepoint objpos)
 {
   float a_x;		/* Vector Influencer->objectpos */
   float a_y;
@@ -3025,20 +2159,11 @@ IsVisible ( GPS objpos , int PlayerNum )
   float a_len;			/* Lenght of a */
   int i;
   finepoint testpos;
-  double influ_x = Me [ PlayerNum ] . pos . x ;
-  double influ_y = Me [ PlayerNum ] . pos . y ;
+  double influ_x = Me.pos.x;
+  double influ_y = Me.pos.y;
 
-  DebugPrintf (2, "\nint IsVisible ( ... ) : real function call confirmed.");
+  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
-  //--------------------
-  // If the object and this player are on different levels, we
-  // don't need to check anything.
-  //
-  if ( objpos -> z != Me [ PlayerNum ] . pos . z ) return FALSE;
-
-  //--------------------
-  // Otherwise we have to check visibility...
-  //
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;
 
@@ -3054,23 +2179,22 @@ IsVisible ( GPS objpos , int PlayerNum )
   testpos.x = objpos->x;
   testpos.y = objpos->y;
 
-  for (i = 0; i < step_num + 1 ; i++)
+  for (i = 0; i < step_num; i++)
     {
-
-      if ( IsPassable ( testpos.x , testpos.y , objpos->z , LIGHT ) != CENTER)
-	{
-	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
-	  return FALSE;
-	}
 
       testpos.x += step.x;
       testpos.y += step.y;
 
+      if (IsPassable (testpos.x, testpos.y, LIGHT) != CENTER)
+	{
+	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
+	  return FALSE;
+	}
     }
   DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 
   return TRUE;
-}; // int IsVisible( Point objpos )
+}				// int IsVisible(Point objpos)
 
 
 #undef _map_c

@@ -884,7 +884,7 @@ InitPictures (void)
   DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
 
   // FIXME: just TESTING white-noise function here!!
-  white_noise (ne_screen, &User_Rect);
+  //  white_noise (ne_screen, &User_Rect);
   // FIXME
 
   SetCurrentFont (FPS_Display_BFont);
@@ -1369,22 +1369,26 @@ Sorry...\n\
 // display "white noise" effect in Rect.
 // algorith basically stolen from 
 // Greg Knauss's "xteevee" hack in xscreensavers.
+//
+// timeout is in ms
 //------------------------------------------------------------
 #define NOISE_COLORS 6
-#define NOISE_TILES 16
+#define NOISE_TILES 8
 
 void
-white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
+white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 {
   int i;
   int x, y;
-  int signal_strengh = 50;
+  int signal_strengh = 60;
   Uint32 grey[NOISE_COLORS];
   Uint8 color;
   SDL_Surface *tmp, *tmp2;
   SDL_Surface *noise_tiles[NOISE_TILES];
   char used_tiles[NOISE_TILES/2+1];
   int next_tile;
+  int now;
+  bool finished;
 
   for (i=0; i< NOISE_COLORS; i++)
     { 
@@ -1397,8 +1401,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
   tmp2 = SDL_DisplayFormat (tmp);
   free(tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
-  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, 
-	      "Preparing noise-tiles ");
+  //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
   for (i=0; i< NOISE_TILES; i++)
     {
       noise_tiles[i] = SDL_DisplayFormat(tmp2);
@@ -1408,7 +1411,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
 	  if (random()%100 > signal_strengh)
 	    PutPixel (noise_tiles[i], x, y, grey[random()%NOISE_COLORS]);
 
-      printf_SDL (ne_screen, -1, -1, " %d", i+1);
+      //      printf_SDL (ne_screen, -1, -1, " %d", i+1);
       //      SDL_BlitSurface (noise_tiles[i], NULL, ne_screen, rect);
       //      SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
     }
@@ -1416,7 +1419,9 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
 
   memset(used_tiles,-1, sizeof(used_tiles));
   // let's go
-  while (!SpacePressed ())
+  now = SDL_GetTicks();
+  
+  while (!finished)
     {
       // pick an old enough tile
       do
@@ -1438,7 +1443,11 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
       SDL_BlitSurface (noise_tiles[next_tile], NULL, ne_screen, rect);
       SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
       usleep(25000);
-    }
+
+      if (SpacePressed () || (timeout && (SDL_GetTicks()-now > timeout)))
+	finished = TRUE;
+
+    } // while (! finished)
 
   for (i=0; i<NOISE_TILES; i++)
     free(noise_tiles[i]);

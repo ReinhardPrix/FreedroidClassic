@@ -40,10 +40,6 @@
 #include "ship.h"
 
 
-/* Scroll- Fenster */
-#define SCROLLSTARTX		USERFENSTERPOSX
-#define SCROLLSTARTY		SCREENHEIGHT
-
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
@@ -1283,7 +1279,8 @@ Title ( char *MissionBriefingPointer )
       // DebugPrintf (1, "\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
       fflush(stdout);
       
-      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
+      ScrollText ( PreparedBriefingText, User_Rect.x, User_Rect.y + User_Rect.h -10, 
+		   ScrollEndLine , TitlePictureName ); 
       free ( PreparedBriefingText );
     }
 
@@ -1319,14 +1316,15 @@ EndTitle (void)
   // SetCurrentFont( FPS_Display_BFont );
   SetCurrentFont( Para_BFont );
 
-  ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_FILE );
+  ScrollText ( DebriefingText , User_Rect.x, User_Rect.y+User_Rect.h-10, 
+	       ScrollEndLine , NE_TITLE_PIC_FILE );
 
   while ( SpacePressed() );
 
 } /* EndTitle() */
 
 /*@Function============================================================
-@Desc: Diese Funktion Sprengt den Influencer und beendet das Programm
+@Desc: Show end-screen 
 
 @Ret: 
 @Int:
@@ -1334,35 +1332,30 @@ EndTitle (void)
 void
 ThouArtDefeated (void)
 {
-  int j;
   int now;
 
-  DebugPrintf (2, "\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status = TERMINATED;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 
   now=SDL_GetTicks();
 
-  while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
+  while ( SDL_GetTicks() - now < WAIT_AFTER_KILLED)
     {
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();
-      MoveEnemys ();
-
-      for (j = 0; j < MAXBULLETS; j++)
-	CheckBulletCollisions (j);
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
     }
-
+  
+  white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
+  
   update_highscores ();
 
   GameOver = TRUE;
 
-  DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
-  DebugPrintf (1, "\n\n DefeatedDone \n\n");
-}; // void ThouArtDefeated(void)
+  return;
+} // void ThouArtDefeated(void)
 
 /*@Function============================================================
 @Desc: 

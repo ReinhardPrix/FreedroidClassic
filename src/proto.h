@@ -154,7 +154,7 @@ EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect);
+EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
 /* map.c */
 #undef EXTERN
 #ifdef _map_c
@@ -382,6 +382,7 @@ EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
+EXTERN void show_droid_info (int droidtype, int page);
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (void);
 
