@@ -25,10 +25,15 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
+  (wird sowieso automatisch behoben bzw. automatisch umgestellt, 
+  wenn wir mit der neuen Engine dann auf TrueColor-Modus umstellen.
 
 - hide mouse pointer
+  (would that really be a good idea?)
 
 - level 11: console rechts unten ist verkehrt
+  (wird leicht zu beheben sein, sobald das Abspeichern von maps aus
+  dem neuen MapEditor funktioniert.)
 
 - (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
 
