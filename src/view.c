@@ -171,11 +171,11 @@ Assemble_Combat_Picture (int mask)
   SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  for (line = 0; line < CurLevel->ylen ; line++)
+  for (line = -5; line < CurLevel->ylen + 5; line++)
     {
-      for (col = 0; col < CurLevel->xlen ; col++)
+      for (col = -5; col < CurLevel->xlen + 5; col++)
 	{
-	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
+	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
 	    {
 	      TargetRectangle.x = USER_FENSTER_CENTER_X 
 		+ ( -Me.pos.x+col-0.5 )*Block_Width;

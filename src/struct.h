@@ -241,8 +241,8 @@ typedef struct
   byte empty;
   unsigned int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
-  unsigned int xlen;		/* X dimension */
-  unsigned int ylen;
+  int xlen;		/* X dimension */
+  int ylen;
   unsigned int color;
   char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];

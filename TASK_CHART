@@ -11,32 +11,22 @@ jp
 
 The list of things I'm going to work on next:
 
-(?)  delete that old InternWindow crap from all our code!!
+1.  delete old INTERNBREITE and INTERNHOEHE crap, since this structure really
+    is an artifact from good old MS-DOS time.
 
-(?)  delete that old RealScreen crap from all the code!!
+(?) Try to introduce an external file for game constants so that mods can be
+    made without looking into the code.
 
-(?)  delete old INTERNBREITE and INTERNHOEHE crap
-
-(?)  Ein dat file verwenden fuer die Anfangstexte
-
-(?)  Ein dat file verwenden fuer die Roboterdaten und Roboterbildfilenamen
-
-(?)  Ein dat file verwenden fuer die Schussstaerken und Schussbildfilenamen
-
-(?)  Ein dat file verwenden fuer die Blastdaten und die Blastbildfilenamen 
+(?) Try to introduce an external file for robot description so that mods can be
+    made without looking into the code.
 
 (?)  write dokumentation about the new format for levels and maps.
 
-(?)  Read more about SDL_net &&  Add networking support
+(?)  LATER: Read more about SDL_net &&  Add networking support
 
-3. Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
+(?) Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
    this.  This will be good to for later, if someone designs new and better animated
    bullets with multiple pictures in EACH direction.
-
-4. Add more documentation concerning framerate calculation
-
-((?))  write a new format for levels and maps.
-
 
 rp
 --
