@@ -30,7 +30,9 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 This is the 'Richard' (RMS) character.  Currently he's positioned right inside the guardhouse.  He is the administrator of the computer cluster of the red guard.
+
 
 
 END OF AUTORS NOTES
@@ -52,7 +54,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="A computer cluster?  What's that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="A cluster is a collection of litterally thousands of normal computers into a whole new entity."
+Subtitle="A cluster is a collection of literally thousands of normal computers into a whole new entity."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It can be used to perform the most complex of operations in comparatively little time, provided suitable methods for analyzing the data are used."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -102,10 +104,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="I have a data cube with confidential cruicial information on the colony installations "
+New Option Nr=6  OptionText="I have a data cube with confidential crucial information on the colony installations "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="Interesting.  Let me see this thing.  Wow, the amount of data is incredible.  Maybe we could use our cluster to evalute the data."
+Subtitle="Interesting.  Let me see this thing.  Wow, the amount of data is incredible.  Maybe we could use our cluster to evaluate the data."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Hey, what's that.  The data are already prepared for processing by a cluster like ours.  Wow!  That's good work!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -114,6 +116,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:7"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:100"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -141,7 +144,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
 Subtitle="Yes, of course.  Some preliminary results are there and they look most interesting.  I'll have to inform the chief about this."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You'll want to talk with him.  He'll know what to do.  Thanks a lot for your efforts.  This might in fact be cruical information for our survival."
+Subtitle="You'll want to talk with him.  He'll know what to do.  Thanks a lot for your efforts.  This might in fact be crucial information for our survival."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

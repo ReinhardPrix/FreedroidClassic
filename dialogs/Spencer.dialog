@@ -33,6 +33,8 @@ BEGIN OF AUTORS NOTES
 This character is "SPENCER", one of the most important characters of old town.
 His most important features are, that he can check through for quests done and maybe bring you into the Town Guard.
 
+
+
 END OF AUTORS NOTES
 
 
@@ -257,7 +259,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=723  PositionY=374  
-Subtitle="From Butch I hear you've become a novice arena master.  Contratulations from me too."
+Subtitle="From Butch I hear you've become a novice arena master.  Congratulations from me too."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=21 ElseGoto=21
@@ -319,7 +321,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=25  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=928  PositionY=374  
-Subtitle="But most importantly, I was very much impressed whith you when you cleared out the warehouse.  That was a huge deed I will never forget."
+Subtitle="But most importantly, I was very much impressed with you when you cleared out the warehouse.  That was a huge deed I will never forget."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=27 ElseGoto=27
@@ -347,12 +349,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=28  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=788  PositionY=112  
-Subtitle="Ok.  Your list of achievements is long enough.  You can join us.  So I hereby declare you a member of the town guard."
+PositionX=473  PositionY=290  
+Subtitle="OK.  Your list of achievements is long enough.  You can join us.  So I hereby declare you a member of the town guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But now that you are in the guard, know this:  There is only one rule for us guards:  We stick together.  We survive together or we die together.  But we'll do it together."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now you might want to inspect the guard house.  Tell Tybalt to open the door for you.  Lukas at the arms counter shall give you your armour."
+Subtitle="And now you might want to inspect the guard house.  Tell Tybalt to open the door for you.  Lukas at the arms counter shall give you your armor."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I hope you will continue to prove yourself a worthy member of the guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -367,7 +369,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=29  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=992  PositionY=303  
+PositionX=1060  PositionY=418  
 ChangeOption=29 ChangeToValue=0
 OnCondition="OldTownMissionScoreAtLeast:30" JumpToOption=30 ElseGoto=31
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -376,7 +378,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=30  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=924  PositionY=222  
+PositionX=1107  PositionY=373  
 Subtitle="All in all, not quite so bad.  But you still need to do the one thing or the other.  Then we can talk about it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
@@ -386,7 +388,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=31  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=1012  PositionY=219  
+PositionX=1095  PositionY=469  
 Subtitle="I can't accept you into the guard like this.  Get going.  There are still many things to do for you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
@@ -408,13 +410,112 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=33  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=312  PositionY=321  
-Subtitle="This is not so easy.  At first you must establish a repultation around here.  Ask around, talk to people and build your reputation."
+Subtitle="This is not so easy.  At first you must establish a reputation around here.  Ask around, talk to people and build your reputation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Once you're a known character around here, we might let you join the ranks of the guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=1
 ChangeOption=33 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=34  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=160  PositionY=540  
+ChangeOption=34 ChangeToValue=0
+OnCondition="MissionComplete:7" JumpToOption=35 ElseGoto=36
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=35  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=219  PositionY=509  
+ChangeOption=35 ChangeToValue=0
+ChangeOption=37 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=36  OptionText="DO REALLY NOTHING"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=218  PositionY=640  
+ChangeOption=36 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=37  OptionText="I've heard Richard obtained new information on the colony."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=289  PositionY=512  
+Subtitle="Yes, that's right and in fact it might be crucial.  The data on the cube he obtained indicates the existence of a secret experimental facility on this world."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our findings suggest, that they were testing some new form of disruptor shield, but research was finally discontinued, because of the side effects of the shield."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If the information is true, then the shield interfered with the positioning system of all bots and made them wander off."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now that seems like a gift of heaven.  We'll need to activate the shield, if that is still possible, and save the colony for good."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=37 ChangeToValue=0
+ChangeOption=38 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=38  OptionText="I'd like to participate in this operation."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=371  PositionY=529  
+Subtitle="That's most kind of you to volunteer.  So far, I've sent two scouts into the area.  They have found the facility entrance and unlocked the gate."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="That is in fact a good sign, because it shows that the key combinations in the data were correct."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="However, we've lost contact to them shortly after they went inside.  Also they reported heavy bot resistance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'd be glad if you could take a look.  But use outmost care.  We can't afford to use another guard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=38 ChangeToValue=0
+ChangeOption=39 ChangeToValue=1
+ChangeOption=40 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=39  OptionText="OK.  I'll be careful.  But I'll do it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=464  PositionY=510  
+Subtitle="Good.  The base entrance is somewhat hidden in the caves to the northwest.  Best use the north gate out of town, then head west."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I wish you the best of luck for this operation.  It might be that our survival depends on it.  Don't wait for assistance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Try to activate the disruptor shield if you can. The control unit should be somewhere on the lowest level of this installation."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=39 ChangeToValue=0
+ChangeOption=40 ChangeToValue=0
+DoSomethingExtra="AssignMission:8"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_disruptor_base_gate"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText="I don't feel like doing it now.  I'll rather prepare some more."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=462  PositionY=578  
+Subtitle="Good.  You should be well prepared if you intend to go."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Also there is no need to hurry with this.  After all, the installation is not running away, so best take a slow approach."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=72  PositionY=579  
+ChangeOption=41 ChangeToValue=0
+OnCondition="MissionAssigned:8" JumpToOption=36 ElseGoto=34
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
