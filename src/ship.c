@@ -280,6 +280,64 @@ ShowLifts (int level, int liftrow)
  * code, else just say no and logoff.
  * ----------------------------------------------------------------------*/
 void
+EnterItemIdentificationBooth (void)
+{
+  int map_x;
+  int map_y;
+  int Codepanel_Index;
+  int Weiter=FALSE;
+  char* RequestString;
+  SDL_Surface* Background;
+  SDL_Rect Chat_Window;
+
+  while (SpacePressed());
+  
+  Chat_Window.x=242;
+  Chat_Window.y=100;
+  Chat_Window.w=380;
+  Chat_Window.h=314;
+
+  //--------------------
+  // First we arrange the background, so that everything looks fine,
+  // similar as in the DroidChat.
+  //
+
+  Activate_Conservative_Frame_Computation( );
+  Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    {
+      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      Terminate(ERR);
+    }
+
+  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+  SDL_Flip( ne_screen );
+  
+  SetCurrentFont( Para_BFont );
+
+  DisplayTextWithScrolling ( 
+			    "United Machines Corporation Item Identification Booth\n\nItems: " , 
+			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+
+  //--------------------
+  // Now we read in the code the user has.
+  //
+
+  while ( !Weiter )
+    {
+      RequestString = GetChatWindowInput( Background , &Chat_Window );
+      Weiter = TRUE;
+
+    }
+}; // void EnterItemIdentificationBooth( void );
+
+/* ----------------------------------------------------------------------
+ * This function does all the codepanel duties, like bring up the 
+ * codepanel screen, ask for a number, compare it to the real codepanel
+ * number and unlock the door/perform the desired action upon right
+ * code, else just say no and logoff.
+ * ----------------------------------------------------------------------*/
+void
 EnterCodepanel (void)
 {
   int map_x;

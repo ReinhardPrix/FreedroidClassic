@@ -383,6 +383,7 @@ EXTERN int ClassOfDruid (int druidtype);
 #endif
 EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
+EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);
 EXTERN void EnterKonsole (void);
 EXTERN void AlleLevelsGleichFaerben (void);

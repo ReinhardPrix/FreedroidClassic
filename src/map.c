@@ -203,6 +203,17 @@ ActSpecialField (float x, float y)
 	}
       break;
 
+    case IDENTIFY_R:
+    case IDENTIFY_L:
+    case IDENTIFY_D:
+    case IDENTIFY_U:
+      if (Me.status == TRANSFERMODE)
+	{
+	  EnterItemIdentificationBooth ( );
+	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	}
+      break;
+
 
     case REFRESH1:
     case REFRESH2:
@@ -2172,6 +2183,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case KONSOLE_L:
     case CODEPANEL_L:
+    case IDENTIFY_L:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2186,6 +2198,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case KONSOLE_R:
     case CODEPANEL_R:
+    case IDENTIFY_R:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2199,6 +2212,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case KONSOLE_O:
     case CODEPANEL_U:
+    case IDENTIFY_U:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2213,6 +2227,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case KONSOLE_U:
     case CODEPANEL_D:
+    case IDENTIFY_D:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
