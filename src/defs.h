@@ -409,6 +409,7 @@ enum _non_player_characters
     PERSON_BENJAMIN,
     PERSON_BENDER,
     PERSON_SPENCER,
+    PERSON_BUTCH,
     PERSON_DARWIN,
     PERSON_DOC_MOORE,
     PERSON_MELFIS,

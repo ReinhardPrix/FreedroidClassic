@@ -186,6 +186,51 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 //--------------------
+// Now we do the connection from camp to novice bot arena and back
+// in the following two events...
+//
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=29 Y=22 Lev=0
+Use map location from map label="NoviceArenaTeleporter"
+Event Action to be triggered by this trigger="teleport_from_camp_to_novice_arena"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=10 Y=3 Lev=6
+Use map location from map label="NoviceArenaTeleportOutPoint"
+Event Action to be triggered by this trigger="teleport_from_novice_arena_to_camp"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+//--------------------
+// Now we do the connection from camp to master bot arena and back
+// in the following two events...
+//
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=29 Y=22 Lev=0
+Use map location from map label="MasterArenaTeleporter"
+Event Action to be triggered by this trigger="teleport_from_camp_to_master_arena"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=10 Y=3 Lev=6
+Use map location from map label="MasterArenaTeleportOutPoint"
+Event Action to be triggered by this trigger="teleport_from_master_arena_to_camp"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+
+
+
+//--------------------
 // Now we do the connection from Sundabar to the MS abandoned cargo and back
 // in the following two events...
 //
@@ -227,6 +272,26 @@ Delete the event trigger after it has been triggered=-1
 +++
 +++ Now we define ACTIONS, that can be triggered by triggers
 +++
+
+* Start of an Event Action Subsection *
+Action label for this action="open_novice_arena_exit_door"
+Mapchange at X=4 Y=7 Lev=2 to new value=27
+Use map label for map change location="NoviceArenaExitDoor"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Thanks for unlocking the door!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="open_master_arena_exit_door"
+Mapchange at X=4 Y=7 Lev=2 to new value=27
+Use map label for map change location="MasterArenaExitDoor"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Thanks for unlocking the door!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
 Action label for this action="open_barrier"
@@ -397,10 +462,30 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="unlock_northern_maintainance_door"
 Mapchange at X=29 Y=24 Lev=0 to new value=18
-Use map label for map change location="NorthernMaintainanceDoor" "NO_LABEL_DEFINED_YET" 
+Use map label for map change location="NorthernMaintainanceDoor" 
 Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="The northern maintainance acces is no unlocked...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="unlock_novice_arena_access_door"
+Mapchange at X=29 Y=24 Lev=0 to new value=27
+Use map label for map change location="NoviceArenaAccessDoor" 
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Novice Arena Access Door unlocked..."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="unlock_master_arena_access_door"
+Mapchange at X=29 Y=24 Lev=0 to new value=27
+Use map label for map change location="MasterArenaAccessDoor" 
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Master Arena Access Door unlocked...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
@@ -426,6 +511,56 @@ Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=23 TelLev=0
 Use map label for teleport target="NorthernMaintainanceTeleporterReturn"
 Action is Influencer say="Arrived back at camp from north maintainance...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+//--------------------
+// Now we enter the connection actions (teleporting) from
+// the novice arena back to the camp and vice versa
+//
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_camp_to_novice_arena"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=10 TelY=2 TelLev=6
+Use map label for teleport target="NoviceArenaTeleportInPoint"
+Action is Influencer say="Arrived at novice arena...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_novice_arena_to_camp"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=29 TelY=23 TelLev=0
+Use map label for teleport target="NoviceArenaTeleporterReturn"
+Action is Influencer say="Arrived back at camp from novice arena...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+//--------------------
+// Now we enter the connection actions (teleporting) from
+// the master arena back to the camp and vice versa
+//
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_camp_to_master_arena"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=10 TelY=2 TelLev=6
+Use map label for teleport target="MasterArenaTeleportInPoint"
+Action is Influencer say="Arrived at master arena...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_master_arena_to_camp"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=29 TelY=23 TelLev=0
+Use map label for teleport target="MasterArenaTeleporterReturn"
+Action is Influencer say="Arrived back at camp from master arena...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 

@@ -120,6 +120,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
   if ( strcmp ( SectionName , "Bender" ) == 0 ) return PERSON_BENDER;
   if ( strcmp ( SectionName , "Spencer" ) == 0 ) return PERSON_SPENCER;
+  if ( strcmp ( SectionName , "Butch" ) == 0 ) return PERSON_BUTCH;
   if ( strcmp ( SectionName , "Darwin" ) == 0 ) return PERSON_DARWIN;
   if ( strcmp ( SectionName , "Duncan" ) == 0 ) return PERSON_DUNCAN;
   if ( strcmp ( SectionName , "Doc Moore" ) == 0 ) return PERSON_DOC_MOORE;

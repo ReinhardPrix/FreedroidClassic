@@ -155,12 +155,12 @@ HandleBannerMouseClick( void )
   if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
     {
       if ( FirstBlock > 3 ) FirstBlock-= 4;
-      DebugPrintf ( 0 , "\nBlocks should be scrolling now, if apprpirate..." );
+      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if apprpirate..." );
     }
   if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
     {
       if ( FirstBlock < NUM_MAP_BLOCKS -4 ) FirstBlock+= 4;
-      DebugPrintf ( 0 , "\nBlocks should be scrolling now, if apprpirate..." );
+      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if apprpirate..." );
     }
 
   for ( i = 0 ; i < 9 ; i ++ ) 

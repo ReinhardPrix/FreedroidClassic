@@ -1503,6 +1503,7 @@ GetQuestList ( char* QuestListFilename )
   char* ActionLabel;
   char* MissionTargetPointer;
   char* fpath;
+  char InnerPreservedLetter=0;
 
 #define MISSION_TARGET_SUBSECTION_START_STRING "** Start of this mission target subsection **"
 #define MISSION_TARGET_SUBSECTION_END_STRING "** End of this mission target subsection **"
@@ -1544,12 +1545,17 @@ GetQuestList ( char* QuestListFilename )
       Me[0].AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
     }
 
-
-
   MissionTargetIndex = 0;
   while ( ( MissionTargetPointer = strstr( MissionTargetPointer , MISSION_TARGET_SUBSECTION_START_STRING ) ) != NULL )
     {
       EndOfMissionTargetPointer = LocateStringInData ( MissionTargetPointer , MISSION_TARGET_SUBSECTION_END_STRING ) ;
+
+      //--------------------
+      // We need to add an inner terminator here, so that the strstr operation
+      // below will know where to stop within this subsection.
+      //
+      InnerPreservedLetter = * EndOfMissionTargetPointer;
+      * EndOfMissionTargetPointer = 0 ;
 
       Me[0].AllMissions[ MissionTargetIndex ].MissionExistsAtAll = TRUE;
       Me[0].AllMissions[ MissionTargetIndex ].MissionIsComplete = FALSE;
@@ -1634,7 +1640,7 @@ GetQuestList ( char* QuestListFilename )
 	  NumberOfEventsToTriggerAtThisAssignment ++;
 	  NextEventPointer ++;
 	}
-      DebugPrintf ( 1 , "\nDetected %d events to be triggered at this assignment." , 
+      DebugPrintf ( 0 , "\nDetected %d events to be triggered at this assignment." , 
 		    NumberOfEventsToTriggerAtThisAssignment ) ;
 
       //--------------------
@@ -1656,12 +1662,12 @@ GetQuestList ( char* QuestListFilename )
 	  ActionLabel=
 	    ReadAndMallocStringFromData ( NextEventPointer , MISSION_COMPLETITION_TRIGGERED_ACTION_STRING , "\"" ) ;
 
-	  Me[0].AllMissions[ MissionTargetIndex ].ListOfActionsToBeTriggeredAtCompletition[ NumberOfEventsToTriggerAtThisAssignment ] = GiveNumberToThisActionLabel ( ActionLabel );
+	  Me [ 0 ] . AllMissions [ MissionTargetIndex ] . ListOfActionsToBeTriggeredAtCompletition [ NumberOfEventsToTriggerAtThisCompletition ] = GiveNumberToThisActionLabel ( ActionLabel );
 	  
 	  NumberOfEventsToTriggerAtThisCompletition ++;
 	  NextEventPointer ++;
 	}
-      DebugPrintf ( 1 , "\nDetected %d events to be triggered at this mission completition." , 
+      DebugPrintf ( 0 , "\nDetected %d events to be triggered at this mission completition." , 
 		    NumberOfEventsToTriggerAtThisCompletition );
 
       //--------------------
@@ -1673,6 +1679,13 @@ GetQuestList ( char* QuestListFilename )
       //
       MissionTargetPointer = EndOfMissionTargetPointer; // to avoid double entering the same target
       MissionTargetIndex++; // to avoid overwriting the same entry again
+
+      //--------------------
+      // We restore the termination character we added before, even if that
+      // is maybe not really nescessary...
+      //
+      * EndOfMissionTargetPointer = InnerPreservedLetter ;
+
 
     } // while mission target found...
 
