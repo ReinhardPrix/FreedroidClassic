@@ -2263,7 +2263,7 @@ ob_type=1 ob_x=82.00 ob_y=73.50 ob_na=-1
 ob_type=1 ob_x=82.00 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=83.00 ob_y=71.50 ob_na=-1 
 ob_type=2 ob_x=82.50 ob_y=72.00 ob_na=-1 
-ob_type=191 ob_x=82.50 ob_y=68.00 ob_na=7 
+ob_type=191 ob_x=82.50 ob_y=68.00 ob_na=4 
 ob_type=0 ob_x=88.50 ob_y=68.50 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=7.50 ob_na=-1 
 ob_type=180 ob_x=85.50 ob_y=4.50 ob_na=-1 
@@ -2535,10 +2535,9 @@ obstacle_label.index=0 obstacle_label_name="NoviceArenaAccessDoor"
 obstacle_label.index=1 obstacle_label_name="MasterArenaAccessDoor"
 obstacle_label.index=2 obstacle_label_name="NorthernMaintainanceDoor"
 obstacle_label.index=3 obstacle_label_name="SouthGateOfTown1"
-obstacle_label.index=4 obstacle_label_name="OldTownGuardHouseEntrance"
+obstacle_label.index=4 obstacle_label_name="EastGateOfTown"
 obstacle_label.index=5 obstacle_label_name="OldTownGuardHouseEntrance"
 obstacle_label.index=6 obstacle_label_name="SouthGateOfTown2"
-obstacle_label.index=7 obstacle_label_name="EastGateOfTown"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level
