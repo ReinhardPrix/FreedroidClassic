@@ -7,7 +7,8 @@ Release TODO
 - update INSTALL instructions
 - produce the .tar.gz archive and test it
 - playtest on all possible machines
-- ? make a small man-page ?
+- make a small man-page
+  (done!)
 - ? produce binary .tgz, rpm's and .deb packages? (later)
 - add some better manual about key-layout and game-instructions?
 
@@ -26,17 +27,11 @@ Outstanding release-critical bugs (priority: high)
 
 - playtest on a _really_ slow machine...
 
-- check and adjust 614 parameters (too fast shot-rate!) and  Alert params (->freedroid.rules)
-
-- add explosion-decals ? (switchable)
-
-- fix bug of exploding enemy (somewhere?) after restarting Mission...
+- adjust Alert params (->freedroid.rules)
 
 - allow original background fieps-pieps instead of music (switchable)
 
 - steal the 'Metal Edition' as an additional theme?
-
-- accelerate explosions, make sure blast-duration is not theme-configurable
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -353,4 +348,16 @@ Resolved bugs
 - add options-switch for takeover=activate (purist's choice ;)
   (done)
 - implement the 'Alert' feature of the original version
+  (done)
+- change GameConfig reading to use ReadValueFromString() for more 'robustnes'
+  (done)
+- bug: Area-names etc seems cut now due to use of ReadValueFromString
+  (fixed)
+- fix bug of exploding enemy (somewhere?) after restarting Mission...
+  (fixed)
+- accelerate explosions, make sure blast-duration is not theme-configurable
+  (done)
+- check and adjust 614 parameters (too fast shot-rate!) and  
+  (better now;)
+- add explosion-decals ? (switchable)
   (done)
