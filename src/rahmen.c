@@ -169,6 +169,18 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
     }
 
   // --------------------
+  // If this is a destructible item, we finally give it's current condition
+  //
+  if ( CurItem->max_duration != (-1) )
+    {
+      sprintf( linebuf , "\nDur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+      strcat( ItemDescText , linebuf );
+    }
+
+
+
+
+  // --------------------
   // If it's a usable item, then we say, that it can be used via right-clicking on it
   //
   if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat )

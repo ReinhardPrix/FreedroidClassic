@@ -188,9 +188,10 @@ Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
-Item as defensive item: ac_bonus_modifier=
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 Sound number=0 
 ** End of new item specification subsection **
@@ -225,6 +226,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=0
 Sound number=5
 ** End of new item specification subsection **
@@ -259,6 +262,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=0
 Sound number=5 
 ** End of new item specification subsection **
@@ -293,6 +298,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=9
 Sound number=3 
 ** End of new item specification subsection **
@@ -327,6 +334,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=3
 Sound number=4
 ** End of new item specification subsection **
@@ -361,6 +370,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=4
 Sound number=1 
 ** End of new item specification subsection **
@@ -395,6 +406,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=1
 Sound number=2 
 ** End of new item specification subsection **
@@ -429,6 +442,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=5
 Sound number=3 
 ** End of new item specification subsection **
@@ -463,6 +478,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=8
 Sound number=4 
 ** End of new item specification subsection **
@@ -497,6 +514,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=10
 Sound number=4 
 ** End of new item specification subsection **
@@ -531,6 +550,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=11
 Sound number=0 
 ** End of new item specification subsection **
@@ -565,6 +586,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=4
 Sound number=0 
 ** End of new item specification subsection **
@@ -599,6 +622,8 @@ Item as gun: bullet_image_type=5
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=2
 Sound number=0 
 ** End of new item specification subsection **
@@ -633,6 +658,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=12
 Sound number=0 
 ** End of new item specification subsection **
@@ -667,6 +694,8 @@ Item as gun: bullet_image_type=3
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=13
 Sound number=0 
 ** End of new item specification subsection **
@@ -701,6 +730,8 @@ Item as gun: bullet_image_type=2
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=9
 Sound number=0 
 ** End of new item specification subsection **
@@ -735,6 +766,8 @@ Item as gun: bullet_image_type=1
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=14
 Sound number=0 
 ** End of new item specification subsection **
@@ -769,6 +802,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=12
 Sound number=0 
 ** End of new item specification subsection **
@@ -803,6 +838,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=8
+Base item duration=30
+Item duration modifier=15
 Picture number=15
 Sound number=0 
 ** End of new item specification subsection **
@@ -837,6 +874,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=7
+Base item duration=25
+Item duration modifier=10
 Picture number=6
 Sound number=0 
 ** End of new item specification subsection **
@@ -871,6 +910,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=16
 Sound number=0 
 ** End of new item specification subsection **
@@ -905,6 +946,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1
+Item duration modifier=0
 Picture number=17
 Sound number=0 
 ** End of new item specification subsection **
@@ -939,6 +982,8 @@ Item as gun: bullet_image_type=6
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=18
 Sound number=0 
 ** End of new item specification subsection **
@@ -973,6 +1018,8 @@ Item as gun: bullet_image_type=7
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=18
 Sound number=0 
 ** End of new item specification subsection **
@@ -1007,6 +1054,8 @@ Item as gun: bullet_image_type=1
 Item as gun: bullet_lifetime=0.05
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
 Picture number=18
 Sound number=0 
 ** End of new item specification subsection **
@@ -1041,6 +1090,8 @@ Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=10
 Item as defensive item: ac_bonus_modifier=5
+Base item duration=10
+Item duration modifier=10
 Picture number=15
 Sound number=0 
 ** End of new item specification subsection **
