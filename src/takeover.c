@@ -480,23 +480,22 @@ PlayGame (void)
     }	/* while !FinishTakeover */
 
   /* Schluss- Countdown */
-  countdown = CAPSULE_COUNTDOWN + 10;
+  countdown = CAPSULE_COUNTDOWN;
 
   while (countdown--)
     {
-      // speed this up a little, some people get bored here...
-      //      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
-      //      prev_count_tick += count_tick_len;
+      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
+      prev_count_tick += count_tick_len;
       ProcessCapsules ();	/* count down the lifetime of the capsules */
       ProcessCapsules ();	/* do it twice this time to be faster */
-      //      AnimateCurrents ();
+      AnimateCurrents ();
       ProcessPlayground ();
       ProcessPlayground ();
       ProcessPlayground ();
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
-      AnimateCurrents ();
       ShowPlayground ();
+
     }	/* while (countdown) */
 
     return;

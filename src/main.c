@@ -71,16 +71,10 @@ main (int argc, char *const argv[])
   joy_sensitivity = 1;
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
   mouse_control = TRUE;
-  /*
-   *  Parse command line and set global switches 
-   *  this function exits program when error, so we don't need to 
-   *  check its success  (dunno if that's good design?)
-   */
-  parse_command_line (argc, argv);
 
 
   now = SDL_GetTicks();
-  InitFreedroid ();   // Initialisation of global variables and arrays
+  InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
 
   while (!QuitProgram)
     {

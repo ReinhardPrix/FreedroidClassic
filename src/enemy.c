@@ -188,8 +188,8 @@ ShuffleEnemys (void)
 	wp = nth_enemy;
       else
 	{
-	  DebugPrintf (1, "\nNumber of waypoints found: %d." , wp_num );
-	  DebugPrintf (1, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
+	  DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
+	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
 	  Terminate (ERR);
 	}
 

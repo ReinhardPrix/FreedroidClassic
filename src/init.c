@@ -865,7 +865,7 @@ InitNewMission ( char *MissionName )
  *  
  *-----------------------------------------------------------------*/
 void
-InitFreedroid (void)
+InitFreedroid (int argc, char *const argv[])
 {
   int i;
 
@@ -899,6 +899,9 @@ InitFreedroid (void)
 
   // now load saved options from the config-file
   LoadGameConfig ();
+
+  // call this _after_ default settings and LoadConfig(), so that cmdline has highest priority
+  parse_command_line (argc, argv);
 
   if (GameConfig.FullUserRect)
     Copy_Rect(Full_User_Rect, User_Rect);

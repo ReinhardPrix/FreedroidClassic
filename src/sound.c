@@ -324,6 +324,8 @@ void
 Switch_Background_Music_To ( char* filename_raw )
 {
   char* fpath;
+  static int prev_color = -1;
+  static bool paused = FALSE;
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -334,17 +336,29 @@ Switch_Background_Music_To ( char* filename_raw )
 
   if ( filename_raw == NULL ) 
     {
-      //printf("\nOld Background music channel has been halted.");
-      // fflush(stdout);
-      Mix_HaltMusic( ); // this REALLY is a VOID-argument function!!
+      Mix_PauseMusic(); // pause currently played background music
+      paused = TRUE;
       return;
     }
 
   // New feature: choose background music by level-color:
   // if filename_raw==BYCOLOR then chose bg_music[color]
+  // NOTE: if new level-color is the same as before, just resume paused music!
   if (!strcmp( filename_raw, BYCOLOR))
-      Mix_PlayMusic (MusicSongs[CurLevel->color], -1);
-  else
+    {
+      if (paused && (prev_color == CurLevel->color) )  // current level-song was just paused
+	{
+	  Mix_ResumeMusic ();
+	  paused = FALSE;
+	}
+      else
+	{
+	  Mix_PlayMusic (MusicSongs[CurLevel->color], -1);
+	  paused = FALSE;
+	  prev_color = CurLevel->color;
+	}
+    }
+  else  // not using BYCOLOR mechanism: just play specified song
     {
       if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);      
       fpath = find_file (filename_raw, SOUND_DIR, FALSE);    
