@@ -1962,7 +1962,7 @@ DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
     {
       ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
-      ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
+      ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ChestItemList[ i ]) );
     }
   
   // Now we repair the damage done to the loaded level data

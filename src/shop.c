@@ -152,6 +152,8 @@ write some suitable code here...",
   //
   CopyItem ( SellItem , & ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] ) , TRUE );
   curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . multiplicity = AmountToSellAtMost;
+  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . x = Me [ 0 ] . pos . x ;
+  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . y = Me [ 0 ] . pos . y ;
   if ( AmountToSellAtMost < SellItem->multiplicity )
     SellItem->multiplicity -= AmountToSellAtMost;
   else DeleteItem( SellItem );
@@ -278,20 +280,20 @@ AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum 
       CurrentItemPointer++;
     }
 
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items
-  // currently equipped, if that is what is desired by parameters...
-  //
   CurrentItemPointer = ItemPointerListPointer;
 
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items in the
-  // pure unequipped inventory
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
       if ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . type == (-1) ) continue;
-      else
+
+      //--------------------
+      // All the items in chests within a range of 1 square around the Tux 
+      // will be collected together to be shown in the chest inventory.
+      //
+      if ( sqrt ( ( Me [ PlayerNum ] . pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) *
+		  ( Me [ PlayerNum ] . pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) +
+		  ( Me [ PlayerNum ] . pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  *
+		  ( Me [ PlayerNum ] . pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  ) < 1 )
 	{
 	  *CurrentItemPointer = & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] );
 	  CurrentItemPointer ++;
@@ -358,6 +360,7 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   float RescaleFactor;
   SDL_Rect TargetRectangle;
 
+  /*
   ShopItemRowRect . x = 55 ;
   ShopItemRowRect . y = 410;
   ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
@@ -367,6 +370,19 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   TuxItemRowRect . y = 10;
   TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
   TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+  */
+
+  TuxItemRowRect . x = 55 ;
+  TuxItemRowRect . y = 410;
+  TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
+  TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+
+  ShopItemRowRect . x = 55 ;
+  ShopItemRowRect . y = 10;
+  ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
+  ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+
+
 
   if ( TuxItemRow )
     {
@@ -1404,11 +1420,11 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
   // if that's possible, and if so, subtract the items price from the
   // current gold.
   //
-  PotentialPrice = CalculateItemPrice ( BuyItem , FALSE );
+  PotentialPrice = CalculateItemPrice ( BuyItem , FALSE ) ;
 
   if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
-      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+      Me[0].Gold -= PotentialPrice ;
       Play_Shop_ItemBoughtSound( );
     }
   else
