@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.10  1997/06/05 23:47:38  jprix
+ * added some doku.  cleaned out some old doku and old code, that was allready commented out.
+ *
  * Revision 1.9  1997/06/05 09:24:15  jprix
  * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
  *
@@ -52,6 +55,7 @@
 
 // For development purposes, the sound will not be activated unless the following definition is made
 #undef PARADROID_SOUND_SUPPORT_ON
+// #define PARADROID_SOUND_SUPPORT_ON
 
 // **********************************************************************
 

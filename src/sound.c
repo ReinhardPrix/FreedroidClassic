@@ -10,11 +10,14 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/05 23:47:38  jprix
+ * added some doku.  cleaned out some old doku and old code, that was allready commented out.
+ *
  * Revision 1.7  1997/06/05 23:09:01  jprix
  * Project can now be compiled and run entirely without any yiff installation.
  *
  * Revision 1.6  1997/06/05 09:24:15  jprix
- * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ * yiff server access introduced to the project. (This version was not compilable without YIFF. SORRY!)
  *
  * Revision 1.5  2002/04/08 19:19:09  rp
  * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
@@ -123,16 +126,6 @@ void ExitProc() {
   }
 }
 
-unsigned char Kanal;
-
-#define MODDIR		"d:\\mod\\parasnd\\"
-#define MY_FIRE	"myfire.mod"
-
-enum _devices {
-  PC_SPEAKER = 0,
-  SOUNDBLASTER = 7
-};
-
 typedef struct{
   int car_att;
   int car_dec;
@@ -197,11 +190,7 @@ tune TankenTune={7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
 		 13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
 		 400,2,TRUE,2};
 
-/* Neu ! */
-// tune BlastTune={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-//		8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-//		200,3,TRUE,7};
-// 
+
 tune HitHimTune1={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
 		  8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
 		  200,3,TRUE,7};
@@ -245,27 +234,13 @@ tune AllSounds[]={ { 12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
 };
 
 
-
 int i;
 unsigned char* ptr;
 unsigned char v = 128;
 int SampleLaenge;
 
-
-int Device = SOUNDBLASTER;		/* The mod-device */
-
-// extern void pascal modvolume(int v1, int v2, int v3, int v4);
-// extern void pascal moddevice(int *device);
-// extern void pascal modsetup(int *status,
-//	int device, int mixspeed, int pro, int loop, char *string);
-
-// extern void pascal modstop(void);
-// extern void pascal modinit(void);
-
 void MakeSound(tune* ThisTune);
 long FragmentRoundUp(long FormerLength);
-
-
 
 long FragmentRoundUp(long FormerLength){
   long NewLength;

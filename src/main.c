@@ -78,37 +78,23 @@ void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
 
-//
-//
-//
-
-// int TestSound(void){
-//  int err;
-//  printf("\nEverything ready to test the alsa sound output... commencing...");
-//
-//  printf("\nOpening PCM interface...");
-//  if ( (err = snd_pcm_open( &handle, card, device,
-//			    SND_PCM_OPEN_PLAYBACK )) < 0 ) {
-//    fprintf( stderr,
-//	     "\nint TestSound(void): open failed: %s\n", snd_strerror( err ) );
-//    return -1;
-//  } else {
-//    printf("\nint TestSound(void): opening PCM interface seems to have worked. Good.");
-//  }
-//
-//  
-//
-//
-//} // void TestSound(void);
-//
 
 
 void CalibratedDelay(long delay){
   usleep(delay);
 } // void CalibatedDelay(long delay)
 
-// This Function is for the SVGALIB for the PORT!!!!
+
+// Before the port to Linux, a (non-periodic) interrupt updated several global variables,
+// that should reflect the keyboard status.  This was a rather crude solution, since some
+// keystrokes tended to get missed if too many keys were pressed simulaneously.
 //
+// But now we've got the svgalib functionality anyway, which does a far better job:  The
+// svgalib has certain functions to immediately report the status of a give key.  The old
+// global variables could now be replaced by functions of the same name, that do not contain
+// the status of the previous interrupt call, but that gain the information about the current
+// status directly from the keyboard!  Long live the linux kernel and the svgalib!
+//                                                                          jp, 10.04.2002
 
 int LeftPressed(void){
   keyboard_update();
@@ -173,18 +159,26 @@ int WPressed(void){
   }
 } // int WPressed(void)
 
-// This Function is for the SVGALIB for the PORT!!!!
 //
-// With Luck, this will restore the vga text mode after some time!
+// This function is for stability while working with the SVGALIB, which otherwise would
+// be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
+// graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
+// console will NOT be returned to normal, the keyboard will remain useless and login from
+// outside and shutting down or reseting the console will be the only way to avoid a hard
+// reset!
+// Therefore this function is introduced.  When Paradroid starts up, the operating system is
+// instructed to generate a signal ALARM after a specified time has passed.  This signal will
+// be handled by this function, which in turn restores to console to normal and resets the
+// yiff sound server access if applicable. (All this is done via calling Terminate of course.)
+//                                                                           jp, 10.04.2002
 //
 
 static void timeout(int sig)
 {
-  keyboard_close();
-  vga_setmode(TEXT);
-  printf("Automatic termination after %d seconds.\n\n", AutoTerminationTime);
-  exit(1);
-}
+  printf("\n\nstatic void timeout(int sig): Automatic termination after %d seconds.\n\n", AutoTerminationTime);
+  Terminate(0);
+} // static void timeout(int sig)
+
 
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
@@ -1168,8 +1162,11 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
+ * Revision 1.19  1997/06/05 23:47:38  jprix
+ * added some doku.  cleaned out some old doku and old code, that was allready commented out.
+ *
  * Revision 1.18  1997/06/05 09:24:15  jprix
- * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ * yiff server access introduced to the project. (This version was not compilable without YIFF. SORRY!)
  *
  * Revision 1.17  2002/04/08 19:19:09  rp
  * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
