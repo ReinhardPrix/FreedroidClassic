@@ -280,6 +280,8 @@ typedef struct
   unsigned char *picpointer;
   SDL_Rect *block;     /* the coordinates of the blocks in ne_blocks */
   double total_animation_time;
+  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
+                                                           // the blast images of this blast type
 }
 blastspec, *Blastspec;
 

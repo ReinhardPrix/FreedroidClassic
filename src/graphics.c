@@ -740,9 +740,55 @@ InitPictures (void)
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
   fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
-  for (i=0; i < ALLBLASTTYPES; i++)
-    Blastmap[i].block =
-      ne_get_blocks ( fpath , Blastmap[i].phases, 0, i, block_line++);
+  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
+    {
+      // This is the old command to read in all the rotated pictures of this bullet
+      // It should soon be no longer nescessary to read more than one type in, but
+      // it doesn't hurt and for now we can leave it as it is
+      Blastmap[i].block =
+	ne_get_blocks ( fpath , Blastmap[i].phases, 0, i, block_line++);
+
+      // At first we create a surface of the size of one map tile and then
+      // we make sure it is supplied with an alpha channel
+      tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      tmp4 = SDL_DisplayFormatAlpha( tmp3 );
+      SDL_FreeSurface( tmp3 );
+
+      // In order to make sure, that he alpha cannel from the ne_blocks surface 
+      // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
+      SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
+      
+      // Bullettypes might have several different phases
+      for ( j = 0 ; j < Blastmap[i].phases ; j++ )
+	{
+	  // Now we can copy the RGB information together with the alpha channel.
+	  Source_Rectangle.x= j * Block_Width;
+	  Source_Rectangle.y= (block_line -1) * Block_Height ;
+	  Source_Rectangle.w=Block_Width;
+	  Source_Rectangle.h=Block_Height;
+	  Destination_Rectangle.x=0;
+	  Destination_Rectangle.y=0;
+	  Destination_Rectangle.w=Block_Width;
+	  Destination_Rectangle.h=Block_Height;
+	  SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
+	  // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
+	  // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
+	  if (Blastmap[i].SurfacePointer[j] == NULL )
+	    {
+	      DebugPrintf( 0 , "\nProblem converting Blast image to Alpha surface....\nTerminating...\n\n");
+	      Terminate(ERR);
+	    }
+
+	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
+	} // for j = 0 to PHASES OF THIS BULLET
+
+      SDL_FreeSurface ( tmp4 );
+
+    } // for i = 0 to MAXBULLETTYPES
+
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load digits image file." );
 
   fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
