@@ -628,8 +628,9 @@ Title (void)
 
   PrepareScaledSurface();
 
-  while (!SpacePressed ())
-    JoystickControl ();
+  while (!SpacePressed ());
+  while (SpacePressed());
+
 
   FadeColors1 ();		/* Titelbild langsam ausblenden */
 

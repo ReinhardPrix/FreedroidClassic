@@ -324,7 +324,6 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   int speed = +2;
   int maxspeed = 4;
 
-
   ClearGraphMem (InternalScreen);
 
   /* Zeilen zaehlen */

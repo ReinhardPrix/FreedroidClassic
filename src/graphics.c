@@ -973,7 +973,9 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 
   // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
   // vga_setpalette (palpos, rot, gruen, blau);
+
   SDL_SetColors( ScaledSurface , &ThisOneColor, palpos, 1 );
+
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
 }				// void SetPalCol(...)
