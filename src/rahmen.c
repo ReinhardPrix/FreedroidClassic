@@ -102,12 +102,12 @@ Sorry...\n\
 
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
 
-  if ( CurItem->prefix_code != (-1) )
+  if ( ( CurItem->prefix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , PrefixList[ CurItem->prefix_code ].bonus_name );
 
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
 
-  if ( CurItem->suffix_code != (-1) )
+  if ( ( CurItem->suffix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
 
   if ( ForShop )
@@ -221,7 +221,7 @@ Sorry...\n\
   //
   if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) ) 
     {
-      if ( CurItem->is_identified != TRUE )
+      if ( CurItem->is_identified == TRUE )
 	{
 	  strcat ( ItemDescText , "\n" );
 	  strcat ( ItemDescText , font_switchto_red );

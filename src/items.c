@@ -153,6 +153,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   ThisItem->bonus_to_resist_electricity = 0;
   ThisItem->bonus_to_resist_force = 0;
 
+  ThisItem->is_identified = TRUE;
+
   if ( ThisItem -> suffix_code != (-1) )
     {
       ThisItem->bonus_to_str += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
@@ -182,6 +184,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
       ThisItem->bonus_to_resist_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_force +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_force ) ;
+
+      ThisItem->is_identified = FALSE;
     }
   if ( ThisItem -> prefix_code != (-1) )
     {
@@ -213,6 +217,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
       ThisItem->bonus_to_resist_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_force +
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_force ) ;
 
+      ThisItem->is_identified = FALSE;
     }
 
 }; // void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )

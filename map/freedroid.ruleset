@@ -2429,7 +2429,7 @@ Notes concerning this droid : this robot is used mainly for serving drinks. A tr
 Droidname: DAP
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 11
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 70.1
 Maximum mana of this droid: 70.1
@@ -2467,7 +2467,7 @@ This is a dark Apprentice of the evil MS Super-Corporation.
 Droidname: DSR
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 11
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 110.1
 Maximum mana of this droid: 110.1

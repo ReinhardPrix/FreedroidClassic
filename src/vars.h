@@ -107,6 +107,7 @@ char *Classname[] = {
   "Security droid",
   "Command Cyborg",
   "Peaceful Human",
+  "Cold MS Force",
   NULL
 };
 
@@ -123,21 +124,6 @@ char *Classes[] = {
   "command",
   "error"
 };
-
-/*
-typedef struct
-{
-  char* Bonus_name;
-  int bonus_to_dex;
-  int bonus_to_str;
-  int bonus_to_vit;
-  int bonus_to_mag;
-  int bonus_to_life;
-  int bonus_to_force;
-  int bonus_to_tohit;
-} item_bonus , *Item_bonus;
-*/
-
 
 //    NAME                      DEX-DEX   STR-STR   VIT-VIT      MAG-MAG  ALLATT-    HP - HP   MANA-MANA  TOHIT-    AC/DA-   FIR-FIR   ELE-ELE   FOR-FOR   DUMMY Alvl PRICE-FACTOR
 item_bonus PrefixList[] = {
