@@ -972,6 +972,9 @@ Get_Robot_Data ( void* DataPointer )
 #define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
 #define DROIDNAME_BEGIN_STRING "Droidname: "
 #define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
+
+#define DROID_PORTRAIT_ROTATION_SERIES_NAME_PREFIX "Droid uses portrait rotation series with prefix=\""
+
 #define MAXSPEED_BEGIN_STRING "Maximum speed of this droid: "
 #define CLASS_BEGIN_STRING "Class of this droid: "
 #define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
@@ -1071,7 +1074,11 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[RobotIndex].portrait_filename_without_ext =
 	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
 
-      // #define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
+      //--------------------
+      // Now we read in the prefix of the file names in the rotation series
+      // to use for the console droid rotation
+      Druidmap [ RobotIndex ] . droid_portrait_rotation_series_prefix =
+	ReadAndMallocStringFromData ( RobotPointer , DROID_PORTRAIT_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
 
       // Now we read in the maximal speed this droid can go. 
       // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
@@ -1954,9 +1961,19 @@ InitNewMissionList ( char *MissionName )
     {
       Me [ 0 ] . clearance_list [ j ] = 0 ;
     }
-  Me [ 0 ] . clearance_list [ 0 ] = 4 ;
-  Me [ 0 ] . clearance_list [ 1 ] = 5 ;
-  Me [ 0 ] . clearance_list [ 2 ] = 6 ;
+  j=0;
+  Me [ 0 ] . clearance_list [ j ] = 1 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 2 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 3 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 4 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 5 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 6 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 7 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 8 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 9 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 23 ; j++;
+
+
   for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
     {
       strcpy ( Me [ 0 ] . password_list [ j ] , "" ) ;

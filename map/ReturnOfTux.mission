@@ -762,10 +762,6 @@ Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, so th
 
 Poison bolt:  Poisons an enemy (turning green then), delivering some damage over time.  Note that damage duration AND damage effect are cumulative, (i.e. damage done will raise with the square of the poison bolt hits taken).
 
-Joystick conrol:
-
-Try out the joystick yourself.  (I don't have one, but joystick support IS implemented.)
-
     Press Fire to Play
 
 

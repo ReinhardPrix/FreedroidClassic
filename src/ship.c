@@ -53,13 +53,11 @@ enum
     GUNOFF_FUNCTION
   };
 
-
 int NoKeyPressed (void);
 void GreatItemShow (void);
-void show_item_info ( item* ShowItem , int page , char ShowArrows );
+void ShowItemInfo ( item* ShowItem , int page , char ShowArrows );
+void ShowDroidPicture (int PosX, int PosY, int Number );
 
-
-// EXTERN SDL_Surface *console_pic;
 SDL_Surface *console_pic = NULL ;
 
 char *EmailText1 = "Freedroid Installation 
@@ -257,10 +255,7 @@ EnterConsole (void)
 
   while (SpacePressed ());
 
-  // SwitchBackgroundMusicTo ( COMBAT_BACKGROUND_MUSIC_SOUND );
   SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
-
-  return;
 
 } // void EnterConsole(void)
 
@@ -276,14 +271,9 @@ void
 PaintConsoleMenu (int menu_pos)
 {
   char MenuText[1000];
-
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
-
   static SDL_Surface *image = NULL ;
-
-  // DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
-  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE |BANNER_FORCE_UPDATE);
 
   //--------------------
   // If this has not happend yet, we load the console menu image
@@ -327,7 +317,6 @@ PaintConsoleMenu (int menu_pos)
   Copy_Rect (Cons_Menu_Rect, TargetRectangle);
   SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
-  return;
 }; // void PaintConsoleMenu ( int MenuPos )
 
 /* ----------------------------------------------------------------------
@@ -354,7 +343,7 @@ void
 GreatDruidShow (void)
 {
   int droidtype;
-  int page;
+  int Displacement;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
   int ClearanceIndex = 0;
@@ -364,10 +353,8 @@ GreatDruidShow (void)
   //--------------------
   // We initialize the text rectangle
   //
-  Cons_Text_Rect . x = 175 ;
-  Cons_Text_Rect . y = 180 ;
-  Cons_Text_Rect . w = SCREEN_WIDTH - 175 ;
-  Cons_Text_Rect . h = 305 ;
+  // Cons_Text_Rect . x = 175 ; Cons_Text_Rect . y = 180 ; Cons_Text_Rect . w = SCREEN_WIDTH - 175 ; Cons_Text_Rect . h = 305 ;
+  Cons_Text_Rect . x = 258 ; Cons_Text_Rect . y = 89 ; Cons_Text_Rect . w = 346 ; Cons_Text_Rect . h = 282 ;
 
   //--------------------
   // First we find out how many clearances the Tux has gained
@@ -379,96 +366,100 @@ GreatDruidShow (void)
     }
   NumberOfClearances = i;
 
-  // droidtype = Me[0].type;
   droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
 
-  page = 0;
+  Displacement = 0;
 
   while (!finished)
     {
       usleep ( 2 );
 
+      //--------------------
+      // We show all the info and the buttons that should be in this
+      // interface...
+      //
       droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+      ShowDroidInfo ( droidtype , Displacement , TRUE );
 
-      show_droid_info (droidtype, page , TRUE );
-      ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
-      SDL_Flip ( Screen );
+      // PutPasswordButtonsAndPassword ( PasswordIndex );
+      // PutSecurityButtonsAndClearance ( ClearanceIndex );
+
+      SDL_Flip( Screen );
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  if ( CursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClearanceIndex < NumberOfClearances -1 ) 
 		{
 		  ClearanceIndex ++;	    
 		  MoveMenuPositionSound();
+		  Displacement = 0 ;
 		}
 	    }
-	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClearanceIndex > 0) 
 		{
 		  ClearanceIndex --;	      
 		  MoveMenuPositionSound();
+		  Displacement = 0 ;
 		}
 	    }
-	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      if (page < 2) page ++;
+	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      if (page > 0) page --;
+	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
 	    }
-
-	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
-	    {
-	      // finished = TRUE;
-	      // while (SpacePressed() ||EscapePressed());
-	    }
-
 	}
 
       WasPressed = axis_is_active;
 
       if (UpPressed() || MouseWheelUpPressed())
 	{
-	  MoveMenuPositionSound();
+	  // MoveMenuPositionSound();
+	  Displacement += FontHeight ( GetCurrentFont () );
 	  while (UpPressed());
-	  if ( droidtype < Me[0].type) droidtype ++;
 	}
       if (DownPressed() || MouseWheelDownPressed())
 	{
-	  MoveMenuPositionSound();
+	  // MoveMenuPositionSound();
+	  Displacement -= FontHeight ( GetCurrentFont () );
 	  while (DownPressed());
-	  if (droidtype > 0) droidtype --;
 	}
       if (RightPressed() )
 	{
-	  MoveMenuPositionSound();
-	  while (RightPressed());
-	  if (page < 2) page ++;
+	  if ( ClearanceIndex < NumberOfClearances -1 ) 
+	    {
+	      ClearanceIndex ++;	    
+	      MoveMenuPositionSound();
+	      Displacement = 0 ;
+	    }
+	  while ( RightPressed() );
 	}
       if (LeftPressed() )
 	{
-	  MoveMenuPositionSound();
-	  while (LeftPressed());
-	  if (page > 0) page --;
+	  if ( ClearanceIndex > 0) 
+	    {
+	      ClearanceIndex --;	      
+	      MoveMenuPositionSound();
+	      Displacement = 0 ;
+	    }
+	  while ( LeftPressed() );
 	}
 
-    } /* while !finished */
+    } // while !finished 
 
-  return;
 }; // void GreatDroidShow( void ) 
 
 /* ----------------------------------------------------------------------
@@ -619,7 +610,7 @@ GreatItemShow (void)
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      show_item_info ( ShowPointerList [ ItemIndex ] , Displacement , TRUE );
+      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE );
 
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
@@ -629,6 +620,7 @@ GreatItemShow (void)
       //--------------------
       // Now we see if identification of the current item is allowed
       // or not.
+
       //
       IdentifyAllowed = FALSE ;
       if ( PasswordIndex >= 0 )
@@ -760,9 +752,8 @@ GreatItemShow (void)
 	  Displacement -= FontHeight ( GetCurrentFont () );
 	}
 
-    } /* while !finished */
+    } // while !finished 
 
-  return;
 }; // void GreatItemShow( void ) 
 
 /* ------------------------------------------------------------
@@ -770,22 +761,29 @@ GreatItemShow (void)
  * does update the screen, no SDL_Flip() necesary !
  * ------------------------------------------------------------ */
 void 
-show_droid_info (int droidtype, int page , char ShowArrows )
+ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
 {
-  char InfoText[1000];
-  char None[20] = "none";
   char *item_name;
   int type;
+  char InfoText[10000];
+  char TextChunk[2000];
+
+
   SDL_SetClipRect ( Screen , NULL );
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
-  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype );
+  DisplayImage ( find_file( ITEM_BROWESER_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
 
-  switch (page)
-    {
-    case 0:
-      sprintf( InfoText, "\
+  ShowDroidPicture ( 45 , 190 , droidtype );
+
+  //--------------------
+  // We fill out the header area of the items browser.
+  //
+  SetCurrentFont ( Menu_BFont );
+  strcpy ( TextChunk , Druidmap [ droidtype ] . druidname );
+  CutDownStringToMaximalSize ( TextChunk , 225 );
+  PutString ( Screen , 330, 38, TextChunk );
+
+  sprintf( InfoText, "\
 Unit type %s - %s\n\
 Entry : %d\n\
 Class : %s\n\
@@ -797,14 +795,13 @@ Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].clas
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
 	       Brainnames[ Druidmap[droidtype].brain ]);
-      break;
-    case 1:
-      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
-	item_name = ItemMap[type].item_name;                     /* does not segfault */
-      else 
-	item_name = None;
 
-      sprintf( InfoText , "\
+  if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
+    item_name = ItemMap[type].item_name;                     /* does not segfault */
+  else 
+    item_name = "none";
+
+  sprintf( TextChunk , "\
 Unit type %s - %s\n\
 Armamant : %s\n\
 Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
@@ -813,24 +810,23 @@ Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);
-      break;
-    case 2:
-      sprintf (InfoText, "Unit type %s - %s\n\
+  strcat ( InfoText , TextChunk );
+
+  sprintf ( TextChunk , "Unit type %s - %s\n\
 Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
-	       Druidmap[droidtype].notes);
-      break;
-    default:
-      sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
-      break;
-    } // switch (page) 
+	    Druidmap[droidtype].notes);
+  strcat ( InfoText , TextChunk );
 
-  SetCurrentFont( Para_BFont );
-  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+  SetCurrentFont( FPS_Display_BFont );
+  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
 
-  if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
+  if ( ShowArrows ) 
+    {
+      ShowGenericButtonFromList ( UP_BUTTON );
+      ShowGenericButtonFromList ( DOWN_BUTTON );
+    }
 
-}; // void show_droid_info ( ... )
-
+}; // void ShowDroidInfo ( ... )
 
 /* ----------------------------------------------------------------------
  * This function displays an item picture. 
@@ -865,7 +861,6 @@ ShowItemPicture (int PosX, int PosY, int Number )
   //--------------------
   // Maybe we have to reload the whole image series
   //
-  // if ( LastImageSeriesLoaded != CurrentImageSeries )
   if ( strcmp ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix ) )
     {
       //--------------------
@@ -936,42 +931,9 @@ Sorry...\n\
 
     }
 
-  // strcpy( fname, Druidmap[Number].druidname );
-
-  /*
-  strcpy( fname, "droids/" );
-  strcat( fname, Druidmap[Number].portrait_filename_without_ext );
-  strcat( fname , ".png" );
-
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-
-  if ( (tmp=IMG_Load (fpath)) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The image file named %s could not be read by SDL.\n\
-\n\
-The error reason as specified by SDL is : %s.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , SDL_GetError() );
-      Terminate (ERR);
-    }
-  */
-
   RotationIndex = ( SDL_GetTicks() / 50 ) ;
 
   RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_ITEM_ROTATION ) * NUMBER_OF_IMAGES_IN_ITEM_ROTATION ;
-
-  // tmp = ItemImageList[ ItemMap[ Number ].picture_number ].Surface ;
 
   tmp = ItemRotationSurfaces[ RotationIndex ] ;
 
@@ -979,10 +941,121 @@ Sorry...\n\
   Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
   SDL_BlitSurface( tmp , NULL, Screen , &target);
 
-  // SDL_FreeSurface(tmp);
-
   DebugPrintf (2, "\nvoid ShowItemPicture(...): Usual end of function reached.");
+
 }; // void ShowItemPicture ( ... )
+
+
+/* ----------------------------------------------------------------------
+ * This function displays an item picture. 
+ * ---------------------------------------------------------------------- */
+void
+ShowDroidPicture (int PosX, int PosY, int Number )
+{
+  SDL_Surface *tmp;
+  SDL_Rect target;
+  char ConstructedFileName[5000];
+  char* fpath;
+
+  static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
+
+#define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 16
+  static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
+  SDL_Surface *Whole_Image;
+  int i;
+  int RotationIndex;
+
+  DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Function call confirmed.");
+
+  if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+    return; // later this should be a default-correction instead
+
+  //--------------------
+  // Maybe we have to reload the whole image series
+  //
+  if ( strcmp ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix ) )
+    {
+      //--------------------
+      // Maybe we have to free the series from an old item display first
+      //
+      if ( DroidRotationSurfaces[ 0 ] != NULL )
+	{
+	  for ( i = 1 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i ++ )
+	    {
+	      SDL_FreeSurface ( DroidRotationSurfaces[ i ] ) ;
+	    }
+	}
+
+      //--------------------
+      // Now we can start to load the whole series into memory
+      //
+      for ( i=0 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i++ )
+	{
+	  if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+	    {
+	      // sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , 1 , i+1 );
+	      // DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	      Terminate ( ERR );
+	    }
+	  else
+	    {
+	      sprintf ( ConstructedFileName , "rotation_models/portraits/portrait_%s_%04d" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
+	      DebugPrintf ( 0 , "\nConstructedFileName = %s " , ConstructedFileName );
+	    }
+
+	  // We must remember, that his is already loaded of course
+	  strcpy ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix );
+
+	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	  
+	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  if ( Whole_Image == NULL )
+	    {
+	      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a rotated image of an item into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	      Terminate(ERR);
+	    }
+	  
+	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+	  
+	  DroidRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( DroidRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  
+	  SDL_FreeSurface( Whole_Image );
+	  
+	}
+
+    }
+
+  RotationIndex = ( SDL_GetTicks() / 50 ) ;
+
+  RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ) * NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ;
+
+  tmp = DroidRotationSurfaces[ RotationIndex ] ;
+
+  SDL_SetClipRect( Screen , NULL );
+  Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+  SDL_BlitSurface( tmp , NULL, Screen , &target);
+
+  DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Usual end of function reached.");
+
+}; // void ShowDroidPicture ( ... )
 
 
 /* ------------------------------------------------------------
@@ -990,7 +1063,7 @@ Sorry...\n\
  * does update the screen, no SDL_Flip() necesary !
  * ------------------------------------------------------------ */
 void 
-show_item_info ( item* ShowItem , int Displacement , char ShowArrows )
+ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows )
 {
   char InfoText[10000];
   char TextChunk[2000];
@@ -1056,7 +1129,7 @@ Speed / Acceleration: %d / %d \n",
       ShowGenericButtonFromList ( DOWN_BUTTON );
     }
 
-}; // void show_item_info ( ... )
+}; // void ShowItemInfo ( ... )
 
 /* ----------------------------------------------------------------------
  * This function should delect a certain security clearance and reorder 
@@ -1065,12 +1138,14 @@ Speed / Acceleration: %d / %d \n",
 void 
 DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
 {
+
   int i;
   
   for ( i = ClearanceIndex ; i < MAX_CLEARANCES-1 ; i ++ )
     {
       Me [ PlayerNum ] . clearance_list [ i ] = Me [ PlayerNum ] . clearance_list [ i + 1 ] ;
     }
+
 }; // void DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
 
 
