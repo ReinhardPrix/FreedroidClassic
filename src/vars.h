@@ -199,7 +199,7 @@ FCU AllFCUs[] = {
 
 Druidspec Druidmap;
 
-#define BULLET_SPEED_CALIBRATOR (1)
+#define BULLET_SPEED_CALIBRATOR (0.8)
 bulletspec Bulletmap[ALLBULLETTYPES] = {
 /*  
   speed                                      blast                 oneshotonly

@@ -23,7 +23,15 @@ THESE ITEMS HAVE FIRST PRIORITY:
    f. Allow to change the level name
    DONE Write doku for the usage of the level editor
    DONE Do segfault protection from planting tiles outside map structure
-   i. Allow for more things to be set directly: Elevators & Boxes
+   DINE Allow for more things to be set directly: Elevators & Boxes
+
+1. Extend the game dat file
+   a. Add direct control over all individual bullet speeds and damages
+   b. Add direct control over blast radiuses and blast damages
+
+2. Extend the game/graphics engine
+   a. Takeover sound should be added
+   b. Takeover graphics effect (alpha-blending?) should be added
 
 5. Write a new ship/area for testing purposes: "The mining community"
    2.a One deck at least.
@@ -34,7 +42,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
                  Mining community
                  Police station
              
-3.   Implement the new and advanced combat behaviour:
+3. Implement the new and advanced combat behaviour:
      * Introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
        That should give the player a chance to compete.  Otherywise they might become too powerful.
      * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
@@ -48,11 +56,6 @@ THESE ITEMS HAVE FIRST PRIORITY:
    b. droids files and 
    c. mission files.
 
-(?) Try to introduce an external file for game constants so that mods can be
-    made without looking into the code.
-    a. Blast radius
-    b. Bullet damage
-
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------
 
@@ -61,7 +64,7 @@ THESE ITEMS ARE OF SECOND PRIORITY:
 
 (?). Restore the animation of Refreshes
 
-(?). Adapt the crew file format, so that you can enter types by
+DONE Adapt the crew file format, so that you can enter types by
      their names instead of their numbers
 
 -1. Write doku on how to control the game

@@ -22,7 +22,7 @@ That will not cause any problems.
 
 *** Start of Bullet Data Section: ***
 
-Common factor for all bullet's speed values: 0.8
+Common factor for all bullet's speed values: 1.0
 Common factor for all bullet's damage values: 1.0
 
 *** End of Bullet Data Section: ***
