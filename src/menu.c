@@ -124,6 +124,13 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
 
+  //--------------------
+  // At first we hide the mouse cursor, so that there can not be any
+  // ambiguity whether to thing of the tux cursor or the mouse cursor
+  // to be the pointer we use.
+  //
+  SDL_ShowCursor( SDL_DISABLE );
+
   if ( FirstItem != (-1) ) MenuPosition = FirstItem;
 
   //--------------------
@@ -183,6 +190,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	{
 	  while ( EscapePressed() );
 	  MenuItemDeselectedSound();
+
+	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
 	}
       if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
@@ -197,6 +206,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  //
 	  // In case of a key, we always have a valid selection.
 	  //
+
+	  /*
 	  if ( axis_is_active )
 	    {
 	      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
@@ -205,23 +216,31 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 		  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
 		  while ( EnterPressed() || SpacePressed() );
 		  MenuItemSelectedSound();
+
+		  SDL_ShowCursor( SDL_ENABLE );
 		  return ( MenuPosition );
 		}
 	    }
 	  else
 	    {
+	  */
+
 	      while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
 	      MenuItemSelectedSound();
+
+	      SDL_ShowCursor( SDL_ENABLE );
 	      return ( MenuPosition );
+	      /*
 	    }
+	      */
 	}
-      if (UpPressed()) 
+      if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
 	  if (MenuPosition > 1) MenuPosition--;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
 	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
 	  MoveMenuPositionSound();
@@ -238,6 +257,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 
     }
 
+  SDL_ShowCursor( SDL_ENABLE );
   return ( -1 );
 }; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
 

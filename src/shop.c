@@ -129,7 +129,14 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
   int MenuInListPosition = 0;
   char DescriptionText[5000];
   float PriceFound;
-  
+
+  //--------------------
+  // At first we hide the mouse cursor, so that there can not be any
+  // ambiguity whether to thing of the tux cursor or the mouse cursor
+  // to be the pointer we use.
+  //
+  SDL_ShowCursor( SDL_DISABLE );
+
   //--------------------
   // First we make sure, that neither space nor Escape are
   // pressed in the beginning, so that a real menu selection
@@ -234,7 +241,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
       // 
       // Mouse wheel action will be checked for further down.
       //
-      if ( UpPressed() )
+      if ( UpPressed() || MouseWheelUpPressed() )
 	{
 	  if ( InMenuPosition > 0 ) InMenuPosition --;
 	  else 
@@ -244,7 +251,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	    }
 	  while ( UpPressed() );
 	}
-      if ( DownPressed() )
+      if ( DownPressed() || MouseWheelDownPressed() )
 	{
 	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
 	       ( InMenuPosition < Pointer_Index -1 ) )
@@ -265,6 +272,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
       // but instead we have the menu scrolling up or down, depending on
       // what's currently requested.
       //
+      /*
       if ( MouseWheelUpPressed() )
 	{
 	  if ( MenuInListPosition > 0 )
@@ -279,21 +287,34 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 
 	  while ( MouseWheelDownPressed() );
 	}      
+      */
 
     } // while not space pressed...
 
+  if ( SpacePressed() || axis_is_active ) 
+    {
+      SDL_ShowCursor( SDL_ENABLE );
+      return ( InMenuPosition + MenuInListPosition ) ;
+    }
+  /*
   if ( SpacePressed() && !axis_is_active ) 
     {
+      SDL_ShowCursor( SDL_ENABLE );
       return ( InMenuPosition + MenuInListPosition ) ;
     }
   else
     {
       if ( ( ClickedMenuItemPosition() != (-1) ) && ( ClickedMenuItemPosition() < Pointer_Index ) )
-	return ( ClickedMenuItemPosition() + MenuInListPosition ) ;
+	{
+	  SDL_ShowCursor( SDL_ENABLE );
+	  return ( ClickedMenuItemPosition() + MenuInListPosition ) ;
+	}
     }
+  */
 
   while ( SpacePressed() || EscapePressed() );
 
+  SDL_ShowCursor( SDL_ENABLE );
   return (-1); // just to make compilers happy :)
 
 }; // int DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] )
@@ -618,7 +639,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 }; // void Buy_Basic_Items( void )
 
 /* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
+ * This is the menu, where you can select items for repair.
  * ---------------------------------------------------------------------- */
 void
 Repair_Items( void )
