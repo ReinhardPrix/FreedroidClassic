@@ -248,7 +248,10 @@ Level_Editor(void)
   char* NewCommentOnThisSquare;
   char* OldMapPointer;
   char linebuf[10000];
-  static char VanishingMessage[10000]="";
+
+  char VanishingMessage[10000]="Hello";
+  float VanishingMessageDisplayTime = 100;
+
   SDL_Rect Editor_Window;
   enum
     { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
@@ -289,7 +292,9 @@ Level_Editor(void)
 			CurLevel -> AllWaypoints [ OriginWaypoint ] . y );
 	    }
 	  LeftPutString ( Screen , 4 * FontHeight( GetCurrentFont() ), linebuf );
-	  LeftPutString ( Screen , 5 * FontHeight( GetCurrentFont() ), VanishingMessage );
+
+	  // LeftPutString ( Screen , 5 * FontHeight( GetCurrentFont() ), VanishingMessage );
+	  DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
 
 
 	  //--------------------
@@ -550,38 +555,38 @@ Level_Editor(void)
 
 	      if ( i == MAXWAYPOINTS )
 		{
-		  printf("\n\nSorry, don't know which waypoint you mean.");
+		  sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
 		}
 	      else
 		{
-		  printf("\n\nYou specified waypoint nr. %d.",i);
+		  sprintf( VanishingMessage , "\n\nYou specified waypoint nr. %d." , i );
 		  if ( OriginWaypoint== (-1) )
 		    {
-		      printf("\nIt has been marked as the origin of the next connection.");
+		      strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
 		      OriginWaypoint = i;
 		    }
 		  else
 		    {
 		      if ( OriginWaypoint == i )
 			{
-			  printf("\n\nOrigin==Target --> Connection Operation cancelled.");
+			  strcat ( VanishingMessage , "\n\nOrigin==Target --> Connection Operation cancelled.");
 			  OriginWaypoint = (-1);
 			}
 		      else
 			{
-			  printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
+			  sprintf( VanishingMessage , "\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
 			  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
 			    {
 			      if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
 			    }
 			  if ( k == MAX_WP_CONNECTIONS ) 
 			    {
-			      printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
+			      strcat ( VanishingMessage , "\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE." );
 			    }
 			  else
 			    {
 			      CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
-			      printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
+			      strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
 			    }
 			  OriginWaypoint = (-1);
 			}
