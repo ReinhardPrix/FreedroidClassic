@@ -354,8 +354,18 @@ either terminate or continue running now.",
     {
       fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
       GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
-The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.",
-				 PLEASE_INFORM, IS_FATAL );
+The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.\n",
+				 PLEASE_INFORM, IS_WARNING_ONLY );
+
+      //--------------------
+      // If we receive an error playing a sound file here, this is very inconvenient.
+      // We must see to it that the callback code and allocation there and all that doesn't
+      // get touched.  I hope that the following fix does already what we want here...
+      // But it should :->
+      //
+      Mix_FreeChunk ( One_Shot_WAV_File );
+      return;
+
     } // if ( ... = -1
   else
     {
