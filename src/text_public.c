@@ -161,7 +161,7 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
     void* MatchPointer;
     size_t SearchPos=0;
     
-    DebugPrintf (3, "MyMemmem(): haystack = %d, len = %d, needle=%s\n", haystack, haystacklen, needle);
+    DebugPrintf ( 3 , "%s(): haystack = %d, len = %d, needle=%s\n", __FUNCTION__ , haystack, haystacklen, needle);
     
     while ( haystacklen - SearchPos > 0 )
     {
@@ -421,7 +421,7 @@ This indicates a corrupted or seriously outdated game data or saved game file.",
 void
 save_item_roster_to_file ( char* filename )
 {
-    FILE *SaveGameFile;  // to this file we will save all the ship data...
+    FILE *SaveGameFile;
     char linebuf[10000];
     int i;
     
@@ -433,9 +433,9 @@ save_item_roster_to_file ( char* filename )
     //
     if ( ( SaveGameFile = fopen ( filename , "wb" ) ) == NULL ) 
     {
-
-	DebugPrintf( 0 , "\n\n%sError opening save game file for writing...\n\nTerminating...\n\n");
-	Terminate(ERR);
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Error opening item roster save file.",
+				   PLEASE_INFORM, IS_FATAL );
     }
     
     //--------------------
@@ -446,7 +446,7 @@ save_item_roster_to_file ( char* filename )
     strcpy ( linebuf , "\n\
 ----------------------------------------------------------------------\n\
  *\n\
- *   Copyright (c) 2003 Johannes Prix\n\
+ *   Copyright (c) 2003, 2004 Johannes Prix\n\
  *\n\
  *\n\
  *  This file is part of Freedroid\n\
@@ -808,10 +808,11 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
 *** End of this Freedroid data File ***\n\n\n\n" );
     fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
     
-    if( fclose( SaveGameFile ) == EOF) 
+    if ( fclose( SaveGameFile ) == EOF ) 
     {
-	printf("\n\nClosing of dialog file failed in save_item_roster_to_file(...)\n\nTerminating\n\n");
-	Terminate(ERR);
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Error closing item roster save file.",
+				   PLEASE_INFORM, IS_FATAL );
     }
     
     DebugPrintf ( 0 , "\n%s(): end of function reached." , __FUNCTION__ );
@@ -826,33 +827,33 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
 void
 save_dialog_roster_to_file ( char* filename )
 {
-  FILE *SaveGameFile;  // to this file we will save all the ship data...
-  char linebuf[10000];
-  int i;
-  int j;
+    FILE *SaveGameFile;
+    char linebuf[10000];
+    int i;
+    int j;
 
-  DebugPrintf ( 0 , "\nvoid save_dialog_roster_to_file(...): real function call confirmed.");
-  DebugPrintf ( 0 , "\nvoid save_dialog_roster_to_file(...): now opening the savegame file for writing ..."); 
+    DebugPrintf ( 0 , "\n%s(): real function call confirmed." , __FUNCTION__ );
+    DebugPrintf ( 0 , "\n%s(): now opening the savegame file for writing ..." , __FUNCTION__ ); 
 
-  //--------------------
-  // Now that we know which filename to use, we can open the save file for writing
-  //
-  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) 
+    //--------------------
+    // Now that we know which filename to use, we can open the save file for writing
+    //
+    if( ( SaveGameFile = fopen(filename, "wb")) == NULL) 
     {
-      DebugPrintf( 0 , "\n\nError opening save game file for writing...\n\nTerminating...\n\n");
-      Terminate(ERR);
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Error opening dialog roster save file.",
+				   PLEASE_INFORM, IS_FATAL );
     }
   
-  //--------------------
-  // Now that the file is opend for writing, we can start writing.  And the first thing
-  // we will write to the file will be a fine header, indicating what this file is about
-  // and things like that...
-  //
-  strcpy ( linebuf , "\n\
+    //--------------------
+    // Now that the file is opend for writing, we can start writing.  And the first thing
+    // we will write to the file will be a fine header, indicating what this file is about
+    // and things like that...
+    //
+    strcpy ( linebuf , "\n\
 ----------------------------------------------------------------------\n\
  *\n\
- *   Copyright (c) 1994, 2002 Johannes Prix\n\
- *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix\n\
  *\n\
  *\n\
  *  This file is part of Freedroid\n\
@@ -879,150 +880,150 @@ If you have questions concerning FreedroidRPG, please send mail to:\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , "BEGIN OF AUTORS NOTES\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , authors_notes );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , "\nEND OF AUTORS NOTES\n\n\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
 
-  strcpy ( linebuf , "BEGIN OF AUTORS NOTES\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-  strcpy ( linebuf , authors_notes );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-  
-  strcpy ( linebuf , "\nEND OF AUTORS NOTES\n\n\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-
-
-  //--------------------
-  // Now we can write out the certain string, that is still needed by
-  // the dialog loading function...
-  //
-  strcpy ( linebuf , "Beginning of new chat dialog for character=\"XXXXX\"\n\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
-
-  //--------------------
-  // Now it's time to proceed through the whole dialog roster and save
-  // each dialog option, one after the other, hopefully loosing no bit
-  // of information...
-  //
-  for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+    //--------------------
+    // Now we can write out the certain string, that is still needed by
+    // the dialog loading function...
+    //
+    strcpy ( linebuf , "Beginning of new chat dialog for character=\"XXXXX\"\n\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
+    
+    //--------------------
+    // Now it's time to proceed through the whole dialog roster and save
+    // each dialog option, one after the other, hopefully loosing no bit
+    // of information...
+    //
+    for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
     {
-      //--------------------
-      // Unused dialog options are recognized by their zero length
-      // option text, right?
-      //
-      if ( strlen ( ChatRoster [ i ] . option_text ) == 0 ) continue ;
-
-      //--------------------
-      // We write out the new dialog option starter...
-      //
-      sprintf ( linebuf , "New Option Nr=%d  OptionText=\"%s\"\nOptionSample=\"%s\"\n" , 
-		i , ChatRoster [ i ] . option_text , ChatRoster [ i ] . option_sample_file_name ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out the option positions of this option..
-      //
-      sprintf ( linebuf , "PositionX=%d  PositionY=%d  \n" , 
-		ChatRoster [ i ] . position_x , ChatRoster [ i ] . position_y ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // Now we write out all reply-text reply-sample combinations that there are for this
-      // dialog option...
-      //
-      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	//--------------------
+	// Unused dialog options are recognized by their zero length
+	// option text, right?
+	//
+	if ( strlen ( ChatRoster [ i ] . option_text ) == 0 ) continue ;
+	
+	//--------------------
+	// We write out the new dialog option starter...
+	//
+	sprintf ( linebuf , "New Option Nr=%d  OptionText=\"%s\"\nOptionSample=\"%s\"\n" , 
+		  i , ChatRoster [ i ] . option_text , ChatRoster [ i ] . option_sample_file_name ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out the option positions of this option..
+	//
+	sprintf ( linebuf , "PositionX=%d  PositionY=%d  \n" , 
+		  ChatRoster [ i ] . position_x , ChatRoster [ i ] . position_y ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// Now we write out all reply-text reply-sample combinations that there are for this
+	// dialog option...
+	//
+	for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
 	{
-	  //--------------------
-	  // The end of the reply-subtitle-sample combinations is indicated again by
-	  // an empty string...
-	  //
-	  if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) == 0 ) break;
-
-	  sprintf ( linebuf , "Subtitle=\"%s\"\nReplySample=\"%s\"\n" ,
-		    ChatRoster [ i ] . reply_subtitle_list [ j ] ,
-		    ChatRoster [ i ] . reply_sample_list [ j ] );
-	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	    //--------------------
+	    // The end of the reply-subtitle-sample combinations is indicated again by
+	    // an empty string...
+	    //
+	    if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) == 0 ) break;
+	    
+	    sprintf ( linebuf , "Subtitle=\"%s\"\nReplySample=\"%s\"\n" ,
+		      ChatRoster [ i ] . reply_subtitle_list [ j ] ,
+		      ChatRoster [ i ] . reply_sample_list [ j ] );
+	    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	}
-
-      //--------------------
-      // Now we write out all option-change option-value combinations that there are for this
-      // dialog option...
-      //
-      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	
+	//--------------------
+	// Now we write out all option-change option-value combinations that there are for this
+	// dialog option...
+	//
+	for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
 	{
-	  //--------------------
-	  // The end of the option-change-value combinations is indicated by
-	  // a (-1) value...
-	  //
-	  if ( ChatRoster [ i ] . change_option_nr [ j ] == (-1) ) continue;
-
-	  sprintf ( linebuf , "ChangeOption=%d ChangeToValue=%d\n" ,
-		    ChatRoster [ i ] . change_option_nr [ j ] ,
-		    ChatRoster [ i ] . change_option_to_value [ j ] );
-	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	    //--------------------
+	    // The end of the option-change-value combinations is indicated by
+	    // a (-1) value...
+	    //
+	    if ( ChatRoster [ i ] . change_option_nr [ j ] == (-1) ) continue;
+	    
+	    sprintf ( linebuf , "ChangeOption=%d ChangeToValue=%d\n" ,
+		      ChatRoster [ i ] . change_option_nr [ j ] ,
+		      ChatRoster [ i ] . change_option_to_value [ j ] );
+	    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	}
       
-      //--------------------
-      // Now we write out all extra commands given for this
-      // dialog option...
-      //
-      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	//--------------------
+	// Now we write out all extra commands given for this
+	// dialog option...
+	//
+	for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
 	{
-	  //--------------------
-	  // The end of the extra list is indicated again by
-	  // an empty string...
-	  //
-	  if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) == 0 ) break;
-
-	  sprintf ( linebuf , "DoSomethingExtra=\"%s\"\n" ,
-		    ChatRoster [ i ] . extra_list [ j ] );
-	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	    //--------------------
+	    // The end of the extra list is indicated again by
+	    // an empty string...
+	    //
+	    if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) == 0 ) break;
+	    
+	    sprintf ( linebuf , "DoSomethingExtra=\"%s\"\n" ,
+		      ChatRoster [ i ] . extra_list [ j ] );
+	    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	}
-
-      //--------------------
-      // We write out the on-goto-condition of this dialog option...but of
-      // course only, if the on-goto-condition is used too, i.e. if the 
-      // condition string is not empty...
-      //
-      if ( strlen ( ChatRoster [ i ] . on_goto_condition ) != 0 )
+	
+	//--------------------
+	// We write out the on-goto-condition of this dialog option...but of
+	// course only, if the on-goto-condition is used too, i.e. if the 
+	// condition string is not empty...
+	//
+	if ( strlen ( ChatRoster [ i ] . on_goto_condition ) != 0 )
 	{
-	  sprintf ( linebuf , "OnCondition=\"%s\" JumpToOption=%d ElseGoto=%d\n" , 
-		    ChatRoster [ i ] . on_goto_condition , ChatRoster [ i ] . on_goto_first_target ,
-		    ChatRoster [ i ] . on_goto_second_target ) ;
-	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	    sprintf ( linebuf , "OnCondition=\"%s\" JumpToOption=%d ElseGoto=%d\n" , 
+		      ChatRoster [ i ] . on_goto_condition , ChatRoster [ i ] . on_goto_first_target ,
+		      ChatRoster [ i ] . on_goto_second_target ) ;
+	    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	}
-
-      sprintf ( linebuf , "AlwaysExecuteThisOptionPriorToDialogStart=\"" ) ;
-      if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
-	strcat ( linebuf , "yes\"\n" );
-      else
-	strcat ( linebuf , "no\"\n" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // Basically this should be it.  So maybe now we can just write out some
-      // separation string and that's it...
-      //
-      sprintf ( linebuf , "\n----------------------------------------------------------------------\n\n" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      
+	
+	sprintf ( linebuf , "AlwaysExecuteThisOptionPriorToDialogStart=\"" ) ;
+	if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
+	    strcat ( linebuf , "yes\"\n" );
+	else
+	    strcat ( linebuf , "no\"\n" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// Basically this should be it.  So maybe now we can just write out some
+	// separation string and that's it...
+	//
+	sprintf ( linebuf , "\n----------------------------------------------------------------------\n\n" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
     }
+    
 
-
-  //--------------------
-  // Now finally, we can write out the certain string, that is still needed by
-  // the dialog loading function...
-  //
-  strcpy ( linebuf , "End of chat dialog for character=\"XXXXX\"\n\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
-
-  if( fclose( SaveGameFile ) == EOF) 
+    //--------------------
+    // Now finally, we can write out the certain string, that is still needed by
+    // the dialog loading function...
+    //
+    strcpy ( linebuf , "End of chat dialog for character=\"XXXXX\"\n\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
+    
+    if( fclose( SaveGameFile ) == EOF) 
     {
-      printf("\n\nClosing of dialog file failed in save_dialog_roster_to_file(...)\n\nTerminating\n\n");
-      Terminate(ERR);
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Error closing the dialog roster save file.",
+				   PLEASE_INFORM, IS_FATAL );
     }
-  
-  DebugPrintf ( 0 , "\nsave_dialog_roster_to_file ( char* filename ): end of function reached.");
+    
+    DebugPrintf ( 0 , "\n%s(): end of function reached." , __FUNCTION__ );
 
 }; // void save_dialog_roster_to_file ( char* filename )
 
@@ -1036,16 +1037,16 @@ freedroid-discussion@lists.sourceforge.net\n\
 void
 RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
 {
-  moderately_finepoint new_vect;
-  float rad_angle;
-
-  rad_angle = rot_angle * ( M_PI / 180.0 ) ; 
-  
-  DebugPrintf( 2 , "\n RAD_ANGLE : %f " , rad_angle );
-  new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
-  new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
-  vector->x = new_vect.x;
-  vector->y = new_vect.y;
+    moderately_finepoint new_vect;
+    float rad_angle;
+    
+    rad_angle = rot_angle * ( M_PI / 180.0 ) ; 
+    
+    DebugPrintf( 2 , "\n RAD_ANGLE : %f " , rad_angle );
+    new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
+    new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
+    vector->x = new_vect.x;
+    vector->y = new_vect.y;
 
 }; // void RotateVectorByAngle ( ... )
 
