@@ -174,7 +174,7 @@ parse_command_line (int argc, char *const argv[])
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vqst:h?d::", long_options, NULL);
+      c = getopt_long (argc, argv, "vfqst:h?d::", long_options, NULL);
       if (c == -1)
 	break;
 

@@ -150,6 +150,12 @@ Frame_Time (void)
 {
   float Rate_To_Be_Returned;
   
+  if ( SkipAFewFrames ) 
+    {
+      Rate_To_Be_Returned = Overall_Average;
+      return Rate_To_Be_Returned;
+    }
+
 
   // Rate_To_Be_Returned = (1.0 / FPSover10);
   if ( Overall_Frames_Displayed < 100 )
@@ -169,11 +175,6 @@ Frame_Time (void)
       Rate_To_Be_Returned = (1.0 / 20.0);
     }
   */
-
-  if ( SkipAFewFrames ) 
-    {
-      Rate_To_Be_Returned = Overall_Average;
-    }
 
   return Rate_To_Be_Returned;
 

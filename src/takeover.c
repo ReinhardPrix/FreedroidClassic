@@ -306,7 +306,7 @@ Takeover (int enemynum)
       waiter = WAIT_AFTER_GAME;
       while (waiter != 0)
 	{
-	  usleep (30000);	/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+	  // usleep (30000);	/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
 
 	  waiter--;
 	  RollToColors ();

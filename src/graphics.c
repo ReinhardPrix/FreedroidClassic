@@ -158,13 +158,7 @@ void display_bmp(char *file_name)
 void
 Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal)
 {
-  FILE *file;
-  void *image;
-  int i;
-  int j;
-  unsigned short int length, height;
-  unsigned char palette[768];
-  SDL_Surface *LocalImage;
+  int i,j;
 
   DebugPrintf
     ("\nvoid Load_PCX_Image(...):  Real function call confirmed...");
@@ -957,7 +951,7 @@ ClearGraphMem (unsigned char *Parameter_screen)
   DebugPrintf
     ("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
 
-  if (screen == RealScreen) 
+  if (Parameter_screen == RealScreen) 
     {
       ThisRectangle.x=0;
       ThisRectangle.y=0;
