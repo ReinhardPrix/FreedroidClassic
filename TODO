@@ -1,29 +1,20 @@
 #-*- mode: text -*-
 Bugs
-----
-- (DONE) Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
-  (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
-  hoffe dass niemand sie doch gebraucht haette...
+=======
 
-- (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
+next release: 0.7.1  (bug-fix release)
 
-- Levelnumber should be the index in curShip.AllLevels to simplify things...
+Outstanding release-critical bugs (priority: high)
+--------------------------------------------------
+- in the first ~20 seconds the game runs _very_ slowly
+- complete SDL checks in autoconf
+- make sure all svgalib references are removed
+- game should be able to check if yiff is actually _running_ and
+  complain if not
 
-- 247 and 249 always in Blinkenergy 
-- 999 rotiert zu schnell
-- "Flash" schuss ist zwar jetzt sichtbarer, scheint aber nicht mehr zu
-  wirken...
-- Schussfrequenz des 001 zu hoch
-- Uebernommener 302 is zu schnell, 420 is zu langsam...
-
-- (rp) "Ghosts" (i.e. Enemeys go throught walls...)
-  ->  Waypoint info in map seems ok, must be bug in enemy-movement
-
-- Enemey visibility is a bit shakey (revisit visibility calcuations...)
-
--  Also there are 516 in the yellow level, which shouldn't be the case.
--  I also encounter OTHER 001 druids of black color! Especially after having died at
-  least once before!  Very strange!
+Outstanding normal bugs (priority: normal)
+------------------------------------------
+- Farbpalettenrotation fuer Bulletcolor austauschen, da sie die Framerate verschlingt!!
 
 - Spiel "holpert" oefters: koennte von Scroll-schrift kommen
   (sollte vielleicht in einem Parallel-prozess laufen, statt in
@@ -36,6 +27,60 @@ Bugs
   vielen IsVisible-Abfragen, die scheinbar irgendwo aus der Karte hinaus im Speicher die
   Sichtbarkeit uberpruefen.  Sehr fragwuerdig.
 
+
+Outstanding tuning/design bugs and general TODO(priority: low)
+--------------------------------------------------------------
+- (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
+- Levelnumber should be the index in curShip.AllLevels for simplicity
+- 247 and 249 always in Blinkenergy 
+- 999 rotiert zu schnell
+- Uebernommener 302 is zu schnell, 420 is zu langsam...
+- Enemey visibility is a bit shakey (revisit visibility
+  calcuations...)
+- Also there are 516 in the yellow level, which shouldn't be the
+  case.
+- I also encounter OTHER 001 druids of black color! Especially after having died at
+  least once before!  Very strange!
+- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
+
+
+Wishlist
+--------
+- !! We should have a common bug/patch mailing address somewhere !!
+  freedroid@....
+
+- (jp) add more sounds:  Deadlock-Sound-Sequenz, Complete-Sound-Sequenz, 
+  verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
+  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
+  eine eigene Hintergrundmusik  zu verwenden.
+  Different sounds for different bullettypes.
+  Win-Takeover-Sound
+  Lose-Takeover-Sound
+  Deadlock-Sound
+
+- save highscores to disk
+
+- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
+  bequem einstellen kann  
+  (Under construction:  Menu exists at least, accessible via ESCAPE key)
+
+- (rp?) mouse-support (should be good with touchstick on laptop!)
+
+- (rp?) joystick/gamepad support waere toll!
+
+- (rp): PORT the map-editor 'maped' ?
+
+- (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
+
+
+Resolved bugs
+-------------
+- Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
+  (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
+  hoffe dass niemand sie doch gebraucht haette...
+- Schussfrequenz des 001 zu hoch
+- (rp) "Ghosts" (i.e. Enemeys go throught walls...)
+
 - (DONE)  gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
  --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
 
@@ -44,8 +89,6 @@ Bugs
 
 - (DONE)  (rp) Invincible mode: versagt manchmal (collisions)
 	  --> inzwischen ueberlebt man die absurdesten Kaempfe und Situationen damit
-
-- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
 
 - (DONE?)  (jp) Calculate all movement (where movement is to be understood in an abstract
 	   sense including movement of energy and such) framerate-dependant
@@ -56,16 +99,6 @@ Bugs
 	   --> Konsole ist jetzt relativ ansehnlich.  Weitere
 	   Verbesserungsvorschaege erwuenscht. 
 	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen
-	   durch die GreatDruidShow!!) 
-
-- (jp) add more sounds:  Deadlock-Sound-Sequenz, Complete-Sound-Sequenz, 
-  verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
-  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
-  eine eigene Hintergrundmusik  zu verwenden.
-  Different sounds for different bullettypes.
-  Win-Takeover-Sound
-  Lose-Takeover-Sound
-  Deadlock-Sound
 
 - (DONE)   correct the too fast refresh movement and effect
 	   Refreshes sollten jetzt ordentlich arbeiten.  Etwas kalibrieren koennte man
@@ -83,33 +116,4 @@ Bugs
 	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
 	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
 
-- Farbpalettenrotation fuer die Bulletcolor austauschen, da diese die Framerate verschling!!
-
-
-Missing features
------------------
-- !! We should have a common bug/patch mailing address somewhere !!
-  freedroid@....
-
-- save highscores to disk
-
-- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
-  bequem einstellen kann  
-  (Under construction:  Menu exists at least, accessible via ESCAPE key)
-
-- (rp?) mouse-support (should be good with touchstick on laptop!)
-
-- (rp?) joystick/gamepad support waere toll!
-
-- (rp): PORT the map-editor 'maped' ?
-
-- (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
-
-- "Encapsulate" all graphic-function/keyboard/mouse calls, 
-  so that porting to X becomes easier?!
-
-- X11 - support (use DGA-mode!)
-
-- Druidmap.notes sollten besser von file eingelesen werden oder
-  zumindest in paravars.h (statt direkt in InitParaplus())
 
