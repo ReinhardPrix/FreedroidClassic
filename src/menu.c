@@ -1064,8 +1064,6 @@ Cheatmenu (void)
 	printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
 		    show_all_droids ? "ON\n" : "OFF\n" );
 	printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
-	printf_SDL (Screen, -1, -1, " s. Sound: %s",
-		    sound_on ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " x. Cheatkeys : %s",
 		    GameConfig . enable_cheatkeys ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
@@ -1263,10 +1261,6 @@ Cheatmenu (void)
 		
 	    case 'n': // toggle display of all droids 
 		show_all_droids = !show_all_droids;
-		break;
-		
-	    case 's': // toggle sound on/off 
-		sound_on = !sound_on;
 		break;
 		
 	    case 'm': /* Show deck map in Concept view */
