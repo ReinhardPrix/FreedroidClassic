@@ -260,21 +260,11 @@ Takeover (int enemynum)
 	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
-	  // SwitchBackgroundMusicTo (SILENCE);
 	  Takeover_Game_Lost_Sound ();
-	  if (Me[0].type != DRUID001)
-	    {
-	      message = "Rejected";
-	      Me[0].type = DRUID001;
-	      Me[0].energy = RejectEnergy;
-	    }
-	  else
-	    {
-	      message = "Burnt Out";
-	      Me[0].energy = 0;
-	    }
+	  message = "Rejected";
+	  if ( Me [ 0 ] . energy > 5 ) Me [ 0 ] . energy = 5 ;
 	  FinishTakeover = TRUE;
-	}			/* LeadColor == OpponentColor */
+	}			// if LeadColor == OpponentColor 
       else
 	{
 	  Takeover_Game_Deadlock_Sound ();
@@ -284,9 +274,16 @@ Takeover (int enemynum)
       /* don't display enemy if we're finished */
       if (FinishTakeover) 
 	{
-	  AllEnemys[enemynum].Status = OUT;
-	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
-	  OpponentType = -1;	/* dont display enemy any more */
+	  if ( LeaderColor == YourColor )
+	    {
+	      AllEnemys[enemynum].Status = OUT;
+	      AllEnemys[enemynum].energy = -1.0;  /* to be sure */
+	      OpponentType = -1;	/* dont display enemy any more */
+	    }
+	  else
+	    {
+	      AllEnemys[enemynum].energy = Druidmap [ AllEnemys[enemynum].type ] . maxenergy ;
+	    }
 	}
 
       //        /* Wait a turn */ */
