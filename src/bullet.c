@@ -152,7 +152,7 @@ StartBlast (float x, float y, int type)
   Blast NewBlast;
   int map_x, map_y;
 
-  DebugPrintf( 0 , "\nvoid StartBlast( ... ) called with x=%f y=%f" , x , y );
+  // DebugPrintf( 1 , "\nvoid StartBlast( ... ) called with x=%f y=%f" , x , y );
   //--------------------
   // first we see if there are any destructible map tiles, that need to
   // be destructed this way...
@@ -160,7 +160,7 @@ StartBlast (float x, float y, int type)
   map_x=(int)rintf(x);
   map_y=(int)rintf(y);
 
-  DebugPrintf( 0 , "\nmap value at blast destination : %d . " , CurLevel->map[ map_y ][ map_x ] );
+  // DebugPrintf( 1 , "\nmap value at blast destination : %d . " , CurLevel->map[ map_y ][ map_x ] );
   if ( CurLevel->map[ map_y ][ map_x ] == BOX_4 ) 
     {
       CurLevel->map[ map_y ][ map_x ] = FLOOR;
