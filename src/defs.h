@@ -180,11 +180,8 @@ enum
 #define COMBAT_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
 // #define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
 #define TAKEOVER_BACKGROUND_MUSIC_SOUND "Intro-Music.mod"
-#define CONSOLE_BACKGROUND_MUSIC_SOUND "ARDA.MOD"
+#define CONSOLE_BACKGROUND_MUSIC_SOUND "Arda.mod"
 #define CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC "A_City_at_Night.mod"
-
-// #define SILENCE (-1)
-#define SILENCE (NULL)
 
 enum _sounds
 {

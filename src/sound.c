@@ -1,3 +1,9 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc:  all functions dealing with sound are contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,12 +28,6 @@
  *  MA  02111-1307  USA
  *
  */
-/*----------------------------------------------------------------------
- *
- * Desc:  all functions dealing with sound are contained in this file.
- *
- *----------------------------------------------------------------------*/
-
 #ifndef _sound_c
 #define _sound_c
 #endif
@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 58
+#define ALL_SOUNDS 28
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -61,10 +61,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "EnterElevator_Sound_0.wav",
    "ThouArtDefeated_Sound_0.wav",
    "Got_Hit_Sound_0.wav",
-   "Enemy_Got_Hit_Sound_0.wav",
    "TakeoverSetCapsule_Sound_0.wav",
-   "Menu_Item_Selected_Sound_1.wav",
-   "Menu_Item_Deselected_Sound_0.wav",
+   "Menu_Item_Selected_Sound_0.wav",
    "Move_Menu_Position_Sound_0.wav",
    "Takeover_Game_Won_Sound_0.wav",
    "Takeover_Game_Deadlock_Sound_0.wav",
@@ -75,50 +73,28 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Flash_Sound_0.wav",
    "Fire_Bullet_Exterminator_Sound_0.wav",
    "Fire_Bullet_Laser_Rifle_Sound_0.wav",
-   "Fire_Bullet_Single_Laser_Sound_0.wav",
-   "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
-   "Fire_Bullet_Sword_Sound_0.wav",
-   "Bullet_Reflected_Sound_0.wav",
    "Cry_Sound_0.wav",
-   "Takeover_Sound_0.wav",
-   "Mission_Status_Change_Sound_0.wav",
-   "Item_Taken_Sound_0.wav",
-   "ICantCarryAnyMore_Sound_0.wav",
-   "MSMachinesClose_0.wav",
-   "Item_Drop_Sound_0.wav",
-   "Item_Drop_Sound_1.wav",
-   "Item_Drop_Sound_2.wav",
-   "Item_Drop_Sound_3.wav",
-   "Item_Drop_Sound_4.wav",
-   "Item_Drop_Sound_5.wav",
-   "Item_Armour_Put_Sound_0.wav",
-   "Item_Wheels_Put_Sound_0.wav",
-   "Item_Range_Weapon_Put_Sound_0.wav",
-   "First_Contact_Sound_0.wav",
-   "First_Contact_Sound_1.wav",
-   "Not_Enough_Power_Sound_0.wav",
-   "Not_Enough_Dist_Sound_0.wav",
-   "Not_Enough_Mana_0.wav",
-   "Influencer_Scream_Sound_0.wav",
-   "Influencer_Scream_Sound_1.wav",
-   "Influencer_Scream_Sound_2.wav",
-   "Influencer_Scream_Sound_3.wav",
-   "Influencer_Scream_Sound_4.wav",
-   "Spell_ForceToEnergy_Sound_0.wav"
+   "Takeover_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-#define ALL_MOD_MUSICS 2
+#define ALL_MOD_MUSICS NUM_COLORS    // we have a mod-background song per color now
 char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
-  "ERRORSOUND_NILL.NOMOD",
-  "A_City_at_Night.mod"
+  "A_City_at_Night.mod",
+  "AnarchyMenu1.mod",     
+  "Arda.mod",	       
+  "Elysium.mod",	       
+  "Intro-Music.mod",      
+  "The_Last_V8.mod",
+  "Beachhead_2.mod"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS];
+Mix_Music *Tmp_MOD_File;
 #endif
 
 void 
@@ -242,7 +218,7 @@ Sorry...\n\
 
   
   Loaded_MOD_Files[0]=NULL;
-  for (i = 1; i < ALL_MOD_MUSICS; i++)
+  for (i = 0; i < ALL_MOD_MUSICS; i++)
     {
       fpath = find_file ( MOD_Music_SampleFilenames [ i ], SOUND_DIR, FALSE);
       Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
@@ -368,143 +344,6 @@ CrySound (void)
   Play_Sound ( CRY_SOUND );
 }
 
-/* ----------------------------------------------------------------------
- * When a Force-To-Energy Spell is invoked successfully, then this sound
- * should be played...
- * ---------------------------------------------------------------------- */
-void
-Play_Spell_ForceToEnergy_Sound( )
-{
-  Play_Sound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
-};  // void Play_Spell_ForceToEnergy_Sound( )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-Not_Enough_Power_Sound ( void )
-{
-  Play_Sound ( NOT_ENOUGH_POWER_SOUND );
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-Not_Enough_Dist_Sound ( void )
-{
-  Play_Sound ( NOT_ENOUGH_DIST_SOUND );
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-Not_Enough_Mana_Sound ( void )
-{
-  Play_Sound ( NOT_ENOUGH_FORCE_SOUND );
-};
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-PlayGreetingSound ( int SoundCode )
-{
-  switch ( SoundCode )
-    {
-    case -1:
-      return;
-      break;
-    case 0:
-      Play_Sound( FIRST_CONTACT_SOUND_0 );
-      break;
-    case 1:
-      Play_Sound( FIRST_CONTACT_SOUND_1 );
-      break;
-    default:
-      DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
-      Terminate( ERR );
-      break;
-    }
-}; // void PlayGreetingSound ( int SoundCode )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-PlayItemSound ( int SoundCode )
-{
-  switch ( SoundCode )
-    {
-    case 0:
-      Play_Sound( ITEM_DROP_SOUND_0 );
-      break;
-    case 1:
-      Play_Sound( ITEM_DROP_SOUND_1 );
-      break;
-    case 2:
-      Play_Sound( ITEM_DROP_SOUND_2 );
-      break;
-    case 3:
-      Play_Sound( ITEM_DROP_SOUND_3 );
-      break;
-    case 4:
-      Play_Sound( ITEM_DROP_SOUND_4 );
-      break;
-    case 5:
-      Play_Sound( ITEM_ARMOUR_PUT_SOUND );
-      break;
-    case 6:
-      Play_Sound( ITEM_WHEELS_PUT_SOUND );
-      break;
-    case 7:
-      Play_Sound( ITEM_RANGE_WEAPON_PUT_SOUND );
-      break;
-    default:
-      break;
-    }
-};
-
-void
-ItemTakenSound (void)
-{
-  Play_Sound ( ITEM_TAKEN_SOUND );
-}
-
-/* ----------------------------------------------------------------------
- * This function generates a voice output stating that the influencer 
- * can't carry any more right now.  Also this function will see to it,
- * that the sentence is not repeated until 4 seconds after the previous
- * cant-carry-sentence have passed.
- * ---------------------------------------------------------------------- */
-void
-CantCarrySound (void)
-{
-  static long CurrentTicks = 0;
-
-  if ( ( SDL_GetTicks() - CurrentTicks ) > 4000 )
-    {
-      Play_Sound ( CANT_CARRY_SOUND );
-      CurrentTicks = SDL_GetTicks();
-    }
-}; // void CantCarrySound (void)
-
 /*@Function============================================================
 @Desc: 
 
@@ -515,18 +354,6 @@ void
 TransferSound (void)
 {
   Play_Sound ( TRANSFER_SOUND );
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-Mission_Status_Change_Sound (void)
-{
-  Play_Sound ( MISSION_STATUS_CHANGE_SOUND );
 }
 
 /*@Function============================================================
@@ -559,7 +386,7 @@ Switch_Background_Music_To ( char* filename_raw )
   if ( !sound_on ) return;
 
 
-  if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
+  if ( filename_raw == NULL ) 
     {
       //printf("\nOld Background music channel has been halted.");
       // fflush(stdout);
@@ -568,57 +395,25 @@ Switch_Background_Music_To ( char* filename_raw )
       return;
     }
 
-  //--------------------
-  // Now we LOAD the music file from disk into memory!!
-  // But before we free the old music.  This is not a danger, cause the music
-  // is first initialized in Init_Audio with some dummy mod files, so that there
-  // is always something allocated, that we can free here.
-  //
-  // The loading of music and sound files is
-  // something that was previously done only in the initialisatzion funtion
-  // of the audio thing.  But now we want to allow for dynamic specification of
-  // music files via the mission files and that.  So we load the music now.
-  //
-  Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
-  fpath = find_file ( filename_raw , SOUND_DIR, FALSE);
-  Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
-  if ( Loaded_MOD_Files[ 0 ] == NULL )
-    {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem in function SwitchBackgroundMusicTo( char* filename ):\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-The SDL says the reason for this would be:\n\
-%s \n\
-\n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , Mix_GetError() );
-      Terminate (ERR);
-    } // if ( !Loaded_WAV...
+  // New feature: choose background music by level-color:
+  // if filename_raw==BYCOLOR then chose bg_music[color]
+#define BYCOLOR "BYCOLOR"
+  if (!strcmp( filename_raw, BYCOLOR))
+      MOD_Music_Channel = Mix_PlayMusic (Loaded_MOD_Files[CurLevel->color], -1);
   else
     {
-      DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
-    }
+      if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);      
+      fpath = find_file (filename_raw, SOUND_DIR, FALSE);    
+      Tmp_MOD_File = Mix_LoadMUS (fpath);
+      if ( Tmp_MOD_File == NULL )
+	{
+	  DebugPrintf (0, "ERROR: Could not load soundfile: %s \n SDL-Error: %s\n", 
+		       fpath , Mix_GetError() );
+	  Terminate (ERR);
+	} // if ( !Loaded_WAV...
+      MOD_Music_Channel = Mix_PlayMusic (Tmp_MOD_File, -1);
+    }      
   
-
-  // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
-  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
-
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
@@ -703,40 +498,6 @@ GotHitSound (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-Influencer_Scream_Sound (void)
-{
-  if (!sound_on) return;
-
-  switch( MyRandom( 4 ) )
-    {
-    case 0 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
-      break;
-    case 1 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_1 );
-      break;
-    case 2 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
-      break;
-    case 3 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
-      break;
-    case 4 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_4 );
-      break;
-    default:
-      break;
-    }
-}; // void Influencer_Scream_Sound (void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
 GotIntoBlastSound (void)
 {
   if (!sound_on) return;
@@ -787,23 +548,7 @@ MenuItemSelectedSound (void)
   if (!sound_on) return;
 
   Play_Sound ( MENU_ITEM_SELECTED_SOUND );
-
-}; // void MenuItemSelectedSound ( void )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-MenuItemDeselectedSound (void)
-{
-  if (!sound_on) return;
-
-  Play_Sound ( MENU_ITEM_DESELECTED_SOUND );
-
-}; // void MenuItemSelectedSound ( void )
+}				// void MoveLiftSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -880,43 +625,32 @@ Fire_Bullet_Sound (int BulletType)
 
   switch (BulletType)
     {
-    case PULSE:
-      Play_Sound ( FIRE_BULLET_PULSE_SOUND );
-      break;
+      case PULSE:
+	Play_Sound ( FIRE_BULLET_PULSE_SOUND );
+	break;
 
-    case SINGLE_PULSE:
-      Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
-      break;
+      case SINGLE_PULSE:
+	Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+	break;
 
-    case MILITARY:
-      Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
-      break;
+      case MILITARY:
+	Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
+	break;
 
-    case FLASH:
-      Play_Sound ( FIRE_BULLET_FLASH_SOUND );
-      break;
+      case FLASH:
+	Play_Sound ( FIRE_BULLET_FLASH_SOUND );
+	break;
 
-    case EXTERMINATOR:
-      Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
-      break;
+      case EXTERMINATOR:
+	Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
+	break;
 
-    case LASER_RIFLE:
-      Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
-      break;
+      case LASER_RIFLE:
+	Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
+	break;
 
-    case SINGLE_LASER:
-      Play_Sound ( FIRE_BULLET_SINGLE_LASER_SOUND );
-      break;
-
-    case PLASMA_PISTOL:
-      Play_Sound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
-      break;
-
-    default:
-      Play_Sound ( FIRE_BULLET_SWORD_SOUND );
-      break;
     }
-}; // void FireBulletSound(void)
+}				// void FireBulletSound(void)
 
 
 /*@Function============================================================
@@ -931,8 +665,7 @@ Takeover_Set_Capsule_Sound (void)
   if (!sound_on) return;
 
   Play_Sound (TAKEOVER_SET_CAPSULE_SOUND);
-
-}; // void Takeover_Set_Capsule_Sound ( void )
+}				// void FireBulletSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -946,8 +679,7 @@ Takeover_Game_Won_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_WON_SOUND );
-
-}; // void Takeover_Game_Won_Sound ( void ) 
+}				// void FireBulletSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -961,8 +693,7 @@ Takeover_Game_Deadlock_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
-
-}; // void Takeover_Game_Deadlock_Sound ( void )
+}				// void FireBulletSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -976,7 +707,7 @@ Takeover_Game_Lost_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_LOST_SOUND );
-}; // void Takeover_Game_Lost_Sound ( void )
+}				// void FireBulletSound(void)
 
 
 /*@Function============================================================
@@ -990,9 +721,10 @@ BounceSound (void)
 {
   if (!sound_on) return;
 
+  // Play_Sound (COMBAT_BACKGROUND_MUSIC_SOUND );
   Play_Sound ( COLLISIONSOUND );
 
-}; // void BounceSound ( void )
+}				// void BounceSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -1007,65 +739,7 @@ DruidBlastSound (void)
 
   Play_Sound (BLASTSOUND);
 
-}; // void DruidBlastSound (void)
-
-
-/* ----------------------------------------------------------------------
- * 
- *
- * ---------------------------------------------------------------------- */
-void 
-PlayLevelCommentSound ( int levelnum )
-{
-  switch ( levelnum )
-    {
-    case 0:
-      // I've been away for a far too long time it seems...
-      break;
-    case 3:
-      // I can feel the MS Machines close now!
-      Play_Sound ( MS_MACHINES_CLOSE_NOW_SOUND );
-      break;
-    default: 
-      break;
-    };
-}; // void PlayLevelCommentSound ( int levelnum )
-
-/* ----------------------------------------------------------------------
- * Whenever an enemy is hit by the tux with a melee weapon, then the
- * following sound is played...
- * ---------------------------------------------------------------------- */
-void 
-PlayEnemyGotHitSound ( int enemytype )
-{
-  switch ( enemytype )
-    {
-    case -1:
-      // Don't play anything at all...
-      break;
-    case 0:
-      // Play a grunting enemy got hit sound...
-      Play_Sound ( ENEMY_GOT_HIT_SOUND_0 );
-      break;
-    default: 
-      break;
-    };
-}; // void PlayLevelCommentSound ( int levelnum )
-
-/* ----------------------------------------------------------------------
- * This function plays a sound of a bullet being reflected. It is only
- * used, when a bullets is compensated by the tux armour.
- * ---------------------------------------------------------------------- */
-void
-BulletReflectedSound (void)
-{
-  if (!sound_on) return;
-
-  Play_Sound ( BULLET_REFLECTED_SOUND);
-
-}; // void DruidBlastSound (void)
-
-
+}				// void BounceSound(void)
 
 
 #undef _sound_c

@@ -88,6 +88,7 @@ EnterLift (void)
     }
 
   EnterLiftSound ();
+  Switch_Background_Music_To (NULL); // turn off Bg music
 
   upLift = curShip.AllLifts[curLift].up;
   downLift = curShip.AllLifts[curLift].down;
@@ -206,6 +207,7 @@ EnterLift (void)
     } // if real level change has occured
 
   LeaveLiftSound ( );
+  Switch_Background_Music_To (CurLevel->Background_Song_Name);
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 

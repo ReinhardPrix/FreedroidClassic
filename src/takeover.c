@@ -202,7 +202,7 @@ Takeover (int enemynum)
       /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
-	  Switch_Background_Music_To (SILENCE);
+	  Switch_Background_Music_To (NULL); // silence
 	  Takeover_Game_Won_Sound ();
 	  if (Me.type == DRUID001)
 	    {
@@ -234,7 +234,7 @@ Takeover (int enemynum)
 	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
-	  Switch_Background_Music_To (SILENCE);
+	  Switch_Background_Music_To (NULL);
 	  Takeover_Game_Lost_Sound ();
 	  if (Me.type != DRUID001)
 	    {

@@ -331,7 +331,7 @@ CheckBulletCollisions (int num)
       //
     default:
       
-      // Check for collision with background
+      // first check for collision with background
       step.x = CurBullet->pos.x - CurBullet->prev_pos.x;
       step.y = CurBullet->pos.y - CurBullet->prev_pos.y;
       num_check_steps = (int)( sqrt(step.x*step.x + step.y*step.y)/ COLLISION_STEPSIZE);
@@ -390,6 +390,7 @@ CheckBulletCollisions (int num)
 		  AllEnemys[i].AdvancedCommand = 0;
 
 		  DeleteBullet( num );
+		  GotHitSound ();
 
 		  Enemy_Post_Bullethit_Behaviour( i );
 
