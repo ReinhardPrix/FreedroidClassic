@@ -81,7 +81,6 @@ EXTERN blastspec Blastmap[ALLBLASTTYPES];
 
 EXTERN int InitBars;
 EXTERN int PreTakeEnergy;
-EXTERN int Conceptview;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int LastBlastHit;
@@ -135,6 +134,7 @@ EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
 #else
 #define EXTERN extern
 #endif
+EXTERN float CurrentCombatScaleFactor;
 EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;
 EXTERN BFont_Info *Menu_BFont;

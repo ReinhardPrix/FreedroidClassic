@@ -97,7 +97,6 @@ int framenr = 0;
 int SkipAFewFrames = 0;
 long Overall_Frames_Displayed=0;
 float Overall_Average=0.041;
-float CurrentCombatScaleFactor=1;
 
 int TestSound (void);
 void CalibratedDelay (long);
@@ -226,7 +225,6 @@ main (int argc, char *const argv[])
 
   GameOver = FALSE;
   QuitProgram = FALSE;
-  Conceptview = FALSE;
 
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
   debug_level = 0;       /* 0=no debug 1=first debug level (at the moment=all) */

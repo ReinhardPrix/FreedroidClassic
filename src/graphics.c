@@ -46,6 +46,27 @@
 
 extern int TimerFlag;
 
+
+
+void
+TakeScreenshot(void)
+{
+  static int Number_Of_Screenshot=0;
+  char *Screenshoot_Filename;
+
+  // Screenshoot_Filename=malloc(100);
+  //="This is a dummy string, that should be sufficiently long ";
+
+  Screenshoot_Filename=malloc(100);
+  printf("\n\nScreenshoot function called.\n\n");
+  sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
+  printf("\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
+  SDL_SaveBMP( ne_screen , Screenshoot_Filename );
+  Number_Of_Screenshot++;
+  free(Screenshoot_Filename);
+
+} // void TakeScreenshot(void)
+
 /*
 ----------------------------------------------------------------------
 @Desc: 
@@ -59,7 +80,8 @@ Escape menu and its submenus.
 ----------------------------------------------------------------------
 */
 void 
-MakeGridOnScreen(void){
+MakeGridOnScreen(void)
+{
   int x,y;
 
   DebugPrintf("\nvoid MakeGridOnScreen(...): real function call confirmed.");

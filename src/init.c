@@ -354,6 +354,10 @@ InitFreedroid (void)
   
   Init_Joy ();
 
+  // The default should be, that no rescaling of the
+  // combat window at all is done.
+  CurrentCombatScaleFactor = 1;
+
   /* 
    * Initialise random-number generator in order to make 
    * level-start etc really different at each program start
@@ -595,7 +599,7 @@ Debriefing (void)
 			"    Enter your name: ");
       PrepareScaledSurface(TRUE);
 
-      GreatScoreName = GetString (10, 2);
+      // GreatScoreName = GetString (10, 2);
       GreatScore = RealScore;
     }
   else if (RealScore < LowestScoreOfDay)
@@ -606,7 +610,7 @@ Debriefing (void)
       PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
 			    "    Enter your name: ");
       PrepareScaledSurface(TRUE);
-      LowestName = GetString (10, 2);
+      // LowestName = GetString (10, 2);
       LowestScoreOfDay = RealScore;
     }
   else if (RealScore > HighestScoreOfDay)
@@ -618,7 +622,7 @@ Debriefing (void)
       PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
 			    "    Enter your name: ");
       PrepareScaledSurface(TRUE);
-      HighestName = GetString (10, 2);
+      // HighestName = GetString (10, 2);
       HighestScoreOfDay = RealScore;
     }
   free (Scoretext);

@@ -162,12 +162,6 @@ Assemble_Combat_Picture (int mask)
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
-  if (Conceptview)
-    {
-      // GetConceptInternFenster ();
-      return;
-    }
-
   // Why not blit the WHOLE map?  Lets try it!
   // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
   // * INTERNBREITE IS NO LONGER NEEDED IN HERE

@@ -10,6 +10,8 @@ Outstanding release-critical bugs (priority: high)
     des einen Cast operators (der die Ints scheinbar fix als maximal 4 bytes voraussetzt,
     was knapp ist) nicht mehr beobachtet.
 
+- (jp) Before any release the levelcolor changing procedure must be rearranged to work
+       well together with the combat screen resizing code
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------

@@ -330,7 +330,6 @@ Cheatmenu (void)
 		 InvincibleMode ? "ON" : "OFF");
       printf (" f. full energy\n");
       printf (" b. blink-energy\n");
-      printf (" c. Conceptview: %s\n", Conceptview ? "ON" : "OFF");
       printf (" h. Hide invisible map parts: %s\n",
 	      HideInvisibleMap ? "ON" : "OFF" );
       printf (" m. Map of Deck xy\n");
@@ -473,10 +472,6 @@ Cheatmenu (void)
 	  getchar_raw ();
 	  break;
 
-	case 'c': /* toggle concept view */
-	  Conceptview = !Conceptview;
-	  break;
-	  
 	case 'h': /* toggle hide invisible map */
 	  HideInvisibleMap = !HideInvisibleMap;
 	  break;
