@@ -52,9 +52,9 @@ message, Message;
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "mouse_buttons/CHAButton.png"                    , { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "mouse_buttons/INVButton.png"                    , { 600 , 400 ,  38 ,  22 } } ,
-    { NULL , "mouse_buttons/SKIButton.png"                    , { 600 , 370 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/CHAButton.png"                    , { 560 , 435 ,  38 ,  45 } } ,
+    { NULL , "mouse_buttons/INVButton.png"                    , { 600 , 420 ,  38 ,  40 } } ,
+    { NULL , "mouse_buttons/SKIButton.png"                    , { 590 , 376 ,  38 ,  47 } } ,
     { NULL , "mouse_buttons/PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } } ,
@@ -285,7 +285,7 @@ be successfully loaded into memory.\n\
 This is an indication of a severe bug/installation problem of freedroid.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
-      AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormat ( tmp );
+      AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormatAlpha ( tmp );
       SDL_FreeSurface ( tmp );
     }
 
