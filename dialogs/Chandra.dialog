@@ -1,4 +1,4 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix
@@ -31,8 +31,12 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
+
+
 You can use this text field to make some notes on anything.  These notes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+
 
 
 END OF AUTORS NOTES
@@ -41,7 +45,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Chandra/Tux_hi_im_new.wav"
 PositionX=63  PositionY=224  
 Subtitle="Welcome to this camp!  I am Chandra.  I am the local sage in this old town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -53,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" What can you tell me about this place? "
-OptionSample="Tux_Chandra_What_Can_Place_0.wav"
+OptionSample="Chandra/Tux_what_can_you.wav"
 PositionX=114  PositionY=310  
 Subtitle="This small town exiisted since before the Great Assault.  It once was a moderatly successful mining community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -67,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" Where can I get better equipment? "
-OptionSample="Tux_Chandra_Where_Can_I_0.wav"
+OptionSample="Chandra/Tux_where_can_i.wav"
 PositionX=109  PositionY=163  
 Subtitle="The shop is to the east.  Mrs. Stone always has a good range of equipment there.  The shop is to the east."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -77,7 +81,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="So what's so strange about the attack?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Chandra/Tux_so_whats_so.wav"
 PositionX=248  PositionY=199  
 Subtitle="It seems that the bots are not intent on merly killing humans.  It has been reported, that they have been transporting away human corpses in automated spaceships. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -92,8 +96,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="What can you tell me about the hostile bots? "
-OptionSample="Tux_Chandra_What_Can_MS_0.wav"
+New Option Nr=4  OptionText="What do you know about the hostile bots? "
+OptionSample="Chandra/Tux_what_do_you.wav"
 PositionX=186  PositionY=312  
 Subtitle="The phenomenon of hostile bots has occupied my mind for quite some time.  There are some strange irrationalities in this behaviour, that I cannot explain."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -108,7 +112,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText=" I want to leave this place."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Chandra/Tux_i_want_to.wav"
 PositionX=260  PositionY=348  
 Subtitle="There's only one gate out of this sector.  You can leave, if our leader grants you passage.  Talk to his manager.  He will help you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -118,18 +122,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="No, I meant I would like to leave this planet."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=7  OptionText="No, I meant I would like to leave this world."
+OptionSample="Chandra/Tux_no_i_meant.wav"
 PositionX=289  PositionY=264  
-Subtitle="I don't know a way how you could do that.  There are no transports going any more.  But you might have more luck in one of the cities to the south."
+Subtitle="I don't know a way how you could do that.  There are no transports going any more from here.  But you might have more luck in one of the cities to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText="Do you think they would let me join the guard of this town?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=9  OptionText="Do you think I could join the guard of this town?"
+OptionSample="Chandra/Tux_do_you_think.wav"
 PositionX=176  PositionY=390  
 Subtitle="Unlikely.  You'd have to establish a reputation before and demonstrate that you can fix things."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -139,7 +143,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_Goodbye_0.wav"
+OptionSample="Chandra/Tux_i_got_to.wav"
 PositionX=515  PositionY=297  
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
