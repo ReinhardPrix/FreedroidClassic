@@ -12,7 +12,6 @@ AC_PROG_CC
 
 # Checks for libraries.
 AC_CHECK_LIB([Y2], [YOpenConnection])
-# FIXME: Replace `main' with a function in `-lm':
 AC_CHECK_LIB([m], [sin])
 AC_CHECK_LIB([vga], [vga_init])
 AC_CHECK_LIB([vgagl], [gl_clearscreen])
