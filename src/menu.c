@@ -1655,10 +1655,16 @@ void
 Highlight_Current_Block(void)
 {
   int i;
+  char PanelText[5000]="";
+  int Codepanel_Index;
+
 #define HIGHLIGHTCOLOR 255
 
+  //--------------------
+  // At first we draw all the four lines that make up the 
+  // cursor in the level editor
+  //
   SDL_LockSurface( ne_screen );
-
   for (i=0; i<Block_Width; i++)
     {
       // This draws a (double) line at the upper border of the current block
@@ -1678,8 +1684,41 @@ Highlight_Current_Block(void)
       putpixel( ne_screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
 
     }
-
   SDL_UnlockSurface( ne_screen );
+
+  //--------------------
+  // Now we print out the codepanel information about this tile
+  // just in case it is really a codepanel.
+  //
+  switch ( CurLevel->map [ (int)rintf( Me.pos.y) ] [ (int)rintf( Me.pos.x ) ] )
+    {
+    case CODEPANEL_L:
+    case CODEPANEL_R:
+    case CODEPANEL_U:
+    case CODEPANEL_D:
+
+      for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
+	{
+	  if ( ( ( (int) rintf( Me.pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) && 
+	       ( ( (int) rintf( Me.pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
+	    break;
+	}
+
+      if ( Codepanel_Index >= MAX_CODEPANELS_PER_LEVEL )
+	{
+	  sprintf( PanelText , "\nWARNING!  Either no codepanel code present or last entry used.\n" );
+	}
+      else
+	{
+	  sprintf( PanelText , "\nCode Panel Information: \n Codeword=\"%s\"." , 
+		   CurLevel->CodepanelList[ Codepanel_Index ].Secret_Code );
+	}
+
+      DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
+      break;
+    default:
+      break;
+    }
 } // void Highlight_Current_Block(void)
 
 /*@Function============================================================
