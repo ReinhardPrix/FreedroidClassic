@@ -192,6 +192,7 @@ Takeover (int enemynum)
       InventPlayground ();
 
       ShowPlayground ();
+      SDL_Flip (Screen);
 
       ChooseColor ();
 
@@ -267,8 +268,10 @@ Takeover (int enemynum)
       //  	{ */
       //  	  usleep (30000); */
       // 	  waiter--; */
-  	  DisplayBanner (message, NULL , 0 );	
+
   	  ShowPlayground ();
+  	  to_show_banner (message, NULL);
+	  SDL_Flip (Screen);
 	  // 	} /* WHILE waiter */ */
 
     }	/* while !FinishTakeover */
@@ -330,9 +333,9 @@ ChooseColor (void)
       countdown--;		/* Count down */
       sprintf (count_text, "Color-%d", countdown);
 
-      DisplayBanner (count_text, NULL , 0);
       ShowPlayground ();
-
+      to_show_banner (count_text, NULL);
+      SDL_Flip (Screen);
 
       if (countdown == 0)
 	ColorChosen = TRUE;
@@ -402,7 +405,6 @@ PlayGame (void)
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
-	  DisplayBanner (count_text, NULL , 0 );
 
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
@@ -471,7 +473,8 @@ PlayGame (void)
 	} /* if (motion_tick has occurred) */
 
       ShowPlayground ();
-
+      to_show_banner (count_text, NULL);
+      SDL_Flip (Screen);
     }	/* while !FinishTakeover */
 
   /* Final contdown */
@@ -491,6 +494,7 @@ PlayGame (void)
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
       ShowPlayground ();
+      SDL_Flip (Screen);
     }	/* while (countdown) */
 
     return;
@@ -785,8 +789,6 @@ ShowPlayground ()
 			   Screen, &Target_Rect);
 	} /* for capsules */
     } /* for player */
-
-  SDL_Flip (Screen);
 
   return;
 
@@ -1240,5 +1242,72 @@ AnimateCurrents (void)
 
   return;
 }; // void AnimateCurrents (void)
+
+void
+to_show_banner (const char* left, const char* right)
+{
+  char dummy[80];
+  char left_box [LEFT_TEXT_LEN + 10];
+  char right_box[RIGHT_TEXT_LEN + 10];
+  int left_len, right_len;   // the actualy string lengths
+
+  // --------------------
+  // At first the text is prepared.  This can't hurt.
+  // we will decide whether to dispaly it or not later...
+  //
+
+  if (left == NULL) 
+    left = "0";
+
+  if ( right == NULL )
+    {
+      sprintf ( dummy , "%ld" , ShowScore );
+      right = dummy;
+    }
+
+  // Now fill in the text
+  left_len = strlen (left);
+  if( left_len > LEFT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Left Infoline!!",left);
+      left_len = LEFT_TEXT_LEN;  // too long, so we cut it! 
+      Terminate(ERR);
+    }
+  right_len = strlen (right);
+  if( right_len > RIGHT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Right Infoline!!", right);
+      right_len = RIGHT_TEXT_LEN;  // too long, so we cut it! 
+      Terminate(ERR);
+    }
+  
+  // Now prepare the left/right text-boxes 
+  memset (left_box,  ' ', LEFT_TEXT_LEN);  // pad with spaces 
+  memset (right_box, ' ', RIGHT_TEXT_LEN);  
+  
+  strncpy (left_box,  left, left_len);  // this drops terminating \0 ! 
+  strncpy (right_box, right, left_len);  // this drops terminating \0 ! 
+  
+  left_box [LEFT_TEXT_LEN]  = '\0';     // that's right, we want padding!
+  right_box[RIGHT_TEXT_LEN] = '\0';
+  
+  // Redraw the whole background of the top status bar
+  //  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+  //  SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
+
+  // Now the text should be ready and its
+  // time to display it...
+  DebugPrintf (2, "Takeover said: %s -- %s\n", left_box, right_box);
+  SetCurrentFont( Para_BFont );
+  DisplayText (left_box, LEFT_INFO_X, LEFT_INFO_Y, NULL);
+  DisplayText (right_box, RIGHT_INFO_X, RIGHT_INFO_Y, NULL);
+
+  //  PrintString ( Screen, LEFT_INFO_X , LEFT_INFO_Y , left_box );
+  //  PrintString ( Screen, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+
+  return;
+
+} // void to_show_banner
+
 
 #undef _takeover_c

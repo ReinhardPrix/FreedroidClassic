@@ -29,6 +29,8 @@
 #include "defs.h"    // we need this here for path defines
 #endif
 
+void
+to_show_banner (const char* left, const char* right);
 
 /* Background-color of takeover-game */
 #define TO_BG_COLOR			63
