@@ -368,7 +368,7 @@ This is indicates a severe bug in Freedroid.",
   if (!subdir)
     subdir = "";
 
-  for (i=0; i < 2; i++)
+  for ( i = 0 ; i < 2 ; i++ )
     {
       if (i==0)
 	strcpy (File_Path, "..");   /* first try local subdirs */
@@ -391,7 +391,10 @@ This is indicates a severe bug in Freedroid.",
 	}
       else
 	{
-	  DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
+	  if ( i == 0 )
+	    DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
+	  else
+	    GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", NO_NEED_TO_INFORM , IS_WARNING_ONLY );
 	}
     } // for i 
 
@@ -425,7 +428,9 @@ Pause (void)
       AnimateCyclingMapTiles ();
       AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
-      AssembleCombatPicture ( DO_SCREEN_UPDATE );
+      AssembleCombatPicture ( 0 );
+      CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
+      SDL_Flip ( Screen );
       
       if (CPressed ())
 	{

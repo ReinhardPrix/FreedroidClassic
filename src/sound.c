@@ -1066,7 +1066,7 @@ LoadAndFadeInBackgroundMusic ( void )
   if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
       fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
-      GiveStandardErrorMessage ( "SwitchBackgroundMusicTo(...)" , "\
+      GiveStandardErrorMessage ( "LoadAndFadeInBackgroundMusic(...)" , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
 \n\
 Please check that the file is present within your Freedroid installation.\n\
