@@ -4,9 +4,17 @@
  * @Desc: all the define-constants and macroes
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
+ *
+ * $Log$
+ * Revision 1.14  1997/06/08 18:46:11  jprix
+ * Sound server should be working perfectly now.  Background music was also activated.
+ * Background music file and new fire sound added.
+ * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
+ *
  *
  *-@Header------------------------------------------------------------*/
 
@@ -25,8 +33,8 @@
 #define SOUND
 
 // For development purposes, the sound will not be activated unless the following definition is made
-#undef PARADROID_SOUND_SUPPORT_ON
-// #define PARADROID_SOUND_SUPPORT_ON
+// #undef PARADROID_SOUND_SUPPORT_ON
+#define PARADROID_SOUND_SUPPORT_ON
 
 // **********************************************************************
 

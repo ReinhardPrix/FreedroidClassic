@@ -9,6 +9,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.3  1997/06/08 18:46:11  jprix
+ * Sound server should be working perfectly now.  Background music was also activated.
+ * Background music file and new fire sound added.
+ * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
+ *
  * Revision 1.2  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -227,6 +232,7 @@ void InitParaplus(void) {
 
 #ifdef PARADROID_SOUND_SUPPORT_ON
   Init_YIFF_Sound_Server();
+  Play_YIFF_BackgroundMusic(0);
 #endif
 
   /* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */

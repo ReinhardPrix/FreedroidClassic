@@ -284,7 +284,7 @@ void ThouArtDefeated(void){
     MoveEnemys();
     for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
     RotateBulletColor();
-    usleep(30000);
+    usleep(10000);
   }
 
   /* Ein Flimmer zieht "uber den Schirm */

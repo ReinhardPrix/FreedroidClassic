@@ -215,6 +215,7 @@ EXTERN int TranslateMap(Level Lev);
 EXTERN void YIFF_Server_Check_Events(void);
 EXTERN int Init_YIFF_Sound_Server(void);
 EXTERN void YIFF_Server_Close_Connections(void);
+EXTERN void Play_YIFF_BackgroundMusic(int);
 EXTERN void Play_YIFF_Server_Sound(int);
 EXTERN void StartSound(int);
 EXTERN void GotHitSound(void);

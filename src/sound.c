@@ -11,6 +11,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.11  1997/06/08 18:46:11  jprix
+ * Sound server should be working perfectly now.  Background music was also activated.
+ * Background music file and new fire sound added.
+ * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
+ *
  * Revision 1.10  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -90,18 +95,14 @@ int channels = 0;         // 0=mono 1=stereo
 int format = AFMT_U8;
 int rate = 8000;
 
-// char BlastSoundSampleFilename[]="BlastSound1.wav";
-// char CollisionSoundSampleFilename[]="CollisionSound1.wav";
-// char FireSoundSampleFilename[]="FireSound2.wav";
-// char BlastSoundSampleFilename[]="sound/BlastSound1.wav";
-// char CollisionSoundSampleFilename[]="sound/CollisionSound1.wav";
-// char FireSoundSampleFilename[]="sound/FireSound2.wav";
-char BlastSoundSampleFilename[]="/home/johannes/ParaPlus/sound/BlastSound1.wav";
-char CollisionSoundSampleFilename[]="/home/johannes/ParaPlus/sound/CollisionSound1.wav";
-char FireSoundSampleFilename[]="/home/johannes/ParaPlus/sound/FireSound2.wav";
-// char BlastSoundSampleFilename[]="./sound/BlastSound1.wav";
-// char CollisionSoundSampleFilename[]="./sound/CollisionSound1.wav";
-// char FireSoundSampleFilename[]="./sound/FireSound2.wav";
+char BlastSoundSampleFilename[]="/sound/BlastSound1.wav";
+char CollisionSoundSampleFilename[]="/sound/CollisionSound1.wav";
+char FireSoundSampleFilename[]="/sound/FireSound1.wav";
+char BackgroundMusicSampleFilename[]="/sound/BackgroundMusic1.wav";
+char* ExpandedBlastSoundSampleFilename;
+char* ExpandedCollisionSoundSampleFilename;
+char* ExpandedFireSoundSampleFilename;
+char* ExpandedBackgroundMusicSampleFilename;
 
 long BlastSoundSampleLength=0;
 long CollisionSoundSampleLength=0;
@@ -114,6 +115,11 @@ unsigned char *FireSoundSamplePointer;
 
 // The following Lines define several channels for sound output to the yiff sound server!!!
 #ifdef PARADROID_SOUND_SUPPORT_ON
+// Background Music Cannel 
+YConnection *BackgroundMusic_con;
+YEventSoundObjectAttributes BackgroundMusic_sndobj_attrib;
+YID BackgroundMusic_play_id;
+YEvent BackgroundMusic_event;
 // Cannel 1
 YConnection *con;
 YEventSoundObjectAttributes sndobj_attrib;
@@ -128,6 +134,7 @@ YEvent event2;
 YID BlastSoundSampleYID;
 YID FireSoundSampleYID;
 YID CollisionSoundSampleYID;
+YID BackgroundMusicSampleYID;
 #endif
 // The above Lines define several channels for sound output to the yiff sound server!!!
 
@@ -344,13 +351,22 @@ void YIFF_Server_Check_Events(void){
 
 } // void YIFF_Server_Check_Events(void)
 
+char *ExpandFilename(char *LocalFilename){
+  char *tmp;
+
+  tmp=malloc(strlen(LocalFilename)+strlen(getcwd(NULL,0)) + 1);
+  strcpy(tmp,getcwd(NULL,0));
+  strcat(tmp,LocalFilename);
+  return(tmp);
+} // char *ExpandFilename(char *LocalFilename){
+
+
 void YIFF_Server_Close_Connections(void){
 
   // This function can and should only be compiled on machines, that have the YIFF sound
   // server installed.  Compilation therefore is optional and can be toggled with the following
   // definition.
 #ifdef PARADROID_SOUND_SUPPORT_ON
-
 
   /* Disconnect from the Y server. We need to pass the
    * original connection pointer con to close that
@@ -422,6 +438,36 @@ void MakeSound(tune* ThisTune){
 
 } // void MakeSound(tune* ThisTune)
 
+void Play_YIFF_BackgroundMusic(int Tune){
+  YEventSoundPlay Music_Parameters;
+
+  printf("\nvoid Play_YIFF_BackgroundMusic(int Tune):  Real function call confirmed.\n");
+  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedBackgroundMusicSampleFilename, 
+				 &BackgroundMusic_sndobj_attrib ) )
+    {
+      // Can't get sound object attributes.
+      fprintf( stderr, "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n", 
+	       ExpandedBackgroundMusicSampleFilename );
+      printf(" CWD: %s \n\n",getcwd(NULL,0));
+      Terminate(ERR);
+    }
+  else
+    {
+      BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedBackgroundMusicSampleFilename );
+
+      Music_Parameters.repeats=0;
+      Music_Parameters.total_repeats=-1; // -1 here means to repeat indefinately
+      Music_Parameters.left_volume=1;
+      Music_Parameters.right_volume=1;
+      Music_Parameters.sample_rate=BackgroundMusic_sndobj_attrib.sample_rate;
+      Music_Parameters.length=BackgroundMusic_sndobj_attrib.sample_size;
+      Music_Parameters.position=0;
+      Music_Parameters.yid=BackgroundMusic_play_id;
+      Music_Parameters.flags=0xFFFFFFFF;
+      YSetPlaySoundObjectValues( BackgroundMusic_con, BackgroundMusic_play_id, &Music_Parameters );
+    }
+} // Play_YIFF_BackgroundMusic(int Tune)
+
 void Play_YIFF_Server_Sound(int Tune){
   //  static int previous_channel;
 #define NUMBER_OF_CHANNELS 2
@@ -436,34 +482,35 @@ void Play_YIFF_Server_Sound(int Tune){
 
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
-  //  if (Tune == FIRESOUND) {
-  //    if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) )
-  //      {
+  if (Tune == FIRESOUND) {
+    if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
+      {
 	// Can't get sound object attributes.
-  //	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
-  //		 FireSoundSampleFilename );
-  //	Terminate(ERR);
-  //      }
-  //    else
-  //      {
-  play_id = YStartPlaySoundObjectSimple( con, FireSoundSampleFilename );
-	//      }
-	//  }
+  	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
+  		 ExpandedFireSoundSampleFilename );
+	printf(" CWD: %s \n\n",getcwd(NULL,0));
+  	Terminate(ERR);
+      }
+    else
+      {
+	play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
+      }
+  }
 
 
 
   if (Tune == COLLISIONSOUND) {
-    play_id = YStartPlaySoundObjectSimple( con, CollisionSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( con, ExpandedCollisionSoundSampleFilename );
     // write(handle, CollisionSoundSamplePointer, FragmentRoundUp(CollisionSoundSampleLength));
   }
 
   if (Tune == BLASTSOUND) {
-    play_id = YStartPlaySoundObjectSimple( con, BlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
   }
 
 #endif
 
-} // void Play_OSS(int Tune)
+} // void Play_YIFF_Server_Sound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -483,11 +530,36 @@ int Init_YIFF_Sound_Server(void){
   // server installed.  Compilation therefore is optional and can be toggled with the following
   // definition.
 #ifdef PARADROID_SOUND_SUPPORT_ON
+  
+  // Because the yiff does not nescessarily have the same origin for relative paths as paradroid does,
+  // is is nescessary to first translate our path names to absolute pathnames.  This is done here:
+  ExpandedBlastSoundSampleFilename=ExpandFilename(BlastSoundSampleFilename);
+  ExpandedCollisionSoundSampleFilename=ExpandFilename(CollisionSoundSampleFilename);
+  ExpandedFireSoundSampleFilename=ExpandFilename(FireSoundSampleFilename);
+  ExpandedBackgroundMusicSampleFilename=ExpandFilename(BackgroundMusicSampleFilename);
 
+  // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
+  // therefore a yiff server will be started even if none is running!!  great!!
+  BackgroundMusic_con = YOpenConnection(
+			"yiff",
+			CON_ARG
+			);
 
+  // Attention!! First channel is to be opend now!
+  if(BackgroundMusic_con == NULL) {
+    // Failed to connect to the Y server. 
+    fprintf(
+	      stderr,
+	      "%s: Cannot connect to YIFF server for background music.\n",
+	      CON_ARG
+	      );
+      Terminate(ERR);
+    }
 
+  // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
+  // therefore a yiff server will be started even if none is running!!  great!!
   con = YOpenConnection(
-			NULL,
+			"yiff",
 			CON_ARG
 			);
 
@@ -496,7 +568,7 @@ int Init_YIFF_Sound_Server(void){
     // Failed to connect to the Y server. 
     fprintf(
 	      stderr,
-	      "%s: Cannot connect to YIFF server.\n",
+	      "%s: Cannot connect to YIFF server for first channel.\n",
 	      CON_ARG
 	      );
       Terminate(ERR);
@@ -509,7 +581,7 @@ int Init_YIFF_Sound_Server(void){
 			 );
   if(con2 == NULL) {
     // Failed to connect to the Y server. 
-    fprintf( stderr, "%s: Cannot connect the SECOND TIME to YIFF server.\n", CON_ARG );
+    fprintf( stderr, "%s: Cannot connect the YIFF server for second channel.\n", CON_ARG );
       Terminate(ERR);
     }
 
@@ -520,12 +592,12 @@ int Init_YIFF_Sound_Server(void){
 
   // Load the Firesound
 
-  if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) ) {
+  //  if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) ) {
     // Can't get sound object attributes.
-    fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
-	     FireSoundSampleFilename );
-    Terminate(ERR);
-  }
+  //    fprintf( stderr, "\nvoid Init_YIFF_Sound_Server(void): %s: Error: Missing or corrupt.\n", 
+  //	     FireSoundSampleFilename );
+  //    Terminate(ERR);
+  //  }
 
   //  
   //  if ((SoundDateihandle=fopen(FireSoundSampleFilename,"rb")) == NULL) {
