@@ -9,9 +9,22 @@ Outstanding release-critical bugs (priority: high)
 ==> tritt das wirklich immer noch auf?? -- (jp:) Ich habs seit der letzten Umstellung
     des einen Cast operators (der die Ints scheinbar fix als maximal 4 bytes voraussetzt,
     was knapp ist) nicht mehr beobachtet.
+  (RP) falls es von Debriefing kam, sollte der (gleiche) bug nicht
+  mehr auftrete, da ich das neu schreibe... (dafuer gibts dann andere.. ;)
 
 - (jp) Before any release the levelcolor changing procedure must be rearranged to work
        well together with the combat screen resizing code
+
+- (rp) Takeover game an new engine anpassen
+
+- (rp?) Lift: show level-change in lift: probably just some
+  SDL_rectangle-filling needed, as it's a simple color scheme anyway
+  maybe even use alpha-channel??
+  
+- Robots now "jitter" until they reach their waypoint: adapt to new
+  coordinate-treatment 
+
+- (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -20,6 +33,8 @@ Outstanding normal bugs (priority: normal)
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
+- (rp) put some proper Highscore-list
+
 - (rp) sensitivity in takeover-game too high (single steps difficult)
   (is BETTER NOW)
 
