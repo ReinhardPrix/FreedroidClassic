@@ -234,8 +234,15 @@ ShowInventoryMessages( void )
   point CurPos;
   point Inv_GrabLoc;
   int Grabbed_InvPos;
+  // static int Item_Grabbed = FALSE;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
+
+  // --------------------
+  // We will need the current mouse position on several spots...
+  //
+  CurPos.x = GetMousePos_x() + 16;
+  CurPos.y = GetMousePos_y() + 16;
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 
@@ -280,7 +287,8 @@ ShowInventoryMessages( void )
   //
   User_Rect.x = SCREENLEN/2;
   User_Rect.w = SCREENLEN/2;
-  SDL_SetClipRect( Screen, &InventoryRect );
+  // SDL_SetClipRect( Screen, &InventoryRect );
+  SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
   //--------------------
@@ -314,6 +322,12 @@ ShowInventoryMessages( void )
 	  continue;
 	}
 
+      // In case the item is currently held in hand, we need not do anything more HERE ...
+      if ( Me.Inventory[ SlotNum ].currently_held_in_hand == TRUE )
+	{
+	  continue;
+	}
+
       TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
       TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
       TargetRect.w = 50;
@@ -327,61 +341,106 @@ ShowInventoryMessages( void )
   // If the user now presses the mouse button and it was not pressed before,
   // the the user has 'grabbed' the item directly under the mouse button
   //
-  if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) )
+  if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
     {
       DebugPrintf( 0 , "\nTrying to 'grab' the item below the mouse cursor.");
-      CurPos.x = GetMousePos_x() + 16;
-      CurPos.y = GetMousePos_y() + 16;
       
-      if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + 9 * 32 ) )
+      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
-	  if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * 6 ) && ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
+	  Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	  Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+
+	  DebugPrintf( 0 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	  Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	  DebugPrintf( 0 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
+
+	  if ( Grabbed_InvPos == (-1) )
 	    {
-	      DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
-	      
-	      Inv_GrabLoc.x = ( CurPos.x - 16 ) / 32 ;
-	      Inv_GrabLoc.y = ( CurPos.y - (User_Rect.y + 480 -16 - 64 - 32 * 6 ) ) / 32 ;
-
-	      DebugPrintf( 0 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
-	      
-	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	      DebugPrintf( 0 , "\nGrabbing relealed inventory entry no.: %d." , Grabbed_InvPos );
-
-	      if ( Grabbed_InvPos == (-1) )
-		{
-		  // Nothing grabbed, so we need not do anything more here..
-		  Item_Held_In_Hand = ( -1 );
-		  goto NoMoreGrabbing;
-		}
-
-	      //--------------------
-	      // At this point we know, that we have just grabbed something from the inventory
-	      // So we set, that something should be displayed in the 'hand', and it should of
-	      // course be the image of the item grabbed from inventory.
-	      //
-	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
-
-
+	      // Nothing grabbed, so we need not do anything more here..
+	      Item_Held_In_Hand = ( -1 );
+	      DebugPrintf( 0 , "\nGrabbing FAILED!" );
 	    }
+
+	  //--------------------
+	  // At this point we know, that we have just grabbed something from the inventory
+	  // So we set, that something should be displayed in the 'hand', and it should of
+	  // course be the image of the item grabbed from inventory.
+	  //
+	  Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
+	  Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
+	}
+      goto NoMoreGrabbing;
+    }
+
+  //--------------------
+  // Now the OTHER CASE:  If the user now no longer presses the mouse button and it WAS pressed before,
+  // the the user has 'released' the item directly under the mouse button
+  //
+  if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
+    //if ( ( !axis_is_active ) && ( MouseButtonPressedPreviousFrame ) )
+    {
+      //--------------------
+      // In case the user didn't hold anything in his hand, then nothing
+      // needs to be released as well...
+      //
+      if ( Item_Held_In_Hand == ( -1 ) ) goto NoMoreReleasing;
+
+      //--------------------
+      // If the cursor is in the inventory window again, then we must see if 
+      // the item was dropped onto a correct inventory location and should from
+      // then on not only no longer be in the players hand but also remain at
+      // the newly assigned position.
+      //
+      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped in inventory window!" );
+	  DropHeldItemToInventory( );
+	  Item_Held_In_Hand = ( -1 );
+	}
+
+      //--------------------
+      // If the cursor is in the user_rect, i.e. the combat window, then
+      // the item should be dropped onto the players current location
+      //
+      if ( CursorIsInUserRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the floor of the combat window!" );
+	  DropHeldItemToTheFloor( );
+	  Item_Held_In_Hand = ( -1 );
+	}
+
+      //--------------------
+      // If the cursor is in the weapons rect, i.e. the small box top left, then
+      // the item should be dropped onto the players current weapon slot
+      //
+      if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the weapons rectangle!" );
+	  // DropHeldItemToTheFloor( );
+	  Item_Held_In_Hand = ( -1 );
 	}
     }
 
+ NoMoreReleasing:
  NoMoreGrabbing:
-  
-  //--------------------
-  // Now that we have filled all the positions, we can start to draw the
-  // items the player currently has 'in his hand' via the mouse drag-and-drop
-  // grip feature
-  //
 
-  if ( axis_is_active ) 
+
+  //--------------------
+  // Now that we have filled all the positions in the inventory, we can start to draw the
+  // items the player currently has 'in his hand' via the mouse drag-and-drop
+  // grip feature.
+  //
+  // if ( axis_is_active ) 
+  if ( Item_Held_In_Hand != (-1) )
     {
       DisplayItemImageAtMouseCursor( Item_Held_In_Hand );
-      // printf("\n Mouse button should cause image now.");
     }
   else
     {
+      // In case the player does not have anything in his hand, then of course we need to
+      // unset everything as 'not in his hand'.
+      //
       // printf("\n Mouse button should cause no image now.");
     }
 
@@ -1030,8 +1089,8 @@ PutItem( int ItemNumber )
   
   if ( CurItem->type == ( -1 ) ) return;
 
-  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.x ) ;
+  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.y ) ;
 
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
