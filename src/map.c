@@ -44,6 +44,8 @@
 
 #include "maped.h"
 
+#define LEVEL_NAME_STRING "Name of this level="
+
 symtrans Translator[ NUM_MAP_BLOCKS ] = {
   {'.', FLOOR},
   {'\'', VOID},
@@ -320,7 +322,6 @@ LoadShip (char *filename)
 
       TranslateMap (curShip.AllLevels[i]);
 
-
     }
 
   /* eventually this should be read in with the ship data as well, */
@@ -510,6 +511,10 @@ char *StructToMem(Level Lev)
   sprintf(linebuf, "Levelnumber: %d\nxlen of this level: %d\nylen of this level: %d\ncolor of this level: %d\n",
 	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color);
   strcpy(LevelMem, linebuf);
+  strcat(LevelMem, LEVEL_NAME_STRING );
+  strcat(LevelMem, Lev->Levelname );
+  // strcat(LevelMem, Decknames[Lev->levelnum] ); 
+  strcat(LevelMem, "\n" );
   
   // Now the beginning of the actual map data is marked:
   strcat(LevelMem, MAP_BEGIN_STRING);
@@ -741,9 +746,11 @@ LevelToStruct (char *data)
   int i;
   int nr, x, y;
   int k;
+  int LevelNameLength;
   int connection;
   char ThisLine[1000];
   char* ThisLinePointer;
+  char* DataPointer;
 
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
@@ -751,17 +758,36 @@ LevelToStruct (char *data)
   loadlevel->empty = FALSE;
 
   DebugPrintf (2, "\n-----------------------------------------------------------------");
-  DebugPrintf (2, "Starting to process information for another level:\n");
+  DebugPrintf (2, "\nStarting to process information for another level:\n");
 
   /* Read Header Data: levelnum and x/ylen */
-  sscanf (data, "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
+  DataPointer = strstr( data , "Levelnumber:" );
+  if ( DataPointer == NULL )
+    {
+      DebugPrintf( 0 , "No Levelnumber entry found! Terminating! ");
+      Terminate(ERR);
+    }
+  sscanf ( DataPointer , "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
 	  &(loadlevel->levelnum), &(loadlevel->xlen),
 	  &(loadlevel->ylen), &(loadlevel->color));
 
-  // printf("\nLevelnumber : %d ", loadlevel->levelnum );
-  // printf("\nxlen of this level: %d ", loadlevel->xlen );
-  // printf("\nylen of this level: %d ", loadlevel->ylen );
-  // printf("\ncolor of this level: %d ", loadlevel->ylen );
+  DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
+  DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
+  DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
+  DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
+
+  DataPointer = strstr( data , LEVEL_NAME_STRING );
+  if ( DataPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nNo levelname entry found! Terminating! ");
+      Terminate(ERR);
+    }
+  DataPointer += strlen ( LEVEL_NAME_STRING );
+  LevelNameLength = strstr ( DataPointer , "\n" ) - DataPointer ;
+  loadlevel->Levelname=MyMalloc ( LevelNameLength + 10 );
+  strncpy ( loadlevel->Levelname , DataPointer, LevelNameLength );
+  loadlevel->Levelname[LevelNameLength]=0;
+  
 
   // find the map data
   // NOTE, that we here only set up a pointer to the map data

@@ -127,26 +127,6 @@ char *Shipnames[ALLSHIPS] = {
   NULL
 };
 
-char *Decknames[] = {
-  "maintenance",
-  "engeneering",
-  "robostores",
-  "quarterd",
-  "repairs",
-  "staterooms",
-  "stores",
-  "research",
-  "bridge",
-  "observation",
-  "airlock",
-  "reactor",
-  "upper cargo",
-  "mid carga",
-  "vehicle hold",
-  "shuttle bay",
-  NULL
-};
-
 char *Alertcolor[ALLALERTCOLORS] = {
   "green",
   "yellow",

@@ -392,7 +392,7 @@ PaintConsoleMenu (void)
   strcpy (MenuText, "\nAccess granted.\nShip : ");
   strcat (MenuText, Shipnames[ThisShip]);
   strcat (MenuText, "\nDeck : ");
-  strcat (MenuText, Decknames[CurLevel->levelnum]);
+  strcat (MenuText, CurLevel->Levelname );
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
