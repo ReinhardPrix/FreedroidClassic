@@ -2748,6 +2748,16 @@ show_level_editor_tooltips ( void )
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to drop a new item to the floor.  You can also use the hotkey 'G' for this." );
     }
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+    {
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to switch between obstacle edit mode and floor edit mode.  The two modes are easily recognized by the top level editor banner showing either floor tiles or obstacles.\n Note, that you can also use the 'f' key to switch between these two modes." );
+    }
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+    {
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to enter the main menu of the level editor.\n Note, that you can also use the Escape key to enter the level editor main menu." );
+    }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
@@ -3013,6 +3023,7 @@ LevelEditor(void)
   int new_x, new_y;
   int current_mark_index ;
   int j;
+  int main_menu_requested;
 
   //--------------------
   // We set the Tux position to something 'round'.
@@ -3046,10 +3057,9 @@ LevelEditor(void)
     {
       Weiter=FALSE;
       OldTicks = SDL_GetTicks ( ) ;
-      while ( ( ! EscapePressed() ) && ( !Done ) )
+      main_menu_requested = FALSE ;
+      while ( ( ! EscapePressed() ) && ( !Done ) && ( ! main_menu_requested ) )
 	{
-
-
 	  //--------------------
 	  // Also in the Level-Editor, there is no need to go at full framerate...
 	  // We can do with less, cause there are no objects supposed to be 
@@ -3143,6 +3153,8 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_MODE_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_ESC_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
@@ -3199,34 +3211,6 @@ LevelEditor(void)
 	  // The label will be assumed to be directly under the cursor.
 	  //
 	  if ( MPressed () ) EditMapLabelData ( EditLevel );
-
-	  //--------------------
-	  // Since the level editor will not always be able to
-	  // immediately feature all the the map tiles that might
-	  // have been added recently, we should offer a feature, so that you can
-	  // specify the value of a map piece just numerically.  This will be
-	  // done upon pressing the 'e' key.
-	  //
-	  /*
-	  if ( EPressed () )
-	    {
-	      while (EPressed());
-	      NumericInputString = 
-		GetEditableStringInPopupWindow ( 10 , "\n You have chosen to enter a floor tile by it's numeric value.\n\nPlease enter the numeric value of the tile below: \n\n" ,
-						 "" );
-	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
-	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
-
-	      if ( Shift_Was_Pressed() )
-		{
-		  RecFillMap ( EditLevel , BlockY , BlockX , SpecialMapValue );
-		}
-	      else
-		{
-		  EditLevel->map[BlockY][BlockX] . floor_value =SpecialMapValue;
-		}
-	    }
-	  */
 
 	  //--------------------
 	  // From the level editor, it should also be possible to drop new goods
@@ -3444,6 +3428,20 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  ItemDropFromLevelEditor(  );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
+		  Highlight = 0 ;
+		  while ( SpacePressed() );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  main_menu_requested = TRUE ;
+		  while ( SpacePressed() );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{

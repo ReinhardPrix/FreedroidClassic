@@ -110,18 +110,9 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } } ,
 
     { NULL , "mouse_buttons/BuyButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Buy10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Buy100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/SellButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Sell10Button.png"                 , { 360 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Sell100Button.png"                , { 487 , 375 , 120 ,  37 } } ,
-
     { NULL , "mouse_buttons/TakeButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Take10Button.png"                 , { 360 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Take100Button.png"                , { 487 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/PutButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Put10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
-    // { NULL , "mouse_buttons/Put100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
@@ -136,6 +127,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 120 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 160 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 200 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 640-241 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 640-176 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 640-111 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-71 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-31 , 90 , 0 ,  0 } } ,
