@@ -2808,6 +2808,46 @@ Going to request reinforcements typical for this droid : 0
 This is a dark Apprentice of the evil MS Super-Corporation.
 
 ** Start of new Robot: ** 
+Droidname: 303
+Droid portrait file name (without extension) to use="302"
+Maximum speed of this droid: 6.1
+Class of this droid: 3
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 75
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.07
+Weight of this droid : 23
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=11
+Weapon item=12
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=85
+Chance modifier, that this robot gets hit=-25
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
+
+
+** Start of new Robot: ** 
 Droidname: DSR
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
