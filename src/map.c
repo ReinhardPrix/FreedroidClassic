@@ -3329,11 +3329,14 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case H_HALF_DOOR1:
     case H_SHUT_DOOR:
     case LOCKED_H_SHUT_DOOR:
+
+      /*
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
 	  break;
 	}
+      */
 
       // check if the unpassable part of the door has been collided with
       if (((fx < H_RANDBREITE) || (fx > (1 - H_RANDBREITE)))
@@ -3391,11 +3394,14 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case V_HALF_DOOR1:
     case V_SHUT_DOOR:
     case LOCKED_V_SHUT_DOOR:
+
+      /*
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
 	  break;
 	}
+      */
 
       // check if the side of the door has been collided with...
       if ((fy < V_RANDBREITE || fy > (1 - V_RANDBREITE)) &&
@@ -3504,7 +3510,7 @@ IsVisible ( GPS objpos , int PlayerNum )
 
       if ( IsPassable ( testpos.x , testpos.y , objpos->z , LIGHT ) != CENTER)
 	{
-	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
+	  // DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	  return FALSE;
 	}
 
@@ -3512,7 +3518,7 @@ IsVisible ( GPS objpos , int PlayerNum )
       testpos.y += step.y;
 
     }
-  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
+  // DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 
   return TRUE;
 }; // int IsVisible( Point objpos )

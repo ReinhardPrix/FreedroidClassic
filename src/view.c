@@ -514,6 +514,52 @@ ShowCombatScreenTexts ( int mask )
 }; // void ShowCombatScreenTexts ( int mask )
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+int
+MapBlockIsVisible ( int col , int line )
+{
+  gps CheckPos;
+
+  CheckPos . z = Me [ 0 ] . pos . z ;
+  CheckPos . x = col ;
+  CheckPos . y = line ;
+
+#define VISION_OFFSET 0.5
+
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+
+  /*
+  CheckPos . x += VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+  CheckPos . x -= 2*VISION_OFFSET ;
+
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+  CheckPos . x += VISION_OFFSET ;
+  CheckPos . y += VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+  CheckPos . y -= 2 * VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE; 
+  */
+
+  CheckPos . x += VISION_OFFSET; 
+  CheckPos . y += VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+
+  CheckPos . x -= 2 * VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+
+  CheckPos . y -= 2 * VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
+
+  CheckPos . x += 2 * VISION_OFFSET ;
+  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE; 
+
+
+  return ( FALSE );
+}; // int MapBlockIsVisible ( int col , int line )
+
+/* ----------------------------------------------------------------------
  * This function should assemble the pure floor tiles that will be visible
  * around the Tux or in the console map view.  Big map inserts and all that
  * will be handled later...
@@ -554,12 +600,22 @@ ShowPureMapBlocksAroundTux ( int mask )
 	{
 	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {
+	      
+
 	      TargetRectangle.x = UserCenter_x 
 		+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = UserCenter_y
 		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
-	      SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
- 			       Screen, &TargetRectangle);
+	      
+	      if ( MapBlockIsVisible ( col , line ) )
+		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
+				 Screen, &TargetRectangle);
+	      else
+		{
+		  TargetRectangle.w = Block_Width;
+		  TargetRectangle.h = Block_Height;
+		  SDL_FillRect ( Screen , & TargetRectangle , 0 );
+		}
 
 	      //--------------------
 	      // Maybe this was called from the level editor or from some
