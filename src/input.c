@@ -54,9 +54,21 @@ int CurrentlyMouseRightPressed=0;
 int CurrentlyMouseLeftPressed = 0;
 
 bool key_pressed[SDLK_LAST];	// array of states (pressed/released) of all keys
+int joy_dirstate[4];  // array of 4 directions we map the joystick to
+
 SDLMod current_modifiers;
 
 SDL_Event event;
+
+// direction for joystick->keyboard mappings
+enum _joy_dirs {
+  JOY_UP = 0,
+  JOY_RIGHT,
+  JOY_DOWN,
+  JOY_LEFT
+};
+#define FLAG_NEW 0xf0
+
 
 int sgn (int x)
 {
@@ -153,18 +165,36 @@ keyboard_update(void)
 	    {
 	      input_axis.x = event.jaxis.value;
 
-	      if (event.jaxis.value > joy_sensitivity*1000)   /* about half tilted */
+	      // this is a bit tricky, because we want to allow direction keys
+	      // to be soft-released. When mapping the joystick->keyboard, we 
+	      // therefore have to make sure that this mapping only occurs when
+	      // and actual _change_ of the joystick-direction ('digital') occurs
+	      // so that it behaves like "set"/"release"
+	      if (joy_sensitivity*event.jaxis.value > 10000)   /* about half tilted */
 		{
-		  key_pressed[SDLK_RIGHT] = TRUE;
-		  key_pressed[SDLK_LEFT] = FALSE;
+		  // compare to previous joy-direction!
+		  if (!joy_dirstate[JOY_RIGHT])
+		    {
+		      key_pressed[SDLK_RIGHT] = TRUE;
+		      key_pressed[SDLK_LEFT] = FALSE;
+		    }
+		  joy_dirstate[JOY_RIGHT] = TRUE;
+		  joy_dirstate[JOY_LEFT] = FALSE;
 		}
-	      else if (event.jaxis.value <  -joy_sensitivity*1000)
+	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  key_pressed[SDLK_LEFT] = TRUE;
-		  key_pressed[SDLK_RIGHT] = FALSE;
+		  if (!joy_dirstate[JOY_LEFT])
+		    {
+		      key_pressed[SDLK_LEFT] = TRUE;
+		      key_pressed[SDLK_RIGHT] = FALSE;
+		    }
+		  joy_dirstate[JOY_LEFT] = TRUE;
+		  joy_dirstate[JOY_RIGHT] = FALSE;
 		}
 	      else
 		{
+		  joy_dirstate[JOY_LEFT] = FALSE;
+		  joy_dirstate[JOY_RIGHT] = FALSE;
 		  key_pressed[SDLK_LEFT] = FALSE;
 		  key_pressed[SDLK_RIGHT] = FALSE;
 		}
@@ -173,18 +203,30 @@ keyboard_update(void)
 	    {
 	      input_axis.y = event.jaxis.value;
 
-	      if (event.jaxis.value > joy_sensitivity*1000)  
+	      if (joy_sensitivity*event.jaxis.value > 10000)  
 		{
-		  key_pressed[SDLK_DOWN] = TRUE;
-		  key_pressed[SDLK_UP] =  FALSE;
+		  if (!joy_dirstate[JOY_DOWN])
+		    {
+		      key_pressed[SDLK_DOWN] = TRUE;
+		      key_pressed[SDLK_UP] = FALSE;
+		    }
+		  joy_dirstate[JOY_DOWN] = TRUE;
+		  joy_dirstate[JOY_UP] =  FALSE;
 		}
-	      else if (event.jaxis.value < -joy_sensitivity*1000)
+	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  key_pressed[SDLK_UP] = TRUE;
-		  key_pressed[SDLK_DOWN]= FALSE;
+		  if (!joy_dirstate[JOY_UP])
+		    {
+		      key_pressed[SDLK_UP] = TRUE;
+		      key_pressed[SDLK_DOWN] = FALSE;
+		    }
+		  joy_dirstate[JOY_UP] = TRUE;
+		  joy_dirstate[JOY_DOWN]= FALSE;
 		}
 	      else
 		{
+		  joy_dirstate[JOY_UP] = FALSE;
+		  joy_dirstate[JOY_DOWN] = FALSE;
 		  key_pressed[SDLK_UP] = FALSE;
 		  key_pressed[SDLK_DOWN] = FALSE;
 		}
@@ -366,8 +408,10 @@ ReleaseKey (SDLKey key)
 bool
 ModIsPressed (SDLMod mod)
 {
+  bool ret;
   keyboard_update();
-  return (current_modifiers & mod);
+  ret = ( (current_modifiers & mod) != 0) ;
+  return (ret);
 }
 
 bool
@@ -385,7 +429,7 @@ bool
 MouseRightPressed(void)
 {
   keyboard_update();
-  return CurrentlyMouseRightPressed;
+  return (CurrentlyMouseRightPressed);
 }
 
 
