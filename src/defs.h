@@ -332,12 +332,15 @@ enum _directions
 */
 #define MAX_WP_CONNECTIONS 	4
 #define MAXMAPLINES 		50
-#define ALLLEVELS		18
-#define MAX_LEVELS_ON_SHIP	20
-
 #define MAX_ENEMYS_ON_SHIP	1000
 
-#define ALLELEVATORS		30
+#define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
+#define MAX_LEVELS		29   	/* don't change this easily */
+				     	/* corresponds to a reserved palette range ! */
+#define MAX_LIFTROWS		15   	/* the different lift "rows" */
+					/* don't change this easily */
+					/* corresponds to a reserved palette range !*/
+
 #define MAXWAYPOINTS 		30
 #define MAX_DOORS_ON_LEVEL 	20
 #define MAX_REFRESHES_ON_LEVEL	10
