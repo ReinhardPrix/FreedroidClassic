@@ -1225,11 +1225,11 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
     // use of this character for the story as a whole or something like
     // that.  If there are some notes like that, we'll read them in here.
     //
-    if ( CountStringOccurences ( SectionPointer , "BEGIN OF AUTORS NOTES" ) ) 
+    if ( CountStringOccurences ( SectionPointer , "BEGIN OF AUTORS NOTES\n" ) ) 
     {
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\nWe've found some AUTHORS NOTES HERE..." );
 	tmp_string = 
-	    ReadAndMallocStringFromData ( SectionPointer , "BEGIN OF AUTORS NOTES" , "END OF AUTORS NOTES" ) ;
+	    ReadAndMallocStringFromData ( SectionPointer , "BEGIN OF AUTORS NOTES\n" , "\nEND OF AUTORS NOTES" ) ;
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\nAUTHORS NOTES text found: \"%s\"." , tmp_string );
 	strcpy ( authors_notes , tmp_string );
     }
