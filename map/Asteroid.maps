@@ -356,7 +356,7 @@ PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 wp
-Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  12 y=   1	 connections:    0   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=   3 y=   3	 connections:    3  15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  12 y=   3	 connections:    1   6  26   2  -1  -1  -1  -1  -1  -1  -1  -1
@@ -373,7 +373,7 @@ Nr.= 13 x=  10 y=  10	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 14 x=  21 y=  10	 connections:   12  11  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=   3 y=  11	 connections:    2  17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 16 x=  11 y=  11	 connections:   18  15  13   8  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 17 x=   1 y=  13	 connections:   18   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 17 x=   1 y=  13	 connections:   18   0  15  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 18 x=  11 y=  13	 connections:   17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 19 x=  16 y=   7	 connections:    7  11  20  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 20 x=  16 y=   9	 connections:   12  19   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
