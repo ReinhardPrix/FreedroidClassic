@@ -39,6 +39,12 @@
 #include "proto.h"
 
 //--------------------
+// This header file is needed
+#ifndef __WIN32__
+#include <execinfo.h>
+#endif
+
+//--------------------
 // The definition of the message structure can stay here,
 // because its only needed in this module.
 //
@@ -186,6 +192,65 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
+
+//--------------------
+// We make these global variables here, as we might want to use
+// this function inside a signal handler and maybe also it's better
+// not to mess too much around with the stack while trying to read
+// out the stack...
+//
+#define MAX_CALLS_IN_BACKTRACE 2000
+    void *backtrace_array [ MAX_CALLS_IN_BACKTRACE ];
+    size_t backtrace_size;
+    char **backtrace_strings;
+    size_t backtrace_counter;
+
+/* ---------------------------------------------------------------------- 
+ * Obtain a backtrace and print it to stdout.
+ * ---------------------------------------------------------------------- */
+void
+print_trace (void)
+{
+
+#ifndef __WIN32__
+
+    fprintf ( stderr , "print_trace:  Now attempting backtrace from within the code!\n" );
+    fprintf ( stderr , "print_trace:  Allowing a maximum of %d function calls on the stack!\n" , MAX_CALLS_IN_BACKTRACE );
+    
+    //--------------------
+    // We attempt to get a backtrace of all function calls so far, even
+    // including the operating system (or rather libc) call to main() in 
+    // the beginning of execution.
+    //
+    backtrace_size = backtrace ( backtrace_array , MAX_CALLS_IN_BACKTRACE );
+
+    fprintf ( stderr , "print_trace:  Obtained %zd stack frames.\n", backtrace_size );
+    
+    //--------------------
+    // Now we attempt to translate the trace information we've got to the
+    // symbol names that might still reside in the binary.
+    //
+    // NOTE: that in order for this to work, the -rdynamic switch must have
+    //       been passed as on option to the LINKER!
+    //       Also there might be a problem with non-ELF binaries, but let's
+    //       hope that it still works...
+    //
+    backtrace_strings = backtrace_symbols ( backtrace_array , backtrace_size );
+    
+    fprintf ( stderr , "print_trace:  Obtaining symbols now done.\n" );
+    
+    for ( backtrace_counter = 0 ; backtrace_counter < backtrace_size ; backtrace_counter++ )
+	fprintf ( stderr , "%s\n", backtrace_strings [ backtrace_counter ] );
+    
+    //--------------------
+    // The strings generated in the backtrace_symbols function need to 
+    // get freed.  Well, this isn't terribly important, but clean.
+    //
+    free ( backtrace_strings );
+
+#endif
+
+}; // void print_trace (void)
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 

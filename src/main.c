@@ -178,7 +178,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
     ParseCommandLine (argc, argv); 
     
     InitFreedroid ();   // Initialisation of global variables and arrays
-    
+
     while (!QuitProgram)
     {
 	

@@ -1217,6 +1217,8 @@ LoadShip (char *filename)
   //
   free ( ShipData );
 
+  print_trace ( ) ;
+
   return OK;
 
 }; // int LoadShip ( ... ) 

@@ -515,6 +515,7 @@ EXTERN int GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle
 #else
 #define EXTERN extern
 #endif
+EXTERN void print_trace (void);
 EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
