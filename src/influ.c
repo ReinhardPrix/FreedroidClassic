@@ -2582,7 +2582,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
       if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
 				  our_level -> obstacle_list [ barrel_index ] . pos . x ,
 				  our_level -> obstacle_list [ barrel_index ] . pos . y ) 
-	   > BEST_MELEE_DISTANCE+0.1 )
+	   > ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.3 )
 	{
 	  //--------------------
 	  // We set up a course, that will lead us directly to the barrel, that we are
@@ -2594,8 +2594,14 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 	  step_vector . x = Me [ player_num ] . pos . x - our_level -> obstacle_list [ barrel_index ] . pos . x ;
 	  step_vector . y = Me [ player_num ] . pos . y - our_level -> obstacle_list [ barrel_index ] . pos . y ;
 	  vec_len = vect_len ( step_vector );
-	  step_vector . x *= 1.0 / vec_len ; // we normalize the distance to 1.  That should be good.  A
-	  step_vector . y *= 1.0 / vec_len ; // distance of a bit more than barrel blocking distance will be best.
+
+	  //--------------------
+	  // We normalize the distance of the final walk-point to the barrel center just
+	  // so, that it will be within the 'strike_distance' we have used just above in
+	  // the 'distance-met' query.
+	  //
+	  step_vector . x *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.05 ) / vec_len ;
+	  step_vector . y *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.05 ) / vec_len ;
 
 	  for ( i = 0 ; i < 8 ; i ++ )
 	    {
@@ -2641,6 +2647,18 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
       //
       smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 
 		       our_level -> obstacle_list [ barrel_index ] . pos . y );
+
+      step_vector . x = Me [ player_num ] . pos . x - our_level -> obstacle_list [ barrel_index ] . pos . x ;
+      step_vector . y = Me [ player_num ] . pos . y - our_level -> obstacle_list [ barrel_index ] . pos . y ;
+      vec_len = vect_len ( step_vector );
+      step_vector . x *= 1.0 / vec_len ; // we normalize the distance to 1.  That should be good.  A
+      step_vector . y *= 1.0 / vec_len ; // distance of a bit more than barrel blocking distance will be best.
+
+      //--------------------
+      // We set a direction of facing directly thowards the barrel in question
+      // so that the strike motion looks authentic...
+      //
+      Me [ player_num ] . angle = 0 ;
 
       tux_wants_to_attack_now ( player_num ) ;
 
