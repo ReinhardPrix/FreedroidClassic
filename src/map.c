@@ -875,6 +875,11 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
 	      obstacle_counter ++ ;
 	      break;
+	      /*
+		//--------------------
+		// These two are intended to be stepped on.  That means they will not be
+		// blitted as obstacles, but must rather be blitted as floor tiles, sorry
+		//
 	    case BLOCK4:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_4 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
@@ -883,6 +888,32 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      break;
 	    case BLOCK5:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	      */
+
+	    case BOX_1:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BOX_2:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BOX_3:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_3 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BOX_4:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_4 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
 	      obstacle_counter ++ ;

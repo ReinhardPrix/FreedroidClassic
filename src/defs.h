@@ -96,7 +96,7 @@ enum
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 68
-#define NUMBER_OF_OBSTACLE_TYPES 52
+#define NUMBER_OF_OBSTACLE_TYPES 54
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 
 #define ITEM_DROP_PERCENTAGE 20
@@ -641,7 +641,7 @@ enum _directions
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 
-#define ALL_ISOMETRIC_FLOOR_TILES 5 // A pointer to the surfaces containing the pictures of the
+#define ALL_ISOMETRIC_FLOOR_TILES 8 // A pointer to the surfaces containing the pictures of the
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
@@ -837,8 +837,9 @@ enum
   CORNER_LD,        T_D,          CORNER_RD,       T_L,          KREUZ,       T_R,    CORNER_LU,  T_U,    CORNER_RU,
   H_WALL=10,     V_WALL,       
 
-  ALERT,        BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
+  ALERT,        
 
+  BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
   H_SHUT_DOOR=18,  H_HALF_DOOR1, H_HALF_DOOR2, H_HALF_DOOR3, H_OPEN_DOOR,
   CONSOLE_L=23,  CONSOLE_R,    CONSOLE_U,    CONSOLE_D,
   V_SHUT_DOOR=27,  V_HALF_DOOR1, V_HALF_DOOR2, V_HALF_DOOR3, V_OPEN_DOOR,
@@ -848,9 +849,7 @@ enum
   REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
   TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,
   LOCKED_H_SHUT_DOOR=43,         LOCKED_V_SHUT_DOOR,
-
   CODEPANEL_L=45,   CODEPANEL_R, CODEPANEL_U, CODEPANEL_D,
-
   BOX_1=49,      BOX_2,        BOX_3,        BOX_4,        UNUSED_BRICK,
 
   CONVEY_L=54,   CONVEY_D,     CONVEY_R,     CONVEY_U,     FINE_GRID,
@@ -936,8 +935,11 @@ enum
   ISO_BLOCK_1 = 47 ,
   ISO_BLOCK_2 = 48 ,
   ISO_BLOCK_3 = 49 ,
-  ISO_BLOCK_4 = 50 ,
-  ISO_BLOCK_5 = 51 
+
+  ISO_BARREL_1 = 50 ,
+  ISO_BARREL_2 = 51 ,
+  ISO_BARREL_3 = 52 ,
+  ISO_BARREL_4 = 53 
 
 };
 
