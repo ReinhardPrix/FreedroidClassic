@@ -2041,9 +2041,11 @@ Level_Editor(void)
 	    }
 	  if (KP2Pressed()) 
 	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_U;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+	      else if ( Ctrl_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
+	      else CurLevel->map[BlockY][BlockX]=T_U;
 	    }
 	  if (KP3Pressed()) 
 	    {
@@ -2051,9 +2053,11 @@ Level_Editor(void)
 	    }
 	  if (KP4Pressed()) 
 	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_L;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+	      else if ( Ctrl_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
+	      else CurLevel->map[BlockY][BlockX]=T_L;
 	    }
 	  if (KP5Pressed()) 
 	    {
@@ -2063,19 +2067,23 @@ Level_Editor(void)
 	    }
 	  if (KP6Pressed()) 
 	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_R;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+	      else if ( Ctrl_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
+	      else CurLevel->map[BlockY][BlockX]=T_R;
 	    }
 	  if (KP7Pressed()) 
 	    {
 	      CurLevel->map[BlockY][BlockX]=ECK_LO;
 	    }
-	  if (KP8Pressed()) 
+	  if ( KP8Pressed() ) 
 	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_O;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+	      else if ( Ctrl_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
+	      else CurLevel->map[BlockY][BlockX]=T_O;
 	    }
 	  if (KP9Pressed()) 
 	    {
@@ -2091,9 +2099,18 @@ Level_Editor(void)
 	    }
 	  if (DPressed())
 	    {
-	      if (Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
-	      else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+	      if ( !Ctrl_Was_Pressed())
+		{
+		  if (Shift_Was_Pressed())
+		    CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
+		  else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+		}
+	      else
+		{
+		  if (Shift_Was_Pressed())
+		    CurLevel->map[BlockY][BlockX]=LOCKED_V_ZUTUERE;	            	      
+		  else CurLevel->map[BlockY][BlockX]=LOCKED_H_ZUTUERE;	            	      
+		}
 	    }
 	  if (SpacePressed())
 	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
