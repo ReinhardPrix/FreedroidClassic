@@ -46,9 +46,8 @@ void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block);
 
-
 /* XPM */
-static const char *arrow[] = {
+static const char *crosshair_xpm[] = {
   /* width height num_colors chars_per_pixel */
   "    32    32        3            1",
   /* colors */
@@ -86,6 +85,51 @@ static const char *arrow[] = {
   "               X..X             ",
   "               X..X             ",
   "               XXXX             ",
+  "                                ",
+  "                                ",
+  "0,0"
+};
+
+
+/* XPM */
+static const char *arrow_xpm[] = {
+  /* width height num_colors chars_per_pixel */
+  "    32    32        3            1",
+  /* colors */
+  "X c #000000",
+  ". c #ffffff",
+  "  c None",
+  /* pixels */
+  "X                               ",
+  "XX                              ",
+  "X.X                             ",
+  "X..X                            ",
+  "X...X                           ",
+  "X....X                          ",
+  "X.....X                         ",
+  "X......X                        ",
+  "X.......X                       ",
+  "X........X                      ",
+  "X.....XXXXX                     ",
+  "X..X..X                         ",
+  "X.X X..X                        ",
+  "XX  X..X                        ",
+  "X    X..X                       ",
+  "     X..X                       ",
+  "      X..X                      ",
+  "      X..X                      ",
+  "       XX                       ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
   "                                ",
   "                                ",
   "0,0"
@@ -552,7 +596,8 @@ InitPictures (void)
 
   printf_SDL (ne_screen, -1, -1, " ok\n");
 
-  SDL_SetCursor( init_system_cursor( arrow ) );
+  arrow_cursor = init_system_cursor (arrow_xpm);
+  crosshair_cursor = init_system_cursor (crosshair_xpm);
 
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
   //---------- get Map blocks
@@ -783,9 +828,6 @@ Init_Video (void)
 	      SDL_GetError()); 
       exit(-1);
     }
-
-  /* hide mouse pointer per default */
-  SDL_ShowCursor (SDL_DISABLE);
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
 

@@ -1274,7 +1274,7 @@ Level_Editor(void)
 	  BlockX=rintf(Me.pos.x);
 	  BlockY=rintf(Me.pos.y);
 	  
-	  ClearUserFenster();
+	  Fill_Rect (User_Rect, Black);
 	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 	  Highlight_Current_Block();
 	  Show_Waypoints();
@@ -1624,7 +1624,6 @@ Level_Editor(void)
 		    case CHANGE_COLOR:
 		      break;
 		    case SET_LEVEL_NAME:
-		      ClearUserFenster();
 		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("New level name: ",
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
@@ -1634,7 +1633,6 @@ Level_Editor(void)
 		      Weiter=!Weiter;
 		      break;
 		    case SET_BACKGROUND_SONG_NAME:
-		      ClearUserFenster();
 		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("Bg music filename: ", 
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
@@ -1643,7 +1641,6 @@ Level_Editor(void)
 		      CurLevel->Background_Song_Name=GetString(20 , FALSE );
 		      break;
 		    case SET_LEVEL_COMMENT:
-		      ClearUserFenster();
 		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("New level-comment :",
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 

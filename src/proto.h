@@ -50,7 +50,6 @@ EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (int argc, char *const argv[]);
 EXTERN void InitNewMission (char *MissionName);
 EXTERN void ThouArtDefeated (void);
-EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);
 
 /* influ.c */
@@ -201,6 +200,7 @@ EXTERN void ResetMouseWheel (void);
 EXTERN int WheelUpPressed(void);
 EXTERN int WheelDownPressed(void);
 EXTERN int MouseRightPressed(void);
+EXTERN int MouseLeftPressed(void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
@@ -353,8 +353,6 @@ EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
 EXTERN void EnterKonsole (void);
 EXTERN int LevelEmpty (void);
-EXTERN int ShipEmpty (void);
-EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
 EXTERN void show_droid_info (int droidtype, int page);
 void ShowLifts (int level, int liftrow);

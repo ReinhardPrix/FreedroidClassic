@@ -48,6 +48,7 @@ int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
 Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
 int CurrentlyMouseRightPressed=0;
+int CurrentlyMouseLeftPressed = 0;
 
 SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
@@ -793,6 +794,7 @@ keyboard_update(void)
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
+	      CurrentlyMouseLeftPressed = TRUE;
 	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
 	    }
@@ -817,6 +819,7 @@ keyboard_update(void)
         case SDL_MOUSEBUTTONUP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
+	      CurrentlyMouseLeftPressed = FALSE;
 	      CurrentlySpacePressed = FALSE;
 	      axis_is_active = FALSE;
 	    }
@@ -1406,13 +1409,6 @@ EscapePressed (void)
   return CurrentlyEscapePressed;
 }				// int WPressed(void)
 
-/*@Function============================================================
-  @Desc: Diese Funktion ermittelt, ob irgend eine Richtungstaste gedrueckt ist
-  
-  @Ret: wenn eine Richtungstaste gedrueckt ist FALSE
-  ansonsten TRUE 
-* $Function----------------------------------------------------------*/
-
 int
 NoDirectionPressed (void)
 {
@@ -1429,6 +1425,13 @@ MouseRightPressed(void)
 {
   keyboard_update();
   return CurrentlyMouseRightPressed;
+}
+
+int
+MouseLeftPressed(void)
+{
+  keyboard_update();
+  return CurrentlyMouseLeftPressed;
 }
 
 

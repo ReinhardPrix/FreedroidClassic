@@ -1117,24 +1117,6 @@ ThouArtDefeated (void)
   return;
 } // void ThouArtDefeated(void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ThouArtVictorious (void)
-{
-  ShipEmptyCounter = WAIT_SHIPEMPTY;
-  GameOver = TRUE;		/*  */
-
-  ClearUserFenster ();
-  getchar_raw ();
-}
-
-
-
 /*----------------------------------------------------------------------
  * This function checks, if the influencer has succeeded in his given 
  * mission.  If not it returns, if yes the EndTitle/Debriefing is
@@ -1143,10 +1125,10 @@ ThouArtVictorious (void)
 void 
 CheckIfMissionIsComplete (void)
 {
-  int Robot_Counter;
+  int i;
 
-  for ( Robot_Counter=0 ; Robot_Counter < NumEnemys ; Robot_Counter++ )
-    if ( AllEnemys[Robot_Counter].energy > 0 )
+  for ( i=0 ; i < NumEnemys ; i++ )
+    if ( AllEnemys[i].energy > 0 )
       return;
 
   // mission complete: all droids have been killed

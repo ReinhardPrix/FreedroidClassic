@@ -126,6 +126,7 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
+EXTERN SDL_Color Black;
 
 #undef EXTERN
 #ifdef _sound_c
@@ -140,6 +141,8 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
+EXTERN SDL_Cursor *crosshair_cursor;
+EXTERN SDL_Cursor  *arrow_cursor;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */
 

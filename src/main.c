@@ -43,10 +43,11 @@
 
 #define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
 
-
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
+
+bool show_cursor;
 
 void UpdateCountersForThisFrame (void);
 
@@ -61,7 +62,6 @@ main (int argc, char *const argv[])
 {
   int i;
   Uint32 now;
-  bool first_time = TRUE;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -71,18 +71,14 @@ main (int argc, char *const argv[])
   joy_sensitivity = 1;
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
 
+  show_cursor = TRUE;
+
   now = SDL_GetTicks();
   InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
 
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );
-
-      if (first_time)   // make sure title is displayed long enough on fast machines.
-	{
-	  while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ; 
-	  first_time = FALSE;
-	}
 
       while (SpacePressed ());
       show_droid_info (Me.type, -3);  // show unit-intro page
@@ -94,15 +90,24 @@ main (int argc, char *const argv[])
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       GameOver = FALSE;
 
+      SDL_SetCursor (crosshair_cursor); // default cursor is a crosshair
+      SDL_ShowCursor (SDL_ENABLE);
+
       while (!GameOver && !QuitProgram)
 	{
 
 	  StartTakingTimeForFPSCalculation(); 
 
 	  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
-	    SDL_ShowCursor (SDL_DISABLE);
+	    {
+	      if (show_cursor) SDL_ShowCursor (SDL_DISABLE);
+	      show_cursor = FALSE;
+	    }
 	  else
-	    SDL_ShowCursor (SDL_ENABLE);
+	    {
+	      if (!show_cursor) SDL_ShowCursor (SDL_ENABLE);
+	      show_cursor = TRUE;
+	    }
 
 	  UpdateCountersForThisFrame ();
 

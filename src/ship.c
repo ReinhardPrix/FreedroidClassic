@@ -40,18 +40,43 @@
 #include "ship.h"
 #include "SDL_rotozoom.h"
 
+
+int CursorIsOnRect (SDL_Rect *rect);
+SDL_Rect up_rect,down_rect,left_rect,right_rect;
+
 #define UPDATE_ONLY 0x01
-int NoKeyPressed (void);
+
+extern bool show_cursor;
 //--------------------
 // Definitions for the menu inside the in-game console
 //
 #define CONS_MENU_HEIGHT 		256
 #define CONS_MENU_LENGTH 		100
 
-SDL_Rect Cons_Menu_Rect = {32, 180, 100, 256};
-SDL_Rect Cons_Rect = {16, 162, 595, 315};
+#define WAIT_ELEVATOR		9	/* warte, bevor Lift weitergeht */
 
-SDL_Rect Cons_Text_Rect = {175, 180, SCREENLEN-175, 305}; 
+#define MENUITEMHEIGHT 		4*77
+#define MENUITEMLENGTH 		50*2
+
+#define MENUTEXT_X	(132 + USERFENSTERPOSX + 5 )
+
+
+SDL_Rect Cons_Header_Rect = {120, BANNER_HEIGHT+40, 0.8*SCREENLEN, 160};
+SDL_Rect Cons_Droid_Rect = {32, 180, 100, 256};
+SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
+SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-175, 305}; 
+
+SDL_Rect Cons_Menu_Rect0 = {60, 180 + 0*64, 100, 64};
+SDL_Rect Cons_Menu_Rect1 = {60, 180 + 1*64, 100, 64};
+SDL_Rect Cons_Menu_Rect2 = {60, 180 + 2*64, 100, 64};
+SDL_Rect Cons_Menu_Rect3 = {60, 180 + 3*64, 100, 64};
+
+
+SDL_Rect up_rect;
+SDL_Rect down_rect;
+SDL_Rect left_rect;
+SDL_Rect right_rect;
+
 
 int ConsoleMenuPos=0;
 
@@ -283,11 +308,14 @@ EnterKonsole (void)
   Copy_Rect (User_Rect, TmpRect);
   Copy_Rect (Full_User_Rect, User_Rect);
 
-  while (SpacePressed ());  /* wait for user to release Space */
+  while (SpacePressed () || MouseRightPressed() );  /* wait for user to release Space */
 
   Me.status = CONSOLE;
 
   ResetMouseWheel ();
+
+  SDL_SetCursor (arrow_cursor);
+  SDL_ShowCursor (SDL_ENABLE);
 
   SetCurrentFont( Para_BFont );
 
@@ -298,9 +326,9 @@ EnterKonsole (void)
 
   while (!ReenterGame)
     {
-      if (EscapePressed())
+      if (EscapePressed() || MouseRightPressed())
 	{
-	  while (EscapePressed());
+	  while (EscapePressed() || MouseRightPressed());
 	  ReenterGame = TRUE;
 	}
       
@@ -320,6 +348,31 @@ EnterKonsole (void)
 	  PaintConsoleMenu (UPDATE_ONLY);
 	  while (DownPressed());
 	}
+      if (CursorIsOnRect (&Cons_Menu_Rect0) && (ConsoleMenuPos != 0) )
+	{
+	  MoveMenuPositionSound ();
+	  ConsoleMenuPos = 0;
+	  PaintConsoleMenu (UPDATE_ONLY);
+	}
+      if (CursorIsOnRect (&Cons_Menu_Rect1) && (ConsoleMenuPos != 1) )
+	{
+	  MoveMenuPositionSound ();
+	  ConsoleMenuPos = 1;
+	  PaintConsoleMenu (UPDATE_ONLY);
+	}
+      if (CursorIsOnRect (&Cons_Menu_Rect2) && (ConsoleMenuPos != 2) )
+	{
+	  MoveMenuPositionSound ();
+	  ConsoleMenuPos = 2;
+	  PaintConsoleMenu (UPDATE_ONLY);
+	}
+      if (CursorIsOnRect (&Cons_Menu_Rect3) && (ConsoleMenuPos != 3) )
+	{
+	  MoveMenuPositionSound ();
+	  ConsoleMenuPos = 3;
+	  PaintConsoleMenu (UPDATE_ONLY);
+	}
+	
 
       if (SpacePressed ())
 	{
@@ -335,12 +388,11 @@ EnterKonsole (void)
 	      PaintConsoleMenu (0);
 	      break;
 	    case 2:
-	      ClearUserFenster();
 	      ShowDeckMap (CurLevel);
 	      PaintConsoleMenu(0);
 	      break;
 	    case 3:
-	      ClearUserFenster ();
+	      Fill_Rect(User_Rect, Black);
 	      ShowLifts (CurLevel->levelnum, -1);
 	      Wait4Fire();
 	      PaintConsoleMenu(0);
@@ -359,6 +411,10 @@ EnterKonsole (void)
   Me.status = MOBILE;
 
   ClearGraphMem();
+  
+  SDL_SetCursor (crosshair_cursor);
+  if (!show_cursor)
+    SDL_ShowCursor (SDL_DISABLE);
 
   return;
 
@@ -378,9 +434,7 @@ void
 PaintConsoleMenu (int flag)
 {
   char MenuText[200];
-
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
+  SDL_Rect src;
 
   if ( !(flag & UPDATE_ONLY) )
     {
@@ -389,23 +443,21 @@ PaintConsoleMenu (int flag)
       SDL_BlitSurface( console_bg_pic1 , NULL , ne_screen , NULL );
 
       DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-      
-      sprintf(MenuText, "Unit type %s - %s", Druidmap[Me.type].druidname, Classname[Druidmap[Me.type].class]);
-      DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
-      
-      sprintf (MenuText, "\nAccess granted.\n\nArea : %s\n\nDeck : %s\n\nAlert: %s",
-	       curShip.AreaName, CurLevel->Levelname, Alertcolor[Alert]);
 
-      DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, &Menu_Rect);
+      sprintf (MenuText, "Area : %s\nDeck : %s    Alert: %s",
+	       curShip.AreaName, CurLevel->Levelname, Alertcolor[Alert]);
+      DisplayText (MenuText, Cons_Header_Rect.x, Cons_Header_Rect.y, &Cons_Header_Rect);
+
+      sprintf (MenuText, "Logout from console\n\nDroid info\n\nDeck map\n\nShip map");
+      DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y+25, &Cons_Text_Rect);
+
     } // only if not UPDATE_ONLY was required 
 
-  SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
-  SourceRectangle.y=0;
-  SourceRectangle.w=MENUITEMLENGTH;
-  SourceRectangle.h=MENUITEMHEIGHT;
-  TargetRectangle.x=MENUITEMPOSX;
-  TargetRectangle.y=MENUITEMPOSY;
-  SDL_BlitSurface( console_pic , &SourceRectangle , ne_screen , &TargetRectangle );
+  src.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
+  src.y=0;
+  src.w=MENUITEMLENGTH;
+  src.h=MENUITEMHEIGHT;
+  SDL_BlitSurface (console_pic, &src, ne_screen, &Cons_Menu_Rect);
 
   SDL_Flip (ne_screen);
 
@@ -421,22 +473,16 @@ PaintConsoleMenu (int flag)
 void
 ShowDeckMap (Level deck)
 {
-  SDL_Rect buf; // buffer: we always use Full_User_Rect for Deck-map.
   finepoint tmp;
   tmp.x=Me.pos.x;
   tmp.y=Me.pos.y;
   
-  ClearUserFenster ();
   Me.pos.x = CurLevel->xlen/2;
   Me.pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
-  Copy_Rect (User_Rect, buf);
-  Copy_Rect (Full_User_Rect, User_Rect);  // always use full-User_Rect for Deck-map
   Assemble_Combat_Picture( ONLY_SHOW_MAP );
-  // restore initial User-rect:
-  Copy_Rect (buf, User_Rect);
 
   SDL_Flip (ne_screen);
 
@@ -471,202 +517,27 @@ LevelEmpty (void)
 	return FALSE;
     }
 
-  if (ShipEmpty ())
-    ThouArtVictorious ();
-
   return TRUE;
 }
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-
+/* ---------------------------------------------------------------------- 
+ * This function should check if the mouse cursor is in the given Rectangle
+ * ---------------------------------------------------------------------- */
 int
-ShipEmpty (void)
+CursorIsOnRect (SDL_Rect *rect)
 {
-  int i;
+  point CurPos;
 
-  for (i = 0; i < curShip.num_levels; i++)
-    {
-      if (curShip.AllLevels[i] == NULL)
-	continue;
+  CurPos.x = input_axis.x + (USER_FENSTER_CENTER_X - 16);
+  CurPos.y = input_axis.y + (USER_FENSTER_CENTER_Y - 16);
 
-      if (!((curShip.AllLevels[i])->empty))
-	return (FALSE);
-    }
-  return (TRUE);
-}
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-NoKeyPressed (void)
-{
-  if (SpacePressed ())
-    return (FALSE);
-  if (LeftPressed ())
-    return (FALSE);
-  if (RightPressed ())
-    return (FALSE);
-  if (UpPressed ())
-    return (FALSE);
-  if (DownPressed ())
-    return (FALSE);
-  return (TRUE);
-}				// int NoKeyPressed(void)
-
-
-/*@Function============================================================
-@Desc: l"oscht das Userfenster
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ClearUserFenster (void)
-{
-  SDL_Rect tmp;
+  if ( (CurPos.x >= rect->x) && (CurPos.x <= rect->x + rect->w) )
+    if ( (CurPos.y >= rect->y) && (CurPos.y <= rect->y + rect->h) )
+      return (TRUE);
   
-  Copy_Rect (User_Rect, tmp);
+  return (FALSE);
 
-  SDL_FillRect( ne_screen , &tmp, 0 );
-  return;
-
-} // void ClearUserFenster(void)
-
-/* ---------------------------------------------------------------------- 
- * This function should check if the mouse cursor is currently on the 
- * 'left' arrow button in the great droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnLeftButton ( void )
-{
-  point CurPos;
-  SDL_Rect dst;
-  int lineskip;
-
-  lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
-
-  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
-  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
-
-  DebugPrintf( 1 , "\nCursor position: %d %d ." , CurPos.x , CurPos.y );
-
-  // Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - lineskip, 23, 32);
-  Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w - 2*lineskip, Cons_Menu_Rect.y - 1.2*lineskip, 23, 32);
-
-  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
-    {
-      DebugPrintf( 1 , "\nCursor might be on left button.");
-      if ( ( CurPos.y >= dst.y ) && 
-	   ( CurPos.y <= dst.y + dst.h ) )
-	{
-	  DebugPrintf( 1 , "\nCursor might IS on left button.");
-	  return( TRUE );
-	}
-    }
-
-  return( FALSE );
-
-}; // int CursorIsOnLeftButton ( void )
-
-/* ---------------------------------------------------------------------- 
- * This function should check if the mouse cursor is currently on the 
- * 'right' arrow button in the great droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnRightButton ( void )
-{
-  point CurPos;
-  SDL_Rect dst;
-  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
-
-  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
-  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
-
-  Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w-1.5*lineskip,Cons_Menu_Rect.y - 1.2*lineskip, 23, 32);
-
-  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
-    {
-      DebugPrintf( 1 , "\nCursor might be on right button.");
-      if ( ( CurPos.y >= dst.y ) && 
-	   ( CurPos.y <= dst.y + dst.h ) )
-	{
-	  DebugPrintf( 1 , "\nCursor might IS on right button.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-
-}; // int CursorIsOnRightButton ( void )
-
-/* ---------------------------------------------------------------------- 
- * This function should check if the mouse cursor is currently on the 
- * 'up' arrow button in the great droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnUpButton ( void )
-{
-  point CurPos;
-  SDL_Rect dst;
-  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
-
-  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
-  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
-
-  Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - 1.5*lineskip, 32, 23);  
-
-  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
-    {
-      DebugPrintf( 1 , "\nCursor might be on up button.");
-      if ( ( CurPos.y >= dst.y ) && 
-	   ( CurPos.y <= dst.y + dst.h ) )
-	{
-	  DebugPrintf( 1 , "\nCursor might IS on up button.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-
-}; // int CursorIsOnUpButton ( void )
-
-/* ---------------------------------------------------------------------- 
- * This function should check if the mouse cursor is currently on the 
- * 'down' arrow button in the great droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnDownButton ( void )
-{
-  point CurPos;
-  SDL_Rect dst;
-  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
-
-  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
-  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
-
-  Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - lineskip, 32, 232);  
-
-  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
-    {
-      DebugPrintf( 1 , "\nCursor might be on down button.");
-      if ( ( CurPos.y >= dst.y ) && 
-	   ( CurPos.y <= dst.y + dst.h ) )
-	{
-	  DebugPrintf( 1 , "\nCursor might IS on down button.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-
-}; // int CursorIsOnDownButton ( void )
+}; // int CursorIsOnRect
 
 /* ----------------------------------------------------------------------
  * This function does the robot show when the user has selected robot
@@ -693,38 +564,40 @@ GreatDruidShow (void)
 	  key_pressed = FALSE;
 	}
 
-      if (SpacePressed() || EscapePressed())
+      if (MouseLeftPressed ())
 	{
-	  if ( CursorIsOnLeftButton () )
+	  while (MouseLeftPressed());
+
+	  if ( CursorIsOnRect (&left_rect) )
 	    {
 	      if (page > 0) page --;
 	      MoveMenuPositionSound();
 	      key_pressed = TRUE;
 	    }
-	  else if ( CursorIsOnRightButton () )
+	  else if (CursorIsOnRect (&right_rect))
 	    {
 	      if (page < 2) page ++;
 	      MoveMenuPositionSound();
 	      key_pressed = TRUE;
 	    }
-	  else if ( CursorIsOnUpButton () )
+	  else if (CursorIsOnRect (&up_rect))
 	    {
 	      if (droidtype < Me.type) droidtype ++;	      
 	      MoveMenuPositionSound();
 	      key_pressed = TRUE;
 	    }
-	  else if ( CursorIsOnDownButton () )
+	  else if (CursorIsOnRect (&down_rect))
 	    {
 	      if (droidtype > 0) droidtype --;
 	      MoveMenuPositionSound();
 	      key_pressed = TRUE;
 	    }
-	  else
-	    {
-	      finished = TRUE;
-	    }
-	  while (SpacePressed() ||EscapePressed());
 	}
+      if (EscapePressed () || MouseRightPressed())
+	finished = TRUE;
+
+      while (EscapePressed() || MouseRightPressed ());
+
 
       if (UpPressed() || WheelUpPressed())
 	{
@@ -774,12 +647,16 @@ show_droid_info (int droidtype, int page)
   bool show_title = FALSE;
   bool show_arrows = FALSE;
   int lineskip;
-  SDL_Rect dst;
 
   SDL_SetClipRect ( ne_screen , NULL );
   SetCurrentFont( Para_BFont );
 
   lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+
+  Set_Rect (up_rect, Cons_Droid_Rect.x + Cons_Droid_Rect.w/2, Cons_Droid_Rect.y - 1.2*lineskip, 25, 13);
+  Set_Rect (down_rect, Cons_Droid_Rect.x + Cons_Droid_Rect.w /2, Cons_Droid_Rect.y -0.7*lineskip, 25, 13);
+  Set_Rect (left_rect, Cons_Text_Rect.x+Cons_Text_Rect.w-1.5*lineskip, Cons_Droid_Rect.y - 1.0*lineskip, 13, 25);
+  Set_Rect (right_rect, Cons_Text_Rect.x + Cons_Text_Rect.w-1.0*lineskip,Cons_Droid_Rect.y - 1.0*lineskip,13,25);
 
   SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -788,7 +665,7 @@ show_droid_info (int droidtype, int page)
 	   Druidmap[droidtype].druidname, 
 	   Classname[Druidmap[droidtype].class]);
 
-  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype);
+  ShowRobotPicture (Cons_Droid_Rect.x, Cons_Droid_Rect.y,  droidtype);
 
   switch (page)
     {
@@ -844,25 +721,21 @@ Sensors  1: %s\n\
 
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
-  DisplayText (DroidName, Cons_Menu_Rect.x + 0.75*Cons_Menu_Rect.w, Cons_Menu_Rect.y - lineskip, NULL);
+  DisplayText (DroidName, Cons_Droid_Rect.x + 0.75*Cons_Menu_Rect.w, Cons_Menu_Rect.y - lineskip, NULL);
 
   if (show_arrows)
     {
-      Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - 1.5*lineskip, 100, 100);
       if (Me.type >  droidtype)
-	SDL_BlitSurface ( arrow_up, NULL, ne_screen, &dst);
+	SDL_BlitSurface ( arrow_up, NULL, ne_screen, &up_rect);
 
-      Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - lineskip, 100, 100);
       if (droidtype > 0)
-	SDL_BlitSurface ( arrow_down, NULL, ne_screen, &dst);
+	SDL_BlitSurface ( arrow_down, NULL, ne_screen, &down_rect);
   
-      Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w - 2*lineskip, Cons_Menu_Rect.y - 1.2*lineskip, 100, 100);
       if (page > 0)
-	SDL_BlitSurface ( arrow_left, NULL, ne_screen, &dst);
-      
-      Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w-1.5*lineskip,Cons_Menu_Rect.y - 1.2*lineskip, 100, 100);
+	SDL_BlitSurface ( arrow_left, NULL, ne_screen, &left_rect);
+
       if (page < 2)
-	SDL_BlitSurface ( arrow_right, NULL, ne_screen, &dst);
+	SDL_BlitSurface ( arrow_right, NULL, ne_screen, &right_rect);
     }
 
   SDL_Flip (ne_screen);

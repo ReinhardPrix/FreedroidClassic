@@ -41,18 +41,6 @@ const SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT, 640, 480 - BANNER_HEIGHT};
 
 const SDL_Rect Full_Screen_Rect = { 0, 0, SCREENLEN, SCREENHEIGHT };
 
-/*
-const SDL_Rect Menu_Rect = {MENUTEXT_X, USERFENSTERPOSY,
-			USERFENSTERPOSX + USERFENSTERBREITE,
-			USERFENSTERPOSY + USERFENSTERHOEHE};
-*/
-
-const SDL_Rect Menu_Rect = {MENUTEXT_X, USERFENSTERPOSY,
-			USERFENSTERBREITE - MENUTEXT_X + USERFENSTERPOSX ,
-			USERFENSTERPOSY + USERFENSTERHOEHE};
-
-int Shieldcolors[INITIAL_BLOCK_WIDTH];
-
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
 influence_t Me = {

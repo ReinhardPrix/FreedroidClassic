@@ -45,6 +45,7 @@
 
 #include "SDL_rotozoom.h"
 
+SDL_Color Black = {0, 0, 0};
 SDL_Color Flash_Light = {11, 11, 11};
 SDL_Color Flash_Dark  = {230, 230, 230};
 
@@ -602,7 +603,7 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
   Uint32 pixcolor;
   SDL_Rect tmp;
 
-  Set_Rect (tmp, rect.x, rect.y, rect.w, rect.h);
+  Copy_Rect (rect, tmp);
 
   pixcolor = SDL_MapRGB (ne_screen->format, color.r, color.g, color.b);
 
