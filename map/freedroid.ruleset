@@ -1397,7 +1397,7 @@ Now we come to the description of all the droids:
 
 ** Start of new Robot: ** 
 Droidname: 001
-Droid portrait file name (without extension) to us use="001"
+Droid portrait file name (without extension) to use="001"
 Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
