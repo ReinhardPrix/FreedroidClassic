@@ -251,20 +251,18 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_BEGIN_STRING "* Start of an Event Action Subsection *"
 #define EVENT_ACTION_END_STRING "* End of this Event Action Subsection *"
 
-#define EVENT_ACTION_MAPCHANGE_POS_X_STRING "Action is mapchange at positionX="
-#define EVENT_ACTION_MAPCHANGE_POS_Y_STRING "Action is mapchange at positionY="
-#define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING "Action is mapchange at maplevel="
-#define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING "Action is change map there to new value="
-#define EVENT_ACTION_INFLUENCER_SAY_SOMETHING "Action is Influencer saying something="
-#define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer saying the following text=\""
-  // #define EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING "ACTION INDEX NUMBER TO USE="
+#define EVENT_ACTION_MAPCHANGE_POS_X_STRING "Mapchange at X="
+#define EVENT_ACTION_MAPCHANGE_POS_Y_STRING " Y="
+#define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING " Lev="
+#define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING " to new value="
+
+#define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer say=\""
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
 #define ACTION_LABEL_INDICATION_STRING "Action label for this action=\""
 
 #define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
 #define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
 #define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
-  // #define EVENT_TRIGGER_WHICH_ACTION_STRING "Event Action to be triggered by this trigger="
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
 
@@ -289,10 +287,8 @@ Get_Game_Events ( char* EventSectionPointer )
     {
       // Maybe the triggered event consists of the influencer saying something
       AllTriggeredActions[i].ActionLabel="";
-      AllTriggeredActions[i].InfluencerSaySomething=-1;
       AllTriggeredActions[i].InfluencerSayText="";
       // Maybe the triggered event consists of the map beeing changed at some tile
-      AllTriggeredActions[i].ChangeMap=-1;
       AllTriggeredActions[i].ChangeMapLevel=-1;
       AllTriggeredActions[i].ChangeMapLocation.x=-1;
       AllTriggeredActions[i].ChangeMapLocation.y=-1;
@@ -341,10 +337,6 @@ Get_Game_Events ( char* EventSectionPointer )
       // Now we read in the new value for that map tile
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapTo , EndOfEvent );
-
-      // Now we read in if the influencer is to say something
-      ReadValueFromString( EventPointer , EVENT_ACTION_INFLUENCER_SAY_SOMETHING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething , EndOfEvent );
 
       // Now we read in if the text for the influencer to say
       AllTriggeredActions[ EventActionNumber].InfluencerSayText =
@@ -953,11 +945,6 @@ Get_Mission_Targets( char* MissionTargetPointer )
 
 	  Me.AllMissions[ MissionTargetIndex ].ListOfActionsToBeTriggeredAtCompletition[ NumberOfEventsToTriggerAtThisAssignment ] = GiveNumberToThisActionLabel ( ActionLabel );
 	  
-	  // ReadValueFromString( NextEventPointer , MISSION_COMPLETITION_TRIGGERED_ACTION_STRING , "%d" ,
-	  // &Me.AllMissions[ MissionTargetIndex ].ListOfActionsToBeTriggeredAtCompletition[ NumberOfEventsToTriggerAtThisAssignment ] ,
-	  // EndOfMissionTargetPointer );
-
-
 	  NumberOfEventsToTriggerAtThisCompletition ++;
 	  NextEventPointer ++;
 	}
