@@ -44,7 +44,7 @@ int Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
-EXTERN void Level_Editor(void);
+EXTERN void LevelEditor(void);
 
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
@@ -120,7 +120,7 @@ StoreMenuBackground ( void )
  * keyboard only, currently, sorry.
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont )
+DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* BackgroundToUse , void* MenuFont )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
@@ -145,7 +145,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   // First thing we do is find out how may options we have
   // been given for the menu
   //
-  for ( i = 0 ; i < 10 ; i ++ )
+  for ( i = 0 ; TRUE ; i ++ )
     {
       if ( strlen( MenuTexts[ i ] ) == 0 ) break;
     }
@@ -198,18 +198,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
 	  LoadAndShowStats ( MenuTexts [ MenuPosition - 1 ] );
 	}
-      //--------------------
-      // We highlight the currently selected option with an 
-      // influencer to the left and right of it.
-      //
-      /*
-      PutInfluence( ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
-		    first_menu_item_pos_y +
-		    ( MenuPosition - 0.5 ) * h , 0 );
-      PutInfluence( ( SCREEN_WIDTH + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
-		    first_menu_item_pos_y +
-		    ( MenuPosition - 0.5 ) * h , 0 );
-      */
       HighlightRect.x = ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
       HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
       HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
@@ -217,9 +205,9 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       HighlightRectangle ( Screen , HighlightRect );
 
 
-      for ( i = 0 ; i < 10 ; i ++ )
+      for ( i = 0 ; TRUE ; i ++ )
 	{
-	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
+	  if ( strlen( MenuTexts[ i ] ) == 0 ) break;
 	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
       if ( strlen( InitialText ) > 0 ) 
@@ -247,33 +235,12 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  //
 	  // In case of a key, we always have a valid selection.
 	  //
+	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	  MenuItemSelectedSound();
 
-	  /*
-	  if ( axis_is_active )
-	    {
-	      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
-		   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
-		{
-		  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
-		  while ( EnterPressed() || SpacePressed() );
-		  MenuItemSelectedSound();
+	  SDL_ShowCursor( SDL_ENABLE );
+	  return ( MenuPosition );
 
-		  SDL_ShowCursor( SDL_ENABLE );
-		  return ( MenuPosition );
-		}
-	    }
-	  else
-	    {
-	  */
-
-	      while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
-	      MenuItemSelectedSound();
-
-	      SDL_ShowCursor( SDL_ENABLE );
-	      return ( MenuPosition );
-	      /*
-	    }
-	      */
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
@@ -1056,7 +1023,7 @@ enum
 	  break;
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );
-	  Level_Editor();
+	  LevelEditor();
 	  // Weiter = TRUE;   /* jp forgot this... ;) */
 	  break;
 	case LOAD_GAME_POSITION:

@@ -38,6 +38,14 @@ Area name="Asteroid 232"
 xlen of this level: 39
 ylen of this level: 34
 color of this level: 0
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=maintenance
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=THEGREATBATH.MOD
@@ -220,6 +228,14 @@ Levelnumber: 1
 xlen of this level: 70
 ylen of this level: 40
 color of this level: 2
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Computer storage
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
@@ -388,6 +404,14 @@ Levelnumber: 2
 xlen of this level: 60
 ylen of this level: 30
 color of this level: 1
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=robostores
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=The_Last_V8.mod
@@ -551,6 +575,14 @@ Levelnumber: 3
 xlen of this level: 38
 ylen of this level: 22
 color of this level: 5
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=stores
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=DELTA2.MOD
@@ -697,6 +729,14 @@ Levelnumber: 4
 xlen of this level: 44
 ylen of this level: 41
 color of this level: 4
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=upper cargo
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ACEII.MOD
@@ -861,6 +901,14 @@ Levelnumber: 5
 xlen of this level: 40
 ylen of this level: 40
 color of this level: 3
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Robot OS evaluation
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=SLOW.MOD
@@ -1024,6 +1072,14 @@ Levelnumber: 6
 xlen of this level: 40
 ylen of this level: 40
 color of this level: 5
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=shuttle bay
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=WORLD.MOD
@@ -1189,6 +1245,14 @@ Levelnumber: 7
 xlen of this level: 43
 ylen of this level: 47
 color of this level: 1
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Asteroid Control Center
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=BLADRUN.MOD
@@ -1359,6 +1423,14 @@ Levelnumber: 8
 xlen of this level: 38
 ylen of this level: 40
 color of this level: 0
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Main reactor block
 Comment of the Influencer on entering this level="This must be the main reactor level.  Humans are not allowed here.
 Name of background song for this level=ALFA.MOD
@@ -1522,6 +1594,14 @@ Levelnumber: 9
 xlen of this level: 26
 ylen of this level: 11
 color of this level: 3
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Administration
 Comment of the Influencer on entering this level="This must be the administration.
 Name of background song for this level=NOWHERE.MOD
@@ -1656,6 +1736,14 @@ Levelnumber: 10
 xlen of this level: 31
 ylen of this level: 13
 color of this level: 1
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=airlock
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Hardcore-Theme.mod
@@ -1792,6 +1880,14 @@ Levelnumber: 11
 xlen of this level: 35
 ylen of this level: 15
 color of this level: 4
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=reactor
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=stylebln.mod
@@ -1927,28 +2023,36 @@ end_of_level
 ----------------------------------------------------------------------
 
 Levelnumber: 12
-xlen of this level: 38
+xlen of this level: 70
 ylen of this level: 15
 color of this level: 4
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Robot construction facility
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=princess.mod
 beginning_of_map
- 33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
- 33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33   7  10  10   8  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0   0   0   0   0   0   0   0   0   0   7   9   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33   7  10   2  18  10   6   0   1   9   0   0  13   0   0  13   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0  32  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0   7   2  10  10   9   0   0   0   7  18   9   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0  27   0   0   0  27   0   0   0  27  34  27   0   0   0  12   0   0   0  11   0   0   0   0   0   0  12  11 
- 33  33  33  33   1  10   8  18  10   6   0  11   0   0   0  11   0   0   0   1  18   3   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0  24  11   0  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  34   4  10  18  10  10  18  10  10   6 
- 33  33  33  33  33  33  11   0  24  11   0   4  10  10  18   6   0   0   0   0   0   0   0   0   7   9   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0  27   0   0   0   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33   1  10  10   2  10   2  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10   3 
+ 33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33   7  10  10   8  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0   0   0   0   0   0   0   0   0   0   7   9   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33   7  10   2  18  10   6   0   1   9   0   0  13   0   0  13   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  11  23   0   0  24  11   0  32  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  11  23   0   0  24  11   0   7   2  10  10   9   0   0   0   7  18   9   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  11  23   0   0  24  11   0  27   0   0   0  27   0   0   0  27  34  27   0   0   0  12   0   0   0  11   0   0   0   0   0   0  12  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33   1  10   8  18  10   6   0  11   0   0   0  11   0   0   0   1  18   3   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  11   0  24  11   0  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  34   4  10  18  10  10  18  10  10   6  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  11   0  24  11   0   4  10  10  18   6   0   0   0   0   0   0   0   0   7   9   0   0   0  27   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0  27   0   0   0   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33   1  10  10   2  10   2  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
@@ -2068,6 +2172,14 @@ Levelnumber: 13
 xlen of this level: 56
 ylen of this level: 57
 color of this level: 2
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Telemetry
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ap-nosta.mod
@@ -2248,6 +2360,14 @@ Levelnumber: 14
 xlen of this level: 51
 ylen of this level: 26
 color of this level: 5
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Scientists quarters
 Comment of the Influencer on entering this level="These must be the private quarters of the scientific staff of the installation.
 Name of background song for this level=Starworx.mod
@@ -2404,6 +2524,14 @@ Levelnumber: 15
 xlen of this level: 50
 ylen of this level: 17
 color of this level: 5
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=Private Goods Storage Cellar
 Comment of the Influencer on entering this level="This is the level, where I was created, back in the scientists makeshift bunker
 Name of background song for this level=Psychospugs.mod
@@ -2570,6 +2698,14 @@ Levelnumber: 16
 xlen of this level: 9
 ylen of this level: 9
 color of this level: 1
+jump threshold north: -1
+jump threshold south: -1
+jump threshold east: -1
+jump threshold west: -1
+jump target north: -1
+jump target south: -1
+jump target east: -1
+jump target west: -1
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=NOWHERE.MOD

@@ -37,7 +37,7 @@
 #include "proto.h"
 
 void Show_Waypoints( int PrintConnectionList );
-void Level_Editor(void);
+void LevelEditor(void);
 
 EXTERN char Previous_Mission_Name[1000];
 
@@ -354,7 +354,7 @@ Show_Waypoints( int PrintConnectionList )
  * change level name and quit from level editing.
  * ---------------------------------------------------------------------- */
 void 
-Level_Editor(void)
+LevelEditor(void)
 {
   int BlockX=rintf(Me[0].pos.x);
   int BlockY=rintf(Me[0].pos.y);
@@ -370,7 +370,7 @@ Level_Editor(void)
   char* OldMapPointer;
   char linebuf[10000];
   int MapInsertNr;
-  char* MenuTexts[ 10 ];
+  char* MenuTexts[ 20 ];
   char Options0[1000];
   char Options1[1000];
   char Options2[1000];
@@ -384,7 +384,7 @@ Level_Editor(void)
 
   SDL_Rect Editor_Window;
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , SET_LEVEL_INTERFACES , QUIT_LEVEL_EDITOR_POSITION };
   
   Editor_Window.x=User_Rect.x;
   Editor_Window.y=User_Rect.y;  
@@ -1030,7 +1030,11 @@ Level_Editor(void)
 	  sprintf( Options5 , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
 	  MenuTexts[ 7 ] = Options5;
 	  MenuTexts[ 8 ] = "Add completely new level" ; 
-	  MenuTexts[ 9 ] = "Quit Level Editor" ;
+	  MenuTexts[ 9 ] = "Set Level Interfaces" ;
+	  MenuTexts[ 10 ] = "Quit Level Editor" ;
+	  MenuTexts[ 11 ] = "" ;
+
+
 
 	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
 
@@ -1199,7 +1203,7 @@ Level_Editor(void)
       
     } // while (!Done)
 
-}; // void Level_Editor ( void )
+}; // void LevelEditor ( void )
 
 
 

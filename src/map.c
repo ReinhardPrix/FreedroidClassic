@@ -710,7 +710,7 @@ Encode_Level_For_Saving(Level Lev)
   int MemAmount=0;		/* the size of the level-data */
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
-  char linebuf[81];		/* Buffer */
+  char linebuf[5000];		/* Buffer */
   char HumanReadableMapLine[10000]="Hello, this is gonna be a made into a readable map-string.";
   
   /* Get the number of waypoints */
@@ -732,8 +732,28 @@ Encode_Level_For_Saving(Level Lev)
 
   // Write the data to memory:
   // Here the levelnumber and general information about the level is written
-  sprintf(linebuf, "Levelnumber: %d\nxlen of this level: %d\nylen of this level: %d\ncolor of this level: %d\n",
-	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color);
+  sprintf(linebuf, "Levelnumber: %d\n\
+xlen of this level: %d\n\
+ylen of this level: %d\n\
+color of this level: %d\n\
+jump threshold north: %d\n\
+jump threshold south: %d\n\
+jump threshold east: %d\n\
+jump threshold west: %d\n\
+jump target north: %d\n\
+jump target south: %d\n\
+jump target east: %d\n\
+jump target west: %d\n",
+	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color , 
+	  Lev->jump_threshold_north, 
+	  Lev->jump_threshold_south, 
+	  Lev->jump_threshold_east, 
+	  Lev->jump_threshold_west, 
+	  Lev->jump_target_north, 
+	  Lev->jump_target_south, 
+	  Lev->jump_target_east, 
+	  Lev->jump_target_west
+	  );
   strcpy(LevelMem, linebuf);
   strcat(LevelMem, LEVEL_NAME_STRING );
   strcat(LevelMem, Lev->Levelname );
@@ -1235,6 +1255,7 @@ Decode_Loaded_Leveldata ( char *data )
   char* ItemPointer;
   char* ItemsSectionBegin;
   char* ItemsSectionEnd;
+  char* TempSectionPointer;
   int NumberOfStatementsInThisLevel;
   int NumberOfCodepanelsInThisLevel;
   int NumberOfMapInsertsInThisLevel;
@@ -1260,7 +1281,78 @@ Decode_Loaded_Leveldata ( char *data )
       DebugPrintf( 0 , "No Levelnumber entry found! Terminating! ");
       Terminate(ERR);
     }
-  sscanf ( DataPointer , "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
+
+  //--------------------
+  // Now we read in the jump points associated with this map
+  //
+
+  // We look for the beginning and end of the map statement section
+  TempSectionPointer = LocateStringInData( DataPointer , MAP_BEGIN_STRING );
+
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  Preserved_Letter=TempSectionPointer[0];
+  TempSectionPointer[0]=0;
+
+  ReadValueFromString( DataPointer , "jump threshold north: " , "%d" , 
+		       &(loadlevel->jump_threshold_north) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump theshold north : %d ", loadlevel->jump_threshold_north );
+  ReadValueFromString( DataPointer , "jump threshold south: " , "%d" , 
+		       &(loadlevel->jump_threshold_south) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump theshold south : %d ", loadlevel->jump_threshold_south );
+  ReadValueFromString( DataPointer , "jump threshold east: " , "%d" , 
+		       &(loadlevel->jump_threshold_east) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump theshold east : %d ", loadlevel->jump_threshold_east );
+  ReadValueFromString( DataPointer , "jump threshold west: " , "%d" , 
+		       &(loadlevel->jump_threshold_west) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump theshold west : %d ", loadlevel->jump_threshold_west );
+
+  ReadValueFromString( DataPointer , "jump target north: " , "%d" , 
+		       &(loadlevel->jump_target_north) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump target north : %d ", loadlevel->jump_target_north );
+  ReadValueFromString( DataPointer , "jump target south: " , "%d" , 
+		       &(loadlevel->jump_target_south) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump target south : %d ", loadlevel->jump_target_south );
+  ReadValueFromString( DataPointer , "jump target east: " , "%d" , 
+		       &(loadlevel->jump_target_east) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump target east : %d ", loadlevel->jump_target_east );
+  ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
+		       &(loadlevel->jump_target_west) , TempSectionPointer );
+  DebugPrintf( 0 , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
+
+
+  TempSectionPointer [ 0 ] = Preserved_Letter ;
+
+  /*
+  sscanf ( DataPointer , "Levelnumber: %u \n\
+ xlen of this level: %u \n\
+ ylen of this level: %u \n\
+ color of this level: %u \n\
+jump threshold north: %u\n\
+jump threshold south: %u\n\
+jump threshold east: %u\n\
+jump threshold west: %u\n\
+jump target north: %u\n\
+jump target south: %u\n\
+jump target east: %u\n\
+jump target west: %u\n",
+	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color , 
+	  Lev->jump_threshold_north, 
+	  Lev->jump_threshold_south, 
+	  Lev->jump_threshold_east, 
+	  Lev->jump_threshold_west, 
+	  Lev->jump_target_north, 
+	  Lev->jump_target_south, 
+	  Lev->jump_target_east, 
+	  Lev->jump_target_west
+
+	  &(loadlevel->levelnum), &(loadlevel->xlen),
+	  &(loadlevel->ylen), &(loadlevel->color));
+  */
+
+  sscanf ( DataPointer , "Levelnumber: %u \n\
+ xlen of this level: %u \n\
+ ylen of this level: %u \n\
+ color of this level: %u \n" , 
 	  &(loadlevel->levelnum), &(loadlevel->xlen),
 	  &(loadlevel->ylen), &(loadlevel->color));
 

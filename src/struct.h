@@ -798,6 +798,14 @@ typedef struct
   int ylen;
   int color;
   char *map[MAX_MAP_LINES];	/* this is a vector of pointers ! */
+  int jump_threshold_north;
+  int jump_threshold_south;
+  int jump_threshold_east;
+  int jump_threshold_west;
+  int jump_target_north;
+  int jump_target_south;
+  int jump_target_east;
+  int jump_target_west;
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
   grob_point consumers[MAX_CONSUMERS_ON_LEVEL];
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
