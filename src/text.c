@@ -217,6 +217,20 @@ ChatWithFriendlyDroid( int Enum )
       //
       for ( i = 0 ; i < MAX_REQUESTS_PER_DROID ; i++ )
 	{
+	  //--------------------
+	  // First we see, if the mission situation is right for this request to be
+	  // imposed upon the player
+	  //
+	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone != (-1) )
+	    {
+	      if ( Me.AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone ].MissionIsComplete != TRUE ) continue;
+	    }
+	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned != (-1) )
+	    {
+	      if ( Me.AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned ].MissionWasAssigned == TRUE ) continue;
+	    }
+
+	  // So if the word matches, then the request is really proper
 	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].RequestList[ i ].RequestTrigger ) ) 
 	    {
 
@@ -421,64 +435,6 @@ Of course you can ask the droid about anything else it has told you or about wha
 		      break;
 		    }
 		}
-
-	      /*
-	      if ( strcmp ( DecisionString , "0" ) == 0 ) 
-		{
-		  InstallItem( 0 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "1" ) == 0 ) 
-		{
-		  InstallItem( 1 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "2" ) == 0 ) 
-		{
-		  InstallItem( 2 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "3" ) == 0 ) 
-		{
-		  InstallItem( 3 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "4" ) == 0 ) 
-		{
-		  InstallItem( 4 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "5" ) == 0 ) 
-		{
-		  InstallItem( 5 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "6" ) == 0 ) 
-		{
-		  InstallItem( 6 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "7" ) == 0 ) 
-		{
-		  InstallItem( 7 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      if ( strcmp ( DecisionString , "8" ) == 0 ) 
-		{
-		  InstallItem( 8 );
-		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
-		  break;
-		}
-	      */
-
 
 
 	      DisplayTextWithScrolling ( "Please answer '0'-'9' or 'q'." , -1 , -1 , &Chat_Window , Background );

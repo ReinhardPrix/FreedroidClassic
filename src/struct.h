@@ -286,6 +286,8 @@ typedef struct
 {
   char* RequestTrigger; // which word of the influencer initiates the request
   char* RequestText;  // which text will be used to pose the request
+  int RequestRequiresMissionDone; // which mission must be done in order to get this request
+  int RequestRequiresMissionUnassigned; // which mission must be unassigned in order to get this request
   char* AnswerYes;    // what does the influ have to say to confirm?
   char* AnswerNo;     // what does the influ have to say to reject?
   char* ResponseYes;  // what will the droid respond, if influ confirms the question
