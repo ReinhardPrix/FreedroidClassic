@@ -40,7 +40,7 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "paratext.h"
+#include "text.h"
 
 #define WAITCHAR 220
 

@@ -37,7 +37,7 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "paratext.h"
+#include "text.h"
 
 extern char *InfluenceModeNames[];
 

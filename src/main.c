@@ -36,8 +36,8 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "paratext.h"
-#include "paravars.h"
+#include "text.h"
+#include "vars.h"
 #include "ship.h"
 
 

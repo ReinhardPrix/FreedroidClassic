@@ -39,7 +39,7 @@
 #include "global.h"
 #include "proto.h"
 #include "map.h"
-#include "paratext.h"
+#include "text.h"
 #include "colodefs.h"
 
 extern int TimerFlag;

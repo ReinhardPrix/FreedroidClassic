@@ -25,9 +25,9 @@
 #ifndef _proto_h
 #define _proto_h
 
-/* paraplus.c */
+/* main.c */
 #undef EXTERN
-#ifdef _freedroid_c
+#ifdef _main_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -43,9 +43,9 @@ EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void StandardEnergieLieferungen (void);
 
-/* paraplus.c */
+/* main.c */
 #undef EXTERN
-#ifdef _freeinit_c
+#ifdef _init_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -382,9 +382,9 @@ EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 
 
-/* paratext.c */
+/* text.c */
 #undef EXTERN
-#ifdef _freetext_c
+#ifdef _text_c
 #define EXTERN
 #else
 #define EXTERN extern
