@@ -51,6 +51,16 @@ int CurrentlyLeftPressed=0;
 int CurrentlyRightPressed=0;
 int CurrentlyUpPressed=0;
 int CurrentlyDownPressed=0;
+int Currently0Pressed=0;
+int Currently1Pressed=0;
+int Currently2Pressed=0;
+int Currently3Pressed=0;
+int Currently4Pressed=0;
+int Currently5Pressed=0;
+int Currently6Pressed=0;
+int Currently7Pressed=0;
+int Currently8Pressed=0;
+int Currently9Pressed=0;
 int CurrentlyAPressed=0;
 int CurrentlyBPressed=0;
 int CurrentlyCPressed=0;
@@ -202,6 +212,36 @@ keyboard_update(void)
 	      break;
 	    case SDLK_KP_ENTER:
 	      CurrentlyKP_ENTER_Pressed=TRUE;
+	      break;
+	    case SDLK_0:
+	      Currently0Pressed=TRUE;
+	      break;
+	    case SDLK_1:
+	      Currently1Pressed=TRUE;
+	      break;
+	    case SDLK_2:
+	      Currently2Pressed=TRUE;
+	      break;
+	    case SDLK_3:
+	      Currently3Pressed=TRUE;
+	      break;
+	    case SDLK_4:
+	      Currently4Pressed=TRUE;
+	      break;
+	    case SDLK_5:
+	      Currently5Pressed=TRUE;
+	      break;
+	    case SDLK_6:
+	      Currently6Pressed=TRUE;
+	      break;
+	    case SDLK_7:
+	      Currently7Pressed=TRUE;
+	      break;
+	    case SDLK_8:
+	      Currently8Pressed=TRUE;
+	      break;
+	    case SDLK_9:
+	      Currently9Pressed=TRUE;
 	      break;
 	    case SDLK_KP0:
 	      CurrentlyKP0Pressed=TRUE;
@@ -381,6 +421,36 @@ keyboard_update(void)
 	      break;
 	    case SDLK_KP_ENTER:
 	      CurrentlyKP_ENTER_Pressed=FALSE;
+	      break;
+	    case SDLK_0:
+	      Currently0Pressed=FALSE;
+	      break;
+	    case SDLK_1:
+	      Currently1Pressed=FALSE;
+	      break;
+	    case SDLK_2:
+	      Currently2Pressed=FALSE;
+	      break;
+	    case SDLK_3:
+	      Currently3Pressed=FALSE;
+	      break;
+	    case SDLK_4:
+	      Currently4Pressed=FALSE;
+	      break;
+	    case SDLK_5:
+	      Currently5Pressed=FALSE;
+	      break;
+	    case SDLK_6:
+	      Currently6Pressed=FALSE;
+	      break;
+	    case SDLK_7:
+	      Currently7Pressed=FALSE;
+	      break;
+	    case SDLK_8:
+	      Currently8Pressed=FALSE;
+	      break;
+	    case SDLK_9:
+	      Currently9Pressed=FALSE;
 	      break;
 	    case SDLK_KP0:
 	      CurrentlyKP0Pressed=FALSE;
@@ -646,6 +716,76 @@ KP_ENTER_Pressed (void)
   keyboard_update();
   return CurrentlyKP_ENTER_Pressed;
 }
+
+int
+Number0Pressed (void)
+{
+  keyboard_update ();
+  return Currently0Pressed;
+}				// int KP0Pressed(void)
+
+int
+Number1Pressed (void)
+{
+  keyboard_update ();
+  return Currently1Pressed;
+}				// int KP1Pressed(void)
+
+int
+Number2Pressed (void)
+{
+  keyboard_update ();
+  return Currently2Pressed;
+}				// int KP2Pressed(void)
+
+int
+Number3Pressed (void)
+{
+  keyboard_update ();
+  return Currently3Pressed;
+}				// int KP3Pressed(void)
+
+int
+Number4Pressed (void)
+{
+  keyboard_update ();
+  return Currently4Pressed;
+}				// int KP4Pressed(void)
+
+int
+Number5Pressed (void)
+{
+  keyboard_update ();
+  return Currently5Pressed;
+}				// int KP5Pressed(void)
+
+int
+Number6Pressed (void)
+{
+  keyboard_update ();
+  return Currently6Pressed;
+}				// int KP6Pressed(void)
+
+int
+Number7Pressed (void)
+{
+  keyboard_update ();
+  return Currently7Pressed;
+}				// int KP7Pressed(void)
+
+int
+Number8Pressed (void)
+{
+  keyboard_update ();
+  return Currently8Pressed;
+}				// int KP8Pressed(void)
+
+int
+Number9Pressed (void)
+{
+  keyboard_update ();
+  return Currently9Pressed;
+}				// int KP9Pressed(void)
 
 int
 KP0Pressed (void)
