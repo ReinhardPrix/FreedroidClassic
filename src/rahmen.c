@@ -159,6 +159,39 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
 
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem )
 
+/* ----------------------------------------------------------------------
+ * This function writes the description of a droid into the description
+ * string.
+ * ---------------------------------------------------------------------- */
+void 
+GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
+{
+  // char linebuf[1000];
+  
+
+  // --------------------
+  // First we print out the droid name.  That's simple.
+  //
+  strcpy( DroidDescText , Druidmap[ CurEnemy->type ].druidname );
+  strcat( DroidDescText , " -- " );
+  strcat( DroidDescText , Classname [ Druidmap[ CurEnemy->type ].class ] );
+  strcat( DroidDescText , "\n" );
+
+  // --------------------
+  // 
+  if ( Druidmap[ CurEnemy->type ].weapon_item.type != (-1) )
+    {
+      strcat( DroidDescText , " WARNING!  ARMED!" );
+    }
+  else
+    {
+      strcat( DroidDescText , " Unarmed!" );
+    }
+  // strcat( DroidDescText , ItemMap [ Druidmap[ CurEnemy->type ].weapon_item.type ].ItemName );
+  // strcat( DroidDescText , "\n" );
+
+}; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
+
 
 /* -----------------------------------------------------------------
  * This function updates the top status bar. 
@@ -277,6 +310,13 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
     } // if nothing is 'held in hand' && inventory-screen visible
 
+  //--------------------
+  // If the mouse cursor is within the user rectangle, then we check if
+  // either the cursor is over an inventory item or over some other droid
+  // and in both cases, we give a description of the object in the small
+  // black rectangle in the top status banner.
+  //
+
   if ( CursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
     {
       DebugPrintf( 0  , "\nCursor is in userfenster... --> see if hovering over an item...");
@@ -291,6 +331,19 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 	    {
 	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) );
+	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
+	    }
+	}
+      for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
+	{
+	  // We don't describe enemys that are not on this level...
+	  if ( AllEnemys[ i ].levelnum != CurLevel->levelnum ) continue;
+	  if ( AllEnemys[ i ].Status == OUT ) continue;
+
+	  if ( ( fabsf( MapPositionOfMouse.x - AllEnemys[ i ].pos.x ) < 0.5 ) &&
+	       ( fabsf( MapPositionOfMouse.y - AllEnemys[ i ].pos.y ) < 0.5 ) )
+	    {
+	      GiveDroidDescription ( ItemDescText , &( AllEnemys[ i ]) );
 	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
 	    }
 	}
