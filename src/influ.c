@@ -73,9 +73,9 @@ InitInfluPositionHistory( void )
 
   for ( RingPosition = 0 ; RingPosition < MAX_INFLU_POSITION_HISTORY ; RingPosition ++ )
     {
-      Me.Position_History_Ring_Buffer[ RingPosition ].x = Me.pos.x ;
-      Me.Position_History_Ring_Buffer[ RingPosition ].y = Me.pos.y ;
-      Me.Position_History_Ring_Buffer[ RingPosition ].z = CurLevel->levelnum ;
+      Me[0].Position_History_Ring_Buffer[ RingPosition ].x = Me[0].pos.x ;
+      Me[0].Position_History_Ring_Buffer[ RingPosition ].y = Me[0].pos.y ;
+      Me[0].Position_History_Ring_Buffer[ RingPosition ].z = CurLevel->levelnum ;
     }
 } // void InitInfluPositionHistory( void )
 
@@ -90,7 +90,7 @@ GetInfluPositionHistoryX( int HowLongPast )
 
   RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
 
-  return Me.Position_History_Ring_Buffer[ RingPosition ].x;
+  return Me[0].Position_History_Ring_Buffer[ RingPosition ].x;
 }
 
 float 
@@ -104,7 +104,7 @@ GetInfluPositionHistoryY( int HowLongPast )
 
   RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
 
-  return Me.Position_History_Ring_Buffer[ RingPosition ].y;
+  return Me[0].Position_History_Ring_Buffer[ RingPosition ].y;
 }
 
 float 
@@ -118,9 +118,49 @@ GetInfluPositionHistoryZ( int HowLongPast )
 
   RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
 
-  return Me.Position_History_Ring_Buffer[ RingPosition ].z;
+  return Me[0].Position_History_Ring_Buffer[ RingPosition ].z;
 }
 
+/* ----------------------------------------------------------------------
+ * T
+ *
+ * ---------------------------------------------------------------------- */
+void 
+CheckIfCharacterIsStillOk ( int PlayerNum ) 
+{
+
+  //--------------------
+  // This is something, that needs to be done ONLY for the 
+  // one character of this client programm!!!!
+  //
+  if ( PlayerNum != 0 ) return;
+
+  //------------------------------
+  // Now we check if the main character is really still ok.
+  //
+  if (Me [ PlayerNum ] .energy <= 0)
+    {
+      if (Me [ PlayerNum ] .type != DRUID001)
+	{
+	  Me [ PlayerNum ] .type = DRUID001;
+	  Me [ PlayerNum ] .speed.x = 0;
+	  Me [ PlayerNum ] .speed.y = 0;
+	  Me [ PlayerNum ] .energy = PreTakeEnergy;
+	  Me [ PlayerNum ] .health = BLINKENERGY;
+	  StartBlast ( Me [ PlayerNum ] .pos.x, Me [ PlayerNum ] .pos.y, Me [ PlayerNum ] .pos.z , DRUIDBLAST );
+	}
+      else
+	{
+	  Me [ PlayerNum ] .status = OUT;
+
+	  if ( !ServerMode ) ThouArtDefeated ();
+	  
+	  DebugPrintf (2, "\nvoid MoveInfluence(void):  Alternate end of function reached.");
+	  return;
+	}
+    }
+
+}; // void CheckIfCharacterIsStillOk ( int PlayerNum ) 
 
 
 /*@Function============================================================
@@ -130,15 +170,21 @@ keys pressed and also adjusts his status and current "phase" of his rotation.
 @Ret: none
 * $Function----------------------------------------------------------*/
 void
-MoveInfluence (void)
+MoveInfluence ( int PlayerNum )
 {
-  // float accel = Druidmap[Me.type].accel;
-  float accel = ItemMap[ Me.drive_item.type ].item_drive_accel;
+  // float accel = Druidmap[Me [ PlayerNum ] .type].accel;
+  float accel; //  = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel;
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
 
-  accel *= Frame_Time();
+  //--------------------
+  // We do not move any players, who's statuses are 'OUT'.
+  //
+  if ( Me [ PlayerNum ] . status == OUT ) return;
+  if ( Me [ PlayerNum ] . energy <= 0 ) return;
+
+  accel = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel * Frame_Time( ) ;
 
   //--------------------
   // We store the influencers position for the history record and so that others
@@ -146,38 +192,19 @@ MoveInfluence (void)
   //
   CurrentZeroRingIndex++;
   CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
-  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me.pos.x;
-  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].y = Me.pos.y;
-  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].z = CurLevel->levelnum ;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me [ PlayerNum ] .pos.x;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].y = Me [ PlayerNum ] .pos.y;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].z = CurLevel->levelnum ;
 
   PermanentLoseEnergy ();	/* influ permanently loses energy */
 
   // check, if the influencer is still ok
-  if (Me.energy <= 0)
-    {
-      if (Me.type != DRUID001)
-	{
-	  Me.type = DRUID001;
-	  Me.speed.x = 0;
-	  Me.speed.y = 0;
-	  Me.energy = PreTakeEnergy;
-	  Me.health = BLINKENERGY;
-	  StartBlast (Me.pos.x, Me.pos.y, DRUIDBLAST);
-	}
-      else
-	{
-	  Me.status = OUT;
-	  ThouArtDefeated ();
-	  DebugPrintf (2, "\nvoid MoveInfluence(void):  Alternate end of function reached.");
-	  return;
-	}
-    }
-
+  CheckIfCharacterIsStillOk ( PlayerNum ) ;
   
   // Time passed before entering Transfermode ??
   if ( TransferCounter >= WAIT_TRANSFERMODE )
     {
-      Me.status = TRANSFERMODE;
+      Me [ PlayerNum ] .status = TRANSFERMODE;
       TransferCounter=0;
     }
 
@@ -187,68 +214,68 @@ MoveInfluence (void)
   // drive unit present!!!  Otherwise only a comment will be
   // printed out!!
   //
-  if ( Me.drive_item.type != (-1) )
+  if ( Me [ PlayerNum ] .drive_item.type != (-1) )
     {
-      if (UpPressed ())
-	Me.speed.y -= accel;
-      if (DownPressed ())
-	Me.speed.y += accel;
-      if (LeftPressed ())
-	Me.speed.x -= accel;
-      if (RightPressed ())
-	Me.speed.x += accel;
+      if ( ServerThinksUpPressed ( PlayerNum ) )
+	Me [ PlayerNum ] .speed.y -= accel;
+      if ( ServerThinksDownPressed ( PlayerNum ) )
+	Me [ PlayerNum ] .speed.y += accel;
+      if ( ServerThinksLeftPressed ( PlayerNum ) )
+	Me [ PlayerNum ] .speed.x -= accel;
+      if ( ServerThinksRightPressed ( PlayerNum ) )
+	Me [ PlayerNum ] .speed.x += accel;
     }
   else
     {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
+      Me [ PlayerNum ] .TextVisibleTime = 0;
+      Me [ PlayerNum ] .TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
     }
 
+
   if (!SpacePressed ())
-    Me.status = MOBILE;
+    Me [ PlayerNum ] .status = MOBILE;
 
   if (TransferCounter == 1)
     {
-      Me.status = TRANSFERMODE;
+      Me [ PlayerNum ] .status = TRANSFERMODE;
       TransferCounter = 0;
     }
 
   HandleCurrentlyActivatedSkill();
-  /*
-  if (MouseRightPressed() == 1)
-    Me.status = TRANSFERMODE;
-  */
 
   if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
-       (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
+       (Me [ PlayerNum ] .status != WEAPON) && (Me [ PlayerNum ] .status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
 
   if ( (SpacePressed ()) && (!NoDirectionPressed () ) &&
-       (Me.status != TRANSFERMODE) )
-    Me.status = WEAPON;
+       (Me [ PlayerNum ] .status != TRANSFERMODE) )
+    Me [ PlayerNum ] .status = WEAPON;
 
-
+  // --------------------
+  // What is this code good for??
+  // stop_influencer = FALSE ;
+  //
   if (stop_influencer)
     {
-      Me.speed.x = 0.0;
-      Me.speed.y = 0.0;
+      Me [ PlayerNum ] .speed.x = 0.0;
+      Me [ PlayerNum ] .speed.y = 0.0;
       if (SpacePressed())
 	{
-	  Me.firewait = 0;
+	  Me [ PlayerNum ] .firewait = 0;
 	  FireBullet ();
 	}
     }
   else
     {
 
-      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
-	  && (Me.firewait == 0) && (NoInfluBulletOnWay ()))
+      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me [ PlayerNum ] .status == WEAPON)
+	  && (Me [ PlayerNum ] .firewait == 0) && (NoInfluBulletOnWay ()))
 	FireBullet ();
     }
 
-  InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed
+  InfluenceFrictionWithAir ( PlayerNum ) ; // The influ should lose some of his speed when no key is pressed
 
-  AdjustSpeed ();  // If the influ is faster than allowed for his type, slow him
+  AdjustSpeed ( PlayerNum ) ;  // If the influ is faster than allowed for his type, slow him
 
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
@@ -267,8 +294,8 @@ MoveInfluence (void)
   //
   // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
   //
-  planned_step_x = Me.speed.x * Frame_Time ();
-  planned_step_y = Me.speed.y * Frame_Time ();
+  planned_step_x = Me [ PlayerNum ] .speed.x * Frame_Time ();
+  planned_step_y = Me [ PlayerNum ] .speed.y * Frame_Time ();
   if ( fabsf(planned_step_x) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
@@ -277,11 +304,41 @@ MoveInfluence (void)
     {
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
     }
+
+  //--------------------
+  // Now perhaps the influencer is out of bounds, i.e. outside of the map.
+  // This would cause a segfault immediately afterwards, when checking
+  // for the current map tile to be conveyor or not.  Therefore we add some
+  // extra security against segfaults and increased diagnosis functionality
+  // here.
+  //
+  if ( ( (int) rintf( Me [ PlayerNum ] . pos.y ) >= CurLevel->ylen ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.x ) >= CurLevel->xlen ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.y ) <  0              ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.x ) <  0              ) )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A Player (influencer/tux) was found outside the map in MoveInfluence.\n\
+\n\
+This indicates a bug or unimplemented functionality in Freedroid.\n\
+The PlayerNum of the offending player on this machine was: %d.\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the internal problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , PlayerNum );
+      Terminate(ERR);
+    }
+
   //--------------------
   // Now if the influencer is on some form of conveyor belt, we adjust the planned step
   // accoringly
   //
-  switch ( CurLevel->map[ (int) rintf(Me.pos.y) ] [ (int) rintf( Me. pos.x ) ] )
+  switch ( CurLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ] )
     {
     case CONVEY_L:
       planned_step_x+=Conveyor_Belt_Speed*Frame_Time();
@@ -298,13 +355,13 @@ MoveInfluence (void)
     default:
       break;
     }
-  Me.pos.x += planned_step_x;
-  Me.pos.y += planned_step_y;
+  Me [ PlayerNum ] .pos.x += planned_step_x;
+  Me [ PlayerNum ] .pos.y += planned_step_y;
 
   //--------------------
   // Check it the influ is on a special field like a lift, a console or a refresh or a conveyor belt
   //
-  ActSpecialField ( Me.pos.x , Me.pos.y );
+  ActSpecialField ( PlayerNum ) ;
 
   AnimateInfluence ();	// move the "phase" of influencers rotation
 
@@ -322,7 +379,7 @@ NoInfluBulletOnWay (void)
 {
   int i;
 
-  if ( ! ItemMap[ Me.weapon_item.type ].item_gun_oneshotonly )
+  if ( ! ItemMap[ Me[0].weapon_item.type ].item_gun_oneshotonly )
     return TRUE;
 
   for (i = 0; i < MAXBULLETS; i++)
@@ -347,57 +404,57 @@ AnimateInfluence (void)
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
 
-  if ( Me.got_hit_time != (-1) )
+  if ( Me[0].got_hit_time != (-1) )
     {
-      Me.phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
-	( Me.got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
-      if ( Me.got_hit_time > TOTAL_STUNNED_TIME ) Me.got_hit_time = (-1) ;
+      Me[0].phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
+	( Me[0].got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
+      if ( Me[0].got_hit_time > TOTAL_STUNNED_TIME ) Me[0].got_hit_time = (-1) ;
     }
-  else if ( Me.weapon_swing_time == (-1) )
+  else if ( Me[0].weapon_swing_time == (-1) )
     {
-      Me.phase = ( (int) ( Me.MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
+      Me[0].phase = ( (int) ( Me[0].MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
     }
   else
     {
-      Me.phase = ( TUX_BREATHE_PHASES + ( Me.weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
-      if ( Me.weapon_swing_time > TOTAL_SWING_TIME ) Me.weapon_swing_time = (-1) ;
-      if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+      Me[0].phase = ( TUX_BREATHE_PHASES + ( Me[0].weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
+      if ( Me[0].weapon_swing_time > TOTAL_SWING_TIME ) Me[0].weapon_swing_time = (-1) ;
+      if (((int) (Me[0].phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
 	{
-	  Me.phase = 0;
+	  Me[0].phase = 0;
 	}
 
     }
 
-  if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
+  if (((int) (Me[0].phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
     {
-      Me.phase = 0;
+      Me[0].phase = 0;
     }
 
   /*
-  Me.phase +=
-    (Me.energy / ( Me.maxenergy)) * Frame_Time () *
+  Me[0].phase +=
+    (Me[0].energy / ( Me[0].maxenergy)) * Frame_Time () *
     DROID_PHASES * 3;
   */
 
   /*
-  if (Me.type != DRUID001)
+  if (Me[0].type != DRUID001)
     {
-      Me.phase +=
-	(Me.energy / (Druidmap[Me.type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+      Me[0].phase +=
+	(Me[0].energy / (Druidmap[Me[0].type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
 	DROID_PHASES * 3;
     }
   else
     {
-      Me.phase +=
-	(Me.energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+      Me[0].phase +=
+	(Me[0].energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
 	DROID_PHASES * 3;
     }
   */
 
   /*
-  if (((int) rintf (Me.phase)) >= DROID_PHASES)
+  if (((int) rintf (Me[0].phase)) >= DROID_PHASES)
     {
-      Me.phase = 0;
+      Me[0].phase = 0;
     }
   */
 }; // void AnimateInfluence ( void )
@@ -409,21 +466,31 @@ AnimateInfluence (void)
  * adapted accordingly.
  * ---------------------------------------------------------------------- */
 void
-CheckInfluenceWallCollisions (void)
+CheckInfluenceWallCollisions ( int PlayerNum )
 {
-  double SX = Me.speed.x * Frame_Time ();
-  double SY = Me.speed.y * Frame_Time ();
+  double SX = Me [ PlayerNum ] .speed.x * Frame_Time ();
+  double SY = Me [ PlayerNum ] .speed.y * Frame_Time ();
   finepoint lastpos;
   int res; 
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
-  double maxspeed = ItemMap [ Me.drive_item.type ].item_drive_maxspeed ;
+  double maxspeed;
+  Level InfluencerLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
-  lastpos.x = Me.pos.x - SX;
-  lastpos.y = Me.pos.y - SY;
+  //--------------------
+  // First we introduce some security against later segfaults
+  // due to calculation with properties of items of type -1.
+  //
+  if ( Me [ PlayerNum ] . status == OUT ) return;
+  if ( Me [ PlayerNum ] . energy <= 0   ) return;
 
-  res = DruidPassable (Me.pos.x, Me.pos.y);
+  maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
+
+  lastpos.x = Me [ PlayerNum ] .pos.x - SX;
+  lastpos.y = Me [ PlayerNum ] .pos.y - SY;
+
+  res = DruidPassable ( Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y , Me [ PlayerNum ] . pos . z );
 
   //--------------------
   // Influence-Wall-Collision only has to be checked in case of
@@ -435,8 +502,8 @@ CheckInfluenceWallCollisions (void)
       // At first we just check in which directions (from the last position)
       // the ways are blocked and in which directions the ways are open.
       //
-      if ( ! ( ( DruidPassable(lastpos.x , lastpos.y + maxspeed * Frame_Time() ) != CENTER ) ||
-	       ( DruidPassable(lastpos.x , lastpos.y - maxspeed * Frame_Time() ) != CENTER ) ) )
+      if ( ! ( ( DruidPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ PlayerNum ] . pos . z ) != CENTER ) ||
+	       ( DruidPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ PlayerNum ] . pos . z ) != CENTER ) ) )
 	{
 	  DebugPrintf(1, "\nNorth-south-Axis seems to be free.");
 	  NorthSouthAxisBlocked = FALSE;
@@ -446,8 +513,8 @@ CheckInfluenceWallCollisions (void)
 	  NorthSouthAxisBlocked = TRUE;
 	}
 
-      if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
-	   ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
+      if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ PlayerNum ] . pos . z ) == CENTER ) &&
+	   ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ PlayerNum ] . pos . z ) == CENTER ) )
 	{
 	  EastWestAxisBlocked = FALSE;
 	}
@@ -463,15 +530,15 @@ CheckInfluenceWallCollisions (void)
       if ( NorthSouthAxisBlocked )
 	{
 	  // NorthSouthCorrectionDone=TRUE;
-	  Me.pos.y = lastpos.y;
-	  Me.speed.y = 0;
+	  Me [ PlayerNum ] .pos.y = lastpos.y;
+	  Me [ PlayerNum ] .speed.y = 0;
 	  
 	  // if its an open door, we also correct the east-west position, in the
 	  // sense that we move thowards the middle
-	  if ( (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y - 0.5 ) == H_GANZTUERE ) || 
-	       (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y + 0.5 ) == H_GANZTUERE ) )
+	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y - 0.5  ) == H_GANZTUERE ) || 
+	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y + 0.5  ) == H_GANZTUERE ) )
 	    {
-	      Me.pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me.pos.x) - Me.pos.x ));
+	      Me [ PlayerNum ] .pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me [ PlayerNum ] .pos.x) - Me [ PlayerNum ] .pos.x ));
 	      H_Door_Sliding_Active = TRUE;
 	    }
 	}
@@ -479,14 +546,14 @@ CheckInfluenceWallCollisions (void)
       if ( EastWestAxisBlocked )
 	{
 	  // EastWestCorrectionDone=TRUE;
-	  if ( !H_Door_Sliding_Active ) Me.pos.x = lastpos.x;
-	  Me.speed.x = 0;
+	  if ( !H_Door_Sliding_Active ) Me [ PlayerNum ] .pos.x = lastpos.x;
+	  Me [ PlayerNum ] .speed.x = 0;
 
 	  // if its an open door, we also correct the north-south position, in the
 	  // sense that we move thowards the middle
-	  if ( (GetMapBrick(CurLevel, Me.pos.x +0.5 , Me.pos.y) == V_GANZTUERE ) || 
-	       (GetMapBrick(CurLevel, Me.pos.x -0.5 , Me.pos.y) == V_GANZTUERE ) )
-	    Me.pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me.pos.y) - Me.pos.y ));
+	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x + 0.5 , Me [ PlayerNum ] . pos . y ) == V_GANZTUERE ) || 
+	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x - 0.5 , Me [ PlayerNum ] . pos . y ) == V_GANZTUERE ) )
+	    Me [ PlayerNum ] .pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me [ PlayerNum ] .pos.y) - Me [ PlayerNum ] .pos.y ));
 	}
 
       if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
@@ -501,8 +568,12 @@ CheckInfluenceWallCollisions (void)
 	  // try if this would make sense...
 	  // (Of course we may only move into the one direction that is free)
 	  //
-	  if ( DruidPassable( Me.pos.x + SX , Me.pos.y ) == CENTER ) Me.pos.x += SX;
-	  if ( DruidPassable( Me.pos.x , Me.pos.y +SY ) == CENTER ) Me.pos.y += SY;
+	  if ( DruidPassable( Me [ PlayerNum ] . pos . x + SX , 
+			      Me [ PlayerNum ] . pos . y ,
+			      Me [ PlayerNum ] . pos . z ) == CENTER ) Me [ PlayerNum ] .pos.x += SX;
+	  if ( DruidPassable( Me [ PlayerNum ] . pos . x      , 
+			      Me [ PlayerNum ] . pos . y + SY ,
+			      Me [ PlayerNum ] . pos . z ) == CENTER ) Me [ PlayerNum ] .pos.y += SY;
 	}
 
       // Here I introduce some extra security as a fallback:  Obviously
@@ -512,12 +583,12 @@ CheckInfluenceWallCollisions (void)
       // For this reason, a history of influ-coordinates has been introduced.  This will all
       // be done here and now:
       
-      if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
-	   (DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) ) != CENTER) &&
-	   (DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) ) != CENTER) )
+      if ( ( DruidPassable ( Me [ PlayerNum ] .pos.x, Me [ PlayerNum ] .pos.y , Me [ PlayerNum ] . pos . z ) != CENTER) && 
+	   ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryY( 0 ) ) != CENTER) &&
+	   ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryY( 1 ) ) != CENTER) )
 	{
-	  Me.pos.x = GetInfluPositionHistoryX( 2 );
-	  Me.pos.y = GetInfluPositionHistoryY( 2 );
+	  Me [ PlayerNum ] .pos.x = GetInfluPositionHistoryX( 2 );
+	  Me [ PlayerNum ] .pos.y = GetInfluPositionHistoryY( 2 );
 	  DebugPrintf(1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
 	}
 
@@ -530,50 +601,40 @@ CheckInfluenceWallCollisions (void)
  * possible for the influencer (determined by the currely used drive type).
  * ---------------------------------------------------------------------- */
 void
-AdjustSpeed (void)
+AdjustSpeed ( int PlayerNum )
 {
-  double maxspeed = ItemMap [ Me.drive_item.type ].item_drive_maxspeed ;
-  if (Me.speed.x > maxspeed)
-    Me.speed.x = maxspeed;
-  if (Me.speed.x < (-maxspeed))
-    Me.speed.x = (-maxspeed);
+  double maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
 
-  if (Me.speed.y > maxspeed)
-    Me.speed.y = maxspeed;
-  if (Me.speed.y < (-maxspeed))
-    Me.speed.y = (-maxspeed);
-}; // void AdjustSpeed ( void ) 
+  if (Me [ PlayerNum ] .speed.x > maxspeed)
+    Me [ PlayerNum ] .speed.x = maxspeed;
+  if (Me [ PlayerNum ] .speed.x < (-maxspeed))
+    Me [ PlayerNum ] .speed.x = (-maxspeed);
+
+  if (Me [ PlayerNum ] .speed.y > maxspeed)
+    Me [ PlayerNum ] .speed.y = maxspeed;
+  if (Me [ PlayerNum ] .speed.y < (-maxspeed))
+    Me [ PlayerNum ] .speed.y = (-maxspeed);
+
+}; // void AdjustSpeed ( int PlayerNum ) 
 
 /* ----------------------------------------------------------------------
  * This function reduces the influencers speed as long as no direction 
  * key of any form is pressed.
  * ---------------------------------------------------------------------- */
 void
-InfluenceFrictionWithAir (void)
+InfluenceFrictionWithAir ( int PlayerNum )
 {
 
-  if (!UpPressed () && !DownPressed ())
+  if ( ! ServerThinksUpPressed ( PlayerNum ) && ! ServerThinksDownPressed ( PlayerNum ) )
     {
-      /*
-	if (Me.speed.y < 0)
-	Me.speed.y++;
-	if (Me.speed.y > 0)
-	Me.speed.y--;
-      */
-      Me.speed.y *= exp(log(0.02) * Frame_Time());
+      Me [ PlayerNum ] . speed.y *= exp(log(0.02) * Frame_Time());
     }
-  if (!RightPressed () && !LeftPressed ())
+  if ( ! ServerThinksRightPressed ( PlayerNum ) && ! ServerThinksLeftPressed ( PlayerNum ) )
     {
-      /*
-	if (Me.speed.x < 0)
-	Me.speed.x++;
-	if (Me.speed.x > 0)
-	Me.speed.x--;
-      */
-      Me.speed.x *= exp(log(0.02) * Frame_Time());
+      Me [ PlayerNum ] . speed.x *= exp(log(0.02) * Frame_Time());
     }
 
-}; // InfluenceFrictionWithAir (void)
+}; // InfluenceFrictionWithAir ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function creates several exprosions around the location where the
@@ -586,7 +647,7 @@ ExplodeInfluencer (void)
   int i;
   int counter;
 
-  Me.status = OUT;
+  Me[0].status = OUT;
 
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
@@ -605,9 +666,9 @@ ExplodeInfluencer (void)
 	}
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].pos.x =
-	Me.pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
+	Me[0].pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].pos.y =
-	Me.pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
+	Me[0].pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }
 
@@ -638,17 +699,20 @@ CheckInfluenceEnemyCollision (void)
       //--------------------
       // ignore enemy that are not on this level or dead 
       //
-      if (AllEnemys[i].levelnum != CurLevel->levelnum)
+      if ( AllEnemys[i].pos.z != CurLevel->levelnum )
 	continue;
-      if (AllEnemys[i].Status == OUT)
+      if ( AllEnemys[i].Status == OUT )
 	continue;
+      if ( AllEnemys[i].type == ( -1 ) )
+	continue;
+
 
       //--------------------
       // We determine the distance and back out immediately if there
       // is still one whole square distance or even more...
       //
-      xdist = Me.pos.x - AllEnemys[i].pos.x;
-      ydist = Me.pos.y - AllEnemys[i].pos.y;
+      xdist = Me[0].pos.x - AllEnemys[i].pos.x;
+      ydist = Me[0].pos.y - AllEnemys[i].pos.y;
       if (abs (xdist) > 1)
 	continue;
       if (abs (ydist) > 1)
@@ -671,7 +735,7 @@ CheckInfluenceEnemyCollision (void)
       // after either of that don't interest us, at least not in this frame
       // any more.
       //
-      if ( Me.status == TRANSFERMODE )
+      if ( Me[0].status == TRANSFERMODE )
 	{
 	  if ( ! AllEnemys[i].Friendly ) Takeover (i);
 	  else ChatWithFriendlyDroid( i );
@@ -692,29 +756,29 @@ CheckInfluenceEnemyCollision (void)
 	  //--------------------
 	  // we invert the speed vector of the influencer
 	  //
-	  Me.speed.x = -Me.speed.x;
-	  Me.speed.y = -Me.speed.y;
+	  Me[0].speed.x = -Me[0].speed.x;
+	  Me[0].speed.y = -Me[0].speed.y;
 	  
-	  if (Me.speed.x != 0)
-	    Me.speed.x +=
-	      COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
+	  if (Me[0].speed.x != 0)
+	    Me[0].speed.x +=
+	      COLLISION_PUSHSPEED * (Me[0].speed.x / fabsf (Me[0].speed.x));
 	  else if (xdist)
-	    Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
-	  if (Me.speed.y != 0)
-	    Me.speed.y +=
-	      COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
+	    Me[0].speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
+	  if (Me[0].speed.y != 0)
+	    Me[0].speed.y +=
+	      COLLISION_PUSHSPEED * (Me[0].speed.y / fabsf (Me[0].speed.y));
 	  else if (ydist)
-	    Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
+	    Me[0].speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
 	  
 	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
 	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
-	  Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
-	  Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
-	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
-	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	  Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+	  Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
 	  
 	  // there might be walls close too, so lets check again for collisions with them
-	  CheckInfluenceWallCollisions ();
+	  CheckInfluenceWallCollisions ( 0 );
 	  
 	  BounceSound ();
 	  
@@ -748,8 +812,8 @@ FireBullet (void)
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
-  int guntype = ItemMap[ Me.weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  double BulletSpeed = ItemMap[ Me.weapon_item.type ].item_gun_speed;
+  int guntype = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  double BulletSpeed = ItemMap[ Me[0].weapon_item.type ].item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
   int max_val;
@@ -758,7 +822,7 @@ FireBullet (void)
   float angle;
 
   // If the currently overtaken droid doesn't have a weapon at all, just return
-  // if ( Me.weapon_item.type == (-1) ) return;
+  // if ( Me[0].weapon_item.type == (-1) ) return;
 
 
   // If the influencer is holding something from the inventory
@@ -776,7 +840,7 @@ FireBullet (void)
   if ( GameConfig.CharacterScreen_Visible && GameConfig.Inventory_Visible ) return;
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
-  if (Me.firewait > 0)
+  if (Me[0].firewait > 0)
     return;
 
   //--------------------
@@ -792,9 +856,9 @@ FireBullet (void)
   // generates a bullet, but rather does his weapon swinging motion and
   // only the damage is done to the robots in the area of effect
   //
-  Me.weapon_swing_time = 0;
-  if ( ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change != 0 ) ||
-       ( Me.weapon_item.type == (-1) ) )
+  Me[0].weapon_swing_time = 0;
+  if ( ( ItemMap [ Me[0].weapon_item.type ].item_gun_angle_change != 0 ) ||
+       ( Me[0].weapon_item.type == (-1) ) )
     {
       //--------------------
       // Since a melee weapon is swung, which may be only influencers fists,
@@ -806,16 +870,16 @@ FireBullet (void)
       Weapon_Target_Vector.x = 0;
       Weapon_Target_Vector.y = - 1.0;
       RotateVectorByAngle ( & Weapon_Target_Vector , angle );
-      Weapon_Target_Vector.x += Me.pos.x;
-      Weapon_Target_Vector.y += Me.pos.y;
+      Weapon_Target_Vector.x += Me[0].pos.x;
+      Weapon_Target_Vector.y += Me[0].pos.y;
       
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	{
 	  if ( AllEnemys[i].Status == OUT ) continue;
-	  if ( AllEnemys[i].levelnum != CurLevel->levelnum ) continue;
+	  if ( AllEnemys[i].pos.z != CurLevel->levelnum ) continue;
 	  if ( fabsf ( AllEnemys[i].pos.x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys[i].pos.y - Weapon_Target_Vector.y ) > 0.5 ) continue;
-	  AllEnemys[ i ].energy -= Me.base_damage + MyRandom( Me.damage_modifier );
+	  AllEnemys[ i ].energy -= Me[0].base_damage + MyRandom( Me[0].damage_modifier );
 	  AllEnemys[ i ].firewait = 
 	    2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ].Got_Hit_Sound_Type );
@@ -835,10 +899,10 @@ FireBullet (void)
       // And then we can return, for real bullet generation isn't required in
       // our case here.
       //
-      if ( Me.weapon_item.type != (-1) )
-	Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+      if ( Me[0].weapon_item.type != (-1) )
+	Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
       else
-	Me.firewait = 0.5;
+	Me[0].firewait = 0.5;
 
       return;
     }
@@ -857,32 +921,33 @@ FireBullet (void)
   if (CurBullet == NULL)
     CurBullet = &AllBullets[0];
 
-  CurBullet->pos.x = Me.pos.x;
-  CurBullet->pos.y = Me.pos.y;
+  CurBullet->pos.x = Me[0].pos.x;
+  CurBullet->pos.y = Me[0].pos.y;
+  CurBullet->pos.z = Me[0].pos.z;
   CurBullet->type = guntype;
 
   //--------------------
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
   // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me.base_damage + MyRandom( Me.damage_modifier);
+  CurBullet->damage = Me[0].base_damage + MyRandom( Me[0].damage_modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
-  CurBullet->bullet_lifetime = ItemMap[ Me.weapon_item.type ].item_gun_bullet_lifetime;
-  CurBullet->angle_change_rate = ItemMap[ Me.weapon_item.type ].item_gun_angle_change;
-  CurBullet->fixed_offset = ItemMap[ Me.weapon_item.type ].item_gun_fixed_offset;
-  CurBullet->ignore_wall_collisions = ItemMap[ Me.weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  CurBullet->owner_pos = & ( Me.pos );
+  CurBullet->bullet_lifetime = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_lifetime;
+  CurBullet->angle_change_rate = ItemMap[ Me[0].weapon_item.type ].item_gun_angle_change;
+  CurBullet->fixed_offset = ItemMap[ Me[0].weapon_item.type ].item_gun_fixed_offset;
+  CurBullet->ignore_wall_collisions = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+  CurBullet->owner_pos = & ( Me[0].pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
   CurBullet->was_reflected = FALSE;
-  CurBullet->reflect_other_bullets = ItemMap[ Me.weapon_item.type ].item_gun_bullet_reflect_other_bullets;
-  CurBullet->pass_through_explosions = ItemMap[ Me.weapon_item.type ].item_gun_bullet_pass_through_explosions;
-  CurBullet->pass_through_hit_bodies = ItemMap[ Me.weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
+  CurBullet->reflect_other_bullets = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_reflect_other_bullets;
+  CurBullet->pass_through_explosions = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_pass_through_explosions;
+  CurBullet->pass_through_hit_bodies = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  CurBullet->to_hit = Me.to_hit;
-  Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+  CurBullet->to_hit = Me[0].to_hit;
+  Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
 
   speed.x = 0.0;
   speed.y = 0.0;
@@ -910,7 +975,7 @@ FireBullet (void)
   // and not start in this direction, but rather somewhat 'before' it,
   // so that the rotation will hit the target later.
   //
-  RotateVectorByAngle ( & speed , ItemMap[ Me.weapon_item.type ].item_gun_start_angle_modifier );
+  RotateVectorByAngle ( & speed , ItemMap[ Me[0].weapon_item.type ].item_gun_start_angle_modifier );
 
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);
@@ -953,12 +1018,12 @@ void
 RefreshInfluencer (void)
 {
 
-  if ( Me.energy < Me.maxenergy )
+  if ( Me[0].energy < Me[0].maxenergy )
     {
-      Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
-      Me.Experience -= REFRESH_ENERGY * Frame_Time () * 10;
-      if (Me.energy > Me.health)
-	Me.energy = Me.health;
+      Me[0].energy += REFRESH_ENERGY * Frame_Time () * 5;
+      Me[0].Experience -= REFRESH_ENERGY * Frame_Time () * 10;
+      if (Me[0].energy > Me[0].health)
+	Me[0].energy = Me[0].health;
 
       if (LastRefreshSound > 0.6)
 	{
@@ -971,8 +1036,8 @@ RefreshInfluencer (void)
       //
       if ( GameConfig.Influencer_Refresh_Text )
 	{
-	  Me.TextToBeDisplayed="Ahhh, that feels so good...";
-	  Me.TextVisibleTime=0;
+	  Me[0].TextToBeDisplayed="Ahhh, that feels so good...";
+	  Me[0].TextVisibleTime=0;
 	}
     }
   else
@@ -981,8 +1046,8 @@ RefreshInfluencer (void)
       // If nothing more is to be had, the influencer might also say so...
       if ( GameConfig.Influencer_Refresh_Text )
 	{
-	  Me.TextToBeDisplayed="Oh, it seems that was it again.";
-	  Me.TextVisibleTime=0;
+	  Me[0].TextToBeDisplayed="Oh, it seems that was it again.";
+	  Me[0].TextVisibleTime=0;
 	}
     }
 
@@ -1004,24 +1069,24 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
 
   if ( AllEnemys[enemynum].Friendly ) return;
 
-  if (Me.type <= enemytype)
+  if (Me[0].type <= enemytype)
     {
       if (InvincibleMode)
 	return;
       
       /* This old code used class difference to determine collision damage.
 	 But now we use Weight-Difference. 
-      Me.energy -=
+      Me[0].energy -=
 	(Druidmap[enemytype].class -
-	 Druidmap[Me.type].class) * BOUNCE_LOSE_FACT;
+	 Druidmap[Me[0].type].class) * BOUNCE_LOSE_FACT;
       */
-      Me.energy -=
+      Me[0].energy -=
 	(Druidmap[enemytype].weight -
-	 Druidmap[Me.type].weight ) * collision_lose_energy_calibrator * 0.01 ;
+	 Druidmap[Me[0].type].weight ) * collision_lose_energy_calibrator * 0.01 ;
     }
   else
     AllEnemys[enemynum].energy -=
-      (Druidmap[Me.type].weight -
+      (Druidmap[Me[0].type].weight -
        Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
 
   //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
@@ -1045,10 +1110,10 @@ PermanentLoseEnergy (void)
   if (InvincibleMode) return;
 
   /* health decreases with time */
-  Me.health -= Druidmap[Me.type].lose_health * Frame_Time () * Me.Current_Victim_Resistance_Factor;
+  Me[0].health -= Druidmap[Me[0].type].lose_health * Frame_Time () * Me[0].Current_Victim_Resistance_Factor;
 
   /* you cant have more energy than health */
-  if (Me.energy > Me.health) Me.energy = Me.health;
+  if (Me[0].energy > Me[0].health) Me[0].energy = Me[0].health;
 
 } // void PermanentLoseEnergy(void)
 

@@ -69,7 +69,7 @@ EnterLift (void)
   //--------------------
   // Prevent the influ from coming out of the lift in transfer mode
   // by turning off transfer mode as soon as the influ enters the lift 
-  Me.status= ELEVATOR;
+  Me[0].status= ELEVATOR;
 
   curLevel = CurLevel->levelnum;
 
@@ -162,20 +162,20 @@ EnterLift (void)
       CurLevel = curShip.AllLevels[array_num];
 
       // redistribute the enemys around the level
-      ShuffleEnemys ();
+      ShuffleEnemys ( array_num );
 
       // set the position of the influencer to the correct locatiohn
-      Me.pos.x =
+      Me[0].pos.x =
 	curShip.AllLifts[curLift].x; 
-      Me.pos.y =
+      Me[0].pos.y =
 	curShip.AllLifts[curLift].y; 
 
       // We reset the time on this level and the position history
-      Me.FramesOnThisLevel=0;
+      Me[0].FramesOnThisLevel=0;
       // for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
       // {
-      // Me.Position_History[ i ].x = Me.pos.x;
-      // Me.Position_History[ i ].y = Me.pos.y;
+      // Me[0].Position_History[ i ].x = Me[0].pos.x;
+      // Me[0].Position_History[ i ].y = Me[0].pos.y;
       // }
 
       // delete all bullets and blasts
@@ -206,9 +206,9 @@ EnterLift (void)
 
   while (SpacePressed ()) ;
 
-  Me.status = MOBILE;
-  Me.TextVisibleTime=0;
-  Me.TextToBeDisplayed=CurLevel->Level_Enter_Comment;
+  Me[0].status = MOBILE;
+  Me[0].TextVisibleTime=0;
+  Me[0].TextToBeDisplayed=CurLevel->Level_Enter_Comment;
 
   DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
 }; // void EnterLift( void )
@@ -361,8 +361,8 @@ EnterCodepanel (void)
   //
   for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
     {
-      if ( ( ( (int) rintf( Me.pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) &&
-	   ( ( (int) rintf( Me.pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
+      if ( ( ( (int) rintf( Me[0].pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) &&
+	   ( ( (int) rintf( Me[0].pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
 	break;
     }
   if ( Codepanel_Index == MAX_CODEPANELS_PER_LEVEL )
@@ -413,17 +413,17 @@ EnterCodepanel (void)
 	   ( !strcmp ( RequestString , "logoff" ) ) ||
 	   ( !strcmp ( RequestString , "" ) ) ) 
 	{
-	  Me.TextVisibleTime=0;
-	  Me.TextToBeDisplayed="Logging out.  Bye...";
+	  Me[0].TextVisibleTime=0;
+	  Me[0].TextToBeDisplayed="Logging out.  Bye...";
 	  return;
 	}
 
       if ( !strcmp ( RequestString , CurLevel->CodepanelList[ Codepanel_Index ].Secret_Code ) )
 	{
-	  Me.TextVisibleTime=0;
-	  Me.TextToBeDisplayed="Wow! I've hacked this terminal.  Cool!";
-	  map_x = (int) rintf( Me.pos.x );
-	  map_y = (int) rintf( Me.pos.y );
+	  Me[0].TextVisibleTime=0;
+	  Me[0].TextToBeDisplayed="Wow! I've hacked this terminal.  Cool!";
+	  map_x = (int) rintf( Me[0].pos.x );
+	  map_y = (int) rintf( Me[0].pos.y );
 	  switch( CurLevel->map[ map_y ] [ map_x + 1] )
 	    {
 	    case LOCKED_H_ZUTUERE:
@@ -505,7 +505,7 @@ EnterKonsole (void)
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  Me.status = CONSOLE;
+  Me[0].status = CONSOLE;
 
   Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
 
@@ -567,7 +567,7 @@ EnterKonsole (void)
 
     } /* while (!finished) */
 
-  Me.status = MOBILE;
+  Me[0].status = MOBILE;
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   SDL_Flip( Screen );
@@ -601,9 +601,9 @@ PaintConsoleMenu (int menu_pos)
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE |BANNER_FORCE_UPDATE);
 
   strcpy (MenuText, "Unit type ");
-  strcat (MenuText, Druidmap[Me.type].druidname);
+  strcat (MenuText, Druidmap[Me[0].type].druidname);
   strcat (MenuText, " - ");
-  strcat (MenuText, Classname[Druidmap[Me.type].class]);
+  strcat (MenuText, Classname[Druidmap[Me[0].type].class]);
   strcat (MenuText, "\nAccess granted.\nArea : ");
   strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
   strcat (MenuText, "\nDeck : ");
@@ -638,7 +638,7 @@ GreatDruidShow (void)
   int finished;
   int page;
 
-  droidtype = Me.type;
+  droidtype = Me[0].type;
   page = 0;
 
   finished = FALSE;
@@ -653,7 +653,7 @@ GreatDruidShow (void)
 	  finished = TRUE;
 	  break;
 	case SDLK_UP:
-	  if (droidtype < Me.type) droidtype ++;
+	  if (droidtype < Me[0].type) droidtype ++;
 	  break;
 	case SDLK_DOWN:
 	  if (droidtype > 0) droidtype --;
@@ -702,7 +702,7 @@ Class : %s\n\
 Height : %f\n\
 Weight: %f \n\
 Drive : %s \n\
-Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me.type].class],
+Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me[0].type].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].ItemName,
@@ -752,12 +752,12 @@ void
 ShowDeckMap (Level deck)
 {
   finepoint tmp;
-  tmp.x=Me.pos.x;
-  tmp.y=Me.pos.y;
+  tmp.x=Me[0].pos.x;
+  tmp.y=Me[0].pos.y;
 
   ClearUserFenster ();
-  Me.pos.x = CurLevel->xlen/2;
-  Me.pos.y = CurLevel->ylen/2;
+  Me[0].pos.x = CurLevel->xlen/2;
+  Me[0].pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
@@ -765,8 +765,8 @@ ShowDeckMap (Level deck)
 
   SDL_Flip (Screen);
 
-  Me.pos.x=tmp.x;
-  Me.pos.y=tmp.y;
+  Me[0].pos.x=tmp.x;
+  Me[0].pos.y=tmp.y;
 
 }; // void ShowDeckMap( ... )
 
@@ -787,12 +787,12 @@ LevelEmpty (void)
   for (i = 0; i < NumEnemys; i++)
     {
       if ((AllEnemys[i].Status != OUT)
-	  && (AllEnemys[i].levelnum == levelnum))
+	  && (AllEnemys[i].pos.z == levelnum))
 	return FALSE;
     }
 
   CurLevel->empty = TRUE;
-  Me.Experience += DECKCOMPLETEBONUS;
+  Me[0].Experience += DECKCOMPLETEBONUS;
   ShowScore += DECKCOMPLETEBONUS;
 
   if (ShipEmpty ())

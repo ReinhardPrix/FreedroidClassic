@@ -531,7 +531,7 @@ Pause (void)
 
   Activate_Conservative_Frame_Computation();
 
-  Me.status = PAUSE;
+  Me[0].status = PAUSE;
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
   while ( Pause )
@@ -545,14 +545,14 @@ Pause (void)
       
       if (CPressed ())
 	{
-	  Me.status = CHEESE;
+	  Me[0].status = CHEESE;
 	  DisplayBanner (NULL, NULL,  0 );
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
 	  while ( SpacePressed() ); /* then wait for Space released */
 	  
-	  Me.status = PAUSE;       /* return to normal PAUSE */
+	  Me[0].status = PAUSE;       /* return to normal PAUSE */
 	} /* if (CPressed) */
 
       if ( SpacePressed() )
@@ -591,10 +591,10 @@ StartTakingTimeForFPSCalculation(void)
     {
       Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
       // printf("\n%f",1/Frame_Time());
-      // printf("Me.pos.x: %g Me.pos.y: %g Me.speed.x: %g Me.speed.y: %g \n",
-      //Me.pos.x, Me.pos.y, Me.speed.x, Me.speed.y );
-      //printf("Me.maxspeed.x: %g \n",
-      //	     Druidmap[Me.type].maxspeed );
+      // printf("Me[0].pos.x: %g Me[0].pos.y: %g Me[0].speed.x: %g Me[0].speed.y: %g \n",
+      //Me[0].pos.x, Me[0].pos.y, Me[0].speed.x, Me[0].speed.y );
+      //printf("Me[0].maxspeed.x: %g \n",
+      //	     Druidmap[Me[0].type].maxspeed );
     }
 #else
   gettimeofday (&oneframetimestamp, NULL);
@@ -830,20 +830,25 @@ Armageddon (void)
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport (int LNum, int X, int Y)
+Teleport (int LNum, int X, int Y, int PlayerNum )
 {
   int curLevel = LNum;
   int array_num = 0;
   Level tmp;
   int i;
 
-  if (curLevel != CurLevel->levelnum)
+
+  if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
 
       //--------------------
       // In case a real level change has happend,
       // we need to do a lot of work:
+      //
 
+      // I think this is for the unlikely case of misordered levels in 
+      // the ship file used for this game?!
+      //
       while ((tmp = curShip.AllLevels[array_num]) != NULL)
 	{
 	  if (tmp->levelnum == curLevel)
@@ -852,12 +857,17 @@ Teleport (int LNum, int X, int Y)
 	    array_num++;
 	}
 
+      //--------------------
+      // We set a new CurLevel.  This is old and depreciated code,
+      // that should sooner or later be completely deactivated.
+      //
       CurLevel = curShip.AllLevels[array_num];
 
-      ShuffleEnemys ();
+      ShuffleEnemys ( array_num );
 
-      Me.pos.x = X;
-      Me.pos.y = Y;
+      Me [ PlayerNum ] . pos . x = X;
+      Me [ PlayerNum ] . pos . y = Y;
+      Me [ PlayerNum ] . pos . z = array_num; 
 
       // turn off all blasts and bullets from the old level
       for (i = 0; i < MAXBLASTS; i++)
@@ -879,8 +889,8 @@ Teleport (int LNum, int X, int Y)
       // If no real level change has occured, everything
       // is simple and we just need to set the new coordinates, haha
       //
-      Me.pos.x = X;
-      Me.pos.y = Y;
+      Me [ PlayerNum ] . pos . x = X ;
+      Me [ PlayerNum ] . pos . y = Y ;
     }
 
   LeaveLiftSound ();
@@ -889,10 +899,10 @@ Teleport (int LNum, int X, int Y)
   // Perhaps the player is visiting this level for the first time.  Then, the
   // tux should make it's initial statement about the location, if there is one.
   //
-  if ( ! Me.HaveBeenToLevel [ CurLevel->levelnum ] )
+  if ( ! Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] )
     {
       PlayLevelCommentSound ( CurLevel->levelnum );
-      Me.HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
+      Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
     }
 
   // UnfadeLevel ();
@@ -1056,6 +1066,15 @@ Terminate (int ExitCode)
 
   SaveSettings();
 
+  if ( ServerMode )
+    {
+      DebugPrintf ( 0 , "\n\
+--------------------\n\
+Closing all players connections to this server...\n\
+--------------------\n");
+      DisconnectAllRemoteClinets ( ) ;
+    }
+
   // printf("\nUnallocation all resouces...");
 
   // free the allocated surfaces...
@@ -1123,7 +1142,7 @@ GiveNumberToThisActionLabel ( char* ActionLabel )
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-In function 'void ExecuteActionWithLabel ( char* ActionLabel ):\n\
+In function 'void GiveNumberToThisActionLabel ( char* ActionLabel ):\n\
 \n\
 The label that should reference an action for later execution could not\n\
 be identified as valid reference to an existing action.\n\
@@ -1149,16 +1168,16 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
  * This function executes an action with a label.
  * ---------------------------------------------------------------------- */
 void 
-ExecuteActionWithLabel ( char* ActionLabel )
+ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum )
 {
-  ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) );
+  ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) , PlayerNum );
 }; // void ExecuteActionWithLabel ( char* ActionLabel )
 
 /* ----------------------------------------------------------------------
  * 
  * ---------------------------------------------------------------------- */
 void 
-ExecuteEvent ( int EventNumber )
+ExecuteEvent ( int EventNumber , int PlayerNum )
 {
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
@@ -1190,7 +1209,8 @@ ExecuteEvent ( int EventNumber )
     {
       Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
 		 AllTriggeredActions[ EventNumber ].TeleportTarget.x ,
-		 AllTriggeredActions[ EventNumber ].TeleportTarget.y );
+		 AllTriggeredActions[ EventNumber ].TeleportTarget.y ,
+		 PlayerNum );
     }
 
   // Does the defined action assign the influencer a mission?
@@ -1203,12 +1223,13 @@ ExecuteEvent ( int EventNumber )
   if ( strlen ( AllTriggeredActions[ EventNumber ].InfluencerSayText ) > 0 )
     {
       //YES. So we need to output his sentence as usual
-      Me.TextVisibleTime=0;
-      Me.TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
+      Me[0].TextVisibleTime=0;
+      Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
 }; // void ExecuteEvent ( int EventNumber )
 
 /* ----------------------------------------------------------------------
+ *
  * This function checks for triggered events & statements.  Those events are
  * usually entered via the mission file and read into the apropriate
  * structures via the InitNewMission function.  Here we check, whether
@@ -1220,27 +1241,29 @@ ExecuteEvent ( int EventNumber )
  *
  * ---------------------------------------------------------------------- */
 void 
-CheckForTriggeredEventsAndStatements ( void )
+CheckForTriggeredEventsAndStatements ( int PlayerNum )
 {
   int i;
   int map_x, map_y;
 
+  Level StatementLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
+
   //--------------------
   // Now we check if some statment location is reached
   //
-  map_x = (int) rintf( Me.pos.x ); map_y = (int) rintf( Me.pos.y );
+  map_x = (int) rintf( Me [ PlayerNum ] . pos . x ); map_y = (int) rintf( Me [ PlayerNum ] . pos . y ) ;
   for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i++ )
     {
-      if ( ( map_x == CurLevel->StatementList[ i ].x ) &&
-	   ( map_y == CurLevel->StatementList[ i ].y ) )
+      if ( ( map_x == StatementLevel -> StatementList [ i ] . x ) &&
+	   ( map_y == StatementLevel -> StatementList [ i ] . y ) )
 	{
-	  Me.TextVisibleTime=0;
-	  Me.TextToBeDisplayed=CurLevel->StatementList[ i ].Statement_Text;
+	  Me [ PlayerNum ] . TextVisibleTime = 0 ;
+	  Me [ PlayerNum ] . TextToBeDisplayed = CurLevel -> StatementList [ i ] . Statement_Text ;
 	}
     }
 
   //--------------------
-  // Now we check if some event tirgger is fullfilled.
+  // Now we check if some event trigger is fullfilled.
   //
   for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
     {
@@ -1254,22 +1277,22 @@ CheckForTriggeredEventsAndStatements ( void )
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != rintf( Me.pos.x ) ) continue;
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != rintf( Me [ PlayerNum ] . pos.x ) ) continue;
 	}
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me.pos.y ) ) continue;
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me [ PlayerNum ] . pos.y ) ) continue;
 	}
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != CurLevel->levelnum ) continue;
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != StatementLevel->levelnum ) continue;
 	}
 
       // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
       // ExecuteEvent( AllEventTriggers[i].EventNumber );
-      ExecuteActionWithLabel ( AllEventTriggers[i].TargetActionLabel );
+      ExecuteActionWithLabel ( AllEventTriggers [ i ] . TargetActionLabel , PlayerNum ) ;
 
       if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
 	{

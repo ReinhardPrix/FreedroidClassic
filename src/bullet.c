@@ -75,6 +75,7 @@ MoveBullets (void)
   int map_y;
   Bullet CurBullet;
   moderately_finepoint dist_vector;
+  Level BulletLevel;
 
   // movement of hte bullets
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
@@ -147,8 +148,9 @@ MoveBullets (void)
       // cause a SEGFAULT directly afterwards, when the map is queried.
       // Therefore we introduce some extra security here...
       //
-      if ( ( map_x < 0 ) || ( map_x >= CurLevel->xlen ) ||
-	   ( map_y < 0 ) || ( map_y >= CurLevel->ylen ) )
+      BulletLevel = curShip.AllLevels[ CurBullet->pos.z ];
+      if ( ( map_x < 0 ) || ( map_x >= BulletLevel->xlen ) ||
+	   ( map_y < 0 ) || ( map_y >= BulletLevel->ylen ) )
 	{
 	  fprintf(stderr, "\n\
 \n\
@@ -172,8 +174,7 @@ encounteres in the function MoveBullets().  Game should proceed as usual.\n\
 	  Terminate(ERR);
 	}
       
-
-      switch ( CurLevel->map[ map_y ] [ map_x ] )
+      switch ( BulletLevel->map[ map_y ] [ map_x ] )
 	{
 	case CONVEY_L:
 	  CurBullet->pos.x += Conveyor_Belt_Speed * Frame_Time();
@@ -209,7 +210,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
   //
-  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
+  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , BULLETBLAST );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
@@ -252,7 +253,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
  *
  * ---------------------------------------------------------------------- */
 void
-StartBlast (float x, float y, int type)
+StartBlast ( float x, float y, int level , int type)
 {
   int i;
   Blast NewBlast;
@@ -277,6 +278,7 @@ StartBlast (float x, float y, int type)
   // create a blast at the specified x/y coordinates
   NewBlast->pos.x = x;
   NewBlast->pos.y = y;
+  NewBlast->pos.z = level;
 
   NewBlast->type = type;
   NewBlast->phase = 0;
@@ -299,6 +301,7 @@ ExplodeBlasts (void)
 {
   int i, map_x, map_y;
   Blast CurBlast = AllBlasts;
+  Level BlastLevel;
 
   for (i = 0; i < MAXBLASTS; i++, CurBlast++)
     if (CurBlast->type != OUT)
@@ -311,8 +314,9 @@ ExplodeBlasts (void)
 	//
 	map_x= (int) rintf( CurBlast->pos.x );
 	map_y= (int) rintf( CurBlast->pos.y );
-	if ( ( map_x < 0 ) || ( map_x >= CurLevel->xlen ) ||
-	     ( map_y < 0 ) || ( map_y >= CurLevel->ylen ) )
+	BlastLevel = curShip.AllLevels[ CurBlast->pos.z ];
+	if ( ( map_x < 0 ) || ( map_x >= BlastLevel->xlen ) ||
+	     ( map_y < 0 ) || ( map_y >= BlastLevel->ylen ) )
 	  {
 	    fprintf(stderr, "\n\
 \n\
@@ -399,9 +403,10 @@ void
 CheckBulletCollisions (int num)
 {
   int i;
-  int level = CurLevel->levelnum;
   double xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
+  // int level = CurLevel->levelnum;
+  int level = CurBullet -> pos.z ;
   static int FBTZaehler = 0;
 
   switch (CurBullet->type)
@@ -448,10 +453,10 @@ CheckBulletCollisions (int num)
 	    }
 	}
       
-      if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
+      if (!InvincibleMode && !Druidmap[Me[0].type].flashimmune)
 	{
-	  // ITEMS Me.energy -= Bulletmap[FLASH].damage ;
-	  Me.energy -= CurBullet->damage ;
+	  // ITEMS Me[0].energy -= Bulletmap[FLASH].damage ;
+	  Me[0].energy -= CurBullet->damage ;
 	}
 
       return;
@@ -468,11 +473,11 @@ CheckBulletCollisions (int num)
     default:
       
       // Check for collision with background
-      if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
+      if ( IsPassable ( CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z , CENTER ) != CENTER)
 	{
 	  if ( CurBullet->ignore_wall_collisions )
 	    {
-	      StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
+	      StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
 	    }
 	  else
 	    {
@@ -482,8 +487,8 @@ CheckBulletCollisions (int num)
 	}
 
       // check for collision with influencer
-      xdist = Me.pos.x - CurBullet->pos.x;
-      ydist = Me.pos.y - CurBullet->pos.y;
+      xdist = Me[0].pos.x - CurBullet->pos.x;
+      ydist = Me[0].pos.y - CurBullet->pos.y;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	{
 
@@ -497,25 +502,25 @@ CheckBulletCollisions (int num)
 		  // NEW RULE:  Even when the bullet hits, there's still a chance that
 		  // the armour will compensate the shot
 		  //
-		  if ( MyRandom( 100 ) < Me.AC )
+		  if ( MyRandom( 100 ) < Me[0].AC )
 		    {
-		      Me.TextVisibleTime = 0;
-		      Me.TextToBeDisplayed = "That one went into the armour.";
+		      Me[0].TextVisibleTime = 0;
+		      Me[0].TextToBeDisplayed = "That one went into the armour.";
 		      BulletReflectedSound ( ) ;
 		    }
 		  else
 		    {
 
-		      Me.TextVisibleTime = 0;
-		      Me.TextToBeDisplayed = "Ouch!";
-		      Me.energy -= CurBullet->damage;	// loose some energy
+		      Me[0].TextVisibleTime = 0;
+		      Me[0].TextToBeDisplayed = "Ouch!";
+		      Me[0].energy -= CurBullet->damage;	// loose some energy
 
 		      //--------------------
 		      // As the new rule, the influencer after getting hit, must completely
 		      // start anew to recover his weapon from the previous shot
 		      //
-		      Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
-		      Me.got_hit_time = 0;
+		      Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
+		      Me[0].got_hit_time = 0;
 
 		      // GotHitSound ();
 		      Influencer_Scream_Sound ( );
@@ -539,7 +544,7 @@ CheckBulletCollisions (int num)
       // for (i = 0; i < NumEnemys; i++)
       for (i = 0; i < Number_Of_Droids_On_Ship; i++)
 	{
-	  if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
+	  if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != level)
 	    continue;
 
 	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
@@ -576,7 +581,7 @@ CheckBulletCollisions (int num)
 		      // be completely deleted of course, with the same small explosion as well
 		      //
 		      if ( CurBullet->pass_through_hit_bodies )
-			StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
+			StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
 		      else DeleteBullet( num , TRUE ); // we want a bullet-explosion
 
 		      Enemy_Post_Bullethit_Behaviour( i );
@@ -660,8 +665,9 @@ void
 CheckBlastCollisions (int num)
 {
   int i;
-  int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
+  // int level = CurLevel->levelnum;
+  int level = CurBlast->pos.z;
 
   //--------------------
   // At first, we check for collisions of this blast with all bullets 
@@ -675,13 +681,14 @@ CheckBlastCollisions (int num)
 
       if (abs (AllBullets[i].pos.x - CurBlast->pos.x ) < Blast_Radius)
 	if (abs (AllBullets[i].pos.y - CurBlast->pos.y ) < Blast_Radius)
-	  {
-	    if ( ! AllBullets[i].pass_through_explosions )
-	      {
-		DeleteBullet( i , TRUE ); // we want a bullet-explosion
-	      }
-	  }
-
+	  if ( AllBullets[i].pos.z == CurBlast->pos.z )
+	    {
+	      if ( ! AllBullets[i].pass_through_explosions )
+		{
+		  DeleteBullet( i , TRUE ); // we want a bullet-explosion
+		}
+	    }
+    
     }	
 
   //--------------------
@@ -691,7 +698,7 @@ CheckBlastCollisions (int num)
   for (i = 0; i < NumEnemys; i++)
     {
       if ((AllEnemys[i].Status == OUT)
-	  || (AllEnemys[i].levelnum != level))
+	  || (AllEnemys[i].pos.z != level))
 	continue;
 
       if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
@@ -706,13 +713,13 @@ CheckBlastCollisions (int num)
   // Now we check, if perhaps the influencer has stepped into the area
   // of effect of this one blast.  Then he'll get burnt ;)
   // 
-  if ( (Me.status != OUT) && 
-       ( fabsf (Me.pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
-       ( fabsf (Me.pos.y - CurBlast->pos.y ) < Blast_Radius ) )
+  if ( (Me[0].status != OUT) && 
+       ( fabsf (Me[0].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
+       ( fabsf (Me[0].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
     {
       if (!InvincibleMode)
 	{
-	  Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
+	  Me[0].energy -= Blast_Damage_Per_Second * Frame_Time ();
 	  
 	  // So the influencer got some damage from the hot blast
 	  // Now most likely, he then will also say so :)

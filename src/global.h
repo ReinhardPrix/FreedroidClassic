@@ -52,6 +52,7 @@ EXTERN float FPSover10;
 EXTERN float FPSover100;
 EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
+EXTERN char *NetworkClientStatusNames[];
 EXTERN char *Classname[];
 EXTERN char *Classes[];
 EXTERN char *Height[];
@@ -70,7 +71,8 @@ EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
 EXTERN FCU AllFCUs[];
-EXTERN influence_t Me;		/* the influence data */
+EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
+EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 // EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
 EXTERN Druidspec Druidmap;     
 // EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
@@ -103,9 +105,14 @@ EXTERN int Alert;
 EXTERN int ThisShip;
 EXTERN long ShowScore;
 
-EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];
-EXTERN event_trigger AllEventTriggers[MAX_EVENT_TRIGGERS];
+EXTERN int ServerMode;
+EXTERN int ClientMode;
+
+EXTERN enemy AllEnemys[ MAX_ENEMYS_ON_SHIP ];
+EXTERN network_enemy NetworkAllEnemys[ MAX_ENEMYS_ON_SHIP ];
+EXTERN event_trigger AllEventTriggers[ MAX_EVENT_TRIGGERS ];
 EXTERN triggered_action AllTriggeredActions[ MAX_TRIGGERED_ACTIONS_IN_GAME ];
+EXTERN char ServerName[ 1000 ];
 
 EXTERN int NumEnemys;
 
@@ -198,7 +205,7 @@ EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   /
                                                // enemys in different phases of rotation
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
-EXTERN SDL_Surface *TuxWorkingCopy [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
+EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *InfluDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation

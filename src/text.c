@@ -282,8 +282,8 @@ You must go and put a end to the thing so that further evil is prevented and the
 	   ( !strcmp ( RequestString , "logoff" ) ) ||
 	   ( !strcmp ( RequestString , "" ) ) ) 
 	{
-	  Me.TextVisibleTime=0;
-	  Me.TextToBeDisplayed="Logging out.  Bye...";
+	  Me[0].TextVisibleTime=0;
+	  Me[0].TextToBeDisplayed="Logging out.  Bye...";
 	  AllEnemys[ Enum ].TextToBeDisplayed="Connection closed.  See ya...";
 	  AllEnemys[ Enum ].TextVisibleTime=0;
 	  return;
@@ -309,11 +309,11 @@ You must go and put a end to the thing so that further evil is prevented and the
 	  //
 	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone != (-1) )
 	    {
-	      if ( Me.AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone ].MissionIsComplete != TRUE ) continue;
+	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone ].MissionIsComplete != TRUE ) continue;
 	    }
 	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned != (-1) )
 	    {
-	      if ( Me.AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned ].MissionWasAssigned == TRUE ) continue;
+	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned ].MissionWasAssigned == TRUE ) continue;
 	    }
 
 	  // So if the word matches, then the request is really proper
@@ -343,7 +343,7 @@ You must go and put a end to the thing so that further evil is prevented and the
 		    {
 		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseYes , 
 						 -1 , -1 , &Chat_Window , Background );
-		      ExecuteActionWithLabel ( AllEnemys[ Enum ].RequestList[ i ].ActionTrigger );
+		      ExecuteActionWithLabel ( AllEnemys[ Enum ].RequestList[ i ].ActionTrigger , 0 );
 		    }
 		  else
 		    {
@@ -565,7 +565,7 @@ AddStandingAndAimingText ( int Enum )
   
   ThisRobot->TextVisibleTime=0;
 	      
-  if ( ( fabsf (Me.speed.x) < 1 ) && ( fabsf (Me.speed.y) < 1 ) )
+  if ( ( fabsf (Me[0].speed.x) < 1 ) && ( fabsf (Me[0].speed.y) < 1 ) )
     {
       ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
     }
@@ -587,31 +587,31 @@ AddInfluBurntText( void )
 
   if ( !GameConfig.Influencer_Blast_Text ) return;
   
-  Me.TextVisibleTime=0;
+  Me[0].TextVisibleTime=0;
   
   FinalTextNr=MyRandom ( 6 );
   switch ( FinalTextNr )
     {
     case 0:
-      Me.TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
+      Me[0].TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
       break;
     case 1:
-      Me.TextToBeDisplayed="Hell, that blast was hot!";
+      Me[0].TextToBeDisplayed="Hell, that blast was hot!";
       break;
     case 2:
-      Me.TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
+      Me[0].TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
       break;
     case 3:
-      Me.TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
+      Me[0].TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
       break;
     case 4:
-      Me.TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
+      Me[0].TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
       break;
     case 5:
-      Me.TextToBeDisplayed="I hope that didn't melt any circuits!";
+      Me[0].TextToBeDisplayed="I hope that didn't melt any circuits!";
       break;
     case 6:
-      Me.TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
+      Me[0].TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
       break;
     default:
       printf("\nError in AddInfluBurntText! That shouldn't be happening.");

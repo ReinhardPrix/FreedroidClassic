@@ -66,20 +66,20 @@ Highlight_Current_Block(void)
   for (i=0; i<Block_Width; i++)
     {
       // This draws a (double) line at the upper border of the current block
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
 
       // This draws a line at the lower border of the current block
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
 
       // This draws a line at the left border of the current block
-      putpixel( Screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( Screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
 
       // This draws a line at the right border of the current block
-      putpixel( Screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( Screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
 
     }
   SDL_UnlockSurface( Screen );
@@ -88,7 +88,7 @@ Highlight_Current_Block(void)
   // Now we print out the codepanel information about this tile
   // just in case it is really a codepanel.
   //
-  switch ( CurLevel->map [ (int)rintf( Me.pos.y) ] [ (int)rintf( Me.pos.x ) ] )
+  switch ( CurLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
     {
     case CODEPANEL_L:
     case CODEPANEL_R:
@@ -97,8 +97,8 @@ Highlight_Current_Block(void)
 
       for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
 	{
-	  if ( ( ( (int) rintf( Me.pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) && 
-	       ( ( (int) rintf( Me.pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
+	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) && 
+	       ( ( (int) rintf( Me[0].pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
 	    break;
 	}
 
@@ -139,8 +139,8 @@ Show_Waypoints(void)
 
 #define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
-  BlockX=rintf(Me.pos.x);
-  BlockY=rintf(Me.pos.y);
+  BlockX=rintf(Me[0].pos.x);
+  BlockY=rintf(Me[0].pos.y);
 	  
   SDL_LockSurface( Screen );
 
@@ -155,25 +155,25 @@ Show_Waypoints(void)
       for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
 	{
 	  // This draws a (double) line at the upper border of the current block
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2 - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
 		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2- (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2- (( Me[0].pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
@@ -233,8 +233,8 @@ Show_Waypoints(void)
 void 
 Level_Editor(void)
 {
-  int BlockX=rintf(Me.pos.x);
-  int BlockY=rintf(Me.pos.y);
+  int BlockX=rintf(Me[0].pos.x);
+  int BlockY=rintf(Me[0].pos.y);
   int Done=FALSE;
   int Weiter=FALSE;
   int MenuPosition=1;
@@ -260,8 +260,8 @@ Level_Editor(void)
       Weiter=FALSE;
       while (!EscapePressed())
 	{
-	  BlockX=rintf(Me.pos.x);
-	  BlockY=rintf(Me.pos.y);
+	  BlockX=rintf(Me[0].pos.x);
+	  BlockY=rintf(Me[0].pos.y);
 	  
 	  ClearUserFenster();
 	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
@@ -273,25 +273,25 @@ Level_Editor(void)
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
-	  // highlited filed (that is Me.pos) accordingly. This is done here:
+	  // highlited filed (that is Me[0].pos) accordingly. This is done here:
 	  if (LeftPressed()) 
 	    {
-	      if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
+	      if ( rintf(Me[0].pos.x) > 0 ) Me[0].pos.x-=1;
 	      while (LeftPressed());
 	    }
 	  if (RightPressed()) 
 	    {
-	      if ( rintf(Me.pos.x) < CurLevel->xlen-1 ) Me.pos.x+=1;
+	      if ( rintf(Me[0].pos.x) < CurLevel->xlen-1 ) Me[0].pos.x+=1;
 	      while (RightPressed());
 	    }
 	  if (UpPressed()) 
 	    {
-	      if ( rintf(Me.pos.y) > 0 ) Me.pos.y-=1;
+	      if ( rintf(Me[0].pos.y) > 0 ) Me[0].pos.y-=1;
 	      while (UpPressed());
 	    }
 	  if (DownPressed()) 
 	    {
-	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
+	      if ( rintf(Me[0].pos.y) < CurLevel->ylen-1 ) Me[0].pos.y+=1;
 	      while (DownPressed());
 	    }
 
@@ -322,8 +322,8 @@ Level_Editor(void)
 		}
 
 	      CurLevel->StatementList[ i ].Statement_Text = NewCommentOnThisSquare;
-	      CurLevel->StatementList[ i ].x = rintf( Me.pos.x );
-	      CurLevel->StatementList[ i ].y = rintf( Me.pos.y );
+	      CurLevel->StatementList[ i ].x = rintf( Me[0].pos.x );
+	      CurLevel->StatementList[ i ].y = rintf( Me[0].pos.y );
 	    }
 
 	  //--------------------
@@ -337,7 +337,7 @@ Level_Editor(void)
 	      SetCurrentFont( FPS_Display_BFont );
 
 	      // First we check if we really are directly on a codepanel:
-	      switch ( CurLevel->map [ (int)rintf( Me.pos.y) ] [ (int)rintf( Me.pos.x ) ] )
+	      switch ( CurLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
 		{
 		case CODEPANEL_L:
 		case CODEPANEL_R:
@@ -352,8 +352,8 @@ Level_Editor(void)
 		  // Now we see if a codepanel entry is existing already for this square
 		  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
 		    {
-		      if ( ( CurLevel->CodepanelList[ i ].x == (int)rintf( Me.pos.x) ) &&
-			   ( CurLevel->CodepanelList[ i ].y == (int)rintf( Me.pos.y) ) ) break;
+		      if ( ( CurLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
+			   ( CurLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
 		    }
 		  if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
 		    {
@@ -381,8 +381,8 @@ Level_Editor(void)
 
 		    }
 		  CurLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
-		  CurLevel->CodepanelList[ i ].x = rintf( Me.pos.x );
-		  CurLevel->CodepanelList[ i ].y = rintf( Me.pos.y );
+		  CurLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
+		  CurLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
 
 
 		  SDL_Flip ( Screen );
@@ -429,8 +429,8 @@ Level_Editor(void)
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
 	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
 
-	      // DropSpecificItemAtPosition( rintf( Me.pos.x ) , rintf( Me.pos.y ) , NewItemCode );
-	      DropItemAt( NewItemCode , rintf( Me.pos.x ) , rintf( Me.pos.y ) , -1 , -1 , 0 );
+	      // DropSpecificItemAtPosition( rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , NewItemCode );
+	      DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );
 	    }
 
 	  //--------------------
@@ -716,7 +716,7 @@ Level_Editor(void)
 	  InitiateMenu( NULL );
 
 	  // Highlight currently selected option with an influencer before it
-	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 , 0 );
 
 	  DisplayText ( "Save whole ship to 'Testship.shp'" , User_Rect.x , 4*FontHeight(Menu_BFont), &Editor_Window );
 
@@ -773,7 +773,7 @@ Level_Editor(void)
 		  // Weiter=!Weiter;
 		  break;
 		case CHANGE_LEVEL_POSITION: 
-		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me.pos.x , Me.pos.y ); 
+		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case CHANGE_TILE_SET_POSITION: 
@@ -825,13 +825,13 @@ Level_Editor(void)
 		  if ( LeftPressed() )
 		    {
 		      if ( CurLevel->levelnum > 0 )
-			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+			Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 );
 		      while (LeftPressed());
 		    }
 		  if ( RightPressed() )
 		    {
 		      if ( CurLevel->levelnum < curShip.num_levels -1 )
-			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+			Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 );
 		      while (RightPressed());
 		    }
 		  SetCombatScaleTo ( CurrentCombatScaleFactor );
@@ -848,7 +848,7 @@ Level_Editor(void)
 		      CurLevel->color--;
 		      while (LeftPressed());
 		    }
-		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
+		  Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 ); 
 		  break;
 		case CHANGE_SIZE_X:
 		  if ( RightPressed() )

@@ -331,7 +331,7 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 
   if ( CurEnemy->Friendly == FALSE )
     {
-      sprintf( linebuf , " Total Kills : %d " , Me.KillRecord[ CurEnemy->type ] );
+      sprintf( linebuf , " Total Kills : %d " , Me[0].KillRecord[ CurEnemy->type ] );
       strcat ( DroidDescText , linebuf );
     }
 
@@ -349,7 +349,7 @@ ShowCurrentSkill( void )
   SDL_Rect Target_Rect;
   static int Mouse_Button_Pressed_Previous_Frame = FALSE;
 
-  if ( Me.status == BRIEFING ) return;
+  if ( Me[0].status == BRIEFING ) return;
   if ( GameConfig.Inventory_Visible ) return;
 
   Target_Rect.x = CURRENT_SKILL_RECT_X ;
@@ -357,7 +357,7 @@ ShowCurrentSkill( void )
   Target_Rect.w = CURRENT_SKILL_RECT_W ;
   Target_Rect.h = CURRENT_SKILL_RECT_H ;
 
-  SDL_BlitSurface ( SkillIconSurfacePointer[ Me.readied_skill ] , NULL , Screen , &Target_Rect );
+  SDL_BlitSurface ( SkillIconSurfacePointer[ Me[0].readied_skill ] , NULL , Screen , &Target_Rect );
 
 
   //--------------------
@@ -439,17 +439,17 @@ ShowCurrentHealthAndForceLevel( void )
   // Of course we do not blit anything during the briefing phase, so as
   // not to disturb the scrolling text at the beginning.
   //
-  if ( Me.status == BRIEFING ) return;
+  if ( Me[0].status == BRIEFING ) return;
   
   //--------------------
   // We only need to regenerate the whole image, blitting the arrows into
   // a new working copy, if something has changed in the values displayed
   // by the arrow position.  
   //
-  if ( ( Previous_Energy    != (int) Me.energy ) ||
-       ( Previous_Mana      != (int) Me.mana ) ||
-       ( Previous_Maxenergy != (int) Me.maxenergy ) ||
-       ( Previous_Maxmana   != (int) Me.maxmana ) )
+  if ( ( Previous_Energy    != (int) Me[0].energy ) ||
+       ( Previous_Mana      != (int) Me[0].mana ) ||
+       ( Previous_Maxenergy != (int) Me[0].maxenergy ) ||
+       ( Previous_Maxmana   != (int) Me[0].maxmana ) )
     {
       //--------------------
       // We generate a new fresh empty speed-o-meter in the working copy
@@ -461,7 +461,7 @@ ShowCurrentHealthAndForceLevel( void )
 
       // We blit in the red arrow, showing current energy
       RotatedArrow = rotozoomSurface( SpeedMeterEnergyArrowImage , 
-				      - 360 * 3 / 4 * Me.energy / Me.maxenergy , 1.0 , FALSE );
+				      - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy , 1.0 , FALSE );
 
       ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
       ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
@@ -470,7 +470,7 @@ ShowCurrentHealthAndForceLevel( void )
 
       // We blit in the blue arrow, showing current mana
       RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage , 
-				      -360 * 3 / 4 * Me.mana / Me.maxmana , 1.0 , FALSE );
+				      -360 * 3 / 4 * Me[0].mana / Me[0].maxmana , 1.0 , FALSE );
 
       ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
       ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
@@ -482,16 +482,16 @@ ShowCurrentHealthAndForceLevel( void )
       // we can detect any changes when this function is called during 
       // the next frame.
       //
-      Previous_Energy    = Me.energy ;
-      Previous_Mana      = Me.mana ;
-      Previous_Maxenergy = Me.maxenergy ;
-      Previous_Maxmana   = Me.maxmana ;
+      Previous_Energy    = Me[0].energy ;
+      Previous_Mana      = Me[0].mana ;
+      Previous_Maxenergy = Me[0].maxenergy ;
+      Previous_Maxmana   = Me[0].maxmana ;
 
       //--------------------
       // Just to make sure, that we really achieved, that the thing is not reassembled
       // every frame, we print out a message.
       //
-      DebugPrintf ( 0 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
+      DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
     }
 
 
@@ -516,22 +516,22 @@ ShowCurrentHealthAndForceLevel( void )
 
   Health_Rect.y = WHOLE_HEALTH_RECT_Y;
   Health_Rect.w = WHOLE_HEALTH_RECT_W;
-  Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ;
-  if ( Me.energy < 0 ) Health_Rect.h = 0;
+  Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me[0].energy ) / Me[0].maxenergy ;
+  if ( Me[0].energy < 0 ) Health_Rect.h = 0;
   Force_Rect.y = WHOLE_FORCE_RECT_Y;
   Force_Rect.w = WHOLE_FORCE_RECT_W;
-  Force_Rect.h = ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ;
-  if ( Me.mana < 0 ) Force_Rect.h = 0;
+  Force_Rect.h = ( WHOLE_FORCE_RECT_H * Me[0].mana ) / Me[0].maxmana ;
+  if ( Me[0].mana < 0 ) Force_Rect.h = 0;
 
   Unhealth_Rect.x = Health_Rect.x;
-  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ) ;
+  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me[0].energy ) / Me[0].maxenergy ) ;
   Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
-  Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ) ;
+  Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me[0].energy ) / Me[0].maxenergy ) ;
   if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
   Unforce_Rect.x = Force_Rect.x;
-  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ) ;
+  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me[0].mana ) / Me[0].maxmana ) ;
   Unforce_Rect.w = WHOLE_FORCE_RECT_W;
-  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ) ;
+  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me[0].mana ) / Me[0].maxmana ) ;
   if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );
@@ -566,7 +566,7 @@ ShowCurrentTextWindow ( void )
   //--------------------
   // During the title display phase, we need not have this window visible...
   //
-  if ( Me.status == BRIEFING ) return;
+  if ( Me[0].status == BRIEFING ) return;
 
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
@@ -628,43 +628,43 @@ ShowCurrentTextWindow ( void )
 	  // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
 	  if ( InvIndex != (-1) )
 	    {
-	      GiveItemDescription ( ItemDescText , &(Me.Inventory[ InvIndex ]) , FALSE );
+	      GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
 	    }
 	} 
       else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Me.weapon_item.type > 0 )
-	    GiveItemDescription ( ItemDescText , & ( Me.weapon_item ) , FALSE );
+	  if ( Me[0].weapon_item.type > 0 )
+	    GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
 	}
       else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Me.drive_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.drive_item) , FALSE );
+	  if ( Me[0].drive_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
 	}
       else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Me.shield_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.shield_item) , FALSE );
+	   if ( Me[0].shield_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].shield_item) , FALSE );
 	}
       else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Me.armour_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.armour_item) , FALSE );
+	   if ( Me[0].armour_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
 	}
       else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Me.aux1_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.aux1_item) , FALSE );
+	   if ( Me[0].aux1_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
 	}
       else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Me.aux2_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.aux2_item) , FALSE );
+	   if ( Me[0].aux2_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
 	}
       else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Me.special_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me.special_item) , FALSE );
+	   if ( Me[0].special_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
 	}
 
     } // if nothing is 'held in hand' && inventory-screen visible
@@ -679,8 +679,8 @@ ShowCurrentTextWindow ( void )
   if ( CursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
     {
       // DebugPrintf( 2  , "\nCursor is in userfenster... --> see if hovering over an item...");
-      MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-      MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+      MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+      MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
       // DebugPrintf( 2  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
@@ -696,7 +696,7 @@ ShowCurrentTextWindow ( void )
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
 	{
 	  // We don't describe enemys that are not on this level...
-	  if ( AllEnemys[ i ].levelnum != CurLevel->levelnum ) continue;
+	  if ( AllEnemys[ i ].pos.z != CurLevel->levelnum ) continue;
 	  if ( AllEnemys[ i ].Status == OUT ) continue;
 
 	  if ( ( fabsf( MapPositionOfMouse.x - AllEnemys[ i ].pos.x ) < 0.5 ) &&
@@ -794,7 +794,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   //
 
   if (left == NULL)       // Left-DEFAULT: Mode 
-    left = InfluenceModeNames[Me.status];
+    left = InfluenceModeNames[Me[0].status];
 
   if ( right == NULL )  // Right-DEFAULT: Score 
     {

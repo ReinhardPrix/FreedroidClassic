@@ -53,9 +53,15 @@ int Shieldcolors[INITIAL_BLOCK_WIDTH];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
-influence_t Me = {
-  DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0
+influence_t Me[ MAX_PLAYERS ] = {
+  { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0 },
+  { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0 },
+  { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0 },
+  { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0 },
+  { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0 }
 };
+
+network_influence_t NetworkMe[ MAX_PLAYERS ];
 
 /*
 enum _status
@@ -91,6 +97,17 @@ char *InfluenceModeNames[] = {
   "Elevator",
   "Briefing",
   "Menu",
+  "Fresh Net",
+  "Name Tran",
+  NULL
+};
+
+char *NetworkClientStatusNames[] = {
+  "Network ERROR" ,
+  "Unconnected" , 
+  "Connection freshly opened" ,
+  "Name has been transmitted" , 
+  "Game on" ,
   NULL
 };
 

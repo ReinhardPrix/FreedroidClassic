@@ -53,7 +53,7 @@
  * The return value is TRUE or FALSE accoringly.
  * ----------------------------------------------------------------------*/
 int 
-DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
+DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
 {
   float LargerDistance;
   int Steps;
@@ -83,7 +83,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
   for ( i = 0 ; i < Steps ; i++ )
     {
 
-      if ( IsPassable ( CheckPosition.x , CheckPosition.y , CENTER ) != CENTER ) 
+      if ( IsPassable ( CheckPosition.x , CheckPosition.y , z , CENTER ) != CENTER ) 
 	{
 	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
@@ -111,6 +111,8 @@ SetDirectCourseToConsole( int EnemyNum )
 {
   int i, j;
   long TicksBefore;
+  Level ThisBotsLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
+
 
   TicksBefore = SDL_GetTicks();
 
@@ -118,18 +120,18 @@ SetDirectCourseToConsole( int EnemyNum )
   DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): real function call confirmed.");
   DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Trying to find direct line to console...");
 
-  for ( i = 0 ; i < CurLevel->xlen ; i ++ )
+  for ( i = 0 ; i < ThisBotsLevel->xlen ; i ++ )
     {
-      for ( j = 0 ; j < CurLevel->ylen ; j ++ )
+      for ( j = 0 ; j < ThisBotsLevel->ylen ; j ++ )
 	{
-	  switch ( CurLevel->map[j][i] )
+	  switch ( ThisBotsLevel->map[j][i] )
 	    {
 	    case KONSOLE_U:
 	    case KONSOLE_O:
 	    case KONSOLE_R:
 	    case KONSOLE_L:
 	      DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Console found: %d-%d.", i , j );
-	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j ) )
+	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j , AllEnemys [ EnemyNum ] . pos . z ) )
 		{
 		  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Walkable is: %d-%d.",
 			       i , j );
@@ -139,8 +141,8 @@ SetDirectCourseToConsole( int EnemyNum )
 
 		  return TRUE;
 
-		  // i=CurLevel->xlen;
-		  // j=CurLevel->ylen;
+		  // i=ThisBotsLevel->xlen;
+		  // j=ThisBotsLevel->ylen;
 		  // break;
 		}
 	      break;
@@ -222,7 +224,7 @@ ClearEnemys ( void )
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       AllEnemys[i].type = -1;
-      AllEnemys[i].levelnum = AllEnemys[i].energy = 0;
+      AllEnemys[i].pos.z = AllEnemys[i].energy = 0;
       AllEnemys[i].feindphase = 0;
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
       AllEnemys[i].Status = OUT;
@@ -269,30 +271,30 @@ ClearEnemys ( void )
  *
  * -----------------------------------------------------------------*/
 void
-ShuffleEnemys (void)
+ShuffleEnemys ( int LevelNum )
 {
-  int curlevel = CurLevel->levelnum;
+  // int curlevel = CurLevel->levelnum;
   int i, j;
   int nth_enemy;
   int wp_num;
   int wp = 0;
   int BestWaypoint;
   finepoint influ_coord;
+  Level ShuffleLevel = curShip.AllLevels[ LevelNum ];
 
   // count the number of waypoints on CurLevel
   wp_num = 0;
 
   for ( i=0 ; i<MAXWAYPOINTS ; i++ )
     {
-      if ( CurLevel->AllWaypoints[i].x != 0 ) wp_num ++;
+      if ( ShuffleLevel->AllWaypoints[i].x != 0 ) wp_num ++;
     }
 
   nth_enemy = 0;
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
-      if (AllEnemys[i].Status == OUT
-	  || AllEnemys[i].levelnum != curlevel)
-	continue;		/* dont handle dead enemys or on other level */
+      if ( ( AllEnemys[i].Status == OUT ) || ( AllEnemys[i].pos.z != LevelNum ) )
+	continue;		// dont handle dead enemys or on other level 
 
       AllEnemys[ i ].persuing_given_course = FALSE; // since position is now completely mixed up,
                                                     // the robot needs to forget about any previous given course.
@@ -308,8 +310,8 @@ ShuffleEnemys (void)
 	  BestWaypoint = 0;
 	  for ( j=0 ; j<MAXWAYPOINTS ; j ++ )
 	    {
-	      if ( abs ( (CurLevel->AllWaypoints[j].x) - AllEnemys[i].pos.x ) < 
-		   abs ( CurLevel->AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) )
+	      if ( abs ( ( ShuffleLevel -> AllWaypoints[j].x) - AllEnemys[i].pos.x ) < 
+		   abs ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) )
 		BestWaypoint = j;
 	    }
 	  AllEnemys[i].nextwaypoint = BestWaypoint;
@@ -323,12 +325,12 @@ ShuffleEnemys (void)
       else
 	{
 	  DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
-	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
+	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", ShuffleLevel->levelnum );
 	  Terminate (ERR);
 	}
 
-      AllEnemys[i].pos.x = CurLevel->AllWaypoints[wp].x;
-      AllEnemys[i].pos.y = CurLevel->AllWaypoints[wp].y;
+      AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[wp].x;
+      AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[wp].y;
 
       AllEnemys[i].lastwaypoint = wp;
       AllEnemys[i].nextwaypoint = wp;
@@ -338,15 +340,15 @@ ShuffleEnemys (void)
   /* leave the enemys alone for some time.... */
 
   /* we shortly remove the influencer, so that it does not interfere with the movement */
-  influ_coord.x = Me.pos.x;
-  influ_coord.y = Me.pos.y;
-  Me.pos.x = Me.pos.y = 0;
+  influ_coord.x = Me[0].pos.x;
+  influ_coord.y = Me[0].pos.y;
+  Me[0].pos.x = Me[0].pos.y = 0;
 
   for (i = 0; i < 30; i++)     MoveEnemys ();
 
   /* now we can put the influencer back in */
-  Me.pos.x = influ_coord.x;
-  Me.pos.y = influ_coord.y;
+  Me[0].pos.x = influ_coord.x;
+  Me[0].pos.y = influ_coord.y;
 
 }; // void ShuffleEnemys ( void ) 
 
@@ -365,9 +367,10 @@ SelectNextWaypointClassical( int EnemyNum )
   finepoint nextwp_pos;
   int trywp;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
   // We do some definitions to save us some more typing later...
-  WpList = CurLevel->AllWaypoints;
+  WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
@@ -447,7 +450,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
       // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
 	{
-	  if ( AllEnemys[j].levelnum != OurLevel ) continue;
+	  if ( AllEnemys[j].pos.z != OurLevel ) continue;
 	  if ( AllEnemys[j].Status == OUT ) continue;
 	  if ( AllEnemys[j].energy <= 0 ) continue;
 	  if ( j == ExceptedDroid ) continue;
@@ -461,8 +464,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	    }
 	}
 
-      if ( ( fabsf( Me.pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
-	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
+      if ( ( fabsf( Me[0].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
+	   ( fabsf( Me[0].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
 	{
 	  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
 	  return FALSE;
@@ -491,11 +494,12 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
   int HistoryIndex;
+  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
   DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisWaypoint ( int EnemyNum ) : real function call confirmed. ");
 
   // We do some definitions to save us some more typing later...
-  WpList = CurLevel->AllWaypoints;
+  WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
@@ -511,8 +515,8 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
   if ( ThisRobot->FollowingInflusTail == TRUE )
     {
-      if ( ( fabsf( ThisRobot->pos.x - Me.pos.x ) > 1 ) || 
-           ( fabsf( ThisRobot->pos.y - Me.pos.y ) > 1 ) )
+      if ( ( fabsf( ThisRobot->pos.x - Me[0].pos.x ) > 1 ) || 
+           ( fabsf( ThisRobot->pos.y - Me[0].pos.y ) > 1 ) )
 	{
 
 	  HistoryIndex = ThisRobot->StayHowManyFramesBehind;
@@ -521,11 +525,11 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 	  nextwp_pos.x = GetInfluPositionHistoryX( HistoryIndex );
 	  // jump to the next level, if the influencer did
 	  // that might cause some inconsistencies, but who cares right now?
-	  if ( ThisRobot->levelnum != GetInfluPositionHistoryZ( HistoryIndex ) )
+	  if ( ThisRobot->pos.z != GetInfluPositionHistoryZ( HistoryIndex ) )
 	    {
 	      ThisRobot->pos.x = GetInfluPositionHistoryX( HistoryIndex );
 	      ThisRobot->pos.y = GetInfluPositionHistoryY( HistoryIndex );
-	      ThisRobot->levelnum = GetInfluPositionHistoryZ( HistoryIndex );
+	      ThisRobot->pos.z = GetInfluPositionHistoryZ( HistoryIndex );
 	    }
 	}
       else
@@ -588,6 +592,7 @@ Persue_Given_Course ( int EnemyNum )
   finepoint nextwp_pos;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
   DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
@@ -596,7 +601,7 @@ Persue_Given_Course ( int EnemyNum )
   DebugPrintf( 2 , "\nvoid MoveThisRobotAdvanced ( int EnemyNum ) : Robot now on given course!!!. ");
 
   // We do some definitions to save us some more typing later...
-  WpList = CurLevel->AllWaypoints;
+  WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
@@ -637,13 +642,14 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   int FreeWays[ MAX_WP_CONNECTIONS ];
   int SolutionFound;
   int TestConnection;
+  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
   DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
   if ( ThisRobot->persuing_given_course == TRUE ) return;
 
   // We do some definitions to save us some more typing later...
-  WpList = CurLevel->AllWaypoints;
+  WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
@@ -711,7 +717,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  // and also if the way there is free of other droids
 	  for ( i = 0; i < j ; i++ )
 	    {
-	      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->levelnum , EnemyNum );
+	      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->pos.z , EnemyNum );
 	    }
 
 	  // Now see whether any way point at all is free in that sense
@@ -789,7 +795,7 @@ MoveThisEnemy( int EnemyNum )
   //
 
   // ignore robots on other levels, except, it it's following influ's trail
-  if ( ( ThisRobot->levelnum != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
+  if ( ( ThisRobot->pos.z != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
 
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
@@ -800,10 +806,9 @@ MoveThisEnemy( int EnemyNum )
   if ( ThisRobot->energy <= 0)
     {
       ThisRobot->Status = OUT;
-      Me.Experience += Druidmap[ ThisRobot->type ].score;
-      StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
-		   DRUIDBLAST);
-      Me.KillRecord[ ThisRobot->type ] ++;
+      Me[0].Experience += Druidmap[ ThisRobot->type ].score;
+      StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+      Me[0].KillRecord[ ThisRobot->type ] ++;
 
       //--------------------
       // Maybe that robot did have something with him?  The item should then
@@ -996,6 +1001,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // start all bullets in the center of the shooter first...
   NewBullet->pos.x = ThisRobot->pos.x;
   NewBullet->pos.y = ThisRobot->pos.y;
+  NewBullet->pos.z = ThisRobot->pos.z;
   
   // fire bullets so, that they don't hit the shooter...
   if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
@@ -1026,8 +1032,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	{
 	  if ( AllEnemys[ j ].Status == OUT ) continue;
 	  if ( AllEnemys[ j ].Friendly ) continue;
-	  if ( AllEnemys[ j ].levelnum != ThisRobot->levelnum ) continue;
-	  if ( DirectLineWalkable( ThisRobot->pos.x , ThisRobot->pos.y , AllEnemys[j].pos.x , AllEnemys[j].pos.y ) != 
+	  if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
+	  if ( DirectLineWalkable( ThisRobot->pos.x , ThisRobot->pos.y , AllEnemys[j].pos.x , AllEnemys[j].pos.y , ThisRobot -> pos . z ) != 
 	       TRUE ) continue;
 
 	  // At this point we have found our target
@@ -1040,8 +1046,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
     }
   else
     {
-      vect_to_target->x = Me.pos.x - ThisRobot->pos.x;
-      vect_to_target->y = Me.pos.y - ThisRobot->pos.y;
+      vect_to_target->x = Me[0].pos.x - ThisRobot->pos.x;
+      vect_to_target->y = Me[0].pos.y - ThisRobot->pos.y;
     }
 
   // Add some security against division by zero
@@ -1070,7 +1076,7 @@ AttackInfluence (int enemynum)
   //
 
   // ignore robots on other levels 
-  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+  if ( ThisRobot->pos.z != CurLevel->levelnum) return;
 
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
@@ -1145,25 +1151,28 @@ AttackInfluence (int enemynum)
       //
       TargetRange = 0.5;
       StepSize = 0.5;
-      if ( fabsf ( Me.pos.x - ThisRobot->pos.x ) > TargetRange )
+      if ( fabsf ( Me[0].pos.x - ThisRobot->pos.x ) > TargetRange )
 	{
-	  if ( ( Me.pos.x - ThisRobot->pos.x ) > 0 )
+	  if ( ( Me[0].pos.x - ThisRobot->pos.x ) > 0 )
 	    {
 	      if ( ( DruidPassable ( ThisRobot->pos.x + StepSize , 
-				     ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+				     ThisRobot->PrivatePathway[ 0 ].y ,
+				     ThisRobot->pos.z ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 		  ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-		  ThisRobot->levelnum , enemynum ) ) )
+		  ThisRobot->pos.z , enemynum ) ) )
 		{
 		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
 		}
 	    }
 	  else
 	    {
-	      if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , 
+				     ThisRobot->PrivatePathway[ 0 ].y ,
+				     ThisRobot->pos.z ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 		  ThisRobot->PrivatePathway[ 0 ].x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-		  ThisRobot->levelnum , enemynum ) ) )
+		  ThisRobot->pos.z , enemynum ) ) )
 		{
 		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x - StepSize;
 		}
@@ -1172,24 +1181,26 @@ AttackInfluence (int enemynum)
       //--------------------
       // Now we check if it's perhaps time to make a step up/down
       //
-      if ( fabsf ( Me.pos.y - ThisRobot->pos.y ) > TargetRange )
+      if ( fabsf ( Me[0].pos.y - ThisRobot->pos.y ) > TargetRange )
 	{
-	  if ( ( Me.pos.y - ThisRobot->pos.y ) > 0 )
+	  if ( ( Me[0].pos.y - ThisRobot->pos.y ) > 0 )
 	    {
 	      if ( ( DruidPassable ( ThisRobot->pos.x , 
-				     ThisRobot->PrivatePathway[ 0 ].y + StepSize ) == CENTER ) &&
+				     ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
+				     ThisRobot->pos.z ) == CENTER ) &&
 		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-						ThisRobot->levelnum , enemynum ) ) )
+						ThisRobot->pos.z , enemynum ) ) )
 		ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
 	    }
 	  else
 	    {
 	      if ( ( DruidPassable ( ThisRobot->pos.x , 
-				     ThisRobot->PrivatePathway[ 0 ].y - StepSize ) == CENTER ) &&
+				     ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
+				     ThisRobot->pos.z ) == CENTER ) &&
 		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-						ThisRobot->levelnum , enemynum ) ) )
+						ThisRobot->pos.z , enemynum ) ) )
 		{
 		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
 		}
@@ -1253,7 +1264,7 @@ CheckEnemyEnemyCollision (int enemynum)
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
       // check only collisions of LIVING enemys on this level
-      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlev)
+      if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != curlev)
 	continue;
       // dont check yourself...
       if (i == enemynum)
@@ -1322,7 +1333,7 @@ AnimateEnemys (void)
     {
       /* ignore enemys that are dead or on other levels or dummys */
       // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
-      if (AllEnemys[i].levelnum != CurLevel->levelnum)
+      if (AllEnemys[i].pos.z != CurLevel->levelnum)
 	continue;
       if (AllEnemys[i].Status == OUT)
 	{

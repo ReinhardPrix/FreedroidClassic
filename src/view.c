@@ -101,25 +101,25 @@ ShowAutomapData( void )
     {
       for ( x = 0 ; x < CurLevel->xlen ; x ++ )
 	{
-	  if ( Me.Automap[y][x].r_wall )
+	  if ( Me[0].Automap[y][x].r_wall )
 	    {
 	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me.Automap[y][x].l_wall )
+	  if ( Me[0].Automap[y][x].l_wall )
 	    {
 	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me.Automap[y][x].u_wall )
+	  if ( Me[0].Automap[y][x].u_wall )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
 	    }
-	  if ( Me.Automap[y][x].d_wall )
+	  if ( Me[0].Automap[y][x].d_wall )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
@@ -135,7 +135,7 @@ ShowAutomapData( void )
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
       if ( AllEnemys[i].Status == OUT ) continue;
-      if ( AllEnemys[i].levelnum != CurLevel->levelnum ) continue;
+      if ( AllEnemys[i].pos.z != CurLevel->levelnum ) continue;
 
       for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
 	{
@@ -155,7 +155,7 @@ ShowAutomapData( void )
     {
       for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	{
-	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me.pos.x + x , AUTOMAP_SQUARE_SIZE * Me.pos.y + y , TuxColor );
+	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me[0].pos.x + x , AUTOMAP_SQUARE_SIZE * Me[0].pos.y + y , TuxColor );
 	}
     }
 
@@ -171,6 +171,8 @@ ShowAutomapData( void )
  *     the more sophisticated method.  Right now however, it's disabled.
  * 
  * ---------------------------------------------------------------------- */
+
+/*
 void
 RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
 {
@@ -221,6 +223,7 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
       (IsPassable (Cent (LX), Cent (LY + Block_Height), CENTER) == CENTER))
     RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
 }
+*/
 
 /* ----------------------------------------------------------------------
  *
@@ -247,28 +250,28 @@ ShowMissionCompletitionMessages( void )
   for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
     {
       // In case the mission does not exist at all, we need not do anything more...
-      if ( Me.AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
+      if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
 
       // In case the mission was not yet assigned, we need not do anything more...
-      if ( Me.AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+      if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
 
       // In case the message is rather old, we need not do anything more...
-      // if ( Me.AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
+      // if ( Me[0].AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
 
       // At this point we know, that the mission has recently been completed or failed
 
-      if ( Me.AllMissions[ MissNum ].MissionIsComplete == TRUE )
+      if ( Me[0].AllMissions[ MissNum ].MissionIsComplete == TRUE )
 	{
 	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
 	}
-      else if ( Me.AllMissions[ MissNum ].MissionWasFailed == TRUE )
+      else if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE )
 	{
 	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
 	}
       else
 	  DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
 
-      DisplayText( Me.AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
+      DisplayText( Me[0].AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
 
     }
 };
@@ -335,12 +338,12 @@ void
 ShowItemAlarm( void )
 {
 
-  if ( ( ( int ) ( Me.MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
+  if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
 
-  ShowOneItemAlarm( & Me.weapon_item , 1 );
-  ShowOneItemAlarm( & Me.drive_item , 2 );
-  ShowOneItemAlarm( & Me.shield_item , 3 );
-  ShowOneItemAlarm( & Me.armour_item , 4 );
+  ShowOneItemAlarm( & Me[0].weapon_item , 1 );
+  ShowOneItemAlarm( & Me[0].drive_item , 2 );
+  ShowOneItemAlarm( & Me[0].shield_item , 3 );
+  ShowOneItemAlarm( & Me[0].armour_item , 4 );
 
 }; // void ShowItemAlarm( void )
 
@@ -364,11 +367,14 @@ Assemble_Combat_Picture (int mask)
   int MapBrick;
   int line, col;
   int i;
+  int PlayerNum;
   int minutes;
   int seconds;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
@@ -388,18 +394,18 @@ Assemble_Combat_Picture (int mask)
                          
   SDL_SetClipRect (Screen , &User_Rect);
 
-  for (line = -5; line < CurLevel->ylen + 5; line++)
+  for (line = -5; line < DisplayLevel->ylen + 5; line++)
     {
-      for (col = -5; col < CurLevel->xlen + 5; col++)
+      for (col = -5; col < DisplayLevel->xlen + 5; col++)
 	{
-	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
+	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {
 	      TargetRectangle.x = UserCenter_x 
-		+ ( -Me.pos.x+col-0.5 )*Block_Width;
+		+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = UserCenter_y
-		+ ( -Me.pos.y+line-0.5 )*Block_Height;
+		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
 	      // Screen, &TargetRectangle);
-	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
+	      SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
  			       Screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
@@ -425,8 +431,14 @@ Assemble_Combat_Picture (int mask)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     PutEnemy (i , -1 , -1 );
 
-  if (Me.energy > 0)
-    PutInfluence ( -1 , -1 );
+  //--------------------
+  // Now we blit all the player tuxes...
+  //
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    {
+      if (Me [ PlayerNum ].energy > 0)
+	PutInfluence ( -1 , -1 , PlayerNum ); // this blits player 0 
+    }
 
   for (i = 0; i < (MAXBULLETS); i++)
     if (AllBullets[i].type != OUT)
@@ -458,23 +470,23 @@ Assemble_Combat_Picture (int mask)
     {
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Energy: %d " , (int) (Me.energy) );
+		       "Energy: %d " , (int) (Me[0].energy) );
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
-		       "Resistance: %f " , (Me.Current_Victim_Resistance_Factor) );
+		       "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
     }
 
   if ( GameConfig.Draw_Position )
     {
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me[0].pos.x) , (int) rintf(Me[0].pos.y) , DisplayLevel->levelnum );
     }
 
-  if ( Me.AllMissions[0].MustLiveTime != (-1) )
+  if ( Me[0].AllMissions[0].MustLiveTime != (-1) )
     {
-      minutes=floor( ( Me.AllMissions[0].MustLiveTime - Me.MissionTimeElapsed ) / 60 );
-      seconds= rintf( Me.AllMissions[0].MustLiveTime - Me.MissionTimeElapsed ) - 60 * minutes;
+      minutes=floor( ( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) / 60 );
+      seconds= rintf( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) - 60 * minutes;
       if ( minutes < 0 ) 
 	{
 	  minutes = 0;
@@ -493,6 +505,9 @@ Assemble_Combat_Picture (int mask)
   ManageInventoryScreen ( );
   ShowQuickInventory ();
   DisplayButtons( );
+
+  if ( ServerMode )
+    CenteredPrintStringFont ( Screen , Menu_BFont , SCREENHEIGHT/2 , " S E R V E R ! ! ! " );
 
   if ( GameConfig.Inventory_Visible ) 
     {
@@ -563,7 +578,7 @@ BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int Friendly )
  * for using the influencer as a cursor in the menus.
  * ----------------------------------------------------------------- */
 void
-PutInfluence ( int x , int y )
+PutInfluence ( int x , int y , int PlayerNum )
 {
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
@@ -572,9 +587,9 @@ PutInfluence ( int x , int y )
   int use_tux = TRUE;
   point UpperLeftBlitCorner;
   float angle;
-  static float Previous_angle = -1000 ; // a completely unrealistic value
-  static SDL_Surface* tmp_influencer = NULL ;
-  static int Previous_phase = -100; // a completely unrealistic value
+  static float Previous_angle [ MAX_PLAYERS ]  = { -1000 , -1000 , -1000 , -1000 , -1000 } ; // a completely unrealistic value
+  static SDL_Surface* tmp_influencer [ MAX_PLAYERS ]  = { NULL , NULL , NULL , NULL , NULL };
+  static int Previous_phase [ MAX_PLAYERS ] = { -100 , -100 , -100 , -100 , -100 } ; // a completely unrealistic value
   moderately_finepoint in_tile_shift;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
@@ -582,15 +597,30 @@ PutInfluence ( int x , int y )
   Text_Rect.w=User_Rect.w/2 - Block_Width/3;
   Text_Rect.h=User_Rect.h/2;
 
-  DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
+  DebugPrintf ( 2 , "\nvoid PutInfluence(void): real function call confirmed." ) ;
 
   if ( x == -1 ) 
     {
+      //--------------------
+      // The (-1) parameter indicates, that the tux should be drawn right 
+      // into the game field at it's apropriate location.
+      //
+      // Well, for game purposes, we do not need to blit anything if the
+      // tux is out, so we'll query for that first.
+      //
+      if ( Me [ PlayerNum ] . status == OUT ) return;
+
       UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
+
     }
   else
     {
+      //--------------------
+      // The not (-1) parameter indicates, that the tux should be drawn 
+      // for cursor purposes.  This will be done anyway, regardless of
+      // whether the tux is currently out or not.
+      //
       UpperLeftBlitCorner.x=x ;
       UpperLeftBlitCorner.y=y ;
     }
@@ -607,12 +637,12 @@ PutInfluence ( int x , int y )
   //
   
 #define alpha_offset 80
-  if ( ( ( Me.energy * 100 / Me.maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
+  if ( ( ( Me [ PlayerNum ].energy * 100 / Me [ PlayerNum ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
     {
 
       // In case of low energy, do the fading effect...
       alpha_value = (int) ( ( 256 - alpha_offset ) * 
-			    fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
+			    fabsf( 0.5 * Me [ PlayerNum ].MissionTimeElapsed - floor( 0.5 * Me [ PlayerNum ].MissionTimeElapsed ) - 0.5 ) + 
 			    ( alpha_offset ) );
 
       for ( i = 0 ; i < DIGITNUMBER ; i++ )
@@ -620,9 +650,9 @@ PutInfluence ( int x , int y )
 
       // ... and also maybe start a new cry-sound
 
-      if ( Me.LastCrysoundTime > CRY_SOUND_INTERVAL )
+      if ( Me [ PlayerNum ].LastCrysoundTime > CRY_SOUND_INTERVAL )
 	{
-	  Me.LastCrysoundTime = 0;
+	  Me [ PlayerNum ].LastCrysoundTime = 0;
 	  CrySound();
 	}
     }
@@ -636,11 +666,11 @@ PutInfluence ( int x , int y )
   // In case of transfer mode, we produce the transfer mode sound
   // but of course only in some periodic intervall...
 
-  if ( Me.status == TRANSFERMODE )
+  if ( Me [ PlayerNum ].status == TRANSFERMODE )
     {
-      if ( Me.LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
+      if ( Me [ PlayerNum ].LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
 	{
-	  Me.LastTransferSoundTime = 0;
+	  Me [ PlayerNum ].LastTransferSoundTime = 0;
 	  TransferSound();
 	}
     }
@@ -652,19 +682,19 @@ PutInfluence ( int x , int y )
   if ( use_tux )
     {
       // If we make the angle dependent upon direction of movement we use
-      // angle = - ( atan2 (Me.speed.y,  Me.speed.x) * 180 / M_PI + 90 );
+      // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
-      if ( ( angle != Previous_angle ) || ( tmp_influencer == NULL ) || ( ( (int) Me.phase) != Previous_phase ) )
+      if ( ( angle != Previous_angle [ PlayerNum ] ) || ( tmp_influencer [ PlayerNum ] == NULL ) || ( ( (int) Me [ PlayerNum ].phase) != Previous_phase [ PlayerNum ] ) )
 	{
-	  if ( tmp_influencer != NULL ) SDL_FreeSurface( tmp_influencer );
-	  tmp_influencer = 
-	    rotozoomSurface( TuxWorkingCopy [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
-	  Previous_angle = angle;
-	  Previous_phase = (int) Me.phase;
+	  if ( tmp_influencer [ PlayerNum ] != NULL ) SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
+	  tmp_influencer [ PlayerNum ] = 
+	    rotozoomSurface( TuxWorkingCopy [ PlayerNum ] [ ((int) Me [ PlayerNum ].phase) ] , angle , 1.0 , FALSE );
+	  Previous_angle [ PlayerNum ] = angle;
+	  Previous_phase [ PlayerNum ] = (int) Me [ PlayerNum ].phase;
 	}
-      // SDL_SetColorKey ( tmp_influencer , SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); 
-      SDL_SetColorKey ( tmp_influencer , 0 , SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); // turn off colorkey
+      // SDL_SetColorKey ( tmp_influencer [ PlayerNum ], SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer[ PlayerNum ]->format , 255 , 0 , 255 ) ); 
+      SDL_SetColorKey ( tmp_influencer [ PlayerNum ] , 0 , SDL_MapRGB ( tmp_influencer [ PlayerNum ]->format , 255 , 0 , 255 ) ); // turn off colorkey
       SDL_SetAlpha( TuxMotionArchetypes[5][i] , SDL_SRCALPHA , 0 );
 
 
@@ -679,17 +709,23 @@ PutInfluence ( int x , int y )
 	  
       if ( x == -1 ) 
 	{
-	  TargetRectangle.x = UserCenter_x - tmp_influencer->w / 2 + in_tile_shift.x ;
-	  TargetRectangle.y = UserCenter_y - tmp_influencer->h / 2 + in_tile_shift.y ;
+	  // TargetRectangle.x = UserCenter_x - tmp_influencer [ PlayerNum ]->w / 2 + in_tile_shift.x ;
+	  // TargetRectangle.y = UserCenter_y - tmp_influencer [ PlayerNum ]->h / 2 + in_tile_shift.y ;
+	  TargetRectangle.x = UserCenter_x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x +
+	    ( ( - Me[0].pos.x + Me[ PlayerNum ].pos.x ) ) * Block_Width;
+	  TargetRectangle.y = UserCenter_y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y +
+	    ( ( - Me[0].pos.y + Me[ PlayerNum ].pos.y ) ) * Block_Width;
+
+
 	}
       else
 	{
-	  TargetRectangle.x = x - tmp_influencer->w / 2 + in_tile_shift.x;
-	  TargetRectangle.y = y - tmp_influencer->h / 2 + in_tile_shift.y;
+	  TargetRectangle.x = x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x;
+	  TargetRectangle.y = y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y;
 	}
       
-      SDL_BlitSurface( tmp_influencer , NULL , Screen, &TargetRectangle );
-      // SDL_FreeSurface( tmp_influencer );
+      SDL_BlitSurface( tmp_influencer[ PlayerNum ] , NULL , Screen, &TargetRectangle );
+      // SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
     }
   else
     {
@@ -697,8 +733,8 @@ PutInfluence ( int x , int y )
       // Now we draw the hat and shoes of the influencer
       // and the digits of the influencers current number.
       //
-      SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
-      BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me.type ].druidname , TRUE );
+      SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me [ PlayerNum ].phase) ], NULL , Screen, &TargetRectangle );
+      BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me [ PlayerNum ].type ].druidname , TRUE );
     }
 
 
@@ -711,14 +747,14 @@ PutInfluence ( int x , int y )
   // Maybe the influencer has something to say :)
   // so let him say it..
   //
-  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+  if ( ( x == (-1) ) && ( Me [ PlayerNum ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
       //      PutStringFont ( Screen , FPS_Display_BFont , 
       //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
       //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
-      //		      Me.TextToBeDisplayed );
+      //		      Me [ PlayerNum ].TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me.TextToBeDisplayed , UserCenter_x + Block_Width/3,
+      DisplayText( Me [ PlayerNum ].TextToBeDisplayed , UserCenter_x + Block_Width/3,
 		   UserCenter_y - Block_Height/2 , &Text_Rect );
     }
 
@@ -744,8 +780,24 @@ PutEnemy (int Enum , int x , int y)
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
-  /* if enemy is on other level, return */
-  if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
+  /*
+  // if enemy is on other level, return 
+  if ( AllEnemys[Enum].pos.z != CurLevel->levelnum )
+    {
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      return;
+    }
+  */
+
+  // if enemy is on other level, return 
+  if ( AllEnemys[Enum].pos.z != Me [ 0 ] . pos . z )
+    {
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      return;
+    }
+
+  // if enemy is of type (-1), return 
+  if ( AllEnemys[Enum].type == ( -1 ) )
     {
       // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
@@ -790,9 +842,9 @@ Sorry...\n\
   if ( x == (-1) ) 
     {
       UpperLeftBlitCorner.x = UserCenter_x + 
-	( ( - Me.pos.x + AllEnemys[Enum].pos.x ) ) * Block_Width  - Block_Width / 2 ;
+	( ( - Me[0].pos.x + AllEnemys[Enum].pos.x ) ) * Block_Width  - Block_Width / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y + 
-	( ( - Me.pos.y + AllEnemys[Enum].pos.y ) ) * Block_Height - Block_Height / 2 ;
+	( ( - Me[0].pos.y + AllEnemys[Enum].pos.y ) ) * Block_Height - Block_Height / 2 ;
     }
   else
     {
@@ -823,7 +875,7 @@ Sorry...\n\
 	{
 	  // In case of low energy, do the fading effect...
 	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
-				fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
+				fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
 				( alpha_offset ) );
 	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
 	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
@@ -860,9 +912,9 @@ Sorry...\n\
     {
       PutStringFont ( Screen , FPS_Display_BFont , 
 		      UserCenter_x + Block_Width/3
-		      + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width ,  
+		      + (AllEnemys[Enum].pos.x - Me[0].pos.x) * Block_Width ,  
 		      UserCenter_y - Block_Height/2
-		      + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
+		      + (AllEnemys[Enum].pos.y - Me[0].pos.y) * Block_Height ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
@@ -957,9 +1009,9 @@ Sorry...\n\
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
   TargetRectangle.x = UserCenter_x
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
   TargetRectangle.y = UserCenter_y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, Screen , &TargetRectangle );
 #else
@@ -971,9 +1023,9 @@ Sorry...\n\
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
   TargetRectangle.x = UserCenter_x
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
   TargetRectangle.y = UserCenter_y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
@@ -999,8 +1051,8 @@ PutItem( int ItemNumber )
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
 
-  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.x ) ;
-  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.y ) ;
+  TargetRectangle.x=UserCenter_x - (Me[0].pos.x - CurItem->pos.x)*Block_Width  - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.x ) ;
+  TargetRectangle.y=UserCenter_y - (Me[0].pos.y - CurItem->pos.y)*Block_Height - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.y ) ;
 
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
@@ -1040,8 +1092,8 @@ Sorry...\n\
     };
 
   
-  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->pos.x )*Block_Width  -Block_Width/2;
-  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->pos.y )*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me[0].pos.x - CurBlast->pos.x )*Block_Width  -Block_Width/2;
+  TargetRectangle.y=UserCenter_y - (Me[0].pos.y - CurBlast->pos.y )*Block_Height -Block_Height/2;
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
 
@@ -1195,9 +1247,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + DRIVE_RECT_X;
   TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
-  if ( ( ! Me.drive_item.currently_held_in_hand ) && ( Me.drive_item.type != (-1) ) )
+  if ( ( ! Me[0].drive_item.currently_held_in_hand ) && ( Me[0].drive_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1205,9 +1257,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
   TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
-  if ( ( ! Me.weapon_item.currently_held_in_hand ) && ( Me.weapon_item.type != (-1) ) )
+  if ( ( ! Me[0].weapon_item.currently_held_in_hand ) && ( Me[0].weapon_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1215,9 +1267,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
   TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
-  if ( ( ! Me.armour_item.currently_held_in_hand ) && ( Me.armour_item.type != (-1) ) )
+  if ( ( ! Me[0].armour_item.currently_held_in_hand ) && ( Me[0].armour_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1225,9 +1277,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
-  if ( ( ! Me.shield_item.currently_held_in_hand ) && ( Me.shield_item.type != (-1) ) )
+  if ( ( ! Me[0].shield_item.currently_held_in_hand ) && ( Me[0].shield_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
   
   //--------------------
@@ -1235,9 +1287,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
   TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
-  if ( ( ! Me.special_item.currently_held_in_hand ) && ( Me.special_item.type != (-1) ) )
+  if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1245,9 +1297,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + AUX1_POS_X ;
   TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
-  if ( ( ! Me.aux1_item.currently_held_in_hand ) && ( Me.aux1_item.type != (-1) ) )
+  if ( ( ! Me[0].aux1_item.currently_held_in_hand ) && ( Me[0].aux1_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1255,9 +1307,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + AUX2_POS_X ;
   TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
-  if ( ( ! Me.aux2_item.currently_held_in_hand ) && ( Me.aux2_item.type != (-1) ) )
+  if ( ( ! Me[0].aux2_item.currently_held_in_hand ) && ( Me[0].aux2_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1266,33 +1318,33 @@ ShowInventoryScreen( void )
   for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
     {
       // In case the item does not exist at all, we need not do anything more...
-      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
+      if ( Me[0].Inventory[ SlotNum ].type == ( -1 ) ) 
 	{
 	  // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
 	  continue;
 	}
 
       // In case the item is currently held in hand, we need not do anything more HERE ...
-      if ( Me.Inventory[ SlotNum ].currently_held_in_hand == TRUE )
+      if ( Me[0].Inventory[ SlotNum ].currently_held_in_hand == TRUE )
 	{
 	  continue;
 	}
 
-      for ( i = 0 ; i < ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].inv_size.y ; i++ )
+      for ( i = 0 ; i < ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].inv_size.y ; i++ )
 	{
-	  for ( j = 0 ; j < ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].inv_size.x ; j++ )
+	  for ( j = 0 ; j < ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].inv_size.x ; j++ )
 	    {
-	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me.Inventory[ SlotNum ].inventory_position.x + j );
-	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me.Inventory[ SlotNum ].inventory_position.y + i );
+	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
+	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
 	    
 	      SDL_BlitSurface( TransparentPlateImage , NULL , Screen , &TargetRect );
 	    }
 	}
 
-      TargetRect.x = INVENTORY_RECT_X + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
+      TargetRect.x = INVENTORY_RECT_X + 32 * Me[0].Inventory[ SlotNum ].inventory_position.x;
+      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me[0].Inventory[ SlotNum ].inventory_position.y;
       
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
 
     }
 }; // void ShowInventoryScreen( void )

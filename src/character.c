@@ -95,6 +95,194 @@ SDL_Rect CharacterRect;
 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+InitiateNewCharacter ( int PlayerNum , int CharacterClass )
+{
+  int i;
+  int MissionTargetIndex;
+
+  //--------------------
+  // We set the coordinates to the generic starting point for all players....
+  //
+  Me [ PlayerNum ] . pos. x = 2 ;
+  Me [ PlayerNum ] . pos. y = 3 ;
+  Me [ PlayerNum ] . pos. z = 0 ;
+
+  //--------------------
+  // At first, we clear out any inventory items, that may still be equipped
+  // for this one character.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Me [ PlayerNum ] . Inventory [ i ] . type = -1 ;
+      Me [ PlayerNum ] . Inventory [ i ] . inventory_position.x = -1 ;
+      Me [ PlayerNum ] . Inventory [ i ] . inventory_position.y = -1 ; 
+      Me [ PlayerNum ] . Inventory [ i ] . currently_held_in_hand = FALSE ; 
+    }
+
+  Me [ PlayerNum ] .weapon_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .drive_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .armour_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .shield_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .aux1_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .aux2_item.type = ( -1 ) ;
+  Me [ PlayerNum ] .special_item.type = ( -1 ) ;
+
+  Me [ PlayerNum ] .weapon_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .drive_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .armour_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .shield_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .aux1_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .aux2_item.prefix_code = ( -1 ) ;
+  Me [ PlayerNum ] .special_item.prefix_code = ( -1 ) ;
+
+  Me [ PlayerNum ] .weapon_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .drive_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .armour_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .shield_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .aux1_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .aux2_item.suffix_code = ( -1 ) ;
+  Me [ PlayerNum ] .special_item.suffix_code = ( -1 ) ;
+
+  Me [ PlayerNum ] .type = DRUID001;
+  Me [ PlayerNum ] .speed.x = 0;
+  Me [ PlayerNum ] .speed.y = 0;
+  Me [ PlayerNum ] .autofire = FALSE;
+  Me [ PlayerNum ] .status = MOBILE;
+  Me [ PlayerNum ] .phase = 0;
+  Me [ PlayerNum ] .MissionTimeElapsed=0;
+  Me [ PlayerNum ] .Current_Victim_Resistance_Factor=1;
+  Me [ PlayerNum ] .FramesOnThisLevel=0;
+  Me [ PlayerNum ] .weapon_swing_time = (-1);  // currently not swinging this means...
+  Me [ PlayerNum ] .got_hit_time = (-1);  // currently not stunned and needing time to recover...
+
+  Me [ PlayerNum ] .PointsToDistribute = 0;
+  Me [ PlayerNum ] .ExpRequired = 1500;
+  for ( i = 0 ; i < 1000 ; i ++ ) Me [ PlayerNum ] .KillRecord[ i ] = 0;
+  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me [ PlayerNum ] .HaveBeenToLevel [ i ] = FALSE ;
+  Me [ PlayerNum ] .exp_level = 1;
+  Me [ PlayerNum ] .Gold = 100;
+
+  switch ( CharacterClass ) 
+    {
+    case WAR_BOT:
+      Me [ PlayerNum ] .character_class = WAR_BOT;
+      Me [ PlayerNum ] .base_vitality = 25;
+      Me [ PlayerNum ] .base_strength = 30;
+      Me [ PlayerNum ] .base_dexterity = 25;
+      Me [ PlayerNum ] .base_magic = 10;
+      
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_BETA;
+      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_BUCKLER;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 2;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = 0;
+      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      Me [ PlayerNum ] .Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+      Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.x = 1;
+      Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 3 ] , TRUE , 0 );
+      break;
+
+    case SNIPER_BOT: 
+      Me [ PlayerNum ] .character_class = SNIPER_BOT;
+      Me [ PlayerNum ] .base_vitality = 20;
+      Me [ PlayerNum ] .base_strength = 25;
+      Me [ PlayerNum ] .base_dexterity = 35;
+      Me [ PlayerNum ] .base_magic = 20;
+	  
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_BETA;
+      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_BOW;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+      break;
+
+    case MIND_BOT: 
+      Me [ PlayerNum ] .character_class = MIND_BOT;
+      Me [ PlayerNum ] .base_vitality = 15;
+      Me [ PlayerNum ] .base_strength = 15;
+      Me [ PlayerNum ] .base_dexterity = 20;
+      Me [ PlayerNum ] .base_magic = 35;
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_ALPHA;
+      
+      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_STAFF;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
+      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
+      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+      break;
+    default: 
+      DebugPrintf ( 0 , "\nERROR!! UNKNOWN CHARACTER CLASS REQUESTED!!! Terminating... " );
+      Terminate ( ERR );
+      break;
+    }
+
+  UpdateAllCharacterStats( PlayerNum );
+
+  Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy;
+  Me [ PlayerNum ] .mana = Me [ PlayerNum ] .maxmana;
+  DebugPrintf( 1 , "\n Me [ PlayerNum ] .energy : %f . " , Me [ PlayerNum ] .energy );
+  Me [ PlayerNum ] .health = Me [ PlayerNum ] .energy;	/* start with max. health */
+
+  Me [ PlayerNum ] .weapon_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .armour_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .shield_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .special_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .drive_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .aux1_item.currently_held_in_hand = FALSE;
+  Me [ PlayerNum ] .aux2_item.currently_held_in_hand = FALSE;
+
+  FillInItemProperties ( & ( Me [ PlayerNum ] .weapon_item ) , TRUE , 0 );
+  FillInItemProperties ( & ( Me [ PlayerNum ] .drive_item ) , TRUE , 0 );
+
+
+  Item_Held_In_Hand = ( -1 );
+
+  ShuffleEnemys( Me [ PlayerNum ] .pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+
+  //--------------------
+  // Now we start those missions, that are to be assigned automatically to the
+  // player at game start
+  //
+  for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    {
+      if ( Me [ PlayerNum ] .AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
+	{
+	  AssignMission( MissionTargetIndex );
+	}
+    }
+
+  
+}; // void InitiateNewCharacter ( int PlayerNum , int CharacterClass )
+
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
  * strength plus button or not
  * ---------------------------------------------------------------------- */
@@ -179,7 +367,7 @@ DisplayButtons( void )
   // Now we can draw either the plus button or the 'cha' button, depending
   // on whether there are points to distribute or not
   //
-  if ( Me.PointsToDistribute > 0 )
+  if ( Me[0].PointsToDistribute > 0 )
     {
       SDL_BlitSurface( PlusButtonImage , NULL , Screen , &CHA_Button_Rect );
     }
@@ -278,10 +466,10 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
        BonusItem -> is_identified )
     {
-      Me.Strength  += BonusItem->bonus_to_str + BonusItem->bonus_to_all_attributes ;
-      Me.Dexterity += BonusItem->bonus_to_dex + BonusItem->bonus_to_all_attributes ;
-      Me.Magic     += BonusItem->bonus_to_mag + BonusItem->bonus_to_all_attributes ;
-      Me.Vitality  += BonusItem->bonus_to_vit + BonusItem->bonus_to_all_attributes ;
+      Me[0].Strength  += BonusItem->bonus_to_str + BonusItem->bonus_to_all_attributes ;
+      Me[0].Dexterity += BonusItem->bonus_to_dex + BonusItem->bonus_to_all_attributes ;
+      Me[0].Magic     += BonusItem->bonus_to_mag + BonusItem->bonus_to_all_attributes ;
+      Me[0].Vitality  += BonusItem->bonus_to_vit + BonusItem->bonus_to_all_attributes ;
     }
 
 }; // void AddInfluencerItemAttributeBonus( item* BonusItem )
@@ -305,14 +493,14 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
        BonusItem->is_identified )
     {
 
-      Me.to_hit    += BonusItem->bonus_to_tohit ;
-      Me.maxmana   += BonusItem->bonus_to_force ;
-      Me.maxenergy += BonusItem->bonus_to_life ; 
-      Me.Vitality  += BonusItem->bonus_to_vit ;
+      Me[0].to_hit    += BonusItem->bonus_to_tohit ;
+      Me[0].maxmana   += BonusItem->bonus_to_force ;
+      Me[0].maxenergy += BonusItem->bonus_to_life ; 
+      Me[0].Vitality  += BonusItem->bonus_to_vit ;
 
-      Me.resist_force       += BonusItem->bonus_to_resist_force ;
-      Me.resist_fire        += BonusItem->bonus_to_resist_fire ;
-      Me.resist_electricity += BonusItem->bonus_to_resist_electricity ;
+      Me[0].resist_force       += BonusItem->bonus_to_resist_force ;
+      Me[0].resist_fire        += BonusItem->bonus_to_resist_fire ;
+      Me[0].resist_electricity += BonusItem->bonus_to_resist_electricity ;
 
     }
 
@@ -323,7 +511,7 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
  * currently equipped items and currenly distributed stats points.
  * ---------------------------------------------------------------------- */
 void 
-UpdateAllCharacterStats ( void )
+UpdateAllCharacterStats ( int PlayerNum )
 {
   int BaseExpRequired = 2000;
 
@@ -331,39 +519,39 @@ UpdateAllCharacterStats ( void )
   // Maybe the influencer has reached a new experience level?
   // Let's check this.
   // 
-  Me.ExpRequired = BaseExpRequired * ( exp ( ( Me.exp_level - 1 ) * log ( 2 ) ) ) ;
+  Me [ PlayerNum ] .ExpRequired = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
 
-  if ( Me.Experience > Me.ExpRequired ) 
+  if ( Me [ PlayerNum ] .Experience > Me [ PlayerNum ] .ExpRequired ) 
     {
-      Me.exp_level ++ ;
-      Me.PointsToDistribute += 5;
+      Me [ PlayerNum ] .exp_level ++ ;
+      Me [ PlayerNum ] .PointsToDistribute += 5;
 
       //--------------------
       // When a droid reaches a new experience level, all health and 
       // force are restored to full this one time
       //
-      Me.energy = Me.maxenergy ;
-      Me.mana   = Me.maxmana   ;
+      Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
+      Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
     }
 
   //--------------------
   // Now we base PRIMARY stats
   //
-  Me.Strength = Me.base_strength;
-  Me.Dexterity = Me.base_dexterity;
-  Me.Magic = Me.base_magic;
-  Me.Vitality = Me.base_vitality;
+  Me [ PlayerNum ] .Strength = Me [ PlayerNum ] .base_strength;
+  Me [ PlayerNum ] .Dexterity = Me [ PlayerNum ] .base_dexterity;
+  Me [ PlayerNum ] .Magic = Me [ PlayerNum ] .base_magic;
+  Me [ PlayerNum ] .Vitality = Me [ PlayerNum ] .base_vitality;
 
   //--------------------
   // Now we add all bonuses to the influencers PRIMARY stats
   //
-  AddInfluencerItemAttributeBonus( & Me.armour_item );
-  AddInfluencerItemAttributeBonus( & Me.weapon_item );
-  AddInfluencerItemAttributeBonus( & Me.drive_item );
-  AddInfluencerItemAttributeBonus( & Me.shield_item );
-  AddInfluencerItemAttributeBonus( & Me.special_item );
-  AddInfluencerItemAttributeBonus( & Me.aux1_item );
-  AddInfluencerItemAttributeBonus( & Me.aux2_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .armour_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .weapon_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .drive_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .shield_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .special_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .aux1_item );
+  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .aux2_item );
 
   //--------------------
   // At this point we know, that the primary stats of the influencer
@@ -372,58 +560,58 @@ UpdateAllCharacterStats ( void )
   // stats.  Once we are done with that, the modifiers to the secondary
   // stats can be applied as well.
   //
-  Me.to_hit = 60 + ( Me.Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
-  Me.maxenergy = (Me.Vitality) * ENERGY_GAIN_PER_VIT_POINT;
-  Me.maxmana   = (Me.Magic)    * MANA_GAIN_PER_MAGIC_POINT;
+  Me [ PlayerNum ] .to_hit = 60 + ( Me [ PlayerNum ] .Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
+  Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * MANA_GAIN_PER_MAGIC_POINT;
   // This includes damage done as well...
-  if ( Me.weapon_item.type != (-1) )
+  if ( Me [ PlayerNum ] .weapon_item.type != (-1) )
     {
-      if ( ItemMap[ Me.weapon_item.type ].item_gun_angle_change != 0 )
+      if ( ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_angle_change != 0 )
 	{
-	  Me.base_damage = Me.weapon_item.damage * 
-	    ( Me.Strength + 100.0) / 100.0 ;
-	  Me.damage_modifier = Me.weapon_item.damage_modifier * 
-	    ( Me.Strength + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
+	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
+	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
 	}
       else
 	{
-	  Me.base_damage = Me.weapon_item.damage * 
-	    ( Me.Dexterity + 100.0) / 100.0 ;
-	  Me.damage_modifier = Me.weapon_item.damage_modifier * 
-	    ( Me.Dexterity + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
+	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
+	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
 	}
     }
   else
     {
-      Me.base_damage = 1;
-      Me.damage_modifier = 1;
+      Me [ PlayerNum ] .base_damage = 1;
+      Me [ PlayerNum ] .damage_modifier = 1;
     }
   // ... and also armour class
-  Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
-  if ( Me.armour_item.type != (-1) )
+  Me [ PlayerNum ] .AC = ( Me [ PlayerNum ] .Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
+  if ( Me [ PlayerNum ] .armour_item.type != (-1) )
     {
-      Me.AC += Me.armour_item.ac_bonus;
+      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .armour_item.ac_bonus;
     }
-  if ( Me.shield_item.type != (-1) )
+  if ( Me [ PlayerNum ] .shield_item.type != (-1) )
     {
-      Me.AC += Me.shield_item.ac_bonus;
+      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .shield_item.ac_bonus;
     }
-  if ( Me.special_item.type != (-1) )
+  if ( Me [ PlayerNum ] .special_item.type != (-1) )
     {
-      Me.AC += Me.special_item.ac_bonus;
+      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .special_item.ac_bonus;
     }
 
   //--------------------
   // So at this point we can finally apply all the modifiers to the influencers
   // SECONDARY stats due to 'magical' items and spells and the like
   //
-  AddInfluencerItemSecondaryBonus( & Me.armour_item );
-  AddInfluencerItemSecondaryBonus( & Me.weapon_item );
-  AddInfluencerItemSecondaryBonus( & Me.drive_item );
-  AddInfluencerItemSecondaryBonus( & Me.shield_item );
-  AddInfluencerItemSecondaryBonus( & Me.special_item );
-  AddInfluencerItemSecondaryBonus( & Me.aux1_item );
-  AddInfluencerItemSecondaryBonus( & Me.aux2_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .armour_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .weapon_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .drive_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .shield_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .special_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux1_item );
+  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux2_item );
 
 
 }; // void UpdateAllCharacterStats ( void )
@@ -501,8 +689,8 @@ ShowCharacterScreen ( void )
   // Now we can start to fill in the character values:
   // Name, Class, Level, Exp, Strength, Dex, ...
   //
-  DisplayText( Me.character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
-  switch ( Me.character_class )
+  DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+  switch ( Me[0].character_class )
     {
     case WAR_BOT:
       DisplayText( "War Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
@@ -519,80 +707,80 @@ ShowCharacterScreen ( void )
       break;
     }
 
-  sprintf( CharText , "%4d", Me.exp_level );
+  sprintf( CharText , "%4d", Me[0].exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
 
-  // Me.Experience = RealScore;
-  sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
+  // Me[0].Experience = RealScore;
+  sprintf( CharText , "%6ld", Me[0].Experience ); // this should be the real score, sooner or later
   DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%6ld", Me.ExpRequired ); 
+  sprintf( CharText , "%6ld", Me[0].ExpRequired ); 
   DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%6ld", Me.Gold ); 
+  sprintf( CharText , "%6ld", Me[0].Gold ); 
   DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me.base_strength );
+  sprintf( CharText , "%d", Me[0].base_strength );
   DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me.Strength );
-  if ( Me.Strength != Me.base_strength ) SetCurrentFont( Red_BFont) ;
+  sprintf( CharText , "%d", Me[0].Strength );
+  if ( Me[0].Strength != Me[0].base_strength ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me.base_magic );
+  sprintf( CharText , "%d", Me[0].base_magic );
   DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me.Magic );
-  if ( Me.Magic != Me.base_magic ) SetCurrentFont( Red_BFont) ;
+  sprintf( CharText , "%d", Me[0].Magic );
+  if ( Me[0].Magic != Me[0].base_magic ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me.base_dexterity );
+  sprintf( CharText , "%d", Me[0].base_dexterity );
   DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me.Dexterity );
-  if ( Me.Dexterity != Me.base_dexterity ) SetCurrentFont( Red_BFont) ;
+  sprintf( CharText , "%d", Me[0].Dexterity );
+  if ( Me[0].Dexterity != Me[0].base_dexterity ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me.base_vitality );
+  sprintf( CharText , "%d", Me[0].base_vitality );
   DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me.Vitality );
-  if ( Me.Vitality != Me.base_vitality ) SetCurrentFont( Red_BFont) ;
+  sprintf( CharText , "%d", Me[0].Vitality );
+  if ( Me[0].Vitality != Me[0].base_vitality ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me.PointsToDistribute );
+  sprintf( CharText , "%d", Me[0].PointsToDistribute );
   DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.maxenergy );
+  sprintf( CharText , "%d", (int) Me[0].maxenergy );
   DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.energy );
+  sprintf( CharText , "%d", (int) Me[0].energy );
   DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.maxmana );
+  sprintf( CharText , "%d", (int) Me[0].maxmana );
   DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.mana );
+  sprintf( CharText , "%d", (int) Me[0].mana );
   DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d-%d", (int) Me.base_damage , (int) Me.base_damage + (int) Me.damage_modifier );
+  sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
-  // sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );
-  sprintf( CharText , "%d", (int) Me.to_hit );
+  // sprintf( CharText , "%d", (int) Me[0].RechargeTimeModifier );
+  sprintf( CharText , "%d", (int) Me[0].to_hit );
   strcat( CharText , "%" );
   DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.AC );
+  sprintf( CharText , "%d", (int) Me[0].AC );
   DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
 
   //--------------------
   // It might be the case, that the character has some points to distribute upon the character
   // stats.  Then of course, we must display the plus button instead of all character 'now' values
   //
-  // Me.PointsToDistribute = 5;
-  if ( Me.PointsToDistribute > 0 )
+  // Me[0].PointsToDistribute = 5;
+  if ( Me[0].PointsToDistribute > 0 )
     {
       ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
       ButtonRect.y = STR_Y + BUTTON_MOD_Y + CharacterRect.y;
@@ -609,33 +797,33 @@ ShowCharacterScreen ( void )
 
       if ( CursorIsOnStrButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.base_strength++;
-	  Me.PointsToDistribute--;
+	  Me[0].base_strength++;
+	  Me[0].PointsToDistribute--;
 	}
       if ( CursorIsOnDexButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.base_dexterity++;
-	  Me.PointsToDistribute--;
+	  Me[0].base_dexterity++;
+	  Me[0].PointsToDistribute--;
 	}
       if ( CursorIsOnMagButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.base_magic++;
-	  Me.PointsToDistribute--;
-	  Me.mana += MANA_GAIN_PER_MAGIC_POINT;
+	  Me[0].base_magic++;
+	  Me[0].PointsToDistribute--;
+	  Me[0].mana += MANA_GAIN_PER_MAGIC_POINT;
 	}
       if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.base_vitality++;
-	  Me.PointsToDistribute--;
-	  Me.health += ENERGY_GAIN_PER_VIT_POINT;
-	  Me.energy += ENERGY_GAIN_PER_VIT_POINT;
+	  Me[0].base_vitality++;
+	  Me[0].PointsToDistribute--;
+	  Me[0].health += ENERGY_GAIN_PER_VIT_POINT;
+	  Me[0].energy += ENERGY_GAIN_PER_VIT_POINT;
 	}
 
       //--------------------
       // It might happen that the last str point was just spent.  Then we can
       // automatically close the character window for convenience of the player.
       //
-      if ( Me.PointsToDistribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
+      if ( Me[0].PointsToDistribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
 
   //--------------------

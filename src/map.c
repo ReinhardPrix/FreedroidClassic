@@ -140,16 +140,19 @@ void
 CollectAutomapData ( void )
 {
   int x , y ;
-  finepoint ObjPos;
+  // finepoint ObjPos;
+  gps ObjPos;
   static int TimePassed;
+
+  ObjPos . z = Me [ 0 ] . pos . z ;
 
   //--------------------
   // Checking the whole map for passablility will surely take a lot
   // of computation.  Therefore we only do this once every second of
   // real time.
   //
-  if ( TimePassed == (int) Me.MissionTimeElapsed ) return;
-  TimePassed = (int) Me.MissionTimeElapsed;
+  if ( TimePassed == (int) Me[0].MissionTimeElapsed ) return;
+  TimePassed = (int) Me[0].MissionTimeElapsed;
 
   //--------------------
   // Now we do the actual checking for visible wall components.
@@ -165,25 +168,25 @@ CollectAutomapData ( void )
 	      //
 	      ObjPos.x = x + 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].r_wall = TRUE;
+	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].r_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some left sides of walls visible
 	      //
 	      ObjPos.x = x - 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].l_wall = TRUE;
+	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].l_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some southern sides of walls visible
 	      //
 	      ObjPos.x = x + 0;
 	      ObjPos.y = y + 0.75;
-	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].d_wall = TRUE;
+	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].d_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some northern sides of walls visible
 	      //
 	      ObjPos.x = x + 0.0 ;
 	      ObjPos.y = y - 0.75 ;
-	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].u_wall = TRUE;
+	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].u_wall = TRUE;
 	    }
 	}
     }
@@ -214,7 +217,7 @@ Smash_Box ( float x , float y )
     case BOX_2:
     case BOX_1:
       CurLevel->map[ map_y ][ map_x ] = FLOOR;
-      StartBlast( map_x , map_y , DRUIDBLAST );
+      StartBlast( map_x , map_y , CurLevel->levelnum , DRUIDBLAST );
       DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
       break;
     default:
@@ -279,8 +282,8 @@ GetCurrentLift (void)
   int curlev = CurLevel->levelnum;
   int gx, gy;
 
-  gx = rintf(Me.pos.x);
-  gy = rintf(Me.pos.y);
+  gx = rintf(Me[0].pos.x);
+  gy = rintf(Me[0].pos.y);
 
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): curlev=%d gx=%d gy=%d" , curlev, gx, gy );
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
@@ -311,20 +314,33 @@ GetCurrentLift (void)
  * a console or a refresh or something like that.
  * ---------------------------------------------------------------------- */
 void
-ActSpecialField (float x, float y)
+ActSpecialField ( int PlayerNum )
 {
   unsigned char MapBrick;
-  float cx, cy;			
+  // float cx, cy;			
+  float x = Me [ PlayerNum ] . pos . x ;
+  float y = Me [ PlayerNum ] . pos . y ;
+  Level SpecialFieldLevel;
 
-  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
+  // DebugPrintf (2, "\nvoid ActSpecialField ( int PlayerNum  ) :  Real function call confirmed." ) ;
 
-  MapBrick = GetMapBrick (CurLevel, x, y);
+  //--------------------
+  // We don't do anything for this player, if it's an
+  // inactive player.
+  //
+  if ( Me [ PlayerNum ] . status == OUT ) return;
+
+  SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+
+  MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
 
   switch (MapBrick)
     {
+
+      /*
     case LIFT:
-      if (!((Me.status == TRANSFERMODE) &&
-	    ( abs(Me.speed.x) <= 1) && ( abs(Me.speed.y) <= 1)))
+      if ( ! ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
+	       ( abs(Me[0].speed.x) <= 1) && ( abs(Me[0].speed.y) <= 1)))
 	break;
 
       cx = rintf(x) - x ;
@@ -334,47 +350,55 @@ ActSpecialField (float x, float y)
       if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
 	EnterLift ();
       break;
+      */
 
     case KONSOLE_R:
     case KONSOLE_L:
     case KONSOLE_O:
     case KONSOLE_U:
-      if (Me.status == TRANSFERMODE)
+      if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
+	   ( PlayerNum == 0 ) &&
+	   ( ! ServerMode ) )
 	{
-	  EnterKonsole ();
-	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  EnterKonsole ( ) ;
+	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
 	}
       break;
 
+      /*
     case CODEPANEL_R:
     case CODEPANEL_L:
     case CODEPANEL_D:
     case CODEPANEL_U:
-      if (Me.status == TRANSFERMODE)
+      if ( Me[0].status == TRANSFERMODE )
 	{
 	  EnterCodepanel ( );
 	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
 	}
       break;
+      */
 
+      /*
     case IDENTIFY_R:
     case IDENTIFY_L:
     case IDENTIFY_D:
     case IDENTIFY_U:
-      if (Me.status == TRANSFERMODE)
+      if (Me[0].status == TRANSFERMODE)
 	{
 	  EnterItemIdentificationBooth ( );
 	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
 	}
       break;
+      */
 
-
+      /*
     case REFRESH1:
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
       RefreshInfluencer ();
       break;
+      */
 
     default:
       break;
@@ -423,6 +447,8 @@ AnimateTeleports (void)
 {
   static float InnerWaitCounter = 0;
   int i, x, y;
+  Level TeleporterLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
@@ -430,12 +456,12 @@ AnimateTeleports (void)
 
   for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     {
-      x = CurLevel->teleporters[i].x;
-      y = CurLevel->teleporters[i].y;
+      x = TeleporterLevel->teleporters[i].x;
+      y = TeleporterLevel->teleporters[i].y;
       if (x == 0 || y == 0)
 	break;
 
-      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
+      TeleporterLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
 
     }				/* for */
 
@@ -1123,7 +1149,7 @@ Decode_Loaded_Leveldata (char *data)
       loadlevel->StatementList[ i ].Statement_Text = 
 	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
 
-      DebugPrintf( 0 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
+      DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
 		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
     }
 
@@ -1165,7 +1191,7 @@ Decode_Loaded_Leveldata (char *data)
       loadlevel->CodepanelList[ i ].Secret_Code = 
 	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
 
-      DebugPrintf( 0 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
+      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
 		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
     }
 
@@ -1197,7 +1223,7 @@ Decode_Loaded_Leveldata (char *data)
   Preserved_Letter=ItemsSectionEnd[0];
   ItemsSectionEnd[0]=0;
   NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
-  DebugPrintf( 0 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
+  DebugPrintf( 1 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
 
   // Now we decode all the item information
   ItemPointer=ItemsSectionBegin;
@@ -1254,7 +1280,7 @@ Decode_Loaded_Leveldata (char *data)
       ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
 			   &( loadlevel->ItemList[ i ].bonus_to_resist_force ) , ItemsSectionEnd );
 
-      DebugPrintf( 0 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
+      DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
 		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
     }
   
@@ -2181,7 +2207,7 @@ Sorry...\n\
 	}
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
-      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
 
     }  // while (enemy-limit of this level not reached) 
@@ -2257,7 +2283,7 @@ Sorry...\n\
 			    EndOfThisLevelData );
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
-      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
 
@@ -2288,53 +2314,103 @@ Sorry...\n\
  * specified delay has passed.
  * ---------------------------------------------------------------------- */
 void
-MoveLevelDoors (void)
+MoveLevelDoors ( int PlayerNum )
 {
   int i, j;
   int doorx, doory;
   float xdist, ydist;
   float dist2;
   char *Pos;
+  Level DoorLevel;
+  int one_player_close_enough = FALSE;
+  int PlayerIndex ;
 
+  DoorLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+
+  //--------------------
   // This prevents animation going too quick.
   // The constant should be replaced by a variable, that can be
   // set from within the theme, but that may be done later...
+  //
   if ( LevelDoorsNotMovedTime < Time_For_Each_Phase_Of_Door_Movement ) return;
-  LevelDoorsNotMovedTime=0;
+  //--------------------
+  // But only the last of these function calls for each player may 
+  // reset the time counter, or the players after the first will
+  // NEVER EVER BE CHECKED!!!!
+  //
+  if ( PlayerNum == MAX_PLAYERS -1 ) LevelDoorsNotMovedTime=0;
 
+  if ( Me [ PlayerNum ] . status == OUT ) return;
 
-  for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
+  // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , DoorLevel -> levelnum , Me [ PlayerNum ] . pos . z );
+
+  //--------------------
+  // Now we go through the whole prepared list of doors for this
+  // level.  This list has been prepared in advance, when the level
+  // was read in.
+  //
+  for ( i = 0 ; i < MAX_DOORS_ON_LEVEL ; i ++ )
     {
-      doorx = (CurLevel->doors[i].x);
-      doory = (CurLevel->doors[i].y);
+      doorx = ( DoorLevel -> doors [ i ] . x );
+      doory = ( DoorLevel -> doors [ i ] . y );
 
       // no more doors?
-      if (doorx == 0 && doory == 0)
+      if ( ( doorx == 0 ) && ( doory == 0 ) )
 	break;
 
-      Pos = &(CurLevel->map[doory][doorx]);
+      Pos = & ( DoorLevel -> map [doory] [doorx] ) ;
 
-      /* first check Influencer distance to doors */
-      xdist = Me.pos.x - doorx;
-      ydist = Me.pos.y - doory;
-      dist2 = xdist * xdist + ydist * ydist;
-
-      if (dist2 < DOOROPENDIST2)
+      //--------------------
+      // First we see if one of the players is close enough to the
+      // door, so that it would get opened.
+      //
+      one_player_close_enough = FALSE;
+      for ( PlayerIndex = 0 ; PlayerIndex < MAX_PLAYERS ; PlayerIndex ++ )
 	{
-	  if ((*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE))
+	  //--------------------
+	  // Maybe this player is on a different level, than we are 
+	  // interested now.
+	  //
+	  if ( Me [ PlayerIndex ] . pos . z != DoorLevel -> levelnum ) continue;
+
+	  //--------------------
+	  // But this player is on the right level, we need to check it's distance 
+	  // to this door.
+	  //
+	  xdist = Me [ PlayerIndex ] . pos . x - doorx ;
+	  ydist = Me [ PlayerIndex ] . pos . y - doory ;
+	  dist2 = xdist * xdist + ydist * ydist ;
+	  if ( dist2 < DOOROPENDIST2 )
+	    {
+	      one_player_close_enough = TRUE ;
+	    }
+	}
+
+      // --------------------
+      // If one of the players is close enough, the door gets opened
+      // and we are done.
+      //
+      if ( one_player_close_enough )
+	{
+	  if ( (*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE) )
 	    *Pos += 1;
 	}
-      else
+      else 
 	{
-	  /* now check all enemys */
+	  //--------------------
+	  // But if the influencer is not close enough, then we must
+	  // see if perhaps one of the enemys is close enough, so that
+	  // the door would still get opened instead of closed.
+	  //
+	  // for (j = 0; j < NumEnemys; j++)
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if (AllEnemys[j].Status == OUT ||
-		  AllEnemys[j].levelnum != CurLevel->levelnum)
+	      if ( ( AllEnemys[j].Status == OUT ) ||
+		   ( AllEnemys[j].pos.z  != DoorLevel->levelnum ) )
 		continue;
 
-	      xdist = abs (AllEnemys[j].pos.x - doorx);
+	      xdist = abs ( AllEnemys[j].pos.x - doorx ) ;
 	      if (xdist < Block_Width)
 		{
 		  ydist = abs (AllEnemys[j].pos.y - doory);
@@ -2375,7 +2451,7 @@ MoveLevelDoors (void)
  * be returned.
  * ---------------------------------------------------------------------- */
 int
-DruidPassable (float x, float y)
+DruidPassable ( float x , float y , int z )
 {
   finepoint testpos[DIRECTIONS + 1];
   int ret = -1;
@@ -2402,7 +2478,7 @@ DruidPassable (float x, float y)
   for (i = 0; i < DIRECTIONS; i++)
     {
 
-      ret = IsPassable (testpos[i].x, testpos[i].y, i);
+      ret = IsPassable ( testpos[i].x , testpos[i].y , z , i );
 
       if (ret != CENTER)
 	break;
@@ -2410,6 +2486,7 @@ DruidPassable (float x, float y)
     }				/* for */
 
   return ret;
+
 }; // int DruidPassable( ... )
 
 /* ---------------------------------------------------------------------- 
@@ -2427,13 +2504,14 @@ DruidPassable (float x, float y)
  * should be pushed to resolve the collision (with a door).
  * ---------------------------------------------------------------------- */
 int
-IsPassable (float x, float y, int Checkpos)
+IsPassable ( float x , float y , int z , int Checkpos)
 {
   float fx, fy;
   unsigned char MapBrick;
   int ret = -1;
+  Level PassLevel = curShip . AllLevels [ z ] ;
 
-  MapBrick = GetMapBrick (CurLevel, x, y);
+  MapBrick = GetMapBrick ( PassLevel , x , y ) ;
 
   // ATTENTION!  
   // With the new coodinates, the position of the Influencer is an integer,
@@ -2639,7 +2717,7 @@ IsPassable (float x, float y, int Checkpos)
 	{
 	  // in case of check for droids passable only, push direction will be returned
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
-	      && (Me.speed.y != 0))
+	      && (Me[0].speed.y != 0))
 	    {
 	      switch (Checkpos)
 		{
@@ -2663,7 +2741,7 @@ IsPassable (float x, float y, int Checkpos)
 		  ret = -1;
 		  break;
 		}		/* switch Checkpos */
-	    }			/* if DRUID && Me.speed.y != 0 */
+	    }			/* if DRUID && Me[0].speed.y != 0 */
 	  else
 	    ret = -1;
 	} // if side of the door has been collided with...
@@ -2702,7 +2780,7 @@ IsPassable (float x, float y, int Checkpos)
 
 	  // only for droids: check if droid needs to be pushed back and return push direction
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
-	      && (Me.speed.x != 0))
+	      && (Me[0].speed.x != 0))
 	    {
 	      switch (Checkpos)
 		{
@@ -2726,7 +2804,7 @@ IsPassable (float x, float y, int Checkpos)
 		  ret = -1;
 		  break;
 		}		/* switch Checkpos */
-	    }			/* if DRUID && Me.speed.x != 0 */
+	    }			/* if DRUID && Me[0].speed.x != 0 */
 	  else
 	    ret = -1;
 	}			// if side of door has been collided with...
@@ -2759,7 +2837,7 @@ IsPassable (float x, float y, int Checkpos)
  *
  * ---------------------------------------------------------------------- */
 int
-IsVisible (Finepoint objpos)
+IsVisible ( GPS objpos )
 {
   float a_x;		/* Vector Influencer->objectpos */
   float a_y;
@@ -2768,8 +2846,8 @@ IsVisible (Finepoint objpos)
   float a_len;			/* Lenght of a */
   int i;
   finepoint testpos;
-  double influ_x = Me.pos.x;
-  double influ_y = Me.pos.y;
+  double influ_x = Me[0].pos.x;
+  double influ_y = Me[0].pos.y;
 
   DebugPrintf (2, "\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
@@ -2791,7 +2869,7 @@ IsVisible (Finepoint objpos)
   for (i = 0; i < step_num + 1 ; i++)
     {
 
-      if (IsPassable (testpos.x, testpos.y, LIGHT) != CENTER)
+      if ( IsPassable ( testpos.x , testpos.y , objpos->z , LIGHT ) != CENTER)
 	{
 	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	  return FALSE;

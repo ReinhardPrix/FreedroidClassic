@@ -78,7 +78,7 @@ SaveGame( void )
   // Now we add a security question to prevent the player from (accidentially)
   // saving a game where his character is already dead
   //
-  if ( Me.energy <= 0 )
+  if ( Me[0].energy <= 0 )
     {
       DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
 		       MenuTexts , 1 , NULL );
@@ -99,7 +99,7 @@ I need to know that for saving. Abort.\n");
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", homedir, Me.character_name, SHIP_EXT );
+  sprintf( filename , "%s/%s%s", homedir, Me[0].character_name, SHIP_EXT );
   if ( SaveShip( filename ) != OK )
     {
       fprintf(stderr, "\n\
@@ -125,7 +125,7 @@ Sorry...\n\
   //--------------------
   // First, we must determine the save game file name
   //
-  sprintf (filename, "%s/%s%s", homedir, Me.character_name, ".savegame");
+  sprintf (filename, "%s/%s%s", homedir, Me[0].character_name, ".savegame");
   
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
 
@@ -282,13 +282,13 @@ I need to know that for loading. Abort.\n");
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", homedir, Me.character_name, SHIP_EXT);
+  sprintf( filename , "%s/%s%s", homedir, Me[0].character_name, SHIP_EXT);
   LoadShip( filename );
 
   //--------------------
   // First, we must determine the savedgame data file name
   //
-  sprintf (filename, "%s/%s%s", homedir, Me.character_name, SAVEDGAME_EXT);
+  sprintf (filename, "%s/%s%s", homedir, Me[0].character_name, SAVEDGAME_EXT);
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
 
@@ -349,7 +349,7 @@ I need to know that for loading. Abort.\n");
   // set to acceptable values before an accident (SEGFAULT) occurs!
   //
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
-  Me.TextToBeDisplayed = "";
+  Me[0].TextToBeDisplayed = "";
   for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
       AllEnemys[ i ].TextToBeDisplayed = "" ;
