@@ -65,7 +65,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Military_Sound_0.wav",
    "Fire_Bullet_Flash_Sound_0.wav",
    "Fire_Bullet_Exterminator_Sound_0.wav",
-   "phaser.wav",
+   "Fire_Bullet_Laser_Rifle_Sound.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Countdown_Sound.wav",
