@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -1488,7 +1488,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TELEPORTER_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . is_smashable = FALSE ;
 
-
+/*
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
@@ -1502,7 +1502,28 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
-  
+*/
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . filename = "iso_container_0004.png" ;
+
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . filename = "iso_container_0002.png" ;
+
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . filename = "iso_container_0003.png" ;
+
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . filename = "iso_container_0001.png" ;
+
+
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . filename = "iso_autogun_0002.png" ;
