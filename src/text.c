@@ -37,17 +37,10 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "text.h"
 #include "SDL_rotozoom.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground );
 void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid );
-
-char *Wordpointer;
-unsigned char *Fontpointer;
-unsigned char *Zeichenpointer[110];	  // Pointer-array to the letter bitmaps
-unsigned int CurrentFontFG = FIRST_FONT_FG;	// current color of the font
-unsigned int CurrentFontBG = FIRST_FONT_BG;
 
 int CharsPerLine;		// line length in chars:  obsolete
 

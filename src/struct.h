@@ -328,7 +328,6 @@ typedef struct
   double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
   int    item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
   int    item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
-  int    item_gun_blast;			// which blast does this bullet create 
   double item_gun_speed; // how fast should a bullet move straightforward?
   int    base_item_gun_damage; //	damage done by this bullettype 
   int    item_gun_damage_modifier; // modifier to the damage done by this bullettype 

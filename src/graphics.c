@@ -38,7 +38,6 @@
 #include "global.h"
 #include "proto.h"
 #include "map.h"
-#include "text.h"
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 

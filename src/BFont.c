@@ -10,7 +10,6 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "text.h"
 #include "SDL_rotozoom.h"
 
 /* Current font */

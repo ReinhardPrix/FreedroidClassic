@@ -62,8 +62,6 @@
 #include <SDL/SDL.h>
 #include "../src/defs.h"
 #include "../src/struct.h"
-#include "../src/text.h"
-// #include "../src/global.h"
 
 #include "../dialog_editor/DialogEditor.h"
 
@@ -1876,12 +1874,6 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       sprintf ( linebuf , "Item as gun: damage of bullets=%d\n" , ItemMap [ i ] . base_item_gun_damage ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
       sprintf ( linebuf , "Item as gun: modifier for damage of bullets=%d\n" , ItemMap [ i ] . item_gun_damage_modifier ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out blast to create...
-      //
-      sprintf ( linebuf , "Item as gun: blast type to create=%d\n" , ItemMap [ i ] . item_gun_blast ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
