@@ -1548,7 +1548,7 @@ Load_Enemy_Surfaces( void )
   // use_default_stand_image [ i ] = TRUE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
   droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
+  droid_attack_animation_speed_factor [ i ] = 16 ;
   droid_gethit_animation_speed_factor [ i ] = 5 ;
   droid_death_animation_speed_factor [ i ] = 5 ;
   droid_stand_animation_speed_factor [ i ] = 5 ;
