@@ -4,9 +4,6 @@ Bugs
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- (rp) fix small mouse-shooting inconsistencies
-       ? which ones are left ?
-
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
        rp: might be related to framerate, I have ~40 fps ?!
@@ -16,11 +13,6 @@ Outstanding release-critical bugs (priority: high)
            level after a melee
        jp: --> damn! --> introduces extra security, that will prevent
            this hopefully, but alter game behaviour if framerate drops under 20 fps.
-           
-- The console picture, i.e. the picture for the menu at the console is a terrible mess.
-  Someone must sooner or later set up something more proper for the ne_cons.bmp file
-  containing the different phases of the console, or end users must be tolerant.
-  jp: --> Corrected, thanks to the great new picture provided by Lanzz! Thanks a lot!!!
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
        to make sure all the constants are in the right range for slow machines
@@ -49,14 +41,11 @@ Outstanding normal bugs (priority: normal)
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
-- (jp) some missing "color rotations": takeover-mode 
-
 - Walls are too "sticky", would be better playable if one could "slide"
   (jp:)  That has been completely resolved, at least for my machine!!
          Please tell me if you still experience trouble.
 
 - (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
-       
 
 Wishlist
 --------
@@ -266,3 +255,12 @@ Resolved bugs
 
 - !! We should have a common bug/patch mailing address somewhere !!
   freedroid@....
+- (rp) fix small mouse-shooting inconsistencies
+       ? which ones are left ?
+
+- The console picture, i.e. the picture for the menu at the console is a terrible mess.
+  Someone must sooner or later set up something more proper for the ne_cons.bmp file
+  containing the different phases of the console, or end users must be tolerant.
+  jp: --> Corrected, thanks to the great new picture provided by Lanzz! Thanks a lot!!!
+
+- (jp) some missing "color rotations": takeover-mode 
