@@ -3416,6 +3416,7 @@ EditMapLabelData ( Level EditLevel )
 {
   char* NewCommentOnThisSquare;
   int i;
+  int check_double;
 
   while (PPressed());
   SetCurrentFont( FPS_Display_BFont );
@@ -3468,6 +3469,26 @@ EditMapLabelData ( Level EditLevel )
   // 
   if ( strlen ( NewCommentOnThisSquare ) )
     {
+	//--------------------
+	// But even if we fill in something new, we should first
+	// check against double entries of the same label.  Let's
+	// do it...
+	//
+	for ( check_double = 0 ; check_double < MAX_MAP_LABELS_PER_LEVEL ; check_double++ )
+	{
+	    if ( ! strcmp ( NewCommentOnThisSquare , EditLevel -> labels [ check_double ] . label_name ) )
+	    {
+		GiveStandardErrorMessage ( "EditMapLabelData(...)" , "\
+The label just entered did already exist on this map!  Deleting old entry in favour of the new one!",
+					   PLEASE_INFORM , IS_WARNING_ONLY );
+		i = check_double ;
+		break;
+	    }
+	}
+
+	//--------------------
+	// Now we can really add the label on the right position.
+	//
       EditLevel -> labels [ i ] . label_name = NewCommentOnThisSquare;
       EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x - 0.5 );
       EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y - 0.5 );
@@ -3802,6 +3823,7 @@ give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle )
 {
   int i;
   int free_index=(-1);
+  int check_double;
 
   //--------------------
   // If the obstacle already has a name, we can use that index for the 
@@ -3840,13 +3862,47 @@ give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle )
   our_obstacle -> name_index = free_index ;
 
   //--------------------
-  // But if the given name was empty, then we remove everything again.
+  // But if the given name was empty, then we remove everything again
+  // and RETURN
   //
   if ( strlen ( EditLevel -> obstacle_name_list [ free_index ] ) == 0 )
     {
       EditLevel -> obstacle_name_list [ free_index ] = NULL ;
       our_obstacle -> name_index = (-1);
+      return;
     }
+
+  //--------------------
+  // But even if we fill in something new, we should first
+  // check against double entries of the same label.  Let's
+  // do it...
+  //
+  for ( check_double = 0 ; check_double < MAX_OBSTACLE_NAMES_PER_LEVEL ; check_double++ )
+  {
+      //--------------------
+      // We must not use null pointers for string comparison...
+      //
+      if ( EditLevel -> obstacle_name_list [ check_double ] == NULL ) continue ;
+
+      //--------------------
+      // We must not overwrite ourself with us in foolish ways :)
+      //
+      if ( check_double == free_index ) continue ;
+      
+      //--------------------
+      // But in case of real double-entries, we'll handle them right.
+      //
+      if ( ! strcmp ( EditLevel -> obstacle_name_list [ free_index ] , 
+		      EditLevel -> obstacle_name_list [ check_double ] ) )
+      {
+	  GiveStandardErrorMessage ( "give_new_name_to_obstacle(...)" , "\
+The label just entered did already exist on this map!  Deleting old entry in favour of the new one!",
+				     PLEASE_INFORM , IS_WARNING_ONLY );
+	  EditLevel -> obstacle_name_list [ free_index ] = NULL ;
+	  our_obstacle -> name_index = check_double ;
+	  break;
+      }
+  }
 
 }; // void give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle )
      

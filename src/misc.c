@@ -1427,8 +1427,9 @@ give_pointer_to_obstacle_with_label ( char* obstacle_label )
 		  // So here we've encountered an error!  There seems to be no obstacle
 		  // pointing to this obstacle label (any more).
 		  //
+		  fprintf ( stderr , "\nlabel=\"%s\"" , obstacle_label );
 		  GiveStandardErrorMessage ( "give_pointer_to_obstacle_with_label(...)" , "\
-The obstacle label was found in the label list,\n but no obstacle seems to point to this label." ,
+The obstacle label was found in the label list,\n but no obstacle seems to point to this label.\nA possible reason for this could be a duplicate entry in the label list.\nDevelopers will have to fix manually..." ,
 					     PLEASE_INFORM, IS_FATAL );
 		}
 	    }
