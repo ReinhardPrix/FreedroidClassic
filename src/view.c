@@ -481,7 +481,10 @@ PutInfluence ( int x , int y )
   SDL_Rect Text_Rect;
   int alpha_value;
   int i;
+  int use_tux = TRUE;
   point UpperLeftBlitCorner;
+  float angle;
+  SDL_Surface* tmp_influencer;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
   Text_Rect.y=UserCenter_y  - Block_Height/2;
@@ -551,13 +554,47 @@ PutInfluence ( int x , int y )
 	}
     }
 
-  // Now we draw the hat and shoes of the influencer
-  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
-
   //--------------------
-  // Now we draw the first digit of the influencers current number.
+  // Either we draw the classical influencer or we draw the more modern
+  // tux, a descendant of the influencer :)
   //
-  BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me.type ].druidname , TRUE );
+  if ( use_tux )
+    {
+      // angle = - ( atan2 (Me.speed.y,  Me.speed.x) * 180 / M_PI + 90 );
+      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+
+      tmp_influencer = 
+	rotozoomSurface( TuxSurfacePointer [ 0 ] , angle , 1.0 , FALSE );
+
+      //--------------------
+      // The rotation may of course have changed the dimensions of the
+      // block to be blitted, so we must adapt the blit target coordinates
+      // accoridngly
+      //
+      if ( x == -1 ) 
+	{
+	  TargetRectangle.x = UserCenter_x - tmp_influencer->w / 2 ;
+	  TargetRectangle.y = UserCenter_y - tmp_influencer->h / 2 ;
+	}
+      else
+	{
+	  TargetRectangle.x = x ;
+	  TargetRectangle.y = y ;
+	}
+      
+      SDL_BlitSurface( tmp_influencer , NULL , Screen, &TargetRectangle );
+      SDL_FreeSurface( tmp_influencer );
+    }
+  else
+    {
+      //--------------------
+      // Now we draw the hat and shoes of the influencer
+      // and the digits of the influencers current number.
+      //
+      SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
+      BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me.type ].druidname , TRUE );
+    }
+
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,

@@ -618,6 +618,7 @@ InitPictures (void)
 
   Load_Influencer_Surfaces();
   Load_Enemy_Surfaces();
+  Load_Tux_Surfaces();
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );

@@ -345,24 +345,24 @@ AnimateInfluence (void)
 {
   Me.phase +=
     (Me.energy / ( Me.maxenergy)) * Frame_Time () *
-    ENEMYPHASES * 3;
+    DROID_PHASES * 3;
 
   /*
   if (Me.type != DRUID001)
     {
       Me.phase +=
 	(Me.energy / (Druidmap[Me.type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
-	ENEMYPHASES * 3;
+	DROID_PHASES * 3;
     }
   else
     {
       Me.phase +=
 	(Me.energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
-	ENEMYPHASES * 3;
+	DROID_PHASES * 3;
     }
   */
 
-  if (((int) rintf (Me.phase)) >= ENEMYPHASES)
+  if (((int) rintf (Me.phase)) >= DROID_PHASES)
     {
       Me.phase = 0;
     }

@@ -1306,9 +1306,9 @@ AnimateEnemys (void)
       // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;
       AllEnemys[i].feindphase +=
 	(AllEnemys[i].energy / Druidmap[AllEnemys[i].type].maxenergy) *
-	Frame_Time () * ENEMYPHASES * 2.5;
+	Frame_Time () * DROID_PHASES * 2.5;
 
-      if (AllEnemys[i].feindphase >= ENEMYPHASES)
+      if (AllEnemys[i].feindphase >= DROID_PHASES)
 	{
 	  AllEnemys[i].feindphase = 0;
 	}
