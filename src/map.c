@@ -51,6 +51,9 @@
 #define MAP_END_STRING "End of pure map information for this level"
 #define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
 #define STATEMENT_END_STRING "End of pure statement information for this level"
+#define X_POSITION_OF_STATEMENT_STRING "PosX="
+#define Y_POSITION_OF_STATEMENT_STRING "PosY="
+#define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
@@ -486,6 +489,23 @@ char *Encode_Level_For_Saving(Level Lev)
   //
   strcat(LevelMem, STATEMENT_BEGIN_STRING);
   strcat(LevelMem, "\n");
+
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->StatementList[ i ].x == (-1) ) continue;
+
+      strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
+      sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
+      sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
+      strcat( LevelMem , "\"\n" );
+    }
   
   //--------------------
   // Now we write out a marker at the end of the map data.  This marker is not really
@@ -788,7 +808,7 @@ Decode_Loaded_Leveldata (char *data)
   // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
   Preserved_Letter=StatementSectionEnd[0];
   StatementSectionEnd[0]=0;
-  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , "Statement=" ) ;
+  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
   DebugPrintf( 0 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
 
   
@@ -796,13 +816,13 @@ Decode_Loaded_Leveldata (char *data)
   StatementPointer=StatementSectionBegin;
   for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
     {
-      StatementPointer = strstr ( StatementPointer + 1 , "PosX=" );
-      ReadValueFromString( StatementPointer , "PosX=" , "%d" , 
+      StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
+      ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
 			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
       ReadValueFromString( StatementPointer , "PosY=" , "%d" , 
 			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
       loadlevel->StatementList[ i ].Statement_Text = 
-	ReadAndMallocStringFromData ( StatementPointer , "Statement=\"" , "\"" ) ;
+	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
 
       DebugPrintf( 0 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
 		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
