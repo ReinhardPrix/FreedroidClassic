@@ -362,7 +362,7 @@ AnimateInfluence (void)
 
 
   Me.phase +=
-    (Me.energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+    (Me.energy / (Druidmap[Me.type].maxenergy)) * Frame_Time () *
     ENEMYPHASES * 3;
   if (((int) rintf (Me.phase)) >= ENEMYPHASES)
     {
@@ -374,11 +374,11 @@ AnimateInfluence (void)
    * Farbe des Influencers (15) richtig setzen
    */
 
-  if ((Me.status == TRANSFERMODE) && (Me.energy > BLINKENERGY))
+  if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
 	       Transfercolor.blau);
 
-  if ((Me.status == MOBILE) && (Me.energy > BLINKENERGY))
+  if ((Me.status == MOBILE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	       Mobilecolor.blau);
 
@@ -389,7 +389,7 @@ AnimateInfluence (void)
 
 #define CRYWAITTIME 14
 
-  if ((Me.energy <= BLINKENERGY) && (blinkwaiter == 0))
+  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && (blinkwaiter == 0))
     {
       //          Palwert+=15;
       //          if(Palwert>63) Palwert=0;

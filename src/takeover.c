@@ -708,6 +708,7 @@ ShowPlayground (void)
     WorkBlock = MyMalloc (BLOCKMEM + 10);
 
   SetUserfenster (TO_BG_COLOR, InternalScreen);
+  DisplayRahmen(InternalScreen);
 
   UpdateInfoline ();
   DebugPrintf ("\nShowPlayground(): first UpdateInfoline() survived");

@@ -338,8 +338,6 @@ InitNewGame (void)
 #endif
 
   Draw_Framerate=TRUE;
-  Current_BG_Music_Volume=0.5;
-  Current_Sound_FX_Volume=0.5;
 
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
@@ -383,6 +381,9 @@ InitParaplus (void)
   Set_SVGALIB_Video_ON ();
 
   Init_YIFF_Sound_Server ();
+
+  Current_BG_Music_Volume=0.5;
+  Current_Sound_FX_Volume=0.5;
 
   /* 
    * Initialise random-number generator in order to make 
