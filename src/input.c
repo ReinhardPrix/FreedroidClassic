@@ -46,8 +46,9 @@
 
 int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
-
+Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
 int CurrentlyMouseRightPressed=0;
+
 SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
@@ -790,6 +791,7 @@ keyboard_update(void)
 	      //
 	      input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
 	      input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
+	      last_mouse_event = SDL_GetTicks ();
 	    }
 	  break;
 	  
@@ -807,11 +809,12 @@ keyboard_update(void)
 	  // wheel events are immediately released, so we rather
 	  // count the number of not yet read-out events
 	  if (event.button.button == SDL_BUTTON_WHEELUP)
-	    WheelUpEvents ++;
+	      WheelUpEvents ++;
 
 	  if (event.button.button == SDL_BUTTON_WHEELDOWN)
-	    WheelDownEvents ++;
+	      WheelDownEvents ++;
 
+	  last_mouse_event = SDL_GetTicks();
 	  break;
 
         case SDL_MOUSEBUTTONUP:
@@ -823,7 +826,7 @@ keyboard_update(void)
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = FALSE;
-	
+
 	  break;
 
  	default:

@@ -259,7 +259,7 @@ enum _sounds
 
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
 #define WAIT_AFTER_KILLED	1500  // time (in ms) to wait and still display pictures after the destruction of 
-#define SHOW_WAIT           2500   // std amount of time to show something
+#define SHOW_WAIT           3500   // std amount of time to show something
                                    // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 

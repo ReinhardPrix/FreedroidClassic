@@ -249,6 +249,7 @@ EXTERN int joy_num_axes; /* number of joystick axes */
 EXTERN int joy_sensitivity;
 EXTERN point input_axis;  /* joystick (and mouse) axis values */
 EXTERN int axis_is_active;  /* is firing to use axis-values or not */
+EXTERN Uint32 last_mouse_event; // SDL-ticks of last mouse event
 
 #undef EXTERN
 #ifdef _highscore_c

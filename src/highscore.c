@@ -171,7 +171,8 @@ Show_Highscores (void)
     }
   SDL_Flip (ne_screen);
   
-  getchar_raw ();
+  while (!SpacePressed());
+  while (SpacePressed())
 
   SetCurrentFont (prev_font);
 

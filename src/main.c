@@ -40,6 +40,9 @@
 #include "vars.h"
 #include "ship.h"
 
+#define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
+
+
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
@@ -79,10 +82,7 @@ main (int argc, char *const argv[])
 
   while (!QuitProgram)
     {
-
-      MissionSelectMenu ( );
-      // InitNewMission ( STANDARD_MISSION );
-      // InitNewMission ( NEW_MISSION );
+      InitNewMission ( STANDARD_MISSION );
 
       show_droid_info (Me.type, -3);  // show unit-intro page
       now=SDL_GetTicks();
@@ -94,6 +94,11 @@ main (int argc, char *const argv[])
 	{
 
 	  StartTakingTimeForFPSCalculation(); 
+
+	  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
+	    SDL_ShowCursor (SDL_DISABLE);
+	  else
+	    SDL_ShowCursor (SDL_ENABLE);
 
 	  UpdateCountersForThisFrame ();
 

@@ -368,111 +368,6 @@ Cheatmenu (void)
   return;
 } /* Cheatmenu() */
 
-/*@Function============================================================
-@Desc: This function provides a the big escape menu from where you can
-       get into different submenus.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-MissionSelectMenu (void)
-{
-enum
-  { 
-    CLASSIC_PARADROID_MISSION_POSITION=1, 
-    NEW_MISSION_POSITION,
-    LAST_MISSION
-  };
-  int Weiter = 0;
-  int MenuPosition=1;
-  int key;
-  static int NoMissionLoadedEver=TRUE;
-  Me.status=MENU;
-
-  DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
-
-  SetCurrentFont ( Menu_BFont );
-  SDL_SetClipRect( ne_screen , NULL );
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
-  while ( EscapePressed() );
-
-  while (!Weiter)
-    {
-
-      // InitiateMenu();
-      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
-
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-
-      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
-
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Asteroid Research");
-
-      SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      key = getchar_raw ();
-      if ( (key == SDLK_RETURN) || (key == SDLK_SPACE))
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
-	    {
-
-	    case CLASSIC_PARADROID_MISSION_POSITION:
-	      InitNewMission ( STANDARD_MISSION );
-	      NoMissionLoadedEver = FALSE;
-	      Weiter = TRUE;   
-	      break;
-	    case NEW_MISSION_POSITION:
-	      InitNewMission ( NEW_MISSION );
-	      NoMissionLoadedEver = FALSE;
-	      Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if ( key == SDLK_UP )
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	}
-      if ( key == SDLK_DOWN )
-	{
-	  if ( MenuPosition < LAST_MISSION-1 ) MenuPosition++;
-	  MoveMenuPositionSound();
-	}
-      if ( key == SDLK_ESCAPE )
-	{
-	  Terminate( OK );
-	}
-    }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
-
-  return;
-
-} // MissionSelectMenu
 
 /*@Function============================================================
 @Desc: This function provides a the big escape menu from where you can
@@ -503,6 +398,8 @@ enum
   int i;
 
   Me.status=MENU;
+  
+  SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
@@ -521,7 +418,6 @@ enum
 
   while (!Weiter)
     {
-
       InitiateMenu();
       // 
       // we highlight the currently selected option with an 
@@ -552,11 +448,6 @@ enum
       PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +7*h, "Quit Game");
 
       SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !EscapePressed() ) ;
 
       if ( EscapePressed() )
 	{
@@ -632,15 +523,17 @@ enum
 	      break;
 	    } 
 	}
-      if (UpPressed()) 
+      if (UpPressed() || WheelUpPressed() ) 
 	{
 	  if (MenuPosition > 1) MenuPosition--;
+	  else MenuPosition = QUIT;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if (DownPressed() || WheelDownPressed() ) 
 	{
 	  if ( MenuPosition < QUIT ) MenuPosition++;
+	  else MenuPosition = 1;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -651,6 +544,8 @@ enum
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
   Me.status=MOBILE;
+
+  SDL_ShowCursor (SDL_ENABLE);  // reactivate mouse-cursor for game
 
   return;
 
@@ -703,11 +598,6 @@ enum
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, "Back");
       SDL_Flip( ne_screen );
 
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
-
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
@@ -724,13 +614,15 @@ enum
 	      if (RightPressed()) 
 		{
 		  while (RightPressed());
-		  if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
+		  if ( GameConfig.Current_BG_Music_Volume < 1 ) 
+		    GameConfig.Current_BG_Music_Volume += 0.05;
 		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
-		  if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
+		  if ( GameConfig.Current_BG_Music_Volume > 0 ) 
+		    GameConfig.Current_BG_Music_Volume -= 0.05;
 		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		}
 	    }
@@ -739,13 +631,15 @@ enum
 	      if (RightPressed()) 
 		{
 		  while (RightPressed());
-		  if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
+		  if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
+		    GameConfig.Current_Sound_FX_Volume += 0.05;
 		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
-		  if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
+		  if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
+		    GameConfig.Current_Sound_FX_Volume -= 0.05;
 		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		}
 	    }
@@ -755,13 +649,17 @@ enum
 		{
 		  while (RightPressed());
 		  GameConfig.Current_Gamma_Correction+=0.05;
-		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				GameConfig.Current_Gamma_Correction , 
+				GameConfig.Current_Gamma_Correction );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
 		  GameConfig.Current_Gamma_Correction-=0.05;
-		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				GameConfig.Current_Gamma_Correction , 
+				GameConfig.Current_Gamma_Correction );
 		}
 	    }
 	}
@@ -787,15 +685,17 @@ enum
 	    } 
 	  // Weiter=!Weiter;
 	}
-      if (UpPressed()) 
+      if (UpPressed() || WheelUpPressed ()) 
 	{
 	  if ( MenuPosition > 1 ) MenuPosition--;
+	  else MenuPosition = BACK;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if (DownPressed() || WheelDownPressed()) 
 	{
 	  if ( MenuPosition < BACK ) MenuPosition++;
+	  else MenuPosition = 1;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -854,11 +754,6 @@ enum
 
       SDL_Flip( ne_screen );
 
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
-
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
@@ -891,15 +786,17 @@ enum
 	    } 
 	  // Weiter=!Weiter;
 	}
-      if (UpPressed()) 
+      if (UpPressed() || WheelUpPressed ()) 
 	{
 	  if ( MenuPosition > 1 ) MenuPosition--;
+	  else MenuPosition = BACK;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if (DownPressed() || WheelDownPressed ()) 
 	{
 	  if ( MenuPosition < BACK ) MenuPosition++;
+	  MenuPosition = 1;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -928,7 +825,7 @@ Droid_Talk_Options_Menu (void)
   int Weiter = 0;
   int MenuPosition=1;
   int h;
-enum
+  enum
   { 
     INFLU_REFRESH_TEXT=1,
     INFLU_BLAST_TEXT,
@@ -936,9 +833,10 @@ enum
     ENEMY_BUMP_TEXT,
     ENEMY_AIM_TEXT,
     ALL_TEXTS,
-    BACK };
+    BACK 
+  };
 
- h = FontHeight (GetCurrentFont()) + 2;
+  h = FontHeight (GetCurrentFont()) + 2;
  
   while ( EscapePressed() );
 
@@ -970,11 +868,6 @@ enum
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+6*h, "Back");
 
       SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
 
       if ( EscapePressed() )
 	{
@@ -1020,9 +913,10 @@ enum
 	    } 
 	  // Weiter=!Weiter;
 	}
-      if (UpPressed()) 
+      if (UpPressed() || WheelUpPressed ()) 
 	{
 	  if ( MenuPosition > 1 ) MenuPosition--;
+	  else MenuPosition = BACK;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
@@ -1061,7 +955,7 @@ enum
   { GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
-    SAVE_OPTIONS, 
+    EXP_MISSION,
     BACK };
 
   while ( EscapePressed() );
@@ -1080,18 +974,18 @@ enum
       PutInfluence( FIRST_MENU_ITEM_POS_X,
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * h);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h,"Graphics & Sound" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,"Droid Talk" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,"On-Screen Displays" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,"Save Options");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h,
+		   "Graphics & Sound" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,
+		   "Droid Talk" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+		   "On-Screen Displays" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,
+		   "Asteroid Mission (unfinished)");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, 
+		   "Back");
 
       SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
 
       if ( EscapePressed() )
 	{
@@ -1116,8 +1010,9 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      On_Screen_Display_Options_Menu();
 	      break;
-	    case SAVE_OPTIONS:
+	    case EXP_MISSION:
 	      while (EnterPressed() || SpacePressed() );
+	      InitNewMission (NEW_MISSION);
 	      break;
 	    case BACK:
 	      while (EnterPressed() || SpacePressed() );
@@ -1128,15 +1023,17 @@ enum
 	    } 
 	  // Weiter=!Weiter;
 	}
-      if (UpPressed()) 
+      if (UpPressed() || WheelUpPressed()) 
 	{
 	  if ( MenuPosition > 1 ) MenuPosition--;
+	  else MenuPosition = BACK;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if (DownPressed() || WheelDownPressed()) 
 	{
 	  if ( MenuPosition < BACK ) MenuPosition++;
+	  else MenuPosition = 1;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -1150,140 +1047,6 @@ enum
 
 } // Options_Menu
 
-/*@Function============================================================
-@Desc: This function provides the single player menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can restart a new game,
-       see the highscore list, see mission instructions and such 
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Single_Player_Menu (void)
-{
-  int Weiter = 0;
-  int MenuPosition=1;
-
-#define SINGLE_PLAYER_MENU_ITEM_POS_X (Block_Width*1.2)
-
-  while (!Weiter)
-    {
-
-      InitiateMenu();
-
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence( SINGLE_PLAYER_MENU_ITEM_POS_X - Block_Width/2, 
-		    (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-
-      CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "New Game");
-      CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
-      CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
-      CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Back");
-
-      SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() )  
-	keyboard_update();
-
-      if ( EscapePressed() )
-	{
-	  while (EscapePressed());
-	  Weiter=!Weiter;
-	}
-
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  while (EnterPressed() || SpacePressed() );
-	  switch (MenuPosition) 
-	    {
-
-	    case NEW_GAME_POSITION:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      InitNewMission( STANDARD_MISSION );
-	      Weiter=!Weiter;
-	      break;
-	    case SHOW_HISCORE_POSITION: 
-	      while (EnterPressed() || SpacePressed() ) ;
-	      Show_Highscores();
-	      break;
-	    case SHOW_MISSION_POSITION:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      Show_Mission_Instructions_Menu();
-	      break;
-	    case BACK_POSITION:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      Weiter=!Weiter;
-	      break;
-	    default: 
-	      break;
-	    }
-	}
-      if (UpPressed()) 
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed()) 
-	{
-	  if ( MenuPosition < BACK_POSITION ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
-} // Single_Player_Menu
-
-
-/*@Function============================================================
-@Desc: This function provides the multi player menu.  It is a submenu
-       of the big EscapeMenu.  Instead of connecting to a server or 
-       something it simply displayes the nonchalant message, that 
-       nothing is implemented yet, but sooner or later it will be.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Multi_Player_Menu (void)
-{
-  int Weiter = 0;
-
-  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
-
-  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
-
-  while (!Weiter)
-    {
-
-      InitiateMenu();
-
-      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
-      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
-      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
-      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
-      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
-      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
-      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
-
-      SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    }
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-} // Multi_Player_Menu
 
 /*@Function============================================================
 @Desc: This function provides the credits screen.  It is a submenu of
@@ -1311,91 +1074,12 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  // Wait until the user does SOMETHING
-  getchar_raw();
+  while (!SpacePressed ());
+  while (SpacePressed());
+
+  return;
 
 } // Credits_Menu
-
-/*@Function============================================================
-@Desc: This function provides the mission instructions.  It is a 
-       submenu of the single player menu.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Show_Mission_Instructions_Menu (void)
-{
-  int Weiter = 0;
-
-  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
-
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
-
-  while (!Weiter)
-    {
-
-      InitiateMenu();
-
-      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
-      
-      printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NO" );
-
-      printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me.mission.KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NO" );
-      printf_SDL ( ne_screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me.mission.MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachLevel ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( ne_screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me.mission.MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustReachPoint.x ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachPoint.y );
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( ne_screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me.mission.MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.mission.MustLiveTime ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me.mission.MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me.mission.MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustBeType ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me.mission.MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
-      else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
-
-      printf_SDL ( ne_screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me.mission.KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.mission.KillClass] ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
-
-      
-      //      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
-      //LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
-      //LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
-      //LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
-      //LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      //LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
-      //LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
-
-      SDL_Flip( ne_screen );
-
-      while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    }
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-} // ShowMissionInstructionsMenu
 
 /*@Function============================================================
 @Desc: This function is used by the Level Editor integrated into 
@@ -1882,11 +1566,6 @@ Level_Editor(void)
 	  
 	  SDL_Flip ( ne_screen );
 	  
-	  // Wait until the user does SOMETHING
-	  
-	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() && !LeftPressed() && !RightPressed())  
-	    keyboard_update();
-	  
 	  if ( EscapePressed() )
 	    {
 	      while (EscapePressed());
@@ -2048,15 +1727,17 @@ Level_Editor(void)
 
 	  // If the user pressed up or down, the cursor within
 	  // the level editor menu has to be moved, which is done here:
-	  if (UpPressed()) 
+	  if (UpPressed() || WheelUpPressed ()) 
 	    {
 	      if (MenuPosition > 1) MenuPosition--;
+	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
 	      while (UpPressed());
 	    }
-	  if (DownPressed()) 
+	  if (DownPressed() || WheelDownPressed ()) 
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
+	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
 	      while (DownPressed());
 	    }

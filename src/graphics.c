@@ -1083,8 +1083,8 @@ Init_Video (void)
       exit(-1);
     }
 
-  if (!mouse_control)  /* hide mouse pointer if not needed */
-    SDL_ShowCursor (SDL_DISABLE);
+  /* hide mouse pointer per default */
+  SDL_ShowCursor (SDL_DISABLE);
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
   /* RGB of transparent color in our pics */
