@@ -531,14 +531,12 @@ CursorIsInWeaponRect( int x , int y )
   point CurPos;
   CurPos.x = x ;
   CurPos.y = y ;
-#define WEAPON_RECT_WIDTH 64
-#define WEAPON_RECT_HEIGHT 64
 
-  if ( ( CurPos.x >= 20 ) && ( CurPos.x <= 20 + WEAPON_RECT_WIDTH ) )
+  if ( ( CurPos.x >= WEAPON_RECT_X ) && ( CurPos.x <= WEAPON_RECT_X + WEAPON_RECT_WIDTH ) )
     {
       DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + 10 ) && 
-	   ( CurPos.y <= User_Rect.y + 10 + WEAPON_RECT_HEIGHT ) )
+      if ( ( CurPos.y >= User_Rect.y + WEAPON_RECT_Y ) && 
+	   ( CurPos.y <= User_Rect.y + WEAPON_RECT_Y + WEAPON_RECT_HEIGHT ) )
 	{
 	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
 	  return( TRUE );
@@ -557,14 +555,12 @@ CursorIsInDriveRect( int x , int y )
   point CurPos;
   CurPos.x = x ;
   CurPos.y = y ;
-#define DRIVE_RECT_WIDTH 64
-#define DRIVE_RECT_HEIGHT 64
 
-  if ( ( CurPos.x >= 240 ) && ( CurPos.x <= 240 + DRIVE_RECT_WIDTH ) )
+  if ( ( CurPos.x >= DRIVE_RECT_X ) && ( CurPos.x <= DRIVE_RECT_X + DRIVE_RECT_WIDTH ) )
     {
       DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + 93 ) && 
-	   ( CurPos.y <= User_Rect.y + 93 + DRIVE_RECT_HEIGHT ) )
+      if ( ( CurPos.y >= User_Rect.y + DRIVE_RECT_Y ) && 
+	   ( CurPos.y <= User_Rect.y + DRIVE_RECT_Y + DRIVE_RECT_HEIGHT ) )
 	{
 	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
 	  return( TRUE );
@@ -711,14 +707,15 @@ int
 CursorIsInInventoryGrid( int x , int y )
 {
   point CurPos;
+
   CurPos.x = x ;
   CurPos.y = y ;
 
-  if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + INVENTORY_GRID_WIDTH * 32 ) )
+  if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * 32 ) )
     {
       DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * INVENTORY_GRID_HEIGHT ) && 
-	   ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
+      if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
+	   ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + 32 * INVENTORY_GRID_HEIGHT ) )
 	{
 	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
 	  return( TRUE );
@@ -734,7 +731,7 @@ CursorIsInInventoryGrid( int x , int y )
 int
 GetInventorySquare_x( int x )
 {
-  return ( ( x - 16 ) / 32 );
+  return ( ( x - INVENTORY_RECT_X ) / 32 );
 }; // int GetInventorySquare_x( x )
 
 /* ----------------------------------------------------------------------
@@ -744,7 +741,7 @@ GetInventorySquare_x( int x )
 int
 GetInventorySquare_y( int y )
 {
-  return ( ( y - (User_Rect.y + 480 -16 - 64 - 32 * 6 ) ) / 32 );
+  return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / 32 );
 }; // int GetInventorySquare_y( y )
 
 /* ----------------------------------------------------------------------
