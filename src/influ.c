@@ -21,8 +21,9 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _influ_c
 
@@ -177,9 +178,8 @@ void AutoFireBullet(void){
 * $Function----------------------------------------------------------*/
 void MoveInfluence(void)
 {
-  unsigned char MapBrick;
   signed int accel = Druidmap[Me.type].accel;
-  static TransferCounter = 0;
+  static int TransferCounter = 0;
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter=-1;
 
@@ -273,11 +273,9 @@ int NoInfluBulletOnWay(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void AnimateInfluence(void) {
-	int gruen,blau,rot;
-	static Teilphase;
+	static int Teilphase;
 	static unsigned char Palwert=0;
 	static int blinkwaiter=0;
-	static int maxblinkvalue=3;
 	static int Crywait=1;
 	static int Overtaketunewait=2;
 	
@@ -296,8 +294,9 @@ void AnimateInfluence(void) {
 	/*
 	 * Farbe des Influencers (15) richtig setzen
 	 */
-	 
-	if ((Me.status == TRANSFERMODE) && (Me.energy > BLINKENERGY)) SetPalCol(INFLUENCEFARBWERT,Transfercolor.rot,Transfercolor.gruen,Transfercolor.blau);
+
+	if ((Me.status == TRANSFERMODE) && (Me.energy > BLINKENERGY)) 
+	  SetPalCol(INFLUENCEFARBWERT,Transfercolor.rot,Transfercolor.gruen,Transfercolor.blau);
 
 	if ((Me.status == MOBILE) && (Me.energy > BLINKENERGY))
 		SetPalCol(INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
@@ -349,8 +348,6 @@ void BounceInfluencer(void)
   int SX=SpeedX, SY=SpeedY;
   point lastpos;
   int res;		/* Ergebnis aus DruidPassable() */
-  int fx, fy;		/* Feinkoordinaten */
-  int gx, gy;		/* Grobkoordinaten */
   int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
   
   int crashx = FALSE, crashy = FALSE;		/* Merker wo kollidiert wurde */
@@ -433,7 +430,6 @@ void BounceInfluencer(void)
     printf("Illegal return value from DruidPassable() ");
     Terminate(-1);
     break;
-    
     
   } /* switch */
 } /* BounceInfluencer */
@@ -769,22 +765,22 @@ void BounceLoseEnergy(int enemynum)
 * $Function----------------------------------------------------------*/
 void PermanentLoseEnergy(void)
 {
-	static time_counter=2*18; /* to obtain approx. 2 sec. */
+  static int time_counter=2*18; /* to obtain approx. 2 sec. */
 
-	if( InvincibleMode ) return;
+  if( InvincibleMode ) return;
 	
-	if( --time_counter ) return; /* wait */
+  if( --time_counter ) return; /* wait */
 	
-	if( time_counter == 0 ) time_counter = 2*18;	/* ca. 2 sec. */
+  if( time_counter == 0 ) time_counter = 2*18;	/* ca. 2 sec. */
 
-	/* health decreases with time */
-	Me.health -= Druidmap[Me.type].lose_health;
+  /* health decreases with time */
+  Me.health -= Druidmap[Me.type].lose_health;
 	
-	/* you cant have more energy than health */
-	if( Me.energy > Me.health ) Me.energy = Me.health;
+  /* you cant have more energy than health */
+  if( Me.energy > Me.health ) Me.energy = Me.health;
 
-	return;
-}
+  return;
+} // void PermanentLoseEnergy(void)
 
 #undef _influ_c
 

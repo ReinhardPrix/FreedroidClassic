@@ -1,5 +1,8 @@
-// static const char RCSid[]=\
-// "$Id$";
+
+
+
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _map_c
 
@@ -16,9 +19,6 @@
 #include "global.h"
 
 #include "map.h"
-
-
-extern SetDebugPos;
 
 /*@Function============================================================
 @Desc: unsigned char GetMapBrick(Level deck, int x, int y): liefert
@@ -139,11 +139,11 @@ void ActSpecialField(int x, int y)
 * $Function----------------------------------------------------------*/
 void AnimateRefresh(void)
 {
-	static OuterWaitCounter = 0;
-	static InnerWaitCounter = 0;
-	static InnerPhase = 0;		/* Zaehler fuer innere Phase */
-	int i,j;
-	int x, y;
+  static int OuterWaitCounter = 0;
+  static int InnerWaitCounter = 0;
+  static int InnerPhase = 0;		/* Zaehler fuer innere Phase */
+  int i,j;
+  int x, y;
 
 	OuterWaitCounter ++;
 	OuterWaitCounter %= OUTER_REFRESH_COUNTER;
@@ -271,74 +271,72 @@ Doors and Waypoints Arrays initialisiert
 * $Function----------------------------------------------------------*/
 Level LevelToStruct(char *data)
 {
-	Level loadlevel;
-	char *pos, *tmp;
-	char *map_begin, *wp_begin;
-	int i, j;
-	int NumWaypoints;
-//	int NumDoors, NumRefreshes;
-	int zahl;
+  Level loadlevel;
+  char *pos;
+  char *map_begin, *wp_begin;
+  int i, j;
+  int NumWaypoints;
+  //	int NumDoors, NumRefreshes;
+  int zahl;
+  
+  /* Get the memory for one level */
+  loadlevel = (Level)MyMalloc(sizeof(level));
+  
+  loadlevel->empty = FALSE;
 	
-
-	/* Get the memory for one level */
-	loadlevel = (Level)MyMalloc(sizeof(level));
-
-	loadlevel->empty = FALSE;
-	
-	/* Read Header Data: levelnum and x/ylen */
-	sscanf(data, "%u %u %u %u",
-		&(loadlevel->levelnum), &(loadlevel->xlen),
-		&(loadlevel->ylen), &(loadlevel->color) );
-
-	/* find Map-data */
-	if( (map_begin = strstr(data, MAP_BEGIN_STRING)) == NULL) {
-		return NULL;
-	}
-
-	/* Position on Waypoint-Data */
-	if( (wp_begin = strstr(data, WP_BEGIN_STRING)) == NULL) {
-		return NULL;
-	}
-
-	/* now scan the map */
-	strtok(map_begin, "\n");	/* init strtok to map-begin */
-	
-	/* read MapData */
-	for(i=0; i<loadlevel->ylen; i++)
-		if( (loadlevel->map[i] = strtok(NULL, "\n")) == NULL) {
-			return NULL;
-		}
-
-	/* Get Doors Array */
-	// NumDoors =
-	GetDoors(loadlevel);
-
-	/* Get Waypoints */
-	NumWaypoints = GetWaypoints(loadlevel);
-
-	/* Get Refreshes */
-	// NumRefreshes =
-	GetRefreshes(loadlevel);
-
-	/* Scan the waypoint- connections */
-	pos = strtok(wp_begin, "\n");	/* Get Pointer to data-begin */
-	
-	/* Read Waypoint-data */
-	for(i=0; i<NumWaypoints; i++) {
-		for(j=0; j<MAX_WP_CONNECTIONS; j++) {
-			if( (pos = strtok(NULL, " \n\t")) == NULL) {
-				return NULL;
-			}
-			
-			if( sscanf(pos, "%d", &zahl) == EOF) {
-				return NULL;
-			}
-			
-			loadlevel->AllWaypoints[i].connections[j] = zahl;
-		}
-	}
-	
-	return loadlevel;
+  /* Read Header Data: levelnum and x/ylen */
+  sscanf(data, "%u %u %u %u",
+	 &(loadlevel->levelnum), &(loadlevel->xlen),
+	 &(loadlevel->ylen), &(loadlevel->color) );
+  
+  /* find Map-data */
+  if( (map_begin = strstr(data, MAP_BEGIN_STRING)) == NULL) {
+    return NULL;
+  }
+  
+  /* Position on Waypoint-Data */
+  if( (wp_begin = strstr(data, WP_BEGIN_STRING)) == NULL) {
+    return NULL;
+  }
+  
+  /* now scan the map */
+  strtok(map_begin, "\n");	/* init strtok to map-begin */
+  
+  /* read MapData */
+  for(i=0; i<loadlevel->ylen; i++)
+    if( (loadlevel->map[i] = strtok(NULL, "\n")) == NULL) {
+      return NULL;
+    }
+  
+  /* Get Doors Array */
+  // NumDoors =
+  GetDoors(loadlevel);
+  
+  /* Get Waypoints */
+  NumWaypoints = GetWaypoints(loadlevel);
+  
+  /* Get Refreshes */
+  // NumRefreshes =
+  GetRefreshes(loadlevel);
+  
+  /* Scan the waypoint- connections */
+  pos = strtok(wp_begin, "\n");	/* Get Pointer to data-begin */
+  
+  /* Read Waypoint-data */
+  for(i=0; i<NumWaypoints; i++) {
+    for(j=0; j<MAX_WP_CONNECTIONS; j++) {
+      if( (pos = strtok(NULL, " \n\t")) == NULL) {
+	return NULL;
+      }
+      
+      if( sscanf(pos, "%d", &zahl) == EOF) {
+	return NULL;
+      }
+      
+      loadlevel->AllWaypoints[i].connections[j] = zahl;
+    }
+  }
+  return loadlevel;
 } /* LevelToStruct */
 
 
@@ -434,33 +432,31 @@ int GetWaypoints(Level Lev)
 * $Function----------------------------------------------------------*/
 int GetRefreshes(Level Lev)
 {
-	int i, row, col;
-	int xlen, ylen;
-	int curref = 0;
-	char brick;
+  int i, row, col;
+  int xlen, ylen;
+  int curref = 0;
+  
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
 
-	xlen = Lev->xlen;
-	ylen = Lev->ylen;
-
-	/* init refreshes array to 0 */
-	for( i=0; i<MAX_REFRESHES_ON_LEVEL; i++)
-		Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
-
-	/* now find all the refreshes */
-	for(row=0; row<ylen; row++)
-		for(col=0; col<xlen; col++) {
-			if( Lev->map[row][col] == '@' ) {
-				Lev->refreshes[curref].x = col;
-				Lev->refreshes[curref++].y = row;
-
-				if( curref > MAX_REFRESHES_ON_LEVEL)
-					return ERR;
-
-			} /* if */
-		} /* for */
-
-	return curref;
-}
+  /* init refreshes array to 0 */
+  for( i=0; i<MAX_REFRESHES_ON_LEVEL; i++)
+    Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
+  
+  /* now find all the refreshes */
+  for(row=0; row<ylen; row++)
+    for(col=0; col<xlen; col++) {
+      if( Lev->map[row][col] == '@' ) {
+	Lev->refreshes[curref].x = col;
+	Lev->refreshes[curref++].y = row;
+	
+	if( curref > MAX_REFRESHES_ON_LEVEL)
+	  return ERR;
+	
+      } /* if */
+    } /* for */
+  return curref;
+} // int GetRefreshed(Level lev)
 
 /*@Function============================================================
 @Desc: int TranslateMap(Level Lev): uebersetzt die geladene Karte
@@ -547,62 +543,59 @@ int GetElevatorConnections(char *shipname)
 * $Function----------------------------------------------------------*/
 int GetCrew(char *shipname)
 {
-	char filename[FILENAME_LEN+1];
-	int i;
-	FILE *CrewFile;
-	int level_num;
-	int enemy_nr;
-	int type_anz;
-	int types[MAX_TYPES_ON_LEVEL];
-	int upper_limit, lower_limit;
-	int this_limit;
-	int linelen = CREW_LINE_LEN;
-	char line[CREW_LINE_LEN];
-	char *pos;
+  char filename[FILENAME_LEN+1];
+  FILE *CrewFile;
+  int level_num;
+  int enemy_nr;
+  int type_anz;
+  int types[MAX_TYPES_ON_LEVEL];
+  int upper_limit, lower_limit;
+  int this_limit;
+  int linelen = CREW_LINE_LEN;
+  char line[CREW_LINE_LEN];
+  char *pos;
+  
+  /* get filename */
+  strcpy(filename, shipname);
+  strcat(filename, CREWEXT);
+  
+  /* Clear Enmey - Array */
+  ClearEnemys();
+  
+  if( (CrewFile = fopen(filename, "r")) == NULL) return FALSE;
+  
+  enemy_nr = 0;
 	
-	/* get filename */
-	strcpy(filename, shipname);
-	strcat(filename, CREWEXT);
+  while( fgets(line, linelen, CrewFile) ) {
+    if( sscanf(line, "%d %d %d ",
+	       &level_num, &upper_limit, &lower_limit) == EOF) return ERR;
+    
+    if ( strtok(line, ",") == NULL ) return ERR;
+    
+    type_anz = 0;
+    while( (pos=strtok(NULL, " \t")) != NULL)
+      sscanf(pos, "%d", &(types[type_anz++]));
+    
+    this_limit = MyRandom(upper_limit-lower_limit) + lower_limit;
+    while( this_limit --) {
+      Feindesliste[enemy_nr].type = types[MyRandom(type_anz)];
+      Feindesliste[enemy_nr].levelnum = level_num;
+      Feindesliste[enemy_nr].Status = 0;
+      enemy_nr ++;
+    }/* while noch_enemy */
+    
+    if( enemy_nr >= MAX_ENEMYS_ON_SHIP ) return ERR;
+    
+  } /* while fgets() */
+  
+  NumEnemys = enemy_nr;
+  
+  fclose(CrewFile);
 
-
-	/* Clear Enmey - Array */
-	ClearEnemys();
-	
-	if( (CrewFile = fopen(filename, "r")) == NULL) return FALSE;
-
-	enemy_nr = 0;
-	
-	while( fgets(line, linelen, CrewFile) ) {
-		if( sscanf(line, "%d %d %d ",
-			&level_num, &upper_limit, &lower_limit) == EOF) return ERR;
-
-		if ( strtok(line, ",") == NULL ) return ERR;
-
-		type_anz = 0;
-		while( (pos=strtok(NULL, " \t")) != NULL)
-			sscanf(pos, "%d", &(types[type_anz++]));
-			
-
-		this_limit = MyRandom(upper_limit-lower_limit) + lower_limit;
-		while( this_limit --) {
-			Feindesliste[enemy_nr].type = types[MyRandom(type_anz)];
-			Feindesliste[enemy_nr].levelnum = level_num;
-			Feindesliste[enemy_nr].Status = 0;
-			enemy_nr ++;
-		}/* while noch_enemy */
-
-		if( enemy_nr >= MAX_ENEMYS_ON_SHIP ) return ERR;
-			
-	} /* while fgets() */
-	
-	NumEnemys = enemy_nr;
+  InitEnemys();		/* Energiewerte richtig setzen */
 		
-	fclose(CrewFile);
-
-	InitEnemys();		/* Energiewerte richtig setzen */
-		
-	return OK;
-}	
+  return OK;
+} // int GetCrew(char *shipname)
 		
 
 /*@Function============================================================
@@ -613,11 +606,9 @@ int GetCrew(char *shipname)
 * $Function----------------------------------------------------------*/
 void MoveLevelDoors(void){
 	int i,j;
-	int ii;
 	int doorx, doory;
 	long xdist, ydist;
 	long dist2;
-	int gx, gy;
 	char *Pos;
 
 	for(i=0; i<MAX_DOORS_ON_LEVEL; i++) {
@@ -1045,11 +1036,15 @@ int IsVisible(Point objpos){
  *	  that contains specified coordinates are done in this file.
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
  * $Log$
+ * Revision 1.11  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
  * Revision 1.10  1997/06/08 14:49:40  jprix
  * Added file FILES describing the files of this project.
  * Added more doku while writing the files description.

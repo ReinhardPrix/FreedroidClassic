@@ -8,19 +8,27 @@
  *        about where to put anything, and only have to supply map coordinates.  Very handy.
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
+ * $Log$
+ * Revision 1.14  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _blocks_c
 
 #include <stdio.h>
 #include <math.h>
+#include <vga.h>
+#include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -146,21 +154,20 @@ void SmallEnemy(int LX,int LY,int enemyclass,unsigned char* Screen,int SBreite)
 
 /* *********************************************************************** */
 
-void GetDigits(){
-int i;
-unsigned char* Localpointer;
+void GetDigits(void){
+  int i;
 
-	Digitpointer=MyMalloc(DIGITMEM);
-	LadeLBMBild(DIGITBILD,InternalScreen,FALSE);
+  Digitpointer=MyMalloc(DIGITMEM);
+  LadeLBMBild(DIGITBILD,InternalScreen,FALSE);
 
-	for (i=0;i<20;i++) {
-		IsolateBlock(
-			InternalScreen,
-			Digitpointer+DIGITHEIGHT*DIGITLENGTH*i,
-			i*DIGITLENGTH,
-			0,DIGITLENGTH,DIGITHEIGHT);
-	}
-}
+  for (i=0;i<20;i++) {
+    IsolateBlock(
+		 InternalScreen,
+		 Digitpointer+DIGITHEIGHT*DIGITLENGTH*i,
+		 i*DIGITLENGTH,
+		 0,DIGITLENGTH,DIGITHEIGHT);
+  }
+} // void GetDigits(void)
 
 /* *********************************************************************** */
 
@@ -179,29 +186,26 @@ unsigned char* Localpointer;
 @Int:
 * $Function----------------------------------------------------------*/
 void IsolateBlock(
-	unsigned char *screen,
+		  unsigned char *screen,
 	unsigned char *target,
 	int BlockEckLinks,
 	int BlockEckOben,
 	int Blockbreite,
 	int Blockhoehe)
 {
-	int row, col;
-	unsigned char *source;
-	unsigned char *tmp;
+  int row;
+  unsigned char *source;
+  unsigned char *tmp;
 
-	source = screen + BlockEckOben*SCREENLEN + BlockEckLinks;
-	tmp = target;
+  source = screen + BlockEckOben*SCREENLEN + BlockEckLinks;
+  tmp = target;
 	
-	for( row = 0; row < Blockhoehe; row ++ ) {
-		memcpy(tmp, source, Blockbreite);
-		tmp += Blockbreite;
-		source += SCREENLEN;
-	}
-	
-	
-	
-}
+  for( row = 0; row < Blockhoehe; row ++ ) {
+    memcpy(tmp, source, Blockbreite);
+    tmp += Blockbreite;
+    source += SCREENLEN;
+  }
+} // void IsolateBlock(...)
 
 /* ***********************************************************************/
 void GetMapBlocks(void)

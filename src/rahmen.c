@@ -4,14 +4,20 @@
  * @Desc: contains functions to update and draw the top status line with score and status etc...
  *	 
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
+ * $Log$
+ * Revision 1.7  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _rahmen_c
 
@@ -64,42 +70,42 @@ void DrawBar(int,int,unsigned char*);
 @Int:
 * $Function----------------------------------------------------------*/
 void DrawBar(int BarCode,int Wert,unsigned char* Screen){
-	unsigned char* BarPoint=Screen;
-	int xlen;
-	int barcol=0;
-	int i,j;
+  unsigned char* BarPoint=Screen;
+  int xlen;
+  int barcol=0;
+  int i;
 
-	if (Wert<0) Wert=0;
-	BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
+  if (Wert<0) Wert=0;
+  BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
 
-	if (InitBars) {
- 		for(i=0;i<AllBars[BarCode].hgt;i++){
-			memset(BarPoint,AllBars[BarCode].col,Wert);
-			memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
-			BarPoint+=SCREENBREITE;
-		}
-		AllBars[BarCode].oldval=Wert;
-		return;
-	}
+  if (InitBars) {
+    for(i=0;i<AllBars[BarCode].hgt;i++){
+      memset(BarPoint,AllBars[BarCode].col,Wert);
+      memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
+      BarPoint+=SCREENBREITE;
+    }
+    AllBars[BarCode].oldval=Wert;
+    return;
+  }
 	
-	if (Wert==AllBars[BarCode].oldval) return;
+  if (Wert==AllBars[BarCode].oldval) return;
+  
+  xlen=abs(Wert-AllBars[BarCode].oldval);
 
-	xlen=abs(Wert-AllBars[BarCode].oldval);
+  // Den Cursor an die Position stellen und rot oder schwarz einstellen.	
+  if (Wert>AllBars[BarCode].oldval) {
+    barcol=AllBars[BarCode].col;
+    BarPoint+=AllBars[BarCode].oldval;
+  } else BarPoint+=Wert;
 
-// Den Cursor an die Position stellen und rot oder schwarz einstellen.	
-	if (Wert>AllBars[BarCode].oldval) {
-		barcol=AllBars[BarCode].col;
-		BarPoint+=AllBars[BarCode].oldval;
-	} else BarPoint+=Wert;
+  // Balken soweit zeichnen, wie die Ver"anderung ausmacht.
+  for(i=0;i<AllBars[BarCode].hgt;i++){
+    memset(BarPoint,barcol,xlen);
+    BarPoint+=SCREENBREITE;
+  }
 
-// Balken soweit zeichnen, wie die Ver"anderung ausmacht.
-	for(i=0;i<AllBars[BarCode].hgt;i++){
-		memset(BarPoint,barcol,xlen);
-		BarPoint+=SCREENBREITE;
-	}
-
-	AllBars[BarCode].oldval=Wert;
-}
+  AllBars[BarCode].oldval=Wert;
+} // void DrawBar(...)
 
 /*@Function============================================================
 @Desc: SayLeftInfo( char* text):
@@ -162,8 +168,8 @@ void SayRightInfo(char *text, unsigned char *screen)
 * $Function----------------------------------------------------------*/
 void DisplayRahmen(unsigned char *screen)
 {
-  unsigned int bg;
-  unsigned int fg;
+  // unsigned int bg;
+  // unsigned int fg;
   
   DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
 
@@ -210,7 +216,6 @@ void UpdateInfoline(void)
   static char LastLeft[50];			/* the change-detectors */
   static char LastRight[50];
   int NoNeedToSaveEnv = 1;
-  int i;
 
   if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
 	
@@ -229,7 +234,7 @@ void UpdateInfoline(void)
 
   if (!NoNeedToSaveEnv) RestoreTextEnvironment();
   return;
-} /* UpdateInfoline */
+} // void UpdateInfoline(void)
 
 #undef _rahmen_c
 

@@ -42,53 +42,53 @@ typedef grob_Point Vect;
 
 
 typedef struct {
-   const char *druidname;
-   byte maxspeed;    /* the maximum of speed it can go */
-   char class;
-   byte accel;       /* its acceleration */
-   int maxenergy;    /* the maximum energy the batteries can carry */
-   byte lose_health; /* the energy/time the duid loses under influence-control */
-   byte gun;         /* Which gun does this druid use */
-   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
-	byte aggression;	/* The aggressiveness of this druidtype */
-	byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
-	byte flashimmune;	/* is the droid immune to FLASH-bullets */
-	int score;			/* Punkte f"ur die Vernichtung dieses Modells */
-   char *notes;		/* notes on the druid of this type */
+  const char *druidname;
+  byte maxspeed;    /* the maximum of speed it can go */
+  int class;
+  byte accel;       /* its acceleration */
+  int maxenergy;    /* the maximum energy the batteries can carry */
+  byte lose_health; /* the energy/time the duid loses under influence-control */
+  byte gun;         /* Which gun does this druid use */
+  byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
+  byte aggression;	/* The aggressiveness of this druidtype */
+  byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
+  byte flashimmune;	/* is the droid immune to FLASH-bullets */
+  int score;			/* Punkte f"ur die Vernichtung dieses Modells */
+  char *notes;		/* notes on the druid of this type */
 } druidspec, *Druidspec;
 
 typedef struct {
-   byte type;         /* what kind of druid is this ? */
-   byte status;       /* attacking, defense, dead, ... */
-   vect speed;       /* the current speed of the druid */
-   point pos;        /* current position in level levelnum */
-   int health;			/* the max. possible energy in the moment */
-   int energy;       /* current energy */
-	byte firewait;		/* counter after fire */
-   byte  phase;        /* the current phase of animation */
-   int autofire;		/* Status of the Firecontrolautomatics */
-   int vneut;			/* Status of Velocityneutralizer for the gun */
-   int MyFCU;			/* FCU (Fire Control Unit) installed */
-   int MyShield;		/* Shield device installed */
-   int Shield[4];		/* Status of Partial Shields */
+  int type;         /* what kind of druid is this ? */
+  byte status;       /* attacking, defense, dead, ... */
+  vect speed;       /* the current speed of the druid */
+  point pos;        /* current position in level levelnum */
+  int health;			/* the max. possible energy in the moment */
+  int energy;       /* current energy */
+  byte firewait;		/* counter after fire */
+  byte  phase;        /* the current phase of animation */
+  int autofire;		/* Status of the Firecontrolautomatics */
+  int vneut;			/* Status of Velocityneutralizer for the gun */
+  int MyFCU;			/* FCU (Fire Control Unit) installed */
+  int MyShield;		/* Shield device installed */
+  int Shield[4];		/* Status of Partial Shields */
 } influence_t, *Influence_t;
 
 typedef struct {
-	byte type;			/* gibt die Nummer in Druidmap an */
-	byte levelnum;		/* Level in dem sich enemy befindet */
-	point pos;			/* gibt die Koordinaten der Momentanposition an */
-	vect speed;			/* current speed  */
-	int energy;		/* gibt die Energie dieses Robots an */
-	byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
-	int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
-	byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
-	byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
-	byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-	byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
-	byte passable;			/* Zeit (counter), in der druid passable ist */
-	byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
-	byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
-	int Shield[4];		// Status of Partial shields
+  byte type;			/* gibt die Nummer in Druidmap an */
+  int levelnum;		/* Level in dem sich enemy befindet */
+  point pos;			/* gibt die Koordinaten der Momentanposition an */
+  vect speed;			/* current speed  */
+  int energy;		/* gibt die Energie dieses Robots an */
+  byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
+  int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
+  byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
+  byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
+  byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  byte passable;			/* Zeit (counter), in der druid passable ist */
+  byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+  byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+  int Shield[4];		// Status of Partial shields
 } enemy, *Enemy;
 
 typedef struct {
@@ -153,16 +153,16 @@ typedef struct {
 } waypoint, *Waypoint;
 
 typedef struct {
-	byte empty;
-   byte levelnum;				/* Number of this level */
-   char *Levelname;			/* Name of this level */
-   byte xlen;    /* X dimension */
-   byte ylen;
-   byte color;
-   char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
-   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
-   grob_point doors[MAX_DOORS_ON_LEVEL];
-   waypoint AllWaypoints[MAXWAYPOINTS];
+  byte empty;
+  unsigned int levelnum;				/* Number of this level */
+  char *Levelname;			/* Name of this level */
+  unsigned int xlen;    /* X dimension */
+  unsigned int ylen;
+  unsigned int color;
+  char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
+  grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
+  grob_point doors[MAX_DOORS_ON_LEVEL];
+  waypoint AllWaypoints[MAXWAYPOINTS];
 } level, *Level; 
 
 typedef struct {
@@ -201,7 +201,16 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.7  1994/06/19 16:41:38  prix
+ * Revision 1.11  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ * Revision 1.10  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.10  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.7  1994/06/19  16:41:38  prix
  * Thu Sep 30 13:57:49 1993: Header moved to end of file
  * Sun Oct 03 09:07:38 1993: enemy-struct hat "onscreen" dazubekommen
  * Sun Oct 03 09:16:34 1993: "flashimmune" added to druidspec

@@ -5,11 +5,16 @@
  *	 
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
  * $Log$
+ * Revision 1.10  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ *
  * Revision 1.9  1997/06/08 14:49:40  jprix
  * Added file FILES describing the files of this project.
  * Added more doku while writing the files description.
@@ -25,7 +30,8 @@
  * yiff server access introduced to the project. (This version was not compilable without YIFF. SORRY!)
  *
  * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ * Johannes latest (and last) non-cvs version to be checked in. 
+ * Added graphics,sound,map-subdirs. Sound support using ALSA started.
  *
  * Revision 1.5  1997/05/31 13:30:32  rprix
  * Further update by johannes. (sent to me in tar.gz)
@@ -39,8 +45,8 @@
  *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #ifndef _sound_c
 #define _sound_c
@@ -417,7 +423,7 @@ void MakeSound(tune* ThisTune){
 } // void MakeSound(tune* ThisTune)
 
 void Play_YIFF_Server_Sound(int Tune){
-  static int previous_channel;
+  //  static int previous_channel;
 #define NUMBER_OF_CHANNELS 2
 
 
@@ -598,7 +604,7 @@ int Init_YIFF_Sound_Server(void){
   //
 
 #endif
-
+  return(OK);
 } // void Init_YIFF_Sound_Server(void)
 
 
@@ -729,8 +735,8 @@ int InitModPlayer(void)
   //		return OK;
   //	}
   //	AllreadyInitialized=1;
-  //	return OK;
-}
+  return OK;
+} // void InitModPlayer(void)
 
 /*@Function============================================================
 @Desc: PlayMod();

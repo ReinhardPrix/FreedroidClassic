@@ -5,15 +5,20 @@
  *	 
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
+ * $Log$
+ * Revision 1.18  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
  *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _misc_c
 
@@ -217,11 +222,10 @@ void Teleport(int LNum,int X,int Y)
    **********************************************************************/
 void Cheatmenu(void){
   char CTaste=' ';
-  char *userInput;
-  int vgamode;
+  // int vgamode;
   char NewRoboType[80]; // name of new influencer robot-type, i.e. "123"
   int Weiter=0;
-  int LNum,X,Y,i,RN,dummy;
+  int LNum,X,Y,i;
   int X0=20, Y0=5;   // startpos for gl_- text writing
 
   // return to normal keyboard operation
@@ -637,14 +641,14 @@ void InsertMessage(char* MText)
 	Par Sicherheitsvorkehrungen.
 	**********************************************************************/
 void* MyMalloc(long Mamount){
-	void* Mptr=NULL;
+  void* Mptr=NULL;
 	
-	if ((Mptr=malloc((size_t)Mamount)) == NULL) {
-		printf(" MyMalloc(%d) did not succeed!\n",Mamount);
-		getchar();
-	}
-	return Mptr;
-}
+  if ((Mptr=malloc((size_t)Mamount)) == NULL) {
+    printf(" MyMalloc(%ld) did not succeed!\n",Mamount);
+    getchar();
+  }
+  return Mptr;
+} // void* MyMalloc(long Mamount)
 	
 /*@Function============================================================
 @Desc: DirToVect

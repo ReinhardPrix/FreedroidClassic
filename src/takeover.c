@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
  * Revision 1.6  1997/06/08 14:49:40  jprix
  * Added file FILES describing the files of this project.
  * Added more doku while writing the files description.
@@ -30,14 +33,16 @@
  *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _takeover_c
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/asoundlib.h>
+#include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -167,7 +172,6 @@ void InitTakeover(void)
 * $Function----------------------------------------------------------*/
 int Takeover(int enemynum)
 {
-  int taste;
   int row;
   int FinishTakeover = FALSE;
   int waiter = 0;
@@ -380,7 +384,6 @@ void PlayGame(void)
 {
   int countdown = GAME_COUNTDOWN*2;
   char dummy[80];
-  int taste;
   int FinishTakeover = FALSE;
   int waiter = 0;
   int row;
@@ -1161,80 +1164,75 @@ void ProcessPlayground(void)
 
 /*@Function============================================================
 @Desc:  ProcessDisplayColumn(): setzt die Korrekten Werte in der Display-
-										Saeule. Blinkende LEDs werden ebenfalls hier
-										realisiert
+        Saeule. Blinkende LEDs werden ebenfalls hier realisiert
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void ProcessDisplayColumn(void)
 {
-	static int CLayer = 3;			/* the connection-layer to the Column */	
-	static int flicker_color=0;
-	int row, color;
-	int GelbCounter, ViolettCounter;
-	int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
-
-	flicker_color = !flicker_color;
- 	
-	for( row=0; row < NUM_LINES; row++ ) {
+  static int CLayer = 3;			/* the connection-layer to the Column */	
+  static int flicker_color=0;
+  int row;
+  int GelbCounter, ViolettCounter;
+  int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
+  
+  flicker_color = !flicker_color;
+  
+  for( row=0; row < NUM_LINES; row++ ) {
 		
-		/* eindeutig gelb */
-		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
-			/* Farbtauscher ??? */
-			if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
-				DisplayColumn[row] = VIOLETT;
-			else
-				DisplayColumn[row] = GELB;
-				
-			continue;
-		}
-
+    /* eindeutig gelb */
+    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
+      /* Farbtauscher ??? */
+      if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
+	DisplayColumn[row] = VIOLETT;
+      else
+	DisplayColumn[row] = GELB;
+      continue;
+    }
 	
-		/* eindeutig violett */
-		if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-			/* Farbtauscher ??? */
-			if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
-				DisplayColumn[row] = GELB;
-			else
-				DisplayColumn[row] = VIOLETT;
-				
-			continue;
-		}
+    /* eindeutig violett */
+    if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+      /* Farbtauscher ??? */
+      if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
+	DisplayColumn[row] = GELB;
+      else
+	DisplayColumn[row] = VIOLETT;
+      
+      continue;
+    }
 
-		/* unentschieden: Flimmern */
-		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-			/* Farbtauscher - Faelle */
-			if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
-				(ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
-				DisplayColumn[row] = VIOLETT;
-			else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
-					(ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
-						DisplayColumn[row] = GELB;
-			else {
-				if( flicker_color == 0 ) DisplayColumn[row] = GELB;
-				else DisplayColumn[row] = VIOLETT;
-			} /* if - else if - else */
-			
-		} /* if unentschieden */
-		
-
-	} /* for */
-
-	/* Win Color beurteilen */
-	GelbCounter = 0;
-	ViolettCounter = 0;
-	for( row = 0; row < NUM_LINES; row ++) 
-		if( DisplayColumn[row] == GELB ) GelbCounter ++;
-		else ViolettCounter ++;
-
-	if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
-	else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
-	else LeaderColor = REMIS;
-	
+    /* unentschieden: Flimmern */
+    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+      /* Farbtauscher - Faelle */
+      if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
+	  (ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
+	DisplayColumn[row] = VIOLETT;
+      else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
+	       (ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
+	DisplayColumn[row] = GELB;
+      else {
+	if( flicker_color == 0 ) DisplayColumn[row] = GELB;
+	else DisplayColumn[row] = VIOLETT;
+      } /* if - else if - else */
+      
+    } /* if unentschieden */
+    
+  } /* for */
+  
+  /* Win Color beurteilen */
+  GelbCounter = 0;
+  ViolettCounter = 0;
+  for( row = 0; row < NUM_LINES; row ++) 
+    if( DisplayColumn[row] == GELB ) GelbCounter ++;
+    else ViolettCounter ++;
+  
+  if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
+  else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
+  else LeaderColor = REMIS;
 	
 } /* ProcessDisplayColumn */
 
@@ -1247,21 +1245,21 @@ void ProcessDisplayColumn(void)
 * $Function----------------------------------------------------------*/
 void ProcessCapsules(void)
 {
-	int row;
-	int color;
-
-	for( color=GELB; color <= VIOLETT; color++ )
-		for( row = 0; row < NUM_LINES; row ++ ) {
-			if( CapsuleCountdown[color][row] > 0 )
-				CapsuleCountdown[color][row] --;
-				
-			if( CapsuleCountdown[color][row] == 0 ) {
-				CapsuleCountdown[color][row] = -1;
-				ToPlayground[color][0][row] = KABEL;
-			}
-
-		} /* for row */
-		
+  int row;
+  int color;
+  
+  for( color=GELB; color <= VIOLETT; color++ )
+    for( row = 0; row < NUM_LINES; row ++ ) {
+      if( CapsuleCountdown[color][row] > 0 )
+	CapsuleCountdown[color][row] --;
+      
+      if( CapsuleCountdown[color][row] == 0 ) {
+	CapsuleCountdown[color][row] = -1;
+	ToPlayground[color][0][row] = KABEL;
+      }
+      
+    } /* for row */
+  
 } /* ProcessCapsules() */		
 		
 

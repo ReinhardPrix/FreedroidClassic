@@ -8,9 +8,15 @@
  *	 
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
+ *
+ * $Log$
+ * Revision 1.15  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
  *
  *-@Header------------------------------------------------------------*/
 

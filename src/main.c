@@ -10,8 +10,9 @@
  * $Author$
  *
  *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _paraplus_c
 
@@ -75,7 +76,6 @@
 #define SCROLLSTARTY		SCREENHOEHE
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
-int SetDebugPos=FALSE;
 int ThisMessageTime;
 
 int card = 0;
@@ -257,6 +257,7 @@ int main(void)
     } /* while !GameOver */
   } /* while !QuitProgram */
   Terminate(0);
+  return (0);
 } // void main(void)
 
 /*@Function============================================================
@@ -322,7 +323,6 @@ void Debriefing(void){
   HallElement* Oldptr;
   HallElement* Newptr;
   HallElement* SaveHallptr=Hallptr;
-  char* PName;
   int DebriefColor;
 
   printf("\nvoid Debriefing(void): Real function call confirmed.");
@@ -458,7 +458,6 @@ void Pause(void){
 	scrollen.
 	**********************************************************************/
 void ShowHighscoreList(void){
-  int j,k;
   int Rankcounter=0;
   HallElement* SaveHallptr=Hallptr;
 
@@ -488,7 +487,7 @@ void ShowHighscoreList(void){
   // return to raw kb mode
   keyboard_init();
   
-}
+} // void ShowHighscoreList(void)
 
 void UpdateCountersForThisFrame(void){
   // Here are some things, that were previously done by some periodic interrupt function

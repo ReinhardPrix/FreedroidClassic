@@ -8,9 +8,16 @@
  *
  * $Author$
  *
+ * $Log$
+ * Revision 1.2  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ * 
+ *
  *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _parainit_c
 
@@ -203,9 +210,7 @@ void InitNewGame(void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void InitParaplus(void)
-{
-  int i;
+void InitParaplus(void) {
 
   printf("void InitParaplus(void) wurde echt aufgerufen....\n");
 
@@ -394,9 +399,6 @@ void InitParaplus(void)
 * $Function----------------------------------------------------------*/
 void Title(void)
 {
-  char LTaste;
-  int i,j;
-  int LX,LY;
   int ScrollEndLine = USERFENSTERPOSY;		/* Endpunkt des Scrollens */
   int OldUpdateStatus = InterruptInfolineUpdate;
 

@@ -4,14 +4,20 @@
  * @Desc: functions to make keyboard access via svgalib somewhat easyer.
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
  *
+ * $Log$
+ * Revision 1.5  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
+ *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _keyboard_c
 
@@ -160,7 +166,7 @@ int SetTypematicRate(unsigned char Rate){
 @Int:
 * $Function----------------------------------------------------------*/
 void JoystickControl(void){
-	int JoyB, JoyX, JoyY;
+  // int JoyB, JoyX, JoyY;
 
 	//	if (!GameAdapterPresent)
 	//		return;

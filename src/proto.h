@@ -158,6 +158,7 @@ EXTERN int InitPictures(void);
 EXTERN void SwapScreen(void);
 EXTERN void ClearVGAScreen(void);
 EXTERN void Monitorsignalunterbrechung(int);
+EXTERN void SetColors(int FirstCol, int PalAnz, char* PalPtr);
 EXTERN void SetPalCol(unsigned int palpos,	unsigned char rot, unsigned char gruen, unsigned char blau );
 EXTERN void SetPalCol2(unsigned int palpos, color Farbwert);
 EXTERN int InitLevelColorTable(void);
@@ -237,6 +238,7 @@ EXTERN void PlayMod(char *modfile);
 #define EXTERN extern
 #endif
 
+EXTERN void ClearKbState(void);
 EXTERN int LeftPressed(void);
 EXTERN int RightPressed(void);
 EXTERN int UpPressed(void);
@@ -303,6 +305,7 @@ EXTERN int ClassOfDruid(int druidtype);
 #else
 #define EXTERN extern
 #endif
+EXTERN void ShowDeckMap(Level deck);
 EXTERN void EnterElevator(void);
 EXTERN void EnterKonsole(void);
 EXTERN void AlleLevelsGleichFaerben(void);

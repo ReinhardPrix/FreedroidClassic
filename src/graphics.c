@@ -5,6 +5,7 @@
  *        to activate or deachtivate monitor signal, to set video modes etc.
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
@@ -26,8 +27,8 @@
  *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _graphics_c
 
@@ -65,8 +66,6 @@
 #include "paratext.h"
 #include "colodefs.h"
 
-static unsigned char VideoMode;
-//PORT static void far* VideoSavePointer;
 extern int TimerFlag;
 
 
@@ -81,12 +80,7 @@ extern int TimerFlag;
 @Int:
 * $Function----------------------------------------------------------*/
 int InitPictures(void) {
-
   int i;
-  char *druidpics;
-  char *tmp;
-  int druidmem;
-  int picts;
 
   /* First read the map blocks */
   GetMapBlocks();
@@ -179,7 +173,6 @@ unsigned char* MemSearch(
 		unsigned char* SEnd,
 		unsigned char *SString);
 		
-void SetColors(int FirstCol, int PalAnz, char* PalPtr);
 void PlusDrawEnergyBar(void);
 
 /*@Function============================================================
@@ -309,13 +302,13 @@ int InitLevelColorTable(void){
   LevelColorArray=MyMalloc(ALLLEVELCOLORS*3*FARBENPROLEVEL+10);	// NICHT FREIGEBEN
   if ( (ColorFile=fopen(COLORFILE,"r")) == NULL ) return (FALSE);
   for (i=0;i<ALLLEVELCOLORS*FARBENPROLEVEL;i++) {
-    if (fscanf(ColorFile,"%d %d %d", &LevelColorArray[i*3],
+    if (fscanf(ColorFile,"%hhd %hhd %hhd", &LevelColorArray[i*3],
 	       &LevelColorArray[3*i+1],&LevelColorArray[3*i+2]) == EOF)
       return (FALSE);
   }
   fclose(ColorFile);
   return (TRUE);
-}
+} // int InitLevelColorTable(void)
 
 /*@Function============================================================
 @Desc: 
@@ -522,8 +515,8 @@ void UnfadeLevel(void)
 * $Function----------------------------------------------------------*/
 void FadeLevel(void)
 {
-  char* CMAPBuffer;
-  int CMAPOffset,CMAPSegment,i,ii;
+  // char* CMAPBuffer;
+  // int CMAPOffset,CMAPSegment,i,ii;
 
   // 
   // THIS CRAP WAS IN BEFORE THE PORT!!!!!!!!!!
@@ -577,11 +570,11 @@ void FadeColors1(void)
 */
 
 /* lokale Variablen der Funktion */
-char* CMAPBuffer;
-int CMAPOffset=0;
-int CMAPSegment=0;
-int i;
-int ii;
+  // char* CMAPBuffer;
+  // int CMAPOffset=0;
+  // int CMAPSegment=0;
+  // int i;
+  // int ii;
 
 /* Speicherplatz fuer die Farbregister reservieren  */
 //	CMAPBuffer=MyMalloc(257*3);		// wird wieder freigegeben 
@@ -636,11 +629,11 @@ void FadeColors2(void)
 */
 
 /* lokale Variablen der Funktion */
-char* CMAPBuffer;
-int CMAPOffset=0;
-int CMAPSegment=0;
-int i;
-int ii;
+  // char* CMAPBuffer;
+  // int CMAPOffset=0;
+  // int CMAPSegment=0;
+  // int i;
+  // int ii;
 
 /* Speicherplatz fuer die Farbregister reservieren  */
 //	CMAPBuffer=MyMalloc(257*3);			// wird wieder freigegeben
@@ -716,8 +709,6 @@ void LadeZeichensatz(char* Zeichensatzname)
   /* lokale Variablen der Funktion */
   unsigned char* Zeichensatzpointer;
   FILE* CharDateiHandle;
-  unsigned int SatzSegment;
-  unsigned int SatzOffset;
   int i,j,k;
 
 
@@ -798,9 +789,9 @@ void RotateColors(register int ColNum1,register int ColNum2)
   //	register unsigned char Zwisch[3];
   
   //	register int AnzColors = ColNum2 - ColNum1 +1;
-  int ColOfs;
-  int ColSeg;
-  int i;
+  // int ColOfs;
+  // int ColSeg;
+  // int i;
 
   //	if( FarbFeldPointer == NULL ) FarbFeldPointer = MyMalloc(1000);
   
@@ -901,7 +892,6 @@ void SetPalCol2(unsigned int palpos, color Farbwert)
 
 void Flimmern(void){
   int i;
-  int j;
   unsigned char* Screenptr;
   unsigned char* Junkptr;
   

@@ -6,15 +6,22 @@
  *	  of the SVGALIB or the fonts used for the horizontal srolling message line!
  * 	
  * $Revision$
+ *
  * $State$
  *
  * $Author$
+ *
+ * $Log$
+ * Revision 1.6  1997/06/08 16:33:10  jprix
+ * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *
  *
  *-@Header------------------------------------------------------------*/
 
 #define _paratext_c
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <vga.h>
@@ -341,7 +348,6 @@ void DisplayText(
 		 ) 
 {
   char *tmp; /* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
-  int i;
 
   printf("\nvoid DisplayText(...): Funktion echt aufgerufen.");
 
@@ -421,7 +427,7 @@ void DisplayWord(char* Worttext){
 @Int:
 * $Function----------------------------------------------------------*/
 void DisplayChar(unsigned char Zeichen, unsigned char *screen){
-  int i,j;
+  int i;
   int ZNum = Zeichen - ' ';
   int ZLen = CharLenList[ZNum];
   
@@ -510,7 +516,7 @@ MaxLen: max. Laenge des Strings
 char* GetString(int MaxLen){
   char *instring;		/* Pointer auf eingegebenen String */
   char *loeschstring;	/* String zum Loeschen der Eingabe-Zeile */
-  char taste;				/* eingeg. Zeichen */
+  // PORT char taste;				/* eingeg. Zeichen */
   int charcounter = 0;	/* zaehlt eingeg. Zeichen mit */
   int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
 
