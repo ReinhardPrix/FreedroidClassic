@@ -2420,7 +2420,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	{
 	  // We announce that we have taken the item
 	  Me[0].TextVisibleTime = 0;
-	  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].ItemName );
+	  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
 	  Me[0].TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
 	  strcpy ( Me[0].TextToBeDisplayed , TempText );
 	  

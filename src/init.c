@@ -296,7 +296,7 @@ Get_Item_Data ( char* DataPointer )
       ItemPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the name of this item
-      ItemMap[ItemIndex].ItemName = ReadAndMallocStringFromData ( ItemPointer , ITEM_NAME_INDICATION_STRING , "\"" ) ;
+      ItemMap[ItemIndex].item_name = ReadAndMallocStringFromData ( ItemPointer , ITEM_NAME_INDICATION_STRING , "\"" ) ;
 
       // Now we read in if this item can be used by the influ without help
       YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_APPLIED_IN_COMBAT , "\"" ) ;
@@ -1068,7 +1068,7 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the greeting sound type of this droid type
       ReadValueFromString( RobotPointer , ENEMY_GOT_HIT_SOUND_STRING , "%d" , 
-			   &Druidmap[RobotIndex].Got_Hit_Sound_Type , EndOfDataPointer );
+			   &Druidmap[RobotIndex].got_hit_sound_type , EndOfDataPointer );
 
       // Now we read in the to-hit chance this robot has in combat against an unarmoured target
       ReadValueFromString( RobotPointer , TO_HIT_STRING , "%d" , 
@@ -1080,7 +1080,7 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].AdvancedBehaviour , EndOfDataPointer );
+			   &Druidmap[RobotIndex].advanced_behaviour , EndOfDataPointer );
 
       // Now we read in the is_human flag of this droid type
       ReadValueFromString( RobotPointer , IS_HUMAN_SPECIFICATION_STRING , "%d" , 
@@ -1088,7 +1088,7 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in if the droid tends to go to call for reinforcements
       ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].CallForHelpAfterSufferingHit , EndOfDataPointer );
+			   &Druidmap[RobotIndex].call_for_help_after_getting_hit , EndOfDataPointer );
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.

@@ -355,9 +355,9 @@ ReactToSpecialKeys(void)
 
       for ( i=0 ; i < ALL_ITEMS ; i ++ )
 	{
-	  if ( ItemMap[ i ].ItemName == NULL ) continue;
-	  DebugPrintf( 0 , "\n\nItemName: %s " , ItemMap[ i ].ItemName );
-	  DebugPrintf( 0 , "\nItemClass: %s " , ItemMap[ i ].ItemClass );
+	  if ( ItemMap[ i ].item_name == NULL ) continue;
+	  DebugPrintf( 0 , "\n\nitem_name: %s " , ItemMap[ i ].item_name );
+	  DebugPrintf( 0 , "\nitem_class: %s " , ItemMap[ i ].item_class );
 	  DebugPrintf( 0 , "\nitem_can_be_applied_in_combat: %d " , ItemMap[ i ].item_can_be_applied_in_combat );
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_influ: %d " , ItemMap[ i ].item_can_be_installed_in_influ );
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );
@@ -375,14 +375,14 @@ ReactToSpecialKeys(void)
 
 	  if ( Druidmap[ i ].drive_item.type != (-1 ) )
 	    DebugPrintf( 0 , "\ndrive_item: %d (%s)" , 
-			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].ItemName );
+			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].item_name );
 	  else DebugPrintf( 0 , "\ndrive_item: NONE " );
 
 	  DebugPrintf( 0 , "\nweapon_item: %d " , Druidmap[ i ].weapon_item.type );
 	  fflush( stdout );
 	  if ( Druidmap[ i ].weapon_item.type != (-1 ) )
 	    DebugPrintf( 0 , "\nweapon_item: %d (%s) " , 
-			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].ItemName );
+			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].item_name );
 	  else DebugPrintf( 0 , "\nweapon_item: NONE" );
 
 	}

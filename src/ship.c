@@ -684,7 +684,7 @@ show_droid_info (int droidtype, int page)
 {
   char InfoText[1000];
   char None[20] = "none";
-  char *ItemName;
+  char *item_name;
   int type;
   SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
@@ -705,21 +705,21 @@ Drive : %s \n\
 Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me[0].type].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
-	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].ItemName,
+	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
       if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
-	ItemName = ItemMap[type].ItemName;                     /* does not segfault */
+	item_name = ItemMap[type].item_name;                     /* does not segfault */
       else 
-	ItemName = None;
+	item_name = None;
 
       sprintf( InfoText , "\
 Unit type %s - %s\n\
 Armamant : %s\n\
 Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
 	       Classname[Druidmap[droidtype].class],
-	       ItemName,
+	       item_name,
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);

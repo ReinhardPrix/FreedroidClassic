@@ -268,8 +268,8 @@ typedef struct
 
 typedef struct
 {
-  char* ItemName;
-  char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
+  char* item_name;
+  char* item_class;  // class of the item, e.g. weapon, drive, shield, other
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
   int item_can_be_installed_in_weapon_slot;
@@ -389,11 +389,11 @@ typedef struct
   item aux2_item;
 
   int greeting_sound_type; // which sample to play in order to 'greet' the influencer?
-  int Got_Hit_Sound_Type; // which sample to play in order to 'greet' the influencer?
+  int got_hit_sound_type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target
   int getting_hit_modifier; // modifier for this droid to receive a hit from the player
-  int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
-  int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
+  int advanced_behaviour;        // Does this droid behave better that in the original paradroid?
+  int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
   int is_human;
