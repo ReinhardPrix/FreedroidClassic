@@ -240,6 +240,22 @@ exist really (i.e. has a type = (-1) ).",
 	  strcat( ItemDescText , linebuf );
 	  break;
 
+	case ITEM_SPELLBOOK_OF_HEALING:
+	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
+	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
+	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
+	case ITEM_SPELLBOOK_OF_ICE_BOLT:
+	case ITEM_SPELLBOOK_OF_POISON_BOLT:
+	case ITEM_SPELLBOOK_OF_PETRIFICATION:
+	case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
+	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
+	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+	  sprintf( linebuf , "Permanently aquire this skill/spell\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
 	default:
 	  sprintf( linebuf , "USE UNDESCRIBED YET\n" );
 	  strcat( ItemDescText , linebuf );
