@@ -442,15 +442,14 @@ Allowed Type of Random Droid for this level: 302
 
 ** Beginning of new Level **
 Level=12
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
-Allowed Type of Random Droid for this level: 123
-Allowed Type of Random Droid for this level: 139
-Allowed Type of Random Droid for this level: 329
-Allowed Type of Random Droid for this level: 742
-Allowed Type of Random Droid for this level: 751
-Allowed Type of Random Droid for this level: 821
-Allowed Type of Random Droid for this level: 834
+Maximum number of Random Droids=85
+Minimum number of Random Droids=85
+Allowed Type of Random Droid for this level: 140
+Allowed Type of Random Droid for this level: 124
+Allowed Type of Random Droid for this level: 248
+Allowed Type of Random Droid for this level: 250
+Allowed Type of Random Droid for this level: DAP
+S**pecialForce: Type=DAP X=29 Y=21 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
 ** End of this levels droid data **
 
 ** Beginning of new Level **
