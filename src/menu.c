@@ -2090,9 +2090,9 @@ Credits_Menu (void)
                                       Doris Stubenrauch\n\n\
                                       Johannes Prix\n\n\
                                       Mbrola\n\
-                                       text-to-speech-system\n\n\
+                                       text-to-speech-system\n\n\n\
    .rpm AND .deb PACKAGING:\n\n\
-                                      Ted Cipichio\n\n\
+                                      Ted Cipicchio\n\n\
                                       The Doctor\n\n\n\n\n";
 
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
