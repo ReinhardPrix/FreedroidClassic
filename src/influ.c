@@ -51,6 +51,7 @@
 #define BEST_CHAT_DISTANCE_IN_SQUARES ( BEST_MELEE_DISTANCE_IN_SQUARES + 0.2 )
 #define DISTANCE_TOLERANCE (0.2)
 #define FORCE_FIRE_DISTANCE (1.5)
+#define ATTACK_BOXES_DISTANCE (2.0)
 #define DROID_SELECTION_TOLERANCE (0.9)
 
 #define REFRESH_ENERGY		3
@@ -598,7 +599,7 @@ MoveInfluence ( int PlayerNum )
        ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) && 
        ( Me [ PlayerNum ] . status == WEAPON ) && 
        ( NoInfluBulletOnWay ( ) ) )
-    FireBullet ( PlayerNum );
+    AnalyzePlayersMouseClick ( PlayerNum );
 
   //--------------------
   // The influ should lose some of his speed when no key is pressed and
@@ -1266,11 +1267,6 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 	  TargetFound = i;
 	}      
 
-      //--------------------
-      // So this must be a possible target for the next weapon swing.  Yes, there
-      // is some living droid beneath the mouse cursor.
-      //
-      // return ( i );
     }
 
   //--------------------
@@ -1310,11 +1306,14 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
 	  break;
 	}
     }
-
   // didn't find any free bullet entry? --> take the first
   if (CurBullet == NULL)
     CurBullet = &AllBullets[0];
 
+  //--------------------
+  // Now that we have found a fresh and new bullet entry, we can start
+  // to fill in sensible values...
+  //
   CurBullet->pos.x = Me [ PlayerNum ] .pos.x;
   CurBullet->pos.y = Me [ PlayerNum ] .pos.y;
   CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
@@ -1404,8 +1403,8 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   
   CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
 
-  DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
-  DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
+  DebugPrintf( 1 , "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
+  DebugPrintf( 1 , "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
   
   CurBullet->speed.x *= BulletSpeed;
   CurBullet->speed.y *= BulletSpeed;
@@ -1422,22 +1421,14 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
 
 }; // void FireTuxRangedWeaponRaw ( PlayerNum ) 
 
-
 /* ----------------------------------------------------------------------
- * This function fires a bullet from the influencer in some direction, or
- * at least it TRIES to fire a bullet from the influencer, cause maybe
- * the influencer can't fire for this reason or another right now...
+ * In some cases, the mouse button will be pressed, but still some signs
+ * might tell us, that this mouse button press was not intended as a move
+ * or fire command to the Tux.  This function checks for these cases.
  * ---------------------------------------------------------------------- */
-void
-FireBullet ( int PlayerNum )
+int 
+ButtonPressWasNotMeantAsFire( PlayerNum )
 {
-  int i = 0;
-  int guntype = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  moderately_finepoint Weapon_Target_Vector;
-  float angle;
-
-  DebugPrintf ( 2 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
-
   // If the influencer is holding something from the inventory
   // menu via the mouse, also just return
   // if ( Item_Held_In_Hand != (-1) ) return;
@@ -1462,7 +1453,7 @@ FireBullet ( int PlayerNum )
 		   User_Rect.x , User_Rect.w , User_Rect.y , User_Rect.h );
       DebugPrintf( 0 , "\nCursor position: X=%d, Y=%d." ,
 		   ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) );
-      return;
+      return ( TRUE );
     }
 
   //--------------------
@@ -1476,121 +1467,32 @@ FireBullet ( int PlayerNum )
 	 CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
-      return;
+      return (TRUE) ;
     }
-
 
   //--------------------
   // And also if the whole screen is filled with inventory or other screens, then we will
   // of course not fire any weapon or something but rather return immediately.
   //
-  if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return;
+  if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return (TRUE) ;
 
-  //--------------------
-  // Now the new mouse move:  If there is no enemy below the mouse cursor, we interpret
-  // a move to that location, not a fire command.
-  //
-  // Also if the target is pretty close, we interpret a fireing command.
-  //
-  if ( 
-      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
-	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
-	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) &&
-	( Me [ PlayerNum ] . mouse_move_target_is_enemy == (-1) ) )
-      )
-    {
-      //--------------------
-      // Later, we will add the new mouse move intention at this point
-      //
-      Me [ PlayerNum ] . mouse_move_target . x = 
-	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
-      Me [ PlayerNum ] . mouse_move_target . y = 
-	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
-      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+  return ( FALSE );
 
-      // Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+}; // void ButtonPressWasNotMeantAsFire( PlayerNum )
 
-      return;
-
-    }
-
-  if ( ( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
-       ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
-       ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
-    {
-      //--------------------
-      // Later, we will add the new mouse move intention at this point
-      //
-      Me [ PlayerNum ] . mouse_move_target . x = 
-	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
-      Me [ PlayerNum ] . mouse_move_target . y = 
-	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
-      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
-
-      Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
-
-    }
-
-  if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
-    {
-      //--------------------
-      // Perhaps the player is just targeting a crushable box now.
-      // Then of course we must not return, but execute the stroke!!
-      //
-      if ( ( ( fabsf ( Me [ PlayerNum ] . mouse_move_target . x - 
-		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
-	     ( fabsf ( Me [ PlayerNum ] . mouse_move_target . y - 
-		       Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) ) ||
-	   ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change == 0 ) )
-	{
-	  // don't return, but do the attack...
-	  //
-	  Me [ PlayerNum ] . mouse_move_target . x = 
-	    Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
-	  Me [ PlayerNum ] . mouse_move_target . y = 
-	    Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
-	  Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
-	}
-      else
-	{
-	  return;
-	}
-    }
-
-
-  if ( ( LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) 
-    {
-      //--------------------
-      // We assign the target robot of the coming attack operation.
-      // In case of no robot, we should get (-1), which is also serving us well.
-      //
-      Me [ PlayerNum ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( PlayerNum ) ;
-      
-      //--------------------
-      // It would be tempting to return now, but perhaps the player is just targeting and fighting a robot.
-      // Then of course we must not return, but execute the stroke!!
-      //
-      if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
-	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x - 
-		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
-	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y - 
-		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) &&
-	   ( !AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) )
-	{
-	  // don't return, but do the attack...
-	  //
-	}
-      else
-	{
-	  return;
-	}
-
-    }
-
-  // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
-  if ( Me [ PlayerNum ] .firewait > 0 )
-    return;
-
+/* ----------------------------------------------------------------------
+ * At some point in the analysis of the users mouse click, we'll be 
+ * certain, that a fireing/weapon swing was meant with the click.  Once
+ * this is knows, this function can be called to do the mechanics of the
+ * weapon use.
+ * ---------------------------------------------------------------------- */
+void
+PerformTuxAttackRaw ( int PlayerNum ) 
+{
+  int guntype = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  float angle;
+  moderately_finepoint Weapon_Target_Vector;
+  int i;
 
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)
@@ -1604,7 +1506,7 @@ FireBullet ( int PlayerNum )
   DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
 
   //--------------------
-  // We always start the weapon application cycle, i.e. change of tux
+  // We always start the weapon application cycle, i.e. change of Tux
   // motion phases
   //
   Me [ PlayerNum ] . weapon_swing_time = 0;
@@ -1682,9 +1584,104 @@ FireBullet ( int PlayerNum )
 
   FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
 
+}; // void PerformTuxAttackRaw ( int PlayerNum ) ;
 
-  return;
-}; // void FireBullet ( int PlayerNum )
+/* ----------------------------------------------------------------------
+ * If the user clicked his mouse, this might have several reasons.  It 
+ * might happen to open some windows, pick up some stuff, smash a box,
+ * move somewhere or fire a shot or make a weapon swing.
+ * 
+ * Therefore it is not so easy to decide what to do upon a users mouse
+ * click and so this function analyzes the situation and decides what to
+ * do.
+ * ---------------------------------------------------------------------- */
+void
+AnalyzePlayersMouseClick ( int PlayerNum )
+{
+  DebugPrintf ( 2 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
+
+  if ( ButtonPressWasNotMeantAsFire( PlayerNum ) ) return;
+
+  //--------------------
+  // Now the new mouse move: If there is 
+  //
+  // * NO enemy below the mouse cursor, 
+  // * NO box below the mouse cursor
+  // * AND also shift was NOT pressed
+  //
+  // a move to that location, not a fire command, 
+  // so only new target will be set and return without attack motion.
+  //
+  if  ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
+	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
+	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) 
+	)
+    {
+      Me [ PlayerNum ] . mouse_move_target . x = 
+	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . y = 
+	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+      return; // no attack motion since no target given!!
+    }
+
+
+  if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+    {
+
+      Me [ PlayerNum ] . mouse_move_target . x = 
+	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . y = 
+	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+
+      //--------------------
+      // Only if the Tux wields a melee weapon and is too far away will we return 
+      // instead of continuing for the attack move now...
+      //
+      if ( ! ( ( ( fabsf ( Me [ PlayerNum ] . mouse_move_target . x - Me [ PlayerNum ] . pos . x ) < ATTACK_BOXES_DISTANCE ) && 
+		 ( fabsf ( Me [ PlayerNum ] . mouse_move_target . y - Me [ PlayerNum ] . pos . y ) < ATTACK_BOXES_DISTANCE ) ) ||
+	       ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change == 0 ) ) )
+	return;
+    }
+
+
+  if ( ( LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) 
+    {
+      //--------------------
+      // We assign the target robot of the coming attack operation.
+      // In case of no robot, we should get (-1), which is also serving us well.
+      //
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( PlayerNum ) ;
+
+      //--------------------
+      // It would be tempting to return now, but perhaps the player is just targeting and fighting a robot.
+      // Then of course we must not return, but execute the stroke!!
+      //
+      if ( ! ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
+	       ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x - 
+			 Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
+	       ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y - 
+			 Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) 
+	       ) )
+	  return;
+    }
+
+  // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
+  if ( Me [ PlayerNum ] .firewait > 0 )
+    return;
+
+  // If a friendly bot is targeted, we also won't attack
+  if ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) 
+    {
+      if ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) return;
+    }
+  
+  PerformTuxAttackRaw ( PlayerNum ) ;
+
+}; // void AnalyzePlayersMouseClick ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function does all the things needed, when the influencer is on
@@ -1731,14 +1728,11 @@ RefreshInfluencer (void)
   return;
 }; // void RefreshInfluence ( void )
 
-/*@Function============================================================
-@Desc: influ-enemy collisions are sucking someones
-       energy, depending no longer on classes of the colliding parties,
-       but on their weights
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * influ-enemy collisions are sucking someones
+ * energy, depending no longer on classes of the colliding parties,
+ * but on their weights
+ * ---------------------------------------------------------------------- */
 void
 InfluEnemyCollisionLoseEnergy (int enemynum)
 {
@@ -1751,12 +1745,6 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
       if (InvincibleMode)
 	return;
       
-      /* This old code used class difference to determine collision damage.
-	 But now we use Weight-Difference. 
-      Me[0].energy -=
-	(Druidmap[enemytype].class -
-	 Druidmap[Me[0].type].class) * BOUNCE_LOSE_FACT;
-      */
       Me[0].energy -=
 	(Druidmap[enemytype].weight -
 	 Druidmap[Me[0].type].weight ) * collision_lose_energy_calibrator * 0.01 ;
@@ -1766,9 +1754,6 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
       (Druidmap[Me[0].type].weight -
        Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
 
-  //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
-
-  return;
 }; // void InfluEnemyCollisionLoseEnergy(int enemynum)
 
 #undef _influ_c

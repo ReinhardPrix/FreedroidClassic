@@ -285,8 +285,8 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-  // int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ].SkillLevel [ SPELL_TELEPORT_HOME ] ] ;
   int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ]. spellcasting_skill ] ;
+  location HomeSpot;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -298,7 +298,8 @@ TeleportHome ( void )
 
       Play_Spell_ForceToEnergy_Sound( );
 
-      Teleport ( 0 , 3 , 3 , 0 , FALSE ) ;
+      ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+      Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , FALSE ) ;
 
     }
   else
