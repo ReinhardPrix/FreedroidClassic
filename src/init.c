@@ -1690,6 +1690,16 @@ InitNewMissionList ( char *MissionName )
   Me.Dexterity = 15;
   Me.Magic = 15;
 
+  Druidmap[ Me.type ].weapon_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].armour_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].shield_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].special_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].drive_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].aux1_item.currently_held_in_hand = FALSE;
+  Druidmap[ Me.type ].aux2_item.currently_held_in_hand = FALSE;
+
+  Item_Held_In_Hand = ( -1 );
+
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
   //--------------------
