@@ -291,6 +291,7 @@ iso_image, *Iso_image;
 typedef struct
 {
     iso_image image;
+    iso_image shadow_image;
     SDL_Surface* automap_version;
     //--------------------
     // Some obstacles will block the Tux from walking through them.

@@ -823,6 +823,7 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 	    // This is the *silent* version of the find-file function,
 	    // so we don't do anything here...
 	    //
+	    return ( NULL );
 	}
     } // for i 
     

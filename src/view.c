@@ -1307,49 +1307,71 @@ set_up_ordered_blitting_list ( int mask )
 void
 blit_preput_objects_according_to_blitting_list ( int mask )
 {
-  int i;
+    int i;
+    obstacle* our_obstacle;
 
-  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
     {
-      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
-      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_OBSTACLE )
+	if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
+	if ( blitting_list [ i ] . element_type == BLITTING_TYPE_OBSTACLE )
 	{
-	  if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
+	    if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
 	    {
-	      GiveStandardErrorMessage ( __FUNCTION__  , 
-					 "The blitting list contained an illegal blitting object type.",
-					 PLEASE_INFORM, IS_FATAL );
+		GiveStandardErrorMessage ( __FUNCTION__  , 
+					   "The blitting list contained an illegal blitting object type.",
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-	  
-	  if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
-	  
-	  //--------------------
-	  // So now we know that we must blit this one obstacle...
-	  //
-	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
+	    
+	    //--------------------
+	    // If the obstacle has a shadow, it seems like now would be a good time
+	    // to blit it.
+	    //
+	    if ( use_open_gl )
 	    {
-	      if ( mask & ZOOM_OUT )
-		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
-	      else
-		blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		our_obstacle = blitting_list [ i ] . element_pointer ;
+		if ( obstacle_map [ our_obstacle -> type ] . shadow_image . texture_has_been_created )
+		{
+		    blit_open_gl_texture_to_map_position ( 
+			obstacle_map [ our_obstacle -> type ] . shadow_image , 
+			our_obstacle -> pos . x , our_obstacle -> pos . y , 
+			0.5 , 0.5, 0.5 , FALSE, TRUE );
+		    // DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
+		}
+	    }
+	    
+	    //--------------------
+	    // If the obstacle isn't otherwise a preput obstacle, we're done here and can 
+	    // move on to the next list element
+	    //
+	    if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
+	    
+	    //--------------------
+	    // So now we know that we must blit this one obstacle...
+	    //
+	    if ( ! ( mask & OMIT_OBSTACLES ) ) 
+	    {
+		if ( mask & ZOOM_OUT )
+		    blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		else
+		    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
 	    }
 	}
-      //--------------------
-      // Enemies, which are dead already become like decoration on the floor.  
-      // They should never obscur the Tux, so we blit them beforehand and not
-      // again later from the list.
-      //
-      if ( ( blitting_list [ i ] . element_type == BLITTING_TYPE_ENEMY ) &&
-	   // ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 ) )
-	   ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION ) )
+	//--------------------
+	// Enemies, which are dead already become like decoration on the floor.  
+	// They should never obscur the Tux, so we blit them beforehand and not
+	// again later from the list.
+	//
+	if ( ( blitting_list [ i ] . element_type == BLITTING_TYPE_ENEMY ) &&
+	     // ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 ) )
+	     ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION ) )
 	{
-	  if ( ! ( mask & OMIT_ENEMIES ) ) 
+	    if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
-	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , FALSE ); 
+		PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , FALSE ); 
 	    }
 	}
     }
-
+    
 }; // void blit_preput_objects_according_to_blitting_list ( ... )
 
 /* ----------------------------------------------------------------------
