@@ -941,6 +941,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   char TextChunk[2000];
   char* ClassString;
   static SDL_Surface* BackgroundSurfaceBackup = NULL ;
+  SDL_Surface* tmp_surface = NULL ;
   static char OldBackgroundFileName[2000];
 
   SDL_SetClipRect ( Screen , NULL );
@@ -964,13 +965,19 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
       // Now we really reload the background surface...
       //
       BackgroundFileName = find_file ( BackgroundFileName , GRAPHICS_DIR , FALSE ) ;
-      BackgroundSurfaceBackup = IMG_Load( BackgroundFileName );
-      if ( BackgroundSurfaceBackup == NULL ) 
+
+      tmp_surface = IMG_Load( BackgroundFileName );
+      if ( tmp_surface == NULL ) 
 	{
 	  fprintf(stderr, "Couldn't load image %s: %s\n",
 		  BackgroundFileName, IMG_GetError());
 	  Terminate(ERR);
 	}
+
+      BackgroundSurfaceBackup = SDL_DisplayFormat ( tmp_surface ) ;
+      
+      SDL_FreeSurface ( tmp_surface );
+
     }
 
   SDL_BlitSurface( BackgroundSurfaceBackup , NULL, Screen, NULL);

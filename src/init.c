@@ -2217,7 +2217,7 @@ ThouArtDefeated (void)
   int now;
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Real function call confirmed.");
-  Me[0].status = TERMINATED;
+  Me [ 0 ] . status = OUT ;
   GameConfig.Inventory_Visible=FALSE;
   GameConfig.CharacterScreen_Visible=FALSE;
   GameConfig.Mission_Log_Visible=FALSE;

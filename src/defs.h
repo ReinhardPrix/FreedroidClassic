@@ -432,7 +432,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         8
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 83
+#define MAX_MOUSE_PRESS_BUTTONS 84
 enum
   { 
     CHA_BUTTON, 
@@ -509,6 +509,7 @@ enum
     LEVEL_EDITOR_ZOOM_IN_BUTTON,
     LEVEL_EDITOR_ZOOM_OUT_BUTTON,
     LEVEL_EDITOR_RECURSIVE_FILL_BUTTON,
+    LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON,
     LEVEL_EDITOR_KEYMAP_BUTTON,
     LEVEL_EDITOR_QUIT_BUTTON,
 
@@ -700,45 +701,14 @@ enum _explosions
 };
 
 #define BLINKENERGY 25
-
-//--------------------
-// droid types
-//
-enum _druids
-{
-  DRUID001 = 0,			/* You will know why are the numbers there, when you */
-  DRUID123 = 1,			/* enter the crew of a level !! */
-  DRUID139 = 2,
-  DRUID247 = 3,
-  DRUID249 = 4,
-  DRUID296 = 5,
-  DRUID302 = 6,
-  DRUID329 = 7,
-  DRUID420 = 8,
-  DRUID476 = 9,
-  DRUID493 = 10,
-  DRUID516 = 11,
-  DRUID571 = 12,
-  DRUID598 = 13,
-  DRUID614 = 14,
-  DRUID615 = 15,
-  DRUID629 = 16,
-  DRUID711 = 17,
-  DRUID742 = 18,
-  DRUID751 = 19,
-  DRUID821 = 20,
-  DRUID834 = 21,
-  DRUID883 = 22,
-  DRUID999 = 23,
-  DEBUG_ENEMY = 24
-};
+#define DRUID001 0
 
 //--------------------
 // possible states of the influencer as displayed in the top status banner
 //
 enum _status
 {
-  TERMINATED=-1,
+  OUT=-30,
   MOBILE,
   TRANSFERMODE,
   WEAPON,
@@ -780,14 +750,6 @@ enum _networking_status
 
 
 #define DECKCOMPLETEBONUS 500
-
-//--------------------
-// inactive things are assigned the status of 'out' which is somewhat
-// dangerous, since it corresponds to 12 or so and this a value that 
-// might well be used at some point as a normal index for the possible
-// states as well...
-// 
-#define OUT TERMINATED	
 
 //--------------------
 // For shop interfaces and chest interfaces we need some constants to

@@ -191,7 +191,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
     {
       MenuWithFileInformation = TRUE ;
     }
-  StoreMenuBackground ();
 
   //--------------------
   // Now that the possible font-changing background assembling is
@@ -201,9 +200,19 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
+  for ( i = 0 ; TRUE ; i ++ )
+    {
+      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+      CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+      CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+    }
+  if ( strlen( InitialText ) > 0 ) 
+    DisplayText ( InitialText , 50 , 50 , NULL );
+
+  StoreMenuBackground ();
+
   while ( 1 )
     {
-
       RestoreMenuBackground ();
 
       if ( MenuWithFileInformation )
@@ -220,15 +229,14 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
       HighlightRect.h = h;		    
       HighlightRectangle ( Screen , HighlightRect );
 
-
-      for ( i = 0 ; TRUE ; i ++ )
-	{
-	  if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-	  CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
-	}
-      if ( strlen( InitialText ) > 0 ) 
-	DisplayText ( InitialText , 50 , 50 , NULL );
+      // for ( i = 0 ; TRUE ; i ++ )
+      // {
+      // if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+      // CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+      // CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+      // }
+      // if ( strlen( InitialText ) > 0 ) 
+      // DisplayText ( InitialText , 50 , 50 , NULL );
 
       SDL_Flip( Screen );
   

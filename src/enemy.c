@@ -246,11 +246,12 @@ PermanentHealRobots (void)
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
     {
-      if (AllEnemys[i].Status == OUT)
+      if ( AllEnemys [ i ] . Status == OUT)
 	continue;
-      if (AllEnemys[i].energy < Druidmap[AllEnemys[i].type].maxenergy)
-	AllEnemys[i].energy += Druidmap[AllEnemys[i].type].lose_health * Frame_Time();
+      if ( AllEnemys [ i ] . energy < Druidmap [ AllEnemys [ i ] . type ] . maxenergy )
+	AllEnemys[i].energy += Druidmap[AllEnemys [ i ] . type ] . lose_health * Frame_Time( );
     }
+
 } // void PermanentHealRobots(void)
 
 /* -----------------------------------------------------------------
