@@ -484,6 +484,7 @@ EXTERN void SwapEnemys ( int First , int Second ) ;
 #endif
 EXTERN int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
 EXTERN void ShowDeckMap (Level deck);
+EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , char* BackgroundFileName );
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);

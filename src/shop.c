@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "SDL_rotozoom.h"
 
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
@@ -46,6 +47,258 @@
 
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
+
+#define SHOP_ROW_LENGTH 8
+
+SDL_Rect ItemRowRect;
+
+/* ----------------------------------------------------------------------
+ * Maybe the user has clicked right onto the item overview row.  Then of
+ * course we must find out and return the index of the item clicked on.
+ * If no item was clicked on, then a -1 will be returned as index.
+ * ---------------------------------------------------------------------- */
+int
+ClickWasOntoItemRowPosition ( int x , int y )
+{
+  if ( y < ItemRowRect . y ) return (-1) ;
+  if ( y > ItemRowRect . y + ItemRowRect.h ) return (-1) ;
+  if ( x < ItemRowRect . x ) return (-1) ;
+  if ( x > ItemRowRect . x + ItemRowRect.w ) return (-1) ;
+
+  //--------------------
+  // Now at this point we know, that the click really was in the item
+  // overview row.  Therefore we just need to find out the index and
+  // can return;
+  //
+  return ( ( x - ItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+
+};
+
+/* ----------------------------------------------------------------------
+ * The item row in the shop interface (or whereever we're going to use it)
+ * should display not only the rotating item display but also a row or a
+ * column of the current equipment, so that some better overview is given
+ * as well and the item can be better associated with it's in-game inventory
+ * representation.  This function displays one such representation with 
+ * the correct size to fit perfectly into the overview item row.
+ * ---------------------------------------------------------------------- */
+void
+ShowRescaledItem ( int position , item* ShowItem )
+{
+  int PictureIndex;
+  SDL_Surface* RescaledSurface;
+  float RescaleFactor;
+  SDL_Rect TargetRectangle;
+
+  ItemRowRect . x = 50 ;
+  ItemRowRect . y = 410;
+  ItemRowRect . h = INITIAL_BLOCK_HEIGHT;
+  ItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+
+  TargetRectangle . x = ItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
+  TargetRectangle . y = ItemRowRect . y ;
+
+  PictureIndex = ItemMap [ ShowItem->type ] . picture_number ;
+
+  if ( ( ItemImageList[ PictureIndex ] . inv_size . x == 1 ) &&
+       ( ItemImageList[ PictureIndex ] . inv_size . y == 1 ) )
+    RescaleFactor = 2.0 ;
+  else if ( ItemImageList[ PictureIndex ] . inv_size . y == 3 ) 
+    RescaleFactor = 2.0 / 3.0 ;
+  else RescaleFactor = 1.0;
+
+  RescaledSurface = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+  
+  SDL_BlitSurface( RescaledSurface , NULL , Screen , &TargetRectangle );
+
+  SDL_FreeSurface ( RescaledSurface );
+    
+}; // void ShowRescaledItem ( int position , item* ShowItem )
+
+/* ----------------------------------------------------------------------
+ * This function does the item show when the user has selected item
+ * show from the console menu.
+ * ---------------------------------------------------------------------- */
+int
+GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
+{
+  int ItemType;
+  int Displacement=0;
+  bool finished = FALSE;
+  static int WasPressed = FALSE ;
+  // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
+  // int NumberOfItems;
+  int ItemIndex=0;
+  int PasswordIndex = (-1) ;
+  // int ClearanceIndex = (-1) ;
+  int IdentifyAllowed = FALSE ;
+  char* MenuTexts[ 10 ];
+  int i;
+  
+  int RowStart=0;
+  int RowLength=SHOP_ROW_LENGTH;
+
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+
+  //--------------------
+  // We initialize the text rectangle
+  //
+  Cons_Text_Rect . x = 258 ;
+  Cons_Text_Rect . y = 89 ;
+  Cons_Text_Rect . w = 346 ;
+  Cons_Text_Rect . h = 282 ;
+
+  // NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
+
+  if ( ShowPointerList[0] == NULL )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
+			MenuTexts, 1 , NULL , NULL );
+      return (-1) ;
+    }
+
+  ItemType = ShowPointerList [ ItemIndex ] -> type ;
+
+  Displacement = 0;
+
+  while (!finished)
+    {
+      usleep ( 35 );
+
+      //--------------------
+      // We show all the info and the buttons that should be in this
+      // interface...
+      //
+      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
+
+      for ( i = 0 ; i < RowLength ; i++ )
+	{
+	  ShowRescaledItem ( i , ShowPointerList [ i + RowStart ] );
+	}
+
+      ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
+      ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
+
+      // PutPasswordButtonsAndPassword ( PasswordIndex );
+      // PutSecurityButtonsAndClearance ( ClearanceIndex );
+
+      SDL_Flip( Screen );
+
+      //--------------------
+      // Now we see if identification of the current item is allowed
+      // or not.
+
+      //
+      IdentifyAllowed = FALSE ;
+      if ( PasswordIndex >= 0 )
+	{
+	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Idenfity" ) )
+	    {
+	      IdentifyAllowed = TRUE ;
+	    }
+	}
+
+      ItemType = ShowPointerList [ ItemIndex ] -> type ;
+
+      if (SpacePressed() || EscapePressed() || axis_is_active )
+	{
+	  if ( CursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ItemIndex < NumberOfItems -1 ) 
+		{
+		  ItemIndex ++;	    
+		  MoveMenuPositionSound();
+		  Displacement = 0;
+		}
+	    }
+	  else if ( CursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ItemIndex > 0) 
+		{
+		  ItemIndex --;	      
+		  MoveMenuPositionSound();
+		  Displacement = 0;
+		}
+	    }
+	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      Displacement += FontHeight ( GetCurrentFont () );
+	    }
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      // if (page > 0) page --;
+	      Displacement -= FontHeight ( GetCurrentFont () );
+	    }
+	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      finished = TRUE;
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( CursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( 0 < RowStart ) RowStart --;
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( CursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( RowStart + RowLength < NumberOfItems ) RowStart ++;
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( ( ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) >= 0 )&& axis_is_active && !WasPressed )
+	    {
+	      ItemIndex = RowStart + ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) ;
+	    }
+
+
+	}
+
+      WasPressed = axis_is_active;
+
+      if (UpPressed() || MouseWheelUpPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	  Displacement += FontHeight ( GetCurrentFont () );
+	}
+      if (DownPressed() || MouseWheelDownPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	  Displacement -= FontHeight ( GetCurrentFont () );
+	}
+      if (RightPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (RightPressed());
+	  if ( ItemType < Me[0].type) ItemType ++;
+	}
+      if (LeftPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (LeftPressed());
+	  if (ItemType > 0) ItemType --;
+	}
+      
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  return (-1);
+	}
+
+    } // while !finished 
+
+  return ( ItemIndex ) ;  // Currently equippment selection is not yet possible...
+
+}; // int GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
+
 
 /* ----------------------------------------------------------------------
  * This function tells us which item in the menu has been clicked upon.
@@ -736,7 +989,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
       // ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
       // ItemSelected = DoEquippmentShowSelection ( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
-      ItemSelected = GreatItemShow ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
+      // ItemSelected = GreatItemShow ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
+      ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
       if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
 
       //--------------------

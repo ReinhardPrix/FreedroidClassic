@@ -55,7 +55,7 @@ enum
 
 int NoKeyPressed (void);
 int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
-void ShowItemInfo ( item* ShowItem , int page , char ShowArrows );
+
 void ShowDroidPicture (int PosX, int PosY, int Number );
 
 SDL_Surface *console_pic = NULL ;
@@ -606,7 +606,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE );
+      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWESER_BG_PIC_FILE );
 
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
@@ -988,14 +988,15 @@ This error indicates some installation problem with freedroid.",
  * does update the screen, no SDL_Flip() necesary !
  * ------------------------------------------------------------ */
 void 
-ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows )
+ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* BackgroundFileName )
 {
   char InfoText[10000];
   char TextChunk[2000];
+  
+  // ITEM_BROWESER_BG_PIC_FILE
 
   SDL_SetClipRect ( Screen , NULL );
-
-  DisplayImage ( find_file( ITEM_BROWESER_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
 
   // ShowItemPicture ( Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
   ShowItemPicture ( 45 , 190 , ShowItem->type );
