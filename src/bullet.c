@@ -453,7 +453,7 @@ CheckBlastCollisions (int num)
   int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
   Bullet CurBullet;
-  float dist2;
+  float dist;
   vect vdist;
 
   /* check Blast-Bullet Collisions and kill hit Bullets */
@@ -462,13 +462,11 @@ CheckBlastCollisions (int num)
       CurBullet = &AllBullets[i];
       if (CurBullet->type == OUT)
 	continue;
-      if (CurBlast->phase > 4)
-	break;
 
       vdist.x = CurBullet->pos.x - CurBlast->PX;
       vdist.y = CurBullet->pos.y - CurBlast->PY;
-      dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
-      if (dist2 < Blast_Radius*Blast_Radius)
+      dist = sqrt(vdist.x*vdist.x + vdist.y*vdist.y);
+      if (dist < Blast_Radius)
 	{
 	  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 	  DeleteBullet( i );
@@ -485,9 +483,9 @@ CheckBlastCollisions (int num)
 
       vdist.x = AllEnemys[i].pos.x - CurBlast->PX;
       vdist.y = AllEnemys[i].pos.y - CurBlast->PY;
-      dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
+      dist = sqrt(vdist.x*vdist.x + vdist.y*vdist.y);
 
-      if (dist2 < Blast_Radius*Blast_Radius)
+      if (dist < Blast_Radius)
 	{
 	  /* drag energy of enemy */
 	  AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
@@ -501,9 +499,9 @@ CheckBlastCollisions (int num)
   /* Check influence-Blast collisions */
   vdist.x = Me.pos.x - CurBlast->PX;
   vdist.y = Me.pos.y - CurBlast->PY;
-  dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
+  dist = sqrt(vdist.x*vdist.x + vdist.y*vdist.y);
 
-  if ( (Me.status != OUT) && (!CurBlast->mine) && (dist2 < Blast_Radius*Blast_Radius) )
+  if ( (Me.status != OUT) && (!CurBlast->mine) && (dist < Blast_Radius) )
     {
       if (!InvincibleMode)
 	{
