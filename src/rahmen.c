@@ -745,7 +745,7 @@ ShowCurrentTextWindow ( void )
   int InterLineDistance;
   int StringLength;
   int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
-
+  int index_of_floor_item_below_mouse_cursor = ( -1 );
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
   //--------------------
@@ -876,22 +876,11 @@ ShowCurrentTextWindow ( void )
 							       (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
 
-      //--------------------
-      // We find out if maybe the cursor in the user rect is hovering right over an item.
-      // In this case we give the item description in the top status display, as far as
-      // the item is known.
-      //
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
-	{
-	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+      index_of_floor_item_below_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 
-	  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
-	    {
-	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) , FALSE );
-	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
-	    }
-	}
+      if ( index_of_floor_item_below_mouse_cursor != (-1) )
+	GiveItemDescription ( ItemDescText , & ( CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] ) , 
+			      FALSE );
 
       //--------------------
       // Maybe the cursor in the user rect is hovering right over a closed chest.

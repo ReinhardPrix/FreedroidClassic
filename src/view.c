@@ -1262,6 +1262,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
   int enemy_under_cursor = -1;
   int barrel_under_cursor = -1;
   int chest_under_cursor = -1;
+  int item_under_cursor = -1; 
 
   //--------------------
   // We memorize which 'enemy' is currently under the mouse target, so that we
@@ -1270,6 +1271,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
   enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
   barrel_under_cursor = smashable_barred_below_mouse_cursor ( 0 ) ;
   chest_under_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
+  item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 
   //--------------------
   // Now it's time to blit all the elements from the list...
@@ -1329,7 +1331,11 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	    PutBlast ( blitting_list [ i ] . code_number ); 
 	  break;
 	case BLITTING_TYPE_THROWN_ITEM:
-	  PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS ); 
+	  if ( item_under_cursor == blitting_list [ i ] . code_number )
+	    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , TRUE ); 
+	  else
+	    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , FALSE ); 
+
 	  // DebugPrintf ( -1 , "\nThrown item now blitted..." );
 	  break;
 	default:
@@ -1588,6 +1594,7 @@ void
 AssembleCombatPicture (int mask)
 {
   int i;
+  int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 
   isometric_show_floor_around_tux_without_doublebuffering ( mask );
 
@@ -1599,7 +1606,10 @@ AssembleCombatPicture (int mask)
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  PutItem( i , mask , PUT_NO_THROWN_ITEMS );
+	  if ( i == item_under_cursor )
+	    PutItem ( i , mask , PUT_NO_THROWN_ITEMS , TRUE ); 
+	  else
+	    PutItem ( i , mask , PUT_NO_THROWN_ITEMS , FALSE ); 
 	}
     }
 
@@ -3188,7 +3198,7 @@ There was a bullet to be blitted of a type that does not really exist.",
  * the AllItems array.
  * ---------------------------------------------------------------------- */
 void
-PutItem( int ItemNumber , int mask , int put_thrown_items_flag )
+PutItem( int ItemNumber , int mask , int put_thrown_items_flag , int highlight_item )
 {
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
@@ -3251,11 +3261,15 @@ There was -1 item type given to blit.  This must be a mistake! ",
 	  blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 						 CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 						 CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-						 1.0 , 1.0 , 1.0 , FALSE );
+						 1.0 , 1.0 , 1.0 , highlight_item );
 	}
       else
 	{
 	  blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+					   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+					   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+	  if ( highlight_item )
+	    blit_outline_of_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
 					   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 					   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
 	}

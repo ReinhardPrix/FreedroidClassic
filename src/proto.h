@@ -122,7 +122,7 @@ EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void AssembleCombatPicture (int );
 EXTERN void blit_tux (int , int , int );
 EXTERN void PutBullet ( int Bullet_number , int mask );
-EXTERN void PutItem ( int ItemNumber , int mask , int put_thrown_items_flag );
+EXTERN void PutItem ( int ItemNumber , int mask , int put_thrown_items_flag , int highlight_item );
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y , int mask , int highlight );
 EXTERN void PutMouseMoveCursor ( void ) ;
@@ -366,6 +366,8 @@ EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
 EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem );
+EXTERN int get_floor_item_index_under_mouse_cursor ( int player_num );
+
 
 // character.c
 #undef EXTERN
