@@ -533,7 +533,7 @@ char *Weaponnames[] = {
   "error"
 };
 
-char* AllSkillTexts [ ] =
+char* AllSkillTexts [ NUMBER_OF_SKILL_LEVELS ] =
   {
     "novice",
     "average",
@@ -544,7 +544,7 @@ char* AllSkillTexts [ ] =
     "inhuman",
     "god-like",
     "super-god-like",
-    "ERROR/UNDEFINED SKILL_LEVEL"
+    "wicked sick"
   };
 
 //--------------------

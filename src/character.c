@@ -742,18 +742,93 @@ UpdateAllCharacterStats ( int PlayerNum )
 
 }; // void UpdateAllCharacterStats ( void )
 
+/* ----------------------------------------------------------------------
+ * Now we print out the current skill levels in hacking skill, 
+ * spellcasting, melee combat, ranged weapon combat and repairing things
+ * ---------------------------------------------------------------------- */
+void
+show_character_screen_skills ( int player_num )
+{
+    
+    //--------------------
+    // We add some security against skill values out of allowed
+    // bounds.
+    //
+    if ( ( Me [ player_num ] . melee_weapon_skill  < 0 ) ||
+	 ( Me [ player_num ] . melee_weapon_skill >= NUMBER_OF_SKILL_LEVELS ) )
+    {
+	fprintf ( stderr , "\nmelee_weapon_skill: %d." , Me [ player_num ] . melee_weapon_skill );
+	GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error: melee weapon skill seems out of bounds.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    DisplayText( AllSkillTexts [ Me [ player_num ] . melee_weapon_skill ] , 
+		 MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    //--------------------
+    // We add some security against skill values out of allowed
+    // bounds.
+    //
+    if ( ( Me [ player_num ] . ranged_weapon_skill < 0 ) ||
+	 ( Me [ player_num ] . ranged_weapon_skill >= NUMBER_OF_SKILL_LEVELS ) )
+    {
+	fprintf ( stderr , "\nranged_weapon_skill: %d." , Me [ player_num ] . ranged_weapon_skill );
+	GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error: ranged weapon skill seems out of bounds.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    DisplayText( AllSkillTexts [ Me [ player_num ] . ranged_weapon_skill ] , 
+		 RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    //--------------------
+    // We add some security against skill values out of allowed
+    // bounds.
+    //
+    if ( ( Me [ player_num ] . spellcasting_skill < 0 ) ||
+	 ( Me [ player_num ] . spellcasting_skill >= NUMBER_OF_SKILL_LEVELS ) )
+    {
+	fprintf ( stderr , "\nspellcasting_skill: %d." , Me [ player_num ] . spellcasting_skill );
+	GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error: spellcasting skill seems out of bounds.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    DisplayText( AllSkillTexts [ Me [ player_num ] . spellcasting_skill ] , 
+		 SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    //--------------------
+    // We add some security against skill values out of allowed
+    // bounds.
+    //
+    if ( ( Me [ player_num ] . hacking_skill < 0 ) ||
+	 ( Me [ player_num ] . hacking_skill >= NUMBER_OF_SKILL_LEVELS ) )
+    {
+	fprintf ( stderr , "\nhacking_skill: %d." , Me [ player_num ] . hacking_skill );
+	GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error: hacking skill seems out of bounds.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    DisplayText( AllSkillTexts [ Me [ player_num ] . hacking_skill ] , 
+		 HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    /*
+      if ( Me [ player_num ] . repair_skill ) 
+      DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+      else
+      DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+    */
+}; // void show_character_screen_skills ( void )
 
 /* ----------------------------------------------------------------------
  * This function displays the character screen.
  * ---------------------------------------------------------------------- */
 void 
-ShowCharacterScreen ( void )
+ShowCharacterScreen ( int player_num )
 {
     char CharText[1000];
     static int MouseButtonPressedPreviousFrame = FALSE;
     point CurPos;
     
-    DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
+    DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
     
     //--------------------
     // If the log is not set to visible right now, we do not need to 
@@ -898,20 +973,7 @@ ShowCharacterScreen ( void )
     // Now we print out the current skill levels in hacking skill, 
     // spellcasting, melee combat, ranged weapon combat and repairing things
     //
-    DisplayText( AllSkillTexts [ Me [ 0 ] . melee_weapon_skill ] , 
-		 MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    DisplayText( AllSkillTexts [ Me [ 0 ] . ranged_weapon_skill ] , 
-		 RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    DisplayText( AllSkillTexts [ Me [ 0 ] . spellcasting_skill ] , 
-		 SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
-		 HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    /*
-      if ( Me [ 0 ] . repair_skill ) 
-      DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
-      else
-      DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
-    */
+    show_character_screen_skills ( player_num );
 
     //--------------------
     // It might be the case, that the character has some points to distribute upon the character

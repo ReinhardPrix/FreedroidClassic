@@ -460,7 +460,7 @@ EXTERN int get_floor_item_index_under_mouse_cursor ( int player_num );
 EXTERN void InitiateNewCharacter ( int player_num , int CharacterClass );
 EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( int player_num );
-EXTERN void ShowCharacterScreen ( void );
+EXTERN void ShowCharacterScreen ( int player_num );
 
 // character.c
 #undef EXTERN

@@ -1860,7 +1860,7 @@ AssembleCombatPicture ( int mask )
 	ShowItemAlarm();
 	ShowQuickInventory ();
 	display_current_game_message_window ( ) ;
-	ShowCharacterScreen ( );
+	ShowCharacterScreen ( 0 );
 	ShowSkillsScreen ( );
 	ManageInventoryScreen ( );
 	DisplayButtons( );
