@@ -2031,7 +2031,7 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 Droidname: CHA
 Droid portrait file name (without extension) to use="CHA"
 Maximum speed of this droid: 6.1
-Class of this droid: 9
+Class of this droid: 10
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2067,7 +2067,7 @@ This is Dr. Chanra, a leading scientist in the field of artificial intelligence 
 Droidname: STO
 Droid portrait file name (without extension) to use="STO"
 Maximum speed of this droid: 6.1
-Class of this droid: 9
+Class of this droid: 10
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1

@@ -1669,17 +1669,14 @@ InitNewMissionList ( char *MissionName )
   Me.MissionTimeElapsed=0;
   Me.Current_Victim_Resistance_Factor=1;
   Me.FramesOnThisLevel=0;
-  Me.Vitality = 15;
-  Me.Strength = 15;
-  Me.Dexterity = 15;
-  Me.Magic = 15;
+
   Me.PointsToDistribute = 0;
   Me.ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me.KillRecord[ i ] = 0;
   Me.exp_level = 1;
   Me.Gold = 100;
   // strcpy ( Me.character_name , "R2D2 v.0.8.5." );
-  strcpy ( Me.character_name , "character_name" );
+  // strcpy ( Me.character_name , "character_name" );
   // strcpy ( Me.class_name , "Force bot" );
 
   UpdateAllCharacterStats();
