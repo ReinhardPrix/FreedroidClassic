@@ -468,17 +468,36 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
     Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
     Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
     Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
-    
+
     //--------------------
     // First we need to know where to begin with our little display.
     //
     lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
     DebugPrintf ( 1 , "\nLines needed: %d. " , lines_needed );
     
-    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) protocol_offset = 0 ;
+    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) 
+    {
+	//--------------------
+	// When there isn't anything to scroll yet, we keep the default
+	// position and also the users clicks on up/down button will be
+	// reset immediately
+	//
+	protocol_offset = 0 ;
+	chat_protocol_scroll_override_from_user = 0 ;
+    }
     else
 	protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) 
 	    * ( lines_needed - AVERAGE_LINES_IN_PROTOCOL_WINDOW + chat_protocol_scroll_override_from_user ) * 1.04 ;
+
+    //--------------------
+    // Now if the protocol offset is really negative, we don't really want
+    // that and force the user offset back to something sane again.
+    //
+    if ( protocol_offset < 0 )
+    {
+	chat_protocol_scroll_override_from_user ++ ;
+	protocol_offset = 0 ;
+    }
     
     //--------------------
     // Now we need to clear this window, cause there might still be some
@@ -496,7 +515,8 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
     Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
     Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
     DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
-    ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
+    if ( protocol_offset > 0 ) 
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
     ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
     if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
