@@ -1,0 +1,77 @@
+
+Beginning of new chat dialog for character="614"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Who are you? "
+OptionSample="Tux_614_Who_Are_You_0.wav"
+Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicolson company ever. "
+ReplySample="614_I_Am_A_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=4 ChangeToValue=1
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText=" Have you detected any MS activity?" 
+OptionSample="Tux_614_Have_You_Detected_0.wav"
+Subtitle="No.  The MS Bots have not shown up within the last 24 hours. "
+ReplySample="614_No_The_MS_0.wav"
+ChangeOption=1 ChangeToValue=0
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText=" What can you tell me about the 614 type? " 
+OptionSample="Tux_614_What_Can_You_0.wav"
+Subtitle="The official manual classifies the 614 as a low security droid."
+ReplySample="614_The_Official_Manual_0.wav"
+Subtitle="It was mainly used within ships to protect certain areas of the ship from intruders."
+ReplySample="614_It_Is_Mainly_0.wav"
+Subtitle="It is considered a old but sure device."
+ReplySample="614_It_Is_Considered_0.wav"
+Subtitle="So don't worry.  I'm still in pretty good shape."
+ReplySample="614_But_Dont_Worry_0.wav"
+ChangeOption=2 ChangeToValue=0
+
+----------------------------------------------------------------------
+
+New Option Nr=3 OptionText=" What are your orders?" 
+OptionSample="Tux_614_What_Are_Your_0.wav"
+Subtitle="My orders are to protect the living beings in this camp from attacks by MS bots."
+ReplySample="614_My_Orders_Are_0.wav"
+Subtitle="This has top priority.  There are no other priorities."
+ReplySample="614_This_Has_Top_0.wav"
+ChangeOption=3 ChangeToValue=0
+
+----------------------------------------------------------------------
+
+New Option Nr=4 OptionText="Why are you not hostile as all the other bots?" 
+OptionSample="Tux_614_What_Are_Your_0.wav"
+Subtitle="I belong to a kind of hardware that was never able to run the MS operating system."
+ReplySample="614_My_Orders_Are_0.wav"
+Subtitle="Therefore I was not affected when the Great Assault happend."
+ReplySample="614_This_Has_Top_0.wav"
+Subtitle="Today, some people are even working to improve the free operating system running on me."
+ReplySample="614_This_Has_Top_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+
+----------------------------------------------------------------------
+
+New Option Nr=5 OptionText="Who is working on that?" 
+OptionSample="Tux_614_What_Are_Your_0.wav"
+Subtitle="Mostly the RMS and his colleagues."
+ReplySample="614_Mostly_The_RMS_0.wav"
+ChangeOption=5 ChangeToValue=0
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText=" END "
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+Subtitle="See you later!"
+ReplySample="Tux_See_You_Later_0.wav"
+
+----------------------------------------------------------------------
+      
+End of chat dialog for character="614"
+
+

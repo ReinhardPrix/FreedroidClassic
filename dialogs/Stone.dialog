@@ -1,0 +1,69 @@
+
+Beginning of new chat dialog for character="Stone"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Hi!  I'm new here. " 
+OptionSample="Tux_Hi_Im_New_0.wav"
+ChangeOption=0 ChangeToValue=0
+Subtitle="Welcome to this camp!  I'm Ms. Stone.  I run this shop."
+ReplySample="STO_Welcome_To_This_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0 // selling is in the buy menu
+ChangeOption=3 ChangeToValue=0 // no identify
+ChangeOption=4 ChangeToValue=0 // no repair
+ChangeOption=5 ChangeToValue=0 // I disable magic stuff now...  We havn't decided about 'magic stuff' issues...
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="I would like to trade with you." 
+OptionSample="Tux_STO_I_Would_Like_0.wav"
+Subtitle="Good!  Here is the selection of items I have for sale."
+ReplySample="STO_Good_Here_Is_0.wav"
+DoSomethingExtra="InitTradeWithCharacter:STO" 
+Do---SomethingExtra="Buy_Basic_Items" 
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText=" I would like to get rid of some stuff. "
+OptionSample="Tux_STO_I_Would_Rid_0.wav"
+Subtitle="Good!  Let's see what you have."
+ReplySample="STO_Good_Lets_See_0.wav"
+DoSomethingExtra="Sell_Items" 
+
+----------------------------------------------------------------------
+
+New Option Nr=3 OptionText=" Can you identify some of the items I found?" 
+OptionSample="Tux_STO_Can_You_Identify_0.wav"
+Subtitle="Which of your items do you want me to identify?"
+ReplySample="STO_Which_Of_Your_0.wav"
+DoSomethingExtra="Identify_Items" 
+
+----------------------------------------------------------------------
+
+New Option Nr=4 OptionText=" Some of my things could need repair." 
+OptionSample="Tux_STO_Some_Of_My_0.wav"
+Subtitle="Which of your items do you want me to repair?"
+ReplySample="STO_Which_Of_Repair_0.wav"
+DoSomethingExtra="Repair_Items" 
+
+----------------------------------------------------------------------
+
+New Option Nr=5 OptionText=" Do you also have some magical stuff?" 
+OptionSample="Tux_STO_Do_You_Also_0.wav"
+Subtitle="Sure.  But this will be a bit more expensive."
+ReplySample="STO_Sure_But_This_0.wav"
+DoSomethingExtra="Buy_Magical_Items" 
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText=" END "
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+Subtitle="See you later."	      
+ReplySample="Tux_See_You_Later_0.wav"
+Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+ReplySample="STO_Goodbye_Love_0.wav"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="Stone"

@@ -1,0 +1,34 @@
+
+Beginning of new chat dialog for character="Melfis"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Hi!  I'm new here. " ;
+OptionSample="Tux_Hi_Im_New_0.wav"
+Subtitle="Ok.  Sorry but I must pay attention."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'so?'
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="What are you concentrating on?" ;
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'm trying to learn some bot hunting skills."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And master Darwin shows me how.  And now please leave me alone."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=1 ChangeToValue=1 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText="I'll be going then.";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+Subtitle="Finally."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1 ; // 
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="Melfis"

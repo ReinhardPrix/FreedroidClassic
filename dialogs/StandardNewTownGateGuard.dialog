@@ -1,0 +1,51 @@
+
+Beginning of new chat dialog for character="StandardNewTownGateGuard"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Hi!  I'm new here. " ;
+OptionSample="Tux_Hi_Im_New_0.wav"
+Subtitle="That I see."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'so?'
+ChangeOption=2 ChangeToValue=1 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="What, no questions, where are you from, what do you want?" ;
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="No."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is not the old town.  None will ask for your buisness here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is the camp of the free coders.  Here everybody can proceed as he or she sees fit."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="However this also means that in here, you got to see for your safety all by youselves."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText="What are you doing out here?" ;
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="What do you think we are doing here?  Any idea how boring this is?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It's more of a strain to stand here and do nothing than any task of coding or the like."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just spend a few days standing here and you'll see what I mean."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText="I'll be going then.";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+Subtitle="Good."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1 ; // 
+ChangeOption=2 ChangeToValue=1 ; // 
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="StandardNewTownGateGuard"

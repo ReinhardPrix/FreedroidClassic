@@ -1,0 +1,122 @@
+
+Beginning of new chat dialog for character="Michelangelo"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Hi!  I'm new here. " ;
+OptionSample="Tux_Hi_Im_New_0.wav"
+Subtitle="Hello!  I'm Michelangelo.  I haven't been for here for long either."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'so?'
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="How is it going?" ;
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Not too well.  I was going to prepare a great meal, but noticed that my favorite oven is down."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Most likely it's the energy crystal again.  I don't get any good energy crystals these days."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And I can't get a new one since cooking with my old oven requires my presence here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=1 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=1 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText="Why didn't you send someone to get some energy crystals?" ;
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I did.  I've asked Jack to get some.  He agreed to bring me some from one of the cavers east of town."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But he hasn't shown up here since then.  That was two days ago."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=3 OptionText="Maybe I can help somehow?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sure!  It would be great if you could bring me some red dilitium crystals."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="As far as I know, the caverns to the east of town hold lots of them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Shouldn't be too hard to find one and bring it here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I don't have much money, but as a reward, you could have lots of food from me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=4 ChangeToValue=1 ; 
+ChangeOption=5 ChangeToValue=1 ; 
+
+----------------------------------------------------------------------
+
+New Option Nr=4 OptionText="I'll go fetch you some of those crystals."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Great!  And hurry up!  Then I can finally dump this old oven beast and use my new one again."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=5 ChangeToValue=0 ; // don't say this twice in one dialog
+DoSomethingExtra="AssignMission:2"
+
+----------------------------------------------------------------------
+
+New Option Nr=5 OptionText="Sorry, no time for that now."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Too bad!  I'd have given you lot's of delicious food for it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Well, think about it.  I'm sure it would pay off for you, very sure."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=5 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=6 OptionText="About those crystals you wanted..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="What, you still got no crystals for me?  What are you waiting for?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="There should be plenty of them in the cave to the east of town."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And don't return unless you got some for me.  You're stealing my time!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=7 OptionText="I've got some red dilitium crystals for you..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="GREAT!  Thanks a lot!  Now that are some great crystals."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wasn't too hard, was it?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0 ; // don't say this twice in one dialog
+Do---SomethingExtra="DeleteAllInventoryItemsOfType:ITEM_RED_DILITIUM_CRYSTAL"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="MarkMissionComplete:2"
+DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Red Dilitium given:"
+DoSomethingExtra="AddExperienceBonus:300"
+
+----------------------------------------------------------------------
+
+New Option Nr=8 OptionText="Now about the reward you promised me..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Yes, I know I said I'd give you lots of food.  But for that I must cook something first."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Come back later, then maybe I'll have something already.  But now leave me alone with my cooking art please."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0 ; // don't say this twice in one dialog
+
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText="I'll be going then.";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+Subtitle="See you later."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=1 ; // 
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="Michelangelo"

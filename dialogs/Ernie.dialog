@@ -1,0 +1,61 @@
+
+Beginning of new chat dialog for character="Ernie"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText="THIS WILL NEVER BE VISIBLE" ; 
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+
+Subtitle="Hey you!  Linarian!  What do you want here?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to say just taking a look
+ChangeOption=2 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+ChangeOption=3 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+ChangeOption=99 ChangeToValue=0 ; // disallow the end immediately
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="Just taking a look around." ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=99 ChangeToValue=1 ; // reallow to quit
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText="I'd like to get into the mine." ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=99 ChangeToValue=1 ; // reallow to quit
+
+----------------------------------------------------------------------
+
+New Option Nr=3 OptionText="I'm here to make an end to your mining buisness." ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Ok Linarian!  You wanted it that way!  And I don't like Penguins anyway!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=99 ChangeToValue=1 ; // reallow to quit
+DoSomethingExtra="BreakOffAndBecomeHostile" 
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText="I'll be going then.";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+Subtitle="Mhmmm."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=1 ; // 
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="Ernie"
