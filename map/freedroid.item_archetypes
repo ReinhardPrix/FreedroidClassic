@@ -415,7 +415,7 @@ Item as gun: ignore collisions with wall="no"
 Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
-Item as gun: required ammunition type="none"
+Item as gun: required ammunition type="exterminator_ammunition"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -567,7 +567,7 @@ Item as gun: ignore collisions with wall="no"
 Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
-Item as gun: required ammunition type="none"
+Item as gun: required ammunition type="exterminator_ammunition"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -1776,7 +1776,7 @@ Item name="Plasma Transistor"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="plasma_transistor"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -1816,11 +1816,11 @@ Item description text="This is an standard part within many robots types."
 
 // Item No. 63
 ** Start of new item specification subsection **
-Item name="Matter-Antimatter Converter"
+Item name="Antimatter-Matter Converter (AMC)"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="antimatter_matter_converter"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -1833,7 +1833,7 @@ Picture number=50
 Rotation model number=0
 Sound number=4
 Base list price=10
-Item description text="This is an standard part within many robots types."
+Item description text="This is an standard part within many robot types."
 ** End of new item specification subsection **
 
 // Item No. 64
@@ -1842,7 +1842,7 @@ Item name="Entropy Inverter"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="entropy_inverter"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -1864,7 +1864,7 @@ Item name="Tachyon Condensator"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="tachyon_converter"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1

@@ -600,7 +600,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 
   while (!finished)
     {
-      usleep ( 35 );
+      usleep ( 100 );
 
       //--------------------
       // We show all the info and the buttons that should be in this
@@ -992,7 +992,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
 {
   char InfoText[10000];
   char TextChunk[2000];
-  
+  char* ClassString;
   // ITEM_BROWESER_BG_PIC_FILE
 
   SDL_SetClipRect ( Screen , NULL );
@@ -1009,6 +1009,20 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   CutDownStringToMaximalSize ( TextChunk , 225 );
   PutString ( Screen , 330, 38, TextChunk );
 
+  if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_weapon_slot )
+    ClassString = "Weapon" ;
+  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
+    ClassString = "Drive" ; 
+  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_armour_slot )
+    ClassString = "Armour" ; 
+  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_shield_slot )
+    ClassString = "Shield" ; 
+  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_special_slot )
+    ClassString = "Collar" ; 
+  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_aux_slot )
+    ClassString = "Wristband" ; 
+  else ClassString = "Miscellaneous" ; 
+
   sprintf( InfoText, "Item: %s \nClass: %s\n\
 Duration: %d / %d\n\
 Required Str: %d\n\
@@ -1016,7 +1030,7 @@ Required Dex: %d\n\
 Required Mag: %d\n\
 Base list price: %d\n", 
 	   ItemMap [ ShowItem->type ] . item_name, 
-	   ItemMap [ ShowItem->type ] . item_class,
+	   ClassString,
 	   (int)ShowItem->current_duration, 
 	   ShowItem->max_duration ,
 	   ItemMap [ ShowItem->type ] . item_require_strength,
@@ -1042,6 +1056,21 @@ Speed / Acceleration: %d / %d \n",
 	    ItemMap [ ShowItem->type ] . item_description );
 
   strcat ( InfoText, TextChunk );
+
+  switch ( ItemMap [ ShowItem->type ] . item_gun_use_ammunition )
+    {
+    case ITEM_PLASMA_AMMUNITION:
+      strcat ( InfoText, " This weapon requires standard plasma ammunition." );
+      break;
+    case ITEM_LASER_AMMUNITION:
+      strcat ( InfoText, " This weapon requires standard laser crystal ammunition." );
+      break;
+    case ITEM_EXTERMINATOR_AMMUNITION:
+      strcat ( InfoText, " This weapon requires standard exterminator ammunition spheres." );
+      break;
+    default:
+      break;
+    }
 
   // SetCurrentFont( Para_BFont );
   // SetCurrentFont( Menu_BFont );
