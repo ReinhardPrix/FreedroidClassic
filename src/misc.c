@@ -338,8 +338,8 @@ ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString ,
   if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )
     {
       fprintf( stderr, "\n\nStartIndicationString: '%s'\n" , StartIndicationString );
-      GiveStandardErrorMessage ( "ReadAndMalocStringFromData(...)" , 
-"The string that is supposed to prefix an entry in a text data file\n\
+      GiveStandardErrorMessage ( "ReadAndMalocStringFromData(...)" , "\
+The string that is supposed to prefix an entry in a text data file\n\
 of Freedroid was not found within this text data file.\n\
 This indicates some corruption in the data file in question.",
 				 PLEASE_INFORM, IS_FATAL );

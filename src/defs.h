@@ -463,6 +463,7 @@ enum _sounds
 
 // #define MAX_PLAYERS             5
 #define MAX_PLAYERS             1
+#define MAX_PLAYERS_AT_MOST     5
 
 enum _non_player_characters
   {

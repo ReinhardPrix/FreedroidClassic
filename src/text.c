@@ -360,20 +360,13 @@ Therefore we need not add an additional termination character now." );
       NumberOfReplySubtitles = CountStringOccurences ( SectionPointer , NEW_REPLY_SUBTITLE_STRING ) ;
       if ( NumberOfReplySamples != NumberOfReplySubtitles )
 	{
-	  fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There were %d reply samples but %d subtitles specified in a section of\n\
-the Freedroid.dialogues file.  This is currently not allowed in Freedroid\n\
-and therefore indicates an error.  Please correct the problem or inform\n\
-the Freedroid dev team about the problem, best by sending e-mail to\n\
-freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot for reporting the issue.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-		   NumberOfReplySamples , NumberOfReplySubtitles );
-	  Terminate ( ERR );
+	  fprintf( stderr, "\n\nNumberOfReplySamples: %d NumberOfReplySubtitles: %d \n" , NumberOfReplySamples , NumberOfReplySubtitles );
+	  GiveStandardErrorMessage ( "LoadChatRosterWithChatSequence(...)" , "\
+There were an unequal number of reply samples and subtitles specified\n\
+within a section of the Freedroid.dialogues file.\n\
+This is currently not allowed in Freedroid and therefore indicates a\n\
+severe error.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       else
 	{
@@ -411,20 +404,13 @@ found in this option of the dialogue, which is fine.", NumberOfReplySamples );
       NumberOfNewOptionValues = CountStringOccurences ( SectionPointer , "ChangeToValue" ) ;
       if ( NumberOfOptionChanges != NumberOfNewOptionValues )
 	{
-	  fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There were %d option changes but %d new option values specified in a section of\n\
-the Freedroid.dialogues file.  This is currently not allowed in Freedroid\n\
-and therefore indicates an error.  Please correct the problem or inform\n\
-the Freedroid dev team about the problem, best by sending e-mail to\n\
-freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot for reporting the issue.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-		   NumberOfOptionChanges , NumberOfNewOptionValues );
-	  Terminate ( ERR );
+	  fprintf( stderr, "\n\nNumberOfOptionChanges: %d NumberOfNewOptionValues: %d \n" , NumberOfOptionChanges , NumberOfNewOptionValues );
+	  GiveStandardErrorMessage ( "LoadChatRosterWithChatSequence(...)" , "\
+There was number of option changes but an unequal number of new option\n\
+values specified in a section within the Freedroid.dialogues file.\n\
+This is currently not allowed in Freedroid and therefore indicates a\n\
+severe error.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       else
 	{
@@ -765,15 +751,11 @@ ExecuteChatExtra ( char* ExtraCommandString )
 	}
       else
 	{
-	  fprintf ( stderr , "\n----------------------------------------------------------------------\n\
-ExecuteChatExtra: ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!!!!  \n\
-Errorneous string: %s \n\
-\n\
-Freedroid will terminate now to draw attention to the chat code\n\
-problem it could not resolve.  Sorry.\n\
-----------------------------------------------------------------------\n" , 
-		       ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
-	  Terminate ( ERR ) ;
+	  fprintf( stderr, "\n\nErrorneous string: %s \n" , 
+		   ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
+		   GiveStandardErrorMessage ( "ExecuteChatExtra(...)" , "\
+ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
+					      PLEASE_INFORM, IS_FATAL );
 	}
 
       DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...item to remove is: %d." , TempValue );
@@ -782,15 +764,10 @@ problem it could not resolve.  Sorry.\n\
     }
   else 
     {
-      fprintf( stderr , "\n----------------------------------------------------------------------\n\
-ExecuteChatExtra: ERROR:  UNKNOWN COMMAND STRING GIVEN!!!!  \n\
-Errorneous string: %s \n\
-\n\
-Freedroid will terminate now to draw attention to the chat code\n\
-problem it could not resolve.  Sorry.\n\
-----------------------------------------------------------------------\n" , ExtraCommandString );
-      Terminate(ERR);
-      
+      fprintf( stderr, "\n\nExtraCommandString: %s \n" , ExtraCommandString );
+      GiveStandardErrorMessage ( "ExecuteChatExtra(...)" , "\
+ERROR:  UNKNOWN COMMAND STRING GIVEN!",
+				 PLEASE_INFORM, IS_FATAL );
     }
 }; // void ExecuteChatExtra ( char* ExtraCommandString )
 
@@ -840,13 +817,10 @@ PrepareMultipleChoiceDialog ( int Enum )
     }
   if ( Background == NULL )
     {
-      fprintf ( stderr , "\n----------------------------------------------------------------------\n\
-PrepareMultipleChoiceDialog: ERROR LOADING BACKGROUND IMAGE FILE!!!!  \n\
-Error code: %s \n\
-Freedroid will terminate now to draw attention to the graphics loading\n\
-problem it could not resolve.  Sorry.\n\
-----------------------------------------------------------------------\n" , SDL_GetError() );
-      Terminate(ERR);
+      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
+ERROR LOADING BACKGROUND IMAGE FILE!",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -865,22 +839,11 @@ problem it could not resolve.  Sorry.\n\
   Small_Droid = IMG_Load (fpath) ;
   if ( Small_Droid == NULL )
     {
-      fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      fprintf( stderr, "\n\nfpath: %s \n" , fpath );
+      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
 It wanted to load a small portrait file in order to display it in the \n\
-chat interface of Freedroid.  But:  Loading this file has failed.\n\
-\n\
-The name of the problematic file was: %s.\n\
-\n\
-Please inform the Freedroid dev team about the problem, best by sending\n\
-e-mail to freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot for reporting the issue.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-	       fpath );
-      Terminate ( ERR );
+chat interface of Freedroid.  But:  Loading this file has failed.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
 

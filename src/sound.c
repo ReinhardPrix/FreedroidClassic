@@ -285,16 +285,10 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   One_Shot_WAV_File = Mix_LoadWAV( fpath );
   if ( One_Shot_WAV_File == NULL )
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
+
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.
 The reason for this is as follows:  Speech files are stored in wav format\n\
 for technical reasons in conjunction with the SDL and the background music.\n\
 This tends to use up much space on disk, i.e. several megabytes which would\n\
@@ -303,30 +297,12 @@ sound samples featuring dialog speeches are in the freedroid repository.\n\
 \n\
 But to ensure smooth gameplay even with missing sound files, there is an option\n\
 to have freedroid either ignore the missing dialog sound samples or to terminate\n\
-on encountering a missing sound sample.\n\
-This option is set to " 
-	       , fpath );
+on encountering a missing sound sample.  According to this option, Freedroid will\n\
+either terminate or continue running now.",
+				 NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 
-      if ( GameConfig.terminate_on_missing_speech_sample )
+      if ( !GameConfig.terminate_on_missing_speech_sample )
 	{
-	  fprintf (stderr, " TERMINATE ON MISSING SPEECH SAMPLE=TRUE\n\
-which will cause freedroid to terminate now.  You can use the menu to change\n\
-this setting if you wish to play smoothly or you could download the rest of the\n\
-sound samples, that are missing in the game from our web page (soon).\n\
-But for now Freedroid will terminate to draw attention to the sound problem it \n\
-could not resolve, as you requested via the option mentioned above. Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-      else
-	{
-	  fprintf (stderr, " TERMINATE ON MISSING SPEECH SAMPLE=FALSE\n\
-which will cause freedroid to continue running and do nothing otherwise.\n\
-If you wish to have the sound samples, you could try to download and install\n\
-the rest of the speech samples from our web page (hopefully soon).\n\
-----------------------------------------------------------------------\n\
-\n" );
 	  //--------------------
 	  // Maybe this sound sample was intended to be hooking the CPU and the
 	  // program flow, so that nothing happens until the sample has been
@@ -369,24 +345,10 @@ the rest of the speech samples from our web page (hopefully soon).\n\
   Newest_Sound_Channel = Mix_PlayChannel( -1 , One_Shot_WAV_File , 0 );
   if ( Newest_Sound_Channel <= -1 )
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-Analysis of the error has returned the following explanation through SDL:\n\
-%s \n\
-Freedroid will be terminated now to draw attention to this sound problem,\n\
-it could not resolve.  Please inform the developers about it.\n\
-Sorry for interrupting your game.  \n\
-----------------------------------------------------------------------\n\
-\n" , SoundSampleFileName , Mix_GetError() );
-      Terminate (ERR);
+      fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
+      GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
+The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.",
+				 PLEASE_INFORM, IS_FATAL );
     } // if ( ... = -1
   else
     {
@@ -437,7 +399,7 @@ Sorry for interrupting your game.  \n\
 
 #endif // HAVE_LIBSDL_MIXER
 
-};
+}; // void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
 
 // ----------------------------------------------------------------------
 // This function shall initialize the SDL Audio subsystem.  It is called
@@ -468,10 +430,7 @@ InitAudio(void)
 
   if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "InitAudio(...)" , "\
 The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
 \n\
 Please check that your sound card is properly configured,\n\
@@ -481,28 +440,21 @@ If you for some reason cannot get your sound card ready, \n\
 you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate(ERR);
-    } else
-      {
-	printf("\nSDL Audio initialisation successful.\n");
-      }
+not complain any more.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
+    } 
+  else
+    {
+      DebugPrintf ( 1 , "\nSDL Audio initialisation successful.\n");
+    }
 
   // Now that we have initialized the audio SubSystem, we must open
   // an audio channel.  This will be done here (see code from Mixer-Tutorial):
 
   if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
+      GiveStandardErrorMessage ( "InitAudio(...)" , "\
+The SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
 \n\
 Please check that your sound card is properly configured,\n\
 i.e. if other applications are able to play sounds.\n\
@@ -511,12 +463,8 @@ If you for some reason cannot get your sound card ready, \n\
 you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate (ERR);
+not complain any more.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
   else 
     {
@@ -537,28 +485,19 @@ Sorry...\n\
       Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
       if ( Loaded_WAV_Files [ i ] == NULL )
 	{
-	  fprintf (stderr,
-		   "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf (stderr, "\n\nfpath: '%s'.\n" , fpath );
+	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
 \n\
-The name of the problematic file is:\n\
-%s \n\
+Please check that your sound card is properly configured,\n\
+i.e. if other applications are able to play sounds.\n\
 \n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
+If you for some reason cannot get your sound card ready, \n\
+you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	  Terminate (ERR);
+not complain any more.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
 	} // if ( !Loaded_WAV...
       else
 	{
@@ -577,31 +516,18 @@ Sorry...\n\
       Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
       if ( Loaded_MOD_Files[ i ] == NULL )
 	{
-	  fprintf (stderr,
-		   "\n\
+	  fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
+	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
 \n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
+Please check that the file is present within your Freedroid installation.\n\
 \n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-The SDL says the reason for this would be the following:\n\
-%s \n\
-\n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
+If you for some reason cannot get sound output ready, \n\
+you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , Mix_GetError() );
-	  Terminate (ERR);
+not complain any more.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
 	} // if ( !Loaded_MOD...
       else
 	{
@@ -628,7 +554,7 @@ Sorry...\n\
   // DebugPrintf (1, "done.");
   // fflush(stdout);
 #endif // HAVE_SDL_MIXER
-} // void InitAudio(void)
+}; // void InitAudio(void)
 
 
 int i;
@@ -1019,31 +945,18 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
-      fprintf (stderr,
-	       "\n\
+      fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
+      GiveStandardErrorMessage ( "SwitchBackgroundMusicTo(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
 \n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY ON THE FLY.\n\
+Please check that the file is present within your Freedroid installation.\n\
 \n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-The SDL says the reason for this would be the following:\n\
-%s \n\
-\n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
+If you for some reason cannot get sound output ready, \n\
+you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , Mix_GetError() );
-      Terminate (ERR);
+not complain any more.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     } // if ( !Loaded_MOD...
   else
     {
@@ -1080,18 +993,9 @@ PlaySound (int Tune)
   Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
   if ( Newest_Sound_Channel == -1 )
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-Analysis of the error has returned the following explanation through SDL:\n\
-%s \n\
+      fprintf (stderr, "\n\nSoundSampleFilenames[ Tune ]: '%s' Mix_GetError(): %s.\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
+      GiveStandardErrorMessage ( "PlaySound(...)" , "\
+The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
 The most likely cause for the problem however is, that too many sounds\n\
 have been played in too rapid succession, which should be caught.\n\
 If the problem persists, please inform the developers about it.\n\
@@ -1101,10 +1005,8 @@ In the meantime you can choose to play without sound.\n\
 If you want this, use the appropriate command line option and Freedroid will \n\
 not complain any more.  Freedroid will NOT be terminated now to draw attention \n\
 to this sound problem, because the problem is not lethal and will not interfere\n\
-with game performance in any way.  I think this is really not dangerous.\n\
-----------------------------------------------------------------------\n\
-\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
-      // Terminate (ERR);
+with game performance in any way.  I think this is really not dangerous.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
     } // if ( ... = -1
   else
     {

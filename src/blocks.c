@@ -378,25 +378,11 @@ LoadAndPrepareEnemyRotationModelNr ( int j )
       Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
       if ( Whole_Image == NULL )
 	{
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
 Freedroid was unable to load a rotated image of a droid into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	  Terminate(ERR);
+This error indicates some installation problem with freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
@@ -609,10 +595,10 @@ void
 HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
 {
   int i , j;
-  static int Previous_weapon_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
-  static int Previous_shield_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
-  static int Previous_special_item [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
-  static int Previous_armour_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ; 
+  static int Previous_weapon_item  [ MAX_PLAYERS_AT_MOST ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_shield_item  [ MAX_PLAYERS_AT_MOST ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_special_item [ MAX_PLAYERS_AT_MOST ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_armour_item  [ MAX_PLAYERS_AT_MOST ] = { -2 , -2 , -2 , -2 , -2 } ; 
   SDL_Surface* tmp;
   float angle;
 
@@ -874,28 +860,12 @@ Load_Big_Map_Insert_Surfaces( void )
       TempSurface = IMG_Load( fpath ) ;
       if ( TempSurface == 0 )
 	{
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
 Freedroid was unable to load a big graphics insert from the hard disk\n\
 into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	  Terminate(ERR);
-
-
+This error indicates some installation problem with freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
       SDL_FreeSurface ( TempSurface ) ;
@@ -906,29 +876,13 @@ Sorry...\n\
       //
       if ( ! AllMapInserts [ i ] . insert_surface )
 	{
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
 Freedroid was unable to load a big graphics insert from the hard disk\n\
 into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	  Terminate(ERR);
-
+This error indicates some installation problem with freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
-
     }
 	  
 }; // void Load_Big_Map_Insert_Surfaces( void )

@@ -287,7 +287,7 @@ typedef struct
 }
 remote_player, *Remote_Player;
 
-remote_player AllPlayers[ MAX_PLAYERS ] = {
+remote_player AllPlayers[ MAX_PLAYERS_AT_MOST ] = {
   { NULL, 0 } ,
   { NULL, 0 } ,
   { NULL, 0 } ,
