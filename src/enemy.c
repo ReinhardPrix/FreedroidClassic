@@ -37,7 +37,7 @@
 #include "global.h"
 #include "proto.h"
 
-#define COL_SPEED		3	
+#define COL_SPEED		3
 
 #define IS_FRIENDLY_EYE_DISTANCE (2.0)
 
@@ -2034,185 +2034,195 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
 void
 MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int DirectionSign )
 {
-  finepoint VictimPosition;
-  finepoint CurrentPosition;
-  moderately_finepoint StepVector;
-  moderately_finepoint RotatedStepVector;
-  float StepVectorLen;
-  int i , j ;
+    finepoint VictimPosition;
+    finepoint CurrentPosition;
+    moderately_finepoint StepVector;
+    moderately_finepoint RotatedStepVector;
+    float StepVectorLen;
+    int i , j ;
 #define ANGLES_TO_TRY 7
-  float RotationAngleTryList[ ANGLES_TO_TRY ] = { 0 , 30 , 360-30 , 60, 360-60, 90, 360-90 };
-
-  //--------------------
-  // When the robot is just getting hit, then there shouldn't be much
-  // of a running motion, especially during the corresponding animaiton
-  // phase...
-  //
-  if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) 
-    return;
-
-  //--------------------
-  // If the distance is not yet right, we find a new location to move to.  We
-  // do this WITHOUT consulting the waypoints, so that the robots become more
-  // 'intelligent' in their movement.
-  //
-  // However great care must be taken so that the robot will not pass 
-  // through walls, which is could, since there are no other checks for
-  // enemy-wall collision and no corrects of any kind for this mistake.
-  //
-  // ThisRobot->TextVisibleTime = 0 ;
-  // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
-  //
-  ThisRobot -> persuing_given_course = TRUE;
-  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
-  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
-  
-  //--------------------
-  // Now we determine a probably better fighting position (not too far away
-  // to save us from walking through walls) and see if it is perhaps reachable
-  // without passing though walls and if it's also free of other droids so
-  // that we won't bump into our colleagues as well.
-  //
-  if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_PLAYER )
+    float RotationAngleTryList[ ANGLES_TO_TRY ] = { 0 , 30 , 360-30 , 60, 360-60, 90, 360-90 };
+    
+    //--------------------
+    // When the robot is just getting hit, then there shouldn't be much
+    // of a running motion, especially during the corresponding animaiton
+    // phase...
+    //
+    if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) 
+	return;
+    
+    if ( DirectionSign < 0 )
     {
-      if ( ( ThisRobot -> attack_target_index < 0 ) ||
-	   ( ThisRobot -> attack_target_index >= MAX_PLAYERS ) )
+	if ( MyRandom ( 100 ) > 20 )
 	{
-	  fprintf ( stderr , "\nThisRobot -> attack_target_index=%d." , ThisRobot -> attack_target_index );
-	  GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
-				     "attack_target_index pointing outside of player number!",
-				     PLEASE_INFORM, IS_FATAL );
+	    // DebugPrintf ( 1 , "\nDROPPING MOVE OUT from failed random check." );
+	    return;
 	}
-      VictimPosition . x = Me [ ThisRobot -> attack_target_index ] . pos . x ;
-      VictimPosition . y = Me [ ThisRobot -> attack_target_index ] . pos . y ;
-    }
-  else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY )
-    {
-      VictimPosition . x = AllEnemys [ ThisRobot -> attack_target_index ] . pos . x ;
-      VictimPosition . y = AllEnemys [ ThisRobot -> attack_target_index ] . pos . y ;
-    }
-  else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_NOTHING )
-    {
-      //--------------------
-      // Well, if there is no target given, we don't do anything here in 
-      // this function...
-      //
-      return;
-    }
-  else
-    {
-      GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
-				 "Unhandled attack_target_type encountered!",
-				 PLEASE_INFORM, IS_FATAL );
+	DirectionSign = (-3) ;
     }
 
-  CurrentPosition . x = ThisRobot -> pos . x ;
-  CurrentPosition . y = ThisRobot -> pos . y ;
-
-  StepVector . x = VictimPosition . x - CurrentPosition . x ;
-  StepVector . y = VictimPosition . y - CurrentPosition . y ;
-  
-  //--------------------
-  // Now some protection against division by zero when two bots
-  // have _exactly_ the same position, i.e. are standing on top
-  // of each other:
-  //
-  if ( ( fabsf ( StepVector . x ) < 0.01 ) &&
-       ( fabsf ( StepVector . y ) < 0.01 ) )
+    //--------------------
+    // If the distance is not yet right, we find a new location to move to.  We
+    // do this WITHOUT consulting the waypoints, so that the robots become more
+    // 'intelligent' in their movement.
+    //
+    // However great care must be taken so that the robot will not pass 
+    // through walls, which is could, since there are no other checks for
+    // enemy-wall collision and no corrects of any kind for this mistake.
+    //
+    // ThisRobot->TextVisibleTime = 0 ;
+    // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
+    //
+    ThisRobot -> persuing_given_course = TRUE;
+    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
+    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
+    
+    //--------------------
+    // Now we determine a probably better fighting position (not too far away
+    // to save us from walking through walls) and see if it is perhaps reachable
+    // without passing though walls and if it's also free of other droids so
+    // that we won't bump into our colleagues as well.
+    //
+    if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_PLAYER )
     {
-      //--------------------
-      // One droid must go to the left and up and one must go to
-      // the right and down.  But who will go where?  --- We use
-      // the index numbers to resolve the question...
-      //
-      if ( enemynum <= ThisRobot -> attack_target_index )
+	if ( ( ThisRobot -> attack_target_index < 0 ) ||
+	     ( ThisRobot -> attack_target_index >= MAX_PLAYERS ) )
 	{
-	  StepVector . x = 3.0 ;
-	  StepVector . y = 3.0 ;
+	    fprintf ( stderr , "\nThisRobot -> attack_target_index=%d." , ThisRobot -> attack_target_index );
+	    GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+				       "attack_target_index pointing outside of player number!",
+				       PLEASE_INFORM, IS_FATAL );
 	}
-      else
+	VictimPosition . x = Me [ ThisRobot -> attack_target_index ] . pos . x ;
+	VictimPosition . y = Me [ ThisRobot -> attack_target_index ] . pos . y ;
+    }
+    else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY )
+    {
+	VictimPosition . x = AllEnemys [ ThisRobot -> attack_target_index ] . pos . x ;
+	VictimPosition . y = AllEnemys [ ThisRobot -> attack_target_index ] . pos . y ;
+    }
+    else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_NOTHING )
+    {
+	//--------------------
+	// Well, if there is no target given, we don't do anything here in 
+	// this function...
+	//
+	return;
+    }
+    else
+    {
+	GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+				   "Unhandled attack_target_type encountered!",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    
+    CurrentPosition . x = ThisRobot -> pos . x ;
+    CurrentPosition . y = ThisRobot -> pos . y ;
+    
+    StepVector . x = VictimPosition . x - CurrentPosition . x ;
+    StepVector . y = VictimPosition . y - CurrentPosition . y ;
+    
+    //--------------------
+    // Now some protection against division by zero when two bots
+    // have _exactly_ the same position, i.e. are standing on top
+    // of each other:
+    //
+    if ( ( fabsf ( StepVector . x ) < 0.01 ) &&
+	 ( fabsf ( StepVector . y ) < 0.01 ) )
+    {
+	//--------------------
+	// One droid must go to the left and up and one must go to
+	// the right and down.  But who will go where?  --- We use
+	// the index numbers to resolve the question...
+	//
+	if ( enemynum <= ThisRobot -> attack_target_index )
 	{
-	  StepVector . x = -3.0 ;
-	  StepVector . y = -3.0 ;
+	    StepVector . x = 3.0 ;
+	    StepVector . y = 3.0 ;
+	}
+	else
+	{
+	    StepVector . x = -3.0 ;
+	    StepVector . y = -3.0 ;
 	}
     }
+    
+    
+    StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
 
-  
-  StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
-
-  StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
-  StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
-
-  //--------------------
-  // Now we have assembled the simplest of ideas:  Try to move directly
-  // thowards the Tux.  We just need to check if that does make some
-  // sense to move there.  Otherwise we can still consider some variations
-  // to the left or right.
-  //
-  for ( i = 0 ; i < ANGLES_TO_TRY ; i ++ )
+    StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+    StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
+    
+    //--------------------
+    // Now we have assembled the simplest of ideas:  Try to move directly
+    // thowards the Tux.  We just need to check if that does make some
+    // sense to move there.  Otherwise we can still consider some variations
+    // to the left or right.
+    //
+    for ( i = 0 ; i < ANGLES_TO_TRY ; i ++ )
     {
-      RotatedStepVector.x = StepVector.x ;
-      RotatedStepVector.y = StepVector.y ;
-      RotateVectorByAngle ( & RotatedStepVector , RotationAngleTryList [ i ] ) ;
-
-      //--------------------
-      // Maybe we've found a solution, then we can take it and quit
-      // trying around...
-      //
-      if ( ConsideredMoveIsFeasible ( ThisRobot , RotatedStepVector , enemynum ) )
+	RotatedStepVector.x = StepVector.x ;
+	RotatedStepVector.y = StepVector.y ;
+	RotateVectorByAngle ( & RotatedStepVector , RotationAngleTryList [ i ] ) ;
+	
+	//--------------------
+	// Maybe we've found a solution, then we can take it and quit
+	// trying around...
+	//
+	if ( ConsideredMoveIsFeasible ( ThisRobot , RotatedStepVector , enemynum ) )
 	{
-	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
-	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
-	  break;
+	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
+	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
+	    break;
 	}
     }
-
-  //--------------------
-  // But if we didn't find anything, we'll just consider moving away from 
-  // the robot that we got stuck into instead of making a step back.
-  //
-  if ( i >= ANGLES_TO_TRY ) 
+    
+    //--------------------
+    // But if we didn't find anything, we'll just consider moving away from 
+    // the robot that we got stuck into instead of making a step back.
+    //
+    if ( i >= ANGLES_TO_TRY ) 
     {
-      //--------------------
-      // Well, who is the closest (other) robot?
-      //
-      j = ClosestOtherEnemyDroid ( ThisRobot );
-
-      StepVector . x = ThisRobot -> pos . x - AllEnemys [ j ] . pos . x ;
-      StepVector . y = ThisRobot -> pos . y - AllEnemys [ j ] . pos . y ;
-      StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
-
-      //--------------------
-      // If can happen, that two droids are EXACTLY on top of each other.  This
-      // is possible by starting teleportation of a special force right on top
-      // of a random bot for example.  But we should not cause a FLOATING POINT
-      // EXCEPTION here!  AND we should also do a sensible handling...
-      //
-      if ( StepVectorLen )
+	//--------------------
+	// Well, who is the closest (other) robot?
+	//
+	j = ClosestOtherEnemyDroid ( ThisRobot );
+	
+	StepVector . x = ThisRobot -> pos . x - AllEnemys [ j ] . pos . x ;
+	StepVector . y = ThisRobot -> pos . y - AllEnemys [ j ] . pos . y ;
+	StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
+	
+	//--------------------
+	// If can happen, that two droids are EXACTLY on top of each other.  This
+	// is possible by starting teleportation of a special force right on top
+	// of a random bot for example.  But we should not cause a FLOATING POINT
+	// EXCEPTION here!  AND we should also do a sensible handling...
+	//
+	if ( StepVectorLen )
 	{
-	  StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
-	  StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
+	    StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+	    StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
 	}
-      else
+	else
 	{
-	  StepVector . x = (float) MyRandom ( 100 ) / 200.0 ;
-	  StepVector . y = (float) MyRandom ( 100 ) / 200.0 ;
+	    StepVector . x = (float) MyRandom ( 100 ) / 200.0 ;
+	    StepVector . y = (float) MyRandom ( 100 ) / 200.0 ;
 	}
-      
-      //--------------------
-      // Here, when eventually moving out of a colliding colleague,
-      // we must not check for feasibility but only for wall collisions,
-      // cause otherwise the move out of the colleague will never
-      // be allowed.
-      //
-      if ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
-			   ThisRobot -> pos.y + StepVector.y ,
-			   ThisRobot -> pos.z ) )
+	
+	//--------------------
+	// Here, when eventually moving out of a colliding colleague,
+	// we must not check for feasibility but only for wall collisions,
+	// cause otherwise the move out of the colleague will never
+	// be allowed.
+	//
+	if ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
+			  ThisRobot -> pos.y + StepVector.y ,
+			  ThisRobot -> pos.z ) )
 	{
-	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
-	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;
+	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
+	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;
 	}
-
+	
     }
 
 }; // void MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )

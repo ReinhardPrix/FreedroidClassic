@@ -661,12 +661,12 @@ blit_energy_o_meter( void )
 void
 blit_experience_countdown_bars ( void )
 {
-  SDL_Rect experience_countdown_rect;
-  SDL_Rect un_experience_countdown_rect;
-  static Uint32 experience_countdown_rect_color = 0 ;
-  static Uint32 un_experience_countdown_rect_color = 0 ;
-  int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
-  int exp_achieved = Me [ 0 ] . Experience - Me [ 0 ] . ExpRequired_previously ;
+    SDL_Rect experience_countdown_rect;
+    SDL_Rect un_experience_countdown_rect;
+    static Uint32 experience_countdown_rect_color = 0 ;
+    static Uint32 un_experience_countdown_rect_color = 0 ;
+    int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
+    int exp_achieved = Me [ 0 ] . Experience - Me [ 0 ] . ExpRequired_previously ;
 
   //--------------------
   // At game startup, it might be that an uninitialized Tux (with 0 in the
@@ -678,7 +678,7 @@ blit_experience_countdown_bars ( void )
        ( exp_range <= 1 ) ||
        ( exp_achieved < 0 ) )
     {
-      GiveStandardErrorMessage ( "blit_experience_countdown_bars(...)" , "\
+	GiveStandardErrorMessage ( "blit_experience_countdown_bars(...)" , "\
 The current experience of the Tux is higher than the next level while trying\n\
 to blit the 'experience countdown' bar.  Graphics will be suppressed for now...",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
