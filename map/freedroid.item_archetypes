@@ -852,8 +852,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=60
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
-Item as defensive item: ac_bonus_modifier=8
+Item as defensive item: base_ac_bonus=12
+Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=15
 Picture number=23
 Sound number=5
@@ -897,7 +897,7 @@ Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=1
-Item as defensive item: ac_bonus_modifier=5
+Item as defensive item: ac_bonus_modifier=2
 Base item duration=10 plus duration modifier=8
 Picture number=24
 Sound number=0
@@ -941,7 +941,7 @@ Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=1
-Item as defensive item: ac_bonus_modifier=5
+Item as defensive item: ac_bonus_modifier=2
 Base item duration=10 plus duration modifier=10
 Picture number=16
 Sound number=0
@@ -1512,7 +1512,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=25
 Dexterity minimum required to wear/wield this item=25
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
+Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=25 plus duration modifier=10
 Picture number=43
@@ -2436,7 +2436,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
+Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=28 plus duration modifier=15
 Picture number=38
@@ -2480,7 +2480,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=12
+Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=10
 Base item duration=38 plus duration modifier=20
 Picture number=37
@@ -2524,7 +2524,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=45
 Dexterity minimum required to wear/wield this item=30
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
+Item as defensive item: base_ac_bonus=14
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=35 plus duration modifier=20
 Picture number=44
