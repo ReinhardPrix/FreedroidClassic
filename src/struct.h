@@ -313,6 +313,8 @@ typedef struct
   int Dexterity; // character Dexterity value = 'power redistribution speed'
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
+  int PointsToDistribute; // these are the points that are available to distribute upon the character stats
+  float Damage; // 
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;

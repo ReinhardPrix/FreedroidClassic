@@ -246,9 +246,20 @@ EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
 EXTERN void ManageInventoryScreen ( void );
-EXTERN void ShowCharacterScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem );
+
+// character.c
+#undef EXTERN
+#ifdef _character_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void UpdateAllCharacterStats ( void );
+EXTERN void ShowCharacterScreen ( void );
+
+
 
 /* input.c */
 #undef EXTERN
