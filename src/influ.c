@@ -82,6 +82,19 @@ Move_Influencers_Friends ( void )
 }; // void Move_Influencers_Friends (void)
 */
 
+void 
+InitInfluPositionHistory( void )
+{
+  int RingPosition;
+
+  for ( RingPosition = 0 ; RingPosition < MAX_INFLU_POSITION_HISTORY ; RingPosition ++ )
+    {
+      Me.Position_History_Ring_Buffer[ RingPosition ].x = Me.pos.x ;
+      Me.Position_History_Ring_Buffer[ RingPosition ].y = Me.pos.y ;
+      Me.Position_History_Ring_Buffer[ RingPosition ].z = CurLevel->levelnum ;
+    }
+} // void InitInfluPositionHistory( void )
+
 float 
 GetInfluPositionHistoryX( int HowLongPast )
 {

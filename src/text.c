@@ -77,6 +77,7 @@ ChatWithFriendlyDroid( int Enum )
   int OldTextCursorX, OldTextCursorY;
   char *fpath;
   char fname[500];
+  char ReplyString[10000];
   SDL_Surface* Small_Droid;
   SDL_Surface* Large_Droid;
   SDL_Surface* Background;
@@ -204,10 +205,10 @@ ChatWithFriendlyDroid( int Enum )
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
 	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
-Most useful command phrases are: FOLLOW STAY STATUS \n\
+Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT\n\
 Often useful information requests are: JOB NAME MS HELLO \n\
 Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
-				   MyCursorX , MyCursorY , &Chat_Window , Background );
+				   -1 , -1 , &Chat_Window , Background );
 	  continue;
 	}
       
@@ -223,43 +224,60 @@ Of course you can ask the droid about anything else it has told you or about wha
 	{
 	  DisplayTextWithScrolling( 
 		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up." , 
-		      MyCursorX , MyCursorY , &Chat_Window , Background );
+		      -1 , -1 , &Chat_Window , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
 	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
+	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS ( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
+	  // printf(" Staying %d Frames behind.  Should be 5 seconds." , AllEnemys[ Enum ].StayHowManyFramesBehind );
+	  // fflush( stdout );
 	  continue;
 	}
+
+      if ( !strcmp ( RequestString , "closer" ) )
+	{
+	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind > 1 ) AllEnemys[ Enum ].StayHowManySecondsBehind--;
+	  sprintf( ReplyString , "Ok.  I'll stay closer to you, lets say %d seconds back." , 
+		   AllEnemys[ Enum ].StayHowManySecondsBehind );
+	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
+	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
+	  continue;
+	}
+
+      if ( !strcmp ( RequestString , "distant" ) )
+	{
+	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind < 10 ) AllEnemys[ Enum ].StayHowManySecondsBehind++;
+	  sprintf( ReplyString , "Ok.  I'll stay farther away from you, lets say %d seconds back." , 
+		   AllEnemys[ Enum ].StayHowManySecondsBehind );
+	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
+	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
+	  continue;
+	}
+
       if ( !strcmp ( RequestString , "stay" ) )
 	{
 	  DisplayTextWithScrolling( 
-				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  \n\
-I hope you know what you're doing." , 
-		      MyCursorX , MyCursorY , &Chat_Window , Background );
+				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  I hope you will come back sooner or later." , 
+		      -1 , -1 , &Chat_Window , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
 	  AllEnemys[ Enum ].FollowingInflusTail = FALSE;
 	  continue;
 	}
       if ( !strcmp ( RequestString , "status" ) )
 	{
-	  DisplayTextWithScrolling( 
-				   "Here's my status report:\n" ,
-				   MyCursorX , MyCursorY , &Chat_Window , Background );
-	  printf_SDL( ne_screen , -1 , -1 , "Energy: %d/%d.\n" , (int) AllEnemys[ Enum ].energy , (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
+	  sprintf( ReplyString , "Here's my status report:\nEnergy: %d/%d.\n" , 
+		   (int) AllEnemys[ Enum ].energy , 
+		   (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
 	  if ( AllEnemys[ Enum ].FollowingInflusTail )
-	    DisplayTextWithScrolling( 
-				     "I'm currently following you.\n" ,
-				     MyCursorX , MyCursorY , &Chat_Window , Background );
+	      strcat( ReplyString , "I'm currently following you.\n" );
 	  else
-	    DisplayTextWithScrolling( 
-				     "I'm currently not following you.\n" ,
-				     MyCursorX , MyCursorY , &Chat_Window , Background );
+	    strcat( ReplyString , "I'm currently not following you.\n" );
 	  if ( AllEnemys[ Enum ].CompletelyFixed )
-	    DisplayTextWithScrolling( 
-				     "I am instructed to wait here for your return.\n" ,
-				     MyCursorX , MyCursorY , &Chat_Window , Background );
+	    strcat( ReplyString , "I am instructed to wait here for your return.\n" );
 	  else
-	    DisplayTextWithScrolling( 
-				     "I'm free to move.\n" ,
-				     MyCursorX , MyCursorY , &Chat_Window , Background );
+	    strcat( ReplyString , "I'm free to move.\n" );
+
+	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
+
 	  continue;
 	}
 

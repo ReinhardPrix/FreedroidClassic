@@ -685,6 +685,12 @@ Frame_Time (void)
 
 } // float Frame_Time(void)
 
+int
+Get_Average_FPS ( void )
+{
+  return ( (int) ( 1.0 / Overall_Average ) );
+}; // int Get_Average_FPS( void )
+
 /*@Function============================================================
 @Desc: 
 

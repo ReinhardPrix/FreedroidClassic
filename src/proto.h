@@ -61,6 +61,7 @@ EXTERN void CheckIfMissionIsComplete (void);
 #define EXTERN extern
 #endif
 EXTERN int isignf (float);
+EXTERN void InitInfluPositionHistory( void );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
@@ -334,6 +335,7 @@ EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);
 EXTERN void StartTakingTimeForFPSCalculation(void);
+EXTERN int Get_Average_FPS ( void );
 EXTERN float Frame_Time (void);
 EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);

@@ -997,6 +997,11 @@ InitNewMission ( char *MissionName )
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   
   //--------------------
+  // At this point the position history can be initialized
+  //
+  InitInfluPositionHistory();
+
+  //--------------------
   // Now we read in the mission targets for this mission
   // Several different targets may be specified simultaneously
   //

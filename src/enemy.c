@@ -244,6 +244,7 @@ ClearEnemys (void)
       AllEnemys[i].TextToBeDisplayed = "";
       AllEnemys[i].persuing_given_course = FALSE;
       AllEnemys[i].FollowingInflusTail = FALSE;
+      AllEnemys[i].StayHowManySecondsBehind = 5;
       
       for ( j=0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
 	{
@@ -519,10 +520,8 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
       if ( ( fabsf( ThisRobot->pos.x - Me.pos.x ) > 1 ) || 
            ( fabsf( ThisRobot->pos.y - Me.pos.y ) > 1 ) )
 	{
-	  if ( Total_Frames_Passed_In_Mission <= MAX_INFLU_POSITION_HISTORY ) 
-	    HistoryIndex = Total_Frames_Passed_In_Mission-1;
-	  else
-	    HistoryIndex = MAX_INFLU_POSITION_HISTORY-1;
+
+	  HistoryIndex = ThisRobot->StayHowManyFramesBehind;
 
 	  nextwp_pos.y = GetInfluPositionHistoryY( HistoryIndex );
 	  nextwp_pos.x = GetInfluPositionHistoryX( HistoryIndex );
