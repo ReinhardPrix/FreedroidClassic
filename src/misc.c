@@ -161,10 +161,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , 480-20-130-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , 480-20 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } } ,
-    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } } ,
-    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
-    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
 
     { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { 575 , 10 , 73 , 98 } } ,
     { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { 575 , 480-10-98 , 73 , 98 } } ,
