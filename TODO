@@ -9,6 +9,9 @@ Outstanding release-critical bugs (priority: high)
 - (rp!!) SegFault caused by entering Highscore list?! also after/in takeover ?!
   (rp?, check Debriefing() and GetString() )
 
+- (rp?) The game gets stuck in the very left elevator on the deck above the
+        very lowest deck.  Might have something to do with map topics?
+
 - in the first ~20 seconds the game runs _still_ slowly
   NO, now runs too fast... lol, frame-time determination should be _immediate_!!
 

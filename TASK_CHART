@@ -16,10 +16,10 @@ DONE Include a LEVELEDITOR option in the options menu
 DONE Include GAMMA correction option in the options menu
 DONE Include Sound Volume correction in the options menu
 DONE Add an SDL-Font based Framerate-Display-Option, that can also be
-   toggled from the options menu
-1. write the Frame-Displaying code
-2. write the gamma correction code
-3. write the bg music volume adjustment code
+     toggled from the options menu
+DONE write the Frame-Displaying code
+DONE write the gamma correction code
+DONE write the bg music volume adjustment code
 4. write the sound fx volume adjustment code
 5. write the multiplayer menu code
 6. Make a new attempt on dumping the yiff.  This time i'll 

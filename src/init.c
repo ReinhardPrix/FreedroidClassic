@@ -339,6 +339,7 @@ InitNewGame (void)
 
   Draw_Framerate=TRUE;
   Current_BG_Music_Volume=0.5;
+  Current_Sound_FX_Volume=0.5;
 
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");

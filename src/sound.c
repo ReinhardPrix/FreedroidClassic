@@ -384,7 +384,8 @@ Switch_Background_Music_To (int Tune)
 void
 Play_YIFF_Server_Sound (int Tune)
 {
-  // YEventSoundPlay Music_Parameters;
+  YEventSoundPlay Music_Parameters;
+
 
   if ( !sound_on ) return;
 
@@ -450,9 +451,41 @@ Play_YIFF_Server_Sound (int Tune)
     }
 */
 
+
+  Music_Parameters.repeats = 0;
+  Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+  Music_Parameters.left_volume = Current_Sound_FX_Volume;
+  Music_Parameters.right_volume = Current_Sound_FX_Volume;
+  Music_Parameters.sample_rate =
+    BackgroundMusic_sndobj_attrib.sample_rate;
+  Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+  Music_Parameters.position = 0;
+  Music_Parameters.yid = BackgroundMusic_play_id;
+  Music_Parameters.flags = YPlayValuesFlagVolume;
+
+  //  YSetPlaySoundObjectValues (BackgroundMusic_con, play_id, &Music_Parameters);
+
+  play_id = YStartPlaySoundObject(BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune], &Music_Parameters);
+
+  /*
   play_id =
     YStartPlaySoundObjectSimple (BackgroundMusic_con,
-				 ExpandedSoundSampleFilenames[Tune]);
+  			 ExpandedSoundSampleFilenames[Tune]);
+  */
+
+  /*
+  Music_Parameters.repeats = 0;
+  Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+  Music_Parameters.left_volume = Current_Sound_FX_Volume;
+  Music_Parameters.right_volume = Current_Sound_FX_Volume;
+  Music_Parameters.sample_rate =
+    BackgroundMusic_sndobj_attrib.sample_rate;
+  Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+  Music_Parameters.position = 0;
+  Music_Parameters.yid = play_id;
+  Music_Parameters.flags = YPlayValuesFlagVolume;
+  YSetPlaySoundObjectValues (BackgroundMusic_con, play_id, &Music_Parameters);
+  &*/
 
 #endif /* HAVE_LIBY2 */
 

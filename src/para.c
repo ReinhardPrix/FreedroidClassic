@@ -395,7 +395,7 @@ main (int argc, char *const argv[])
 		(now.tv_sec - onehundredframetimestamp.tv_sec) * 1000000 +
 		(now.tv_usec - onehundredframetimestamp.tv_usec);
 	      framenr = 0;
-	      printf("\n Current Frame_Time: %f.", Frame_Time());
+	      // printf("\n Current Frame_Time: %f.", Frame_Time());
 	    }
 
 	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
