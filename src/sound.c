@@ -91,7 +91,7 @@ Init_Audio(void)
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
 
-  printf("\nInitializing SDL Audio Systems....\n");
+  DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
   // At first we set audio volume to maximum value.
   // This might be replaced later with values from a 
@@ -159,7 +159,7 @@ Sorry...\n\
     }
   else 
     {
-      printf("\nSuccessfully opened SDL audio channel." );
+      DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
     }
 
   // Now that the audio channel is opend, its time to load all the
@@ -197,12 +197,12 @@ Sorry...\n\
 	} // if ( !Loaded_WAV...
       else
 	{
-	  printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
+	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
 	}
     } // for (i=0; ...
 
 
-  // printf("done.");
+  // DebugPrintf (1, "done.");
   // fflush(stdout);
 #endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
@@ -305,8 +305,8 @@ static int Background_Music_Channel = -1;
 
   if ( !sound_on ) return;
 
-  printf("\n\nBACKGROUND_MUSIC_CHANNEL IS NOW: %d ", Background_Music_Channel );
-  printf("\nSoundfile to be played: %s ", SoundSampleFilenames[Tune] );
+  DebugPrintf (1, "\n\nBACKGROUND_MUSIC_CHANNEL IS NOW: %d ", Background_Music_Channel );
+  DebugPrintf (1, "\nSoundfile to be played: %s ", SoundSampleFilenames[Tune] );
 
   if ( Background_Music_Channel >= 0 )
     {
@@ -319,7 +319,7 @@ static int Background_Music_Channel = -1;
 
   if (Background_Music_Channel < 0)
     {
-      printf("\nNew Background music ist being initiated....");
+      DebugPrintf (1, "\nNew Background music ist being initiated....");
       fflush(stdout);
       Background_Music_Channel = Mix_PlayChannel( -1, Loaded_WAV_Files[ Tune ], -1 );
       // Play_Sound ( Tune );
@@ -360,7 +360,7 @@ Sorry...\n\
 	}
       else
 	{
-	  printf("\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
+	  DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
 	}
       */
     }
@@ -419,7 +419,7 @@ with game performance in any way.  I think this is really not dangerous.\n\
     } // if ( ... = -1
   else
     {
-      printf("\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
+      DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
     }
 
 #endif // HAVE_LIBSDL_MIXER
