@@ -1520,7 +1520,7 @@ AnimateRefresh (void)
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
-  InnerWaitCounter += Frame_Time () * 10;
+  InnerWaitCounter += Frame_Time () * 3;
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     {
