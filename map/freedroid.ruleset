@@ -783,8 +783,8 @@ Item can be installed in armour slot="no"
 Item can be installed in shield slot="no"
 Item can be installed in special slot="no"
 Item can be installed in aux slot="no"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
+Strength minimum required to wear/wield this item=20
+Dexterity minimum required to wear/wield this item=45
 Magic minimum required to wear/wield this item=-1
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
@@ -810,7 +810,7 @@ Sound number=0
 
 // Item No. 18
 ** Start of new item specification subsection **
-Item name="Standard droid plating"
+Item name="Droid Plating"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in drive slot="no"
@@ -819,7 +819,7 @@ Item can be installed in armour slot="yes"
 Item can be installed in shield slot="no"
 Item can be installed in special slot="no"
 Item can be installed in aux slot="no"
-Strength minimum required to wear/wield this item=-1
+Strength minimum required to wear/wield this item=60
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item installation changes weapon into new value=2
@@ -855,8 +855,8 @@ Item can be installed in armour slot="no"
 Item can be installed in shield slot="yes"
 Item can be installed in special slot="no"
 Item can be installed in aux slot="no"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
+Strength minimum required to wear/wield this item=25
+Dexterity minimum required to wear/wield this item=25
 Magic minimum required to wear/wield this item=-1
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
@@ -882,7 +882,7 @@ Sound number=0
 
 // Item No. 20
 ** Start of new item specification subsection **
-Item name="Standard enhandcement special"
+Item name="Module"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in drive slot="no"
@@ -918,7 +918,7 @@ Sound number=0
 
 // Item No. 21
 ** Start of new item specification subsection **
-Item name="Standard auxhiliary module"
+Item name="Plug-in"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in drive slot="no"
@@ -1026,7 +1026,7 @@ Sound number=0
 
 // Item No. 24
 ** Start of new item specification subsection **
-Item name="Laser sword"
+Item name="Heavy Laser Sword"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in drive slot="no"
@@ -1035,7 +1035,7 @@ Item can be installed in armour slot="no"
 Item can be installed in shield slot="no"
 Item can be installed in special slot="no"
 Item can be installed in aux slot="no"
-Strength minimum required to wear/wield this item=-1
+Strength minimum required to wear/wield this item=45
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item installation changes weapon into new value=2

@@ -152,7 +152,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   //
   if ( ItemMap[ CurItem->type ].item_can_be_installed_in_drive_slot )
     {
-      sprintf( linebuf , "Maxspeed=%2.1f Accel=%2.1f" , 
+      sprintf( linebuf , "Speed: %2.1f Accel: %2.1f" , 
 	       ItemMap[ CurItem->type ].item_drive_maxspeed ,
 	       ItemMap[ CurItem->type ].item_drive_accel );
       strcat( ItemDescText , linebuf );
@@ -164,20 +164,40 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_armour_slot )
   if ( CurItem->ac_bonus )
     {
-      sprintf( linebuf , "AC:=%d" , CurItem->ac_bonus );
+      sprintf( linebuf , "Armour: %d" , CurItem->ac_bonus );
       strcat( ItemDescText , linebuf );
     }
 
   // --------------------
   // If this is a destructible item, we finally give it's current condition
-  //
+  // and if it can be equipped, but not destroyed, we will also say so
   if ( CurItem->max_duration != (-1) )
     {
-      sprintf( linebuf , "\nDur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+      sprintf( linebuf , " Dur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
       strcat( ItemDescText , linebuf );
     }
-
-
+  else if ( ItemMap [ CurItem->type ].item_can_be_installed_in_influ )
+    {
+      strcat( ItemDescText , " Indestructable " );
+    };
+  // --------------------
+  // If this item has some strength or dex or magic requirements, we say so
+  //
+  if ( ( ItemMap[ CurItem->type ].item_require_strength  != ( -1 ) ) || 
+       ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) ) )
+    {
+      strcat ( ItemDescText , "\nRequired:" );
+      if ( ItemMap[ CurItem->type ].item_require_strength != ( -1 ) )
+	{
+	  sprintf( linebuf , "   Pow: %d" , ItemMap[ CurItem->type ].item_require_strength );
+	  strcat( ItemDescText , linebuf );
+	}
+      if ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) )
+	{
+	  sprintf( linebuf , "   Dis: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
+	  strcat( ItemDescText , linebuf );
+	}
+    }
 
 
   // --------------------
@@ -187,8 +207,6 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
     {
       sprintf( linebuf , "Right click to use" );
       strcat( ItemDescText , linebuf );
-
-
     }
 
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem )
@@ -253,10 +271,15 @@ DisplayBanner (const char* left, const char* right,  int flags )
   SDL_Rect Banner_Text_Rect;
   point CurPos;
   char ItemDescText[5000]="=== Nothing ===";
+  char TextLine[10][1000];
   grob_point inv_square;
   int InvIndex;
   int i;
+  int NumberOfLinesInText = 1;
   finepoint MapPositionOfMouse;
+  char* LongTextPointer;
+  int InterLineDistance;
+  int StringLength;
 
   Banner_Text_Rect.x = BANNER_TEXT_RECT_X;
   Banner_Text_Rect.y = BANNER_TEXT_RECT_Y;
@@ -269,7 +292,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  SDL_FillRect( Screen , &Banner_Text_Rect , 0 );
+  SDL_FillRect( Screen , &Banner_Text_Rect , 0x00FF );
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
@@ -384,8 +407,35 @@ DisplayBanner (const char* left, const char* right,  int flags )
     }
 
   SetCurrentFont( FPS_Display_BFont );
-  DisplayText ( ItemDescText , 
-		Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
+  // SetCurrentFont( Red_BFont );
+
+  //--------------------
+  // Now we count how many lines are to be printed
+  //
+  NumberOfLinesInText = 1 + CountStringOccurences ( ItemDescText , "\n" ) ;
+
+  //--------------------
+  // Now we separate the lines and fill them into the line-array
+  //
+  InterLineDistance = ( BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
+    ( NumberOfLinesInText + 1 );
+
+  LongTextPointer = ItemDescText;
+  for ( i = 0 ; i < NumberOfLinesInText-1 ; i ++ )
+    {
+      StringLength = strstr( LongTextPointer , "\n" ) - LongTextPointer ;
+
+      strncpy ( TextLine[ i ] , LongTextPointer , StringLength );
+      TextLine [ i ] [ StringLength ] = 0;
+
+      LongTextPointer += StringLength + 1;
+      CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+			  i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
+    }
+  CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+		      i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
+  
+  // DisplayText ( ItemDescText , Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
 
   SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , 
 		  Banner_Text_Rect.w , Banner_Text_Rect.h );
