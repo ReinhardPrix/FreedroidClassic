@@ -69,6 +69,7 @@
 #define ITEM_SCIMITAR 34
 #define ITEM_HUNTERS_BOW 03
 #define ITEM_WHEELS 07
+#define ITEM_CAP 20
 
 #define WAR_BOT 1
 #define SNIPER_BOT 2
@@ -349,6 +350,7 @@ enum _sounds
 #define ALLSHIPS 		4
 
 #define DROID_PHASES            8
+#define DEAD_DROID_PHASES       1
 #define TUX_SWING_PHASES 	7
 #define TUX_BREATHE_PHASES 	5
 #define TUX_GOT_HIT_PHASES      3
