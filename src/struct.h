@@ -779,6 +779,16 @@ spell_active, *Spell_Active;
 
 typedef struct
 {
+  int Circle;
+  char* spell_skill_name;
+  char* spell_skill_icon_name;
+  SDL_Surface* spell_skill_icon_surface;
+}
+spell_skill_spec, *Spell_Skill_Spec;
+
+
+typedef struct
+{
   int level;   // The level, where this elevtor entrance is located
   int x;       // The position in x of this elevator entrance within the level
   int y;       // The position in y of this elevator entrance within the level

@@ -305,6 +305,51 @@ Load_Bullet_Surfaces( void )
 
 }; // void Load_Bullet_Surfaces( void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
+{
+  SDL_Surface* Whole_Image;
+  char *fpath;
+  char AssembledFileName [ 2000 ] ;
+
+  //--------------------
+  // Maybe this spell/skill icon surface has already been loaded, i.e. it's not
+  // NULL any more.  Then we needn't do anything here.
+  //
+  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface ) return;
+
+  //--------------------
+  // Now it's time to assemble the file name to get the image from
+  //
+  strcpy ( AssembledFileName , "skill_icons/" );
+  strcat ( AssembledFileName , SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_name );
+  fpath = find_file ( AssembledFileName , GRAPHICS_DIR, FALSE );
+
+  //--------------------
+  // Now we can load and prepare the image and that's it
+  //
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  if ( !Whole_Image )
+    {
+      fprintf ( stderr , "\nfpath=%s." , fpath );
+      GiveStandardErrorMessage ( "LoadOneSkillSurfaceIfNotYetLoaded(...)" , "\
+Freedroid was unable to load a certain skill surface into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface = SDL_DisplayFormatAlpha( Whole_Image ); 
+
+  SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , 0 , 0 ); 
+  SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
+  SDL_FreeSurface( Whole_Image );
+  
+}; // void LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
 
 /* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit the
@@ -314,6 +359,17 @@ Load_Bullet_Surfaces( void )
 void 
 Load_SkillIcon_Surfaces( void )
 {
+  int i;
+
+  return;
+
+  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i++ )
+    {
+      LoadOneSkillSurfaceIfNotYetLoaded ( i );
+    }
+
+  /*
+
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
   SDL_Rect Source;
@@ -331,8 +387,8 @@ Load_SkillIcon_Surfaces( void )
 
   for ( i=0 ; i < NUMBER_OF_SKILLS ; i++ )
     {
-      SkillIconSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( SkillIconSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      SpellSkillMap [ i ] . spell_skill_icon_surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( SpellSkillMap [ i ] . spell_skill_icon_surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*(Block_Height+2);
       Source.y=0*(Block_Width+2);
@@ -342,12 +398,14 @@ Load_SkillIcon_Surfaces( void )
       Target.y=0;
       Target.w=Block_Width;
       Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , SkillIconSurfacePointer[i] , &Target );
-      SDL_SetAlpha( SkillIconSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_BlitSurface ( Whole_Image , &Source , SpellSkillMap [ i ] . spell_skill_icon_surface , &Target );
+      SDL_SetAlpha( SpellSkillMap [ i ] . spell_skill_icon_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   SDL_FreeSurface( Whole_Image );
   SDL_FreeSurface( tmp_surf );
+
+  */
 
 }; // void Load_SkillIcon_Surfaces( void )
 

@@ -857,12 +857,13 @@ ShowSkillsScreen ( void )
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
-      SDL_BlitSurface ( SkillIconSurfacePointer[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] , NULL , Screen , &ButtonRect );
+      LoadOneSkillSurfaceIfNotYetLoaded ( i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible );
+      SDL_BlitSurface ( SpellSkillMap [ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] . spell_skill_icon_surface , NULL , Screen , &ButtonRect );
 
       //--------------------
       // First we write the name of the skill to the screen
       //
-      DisplayText( SkillName[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] , 
+      DisplayText( SpellSkillMap [ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] . spell_skill_name , 
 		   16 + 64 + 16 + SkillScreenRect.x , 
 		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , &SkillScreenRect );
       

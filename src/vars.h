@@ -375,69 +375,68 @@ float RangedRechargeMultiplierTable [  ] =
 int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
-char* SkillName[ NUMBER_OF_SKILLS ] = {
+spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
+  { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png" , NULL } ,
+  { 0 , "Repair Skill"           , "RepairSkill.png"       , NULL } ,
+  { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png" , NULL } ,
+  { 1 , "Force -> Energy "       , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Create Teleportal Home" , "NoSkillAvailable.png"  , NULL } ,
 
-  "Takeover/Talk/Loot",
-  "Repair Skill",
-  "Force Explosion Ray",
-  "Force -> Energy ",
-  "Create Teleportal Home",
+  { 1 , "Firey Bolt"             , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Ice Bolt"               , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Explosion Circle"       , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Poison Bolt"            , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Petrification"          , "NoSkillAvailable.png"  , NULL } ,
 
-  "Firey Bolt", // "Remote Strike",
-  "Ice Bolt",
-  "Explosion Circle" , // "Mana Shield",
-  "Poison Bolt",
-  "Petrification",
+  { 1 , "Detect Stuff"           , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Radial EMP Wave"        , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Radial VMX Wave"        , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Radial Plasma Wave"     , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 14"    , "NoSkillAvailable.png"  , NULL } ,
+  
+  { 1 , "Unused spell Nr. 15"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 16"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 17"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 18"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"  , NULL } ,
 
-  "Detect Stuff",
-  "Radial EMP Wave",
-  "Radial VMX Wave",
-  "Radial Plasma Wave",
-  "Unused spell Nr. 14",
-  
-  "Unused spell Nr. 15",
-  "Unused spell Nr. 16",
-  "Unused spell Nr. 17",
-  "Unused spell Nr. 18",
-  "Unused spell Nr. 19",
-  
-  "Unused spell Nr. 20",
-  "Unused spell Nr. 21",
-  "Unused spell Nr. 22",
-  "Unused spell Nr. 23",
-  "Unused spell Nr. 24",
-  
-  "Unused spell Nr. 25",
-  "Unused spell Nr. 26",
-  "Unused spell Nr. 27",
-  "Unused spell Nr. 28",
-  "Unused spell Nr. 29",
-  
-  "Unused spell Nr. 30",
-  "Unused spell Nr. 31",
-  "Unused spell Nr. 32",
-  "Unused spell Nr. 33",
-  "Unused spell Nr. 34",
-  
-  "Unused spell Nr. 35",
-  "Unused spell Nr. 36",
-  "Unused spell Nr. 37",
-  "Unused spell Nr. 38",
-  "Unused spell Nr. 39",
-  
-  "Unused spell Nr. 40",
-  "Unused spell Nr. 41",
-  "Unused spell Nr. 42",
-  "Unused spell Nr. 43",
-  "Unused spell Nr. 44",
-  
-  "Unused spell Nr. 45",
-  "Unused spell Nr. 46",
-  "Unused spell Nr. 47",
-  "Unused spell Nr. 48",
-  "Unused spell Nr. 49"
-  
-};
+  { 1 , "Unused spell Nr. 20"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 22"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 23"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 24"    , "NoSkillAvailable.png"  , NULL } ,
+
+  { 1 , "Unused spell Nr. 25"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 26"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 27"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 28"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 29"    , "NoSkillAvailable.png"  , NULL } ,
+
+  { 1 , "Unused spell Nr. 30"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 31"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 32"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 33"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 34"    , "NoSkillAvailable.png"  , NULL } ,
+
+  { 1 , "Unused spell Nr. 35"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 36"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 37"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 38"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 39"    , "NoSkillAvailable.png"  , NULL } ,
+
+  { 1 , "Unused spell Nr. 40"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 41"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 42"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 43"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 44"    , "NoSkillAvailable.png"  , NULL } ,
+
+  { 1 , "Unused spell Nr. 45"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 46"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 47"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 48"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 49"    , "NoSkillAvailable.png"  , NULL } 
+
+}; // SpellSkillSpec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
 
 Druidspec Druidmap;
 

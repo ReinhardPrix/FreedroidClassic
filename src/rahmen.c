@@ -434,8 +434,8 @@ ShowCurrentSkill( void )
   Target_Rect.w = CURRENT_SKILL_RECT_W ;
   Target_Rect.h = CURRENT_SKILL_RECT_H ;
 
-  SDL_BlitSurface ( SkillIconSurfacePointer[ Me[0].readied_skill ] , NULL , Screen , &Target_Rect );
-
+  LoadOneSkillSurfaceIfNotYetLoaded ( Me[0].readied_skill );
+  SDL_BlitSurface ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , NULL , Screen , &Target_Rect );
 
   //--------------------
   // Here we also check for possible mouse clicks on the skill icon.  In this
