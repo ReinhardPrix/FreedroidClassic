@@ -270,6 +270,7 @@ typedef struct
   signed char mine;
   int owner;
   double angle;
+  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
 }
 bullet, *Bullet;
 

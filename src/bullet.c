@@ -100,12 +100,31 @@ void
 DeleteBullet (int Bulletnummer)
 {
   Bullet CurBullet = &AllBullets[Bulletnummer];
+  int i;
 
-  /* Das Bullet loeschen */
+  //--------------------
+  // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
+  // free the SDL_Surfaces again as well...
+  //
+  if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
+    {
+      DebugPrintf( 0 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
+      for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
+	{
+	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );
+	}
+    }
+
+
+
+  // delete the bullet
   CurBullet->type = OUT;
   CurBullet->time_in_seconds = 0;
   CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
+
+
+
 
   /* Blast erzeugen: type BULLETBLAST */
   StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);

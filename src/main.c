@@ -102,11 +102,11 @@ main (int argc, char *const argv[])
 
 	  AnimateTeleports ();	
 
-	  MoveBullets ();   
-
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
 
 	  DisplayBanner (NULL, NULL,  0 );
+
+	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
