@@ -68,7 +68,6 @@ EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
-
 EXTERN FCU AllFCUs[];
 EXTERN influence_t Me;		/* the influence data */
 EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
@@ -163,6 +162,7 @@ EXTERN float Current_Sound_FX_Volume;
 #else
 #define EXTERN extern
 #endif
+EXTERN int RahmenIsDestroyed;
 EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;

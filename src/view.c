@@ -148,16 +148,6 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
            to also cause an SDL_Update of the portion of the screen
            that has been modified
 
-       (*) ALSO_UPDATE_EXTERIORS = 4:  This flag indicated, that not
-           only the combat window, but also the status line above and
-           the designs outside the combat window need to be redrawn
-           and if specified above, updated.
-	   WARNING!  THIS OPTION FORCES THE REDRAWING OF THE INFOLINE
-           AND THE TEXT WITHIN THE INFO LINE, WHICH MIGHT BE UNNESCESSARY
-           AND COSTS FRAMES.  YOU MIGHT CONSIDER USING THE FUNCTION
-           SetInfoline with appropriate flags instead.
-     
-
  @Ret: none
 -----------------------------------------------------------------
 */
@@ -185,14 +175,8 @@ Assemble_Combat_Picture (int mask)
       return;
     }
 
-  // In case that the users asks us to update the whole screen, its best to
-  // clear the screen before starting to update the combat window.
-  if ( mask & ALSO_UPDATE_EXTERIORS )
-    SDL_FillRect( ne_screen , NULL , 0 );
-
-
   // Why not blit the WHOLE map?  Lets try it!
-  // --> It seems to work!!  THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
+  // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
   // * INTERNBREITE IS NO LONGER NEEDED IN HERE
   // * INTERNHOEHE IS NO LONGER NEEDED IN HERE
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
@@ -240,18 +224,6 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
-  // At this point we are done with the interiours of the
-  // combat window.
-  // But IF the user wants exteriours to be updated too, we
-  // also need to draw the rest of the screen, i.e. status
-  // lines and all that.
-
-  if ( mask & ALSO_UPDATE_EXTERIORS )
-    {
-      DisplayRahmen( 0 );
-      SetInfoline( NULL , NULL );
-    }
-
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
   // Depending on where we did our modifications, we update
@@ -259,10 +231,7 @@ Assemble_Combat_Picture (int mask)
 
   if ( mask & DO_SCREEN_UPDATE )
     {
-      if ( mask & ALSO_UPDATE_EXTERIORS )
-	SDL_Flip( ne_screen );
-      else 
-	SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
+      SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
     }
 
   return;  // for now
@@ -522,8 +491,6 @@ PutInfluence ( int x, int y)
 void
 PutEnemy (int Enum)
 {
-  unsigned char *Enemypic;
-  int enemyX, enemyY;
   const char *druidname;	/* the number-name of the Enemy */
   int phase;
   SDL_Rect TargetRectangle;

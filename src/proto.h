@@ -59,6 +59,8 @@ EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (void);
 EXTERN void InitNewGame (void);
 EXTERN void Init_Druidmap (void);
+EXTERN void Debriefing (void);
+
 /* influ.c */
 #undef EXTERN
 #ifdef _influ_c

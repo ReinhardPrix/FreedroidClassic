@@ -594,7 +594,7 @@ enum
 
       SDL_SetClipRect( ne_screen, NULL );
 
-      Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS );
+      Assemble_Combat_Picture ( 0 );
 
       MakeGridOnScreen();
 
@@ -679,8 +679,10 @@ enum
 
 } // EscapeMenu
 
-/* -----------------------------------------------------------------
- *-----------------------------------------------------------------*/
+/* 
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+*/
 void
 Options_Menu (void)
 {
@@ -707,7 +709,7 @@ enum
   while (!Weiter)
     {
 
-      Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS );
+      Assemble_Combat_Picture ( 0 );
       MakeGridOnScreen();
       SDL_SetClipRect( ne_screen, NULL );
 
@@ -844,7 +846,7 @@ enum
 
   ClearGraphMem ();
   Update_SDL_Screen();
-  DisplayRahmen ( FORCE_UPDATE );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -936,7 +938,7 @@ Single_Player_Menu (void)
     }
   ClearGraphMem ( );
   Update_SDL_Screen();
-  DisplayRahmen ( );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -992,7 +994,7 @@ Show_Highscore_Menu (void)
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
   ClearGraphMem ( );
-  DisplayRahmen ( );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -1044,7 +1046,7 @@ Multi_Player_Menu (void)
 
   ClearGraphMem ( );
   // Update_SDL_Screen();
-  DisplayRahmen ( );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -1092,7 +1094,7 @@ Show_Mission_Instructions_Menu (void)
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
   ClearGraphMem ( );
-  DisplayRahmen ( );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -1250,7 +1252,7 @@ Level_Editor(void)
       while (!Weiter)
 	{
 
-	  AssembleCombatWindow( );
+	  AssembleCombatWindow( 0 );
 
 	  MakeGridOnScreen( Outline320x200 );
 
@@ -1369,6 +1371,7 @@ Terminate (int ExitCode)
 
   DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf ("GameOver : %i\n", GameOver);
+
 
   SDL_Quit();
   exit (ExitCode);
@@ -1657,7 +1660,7 @@ MyMalloc (long Mamount)
   if ((Mptr = malloc ((size_t) Mamount)) == NULL)
     {
       printf (" MyMalloc(%ld) did not succeed!\n", Mamount);
-      exit (-1);
+      Terminate(ERR);
     }
 
   return Mptr;

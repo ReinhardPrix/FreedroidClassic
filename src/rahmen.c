@@ -128,9 +128,10 @@ To save framerate on slow machines however it will only work
 if it thinks that work needs to be done. 
 You can however force update if you say so with a flag.
 
-FORCE_UPDATE=1.
+RAHMEN_FORCE_UPDATE=1: Forces the redrawing of the title bar
 
-Well, the details have to be written still...
+RAHMEN_DONT_TOUCH_TEXT=2: Prevents DisplayRahmen from touching the
+text, i.e. calling SetInfoline            
 
 To update the information in the top status line only, you can
 as well use the function SetInfoline.
@@ -140,13 +141,23 @@ as well use the function SetInfoline.
 void
 DisplayRahmen ( int flags )
 {
-
   SDL_Rect TargetRectangle;
-  TargetRectangle.x=0;
-  TargetRectangle.y=0;
-  SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
-  SDL_BlitSurface( ne_blocks , ne_rahmen_block , ne_screen , &TargetRectangle );
 
+  if ( RahmenIsDestroyed || (flags & RAHMEN_FORCE_UPDATE ) )
+    {
+      TargetRectangle.x=0;
+      TargetRectangle.y=0;
+      SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
+      SDL_BlitSurface( ne_blocks , ne_rahmen_block , ne_screen , &TargetRectangle );
+      RahmenIsDestroyed = FALSE;
+      printf("\nHad to redraw the top bar completely...");
+    }
+
+  // The following instruction only does something to the screen
+  // IF the screen has changed.  Therefore it can be called allways
+  // without loss of framerate.
+  if ( ! (flags & RAHMEN_DONT_TOUCH_TEXT ) ) SetInfoline( NULL , NULL );
+  
   return;
 
 } /* DisplayRahmen() */
@@ -167,6 +178,8 @@ SetInfoline (const char *left, const char *right)
   char dummy[80];
   char left_box [LEFT_TEXT_LEN + 10];
   char right_box[RIGHT_TEXT_LEN + 10];
+  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
+  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
   int left_len, right_len;   /* the actualy string-lens */
 
   if (left == NULL)       /* Left-DEFAULT: Mode */
@@ -202,10 +215,22 @@ SetInfoline (const char *left, const char *right)
   /* Hintergrund Textfarbe setzen */
   SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
 
-  /* Text ausgeben */
-  PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
-  PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-  //  DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
+  
+  SDL_SetClipRect( ne_screen , NULL );
+  // Now the text should be ready and its
+  // time to display it...
+  if ( (strcmp( left_box , previous_left_box )) || (strcmp( right_box , previous_right_box )) )
+    {
+      DisplayRahmen( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
+      PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
+      SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
+      strcpy( previous_left_box , left_box );
+      PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+      SDL_UpdateRect( ne_screen, RIGHT_INFO_X, RIGHT_INFO_Y, FontHeight(Menu_BFont)*4, FontHeight(Menu_BFont) );
+      strcpy( previous_right_box , right_box );
+      printf("\nHad to update top status line box...");
+    }
+  // DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
   // DisplayText (right_box, RIGHTINFO_X, RIGHTINFO_Y, Outline320x200, FALSE);
 
   return;

@@ -182,7 +182,7 @@ Takeover (int enemynum)
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
 
-  DisplayRahmen ( FORCE_UPDATE );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   SetUserfenster ( TO_BG_COLOR );  /* set takeover color */
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */

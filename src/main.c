@@ -327,9 +327,10 @@ main (int argc, char *const argv[])
 	  MoveBullets ();   
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
+	  DisplayRahmen( 0 );
 	  SetInfoline (NULL, NULL); /* put up default infos: MODE  -- SCORE */
 
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); // | ALSO_UPDATE_EXTERIORS );
+	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
 	  for (i = 0; i < MAXBULLETS; i++)
 	    CheckBulletCollisions (i);
@@ -457,7 +458,8 @@ ThouArtDefeated (void)
 
   while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
     {
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE | ALSO_UPDATE_EXTERIORS );
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+      DisplayRahmen( 0 );
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();
@@ -501,125 +503,6 @@ ThouArtVictorious (void)
   getchar_raw ();
 }
 
-/* **********************************************************************
-   Diese Funktion updated die Highscoreliste
-**********************************************************************/
-void
-Debriefing (void)
-{
-  char *Scoretext;
-  HallElement *Oldptr;
-  HallElement *Newptr;
-  HallElement *SaveHallptr = Hallptr;
-  int DebriefColor;
-
-  DebriefColor = FONT_WHITE;
-
-  Me.status = DEBRIEFING;
-  if (!PlusExtentionsOn)
-    {
-      Scoretext = MyMalloc (1000);
-      SetUserfenster ( DebriefColor );	// KON_BG_COLOR
-      // SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
-      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
-      if (RealScore > GreatScore)
-	{
-	  // strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			    "    Great Score !");
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
-			    "    Enter your name: ");
-	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
-	  PrepareScaledSurface(TRUE);
-
-	  GreatScoreName = GetString (10, 2);
-	  GreatScore = RealScore;
-	}
-      else if (RealScore < LowestScoreOfDay)
-	{
-	  // strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			    "\n   Lowest Score of Day!");
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
-			    "    Enter your name: ");
-	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
-	  PrepareScaledSurface(TRUE);
-	  LowestName = GetString (10, 2);
-	  LowestScoreOfDay = RealScore;
-	}
-      else if (RealScore > HighestScoreOfDay)
-	{
-	  strcpy (Scoretext,
-		  "\n   Highest Score of Day! \n Enter your name:");
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			    "\n   Highest Score of Day!" );
-	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
-			    "    Enter your name: ");
-	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
-	  PrepareScaledSurface(TRUE);
-	  HighestName = GetString (10, 2);
-	  HighestScoreOfDay = RealScore;
-	}
-      free (Scoretext);
-
-    }
-  else
-    {
-      SaveHallptr = Hallptr;
-
-      /* Wir brauchen keine Versager ! */
-      if (RealScore == 0)
-	return;
-      /* Setzten der Umgebung */
-      SetUserfenster ( KON_BG_COLOR );
-      SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-      DisplayText
-	(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
-	 USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
-
-	  PrepareScaledSurface(TRUE);
-
-      /* Den neuen Eintrag in die Liste integrieren */
-      if (Hallptr->PlayerScore < RealScore)
-	{
-	  Oldptr = Hallptr;
-	  Hallptr = MyMalloc (sizeof (HallElement) + 1);
-	  Hallptr->PlayerScore = RealScore;
-	  Hallptr->PlayerName = GetString (18, 2);
-	  Hallptr->NextPlayer = Oldptr;
-	  SaveHallptr = Hallptr;
-	}
-      else
-	{
-	  Oldptr = Hallptr;
-	  while (Hallptr->PlayerScore > RealScore)
-	    {
-	      Hallptr = Hallptr->NextPlayer;
-	      if (Hallptr->PlayerScore > RealScore)
-		Oldptr = Oldptr->NextPlayer;
-	    }
-	  Newptr = MyMalloc (sizeof (HallElement) + 1);
-	  Newptr->PlayerScore = RealScore;
-	  Newptr->PlayerName = GetString (18, 2);
-	  Newptr->NextPlayer = Hallptr;
-	  Oldptr->NextPlayer = Newptr;
-	}
-
-      /* Message an exit */
-      DisplayText ("You are now added to the hall\n of fame!\n",
-		   USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
-      Hallptr = SaveHallptr;
-
-      PrepareScaledSurface(TRUE);
-      getchar ();
-    } /* if (ParaPlusExtensions) */
-
-  printf ("\nSurvived Debriefing! \n");
-
-  return;
-
-} /* Debriefing() */
-
 /*-----------------------------------------------------------------
  * Desc: realise Pause-Mode: the game process is halted,
  * 	while the graphics and animations are not.  This mode 
@@ -638,7 +521,7 @@ Pause (void)
   Activate_Conservative_Frame_Computation();
 
   Me.status = PAUSE;
-  Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS | DO_SCREEN_UPDATE );
+  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
   while ( Pause )
     {

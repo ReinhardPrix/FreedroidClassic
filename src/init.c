@@ -289,17 +289,6 @@ InitNewGame (void)
       Terminate (-1);
     }
 
-  /* Influ initialisieren */
-  Me.type = DRUID001;
-  Me.speed.x = 0;
-  Me.speed.y = 0;
-  Me.energy = Druidmap[DRUID001].maxenergy;
-  Me.health = Me.energy;	/* start with max. health */
-  Me.autofire = FALSE;
-  Me.status = MOBILE;
-  Me.phase = 0;
-
-  // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 
   /* Introduction und Title */
   Title ();
@@ -316,7 +305,7 @@ InitNewGame (void)
 
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearGraphMem();
-  DisplayRahmen ( FORCE_UPDATE );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   SetInfoline (NULL,NULL);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
@@ -327,6 +316,18 @@ InitNewGame (void)
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
 
+  // Now that the briefing and all that is done,
+  // the influence structure can be initialized for
+  // the new mission:
+  Me.type = DRUID001;
+  Me.speed.x = 0;
+  Me.speed.y = 0;
+  Me.energy = Druidmap[DRUID001].maxenergy;
+  Me.health = Me.energy;	/* start with max. health */
+  Me.autofire = FALSE;
+  Me.status = MOBILE;
+  Me.phase = 0;
+  
   return;
 
 } /* InitNewGame */
@@ -509,7 +510,6 @@ Title (void)
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
-
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
   DisplayImage ( NE_TITLE_PIC_FILE );
@@ -523,7 +523,9 @@ Title (void)
 
   ClearGraphMem ();
 
-  DisplayRahmen( FORCE_UPDATE ); 
+  Me.status=BRIEFING;
+
+  DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
 
   SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
@@ -559,7 +561,7 @@ EndTitle (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  DisplayRahmen( FORCE_UPDATE );
+  DisplayRahmen( RAHMEN_FORCE_UPDATE );
 
   SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
@@ -575,6 +577,132 @@ EndTitle (void)
   while ( SpacePressed() );
 
 } /* EndTitle() */
+
+/* 
+----------------------------------------------------------------------
+@Desc: This function does the mission debriefing.  If the score was
+very good or very bad, player will be asked for this name and the 
+highscore list will be updated.
+
+@Ret: 
+@Int:
+----------------------------------------------------------------------
+*/
+void
+Debriefing (void)
+{
+  char *Scoretext;
+  HallElement *Oldptr;
+  HallElement *Newptr;
+  HallElement *SaveHallptr = Hallptr;
+  int DebriefColor;
+
+  DebriefColor = FONT_WHITE;
+
+  Me.status = DEBRIEFING;
+  if (!PlusExtentionsOn)
+    {
+      Scoretext = MyMalloc (1000);
+      SetUserfenster ( DebriefColor );	// KON_BG_COLOR
+      // SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
+      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      if (RealScore > GreatScore)
+	{
+	  // strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "    Great Score !");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+	  PrepareScaledSurface(TRUE);
+
+	  GreatScoreName = GetString (10, 2);
+	  GreatScore = RealScore;
+	}
+      else if (RealScore < LowestScoreOfDay)
+	{
+	  // strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "\n   Lowest Score of Day!");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+	  PrepareScaledSurface(TRUE);
+	  LowestName = GetString (10, 2);
+	  LowestScoreOfDay = RealScore;
+	}
+      else if (RealScore > HighestScoreOfDay)
+	{
+	  strcpy (Scoretext,
+		  "\n   Highest Score of Day! \n Enter your name:");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "\n   Highest Score of Day!" );
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+	  PrepareScaledSurface(TRUE);
+	  HighestName = GetString (10, 2);
+	  HighestScoreOfDay = RealScore;
+	}
+      free (Scoretext);
+
+    }
+  else
+    {
+      SaveHallptr = Hallptr;
+
+      /* Wir brauchen keine Versager ! */
+      if (RealScore == 0)
+	return;
+      /* Setzten der Umgebung */
+      SetUserfenster ( KON_BG_COLOR );
+      SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
+      DisplayText
+	(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
+	 USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+
+	  PrepareScaledSurface(TRUE);
+
+      /* Den neuen Eintrag in die Liste integrieren */
+      if (Hallptr->PlayerScore < RealScore)
+	{
+	  Oldptr = Hallptr;
+	  Hallptr = MyMalloc (sizeof (HallElement) + 1);
+	  Hallptr->PlayerScore = RealScore;
+	  Hallptr->PlayerName = GetString (18, 2);
+	  Hallptr->NextPlayer = Oldptr;
+	  SaveHallptr = Hallptr;
+	}
+      else
+	{
+	  Oldptr = Hallptr;
+	  while (Hallptr->PlayerScore > RealScore)
+	    {
+	      Hallptr = Hallptr->NextPlayer;
+	      if (Hallptr->PlayerScore > RealScore)
+		Oldptr = Oldptr->NextPlayer;
+	    }
+	  Newptr = MyMalloc (sizeof (HallElement) + 1);
+	  Newptr->PlayerScore = RealScore;
+	  Newptr->PlayerName = GetString (18, 2);
+	  Newptr->NextPlayer = Hallptr;
+	  Oldptr->NextPlayer = Newptr;
+	}
+
+      /* Message an exit */
+      DisplayText ("You are now added to the hall\n of fame!\n",
+		   USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+      Hallptr = SaveHallptr;
+
+      PrepareScaledSurface(TRUE);
+      getchar ();
+    } /* if (ParaPlusExtensions) */
+
+  printf ("\nSurvived Debriefing! \n");
+
+  return;
+
+} /* Debriefing() */
 
 #undef _init_c
 

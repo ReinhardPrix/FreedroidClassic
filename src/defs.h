@@ -45,11 +45,11 @@
 
 // The flags for DisplayRahmen are:
 enum
-  { FORCE_UPDATE=1 };
+  { RAHMEN_FORCE_UPDATE=1 , RAHMEN_DONT_TOUCH_TEXT=2 };
 
 // The flags for AssembleCombatWindow are:
 enum
-{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2, ALSO_UPDATE_EXTERIORS = 4 };
+{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 };
 
 
 // **********************************************************************
@@ -402,7 +402,8 @@ enum _status
   TERMINATED,
   PAUSE,
   CHEESE,
-  ELEVATOR
+  ELEVATOR,
+  BRIEFING
 };
 
 

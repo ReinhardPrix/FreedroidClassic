@@ -193,7 +193,7 @@ EnterElevator (void)
 
   LeaveElevatorSound ();
   ClearGraphMem ( );
-  DisplayRahmen ( FORCE_UPDATE );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   SetInfoline (NULL,NULL);
 
   UnfadeLevel ();
@@ -231,7 +231,7 @@ ShowElevators (void)
   ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
-  DisplayRahmen ( FORCE_UPDATE );      
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );      
   SetInfoline (NULL, NULL);
 
   tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
@@ -413,7 +413,7 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
-  DisplayRahmen ( FORCE_UPDATE );
+  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */

@@ -603,8 +603,14 @@ LevelGrauFaerben (void)
 void
 ClearGraphMem ( void )
 {
+  // One this function is done, the rahmen at the
+  // top of the screen surely is destroyed.  We inform the
+  // DisplayRahmen function of the matter...
+  RahmenIsDestroyed=TRUE;
+
+  // Now we fill the screen with black color...
   SDL_FillRect( ne_screen , NULL , 0 );
-}
+} // ClearGraphMem( void )
 
 
 /*@Function============================================================
