@@ -99,6 +99,7 @@ CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatad
 AC_CONFIG_FILES([Makefile 
                 src/Makefile 
                 map/Makefile 
+                dialogs/Makefile 
                 sound/Makefile 
 		sound/speeches/Makefile
 		sound/effects/Makefile 
