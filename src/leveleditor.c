@@ -248,6 +248,7 @@ Level_Editor(void)
   char* NewCommentOnThisSquare;
   char* OldMapPointer;
   char linebuf[10000];
+  int MapInsertNr;
 
   char VanishingMessage[10000]="Hello";
   float VanishingMessageDisplayTime = 0;
@@ -620,6 +621,68 @@ Level_Editor(void)
 	  if ( TPressed()) 
 	    {
 	      CurLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
+	    }
+
+	  //--------------------
+	  // Pressing the 'B' key will toggle the big graphics insert by one...
+	  //
+	  if ( BPressed()) 
+	    {
+	      //--------------------
+	      // First we wait till the b key is released again...
+	      //
+	      while ( BPressed() );
+
+	      //--------------------
+	      // Now we go and take a look if there is some grapics insert
+	      // at this location present already...
+	      //
+	      for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+		{
+		  if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
+		  if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
+		  if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
+		  break;
+		}
+
+	      if ( MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL )
+		{
+		  sprintf( VanishingMessage , " Old map insert on this position found... " );
+		  VanishingMessageDisplayTime = 0 ;
+		}
+	      else
+		{
+		  sprintf( VanishingMessage , " No Old map insert on this position found. Opening new index...." );
+		  VanishingMessageDisplayTime = 0 ;
+		  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+		    {
+		      if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
+		    }
+		  if ( MapInsertNr >= MAX_MAP_INSERTS_PER_LEVEL )
+		    {
+		      sprintf( VanishingMessage , " No new map insert index available.\n Overwriting first one..." );
+		      VanishingMessageDisplayTime = 0 ;
+		      MapInsertNr = 0;
+		    }
+		  
+		  //--------------------
+		  // Now we enter the right coordinates for our new map index...
+		  //
+		  CurLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
+		  CurLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
+		  
+		}
+
+	      //--------------------
+	      // At this point we know, that we have a good map insert index at our
+	      // hands.  Therefore we increase the number of the type and possible
+	      // reset it to -1 if the last index was exceeded...
+	      //
+	      CurLevel->MapInsertList [ MapInsertNr ] . type ++ ;
+
+	      if ( CurLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
+		CurLevel->MapInsertList [ MapInsertNr ] . type = -1;
+
 	    }
 
 	  //--------------------
