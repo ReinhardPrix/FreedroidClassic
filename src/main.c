@@ -339,11 +339,47 @@ UpdateCountersForThisFrame ( int PlayerNum )
 
   if ( Me [ PlayerNum ] .firewait > 0 )
     {
-      Me [ PlayerNum ] .firewait-=Frame_Time();
-      if (Me [ PlayerNum ] .firewait < 0) Me [ PlayerNum ] .firewait=0;
+      Me [ PlayerNum ] .firewait -= Frame_Time();
+      if ( Me [ PlayerNum ] . firewait < 0) Me [ PlayerNum ] .firewait=0;
     }
 
-} /* UpdateCountersForThisFrame() */
+  //--------------------
+  // In order to know when a level can finally be respawned with
+  // enemies, we keep track to the time spent actually in the game, i.e.
+  // time actually spent passing frames...
+  //
+  for ( i = 0 ; i < MAX_LEVELS ; i ++ )
+    {
+      if ( Me [ PlayerNum ] . pos . z != i )
+	{
+	  if ( Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] > (-1) )
+	    {
+	      Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] += Frame_Time() ;
+	    }
+
+	  //--------------------
+	  // Now maybe it's time to respawn?  If we really have multiple
+	  // players of course, this check would have to look a bit different...
+	  //
+	  if ( Me [ 0 ] . time_since_last_visit_or_respawn [ i ] > 600 )
+	    {
+	      DebugPrintf ( -10 , "\nNow respawning all bots on level : %d. " , i ) ;
+	      Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
+	      respawn_level ( i ) ;
+	    }
+	  
+	}
+      else
+	{
+	  //--------------------
+	  // When the Tux is right on this level, there is absolutely no need 
+	  // for respawning anything...
+	  //
+	  Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
+	}
+    }
+
+}; // void UpdateCountersForThisFrame(...) 
 
 
 #undef _main_c

@@ -1499,7 +1499,11 @@ InitHarmlessTuxStatusVariables( int PlayerNum )
   Me[ PlayerNum ].points_to_distribute = 0;
   Me[ PlayerNum ].ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me[ PlayerNum ].KillRecord[ i ] = 0;
-  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[ PlayerNum ].HaveBeenToLevel [ i ] = FALSE ;
+  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) 
+    {
+      Me [ PlayerNum ] . HaveBeenToLevel [ i ] = FALSE ;
+      Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] = (-1) ;
+    }
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
     {
       Me[ PlayerNum ].DetectedItemList[i].x = 0 ;

@@ -103,7 +103,7 @@ char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   };
 
 /*
-influence_t Me[ MAX_PLAYERS ] = {
+tux_t Me[ MAX_PLAYERS ] = {
   { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 },
   { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 },
   { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 },
@@ -112,11 +112,11 @@ influence_t Me[ MAX_PLAYERS ] = {
 };
 */
 
-influence_t Me[ MAX_PLAYERS ] = 
+tux_t Me[ MAX_PLAYERS ] = 
 { { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 } };
 
 
-network_influence_t NetworkMe[ MAX_PLAYERS ];
+network_tux_t NetworkMe[ MAX_PLAYERS ];
 
 char *InfluenceModeNames[] = {
   "Mobile",

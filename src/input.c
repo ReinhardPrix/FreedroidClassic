@@ -299,7 +299,7 @@ ReactToSpecialKeys(void)
   static int Number7PressedLastFrame;
   static int Number8PressedLastFrame;
   static int Number9PressedLastFrame;
-  influence_t Zwisch_Me;
+  tux_t Zwisch_Me;
 
   if ( QPressed() && CtrlWasPressed() )
     Terminate (OK);
@@ -814,6 +814,15 @@ ReactToSpecialKeys(void)
 	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , TRUE  , FALSE , FALSE ) ;
       else
 	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , FALSE , FALSE , FALSE ) ;
+
+      //--------------------
+      // here our cheat key for immediately forcing respawning of the
+      // enemies on this level...
+      //
+      if ( Alt_Was_Pressed() )
+	{
+	  respawn_level ( Me [ 0 ] . pos . z );
+	}
 
       while ( RPressed() );
     }

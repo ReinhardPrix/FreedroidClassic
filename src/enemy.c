@@ -1005,7 +1005,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       //--------------------
       // The Tux gains experience from this, only for non-friends
       //
-      Me[0].Experience += Druidmap[ ThisRobot->type ].score;
+      Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].score;
     }
 
   ThisRobot->Status = OUT;
@@ -2135,7 +2135,7 @@ ProcessAttackStateMachine ( int enemynum )
       // 'greeted' and also the state will finally move to something more
       // interesting...
       //
-      if ( ThisRobot->has_greeted_influencer == FALSE )
+      if ( ThisRobot -> has_greeted_influencer == FALSE )
 	{
 	  ThisRobot->has_greeted_influencer = TRUE;
 	  if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )

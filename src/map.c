@@ -48,6 +48,98 @@ void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
 // int IsWallBlock ( int block );
 
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+void
+remove_blood_obstacles_for_respawning ( int level_num )
+{
+  int i;
+
+  //--------------------
+  // We pass through all the obstacles, deleting those
+  // that are 'blood'.
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      switch ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] . type )
+	{
+	  //--------------------
+	  // In case we encounter the -1 obstacle, we're done, cause 'holes'
+	  // aren't permitted inside the obstacle list of a level...
+	  //
+	case (-1) :
+	  return;
+	  break;
+	case ISO_BLOOD_1:
+	case ISO_BLOOD_2:
+	case ISO_BLOOD_3:
+	case ISO_BLOOD_4:
+	case ISO_BLOOD_5:
+	case ISO_BLOOD_6:
+	case ISO_BLOOD_7:
+	case ISO_BLOOD_8:
+	  delete_obstacle ( curShip . AllLevels [ level_num ] , 
+			    & ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] ) ) ;
+	  //--------------------
+	  // Now the obstacles have shifted a bit to close the gap from the
+	  // deletion.  We need to re-process the current index in the next
+	  // loop of this cycle...
+	  //
+	  i -- ;
+	  break;
+	default: 
+	  break;
+	}
+    }
+
+}; // void remove_blood_obstacles_for_respawning ( int level_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+respawn_level ( int level_num )
+{
+  int i;
+
+  //--------------------
+  // First we remove all the blood obstacles...
+  //
+  remove_blood_obstacles_for_respawning ( level_num );
+
+  //--------------------
+  // Now we can start to fill the enemies on this level with new life...
+  //
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    {
+      if ( AllEnemys [ i ] . pos . z != level_num ) continue;
+      if ( AllEnemys [ i ] . type == (-1) ) continue;
+
+      //--------------------
+      // So now we've found some bot to respawn.  Let's do it:
+      // new energy
+      // new 'phase' for not dead
+      // new status
+      // new tasks and commands..
+      //
+      AllEnemys [ i ] . energy = Druidmap [ AllEnemys [ i ] . type ] . maxenergy ;
+      AllEnemys [ i ] . Status = MOBILE ;
+      AllEnemys [ i ] . phase = 0 ;
+      AllEnemys [ i ] . animation_phase = 0 ;
+      AllEnemys [ i ] . animation_type = WALK_ANIMATION ; 
+
+      if ( ! AllEnemys [ i ] . is_friendly )
+	{
+	  AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	  AllEnemys [ i ] . has_greeted_influencer = FALSE ;
+	  AllEnemys [ i ] . state_timeout = 0 ;
+	}
+    }
+
+}; // void respawn_level ( int level_num )
 
 /* -----------------------------------------------------------------
  *
@@ -2395,16 +2487,16 @@ ReviveAllDroidsOnShip ( void )
   int i;
   int type;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      type = AllEnemys[i].type;
+      type = AllEnemys [ i ] . type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
-      AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = MOBILE; // !OUT;
-      AllEnemys[i].has_greeted_influencer = FALSE ;
-      AllEnemys[i].combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
-      AllEnemys[i].state_timeout = 0 ;
-      AllEnemys[i].animation_phase = 0 ;
+      AllEnemys [ i ] . energy = Druidmap[type].maxenergy;
+      AllEnemys [ i ] . Status = MOBILE; // !OUT;
+      AllEnemys [ i ] . has_greeted_influencer = FALSE ;
+      AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+      AllEnemys [ i ] . state_timeout = 0 ;
+      AllEnemys [ i ] . animation_phase = 0 ;
     }
 }; // void ReviveAllDroidsOnShip ( void )
 
@@ -2716,7 +2808,7 @@ game data file with all droid type specifications.",
     {
       for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
 	{
-	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	  if ( AllEnemys [ FreeAllEnemysPosition ] . Status == OUT ) break;
 	}
       if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
@@ -2732,7 +2824,7 @@ game data file with all droid type specifications.",
 
     }  // while (enemy-limit of this level not reached) 
 
-  SearchPointer=SectionPointer;
+  SearchPointer = SectionPointer;
 
   GetThisLevelsSpecialForces ( SearchPointer , OurLevelNumber , FreeAllEnemysPosition , EndOfThisLevelData );
 

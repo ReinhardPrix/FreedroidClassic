@@ -746,10 +746,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 		  DebugPrintf ( 1 , "\nChatDoMenuSelection:  mouse now over different item, therefore new main cycle..." );
 		}
 	    }
-
 	  usleep ( 1 ) ;
 	}
-
 
       //--------------------
       // 
@@ -913,7 +911,6 @@ InitiateMenu( int background_code )
   // write on it further down.
   //
   SDL_SetClipRect( Screen, NULL );
-  // ClearGraphMem();
 
   if ( background_code == ( -1 ) )
     {

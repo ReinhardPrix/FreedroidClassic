@@ -233,7 +233,7 @@ corresponding chat flags array index." ,
  * This function plants a cookie, i.e. sets a new text string with the
  * purpose of serving as a flag.  These flags can be set from the dialog
  * file and used from within there and they get stored and loaded with
- * every gave via the influence_t structure.
+ * every gave via the tux_t structure.
  * ---------------------------------------------------------------------- */
 void
 PlantCookie ( char* CookieString , int PlayerNum )

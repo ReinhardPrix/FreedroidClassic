@@ -599,7 +599,7 @@ typedef struct
   // A record of when and if the tux has been on some maps...
   //
   unsigned char HaveBeenToLevel [ MAX_LEVELS ]; // record of the levels the player has visited yet.
-  int time_since_last_visit_or_respawn [ MAX_LEVELS ]; // record of the levels the player has visited yet.
+  float time_since_last_visit_or_respawn [ MAX_LEVELS ]; // record of the levels the player has visited yet.
 
   //--------------------
   // Some story-based variables:  which persons has the Tux talked to and
@@ -624,7 +624,7 @@ typedef struct
   int current_zero_ring_index;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
-influence_t, *Influence_t;
+tux_t, *Tux_t;
 
 
 typedef struct
@@ -701,7 +701,7 @@ typedef struct
   // automap_tile Automap[200][200]; // this is the data for the automatic map
   // gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
-network_influence_t, *Network_Influence_t;
+network_tux_t, *Network_tux_t;
 
 typedef struct
 {

@@ -75,8 +75,8 @@ EXTERN float MeleeRechargeMultiplierTable [  ] ;
 EXTERN float RangedDamageMultiplierTable [  ] ;
 EXTERN float RangedRechargeMultiplierTable [  ] ;
 EXTERN spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] ;
-EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
-EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
+EXTERN tux_t Me[ MAX_PLAYERS ];		/* the influence data */
+EXTERN network_tux_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 EXTERN Druidspec Druidmap;     
 EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];

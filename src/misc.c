@@ -1138,6 +1138,15 @@ This indicates an error in the map system of Freedroid.",
       ShuffleEnemys ( array_num );
     }
 
+  /*
+  //--------------------
+  // Maybe the Tux hasn't *ever* been to this level before.  Then it's time
+  // to enable the respawning time countdown for this level.
+  //
+  if ( Me [ PlayerNum ] . time_since_last_visit_or_respawn [ CurLevel -> levelnum ] < 0 )
+    Me [ PlayerNum ] . time_since_last_visit_or_respawn [ CurLevel -> levelnum ] = 0 ;
+  */
+
   if ( Shuffling ) ShuffleEnemys ( array_num );
 
   // UnfadeLevel ();

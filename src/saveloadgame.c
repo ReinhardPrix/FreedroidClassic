@@ -334,9 +334,9 @@ SaveGame( void )
   // any more...
   //
   sprintf ( Me [ 0 ] . freedroid_version_string , 
-	    "%s;sizeof(influence_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+	    "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
 	    VERSION , 
-	   (int) sizeof(influence_t) , 
+	   (int) sizeof(tux_t) , 
 	   (int) sizeof(enemy) ,
 	   (int) sizeof(bullet) ,
 	   (int) MAXBULLETS ,
@@ -443,7 +443,7 @@ freedroid-discussion@lists.sourceforge.net\n\
   //
   fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
 	   sizeof(char), SaveGameFile );  
-  fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );  
+  fwrite ( &(Me) , sizeof( tux_t ) , sizeof( char ) , SaveGameFile );  
   // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
   // sizeof(char), SaveGameFile );  
   // fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
@@ -668,8 +668,8 @@ This indicates a serious bug in this installation of Freedroid.",
   InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
 				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
-  memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
-  InfluencerRawDataPointer += sizeof ( influence_t );
+  memcpy( &Me , InfluencerRawDataPointer , sizeof ( tux_t ) );
+  InfluencerRawDataPointer += sizeof ( tux_t );
 
   //--------------------
   // Now we decode the enemy information.
@@ -723,9 +723,9 @@ This indicates a serious bug in this installation of Freedroid.",
   //
   //
   //
-  sprintf ( version_check_string , "%s;sizeof(influence_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+  sprintf ( version_check_string , "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
 	    VERSION , 
-	    (int) sizeof(influence_t) , 
+	    (int) sizeof(tux_t) , 
 	    (int) sizeof(enemy) ,
 	    (int) sizeof(bullet) ,
 	    (int) MAXBULLETS ,
