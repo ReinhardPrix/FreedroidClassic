@@ -110,7 +110,7 @@ MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 	EditLevel -> MapInsertList [ i ] . pos . y += ByWhat;
     }
   
-}; // void MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat )
+}; // void MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the map inserts east of this
@@ -129,7 +129,45 @@ MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
 	EditLevel -> MapInsertList [ i ] . pos . x += ByWhat;
     }
   
-}; // void MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat )
+}; // void MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map labels south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
+      
+      if ( EditLevel -> labels [ i ] . pos . y >= FromWhere )
+	EditLevel -> labels [ i ] . pos . y += ByWhat;
+    }
+  
+}; // void MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map labels east of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
+      
+      if ( EditLevel -> labels [ i ] . pos . x >= FromWhere )
+	EditLevel -> labels [ i ] . pos . x += ByWhat;
+    }
+  
+}; // void MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints south of this
@@ -148,7 +186,7 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 	EditLevel -> AllWaypoints [ i ] . y += ByWhat;
     }
   
-}; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat )
+}; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints east of this
@@ -167,7 +205,7 @@ MoveWaypointsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
 	EditLevel -> AllWaypoints [ i ] . x += ByWhat;
     }
   
-}; // void MoveWaypointsEastOf ( int FromWhere , int ByWhat )
+}; // void MoveWaypointsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
@@ -252,6 +290,7 @@ InsertColumnEasternInterface( Level EditLevel )
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
   MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
+  MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
 
@@ -289,6 +328,7 @@ RemoveColumnEasternInterface( Level EditLevel )
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
   MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
+  MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
 
@@ -420,6 +460,7 @@ InsertLineSouthernInterface ( Level EditLevel )
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
   MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
+  MoveMapLabelsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
 
 }; // void InsertLineSouthernInterface ( EditLevel )
 
@@ -451,6 +492,7 @@ RemoveLineSouthernInterface ( Level EditLevel )
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
   MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
+  MoveMapLabelsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
 
 }; // void RemoveLineSouthernInterface ( EditLevel )
 
