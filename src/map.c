@@ -58,6 +58,7 @@
 #define ITEM_CODE_STRING "New item: type="
 #define ITEM_POS_X_STRING " X="
 #define ITEM_POS_Y_STRING " Y="
+#define ITEM_AC_BONUS_STRING " AC="
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
@@ -592,6 +593,10 @@ char *Encode_Level_For_Saving(Level Lev)
       sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
       strcat( LevelMem , linebuf );
 
+      strcat( LevelMem , ITEM_AC_BONUS_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].ac_bonus );
+      strcat( LevelMem , linebuf );
+
       strcat( LevelMem , "\n" );
     }
   //--------------------
@@ -1000,6 +1005,8 @@ Decode_Loaded_Leveldata (char *data)
 			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
 			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
 
       DebugPrintf( 0 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
 		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );

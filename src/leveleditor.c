@@ -429,7 +429,10 @@ Level_Editor(void)
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
 	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
-	      
+
+	      DropSpecificItemAtPosition( rintf( Me.pos.x ) , rintf( Me.pos.y ) , NewItemCode );
+
+	      /*
 	      for ( ItemIndex = 0 ; ItemIndex < MAX_ITEMS_PER_LEVEL ; ItemIndex++ )
 		{
 		  if ( CurLevel->ItemList[ ItemIndex ].type  == (-1) ) break;
@@ -443,6 +446,8 @@ Level_Editor(void)
 	      CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
 	      CurLevel->ItemList[ ItemIndex ].pos.y = rintf( Me.pos.y );
 	      CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
+	      */
+
 	    }
 
 	  //--------------------

@@ -245,7 +245,6 @@ UpdateAllCharacterStats ( void )
     {
       Me.exp_level ++ ;
       Me.PointsToDistribute += 5;
-      
     }
 
 
@@ -275,7 +274,15 @@ UpdateAllCharacterStats ( void )
     {
       // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
       // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus );
-      Me.AC += ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus;
+      // Me.AC += ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus;
+      Me.AC += Druidmap[ DRUID001 ].armour_item.ac_bonus;
+    }
+  if ( Druidmap[ DRUID001 ].shield_item.type != (-1) )
+    {
+      // DebugPrintf( 0 , "\nA shield is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
+      // DebugPrintf( 0 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].shield_item.type ].item_armour_ac_bonus );
+      // Me.AC += ItemMap[ Druidmap[ Me.type ].shield_item.type ].item_shield_ac_bonus;
+      Me.AC += Druidmap[ DRUID001 ].shield_item.ac_bonus;
     }
 
   //--------------------

@@ -236,17 +236,15 @@ typedef struct
   // How good is the item as weapon???
   double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
   double item_gun_speed;			/* speed of the bullet */
-  int item_gun_damage;			/* damage done by this bullettype */
+  int base_item_gun_damage; //	damage done by this bullettype 
   int item_gun_blast;			/* which blast does this bullet create */
   int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
   int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
   double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
 
-  // how good is the item as armour???
-  double item_armour_ac_bonus;
-
-  // how good is the item as a shield???
-  double item_shield_ac_bonus;
+  // how good is the item as armour or shield or other protection???
+  int base_ac_bonus;
+  int ac_bonus_modifier;
 
   // which requirement for strength, dexterity and magic (force) does the item have?
   int item_require_strength;
@@ -256,6 +254,7 @@ typedef struct
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
   int sound_number;
+  int base_list_price;         // the base price of this item at the shop
 
 } itemspec , *Itemspec;
 
@@ -269,6 +268,9 @@ typedef struct
   int condition;
   int prefix_code;
   int suffix_code;
+  int ac_bonus;    // how much is ac increased by this item worn
+  float max_duration;     // the maximum item durability reachable for this item
+  float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;
 } item, *Item;
 

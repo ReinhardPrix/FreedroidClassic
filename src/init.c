@@ -597,13 +597,11 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
 
-      // Now we read in the armour value of this item as armour
-      ReadValueFromString( ItemPointer ,  "Item as armour: ac_bonus=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_armour_ac_bonus , EndOfItemData );
-
-      // Now we read in the armour value of this item as shield
-      ReadValueFromString( ItemPointer ,  "Item as shield: ac_bonus=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_shield_ac_bonus , EndOfItemData );
+      // Now we read in the armour value of this item as armour or shield or whatever
+      ReadValueFromString( ItemPointer ,  "Item as defensive item: base_ac_bonus=" , "%d" , 
+			   &ItemMap[ItemIndex].base_ac_bonus , EndOfItemData );
+      ReadValueFromString( ItemPointer ,  "Item as defensive item: ac_bonus_modifier=" , "%d" , 
+			   &ItemMap[ItemIndex].ac_bonus_modifier , EndOfItemData );
 
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 

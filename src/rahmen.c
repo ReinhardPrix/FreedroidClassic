@@ -158,6 +158,16 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
     }
 
   // --------------------
+  // If this item gives some armour bonus, we say so
+  //
+  // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_armour_slot )
+  if ( CurItem->ac_bonus )
+    {
+      sprintf( linebuf , "AC:=%d" , CurItem->ac_bonus );
+      strcat( ItemDescText , linebuf );
+    }
+
+  // --------------------
   // If it's a usable item, then we say, that it can be used via right-clicking on it
   //
   if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat )

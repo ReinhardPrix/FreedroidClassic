@@ -38,6 +38,41 @@
 
 #include "items.h"
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+DropSpecificItemAtPosition( int x , int y , int NewItemCode )
+{
+  int ItemIndex;
+
+  for ( ItemIndex = 0 ; ItemIndex < MAX_ITEMS_PER_LEVEL ; ItemIndex++ )
+    {
+      if ( CurLevel->ItemList[ ItemIndex ].type  == (-1) ) break;
+    }
+  if ( ItemIndex >= MAX_ITEMS_PER_LEVEL )
+    {
+      CenteredPutString   ( Screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
+      CenteredPutString   ( Screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
+      ItemIndex = 0;
+    }
+
+  //--------------------
+  // First we specify general things like item type and position
+  //
+  CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
+  CurLevel->ItemList[ ItemIndex ].pos.y = rintf( Me.pos.y );
+  CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
+
+  //--------------------
+  // Now we fix the details of this one dropped item
+  //
+  CurLevel->ItemList[ ItemIndex ].ac_bonus = 
+    ItemMap [ NewItemCode ].base_ac_bonus + MyRandom( ItemMap [ NewItemCode ].ac_bonus_modifier );
+
+}; // void DropSpecificItemAtPosition( int x , int y , int NewItemCode )
+
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
@@ -1658,6 +1693,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	      // At this point we know we have reached a position where we can plant this item.
 	      Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
 	      Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+	      DebugPrintf( 0 , "FINE INVENTORY POSITION FOUND!!");
 	      goto Inv_Loc_Found;
 	      
 	    This_Is_No_Possible_Location:
@@ -1683,11 +1719,13 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	  Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
 	  strcpy ( Me.TextToBeDisplayed , TempText );
 	  
-	  // We
-	  Me.Inventory[ InvPos ].type = ItemPointer->type;
-	  
-	  // We remove the item from the floor
-	  ItemPointer->type = (-1);
+	  // We add the new item to the inventory
+	  CopyItem( ItemPointer , & ( Me.Inventory[ InvPos ] ) );
+	  Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
+	  Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+
+	  // ItemPointer->type = (-1);
+	  DeleteItem( ItemPointer );
 	  
 	  // We make the sound of an item being taken
 	  ItemTakenSound();
