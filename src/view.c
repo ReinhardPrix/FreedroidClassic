@@ -968,10 +968,9 @@ AssembleCombatPicture (int mask)
 
   isometric_show_blocks_around_tux ( mask );
 
-    // ShowPureMapBlocksAroundTux ( mask );
+  // ShowPureMapBlocksAroundTux ( mask );
 
-  ShowBigMapInsertsAroundTux ( mask );
-
+  // ShowBigMapInsertsAroundTux ( mask );
 
   if (mask & ONLY_SHOW_MAP) 
     {

@@ -1472,10 +1472,24 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_TELEPORTER_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . block_area_type = COLLISION_TYPE_NONE ;
 
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
+
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
   
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_2 = 0.9 ;
+
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 
 /* ---------------------------------------------------------------------- 

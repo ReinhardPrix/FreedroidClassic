@@ -1298,7 +1298,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
   // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
+  CurBullet->damage = Me [ PlayerNum ] . base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
   CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;

@@ -733,6 +733,34 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	    case CHEST_U:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_CHEST_CLOSED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.25 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case CHEST_D:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_CHEST_CLOSED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.75 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case CHEST_R:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_CHEST_CLOSED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.75 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case CHEST_L:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_CHEST_CLOSED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.25 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
 	    default:
 	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{
@@ -3715,7 +3743,7 @@ is not really an autogun.  Instead it's something else.",
       // the picture of the bullet itself
       //
       
-      CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
+      CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 + 45 );
       
       DebugPrintf( 1 , "\nWorkLevelGuns(...) : Phase of bullet=%d." , CurBullet->phase );
       DebugPrintf( 1 , "\nWorkLevelGuns(...) : angle of bullet=%f." , CurBullet->angle );
