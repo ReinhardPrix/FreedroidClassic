@@ -939,6 +939,15 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
 	   ItemMap [ ShowItem->type ] . item_name, 
 	   ClassString );
 
+
+  if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
+    {
+      strcat ( InfoText , "Multiplicity: " );
+      sprintf( TextChunk, "%d \n" , 
+	       (int)ShowItem->multiplicity );
+      strcat ( InfoText , TextChunk );
+    }
+
   strcat ( InfoText , "Duration: " );
   if ( ShowItem->max_duration >= 0 )
     sprintf( TextChunk, "%d / %d\n" , 

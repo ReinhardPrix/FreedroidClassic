@@ -45,7 +45,8 @@
 #define ITEM_MENU_DISTANCE 80
 #define ITEM_FIRST_POS_Y 130
 
-#define SELL_PRICE_FACTOR (0.25)
+// #define SELL_PRICE_FACTOR (0.25)
+#define SELL_PRICE_FACTOR (0.5)
 #define REPAIR_PRICE_FACTOR (0.5)
 
 #define SHOP_ROW_LENGTH 8
@@ -405,12 +406,12 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      Buy100ButtonActive = TRUE ;
 	    }
 	}
-      if ( TuxItemIndex >= 0 )
+      else if ( TuxItemIndex >= 0 )
 	{
 	  ShowGenericButtonFromList ( SELL_BUTTON );
 	  SellButtonActive = TRUE; 
 	  BuyButtonActive = FALSE ;
-	  BuyButtonActive = FALSE ;
+	  Buy10ButtonActive = FALSE ;
 	  Buy100ButtonActive = FALSE ;
 	  if ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory )
 	    {
@@ -419,6 +420,15 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      Sell10ButtonActive = TRUE; 
 	      Sell100ButtonActive = TRUE; 
 	    }
+	}
+      else
+	{
+	  BuyButtonActive = FALSE ;
+	  Buy10ButtonActive = FALSE ;
+	  Buy100ButtonActive = FALSE ;
+	  SellButtonActive = FALSE ;
+	  Sell10ButtonActive = FALSE ;
+	  Sell100ButtonActive = FALSE ;
 	}
 
       sprintf ( GoldString , "Your Gold: %d." , (int) Me [ 0 ] . Gold );
@@ -1051,7 +1061,7 @@ TryToIdentifyItem( item* IdentifyItem )
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 void 
-TryToSellItem( item* SellItem , int WithBacktalk )
+TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 {
   int MenuPosition;
   char linebuf[1000];
@@ -1063,38 +1073,47 @@ TryToSellItem( item* SellItem , int WithBacktalk )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
+
+  if ( AmountToSellAtMost > SellItem -> multiplicity )
+    AmountToSellAtMost = SellItem -> multiplicity ;
 
   while ( SpacePressed() || EnterPressed() );
 
-  while ( 1 )
+  if ( WithBacktalk )
     {
-      GiveItemDescription( linebuf , SellItem , TRUE );
-      strcat ( linebuf , "\n\n    Are you sure you wish to sell this item?" );
-      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-      switch (MenuPosition) 
+      while ( 1 )
 	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
-	  DeleteItem( SellItem );
-	  Play_Shop_ItemSoldSound( );
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
+	  GiveItemDescription( linebuf , SellItem , TRUE );
+	  strcat ( linebuf , "\n\n    Are you sure you wish to sell this/(some of these) item(s)?" );
+	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+	  switch (MenuPosition) 
+	    {
+	    case (-1):
+	      return;
+	      break;
+	    case ANSWER_YES:
+	      while (EnterPressed() || SpacePressed() );
+
+	      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
+	      DeleteItem( SellItem );
+	      Play_Shop_ItemSoldSound( );
+
+	      return;
+	      break;
+	    case ANSWER_NO:
+	      while (EnterPressed() || SpacePressed() );
+	      return;
+	      break;
+	    }
 	}
+    }
+  else
+    {
+      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE ) * (float)AmountToSellAtMost / (float)SellItem->multiplicity ;
+      if ( AmountToSellAtMost < SellItem->multiplicity )
+	SellItem->multiplicity -= AmountToSellAtMost;
+      else DeleteItem( SellItem );
+      Play_Shop_ItemSoldSound( );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1104,7 +1123,7 @@ TryToSellItem( item* SellItem , int WithBacktalk )
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 void 
-TryToBuyItem( item* BuyItem , int WithBacktalk )
+TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 {
   int x, y;
   int MenuPosition;
@@ -1121,6 +1140,8 @@ TryToBuyItem( item* BuyItem , int WithBacktalk )
   MenuTexts[2]="";
 
   DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
+
+  BuyItem -> multiplicity = AmountToBuyAtMost ;
 
   FreeIndex = GetFreeInventoryIndex(  );
 
@@ -1393,22 +1414,22 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       switch ( ShopOrder . shop_command )
 	{
 	case BUY_1_ITEM:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 1 ) ;
 	  break;
 	case BUY_10_ITEMS:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 10 ) ;
 	  break;
 	case BUY_100_ITEMS:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 100 ) ;
 	  break;
 	case SELL_1_ITEM:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 1 ) ;
 	  break;
 	case SELL_10_ITEMS:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
 	  break;
 	case SELL_100_ITEMS:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
 	  break;
 	default:
 	  
@@ -1700,7 +1721,7 @@ Sell_Items( int ForHealer )
     {
       sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
-      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE ) ;
+      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE , 1 ) ;
     }
 
 }; // void Sell_Items( int ForHealer )
