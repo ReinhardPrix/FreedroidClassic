@@ -526,7 +526,25 @@ char *Encode_Level_For_Saving(Level Lev)
   strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
   strcat(LevelMem, "\n");
 
+  //--------------------
+  // Now we write out the bulk of codepanel infos
+  //
+  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
 
+      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
+      strcat( LevelMem , "\"\n" );
+    }
 
   //--------------------
   // Now we write out a marker to announce the end of the codepanel data
