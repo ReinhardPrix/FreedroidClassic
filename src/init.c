@@ -22,9 +22,15 @@
  *  MA  02111-1307  USA
  *
  */
+
 /* ----------------------------------------------------------------------
- * Desc: the paraplus initialisation routines
+ * (Not all of the) Initialisation routines for FreeDroid.
  * ---------------------------------------------------------------------- */
+
+/*
+ * This file has been checked for remains of german comments.  If you still
+ * find any, please kill them mercilessly :)
+ */
 
 #define _init_c
 
@@ -45,12 +51,11 @@ char* DebriefingSong;
 char* NextMissionName;
 char Previous_Mission_Name[1000];
 
-/*@Function============================================================
-@Desc: This function loads all the constant variables of the game from
-       a dat file, that should be optimally human readable.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function loads all the constant variables of the game from
+ * a data file, that should be optimally human readable.
+ *
+ * ---------------------------------------------------------------------- */
 void
 Get_General_Game_Constants ( void* DataPointer )
 {
@@ -618,11 +623,9 @@ Sorry...\n\
 
 
 /* ----------------------------------------------------------------------
- *
- *
- *
+ * This function reads in the game events, i.e. the locations and conditions
+ * under which some actions are triggered.
  * ---------------------------------------------------------------------- */
-
 void 
 Get_Game_Events ( char* EventSectionPointer )
 {
@@ -801,12 +804,10 @@ Get_Game_Events ( char* EventSectionPointer )
 }; // void Get_Game_Events ( char* EventSectionPointer );
 
 
-/*@Function============================================================
-@Desc: This function loads all the constant variables of the game from
-       a dat file, that should be optimally human readable.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function loads all the constant concerning robot archetypes
+ * from a section in memory to the actual archetype structures.
+ * ---------------------------------------------------------------------- */
 void
 Get_Robot_Data ( void* DataPointer )
 {
@@ -1085,18 +1086,13 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[i].score *= score_calibrator;
 
       Druidmap[i].weapon_item.currently_held_in_hand = FALSE ;
-
     }
+}; // int Get_Robot_Data ( void )
 
-
-} // int Get_Robot_Data ( void )
-
-/*@Function============================================================
-@Desc: This function loads all the constant variables of the game from
-       a dat file, that should be optimally human readable.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function loads all the constant variables of the game from
+ * a data file, using mainly subroutines which do the main work.
+ * ---------------------------------------------------------------------- */
 void
 Init_Game_Data ( char * Datafilename )
 {
@@ -1124,8 +1120,6 @@ Init_Game_Data ( char * Datafilename )
   // DROIDNAMES EVERY TIME!!!
 
 } // int Init_Game_Data ( void )
-
-
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
@@ -1258,8 +1252,9 @@ parse_command_line (int argc, char *const argv[])
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function assigns a new mission to the influencer, which means 
+ * that the status of the mission in the mission array is changed and
+ * perhaps the mission log activated.
  * ---------------------------------------------------------------------- */
 void 
 AssignMission( int MissNum )
@@ -1279,9 +1274,8 @@ AssignMission( int MissNum )
 }; // void AssignMission( int MissNum );
 
 /* ----------------------------------------------------------------------
- *
- *
- * 
+ * This function reads the mission specifications from the mission file
+ * which is assumed to be loaded into memory already.
  * ---------------------------------------------------------------------- */
 void 
 Get_Mission_Targets( char* MissionTargetPointer )
@@ -1462,12 +1456,11 @@ Get_Mission_Targets( char* MissionTargetPointer )
 
 }; // void Get_Mission_Targets( ... )
 
-/*-----------------------------------------------------------------
- * @Desc: Startwerte fuer neues Spiel einstellen 
- * 
- * @Ret: 
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function initializes a completely new game within freedroid.
+ * In contrast to InitFreedroid, this function should be called 
+ * whenever or better before any new game is started.
+ * -----------------------------------------------------------------*/
 void
 InitNewMissionList ( char *MissionName )
 {
@@ -1538,7 +1531,6 @@ InitNewMissionList ( char *MissionName )
   Me.Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...
-  InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
 
   //--------------------
   // Delete all bullets and blasts.  We need to do this AFTER the map has been
@@ -1730,6 +1722,7 @@ InitNewMissionList ( char *MissionName )
 
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
 
+  //--------------------
   // Now that the briefing and all that is done,
   // the influence structure can be initialized for
   // the new mission:
@@ -1770,13 +1763,6 @@ InitNewMissionList ( char *MissionName )
   FillInItemProperties ( & ( Me.weapon_item ) , TRUE );
   FillInItemProperties ( & ( Me.drive_item ) , TRUE );
 
-  /*
-  Me.drive_item.current_duration = 20;
-  Me.drive_item.max_duration = 20;
-  Me.drive_item.ac_bonus = 0;
-  Me.drive_item.damage = 0;
-  */
-
 
   Item_Held_In_Hand = ( -1 );
 
@@ -1801,8 +1787,6 @@ InitNewMissionList ( char *MissionName )
  * 
  * THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
  * ONLY INITIALIZES A NEW MISSION FOR THE GAME.
- *  
- * 
  *  
  *-----------------------------------------------------------------*/
 void
@@ -1867,7 +1851,7 @@ InitFreedroid (void)
   
   Init_Joy ();
 
-  Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be */
+  Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be
 			       // overwritten from the mission file.
 
   // The default should be, that no rescaling of the
@@ -1881,7 +1865,7 @@ InitFreedroid (void)
   gettimeofday(&timestamp, NULL);
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 
-  /* initialize the highscore list */
+  // initialize the highscore list 
   Init_Highscores ();
  
 
@@ -1905,17 +1889,16 @@ InitFreedroid (void)
   return;
 } /* InitFreedroid() */
 
-/*-----------------------------------------------------------------
- * @Desc: This function does the mission briefing.  It assumes, 
- *  that a mission file has already been successfully loaded into
- *  memory.  The briefing texts will be extracted and displayed in
- *  scrolling font.
- * 
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function does the mission briefing.  It assumes, 
+ * that a mission file has already been successfully loaded into
+ * memory.  The briefing texts will be extracted and displayed in
+ * scrolling font.
+ * -----------------------------------------------------------------*/
 void
 Title ( char *MissionBriefingPointer )
 {
-  int ScrollEndLine = User_Rect.y;	/* Endpunkt des Scrollens */
+  int ScrollEndLine = User_Rect.y;	// endpoint for scrolling...
   char* NextSubsectionStartPointer;
   char* PreparedBriefingText;
   char* TerminationPointer;
@@ -1984,18 +1967,14 @@ Title ( char *MissionBriefingPointer )
 
 }; // void Title ( void )
 
-/*@Function============================================================
-@Desc: Diese Prozedur ist fuer die Introduction in das Spiel verantwortlich. Im
-   Moment beschr„nkt sich ihre Funktion auf das Laden und anzeigen eines
-   Titelbildes, das dann ausgeblendet wird.
-
-@Ret: keiner
-@Int: keiner
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is for the end of the game in case of the player having
+ * won.
+ * ---------------------------------------------------------------------- */
 void
 EndTitle (void)
 {
-  int ScrollEndLine = User_Rect.y;	/* Endpunkt des Scrollens */
+  int ScrollEndLine = User_Rect.y;	// endpoint for scrolling...
 
   DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
 
@@ -2012,12 +1991,14 @@ EndTitle (void)
 
 }; // void EndTitle( void ) 
 
-/*@Function============================================================
-@Desc: Diese Funktion Sprengt den Influencer und beendet das Programm
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function displayes the last seconds of the game when the influencer
+ * has actually been killed.  It generates some explosions and waits for
+ * some seconds, where the user can reload his latest game, or after that
+ * returns to finally quit the inner game loop and the program will 
+ * (outside this function) ask for a completely new game or loading a different
+ * saved game or quit as in the very beginning of the game.
+ * ---------------------------------------------------------------------- */
 void
 ThouArtDefeated (void)
 {
@@ -2075,23 +2056,21 @@ ThouArtDefeated (void)
   DebugPrintf (1, "\n\n DefeatedDone \n\n");
 }; // void ThouArtDefeated(void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This is an old function, that was used in the classical paradroid in
+ * order to detect a completely cleared ship, but only after some seconds.
+ * Maybe that could be removed from the code already, since we have the
+ * CheckIfMissionIsComplete function.
+ * ---------------------------------------------------------------------- */
 void
 ThouArtVictorious (void)
 {
   ShipEmptyCounter = WAIT_SHIPEMPTY;
-  GameOver = TRUE;		/*  */
+  GameOver = TRUE;
 
   ClearUserFenster ();
   getchar_raw ();
 }
-
-
 
 /*----------------------------------------------------------------------
  * This function checks, if the influencer has succeeded in his given 
@@ -2294,15 +2273,7 @@ CheckIfMissionIsComplete (void)
     CheckNextMission: // this is a label for goto jumps.  Please don't remove it.
     } // for AllMissions
       
-  /*
-    EndTitle();
-    // GameOver=TRUE;
-    InitNewMissionList ( NextMissionName);
-  */
-  
 }; // void CheckIfMissionIsComplete
-
-
 
 #undef _init_c
 
