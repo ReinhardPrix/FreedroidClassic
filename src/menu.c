@@ -306,7 +306,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 
   SDL_ShowCursor( SDL_ENABLE );
   return ( -1 );
-}; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
+}; // int DoMenuSelection( ... )
 
 /* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
@@ -318,7 +318,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 			    char* BackgroundToUse , void* MenuFont )
 {
   int MenuSelection = (-1) ;
-  char* FilteredChatMenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
+  char* FilteredChatMenuTexts[ MAX_ANSWERS_PER_PERSON ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
   int i;
   int use_counter = 0;
 
@@ -331,11 +331,6 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	{
 	  FilteredChatMenuTexts[ use_counter ] = MenuTexts[ i ] ;
 	  use_counter++;
-	  if ( use_counter >= 10 )
-	    {
-	      DebugPrintf( 0 , "\n\nERROR:  TOO MANY CHAT ALTERNATIVES ACTIVATED... TERMINATING...\n\n" );
-	      Terminate ( ERR );
-	    }
 	}
     }
 
@@ -359,11 +354,6 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	    {
 	      FilteredChatMenuTexts[ use_counter ] = MenuTexts[ i ] ;
 	      use_counter++;
-	      if ( use_counter >= 10 )
-		{
-		  DebugPrintf( 0 , "\n\nERROR:  TOO MANY CHAT ALTERNATIVES ACTIVATED... TERMINATING...\n\n" );
-		  Terminate ( ERR );
-		}
 	      if ( MenuSelection == use_counter ) 
 		{
 		  DebugPrintf( 1 , "\nOriginal MenuSelect: %d. \nTransposed MenuSelect: %d." , 
@@ -1309,8 +1299,8 @@ New_GraphicsSound_Options_Menu (void)
   char Options4[1000];
   char Options5[1000];
   char Options6[1000];
-  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
+  char Options7[1000];
+  char* MenuTexts[10]; // ={ "" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
   enum
     { 
       SET_BG_MUSIC_VOLUME=1, 
@@ -1320,6 +1310,7 @@ New_GraphicsSound_Options_Menu (void)
       CW_SIZE,
       SET_TERMINATE_ON_MISSING_FLAG,
       SET_SHOW_SUBTITLE_FLAG,
+      SET_HOG_CPU_FLAG,
       LEAVE_OPTIONS_MENU 
     };
 
@@ -1341,6 +1332,8 @@ New_GraphicsSound_Options_Menu (void)
 	       GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
       sprintf( Options6 , "Show Subtitles in Dialogs: %s", 
 	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
+      sprintf( Options7 , "Hog CPU for max. performance: %s", 
+	       GameConfig.hog_CPU ? "YES" : "NO" );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
@@ -1348,7 +1341,9 @@ New_GraphicsSound_Options_Menu (void)
       MenuTexts[4]=Options4;
       MenuTexts[5]=Options5;
       MenuTexts[6]=Options6;
-      MenuTexts[7]="Back";
+      MenuTexts[7]=Options7;
+      MenuTexts[8]="Back";
+      MenuTexts[9]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1448,6 +1443,11 @@ New_GraphicsSound_Options_Menu (void)
 	case SET_SHOW_SUBTITLE_FLAG:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig.show_subtitles_in_dialogs = !GameConfig.show_subtitles_in_dialogs;
+	  break;
+
+	case SET_HOG_CPU_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . hog_CPU = ! GameConfig . hog_CPU ;
 	  break;
 
 	case LEAVE_OPTIONS_MENU:

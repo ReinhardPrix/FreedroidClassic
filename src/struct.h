@@ -104,6 +104,7 @@ typedef struct
   int show_digits_of_droids;
   int skill_explanation_screen_visible;
   int enemy_energy_bars_visible;
+  int hog_CPU;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

@@ -165,6 +165,8 @@ main (int argc, char *const argv[])
 
 	  CheckIfMissionIsComplete (); 
 
+	  if ( ! GameConfig.hog_CPU ) usleep ( 2 ); // we allow the CPU to also do something else..
+
 	  ComputeFPSForThisFrame();
 
 	} // while !GameOver 

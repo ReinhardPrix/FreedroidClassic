@@ -2043,6 +2043,8 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig.show_digits_of_droids = FALSE ;
 
   GameConfig.enemy_energy_bars_visible = TRUE ;
+  
+  GameConfig.hog_CPU = TRUE;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
