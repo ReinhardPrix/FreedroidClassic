@@ -819,17 +819,47 @@ SetUserfenster (int color)
 void
 ShowRobotPicture (int PosX, int PosY, int Number, unsigned char *Screen)
 {
+  SDL_Surface *tmp;
+  SDL_Rect SourceRectangle;
+  SDL_Rect TargetRectangle;
+  char ImageFilename[100]="../graphics/";
 
   DebugPrintf ("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
-  // Is the following line a reason for segfaults?  I turn is of for test purposes
-  // gl_putbox(PosX, PosY, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT, Druidmap[Number].image );
-  DisplayBlock (PosX, PosY, Druidmap[Number].image, DRUIDIMAGE_LENGTH,
-		DRUIDIMAGE_HEIGHT, Screen);
+  strcat( ImageFilename , Druidmap[Number].druidname );
+  strcat( ImageFilename , ".jpg" );
+
+  if ( !(tmp=IMG_Load( ImageFilename ) ) )
+    {
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The image file named %s could not be read by SDL.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , ImageFilename );
+      Terminate (ERR);
+    }
+  
+  SourceRectangle.x=0;
+  SourceRectangle.y=0;
+  SourceRectangle.w=USERFENSTERBREITE;
+  SourceRectangle.h=USERFENSTERHOEHE;
+  TargetRectangle.x=USERFENSTERPOSX;
+  TargetRectangle.y=USERFENSTERPOSY;
+  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+  
+  SDL_FreeSurface(tmp);
 
   DebugPrintf
     ("\nvoid ShowRobotPicture(...): Usual end of function reached.");
-
 }				// void ShowRobotPicture(...)
 
 #undef _view_c

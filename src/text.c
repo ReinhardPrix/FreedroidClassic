@@ -43,6 +43,7 @@
 #include "text.h"
 
 #define WAITCHAR 220
+#define TEXT_STRETCH 1.5
 
 int CharLenList[100] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* ' !"#$%&'()' */
@@ -137,43 +138,9 @@ RestoreTextEnvironment (void)
 void
 SetTextColor (unsigned char bg, unsigned char fg)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
-  unsigned int i;
-  static unsigned LastBg = FIRST_FONT_BG;
-  static unsigned LastFg = FIRST_FONT_FG;
-  unsigned char *source;
-
-  /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
-  if ((bg == LastFg) || (bg == fg))
-    {
-      printf("\nSetTextColor(): Schrift wird durch diesen Aufruf vernichtet !\n");
-      Terminate (ERR);
-    }
-  CurrentFontFG = fg;
-  CurrentFontBG = bg;
-
-  source = Zeichenpointer[0];
-  if ((bg != 0) && (bg != LastBg))
-    {
-      for (i = 0; i < FONTANZAHL * FONTMEM * 2; i++, source++)
-	if (*source == LastBg)
-	  *source = bg;
-      LastBg = bg;
-    }
-
-  source = Zeichenpointer[0];
-  if (fg && (fg != LastFg))
-    {
-      for (i = 0; i < FONTANZAHL * FONTMEM * 2; i++, source++)
-	if (*source == LastFg)
-	  *source = fg;
-      LastFg = fg;
-    }
 
   return;
-#endif
+
 }				/* SetTextcolor */
 
 /* ====================================================================== 
@@ -281,7 +248,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   /* Texthoehe berechnen */
   TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine )
-    * ( FontHeight(Menu_BFont) * 1.5 );
+    * ( FontHeight(Menu_BFont) * TEXT_STRETCH );
 
   while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
     {
@@ -361,7 +328,7 @@ DisplayText (char *Text,
       if (*tmp == '\n')
 	{			/* Zeilenende erreicht */
 	  MyCursorX = startx;	/* "Wagenruecklauf" */
-	  MyCursorY += FontHeight(Menu_BFont) * 1.5;	/* naechste Zeile */
+	  MyCursorY += FontHeight(Menu_BFont) * TEXT_STRETCH;	/* naechste Zeile */
 	  tmp++;		/* skip the newline-char !! */
 	  continue;
 	}
@@ -401,16 +368,13 @@ DisplayText (char *Text,
 
 } // void DisplayText(...)
 
-/*-----------------------------------------------------------------
- * @Desc: Stellt ein Zeichen an der Pos MyCursorX/Y INNERHALB des
- * Text-Borders dar. Hinausragende Teile des Zeichens werden
- * "abgeschnitten". Der Einfuegepunkt MyCursorX/Y wird nach der
- * Ausgabe um die Zeichenbreite nach rechts verschoben.
- * 
- * Einfuegepunkt: LINKS OBEN
- * 
- *
- *-----------------------------------------------------------------*/
+/*
+-----------------------------------------------------------------
+@Desc: This function displays a char.  It uses Menu_BFont now
+to do this.  
+ 
+-----------------------------------------------------------------
+*/
 void
 DisplayChar (unsigned char Zeichen, unsigned char *screen)
 {
@@ -472,10 +436,8 @@ void
 ImprovedCheckUmbruch (char* Resttext)
 {
   int i;
+  int NeededSpace=0;
 #define MAX_WORD_LENGTH 100
-
-  if (MyCursorX > LeftTextBorder + (CharsPerLine-2) * FONTBREITE)
-    MakeUmbruch ();
 
   // In case of a space, see if the next word will still fit on the line
   // and do a carriage return/line feed if not
@@ -484,7 +446,8 @@ ImprovedCheckUmbruch (char* Resttext)
       {
 	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
 	  { 
-	    if ( MyCursorX+i*FONTBREITE > LeftTextBorder + (CharsPerLine-3) * FONTBREITE ) 
+	    NeededSpace+=CharWidth( Menu_BFont , Resttext[i] );
+	    if ( MyCursorX+NeededSpace > USERFENSTERPOSX + USERFENSTERBREITE-10 ) 
 	      {
 		MakeUmbruch();
 		return;
@@ -493,7 +456,6 @@ ImprovedCheckUmbruch (char* Resttext)
 	else return;
       }
   }
-
 } // void CheckUmbruch(void)
 
 
@@ -508,7 +470,7 @@ MakeUmbruch (void)
 {
   DebugPrintf("\nvoid MakeUmbruch(void): real function call confirmed.");
   MyCursorX = LeftTextBorder;
-  MyCursorY += FontHeight( Menu_BFont ) * 1.5;
+  MyCursorY += FontHeight( Menu_BFont ) * TEXT_STRETCH;
   DebugPrintf("\nvoid MakeUmbruch(void): end of function reached.");
 } // void MakeUmbruch(void)
 

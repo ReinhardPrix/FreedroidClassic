@@ -117,7 +117,7 @@ typedef struct
   byte flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* Punkte f"ur die Vernichtung dieses Modells */
   char *notes;			/* notes on the druid of this type */
-  char *image;
+  // char *image;
 }
 druidspec, *Druidspec;
 

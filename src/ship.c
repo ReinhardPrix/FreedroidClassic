@@ -458,20 +458,9 @@ GreatDruidShow (void)
 
   SetUserfenster ( KON_BG_COLOR );
 
-
-  // SetTextColor (KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
-  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
-
-  /*
-   * Beginn der gro"sen "Ubersicht "uber alle Roboter
-   *
-   */
-
   for (Infodroid = Me.type; Infodroid > -1;)
     {
 
-      // ClearUserFenster ();
-      // ClearGraphMem( Outline320x200 );
       ClearAllButRahmen( );
       /*
        * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
@@ -483,12 +472,8 @@ GreatDruidShow (void)
       while (!PassOn)
 	{
 
-	  // Am Bildschirm anzeigen
-	  // ClearUserFenster ();
-	  // ClearGraphMem( Outline320x200 );
-	  // DisplayRahmen( Outline320x200 );
 	  ClearAllButRahmen( );
-	  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+	  // SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
 	  strcat (InfoText, " - ");
@@ -946,9 +931,6 @@ void
 ClearAllButRahmen (void)
 {
   int i;
-
-  for (i = RAHMENHOEHE; i < SCREENHOEHE; i++)
-    memset( Outline320x200 + i*SCREENBREITE , 0 , SCREENBREITE );
 
   return;
 
