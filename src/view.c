@@ -361,6 +361,23 @@ Assemble_Combat_Picture (int mask)
   ShowInventoryScreen ( );
   ShowCharacterScreen ( );
 
+  if ( GameConfig.Inventory_Visible ) 
+    {
+      User_Rect.x = SCREENLEN/2;
+      User_Rect.w = SCREENLEN/2;
+    }
+  else if ( GameConfig.CharacterScreen_Visible ) 
+    {
+      User_Rect.x = 0; // SCREENLEN/2;
+      User_Rect.w = SCREENLEN/2;
+    }
+  else
+    {
+      User_Rect.x = 0;
+      User_Rect.w = SCREENLEN;
+    }
+
+
   //--------------------
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.

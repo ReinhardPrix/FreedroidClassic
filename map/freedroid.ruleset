@@ -163,7 +163,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
-Picture number=0 // this should perhaps be -1, but who cares?
+Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 ** End of new item specification subsection **
 
 // Item No. 1
