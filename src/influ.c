@@ -1045,7 +1045,8 @@ CheckInfluenceEnemyCollision (void)
 
       if ( AllEnemys[i].Status == OUT )
 	{
-	  if ( Me[0].status == TRANSFERMODE )
+	  if ( ( Me [ 0 ] . readied_skill == SPELL_LOOT_CHEST_OR_DEAD_BODY ) &&
+	       ( MouseRightPressed() ) )
 	    {
 	      EnterChest();
 	      return;

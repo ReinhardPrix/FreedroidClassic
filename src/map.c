@@ -863,8 +863,9 @@ ActSpecialField ( int PlayerNum )
     case CHEST_L:
     case CHEST_U:
     case CHEST_D:
-      if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
+      if ( ( Me [ 0 ] . readied_skill == SPELL_LOOT_CHEST_OR_DEAD_BODY ) &&
 	   ( PlayerNum == 0 ) &&
+	   ( MouseRightPressed() ) && 
 	   ( ! ServerMode ) )
 	{
 	  EnterChest ( ) ;

@@ -346,6 +346,7 @@ int SpellHitPercentageTable [  ] =
 
 spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
+  { 0 , "Loot Chest/Body"        , "ChestAndDeadBodyLoot.png"  , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
   { 0 , "Repair Skill"           , "RepairSkill.png"           , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
   { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
   { 1 , "Force -> Energy "       , "FirstAidSpell.png"         , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
@@ -357,19 +358,19 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   { 1 , "Poison Bolt"            , "PoisonBoltSpell.png"       , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
   { 1 , "Petrification"          , "StoningBoltSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Detect Stuff"           , "DetectItemsSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Radial EMP Wave"        , "RadialEMPWaveSpell.png"    , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Radial VMX Wave"        , "RadialVMXWaveSpell.png"    , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Radial Plasma Wave"     , "RadialPlasmaWaveSpell.png" , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Ex. Plasma Transistor" , "ExtractPlasmaTransistor.png" , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
+  { 1 , "Detect Stuff"           , "DetectItemsSpell.png"        , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial EMP Wave"        , "RadialEMPWaveSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial VMX Wave"        , "RadialVMXWaveSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial Plasma Wave"     , "RadialPlasmaWaveSpell.png"   , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Plasma Transistor"  , "ExtractPlasmaTransistor.png" , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
   
-  { 1 , "Extract Superconductor"    , "ExtractSuperconductor.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Ex. Antim. Converter"    , "ExtractAntimatterConverter.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Ex. Entropy Inverter"    , "ExtractEntropyInverter.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Ex. Tach. Condensator"    , "ExtractTachyonCondensator.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
-  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Extract Superconductor" , "ExtractSuperconductor.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Antim. Converter"   , "ExtractAntimatterConverter.png" , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Entropy Inverter"   , "ExtractEntropyInverter.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Tach. Condensator"  , "ExtractTachyonCondensator.png"  , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"           , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 20"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+
   { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
   { 1 , "Unused spell Nr. 22"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
   { 1 , "Unused spell Nr. 23"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
