@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 69
+#define ALL_SOUNDS 59
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -69,11 +69,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Military_Sound_0.wav",
    "Fire_Bullet_Flash_Sound_0.wav",
    "Fire_Bullet_Exterminator_Sound_0.wav",
-   // "Fire_Bullet_Laser_Rifle_Sound_0.wav",
    "phaser.wav",
    "Fire_Bullet_Single_Laser_Sound_0.wav",
    "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
-   // "Fire_Bullet_Sword_Sound_0.wav",
    "swing_then_hit_1.wav",
    "swing_then_hit_2.wav",
    "swing_then_hit_3.wav",
@@ -86,20 +84,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Mission_Status_Change_Sound_0.wav",
-   "Item_Taken_Sound_0.wav",
    "ICantCarryAnyMore_Sound_0.wav",
    "ICantCarryAnyMore_Sound_1.wav",
    "ICantCarryAnyMore_Sound_2.wav",
    "MSMachinesClose_0.wav",
-   "Item_Drop_Sound_0.wav",
-   "Item_Drop_Sound_1.wav",
-   "Item_Drop_Sound_2.wav",
-   "Item_Drop_Sound_3.wav",
-   "Item_Drop_Sound_4.wav",
-   "Item_Drop_Sound_5.wav",
-   "Item_Armour_Put_Sound_0.wav",
-   "Item_Wheels_Put_Sound_0.wav",
-   "Item_Range_Weapon_Put_Sound_0.wav",
    "bot_sounds/First_Contact_Sound_0.wav",
    "bot_sounds/First_Contact_Sound_1.wav",
    "bot_sounds/First_Contact_Sound_2.wav",
@@ -199,7 +187,7 @@ void channelDone(int channel) {
 // for the action parts of the game will be kept in memory all the time.
 // ----------------------------------------------------------------------
 void
-PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
+PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
 {
   //--------------------
   // These variables will always be needed!
@@ -250,7 +238,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   // lead to non-loadability errors with the sound files.
   //
   TicksNow = SDL_GetTicks();
-  if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) ) return;
+  if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) && ( ! no_double_catching ) ) return;
 
   //--------------------
   // For now, we disable the bombardment with 'no voice sample yet...'
@@ -702,7 +690,7 @@ CrySound (void)
 void
 play_open_chest_sound( void )
 {
-  PlayOnceNeededSoundSample ( "../effects/enter_chest_sound.wav" , FALSE );
+  PlayOnceNeededSoundSample ( "../effects/enter_chest_sound.wav" , FALSE , TRUE );
 }; // void play_open_chest_sound( void )
 
 /* ----------------------------------------------------------------------
@@ -844,49 +832,49 @@ PlayGreetingSound ( int SoundCode )
       PlaySound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
       break;
     case 4:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE , FALSE );
       break;
     case 5:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE , FALSE );
       break;
     case 6:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE , FALSE );
       break;
     case 7:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE , FALSE );
       break;
     case 8:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE , FALSE );
       break;
     case 9:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE , FALSE );
       break;
     case 10:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE , FALSE );
       break;
     case 11:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE , FALSE );
       break;
     case 12:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE , FALSE );
       break;
     case 13:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE , FALSE );
       break;
     case 14:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE , FALSE );
       break;
     case 15:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE , FALSE );
       break;
     case 16:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE , FALSE );
       break;
     case 17:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE , FALSE );
       break;
     case 18:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
@@ -919,7 +907,7 @@ play_death_sound_for_bot ( enemy* ThisRobot )
   //
   strcpy ( filename , "../effects/bot_sounds/" );
   strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name );
-  PlayOnceNeededSoundSample ( filename , FALSE );
+  PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
 
 }; // void play_death_sound_for_bot ( enemy* ThisRobot )
 
@@ -946,7 +934,7 @@ play_attack_animation_sound_for_bot ( enemy* ThisRobot )
   //
   strcpy ( filename , "../effects/bot_sounds/" );
   strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name );
-  PlayOnceNeededSoundSample ( filename , FALSE );
+  PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
 
 }; // play_attack_animation_sound_for_bot ( enemy* ThisRobot )
 
@@ -964,43 +952,43 @@ play_enter_attack_run_state_sound ( int SoundCode )
       return;
       break;
     case 0:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_0.wav" , FALSE , FALSE );
       break;
     case 1:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE , FALSE );
       break;
     case 2:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_2.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_2.wav" , FALSE , FALSE );
       break;
     case 9:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE , FALSE );
       break;
     case 10:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_10.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_10.wav" , FALSE , FALSE );
       break;
     case 11:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_11.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_11.wav" , FALSE , FALSE );
       break;
     case 12:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_12.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_12.wav" , FALSE , FALSE );
       break;
     case 13:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_13.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_13.wav" , FALSE , FALSE );
       break;
     case 14:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE , FALSE );
       break;
     case 15:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_15.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_15.wav" , FALSE , FALSE );
       break;
     case 16:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_16.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_16.wav" , FALSE , FALSE );
       break;
     case 17:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_17.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_17.wav" , FALSE , FALSE );
       break;
     case 18:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_18.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_18.wav" , FALSE , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");
@@ -1014,44 +1002,28 @@ play_enter_attack_run_state_sound ( int SoundCode )
  * that item. 
  * ---------------------------------------------------------------------- */
 void
-PlayItemSound ( int SoundCode )
+play_item_sound ( int item_type )
 {
-  switch ( SoundCode )
+  char final_file_name[5000];
+  //--------------------
+  // First some sanity check...
+  //
+  if ( item_type < 0 )
     {
-    case 0:
-      PlaySound( ITEM_DROP_SOUND_0 );
-      break;
-    case 1:
-      PlaySound( ITEM_DROP_SOUND_1 );
-      break;
-    case 2:
-      PlaySound( ITEM_DROP_SOUND_2 );
-      break;
-    case 3:
-      PlaySound( ITEM_DROP_SOUND_3 );
-      break;
-    case 4:
-      PlaySound( ITEM_DROP_SOUND_4 );
-      break;
-    case 5:
-      PlaySound( ITEM_ARMOUR_PUT_SOUND );
-      break;
-    case 6:
-      PlaySound( ITEM_WHEELS_PUT_SOUND );
-      break;
-    case 7:
-      PlaySound( ITEM_RANGE_WEAPON_PUT_SOUND );
-      break;
-    default:
-      break;
+      fprintf( stderr, "\n\nitem_type %d \n" , item_type );
+      GiveStandardErrorMessage ( "play_item_sound(...)" , "\
+negative item type received!\n",
+				 PLEASE_INFORM, IS_FATAL );
     }
-};
 
-void
-ItemTakenSound (void)
-{
-  PlaySound ( ITEM_TAKEN_SOUND );
-}
+  //--------------------
+  // Now we can proceed and just play the sound associated with that item...
+  //
+  strcpy ( final_file_name , "../effects/item_sounds/" );
+  strcat ( final_file_name , ItemMap [ item_type ] . item_drop_sound_file_name ); 
+  PlayOnceNeededSoundSample ( final_file_name , FALSE , TRUE );
+
+}; // void play_item_sound ( int item_type )
 
 /* ----------------------------------------------------------------------
  * This function generates a voice output stating that the influencer 
@@ -1420,12 +1392,10 @@ MenuItemDeselectedSound (void)
 
 }; // void MenuItemSelectedSound ( void )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 MoveMenuPositionSound (void)
 {
@@ -1434,17 +1404,15 @@ MoveMenuPositionSound (void)
 }; // void MoveMenuPositionSound (void)
 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 ThouArtDefeatedSound (void)
 {
   if (!sound_on) return;
-  PlayOnceNeededSoundSample ( "../effects/ThouArtDefeated_Sound_0.wav" , FALSE );
+  PlayOnceNeededSoundSample ( "../effects/ThouArtDefeated_Sound_0.wav" , FALSE , FALSE );
 }; // void ThouArtDefeatedSound (void)
 
 

@@ -1158,6 +1158,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_GROUP_TOGETHER_IN_INVENTORY "Items of this type collect together in inventory=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
+#define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -1538,6 +1539,11 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
       // Now we read in the number of the sound to be used for this item
       ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
 			   &ItemMap[ItemIndex].sound_number , EndOfItemData );
+
+      // Now we read in the name of the sound sample to be played when this item is moved
+      ItemMap[ItemIndex].item_drop_sound_file_name = 
+	ReadAndMallocStringFromData ( ItemPointer , ITEM_DROP_SOUND_FILE_NAME , "\"" ) ;
+      // DebugPrintf ( 0 , "\nName of item %d is: '%s'." , ItemIndex , ItemMap [ ItemIndex ] . item_name );
 
       // Now we read in the base list price for this item
       ReadValueFromString( ItemPointer ,  "Base list price=" , "%d" , 

@@ -193,20 +193,20 @@ HomeMadeItemRepair ( Item RepairItem )
   //
   if ( RepairItem->max_duration == (-1) )
     {
-      PlayOnceNeededSoundSample ( "../effects/Tux_Item_Cant_Be_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
     }
   else
     {
       if ( RepairItem -> max_duration <= 3 ) 
 	{
-	  PlayOnceNeededSoundSample ( "../effects/Tux_Item_Too_Fragile_0.wav" , FALSE );	  
+	  PlayOnceNeededSoundSample ( "../effects/Tux_Item_Too_Fragile_0.wav" , FALSE , FALSE );
 	}
       else
 	{
 	  RepairItem->max_duration *= 0.5 ;
 	  RepairItem->current_duration = RepairItem->max_duration;
 	  // Play_Shop_ItemRepairedSound( );
-	  PlayOnceNeededSoundSample ( "../effects/Tux_This_Quick_Fix_0.wav" , FALSE );	  
+	  PlayOnceNeededSoundSample ( "../effects/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
 	}
     }
 }; // void HomeMadeItemRepair ( Item RepairItem ) 
@@ -518,7 +518,8 @@ item types.  This indicates a severe bug in Freedroid.",
   CurLevel->ItemList[ i ].multiplicity = multiplicity ;
   CurLevel->ItemList[ i ].throw_time = 0.01 ; // something > 0 
 
-  PlayItemSound( ItemMap[ ItemType ].sound_number );
+  // PlayItemSound( ItemMap[ ItemType ].sound_number );
+  play_item_sound( ItemType );
 
 }; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
@@ -574,7 +575,8 @@ item types.  This indicates a severe bug in Freedroid.",
 
   FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
 
-  PlayItemSound( ItemMap[ ItemType ].sound_number );
+  // PlayItemSound( ItemMap[ ItemType ].sound_number );
+  play_item_sound( ItemType );
 
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
@@ -1076,7 +1078,11 @@ CopyItem( item* SourceItem , item* DestItem , int MakeSound )
 
   memcpy ( DestItem, SourceItem, sizeof ( item ));
 
-  if ( MakeSound ) PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
+  if ( MakeSound ) 
+    {
+      // PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
+      play_item_sound( SourceItem -> type );
+    }
 
 }; // void MoveItem( item* SourceItem , item* DestItem )
 
@@ -1289,7 +1295,8 @@ ApplyItem( item* CurItem )
   if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
   if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
 
-  PlayItemSound( ItemMap[ CurItem->type ].sound_number );
+  // PlayItemSound( ItemMap[ CurItem->type ].sound_number );
+  play_item_sound( CurItem -> type );
 
   //--------------------
   // In some cases the item concerned is a one-shot-device like a health potion, which should
@@ -2188,7 +2195,8 @@ ManageInventoryScreen ( void )
 	      // course be the image of the item grabbed from inventory.
 	      //
 	      Item_Held_In_Hand = ItemMap[ Me[0].Inventory[ Grabbed_InvPos ].type ].picture_number ;
-	      PlayItemSound( ItemMap[ Me[0].Inventory[ Grabbed_InvPos ].type ].sound_number );
+	      // PlayItemSound( ItemMap[ Me[0].Inventory[ Grabbed_InvPos ].type ].sound_number );
+	      play_item_sound( Me[0].Inventory[ Grabbed_InvPos ].type );
 	      Me[0].Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
 	    }
 	}
@@ -2711,7 +2719,8 @@ raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , poi
   TargetPointer -> inventory_position.y = Inv_Loc . y ;
   
   // We make the sound of an item being taken
-  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+  // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+  play_item_sound( ItemPointer -> type );
   
   DeleteItem( ItemPointer );
   
@@ -2752,7 +2761,8 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   //
   if ( ItemPointer->type == ITEM_MONEY )
     {
-      PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+      // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+      play_item_sound( ItemPointer -> type );
       Me[0].Gold += ItemPointer->gold_amount;
       DeleteItem( ItemPointer );
       return;
@@ -2769,7 +2779,8 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	{
 	  TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
 	  Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
-	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+	  // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+	  play_item_sound ( ItemPointer -> type );
 	  DeleteItem( ItemPointer );
 	  return;
 	}

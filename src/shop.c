@@ -101,7 +101,8 @@ TryToPutItem( item* SellItem , int AmountToSellAtMost , moderately_finepoint pos
 		{
 		  while (EnterPressed() || SpacePressed() );
 
-		  PlayItemSound( ItemMap[ SellItem->type ].sound_number );
+		  // PlayItemSound( ItemMap[ SellItem->type ].sound_number );
+		  play_item_sound( SellItem -> type );
 
 		  //--------------------
 		  // We add the multiplicity to the one of the similar item found in the 
@@ -1152,7 +1153,7 @@ TryToRepairItem( item* RepairItem )
 
   if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me[0].Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
@@ -1173,7 +1174,7 @@ TryToRepairItem( item* RepairItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
 	  RepairItem->current_duration = RepairItem->max_duration;
-	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE );
+	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
 	  return;
 	  break;
 	case ANSWER_NO:
@@ -1205,7 +1206,7 @@ TryToIdentifyItem( item* IdentifyItem )
 
   if ( 100 > Me[0].Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
@@ -1227,7 +1228,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= 100 ;
 	  IdentifyItem -> is_identified = TRUE ;
-	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE );
+	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
 
 	  MenuTexts[0]=" BACK ";
 	  MenuTexts[1]="";
@@ -1296,7 +1297,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 
 	      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
 	      DeleteItem( SellItem );
-	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE );
+	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , FALSE );
 
 	      return;
 	      break;
@@ -1313,7 +1314,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
       if ( AmountToSellAtMost < SellItem->multiplicity )
 	SellItem->multiplicity -= AmountToSellAtMost;
       else DeleteItem( SellItem );
-      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , FALSE );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1404,7 +1405,7 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
   // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
   // Therefore a message must be displayed, saying what the problem is.
   //
-  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE );
+  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE , FALSE );
   MenuTexts[0]=" BACK ";
   MenuTexts[1]="";
   GiveItemDescription( linebuf , BuyItem , TRUE );
@@ -1444,7 +1445,8 @@ TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
 
   if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
-      PlayItemSound( ItemMap[ StoredItemType ].sound_number );
+      // PlayItemSound( ItemMap[ StoredItemType ].sound_number );
+      play_item_sound( StoredItemType );
     }
 }; // void TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
 
@@ -1488,7 +1490,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 
   if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE , FALSE );
       if ( WithBacktalk )
 	{
 	  MenuTexts[0]=" BACK ";
@@ -1511,7 +1513,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
   if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
       Me[0].Gold -= PotentialPrice ;
-      PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
     }
   else
     {
@@ -1707,7 +1709,7 @@ Repair_Items( void )
 
   if ( Pointer_Index == 0 )
     {
-      PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
@@ -1810,7 +1812,7 @@ Identify_Items ( void )
 
   if ( Pointer_Index == 0 )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
@@ -1882,7 +1884,7 @@ Sell_Items( int ForHealer )
 
   if ( Pointer_Index == 0 )
     {
-      PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 

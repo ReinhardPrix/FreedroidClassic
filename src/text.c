@@ -435,11 +435,11 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
   if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
     {
       DisplaySubtitle ( SubtitleText , Dialog_Screen_Background );
-      PlayOnceNeededSoundSample( SampleFilename , TRUE );
+      PlayOnceNeededSoundSample( SampleFilename , TRUE , FALSE );
     }
   else
     {
-      PlayOnceNeededSoundSample( SampleFilename , FALSE );
+      PlayOnceNeededSoundSample( SampleFilename , FALSE , FALSE );
     }
 }; // void GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 

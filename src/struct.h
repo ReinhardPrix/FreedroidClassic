@@ -351,6 +351,7 @@ typedef struct
   char* item_name;
   char* item_rotation_series_prefix;
   char* item_description;
+  char* item_drop_sound_file_name;
 
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;

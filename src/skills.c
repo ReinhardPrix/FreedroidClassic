@@ -618,7 +618,7 @@ HandleCurrentlyActivatedSkill( void )
 	      return;
 	    }
 	}
-      PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE );      
+      PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
       break;
 
     case SPELL_TRANSFERMODE:
@@ -722,7 +722,7 @@ HandleCurrentlyActivatedSkill( void )
 	      // Do nothing here.  The right mouse click while in inventory screen
 	      // will be handled in the inventory screen management function.
 	      //
-	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE );      
+	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
 	    }
 	}
       break;

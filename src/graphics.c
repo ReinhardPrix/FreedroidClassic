@@ -926,7 +926,7 @@ TakeScreenshot( void )
   // Now that a screenshot has been taken, we might as well start
   // the sound of a camera taking a picture... :)
   //
-  PlayOnceNeededSoundSample( "../effects/CameraTakesPicture.wav" , FALSE ) ;
+  PlayOnceNeededSoundSample( "../effects/CameraTakesPicture.wav" , FALSE , TRUE ) ;
 
   //--------------------
   // Taking the screenshot, converting is and saving it, maybe also

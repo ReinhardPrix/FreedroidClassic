@@ -1179,12 +1179,12 @@ ShowDeckMap (Level deck)
 		  else 
 		    {
 		      SelectedFunction = UNLOCK_FUNCTION;
-		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Door_To_Unlock_0.wav" , FALSE );
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Door_To_Unlock_0.wav" , FALSE , FALSE );
 		    }
 		}
 	      else
 		{
-		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_GUNOFF_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
@@ -1195,12 +1195,12 @@ ShowDeckMap (Level deck)
 		  else 
 		    {
 		      SelectedFunction = GUNOFF_FUNCTION;
-		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE );
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE , FALSE );
 		    }
 		}
 	      else
 		{
-		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );		  
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_GUNON_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
@@ -1211,12 +1211,12 @@ ShowDeckMap (Level deck)
 		  else 
 		    {
 		      SelectedFunction = GUNON_FUNCTION;
-		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_Type_0.wav" , FALSE );
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_Type_0.wav" , FALSE , FALSE );
 		    }
 		}
 	      else
 		{
-		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );		  
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON , 
@@ -1224,7 +1224,7 @@ ShowDeckMap (Level deck)
 	    {
 	      if ( EnergyRate > 0 )
 		{
-		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Energy_Transferred_0.wav" , FALSE );		  
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Energy_Transferred_0.wav" , FALSE , FALSE );		  
 		  Me [ 0 ] . energy += EnergyRate ;
 
 		  //--------------------
@@ -1244,7 +1244,7 @@ ShowDeckMap (Level deck)
 	    {
 	      if ( ReadEmailAllowed )
 		{
-		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Browsing_Information_0.wav" , FALSE );		  
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Browsing_Information_0.wav" , FALSE , FALSE );		  
 		  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Himself" )  )
 		    {
 		      MenuTexts[ 0 ] = "Welcome Tux!" ;
@@ -1268,7 +1268,7 @@ ShowDeckMap (Level deck)
 		    }
 		}
 	      else
-		PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );		  
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
@@ -1373,14 +1373,14 @@ ShowDeckMap (Level deck)
 		      if ( MapValue == LOCKED_H_SHUT_DOOR )
 			{
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = H_SHUT_DOOR ;
-			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			}
 		      if ( MapValue == LOCKED_V_SHUT_DOOR )
 			{
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = V_SHUT_DOOR ;
-			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
 			}                                         
@@ -1406,7 +1406,7 @@ ShowDeckMap (Level deck)
 			   ( MapValue == AUTOGUN_D ) || ( MapValue == AUTOGUN_U ) )
 			{
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = BLOCK1 ;
-			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
 			}
@@ -1469,12 +1469,12 @@ ShowDeckMap (Level deck)
 				    default:
 				      break;
 				    }
-				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Installed_0.wav" , FALSE );			      
+				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Installed_0.wav" , FALSE , FALSE );			      
 				  SelectedFunction = NO_FUNCTION;
 				}
 			      else
 				{
-				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Please_Specify_Gun_0.wav" , FALSE );
+				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Please_Specify_Gun_0.wav" , FALSE , FALSE );
 				}
 
 			      GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
