@@ -872,6 +872,7 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
     //
     if ( ThisRobot -> paralysation_duration_left != 0 ) return;
     if ( ThisRobot -> pure_wait > 0 ) return;
+    if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) return;
 
     //--------------------
     // We determine our movement target, either the preset course or the 
@@ -1799,6 +1800,18 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
     
     
+    //--------------------
+    // In any case, if the robot has some (more than 1 image long) attack
+    // animation, the attack animation should be started now.
+    //
+    if ( last_attack_animation_image [ ThisRobot -> type ] - first_attack_animation_image [ ThisRobot -> type ] > 1 )
+    {
+	ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
+	ThisRobot -> animation_type = ATTACK_ANIMATION;
+	ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
+	// previous_angle = ;         // which angle has this robot been facing the frame before?
+    }
+
     //--------------------
     // Maybe this robot doesn't really generate any bullets, but rather the
     // attack is built into the droid animation itself.  Then of course we
