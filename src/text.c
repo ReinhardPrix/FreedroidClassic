@@ -41,6 +41,7 @@
 #include "proto.h"
 #include "global.h"
 #include "text.h"
+#include "SDL_rotozoom.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
 
@@ -74,9 +75,14 @@ ChatWithFriendlyDroid( int Enum )
   char* RequestString;
   int i;
   int OldTextCursorX, OldTextCursorY;
+  char *fpath;
+  char fname[500];
+  SDL_Surface* Small_Droid;
+  SDL_Surface* Large_Droid;
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Input_Window;
+  SDL_Rect Droid_Image_Window;
   
   Chat_Window.x=242;
   Chat_Window.y=100;
@@ -87,6 +93,11 @@ ChatWithFriendlyDroid( int Enum )
   Input_Window.y=434;
   Input_Window.w=606;
   Input_Window.h=37;
+
+  Droid_Image_Window.x=15;
+  Droid_Image_Window.y=82;
+  Droid_Image_Window.w=215;
+  Droid_Image_Window.h=330;
 
   Activate_Conservative_Frame_Computation( );
   // MakeGridOnScreen( NULL );
@@ -100,6 +111,12 @@ ChatWithFriendlyDroid( int Enum )
       printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
       Terminate(ERR);
     }
+  strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+  strcat( fname , ".png" );
+  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+  Small_Droid = IMG_Load (fpath) ;
+  Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+  SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
 
   SDL_BlitSurface( Background , NULL , ne_screen , NULL );
   SDL_Flip( ne_screen );

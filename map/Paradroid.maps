@@ -421,7 +421,7 @@ xlen of this level: 31
 ylen of this level: 13
 color of this level: 0
 Name of this level=quarterd
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="Oh no, the quarters deck, typically full of deadly bots.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1057,7 +1057,7 @@ xlen of this level: 38
 ylen of this level: 12
 color of this level: 0
 Name of this level=bridge
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="This is the command bridge.  I better be careful.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   8  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1182,7 +1182,7 @@ xlen of this level: 20
 ylen of this level: 8
 color of this level: 3
 Name of this level=observation
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="Look out, this is the lookout, haha.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1549,7 +1549,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 0
 Name of this level=upper cargo
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="Upper cargo.  Here all the battle droids in storage became hyper-active.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9 
@@ -1678,7 +1678,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 2
 Name of this level=mid carga
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="Mid cargo, with little cover anywhere, very hard to fight here.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
@@ -1936,7 +1936,7 @@ xlen of this level: 10
 ylen of this level: 15
 color of this level: 5
 Name of this level=shuttle bay
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="The shuttle is still there.  I looks like noone could manage to escap.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10   9 
