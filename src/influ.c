@@ -2332,9 +2332,9 @@ CheckInfluenceEnemyCollision (void)
       //--------------------
       // shortly stop this enemy, then send him back to previous waypoint
       //
-      if ( ! AllEnemys[i].warten )
+      if ( ! AllEnemys[i].pure_wait )
 	{
-	  AllEnemys[i].warten = WAIT_COLLISION;
+	  AllEnemys[i].pure_wait = WAIT_COLLISION;
 	  // swap = AllEnemys[i].nextwaypoint;
 	  // AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
 	  // AllEnemys[i].lastwaypoint = swap;

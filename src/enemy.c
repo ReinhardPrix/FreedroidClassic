@@ -339,7 +339,7 @@ ClearEnemys ( void )
 	our_bot -> pos.z = our_bot -> energy = 0;
 	our_bot -> nextwaypoint = our_bot -> lastwaypoint = 0;
 	our_bot -> Status = OUT;
-	our_bot -> warten = 0;
+	our_bot -> pure_wait = 0;
 	our_bot -> frozen = 0;
 	our_bot -> poison_duration_left = 0;
 	our_bot -> poison_damage_per_sec = 0;
@@ -604,7 +604,7 @@ CheckIfWayIsFreeOfDroidsWithTuxchecking ( float x1 , float y1 , float x2 , float
 	  if ( this_enemy -> pos.z != OurLevel ) continue;
 	  if ( this_enemy -> Status == OUT ) continue;
 	  if ( this_enemy -> energy <= 0 ) continue;
-	  if ( this_enemy -> warten > 0 ) continue;
+	  if ( this_enemy -> pure_wait > 0 ) continue;
 	  if ( this_enemy == ExceptedRobot ) continue;
 
 	  // so it seems that we need to test this one!!
@@ -694,7 +694,7 @@ CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , fl
 	  if ( this_enemy -> pos.z != OurLevel ) continue;
 	  if ( this_enemy -> Status == OUT ) continue;
 	  if ( this_enemy -> energy <= 0 ) continue;
-	  if ( this_enemy -> warten > 0 ) continue;
+	  if ( this_enemy -> pure_wait > 0 ) continue;
 	  if ( this_enemy == ExceptedRobot ) continue;
 
 	  // so it seems that we need to test this one!!
@@ -954,7 +954,7 @@ This is an error in the waypoint structure of this level.",
     if ( i == num_conn )
     {
 	DebugPrintf( 2 , "\n%s(): Sorry, there seems no free way out.  I'll wait then... , num_conn was : %d ." , __FUNCTION__ , num_conn );
-	ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
+	ThisRobot->pure_wait = 1.5 ; // this makes this droid 'passable' for other droids for now...
 	if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
 	     ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
 	    ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
@@ -1049,7 +1049,7 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
     if ( ! success )
     {
 	DebugPrintf ( 1 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
-	ThisRobot -> warten = 1.6 ;
+	ThisRobot -> pure_wait = 1.6 ;
 	
     }
     else
@@ -1351,7 +1351,7 @@ MoveThisEnemy( int EnemyNum )
   // robots that still have to wait also do not need to
   // be processed for movement
   //
-  if ( ThisRobot->warten > 0) return;
+  if ( ThisRobot->pure_wait > 0) return;
 
   if ( ThisRobot->AdvancedCommand == 2 ) 
     {
@@ -2757,7 +2757,7 @@ ProcessAttackStateMachine ( int enemynum )
 	
 	TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 30 );
 	
-	if ( ! ThisRobot -> warten ) 
+	if ( ! ThisRobot -> pure_wait ) 
 	    ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	
 	return;
@@ -3019,15 +3019,15 @@ CheckEnemyEnemyCollision (int enemynum)
 	{
 
 	  // am I waiting already?  If so, keep waiting... 
-	  if ( OurBot->warten)
+	  if ( OurBot->pure_wait)
 	    {
 	      // keep waiting
-	      OurBot->warten = WAIT_COLLISION;
+	      OurBot->pure_wait = WAIT_COLLISION;
 	      continue;
 	    }
 
 	  // otherwise: stop this one enemy and go back youself
-	  ListEnemy->warten = WAIT_COLLISION;
+	  ListEnemy->pure_wait = WAIT_COLLISION;
 
 	  swap = OurBot->nextwaypoint;
 	  OurBot->nextwaypoint = OurBot->lastwaypoint;

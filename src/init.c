@@ -1530,6 +1530,8 @@ InitHarmlessTuxStatusVariables( int player_num )
     int i;
     
     Me [ player_num ] . type = DRUID001;
+    Me [ player_num ] . character_class = WAR_BOT ;
+    Me [ player_num ] . current_game_date = 0.0 ;
     Me [ player_num ] . speed.x = 0;
     Me [ player_num ] . speed.y = 0;
     Me [ player_num ] . energy = 5 ;

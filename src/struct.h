@@ -165,14 +165,12 @@ map_label, *Map_Label;
 
 typedef struct
 {
-  // char* MissionName;  // this should be the name of the mission, currently uninitialized
   char MissionName[500];  // this should be the name of the mission, currently uninitialized
   int MissionWasAssigned; // has be influencer been assigned to this mission? , currently uninitialized
   int MissionIsComplete; // has the mission been completed?
   int MissionWasFailed; // has the mission been failed?
   int MissionExistsAtAll; // is this mission entry used at all, or is it just unused memory?
   int AutomaticallyAssignThisMissionAtGameStart; // well...
-  // float MissionLastStatusChangeTime; // for how long is the mission now closed?
 
   int fetch_item;
   int KillAll;
@@ -228,19 +226,19 @@ triggered_action , *Triggered_action;
 //
 typedef struct
 {
-  // Maybe the event is triggerd by the influencer stepping somewhere
-  int Influ_Must_Be_At_Level;
-  point Influ_Must_Be_At_Point;
-
-  // Maybe the event is triggered by time
-  float Mission_Time_Must_Have_Passed;
-  float Mission_Time_Must_Not_Have_Passed;
-
-  int DeleteTriggerAfterExecution;
-  // And now of course which event to trigger!!!!
-  // Thats propably the most important information at all!!!
-  // int EventNumber;
-  char* TargetActionLabel;
+    // Maybe the event is triggerd by the influencer stepping somewhere
+    int Influ_Must_Be_At_Level;
+    point Influ_Must_Be_At_Point;
+    
+    // Maybe the event is triggered by time
+    float Mission_Time_Must_Have_Passed;
+    float Mission_Time_Must_Not_Have_Passed;
+    
+    int DeleteTriggerAfterExecution;
+    // And now of course which event to trigger!!!!
+    // Thats propably the most important information at all!!!
+    // int EventNumber;
+    char* TargetActionLabel;
 }
 event_trigger , *Event_trigger;
 
@@ -366,7 +364,6 @@ typedef struct
     int modifier_to_bonus_to_resist_electricity; // this is a percentage
     int base_bonus_to_resist_disruptor; // this is a percentage
     int modifier_to_bonus_to_resist_disruptor; // this is a percentage
-    // int freezing_time_in_seconds;
     int light_bonus_value;
     int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
     float price_factor;
@@ -542,9 +539,13 @@ druidspec, *Druidspec;
 
 typedef struct
 {
-    Sint8 type;			  // what kind of druid is this ? 
-    Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-    Sint8 status;			  // attacking, defense, dead, ... 
+    Sint8 type;			  // ... currently unused ...
+    Sint8 character_class;        // ... currently unused ...
+    Sint8 status;		  // ... only little meaning any more ...
+
+    float current_game_date;      // seconds since game start, will be printed as a different 'date'
+                                  // inside the game, like 14:23 is afternoon
+
     finepoint speed;		  // the current speed of the druid 
     gps pos;		          // current position in the whole ship 
     gps teleport_anchor;            // where from have you last teleported home
@@ -680,59 +681,53 @@ tux_t, *Tux_t;
 
 typedef struct
 {
-  Sint8 type;			/* what kind of druid is this ? */
-  Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  Sint8 status;			/* attacking, defense, dead, ... */
-  finepoint speed;		/* the current speed of the druid */
-  gps pos;		        /* current position in the whole ship */
-  gps teleport_anchor;          // where from have you last teleported home?
-  double health;		/* the max. possible energy in the moment */
-  double energy;		/* current energy level */
-  double mana;                  // current mana level 
-
-  double firewait;		// time remaining, until the weapon is ready to fire again...
-  double phase;			// the current phase of animation 
-  float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
+  Sint8 type;			
+  Sint8 character_class;        
+  Sint8 status;			
+  finepoint speed;		
+  gps pos;		        
+  gps teleport_anchor;          
+  double health;		
+  double energy;		
+  double mana;                  
+  double firewait;		
+  double phase;			
+  float weapon_swing_time;	
   float MissionTimeElapsed;
-  float got_hit_time;           // how long stunned now since the last time tux got hit 
-
-  int autofire;			/* Status of the Firecontrolautomatics */
-  int Strength;  // character Strength value = 'power supply max. capacity'
-  int Magic;     // character Magic value = 
-  int Dexterity; // character Dexterity value = 'power redistribution speed'
-  int base_vitality;  // character Vitality value = 'cloaking field maximum strength'
-  int base_strength;  // character Strength value = 'power supply max. capacity'
-  int base_magic;     // character Magic value = 
-  int base_dexterity; // character Dexterity value = 'power redistribution speed'
-  int Vitality;  // character Vitality value = 'cloaking field maximum strength'
-  long Experience; // character Experience = 'spare droid elements found'
-  int points_to_distribute; // these are the points that are available to distribute upon the character stats
-  float base_damage; // the current damage the influencer does
-  float damage_modifier; // the modifier to the damage the influencer currently does
-  float AC; // the current Armour Class of the influencer
-  // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
-  // float RechargeTime; // the actual minimum time to wait for the influencer between shots
+  float got_hit_time;           
+  int autofire;			
+  int Strength;  
+  int Magic;     
+  int Dexterity; 
+  int base_vitality;  
+  int base_strength;  
+  int base_magic;     
+  int base_dexterity; 
+  int Vitality;  
+  long Experience; 
+  int points_to_distribute;
+  float base_damage; 
+  float damage_modifier; 
+  float AC; 
   float to_hit;
-  int resist_force;        // percentage to reduce from force damage
-  int resist_fire;         // percentage to reduce from fire damage
-  int resist_electricity;  // percentage to reduce from electricity damage
-  float maxenergy; // current top limit for the influencers energy
-  float maxmana;   // current top limit for the influencers magic power
-  int exp_level;       // which 'experience level' is the influencer currenly at?
-  long ExpRequired;    // how much experience required for the next level?
+  int resist_force;        
+  int resist_fire;         
+  int resist_electricity;  
+  float maxenergy; 
+  float maxmana;   
+  int exp_level;   
+  long ExpRequired;
   long Gold;
   char character_name[25];
-  mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
-  int marker;                   // In case you've taken over a marked droid, this will contain the marker
+  mission AllMissions[ MAX_MISSIONS_IN_GAME ];
+  int marker;    
   float LastCrysoundTime;
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
-  int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
-  
-  int readied_skill; // which skill does the influencer currently have readied?
-
+  int FramesOnThisLevel;   
+  int readied_skill;
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
   item drive_item;
@@ -741,16 +736,7 @@ typedef struct
   item special_item;
   item aux1_item;
   item aux2_item;
-
-  unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
-
-  //--------------------
-  // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
-  // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
-  //
-  // int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
-  // automap_tile Automap[200][200]; // this is the data for the automatic map
-  // gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+  unsigned char HaveBeenToLevel[ MAX_LEVELS ];
 }
 network_tux_t, *Network_tux_t;
 
@@ -776,7 +762,7 @@ typedef struct
     float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?
     float poison_damage_per_sec;  // is this droid currently poisoned and how much poison is at work?
     float paralysation_duration_left;  // is this droid currently paralyzed and for how long will it stay this way?
-    double warten;		// time till the droid will start to move again
+    double pure_wait;		// time till the droid will start to move again
     double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
     
     int CompletelyFixed;          // set this flat to make the robot entirely immobile
@@ -827,7 +813,7 @@ typedef struct
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
   int Status;			// current status like OUT=TERMINATED or not OUT
-  double warten;		// time till the droid will start to move again
+  double pure_wait;		// time till the droid will start to move again
   double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
   int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )

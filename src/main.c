@@ -245,10 +245,10 @@ update_timeouts_for_bots_on_level ( int level_num , float latest_frame_time )
 	
 	if ( this_bot -> Status == OUT ) continue;
 	
-	if ( this_bot -> warten > 0 ) 
+	if ( this_bot -> pure_wait > 0 ) 
 	{
-	    this_bot -> warten -= latest_frame_time ;
-	    if ( this_bot -> warten < 0 ) this_bot -> warten = 0;
+	    this_bot -> pure_wait -= latest_frame_time ;
+	    if ( this_bot -> pure_wait < 0 ) this_bot -> pure_wait = 0;
 	}
 	
 	if ( this_bot -> frozen > 0 ) 
@@ -373,8 +373,9 @@ UpdateCountersForThisFrame ( int player_num )
     // Now we do all the things, that need to be updated for each connected
     // player separatedly.
     //
-    Me [ player_num ] . FramesOnThisLevel++;
+    Me [ player_num ] . current_game_date += latest_frame_time ;
 
+    Me [ player_num ] . FramesOnThisLevel++;
     Me [ player_num ] . LastCrysoundTime += latest_frame_time ;
     Me [ player_num ] . MissionTimeElapsed += latest_frame_time;
     Me [ player_num ] . LastTransferSoundTime += latest_frame_time;

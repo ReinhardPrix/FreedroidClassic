@@ -1353,6 +1353,7 @@ ShowCurrentTextWindow ( void )
 void
 DisplayBanner ( void )
 {
+    char level_name_and_time [ 1000 ] ;
 
     SDL_SetClipRect( Screen , NULL ); 
 
@@ -1361,8 +1362,13 @@ DisplayBanner ( void )
     
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
+
+    sprintf ( level_name_and_time , "%s  %02d:%02d " , 
+	      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
+	      ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 * 60 ))) % 24 ,
+	      ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 ))) % 60 ) ;
     
-    RightPutStringFont ( Screen , FPS_Display_BFont , 2 , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
+    RightPutStringFont ( Screen , FPS_Display_BFont , 2 , level_name_and_time );
 
 }; // void DisplayBanner( void ) 
 

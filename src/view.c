@@ -312,100 +312,100 @@ There was a bogus spell type entry found in the active spell list.",
 void
 ShowCombatScreenTexts ( int mask )
 {
-  static float TimeSinceLastFPSUpdate=10;
-  static int FPS_Displayed=1;
+    static float TimeSinceLastFPSUpdate=10;
+    static int FPS_Displayed=1;
 #define UPDATE_FPS_HOW_OFTEN 0.75
-  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-  int minutes;
-  int seconds;
-  int i;
-  int k;
-  int remaining_bots;
-
-  if ( GameConfig.Draw_Framerate )
+    Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+    int minutes;
+    int seconds;
+    int i;
+    int k;
+    int remaining_bots;
+    
+    if ( GameConfig.Draw_Framerate )
     {
-      TimeSinceLastFPSUpdate += Frame_Time();
-      if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+	TimeSinceLastFPSUpdate += Frame_Time();
+	if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
 	{
-	  if ( Frame_Time() > 0 )
-	    FPS_Displayed=(int)(1.0/Frame_Time());
-	  else
-	    FPS_Displayed=(int)9999;
-	  TimeSinceLastFPSUpdate=0;
-
-	  // DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
-
+	    if ( Frame_Time() > 0 )
+		FPS_Displayed=(int)(1.0/Frame_Time());
+	    else
+		FPS_Displayed=(int)9999;
+	    TimeSinceLastFPSUpdate=0;
+	    
+	    // DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
+	    
 	}
       
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "FPS: %d " , FPS_Displayed );
-
-      // PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
-      // User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-      // "Axis: %d %d" , input_axis.x, input_axis.y);
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			 "FPS: %d " , FPS_Displayed );
+	
+	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
+	// User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	// "Axis: %d %d" , input_axis.x, input_axis.y);
     }
-
-  if ( GameConfig.Draw_Energy )
+    
+    if ( GameConfig.Draw_Energy )
     {
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Energy: %d " , (int) (Me[0].energy) );
-      // PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-      // User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
-      // "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			 "Energy: %d " , (int) (Me[0].energy) );
+	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+	// User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
+	// "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
     }
-
-  if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
+    
+    if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+1.0*User_Rect.w/3 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+1.0*User_Rect.w/3 , 
+			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			 "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
     }
-
-  for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
+    
+    for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
     {
-      if ( ! Me [ 0 ] . AllMissions [ i ] . MissionWasAssigned ) continue;
-
-      DebugPrintf ( 0 , "\nYES, Something was assigned at all...." );
-
-      if ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime != (-1) )
+	if ( ! Me [ 0 ] . AllMissions [ i ] . MissionWasAssigned ) continue;
+	
+	DebugPrintf ( 0 , "\nYES, Something was assigned at all...." );
+	
+	if ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime != (-1) )
 	{
-	  minutes = floor ( ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) / 60 );
-	  seconds = rintf ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) - 60 * minutes;
-	  if ( minutes < 0 ) 
+	    minutes = floor ( ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) / 60 );
+	    seconds = rintf ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) - 60 * minutes;
+	    if ( minutes < 0 ) 
 	    {
-	      minutes = 0;
-	      seconds = 0;
+		minutes = 0;
+		seconds = 0;
 	    }
-	  PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-			   User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-			   "Time to hold out still: %2d:%2d " , minutes , seconds );
+	    PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			     User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+			     "Time to hold out still: %2d:%2d " , minutes , seconds );
 	}
-
-      if ( ( Me [ 0 ] . AllMissions [ i ] . must_clear_first_level == Me [ 0 ] . pos . z ) ||
-	   ( Me [ 0 ] . AllMissions [ i ] . must_clear_second_level == Me [ 0 ] . pos . z ) )
+	
+	if ( ( Me [ 0 ] . AllMissions [ i ] . must_clear_first_level == Me [ 0 ] . pos . z ) ||
+	     ( Me [ 0 ] . AllMissions [ i ] . must_clear_second_level == Me [ 0 ] . pos . z ) )
 	{
-	  remaining_bots = 0 ;
-
-	  for ( k = 0 ; k < Number_Of_Droids_On_Ship ; k ++ )
+	    remaining_bots = 0 ;
+	    
+	    for ( k = 0 ; k < Number_Of_Droids_On_Ship ; k ++ )
 	    {
-	      if ( ( AllEnemys [ k ] . pos . z == Me [ 0 ] . pos . z ) &&
-		   ( AllEnemys [ k ] . Status != OUT ) &&
-		   ( AllEnemys [ k ] . energy > 0 ) &&
-		   ( ! AllEnemys [ k ] . is_friendly ) )
-		remaining_bots ++ ;
+		if ( ( AllEnemys [ k ] . pos . z == Me [ 0 ] . pos . z ) &&
+		     ( AllEnemys [ k ] . Status != OUT ) &&
+		     ( AllEnemys [ k ] . energy > 0 ) &&
+		     ( ! AllEnemys [ k ] . is_friendly ) )
+		    remaining_bots ++ ;
 	    }
-	  PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-			   User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-			   "Bots remaining on level: %d" , remaining_bots );
-	  DebugPrintf ( 0 , "\nYES, this is the level...." );
+	    PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			     User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+			     "Bots remaining on level: %d" , remaining_bots );
+	    DebugPrintf ( 0 , "\nYES, this is the level...." );
 	}
     }
+    
+    ShowMissionCompletitionMessages();
 
-  ShowMissionCompletitionMessages();
-
-  DisplayBigScreenMessage( );
+    DisplayBigScreenMessage( );
 
 }; // void ShowCombatScreenTexts ( int mask )
 
@@ -1840,7 +1840,7 @@ AssembleCombatPicture (int mask)
 	User_Rect.x = SCREEN_WIDTH/2;
 	User_Rect.w = SCREEN_WIDTH/2;
     }
-    else if ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) 
+    else if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ) 
     {
 	User_Rect.x = 0; // SCREEN_WIDTH/2;
 	User_Rect.w = SCREEN_WIDTH/2;
