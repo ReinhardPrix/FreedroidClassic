@@ -44,11 +44,9 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
+// haha
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
-   "Combat_Background_Music.wav",
-   "Takeover_Background_Music.wav",
-   "Console_Background_Music.wav",
    "Blast_Sound_0.wav",
    "Collision_Sound_0.wav",
    "GotIntoBlast_Sound_0.wav",
