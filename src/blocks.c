@@ -117,8 +117,8 @@ Load_Item_Surfaces( void )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      ItemSurfaceList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( ItemSurfaceList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
+      ItemImageList[ j ].Surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=j*(Block_Height+2);
       Source.y=i*(Block_Width+2);
@@ -128,11 +128,35 @@ Load_Item_Surfaces( void )
       Target.y=0;
       Target.w=Block_Width;
       Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , ItemSurfaceList[ j ] , &Target );
-      SDL_SetAlpha( ItemSurfaceList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
+      SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   SDL_FreeSurface( tmp_surf );
+
+
+  ItemImageList[ 0 ].inv_size.x = 1;
+  ItemImageList[ 0 ].inv_size.y = 1;
+  ItemImageList[ 1 ].inv_size.x = 2;
+  ItemImageList[ 1 ].inv_size.y = 2;
+  ItemImageList[ 2 ].inv_size.x = 2;
+  ItemImageList[ 2 ].inv_size.y = 2;
+  ItemImageList[ 3 ].inv_size.x = 2;
+  ItemImageList[ 3 ].inv_size.y = 2;
+  ItemImageList[ 4 ].inv_size.x = 2;
+  ItemImageList[ 4 ].inv_size.y = 2;
+  ItemImageList[ 5 ].inv_size.x = 2;
+  ItemImageList[ 5 ].inv_size.y = 2;
+  ItemImageList[ 6 ].inv_size.x = 2;
+  ItemImageList[ 6 ].inv_size.y = 2;
+  ItemImageList[ 7 ].inv_size.x = 2;
+  ItemImageList[ 7 ].inv_size.y = 2;
+  ItemImageList[ 8 ].inv_size.x = 2;
+  ItemImageList[ 8 ].inv_size.y = 2;
+  ItemImageList[ 9 ].inv_size.x = 2;
+  ItemImageList[ 9 ].inv_size.y = 2;
+
+
 
 }; // void Load_Item_Surfaces( void )
 

@@ -113,7 +113,7 @@ int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
 
-grob_point ItemSizeTable[ ALL_ITEMS ];
+// grob_point ItemSizeTable[ ALL_ITEMS ];
 
 int sgn (int x)
 {
@@ -197,16 +197,16 @@ Inv_Pos_Is_Free( int x , int y )
     {
       if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
 
-      for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
+      // for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
+      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
 	{
-	  for ( item_width = 0 ; item_width < ItemSizeTable[ Me.Inventory[ i ].type ].x ; item_width ++ )
+	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
 	    {
 	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
 		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
 		return ( FALSE );
 	    }
 	}
-
     }
   return ( TRUE );
 }; // int Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y )
@@ -225,27 +225,6 @@ ReactToSpecialKeys(void)
   grob_point Inv_Loc;
   int item_width;
   int item_height;
-
-  ItemSizeTable[ 0 ].x = 1;
-  ItemSizeTable[ 0 ].y = 1;
-  ItemSizeTable[ 1 ].x = 1;
-  ItemSizeTable[ 1 ].y = 1;
-  ItemSizeTable[ 2 ].x = 1;
-  ItemSizeTable[ 2 ].y = 1;
-  ItemSizeTable[ 3 ].x = 2;
-  ItemSizeTable[ 3 ].y = 2;
-  ItemSizeTable[ 4 ].x = 2;
-  ItemSizeTable[ 4 ].y = 2;
-  ItemSizeTable[ 5 ].x = 2;
-  ItemSizeTable[ 5 ].y = 2;
-  ItemSizeTable[ 6 ].x = 2;
-  ItemSizeTable[ 6 ].y = 2;
-  ItemSizeTable[ 7 ].x = 2;
-  ItemSizeTable[ 7 ].y = 2;
-  ItemSizeTable[ 8 ].x = 2;
-  ItemSizeTable[ 8 ].y = 2;
-  ItemSizeTable[ 9 ].x = 2;
-  ItemSizeTable[ 9 ].y = 2;
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -379,21 +358,21 @@ ReactToSpecialKeys(void)
 
 
 	  // find enough free squares in the inventory to fit
-	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemSizeTable[ CurLevel->ItemList[ i ].type ].y + 1 ; Inv_Loc.y ++ )
+	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemImageList[ ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ].inv_size.y + 1 ; Inv_Loc.y ++ )
 	    {
-	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemSizeTable[ CurLevel->ItemList[ i ].type ].x + 1 ; Inv_Loc.x ++ )
+	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemImageList[ ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ].inv_size.x + 1 ; Inv_Loc.x ++ )
 		{
 		  
-		  for ( item_height = 0 ; item_height < ItemSizeTable[ CurLevel->ItemList[ i ].type ].y ; item_height ++ )
+		  for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[CurLevel->ItemList[ i ].type].picture_number ].inv_size.y ; item_height ++ )
 		    {
-		      for ( item_width = 0 ; item_width < ItemSizeTable[ CurLevel->ItemList[ i ].type ].x ; item_width ++ )
+		      for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[CurLevel->ItemList[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
 			{
 			  printf( "\nChecking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
 			  if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
 						 Inv_Loc.y + item_height ) )
 			    {
-			      Me.Inventory[ InvPos ].inventory_position.x = 3;
-			      Me.Inventory[ InvPos ].inventory_position.y = 3;
+			      Me.Inventory[ InvPos ].inventory_position.x = -1;
+			      Me.Inventory[ InvPos ].inventory_position.y = -1;
 			      goto This_Is_No_Possible_Location;
 			    }
 			}
@@ -413,7 +392,7 @@ ReactToSpecialKeys(void)
 
 	Inv_Loc_Found:
 	  
-	  if ( InvPos == MAX_ITEMS_IN_INVENTORY ) 
+	  if ( ( InvPos == MAX_ITEMS_IN_INVENTORY ) || ( Me.Inventory[ InvPos ].inventory_position.x == (-1) ) )
 	    {
 	      Me.TextVisibleTime = 0;
 	      Me.TextToBeDisplayed = "I can't carry any more.";
