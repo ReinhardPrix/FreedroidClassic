@@ -154,7 +154,6 @@ Takeover (int enemynum)
 {
   int row;
   int FinishTakeover = FALSE;
-  int waiter = 0;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
 
@@ -269,15 +268,15 @@ Takeover (int enemynum)
 	  OpponentType = -1;	/* dont display enemy any more */
 	}
 
-      /* Wait a turn */
-      waiter = WAIT_AFTER_GAME;
-      while (waiter != 0)
-	{
-	  usleep (30000);
-	  waiter--;
-	  DisplayBanner (message, NULL , 0 );	
-	  ShowPlayground ();
-	} /* WHILE waiter */
+      //        /* Wait a turn */ */
+      //        waiter = WAIT_AFTER_GAME; */
+      //       while (waiter != 0) */
+      //  	{ */
+      //  	  usleep (30000); */
+      // 	  waiter--; */
+  	  DisplayBanner (message, NULL , 0 );	
+  	  ShowPlayground ();
+	  // 	} /* WHILE waiter */ */
 
     }	/* while !FinishTakeover */
 
@@ -380,7 +379,7 @@ PlayGame (void)
   up = down = set = FALSE;
   up_counter = down_counter = 0;
 
-  wait_move_ticks = 1;  
+  wait_move_ticks = 2;  
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
   
@@ -488,28 +487,21 @@ PlayGame (void)
 
   while (countdown--)
     {
-
-      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
-
-      prev_count_tick += count_tick_len;
-      
+      // speed this up a little, some people get bored here...
+      //      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
+      //      prev_count_tick += count_tick_len;
       ProcessCapsules ();	/* count down the lifetime of the capsules */
       ProcessCapsules ();	/* do it twice this time to be faster */
-
-      AnimateCurrents ();
-
+      //      AnimateCurrents ();
       ProcessPlayground ();
       ProcessPlayground ();
       ProcessPlayground ();
       ProcessPlayground ();	/* this has to be done several times to be sure */
-
       ProcessDisplayColumn ();
-
       ShowPlayground ();
     }	/* while (countdown) */
 
-
-  return;
+    return;
 
 } /* PlayGame() */
 
