@@ -603,68 +603,7 @@ ShowSkillsScreen ( void )
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
   int i;
-  char* SkillName[ NUMBER_OF_SKILLS ];
   SDL_Rect SpellLevelRect;
-
-  SkillName[  0 ] = "Takeover/Talk Skill";
-  SkillName[  1 ] = "Force Explosion Circle";
-  SkillName[  2 ] = "Force Explosion Ray";
-  SkillName[  3 ] = "Force -> Energy ";
-  SkillName[  4 ] = "Create Teleportal Home";
-
-  SkillName[  5 ] = "Remote Strike";
-  SkillName[  6 ] = "Cold Bolt";
-  SkillName[  7 ] = "Mana Shield";
-  SkillName[  8 ] = "Poison Bolt";
-  SkillName[  9 ] = "Stone Curse";
-
-  SkillName[ 10 ] = "Detect Stuff";
-  SkillName[ 11 ] = "Force Explosion Circle";
-  SkillName[ 12 ] = "Force Explosion Ray";
-  SkillName[ 13 ] = "Force -> Energy ";
-  SkillName[ 14 ] = "Create Teleportal Home";
-
-  SkillName[ 15 ] = "Remote Strike";
-  SkillName[ 16 ] = "Cold Bolt";
-  SkillName[ 17 ] = "Mana Shield";
-  SkillName[ 18 ] = "Holy Bolt";
-  SkillName[ 19 ] = "Poison Bolt";
-
-  SkillName[ 20 ] = "Detect Stuff";
-  SkillName[ 21 ] = "Force Explosion Circle";
-  SkillName[ 22 ] = "Force Explosion Ray";
-  SkillName[ 23 ] = "Force -> Energy ";
-  SkillName[ 24 ] = "Create Teleportal Home";
-
-  SkillName[ 25 ] = "Remote Strike";
-  SkillName[ 26 ] = "Cold Bolt";
-  SkillName[ 27 ] = "Mana Shield";
-  SkillName[ 28 ] = "Holy Bolt";
-  SkillName[ 29 ] = "Poison Bolt";
-
-  SkillName[ 30 ] = "Detect Stuff";
-  SkillName[ 31 ] = "Force Explosion Circle";
-  SkillName[ 32 ] = "Force Explosion Ray";
-  SkillName[ 33 ] = "Force -> Energy ";
-  SkillName[ 34 ] = "Create Teleportal Home";
-
-  SkillName[ 35 ] = "Remote Strike";
-  SkillName[ 36 ] = "Cold Bolt";
-  SkillName[ 37 ] = "Mana Shield";
-  SkillName[ 38 ] = "Holy Bolt";
-  SkillName[ 39 ] = "Poison Bolt";
-
-  SkillName[ 40 ] = "Detect Stuff";
-  SkillName[ 41 ] = "Force Explosion Circle";
-  SkillName[ 42 ] = "Force Explosion Ray";
-  SkillName[ 43 ] = "Force -> Energy ";
-  SkillName[ 44 ] = "Create Teleportal Home";
-
-  SkillName[ 45 ] = "Remote Strike";
-  SkillName[ 46 ] = "Cold Bolt";
-  SkillName[ 47 ] = "Mana Shield";
-  SkillName[ 48 ] = "Holy Bolt";
-  SkillName[ 49 ] = "Poison Bolt";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 

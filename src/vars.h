@@ -301,6 +301,70 @@ char *Weaponnames[] = {
   "error"
 };
 
+char* SkillName[ NUMBER_OF_SKILLS ] = {
+
+  "Takeover/Talk Skill",
+  "Force Explosion Circle",
+  "Force Explosion Ray",
+  "Force -> Energy ",
+  "Create Teleportal Home",
+
+  "Remote Strike",
+  "Cold Bolt",
+  "Mana Shield",
+  "Poison Bolt",
+  "Stone Curse",
+
+  "Detect Stuff",
+  "Unused spell Nr. 11",
+  "Unused spell Nr. 12",
+  "Unused spell Nr. 13",
+  "Unused spell Nr. 14",
+  
+  "Unused spell Nr. 15",
+  "Unused spell Nr. 16",
+  "Unused spell Nr. 17",
+  "Unused spell Nr. 18",
+  "Unused spell Nr. 19",
+  
+  "Unused spell Nr. 20",
+  "Unused spell Nr. 21",
+  "Unused spell Nr. 22",
+  "Unused spell Nr. 23",
+  "Unused spell Nr. 24",
+  
+  "Unused spell Nr. 25",
+  "Unused spell Nr. 26",
+  "Unused spell Nr. 27",
+  "Unused spell Nr. 28",
+  "Unused spell Nr. 29",
+  
+  "Unused spell Nr. 30",
+  "Unused spell Nr. 31",
+  "Unused spell Nr. 32",
+  "Unused spell Nr. 33",
+  "Unused spell Nr. 34",
+  
+  "Unused spell Nr. 35",
+  "Unused spell Nr. 36",
+  "Unused spell Nr. 37",
+  "Unused spell Nr. 38",
+  "Unused spell Nr. 39",
+  
+  "Unused spell Nr. 40",
+  "Unused spell Nr. 41",
+  "Unused spell Nr. 42",
+  "Unused spell Nr. 43",
+  "Unused spell Nr. 44",
+  
+  "Unused spell Nr. 45",
+  "Unused spell Nr. 46",
+  "Unused spell Nr. 47",
+  "Unused spell Nr. 48",
+  "Unused spell Nr. 49"
+  
+};
+
 Druidspec Druidmap;
 
 Bulletspec Bulletmap;
