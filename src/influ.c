@@ -926,6 +926,9 @@ FireBullet (void)
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
 
+  speed.x = 0.0;
+  speed.y = 0.0;
+
   if (DownPressed ())
     speed.y = 1.0;
   if (UpPressed ())
