@@ -237,13 +237,15 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
   // printf("\nScrollTest should be starting to scroll now...");
 
+  // getchar();
+
    /* Zeilen zaehlen */
   textpt = Text;
   while (*textpt++)
     if (*textpt == '\n')
       Number_Of_Line_Feeds++;
 
-  while (!SpacePressed () )
+  while ( !SpacePressed () )
     {
       if (UpPressed ())
 	{
@@ -264,7 +266,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
-	break;  /* Text has been scrolled outside User_Rect */
+	{
+	  break;  /* Text has been scrolled outside User_Rect */
+	}
 
       InsertLine -= speed;
 

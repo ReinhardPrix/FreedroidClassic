@@ -1126,8 +1126,8 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
-  GameConfig.Theme_SubPath="default_theme/";
-  //GameConfig.Theme_SubPath="lanzz_theme/";
+  // GameConfig.Theme_SubPath="default_theme/";
+  GameConfig.Theme_SubPath="lanzz_theme/";
 
   Init_Video ();
 
@@ -1251,6 +1251,7 @@ Title ( char *MissionBriefingPointer )
       
       // DebugPrintf (1, "\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
       fflush(stdout);
+      
       ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
       free ( PreparedBriefingText );
     }

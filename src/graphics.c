@@ -43,7 +43,12 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
-EXTERN void Load_MapBlock_Surfaces( void );
+void Load_MapBlock_Surfaces( void );
+void Load_Enemy_Surfaces( void ) ;
+void Load_Influencer_Surfaces( void ) ;
+void Load_Digit_Surfaces( void ) ;
+void Load_Bullet_Surfaces( void ) ;
+void Load_Blast_Surfaces( void ) ;
 
 /*
 ----------------------------------------------------------------------
@@ -238,16 +243,41 @@ ReInitPictures (void)
     {
       for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
 	{
-	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] ); // store the surface pointer for freeing it soon
+	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] );
 	}
     }
 
-  Load_MapBlock_Surfaces();
+  for ( j=0 ; j < DROID_PHASES ; j++ )
+    {
+      SDL_FreeSurface( InfluencerSurfacePointer[j] ); 
+      SDL_FreeSurface( EnemySurfacePointer[j] ); 
+    }
 
-  // SDL_FreeSurface( ne_static );
+  for ( j=0 ; j < DIGITNUMBER ; j++ )
+    {
+      SDL_FreeSurface( InfluDigitSurfacePointer[j] ); 
+      SDL_FreeSurface( EnemyDigitSurfacePointer[j] ); 
+    }
 
-  return ( OK );
-  // return (InitPictures());
+  for ( j=0 ; j < ALLBLASTTYPES ; j++ )
+    {
+      for ( i = 0 ; i < Blastmap[j].phases ; i++ )
+	{
+	  SDL_FreeSurface( Blastmap[j].SurfacePointer[i] );
+	}
+    }
+
+  for ( j=0 ; j < Number_Of_Bullet_Types ; j++ )
+    {
+      for ( i = 0 ; i < Bulletmap[j].phases ; i++ )
+	{
+	  SDL_FreeSurface( Bulletmap[j].SurfacePointer[i] );
+	}
+    }
+
+
+  // return ( OK );
+  return (InitPictures());
 } // int ReInitPictures(void)
 
 
@@ -309,6 +339,9 @@ SetCombatScaleTo(float ResizeFactor)
 	{
 	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
 	  MapBlockSurfacePointer[j][i]=zoomSurface( MapBlockSurfacePointer[j][i] , ResizeFactor , ResizeFactor , 0 );
+	  SDL_FreeSurface( tmp ); // free the old surface
+	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
+	  MapBlockSurfacePointer[j][i]=SDL_DisplayFormat( MapBlockSurfacePointer[j][i] );
 	  SDL_FreeSurface( tmp ); // free the old surface
 	}
     }
