@@ -117,7 +117,7 @@ moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 
 enum
-  {
+{
     BLITTING_TYPE_NONE = 0 ,
     BLITTING_TYPE_OBSTACLE = 1 ,
     BLITTING_TYPE_ENEMY = 2 ,
@@ -125,7 +125,7 @@ enum
     BLITTING_TYPE_BULLET = 4 ,
     BLITTING_TYPE_BLAST = 5 ,
     BLITTING_TYPE_THROWN_ITEM = 6
-  };
+};
 
 /* ----------------------------------------------------------------------
  * This function should display the currently assigned/unassigned mission
@@ -135,54 +135,54 @@ enum
 void 
 ShowMissionCompletitionMessages( void )
 {
-  int MissNum;
-
-  //--------------------
-  // If the log is not set to visible right now, we do not need to 
-  // do anything more
-  //
-  if ( GameConfig.Mission_Log_Visible == FALSE ) return;
-  if ( GameConfig.Mission_Log_Visible_Time >= GameConfig.Mission_Log_Visible_Max_Time ) return;
-
-  //--------------------
-  // At this point we know, that the quest log is desired and
-  // therefore we display it in-game:
-  //
-  SDL_SetClipRect( Screen , NULL );
-  DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
-
-  for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
+    int MissNum;
+    
+    //--------------------
+    // If the log is not set to visible right now, we do not need to 
+    // do anything more
+    //
+    if ( GameConfig.Mission_Log_Visible == FALSE ) return;
+    if ( GameConfig.Mission_Log_Visible_Time >= GameConfig.Mission_Log_Visible_Max_Time ) return;
+    
+    //--------------------
+    // At this point we know, that the quest log is desired and
+    // therefore we display it in-game:
+    //
+    SDL_SetClipRect( Screen , NULL );
+    DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
+    
+    for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
     {
-      // In case the mission does not exist at all, we need not do anything more...
-      if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
-
-      // In case the mission was not yet assigned, we need not do anything more...
-      // if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
-
-      // In case the message is rather old, we need not do anything more...
-      // if ( Me[0].AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
-
-      // At this point we know, that the mission has recently been completed or failed
-
-      if ( Me[0].AllMissions[ MissNum ].MissionIsComplete == TRUE )
+	// In case the mission does not exist at all, we need not do anything more...
+	if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
+	
+	// In case the mission was not yet assigned, we need not do anything more...
+	// if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+	
+	// In case the message is rather old, we need not do anything more...
+	// if ( Me[0].AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
+	
+	// At this point we know, that the mission has recently been completed or failed
+	
+	if ( Me[0].AllMissions[ MissNum ].MissionIsComplete == TRUE )
 	{
-	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
 	}
-      else if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE )
+	else if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE )
 	{
-	  DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect );
 	}
-      else if ( ! Me[0].AllMissions[ MissNum ].MissionWasAssigned == TRUE )
+	else if ( ! Me[0].AllMissions[ MissNum ].MissionWasAssigned == TRUE )
 	{
-	  DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect );
 	}
-      else 
-	DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
-
-      DisplayText( Me[0].AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
-
+	else 
+	    DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
+	
+	DisplayText( Me[0].AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
+	
     }
-};
+}; // void ShowMissionCompletitionMessages( void )
 
 /* ----------------------------------------------------------------------
  * This function displays an item at the current mouse cursor position.
@@ -222,19 +222,19 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
 void
 ShowOneItemAlarm( item* AlarmItem , int Position )
 {
-  SDL_Rect TargetRect;
-  int ItemImageCode;
-
-  if ( AlarmItem->type == ( -1 ) ) return;
-
-  ItemImageCode = AlarmItem -> type ;
-
-  TargetRect.x = 60 * Position ;
-  TargetRect.y = 400;
-
-  if ( AlarmItem->current_duration < 5 )
+    SDL_Rect TargetRect;
+    int ItemImageCode;
+    
+    if ( AlarmItem->type == ( -1 ) ) return;
+    
+    ItemImageCode = AlarmItem -> type ;
+    
+    TargetRect . x = 60 * Position ;
+    TargetRect . y = SCREEN_HEIGHT - 80 ;
+    
+    if ( AlarmItem->current_duration < 5 )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 }; // void ShowOneItemAlarm( item* AlarmItem )
 
@@ -246,13 +246,13 @@ void
 ShowItemAlarm( void )
 {
 
-  if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
-
-  ShowOneItemAlarm( & Me[0].weapon_item , 1 );
-  ShowOneItemAlarm( & Me[0].drive_item , 2 );
-  ShowOneItemAlarm( & Me[0].shield_item , 3 );
-  ShowOneItemAlarm( & Me[0].armour_item , 4 );
-
+    if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
+    
+    ShowOneItemAlarm( & Me[0].weapon_item , 1 );
+    ShowOneItemAlarm( & Me[0].drive_item , 2 );
+    ShowOneItemAlarm( & Me[0].shield_item , 3 );
+    ShowOneItemAlarm( & Me[0].armour_item , 4 );
+    
 }; // void ShowItemAlarm( void )
 
 /* ----------------------------------------------------------------------
