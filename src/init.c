@@ -1770,6 +1770,7 @@ InitNewMissionList ( char *MissionName )
 
   Me[0].readied_skill = 0;
   for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) Me[0].SkillLevel [ i ] = 0 ;
+  Me[0].SkillLevel [ 0 ] = 1 ;
 
   // strcpy ( Me[0].character_name , "R2D2 v.0.8.5." );
   // strcpy ( Me[0].character_name , "character_name" );
