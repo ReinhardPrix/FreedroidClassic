@@ -42,8 +42,6 @@
 #include "ship.h"
 
 
-#define TITLE_EIN
-
 #define FENSTEROFF 		FALSE
 #define USEINTSOFF 		FALSE
 
@@ -166,7 +164,7 @@ parse_command_line (int argc, char *const argv[])
 	  /* version statement -v or --version
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
-	  // printf (PACKAGE_STRING); 
+	  printf ("\n%s %s  \n", PACKAGE, VERSION); 
 	  printf (copyright);
 	  exit (0);
 	  break;
@@ -333,9 +331,7 @@ InitNewGame (void)
   RedrawInfluenceNumber ();
 
   /* Introduction und Title */
-#ifdef TITLE_EIN
   Title ();
-#endif
 
   Draw_Framerate=TRUE;
 
@@ -345,13 +341,10 @@ InitNewGame (void)
   /* Farben des aktuellen Levels einstellen */
   SetLevelColor (CurLevel->color);
 
-  LeftInfo[0] = '\0';
-  RightInfo[0] = '\0';
-
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearVGAScreen ();
-  DisplayRahmen (RealScreen);
-  // DisplayRahmen(NULL);
+  DisplayRahmen (Outline320x200);
+  SetInfoline (NULL,NULL);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
@@ -496,51 +489,30 @@ InitParaplus (void)
   GameAdapterPresent = FALSE;	/* start with this */
   taste = 255;
 
-  /* Sounds on/off */
-  ModPlayerOn = FALSE;
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Textmeldungsvariablen wurden erfolgreich initialisiert....");
-
   /* ScreenPointer setzen */
-  RealScreen = malloc (SCREENBREITE * SCREENHOEHE + 10);
-  Outline320x200 = malloc (SCREENBREITE * SCREENHOEHE + 10);
-  InternalScreen = (unsigned char *) malloc (SCREENHOEHE * SCREENBREITE + 10);
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
+  RealScreen = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
+  Outline320x200 = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
+  InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE + 10);
 
   if (LoadShip (SHIPNAME) == ERR)
     {
-      DebugPrintf ("Error in LoadShip");
+      printf ("Error in LoadShip\n");
       Terminate (-1);
     }
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): LoadShip(...) ist erfolgreich zurueckgekehrt....");
 
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
     {				/* Fehler aufgetreten */
-      DebugPrintf("\n Error in InitPictures reported back... Terminating....");
+      printf("\n Error in InitPictures reported back...\n");
       Terminate(ERR);
       return;
     }
 
-  DebugPrintf
-    ("\nvoid InitParaplus(void): InitPictures(void) ist erfolgreich zurueckgekehrt....");
-
   /* Init the Takeover- Game */
   InitTakeover ();
 
-  DebugPrintf
-    ("\nvoid InitParaplus(void): InitTakeover(void) ist erfolgreich zurueckgekehrt....");
-
   /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
   GetDigits ();
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): GetDigits(void) ist erfolgreich zurueckgekehrt....");
 
   /* InternWindow */
   /* wenn moeglich: Speicher sparen und mit InternalScreen ueberlappen: */
@@ -560,26 +532,19 @@ InitParaplus (void)
 	}
     }
 
-  DebugPrintf
-    ("\nvoid InitParaplus(void): InternWindow wurde erfolgreich initialisiert....");
-
   /* eigenen Zeichensatz installieren */
   LadeZeichensatz (DATA70ZEICHENSATZ);
 
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Zeichensatz wurde erfolgreich geladen....");
-
   // Initialisieren der Schildbilder
   GetShieldBlocks ();
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): GetShieldBlocks(void) ist fehlerfrei zurueckgekehrt....");
 
   /* richtige Paletten-Werte einstellen */
   InitPalette ();
 
   /* Tastaturwiederholrate auf den geringsten Wert setzen */
   SetTypematicRate (TYPEMATIC_SLOW);
+
+  return;
 
 } /* InitParaplus() */
 
@@ -609,9 +574,6 @@ Title (void)
   FadeColors1 ();		/* Titelbild langsam ausblenden */
 
   InitPalette ();		/* This function writes into InternalScreen ! */
-
-  // ClearGraphMem(RealScreen);
-  // DisplayRahmen(RealScreen);
 
   Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
 
@@ -652,19 +614,6 @@ EndTitle (void)
   DebugPrintf ("\nvoid EndTitle(void): real function call confirmed...:");
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
-
-  // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
-  // Load_PCX_Image (TITELBILD1_PCX, RealScreen, TRUE);	/* Titelbild laden */
-
-  // while (!SpacePressed ())
-  //JoystickControl ();
-
-  // FadeColors1 ();		/* Titelbild langsam ausblenden */
-
-  // InitPalette ();		/* This function writes into InternalScreen ! */
-
-  // ClearGraphMem(RealScreen);
-  // DisplayRahmen(RealScreen);
 
   Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
 
