@@ -1717,6 +1717,15 @@ PrepareStartOfNewCharacter ( void )
   Me [ 0 ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ; // what extra action has to be done upon arrival?
   Me [ 0 ] . mouse_move_target_combo_action_parameter = (-1) ; // extra data to use for the combo action
 
+  //--------------------
+  // Now we know that right after starting a new game, the Tux might have
+  // to 'change clothes' i.e. a lot of tux images need to be updated which can
+  // take a little time.  Therefore we print some message so the user will not
+  // panic and push the reset button :)
+  //
+  PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
+  our_SDL_flip_wrapper ( Screen );
+
 }; // void PrepareStartOfNewCharacter ( char* MissionName )
 
 /* ----------------------------------------------------------------------

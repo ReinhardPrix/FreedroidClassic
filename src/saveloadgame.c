@@ -679,6 +679,15 @@ This indicates a serious bug in this installation of Freedroid.",
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
 
+  //--------------------
+  // Now we know that right after loading an old saved game, the Tux might have
+  // to 'change clothes' i.e. a lot of tux images need to be updated which can
+  // take a little time.  Therefore we print some message so the user will not
+  // panic and push the reset button :)
+  //
+  PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
+  our_SDL_flip_wrapper ( Screen );
+
   return OK;
 }; // int LoadGame ( void ) 
 

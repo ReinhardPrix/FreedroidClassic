@@ -2412,22 +2412,11 @@ Load_Existing_Hero_Menu ( void )
 {
   char *homedir;
   char Saved_Games_Dir[1000];
-  char* MenuTexts[ 10 ];
+  char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
   struct dirent **eps;
   int n;  
   int cnt;
   int MenuPosition;
-
-  MenuTexts[ 0 ] = "";
-  MenuTexts[ 1 ] = "";
-  MenuTexts[ 2 ] = "";
-  MenuTexts[ 3 ] = "";
-  MenuTexts[ 4 ] = "";
-  MenuTexts[ 5 ] = "";
-  MenuTexts[ 6 ] = "";
-  MenuTexts[ 7 ] = "";
-  MenuTexts[ 8 ] = "";
-  MenuTexts[ 9 ] = "";
 
   DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
   InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
@@ -2529,7 +2518,7 @@ Delete_Existing_Hero_Menu ( void )
 {
   char *homedir;
   char Saved_Games_Dir[1000];
-  char* MenuTexts[ 10 ];
+  char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
   struct dirent **eps;
   int n;  
   int cnt;
@@ -2539,27 +2528,18 @@ Delete_Existing_Hero_Menu ( void )
 
   DebugPrintf ( 0 , "\nint Delete_Existing_Hero_Menu ( void ): real function call confirmed.");
   InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
-  MenuTexts[0]="";
-  MenuTexts[1]="";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
-  //--------------------
-  // get home-directory to save in
-  //
-  if ( (homedir = getenv("HOME")) == NULL ) 
+#if __WIN32__
+  homedir = ".";
+#else
+  // first we need the user's homedir for loading/saving stuff
+  if ( (homedir = getenv("HOME")) == NULL )
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      return (ERR);
+      return ( ERR );
     }
+#endif
 
   //--------------------
   // Now we generate the right directory for saving from the home
