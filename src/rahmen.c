@@ -184,6 +184,11 @@ exist really (i.e. has a type = (-1) ).",
 	  strcat( ItemDescText , linebuf );
 	  break;
 
+	case ITEM_RUNNING_POWER_POTION:
+	  sprintf( linebuf , "Recover Running Power\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
 	case ITEM_STRENGTH_PILL:
 	  sprintf( linebuf , "Permanently gain +1 strength\n" );
 	  strcat( ItemDescText , linebuf );

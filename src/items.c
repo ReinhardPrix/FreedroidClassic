@@ -797,7 +797,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 13 ) )
+      switch ( MyRandom ( 14 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_TRACKS ;
@@ -853,6 +853,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 13:
 	  drop_item_type = ITEM_SHOES ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 14:
+	  drop_item_type = ITEM_RUNNING_POWER_POTION ;
 	  drop_item_multiplicity =  1 ;
 	  break;
 	} // inner switch
@@ -923,7 +927,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	} // inner switch
       break;
     case 2:
-      switch ( MyRandom ( 15 ) )
+      switch ( MyRandom ( 16 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_TRIPEDAL ;
@@ -987,6 +991,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 15:
 	  drop_item_type = ITEM_MEDIUM_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 16:
+	  drop_item_type = ITEM_RUNNING_POWER_POTION ;
 	  drop_item_multiplicity =  1 ;
 	  break;
 	} // inner switch
@@ -1406,168 +1414,173 @@ Quick_ApplyItem( int ItemKey )
 void
 ApplyItem( item* CurItem )
 {
-  DebugPrintf( 0 , "\nvoid ApplyItem( ... ): function call confirmed.");
+    DebugPrintf( 1 , "\n%s(): function call confirmed." , __FUNCTION__ );
 
-  // If the inventory slot is not at all filled, we need not do anything more...
-  if ( CurItem->type == (-1) ) return;
-
-  if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat == FALSE ) 
+    // If the inventory slot is not at all filled, we need not do anything more...
+    if ( CurItem->type == (-1) ) return;
+    
+    if ( ItemMap[ CurItem->type ] . item_can_be_applied_in_combat == FALSE ) 
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "I can't use this item here.";
-      return;
-    }
-
-  //--------------------
-  // At this point we know that the item is applicable in combat situation
-  // and therefore all we need to do from here on is execute the item effect
-  // upon the influencer or his environment.
-  //
-  if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
-    {
-      Me[0].health += 25;
-      Me[0].energy += 25;
-    }
-  else if ( CurItem->type == ITEM_MEDIUM_HEALTH_POTION )
-    {
-      Me[0].health += 50;
-      Me[0].energy += 50;
-    }
-  else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
-    {
-      Me[0].health += Me[0].maxenergy;
-      Me[0].energy += Me[0].maxenergy;
-    }
-  else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
-    {
-      Me[0].mana += 25;
-    }
-  else if ( CurItem->type == ITEM_MEDIUM_MANA_POTION )
-    {
-      Me[0].mana += 50;
-    }
-  else if ( CurItem->type == ITEM_FULL_MANA_POTION )
-    {
-      Me[0].mana += Me[0].maxmana;
-    }
-  else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
-    {
-      RadialVMXWave ( Me [ 0 ] . pos , FALSE );
-    }
-  else if ( CurItem->type == ITEM_EMP_SHOCK_GRENADE )
-    {
-      RadialEMPWave ( Me [ 0 ] . pos , FALSE );
-    }
-  else if ( CurItem->type == ITEM_PLASMA_GRENADE )
-    {
-      RadialFireWave ( Me [ 0 ] . pos , FALSE );
-    }
-  else if ( CurItem->type == ITEM_STRENGTH_PILL )
-    {
-      Me [ 0 ] . base_strength ++ ;
-    }
-  else if ( CurItem->type == ITEM_DEXTERITY_PILL )
-    {
-      Me [ 0 ] . base_dexterity ++ ;
-    }
-  else if ( CurItem->type == ITEM_MAGIC_PILL )
-    {
-      Me [ 0 ] . base_magic ++ ;
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_FORCE_TO_ENERGY ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_FORCE_TO_ENERGY ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_TELEPORT_HOME ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_TELEPORT_HOME ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_PLASMA_BOLT )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_FIREY_BOLT ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_FIREY_BOLT ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_ICE_BOLT )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_COLD_BOLT ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_COLD_BOLT ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_POISON_BOLT )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_POISON_BOLT ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_POISON_BOLT ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_PETRIFICATION )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_PARALYZE_BOLT ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_PARALYZE_BOLT ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_EMP_WAVE ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_EMP_WAVE ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_VMX_WAVE ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_VMX_WAVE ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_DETECT_ITEMS )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_DETECT_ITEM ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
-    }
-  else if ( CurItem->type == ITEM_SPELLBOOK_OF_IDENTIFY )
-    {
-      Me [ 0 ] . SkillLevel [ SPELL_IDENTIFY_SKILL ] ++ ;
-      Me [ 0 ] . base_skill_level [ SPELL_IDENTIFY_SKILL ] ++ ;
-      Play_Spell_ForceToEnergy_Sound( );
+	Me [ 0 ] . TextVisibleTime = 0;
+	Me [ 0 ] . TextToBeDisplayed = "I can't use this item here.";
+	return;
     }
 
-  if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
-  if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
-
-  // PlayItemSound( ItemMap[ CurItem->type ].sound_number );
-  play_item_sound( CurItem -> type );
-
-  //--------------------
-  // In some cases the item concerned is a one-shot-device like a health potion, which should
-  // evaporize after the first application.  Therefore we delete the item from the inventory list.
-  //
-
-  if ( CurItem->multiplicity > 1 )
-    CurItem->multiplicity--;
-  else DeleteItem ( CurItem );
-
+    //--------------------
+    // At this point we know that the item is applicable in combat situation
+    // and therefore all we need to do from here on is execute the item effect
+    // upon the influencer or his environment.
+    //
+    if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
+    {
+	Me [ 0 ] . health += 25;
+	Me [ 0 ] . energy += 25;
+    }
+    else if ( CurItem->type == ITEM_MEDIUM_HEALTH_POTION )
+    {
+	Me [ 0 ] . health += 50;
+	Me [ 0 ] . energy += 50;
+    }
+    else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
+    {
+	Me[0].health += Me[0].maxenergy;
+	Me[0].energy += Me[0].maxenergy;
+    }
+    else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
+    {
+	Me[0].mana += 25;
+    }
+    else if ( CurItem->type == ITEM_MEDIUM_MANA_POTION )
+    {
+	Me[0].mana += 50;
+    }
+    else if ( CurItem->type == ITEM_FULL_MANA_POTION )
+    {
+	Me[0].mana += Me[0].maxmana;
+    }
+    else if ( CurItem->type == ITEM_RUNNING_POWER_POTION )
+    {
+	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power;
+	Me [ 0 ] . running_must_rest = FALSE ;
+    }
+    else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
+    {
+	RadialVMXWave ( Me [ 0 ] . pos , FALSE );
+    }
+    else if ( CurItem->type == ITEM_EMP_SHOCK_GRENADE )
+    {
+	RadialEMPWave ( Me [ 0 ] . pos , FALSE );
+    }
+    else if ( CurItem->type == ITEM_PLASMA_GRENADE )
+    {
+	RadialFireWave ( Me [ 0 ] . pos , FALSE );
+    }
+    else if ( CurItem->type == ITEM_STRENGTH_PILL )
+    {
+	Me [ 0 ] . base_strength ++ ;
+    }
+    else if ( CurItem->type == ITEM_DEXTERITY_PILL )
+    {
+	Me [ 0 ] . base_dexterity ++ ;
+    }
+    else if ( CurItem->type == ITEM_MAGIC_PILL )
+    {
+	Me [ 0 ] . base_magic ++ ;
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_FORCE_TO_ENERGY ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_FORCE_TO_ENERGY ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_TELEPORT_HOME ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_TELEPORT_HOME ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_PLASMA_BOLT )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_FIREY_BOLT ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_FIREY_BOLT ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_ICE_BOLT )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_COLD_BOLT ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_COLD_BOLT ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_POISON_BOLT )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_POISON_BOLT ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_POISON_BOLT ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_PETRIFICATION )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_PARALYZE_BOLT ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_PARALYZE_BOLT ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_RADIAL_EMP_WAVE ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_RADIAL_EMP_WAVE ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_RADIAL_VMX_WAVE ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_RADIAL_VMX_WAVE ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_DETECT_ITEMS )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_DETECT_ITEM ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    else if ( CurItem->type == ITEM_SPELLBOOK_OF_IDENTIFY )
+    {
+	Me [ 0 ] . SkillLevel [ SPELL_IDENTIFY_SKILL ] ++ ;
+	Me [ 0 ] . base_skill_level [ SPELL_IDENTIFY_SKILL ] ++ ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
+    
+    if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
+    if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
+    
+    // PlayItemSound( ItemMap[ CurItem->type ].sound_number );
+    play_item_sound( CurItem -> type );
+    
+    //--------------------
+    // In some cases the item concerned is a one-shot-device like a health potion, which should
+    // evaporize after the first application.  Therefore we delete the item from the inventory list.
+    //
+    
+    if ( CurItem->multiplicity > 1 )
+	CurItem->multiplicity--;
+    else DeleteItem ( CurItem );
+    
 }; // void ApplyItemFromInventory( int ItemNum )
 
 /* ----------------------------------------------------------------------
