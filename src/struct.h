@@ -107,6 +107,9 @@ typedef struct
   int hog_CPU;
   int highlighting_mode_full;
   int menu_mode;
+  int omit_tux_in_level_editor;
+  int omit_obstacles_in_level_editor;
+  int omit_enemies_in_level_editor;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

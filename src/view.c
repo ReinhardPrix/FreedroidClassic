@@ -1366,7 +1366,7 @@ set_up_ordered_blitting_list ( void )
  * blit all the objects according to the blitting list set up.
  * ---------------------------------------------------------------------- */
 void
-blit_all_objects_according_to_blitting_list ( void )
+blit_all_objects_according_to_blitting_list ( int mask )
 {
   int i;
 
@@ -1376,14 +1376,21 @@ blit_all_objects_according_to_blitting_list ( void )
       switch ( blitting_list [ i ] . element_type )
 	{
 	case BLITTING_TYPE_OBSTACLE:
-	  blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
+	    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
 	  break;
 	case BLITTING_TYPE_TUX:
-	  if ( Me [ 0 ] . energy > 0 )
-	    PutInfluence ( -1 , -1 , 0 ); // this blits player 0 
+	  if ( ! ( mask & OMIT_TUX ) ) 
+	    {
+	      if ( Me [ 0 ] . energy > 0 )
+		PutInfluence ( -1 , -1 , 0 ); // this blits player 0 
+	    }
 	  break;
 	case BLITTING_TYPE_ENEMY:
-	  PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 ); // this blits player 0 
+	  if ( ! ( mask & OMIT_ENEMIES ) ) 
+	    {
+	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 ); // this blits player 0 
+	    }
 	  break;
 	case BLITTING_TYPE_BULLET:
 	  PutBullet ( blitting_list [ i ] . code_number ); 
@@ -1443,7 +1450,7 @@ AssembleCombatPicture (int mask)
 
   set_up_ordered_blitting_list ();
 
-  blit_all_objects_according_to_blitting_list ();
+  blit_all_objects_according_to_blitting_list ( mask );
 
   if (mask & ONLY_SHOW_MAP) 
     {

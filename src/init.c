@@ -1621,6 +1621,10 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . highlighting_mode_full = TRUE ;
   GameConfig . menu_mode = MENU_MODE_DEFAULT ;
 
+  GameConfig . omit_tux_in_level_editor = TRUE ;
+  GameConfig . omit_obstacles_in_level_editor = FALSE ;
+  GameConfig . omit_enemies_in_level_editor = TRUE ;
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------
