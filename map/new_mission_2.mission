@@ -69,8 +69,8 @@ P**ossible Start Point : Level=5 XPos=5 YPos=5
 P**ossible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=3 YPos=7
 Mission target is to kill all droids : -1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : 1
+Mission target is to kill class of droids : 9
+Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -78,56 +78,11 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-After completing this mission, load mission : new_mission_2.mission
+After completing this mission, load mission : classical_paradroid_mission.mission
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
-It's the the year 2400.  
-All of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.
-This came to be as follows:  
-
-Since 2200 military and police forces were mostly automatized.  Also interstellar traffic is mainly relying on droid control units.
-By 2310 almost all the droids were running a MegaSoft Operating System.  
-By new year 2400 it turned out that this proprietary OS was a trojan horse and from then on only responded to MS instruction signals.
-So, military and police forces are suddenly under MS control.  Interstellar traffic, also mainly controlled by droids, now depends upon MS allowance.
-Droids are roaming the streets and announcing the new rule.  
-Any resistance is met with utter violence.  
-
-THE FACILITY:
-
-On a large asteroid in a secret research facility of the government, different operating systems and kernels were tested.
-After taking control of the governmental database, the MS learned of the facility and sees it as a potential threat to its security.  It has ruled that the facility be destroyed and all personel there be killed.
-A military battle cruiser has been dispatched to carry out this command.
-
-The scientists within the facility have no means to attack or flee.  However they have not completly given up hope.
-
-They have activated the asteroids defence system to protect them from direct bombardment.   They have retreated to the innermost bunker and barred all exists.  It is clear, that the scientists barricades will not last very long against the force of battle droids that will be beamed down soon.  They are piecing together a new prototype influence device.
-
-Meanwhile the battle cruiser has arrived and beamed down a contingent of battle droids to destroy all human personal.  The new 'influence device' has now booted the latest Linux 28.32.199 kernel and reports all systems up and running.
-
-Press Space Bar to skip controls explanation
-
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-Controls
-
-The game is controlled via keyboard input or via joystick input.
-The joystick control is similar to keyboard control.
-Therefore only keyboard control is expained here:
-
-Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
-
-If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
-
-
-If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
-If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
-If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
-
-The P key causes the game to pause.
-The S key causes a screenshot to be taken.
-The Escape key causes the menu to pop up.
-
-Elevators are also entered via transfer mode if you stand still on the elevaor.
+Since you've successfully removed the droids assaulting the scientists retreat, they could shortly leave the bunker and get new parts required to intercept the communication of the battle cruiser with the new MS headquater.  Once that is done, the local command cyborgs will be in charge.  Several of them have automatically beamed down to organize the destruction of the facility.  
+They must all be destroyed in order to make the chief command cybord beam down.  But first things first.
 
 Press Fire to Play
 
@@ -142,10 +97,12 @@ Congratulations!!
 
 It seems that you have made it!  
 
-The remaining scientists may now safely leave the emergency retreat bunker and collect all their stuff and leave the facility.  A problem remains:  On the surface, there are still hostile forces protection the secure teleportation facility.  And appart from that, the scientists have no ship to escape with.  Someone must go up and take over the command cyborg at the surface.  With it, the scientists can instruct the ships crew droids to land the ship or to activate the ships secure transport devices so that the humans can board the spaceship.
+SORRY, BUT AT THIS POINT, THE THREAD OF ACTION IS INTERUPTED.
+WE HAVE NOT YET HAD THE TIME TO CREATE MORE STORY AND MORE
+MISSION FILES.  THAT MIGHT CHANGE SOON.  STAY TUNED.....
 
-
-Your task is now to move to the surface and take over the command cyborg.  It must be somewhere close to the secure transport facility, which it most likely will not leave.  But read all the details in the Briefing...
+For now you will be redirected to the classical paradroid
+mission.  Sorry.
 
 Press Fire to move on to the next mission
 

@@ -118,9 +118,9 @@ Allowed Type of Random Droid for this level: 249
 Allowed Type of Random Droid for this level: 296
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 329
-SpecialForce: Type=629 X=13 Y=3 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=6
-SpecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7
-SpecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=8
+S**pecialForce: Type=629 X=13 Y=3 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=6
+S**pecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7
+S**pecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=8
 
 ** End of this levels droid data **
 
