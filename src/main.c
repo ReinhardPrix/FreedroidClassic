@@ -58,10 +58,6 @@
 
 #define TITLE_EIN
 
-#undef MODSCHASEIN
-#undef NOJUNKWHILEINIT
-
-
 #define MOVEENEMYSOFF 		FALSE
 #define ANIMATEENEMYSOFF 	FALSE
 #define INFLUENCEGETROFFENOFF 	FALSE
@@ -229,8 +225,6 @@ main (int argc, char *const argv[])
    *  check its success  (dunno if that's good design?)
    */
   parse_command_line (argc, argv);
-
-  InterruptInfolineUpdate = TRUE;
 
   /* Initialisieren der globalen Variablen und Arrays */
   InitParaplus ();
@@ -725,7 +719,8 @@ UpdateCountersForThisFrame (void)
   Overall_Frames_Displayed++;
   Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1) + Frame_Time()) / Overall_Frames_Displayed;
 
-  // Here are some things, that were previously done by some periodic interrupt function
+  // Here are some things, that were previously done by some periodic */
+  // interrupt function
   ThisMessageTime++;
 
   LastGotIntoBlastSound += Frame_Time ();
@@ -745,13 +740,10 @@ UpdateCountersForThisFrame (void)
     ShowScore++;
   if (RealScore < ShowScore)
     ShowScore--;
-  if (InterruptInfolineUpdate)
-    {
-      UpdateInfoline ();
-      SetInfoline ();
-    }
-  // This is the end of the things, that were previously done by periodic interrupt
-}				// void UpdateCountersForThisFrame(void)
+  UpdateInfoline ();
+  SetInfoline ();
+
+} /* UpdateCountersForThisFrame() */
 
 
 #undef _paraplus_c

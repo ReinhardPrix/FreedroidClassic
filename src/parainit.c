@@ -44,10 +44,6 @@
 
 #define TITLE_EIN
 
-#undef MODSCHASEIN
-#undef NOJUNKWHILEINIT
-
-
 #define FENSTEROFF 		FALSE
 #define USEINTSOFF 		FALSE
 
@@ -235,7 +231,6 @@ InitNewGame (void)
 
   Activate_Conservative_Frame_Computation();
 
-  InterruptInfolineUpdate = TRUE;
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
@@ -368,9 +363,6 @@ InitNewGame (void)
 
   SetTextColor (FONT_WHITE, FONT_RED);
   //    InitPalette();
-#ifdef NOJUNKWHILEINIT
-  Monitorsignalunterbrechung (0);
-#endif
   InitBars = TRUE;
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
@@ -591,35 +583,21 @@ InitParaplus (void)
   /* Tastaturwiederholrate auf den geringsten Wert setzen */
   SetTypematicRate (TYPEMATIC_SLOW);
 
-  /* Initialisierung beendet. Monitor wird aktiviert. */
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Funktionsende fehlerfrei erreicht....");
-
-}				// void InitParaplus(void)
+} /* InitParaplus() */
 
 
-/*@Function============================================================
-@Desc: Diese Prozedur ist fuer die Introduction in das Spiel verantwortlich. Im
-   Moment beschr„nkt sich ihre Funktion auf das Laden und anzeigen eines
-   Titelbildes, das dann ausgeblendet wird.
-
-@Ret: keiner
-@Int: keiner
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Diese Prozedur ist fuer die Introduction in das Spiel
+ *  verantwortlich. Im Moment beschrankt sich ihre Funktion auf das
+ *  Laden und anzeigen eines Titelbildes, das dann ausgeblendet wird.
+ * 
+ *-----------------------------------------------------------------*/
 void
 Title (void)
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
-  int OldUpdateStatus = InterruptInfolineUpdate;
-
-  DebugPrintf ("\nvoid Title(void): real function call confirmed...:");
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
-
-  InterruptInfolineUpdate = FALSE;
-#ifdef NOJUNKWHILEINIT
-  Monitorsignalunterbrechung (0);
-#endif
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
   Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
@@ -657,11 +635,8 @@ Title (void)
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
   SetTypematicRate (TYPEMATIC_SLOW);
-  InterruptInfolineUpdate = OldUpdateStatus;
 
-  DebugPrintf ("\nvoid Title(void): end of function reached...:");
-
-}				// void Title(void)
+} /* Title() */
 
 /*@Function============================================================
 @Desc: Diese Prozedur ist fuer die Introduction in das Spiel verantwortlich. Im
@@ -675,16 +650,10 @@ void
 EndTitle (void)
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
-  int OldUpdateStatus = InterruptInfolineUpdate;
 
   DebugPrintf ("\nvoid EndTitle(void): real function call confirmed...:");
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
-
-  InterruptInfolineUpdate = FALSE;
-#ifdef NOJUNKWHILEINIT
-  Monitorsignalunterbrechung (0);
-#endif
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
   // Load_PCX_Image (TITELBILD1_PCX, RealScreen, TRUE);	/* Titelbild laden */
@@ -717,10 +686,9 @@ EndTitle (void)
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
   SetTypematicRate (TYPEMATIC_SLOW);
-  InterruptInfolineUpdate = OldUpdateStatus;
 
   DebugPrintf ("\nvoid EndTitle(void): end of function reached...:");
 
-} // void EndTitle(void)
+} /* EndTitle() */
 
 #undef _parainit_c

@@ -386,18 +386,6 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 }				// void SetColors(...)
 
 /*@Function============================================================
-@Desc: Monitorsignalunterbrechung(int): steuert das Monitorsignal
-
-@Ret:
-@Int:
-* $Function----------------------------------------------------------*/
-void
-Monitorsignalunterbrechung (int Signal)
-{
-
-}
-
-/*@Function============================================================
 @Desc: InitPalette(): laedt die allgemein gueltige Palette fuer die
 						LBM- Bilder 
 

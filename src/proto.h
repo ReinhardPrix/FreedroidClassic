@@ -178,7 +178,6 @@ EXTERN int InitPictures (void);
 EXTERN void SwapScreen (void);
 EXTERN void CopyScreenToInternalScreen(void);
 EXTERN void ClearVGAScreen (void);
-EXTERN void Monitorsignalunterbrechung (int);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);

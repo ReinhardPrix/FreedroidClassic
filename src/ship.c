@@ -300,7 +300,6 @@ EnterKonsole (void)
 
   /* Initialisierung der Konsole */
 
-  // InterruptInfolineUpdate = FALSE;
   ClearGraphMem (RealScreen);
   KillTastaturPuffer ();
 
@@ -416,8 +415,6 @@ EnterKonsole (void)
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
   UpdateInfoline ();
-  // InterruptInfolineUpdate = TRUE;
-  // InitBars=TRUE;
 
   while (SpacePressed ())
     {

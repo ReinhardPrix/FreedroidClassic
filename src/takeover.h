@@ -37,6 +37,8 @@
 #define WAIT_COLOR_ROTATION	2	/* 1/18 sekunden aktive-Kabel */
 #define WAIT_AFTER_GAME		2*18	/* Wait after a deadlock */
 
+#define TO_TICK_LENGTH		40     /* Time in ms between ticks */
+
 /* Position of Leader-Led */
 #define LEADERLEDX		USERFENSTERPOSX + 136
 #define LEADERLEDY		83

@@ -38,6 +38,12 @@
 #include "global.h"
 #include "proto.h"
 #include "takeover.h"
+#include "map.h"
+
+Uint32 prev_tick, next_tick;  	/* time of previous and next ticks */
+Uint32 cur_time;  		/* current time in ms */
+Uint32 tick_length; 		/* time between ticks */
+
 
 unsigned char *ToPlaygroundBlock;
 unsigned char *ToGroundBlocks;
@@ -118,9 +124,6 @@ playground_t ToPlayground;
 
 void RollToColors (void);
 
-#include "map.h"
-
-
 /*-----------------------------------------------------------------
  * @Desc: Initialise the Takeover game
  *
@@ -169,47 +172,29 @@ Takeover (int enemynum)
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
 
-  DebugPrintf
-    ("\nvoid Takeover(int enemynum): real function call confirmed.");
-
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu.
    */
   Activate_Conservative_Frame_Computation ();
 
+  while (SpacePressed ()) ;  /* make sure space is release before proceed */
+
   Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
-  DebugPrintf
-    ("\nvoid Takeover(int enemynum):  Takeover background music started...");
 
   /* Get a new Internfenster without any robots, blasts bullets etc
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
-  SetUserfenster (TO_BG_COLOR, RealScreen);
 
-  /* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
-     kommt, wird diese Funktion tempor"ar desaktiviert. */
-  InterruptInfolineUpdate = 0;
+  SetUserfenster (TO_BG_COLOR, RealScreen);  /* set takeover color */
 
   Me.status = MOBILE;
   SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	     Mobilecolor.blau);
 
-  /* Tastaturwiederholrate richtig setzen */
-  SetTypematicRate (TYPEMATIC_FAST);
-
-  /* Warte, bis User Space auslaesst */
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
+  while (SpacePressed ()) ; 	 /* Warte, bis User Space auslaesst */
 
   while (!FinishTakeover)
     {
-
-      /* Userfenster faerben */
-      //    SetUserfenster(TO_BG_COLOR, RealScreen);
-
       /* Init Color-column and Capsule-Number for each opponenet and your color */
       for (row = 0; row < NUM_LINES; row++)
 	{
@@ -232,6 +217,10 @@ Takeover (int enemynum)
 
       ShowPlayground ();
 
+      /* here we start the tick-timer */
+      prev_tick = SDL_GetTicks (); 
+      next_tick = prev_tick + TO_TICK_LENGTH; 
+      
       ChooseColor ();
 
       PlayGame ();
@@ -254,11 +243,11 @@ Takeover (int enemynum)
 	  RealScore += Druidmap[OpponentType].score;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
-	  else			/* won the proper way */
+	  else				/* won the proper way */
 	    message = "Complete";
 
 	  FinishTakeover = TRUE;
-	}			/* LeaderColor == YourColor */
+	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
 	  Switch_Background_Music_To (SILENCE);
@@ -284,29 +273,26 @@ Takeover (int enemynum)
 
       RedrawInfluenceNumber ();
 
-      /* Feind in jedem Fall ausschalten */
-      Feindesliste[enemynum].Status = OUT;
-      OpponentType = -1;	/* dont display enemy any more */
+      /* don't display enemy if we're finished */
+      if (FinishTakeover) 
+	{
+	  Feindesliste[enemynum].Status = OUT;
+	  OpponentType = -1;	/* dont display enemy any more */
+	}
 
       /* Wait a turn */
       waiter = WAIT_AFTER_GAME;
       while (waiter != 0)
 	{
-  // usleep (30000);	/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
-
+	  usleep (30000);
 	  waiter--;
 	  RollToColors ();
 	  SetInfoline ();
 	  strcpy (LeftInfo, message);	/* eigene Message anzeigen */
 	  ShowPlayground ();
-	}			/* while waiter */
-    }				/* while !FinishTakeover */
+	} /* WHILE waiter */
 
-  /* Tastaturwiederholung wieder auf langsam setzen */
-  SetTypematicRate (TYPEMATIC_SLOW);
-
-  /* Die Rahmenupdatefunktion kann wieder aktiviert werden. */
-  InterruptInfolineUpdate = 1;
+    }	/* while !FinishTakeover */
 
   ClearVGAScreen ();
 
@@ -329,30 +315,17 @@ Takeover (int enemynum)
 void
 ChooseColor (void)
 {
-  // int countdown = COLOR_COUNTDOWN * 2;
-  int countdown = 200;
+  int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
   int ColorChosen = FALSE;
   char dummy[80];
+  
+  tick_length = 100;  	/* count down in 1/10 second steps */
 
-  DebugPrintf ("\nvoid ChooseColor(void): Funktion echt aufgerufen.");
-
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
-
+  prev_tick = SDL_GetTicks ();
+  next_tick = prev_tick + tick_length;
 
   while (!ColorChosen)
     {
-      //      usleep (30000);
-
-      countdown--;		/* Count down */
-
-      JoystickControl ();
-
-      keyboard_update ();
-
       if (RightPressed ())
 	{
 	  YourColor = VIOLETT;
@@ -367,28 +340,28 @@ ChooseColor (void)
       if (SpacePressed ())
 	{
 	  ColorChosen = TRUE;
-	  while (SpacePressed ())
-	    {
-	      JoystickControl ();
-	      keyboard_update ();
-	    }
+	  while (SpacePressed ()) ;
 	}
 
-      ShowPlayground ();
-      DebugPrintf
-	("\nvoid ChooseColor(void): ShowPlayground erfolgreich durchgefuehrt.....");
-
-      strcpy (LeftInfo, "Color? ");
-      strcat (LeftInfo, itoa (countdown / 2, dummy, 10));
+      cur_time = SDL_GetTicks ();
+      if (cur_time >= next_tick )   /* next tick has ocurred */
+	{
+	  prev_tick = next_tick; 
+	  next_tick = prev_tick + tick_length;
+	  countdown--;		/* Count down */
+	  strcpy (LeftInfo, "Color? ");
+	  strcat (LeftInfo, itoa (countdown, dummy, 10));
+	  ShowPlayground ();
+	}
 
       if (countdown == 0)
 	ColorChosen = TRUE;
 
-    }				/* while */
-  DebugPrintf
-    ("\nvoid ChooseColor(void): Funktionsende ordnungsgemaess erreicht.");
+    } /* while(!ColorChosen) */
+
   return;
-}				// void ChooseColor(void)
+
+} /* ChooseColor() */
 
 
 /*-----------------------------------------------------------------
@@ -414,8 +387,6 @@ PlayGame (void)
 	  LeaderColor = YourColor;
 	  return;
 	}
-
-      //      usleep (15000);	
 
       countdown--;
 
@@ -495,8 +466,6 @@ PlayGame (void)
 
   while (countdown--)
     {
-      //      usleep (15000);	
-
       RollToColors ();
 
       ProcessCapsules ();	/* count down the lifetime of the capsules */

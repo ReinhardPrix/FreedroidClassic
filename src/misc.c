@@ -187,7 +187,7 @@ itoa (int n, char s[], int Dummy)
   s[i] = '\0';
   reverse (s);
   return s;
-}				// void itoa(int n, char s[]) siehe Kernighan&Ritchie!
+}// void itoa(int n, char s[]) siehe Kernighan&Ritchie!
 
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
@@ -210,7 +210,7 @@ ltoa (long n, char s[], int Dummy)
   s[i] = '\0';
   reverse (s);
   return s;
-}				// void ltoa(long n, char s[]) angelehnt an itoa!
+} // void ltoa(long n, char s[]) angelehnt an itoa!
 
 /* **********************************************************************
    Diese Funktion l"oscht alle Roboter auf dem momentanen Level

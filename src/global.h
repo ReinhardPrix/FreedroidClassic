@@ -75,7 +75,6 @@ EXTERN int Conceptview;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int LastBlastHit;
-EXTERN int InterruptInfolineUpdate;
 EXTERN int InvincibleMode;
 EXTERN int HideInvisibleMap;
 EXTERN int PlusExtentionsOn;
