@@ -518,6 +518,8 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   "This skill allows to repair a given item from inventory.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to repair.  While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value." } ,
   { 0 , "Attack with weapon"     , "WeaponSkill.png"           , UNLOADED_ISO_IMAGE , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
   "This is the main weapon skill.  Right clicking somewhere will now cause an attack.  You can still use left click to move around.  In general, peaceful humans will not appreciate people running around with weapons drawn." } ,
+  { 0 , "Identify Item"     , "IdentifySkill.png"           , UNLOADED_ISO_IMAGE , { 15 , 13 , 11 , 9 , 7 , 5 , 4 , 3 , 2 , 1 } ,
+  "This skill can be used to identify items.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to identify." } ,
   { 1 , "Force -> Energy "       , "FirstAidSpell.png"         , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
   "This is maybe the most vital spell/skill of them all.  With this spell, you can regain some of your health lost in combat for a comparatively little cost of mana." } ,
   { 1 , "Teleport Old Town" , "TeleportHomeSpell.png"     , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
@@ -557,8 +559,6 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   "This is a skill manly used for training purposes.  It is very simple and also of very limited use.  But every adept usually has to learn it sooner or later in the course of his training in making use of the force." } ,
 
 
-  { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
   { 1 , "Unused spell Nr. 22"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
   "This is a skill" } ,
   { 1 , "Unused spell Nr. 23"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,

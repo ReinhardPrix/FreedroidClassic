@@ -759,7 +759,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	} // inner switch
       break;
     case 1:
-      switch ( MyRandom ( 10 ) )
+      switch ( MyRandom ( 11 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_WHEELS ;
@@ -804,6 +804,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 10:
 	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 	  drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
+	  break;
+	case 11:
+	  drop_item_type = ITEM_MACE ;
+	  drop_item_multiplicity = 1 ;
 	  break;
 	} // inner switch
       break;
@@ -2187,6 +2191,7 @@ ManageInventoryScreen ( void )
   int i;
   finepoint MapPositionOfMouse;
   Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -2692,34 +2697,10 @@ ManageInventoryScreen ( void )
   
   if ( MouseRightPressed ( ) && ( !RightPressedPreviousFrame ) )
     {
-      if ( Me [ 0 ] . readied_skill != SPELL_REPAIR_SKILL )
+
+      switch ( Me [ 0 ] . readied_skill )
 	{
-	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
-	    {
-	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
-	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
-	      
-	      DebugPrintf( 0 , "\nApplying item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
-	      
-	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	      DebugPrintf( 0 , "\nApplying inventory entry no.: %d." , Grabbed_InvPos );
-	      
-	      if ( Grabbed_InvPos == (-1) )
-		{
-		  // Nothing grabbed, so we need not do anything more here..
-		  DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
-		}
-	      else
-		{
-		  //--------------------
-		  // At this point we know, that we have just applied something from the inventory
-		  //
-		  ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
-		}
-	    }
-	}
-      else
-	{
+	case SPELL_REPAIR_SKILL:
 	  //--------------------
 	  // Here we know, that the repair skill is selected, therefore we try to 
 	  // repair the item currently under the mouse cursor.
@@ -2786,6 +2767,84 @@ ManageInventoryScreen ( void )
 	      if ( Me [ 0 ] . aux2_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . aux2_item ) );
 	    }
+	  break;
+
+	case SPELL_IDENTIFY_SKILL:
+	  //--------------------
+	  // Here we know, that the identify skill is selected, therefore we try to 
+	  // repair the item currently under the mouse cursor.
+	  //
+	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	    {
+	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+	      
+	      DebugPrintf( 0 , "\nTrying to repair item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      DebugPrintf( 0 , "\nTrying to repair inventory entry no.: %d." , Grabbed_InvPos );
+	      
+	      if ( Grabbed_InvPos == (-1) )
+		{
+		  // Nothing grabbed, so we need not do anything more here..
+		  DebugPrintf( 0 , "\nIdentifying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+		}
+	      else
+		{
+		  if ( Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified == TRUE )
+		    {
+		      PlayOnceNeededSoundSample ( "../effects/is_already_indentif.wav" , FALSE , FALSE );
+		    }
+		  else
+		    {
+		      if ( Me [ 0 ] . mana >= SpellCost )
+			{
+			  Me [ 0 ] . mana -= SpellCost;
+			  Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
+			  Play_Spell_ForceToEnergy_Sound( );
+			}
+		      else
+			{
+			  Me [ 0 ] . TextVisibleTime = 0;
+			  Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+			  Not_Enough_Mana_Sound(  );
+			}
+		    }
+		}
+	    }
+	  break;
+
+	default:
+	  //--------------------
+	  // The default behaviour for right mouse clicks (i.e. when no repair or
+	  // identify skills are selected) is to try to 'apply' the item in combat, 
+	  // i.e. expend the item, if it can be used up just so like a potion.  So
+	  // we do this here.
+	  //
+	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	    {
+	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+	      
+	      DebugPrintf( 0 , "\nApplying item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      DebugPrintf( 0 , "\nApplying inventory entry no.: %d." , Grabbed_InvPos );
+	      
+	      if ( Grabbed_InvPos == (-1) )
+		{
+		  // Nothing grabbed, so we need not do anything more here..
+		  DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+		}
+	      else
+		{
+		  //--------------------
+		  // At this point we know, that we have just applied something from the inventory
+		  //
+		  ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
+		}
+	    }
+	  break;
 
 	}
 
@@ -2797,8 +2856,7 @@ ManageInventoryScreen ( void )
   // contained within the user rectangle that also gets updated every frame.
   //
   // our_SDL_update_rect_wrapper( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
-
-
+  //
   MouseButtonPressedPreviousFrame = axis_is_active;
   RightPressedPreviousFrame = MouseRightPressed ( ) ;
 }; // void ManageInventoryScreen ( void );

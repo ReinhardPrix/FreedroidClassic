@@ -722,6 +722,19 @@ HandleCurrentlyActivatedSkill( void )
 	      // Do nothing here.  The right mouse click while in inventory screen
 	      // will be handled in the inventory screen management function.
 	      //
+	      PlayOnceNeededSoundSample ( "../effects/item_must_be_in_inv_for_identi.wav" , FALSE , FALSE );
+	    }
+	}
+      break;
+    case SPELL_IDENTIFY_SKILL:
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( !CursorIsInInvRect( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) || !GameConfig.Inventory_Visible )
+	    {
+	      //--------------------
+	      // Do nothing here.  The right mouse click while in inventory screen
+	      // will be handled in the inventory screen management function.
+	      //
 	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
 	    }
 	}
