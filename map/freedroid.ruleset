@@ -54,7 +54,7 @@ That will not cause any problems.
 
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 
-Radius of explosions (as far as damage is concerned) in multiples of tiles=0.5
+Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
 Amount of damage done by contact to a blast per second of time=45.0
 
 Droid radius: 0.3
