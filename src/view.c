@@ -84,7 +84,19 @@ ShowAutomapData( void )
   int x , y ;
 #define AUTOMAP_SQUARE_SIZE 3
 #define AUTOMAP_COLOR 0x0FFFF
+  int i;
+  int TuxColor = SDL_MapRGB( Screen->format, 0 , 0 , 255 ); 
+  int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
 
+  //--------------------
+  // Of course we only display the automap on demand of the user...
+  //
+  if ( GameConfig.Automap_Visible == FALSE ) return;
+
+  //--------------------
+  // At first, we only blit the known data about the pure wall-type
+  // obstacles on this level
+  //
   for ( y = 0 ; y < CurLevel->ylen ; y ++ )
     {
       for ( x = 0 ; x < CurLevel->xlen ; x ++ )
@@ -117,6 +129,25 @@ ShowAutomapData( void )
     }
 
   //--------------------
+  // Now that the pure map data has been drawn, we add red dots for 
+  // the ememys around.
+  //
+  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    {
+      if ( AllEnemys[i].Status == OUT ) continue;
+      if ( AllEnemys[i].levelnum != CurLevel->levelnum ) continue;
+
+      for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
+	{
+	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
+	    {
+	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
+			 AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
+	    }
+	}
+    }
+
+  //--------------------
   // Now that the automap is drawn so far, we add a red dot for the
   // tux himself.
   //
@@ -124,7 +155,7 @@ ShowAutomapData( void )
     {
       for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	{
-	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me.pos.x + x , AUTOMAP_SQUARE_SIZE * Me.pos.y + y , 63 );
+	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me.pos.x + x , AUTOMAP_SQUARE_SIZE * Me.pos.y + y , TuxColor );
 	}
     }
 
@@ -543,6 +574,7 @@ PutInfluence ( int x , int y )
   float angle;
   static float Previous_angle = -1000 ; // a completely unrealistic value
   static SDL_Surface* tmp_influencer = NULL ;
+  static int Previous_phase = -100; // a completely unrealistic value
   moderately_finepoint in_tile_shift;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
@@ -623,12 +655,13 @@ PutInfluence ( int x , int y )
       // angle = - ( atan2 (Me.speed.y,  Me.speed.x) * 180 / M_PI + 90 );
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
-      if ( ( angle != Previous_angle ) || ( tmp_influencer == NULL ) )
+      if ( ( angle != Previous_angle ) || ( tmp_influencer == NULL ) || ( ( (int) Me.phase) != Previous_phase ) )
 	{
 	  if ( tmp_influencer != NULL ) SDL_FreeSurface( tmp_influencer );
 	  tmp_influencer = 
 	    rotozoomSurface( TuxWorkingCopy [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
 	  Previous_angle = angle;
+	  Previous_phase = (int) Me.phase;
 	}
       // SDL_SetColorKey ( tmp_influencer , SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); 
       SDL_SetColorKey ( tmp_influencer , 0 , SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); // turn off colorkey

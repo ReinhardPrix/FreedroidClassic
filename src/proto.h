@@ -178,6 +178,7 @@ EXTERN int LoadGame( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void CollectAutomapData ( void ) ;
 EXTERN void Smash_Box ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
@@ -329,6 +330,7 @@ EXTERN int DownPressed (void);
 EXTERN int SpacePressed (void);
 EXTERN int EnterPressed (void);
 EXTERN int EscapePressed (void);
+EXTERN int TabPressed (void);
 EXTERN int BackspacePressed (void);
 EXTERN int KP_PLUS_Pressed (void);
 EXTERN int KP_MINUS_Pressed (void);

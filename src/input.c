@@ -111,6 +111,7 @@ int CurrentlyF10Pressed=0;
 int CurrentlyF11Pressed=0;
 int CurrentlyF12Pressed=0;
 int CurrentlyEscapePressed=0;
+int CurrentlyTabPressed=0;
 int CurrentlyBackspacePressed=0;
 
 
@@ -264,6 +265,7 @@ ReactToSpecialKeys(void)
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
+  static int TabPressed_LastFrame;
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -480,6 +482,23 @@ ReactToSpecialKeys(void)
   else
     {
       CPressed_LastFrame = FALSE;
+    }
+
+  //--------------------
+  // We assign the C key to turn on/off the character screen
+  //
+  if ( TabPressed() )
+    {
+      if ( !TabPressed_LastFrame ) 
+	{
+	  GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
+	}
+
+      TabPressed_LastFrame = TRUE;
+    }
+  else
+    {
+      TabPressed_LastFrame = FALSE;
     }
 
 
@@ -817,6 +836,9 @@ keyboard_update(void)
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=TRUE;
 	      break;
+	    case SDLK_TAB:
+	      CurrentlyTabPressed=TRUE;
+	      break;
 	    default:
 	      /*
 		printf("\n\nUnhandled keystroke!! Terminating...\n\n");
@@ -1060,6 +1082,9 @@ keyboard_update(void)
 	      break;
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=FALSE;
+	      break;
+	    case SDLK_TAB:
+	      CurrentlyTabPressed=FALSE;
 	      break;
 	    default:
 	      break;
@@ -1715,6 +1740,13 @@ EscapePressed (void)
 {
   keyboard_update ();
   return CurrentlyEscapePressed;
+}				// int WPressed(void)
+
+int
+TabPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyTabPressed;
 }				// int WPressed(void)
 
 /*@Function============================================================
