@@ -3550,10 +3550,12 @@ Error:  Doors pointing not to door obstacles found.",
 		   ( AllEnemys[j].pos.z  != DoorLevel->levelnum ) )
 		continue;
 
-	      xdist = abs ( AllEnemys[j].pos.x - doorx ) ;
+	      // xdist = abs ( AllEnemys[j].pos.x - doorx ) ;
+	      xdist = abs ( AllEnemys [ j ] . pos . x - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . x ) ;
 	      if (xdist < Block_Width)
 		{
-		  ydist = abs (AllEnemys[j].pos.y - doory);
+		  // ydist = abs (AllEnemys[j].pos.y - doory);
+		  ydist = abs ( AllEnemys [ j ] . pos . y - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . y ) ;
 		  if (ydist < Block_Height)
 		    {
 		      dist2 = xdist * xdist + ydist * ydist;
