@@ -365,6 +365,8 @@ EXTERN void play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Wa
 #endif
 EXTERN void MoveItem( item* SourceItem , item* DestItem );
 EXTERN void silently_unhold_all_items ( void );
+EXTERN int required_spellcasting_skill_for_item ( int item_type );
+EXTERN int required_magic_stat_for_next_level_and_item ( int item_type );
 EXTERN int CountItemtypeInInventory( int Itemtype , int player_num );
 EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int player_num );
 EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int player_num );

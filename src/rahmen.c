@@ -177,6 +177,39 @@ exist really (i.e. has a type = (-1) ).",
 	    strcat( ItemDescText , linebuf );
 	}
     }
+    else if ( ItemMap [ CurItem->type ] . item_can_be_applied_in_combat )
+    {
+	//--------------------
+	// Maybe it's an applicable item, that still has some stat
+	// requirements.  Typically spellbooks fall into that category.
+	//
+	switch ( CurItem -> type )
+	{
+	    case ITEM_SPELLBOOK_OF_HEALING:
+	    case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
+	    case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
+	    case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	    case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+	    case ITEM_SPELLBOOK_OF_IDENTIFY:
+	    case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
+	    case ITEM_SPELLBOOK_OF_ICE_BOLT:
+	    case ITEM_SPELLBOOK_OF_POISON_BOLT:
+	    case ITEM_SPELLBOOK_OF_PETRIFICATION:
+	    case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
+	    case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
+	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+
+		sprintf( linebuf , "Spellcasting skill: %s\n " ,  
+			 AllSkillTexts [ required_spellcasting_skill_for_item ( CurItem -> type ) ] );
+		strcat( ItemDescText , linebuf );
+		sprintf( linebuf , "Magic: %d\n " ,  
+			 required_magic_stat_for_next_level_and_item ( CurItem -> type ) );
+		strcat( ItemDescText , linebuf );
+		break;
+	    default:
+		break;
+	}
+    }
     else if ( ForShop )
     {
 	strcat ( ItemDescText , " , No required attributes " );
@@ -257,7 +290,7 @@ exist really (i.e. has a type = (-1) ).",
 	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
 	    case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
 	    case ITEM_SPELLBOOK_OF_IDENTIFY:
-		sprintf( linebuf , "Permanently aquire this skill/spell\n" );
+		sprintf( linebuf , "Permanently aquire/enhance this skill/spell\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		

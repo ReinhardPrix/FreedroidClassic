@@ -2444,7 +2444,7 @@ clear_player_inventory_and_stats ( void )
     Me [ 0 ] . base_vitality = 25 ;
     Me [ 0 ] . base_strength = 10 ;
     Me [ 0 ] . base_dexterity = 15 ;
-    Me [ 0 ] . base_magic = 40 ;
+    Me [ 0 ] . base_magic = 25 ;
     Me [ 0 ] . exp_level = 1 ;
 
 }; // void clear_player_inventory_and_stats ( void )

@@ -975,7 +975,7 @@ healing_spell_sound ( void )
 void
 application_requirements_not_met_sound ( void )
 {
-    play_sample_using_WAV_cache ( "../effects/cannot_use_this_yet.wav", FALSE , FALSE );
+    play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/i_cannot_use_this_item_yet.ogg", FALSE , FALSE );
 }; // void application_requirements_not_met_sound ( void )
 
 /* ----------------------------------------------------------------------

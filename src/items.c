@@ -1615,6 +1615,171 @@ Quick_ApplyItem( int ItemKey )
 }; // void Quick_ApplyItem( item* CurItem )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+required_spellcasting_skill_for_item ( int item_type )
+{
+
+    switch ( item_type )
+    {
+	case ITEM_SPELLBOOK_OF_HEALING:
+	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
+	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
+	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+	case ITEM_SPELLBOOK_OF_IDENTIFY:
+	    return ( 0 ) ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
+	case ITEM_SPELLBOOK_OF_ICE_BOLT:
+	case ITEM_SPELLBOOK_OF_POISON_BOLT:
+	case ITEM_SPELLBOOK_OF_PETRIFICATION:
+	    return ( 1 ) ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
+	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
+	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+	    return ( 2 ) ;
+	    break;
+
+	default:
+	    return ( 0 ) ;
+	    break;
+    }
+    
+}; // int required_spellcasting_skill_for_item ( int item_type )
+
+/* ----------------------------------------------------------------------
+ * There are many spellbooks.  These are handled inside the code via 
+ * their item_type, an integer.  Now these spellbooks affect skills.  The
+ * skills are handled internally via their index in the skill list.  So
+ * at some points, it's convenient to look up the skill associated with
+ * the spellbook.  So we do this once and have it available all the time
+ * in a convenient and easy to maintain fashion.
+ * ---------------------------------------------------------------------- */
+int
+associate_skill_with_item ( int item_type )
+{
+    int associated_skill = (-1) ;
+
+    switch ( item_type )
+    {
+	case ITEM_SPELLBOOK_OF_HEALING:
+	    associated_skill = SPELL_FORCE_TO_ENERGY ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
+	    associated_skill = SPELL_FORCE_EXPLOSION_CIRCLE;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
+	    associated_skill = SPELL_FORCE_EXPLOSION_RAY ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	    associated_skill = SPELL_TELEPORT_HOME ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+	    associated_skill = SPELL_DETECT_ITEM ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_IDENTIFY:
+	    associated_skill = SPELL_IDENTIFY_SKILL ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
+	    associated_skill = SPELL_FIREY_BOLT ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_ICE_BOLT:
+	    associated_skill = SPELL_COLD_BOLT ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_POISON_BOLT:
+	    associated_skill = SPELL_POISON_BOLT ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_PETRIFICATION:
+	    associated_skill = SPELL_PARALYZE_BOLT ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
+	    associated_skill = SPELL_RADIAL_EMP_WAVE ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
+	    associated_skill = SPELL_RADIAL_VMX_WAVE ;
+	    break;
+
+	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+	    associated_skill = SPELL_RADIAL_FIRE_WAVE ;
+	    break;
+
+	default:
+	    //--------------------
+	    // In case it's not one of the spellbooks mentioned above, 
+	    // there isn't any magic requirement, so we return 0 and
+	    // allow for application of the item in question.
+	    //
+	    break;
+    }
+
+    return ( associated_skill );
+
+}; // int associate_skill_with_item ( int item_type )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+required_magic_stat_for_next_level_and_item ( int item_type )
+{
+    int level_index;
+    int associated_skill = (-1) ;
+
+    associated_skill = associate_skill_with_item ( item_type );
+
+    //--------------------
+    // In case we're not dealing with a spell book, the question
+    // for skill requirement for the next level is senseless.  In
+    // that case, we always allow to apply the item in question.
+    //
+    if ( associated_skill == (-1) ) 
+	return ( 0 );
+
+    //--------------------
+    // Now we know the associated skill, so all we need to do is
+    // return the proper value from the magic requirements entry
+    // of the SkillMap.
+    //
+    level_index = Me [ 0 ] . SkillLevel [ associated_skill ] ;
+    if ( ( level_index >= 0 ) && ( level_index < NUMBER_OF_SKILL_LEVELS ) )
+    {
+	return ( SpellSkillMap [ associated_skill ] . magic_requirement_table [ level_index ] );
+    }
+    else
+    {
+	fprintf ( stderr , "\nlevel_index=%d." , level_index );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was a skill level mentioned, that exceeds the range of allowed skill levels.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+
+    //--------------------
+    // Just to make the compiler happy.  (This line can't be
+    // ever reached from inside the code...)
+    //
+    return ( 0 );
+    
+}; // int required_magic_stat_for_next_level_and_item ( int item_type )
+
+/* ----------------------------------------------------------------------
  * Some items, that can be applied directly (like spellbooks) do have a
  * certain stat requirement.  This function checks, if the corresponding
  * requirements are met or not.
@@ -1622,7 +1787,17 @@ Quick_ApplyItem( int ItemKey )
 int
 requirements_for_item_application_met ( item* CurItem ) 
 {
-    return ( FALSE );
+
+    if ( Me [ 0 ] . Magic >= required_magic_stat_for_next_level_and_item ( CurItem -> type ) )
+    {
+	if ( Me [ 0 ] . spellcasting_skill >= required_spellcasting_skill_for_item ( CurItem -> type ) )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else
+	return ( FALSE );
+
 }; // int requirements_for_item_application_met ( item* CurItem ) 
 
 /* ----------------------------------------------------------------------
@@ -2223,21 +2398,25 @@ DropHeldItemToTheFloor ( void )
 int 
 ItemUsageRequirementsMet( item* UseItem , int MakeSound )
 {
-  if ( Me[0].Strength < ItemMap[ UseItem->type ].item_require_strength )
+    if ( Me [ 0 ] . Strength < ItemMap[ UseItem->type ].item_require_strength )
     {
-      if ( MakeSound ) Not_Enough_Power_Sound( );
-      return ( FALSE );
+	if ( MakeSound ) Not_Enough_Power_Sound( );
+	return ( FALSE );
     }
-  if ( Me[0].Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
+    if ( Me [ 0 ] . Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
     {
-      if ( MakeSound ) Not_Enough_Dist_Sound( );
-      return ( FALSE );
+	if ( MakeSound ) Not_Enough_Dist_Sound( );
+	return ( FALSE );
     }
-  if ( Me[0].Magic < ItemMap[ UseItem->type ].item_require_magic )
+    if ( Me [ 0 ] . Magic < ItemMap[ UseItem->type ].item_require_magic )
     {
-      return ( FALSE );
+	return ( FALSE );
     }
-  return ( TRUE );
+    if ( ! requirements_for_item_application_met ( UseItem )  )
+    {
+	return ( FALSE );
+    }
+    return ( TRUE );
 }; // int ItemUsageRequirementsMet( item* UseItem )
 
 /* ----------------------------------------------------------------------

@@ -937,6 +937,7 @@ typedef struct
     char* spell_skill_icon_name;
     iso_image spell_skill_icon_surface;
     int mana_cost_table[ NUMBER_OF_SKILL_LEVELS ];
+    int magic_requirement_table[ NUMBER_OF_SKILL_LEVELS ];
     char* spell_skill_description;
 }
 spell_skill_spec, *Spell_Skill_Spec;

@@ -4740,158 +4740,158 @@ The red transparent plate for the inventory could not be loaded.  This is a fata
 void
 ShowInventoryScreen( void )
 {
-  SDL_Rect TargetRect;
-  int SlotNum;
-  int i , j ;
-
-  //--------------------
-  // We define the right side of the user screen as the rectangle
-  // for our inventory screen.
-  //
-  InventoryRect.x = 0;
-  InventoryRect.y = User_Rect.y;
-  InventoryRect.w = GameConfig . screen_width/2;
-  InventoryRect.h = User_Rect.h;
-
-  //--------------------
-  // At this point we know, that the inventory screen is desired and must be
-  // displayed in-game:
-  //
-  blit_special_background ( INVENTORY_SCREEN_BACKGROUND_CODE );
-
-  //--------------------
-  // Now we display the item in the influencer drive slot
-  //
-  TargetRect.x = InventoryRect.x + DRIVE_RECT_X;
-  TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
-  if ( ( ! Me[0].drive_item.currently_held_in_hand ) && ( Me[0].drive_item.type != (-1) ) )
+    SDL_Rect TargetRect;
+    int SlotNum;
+    int i , j ;
+    
+    //--------------------
+    // We define the right side of the user screen as the rectangle
+    // for our inventory screen.
+    //
+    InventoryRect.x = 0;
+    InventoryRect.y = User_Rect.y;
+    InventoryRect.w = GameConfig . screen_width/2;
+    InventoryRect.h = User_Rect.h;
+    
+    //--------------------
+    // At this point we know, that the inventory screen is desired and must be
+    // displayed in-game:
+    //
+    blit_special_background ( INVENTORY_SCREEN_BACKGROUND_CODE );
+    
+    //--------------------
+    // Now we display the item in the influencer drive slot
+    //
+    TargetRect.x = InventoryRect.x + DRIVE_RECT_X;
+    TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
+    if ( ( ! Me[0].drive_item.currently_held_in_hand ) && ( Me[0].drive_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . drive_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . drive_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-
-  //--------------------
-  // Now we display the item in the influencer weapon slot
-  // At this point we have to pay extra care, cause the weapons in Freedroid
-  // really come in many different sizes.
-  //
-  TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
-  TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
-  if ( ( ! Me [ 0 ] . weapon_item.currently_held_in_hand ) && ( Me [ 0 ] . weapon_item.type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencer weapon slot
+    // At this point we have to pay extra care, cause the weapons in Freedroid
+    // really come in many different sizes.
+    //
+    TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
+    TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
+    if ( ( ! Me [ 0 ] . weapon_item.currently_held_in_hand ) && ( Me [ 0 ] . weapon_item.type != (-1) ) )
     {
-      TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
-      TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
-
-      //--------------------
-      // Maybe this is also a 2-handed weapon.  In this case we need to blit the
-      // weapon a second time, this time in the center of the shield rectangle to
-      // visibly reflect the fact, that the shield hand is required too for this
-      // weapon.
-      //
-      if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+	TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
+	TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	
+	//--------------------
+	// Maybe this is also a 2-handed weapon.  In this case we need to blit the
+	// weapon a second time, this time in the center of the shield rectangle to
+	// visibly reflect the fact, that the shield hand is required too for this
+	// weapon.
+	//
+	if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 	{
-	  TargetRect.x = InventoryRect.x + SHIELD_RECT_X;
-	  TargetRect.y = InventoryRect.y + SHIELD_RECT_Y;
-	  TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
-	  TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
-	  our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	    TargetRect.x = InventoryRect.x + SHIELD_RECT_X;
+	    TargetRect.y = InventoryRect.y + SHIELD_RECT_Y;
+	    TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
+	    TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
+	    our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
 	}
     }
-
-  //--------------------
-  // Now we display the item in the influencer armour slot
-  //
-  TargetRect.x = InventoryRect.x + ARMOUR_RECT_X ;
-  TargetRect.y = InventoryRect.y + ARMOUR_RECT_Y ;
-  if ( ( ! Me[0].armour_item.currently_held_in_hand ) && ( Me[0].armour_item.type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencer armour slot
+    //
+    TargetRect.x = InventoryRect.x + ARMOUR_RECT_X ;
+    TargetRect.y = InventoryRect.y + ARMOUR_RECT_Y ;
+    if ( ( ! Me[0].armour_item.currently_held_in_hand ) && ( Me[0].armour_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . armour_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . armour_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-
-  //--------------------
-  // Now we display the item in the influencer shield slot
-  //
-  TargetRect.x = InventoryRect.x + SHIELD_RECT_X ;
-  TargetRect.y = InventoryRect.y + SHIELD_RECT_Y ;
-  if ( ( ! Me [ 0 ] . shield_item . currently_held_in_hand ) && ( Me [ 0 ] . shield_item . type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencer shield slot
+    //
+    TargetRect.x = InventoryRect.x + SHIELD_RECT_X ;
+    TargetRect.y = InventoryRect.y + SHIELD_RECT_Y ;
+    if ( ( ! Me [ 0 ] . shield_item . currently_held_in_hand ) && ( Me [ 0 ] . shield_item . type != (-1) ) )
     {
-      //--------------------
-      // Not all shield have the same height, therefore we do a little safety
-      // correction here, so that the shield will always appear in the center
-      // of the shield slot
-      //
-      TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . inv_size . y ) ;
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	//--------------------
+	// Not all shield have the same height, therefore we do a little safety
+	// correction here, so that the shield will always appear in the center
+	// of the shield slot
+	//
+	TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . inv_size . y ) ;
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-  
-  //--------------------
-  // Now we display the item in the influencer special slot
-  //
-  TargetRect.x = InventoryRect.x + HELMET_RECT_X ;
-  TargetRect.y = InventoryRect.y + HELMET_RECT_Y ;
-  if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencer special slot
+    //
+    TargetRect.x = InventoryRect.x + HELMET_RECT_X ;
+    TargetRect.y = InventoryRect.y + HELMET_RECT_Y ;
+    if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . special_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . special_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-
-  //--------------------
-  // Now we display the item in the influencers aux1 slot
-  //
-  TargetRect.x = InventoryRect.x + AUX1_RECT_X ;
-  TargetRect.y = InventoryRect.y + AUX1_RECT_Y ;
-  if ( ( ! Me[0].aux1_item.currently_held_in_hand ) && ( Me[0].aux1_item.type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencers aux1 slot
+    //
+    TargetRect.x = InventoryRect.x + AUX1_RECT_X ;
+    TargetRect.y = InventoryRect.y + AUX1_RECT_Y ;
+    if ( ( ! Me[0].aux1_item.currently_held_in_hand ) && ( Me[0].aux1_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux1_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux1_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-
-  //--------------------
-  // Now we display the item in the influencers aux2 slot
-  //
-  TargetRect.x = InventoryRect.x + AUX2_RECT_X ;
-  TargetRect.y = InventoryRect.y + AUX2_RECT_Y ;
-  if ( ( ! Me[0].aux2_item.currently_held_in_hand ) && ( Me[0].aux2_item.type != (-1) ) )
+    
+    //--------------------
+    // Now we display the item in the influencers aux2 slot
+    //
+    TargetRect.x = InventoryRect.x + AUX2_RECT_X ;
+    TargetRect.y = InventoryRect.y + AUX2_RECT_Y ;
+    if ( ( ! Me[0].aux2_item.currently_held_in_hand ) && ( Me[0].aux2_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux2_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux2_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
-
-  //--------------------
-  // Now we display all the items the influencer is carrying with him
-  //
-  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY -1 ; SlotNum ++ )
+    
+    //--------------------
+    // Now we display all the items the influencer is carrying with him
+    //
+    for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY -1 ; SlotNum ++ )
     {
-      // In case the item does not exist at all, we need not do anything more...
-      if ( Me[0].Inventory[ SlotNum ].type == ( -1 ) ) 
+	// In case the item does not exist at all, we need not do anything more...
+	if ( Me[0].Inventory[ SlotNum ].type == ( -1 ) ) 
 	{
-	  // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
-	  continue;
+	    // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
+	    continue;
 	}
-
-      // In case the item is currently held in hand, we need not do anything more HERE ...
-      if ( Me[0].Inventory[ SlotNum ].currently_held_in_hand == TRUE )
+	
+	// In case the item is currently held in hand, we need not do anything more HERE ...
+	if ( Me[0].Inventory[ SlotNum ].currently_held_in_hand == TRUE )
 	{
-	  continue;
+	    continue;
 	}
-
-      for ( i = 0 ; i < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . y ; i++ )
+	
+	for ( i = 0 ; i < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . y ; i++ )
 	{
-	  for ( j = 0 ; j < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . x ; j++ )
+	    for ( j = 0 ; j < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . x ; j++ )
 	    {
-	      TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
-	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
-	      TargetRect.w = INVENTORY_SUBSQUARE_WIDTH ;
-	      TargetRect.h = INVENTORY_SUBSQUARE_WIDTH ;
-	      if ( ItemUsageRequirementsMet ( & ( Me [ 0 ] . Inventory [ SlotNum ] ) , FALSE ) )
-		draw_inventory_occupied_rectangle ( TargetRect , TRUE );
-	      else
-		draw_inventory_occupied_rectangle ( TargetRect , FALSE );
+		TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
+		TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
+		TargetRect.w = INVENTORY_SUBSQUARE_WIDTH ;
+		TargetRect.h = INVENTORY_SUBSQUARE_WIDTH ;
+		if ( ItemUsageRequirementsMet ( & ( Me [ 0 ] . Inventory [ SlotNum ] ) , FALSE ) )
+		    draw_inventory_occupied_rectangle ( TargetRect , TRUE );
+		else
+		    draw_inventory_occupied_rectangle ( TargetRect , FALSE );
 	    }
 	}
-
-      TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.y;
-      
-      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
-
+	
+	TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.x;
+	TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.y;
+	
+	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	
     }
 }; // void ShowInventoryScreen( void )
 
