@@ -208,7 +208,7 @@ EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void RotateColors (int, int);
 EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem (unsigned char *screen);
-EXTERN void Flimmern (void);
+EXTERN void Flimmern (int type);
 
 /* map.c */
 #undef EXTERN
@@ -277,6 +277,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #endif
 
 EXTERN void Init_SDL_Keyboard(void);
+EXTERN int getchar_raw (void);
 EXTERN int keyboard_update(void);
 EXTERN void ClearKbState (void);
 EXTERN int LeftPressed (void);
@@ -418,7 +419,7 @@ EXTERN void MakeUmbruch (void);
 EXTERN int FensterVoll (void);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
-EXTERN char *GetString (int);
+EXTERN char *GetString (int MaxLen, int echo);
 
 /* rahmen.c */
 #undef EXTERN
