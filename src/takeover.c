@@ -140,221 +140,224 @@ float EvaluatePosition ( int color , int row , int layer );
 void AdvancedEnemyTakeoverMovements (void);
 
 /*-----------------------------------------------------------------
- * @Desc: play takeover-game against a druid 
  *
- * @Ret: TRUE/FALSE:  user has won/lost
+ * This function manages the whole takeover game of Tux against 
+ * some bot.
+ *
+ * The return value is TRUE/FALSE depending on whether the game was
+ * finally won/lost.
  *
  *-----------------------------------------------------------------*/
 int
-Takeover (int enemynum)
+Takeover ( int enemynum )
 {
-  int row;
-  int FinishTakeover = FALSE;
-  static int RejectEnergy = 0;	/* your energy if you're rejected */
-  char *message;
-  int ClearanceIndex;
-  int Finished = FALSE;
-  int WasPressed = FALSE ;
-  int Displacement = 0 ;
-
-  //--------------------
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spent in the menu.
-  //
-  Activate_Conservative_Frame_Computation ();
-
-  //--------------------
-  // We set the UserRect to full again, no matter what other windows might
-  // be open right now...
-  //
-  User_Rect . x = 0 ;
-  User_Rect . y = 0 ;
-  User_Rect . w = 640 ;
-  User_Rect . h = 480 ;
-
-  //--------------------
-  // Maybe takeover graphics haven't been loaded yet.  Then we do this
-  // here now and for once.  Later calls will be ignored inside the function.
-  //
-  GetTakeoverGraphics ( ) ;
-
-  while (SpacePressed ()) ;  /* make sure space is release before proceed */
-
-  SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
-
-  DisplayBanner ( ) ;
-  Me [ 0 ] . status = MOBILE; /* the new status _after_ the takeover game */
-
-  //--------------------
-  // Now it is time to display the enemy of this whole takeover process...
-  //
-  while ( !Finished )
+    int row;
+    int FinishTakeover = FALSE;
+    static int RejectEnergy = 0;	// your energy if you're rejected 
+    char *message;
+    int ClearanceIndex;
+    int Finished = FALSE;
+    int WasPressed = FALSE ;
+    int Displacement = 0 ;
+    
+    //--------------------
+    // Prevent distortion of framerate by the delay coming from 
+    // the time spent in the menu.
+    //
+    Activate_Conservative_Frame_Computation ();
+    
+    //--------------------
+    // We set the UserRect to full again, no matter what other windows might
+    // be open right now...
+    //
+    User_Rect . x = 0 ;
+    User_Rect . y = 0 ;
+    User_Rect . w = 640 ;
+    User_Rect . h = 480 ;
+    
+    //--------------------
+    // Maybe takeover graphics haven't been loaded yet.  Then we do this
+    // here now and for once.  Later calls will be ignored inside the function.
+    //
+    GetTakeoverGraphics ( ) ;
+    
+    while (SpacePressed ()) ;  // make sure space is release before proceed 
+    
+    SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
+    
+    DisplayBanner ( ) ;
+    Me [ 0 ] . status = MOBILE; // the new status _after_ the takeover game 
+    
+    //--------------------
+    // Now it is time to display the enemy of this whole takeover process...
+    //
+    while ( !Finished )
     {
-      ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
-      our_SDL_flip_wrapper ( Screen );
-      
-      if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
+	our_SDL_flip_wrapper ( Screen );
+	
+	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	{
-	  MoveMenuPositionSound();
-	  Displacement += FontHeight ( GetCurrentFont () );
+	    MoveMenuPositionSound();
+	    Displacement += FontHeight ( GetCurrentFont () );
 	}
-      else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	{
-	  MoveMenuPositionSound();
-	  Displacement -= FontHeight ( GetCurrentFont () );
+	    MoveMenuPositionSound();
+	    Displacement -= FontHeight ( GetCurrentFont () );
 	}
-      else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed ) 
+	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed ) 
 	{
-	  Finished = TRUE;
+	    Finished = TRUE;
 	}
-      WasPressed = axis_is_active; 
-
-      if ( SpacePressed() && !axis_is_active ) Finished = TRUE ;
-
+	WasPressed = axis_is_active; 
+	
+	if ( SpacePressed() && !axis_is_active ) Finished = TRUE ;
+	
     }
-
-  while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
-
-
-  while (!FinishTakeover)
+    
+    while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
+    
+    
+    while (!FinishTakeover)
     {
-      //--------------------
-      // Init Color-column and Capsule-Number for each opponenet and your color 
-      //
-      for (row = 0; row < NUM_LINES; row++)
+	//--------------------
+	// Init Color-column and Capsule-Number for each opponenet and your color 
+	//
+	for (row = 0; row < NUM_LINES; row++)
 	{
-	  DisplayColumn[row] = (row % 2);
-	  CapsuleCountdown[GELB][0][row] = -1;
-	  CapsuleCountdown[VIOLETT][0][row] = -1;
+	    DisplayColumn[row] = (row % 2);
+	    CapsuleCountdown[GELB][0][row] = -1;
+	    CapsuleCountdown[VIOLETT][0][row] = -1;
 	} // for row 
-
-      YourColor = GELB;
-      OpponentColor = VIOLETT;
-
-      CapsuleCurRow[GELB] = 0;
-      CapsuleCurRow[VIOLETT] = 0;
-      
-      DroidNum = enemynum;
-      OpponentType = AllEnemys[enemynum].type;
-      // NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
-      NumCapsules[YOU] = 3 + Me [ 0 ] . hacking_skill ;
-      NumCapsules[ENEMY] = 4 + Druidmap [ OpponentType ] . class ;
-
-      InventPlayground ();
-
-      EvaluatePlayground ();
-
-      ShowPlayground ();
-      our_SDL_flip_wrapper (Screen);
-
-      ChooseColor ();
-
-      PlayGame ();
-
-      // evaluate the final score of the game and return it
-      if (InvincibleMode || (LeaderColor == YourColor))
+	
+	YourColor = GELB;
+	OpponentColor = VIOLETT;
+	
+	CapsuleCurRow[GELB] = 0;
+	CapsuleCurRow[VIOLETT] = 0;
+	
+	DroidNum = enemynum;
+	OpponentType = AllEnemys[enemynum].type;
+	// NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
+	NumCapsules[YOU] = 3 + Me [ 0 ] . hacking_skill ;
+	NumCapsules[ENEMY] = 4 + Druidmap [ OpponentType ] . class ;
+	
+	InventPlayground ();
+	
+	EvaluatePlayground ();
+	
+	ShowPlayground ();
+	our_SDL_flip_wrapper (Screen);
+	
+	ChooseColor ();
+	
+	PlayGame ();
+	
+	// evaluate the final score of the game and return it
+	if (InvincibleMode || (LeaderColor == YourColor))
 	{
-	  // SwitchBackgroundMusicTo (SILENCE);
-	  Takeover_Game_Won_Sound ();
-	  if ( Me [ 0 ] . type == DRUID001 )
+	    // SwitchBackgroundMusicTo (SILENCE);
+	    Takeover_Game_Won_Sound ();
+	    if ( Me [ 0 ] . type == DRUID001 )
 	    {
-	      RejectEnergy = Me [ 0 ] . energy;
-	      PreTakeEnergy = Me [ 0 ] . energy;
+		RejectEnergy = Me [ 0 ] . energy;
+		PreTakeEnergy = Me [ 0 ] . energy;
 	    }
-
-	  //--------------------
-	  // We allow to gain the current energy/full health that was still in the 
-	  // other droid, since all previous damage must be due to fighting damage,
-	  // and this is exactly the sort of damage can usually be cured in refreshes.
-	  //
-	  Me [ 0 ] . energy += AllEnemys [ enemynum ] . energy;
-	  Me [ 0 ] . health += Druidmap [ OpponentType ] . maxenergy;
-
-	  //--------------------
-	  // We provide some security agains too high energy/health values gained
-	  // by very rapid successions of successful takeover attempts
-	  //
-	  if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) 
-	    Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
-	  if ( Me [ 0 ] . health > Me [ 0 ] . maxenergy ) 
-	    Me [ 0 ] . health = Me [ 0 ] . maxenergy;
-
-	  //--------------------
-	  // We add the victims security clearance to our own list of 
-	  // availabe security clearances.
-	  //
-	  for ( ClearanceIndex = 0 ; ClearanceIndex < MAX_CLEARANCES ; ClearanceIndex ++ )
+	    
+	    //--------------------
+	    // We allow to gain the current energy/full health that was still in the 
+	    // other droid, since all previous damage must be due to fighting damage,
+	    // and this is exactly the sort of damage can usually be cured in refreshes.
+	    //
+	    Me [ 0 ] . energy += AllEnemys [ enemynum ] . energy;
+	    Me [ 0 ] . health += Druidmap [ OpponentType ] . maxenergy;
+	    
+	    //--------------------
+	    // We provide some security agains too high energy/health values gained
+	    // by very rapid successions of successful takeover attempts
+	    //
+	    if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) 
+		Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
+	    if ( Me [ 0 ] . health > Me [ 0 ] . maxenergy ) 
+		Me [ 0 ] . health = Me [ 0 ] . maxenergy;
+	    
+	    //--------------------
+	    // We add the victims security clearance to our own list of 
+	    // availabe security clearances.
+	    //
+	    for ( ClearanceIndex = 0 ; ClearanceIndex < MAX_CLEARANCES ; ClearanceIndex ++ )
 	    {
-	      if ( Me [ 0 ] . clearance_list [ ClearanceIndex ] == 0 )
+		if ( Me [ 0 ] . clearance_list [ ClearanceIndex ] == 0 )
 		{
-		  Me [ 0 ] . clearance_list [ ClearanceIndex ] = AllEnemys [ enemynum ] . type ;
-		  SetNewBigScreenMessage ( "Clearance obtained" );
-		  break;
+		    Me [ 0 ] . clearance_list [ ClearanceIndex ] = AllEnemys [ enemynum ] . type ;
+		    SetNewBigScreenMessage ( "Clearance obtained" );
+		    break;
 		}
 	    }
-	  
-	  Me [ 0 ] . type = AllEnemys [enemynum ] . type;
-	  Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
-	  Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
-	  if ( AllEnemys [ enemynum ] . on_death_drop_item_code != (-1) )
-	  {
-	      DropItemAt( AllEnemys [ enemynum ] . on_death_drop_item_code , AllEnemys [ enemynum ] . pos . x , 
-			  AllEnemys [ enemynum ] . pos . y , -1 , -1 , 2 , 1 );
-	  }  
-
-	  if ( LeaderColor != YourColor )	/* only won because of InvincibleMode */
-	    message = "You cheat";
-	  else				/* won the proper way */
-	    message = "Complete";
-
-	  FinishTakeover = TRUE;
-	}				/* LeaderColor == YourColor */
-      else if (LeaderColor == OpponentColor)
+	    
+	    Me [ 0 ] . type = AllEnemys [enemynum ] . type;
+	    Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
+	    Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
+	    if ( AllEnemys [ enemynum ] . on_death_drop_item_code != (-1) )
+	    {
+		DropItemAt( AllEnemys [ enemynum ] . on_death_drop_item_code , AllEnemys [ enemynum ] . pos . x , 
+			    AllEnemys [ enemynum ] . pos . y , -1 , -1 , 2 , 1 );
+	    }  
+	    
+	    if ( LeaderColor != YourColor )	// only won because of InvincibleMode 
+		message = "You cheat";
+	    else				// won the proper way 
+		message = "Complete";
+	    
+	    FinishTakeover = TRUE;
+	}				// LeaderColor == YourColor 
+	else if (LeaderColor == OpponentColor)
 	{
-	  Takeover_Game_Lost_Sound ();
-	  message = "Rejected";
-	  if ( Me [ 0 ] . energy > 5 ) Me [ 0 ] . energy = 5 ;
-	  FinishTakeover = TRUE;
+	    Takeover_Game_Lost_Sound ();
+	    message = "Rejected";
+	    Me [ 0 ] . energy *= 0.5 ;
+	    FinishTakeover = TRUE;
 	}			// if LeadColor == OpponentColor 
-      else
+	else
 	{
-	  Takeover_Game_Deadlock_Sound ();
-	  message = "Deadlock";
-	}			/* LeadColor == REMIS */
-
-      /* don't display enemy if we're finished */
-      if (FinishTakeover) 
+	    Takeover_Game_Deadlock_Sound ();
+	    message = "Deadlock";
+	}			// LeadColor == DRAW
+	
+	// don't display enemy if we're finished 
+	if (FinishTakeover) 
 	{
-	  if ( LeaderColor == YourColor )
+	    if ( LeaderColor == YourColor )
 	    {
-	      // AllEnemys[enemynum].Status = OUT;
-	      // AllEnemys[enemynum].energy = -1.0; 
-	      // AllEnemys [ enemynum ] . energy =  100.0; 
-	      AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
-	      AllEnemys [ enemynum ] . is_friendly = TRUE ;
-	      OpponentType = -1;	/* dont display enemy any more */
+		// AllEnemys[enemynum].Status = OUT;
+		// AllEnemys[enemynum].energy = -1.0; 
+		// AllEnemys [ enemynum ] . energy =  100.0; 
+		AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
+		AllEnemys [ enemynum ] . is_friendly = TRUE ;
+		OpponentType = -1;	/* dont display enemy any more */
 	    }
-	  else
+	    else
 	    {
-	      AllEnemys[enemynum].energy = Druidmap [ AllEnemys[enemynum].type ] . maxenergy ;
+		AllEnemys[enemynum].energy = Druidmap [ AllEnemys[enemynum].type ] . maxenergy ;
 	    }
 	}
-      
-      ShowPlayground ();
-      to_show_banner (message, NULL);
-      our_SDL_flip_wrapper (Screen);
-
-    }	/* while !FinishTakeover */
-
-  ClearGraphMem();
-
-  SwitchBackgroundMusicTo ( CurLevel -> Background_Song_Name );
-
-  if (LeaderColor == YourColor)
-    return TRUE;
-  else
-    return FALSE;
-
+	
+	ShowPlayground ();
+	to_show_banner (message, NULL);
+	our_SDL_flip_wrapper (Screen);
+	
+    }	// while !FinishTakeover 
+    
+    ClearGraphMem();
+    
+    SwitchBackgroundMusicTo ( CurLevel -> Background_Song_Name );
+    
+    if (LeaderColor == YourColor)
+	return TRUE;
+    else
+	return FALSE;
+    
 }; // int Takeover( int enemynum ) 
 
 
@@ -365,55 +368,55 @@ Takeover (int enemynum)
 void
 ChooseColor (void)
 {
-  int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
-  int ColorChosen = FALSE;
-  char count_text[80];
-  
-  Uint32 prev_count_tick, count_tick_len;
+    int countdown = 100;  // duration in 1/10 seconds given for color choosing 
+    int ColorChosen = FALSE;
+    char count_text[80];
+    
+    Uint32 prev_count_tick, count_tick_len;
+    
+    count_tick_len = 100; 	// countdown in 1/10 second steps 
 
-  count_tick_len = 100; 	/* countdown in 1/10 second steps */
+    prev_count_tick = SDL_GetTicks ();
 
-  prev_count_tick = SDL_GetTicks ();
-
-  while (!ColorChosen)
+    while (!ColorChosen)
     {
-      /* wait for next countdown tick */
-      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ); 
-
-      prev_count_tick += count_tick_len; /* set for next tick */
-      
-      if ( RightPressed () || MouseWheelDownPressed() )
+	// wait for next countdown tick 
+	while ( SDL_GetTicks() < prev_count_tick + count_tick_len ); 
+	
+	prev_count_tick += count_tick_len; // set for next tick 
+	
+	if ( RightPressed () || MouseWheelDownPressed() )
 	{
-	  YourColor = VIOLETT;
-	  OpponentColor = GELB;
+	    YourColor = VIOLETT;
+	    OpponentColor = GELB;
 	}
-      if (LeftPressed () || MouseWheelUpPressed() )
+	if (LeftPressed () || MouseWheelUpPressed() )
 	{
-	  YourColor = GELB;
-	  OpponentColor = VIOLETT;
+	    YourColor = GELB;
+	    OpponentColor = VIOLETT;
 	}
-
-      if ( SpacePressed() || axis_is_active )
+	
+	if ( SpacePressed() || axis_is_active )
 	{
+	    ColorChosen = TRUE;
+	    while ( SpacePressed() || axis_is_active ) ;
+	}
+	
+	countdown--; // Count down 
+	sprintf (count_text, "Color-%d", countdown);
+	
+	ShowPlayground ();
+	to_show_banner (count_text, NULL);
+	our_SDL_flip_wrapper (Screen);
+	
+	if (countdown == 0)
 	  ColorChosen = TRUE;
-	  while ( SpacePressed() || axis_is_active ) ;
-	}
-
-      countdown--;		/* Count down */
-      sprintf (count_text, "Color-%d", countdown);
-
-      ShowPlayground ();
-      to_show_banner (count_text, NULL);
-      our_SDL_flip_wrapper (Screen);
-
-      if (countdown == 0)
-	ColorChosen = TRUE;
-
-    } /* while(!ColorChosen) */
-
+      
+    } // while(!ColorChosen) 
+  
   return;
-
-} /* ChooseColor() */
+  
+}; // void ChooseColor ( void ) 
 
 
 /*-----------------------------------------------------------------
