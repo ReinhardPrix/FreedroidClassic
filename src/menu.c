@@ -52,6 +52,8 @@ void LevelEditor(void);
 bool LevelEditMenu (void);
 void DeleteWaypoint (level *level, int num); 
 void CreateWaypoint (level *level, int BlockX, int BlockY);
+void GraphicsSound_Options_Menu (void);
+void On_Screen_Display_Options_Menu (void);
 
 #define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
@@ -110,6 +112,7 @@ InitiateMenu (bool with_droids)
 } // void InitiateMenu (bool with_droids)
 
 
+// ----------------------------------------------------------------------
 void 
 QuitGameMenu (void)
 {
@@ -126,290 +129,6 @@ QuitGameMenu (void)
 
 
 
-
-/*@Function============================================================
-@Desc: This function provides a convenient cheat menu, so that any 
-       tester does not have to play all through the game again and again
-       to see if a bug in a certain position has been removed or not.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-extern int CurrentlyCPressed; 	/* the key that brought as in here */
-				/* we need to make sure it is set as released */
-				/* before we leave ...*/
-void
-Cheatmenu (void)
-{
-  char *input;		/* string input from user */
-  int Weiter;
-  int LNum, X, Y, num;
-  int i, l;
-  int x0, y0, line;
-  Waypoint WpList;      /* pointer on current waypoint-list  */
-  BFont_Info *font;
-  char *status;
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-
-  font =  FPS_Display_BFont;
-
-
-  SetCurrentFont (font);  /* not the ideal one, but there's currently */
-				/* no other it seems.. */
-  x0 = 50;
-  y0 = 20;
-  line = 0;
-
-  Weiter = FALSE;
-  while (!Weiter)
-    {
-      ClearGraphMem ();
-      printf_SDL (ne_screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
-		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
-      printf_SDL (ne_screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
-      printf_SDL (ne_screen, -1, -1, " l. robot list of current level\n");
-      printf_SDL (ne_screen, -1, -1, " g. complete robot list\n");
-      printf_SDL (ne_screen, -1, -1, " d. destroy robots on current level\n");
-      printf_SDL (ne_screen, -1, -1, " t. Teleportation\n");
-      printf_SDL (ne_screen, -1, -1, " r. change to new robot type\n");
-      printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
-		  InvincibleMode ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " e. set energy\n");
-      printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
-		  HideInvisibleMap ? "ON\n" : "OFF\n" );
-      printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
-		  show_all_droids ? "ON\n" : "OFF\n" );
-      printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
-      printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
-		  sound_on ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
-      printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
-      printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
-		  stop_influencer ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
-
-      switch (getchar_raw ())
-	{
-	case 'f':
-	  stop_influencer = !stop_influencer;
-	  break;
-
-	case 'z':
-	  ClearGraphMem();
-	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",
-		      CurrentCombatScaleFactor); 
-	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
-	  input = GetString (40, 2);
-	  sscanf (input, "%f", &CurrentCombatScaleFactor);
-	  free (input);
-	  SetCombatScaleTo (CurrentCombatScaleFactor);
-	  break;
-
-	case 'a': /* armageddon */
-	  Weiter = 1;
-	  Armageddon ();
-	  break;
-
-	case 'l': /* robot list of this deck */
-	  l = 0; /* line counter for enemy output */
-	  for (i = 0; i < NumEnemys; i++)
-	    {
-	      if (AllEnemys[i].levelnum == CurLevel->levelnum) 
-		{
-		  if (l && !(l%20)) 
-		    {
-		      printf_SDL (ne_screen, -1, -1, " --- MORE --- \n");
-		      if( getchar_raw () == 'q')
-			break;
-		    }
-		  if (!(l % 20) )  
-		    {
-		      ClearGraphMem ();
-		      printf_SDL (ne_screen, x0, y0,
-				   " NR.   ID  X    Y   ENERGY   Status\n");
-		      printf_SDL (ne_screen, -1, -1,
-				  "---------------------------------------------\n");
-		    }
-		  
-		  l ++;
-		  if (AllEnemys[i].status == OUT) 
-		    status = "OUT";
-		  else if (AllEnemys[i].status == TERMINATED)
-		    status = "DEAD";
-		  else
-		    status = "ACTIVE";
-
-		  printf_SDL (ne_screen, -1, -1,
-			      "%d.   %s   %d   %d   %d    %s.\n", i,
-			      Druidmap[AllEnemys[i].type].druidname,
-			      (int)AllEnemys[i].pos.x,
-			      (int)AllEnemys[i].pos.y,
-			      (int)AllEnemys[i].energy,
-			      status);
-		} /* if (enemy on current level)  */
-	    } /* for (i<NumEnemys) */
-
-	  printf_SDL (ne_screen, -1, -1," --- END --- \n");
-	  getchar_raw ();
-	  break;
-
-	case 'g': /* complete robot list of this ship */
-	  for (i = 0; i < NumEnemys ; i++)
-	    {
-	      if ( AllEnemys[i].type == (-1) ) continue;
-
-	      if (i && !(i%13)) 
-		{
-		  printf_SDL (ne_screen, -1, -1, " --- MORE --- ('q' to quit)\n");
-		  if (getchar_raw () == 'q')
-		    break;
-		}
-	      if ( !(i % 13) )
-		{
-		  ClearGraphMem ();
-		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
-		  printf_SDL (ne_screen, -1, -1, "------------------------------\n");
-		}
-	      
-	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %g\n",
-			  i, AllEnemys[i].levelnum,
-			  Druidmap[AllEnemys[i].type].druidname,
-			  (int)AllEnemys[i].energy,
-			  AllEnemys[i].speed.x);
-	    } /* for (i<NumEnemys) */
-
-	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
-	  getchar_raw ();
-	  break;
-
-
-	case 'd': /* destroy all robots on this level, haha */
-	  for (i = 0; i < NumEnemys; i++)
-	    {
-	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
-		AllEnemys[i].energy = -100;
-	    }
-	  printf_SDL (ne_screen, -1, -1, "All robots on this deck killed!\n");
-	  getchar_raw ();
-	  break;
-
-
-	case 't': /* Teleportation */
-	  ClearGraphMem ();
-	  printf_SDL (ne_screen, x0, y0, "Enter Level, X, Y: ");
-	  input = GetString (40, 2);
-	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
-	  free (input);
-	  Teleport (LNum, X, Y);
-	  break;
-
-	case 'r': /* change to new robot type */
-	  ClearGraphMem ();
-	  printf_SDL (ne_screen, x0, y0, "Type number of new robot: ");
-	  input = GetString (40, 2);
-	  for (i = 0; i < Number_Of_Droid_Types ; i++)
-	    if (!strcmp (Druidmap[i].druidname, input))
-	      break;
-
-	  if ( i == Number_Of_Droid_Types )
-	    {
-	      printf_SDL (ne_screen, x0, y0+20,
-			  "Unrecognized robot-type: %s", input);
-	      getchar_raw ();
-	      ClearGraphMem();
-	    }
-	  else
-	    {
-	      Me.type = i;
-	      Me.energy = Druidmap[Me.type].maxenergy;
-	      Me.health = Me.energy;
-	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
-	      getchar_raw ();
-	    }
-	  free (input);
-	  break;
-
-	case 'i': /* togge Invincible mode */
-	  InvincibleMode = !InvincibleMode;
-	  break;
-
-	case 'e': /* complete heal */
-	  ClearGraphMem();
-	  printf_SDL (ne_screen, x0, y0, "Current energy: %f\n", Me.energy);
-	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
-	  input = GetString (40, 2);
-	  sscanf (input, "%d", &num);
-	  free (input);
-	  Me.energy = (float) num;
-	  if (Me.energy > Me.health) Me.health = Me.energy;
-	  break;
-
-	case 'h': /* toggle hide invisible map */
-	  HideInvisibleMap = !HideInvisibleMap;
-	  break;
-
-	case 'n': /* toggle display of all droids */
-	  show_all_droids = !show_all_droids;
-	  break;
-
-	case 's': /* toggle sound on/off */
-	  sound_on = !sound_on;
-	  break;
-
-	case 'm': /* Show deck map in Concept view */
-	  printf_SDL (ne_screen, -1, -1, "\nLevelnum: ");
-	  input = GetString (40, 2);
-	  sscanf (input, "%d", &LNum);
-	  free (input);
-	  ShowDeckMap (curShip.AllLevels[LNum]);
-	  getchar_raw ();
-	  break;
-
-	case 'w':  /* print waypoint info of current level */
-	  WpList = CurLevel->AllWaypoints;
-	  for (i=0; i<CurLevel->num_waypoints; i++)
-	    {
-	      if (i && !(i%20))
-		{
-		  printf_SDL (ne_screen, -1, -1, " ---- MORE -----\n");
-		  if (getchar_raw () == 'q')
-		    break;
-		}
-	      if ( !(i%20) )
-		{
-		  ClearGraphMem ();
-		  printf_SDL (ne_screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
-		  printf_SDL (ne_screen, -1, -1, "------------------------------------\n");
-		}
-	      printf_SDL (ne_screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
-			  i, WpList[i].x, WpList[i].y,
-			  WpList[i].connections[0],
-			  WpList[i].connections[1],
-			  WpList[i].connections[2],
-			  WpList[i].connections[3]);
-
-	    } /* for (all waypoints) */
-	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
-	  getchar_raw ();
-	  break;
-
-	case ' ':
-	case 'q':
-	  Weiter = 1;
-	  break;
-	} /* switch (getchar_raw()) */
-    } /* while (!Weiter) */
-
-  ClearGraphMem ();
-
-  keyboard_update (); /* treat all pending keyboard events */
-
-  return;
-} /* Cheatmenu() */
-
-
 /*@Function============================================================
 @Desc: This function provides a the big escape menu from where you can
        get into different submenus.
@@ -422,24 +141,20 @@ EscapeMenu (void)
   enum
     { 
       BACK2GAME=1, 
-      FULL_WINDOW,
-      SET_THEME,
-      OPTIONS,
-      LEVEL_EDITOR,
-      HIGHSCORES,
-      CREDITS,
-      QUIT
+      POS_GRAPHICS_SOUND_OPTIONS,
+      POS_ON_SCREEN_DISPLAYS,
+      POS_LEGACY_OPTIONS,
+      POS_LEVEL_EDITOR,
+      POS_HIGHSCORES,
+      POS_CREDITS,
+      POS_QUIT
     };
   
   bool key=FALSE;
   bool finished = FALSE;
-  bool reload_theme = FALSE;
-  bool toggle_window = FALSE;
 
+  int pos=0;
   int MenuPosition=1;
-  char theme_string[40];
-  char window_string[40];
-  int new_tnum = AllThemes.cur_tnum;
 
   InitiateMenu(TRUE);
   
@@ -447,23 +162,20 @@ EscapeMenu (void)
     {
       key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-    
+
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
-      sprintf (theme_string, "Graphics theme: %s", AllThemes.theme_name[new_tnum]);
 
-      strcpy (window_string, "Combat window: ");
-      if (GameConfig.FullUserRect) strcat (window_string, "Full");
-      else strcat (window_string, "Classic");
+      pos = 0;
 
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y, "Back to Game");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight, window_string);
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight, theme_string);
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+3*fheight,"Further Options");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +4*fheight, "Level Editor");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +5*fheight, "Highscores");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +6*fheight, "Credits");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +7*fheight, "Quit Game");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Back to Game");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"Graphics & Sound" );
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"On-Screen Displays" );
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"Legacy Options");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Level Editor");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Highscores");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y +(pos++)*fheight, "Credits");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y +(pos++)*fheight, "Quit Game");
 
       SDL_Flip( ne_screen );
 
@@ -471,32 +183,258 @@ EscapeMenu (void)
 	{
 	  usleep (50);
 
+	  if (EscapePressedR() )
+	    {
+	      finished = TRUE;
+	      key = TRUE;
+	    }
+	  
+
+	  if (FirePressedR())
+	    {
+	      MenuItemSelectedSound();
+	      key = TRUE;
+	      switch (MenuPosition) 
+		{
+		case BACK2GAME:
+		  finished = TRUE;
+		  break;
+		case POS_GRAPHICS_SOUND_OPTIONS:
+		  GraphicsSound_Options_Menu();
+		  break;
+		case POS_ON_SCREEN_DISPLAYS:
+		  On_Screen_Display_Options_Menu();
+		  break;
+		case POS_LEGACY_OPTIONS:
+		  Options_Menu();
+		  break;
+		case POS_LEVEL_EDITOR:
+		  LevelEditor();
+		  finished = TRUE;
+		  break;
+		case POS_HIGHSCORES:
+		  ShowHighscores();
+		  break;
+		case POS_CREDITS:
+		  Credits_Menu();
+		  break;
+		case POS_QUIT:
+		  QuitGameMenu ();
+		  break;
+		default: 
+		  break;
+		}
+	    }
+
+	  if (UpPressedR () || WheelUpPressed() ) 
+	    {
+	      key = TRUE;
+	      if (MenuPosition > 1) MenuPosition--;
+	      else MenuPosition = POS_QUIT;
+	      MoveMenuPositionSound();
+	    }
+	  if (DownPressedR() || WheelDownPressed() ) 
+	    {
+	      key = TRUE;
+	      if ( MenuPosition < POS_QUIT ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+      
+	    }
+
+
+	} // while !key
+
+
+    } // while !finished
+
+  ClearGraphMem();
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  BannerIsDestroyed=TRUE;
+  Me.status=MOBILE;
+
+  SDL_ShowCursor (SDL_ENABLE);  // reactivate mouse-cursor for game
+
+  return;
+
+} // EscapeMenu
+
+
+
+
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
+Options_Menu (void)
+{
+  int MenuPosition=1;
+  bool finished = FALSE;
+  bool key = FALSE;
+  int pos;
+  bool reload_theme = FALSE;
+  bool toggle_window = FALSE;
+  char theme_string[40];
+  char window_string[40];
+  int new_tnum = AllThemes.cur_tnum;
+
+enum
+  { 
+    POS_RESET=1,
+    POS_FULL_WINDOW,
+    POS_SET_THEME,
+    POS_DROID_TALK,
+    POS_SHOW_DECALS,
+    POS_MAP_VISIBLE,
+    POS_TAKEOVER_IS_ACTIVATE,
+    POS_BACK 
+  };
+
+
+  while (!finished)
+    {
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+      key = FALSE;
+
+      sprintf (theme_string, "Graphics theme: %s", AllThemes.theme_name[new_tnum]);
+
+      strcpy (window_string, "Combat window: ");
+      if (GameConfig.FullUserRect) strcat (window_string, "Full");
+      else strcat (window_string, "Classic");
+
+
+
+      PutInfluence( FIRST_MENU_ITEM_POS_X,
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
+      pos = 0;
+
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
+		 "Set to Strictly Classic");
+
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, window_string);
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, theme_string);
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Show Decals : %s", GameConfig.ShowDecals ? "ON" : "OFF");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "All Map Visible: %s", GameConfig.AllMapVisible ? "ON" : "OFF");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
+		   "Back");
+
+      SDL_Flip( ne_screen );
+
+      while (!key)
+	{
+
+	  usleep(50);
+
 	  if ( EscapePressedR () )
 	    {
 	      finished = TRUE;
 	      key = TRUE;
-	      if (MenuPosition == SET_THEME)
+	      if (MenuPosition == POS_SET_THEME)
 		reload_theme = TRUE;
 	    }
 
-	  if (LeftPressedR() )
+	  if (FirePressedR())
 	    {
-	      switch (MenuPosition)
+	      MenuItemSelectedSound();
+	      key = TRUE;
+	      switch (MenuPosition) 
 		{
-		case SET_THEME:
-		  key = TRUE;
-		  if (!MouseLeftPressed() )MoveMenuPositionSound();
+		case POS_RESET:
+		  GameConfig.Droid_Talk = FALSE;
+		  GameConfig.ShowDecals = FALSE;
+		  GameConfig.TakeoverActivates = TRUE;
+		  GameConfig.AllMapVisible = TRUE;
+		  GameConfig.FullUserRect = FALSE;
+		  Copy_Rect (Classic_User_Rect, User_Rect);
+		  new_tnum = 0;
+		  reload_theme = TRUE;
+		  InitiateMenu (TRUE);
+		  SDL_Flip (ne_screen);
+		  break;
 
+
+		case POS_FULL_WINDOW:
+		  toggle_window = TRUE;
+		  break;
+		case POS_SET_THEME:
+		  if (!MouseLeftPressed() )MoveMenuPositionSound();
 		  new_tnum--;
 		  if (new_tnum < 0) 
 		    new_tnum = AllThemes.num_themes - 1;
 		  reload_theme = TRUE;
 		  break;
 
-		case FULL_WINDOW:
+		case POS_DROID_TALK:
+		  GameConfig.Droid_Talk = !GameConfig.Droid_Talk;
+		  break;
+		case POS_SHOW_DECALS:
+		  GameConfig.ShowDecals = !GameConfig.ShowDecals;
+		  InitiateMenu (TRUE);
+		  break;
+		case POS_MAP_VISIBLE:
+		  GameConfig.AllMapVisible = !GameConfig.AllMapVisible;
+		  InitiateMenu (TRUE);
+		  break;
+		case POS_TAKEOVER_IS_ACTIVATE:
+		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
+		  break;
+
+		case POS_BACK:
+		  finished = TRUE;
+		  break;
+		default: 
+		  break;
+		} 
+	    } // if SpacePressed
+
+	  if (UpPressedR() || WheelUpPressed()) 
+	    {
+	      if ( MenuPosition > 1 ) MenuPosition--;
+	      else MenuPosition = POS_BACK;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	      ReleaseKey (SDLK_RIGHT); // clear any r-l movement
+	      ReleaseKey (SDLK_LEFT);
+	    }
+	  if (DownPressedR() || WheelDownPressed()) 
+	    {
+	      if ( MenuPosition < POS_BACK ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	      ReleaseKey (SDLK_RIGHT); // clear any r-l movement
+	      ReleaseKey (SDLK_LEFT);
+	    }
+
+
+	  if (LeftPressedR() )
+	    {
+	      switch (MenuPosition)
+		{
+		case POS_SET_THEME:
 		  key = TRUE;
-		  toggle_window = TRUE;
-		  if (!MouseLeftPressed() ) MenuItemSelectedSound();
+		  if (!MouseLeftPressed() ) MoveMenuPositionSound();
+
+		  new_tnum--;
+		  if (new_tnum < 0) 
+		    new_tnum = AllThemes.num_themes - 1;
+		  reload_theme = TRUE;
 		  break;
 
 		default:
@@ -507,7 +445,7 @@ EscapeMenu (void)
 	    {
 	      switch (MenuPosition)
 		{
-		case SET_THEME:
+		case POS_SET_THEME:
 		  key = TRUE;
 		  MenuItemSelectedSound();
 
@@ -517,82 +455,12 @@ EscapeMenu (void)
 		  reload_theme = TRUE;
 		  break;
 
-		case FULL_WINDOW:
-		  key = TRUE;
-		  toggle_window = TRUE;
-		  break;
-
 		default:
 		  break;
 		}
 	    }
-	  if (FirePressedR())
-	    {
-	      key = TRUE;
-	      MenuItemSelectedSound();
 
-	      switch (MenuPosition) 
-		{
-		case BACK2GAME:
-		  finished = TRUE;
-		  break;
-		case FULL_WINDOW:
-		  toggle_window = TRUE;
-		  break;
-		case SET_THEME:
-		  key = TRUE;
-		  if (!MouseLeftPressed() )MoveMenuPositionSound();
 
-		  new_tnum--;
-		  if (new_tnum < 0) 
-		    new_tnum = AllThemes.num_themes - 1;
-		  reload_theme = TRUE;
-		  break;
-
-		case OPTIONS:
-		  Options_Menu();
-		  break;
-
-		case LEVEL_EDITOR:
-		  LevelEditor();
-		  finished = TRUE;
-		  break;
-
-		case HIGHSCORES:
-		  ShowHighscores();
-		  break;
-
-		case CREDITS:
-		  Credits_Menu();
-		  break;
-		case QUIT:
-		  QuitGameMenu ();
-		  break;
-		default: 
-		  break;
-		} // switch 
-	    } // if SpacePressed()
-	  if (UpPressedR () || WheelUpPressed() ) 
-	    {
-	      key = TRUE;
-	      if (MenuPosition == SET_THEME)
-		reload_theme = TRUE;
-
-	      if (MenuPosition > 1) MenuPosition--;
-	      else MenuPosition = QUIT;
-	      MoveMenuPositionSound();
-	    }
-	  if (DownPressedR() || WheelDownPressed() ) 
-	    {
-	      key = TRUE;
-	      if (MenuPosition == SET_THEME)
-		reload_theme = TRUE;
-
-	      if ( MenuPosition < QUIT ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-      
-	    }
 	} // while !key
 
 
@@ -620,19 +488,14 @@ EscapeMenu (void)
 	}
 
 
+
     } // while !finished
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
-
-  SDL_ShowCursor (SDL_ENABLE);  // reactivate mouse-cursor for game
 
   return;
 
-} // EscapeMenu
+} // Options_Menu
+
+
 
 /*@Function============================================================
 @Desc: This function provides a the options menu.  This menu is a 
@@ -891,125 +754,6 @@ enum
   return;
 
 }; // On_Screen_Display_Options_Menu
-
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Options_Menu (void)
-{
-  int MenuPosition=1;
-  bool finished = FALSE;
-  bool key = FALSE;
-  int pos;
-
-enum
-  { 
-
-    POS_GRAPHICS_SOUND_OPTIONS = 1,
-    POS_ON_SCREEN_DISPLAYS,
-    POS_DROID_TALK,
-    POS_SHOW_DECALS,
-    POS_TAKEOVER_IS_ACTIVATE,
-    BACK 
-};
-
-  while (!finished)
-    {
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-      key = FALSE;
-
-
-
-      PutInfluence( FIRST_MENU_ITEM_POS_X,
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
-      pos = 0;
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Graphics & Sound" );
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "On-Screen Displays" );
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Show Decals : %s", GameConfig.ShowDecals ? "ON" : "OFF");
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
-		   "Back");
-
-      SDL_Flip( ne_screen );
-
-      while (!key)
-	{
-
-	  usleep(50);
-
-	  if ( EscapePressedR() )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-
-	  if (FirePressedR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition) 
-		{
-		case POS_DROID_TALK:
-		  GameConfig.Droid_Talk = !GameConfig.Droid_Talk;
-		  break;
-		case POS_SHOW_DECALS:
-		  GameConfig.ShowDecals = !GameConfig.ShowDecals;
-		  break;
-		case POS_TAKEOVER_IS_ACTIVATE:
-		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
-		  break;
-		case POS_GRAPHICS_SOUND_OPTIONS:
-		  GraphicsSound_Options_Menu();
-		  break;
-		case POS_ON_SCREEN_DISPLAYS:
-		  On_Screen_Display_Options_Menu();
-		  break;
-		case BACK:
-		  finished = TRUE;
-		  break;
-		default: 
-		  break;
-		} 
-	    } // if SpacePressed
-
-	  if (UpPressedR() || WheelUpPressed()) 
-	    {
-	      if ( MenuPosition > 1 ) MenuPosition--;
-	      else MenuPosition = BACK;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (DownPressedR() || WheelDownPressed()) 
-	    {
-	      if ( MenuPosition < BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	} // while !key
-
-    } // while !finished
-
-  return;
-
-} // Options_Menu
 
 
 /*@Function============================================================
@@ -1819,6 +1563,283 @@ CreateWaypoint (level *Lev, int x, int y)
 
   return;
 } // CreateWaypoint()
+
+
+
+// ----------------------------------------------------------------------
+// Cheat menu
+// ----------------------------------------------------------------------
+void
+Cheatmenu (void)
+{
+  char *input;		/* string input from user */
+  int Weiter;
+  int LNum, X, Y, num;
+  int i, l;
+  int x0, y0, line;
+  Waypoint WpList;      /* pointer on current waypoint-list  */
+  BFont_Info *font;
+  char *status;
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+
+  font =  FPS_Display_BFont;
+
+
+  SetCurrentFont (font);  /* not the ideal one, but there's currently */
+				/* no other it seems.. */
+  x0 = 50;
+  y0 = 20;
+  line = 0;
+
+  Weiter = FALSE;
+  while (!Weiter)
+    {
+      ClearGraphMem ();
+      printf_SDL (ne_screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
+		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
+      printf_SDL (ne_screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
+      printf_SDL (ne_screen, -1, -1, " l. robot list of current level\n");
+      printf_SDL (ne_screen, -1, -1, " g. complete robot list\n");
+      printf_SDL (ne_screen, -1, -1, " d. destroy robots on current level\n");
+      printf_SDL (ne_screen, -1, -1, " t. Teleportation\n");
+      printf_SDL (ne_screen, -1, -1, " r. change to new robot type\n");
+      printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
+		  InvincibleMode ? "ON\n" : "OFF\n");
+      printf_SDL (ne_screen, -1, -1, " e. set energy\n");
+      printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
+		  HideInvisibleMap ? "ON\n" : "OFF\n" );
+      printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
+		  show_all_droids ? "ON\n" : "OFF\n" );
+      printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
+      printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
+		  sound_on ? "ON\n" : "OFF\n");
+      printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
+      printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
+      printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
+		  stop_influencer ? "ON\n" : "OFF\n");
+      printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
+
+      switch (getchar_raw ())
+	{
+	case 'f':
+	  stop_influencer = !stop_influencer;
+	  break;
+
+	case 'z':
+	  ClearGraphMem();
+	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",
+		      CurrentCombatScaleFactor); 
+	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%f", &CurrentCombatScaleFactor);
+	  free (input);
+	  SetCombatScaleTo (CurrentCombatScaleFactor);
+	  break;
+
+	case 'a': /* armageddon */
+	  Weiter = 1;
+	  Armageddon ();
+	  break;
+
+	case 'l': /* robot list of this deck */
+	  l = 0; /* line counter for enemy output */
+	  for (i = 0; i < NumEnemys; i++)
+	    {
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum) 
+		{
+		  if (l && !(l%20)) 
+		    {
+		      printf_SDL (ne_screen, -1, -1, " --- MORE --- \n");
+		      if( getchar_raw () == 'q')
+			break;
+		    }
+		  if (!(l % 20) )  
+		    {
+		      ClearGraphMem ();
+		      printf_SDL (ne_screen, x0, y0,
+				   " NR.   ID  X    Y   ENERGY   Status\n");
+		      printf_SDL (ne_screen, -1, -1,
+				  "---------------------------------------------\n");
+		    }
+		  
+		  l ++;
+		  if (AllEnemys[i].status == OUT) 
+		    status = "OUT";
+		  else if (AllEnemys[i].status == TERMINATED)
+		    status = "DEAD";
+		  else
+		    status = "ACTIVE";
+
+		  printf_SDL (ne_screen, -1, -1,
+			      "%d.   %s   %d   %d   %d    %s.\n", i,
+			      Druidmap[AllEnemys[i].type].druidname,
+			      (int)AllEnemys[i].pos.x,
+			      (int)AllEnemys[i].pos.y,
+			      (int)AllEnemys[i].energy,
+			      status);
+		} /* if (enemy on current level)  */
+	    } /* for (i<NumEnemys) */
+
+	  printf_SDL (ne_screen, -1, -1," --- END --- \n");
+	  getchar_raw ();
+	  break;
+
+	case 'g': /* complete robot list of this ship */
+	  for (i = 0; i < NumEnemys ; i++)
+	    {
+	      if ( AllEnemys[i].type == (-1) ) continue;
+
+	      if (i && !(i%13)) 
+		{
+		  printf_SDL (ne_screen, -1, -1, " --- MORE --- ('q' to quit)\n");
+		  if (getchar_raw () == 'q')
+		    break;
+		}
+	      if ( !(i % 13) )
+		{
+		  ClearGraphMem ();
+		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
+		  printf_SDL (ne_screen, -1, -1, "------------------------------\n");
+		}
+	      
+	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %g\n",
+			  i, AllEnemys[i].levelnum,
+			  Druidmap[AllEnemys[i].type].druidname,
+			  (int)AllEnemys[i].energy,
+			  AllEnemys[i].speed.x);
+	    } /* for (i<NumEnemys) */
+
+	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
+	  getchar_raw ();
+	  break;
+
+
+	case 'd': /* destroy all robots on this level, haha */
+	  for (i = 0; i < NumEnemys; i++)
+	    {
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
+		AllEnemys[i].energy = -100;
+	    }
+	  printf_SDL (ne_screen, -1, -1, "All robots on this deck killed!\n");
+	  getchar_raw ();
+	  break;
+
+
+	case 't': /* Teleportation */
+	  ClearGraphMem ();
+	  printf_SDL (ne_screen, x0, y0, "Enter Level, X, Y: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
+	  free (input);
+	  Teleport (LNum, X, Y);
+	  break;
+
+	case 'r': /* change to new robot type */
+	  ClearGraphMem ();
+	  printf_SDL (ne_screen, x0, y0, "Type number of new robot: ");
+	  input = GetString (40, 2);
+	  for (i = 0; i < Number_Of_Droid_Types ; i++)
+	    if (!strcmp (Druidmap[i].druidname, input))
+	      break;
+
+	  if ( i == Number_Of_Droid_Types )
+	    {
+	      printf_SDL (ne_screen, x0, y0+20,
+			  "Unrecognized robot-type: %s", input);
+	      getchar_raw ();
+	      ClearGraphMem();
+	    }
+	  else
+	    {
+	      Me.type = i;
+	      Me.energy = Druidmap[Me.type].maxenergy;
+	      Me.health = Me.energy;
+	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
+	      getchar_raw ();
+	    }
+	  free (input);
+	  break;
+
+	case 'i': /* togge Invincible mode */
+	  InvincibleMode = !InvincibleMode;
+	  break;
+
+	case 'e': /* complete heal */
+	  ClearGraphMem();
+	  printf_SDL (ne_screen, x0, y0, "Current energy: %f\n", Me.energy);
+	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%d", &num);
+	  free (input);
+	  Me.energy = (float) num;
+	  if (Me.energy > Me.health) Me.health = Me.energy;
+	  break;
+
+	case 'h': /* toggle hide invisible map */
+	  HideInvisibleMap = !HideInvisibleMap;
+	  break;
+
+	case 'n': /* toggle display of all droids */
+	  show_all_droids = !show_all_droids;
+	  break;
+
+	case 's': /* toggle sound on/off */
+	  sound_on = !sound_on;
+	  break;
+
+	case 'm': /* Show deck map in Concept view */
+	  printf_SDL (ne_screen, -1, -1, "\nLevelnum: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%d", &LNum);
+	  free (input);
+	  ShowDeckMap (curShip.AllLevels[LNum]);
+	  getchar_raw ();
+	  break;
+
+	case 'w':  /* print waypoint info of current level */
+	  WpList = CurLevel->AllWaypoints;
+	  for (i=0; i<CurLevel->num_waypoints; i++)
+	    {
+	      if (i && !(i%20))
+		{
+		  printf_SDL (ne_screen, -1, -1, " ---- MORE -----\n");
+		  if (getchar_raw () == 'q')
+		    break;
+		}
+	      if ( !(i%20) )
+		{
+		  ClearGraphMem ();
+		  printf_SDL (ne_screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
+		  printf_SDL (ne_screen, -1, -1, "------------------------------------\n");
+		}
+	      printf_SDL (ne_screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
+			  i, WpList[i].x, WpList[i].y,
+			  WpList[i].connections[0],
+			  WpList[i].connections[1],
+			  WpList[i].connections[2],
+			  WpList[i].connections[3]);
+
+	    } /* for (all waypoints) */
+	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
+	  getchar_raw ();
+	  break;
+
+	case ' ':
+	case 'q':
+	  Weiter = 1;
+	  break;
+	} /* switch (getchar_raw()) */
+    } /* while (!Weiter) */
+
+  ClearGraphMem ();
+
+  keyboard_update (); /* treat all pending keyboard events */
+
+  return;
+} /* Cheatmenu() */
 
 
 #undef _menu_c

@@ -487,7 +487,7 @@ ShowDeckMap (Level deck)
 
   SetCombatScaleTo( 0.25 );
 
-  Assemble_Combat_Picture( ONLY_SHOW_MAP );
+  Assemble_Combat_Picture( ONLY_SHOW_MAP|SHOW_FULL_MAP );
 
   SDL_Flip (ne_screen);
 

@@ -111,7 +111,7 @@ enum
 
 // The flags for AssembleCombatWindow are:
 enum
-{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 };
+{ ONLY_SHOW_MAP = 0x01 , DO_SCREEN_UPDATE = 0x02 , SHOW_FULL_MAP = 0x04};
 
 // symbolic Alert-names
 enum _alertnames {

@@ -908,7 +908,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.UseFullscreen = FALSE;
   GameConfig.TakeoverActivates = FALSE;  // not the purist's choice but more practical ;)
   GameConfig.ShowDecals = FALSE;
-  GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
+  GameConfig.AllMapVisible = FALSE;    // classic setting: map always visible
 
   // now load saved options from the config-file
   LoadGameConfig ();

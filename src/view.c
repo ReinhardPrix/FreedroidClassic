@@ -58,12 +58,14 @@ SDL_Color Flash_Dark  = {230, 230, 230};
 
        Several FLAGS can be used to control its behaviour:
 
-       (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
+       (*) ONLY_SHOW_MAP = 0x01:  This flag indicates not do draw any
            game elements but the map blocks
 
-       (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
+       (*) DO_SCREEgN_UPDATE = 0x02: This flag indicates for the function
            to also cause an SDL_Update of the portion of the screen
            that has been modified
+
+       (*) SHOW_FULL_MAP = 0x04: show complete map, disregard visibility
 
  @Ret: none
 -----------------------------------------------------------------
@@ -82,22 +84,38 @@ Assemble_Combat_Picture (int mask)
   finepoint pos, vect;
   float len;
   bool vis = TRUE;
+  grob_point upleft, downright;
+
 
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
-  // blitting starts at -5 tiles outside the ship and ends +5 tiles outside the other end of the ship.  
-  //That should do it.
+  
 
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  for (line = -5; line < CurLevel->ylen + 5; line++)
+  if ( !GameConfig.AllMapVisible )
+    Fill_Rect (User_Rect, Black);
+
+  if ( (mask & SHOW_FULL_MAP) != 0 )
     {
-      for (col = -5; col < CurLevel->xlen + 5; col++)
+      upleft.x = -5; upleft.y = -5;
+      downright.x = CurLevel->xlen + 5; downright.y = CurLevel->ylen + 5;
+    }
+  else
+    {
+      upleft.x = Me.pos.x - 5; upleft.y = Me.pos.y - 5;
+      downright.x = Me.pos.x + 7; downright.y = Me.pos.y + 5;
+    }
+    
+
+  for (line = (int)upleft.y; line < (int)downright.y; line++)
+    {
+      for (col = (int)upleft.x; col < (int)downright.x; col++)
 	{
 	  vis = TRUE;
-	  if ( !GameConfig.AllMapVisible )
+	  if ( !GameConfig.AllMapVisible && ( (mask & SHOW_FULL_MAP) == 0x0) )
 	    {
 	      pos.x = col;
 	      pos.y = line;
@@ -112,12 +130,10 @@ Assemble_Combat_Picture (int mask)
 		  pos.y += vect.y;
 		}
 	      if ( !IsVisible (&pos) )
-		vis = FALSE;
+		continue;
 	    }
-	  if (!vis)
-	    MapBrick = INVISIBLE;
-	  else
-	    MapBrick = GetMapBrick( CurLevel, col , line );
+	  
+	  MapBrick = GetMapBrick( CurLevel, col , line );
 	  TargetRectangle.x = USER_FENSTER_CENTER_X + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
 	  TargetRectangle.y = USER_FENSTER_CENTER_Y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
 	  SDL_BlitSurface( MapBlockSurfacePointer[CurLevel->color][MapBrick], NULL, ne_screen, &TargetRectangle);
@@ -181,13 +197,16 @@ Assemble_Combat_Picture (int mask)
 
       // make sure Ashes are displayed _before_ droids, so that they are _under_ them!
       for (i = 0; i < NumEnemys ; i++)
-	if ( (AllEnemys[i].levelnum != CurLevel->levelnum) || (AllEnemys[i].status == OUT) )
-	  continue;
-	else if (AllEnemys[i].status == TERMINATED)
+	if (AllEnemys[i].status == TERMINATED)
 	  {
 	    if (IsVisible (&(AllEnemys[i].pos) ) )
-		PutAshes (AllEnemys[i].pos.x, AllEnemys[i].pos.y);
+	      PutAshes (AllEnemys[i].pos.x, AllEnemys[i].pos.y);
 	  }
+
+      for (i = 0; i < NumEnemys ; i++)
+	if ( (AllEnemys[i].levelnum != CurLevel->levelnum) || (AllEnemys[i].status == OUT) ||
+	     (AllEnemys[i].status == TERMINATED) )
+	  continue;
 	else
 	  PutEnemy (i , -1 , -1 );
 
