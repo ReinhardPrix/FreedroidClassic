@@ -286,22 +286,8 @@ InitPictures (void)
 void
 SwapScreen (void)
 {
-  int x;
-  int y;
 
-  Lock_SDL_Screen();
-
-  for (y = 0; y < SCREENHOEHE; y++)
-    {
-      for (x = 0; x< SCREENBREITE; x++)
-	{
-	  putpixel ( screen, x, y, *(InternalScreen + SCREENBREITE * y + x) );
-	}
-    }
-
-  Unlock_SDL_Screen();
-
-  Update_SDL_Screen();
+  memcpy( Outline320x200, InternalScreen, SCREENBREITE * SCREENHOEHE );
 
 } /* SwapScreen() */
 
@@ -336,27 +322,10 @@ CopyScreenToInternalScreen(void)
 void
 ClearVGAScreen (void)
 {
-  char *LocalBlackLinePointer;
-  int y;
-  int x;
 
-  LocalBlackLinePointer = malloc (SCREENBREITE + 10);
-  memset (LocalBlackLinePointer, 0, SCREENBREITE);
+  memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
 
-  Lock_SDL_Screen();
-
-  for (y = 0; y < SCREENHOEHE; y++)
-    {
-      for (x=0; x<SCREENBREITE; x++) 
-	{
-	  putpixel ( screen , x , y , 0 );
-	}
-    }
-
-  Unlock_SDL_Screen();
-
-  free (LocalBlackLinePointer);
-}				// void ClearVGAScreen(void)
+} // void ClearVGAScreen(void)
 
 unsigned char *MemSearch (unsigned char *SStart,
 			  unsigned char *SEnd, unsigned char *SString);

@@ -95,10 +95,6 @@ PrepareScaledSurface(void)
 
 	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
 	  Terminate(ERR);
-
-	  /* 
-	     putpixel ( ScaledSurface , x     , y     , SourcePixel );
-	  */
 	  break;
 
 	case 2:
@@ -124,31 +120,12 @@ PrepareScaledSurface(void)
 	      p+=SCREENBREITE*SCALE_FACTOR*bpp;
 	      pSecond+=SCREENBREITE*SCALE_FACTOR*bpp;
 	    }
-
-	  /*
-	    putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
-	    putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
-	    putpixel ( ScaledSurface , x*2   , y*2+1 , SourcePixel );
-	    putpixel ( ScaledSurface , x*2+1 , y*2+1 , SourcePixel );
-	  */
 	  break;
 
 	case 3:
 
 	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
 	  Terminate(ERR);
-
-	  /*
-	    putpixel ( ScaledSurface , x*3     , y*3   , SourcePixel );
-	    putpixel ( ScaledSurface , x*3+1   , y*3   , SourcePixel );
-	    putpixel ( ScaledSurface , x*3     , y*3+1 , SourcePixel );
-	    putpixel ( ScaledSurface , x*3+1   , y*3+1 , SourcePixel );
-	    putpixel ( ScaledSurface , x*3  +2 , y*3   , SourcePixel );
-	    putpixel ( ScaledSurface , x*3  +2 , y*3+1 , SourcePixel );
-	    putpixel ( ScaledSurface , x*3  +1 , y*3+2 , SourcePixel );
-	    putpixel ( ScaledSurface , x*3     , y*3+2 , SourcePixel );
-	    putpixel ( ScaledSurface , x*3  +2 , y*3+2 , SourcePixel );
-	  */
 	  break;
 
 	default:
@@ -159,54 +136,26 @@ PrepareScaledSurface(void)
 	  break;
 	}
 
-      /*
-
-       *p = pixel;
-
-       */
       break;
       
     case 2:
+
       printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
       Terminate(ERR);
-      /*
-
-       *(Uint16 *)p = pixel;
-
-      */
       break;
       
     case 3:
+
       printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
       Terminate(ERR);
-
-      /*
-	if(SDL_BYTEORDER == SDL_BIG_ENDIAN) 
-	{
-	p[0] = (pixel >> 16) & 0xff;
-	p[1] = (pixel >> 8) & 0xff;
-	p[2] = pixel & 0xff;
-	} 
-	else 
-	{
-	p[0] = pixel & 0xff;
-	p[1] = (pixel >> 8) & 0xff;
-	p[2] = (pixel >> 16) & 0xff;
-	}
-      */
-
       break;
       
     case 4:
+
       printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
       Terminate(ERR);
-
-      /*
-
-        *(Uint32 *)p = pixel;
-
-      */
       break;
+
     }
 
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Memory has been copied...");
@@ -222,63 +171,6 @@ PrepareScaledSurface(void)
 
 } // void PrepareScaledSurface(void)
 
-
-void 
-PrepareScaledSurfaceNo(void)
-{
-  int x;
-  int y;
-  byte SourcePixel;
-
-#define BYTES_PER_PIXEL
-
-  Lock_SDL_Screen();
-  SDL_LockSurface( ScaledSurface );
-
-
-
-
-
-  for ( y = 0; y < SCREENHOEHE; y++ )
-    {
-      for ( x = 0; x< SCREENBREITE; x++ )
-	{
-	  SourcePixel=getpixel(screen, x, y);
-	  
-	  switch ( SCALE_FACTOR ) 
-	    {
-	    case 1:
-	      putpixel ( ScaledSurface , x     , y     , SourcePixel );
-	      break;
-	    case 2:
-	      putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
-	      putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
-	      putpixel ( ScaledSurface , x*2   , y*2+1 , SourcePixel );
-	      putpixel ( ScaledSurface , x*2+1 , y*2+1 , SourcePixel );
-	      break;
-	    case 3:
-	      putpixel ( ScaledSurface , x*3     , y*3   , SourcePixel );
-	      putpixel ( ScaledSurface , x*3+1   , y*3   , SourcePixel );
-	      putpixel ( ScaledSurface , x*3     , y*3+1 , SourcePixel );
-	      putpixel ( ScaledSurface , x*3+1   , y*3+1 , SourcePixel );
-	      putpixel ( ScaledSurface , x*3  +2 , y*3   , SourcePixel );
-	      putpixel ( ScaledSurface , x*3  +2 , y*3+1 , SourcePixel );
-	      putpixel ( ScaledSurface , x*3  +1 , y*3+2 , SourcePixel );
-	      putpixel ( ScaledSurface , x*3     , y*3+2 , SourcePixel );
-	      putpixel ( ScaledSurface , x*3  +2 , y*3+2 , SourcePixel );
-	      break;
-	    default:
-	      printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
-	      break;
-	    }
-	}
-    }
-
-  Unlock_SDL_Screen();
-  SDL_UnlockSurface( ScaledSurface );
-
-  Update_SDL_Screen();
-}
 
 void 
 Lock_SDL_Screen(void)
@@ -549,6 +441,9 @@ int vga_setmode(int mode)
 
   flags = SDL_SWSURFACE | SDL_HWPALETTE ;
   if (use_fullscreen) flags |= SDL_FULLSCREEN;
+
+  SDL_WM_SetCaption("FreeDroid", "");
+  SDL_WM_SetIcon(SDL_LoadBMP("../graphics/paraicon.bmp"), NULL);
 
   /* Open the display device */
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN|SDL_HWPALETTE );
