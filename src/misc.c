@@ -85,7 +85,7 @@ message *Queue = NULL;
 void
 gotoxy (int x, int y)
 {
-
+  return;
 };
 
 void
@@ -223,16 +223,16 @@ ltoa (long n, char s[], int Dummy)
 void
 Armageddon (void)
 {
+  char key =' ';
   int i;
-  char ATaste = ' ';
 
-  gl_printf (-1, -1, "\nKill all droids on ship (y/n) ?");
-  while ((ATaste != 'y') && (ATaste != 'n'))
-    ATaste = getchar ();
-  if (ATaste == 'n')
+  printf ("\nKill all droids on ship (y/n) ? \n");
+  while ((key != 'y') && (key != 'n'))
+    key = getchar_raw ();
+  if (key == 'n')
     return;
   else
-    for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    for (i = 0; i < NumEnemys; i++)
       {
 	Feindesliste[i].energy = 0;
 	Feindesliste[i].Status = OUT;
@@ -299,217 +299,276 @@ Teleport (int LNum, int X, int Y)
 
 } /* Teleport() */
 
+
 /* **********************************************************************
  *  Diese Funktion stellt ein praktisches Cheatmenu zur Verf"ugung
- *  Es sind geplant:
- *		* Robotvernichtung
- *		* Teleportationen nach Belieben
- *		* Belibige Typenauswahl
- *		* Ausgabe einer Gesamtrobotliste
+ *
  ***********************************************************************/
+extern int CurrentlyCPressed; 	/* the key that brought as in here */
+				/* we need to make sure it is set as released */
+				/* before we leave ...*/
 void
 Cheatmenu (void)
 {
-  char CTaste = ' ';
-  char NewRoboType[80];		/* name of new influencer robot-type, i.e. "123" */
-  int Weiter = 0;
-  int LNum, X, Y, i;
-  int X0 = 20, Y0 = 5;		/* startpos for gl_- text writing */
-  Waypoint WpList;           /* pointer on current waypoint-list  */
+  char *input;		/* string input from user */
+  const char clearscr[] =
+    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+  int Weiter;
+  int LNum, X, Y;
+  int i, l;
+  Waypoint WpList;      /* pointer on current waypoint-list  */
 
-  
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  // return to normal keyboard operation
-  keyboard_close ();
+  /* 
+   * this cheat-menu currently uses the text-window for output
+   * therefore, if we're in fullscreen-mode: change to window-mode
+   */
+  if (fullscreen_on)
+    SDL_WM_ToggleFullScreen (ScaledSurface);
 
+  Weiter = FALSE;
   while (!Weiter)
     {
-      vga_clear ();
-      // SDL gl_setfont (8, 8, gl_font8x8);
-      // SDL gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
-      gl_setfontcolors (0, vga_white ());
-
-      gl_printf (X0, Y0, "Current position: Level=%d, X=%d, Y=%d\n\n",
-		 CurLevel->levelnum, (int)GrobX, (int)GrobY);
-      gl_printf (-1, -1, " a. Armageddon (alle Robots sprengen)\n");
-      gl_printf (-1, -1, " l. Robotliste von einem Deck\n");
-      gl_printf (-1, -1, " g. Gesamtrobotliste\n");
-      gl_printf (-1, -1, " r. Robotvernichtung dieses Deck\n");
-      gl_printf (-1, -1, " t. Teleportation\n");
-      gl_printf (-1, -1, " w. Wechsle Robo-typ\n\n");
-      gl_printf (-1, -1, " i. Invinciblemode: %s\n",
+      printf (clearscr);
+      printf ("\n\nCurrent position: Level=%d, X=%d, Y=%d\n\n",
+	      CurLevel->levelnum, (int)GrobX, (int)GrobY);
+      printf (" a. Armageddon (alle Robots sprengen)\n");
+      printf (" l. robot list of current level\n");
+      printf (" g. complete robot list\n");
+      printf (" d. destroy robots on current level\n");
+      printf (" t. Teleportation\n");
+      printf (" r. change to new robot type\n");
+      printf (" i. Invinciblemode: %s\n",
 		 InvincibleMode ? "ON" : "OFF");
-      gl_printf (-1, -1, " v. Volle Energie\n");
-      gl_printf (-1, -1, " b. Blinkenergie\n");
-      gl_printf (-1, -1, " c. Conceptview: %s\n", Conceptview ? "ON" : "OFF");
-      gl_printf (-1, -1, " m. Map von Deck xy\n");
-      gl_printf (-1, -1, " s. Sound: %s\n", sound_on ? "ON" : "OFF");
-      gl_printf (-1, -1, " W. Print current waypoints\n");
-      gl_printf (-1, -1, "\n q. RESUME game\n");
+      printf (" f. full energy\n");
+      printf (" b. blink-energy\n");
+      printf (" c. Conceptview: %s\n", Conceptview ? "ON" : "OFF");
+      printf (" h. Hide invisible map parts: %s\n",
+	      HideInvisibleMap ? "ON" : "OFF" );
+      printf (" m. Map of Deck xy\n");
+      printf (" s. Sound: %s\n", sound_on ? "ON" : "OFF");
+      printf (" x. Fullscreen : %s\n", fullscreen_on ? "ON" : "OFF");
+      printf (" w. Print current waypoints\n");
+      printf ("\n q. RESUME game\n");
 
-      CTaste = getchar ();
-      switch (CTaste)
+      printf ("\n[ Input in Freedroid window please! ]");
+      fflush (stdout);
+
+      switch (getchar_raw ())
 	{
-	case 'a':
+	case 'a': /* armageddon */
 	  Weiter = 1;
 	  Armageddon ();
 	  break;
-	case 'l':
-	  vga_clear ();
-	  gl_printf (X0, Y0, "NR.\tID\tX\tY\tENERGY.\n");
-	  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+
+	case 'l': /* robot list of this deck */
+	  l = 0; /* line counter for enemy output */
+	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
+	      if (Feindesliste[i].levelnum == CurLevel->levelnum) 
 		{
-		  if (Feindesliste[i].type >= ALLDRUIDTYPES)
+		  if (l && !(l%20)) 
 		    {
-		      printf("\n\n WARNING!  Illegal Druidtype encoutered!  Terminating...");
-		      printf("\n               The details are: Type=%d.\n\n", Feindesliste[i].type );
-		      Terminate(ERR);
+		      printf ("\n --- MORE --- \n");
+		      if( getchar_raw () == 'q')
+			break;
 		    }
-		  gl_printf (-1, -1, "%d.\t%s\t%f\t%f\t%f.\n", i,
-			     Druidmap[Feindesliste[i].type].druidname,
-			     Feindesliste[i].pos.x, Feindesliste[i].pos.y,
-			     Feindesliste[i].energy);
-		}
-	    }
-	  getchar ();
+		  if (!(l % 20) )  
+		    {
+		      printf (clearscr);
+		      printf ("\n\n NR.\tID\tX\tY\tENERGY.\n");
+		      printf ("---------------------------------------------\n");
+		    }
+		  
+		  l ++;
+		  printf ("%d.\t%s\t%d\t%d\t%d.\n", i,
+			  Druidmap[Feindesliste[i].type].druidname,
+			  Fein2Grob (Feindesliste[i].pos.x),
+			  Fein2Grob (Feindesliste[i].pos.y),
+			  (int)Feindesliste[i].energy);
+		} /* if (enemy on current level)  */
+	    } /* for (i<NumEnemys) */
+
+	  printf (" --- END --- \n");
+	  getchar_raw ();
 	  break;
-	case 'r':
-	  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+
+	case 'g': /* complete robot list of this ship */
+	  for (i = 0; i < NumEnemys; i++)
+	    {
+	      if (i && !(i%20)) 
+		{
+		  printf (" --- MORE --- \n");
+		  if( getchar_raw () == 'q')
+		    break;
+		}
+	      if ( !(i % 20) )
+		{
+		  printf (clearscr);
+		  printf ("\n\nNr.\tLev.\tID\tEnergy\n");
+		  printf ("------------------------------\n");
+		}
+	      
+	      printf ("%d\t%d\t%s\t%d\n",
+		      i, Feindesliste[i].levelnum,
+		      Druidmap[Feindesliste[i].type].druidname,
+		      (int)Feindesliste[i].energy);
+	    } /* for (i<NumEnemys) */
+
+	  printf (" --- END --- \n");
+	  getchar_raw ();
+	  break;
+
+
+	case 'd': /* destroy all robots on this level */
+	  for (i = 0; i < NumEnemys; i++)
 	    {
 	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
 		Feindesliste[i].energy = 0;
 	    }
-	  gl_printf (-1, -1, "All robots on this deck killed!");
-	  getchar ();
+	  printf ("\n\nAll robots on this deck killed! \n");
+	  getchar_raw ();
 	  break;
 
-	case 'g':
-	  vga_clear ();
-	  gl_printf (X0, Y0, "Nr.\tLev.\tID\tEnergy\n");
-	  for (i = 0; i < NumEnemys; i++)
-	    {
-	      gl_printf (-1, -1, "%d\t%d\t%s\t%d\n",
-			 i, Feindesliste[i].levelnum,
-			 Druidmap[Feindesliste[i].type].druidname,
-			 Feindesliste[i].energy);
-	      if ((i % 22) == 0 && i > 0)
-		{
-		  gl_printf (-1, -1, " --- MORE --- \n");
-		  getchar ();
-		  vga_clear ();
-		  gl_printf (X0, Y0, "Nr.\tLev.\tID\tEnergy\n");
-		}
-	    }
-	  break;
 
-	case 't':
-	  gl_printf (-1, -1, "\n Enter Levelnummer, X-Pos, Y-Pos: ");
-	  scanf ("%d, %d, %d", &LNum, &X, &Y);
-	  getchar ();		// remove the cr from input
-	  vga_clear ();
+	case 't': /* Teleportation */
+	  printf ("\n Enter Levelnummer, X-Pos, Y-Pos: ");
+	  input = GetString (40, 1);
+	  sscanf (input, "\n%d, %d, %d", &LNum, &X, &Y);
+	  free (input);
 	  Teleport (LNum, X, Y);
-	  gl_printf (1, 1, "This is your position on level %d.\n", LNum);
-	  gl_printf (-1, -1, "Press key to continue");
-	  getchar ();
+	  printf ("\nThis is your position on level %d.\n", LNum);
+	  printf ("\nPress key to continue \n");
+	  getchar_raw ();
 	  break;
 
-	case 'w':
-	  gl_printf (-1, -1, "\nTypennummer ihres neuen robos: ");
-	  scanf ("%s", NewRoboType);
-	  getchar ();		// remove cr from input
+	case 'r': /* change to new robot type */
+	  printf ("\nType number of new robot: ");
+	  input = GetString (40, 1);
 	  for (i = 0; i < ALLDRUIDTYPES; i++)
-	    {
-	      if (!strcmp (Druidmap[i].druidname, NewRoboType))
-		break;
-	    }
+	    if (!strcmp (Druidmap[i].druidname, input))
+	      break;
+
 	  if (i == ALLDRUIDTYPES)
 	    {
-	      gl_printf (-1, -1, "\nUnrecognized robot-type: %s\n",
-			 NewRoboType);
-	      getchar ();
+	      printf ("\nUnrecognized robot-type: %s\n", input);
+	      getchar_raw ();
 	    }
 	  else
 	    {
 	      Me.type = i;
 	      Me.energy = Druidmap[Me.type].maxenergy;
 	      Me.health = Me.energy;
-	      gl_printf (-1, -1, "\nYou are now a %s. Have fun!\n",
-			 NewRoboType);
-	      getchar ();
+	      printf ("\nYou are now a %s. Have fun!\n", input);
+	      getchar_raw ();
 	      RedrawInfluenceNumber ();
 	    }
+	  free (input);
 	  break;
 
-	case 'i':
+	case 'i': /* togge Invincible mode */
 	  InvincibleMode = !InvincibleMode;
 	  break;
-	case 'v':
+
+	case 'f': /* complete heal */
 	  Me.energy = Druidmap[Me.type].maxenergy;
 	  Me.health = Me.energy;
-	  gl_printf (-1, -1, "\nSie sind wieder gesund!");
-	  getchar ();
+	  printf ("\nSie sind wieder gesund! \n");
+	  getchar_raw ();
 	  break;
-	case 'b':
+
+	case 'b': /* minimal energy */
 	  Me.energy = 1;
-	  gl_printf (-1, -1, "\nSie sind jetzt ziemlich schwach!");
-	  getchar ();
+	  printf ("\nSie sind jetzt ziemlich schwach! \n");
+	  getchar_raw ();
 	  break;
-	case 'c':
+
+	case 'c': /* toggle concept view */
 	  Conceptview = !Conceptview;
 	  break;
-	case 's':
-	  Weiter = 1;
+	  
+	case 'h': /* toggle hide invisible map */
+	  HideInvisibleMap = !HideInvisibleMap;
+	  break;
+
+	case 's': /* toggle sound on/off */
 	  sound_on = !sound_on;
 	  break;
-	case 'm':
-	  gl_printf (-1, -1, "\nLevelnum:");
-	  scanf ("%d", &LNum);
-	  getchar ();
-	  /* this function works in raw-kb mode, so we switch again */
-	  keyboard_init ();
+
+	case 'm': /* Show deck map in Concept view */
+	  printf ("\nLevelnum: ");
+	  input = GetString (40, 1);
+	  sscanf (input, "%d", &LNum);
+	  free (input);
 	  ShowDeckMap (curShip.AllLevels[LNum]);
-	  keyboard_close ();
+	  getchar_raw ();
+	  break;
+
+	case 'x': /* toggle fullscreen - mode */
+	  fullscreen_on = !fullscreen_on;
 	  break;
 	  
-	case 'W':  /* print waypoint info of current level */
-	  vga_clear();
+	case 'w':  /* print waypoint info of current level */
 	  WpList = CurLevel->AllWaypoints;
-	  gl_printf (X0, Y0, "Nr.   X   Y      C1 C2 C3 C4  \n");
 	  for (i=0; i<MAXWAYPOINTS && WpList[i].x; i++)
 	    {
-	      gl_printf (-1, -1, "%2d %2d %2d     %2d %2d %2d %2d\n",
-			 i, WpList[i].x, WpList[i].y,
-			 WpList[i].connections[0],
-			 WpList[i].connections[1],
-			 WpList[i].connections[2],
-			 WpList[i].connections[3]);
-	    } /* for (waypoints) */
-	  getchar();
+	      if (i && !(i%20))
+		{
+		  printf (" ---- MORE -----\n");
+		  if (getchar_raw () == 'q')
+		    break;
+		}
+	      if ( !(i%20) )
+		{
+		  printf (clearscr);
+		  printf ("\n\nNr.   X   Y      C1  C2  C3  C4 \n");
+		  printf ("------------------------------------\n");
+		}
+	      printf ("%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
+		      i, WpList[i].x, WpList[i].y,
+		      WpList[i].connections[0],
+		      WpList[i].connections[1],
+		      WpList[i].connections[2],
+		      WpList[i].connections[3]);
 
+	    } /* for (all waypoints) */
+	  printf (" --- END ---\n");
+	  getchar_raw ();
 	  break;
 
 	case ' ':
 	case 'q':
 	  Weiter = 1;
 	  break;
-	}
-    }
-  ClearGraphMem (RealScreen);
-  DisplayRahmen (RealScreen);
-  InitBars = TRUE;
+	} /* switch (getchar_raw()) */
+    } /* while (!Weiter) */
 
-  vga_clear ();
-  keyboard_init (); /* return to raw keyboard mode */
+  InitBars = TRUE;
+  
+  keyboard_update (); /* treat all pending keyboard events */
+  /* 
+   * when changing windows etc, sometimes a key-release event gets 
+   * lost, so we have to make sure that CPressed is no longer set
+   * or we stay here for ever...
+   */
+  CurrentlyCPressed = FALSE;
+
+  /* clear terminal (if it's not a terminal: tant pis) */
+  printf (clearscr);
+  printf ("Back in the game!\n");
+
+  /* toggle back to fullscreen, if that's where we came from */
+  if (fullscreen_on)
+    SDL_WM_ToggleFullScreen (ScaledSurface);
 
   return;
 } /* Cheatmenu() */
 
-
+/* -----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
 void
 OptionsMenu (void)
 {
@@ -1098,12 +1157,10 @@ my_abs (int wert)
 void
 ShowDebugInfos (void)
 {
-  vga_clear ();
-  gl_printf (20, 5, "\nMe.energy: %d", Me.energy);
-  gl_printf (-1, -1, "\nMe.pos: %d %d", Me.pos.x, Me.pos.y);
-  keyboard_close ();
-  getchar ();
-  keyboard_init ();
+  printf ("\n\n\n\n\n\n\n");
+  printf ("Me.energy: %f \n", Me.energy);
+  printf ("Me.pos: %f %f \n", Me.pos.x, Me.pos.y);
+  getchar_raw ();
   return;
 }
 
