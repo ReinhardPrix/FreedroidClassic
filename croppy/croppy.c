@@ -600,7 +600,7 @@ write_offset_file ( )
        ( input_surface -> h == 240 ) )
     {
       default_center_x = 99 ;
-      default_center_y = 162 ;
+      default_center_y = 190 ;
       DebugPrintf ( 0 , "\nImage size 200x240 (typical smaller tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
@@ -608,8 +608,8 @@ write_offset_file ( )
        ( input_surface -> h == 480 ) )
     {
       default_center_x = 199 ;
-      default_center_y = 323 ;
-      DebugPrintf ( 0 , "\nImage size 200x240 (typical larger tux part rendering).  Using %d/%d default origin." ,
+      default_center_y = 381 ;
+      DebugPrintf ( 0 , "\nImage size 400x480 (typical larger tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
 
