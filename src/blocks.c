@@ -445,27 +445,11 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.6  1993/08/29 23:37:44  prix
- * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
- * Sat Jul 24 07:55:19 1993: Kontrollwarten eingefuehrt
- * Sat Jul 24 08:02:37 1993: Anzeige der isolierten Digits eingefuehrt
- * Sat Jul 24 14:01:20 1993: GetEnemyBox hinzugefuegt
- * Sat Jul 24 15:27:03 1993: die isolierten Enemybilder werden jetzt zur Konstrolle gezeigt
- * Sat Jul 24 16:38:51 1993: Korrekturm, da im Bild zwischen Phasen ein Pixel abstand ist
- * Sun Jul 25 09:10:04 1993: Steicher fuer Digitpointer erhoehet
- * Sun Jul 25 09:11:26 1993: Speicher fuer Enemypointer erhoeht
- * Sun Jul 25 15:28:37 1993: getch entfern
- * Sun Jul 25 15:43:46 1993: Memorygroessen erhoeht
- * Wed Jul 28 10:30:04 1993: einlesen der neuen Mapblocks
- * Fri Jul 30 11:44:23 1993: v_tuere nun 6 phasig !: 6 Bloecke einlesen
- * Fri Jul 30 13:20:44 1993: 6 phases for h-doors
- * Sat Jul 31 18:21:53 1993: nicht mehr als ENEMYPHASES Bilder isolieren nach Enemypointer
- * Wed Aug 04 13:30:01 1993: removed MEGATUERE-block read from GetMapBlocks()
- * Wed Aug 04 13:41:01 1993: include of map.h
- * Wed Aug 04 13:41:59 1993: removed incl. of map.h again
- * Wed Aug 11 09:34:35 1993: getch entfernt
- * Sat Aug 21 19:31:41 1993: neue Blockreihenfolge in GetMapBlocks beachten
- * Sat Aug 21 19:42:55 1993: 4 refresh-phases
+ * Revision 1.7  1994/06/19 15:59:08  prix
+ * Mon May 23 16:32:14 1994: IsolateBlock hat jetzt screen als Parameter 1
+ * Thu Jun 02 17:48:21 1994: Bullet-Bullet-Collisions in Conceptview
+ * Tue Jun 14 10:26:39 1994: ShowBlocks transfered to junk.c
+ * Thu Jun 16 06:47:46 1994: SmallBlock optimized
  *
  * Revision 1.6  1993/08/29  23:37:44  prix
  * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
