@@ -866,7 +866,8 @@ typedef struct
   point refreshes[MAX_REFRESHES_ON_LEVEL];
   point consumers[MAX_CONSUMERS_ON_LEVEL];
   point teleporters[MAX_TELEPORTERS_ON_LEVEL];
-  point doors[MAX_DOORS_ON_LEVEL];
+  // point doors[MAX_DOORS_ON_LEVEL];
+  int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
   map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;

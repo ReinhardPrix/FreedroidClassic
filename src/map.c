@@ -588,6 +588,16 @@ generate_wallobstacles_from_level_map ( int level_num )
   int x, y;
   level* loadlevel = curShip . AllLevels [ level_num ] ;
   int obstacle_counter = 2 ;
+  int i;
+
+  //--------------------
+  // First we must erase all obstacle information, that might still be
+  // lurking around in the uninitialized arrays...
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      loadlevel -> obstacle_list [ obstacle_counter ] . type = ( -1 ) ;
+    }
 
   //--------------------
   // Now we try to make obstacles out of the former 'wall' information,
@@ -1468,17 +1478,19 @@ LoadShip (char *filename)
       decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
 
       //--------------------
+      // We generate obstacles out of the current map info...
+      //
+      generate_wallobstacles_from_level_map ( i );
+
+      //--------------------
       // The level structure contains an array with the locations of all
       // doors that might have to be opened or closed during the game.  This
       // list is prepared in advance, so that we don't have to search for doors
       // on all of the map during program runtime.
       //
-      GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
-
-      //--------------------
-      // We generate obstacles out of the current map info...
+      // It requires, that the obstacles have been read in already.
       //
-      generate_wallobstacles_from_level_map ( i );
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
 
       //--------------------
       // We attach each obstacle to a floor tile, just so that we can sort
@@ -2552,35 +2564,110 @@ GetAllAnimatedMapTiles ( Level Lev )
   int curcons = 0;
   int curtele = 0;
   char brick;
+  int obstacle_index;
 
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
+  xlen = Lev -> xlen;
+  ylen = Lev -> ylen;
 
   //--------------------
   // At first we must clear out all the junk that might
   // still be in these arrays...
   //
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
-    Lev->doors[i].x = Lev->doors[i].y = 0;
+    Lev -> door_obstacle_indices [ i ] = ( -1 ) ;
+
+  // DebugPrintf ( 0 , "\nPretest for level %d." , Lev -> levelnum );
+  // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
+  // {
+  // DebugPrintf ( 0 , " %d " , Lev -> door_obstacle_indices [ i ] ) ;
+  // }
+
   for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
     Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
   for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
     Lev->consumers[i].x = Lev->consumers[i].y = 0;
-  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
+  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
 
   //--------------------
-  // now find the doors 
+  // New method:  proceed through the obstacles of this level
+  // to find out where the doors are...
+  //
+  curdoor = 0;
+  for ( obstacle_index = 0 ; obstacle_index < MAX_OBSTACLES_ON_MAP ; obstacle_index ++ )
+    {
+      //--------------------
+      // Maybe we're done with the obstacles now...
+      //
+      if ( Lev -> obstacle_list [ obstacle_index ] . type == ( -1 ) ) 
+	{
+	  Lev -> door_obstacle_indices [ curdoor ] = ( -1 ) ;
+	  break;
+	}
+
+      switch ( Lev -> obstacle_list [ obstacle_index ] . type )
+	{
+	case ISO_H_DOOR_000_OPEN:
+	case ISO_H_DOOR_025_OPEN:
+	case ISO_H_DOOR_050_OPEN:
+	case ISO_H_DOOR_075_OPEN:
+	case ISO_H_DOOR_100_OPEN:
+
+	case ISO_V_DOOR_000_OPEN:
+	case ISO_V_DOOR_025_OPEN:
+	case ISO_V_DOOR_050_OPEN:
+	case ISO_V_DOOR_075_OPEN:
+	case ISO_V_DOOR_100_OPEN:
+	  
+	  //--------------------
+	  // We've found another door obstacle, so we add it's index
+	  // into the door obstacle index list of this level...
+	  //
+	  Lev -> door_obstacle_indices [ curdoor ] = obstacle_index ;
+	  curdoor++;
+	  if ( curdoor > MAX_DOORS_ON_LEVEL)
+	    {
+	      fprintf( stderr , "\n\nLev->levelnum : %d MAX_DOORS_ON_LEVEL: %d \n" , 
+		       Lev -> levelnum , MAX_DOORS_ON_LEVEL );
+	      GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of doors found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  break;
+	default:
+	  //--------------------
+	  // This isn't a door, so we do nothing here...
+	  //
+	  break;
+	}
+    }
+
+  // DebugPrintf ( 0 , "\nFound %d doors on level %d." , curdoor , Lev -> levelnum );
+  // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
+  // {
+  // DebugPrintf ( 0 , " %d " , Lev -> door_obstacle_indices [ i ] ) ;
+  // }
+  
+
+  //--------------------
+  // now find the autoguns and that...
   for (line = 0; line < ylen; line++)
     {
       for (col = 0; col < xlen; col++)
 	{
-	  brick = Lev->map[line][col] . floor_value ;
 
+
+	  //--------------------
+	  // Old method:  autoguns and that are detected from
+	  // map tiles...
+	  brick = Lev->map[line][col] . floor_value ;
 	  switch ( brick )
 	    {
+
+	      /*
 	    case H_SHUT_DOOR:
 	    case H_HALF_DOOR1:
 	    case H_HALF_DOOR2:
@@ -2603,7 +2690,8 @@ of doors currently allowed in a Freedroid map.",
 					     PLEASE_INFORM, IS_FATAL );
 		}
 	    break;
-	    
+	      */
+
 	    case AUTOGUN_L:
 	    case AUTOGUN_R:
 	    case AUTOGUN_U:
@@ -3192,10 +3280,11 @@ MoveLevelDoors ( int PlayerNum )
   int doorx, doory;
   float xdist, ydist;
   float dist2;
-  Uint16 *Pos;
+  int *Pos;
   Level DoorLevel;
   int one_player_close_enough = FALSE;
   int PlayerIndex ;
+  int door_obstacle_index;
 
   DoorLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
@@ -3224,18 +3313,48 @@ MoveLevelDoors ( int PlayerNum )
   //
   for ( i = 0 ; i < MAX_DOORS_ON_LEVEL ; i ++ )
     {
-      doorx = ( DoorLevel -> doors [ i ] . x );
-      doory = ( DoorLevel -> doors [ i ] . y );
+      door_obstacle_index = DoorLevel -> door_obstacle_indices [ i ] ;
 
       // no more doors?
-      if ( ( doorx == 0 ) && ( doory == 0 ) )
+      if ( door_obstacle_index == (-1) )
 	{
 	  // DebugPrintf ( 0 , "\nNumber of last door moved on this level : %d." , i );
 	  // DebugPrintf ( 0 , "\nNumber_Of_Droids_On_Ship : %d." , Number_Of_Droids_On_Ship );
 	  break;
 	}
 
-      Pos = & ( DoorLevel -> map [doory] [doorx]  . floor_value ) ;
+      //--------------------
+      // We make a convenient pointer to the type of the obstacle, that
+      // is supposed to be a door and might need to be changed as far as
+      // it's opening status is concerned...
+      //
+      Pos = & ( DoorLevel -> obstacle_list [ door_obstacle_index ] . type ) ;
+
+      //--------------------
+      // Some security check against changing anything that isn't a door here...
+      //
+      switch ( *Pos )
+	{
+	case ISO_H_DOOR_000_OPEN:
+	case ISO_H_DOOR_025_OPEN:
+	case ISO_H_DOOR_050_OPEN:
+	case ISO_H_DOOR_075_OPEN:
+	case ISO_H_DOOR_100_OPEN:
+
+	case ISO_V_DOOR_000_OPEN:
+	case ISO_V_DOOR_025_OPEN:
+	case ISO_V_DOOR_050_OPEN:
+	case ISO_V_DOOR_075_OPEN:
+	case ISO_V_DOOR_100_OPEN:
+	  break;
+	  
+	default:
+	  fprintf ( stderr, "\n*Pos: '%d'.\ni: %d\nPlayerNum: %d\nlevelnum: %d\nObstacle index: %d" , *Pos , i , PlayerNum , DoorLevel -> levelnum , door_obstacle_index );
+	  GiveStandardErrorMessage ( "MoveLevelDoors (...)" , "\
+Error:  Doors pointing not to door obstacles found.",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
 
       //--------------------
       // First we see if one of the players is close enough to the
@@ -3254,8 +3373,8 @@ MoveLevelDoors ( int PlayerNum )
 	  // But this player is on the right level, we need to check it's distance 
 	  // to this door.
 	  //
-	  xdist = Me [ PlayerIndex ] . pos . x - doorx ;
-	  ydist = Me [ PlayerIndex ] . pos . y - doory ;
+	  xdist = Me [ PlayerIndex ] . pos . x - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . x ;
+	  ydist = Me [ PlayerIndex ] . pos . y - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . y ;
 	  dist2 = xdist * xdist + ydist * ydist ;
 	  if ( dist2 < DOOROPENDIST2 )
 	    {
@@ -3269,7 +3388,7 @@ MoveLevelDoors ( int PlayerNum )
       //
       if ( one_player_close_enough )
 	{
-	  if ( (*Pos != H_OPEN_DOOR) && (*Pos != V_OPEN_DOOR) )
+	  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN ) )
 	    *Pos += 1;
 	}
       else 
@@ -3295,7 +3414,7 @@ MoveLevelDoors ( int PlayerNum )
 		      dist2 = xdist * xdist + ydist * ydist;
 		      if (dist2 < DOOROPENDIST2)
 			{
-			  if ((*Pos != H_OPEN_DOOR) && (*Pos != V_OPEN_DOOR))
+			  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN ) )
 			    *Pos += 1;
 
 			  break;	/* one druid is enough to open a door */
@@ -3306,7 +3425,7 @@ MoveLevelDoors ( int PlayerNum )
 
 	  /* No druid near: close door if it isnt closed */
 	  if ( j == Number_Of_Droids_On_Ship )
-	    if ( ( *Pos != V_SHUT_DOOR ) && ( *Pos != H_SHUT_DOOR ) )
+	    if ( ( *Pos != ISO_V_DOOR_000_OPEN ) && ( *Pos != ISO_H_DOOR_000_OPEN ) )
 	      *Pos -= 1;
 
 	}			/* else */
@@ -3562,8 +3681,16 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   // If the obstacle doesn't even have a collision rectangle, then
   // of course it's easy, cause then there can't be any collsision
   //
+  if ( obstacle_map [ obs_type ] . block_area_type == COLLISION_TYPE_NONE )
+    return ( FALSE );
+
   if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
-    return ( TRUE );
+    {
+      fprintf ( stderr, "\n\nCollision_area_type: %d.\n" , obstacle_map [ obs_type ] . block_area_type );
+      GiveStandardErrorMessage ( "position_collides_with_this_obstacle(...)" , "\
+Error:  Unsupported type of collision area given.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
 
   //--------------------
   // first we find out where the borders of our collision rectangle
