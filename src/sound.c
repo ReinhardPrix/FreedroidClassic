@@ -11,6 +11,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.12  1997/06/08 21:22:44  jprix
+ * Makefile modifiet to generate para with sound per default. Alternative target is now paranosound.
+ *
  * Revision 1.11  1997/06/08 18:46:11  jprix
  * Sound server should be working perfectly now.  Background music was also activated.
  * Background music file and new fire sound added.
@@ -438,6 +441,7 @@ void MakeSound(tune* ThisTune){
 
 } // void MakeSound(tune* ThisTune)
 
+#ifdef PARADROID_SOUND_SUPPORT_ON
 void Play_YIFF_BackgroundMusic(int Tune){
   YEventSoundPlay Music_Parameters;
 
@@ -467,6 +471,7 @@ void Play_YIFF_BackgroundMusic(int Tune){
       YSetPlaySoundObjectValues( BackgroundMusic_con, BackgroundMusic_play_id, &Music_Parameters );
     }
 } // Play_YIFF_BackgroundMusic(int Tune)
+#endif
 
 void Play_YIFF_Server_Sound(int Tune){
   //  static int previous_channel;

@@ -8,10 +8,10 @@ HFILES = Makefile defs.h proto.h global.h struct.h
 OBJ = para.o graphics.o view.o blocks.o sound.o map.o misc.o enemy.o influ.o bullet.o ship.o takeover.o rahmen.o paratext.o keyboard.o parainit.o
 
 para: $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(OBJ)
-
-parasound: $(OBJ)
 	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(SOUNDLIBS) $(OBJ)
+
+paranosound: $(OBJ)
+	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(OBJ)
 
 %.o : %.c $(HFILES)
 	$(CC) -c $(CFLAGS) $(INC) $<
