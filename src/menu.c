@@ -1089,12 +1089,11 @@ Cheatmenu (void)
   return;
 } /* Cheatmenu() */
 
-/*@Function============================================================
-@Desc: This function provides a the big escape menu from where you can
-       get into different submenus.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function lets you select whether you with to play the classical
+ * Paradroid episode or the new missions.  (Might be obsolete soon, since
+ * classical paradroid is finished.)
+ * ---------------------------------------------------------------------- */
 void
 MissionSelectMenu (void)
 {
@@ -1167,7 +1166,7 @@ enum
 	    case NEW_MISSION_POSITION:
 	      InitNewMissionList ( NEW_MISSION );
 	      NoMissionLoadedEver = FALSE;
-	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      Weiter = TRUE;   // jp forgot this... ;)
 	      break;
 	    case RESTART_PREVIOUS_MISSION:
 	      if ( NoMissionLoadedEver )
@@ -1213,6 +1212,116 @@ enum
   return;
 
 } // MissionSelectMenu
+
+/* ----------------------------------------------------------------------
+ * This function lets you select whether you want to play the single player
+ * mode or the multi player mode or the credits or the intro again or exit.
+ * ---------------------------------------------------------------------- */
+void
+StartupMenu (void)
+{
+#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
+enum
+  { 
+    SINGLE_PLAYER_POSITION=1, 
+    MULTI_PLAYER_POSITION,
+    CREDITS_POSITION,
+    EXIT_FREEDROID_POSITION
+  };
+  int Weiter = 0;
+  int MenuPosition=1;
+  int key;
+
+  Me.status=MENU;
+
+  DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
+
+  SDL_SetClipRect( Screen , NULL );
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spent in the menu.
+  Activate_Conservative_Frame_Computation();
+
+  while (!Weiter)
+    {
+      //--------------------
+      // We display some background image and we also set the correct
+      // font for the very startup menu
+      //
+      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
+      SetCurrentFont ( Menu_BFont );
+
+      //--------------------
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      //
+      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , 
+		    FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+      // CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
+
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 0 * FontHeight(GetCurrentFont()) , "Single Player");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 1 * FontHeight(GetCurrentFont()) , "Multi Player");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 2 * FontHeight(GetCurrentFont()) , "Credits");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 3 * FontHeight(GetCurrentFont()) , "Exit Freedroid" );
+
+      SDL_Flip( Screen );
+
+      // Wait until the user does SOMETHING
+
+      key = getchar_raw ();
+      if ( (key == SDLK_RETURN) || (key == SDLK_SPACE))
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+
+	    case SINGLE_PLAYER_POSITION:
+	      InitNewMissionList ( NEW_MISSION );
+	      Weiter = TRUE;   
+	      break;
+	    case MULTI_PLAYER_POSITION:
+	      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
+	      SetCurrentFont ( Menu_BFont );
+	      Multi_Player_Menu();
+	      break;
+	    case CREDITS_POSITION:
+	      Credits_Menu();
+	      break;
+	    case EXIT_FREEDROID_POSITION:
+	      Terminate( OK );
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if ( key == SDLK_UP )
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	}
+      if ( key == SDLK_DOWN )
+	{
+	  if ( MenuPosition < EXIT_FREEDROID_POSITION ) MenuPosition++;
+	  MoveMenuPositionSound();
+	}
+      if ( key == SDLK_ESCAPE )
+	{
+	  Terminate( OK );
+	}
+    }
+
+  ClearGraphMem();
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  BannerIsDestroyed=TRUE;
+  Me.status=MOBILE;
+
+  return;
+
+}; // void StartupMenu( void );
 
 /*@Function============================================================
 @Desc: This function provides a the big escape menu from where you can
@@ -1885,15 +1994,19 @@ Multi_Player_Menu (void)
   while (!Weiter)
     {
 
-      InitiateMenu();
+      // InitiateMenu();
 
       CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
-      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
-      LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
-      LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
-      LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
-      LeftPutString ( Screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
-      LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
+      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "We are sorry, but multi player mode");
+      LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "is not operational yet.");
+      // LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
+      LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "We'd like to see this functional in");
+      LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "version 1.0, but we won't make any");
+      LeftPutString ( Screen , 8*FontHeight(Menu_BFont), "promises, since we've never done any");
+      LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "networking code before.");
+
+      LeftPutString ( Screen ,11*FontHeight(Menu_BFont), "Advice or code sniplets or any help");
+      LeftPutString ( Screen ,12*FontHeight(Menu_BFont), "would be welcome.");
 
       SDL_Flip( Screen );
 
@@ -1920,7 +2033,7 @@ Credits_Menu (void)
 {
   while( SpacePressed() || EnterPressed() ) ; /* wait for key release */
 
-  InitiateMenu();
+  // InitiateMenu();
       
   DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
