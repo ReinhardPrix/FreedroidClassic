@@ -1535,7 +1535,16 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  AllEnemys[ i ] . is_friendly = 0 ;
 	  AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
 	  SetRestOfGroupToState ( & ( AllEnemys[i] ) , MAKE_ATTACK_RUN );
+
+	  //--------------------
+	  // We'll launch the attack cry of this bot...
+	  //
+	  if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
+	    {
+	      PlayStartAttackSound( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
+	    }
 	  
+
 	  //--------------------
 	  // War tux freezes enemys with the appropriate plugin...
 	  AllEnemys[ i ] . frozen += Me [ PlayerNum ] . freezing_melee_targets ; 

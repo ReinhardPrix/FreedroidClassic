@@ -754,12 +754,14 @@ Not_Enough_Mana_Sound ( void )
 
 }; // void Not_Enough_Mana_Sound ( void )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * Whenever the Tux meets someone in the game for the very first time, 
+ * this enemy or friend will issue the first-time greeting.
+ * Depending on whether that is typically a hostile unit or not, we play
+ * the corresponding sound from preloaded memory or, if there is no combat
+ * to expect, by loading it freshly from disk and then forgeting about it
+ * again.
+ * ---------------------------------------------------------------------- */
 void
 PlayGreetingSound ( int SoundCode )
 {
@@ -802,12 +804,35 @@ PlayGreetingSound ( int SoundCode )
     }
 }; // void PlayGreetingSound ( int SoundCode )
 
-/*@Function============================================================
-@Desc: 
+/* ----------------------------------------------------------------------
+ * Whenever a bot starts to attack the Tux, he'll issue the attack cry.
+ * This is done here, and no respect to loading time issues for now...
+ * ---------------------------------------------------------------------- */
+void
+PlayStartAttackSound ( int SoundCode )
+{
+  switch ( SoundCode )
+    {
+    case -1:
+      return;
+      break;
+    case 0:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_0.wav" , FALSE );
+      break;
+    case 1:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE );
+      break;
+    default:
+      DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");
+      // Terminate( ERR );
+      break;
+    }
+}; // void PlayStartAttackSound ( int SoundCode )
 
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * Whenever an item is placed or taken, we'll issue a sound attached to
+ * that item. 
+ * ---------------------------------------------------------------------- */
 void
 PlayItemSound ( int SoundCode )
 {

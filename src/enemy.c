@@ -2037,6 +2037,15 @@ ProcessAttackStateMachine (int enemynum)
 		  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
 		  ThisRobot -> persuing_given_course = FALSE ;
 		  SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+
+		  //--------------------
+		  // We'll launch the attack cry of this bot...
+		  //
+		  if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
+		    {
+		      PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+		    }
+
 		}
 	    }
 	}
