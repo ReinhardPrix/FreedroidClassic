@@ -2,6 +2,7 @@
 
 Freedroid Installation 
 ======================
+
 [ 0) if you have downloaded your source from the cvs-archive 
    you have to start by typing `./autogen.sh']
 
