@@ -540,11 +540,13 @@ Sorry...\n\
 
   #define SCALE_FACTOR 2
 
-  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 200*SCALE_FACTOR , 0 , flags)) )
+  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 240*SCALE_FACTOR , 0 , flags)) )
     {
       fprintf(stderr, "Couldn't set 320x200*SCALE_FACTOR video mode: %s\n", SDL_GetError());
       exit(-1);
     }
+
+  SDL_ShowCursor (SDL_DISABLE);
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
   /* RGB of transparent color in our pics */
