@@ -714,7 +714,6 @@ LevelToStruct (char *data)
   int i;
   int nr, x, y;
   int k;
-  int LevelNameLength;
   int connection;
   char ThisLine[1000];
   char* ThisLinePointer;
@@ -758,7 +757,9 @@ LevelToStruct (char *data)
   loadlevel->Levelname[LevelNameLength]=0;
   */
 
-  // curShip.AllLevels[i]->Background_Song_Name = "ELYSIUM.MOD";
+  loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
+  loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
+  // loadlevel->Background_Song_Name = "The_Last_V8.mod";
 
 
   // find the map data

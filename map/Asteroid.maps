@@ -37,6 +37,7 @@ xlen of this level: 38
 ylen of this level: 16
 color of this level: 0
 Name of this level=maintenance
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10   9  33  33  33  33  33  33  33  33  33  33  33  33 
   7  10  10  10  10  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0  11  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -164,6 +165,7 @@ xlen of this level: 60
 ylen of this level: 30
 color of this level: 1
 Name of this level=robostores
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0  24   4  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -305,6 +307,7 @@ xlen of this level: 38
 ylen of this level: 17
 color of this level: 5
 Name of this level=Main storage cellar
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0  14  14  11   0  14  15  14  14  14  15  15  15   0  13   0  14  14   0  14  15  14  14  14  14  11 
@@ -433,6 +436,7 @@ xlen of this level: 31
 ylen of this level: 13
 color of this level: 2
 Name of this level=Computer storage
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10   8  10  10  10   8  10  10  10  10   9 
  33  33  33  33  33  33   7  10  10  10  10   3  15  14  14  15  15  14  15  15  14  11   0   0   0  27   0  25  25  16  11 
@@ -557,6 +561,7 @@ xlen of this level: 32
 ylen of this level: 13
 color of this level: 3
 Name of this level=Robot OS evaluation
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -681,6 +686,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 4
 Name of this level=Robot construction facility
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
@@ -807,6 +813,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 5
 Name of this level=stores
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33   7  10  10   8  10   8  10  10   9  33  33  33  33   7  10  10  10   8  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
  33  33  33   7   3   0   0  27   0  27   0   0   1   9  33  33   7   3  25  25  25  11   0   0   0   0   0   0   0  27   0   0  13  14  15  15  15  11 
@@ -933,6 +940,7 @@ xlen of this level: 51
 ylen of this level: 40
 color of this level: 1
 Name of this level=Scientists quarters
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33   7  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10  10  10  10   9  33  33  33 
   7  10  10  10   6  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11   0   0   0   0   0  14  15  11  33  33  33 
@@ -1084,6 +1092,7 @@ xlen of this level: 38
 ylen of this level: 40
 color of this level: 0
 Name of this level=Main reactor block
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1235,6 +1244,7 @@ xlen of this level: 26
 ylen of this level: 11
 color of this level: 3
 Name of this level=Administration
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33   7  10  10  10   8  10  10  10   8  10  10  10   8  10  10  10   8  10  10   9  33  33  33 
  33  33  33  11   0  25   0  11   0  25   0  11   0  25   0  11   0  25   0  27   0   0  11  33  33  33 
@@ -1357,6 +1367,7 @@ xlen of this level: 31
 ylen of this level: 13
 color of this level: 1
 Name of this level=airlock
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9  33 
  11   0   0   0   0   0   0   0  17   0  17   0  25  25  25   0  12   0  34  14  34   0  25  25  25   0  34  14  34  11  33 
@@ -1481,6 +1492,7 @@ xlen of this level: 35
 ylen of this level: 15
 color of this level: 4
 Name of this level=reactor
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10   8  10  10   8  10  10   8  10  10  10  10  10  10  10  10   8  10  10  10   8  10   8  10  10  10   9 
  11  14  14  14  14   0  14   0   0  11  34  34  11  34  34  11   0   0  13  13  13  13  13  13  11  17  25  17  11   0  11   0  12   0  11 
@@ -1607,6 +1619,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 0
 Name of this level=upper cargo
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9 
  11  12   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0  14  11 
@@ -1734,6 +1747,7 @@ xlen of this level: 34
 ylen of this level: 31
 color of this level: 2
 Name of this level=Telemetry
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1876,6 +1890,7 @@ xlen of this level: 19
 ylen of this level: 19
 color of this level: 1
 Name of this level=Asteroid Control Center
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -2006,6 +2021,7 @@ xlen of this level: 10
 ylen of this level: 15
 color of this level: 5
 Name of this level=shuttle bay
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0  11 
