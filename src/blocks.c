@@ -457,8 +457,8 @@ This error indicates some installation problem with freedroid.",
  *
  * ---------------------------------------------------------------------- */
 void
-blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y ){
-
+blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+{
   SDL_Rect target_rectangle;
 
   target_rectangle . x = 
@@ -573,8 +573,8 @@ in graphics displayed, but FreedroidRPG will continue to work.",
 
   ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETY_STRING , "%d" , 
 		       & ( our_iso_image -> offset_y ) , offset_data + 30000 );
-
-
+  free ( offset_data );
+  
 }; // void get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image )
 
 /* ----------------------------------------------------------------------
@@ -1110,6 +1110,8 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
   static int Previous_armour_item  [ MAX_PLAYERS_AT_MOST ] = { -2 , -2 , -2 , -2 , -2 } ; 
   SDL_Surface* tmp;
   float angle;
+
+  return;
 
   if ( ( Previous_weapon_item  [ PlayerNum ] == Me [ PlayerNum ] . weapon_item. type ) &&
        ( Previous_shield_item  [ PlayerNum ] == Me [ PlayerNum ] . shield_item. type ) &&

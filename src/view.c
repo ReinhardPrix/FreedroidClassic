@@ -1446,6 +1446,8 @@ AssembleCombatPicture (int mask)
 	}
     }
 
+  PutMiscellaneousSpellEffects ( );
+      
   PutMouseMoveCursor ( );
 
   set_up_ordered_blitting_list ();
@@ -1461,8 +1463,6 @@ AssembleCombatPicture (int mask)
       return;
     }
 
-  PutMiscellaneousSpellEffects ( );
-      
   ShowAutomapData();
 
   ShowCombatScreenTexts( mask );
@@ -1583,13 +1583,6 @@ PutMouseMoveCursor ( void )
       TargetRectangle . y = - Block_Height  / 2 +
 	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
 					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
-
-	/*
-      TargetRectangle . x = UserCenter_x - 
-	( Me[0].pos.x - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x ) * Block_Width  - Block_Width  / 2  ;
-      TargetRectangle . y = UserCenter_y - 
-	( Me[0].pos.y - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y ) * Block_Height - Block_Height / 2 ;
-	*/
     }
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
@@ -1598,6 +1591,162 @@ PutMouseMoveCursor ( void )
     SDL_BlitSurface ( MouseCursorImageList[ 1 ] , NULL , Screen , &TargetRectangle);
 
 }; // void PutMouseMoveCursor ( void )
+
+/*----------------------------------------------------------------------
+ * This function should blit the isometric version of the Tux to the
+ * screen.
+ *----------------------------------------------------------------------*/
+void
+iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotation_index )
+{
+#define ALL_TUX_PARTS 6
+#define ALL_TUX_PHASES 15
+  static iso_image tmp [ ALL_TUX_PARTS ] [ ALL_TUX_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
+  static int first_call = TRUE;
+  char* fpath;
+  char constructed_filename[5000];
+  int part_index;
+  int i, j , k ;
+
+  //--------------------
+  // At first call, we need to mark all the iso_images as not yet loaded...
+  //
+  if ( first_call )
+    {
+      first_call = FALSE;
+      for ( i = 0 ; i < ALL_TUX_PARTS ; i ++ )
+	{
+	  for ( j = 0 ; j < ALL_TUX_PHASES ; j ++ )
+	    {
+	      for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+		{
+		  tmp [ i ] [ j ] [ k ] . surface = NULL ;
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // Now we need to resolve the part_string given as parameter
+  //
+  if ( strlen ( part_string ) == 0 )
+    {
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+Empty part string received!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  if ( ! strcmp ( part_string , "head" ) )
+    {
+      part_index = 0 ;
+    }
+  else if ( ! strcmp ( part_string , "torso" ) )
+    {
+      part_index = 1 ;
+    }
+  else if ( ! strcmp ( part_string , "feet" ) )
+    {
+      part_index = 2 ;
+    }
+  else if ( ! strcmp ( part_string , "mace" ) )
+    {
+      part_index = 3 ;
+    }
+  else if ( ! strcmp ( part_string , "weaponarm" ) )
+    {
+      part_index = 4 ;
+    }
+  else if ( ! strcmp ( part_string , "shieldarm" ) )
+    {
+      part_index = 5 ;
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+Resolving part string to index failed!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now if the iso_image we want to blit right now has not yet been loaded,
+  // then we need to do something about is and at least attempt to load the
+  // surface
+  //
+  if ( tmp [ part_index ] [ (int) Me [ PlayerNum ] . phase ] [ rotation_index ] . surface == NULL )
+    {
+      sprintf ( constructed_filename , "tux_motion_parts/iso_%s_%02d_%04d.png" , part_string , rotation_index , (int) ( Me [ PlayerNum ] . phase + 1 ) );
+      fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( tmp [ part_index ] [ (int) Me [ PlayerNum ] . phase ] [ rotation_index ] ) ) ;
+    }
+
+  if ( tmp [ part_index ] [ ( int ) Me [ PlayerNum ] . phase ] [ rotation_index ] . surface != NULL )
+    {
+      blit_iso_image_to_map_position ( tmp [ part_index ] [ ( int ) Me [ PlayerNum ] . phase ] [ rotation_index ] , Me [ PlayerNum ] . pos . x , Me [ PlayerNum ] . pos . y );
+      // SDL_FreeSurface ( tmp . surface );
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+Unable to load tux part!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+}; // void iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum )
+
+/*----------------------------------------------------------------------
+ * This function should blit the isometric version of the Tux to the
+ * screen.
+ *----------------------------------------------------------------------*/
+void
+iso_put_tux ( int x , int y , int PlayerNum )
+{
+  static iso_image tmp;
+  static int first_call = TRUE;
+  char* fpath;
+  char constructed_filename[5000];
+  int rotation_index;
+  float angle;
+
+  //--------------------
+  // If we make the angle dependent upon direction of movement we use
+  // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
+  //
+  // But currently, we use as the angle the current location of the mouse on the local
+  // client for the first player,
+  // but for other players, we use the last known mouse possision as reported by the server
+  //
+  if ( PlayerNum == 0 ) 
+    {
+      // angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+      angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+      while ( angle < 0 ) angle += 360;
+      // DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
+    }
+  else
+    {
+      angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
+    }
+
+  //--------------------
+  // From the angle we can compute the index to use...
+  //
+  rotation_index = ( angle * MAX_TUX_DIRECTIONS ) / 360.0 + ( MAX_TUX_DIRECTIONS / 2 )  ;
+  while ( rotation_index >= MAX_TUX_DIRECTIONS ) rotation_index -= MAX_TUX_DIRECTIONS;
+  while ( rotation_index < 0 ) rotation_index += MAX_TUX_DIRECTIONS;
+
+  iso_put_tux_part ( "feet" , x , y , PlayerNum , rotation_index );
+
+  iso_put_tux_part ( "torso" , x , y , PlayerNum , rotation_index );
+
+  iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
+
+  iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
+
+  iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+
+  iso_put_tux_part ( "head" , x , y , PlayerNum , rotation_index );
+
+}; // void iso_put_tux ( int x , int y , int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * The 'Influencer can be either displayed as a ball or as the more telling
@@ -1798,7 +1947,8 @@ PutInfluence ( int x , int y , int PlayerNum )
   //
   if ( use_tux )
     {
-      PutTux ( x , y , PlayerNum );
+      // PutTux ( x , y , PlayerNum );
+      iso_put_tux ( x , y , PlayerNum );
     }
   else
     {

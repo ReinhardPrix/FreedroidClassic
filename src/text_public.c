@@ -110,7 +110,7 @@ Thanks a lot!\n\n" );
     {
       fprintf (stderr, 
 "Freedroid will terminate now to draw attention to the problems it could\n\
-not sesolve.  Sorry if that interrupts a major game of yours...\n" );
+not resolve.  Sorry if that interrupts a major game of yours...\n" );
     }
   else
     {
@@ -301,7 +301,7 @@ belonging to Freedroid.",
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
 
-  if (fclose ( DataFile ) == EOF)
+  if ( fclose ( DataFile ) == EOF)
     {
       fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
       GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
