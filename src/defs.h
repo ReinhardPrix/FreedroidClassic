@@ -217,7 +217,8 @@ enum _sounds
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
 #define WAIT_AFTER_KILLED	45	/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	5	/* warte, bevor in Transfermode schalten */
+#define WAIT_TRANSFERMODE	1	/* this is a "float" indicating the number of seconds the influence 
+					   stand still with space pressed, before switching into transfermode */
 
 /* Soundblasterkonstanten */
 #define SBCHANNELS 		7

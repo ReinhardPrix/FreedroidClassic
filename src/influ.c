@@ -229,7 +229,7 @@ void
 MoveInfluence (void)
 {
   signed int accel = Druidmap[Me.type].accel;
-  static int TransferCounter = 0;
+  static float TransferCounter = 0;
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter = -1;
 
@@ -268,8 +268,11 @@ MoveInfluence (void)
     }
 
   /* Time passed before entering Transfermode ?? */
-  if (TransferCounter && (TransferCounter-- == 1))
-    Me.status = TRANSFERMODE;
+  if ( TransferCounter >= WAIT_TRANSFERMODE )
+    {
+      Me.status = TRANSFERMODE;
+      TransferCounter=0;
+    }
 
   if (UpPressed ())
     Me.speed.y -= accel;
@@ -290,9 +293,8 @@ MoveInfluence (void)
     }
 
   if ((SpacePressed ()) && (NoDirectionPressed ()) &&
-      (Me.status != WEAPON) && (Me.status != TRANSFERMODE)
-      && (!TransferCounter))
-    TransferCounter = WAIT_TRANSFERMODE;
+      (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
+    TransferCounter += Frame_Time();
 
   if ((SpacePressed ()) && (!NoDirectionPressed ()) &&
       (Me.status != TRANSFERMODE))
