@@ -118,8 +118,8 @@ Label=09 Deck=10 PosX= 1 PosY= 2 LevelUp=-1 LevelDown=10 LiftRow=2
 Label=10 Deck= 9 PosX= 2 PosY= 5 LevelUp= 9 LevelDown=11 LiftRow=2
 Label=11 Deck=11 PosX= 9 PosY= 7 LevelUp=10 LevelDown=12 LiftRow=2
 Label=12 Deck=12 PosX= 1 PosY= 4 LevelUp=11 LevelDown=13 LiftRow=2
-Label=13 Deck=13 PosX= 1 PosY= 4 LevelUp=12 LevelDown=14 LiftRow=2
-Label=14 Deck=14 PosX= 1 PosY= 5 LevelUp=13 LevelDown=15 LiftRow=2
+Label=13 Deck=13 PosX=14 PosY=29 LevelUp=12 LevelDown=14 LiftRow=2
+Label=14 Deck=14 PosX= 1 PosY= 9 LevelUp=13 LevelDown=15 LiftRow=2
 Label=15 Deck= 8 PosX=23 PosY= 4 LevelUp=14 LevelDown=15 LiftRow=2
 Label=16 Deck= 7 PosX= 5 PosY= 8 LevelUp=-1 LevelDown=17 LiftRow=4
 Label=17 Deck= 9 PosX=23 PosY= 5 LevelUp=16 LevelDown=-1 LiftRow=4

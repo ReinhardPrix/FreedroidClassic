@@ -46,7 +46,7 @@ The data in this file has the format:
 
 Elevator Number=0 ElRowX= 68 ElRowY= 18 ElRowW=16 ElRowH=160
 Elevator Number=1 ElRowX=132 ElRowY= 66 ElRowW=16 ElRowH=208
-Elevator Number=2 ElRowX=228 ElRowY= 34 ElRowW=16 ElRowH= 30
+Elevator Number=2 ElRowX=119 ElRowY= 69 ElRowW=16 ElRowH=135
 Elevator Number=3 ElRowX=308 ElRowY= 18 ElRowW=16 ElRowH= 78
 Elevator Number=4 ElRowX=274 ElRowY= 50 ElRowW=16 ElRowH= 73
 Elevator Number=5 ElRowX=356 ElRowY=130 ElRowW=16 ElRowH= 46
@@ -85,24 +85,20 @@ DeckNr=7 RectNumber=0 DeckX=244 DeckY= 50 DeckW=  31 DeckH= 16
 DeckNr=7 RectNumber=1 DeckX=288 DeckY= 50 DeckW= 115 DeckH= 16 
 DeckNr=7 RectNumber=2 DeckX=420 DeckY= 50 DeckW=  96 DeckH= 16 
 
-DeckNr=8 RectNumber=0 DeckX=244 DeckY= 34 DeckW=  64 DeckH= 16 
-DeckNr=8 RectNumber=1 DeckX=324 DeckY= 34 DeckW=  80 DeckH= 16 
-DeckNr=8 RectNumber=2 DeckX=452 DeckY= 34 DeckW=  16 DeckH= 16 
+DeckNr=8 RectNumber=0 DeckX=39 DeckY=189 DeckW=  80 DeckH= 16 
+DeckNr=8 RectNumber=1 DeckX=14 DeckY=189 DeckW=   9 DeckH= 16 
 
 DeckNr=9 RectNumber=0 DeckX=134 DeckY=109 DeckW= 140 DeckH= 16 
 
-DeckNr=10 RectNumber=0 DeckX= 84 DeckY= 34 DeckW= 112 DeckH= 16
+DeckNr=10 RectNumber=0 DeckX=134 DeckY= 69 DeckW=  48 DeckH= 16
 
-DeckNr=11 RectNumber=0 DeckX= 36 DeckY= 50 DeckW=  32 DeckH= 16 
-DeckNr=11 RectNumber=1 DeckX= 84 DeckY= 50 DeckW= 144 DeckH= 16 
+DeckNr=11 RectNumber=0 DeckX=134 DeckY=125 DeckW= 128 DeckH= 16 
 
-DeckNr=12 RectNumber=0 DeckX=148 DeckY= 66 DeckW= 128 DeckH= 16 
-DeckNr=12 RectNumber=1 DeckX=148 DeckY= 82 DeckW= 160 DeckH= 16 
-DeckNr=12 RectNumber=2 DeckX=148 DeckY= 98 DeckW= 176 DeckH= 16 
+DeckNr=12 RectNumber=0 DeckX=134 DeckY=141 DeckW=  95 DeckH= 16 
 
-DeckNr=13 RectNumber=0 DeckX=148 DeckY=114 DeckW= 176 DeckH= 48
+DeckNr=13 RectNumber=0 DeckX=134 DeckY=157 DeckW=  48 DeckH= 16
 
-DeckNr=14 RectNumber=0 DeckX=148 DeckY=162 DeckW= 124 DeckH= 48
+DeckNr=14 RectNumber=0 DeckX=134 DeckY=173 DeckW=  81 DeckH= 16
 
 DeckNr=15 RectNumber=0 DeckX=276 DeckY=162 DeckW=  48 DeckH= 32
 
@@ -112,24 +108,24 @@ DeckNr=15 RectNumber=0 DeckX=276 DeckY=162 DeckW=  48 DeckH= 32
 
 Label=01 Deck= 0 PosX=17 PosY= 7 LevelUp= 1 LevelDown=-1 LiftRow=0
 Label=02 Deck= 1 PosX=17 PosY= 7 LevelUp= 2 LevelDown= 0 LiftRow=0
-Label=03 Deck=11 PosX= 9 PosY= 7 LevelUp= 3 LevelDown= 1 LiftRow=0
-Label=04 Deck=10 PosX= 1 PosY= 2 LevelUp= 4 LevelDown= 2 LiftRow=0
+Label=03 Deck=11 PosX=01 PosY=01 LevelUp= 3 LevelDown= 1 LiftRow=0
+Label=04 Deck=10 PosX=10 PosY= 2 LevelUp= 4 LevelDown= 2 LiftRow=0
 Label=05 Deck= 9 PosX= 1 PosY= 1 LevelUp=-1 LevelDown= 3 LiftRow=0
-Label=06 Deck=14 PosX= 1 PosY= 5 LevelUp= 6 LevelDown=-1 LiftRow=1
-Label=07 Deck=13 PosX= 1 PosY= 4 LevelUp= 7 LevelDown= 5 LiftRow=1
-Label=08 Deck=12 PosX= 1 PosY= 4 LevelUp=-1 LevelDown= 6 LiftRow=1
-Label=09 Deck=11 PosX=29 PosY= 7 LevelUp= 9 LevelDown=-1 LiftRow=2
-Label=00 Deck= 8 PosX= 9 PosY= 4 LevelUp=-1 LevelDown= 8 LiftRow=2
-Label=11 Deck= 5 PosX= 4 PosY= 7 LevelUp=11 LevelDown=-1 LiftRow=3
-Label=12 Deck= 6 PosX= 8 PosY= 7 LevelUp=12 LevelDown=10 LiftRow=3
-Label=13 Deck= 7 PosX=12 PosY= 7 LevelUp=13 LevelDown=11 LiftRow=3
-Label=14 Deck= 8 PosX=23 PosY= 4 LevelUp=14 LevelDown=12 LiftRow=3
-Label=15 Deck= 9 PosX=18 PosY= 5 LevelUp=-1 LevelDown=13 LiftRow=3
+Label=06 Deck=14 PosX= 1 PosY= 1 LevelUp= 6 LevelDown=-1 LiftRow=1
+Label=07 Deck=13 PosX= 1 PosY= 1 LevelUp= 7 LevelDown= 5 LiftRow=1
+Label=08 Deck=12 PosX= 1 PosY= 1 LevelUp=-1 LevelDown= 6 LiftRow=1
+Label=09 Deck=10 PosX= 1 PosY= 2 LevelUp=-1 LevelDown=10 LiftRow=2
+Label=10 Deck= 9 PosX= 2 PosY= 5 LevelUp= 9 LevelDown=11 LiftRow=2
+Label=11 Deck=11 PosX= 9 PosY= 7 LevelUp=10 LevelDown=12 LiftRow=2
+Label=12 Deck=12 PosX= 1 PosY= 4 LevelUp=11 LevelDown=13 LiftRow=2
+Label=13 Deck=13 PosX=14 PosY=29 LevelUp=12 LevelDown=14 LiftRow=2
+Label=14 Deck=14 PosX= 1 PosY= 9 LevelUp=13 LevelDown=15 LiftRow=2
+Label=15 Deck= 8 PosX=23 PosY= 4 LevelUp=14 LevelDown=15 LiftRow=2
 Label=16 Deck= 7 PosX= 5 PosY= 8 LevelUp=-1 LevelDown=17 LiftRow=4
 Label=17 Deck= 9 PosX=23 PosY= 5 LevelUp=16 LevelDown=-1 LiftRow=4
 Label=18 Deck=12 PosX=32 PosY=14 LevelUp=18 LevelDown=16 LiftRow=4
 Label=19 Deck= 5 PosX= 4 PosY=13 LevelUp=-1 LevelDown=17 LiftRow=4
-Label=10 Deck= 0 PosX=33 PosY= 8 LevelUp=20 LevelDown=-1 LiftRow=5
+Label=20 Deck= 0 PosX=33 PosY= 8 LevelUp=20 LevelDown=-1 LiftRow=5
 Label=21 Deck= 1 PosX=39 PosY= 8 LevelUp=21 LevelDown=19 LiftRow=5
 Label=22 Deck= 2 PosX=19 PosY= 5 LevelUp=23 LevelDown=-1 LiftRow=6
 Label=23 Deck= 3 PosX= 7 PosY= 4 LevelUp=24 LevelDown=22 LiftRow=6

@@ -913,7 +913,27 @@ GetRefreshes (Level Lev)
 
 	    if (curref > MAX_REFRESHES_ON_LEVEL)
 	      {
-		printf("\nTo many refreshes on level!!! Terminating...");
+		fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The number of refreshes found in level %d seems to be greater than the number\n\
+of refreshes currently allowed in a freedroid map.\n\
+\n\
+The constant for the maximum number of doors currently is set to %d in the\n\
+freedroid defs.h file.  You can enlarge the constant there, then start make\n\
+and make install again, and the map will be loaded without complaint.\n\
+\n\
+The constant in defs.h is names 'MAX_REFRESHES_ON_LEVEL'.  If you received this \n\
+message, please also tell the developers of the freedroid project, that they\n\
+should enlarge the constant in all future versions as well.\n\
+\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention to this small map problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , Lev->levelnum , MAX_REFRESHES_ON_LEVEL );
 		Terminate(ERR);
 		return ERR;
 	      }
@@ -954,7 +974,27 @@ GetTeleports (Level Lev)
 
 	    if (curref > MAX_TELEPORTERS_ON_LEVEL)
 	      {
-		DebugPrintf( 0 , "\nError in GetTeleporters:  Too many teleporters on level!!! Terminating...");
+		fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The number of teleporters found in level %d seems to be greater than the number\n\
+of teleporters currently allowed in a freedroid map.\n\
+\n\
+The constant for the maximum number of doors currently is set to %d in the\n\
+freedroid defs.h file.  You can enlarge the constant there, then start make\n\
+and make install again, and the map will be loaded without complaint.\n\
+\n\
+The constant in defs.h is names 'MAX_TELEPORTERS_ON_LEVEL'.  If you received this \n\
+message, please also tell the developers of the freedroid project, that they\n\
+should enlarge the constant in all future versions as well.\n\
+\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention to this small map problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , Lev->levelnum , MAX_TELEPORTERS_ON_LEVEL );
 		Terminate(ERR);
 	      }
 	  }			/* if */
