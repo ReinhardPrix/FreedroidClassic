@@ -2083,6 +2083,33 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 
   StepVector . x = VictimPosition . x - CurrentPosition . x ;
   StepVector . y = VictimPosition . y - CurrentPosition . y ;
+  
+  //--------------------
+  // Now some protection against division by zero when two bots
+  // have _exactly_ the same position, i.e. are standing on top
+  // of each other:
+  //
+  if ( ( fabsf ( StepVector . x ) < 0.01 ) &&
+       ( fabsf ( StepVector . y ) < 0.01 ) )
+    {
+      //--------------------
+      // One droid must go to the left and up and one must go to
+      // the right and down.  But who will go where?  --- We use
+      // the index numbers to resolve the question...
+      //
+      if ( enemynum <= ThisRobot -> attack_target_index )
+	{
+	  StepVector . x = 3.0 ;
+	  StepVector . y = 3.0 ;
+	}
+      else
+	{
+	  StepVector . x = -3.0 ;
+	  StepVector . y = -3.0 ;
+	}
+    }
+
+  
   StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
 
   StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;

@@ -556,9 +556,7 @@ ShowCombatScreenTexts ( int mask )
 	  PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 			   User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
 			   "Bots remaining on level: %d" , remaining_bots );
-
 	  DebugPrintf ( 0 , "\nYES, this is the level...." );
-      
 	}
     }
 
@@ -1301,6 +1299,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	    }
 	  break;
 	case BLITTING_TYPE_BULLET:
+	  DebugPrintf ( -1000 , "Bullet code_number: %d. " , blitting_list [ i ] . code_number );
 	  PutBullet ( blitting_list [ i ] . code_number , mask ); 
 	  break;
 	case BLITTING_TYPE_BLAST:
@@ -3271,47 +3270,61 @@ There was a droid type on this level, that does not really exist.",
  * array. Everything else is computed in here.
  * ---------------------------------------------------------------------- */
 void
-PutBullet ( int Bullet_number , int mask )
+PutBullet ( int bullet_index , int mask )
 {
-  Bullet CurBullet = & ( AllBullets [ Bullet_number ] ) ;
+  bullet* CurBullet;
   int PhaseOfBullet;
   int direction_index;
 
-  if ( CurBullet -> time_to_hide_still > 0 ) return ;
+  fprintf ( stderr , "\nInside PutBullet:  bullet_index = %d." , bullet_index );
+  fflush ( stderr );
+
+  CurBullet = & ( AllBullets [ bullet_index ] ) ;
+
+  if ( CurBullet -> time_to_hide_still > 0 ) 
+    return ;
 
   //--------------------
   // in case our bullet is of the type "FLASH", we only
   // draw a big white or black rectangle right over the 
   // combat window, white for even frames and black for 
   // odd frames.
-  if (CurBullet->type == FLASH)
+  if ( CurBullet -> type == FLASH )
     {
       // Now the whole window will be filled with either white
       // or black each frame until the flash is over.  (Flash 
       // deletion after some time is done in CheckBulletCollisions.)
-      if ( (CurBullet->time_in_frames % 2) == 1)
+      if ( ( CurBullet -> time_in_frames % 2 ) == 1)
 	{
-	  FlashWindow (flashcolor1);
+	  FlashWindow ( flashcolor1 );
 	  return;
 	}
-      if ( (CurBullet->time_in_frames % 2) == 0)
+      if ( ( CurBullet -> time_in_frames % 2 ) == 0)
 	{
-	  FlashWindow (flashcolor2);
+	  FlashWindow ( flashcolor2 );
 	  return;
 	}
     } // if type == FLASH
 
   // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
-  if ( CurBullet->type >= Number_Of_Bullet_Types ) 
+  if ( ( CurBullet -> type >= Number_Of_Bullet_Types ) ||
+       ( CurBullet -> type <  0                      ) )
     {
+      fprintf ( stderr , "\nPutBullet:  bullet type received: %d." , CurBullet -> type );
+      fflush ( stderr );
       GiveStandardErrorMessage ( "PutBullet(...)" , "\
 There was a bullet to be blitted of a type that does not really exist.",
 				 PLEASE_INFORM, IS_FATAL );
     };
 
-  PhaseOfBullet = ( CurBullet -> time_in_seconds * Bulletmap [ CurBullet->type ] . phase_changes_per_second );
+  fprintf ( stderr , "\nInside PutBullet (2nd time):  bullet_index = %d." , bullet_index );
+  fprintf ( stderr , "\nBulletmap [ 2 ] . phase_changes_per_second =%f." , Bulletmap [ 2 ] . phase_changes_per_second );
+  fprintf ( stderr , "\nBulletmap [ 4 ] . phase_changes_per_second =%f." , Bulletmap [ 4 ] . phase_changes_per_second );
+  fflush ( stderr );
 
-  PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
+  PhaseOfBullet = CurBullet -> time_in_seconds * Bulletmap [ CurBullet -> type ] . phase_changes_per_second ;
+
+  PhaseOfBullet = PhaseOfBullet % Bulletmap [ CurBullet -> type ] . phases ;
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
 
   direction_index = ( ( CurBullet -> angle + 360.0 + 360 / ( 2 * BULLET_DIRECTIONS ) ) * BULLET_DIRECTIONS / 360 ) ;
@@ -3735,7 +3748,7 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   strcpy( fname, "droids/" );
   strcat( fname, Druidmap[Number].portrait_filename_without_ext );
   strcat( fname , "/portrait.png" );
-  DebugPrintf (2, "\ntrying to load this: $fname");
+  DebugPrintf ( 2 , "\ntrying to load this: %s" , fname );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
 
   if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
@@ -3745,7 +3758,6 @@ ShowRobotPicture (int PosX, int PosY, int Number )
 A droid portrait failed to load.",
 				 PLEASE_INFORM, IS_FATAL );
     }
-  
 
   SDL_SetClipRect( Screen , NULL );
   Set_Rect (target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
