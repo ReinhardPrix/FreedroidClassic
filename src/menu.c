@@ -2934,7 +2934,7 @@ Credits_Menu (void)
 void
 Contribute_Menu (void)
 {
-  char* ContributeText = "\n\n\
+    char* ContributeText = "\n\n\
                        HOW TO CONTRIUBTE\n\n\n\
 FreedroidRPG is entirely free software AND free artwork.  It is developed exclusively by volunteers in their leisure time.\n\n\
 FreedroidRPG depends on these contributions to become a better game.  \
@@ -2955,20 +2955,20 @@ If you are capable of writing some background music, preferably in MOD format, b
    CONTACT:\n\n\
 If you wish to get in contact with the current list of FreedroidRPG developers and contributors, please send e-mail to the following address:\n\n\
 freedroid-discussion@lists.sourceforge.net\n\n\
-For the reason of spam-protection, your post maybe be held for some time for approval of the list moderator, before it is let through.  You can subscribe via the sourceforge project page of FreedroidRPG to gain direct access.\n\n\
+Or, if you prefer that, you might talk to some of the developes on our IRC channel.  The channel is #freedroid on irc.freenode.net and everyone's invited.\n\
 \n\
 Thank you,\n\n\
                 The FreedroidRPG dev team.\n\
                                       \n\n\n\n\n";
+    
+    while ( SpacePressed() || EscapePressed() ) ; 
+    
+    SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
+    
+    ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
 
-  while ( SpacePressed() || EscapePressed() ) ; 
-
-  SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
-
-  ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
-
-  while ( SpacePressed() || EscapePressed() ) ; 
-
+    while ( SpacePressed() || EscapePressed() ) ; 
+  
 }; // void Contribute_Menu(void)
 
 /*@Function============================================================
