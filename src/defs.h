@@ -174,8 +174,8 @@ enum _spell_names
 #define Copy_Rect(src, dst) {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; }
 
-#define UserCenter_x (User_Rect.x + User_Rect.w/2)
-#define UserCenter_y (User_Rect.y + User_Rect.h/2)
+#define UserCenter_x (User_Rect.x+User_Rect.w/2)
+#define UserCenter_y (User_Rect.y+User_Rect.h/2)
 
 /* 
  * these macros are a bit of a hack, as they will work correctly only

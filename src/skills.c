@@ -538,31 +538,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_WEAPON:
       if ( MouseRightPressed ( ) != 1 ) break;
 
-      if ( Me [ 0 ] . firewait > 0 ) break;
+      tux_wants_to_attack_now ( 0 );
 
-      //--------------------
-      // If the Tux has a weapon and this weapon requires some ammunition, then
-      // we have to check for enough ammunition first...
-      //
-      if ( Me [ 0 ] . weapon_item . type >= 0 )
-	{
-	  if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
-	    {
-	      if ( !CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
-					       0 ) )
-		{
-		  No_Ammo_Sound();
-		  //--------------------
-		  // So no ammunition... We should say so and return...
-		  //
-		  break;
-		}
-	      else
-		DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
-	    }
-	}
-
-      PerformTuxAttackRaw ( 0 ) ;      
       break;
     case SPELL_LOOT_CHEST_OR_DEAD_BODY:
       //--------------------

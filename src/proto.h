@@ -61,27 +61,28 @@ EXTERN void PlayATitleFile ( char* Filename );
 #else
 #define EXTERN extern
 #endif
-EXTERN void PerformTuxAttackRaw ( int PlayerNum ) ;
-EXTERN void CheckForJumpThresholds ( int PlayerNum );
+EXTERN void tux_wants_to_attack_now ( int player_num ) ;
+EXTERN void PerformTuxAttackRaw ( int player_num ) ;
+EXTERN void CheckForJumpThresholds ( int player_num );
 EXTERN int isignf (float);
-EXTERN void InitInfluPositionHistory( int PlayerNum );
+EXTERN void InitInfluPositionHistory( int player_num );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
-EXTERN void FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
-EXTERN void MoveInfluence ( int PlayerNum ) ;
-EXTERN void AdjustTuxSpeed ( int PlayerNum ) ;
-EXTERN void CheckInfluenceWallCollisions ( int PlayerNum ) ;
-EXTERN void InfluenceFrictionWithAir ( int PlayerNum ) ;
+EXTERN void FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
+EXTERN void MoveInfluence ( int player_num ) ;
+EXTERN void AdjustTuxSpeed ( int player_num ) ;
+EXTERN void CheckInfluenceWallCollisions ( int player_num ) ;
+EXTERN void InfluenceFrictionWithAir ( int player_num ) ;
 EXTERN void CheckEnergieLevel (void);
-EXTERN void AnimateInfluence ( int PlayerNum ) ;
+EXTERN void AnimateInfluence ( int player_num ) ;
 EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
-EXTERN float translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) ;
-EXTERN float translate_pixel_to_zoomed_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x );
+EXTERN float translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) ;
+EXTERN float translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float axis_y , int give_x );
 EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 
 // bullet.c 
@@ -92,7 +93,7 @@ EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , f
 #define EXTERN extern
 #endif
 EXTERN void RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle );
-EXTERN void AnalyzePlayersMouseClick ( int PlayerNum ) ;
+EXTERN void AnalyzePlayersMouseClick ( int player_num ) ;
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
 EXTERN void StartBlast ( float x , float y , int level , int type );
@@ -144,7 +145,7 @@ EXTERN void LoadAndPrepareGreenEnemyRotationModelNr ( int RotationModel );
 EXTERN void LoadAndPrepareBlueEnemyRotationModelNr ( int RotationModel );
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
-EXTERN void HomemadeUpdateTuxWorkingCopy ( int PlayerNum );
+EXTERN void HomemadeUpdateTuxWorkingCopy ( int player_num );
 EXTERN void InitTuxWorkingCopy( void );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void LoadOneMapInsertSurfaceIfNotYetLoaded ( int i );
@@ -208,7 +209,7 @@ EXTERN void SmashBox ( float x , float y );
 EXTERN void smash_obstacle ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN Uint16 GetMapBrick (Level deck, float x, float y);
-EXTERN void ActSpecialField ( int PlayerNum ) ;
+EXTERN void ActSpecialField ( int player_num ) ;
 
 EXTERN void CountNumberOfDroidsOnShip ( void );
 EXTERN int LoadShip (char *filename);
@@ -217,11 +218,11 @@ EXTERN void GetAllAnimatedMapTiles (Level Lev);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateCyclingMapTiles (void);
-EXTERN void MoveLevelDoors ( int PlayerNum ) ;
-EXTERN void WorkLevelGuns ( int PlayerNum ) ;
+EXTERN void MoveLevelDoors ( int player_num ) ;
+EXTERN void WorkLevelGuns ( int player_num ) ;
 EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
 EXTERN int DruidPassable ( float x , float y , int z );
-EXTERN int IsVisible ( GPS objpos , int PlayerNum ) ;
+EXTERN int IsVisible ( GPS objpos , int player_num ) ;
 EXTERN int TranslateMap (Level Lev);
 
 // sound.c  OR nosound.c 
@@ -284,15 +285,15 @@ EXTERN void Play_Spell_DetectItems_Sound( void );
 #define EXTERN extern
 #endif
 EXTERN void silently_unhold_all_items ( void );
-EXTERN int CountItemtypeInInventory( int Itemtype , int PlayerNum );
-EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum );
-EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum );
+EXTERN int CountItemtypeInInventory( int Itemtype , int player_num );
+EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int player_num );
+EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int player_num );
 EXTERN void DamageItem( item* CurItem );
 EXTERN int GetFreeInventoryIndex( void );
 EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem , int ForRepair );
 EXTERN void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange );
-EXTERN void DamageAllEquipment( int PlayerNum ) ;
+EXTERN void DamageAllEquipment( int player_num ) ;
 EXTERN void DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange );
 EXTERN void DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity );
 EXTERN void Quick_ApplyItem( int ItemKey );
@@ -300,7 +301,7 @@ EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
 EXTERN item* GetHeldItemPointer( void );
-EXTERN Item FindPointerToPositionCode ( int PositionCode , int PlayerNum ) ;
+EXTERN Item FindPointerToPositionCode ( int PositionCode , int player_num ) ;
 EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
 EXTERN int CursorIsInUserRect( int x , int y );
@@ -325,9 +326,9 @@ EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int For
 #else
 #define EXTERN extern
 #endif
-EXTERN void InitiateNewCharacter ( int PlayerNum , int CharacterClass );
+EXTERN void InitiateNewCharacter ( int player_num , int CharacterClass );
 EXTERN void DisplayButtons( void );
-EXTERN void UpdateAllCharacterStats ( int PlayerNum );
+EXTERN void UpdateAllCharacterStats ( int player_num );
 EXTERN void ShowCharacterScreen ( void );
 
 // skills.c
@@ -340,7 +341,7 @@ EXTERN void ShowCharacterScreen ( void );
 EXTERN void RadialVMXWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialEMPWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialFireWave ( gps ExpCenter , int SpellCostsMana );
-EXTERN void ClearDetectedItemList( int PlayerNum );
+EXTERN void ClearDetectedItemList( int player_num );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( void );
 
@@ -446,7 +447,7 @@ EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedTe
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
 EXTERN char * find_file (char *fname, char *datadir, int use_theme);
-EXTERN void CheckForTriggeredEventsAndStatements ( int PlayerNum );
+EXTERN void CheckForTriggeredEventsAndStatements ( int player_num );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);
 EXTERN void StartTakingTimeForFPSCalculation(void);
@@ -457,7 +458,7 @@ EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
-EXTERN void Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int WithSound ) ;
+EXTERN void Teleport ( int LNum , float X , float Y , int player_num , int Shuffling , int WithSound ) ;
 EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);
@@ -465,8 +466,8 @@ EXTERN void Terminate (int);
 EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
 EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
-EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum ) ;
-EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
+EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int player_num ) ;
+EXTERN void ExecuteEvent ( int EventNumber , int player_num );
 
 // enemy.c 
 #undef EXTERN
@@ -575,8 +576,8 @@ EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 #endif
 EXTERN void ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem );
 EXTERN int TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost );
-EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum );
-EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int PlayerNum );
+EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int player_num );
+EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int player_num );
 EXTERN void InitTradeWithCharacter( int CharacterCode ) ;
 EXTERN void Sell_Items( int ForHealer );
 EXTERN void Repair_Items( void );
@@ -591,16 +592,16 @@ EXTERN void EnterChest ( moderately_finepoint pos );
 #define EXTERN extern
 #endif
 EXTERN void Init_Network ( void ) ;
-EXTERN int ServerThinksInputAxisX ( int PlayerNum ) ;
-EXTERN int ServerThinksInputAxisY ( int PlayerNum ) ;
-EXTERN int ServerThinksAxisIsActive ( int PlayerNum ) ;
-EXTERN int ServerThinksShiftWasPressed ( int PlayerNum ) ;
-EXTERN int ServerThinksRightPressed ( int PlayerNum ) ;
-EXTERN int ServerThinksLeftPressed ( int PlayerNum ) ;
-EXTERN int ServerThinksUpPressed ( int PlayerNum ) ;
-EXTERN int ServerThinksDownPressed ( int PlayerNum ) ;
-EXTERN int ServerThinksSpacePressed ( int PlayerNum ) ;
-EXTERN int ServerThinksNoDirectionPressed ( int PlayerNum ) ;
+EXTERN int ServerThinksInputAxisX ( int player_num ) ;
+EXTERN int ServerThinksInputAxisY ( int player_num ) ;
+EXTERN int ServerThinksAxisIsActive ( int player_num ) ;
+EXTERN int ServerThinksShiftWasPressed ( int player_num ) ;
+EXTERN int ServerThinksRightPressed ( int player_num ) ;
+EXTERN int ServerThinksLeftPressed ( int player_num ) ;
+EXTERN int ServerThinksUpPressed ( int player_num ) ;
+EXTERN int ServerThinksDownPressed ( int player_num ) ;
+EXTERN int ServerThinksSpacePressed ( int player_num ) ;
+EXTERN int ServerThinksNoDirectionPressed ( int player_num ) ;
 EXTERN void OpenTheServerSocket ( void ) ;
 EXTERN void AcceptConnectionsFromClients ( void ) ;
 EXTERN void ConnectToFreedroidServer ( void );

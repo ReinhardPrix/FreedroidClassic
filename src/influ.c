@@ -61,6 +61,41 @@ int NoInfluBulletOnWay (void);
 
 /* ----------------------------------------------------------------------
  *
+ * 
+ * ---------------------------------------------------------------------- */
+void
+tux_wants_to_attack_now ( int player_num ) 
+{
+  if ( Me [ 0 ] . firewait > 0 ) return; 
+  
+  //--------------------
+  // If the Tux has a weapon and this weapon requires some ammunition, then
+  // we have to check for enough ammunition first...
+  //
+  if ( Me [ 0 ] . weapon_item . type >= 0 )
+    {
+      if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
+	{
+	  if ( !CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
+					   0 ) )
+	    {
+	      No_Ammo_Sound();
+	      //--------------------
+	      // So no ammunition... We should say so and return...
+	      //
+	      return ;
+	    }
+	  else
+	    DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
+	}
+    }
+  
+  PerformTuxAttackRaw ( 0 ) ;      
+
+}; // void tux_wants_to_attack_now ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
  *
  * ---------------------------------------------------------------------- */
 void
@@ -1851,6 +1886,21 @@ AnalyzePlayersMouseClick ( int player_num )
       //
       Me [ player_num ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( player_num ) ;
 
+      if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) return ;
+
+      if ( Me [ 0 ] . weapon_item . type >= 0 )
+	{
+	  if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change )
+	    {
+	      Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
+	      Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
+	      Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
+	      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	    }
+	}
+
+      tux_wants_to_attack_now ( player_num ) ;
+
       //--------------------
       // It would be tempting to return now, but perhaps the player is just targeting and fighting a robot.
       // Then of course we must not return, but execute the stroke!!
@@ -1861,7 +1911,9 @@ AnalyzePlayersMouseClick ( int player_num )
 	       ( fabsf ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y - 
 			 Me [ player_num ] . pos . y ) < FORCE_FIRE_DISTANCE  ) 
 	       ) )
+	{
 	  return;
+	}
     }
 
   return;
