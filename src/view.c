@@ -1123,13 +1123,22 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
 	      //
 	      // 2. We calsulate the angle of the vector
 	      //
-	      angle = ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
+	      if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
+		{
+		  angle = - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
+		  AllEnemys[Enum].previous_angle = angle ;
+		}
+	      else
+		{
+		  angle = AllEnemys[Enum].previous_angle ;
+		}
 	      //
 	      // 3. We make a phase out of the current angle
 	      //
 	      RotationIndex = ( angle * 40 / 360 ) ;
-	      if ( RotationIndex < 0 ) RotationIndex += 40; // just to make sure... a modulo 40 operation can't hurt
-	      DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
+	      while ( RotationIndex < 0  ) RotationIndex += 40; // just to make sure... a modulo 40 operation can't hurt
+	      while ( RotationIndex > 39 ) RotationIndex -= 40; // just to make sure... a modulo 40 operation can't hurt
+	      // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
 	      RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
 	      SDL_BlitSurface( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	    }

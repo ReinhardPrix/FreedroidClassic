@@ -1305,6 +1305,30 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 }; // void DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
 
 /* ----------------------------------------------------------------------
+ * In some of the movement functions for enemy droids, we consider making
+ * a step and move a bit into one direction or the other.  But not all
+ * moves are really allowed and feasible.  Therefore we need a function
+ * to check if a certain step makes sense or not, which is exactly what
+ * this function is supposed to do.
+ * ---------------------------------------------------------------------- */
+int
+ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , int enemynum )
+{
+  if ( ( DruidPassable ( ThisRobot -> pos.x + StepVector.x , 
+			 ThisRobot -> pos.y + StepVector.y ,
+			 ThisRobot -> pos.z ) == CENTER ) &&
+       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+				    ThisRobot->pos.x + StepVector . x , 
+				    ThisRobot->pos.y + StepVector . y ,
+				    ThisRobot->pos.z , enemynum ) ) )
+    {
+      return TRUE;
+    }
+  
+  return FALSE;
+}; // int ConsideredMoveIsFeasible ( Enemy ThisRobot , finepoint StepVector )
+
+/* ----------------------------------------------------------------------
  * Maybe there is a melee weapon using robot somewhere in the game.  In
  * this case it might come to be that this robot can't use his weapon
  * cause it is still too far away for a strike.  So the robot must move
@@ -1317,13 +1341,21 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 void
 MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
 {
-  float TargetRange;
   float StepSize;
+  finepoint VictimPosition;
+  finepoint ConsideredGoodPosition;
+  finepoint CurrentPosition;
+  moderately_finepoint StepVector;
+  float StepVectorLen;
 
   //--------------------
   // If the distance is not yet right, we find a new location to move to.  We
   // do this WITHOUT consulting the waypoints, so that the robots become more
   // 'intelligent' in their movement.
+  //
+  // However great care must be taken so that the robot will not pass 
+  // through walls, which is could, since there are no other checks for
+  // enemy-wall collision and no corrects of any kind for this mistake.
   //
   // ThisRobot->TextVisibleTime = 0 ;
   // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
@@ -1333,69 +1365,66 @@ MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
   ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
   
   //--------------------
-  // Now we check if it's perhaps time to make a step to the left/right in 
-  // order to get close enough to the target tux for a successful melee weapon
-  // swing.
+  // Now we determine a probably better fighting position (not too far away
+  // to save us from walking through walls) and see if it is perhaps reachable
+  // without passing though walls and if it's also free of other droids so
+  // that we won't bump into our colleagues as well.
   //
-  TargetRange = 0.5;
   StepSize = 0.5;
-  if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > TargetRange )
+
+  VictimPosition . x = Me [ TargetPlayer ] . pos . x ;
+  VictimPosition . y = Me [ TargetPlayer ] . pos . y ;
+  CurrentPosition . x = ThisRobot -> pos . x ;
+  CurrentPosition . y = ThisRobot -> pos . y ;
+
+  StepVector . x = VictimPosition . x - CurrentPosition . x ;
+  StepVector . y = VictimPosition . y - CurrentPosition . y ;
+  StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
+
+  StepVector . x /= ( 2 * StepVectorLen ) ;
+  StepVector . y /= ( 2 * StepVectorLen ) ;
+
+  //--------------------
+  // Now we have assembled the simplest of ideas:  Try to move directly
+  // thowards the Tux.  We just need to check if that does make some
+  // sense to move there.  Otherwise we can still consider some variations
+  // to the left or right.
+  //
+  ConsideredGoodPosition . x = CurrentPosition . x + StepVector . x ;
+  ConsideredGoodPosition . y = CurrentPosition . y + StepVector . y ;
+
+  if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
     {
-      if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
+      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
+      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
+    }
+  else
+    {
+      //--------------------
+      // If we didn't have any luck with the direct vector, we may have
+      // more luck with a 45 degree rotated vector.  So let's try that.
+      //
+      RotateVectorByAngle ( & StepVector , 45 ) ;
+      if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
 	{
-	  if ( ( DruidPassable ( ThisRobot -> pos.x + StepSize , 
-				 ThisRobot -> PrivatePathway [ 0 ] . y ,
-				 ThisRobot -> pos.z ) == CENTER ) &&
-	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-					    ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-					    ThisRobot->pos.z , enemynum ) ) )
-	    {
-	      ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
-	    }
+	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
+	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
 	}
       else
 	{
-	  if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , 
-				 ThisRobot->PrivatePathway[ 0 ].y ,
-				 ThisRobot->pos.z ) == CENTER ) &&
-	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-					    ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-					    ThisRobot->pos.z , enemynum ) ) )
+	  //--------------------
+	  // And if all else has failed, we could still try rotating (the meanwhile
+	  // 45 degree rotated vector) into the other direction, which is the same
+	  // as rotating is again by (360-90) degrees.
+	  //
+	  RotateVectorByAngle ( & StepVector , 360 - 90 ) ;
+	  if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
 	    {
-	      ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
+	      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
+	      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
 	    }
 	}
     }
-  
-  //--------------------
-  // Now we check if it's perhaps time to make a step up/down in order to
-  // get close enough for a successful melee weapon swing at a tux.
-  //
-  if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > TargetRange )
-    {
-      if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
-	{
-	  if ( ( DruidPassable ( ThisRobot->pos.x , 
-				 ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-				 ThisRobot->pos.z ) == CENTER ) &&
-	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-					    ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-					    ThisRobot->pos.z , enemynum ) ) )
-	    ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
-	}
-      else
-	{
-	  if ( ( DruidPassable ( ThisRobot->pos.x , 
-				 ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-				 ThisRobot->pos.z ) == CENTER ) &&
-	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-					    ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-					    ThisRobot->pos.z , enemynum ) ) )
-	    {
-	      ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
-	    }
-	}
-    } 
 
 }; // void MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
 
