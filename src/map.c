@@ -604,9 +604,17 @@ DecodeObstaclesOfThisLevel ( Level loadlevel , char* DataPointer )
       loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
     }
 
-  loadlevel -> obstacle_list [ i ] . type = 0 ;
-  loadlevel -> obstacle_list [ i ] . pos . x = 20 ;
-  loadlevel -> obstacle_list [ i ] . pos . y = 80 ;
+  loadlevel -> obstacle_list [ 0 ] . type = 0 ;
+  loadlevel -> obstacle_list [ 0 ] . pos . x = 20 ;
+  loadlevel -> obstacle_list [ 0 ] . pos . y = 80 ;
+
+  loadlevel -> obstacle_list [ 1 ] . type = 1 ;
+  loadlevel -> obstacle_list [ 1 ] . pos . x = 22 ;
+  loadlevel -> obstacle_list [ 1 ] . pos . y = 80 ;
+
+  loadlevel -> obstacle_list [ 1 ] . type = 2 ;
+  loadlevel -> obstacle_list [ 1 ] . pos . x = 20 ;
+  loadlevel -> obstacle_list [ 1 ] . pos . y = 78 ;
 
   /*
   //--------------------

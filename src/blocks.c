@@ -1366,10 +1366,10 @@ This error indicates some installation problem with freedroid.",
       // Now we convert this to display format and set alpha and colorkey
       // properties right...
       //
-      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-      obstacle_map [ i ] . image . surface = SDL_DisplayFormat( Whole_Image );
-      SDL_SetColorKey( obstacle_map [ i ] . image . surface , 0 , 0 );
-      SDL_SetAlpha( obstacle_map [ i ] . image . surface , 0 , 0 );
+      // SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      obstacle_map [ i ] . image . surface = SDL_DisplayFormatAlpha( Whole_Image );
+      // SDL_SetColorKey( obstacle_map [ i ] . image . surface , 0 , 0 );
+      // SDL_SetAlpha( obstacle_map [ i ] . image . surface , 0 , 0 );
       
       //--------------------
       // Now that this is all done, we can mark the map tile as loaded (later)

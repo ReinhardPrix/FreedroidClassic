@@ -837,6 +837,62 @@ This indicates a severe error in the map insert handling of Freedroid.",
     }
 }; // void ShowBigMapInsertsAroundTux ( int mask )
 
+/* ----------------------------------------------------------------------
+ * This function should blit an obstacle, that is given via it's address
+ * in the parameter
+ * ---------------------------------------------------------------------- */
+void
+blit_one_obstacle ( obstacle* our_obstacle )
+{
+  SDL_Rect target_rectangle;
+
+  // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
+  // our_obstacle -> pos . x , our_obstacle -> pos . y );
+
+  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    {
+      GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
+There was an obstacle type given, that exceeds the number of\n\
+ obstacle types allowed and loaded in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+
+    }
+
+  //--------------------
+  // Maybe later we might insert a check, whether the obstacle
+  // has been loaded into memory already, here at this location...
+  // But for now, we'll do without such measures...  Later with
+  // dynamic loading, this might give a more efficient game...
+  //
+
+  //--------------------
+  // We blit the obstacle to the right position...
+  //
+  target_rectangle . x = translate_map_point_to_screen_pixel ( our_obstacle -> pos . x , our_obstacle -> pos . y , TRUE );
+  target_rectangle . y = translate_map_point_to_screen_pixel ( our_obstacle -> pos . x , our_obstacle -> pos . y , FALSE );
+
+  SDL_BlitSurface ( obstacle_map [ our_obstacle -> type ] . image . surface , NULL , Screen , &target_rectangle );
+
+};
+
+/* ----------------------------------------------------------------------
+ * This function should display all obstacles around the Tux.  It might
+ * leave the code soon again, cause order of blitting has to be taken
+ * into account...
+ * ---------------------------------------------------------------------- */
+void
+show_obstacles_around_tux ( void )
+{
+  int i;
+  level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( obstacle_level -> obstacle_list [ i ] . type != ( -1 ) )
+	blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
+    }
+}; // void show_obstacles_around_tux ( void )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -889,6 +945,8 @@ AssembleCombatPicture (int mask)
 	  PutItem( i );
 	}
     }
+
+  show_obstacles_around_tux (  );
 
   if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
