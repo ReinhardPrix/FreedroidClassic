@@ -785,6 +785,45 @@ MyMalloc (long Mamount)
 @Ret: 
 * $Function----------------------------------------------------------*/
 void 
+ExecuteEvent ( int EventNumber )
+{
+  printf("\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
+  printf("\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
+
+  // Does the trigger include a change of a map tile?
+  if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
+    {
+      //YES.  So we need to check, if the location has been supplied fully first.
+      if ( ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.x == (-1) ) ||
+	   ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.y == (-1) ) ||
+	   ( AllTriggeredActions[ EventNumber ].ChangeMapLevel == (-1) ) )
+	{
+	  printf("\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  printf("\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
+	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
+	}
+    }
+
+  AllTriggeredActions[0].ChangeMapLocation.y=0;
+
+
+
+}; // void ExecuteEvent ( int EventNumber )
+
+/*@Function============================================================
+@Desc: This function checks for triggered events.  Those events are
+       usually entered via the mission file and read into the apropriate
+       structures via the InitNewMission function.  Here we check, whether
+       the nescessary conditions for an event are satisfied, and in case that
+       they are, we order the apropriate event to be executed.
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void 
 CheckForTriggeredEvents ( void )
 {
   int i;
@@ -808,7 +847,13 @@ CheckForTriggeredEvents ( void )
 	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me.pos.y ) ) continue;
 	}
 
-      printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
+      if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )
+	{
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != CurLevel->levelnum ) continue;
+	}
+
+      // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
+      ExecuteEvent( i );
 
     }
 

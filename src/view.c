@@ -247,7 +247,7 @@ Assemble_Combat_Picture (int mask)
     {
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) );
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
     }
 
   if ( Me.mission.MustLiveTime != (-1) )

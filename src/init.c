@@ -913,6 +913,12 @@ InitNewMission ( char *MissionName )
   AllEventTriggers[0].Influ_Must_Be_At_Point.y=2;
   AllEventTriggers[0].EventNumber=0;
 
+  AllTriggeredActions[0].ChangeMapLocation.x=6;
+  AllTriggeredActions[0].ChangeMapLocation.y=0;
+  AllTriggeredActions[0].ChangeMapLevel=4;
+  AllTriggeredActions[0].ChangeMapTo=0;
+
+
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
     {
