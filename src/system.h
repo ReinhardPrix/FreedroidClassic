@@ -39,32 +39,58 @@
 
 #include <stdio.h>
 #include <math.h>
+
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
-#include <getopt.h>
-
-#ifndef MACOSX 
-#include <sys/soundcard.h>
 #endif
 
+#ifdef HAVE_TIME_H
+#include <time.h>
+#else 
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+
+#include <signal.h>
+
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#else
+#include "mac-osx/getopt.h"
+#endif
+
+#ifdef HAVE_SYS_SOUNDCARD_H
+#include <sys/soundcard.h>
+#endif
+#ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
+#endif
+
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+
 #include <errno.h>
 #include <stdarg.h>
 #include <ctype.h>
 
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 
 #include "SDL.h"
 #include "SDL_image.h"
