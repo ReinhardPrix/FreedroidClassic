@@ -1006,7 +1006,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 9:
-		    drop_item_type = ITEM_CLOAK ;
+		    drop_item_type = ITEM_ARMOR_SIMPLE_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 10:
@@ -1064,7 +1064,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 7:
-		    drop_item_type = ITEM_ROBE ;
+		    drop_item_type = ITEM_ARMOR_REINFORCED_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 8:
@@ -1130,7 +1130,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 7:
-		    drop_item_type = ITEM_QUILTED_ARMOUR ;
+		    drop_item_type = ITEM_ARMOR_PROTECTIVE_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 8:
@@ -1251,7 +1251,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 4:
-	    switch ( MyRandom ( 4 ) )
+	    switch ( MyRandom ( 5 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_HIKING_BOOTS ;
@@ -1270,6 +1270,9 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 4:
+		    drop_item_type = ITEM_DROID_PLATING ;
+		    drop_item_multiplicity =  1 ;
+		    break;
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;

@@ -208,8 +208,8 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_EXTERMINATOR; ListPointer++;
 	ListPointer->type = ITEM_BUCKLER; ListPointer++;
 	ListPointer->type = ITEM_SMALL_SHIELD; ListPointer++;
-	ListPointer->type = ITEM_CLOAK; ListPointer++;
-	ListPointer->type = ITEM_ROBE; ListPointer++;
+	ListPointer->type = ITEM_ARMOR_SIMPLE_JACKET; ListPointer++;
+	ListPointer->type = ITEM_ARMOR_REINFORCED_JACKET; ListPointer++;
 	ListPointer->type = ITEM_DAGGER; ListPointer++;
 	ListPointer->type = ITEM_CLUB; ListPointer++;
 	ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;

@@ -2966,8 +2966,15 @@ Empty part string received!",
 }; // void iso_put_tux_part ( char* part_string , int x , int y , int player_num )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function will put the Tux torso, i.e. it will put some torso with
+ * the currently equipped armour on it.  Of course we can't have a unique
+ * ingame representation of the Tux torso for every type of armour inside
+ * the game.  Therefore several types of armour will each be mapped upon
+ * the same ingame representation.  Typically the types of armour mapping
+ * to the same ingame representation will be so similar, that you can
+ * easily tell them apart in inventory, but it will be more or less ok to
+ * use the very same ingame representation, because they are rather 
+ * similar after all.
  * ---------------------------------------------------------------------- */
 void
 iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
@@ -2977,9 +2984,13 @@ iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 	case -1 :
 	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_torso" , x , y , player_num , rotation_index );
 	    break;
-	case 29:
-	case 30:
-	case 31:
+	case ITEM_ARMOR_SIMPLE_JACKET:
+	case ITEM_ARMOR_REINFORCED_JACKET:
+	case ITEM_ARMOR_PROTECTIVE_JACKET:
+	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
+	    break;
+	case ITEM_LEATHER_ARMOUR:
+	case ITEM_DROID_PLATING:
 	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_robe" , x , y , player_num , rotation_index );
 	    break;
 	default:
@@ -2987,7 +2998,7 @@ iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 	    break;
     }
     
-}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
+}; // void iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
@@ -3071,7 +3082,7 @@ iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
   else
     iso_put_tux_part ( PART_GROUP_FEET , "iso_boots1" , x , y , player_num , rotation_index );
 
-}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
+}; // void iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *

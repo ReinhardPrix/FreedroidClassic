@@ -1031,7 +1031,7 @@ void
 Cheatmenu (void)
 {
     char *input;		// string input from user 
-    int Weiter;
+    int can_continue;
     int LNum, X, Y, num;
     int i, l;
     int x0, y0, line;
@@ -1053,8 +1053,8 @@ Cheatmenu (void)
     y0 = 20;
     line = 0;
 
-    Weiter = FALSE;
-    while (!Weiter)
+    can_continue = FALSE;
+    while (!can_continue)
     {
 	ClearGraphMem ();
 	printf_SDL (Screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
@@ -1089,7 +1089,7 @@ Cheatmenu (void)
 		break;
 		
 	    case 'a': // armageddon: kills all robots on ship...
-		Weiter = 1;
+		can_continue = 1;
 		Armageddon ();
 		break;
 		
@@ -1312,10 +1312,10 @@ Cheatmenu (void)
 		
 	    case ' ':
 	    case 'q':
-		Weiter = 1;
+		can_continue = 1;
 		break;
 	} /* switch (getchar_raw()) */
-    } /* while (!Weiter) */
+    } /* while (!can_continue) */
     
     ClearGraphMem ();
     our_SDL_flip_wrapper (Screen);
@@ -1349,7 +1349,7 @@ enum
     CONTRIBUTE_POSITION,
     EXIT_FREEDROID_POSITION
   };
-  int Weiter = 0 ;
+  int can_continue = 0 ;
   int MenuPosition = 1 ;
   char* MenuTexts [ 10 ] ;
 
@@ -1363,7 +1363,7 @@ enum
   // the time spent in the menu.
   Activate_Conservative_Frame_Computation ( ) ;
 
-  while (!Weiter)
+  while (!can_continue)
     {
       SetCurrentFont ( Menu_BFont );
 
@@ -1382,10 +1382,10 @@ enum
       switch (MenuPosition) 
 	{
 	case SINGLE_PLAYER_POSITION:
-	  Weiter = Single_Player_Menu ( );
+	  can_continue = Single_Player_Menu ( );
 	  break;
 	case MULTI_PLAYER_POSITION:
-	  Weiter = Multi_Player_Menu();
+	  can_continue = Multi_Player_Menu();
 	  break;
 	case CREDITS_POSITION:
 	  Credits_Menu();
@@ -1430,7 +1430,7 @@ enum
     QUIT_POSITION
   };
 
-  int Weiter = 0;
+  int can_continue = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
 
@@ -1449,7 +1449,7 @@ enum
   //
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!can_continue)
     {
       MenuTexts[0]="Save Game";
       MenuTexts[1]="Resume Game";
@@ -1466,26 +1466,26 @@ enum
 	{
 	case ( -1 ) :
 	case ( RESUME_GAME_POSITION ) :
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	  break;
 	case OPTIONS_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  Options_Menu();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  // can_continue = TRUE;   /* jp forgot this... ;) */
 	  break;
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  LevelEditor();
-	  Weiter = TRUE;  
+	  can_continue = TRUE;  
 	  break;
 	case LOAD_GAME_POSITION:
 	  LoadGame ( ) ;
-	  Weiter = TRUE ;
+	  can_continue = TRUE ;
 	  break;
 	case NEW_GAME_POSITION:
 	  Me [ 0 ] . energy = 100 ;
 	  GameOver = TRUE ;
-	  Weiter = TRUE;
+	  can_continue = TRUE;
 	  break;
 	case SAVE_GAME_POSITION:
 	  SaveGame(  );
@@ -1517,7 +1517,7 @@ enum
 void
 Change_Screen_Resolution_Menu ( void )
 {
-    int Weiter = 0;
+    int can_continue = 0;
     int MenuPosition=1;
     char* MenuTexts[10];
     enum
@@ -1535,7 +1535,7 @@ Change_Screen_Resolution_Menu ( void )
 
     while ( EscapePressed() );
     
-    while (!Weiter)
+    while (!can_continue)
     {
 	MenuTexts[0]="640x480";
 	MenuTexts[1]="800x600";
@@ -1549,7 +1549,7 @@ Change_Screen_Resolution_Menu ( void )
 	switch (MenuPosition) 
 	{
 	    case (-1):
-		Weiter=!Weiter;
+		can_continue=!can_continue;
 		break;
 		
 	    case SET_640_480:
@@ -1596,7 +1596,7 @@ Thanks you.\n");
 		
 	    case LEAVE_OPTIONS_MENU:
 		while (EnterPressed() || SpacePressed() );
-		Weiter=TRUE;
+		can_continue=TRUE;
 		break;
 		
 	    default: 
@@ -1619,7 +1619,7 @@ Thanks you.\n");
 void
 Graphics_Options_Menu (void)
 {
-    int Weiter = 0;
+    int can_continue = 0;
     int MenuPosition=1;
     char Options0[1000];
     char Options1[1000];
@@ -1643,7 +1643,7 @@ Graphics_Options_Menu (void)
     
     while ( EscapePressed() );
     
-    while (!Weiter)
+    while (!can_continue)
     {
 	sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
 	sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
@@ -1666,7 +1666,7 @@ Graphics_Options_Menu (void)
 	{
 	    
 	    case (-1):
-		Weiter=!Weiter;
+		can_continue=!can_continue;
 		break;
 		
 	    case SET_GAMMA_CORRECTION:
@@ -1739,7 +1739,7 @@ Thanks you.\n");
 		
 	    case LEAVE_OPTIONS_MENU:
 		while (EnterPressed() || SpacePressed() );
-		Weiter=TRUE;
+		can_continue=TRUE;
 		break;
 		
 	    default: 
@@ -1762,7 +1762,7 @@ Thanks you.\n");
 void
 Sound_Options_Menu (void)
 {
-    int Weiter = 0;
+    int can_continue = 0;
     int MenuPosition=1;
     char Options0[1000];
     char Options1[1000];
@@ -1784,7 +1784,7 @@ Sound_Options_Menu (void)
     
     while ( EscapePressed() );
     
-    while (!Weiter)
+    while (!can_continue)
     {
 	
 	sprintf ( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
@@ -1806,7 +1806,7 @@ Sound_Options_Menu (void)
 	{
 	    
 	    case (-1):
-		Weiter=!Weiter;
+		can_continue=!can_continue;
 		break;
 		
 	    case SET_BG_MUSIC_VOLUME:
@@ -1858,7 +1858,7 @@ Sound_Options_Menu (void)
 		
 	    case LEAVE_OPTIONS_MENU:
 		while (EnterPressed() || SpacePressed() );
-		Weiter=TRUE;
+		can_continue=TRUE;
 		break;
 		
 	    default: 
@@ -1881,7 +1881,7 @@ Sound_Options_Menu (void)
 void
 PerformanceTweaksOptionsMenu (void)
 {
-    int Weiter = 0;
+    int can_continue = 0;
     int MenuPosition=1;
     char Options0[1000];
     char Options1[1000];
@@ -1909,7 +1909,7 @@ PerformanceTweaksOptionsMenu (void)
     
     while ( EscapePressed() );
     
-    while (!Weiter)
+    while (!can_continue)
     {
 	
 	sprintf ( Options0 , "Hog CPU for max. performance: %s", 
@@ -1953,7 +1953,7 @@ PerformanceTweaksOptionsMenu (void)
 	switch (MenuPosition) 
 	{
 	    case (-1):
-		Weiter=!Weiter;
+		can_continue=!can_continue;
 		break;
 		
 	    case SET_HOG_CPU_FLAG:
@@ -1998,7 +1998,7 @@ PerformanceTweaksOptionsMenu (void)
 
 	    case LEAVE_PERFORMANCE_TWEAKS_MENU:
 		while (EnterPressed() || SpacePressed() );
-		Weiter=TRUE;
+		can_continue=TRUE;
 		break;
 		
 	    default: 
@@ -2021,7 +2021,7 @@ PerformanceTweaksOptionsMenu (void)
 void
 On_Screen_Display_Options_Menu (void)
 {
-  int Weiter = 0;
+  int can_continue = 0;
   int MenuPosition=1;
   char Options0[1000];
   char Options1[1000];
@@ -2047,7 +2047,7 @@ On_Screen_Display_Options_Menu (void)
 
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!can_continue)
     {
 
       sprintf( Options0 , "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF" );
@@ -2070,7 +2070,7 @@ On_Screen_Display_Options_Menu (void)
       switch (MenuPosition) 
 	{
 	case (-1):
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	  break;
 	case SHOW_POSITION:
 	  while (EnterPressed() || SpacePressed() );
@@ -2126,7 +2126,7 @@ On_Screen_Display_Options_Menu (void)
 
 	case LEAVE_OPTIONS_MENU:
 	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
+	  can_continue=TRUE;
 	  break;
 	default: 
 	  break;
@@ -2148,7 +2148,7 @@ void
 Droid_Talk_Options_Menu (void)
 {
 
-  int Weiter = 0;
+  int can_continue = 0;
   int MenuPosition=1;
   char Options0[1000];
   char Options1[1000];
@@ -2169,7 +2169,7 @@ Droid_Talk_Options_Menu (void)
       LEAVE_DROID_TALK_OPTIONS_MENU 
     };
 
-  while (!Weiter)
+  while (!can_continue)
     {
       sprintf( Options0 , "Influencer Refresh Texts: %s" , GameConfig.Influencer_Refresh_Text ? "ON" : "OFF" );
       sprintf( Options1 , "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF" );
@@ -2190,7 +2190,7 @@ Droid_Talk_Options_Menu (void)
       switch (MenuPosition) 
 	{
 	case (-1):
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	  break;
 	case INFLU_REFRESH_TEXT:
 	  while (EnterPressed() || SpacePressed() );
@@ -2218,7 +2218,7 @@ Droid_Talk_Options_Menu (void)
 	  break;
 	case LEAVE_DROID_TALK_OPTIONS_MENU:
 	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
+	  can_continue=TRUE;
 	  break;
 	default: 
 	  break;
@@ -2239,7 +2239,7 @@ Droid_Talk_Options_Menu (void)
 void
 Options_Menu (void)
 {
-  int Weiter = 0;
+  int can_continue = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
 enum
@@ -2262,7 +2262,7 @@ enum
   MenuTexts[6]="Back";
   MenuTexts[7]="";
 
-  while ( !Weiter )
+  while ( !can_continue )
     {
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
@@ -2270,7 +2270,7 @@ enum
       switch (MenuPosition) 
 	{
 	case (-1):
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	  break;
 	case GRAPHICS_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
@@ -2297,7 +2297,7 @@ enum
 	  break;
 	case LEAVE_OPTIONS_MENU:
 	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
+	  can_continue=TRUE;
 	  break;
 	default: 
 	  break;
@@ -2813,7 +2813,7 @@ Freedroid will continue execution now, since this problem\n\
 int
 Single_Player_Menu (void)
 {
-    int Weiter = 0;
+    int can_continue = 0;
     int MenuPosition=1;
     char* MenuTexts[10];
     
@@ -2831,7 +2831,7 @@ Single_Player_Menu (void)
     MenuTexts[3]="Back";
     MenuTexts[4]="";
     
-    while (!Weiter)
+    while (!can_continue)
     {
 	
 	if ( ! skip_initial_menus )
@@ -2848,13 +2848,13 @@ Single_Player_Menu (void)
 		{
 		    LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 		    PrepareStartOfNewCharacter ( ) ;
-		    Weiter=TRUE;
+		    can_continue=TRUE;
 		    load_game_command_came_from_inside_running_game = TRUE ;
 		    return ( TRUE );
 		}
 		else
 		{
-		    Weiter=FALSE;
+		    can_continue=FALSE;
 		}
 		break;
 		
@@ -2863,12 +2863,12 @@ Single_Player_Menu (void)
 		
 		if ( Load_Existing_Hero_Menu ( ) == TRUE )
 		{
-		    Weiter = TRUE;
+		    can_continue = TRUE;
 		    return ( TRUE );
 		}
 		else
 		{
-		    Weiter = FALSE;
+		    can_continue = FALSE;
 		    // return ( FALSE );
 		}
 		break;
@@ -2876,14 +2876,14 @@ Single_Player_Menu (void)
 	    case DELETE_EXISTING_HERO_POSITION: 
 		while (EnterPressed() || SpacePressed() ) ;
 		Delete_Existing_Hero_Menu ( ) ;
-		Weiter= FALSE ;
+		can_continue= FALSE ;
 		// return ( FALSE );
 		break;
 		
 	    case (-1):
 	    case BACK_POSITION:
 		while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
-		Weiter=!Weiter;
+		can_continue=!can_continue;
 		return ( FALSE );
 		break;
 	    default: 
@@ -2903,88 +2903,88 @@ Single_Player_Menu (void)
 int
 Multi_Player_Menu (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-
-enum
-  { 
-    START_AS_SERVER_POSITION=1, 
-    JOIN_EXISTING_MULTIPLAYER_POSITION, 
-    LIST_KNOWN_SERVERS,
-    BACK_POSITION
-  };
-
-  MenuTexts[0]="Start as a Server";
-  MenuTexts[1]="Join existing Multiplayer game";
-  MenuTexts[2]="List known Servers";
-  MenuTexts[3]="Back";
-  MenuTexts[4]="";
-
-  GiveMouseAlertWindow ( "\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot." ) ;
-  SetCurrentFont ( Menu_BFont );
-  
-  while (!Weiter)
+    int can_continue = 0;
+    int MenuPosition=1;
+    char* MenuTexts[10];
+    
+    enum
+	{ 
+	    START_AS_SERVER_POSITION=1, 
+	    JOIN_EXISTING_MULTIPLAYER_POSITION, 
+	    LIST_KNOWN_SERVERS,
+	    BACK_POSITION
+	};
+    
+    MenuTexts[0]="Start as a Server";
+    MenuTexts[1]="Join existing Multiplayer game";
+    MenuTexts[2]="List known Servers";
+    MenuTexts[3]="Back";
+    MenuTexts[4]="";
+    
+    GiveMouseAlertWindow ( "\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot." ) ;
+    SetCurrentFont ( Menu_BFont );
+    
+    while (!can_continue)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-
-      switch (MenuPosition) 
+	MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	
+	switch (MenuPosition) 
 	{
-	case START_AS_SERVER_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR , FALSE ) ) ;
-	  PrepareStartOfNewCharacter (  );	
-	  ServerMode = TRUE ;
-	  OpenTheServerSocket (  );
-	  Weiter=TRUE;
-	  return ( TRUE );
-	  break;
-
+	    case START_AS_SERVER_POSITION:
+		while (EnterPressed() || SpacePressed() ) ;
+		LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR , FALSE ) ) ;
+		PrepareStartOfNewCharacter (  );	
+		ServerMode = TRUE ;
+		OpenTheServerSocket (  );
+		can_continue=TRUE;
+		return ( TRUE );
+		break;
+		
 	case JOIN_EXISTING_MULTIPLAYER_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
+	    while (EnterPressed() || SpacePressed() ) ;
+	    
+	    if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
 	    {
-	      Weiter = TRUE;
-	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	      PrepareStartOfNewCharacter (  );
-	      ClientMode = TRUE;
-	      return ( TRUE );
+		can_continue = TRUE;
+		LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+		PrepareStartOfNewCharacter (  );
+		ClientMode = TRUE;
+		return ( TRUE );
 	    }
-	  else
+	    else
 	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
+		can_continue = FALSE;
+		// return ( FALSE );
 	    }
-
-	  break;
-	case LIST_KNOWN_SERVERS: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
-	    {
-	      Weiter = TRUE;
-	      return ( TRUE );
-	    }
-	  else
-	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
-	    }
-
-	  break;
-	case BACK_POSITION:
-	case (-1):
-	default: 
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
+	    
+	    break;
+	    case LIST_KNOWN_SERVERS: 
+		while (EnterPressed() || SpacePressed() ) ;
+		
+		if ( Load_Existing_Hero_Menu ( ) == TRUE )
+		{
+		    can_continue = TRUE;
+		    return ( TRUE );
+		}
+		else
+		{
+		    can_continue = FALSE;
+		    // return ( FALSE );
+		}
+		
+		break;
+	    case BACK_POSITION:
+	    case (-1):
+	    default: 
+		while (EnterPressed() || SpacePressed() ) ;
+		can_continue=!can_continue;
+		return ( FALSE );
+		break;
 	}
     }
-  return ( TRUE );
-
-} // Multi_Player_Menu
+    return ( TRUE );
+    
+}; // int Multi_Player_Menu ( void ) 
 
 /* ----------------------------------------------------------------------
  * This function provides the credits screen.  It is a submenu of
@@ -3112,11 +3112,11 @@ Thank you,\n\n\
 void
 Show_Mission_Details ( int MissionNumber )
 {
-  int Weiter = 0;
+  int can_continue = 0;
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
-  while (!Weiter)
+  while (!can_continue)
     {
 
       DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
@@ -3169,7 +3169,7 @@ Show_Mission_Details ( int MissionNumber )
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	}
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
@@ -3185,7 +3185,7 @@ Show_Mission_Details ( int MissionNumber )
 void
 Show_Mission_Log_Menu (void)
 {
-  int Weiter = 0;
+  int can_continue = 0;
   int i;
   int NoOfActiveMissions;
   int MenuPosition=1;
@@ -3198,7 +3198,7 @@ Show_Mission_Log_Menu (void)
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
-  while (!Weiter)
+  while (!can_continue)
     {
 
       DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
@@ -3273,7 +3273,7 @@ Show_Mission_Log_Menu (void)
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{
-	  Weiter=!Weiter;
+	  can_continue=!can_continue;
 	}
     } // end of while loop
 
