@@ -1459,7 +1459,10 @@ Show_Mission_Details ( int MissionNumber )
   while (!Weiter)
     {
 
-      InitiateMenu();
+      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+      MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
+      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+      //InitiateMenu();
 
       CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
 
@@ -1535,67 +1538,106 @@ Show_Mission_Log_Menu (void)
 {
   int Weiter = 0;
   int i;
+  int NoOfActiveMissions;
+  int MenuPosition=1;
+  int InterLineSpace=60;
   SDL_Rect* Mission_Window_Pointer=&User_Rect;
+
+#define MISSION_NAME_POS_X 230
+#define FIRST_MISSION_POS_Y 50
+
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
   while (!Weiter)
     {
 
-      InitiateMenu();
+      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+      MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
+      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+      // InitiateMenu();
 
-      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION LOG");
-      
-      DisplayText ( " " , 1 , 3*FontHeight( Menu_BFont ) , Mission_Window_Pointer );
+      // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION LOG");
+      // DisplayText ( " " , 1 , 3*FontHeight( Menu_BFont ) , Mission_Window_Pointer );
+
+      // SetCurrentFont( Menu_BFont );
+      SetCurrentFont( Para_BFont );
 
       DisplayText ( "This is the record of all missions you have been assigned:\n\n" , 
-		    -1 , -1 , Mission_Window_Pointer );
+		    0 , FIRST_MISSION_POS_Y - 2 * InterLineSpace , Mission_Window_Pointer );
 
+      NoOfActiveMissions=0;
       for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
 	{
 
 	  if ( Me.AllMissions[i].MissionExistsAtAll != TRUE ) continue;
 
-	  DisplayText ( "\nMission status: " , 
-			-1 , -1 , Mission_Window_Pointer );
+	  NoOfActiveMissions++;
+
+	  // DisplayText ( "\nMission status: " , -1 , -1 , Mission_Window_Pointer );
 
 	  if ( Me.AllMissions[i].MissionIsComplete == TRUE )
 	    {
-	      DisplayText ( "SOLVED: " , -1 , -1 , Mission_Window_Pointer );
+	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
 	  else if ( Me.AllMissions[i].MissionWasFailed == TRUE )
 	    {
-	      DisplayText ( "FAILED: " , -1 , -1 , Mission_Window_Pointer );
+	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
 	  else if ( Me.AllMissions[i].MissionWasAssigned == TRUE ) 
 	    {
-	      DisplayText ( "ASSIGNED: " , -1 , -1 , Mission_Window_Pointer );
+	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
 	  else
 	    {
-	      DisplayText ( "UNASSIGNED: " , -1 , -1 , Mission_Window_Pointer );
+	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
 
-	  DisplayText ( Me.AllMissions[i].MissionName , 
-			-1 , -1 , Mission_Window_Pointer );
+	  DisplayText ( Me.AllMissions[i].MissionName , MISSION_NAME_POS_X , 
+			FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace ,  Mission_Window_Pointer );
 
 	}
 
-      DisplayText ( "\n--- Currently no more missions beyond that ---" , 
+      DisplayText ( "\n\n--- Currently no missions beyond that ---" , 
 		    -1 , -1 , Mission_Window_Pointer );
+
+      // Highlight currently selected option with an influencer before it
+      PutInfluence( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 );
+
+      // If the user pressed up or down, the cursor within
+      // the level editor menu has to be moved, which is done here:
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < NoOfActiveMissions ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+
+      if ( EnterPressed() || SpacePressed() )
+	{
+	  Show_Mission_Details ( MenuPosition-1 );
+	  while ( EnterPressed() || SpacePressed() );
+	}
+
 
 
 
       SDL_Flip( ne_screen );
-
-      // Wait until the user does SOMETHING
-      while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{
 	  Weiter=!Weiter;
 	}
     } // end of while loop
+
+  // Wait until the user does SOMETHING
+  //while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
 
 
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
