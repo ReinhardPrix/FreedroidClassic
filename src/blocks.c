@@ -209,33 +209,50 @@ Load_Bullet_Surfaces( void )
   SDL_Rect Target;
   int i;
   int j;
+  int RowTop=0;
   char *fpath;
+  int BulletImageHeightTable[30];
+  
+  BulletImageHeightTable[  0 ] = Block_Height;
+  BulletImageHeightTable[  1 ] = Block_Height;
+  BulletImageHeightTable[  2 ] = Block_Height;
+  BulletImageHeightTable[  3 ] = Block_Height;
+  BulletImageHeightTable[  4 ] = Block_Height;
+  BulletImageHeightTable[  5 ] = Block_Height;
+  BulletImageHeightTable[  6 ] = Block_Height;
+  BulletImageHeightTable[  7 ] = Block_Height;
+  BulletImageHeightTable[  8 ] = Block_Height * 2 ;
+  BulletImageHeightTable[  9 ] = Block_Height;
+  BulletImageHeightTable[ 10 ] = Block_Height;
+
 
   fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       for ( j=0 ; j < Bulletmap[i].phases ; j++ )
 	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
 	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
-	  Source.x=j*(Block_Height+2);
-	  Source.y=i*(Block_Width+2);
+	  Source.x=j*(Block_Width+2);
+	  Source.y=i*(Block_Height+2);
 	  Source.w=Block_Width;
-	  Source.h=Block_Height;
+	  Source.h=BulletImageHeightTable[ i ]; // Block_Height;
 	  Target.x=0;
 	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
+	  Target.w=0; // Block_Width;
+	  Target.h=0; // Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
 	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 	}
+      RowTop += BulletImageHeightTable[ i ];
     }
 
   SDL_FreeSurface( tmp_surf );
