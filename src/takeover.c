@@ -119,7 +119,7 @@ int DisplayColumn[NUM_LINES] = {
   GELB, VIOLETT
 };
 
-SDL_Color to_bg_color = {199, 43, 43};
+SDL_Color to_bg_color = {199, 199, 199};
 
 playground_t ToPlayground;
 playground_t ActivationMap;
@@ -596,12 +596,10 @@ GetTakeoverGraphics (void)
   int i,j;
   int curx = 0, cury = 0;
   SDL_Rect tmp;
-  char *filepath;
 
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
-
-  filepath = find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-  to_blocks = IMG_Load (filepath);
+  
+  to_blocks = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
 
   /* Set the fill-blocks */
   for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)

@@ -812,14 +812,16 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   SDL_Surface *tmp;
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
-  char ImageFilename[100] = GRAPHICS_DIR;
+  char *fpath;
+  char fname[500];
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
 
-  strcat( ImageFilename , Druidmap[Number].druidname );
-  strcat( ImageFilename , ".jpg" );
+  strcat( fname, Druidmap[Number].druidname );
+  strcat( fname , ".jpg" );
 
-  if ( !(tmp=IMG_Load( ImageFilename ) ) )
+  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+  if ( !(tmp=IMG_Load (fpath)) )
     {
       fprintf (stderr,
 	     "\n\
@@ -834,7 +836,7 @@ in your distribution of Freedroid.\n\
 Freedroid will terminate now to point at the error.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , ImageFilename );
+\n" , fpath );
       Terminate (ERR);
     }
   

@@ -305,6 +305,7 @@ AnimateTeleports (void)
 int
 LoadShip (char *filename)
 {
+  char *fpath;
   struct stat stbuf;
   FILE *ShipFile;
   char *ShipData;
@@ -314,7 +315,8 @@ LoadShip (char *filename)
   int i;
 
   /* Read the whole ship-data to memory */
-  if ((ShipFile = fopen (filename, "r")) == NULL)
+  fpath = find_file (filename, MAP_DIR, FALSE);
+  if ((ShipFile = fopen (fpath, "r")) == NULL)
     {
       // DebugPrintf (2, "\nint LoadShip(char *shipname): Error opening file.... ");
       DebugPrintf (1, "\n\nint LoadShip(char *filename): Error opening file....Terminating.... ");
@@ -462,8 +464,6 @@ LoadShip (char *filename)
 void CheckWaypointIntegrity(Level Lev)
 {
   int i, j , k , l ;
-  int MemAmount=0;		/* the size of the level-data */
-  int xlen = Lev->xlen, ylen = Lev->ylen;
 
   for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
@@ -1220,14 +1220,12 @@ TranslateMap (Level Lev)
 int
 GetLiftConnections (char *filename)
 {
-  // char filename[FILENAME_LEN + 1];
-  int i;
+  char *fpath;
   FILE *Lift_file;
   struct stat stbuf;
   char *Data;
   char *EndPointer;
   char *EntryPointer;
-  int cur_lev, cur_x, cur_y, up, down, lift_row;
   int Label;
   Lift CurLift;
 
@@ -1235,9 +1233,8 @@ GetLiftConnections (char *filename)
 #define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
 
   /* Now get the lift-connection data from "FILE.elv" file */
-  // strcpy (filename, shipname);	/* get lift filename */
-
-  if ((Lift_file = fopen (filename, "r")) == NULL)
+  fpath = find_file (filename, MAP_DIR, FALSE);
+  if ((Lift_file = fopen (fpath, "r")) == NULL)
     {
       printf("\n\nCouldn't open lift file...Terminating....\n");
       Terminate (ERR);
@@ -1365,6 +1362,7 @@ GetLiftConnections (char *filename)
 int
 GetCrew (char *filename)
 {
+  char *fpath;
   FILE *DroidsFile;
   char *MainDroidsFilePointer;
   char *EndOfDroidsFilePointer;
@@ -1386,7 +1384,8 @@ GetCrew (char *filename)
   //For that, we must get it into memory first.
   //The procedure is the same as with LoadShip
   //
-  if (( DroidsFile = fopen ( filename , "r")) == NULL)
+  fpath = find_file (filename, MAP_DIR, FALSE);
+  if (( DroidsFile = fopen (fpath , "r")) == NULL)
     {
       DebugPrintf (2, "\nint GetCrew( ... ): Error opening file.... ");
       Terminate(ERR);

@@ -76,9 +76,9 @@ enum
 #define DATADIR ".."   // our local fallback
 #endif
 
-#define GRAPHICS_DIR		DATADIR "/graphics/"
-#define SOUND_DIR		DATADIR "/sound/"
-#define MAP_DIR			DATADIR "/map/"
+#define GRAPHICS_DIR		"graphics/"
+#define SOUND_DIR		"sound/"
+#define MAP_DIR			"map/"
 
 #define NE_MAP_BLOCK_FILE	"ne_block_red.gif"
 #define NE_DROID_BLOCK_FILE	"ne_droids.gif"
@@ -86,23 +86,18 @@ enum
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.gif"
 #define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
 
-#define NE_LIFT_PIC_FILE	GRAPHICS_DIR "ne_ship.gif"
-#define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.gif" 
-#define NE_BANNER_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.gif"
-#define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
-#define NE_CREDITS_PIC_FILE     GRAPHICS_DIR "ne_credits.jpg"
-#define SHIP_OFF_PIC		GRAPHICS_DIR "ship_off.bmp"
-#define SHIP_ON_PIC		GRAPHICS_DIR "ship_on.bmp"
+#define NE_CONSOLEN_PIC_FILE    "ne_cons.gif" 
+#define NE_BANNER_BLOCK_FILE    "ne_rahmen.gif"
+#define NE_TITLE_PIC_FILE       "ne_title.jpg"
+#define NE_CREDITS_PIC_FILE     "ne_credits.jpg"
 
-#define STANDARD_MISSION        MAP_DIR "Paradroid.mission"
-#define NEW_MISSION             MAP_DIR "The_Outbreak.mission"
+#define STANDARD_MISSION        "Paradroid.mission"
+#define NEW_MISSION             "The_Outbreak.mission"
 
-#define PARA_FONT_FILE 		GRAPHICS_DIR "parafont.png"
-// #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"
-// #define MENU_FONT_FILE		GRAPHICS_DIR "NeonFont.png"
-#define MENU_FONT_FILE 		GRAPHICS_DIR "ArialGold.png"
-#define FPS_FONT_FILE 		GRAPHICS_DIR "font05.png"
-#define ICON_FILE		GRAPHICS_DIR "paraicon.bmp"
+#define PARA_FONT_FILE 		"parafont.png"
+#define MENU_FONT_FILE 		"ArialGold.png"
+#define FPS_FONT_FILE 		"font05.png"
+#define ICON_FILE		"paraicon.bmp"
 
 
 // **********************************************************************
@@ -281,7 +276,7 @@ enum _directions
 
 #define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
 
-#define ALLBULLETTYPES		7	/* number of bullet-types */
+#define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */

@@ -162,7 +162,7 @@ ne_get_rahmen_block (char *picfile)
   SDL_Rect rect, *ret;
 
   /* Load the map-block BMP file into the appropriate surface */
-  if( !(tmp = IMG_Load(picfile) ))
+  if( !(tmp = IMG_Load(picfile)) )
     {
       fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
       Terminate (ERR);

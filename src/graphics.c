@@ -358,15 +358,15 @@ LoadThemeConfigurationFile(void)
   FILE *DataFile;
   char *Data;
   char *ReadPointer;
-  char *filename;
+  char *fpath;
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
 
-  filename = find_file ("config.theme", GRAPHICS_DIR, TRUE);
+  fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
-  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , filename );
+  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , fpath );
 
   // Read the whole theme data to memory 
-  if ((DataFile = fopen (filename, "r")) == NULL)
+  if ((DataFile = fopen (fpath, "r")) == NULL)
     {
       DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile( void ): Error opening file.... ");
       Terminate(ERR);
@@ -593,7 +593,7 @@ InitPictures (void)
   SDL_Rect Source_Rectangle;
   SDL_Rect Destination_Rectangle;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
-  char *PicturePath;
+  char *fpath;
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -661,9 +661,9 @@ InitPictures (void)
 
   if ( CurLevel == NULL )
     {
-      PicturePath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+      fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
       ne_map_block =
-	ne_get_blocks (PicturePath , NUM_MAP_BLOCKS, 9, 0, block_line++);
+	ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
     }
   else 
     {
@@ -672,16 +672,16 @@ InitPictures (void)
     }
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
-  PicturePath = find_file (NE_DROID_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (NE_DROID_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   ne_influ_block =
-    ne_get_blocks ( PicturePath , DROID_PHASES, 0, 0, block_line++);
+    ne_get_blocks ( fpath , DROID_PHASES, 0, 0, block_line++);
 
   ne_droid_block =
-    ne_get_blocks ( PicturePath , DROID_PHASES, 0, 1, block_line++);
+    ne_get_blocks ( fpath , DROID_PHASES, 0, 1, block_line++);
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  PicturePath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   for (i=0; i < ALLBULLETTYPES; i++)
     {
@@ -689,7 +689,7 @@ InitPictures (void)
       // It should soon be no longer nescessary to read more than one type in, but
       // it doesn't hurt and for now we can leave it as it is
       Bulletmap[i].block =
-	ne_get_blocks ( PicturePath , MAX_PHASES_IN_A_BULLET , 0, i, block_line++);
+	ne_get_blocks ( fpath , MAX_PHASES_IN_A_BULLET , 0, i, block_line++);
 
       // At first we create a surface of the size of one map tile and then
       // we make sure it is supplied with an alpha channel
@@ -732,33 +732,28 @@ InitPictures (void)
     } // for i = 0 to MAXBULLETTYPES
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
-  PicturePath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   for (i=0; i < ALLBLASTTYPES; i++)
     Blastmap[i].block =
-      ne_get_blocks ( PicturePath , Blastmap[i].phases, 0, i, block_line++);
+      ne_get_blocks ( fpath , Blastmap[i].phases, 0, i, block_line++);
 
-  PicturePath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   ne_digit_block =
-    ne_get_digit_blocks ( PicturePath , DIGITNUMBER, DIGITNUMBER, 0, block_line++);
+    ne_get_digit_blocks ( fpath , DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
-  ne_rahmen_block = ne_get_rahmen_block ( NE_BANNER_BLOCK_FILE );
+  fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
+  ne_rahmen_block = ne_get_rahmen_block (fpath);
   
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)
-  ne_console_surface= IMG_Load ( NE_CONSOLEN_PIC_FILE );
-
-  /* load the 3 ship side-view: lights off, level-lights on and lift-lights on */
-  // ship_off_pic = IMG_Load (SHIP_OFF_PIC);
-  // ship_on_pic = IMG_Load (SHIP_ON_PIC);
-  // SDL_SetColorKey(ship_off_pic, SDL_SRCCOLORKEY, ne_transp_key);
-  // SDL_SetColorKey(ship_on_pic, SDL_SRCCOLORKEY, ne_transp_key);
+  fpath = find_file (NE_CONSOLEN_PIC_FILE, GRAPHICS_DIR, FALSE);
+  ne_console_surface= IMG_Load (fpath); 
 
   ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
-
-
+  
   return (TRUE);
 }  // InitPictures
 
@@ -794,7 +789,7 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 void
 SetLevelColor (int ColorEntry)
 {
-  char *PicturePath;
+  char *fpath;
 
   char *ColoredBlockFiles[] = {
     "ne_block_red.gif",
@@ -807,8 +802,8 @@ SetLevelColor (int ColorEntry)
     NULL
   };
 
-  PicturePath = find_file (ColoredBlockFiles[ColorEntry], GRAPHICS_DIR, TRUE);
-  ne_map_block = ne_get_blocks (PicturePath, NUM_MAP_BLOCKS, 9, 0, 0);
+  fpath = find_file (ColoredBlockFiles[ColorEntry], GRAPHICS_DIR, TRUE);
+  ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
 
   
 } // void SetLevelColor(int ColorEntry)
@@ -826,6 +821,7 @@ Init_Video (void)
   SDL_Rect **vid_modes;
   char vid_driver[81];
   Uint32 flags;  /* flags for SDL video mode */
+  char *fpath;
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
@@ -851,8 +847,8 @@ Init_Video (void)
 
   //--------------------
   // Now we initialize the fonts needed by BFont functions
-  
-  if ( ( Menu_BFont = LoadFont (MENU_FONT_FILE) ) == NULL )
+  fpath = find_file (MENU_FONT_FILE, GRAPHICS_DIR, FALSE);
+  if ( ( Menu_BFont = LoadFont (fpath) ) == NULL )
       {
       fprintf (stderr,
 	     "\n\
@@ -871,8 +867,9 @@ Sorry...\n\
         Terminate(ERR);
   } else
   DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
-
-  if ( ( Para_BFont = LoadFont (PARA_FONT_FILE) ) == NULL )
+  
+  fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, FALSE);
+  if ( ( Para_BFont = LoadFont (fpath) ) == NULL )
     {
       fprintf (stderr,
 	     "\n\
@@ -892,7 +889,8 @@ Sorry...\n\
     } else
       DebugPrintf(1, "\nSDL Para Font initialisation successful.\n");
 
-  if ( ( FPS_Display_BFont = LoadFont ( FPS_FONT_FILE) ) == NULL )
+  fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, FALSE);
+  if ( ( FPS_Display_BFont = LoadFont (fpath) ) == NULL )
     {
       fprintf (stderr,
 	     "\n\
@@ -925,7 +923,8 @@ Sorry...\n\
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
       SDL_WM_SetCaption ("Freedroid", "");
-      SDL_WM_SetIcon( IMG_Load (ICON_FILE), NULL);
+      fpath = find_file (ICON_FILE, GRAPHICS_DIR, FALSE);
+      SDL_WM_SetIcon( IMG_Load (fpath), NULL);
     }
 
 
@@ -983,6 +982,7 @@ UnfadeLevel (void)
 void
 LadeZeichensatz (char *Zeichensatzname)
 {
+  char *fpath;
 /*
   Diese Prozedur laedt einen Zeichensatz in den Standardzeichensatzbereich
   und verwendet dazu das BIOS.
@@ -1002,7 +1002,8 @@ LadeZeichensatz (char *Zeichensatzname)
   Zeichensatzpointer = MyMalloc (256 * 8 + 10);
 
   /* Datei in den Speicher laden */
-  if ((CharDateiHandle = fopen (Zeichensatzname, "rb")) == NULL)
+  fpath = find_file (Zeichensatzname, GRAPHICS_DIR, FALSE);
+  if ((CharDateiHandle = fopen (fpath, "rb")) == NULL)
     {
       DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname):  Konnte die Datei %s nicht oeffnen !\n",
 	 Zeichensatzname);

@@ -377,7 +377,6 @@ enum
     CLASSIC_PARADROID_MISSION_POSITION=1, 
     NEW_MISSION_POSITION
   };
-
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -403,8 +402,7 @@ enum
     {
 
       // InitiateMenu();
-      
-      DisplayImage ( NE_TITLE_PIC_FILE );
+      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
 
       // 
       // we highlight the currently selected option with an 
@@ -1291,66 +1289,46 @@ Single_Player_Menu (void)
     }
 } // Single_Player_Menu
 
-/*@Function============================================================
-@Desc: This function displayes the high scores of the single player
-       game.  This function is actually a submenu of the big 
-       EscapeMenu.  The function is currently disabled, since rp is
-       rewriting the high score administration routines.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * Display the high scores of the single player game.  
+ * This function is actually a submenu of the big EscapeMenu.
+ * The function is currently disabled, since rp is rewriting the
+ * high score administration routines.
+ *
+ *-----------------------------------------------------------------*/
 void
 Show_Highscore_Menu (void)
 {
+  int x0, y0;
+  Hall_entry tmp;
+  int counter;
+  //  BFont_Info *prev_font;
 
-  /*
+  InitiateMenu ();
 
-  int Weiter = 0;
+  x0 = 100;
+  y0 = 50;  
 
-  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+  //  prev_font = CurrentFont;
+  //  SetCurrentFont (FPS_Display_BFont);  /* should use a better one */
 
-  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+  printf_SDL (ne_screen, x0, y0, "Top %d  freedom fighters\n", MAX_HIGHSCORES);
+  printf_SDL (ne_screen, -1, -1, "\n");
+  
+  counter = 1;
+  if ( (tmp = highscores)==NULL)
+    printf_SDL (ne_screen, -1, -1, "---- Empty ----");
+  else
+    while (tmp)
+      {
+	printf_SDL (ne_screen, -1, -1, "%d. %s   %ld\n",
+		    counter ++, tmp->name, tmp->score);
+	tmp = tmp->next;
+      }
 
-  while (!Weiter)
-    {
-
-      InitiateMenu();
-
-      CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "Highscore list:" );
-
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 4*FontHeight(Menu_BFont),    
-		       "Highest score: %10s : %6.2f" , HighestName, HighestScoreOfDay );
-
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 5*FontHeight(Menu_BFont),
-		       "Great score: %10s : %6.2f" , GreatScoreName,  GreatScore);
-
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 6*FontHeight(Menu_BFont),
-		       " Lowest Score:  %10s : %6.2f", LowestName,   LowestScoreOfDay);
-
-      // LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
-      // LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "new missions and levels from you!");
-
-      SDL_Flip ( ne_screen );
-
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    }
-
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-  ClearGraphMem ( );
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  InitBars = TRUE;
-
-  */ 
+  getchar_raw ();
 
   return;
-
 } // Show_Highscore_Menu
 
 /*@Function============================================================
@@ -1417,7 +1395,7 @@ Credits_Menu (void)
 
       InitiateMenu();
       
-      DisplayImage ( NE_CREDITS_PIC_FILE );
+      DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
       CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
       LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");

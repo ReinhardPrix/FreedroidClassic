@@ -189,6 +189,7 @@ EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 #else
 #define EXTERN extern
 #endif
+EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
 EXTERN int GetCurrentLift (void);
 EXTERN void ActSpecialField (float, float);
@@ -248,6 +249,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int MouseRightPressed(void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);

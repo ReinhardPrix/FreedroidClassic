@@ -1148,21 +1148,19 @@ Get_Robot_Data ( void* DataPointer )
 void
 Init_Game_Data ( char * Datafilename )
 {
+  char *fpath;
   struct stat stbuf;
   FILE *DataFile;
   char *Data;
   char *EndPointer;
-  // char filename[10000];
+
 #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 
-  // strcpy ( filename , MAP_DIR );
-  // strcat ( filename , Datafilename );
-
   DebugPrintf (2, "\nint Init_Game_Data ( char* Datafilename ) called.");
-  // printf("\nint Init_Game_Data ( char* Datafilename ): The filename is: %s" , Datafilename );
 
   /* Read the whole game data to memory */
-  if ((DataFile = fopen (Datafilename, "r")) == NULL)
+  fpath = find_file (Datafilename, MAP_DIR, FALSE);
+  if ((DataFile = fopen (fpath, "r")) == NULL)
     {
       DebugPrintf ( 0 , "\nint Init_Game_Data( void ): Error opening file.... ");
       Terminate(ERR);
@@ -1357,6 +1355,7 @@ parse_command_line (int argc, char *const argv[])
 void
 InitNewMission ( char *MissionName )
 {
+  char *fpath;
   int i;
   struct stat stbuf;
   FILE *MissionFile;
@@ -1391,8 +1390,6 @@ InitNewMission ( char *MissionName )
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
-  // char filename[]=MAP_DIR "game.dat";
-  // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
@@ -1464,7 +1461,8 @@ InitNewMission ( char *MissionName )
   //The procedure is the same as with LoadShip
 
   /* Read the whole mission data to memory */
-  if ((MissionFile = fopen ( MissionName , "r")) == NULL)
+  fpath = find_file (MissionName, MAP_DIR, FALSE);
+  if ((MissionFile = fopen ( fpath , "r")) == NULL)
     {
       DebugPrintf (2, "\nint InitNewMission( ... ): Error opening file.... ");
       Terminate(ERR);
@@ -1561,12 +1559,11 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      strcpy( GameDataName , MAP_DIR );
       GameDataNamePointer += strlen ( GAMEDATANAME_INDICATION_STRING );
       
       GameDataNameLength = strstr ( GameDataNamePointer , "\n") - GameDataNamePointer;
-      strncat( GameDataName , GameDataNamePointer , GameDataNameLength );
-      GameDataName[ strlen(MAP_DIR) + GameDataNameLength ] = 0;
+      strncpy( GameDataName , GameDataNamePointer , GameDataNameLength );
+      GameDataName[ GameDataNameLength ] = 0;
       DebugPrintf (1, "\nGame data filename found!  It reads: %s" , GameDataName );
     }
   
@@ -1583,12 +1580,11 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      strcpy( Shipname , MAP_DIR );
       ShipnamePointer += strlen ( SHIPNAME_INDICATION_STRING );
       
       ShipnameLength = strstr (ShipnamePointer , "\n") - ShipnamePointer;
-      strncat( Shipname , ShipnamePointer , ShipnameLength );
-      Shipname[ strlen(MAP_DIR) + ShipnameLength ] = 0;
+      strncpy( Shipname , ShipnamePointer , ShipnameLength );
+      Shipname[ ShipnameLength ] = 0;
       
       
       DebugPrintf (1, "\nShipname found!  It reads: %s" , Shipname );
@@ -1612,12 +1608,11 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      strcpy( Liftname , MAP_DIR );
       LiftnamePointer += strlen ( ELEVATORNAME_INDICATION_STRING );
       
       LiftnameLength = strstr (LiftnamePointer , "\n") - LiftnamePointer;
-      strncat( Liftname , LiftnamePointer , LiftnameLength );
-      Shipname[ strlen(MAP_DIR) + LiftnameLength ] = 0;
+      strncpy( Liftname , LiftnamePointer , LiftnameLength );
+      Liftname[ LiftnameLength ] = 0;
       
       DebugPrintf (1, "\nLift file name found!  It reads: %s" , Liftname );
     }
@@ -1641,12 +1636,11 @@ InitNewMission ( char *MissionName )
   else
     {
       ship_on_filename = MyMalloc(2000);
-      strcpy( ship_on_filename , GRAPHICS_DIR );
       ShipOnPointer += strlen ( LIFTS_ON_INDICATION_STRING );
       
       ShipOnLength = strstr ( ShipOnPointer , "\n") - ShipOnPointer;
-      strncat( ship_on_filename , ShipOnPointer , ShipOnLength );
-      ship_on_filename[ strlen(GRAPHICS_DIR) + ShipOnLength ] = 0;
+      strncpy (ship_on_filename , ShipOnPointer , ShipOnLength );
+      ship_on_filename[ ShipOnLength ] = 0;
       
       DebugPrintf (1, "\nShipOn file name found!  It reads: %s" , ship_on_filename );
     }
@@ -1658,12 +1652,11 @@ InitNewMission ( char *MissionName )
   else
     {
       ship_off_filename = MyMalloc(2000);
-      strcpy( ship_off_filename , GRAPHICS_DIR );
       ShipOffPointer += strlen ( LIFTS_OFF_INDICATION_STRING );
       
       ShipOffLength = strstr ( ShipOffPointer , "\n") - ShipOffPointer;
-      strncat( ship_off_filename , ShipOffPointer , ShipOffLength );
-      ship_off_filename[ strlen(GRAPHICS_DIR) + ShipOffLength ] = 0;
+      strncpy( ship_off_filename , ShipOffPointer , ShipOffLength );
+      ship_off_filename[ ShipOffLength ] = 0;
       
       DebugPrintf (1, "\nShipOff file name found!  It reads: %s" , ship_off_filename );
     }
@@ -1681,12 +1674,11 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      strcpy( Crewname , MAP_DIR );
       CrewnamePointer += strlen ( CREWNAME_INDICATION_STRING );
       
       CrewnameLength = strstr (CrewnamePointer , "\n") - CrewnamePointer;
-      strncat( Crewname , CrewnamePointer , CrewnameLength );
-      Crewname[ strlen(MAP_DIR) + CrewnameLength ] = 0;
+      strncpy( Crewname , CrewnamePointer , CrewnameLength );
+      Crewname[ CrewnameLength ] = 0;
       
       DebugPrintf (1, "\nCrew file name found!  It reads: %s" , Crewname );
     }
@@ -2000,7 +1992,8 @@ InitFreedroid (void)
   
   Init_Joy ();
 
-  Init_Game_Data( MAP_DIR "game.dat" );  // load the default ruleset. This can be overwritten from the mission file.
+  Init_Game_Data("game.dat");  // load the default ruleset. This can be */
+			       // overwritten from the mission file.
 
   // The default should be, that no rescaling of the
   // combat window at all is done.
@@ -2076,9 +2069,8 @@ Title ( char *MissionBriefingPointer )
     {
       TitlePictureNamePointer += strlen ( BRIEFING_TITLE_PICTURE_STRING );
       ThisTextLength = strstr(TitlePictureNamePointer , "\n" ) - TitlePictureNamePointer ;
-      strcpy( TitlePictureName , GRAPHICS_DIR );
-      strncat( TitlePictureName , TitlePictureNamePointer , ThisTextLength);
-      TitlePictureName[ ThisTextLength + strlen ( GRAPHICS_DIR ) ] = 0;
+      strncpy ( TitlePictureName , TitlePictureNamePointer , ThisTextLength);
+      TitlePictureName[ ThisTextLength ] = 0;
       DebugPrintf( 1 , "\nvoid Title(...): The briefing picture name found is : %s." , TitlePictureName );
     }
   else
@@ -2088,8 +2080,7 @@ Title ( char *MissionBriefingPointer )
     }
 
   SDL_SetClipRect ( ne_screen, NULL );
-  // DisplayImage ( NE_TITLE_PIC_FILE );
-  DisplayImage ( TitlePictureName );
+  DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
   SDL_Flip (ne_screen);
 
   Me.status=BRIEFING;
@@ -2220,75 +2211,81 @@ ThouArtVictorious (void)
 }
 
 
-/* 
-----------------------------------------------------------------------
-@Desc: This function does the mission debriefing.  If the score was
-very good or very bad, player will be asked for this name and the 
-highscore list will be updated.
-
-@Ret: 
-@Int:
-----------------------------------------------------------------------
-*/
+/*----------------------------------------------------------------------
+ * Mission debriefing.  
+ * Mainly managing of highscore entries 
+ *
+ *----------------------------------------------------------------------*/
 void
 Debriefing (void)
 {
   char *tmp_name;
-  Hall_entry new, tmp;
-  int DebriefColor;
+  Hall_entry new, tmp, last;
+  //  int DebriefColor;
   int count;
-  
+  //  BFont_Info *prev_font;
 
-  return;  // until this works properly
+  if (RealScore <= 0)  /* don't even bother.. */
+    return;
 
-
-  DebriefColor = FONT_WHITE;
+  //  DebriefColor = FONT_WHITE;
   Me.status = DEBRIEFING;
-  SetUserfenster ( DebriefColor );	// KON_BG_COLOR
+  //  SetUserfenster (DebriefColor);	// KON_BG_COLOR
 
-
-  count = 1;
+  count = 0;
   if ( (tmp = highscores) != NULL)
-    while (tmp->next) { count++; tmp = tmp->next;}  /* tmp now points to lowest! */
-  else
-    count = 0;  /* first entry */
- 
-  if ( (count == MAX_HIGHSCORES) && (RealScore <= tmp->score) )
+    {
+      count = 1;
+      while (tmp->next) { count++; tmp = tmp->next;}  /* tmp now points to lowest! */
+      last = tmp; /* remember this one */
+    }
+
+
+  if ( (count == MAX_HIGHSCORES) && (RealScore <= last->score) )
     return; /* looser! ;) */
       
   /* else: prepare a new entry */
   new = MyMalloc (sizeof(hall_entry));
   new->score = RealScore;
   new->next = new->prev = NULL;
-  DisplayText ("Great Score !", User_Rect.x, User_Rect.y, &User_Rect);
-  DisplayText ("\nEnter your name: ", User_Rect.x, User_Rect.y, &User_Rect);
-  SDL_Flip (ne_screen);
+  //  prev_font = CurrentFont;
+  //  SetCurrentFont (Highscore_BFont);
+  printf_SDL (ne_screen, User_Rect.x, User_Rect.y, "Great Score !\n");
+  printf_SDL (ne_screen, -1, -1, "Enter your name: ");
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new->name, tmp_name);
   free (tmp_name);
+  //  SetCurrentFont (prev_font);
 
-  if (!highscores)  /* hey, you're the first one ! */
+  if (!highscores)  /* hey, no previous entries! */
     highscores = new;
-  else   /* link in the new entry */
+  else if (RealScore <= last->score) /* you're the last */
     {
       count ++;
-      tmp = highscores;
-      while ( tmp->score >= RealScore )
-	tmp = tmp->next;
-      ((Hall_entry)(tmp->prev))->next = new;
+      last->next = new;
+      new->prev = last;
+    }
+  else   /* link in the new entry inside existing list */
+    {
+      count ++;
+      tmp = last;  /* work your way back up from last enty */
+      while ( tmp->prev && (RealScore > ((Hall_entry)(tmp->prev))->score) )
+	tmp = tmp->prev;
+
+      /* tmp now points to the entry to be pushed down */
+      ((Hall_entry)tmp->prev)->next = new;
       new->prev = tmp->prev;
       new->next = tmp;
+      tmp->prev = new;
     }
 
   /* now check the length of our new highscore list.
    * if longer than MAX_HIGHSCORES */
-  tmp = highscores;
-  while (tmp->next) tmp = tmp->next; /* find last entry */
 
   if ( count > MAX_HIGHSCORES ) /* the last one drops out */
     {
-      ((Hall_entry)(tmp->prev))->next = NULL;
-      free (tmp);
+      ((Hall_entry)(last->prev))->next = NULL;
+      free (last);
     }
   
   return;
@@ -2304,7 +2301,6 @@ void
 CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
-  char LoadWhichMission[2000]=MAP_DIR;
 
   if ( Me.mission.KillOne != (-1) )
     {
@@ -2420,8 +2416,7 @@ CheckIfMissionIsComplete (void)
   EndTitle();
   // GameOver=TRUE;
 
-  strcat ( LoadWhichMission , NextMissionName );
-  InitNewMission ( LoadWhichMission );
+  InitNewMission ( NextMissionName);
   
 } // void CheckIfMissionIsComplete
 

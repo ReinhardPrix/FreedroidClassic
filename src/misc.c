@@ -76,35 +76,55 @@ Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
 /*-----------------------------------------------------------------
- * find a given filename in data-dir, using theme subdir if required
+ * find a given filename in subdir relative to DATADIR, 
+ * using theme subdir if use_theme==TRUE
  *
- * if you pass NULL as datadir, it will be ignored
+ * if you pass NULL as subdir, it will be ignored
  *
  * returns pointer to _static_ string array File_Path, which 
  * contains the full pathname of the file.
  *
- * !! therefore do never try to free the returned string!!
+ * !! do never try to free the returned string !!
  *
  *-----------------------------------------------------------------*/
 char *
-find_file (char *fname, char *datadir, int use_theme)
+find_file (char *fname, char *subdir, int use_theme)
 {
   static char File_Path[5000];   /* hope this will be enough */
-
-
-  if (datadir)
-    strcpy (File_Path, datadir);
-      
-  if (use_theme)
-    strcat (File_Path, GameConfig.Theme_SubPath);
+  FILE *fp;
+  int i;
 
   if (!fname)
     {
       printf ("\nError. find_file() called with empty filename!\n");
       return (NULL);
     }
-  else
-    strcat (File_Path, fname);
+  if (!subdir)
+    subdir = "";
+
+  for (i=0; i < 2; i++)
+    {
+      if (i==0)
+	strcpy (File_Path, "..");   /* first try local subdirs */
+      if (i==1)
+	strcpy (File_Path, DATADIR); /* then the DATADIR */
+
+      strcat (File_Path, "/");
+      strcat (File_Path, subdir);
+      strcat (File_Path, "/");
+
+      if (use_theme)
+	strcat (File_Path, GameConfig.Theme_SubPath);
+
+      strcat (File_Path, fname);
+      
+      if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
+	{
+	  fclose (fp);
+	  break;
+	}
+    } /* for i */
+
 
   return (File_Path);
 	

@@ -47,32 +47,32 @@
 
 #define ALL_SOUNDS 26
 char *SoundSampleFilenames[ALL_SOUNDS] = {
-  SOUND_DIR "ERRORSOUND_NILL",
-  SOUND_DIR "Combat_Background_Music.wav",
-  SOUND_DIR "Takeover_Background_Music.wav",
-  SOUND_DIR "Console_Background_Music.wav",
-  SOUND_DIR "Classical_Beep_Beep_Background_Music.wav",
-  SOUND_DIR "Blast_Sound_0.wav",
-  SOUND_DIR "Collision_Sound_0.wav",
-  SOUND_DIR "GotIntoBlast_Sound_0.wav",
-  SOUND_DIR "MoveElevator_Sound_0.wav",
-  SOUND_DIR "Refresh_Sound_0.wav",
-  SOUND_DIR "LeaveElevator_Sound_0.wav",
-  SOUND_DIR "EnterElevator_Sound_0.wav",
-  SOUND_DIR "ThouArtDefeated_Sound_0.wav",
-  SOUND_DIR "Got_Hit_Sound_0.wav",
-  SOUND_DIR "TakeoverSetCapsule_Sound_0.wav",
-  SOUND_DIR "Menu_Item_Selected_Sound_0.wav",
-  SOUND_DIR "Move_Menu_Position_Sound_0.wav",
-  SOUND_DIR "Takeover_Game_Won_Sound_0.wav",
-  SOUND_DIR "Takeover_Game_Deadlock_Sound_0.wav",
-  SOUND_DIR "Takeover_Game_Lost_Sound_0.wav",
-  SOUND_DIR "Fire_Bullet_Pulse_Sound_0.wav",
-  SOUND_DIR "Fire_Bullet_Single_Pulse_Sound_0.wav",
-  SOUND_DIR "Fire_Bullet_Military_Sound_0.wav",
-  SOUND_DIR "Fire_Bullet_Flash_Sound_0.wav",
-  SOUND_DIR "Cry_Sound_0.wav",
-  SOUND_DIR "Takeover_Sound_0.wav"
+   "ERRORSOUND_NILL",
+   "Combat_Background_Music.wav",
+   "Takeover_Background_Music.wav",
+   "Console_Background_Music.wav",
+   "Classical_Beep_Beep_Background_Music.wav",
+   "Blast_Sound_0.wav",
+   "Collision_Sound_0.wav",
+   "GotIntoBlast_Sound_0.wav",
+   "MoveElevator_Sound_0.wav",
+   "Refresh_Sound_0.wav",
+   "LeaveElevator_Sound_0.wav",
+   "EnterElevator_Sound_0.wav",
+   "ThouArtDefeated_Sound_0.wav",
+   "Got_Hit_Sound_0.wav",
+   "TakeoverSetCapsule_Sound_0.wav",
+   "Menu_Item_Selected_Sound_0.wav",
+   "Move_Menu_Position_Sound_0.wav",
+   "Takeover_Game_Won_Sound_0.wav",
+   "Takeover_Game_Deadlock_Sound_0.wav",
+   "Takeover_Game_Lost_Sound_0.wav",
+   "Fire_Bullet_Pulse_Sound_0.wav",
+   "Fire_Bullet_Single_Pulse_Sound_0.wav",
+   "Fire_Bullet_Military_Sound_0.wav",
+   "Fire_Bullet_Flash_Sound_0.wav",
+   "Cry_Sound_0.wav",
+   "Takeover_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -85,6 +85,7 @@ Init_Audio(void)
 #ifndef HAVE_LIBSDL_MIXER  
   return;
 #else
+  char *fpath;
   int i;
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
@@ -170,7 +171,8 @@ Sorry...\n\
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      Loaded_WAV_Files[i] = Mix_LoadWAV( SoundSampleFilenames[ i ] );
+      fpath = find_file (SoundSampleFilenames[i], SOUND_DIR, FALSE);
+      Loaded_WAV_Files[i] = Mix_LoadWAV(fpath);
       if ( !Loaded_WAV_Files[i] )
 	{
 	  fprintf (stderr,

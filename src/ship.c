@@ -205,10 +205,8 @@ ShowLifts (int level, int liftrow)
   SDL_Rect src, dst;
   int i;
 
-  ship_off_pic = IMG_Load ( ship_off_filename );
-  ship_on_pic = IMG_Load ( ship_on_filename );
-  SDL_SetColorKey(ship_off_pic, SDL_SRCCOLORKEY, ne_transp_key);
-  SDL_SetColorKey(ship_on_pic, SDL_SRCCOLORKEY, ne_transp_key);
+  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, FALSE));
+  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, FALSE));
 
   // clear the whole screen
   //  ClearGraphMem();

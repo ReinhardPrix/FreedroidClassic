@@ -260,7 +260,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       usleep (30000);
 
-      DisplayImage ( TitlePictureName );
+      DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
       // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
