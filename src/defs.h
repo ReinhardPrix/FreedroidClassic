@@ -356,12 +356,6 @@ enum
 #define INITIAL_DIGIT_HEIGHT (9*2)
 #define INITIAL_DIGIT_POS_X 5*2
 #define INITIAL_DIGIT_POS_Y 12*2
-
-// #define GameConfig . screen_width		640
-// #define GameConfig . screen_height		480
-// #define GameConfig . screen_width		800
-// #define GameConfig . screen_height		600
-
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
 
@@ -743,27 +737,27 @@ enum
 //
 enum _bullets
 {
-  PULSE=0,
-  SINGLE_PULSE,
-  MILITARY,
-  FLASH,
-  EXTERMINATOR,
-  LASER_RIFLE,
-  SINGLE_LASER,
-  PLASMA_PISTOL,
-  LASER_SWORD_1,
-  LASER_AXE,
-  LASER_SWORD_2,
-  GREEN_BULLET,
-  BLUE_BULLET,
-  MAGENTA_BULLET,
-  WHITE_BULLET
-  //--------------------
-  // If you add some more bullet types here, don't forget to
-  //   1.  Also add a specification in the freedroid ruleset
-  //   2.  Also add an entry for the number of phases in the config.theme file!!
-  //   3.  Specify the size of the bullet image in the blocks.c loading function
-  //
+    PULSE=0,
+    SINGLE_PULSE,
+    MILITARY,
+    FLASH,
+    EXTERMINATOR,
+    LASER_RIFLE,
+    SINGLE_LASER,
+    PLASMA_PISTOL,
+    LASER_SWORD_1,
+    LASER_AXE,
+    LASER_SWORD_2,
+    GREEN_BULLET,
+    BLUE_BULLET,
+    MAGENTA_BULLET,
+    WHITE_BULLET
+    //--------------------
+    // If you add some more bullet types here, don't forget to
+    //   1.  Also add a specification in the freedroid ruleset
+    //   2.  Also add an entry for the number of phases in the config.theme file!!
+    //   3.  Specify the size of the bullet image in the blocks.c loading function
+    //
 };
 
 
@@ -772,9 +766,9 @@ enum _bullets
 //
 enum _explosions
 {
-  BULLETBLAST=0,
-  DRUIDBLAST,
-  OWNBLAST
+    BULLETBLAST=0,
+    DRUIDBLAST,
+    OWNBLAST
 };
 
 #define BLINKENERGY 25
@@ -785,20 +779,20 @@ enum _explosions
 //
 enum _status
 {
-  OUT=-30,
-  MOBILE,
-  TRANSFERMODE,
-  WEAPON,
-  CAPTURED,
-  COMPLETE,
-  REJECTED,
-  CONSOLE,
-  DEBRIEFING,
-  PAUSE,
-  CHEESE,
-  ELEVATOR,
-  BRIEFING,
-  MENU
+    OUT=-30,
+    MOBILE,
+    TRANSFERMODE,
+    WEAPON,
+    CAPTURED,
+    COMPLETE,
+    REJECTED,
+    CONSOLE,
+    DEBRIEFING,
+    PAUSE,
+    CHEESE,
+    ELEVATOR,
+    BRIEFING,
+    MENU
 };
 
 //--------------------
@@ -854,13 +848,13 @@ enum
 // The possible networking statuses of clients.
 //
 enum _networking_status
-  {
+{
     NETWORK_ERROR = 0 ,
     UNCONNECTED , 
     CONNECTION_FRESHLY_OPENED ,
     NAME_HAS_BEEN_TRANSMITTED , 
     GAME_ON
-  };
+};
 
 //--------------------
 // It is possible, that the Tux must fist move somewhere AND
@@ -869,12 +863,12 @@ enum _networking_status
 // has to be made about the type of current combo_action.
 //
 enum _combo_action_types
-  {
+{
     NO_COMBO_ACTION_SET = -10 ,
     COMBO_ACTION_OPEN_CHEST = 15 ,
     COMBO_ACTION_PICK_UP_ITEM = 16 ,
     COMBO_ACTION_SMASH_BARREL = 17 ,
-  };
+};
 
 //--------------------
 // For shop interfaces and chest interfaces we need some constants to
@@ -906,24 +900,21 @@ enum
 //
 enum
 {
-  FLOOR = 0,
-  CORNER_LD,        T_D,          CORNER_RD,       T_L,          KREUZ,       T_R,    CORNER_LU,  T_U,    CORNER_RU,
-  H_WALL=10,     V_WALL,         ALERT,        
-  BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
-  H_SHUT_DOOR=18,  H_HALF_DOOR1, H_HALF_DOOR2, H_HALF_DOOR3, H_OPEN_DOOR,
-  CONSOLE_L=23,  CONSOLE_R,    CONSOLE_U,    CONSOLE_D,
-  V_SHUT_DOOR=27,  V_HALF_DOOR1, V_HALF_DOOR2, V_HALF_DOOR3, V_OPEN_DOOR,
-  LIFT=32,       VOID,         
-  REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
-  TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,
-  LOCKED_H_SHUT_DOOR=43,         LOCKED_V_SHUT_DOOR,
-  OLD_CODEPANEL_L=45,   OLD_CODEPANEL_R, OLD_CODEPANEL_U, OLD_CODEPANEL_D,
-  BOX_1=49,      BOX_2,        BOX_3,        BOX_4,        UNUSED_BRICK,
-  OLD_CONVEY_L=54,   OLD_CONVEY_D,     OLD_CONVEY_R,     OLD_CONVEY_U,     FINE_GRID,
-  AUTOGUN_R=59,   AUTOGUN_D,     AUTOGUN_L,     AUTOGUN_U,
-  ENHANCER_RU=63,   ENHANCER_LU,     ENHANCER_RD,     ENHANCER_LD,
-  CONSUMER_1=67,     CONSUMER_2,     CONSUMER_3,    CONSUMER_4,
-  CHEST_U=71,   CHEST_L,     CHEST_D,     CHEST_R,
+    FLOOR = 0,
+    CORNER_LD,        T_D,          CORNER_RD,       T_L,          KREUZ,       T_R,    CORNER_LU,  T_U,    CORNER_RU,
+    H_WALL=10,     V_WALL,         ALERT,        
+    BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
+    H_SHUT_DOOR=18,  H_HALF_DOOR1, H_HALF_DOOR2, H_HALF_DOOR3, H_OPEN_DOOR,
+    CONSOLE_L=23,  CONSOLE_R,    CONSOLE_U,    CONSOLE_D,
+    V_SHUT_DOOR=27,  V_HALF_DOOR1, V_HALF_DOOR2, V_HALF_DOOR3, V_OPEN_DOOR,
+    LIFT=32,       VOID,         
+    REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
+    TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,
+    LOCKED_H_SHUT_DOOR=43,         LOCKED_V_SHUT_DOOR,
+    OLD_CODEPANEL_L=45,   OLD_CODEPANEL_R, OLD_CODEPANEL_U, OLD_CODEPANEL_D,
+    BOX_1=49,      BOX_2,        BOX_3,        BOX_4,        UNUSED_BRICK,
+    OLD_CONVEY_L=54,   OLD_CONVEY_D,     OLD_CONVEY_R,     OLD_CONVEY_U,     FINE_GRID,
+    AUTOGUN_R=59,   AUTOGUN_D,     AUTOGUN_L,     AUTOGUN_U
 };
 
 enum

@@ -2534,6 +2534,78 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 
 
 /* ----------------------------------------------------------------------
+ * This function checks if there is some living droid below the current
+ * mouse cursor and returns the index number of this droid in the array.
+ * 
+ * Earlier we did this by computing the map location the mouse was pointing
+ * to and using that for the computation of the distance to droid coordinates.
+ * The problem with this method is, that some droids are very 'high' in
+ * the sense that the graphics (e.g. 302 body) is very far away from the
+ * 'foot' point, where the droid is in X-Y coordinates on the map.  Therefore
+ * some correction has to be done to fix this.  We can't use the map position
+ * of the mouse any more... except maybe to exclude some bots from the start.
+ *
+ * ---------------------------------------------------------------------- */
+int 
+GetObstacleBelowMouseCursor ( int player_num )
+{
+    int i;
+    float Mouse_Blocks_X, Mouse_Blocks_Y;
+    int TargetFound = (-1);
+    iso_image* our_iso_image ;
+    int x ;
+    int y ;
+    level* our_level;
+    int obstacle_index;
+    obstacle* our_obstacle;
+
+    Mouse_Blocks_X = translate_pixel_to_map_location ( player_num , 
+						       (float) ServerThinksInputAxisX ( player_num ) , 
+						       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+    Mouse_Blocks_Y = translate_pixel_to_map_location ( player_num , 
+						       (float) ServerThinksInputAxisX ( player_num ) , 
+						       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+
+    our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+
+
+    for ( x = (int) Mouse_Blocks_X - 3 ; x < (int) Mouse_Blocks_X + 4 ; x ++ )
+    {
+	if ( x < 0 ) continue ;
+	if ( x >= our_level -> xlen ) continue ;
+
+	for ( y = (int) Mouse_Blocks_Y - 3 ; y < (int) Mouse_Blocks_Y + 4 ; y ++ )
+	{
+	    if ( y < 0 ) continue ;
+	    if ( y >= our_level -> ylen ) continue ;
+
+	    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    {
+		obstacle_index = our_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ;
+		if ( obstacle_index == (-1) ) continue;
+		our_obstacle = & ( our_level -> obstacle_list [ obstacle_index ] ) ;
+		our_iso_image = & ( obstacle_map [ our_obstacle -> type ] . image );
+		
+		// DebugPrintf ( -4 , "\n%s(): rectangle check reached." , __FUNCTION__ );
+		if ( mouse_cursor_is_on_that_iso_image ( our_obstacle -> pos . x , 
+							 our_obstacle -> pos . y , 
+							 our_iso_image ) )
+		{
+		    TargetFound = i;
+		}
+	    }
+	}
+	 
+    }
+   
+    // DebugPrintf ( -4 , "\n%s(): found: %d." , __FUNCTION__ , TargetFound );
+
+    return ( TargetFound );
+    
+}; // int GetObstacleBelowMouseCursor ( int player_num )
+
+
+/* ----------------------------------------------------------------------
  * This function fires a bullet from the influencer in some direction, 
  * no matter whether this is 'allowed' or not, not questioning anything
  * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.

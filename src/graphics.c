@@ -331,6 +331,8 @@ blit_mouse_cursor_corona ( void )
     static iso_image mouse_cursor_coronas [ 16 ] ;
     char constructed_filename[2000];
     char* fpath;
+    moderately_finepoint offset_vector;
+    int our_obstacle_index ;
 
     //--------------------
     // On the first function call ever, we load the surfaces for the
@@ -360,51 +362,44 @@ Error loading flag image.",
 	first_call = FALSE ;
     }
 
-    /*
-    //--------------------
-    // We can now blit the mouse cursor...
-    //
-    if ( use_open_gl )
+    our_obstacle_index = GetObstacleBelowMouseCursor ( 0 ) ;
+    if ( our_obstacle_index != (-1) )
     {
-	switch ( global_ingame_mode )
+	PutStringFont ( Screen , FPS_Display_BFont , GetMousePos_x () + 30 , GetMousePos_y () + 30 , 
+			"Obstacle type:" );
+    }
+    else return;
+	
+
+    for ( i = 0 ; i < 3 ; i ++ )
+    {
+	offset_vector . x = 0 ;
+	offset_vector . y = -35 ;
+	RotateVectorByAngle ( &offset_vector , -(i+1) * 45 );
+	
+	if ( use_open_gl )
 	{
-	    case GLOBAL_INGAME_MODE_IDENTIFY :
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 1 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_NORMAL:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    default:
-		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
-			      global_ingame_mode );
-		GiveStandardErrorMessage ( __FUNCTION__  , 
-					   "Illegal global ingame mode encountered!" ,
-					   PLEASE_INFORM, IS_FATAL );
-		break;
+	    blit_open_gl_texture_to_screen_position ( mouse_cursor_coronas [ i ] , 
+						      GetMousePos_x () + offset_vector . x , GetMousePos_y () + offset_vector . y , TRUE );
 	}
-    }
-    else
-    {
-	blit_iso_image_to_map_position ( mouse_cursors [ 0 ] , 
-					 GetMousePos_x () , GetMousePos_x () );
-    }
-    */
-
-
-    if ( use_open_gl )
-    {
-	blit_open_gl_texture_to_screen_position ( mouse_cursor_coronas [ 1 ] , 
-						  GetMousePos_x () , GetMousePos_y () , TRUE );
-    }
-    else
-    {
-	blit_iso_image_to_map_position ( mouse_cursor_coronas [ 0 ] , 
-					 GetMousePos_x () , GetMousePos_x () );
+	else
+	{
+	    blit_iso_image_to_map_position ( mouse_cursor_coronas [ i ] , 
+					     GetMousePos_x () , GetMousePos_x () );
+	}
     }
 
 }; // void blit_mouse_cursor_corona ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+get_obstacle_below_mouse_cursor ( void ) 
+{
+    
+}; // void get_obstacle_below_mouse_cursor ( void ) 
 
 /* ----------------------------------------------------------------------
  * Occasionally it might come in handly to have the whole image fading

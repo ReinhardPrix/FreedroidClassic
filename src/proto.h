@@ -75,6 +75,7 @@ EXTERN void PlayATitleFile ( char* Filename );
 #endif
 EXTERN float vect_len ( moderately_finepoint our_vector );
 EXTERN int GetLivingDroidBelowMouseCursor ( int player_num );
+EXTERN int GetObstacleBelowMouseCursor ( int player_num );
 EXTERN int find_free_floor_items_index ( int levelnum ) ;
 EXTERN int closed_chest_below_mouse_cursor ( int player_num ) ;
 EXTERN int smashable_barrel_below_mouse_cursor ( int player_num ) ;

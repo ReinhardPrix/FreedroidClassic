@@ -1095,14 +1095,13 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 void 
 DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
 {
-
-  int i;
+    int i;
   
-  for ( i = ClearanceIndex ; i < MAX_CLEARANCES-1 ; i ++ )
+    for ( i = ClearanceIndex ; i < MAX_CLEARANCES-1 ; i ++ )
     {
-      Me [ PlayerNum ] . clearance_list [ i ] = Me [ PlayerNum ] . clearance_list [ i + 1 ] ;
+	Me [ PlayerNum ] . clearance_list [ i ] = Me [ PlayerNum ] . clearance_list [ i + 1 ] ;
     }
-
+    
 }; // void DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
 
 
