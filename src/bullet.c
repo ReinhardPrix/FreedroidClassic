@@ -96,17 +96,17 @@ MoveBullets (void)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void
-DeleteBullet (int Bulletnumber)
+void 
+DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
 {
-  Bullet CurBullet = &AllBullets[Bulletnumber];
+  Bullet CurBullet = &AllBullets[ Bulletnumber ];
   int i;
 
   //--------------------
   // At first we generate the blast at the collision spot of the bullet,
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
-  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
+  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
@@ -137,7 +137,7 @@ DeleteBullet (int Bulletnumber)
   CurBullet->pos.y = 0;
   CurBullet->angle = 0;
 
-}; // void DeleteBullet(int Bulletnumber)
+}; // void DeleteBullet( int Bulletnumber , int StartBlast )
 
 /*@Function============================================================
 @Desc: StartBlast(): erzeugt einen Blast type an x/y
@@ -150,20 +150,41 @@ StartBlast (float x, float y, int type)
 {
   int i;
   Blast NewBlast;
+  int map_x, map_y;
 
-  /* Position des naechsten freien Blasts herausfinden */
+  DebugPrintf( 0 , "\nvoid StartBlast( ... ) called with x=%f y=%f" , x , y );
+  //--------------------
+  // first we see if there are any destructible map tiles, that need to
+  // be destructed this way...
+  //
+  map_x=(int)rintf(x);
+  map_y=(int)rintf(y);
+
+  DebugPrintf( 0 , "\nmap value at blast destination : %d . " , CurLevel->map[ map_y ][ map_x ] );
+  if ( CurLevel->map[ map_y ][ map_x ] == BOX_4 ) 
+    {
+      CurLevel->map[ map_y ][ map_x ] = FLOOR;
+    }
+  if ( ( CurLevel->map[ map_y ][ map_x ] == BOX_1 ) ||
+       ( CurLevel->map[ map_y ][ map_x ] == BOX_2 ) ||
+       ( CurLevel->map[ map_y ][ map_x ] == BOX_3 ) )
+    {
+      CurLevel->map[ map_y ][ map_x ]++;
+    }
+
+  // find out the position of the next free blast
   for (i = 0; i < MAXBLASTS; i++)
     if (AllBlasts[i].type == OUT)
       break;
 
-  /* keinen gefunden: nimm den ersten */
+  // didn't fine any --> then take the first one
   if (i >= MAXBLASTS)
     i = 0;
 
-  /* Get Pointer to it: more comfortable */
+  // get pointer to it: more comfortable 
   NewBlast = &(AllBlasts[i]);
 
-  /* Einen Blast an x/y erzeugen */
+  // create a blast at the specified x/y coordinates
   NewBlast->PX = x;
   NewBlast->PY = y;
 
@@ -177,7 +198,7 @@ StartBlast (float x, float y, int type)
       DruidBlastSound ();
     }
 
-}				/* StartBlast */
+}; // void StartBlast( ... )
 
 /*@Function============================================================
 @Desc: Diese Funktion zaehlt die Phasen aller Explosionen weiter
@@ -323,7 +344,7 @@ CheckBulletCollisions (int num)
       // Check for collision with background
       if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
 	{
-	  DeleteBullet (num);
+	  DeleteBullet ( num , TRUE ); // we want a bullet-explosion
 	  return;			
 	}
       
@@ -341,7 +362,7 @@ CheckBulletCollisions (int num)
 	  // ATTENTION!  These instructions belong here and must not be moved up.
 	  // CurBullet->type = OUT;
 	  // CurBullet->mine = FALSE;
-	  DeleteBullet( num );
+	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
 	  return;			/* Bullet ist hin */
 	}
       
@@ -366,7 +387,7 @@ CheckBulletCollisions (int num)
 
 	      // We might also start a little bullet-blast even after the
 	      // collision of the bullet with an enemy (not in Paradroid)
-	      DeleteBullet( num );
+	      DeleteBullet( num , TRUE ); // we want a bullet-explosion
 
 	      Enemy_Post_Bullethit_Behaviour( i );
 
@@ -398,7 +419,7 @@ CheckBulletCollisions (int num)
 	  //AllBullets[num].type=OUT;
 	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
 	  StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
-	  DeleteBullet( num );
+	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
 	}
       break;
     } // switch ( Bullet-Type )
@@ -438,7 +459,7 @@ CheckBlastCollisions (int num)
 	    /* KILL Bullet silently */
 	    //AllBullets[i].type = OUT;
 	    //AllBullets[i].mine = FALSE;
-	    DeleteBullet( i );
+	    DeleteBullet( i , TRUE ); // we want a bullet-explosion
 	  }
 
     }				/* for */

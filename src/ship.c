@@ -186,7 +186,7 @@ EnterLift (void)
 	  // AllBullets[i].mine = FALSE;
 	  // Never remove bullets any other way than via DeleteBullet or you will
 	  // get SEGFAULTS!!!!!!!!!!
-	  DeleteBullet ( i ) ;
+	  DeleteBullet ( i , FALSE ) ;
 	}
     } // if real level change has occured
 
