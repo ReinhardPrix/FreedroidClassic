@@ -838,8 +838,14 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       // the current Tux position.  That can't fail, right?
       //
       if ( !TryToIntegrateItemIntoInventory ( & NewItem , 1 ) )
-	DropItemToTheFloor ( &NewItem , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , Me [ 0 ] . pos. z ) ;
-      
+	{
+	  DropItemToTheFloor ( &NewItem , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , Me [ 0 ] . pos. z ) ;
+	  SetNewBigScreenMessage( "1 Item received (on floor)" );
+	}
+      else
+	{
+	  SetNewBigScreenMessage( "1 Item received!" );
+	}
     }
   else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
@@ -922,6 +928,18 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
       Me [ 0 ] . Gold -= TempValue;
+      sprintf ( WorkString , "%d bucks given" , TempValue );
+      SetNewBigScreenMessage ( WorkString );
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AddGold:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding gold. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "AddGold:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
+      Me [ 0 ] . Gold += TempValue;
+      sprintf ( WorkString , "%d bucks received" , TempValue );
+      SetNewBigScreenMessage ( WorkString );
     }
   else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsWithCode:" ) )
     {
@@ -1428,10 +1446,8 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   //--------------------
   // Now we do the dialog with Dixon, the teleporter service man...
   //
-  if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
+  if ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned ) 
     {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 1 ; 
-      
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = FALSE ; // we allow to ask naively...
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 2 ] = FALSE ; // we allow to ask naively...
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 3 ] = FALSE ; // we allow to ask naively...
@@ -1439,24 +1455,25 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 6 ] = FALSE ; // we allow to ask naively...
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = FALSE ; // we allow to ask naively...
     }
-  else
+  if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned ) &&
+       ( !Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete ) )
     {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 0 ; 
-      
-      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
-	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
+      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
 	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 1 ; // allow to give back the toolset
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = FALSE ; // we disallow to ask directly for the toolset...
+	}
+      else
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 0 ; // disallow to give back the toolset
 	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
-	  
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 5 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 6 ] = FALSE ; // we allow to ask naively...
 	}
     }
-  
+  if ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete ) 
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = TRUE ; // we reallow to ask for the status of teleport...
+    }
+
   //--------------------
   // Now we prepare the dialog with Michelangelo, the colony cook...
   //
@@ -1503,6 +1520,12 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = TRUE ; // we allow to report no success yet...
 	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = FALSE ; // we allow to report no success yet...
 	}
+    }
+  if ( Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) 
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = FALSE ; // we disallow to talk more about the mission...
+      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = FALSE ; // we disallow to talk more about the mission...
+      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 13 ] = TRUE ; // we disallow to talk more about the mission...
     }
 
   //--------------------
@@ -1882,7 +1905,7 @@ SetNewBigScreenMessage( char* ScreenMessageText )
   BigScreenMessageDuration[ BigScreenMessageIndex] = 0 ;
   BigScreenMessageIndex ++ ;
   if ( BigScreenMessageIndex >= MAX_BIG_SCREEN_MESSAGES )
-    BigScreenMessageIndex = MAX_BIG_SCREEN_MESSAGES ;
+    BigScreenMessageIndex = 0 ;
 }; // void SetNewBigScreenMessage( char* ScreenMessageText )
 
 /* ----------------------------------------------------------------------

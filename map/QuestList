@@ -37,32 +37,32 @@
 +++
 Mission Name="Find cure for Bender"
 Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : 57
+Mission target is to fetch item : 79
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
+Mission target is to reach level : 1
+Mission target is to reach X-Pos : 0
+Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
 Mission Name="Dixon's toolkit"
 Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : 57
+Mission target is to fetch item : 59
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
+Mission target is to reach level : 1
+Mission target is to reach X-Pos : 0
+Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
 
@@ -76,9 +76,9 @@ Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
+Mission target is to reach level : 1
+Mission target is to reach X-Pos : 0
+Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
 

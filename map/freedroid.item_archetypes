@@ -2169,7 +2169,7 @@ Item description text="These pills permanently raise magic within a character by
 
 // Item No. 79
 ** Start of new item specification subsection **
-Item name="Brain Enlargement Antidode"
+Item name="Brain Enlargement Antidote"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
