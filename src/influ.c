@@ -234,10 +234,6 @@ MoveInfluence (void)
   static int counter = -1;
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Real function call confirmed.");
-  // printf("\nvoid MoveInfluence(void):  accel ist jetzt: %d.",accel);
-
-  if (BeamLine)
-    return;
 
   counter++;
   counter %= BREMSDREHUNG;	/* Wird mal vom Druid abhaengen */
