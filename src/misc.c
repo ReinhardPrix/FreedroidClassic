@@ -40,9 +40,11 @@
 
 //--------------------
 // This header file is needed
-#ifndef __WIN32__
-#include <execinfo.h>
-#include <signal.h>
+#if HAVE_EXECINFO_H
+#  include <execinfo.h>
+#endif
+#if HAVE_SIGNAL_H 
+#  include <signal.h>
 #endif
 
 //--------------------
@@ -275,7 +277,7 @@ void
 print_trace ( int signum )
 {
 
-#ifndef __WIN32__
+#if (!defined __WIN32__) && (!defined __APPLE_CC__)
 
     // fprintf ( stderr , "print_trace:  Now attempting backtrace from within the code!\n" );
     // fprintf ( stderr , "print_trace:  Allowing a maximum of %d function calls on the stack!\n" , MAX_CALLS_IN_BACKTRACE );
@@ -350,7 +352,7 @@ void
 implant_backtrace_into_signal_handlers ( void )
 {
 
-#ifndef __WIN32__
+#if (!defined __WIN32__) && (!defined __APPLE_CC__)
 
     DebugPrintf ( -4 , "\n-Signal Handling------------------------------------------------------\n\
 Setting up signal handlers for internal backtrace:\n\
@@ -2266,15 +2268,44 @@ ReadSint16 (void * memory)
 {
   Sint16 ret;
 
-#ifdef __APPLE_CC__
-  ret = SDLNet_Read16 (memory);
-#else
   memcpy (&ret, memory, sizeof(Sint16));
+#ifdef __APPLE_CC__
+  endian_swap ( (char*)&ret, sizeof (Sint16), 1);
 #endif
 
   return (ret);
 
 } /* ReadSint16() */
+
+/***********************************************************************
+ * a little endian-swapper 
+ */
+void 
+endian_swap(char * pdata, size_t dsize, size_t nelements)
+{
+  int i, j, indx;
+  char tempbyte;
+
+  if (dsize <= 1) return;
+
+  for (i=0; i<nelements; i++)
+    {
+      indx = dsize;
+      for (j=0; j<dsize/2; j++)
+	{
+	  tempbyte = pdata[j];
+	  indx = indx - 1;
+	  pdata[j] = pdata[indx];
+	  pdata[indx] = tempbyte;
+	}
+      
+      pdata = pdata + dsize;
+    }
+  
+  return;
+
+} /* endian swap */
+
 
 
 #undef _misc_c
