@@ -594,6 +594,10 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
 
+      // Now we read in the number of the sound to be used for this item
+      ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
+			   &ItemMap[ItemIndex].sound_number , EndOfItemData );
+
       ItemIndex++;
     }
 
