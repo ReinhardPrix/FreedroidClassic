@@ -833,45 +833,24 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.10  1993/08/04 15:13:22  prix
- * Fri Jul 30 18:26:16 1993: working on new MoveLevelDoors()
- * Fri Jul 30 18:57:29 1993: still working
- * Fri Jul 30 19:16:35 1993: First Release of New MoveLevelDoors
- * Sat Jul 31 07:25:14 1993: SetColors hinzugefuegt
- * Sat Jul 31 07:40:46 1993: farbwerte hinzugefuegt
- * Sat Jul 31 11:04:54 1993: Waypointliste - Array nun ausserhalb der Feindliste: Pointer
- * Sat Jul 31 11:22:27 1993: made HALBTUERE3 passable
- * Sat Jul 31 11:48:28 1993: changes in druidsped: init
- * Sat Jul 31 12:18:31 1993: adapts to new druid-struct: firewait in FireBullet
- * Sat Jul 31 18:30:11 1993: Speicher reservieren in Druidmap[0].type
- * Sat Jul 31 19:44:47 1993: added levelnum init in Feindliste
- * Sat Jul 31 19:48:38 1993: EnemyCollision only for living druid on current level
- * Sat Jul 31 20:25:37 1993: BounceBack stoppt nun Influencer statt zu reflektieren
- * Sat Jul 31 21:02:07 1993: removed brain-damaged shifts of Influence coordinates
- * Sat Jul 31 22:04:39 1993: New MoveLevelDoors: open for all druids
- * Sun Aug 01 08:23:53 1993: MoveLevelDoors: 0/0 beendet Funktion
- * Sun Aug 01 13:30:50 1993: dist - Werte in MoveLevelDoors long !!
- * Sun Aug 01 13:52:40 1993: rewriting NotPassable; exact checks
- * Sun Aug 01 14:59:31 1993: New NotPassable
- * Sun Aug 01 15:01:00 1993: Aufrufe von NotPassable an neue Paramter angepasst
- * Sun Aug 01 15:08:52 1993: mod. notPassable
- * Sun Aug 01 16:42:59 1993: New BounceBack
- * Mon Aug 02 09:26:30 1993: rotateBulletColor() aktiviert
- * Mon Aug 02 10:03:01 1993: schussgeschwindigkeit erhoeht
- * Tue Aug 03 12:34:41 1993: some unnescesary extras transfered into the file "plusjunk"
- * Tue Aug 03 13:52:28 1993: documentation and influence mortal
- * Tue Aug 03 14:33:11 1993: removed drive init of Druidmap (struct changed !)
- * Tue Aug 03 14:41:01 1993: NotPassable verbessert: Tuerraender
- * Tue Aug 03 14:49:22 1993: use of Me.firedir removed in MoveInfluence() und FireBullet
- * Tue Aug 03 14:51:13 1993: removed init of Me.firedir
- * Tue Aug 03 17:34:59 1993: BounceBack verbessert: schnelles Abgleiten an Mauer
- * Tue Aug 03 18:20:23 1993: written DoorCatch()
- * Tue Aug 03 18:22:59 1993: call to DoorCatch in CheckWallHit
- * Tue Aug 03 18:30:43 1993: killed CheckWallHit. New: BounceInfluencer
- * Tue Aug 03 19:41:52 1993: fighting with Pos-correction-functions (SHIITTTT)
- * Tue Aug 03 20:55:37 1993: written BounceInfluencer(), NotPassable() and DruidPassable()
- * Tue Aug 03 22:24:21 1993: changed DruidPassable and BounceInfluencer
- * Wed Aug 04 10:20:23 1993: added some lines to DruidPassable
+ * Revision 1.11  1993/08/24 20:28:38  prix
+ * Wed Aug 04 12:27:11 1993: exported all influencer-functions to influence.c
+ * Wed Aug 04 12:39:45 1993: ausgemistet
+ * Wed Aug 04 12:50:33 1993: removed call to RotateShieldColors
+ * Wed Aug 04 12:57:27 1993: removed WallReflectShots
+ * Sun Aug 08 12:57:06 1993: AlleLevelsgleichFaerben hinyugefuegt
+ * Sun Aug 08 13:15:01 1993: Levelfaerbeprozeduren disloziert
+ * Sun Aug 08 21:05:48 1993: changed Feindesliste to new struct enem
+ * Mon Aug 09 17:19:37 1993: call to ShuffleEnemys in  InitGlobalVars()
+ * Mon Aug 09 19:01:45 1993: more enemys
+ * Tue Aug 10 08:19:14 1993: DRUIDBAST
+ * Tue Aug 10 10:15:15 1993: InitLevelColorTable aktiviert
+ * Tue Aug 10 20:08:56 1993: kein EnemysGetroffen() meht
+ * Tue Aug 10 20:15:39 1993: No InfluenceGetroffen mehr
+ * Fri Aug 13 14:20:03 1993: Toene aus beim Programmende
+ * Sat Aug 21 14:58:13 1993: Call to new LoadShip
+ * Tue Aug 24 09:52:22 1993:  call Animate Refresh
+ * Tue Aug 24 10:25:48 1993: randomize()
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
