@@ -673,6 +673,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   int maxspeed = 8;
   SDL_Surface* Background;
 
+  Activate_Conservative_Frame_Computation( );
+
   if ( TitlePictureName != NULL )
     DisplayImage ( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
 
@@ -680,6 +682,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   Background = SDL_DisplayFormat( Screen );
 
+  SetCurrentFont( Para_BFont );
 
   // printf("\nScrollTest should be starting to scroll now...");
 
@@ -741,6 +744,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
     } /* while !Space_Pressed */
 
   SDL_FreeSurface( Background );
+
+  while ( SpacePressed() ); // so that we don't touch again immediately.
 
   return OK;
 }				// void ScrollText(void)
