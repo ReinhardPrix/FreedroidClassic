@@ -1036,7 +1036,8 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   char fname[500];
 
   // #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test.jpg" 
-#define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test2.jpg" 
+  // #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test2.jpg" 
+#define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
 
   //--------------------
   // This is the droid window we used before Bastian reshaped

@@ -96,7 +96,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  94 ,  94 ,  54 ,  54 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 200 , 310 ,  54 ,  54 } } ,
 
     { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 , 420 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/RightShopButton.png"              , { 600 , 420 ,  40 ,  40 } } ,
