@@ -871,7 +871,10 @@ int
 InitPictures (void)
 {
   SDL_Surface *tmp2;
+  BFont_Info *oldfont;
   char *fpath;
+
+  oldfont = GetCurrentFont ();
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -986,6 +989,8 @@ InitPictures (void)
   DisplayText ("ok", -1, -1, NULL);
   SDL_Flip (ne_screen);
   
+  SetCurrentFont (oldfont);
+
   return (TRUE);
 }  // InitPictures
 

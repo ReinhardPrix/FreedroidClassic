@@ -337,6 +337,8 @@ EnterKonsole (void)
 	    }
 	  if (SpacePressed ())
 	    TasteOK = 1;
+	  if (EscapePressed())
+	    ReenterGame = TRUE;
 	}
 
       /* Verhindern, da"s der Menucursor das Menu verl"a"st */

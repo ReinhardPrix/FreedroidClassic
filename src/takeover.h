@@ -29,15 +29,13 @@
 #include "defs.h"    // we need this here for path defines
 #endif
 
-void
-to_show_banner (const char* left, const char* right);
 
 /* Background-color of takeover-game */
 #define TO_BG_COLOR			63
 
 /* File containing the Takeover-blocks */
-#define TO_BLOCK_FILE		"to_elem.png"
-#define TO_BG_FILE		"to_background.jpg"
+#define TO_BLOCK_FILE		"ne_to_elem.png"
+
 /* --------------- individual block dimensions --------------- */
 #define NUM_PHASES		5       /* number of color-phases for current "flow" */
 					/* inclusive "inactive" phase */
@@ -95,7 +93,7 @@ to_show_banner (const char* left, const char* right);
 
 /* Positions of Druid-pictures */
 #define GELB_DRUID_X		2*40
-#define GELB_DRUID_Y		0
+#define GELB_DRUID_Y		-3
 #define VIOLETT_DRUID_X		2*220
 #define VIOLETT_DRUID_Y		GELB_DRUID_Y
 
@@ -179,7 +177,7 @@ enum to_elements
 };
 
 /* Block-Names */
-enum to_block_tyes
+enum to_blocks
 {
   KABEL,
   KABELENDE,

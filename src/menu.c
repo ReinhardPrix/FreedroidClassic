@@ -37,8 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-int New_Game_Requested=FALSE;
-
 void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
 void Credits_Menu (void);
@@ -47,9 +45,14 @@ void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
 
+#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
+#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+#define OPTIONS_MENU_ITEM_POS_X (UserCenter_x - 120)
+#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
-EXTERN char Previous_Mission_Name[1000];
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 
@@ -374,8 +377,6 @@ Cheatmenu (void)
 void
 MissionSelectMenu (void)
 {
-#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
-#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
     CLASSIC_PARADROID_MISSION_POSITION=1, 
@@ -482,23 +483,23 @@ enum
 void
 EscapeMenu (void)
 {
-#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
-#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
-    SINGLE_PLAYER_POSITION=1, 
-    MULTI_PLAYER_POSITION, 
-    OPTIONS_POSITION, 
+    NEW_GAME=1, 
+    FULL_WINDOW,
     SET_THEME,
-    LEVEL_EDITOR_POSITION, 
-    CREDITS_POSITION,
-    QUIT_POSITION
+    OPTIONS,
+    LEVEL_EDITOR,
+    HIGHSCORES,
+    CREDITS,
+    QUIT
   };
 
   int Weiter = 0;
   int MenuPosition=1;
   int h;
   char theme_string[40];
+  char window_string[40];
   int i;
 
   Me.status=MENU;
@@ -513,7 +514,8 @@ enum
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
 
-  SetCurrentFont( Para_BFont );
+  SetCurrentFont ( Menu_BFont );
+  h = FontHeight (GetCurrentFont()) + 2;
   
   while ( EscapePressed() );
 
@@ -521,33 +523,33 @@ enum
     {
 
       InitiateMenu();
-
       // 
       // we highlight the currently selected option with an 
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      SetCurrentFont ( Menu_BFont );
-      h = FontHeight (GetCurrentFont());
-      PutInfluence( FIRST_MENU_ITEM_POS_X , 
-		    FIRST_MENU_ITEM_POS_Y +
-		    ( MenuPosition - 1.5 ) * h );
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
 
       strcpy (theme_string, "Theme: ");
       if (strstr (GameConfig.Theme_SubPath, "default"))
-	strcat (theme_string, "default");
+	strcat (theme_string, "Classic");
       else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "lanzz");
+	strcat (theme_string, "Lanzz");
       else
 	strcat (theme_string, "unknown");
 
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*h,    "Multi Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*h,    "Options");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*h,  theme_string);
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*h,    "Level Editor");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*h,    "Credits");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +6*h,    "Quit Game");
+      strcpy (window_string, "Combat window: ");
+      if (GameConfig.FullUserRect) strcat (window_string, "Full");
+      else strcat (window_string, "Classic");
+
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y, "New Game");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h, window_string);
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h, theme_string);
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+3*h,"Further Options");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +4*h, "Level Editor");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +5*h, "Highscores");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +6*h, "Credits");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +7*h, "Quit Game");
 
       SDL_Flip( ne_screen );
 
@@ -567,32 +569,28 @@ enum
 	  switch (MenuPosition) 
 	    {
 
-	    case SINGLE_PLAYER_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      New_Game_Requested=FALSE;
-	      Single_Player_Menu();
-	      if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
+	    case NEW_GAME:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      GameOver = TRUE;
+	      Weiter=!Weiter;
 	      break;
-	    case MULTI_PLAYER_POSITION:
+
+	    case FULL_WINDOW:
 	      while (EnterPressed() || SpacePressed() );
-	      Multi_Player_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      GameConfig.FullUserRect = ! GameConfig.FullUserRect;
+	      if (GameConfig.FullUserRect)
+		Copy_Rect (Full_User_Rect, User_Rect);
+	      else
+		Copy_Rect (Classic_User_Rect, User_Rect);
 	      break;
-	    case OPTIONS_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      Options_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
+
 	    case SET_THEME:
 	      while (EnterPressed() || SpacePressed() );
 	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
-		{
-		  GameConfig.Theme_SubPath="lanzz_theme/";
-		}
+		GameConfig.Theme_SubPath="lanzz_theme/";
 	      else
-		{
-		  GameConfig.Theme_SubPath="default_theme/";
-		}
+		GameConfig.Theme_SubPath="default_theme/";
+
 	      ReInitPictures();
 
 	      //--------------------
@@ -609,24 +607,30 @@ enum
 		  AllBullets[i].Surfaces_were_generated = FALSE ;
 		}
 	      break;
-	    case LEVEL_EDITOR_POSITION:
+	    case OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      Options_Menu();
+	      break;
+
+	    case LEVEL_EDITOR:
 	      while (EnterPressed() || SpacePressed() );
 	      Level_Editor();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
-	    case CREDITS_POSITION:
+	    case HIGHSCORES:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      Show_Highscores();
+	      break;
+	    case CREDITS:
 	      while (EnterPressed() || SpacePressed() );
 	      Credits_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
-	    case QUIT_POSITION:
+	    case QUIT:
 	      DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
 	      Terminate(0);
 	      break;
 	    default: 
 	      break;
 	    } 
-	  // Weiter=!Weiter;
 	}
       if (UpPressed()) 
 	{
@@ -636,7 +640,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if ( MenuPosition < QUIT_POSITION ) MenuPosition++;
+	  if ( MenuPosition < QUIT ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -665,25 +669,20 @@ GraphicsSound_Options_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
-
-#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+  int h;
 enum
   { SET_BG_MUSIC_VOLUME=1, 
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    USER_RECT,
-    LEAVE_OPTIONS_MENU };
+    BACK };
 
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
+  h = FontHeight (GetCurrentFont()) + 2;
 
   while ( EscapePressed() );
 
   while (!Weiter)
     {
-
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -691,28 +690,17 @@ enum
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen( NULL );
 
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+ (MenuPosition-1.5)*h);
 
-
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
-		       "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
-		       "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
-		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
-		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Combat Window Size: %s", GameConfig.FullUserRect ? "FULL" : "CLASSIC");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "Back");
-
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+		   "Background Music: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,  
+		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,  
+		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h, 
+		   "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, "Back");
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
@@ -790,17 +778,7 @@ enum
 	      fullscreen_on = !fullscreen_on;
 	      break;
 
-	    case USER_RECT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.FullUserRect = ! GameConfig.FullUserRect;
-	      if (GameConfig.FullUserRect)
-		Copy_Rect (Full_User_Rect, User_Rect);
-	      else
-		Copy_Rect (Classic_User_Rect, User_Rect);
-
-	      break;
-
-	    case LEAVE_OPTIONS_MENU:
+	    case BACK:
 	      while (EnterPressed() || SpacePressed() );
 	      Weiter=TRUE;
 	      break;
@@ -817,7 +795,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  if ( MenuPosition < BACK ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -842,29 +820,21 @@ enum
 void
 On_Screen_Display_Options_Menu (void)
 {
-
   int Weiter = 0;
   int MenuPosition=1;
-
-#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+  int h;
 enum
-  { //SET_BG_MUSIC_VOLUME=1, 
-    //SET_SOUND_FX_VOLUME, 
-    //SET_GAMMA_CORRECTION, 
-    SHOW_POSITION=1, 
+  { SHOW_POSITION=1, 
     SHOW_FRAMERATE, 
     SHOW_ENERGY,
-    LEAVE_OPTIONS_MENU };
+    BACK };
 
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
+  h = FontHeight (GetCurrentFont()) + 2;
 
   while ( EscapePressed() );
 
   while (!Weiter)
     {
-
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -872,29 +842,15 @@ enum
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen( NULL );
 
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
 
-
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont)
-      //"Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont),
-      //"Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont),
-      //"Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
-		       "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
-		       "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
-		       "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
-		       "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+		   "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,
+		   "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+		   "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h, "Back");
 
       SDL_Flip( ne_screen );
 
@@ -926,7 +882,7 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
 	      break;
-	    case LEAVE_OPTIONS_MENU:
+	    case BACK:
 	      while (EnterPressed() || SpacePressed() );
 	      Weiter=TRUE;
 	      break;
@@ -943,7 +899,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  if ( MenuPosition < BACK ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -971,8 +927,7 @@ Droid_Talk_Options_Menu (void)
 
   int Weiter = 0;
   int MenuPosition=1;
-
-#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+  int h;
 enum
   { 
     INFLU_REFRESH_TEXT=1,
@@ -981,18 +936,14 @@ enum
     ENEMY_BUMP_TEXT,
     ENEMY_AIM_TEXT,
     ALL_TEXTS,
-    // SHOW_ENERGY,
-    LEAVE_DROID_TALK_OPTIONS_MENU };
+    BACK };
 
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
+ h = FontHeight (GetCurrentFont()) + 2;
+ 
   while ( EscapePressed() );
 
   while (!Weiter)
     {
-
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -1000,29 +951,23 @@ enum
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen( NULL );
 
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      PutInfluence(FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
 
-
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
-		       "Influencer Refresh Texts: %s", GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
-		       "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
-		       "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
-		       "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
-		       "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+		   "Player Refresh Texts: %s", 
+		   GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h, 
+		   "Player Blast Texts: %s", 
+		   GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+		   "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,
+		   "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h,
+		   "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+5*h,
+		   "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+6*h, "Back");
 
       SDL_Flip( ne_screen );
 
@@ -1066,7 +1011,7 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
 	      break;
-	    case LEAVE_DROID_TALK_OPTIONS_MENU:
+	    case BACK:
 	      while (EnterPressed() || SpacePressed() );
 	      Weiter=TRUE;
 	      break;
@@ -1083,7 +1028,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if ( MenuPosition < LEAVE_DROID_TALK_OPTIONS_MENU ) MenuPosition++;
+	  if ( MenuPosition < BACK ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -1108,29 +1053,23 @@ enum
 void
 Options_Menu (void)
 {
-
   int Weiter = 0;
   int MenuPosition=1;
+  int h;
 
-#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
   { GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
     SAVE_OPTIONS, 
-    //    TOGGLE_FRAMERATE, 
-    // SHOW_ENERGY,
-    LEAVE_OPTIONS_MENU };
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
+    BACK };
 
   while ( EscapePressed() );
 
+  h = FontHeight (GetCurrentFont()) + 2;
+
   while (!Weiter)
     {
-
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -1138,29 +1077,14 @@ enum
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen( NULL );
 
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      PutInfluence( FIRST_MENU_ITEM_POS_X,
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * h);
 
-
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
-		       "Graphics & Sound" );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
-		       "Droid Talk" );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
-		       "On-Screen Displays" );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
-		       "Save Options");
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
-      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
-      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h,"Graphics & Sound" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,"Droid Talk" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,"On-Screen Displays" );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,"Save Options");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, "Back");
 
       SDL_Flip( ne_screen );
 
@@ -1195,7 +1119,7 @@ enum
 	    case SAVE_OPTIONS:
 	      while (EnterPressed() || SpacePressed() );
 	      break;
-	    case LEAVE_OPTIONS_MENU:
+	    case BACK:
 	      while (EnterPressed() || SpacePressed() );
 	      Weiter=TRUE;
 	      break;
@@ -1212,7 +1136,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  if ( MenuPosition < BACK ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -1240,7 +1164,7 @@ Single_Player_Menu (void)
   int Weiter = 0;
   int MenuPosition=1;
 
-  #define SINGLE_PLAYER_MENU_ITEM_POS_X (Block_Width*1.2)
+#define SINGLE_PLAYER_MENU_ITEM_POS_X (Block_Width*1.2)
 
   while (!Weiter)
     {
@@ -1282,7 +1206,6 @@ Single_Player_Menu (void)
 
 	    case NEW_GAME_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
-	      New_Game_Requested=TRUE;
 	      InitNewMission( STANDARD_MISSION );
 	      Weiter=!Weiter;
 	      break;
@@ -1617,9 +1540,20 @@ Level_Editor(void)
   int OriginWaypoint = (-1);
   char* NumericInputString;
   char* OldMapPointer;
+  int h;
 
-  enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
+  enum { 
+    SAVE_LEVEL_POSITION=1, 
+    CHANGE_LEVEL_POSITION, 
+    CHANGE_TILE_SET_POSITION, 
+    CHANGE_SIZE_X, 
+    CHANGE_SIZE_Y, 
+    SET_LEVEL_NAME, 
+    SET_BACKGROUND_SONG_NAME, 
+    SET_LEVEL_COMMENT, 
+    BACK};
+
+  h = FontHeight (GetCurrentFont()) + 2;
 
   while ( !Done )
     {
@@ -1921,30 +1855,30 @@ Level_Editor(void)
 
       while (!Weiter)
 	{
-
+	  int xoffs = 110;
 	  InitiateMenu();
 
 	  // Highlight currently selected option with an influencer before it
-	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*h);
 
-	  CenteredPutString   ( ne_screen ,  4*FontHeight(Menu_BFont),    
-				"Save whole ship to 'Testship.shp'");
-	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
-				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
-	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
-				"Change tile set");
-	  CenteredPrintString ( ne_screen ,  7*FontHeight(Menu_BFont),    
-				"Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
-	  CenteredPrintString ( ne_screen ,  8*FontHeight(Menu_BFont),    
-				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
-	  CenteredPrintString ( ne_screen ,  9*FontHeight(Menu_BFont),    
-				"Level name: %s" , CurLevel->Levelname );
-	  CenteredPrintString ( ne_screen ,  10*FontHeight(Menu_BFont),    
-				"Background music file name: %s" , CurLevel->Background_Song_Name );
-	  CenteredPrintString ( ne_screen ,  11*FontHeight(Menu_BFont),    
-				"Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  CenteredPutString   ( ne_screen ,  12*FontHeight(Menu_BFont),    
-				"Quit Level Editor");
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*h, 
+		       "Save ship as  'Testship.shp'");
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*h, 
+		       "Current: %d.  Level +/-" , CurLevel->levelnum );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*h, 
+		       "Change tile set (color)");
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*h, 
+		       "Levelsize in X: %d.  -/+" , CurLevel->xlen );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*h, 
+		       "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*h, 
+		       "Level name: %s" , CurLevel->Levelname );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*h, 
+		       "Background music: %s" , CurLevel->Background_Song_Name );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*h, 
+		       "Level Comment: %s" , CurLevel->Level_Enter_Comment );
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*h, 
+		       "Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
 	  
@@ -1976,7 +1910,6 @@ Level_Editor(void)
 		  // Weiter=!Weiter;
 		  break;
 		case CHANGE_LEVEL_POSITION: 
-		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me.pos.x , Me.pos.y ); 
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case CHANGE_TILE_SET_POSITION: 
@@ -1984,27 +1917,37 @@ Level_Editor(void)
 		  break;
 		case SET_LEVEL_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
+		  ClearUserFenster();
+		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		  DisplayText ("New level name: ",
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
+			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
-		  CurLevel->Levelname=GetString( 100 , FALSE );
+		  CurLevel->Levelname=GetString(15, FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case SET_BACKGROUND_SONG_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
+		  ClearUserFenster();
+		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		  DisplayText ("Bg music filename: ", 
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
+			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
-		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
-		  Weiter=!Weiter;
+		  CurLevel->Background_Song_Name=GetString(20 , FALSE );
 		  break;
 		case SET_LEVEL_COMMENT:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
+		  ClearUserFenster();
+		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		  DisplayText ("New level-comment :",
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
+			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
-		  MyCursorX=15; MyCursorY=440;
-		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
-		  Weiter=!Weiter;
+		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
 		  break;
-		case QUIT_LEVEL_EDITOR_POSITION:
+
+		case BACK:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  Weiter=!Weiter;
 		  Done=TRUE;
@@ -2113,7 +2056,7 @@ Level_Editor(void)
 	    }
 	  if (DownPressed()) 
 	    {
-	      if ( MenuPosition < QUIT_LEVEL_EDITOR_POSITION ) MenuPosition++;
+	      if ( MenuPosition < BACK ) MenuPosition++;
 	      MoveMenuPositionSound();
 	      while (DownPressed());
 	    }
@@ -2121,6 +2064,9 @@ Level_Editor(void)
 	}
       
     } // while (!Done)
+
+  ClearGraphMem();
+  return;
 
 } // void Level_Editor(void)
 

@@ -656,7 +656,7 @@ ShowPlayground ()
   SDL_Rect Target_Rect;
 
   xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
-  yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*140)/2;
+  yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*128)/2;
 
   SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
