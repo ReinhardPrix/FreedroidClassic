@@ -515,7 +515,7 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
       Me[0].resist_electricity += BonusItem->bonus_to_resist_electricity ;
 
       // if ( ItemMap [ BonusItem->type ] . can_be_installed_in_weapon_slot )
-      // Me[0].freezing_enemys_property += BonusItem->
+      // Me[0].freezing_enemys_property += BonusItem->freezing_time_in_seconds;
     }
 
 }; // void AddInfluencerItemSecondaryBonus( item* BonusItem )

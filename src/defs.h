@@ -50,6 +50,7 @@
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 38
+#define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 #define ALL_ITEMS 100
 
 #define ITEM_DROP_PERCENTAGE 20
@@ -173,6 +174,7 @@ enum
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
+#define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define NE_SKILL_ICON_FILE      "skills.png"
 #define SHOP_BACKGROUND_IMAGE   "shoppe.jpg"
 

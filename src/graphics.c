@@ -1135,6 +1135,8 @@ InitPictures (void)
 
   ShowStartupPercentage ( 75 ) ; 
 
+  Load_Mouse_Move_Cursor_Surfaces();
+
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
 
   Load_SkillIcon_Surfaces();

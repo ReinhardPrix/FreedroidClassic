@@ -783,7 +783,28 @@ void
 SwapEnemys ( int First , int Second ) 
 {
   enemy Zwisch;
+  int i;
 
+  //--------------------
+  // This function swaps two enemies.  However this can not be done
+  // without taking also the target index of the mouse move for the
+  // influecner into account.
+  //
+  for ( i = 0 ; i < MAX_PLAYERS ; i ++ )
+    {
+      if ( Me [ i ] . mouse_move_target_is_enemy == First )
+	{
+	  Me [ i ] .  mouse_move_target_is_enemy = Second ;
+	}
+      else if ( Me [ i ] . mouse_move_target_is_enemy == Second )
+	{
+	  Me [ i ] .  mouse_move_target_is_enemy = First ;
+	}
+    }
+	   
+  //--------------------
+  // Now we can swap the two enemies as desired...
+  //
   memcpy ( &Zwisch , & ( AllEnemys[ First ] ) , sizeof( enemy ) );
   memcpy ( & ( AllEnemys[ First ] ) , & ( AllEnemys [ Second ] ) , sizeof( enemy ) );
   memcpy ( & ( AllEnemys[ Second ] ) , & Zwisch , sizeof( enemy ) );
