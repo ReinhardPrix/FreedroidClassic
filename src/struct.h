@@ -783,6 +783,7 @@ typedef struct
   char* spell_skill_name;
   char* spell_skill_icon_name;
   SDL_Surface* spell_skill_icon_surface;
+  int mana_cost_table[ NUMBER_OF_SKILL_LEVELS ];
 }
 spell_skill_spec, *Spell_Skill_Spec;
 

@@ -318,37 +318,6 @@ char* AllSkillTexts [ ] =
   };
 
 //--------------------
-// This table indicates how many points of magic energy ('force')
-// it takes to cast a given spell, provided the caster is of 
-// the given skill level.
-//
-int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
-  {    0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , // takeover skill.  This should remain free
-  {    0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , // 'Repair Skill'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Explosion ray'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Healing'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Teleportal Home'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Firey Bolt'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Ice Bolt'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Explosion circle'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Poison Bolt'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Petrification'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Detect Stuff'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'EMP Radial Wave'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'VMX Radial Wave'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Fire Radial Wave'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 14'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 15'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 16'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 17'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 18'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 19'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 20'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 21'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 22'
-};
-
-//--------------------
 // When a character aquires better melee_weapon_skill for melee
 // weapons or better ranged_weapon_skill for ranged weapons, this
 // will affect (his chance to hit and also) the damage the player
@@ -376,65 +345,65 @@ int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
 spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
-  { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png" , NULL } ,
-  { 0 , "Repair Skill"           , "RepairSkill.png"       , NULL } ,
-  { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png" , NULL } ,
-  { 1 , "Force -> Energy "       , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Create Teleportal Home" , "NoSkillAvailable.png"  , NULL } ,
+  { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
+  { 0 , "Repair Skill"           , "RepairSkill.png"           , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
+  { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Force -> Energy "       , "FirstAidSpell.png"         , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Create Teleportal Home" , "TeleportHomeSpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Firey Bolt"             , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Ice Bolt"               , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Explosion Circle"       , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Poison Bolt"            , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Petrification"          , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Firey Bolt"             , "PlasmaBoltSpell.png"       , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ice Bolt"               , "FrostBoltSpell.png"        , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Explosion Circle"       , "ExplosionCircleSpell.png"  , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Poison Bolt"            , "PoisonBoltSpell.png"       , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Petrification"          , "StoningBoltSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Detect Stuff"           , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Radial EMP Wave"        , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Radial VMX Wave"        , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Radial Plasma Wave"     , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 14"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Detect Stuff"           , "DetectItemsSpell.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial EMP Wave"        , "RadialEMPWaveSpell.png"    , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial VMX Wave"        , "RadialVMXWaveSpell.png"    , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Radial Plasma Wave"     , "RadialPlasmaWaveSpell.png" , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Plasma Transistor" , "ExtractPlasmaTransistor.png" , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } } ,
   
-  { 1 , "Unused spell Nr. 15"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 16"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 17"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 18"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Extract Superconductor"    , "ExtractSuperconductor.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Antim. Converter"    , "ExtractAntimatterConverter.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Entropy Inverter"    , "ExtractEntropyInverter.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Ex. Tach. Condensator"    , "ExtractTachyonCondensator.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 20"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 22"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 23"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 24"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 20"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 22"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 23"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 24"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 25"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 26"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 27"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 28"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 29"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 25"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 26"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 27"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 28"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 29"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 30"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 31"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 32"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 33"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 34"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 30"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 31"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 32"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 33"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 34"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 35"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 36"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 37"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 38"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 39"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 35"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 36"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 37"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 38"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 39"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 40"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 41"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 42"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 43"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 44"    , "NoSkillAvailable.png"  , NULL } ,
+  { 1 , "Unused spell Nr. 40"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 41"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 42"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 43"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 44"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
 
-  { 1 , "Unused spell Nr. 45"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 46"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 47"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 48"    , "NoSkillAvailable.png"  , NULL } ,
-  { 1 , "Unused spell Nr. 49"    , "NoSkillAvailable.png"  , NULL } 
+  { 1 , "Unused spell Nr. 45"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 46"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 47"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 48"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } ,
+  { 1 , "Unused spell Nr. 49"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } } 
 
 }; // SpellSkillSpec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
 

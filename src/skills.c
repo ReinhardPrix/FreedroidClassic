@@ -110,8 +110,7 @@ ClearDetectedItemList( int PlayerNum )
 void
 DetectItemsSpell ( void )
 {
-  // int SpellCost = ManaCostTable [ SPELL_DETECT_ITEM ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_DETECT_ITEM ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_DETECT_ITEM ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int i;
 
@@ -149,8 +148,7 @@ DetectItemsSpell ( void )
 void
 ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  // int SpellCost = ManaCostTable [ SPELL_PARALYZE_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_PARALYZE_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_PARALYZE_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -176,8 +174,7 @@ ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  // int SpellCost = ManaCostTable [ SPELL_FIREY_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_FIREY_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_FIREY_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -203,8 +200,7 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  // int SpellCost = ManaCostTable [ SPELL_COLD_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_COLD_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_COLD_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -230,7 +226,7 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  int SpellCost = ManaCostTable [ SPELL_POISON_BOLT ][ Me[ 0 ] . spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -256,8 +252,7 @@ PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 CreateTeleportal ( gps PortalTarget )
 {
-  // int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -285,7 +280,7 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-  int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
   location HomeSpot;
 
   if ( Me [ 0 ] . mana >= SpellCost )
@@ -316,8 +311,7 @@ TeleportHome ( void )
 void
 ForceExplosionCircle ( gps ExpCenter )
 {
-  // int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_CIRCLE ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_CIRCLE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_CIRCLE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
@@ -346,7 +340,7 @@ ForceExplosionCircle ( gps ExpCenter )
 void
 RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = ManaCostTable [ SPELL_RADIAL_EMP_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_RADIAL_EMP_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
   int i;
 
   if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana )
@@ -390,7 +384,7 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = ManaCostTable [ SPELL_RADIAL_VMX_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_RADIAL_VMX_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
   int i;
 
   if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
@@ -435,7 +429,7 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialFireWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = ManaCostTable [ SPELL_RADIAL_FIRE_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_RADIAL_FIRE_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
   int i;
 
   if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
@@ -482,7 +476,7 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
   moderately_finepoint step;
-  int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_RAY ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_RAY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
@@ -510,8 +504,7 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 void
 ForceToEnergyConversion ( void )
 {
-  // int SpellCost = ManaCostTable [ SPELL_FORCE_TO_ENERGY ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_TO_ENERGY ] ] ;
-  int SpellCost = ManaCostTable [ SPELL_FORCE_TO_ENERGY ][ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_FORCE_TO_ENERGY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
@@ -880,8 +873,7 @@ ShowSkillsScreen ( void )
       sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      // sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0]. SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ]] );
-      sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0]. spellcasting_skill ] );
+      sprintf( CharText , "Mana cost: %d " , SpellSkillMap [ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] . mana_cost_table [Me[0]. spellcasting_skill ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       
