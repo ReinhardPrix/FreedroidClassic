@@ -1187,7 +1187,7 @@ InitPictures (void)
   // could box the influencer out of the ship....
   Activate_Conservative_Frame_Computation();
 
-  ShowStartupPercentage ( 12 ) ; 
+  ShowStartupPercentage ( 18 ) ; 
 
   // In the following we will be reading in image information.  But the number
   // of images to read in and the way they are displayed might be strongly dependant
@@ -1196,7 +1196,7 @@ InitPictures (void)
   // commands will do the right thing...
   LoadThemeConfigurationFile();
 
-  ShowStartupPercentage ( 15 ) ; 
+  ShowStartupPercentage ( 20 ) ; 
 
   SDL_SetCursor( init_system_cursor( arrow ) );
 
@@ -1223,24 +1223,24 @@ InitPictures (void)
       return (FALSE);
     }
 
-  ShowStartupPercentage ( 18 ) ; 
+  ShowStartupPercentage ( 22 ) ; 
 
   //--------------------
   // And now we read in the blocks from various files 
   //
   Load_MapBlock_Surfaces();
 
-  ShowStartupPercentage ( 20 ) ; 
+  ShowStartupPercentage ( 24 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
 
   Load_Influencer_Surfaces();
 
-  ShowStartupPercentage ( 25 ) ; 
+  ShowStartupPercentage ( 26 ) ; 
 
   Load_Enemy_Surfaces();
 
-  ShowStartupPercentage ( 30 ) ; 
+  ShowStartupPercentage ( 38 ) ; 
 
   Load_Tux_Surfaces();
 

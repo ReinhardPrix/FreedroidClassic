@@ -393,6 +393,105 @@ The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING O
 
 }; // void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
 
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAllStaticWavFiles( void )
+{
+#ifndef HAVE_LIBSDL_MIXER  
+  return;
+#else
+  char *fpath;
+  int i;
+  char Temp_Filename[5000];
+
+  //--------------------
+  // Now that the audio channel is opend, its time to load all the
+  // WAV files into memory, something we NEVER did while using the yiff,
+  // because the yiff did all the loading, analyzing and playing...
+  //
+  Loaded_WAV_Files[0]=NULL;
+  for (i = 1; i < ALL_SOUNDS; i++)
+    {
+      strcpy ( Temp_Filename , "effects/" );
+      strcat ( Temp_Filename , SoundSampleFilenames[ i ] );
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+      Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
+      if ( Loaded_WAV_Files [ i ] == NULL )
+	{
+	  fprintf (stderr, "\n\nfpath: '%s'.\n" , fpath );
+	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
+\n\
+Please check that your sound card is properly configured,\n\
+i.e. if other applications are able to play sounds.\n\
+\n\
+If you for some reason cannot get your sound card ready, \n\
+you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
+	} // if ( !Loaded_WAV...
+      else
+	{
+	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
+	}
+    } // for (i=0; ...
+
+#endif // HAVE_SDL_MIXER
+
+}; // void LoadAllStaticWavFiles( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAllStaticModFiles( void )
+{
+#ifndef HAVE_LIBSDL_MIXER  
+  return;
+#else
+  char *fpath;
+  int i;
+  char Temp_Filename[5000];
+
+  Loaded_MOD_Files[0]=NULL;
+  for (i = 1; i < ALL_MOD_MUSICS; i++)
+    {
+      strcpy ( Temp_Filename , "music/" );
+      strcat ( Temp_Filename , MOD_Music_SampleFilenames[ i ] );
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+      Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
+      if ( Loaded_MOD_Files[ i ] == NULL )
+	{
+	  fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
+	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
+\n\
+Please check that the file is present within your Freedroid installation.\n\
+\n\
+If you for some reason cannot get sound output ready, \n\
+you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
+	} // if ( !Loaded_MOD...
+      else
+	{
+	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
+	}
+
+    } // for (i=1, ... MOD_FILES...
+
+#endif // HAVE_SDL_MIXER
+
+}; // void LoadAllStaticModFiles( void )
+
 // ----------------------------------------------------------------------
 // This function shall initialize the SDL Audio subsystem.  It is called
 // as soon as Freedroid is started.  It does ONLY work with SDL and no
@@ -404,19 +503,15 @@ InitAudio(void)
 #ifndef HAVE_LIBSDL_MIXER  
   return;
 #else
-  char *fpath;
-  int i;
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
   int audio_channels = 2;
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
-  char Temp_Filename[5000];
 
   DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
   if ( !sound_on ) return;
-
 
   // Now SDL_AUDIO is initialized here:
 
@@ -463,77 +558,9 @@ not complain any more.",
       DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
     }
 
-  //--------------------
-  // Now that the audio channel is opend, its time to load all the
-  // WAV files into memory, something we NEVER did while using the yiff,
-  // because the yiff did all the loading, analyzing and playing...
-  //
-  Loaded_WAV_Files[0]=NULL;
-  for (i = 1; i < ALL_SOUNDS; i++)
-    {
-      strcpy ( Temp_Filename , "effects/" );
-      strcat ( Temp_Filename , SoundSampleFilenames[ i ] );
-      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
-      if ( Loaded_WAV_Files [ i ] == NULL )
-	{
-	  fprintf (stderr, "\n\nfpath: '%s'.\n" , fpath );
-	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
-\n\
-Please check that your sound card is properly configured,\n\
-i.e. if other applications are able to play sounds.\n\
-\n\
-If you for some reason cannot get your sound card ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
-	} // if ( !Loaded_WAV...
-      else
-	{
-	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
-	}
-    } // for (i=0; ...
+  // LoadAllStaticWavFiles();
 
-
-  
-  Loaded_MOD_Files[0]=NULL;
-  for (i = 1; i < ALL_MOD_MUSICS; i++)
-    {
-      strcpy ( Temp_Filename , "music/" );
-      strcat ( Temp_Filename , MOD_Music_SampleFilenames[ i ] );
-      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
-      if ( Loaded_MOD_Files[ i ] == NULL )
-	{
-	  fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
-	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
-\n\
-Please check that the file is present within your Freedroid installation.\n\
-\n\
-If you for some reason cannot get sound output ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
-	} // if ( !Loaded_MOD...
-      else
-	{
-	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
-	}
-
-    } // for (i=1, ... MOD_FILES...
-
-  //--------------------
-  // Now that the music files have been loaded successfully, it's time to set
-  // the music and sound volumes accoridingly, i.e. as specifies by the users
-  // configuration.
-  //
-  SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
+  // LoadAllStaticModFiles();
 
   //--------------------
   // Since we don't want some sounds to be omitted due to lack of mixing

@@ -2117,7 +2117,26 @@ InitFreedroid ( void )
 
   ShowStartupPercentage ( 4 ) ; 
   
+  LoadAllStaticWavFiles();
+
+  ShowStartupPercentage ( 6 ) ; 
+
+  LoadAllStaticModFiles();
+
+  ShowStartupPercentage ( 8 ) ; 
+
+  //--------------------
+  // Now that the music files have been loaded successfully, it's time to set
+  // the music and sound volumes accoridingly, i.e. as specifies by the users
+  // configuration.
+  //
+  // THIS MUST NOT BE DONE BEFORE THE SOUND SAMPLES HAVE BEEN LOADED!!
+  //
+  SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
+
   Init_Joy ();
+
+  ShowStartupPercentage ( 10 ) ; 
 
   //--------------------
   // Now we prepare the automap data for later use
@@ -2125,16 +2144,16 @@ InitFreedroid ( void )
   GameConfig.Automap_Visible = TRUE;
   ClearAutomapData( );
 
-  ShowStartupPercentage ( 6 ) ; 
+  ShowStartupPercentage ( 12 ) ; 
 
   Init_Network ();
 
-  ShowStartupPercentage ( 8 ) ; 
+  ShowStartupPercentage ( 14 ) ; 
 
   Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be
 			       // overwritten from the mission file.
 
-  ShowStartupPercentage ( 10 ) ; 
+  ShowStartupPercentage ( 16 ) ; 
 
   // The default should be, that no rescaling of the
   // combat window at all is done.
@@ -2164,7 +2183,7 @@ InitFreedroid ( void )
       Terminate(ERR);
     }
 
-  ShowStartupPercentage ( 99 ) ; 
+  ShowStartupPercentage ( 100 ) ; 
 
 }; // void InitFreedroid ( void ) 
 
