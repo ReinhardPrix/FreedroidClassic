@@ -1,5 +1,5 @@
 /* 
- *   Copyright (c) 2003 Johannes Prix
+ *   Copyright (c) 2003 2004 Johannes Prix
  *
  *  This file is part of Freedroid
  *

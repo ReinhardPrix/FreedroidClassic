@@ -454,7 +454,7 @@ Error opening item roster save file.",
     // we will write to the file will be a fine header, indicating what this file is about
     // and things like that...
     //
-    strcpy ( linebuf , "\n\
+    strcpy ( linebuf , "% -*- mode: flyspell; mode: fill -*-\n\n\
 ----------------------------------------------------------------------\n\
  *\n\
  *   Copyright (c) 2003, 2004 Johannes Prix\n\
@@ -861,7 +861,7 @@ Error opening dialog roster save file.",
     // we will write to the file will be a fine header, indicating what this file is about
     // and things like that...
     //
-    strcpy ( linebuf , "\n\
+    strcpy ( linebuf , "% -*- mode: flyspell; mode: fill -*-\n\
 ----------------------------------------------------------------------\n\
  *\n\
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix\n\

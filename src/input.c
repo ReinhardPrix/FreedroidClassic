@@ -481,6 +481,32 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 6 ] . MissionIsComplete = FALSE ;
 	}
     }
+    if ( Number7Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 7 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 7 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number8Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 8 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 8 ] . MissionIsComplete = FALSE ;
+	}
+    }
 
     //--------------------
     // For debugging purposes, we introduce a key, that causes several 
