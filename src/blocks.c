@@ -2151,6 +2151,7 @@ init_obstacle_data( void )
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
+      obstacle_map [ i ] . transparent = FALSE ;
       obstacle_map [ i ] . emitted_light_strength = 0 ; // how much light emitted from here...
       obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
       sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
@@ -2162,16 +2163,21 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
+  obstacle_map [ ISO_V_WALL ] . transparent = TRUE ;
   obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
+  obstacle_map [ ISO_H_WALL ] . transparent = TRUE;
+  
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . filename = "iso_walls_0003.png"; 
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . transparent = TRUE ;
+  
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
-
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . transparent = TRUE ;
 
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
@@ -2665,6 +2671,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TREE_5 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_TREE_5 ] . filename = "iso_tree_0001.png" ;
 
+  for( i = ISO_THICK_WALL_H ; i <= ISO_THICK_WALL_T_W ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
+
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_parm_2 = 0.5 ;
@@ -2724,6 +2734,9 @@ init_obstacle_data( void )
   obstacle_map [ ISO_CAVE_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_END_S ] . filename = "iso_cave_wall_0010.png" ;
 
+  for( i = ISO_GREY_WALL_END_W ; i <= ISO_GREY_WALL_END_S ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_2 = 1.1 ;
@@ -2741,7 +2754,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
-  
+  for( i = ISO_LIGHT_GREEN_WALL_1 ; i <= ISO_FUNKY_WALL_4 ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
+
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_parm_2 = 1.1 ;
@@ -2772,6 +2788,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_FUNKY_WALL_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_FUNKY_WALL_4 ] . filename = "iso_walls_0015.png" ;
 
+  for( i = ISO_BRICK_WALL_H ; i <= ISO_BRICK_WALL_CORNER_4 ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
+
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_2 = 1.2 ;
@@ -2801,6 +2821,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_brick_wall_0007.png" ;
+  
+  for( i = ISO_BRICK_WALL_JUNCTION_1 ; i <= ISO_BRICK_WALL_RUBBLE_2  ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
 
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_parm_1 = 1.2 ;
@@ -2945,6 +2969,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . filename = "iso_rocks_n_plants_0007.png" ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . emitted_light_strength = -8 ;
+  
+  for( i = ISO_ROOM_WALL_V_RED ; i <= ISO_ROOM_WALL_H_GREEN ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
 
   obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_2 = 1.2 ;
@@ -2985,6 +3013,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . filename = "iso_shop_furniture_0006.png" ;
+
+  for( i = ISO_OUTER_WALL_N1 ; i <= ISO_OUTER_WALL_CORNER_4 ; i++) {
+    obstacle_map [ i ] . transparent = TRUE ;
+  }
 
   obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_parm_1 = 1.0 ;

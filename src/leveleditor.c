@@ -1107,7 +1107,7 @@ ShowLevelEditorTopMenu( int Highlight )
 	    case LEVEL_EDITOR_SELECTION_FLOOR:
 		if ( use_open_gl )
 		{
-		    blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
+		    blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5) ;
 		}
 		else
 		{
@@ -3094,7 +3094,7 @@ Unable to load the level editor waypoint dot cursor.",
 	    blit_zoomed_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
 							  ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
 							  ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
-							  1.0 , 1.0 , 1.0 , 0.25 );
+							  1.0 , 1.0 , 1.0 , 0.25 , FALSE);
 	  else
 	    blit_iso_image_to_map_position ( level_editor_dot_cursor ,
 					     ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
@@ -3106,7 +3106,7 @@ Unable to load the level editor waypoint dot cursor.",
 	    blit_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
 						   ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
 						   ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
-						   1.0 , 1.0 , 1.0 , TRUE );
+						   1.0 , 1.0 , 1.0 , TRUE , FALSE);
 	  else
 	    blit_iso_image_to_map_position ( level_editor_dot_cursor ,
 					     ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
@@ -3176,7 +3176,7 @@ Unable to load the level editor waypoint cursor.",
 	  if ( use_open_gl )
 	    {
 	      blit_zoomed_open_gl_texture_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
-							    this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
+							    this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25, FALSE ) ;
 	    }
 	  else
 	    {
@@ -3188,7 +3188,7 @@ Unable to load the level editor waypoint cursor.",
 	{
 	  if ( use_open_gl )
 	    blit_open_gl_texture_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  , 
-						   this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
+						   this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 , FALSE) ;
 	  else
 	    blit_iso_image_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
 					     this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
@@ -3280,7 +3280,7 @@ ShowMapLabels( int mask )
 	{
 	  if ( use_open_gl )
 	    blit_open_gl_texture_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
-						   EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0, 1.0 , 1.0 , FALSE );
+						   EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0, 1.0 , 1.0 , FALSE , FALSE);
 	    else
 	      blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
 					       EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
@@ -3289,7 +3289,7 @@ ShowMapLabels( int mask )
 	{
 	  if ( use_open_gl )
 	    blit_zoomed_open_gl_texture_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
-							  EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 );
+							  EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25, FALSE );
 	  else
 	    blit_zoomed_iso_image_to_map_position ( & ( map_label_indicator ) , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
 						    EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );

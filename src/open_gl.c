@@ -585,6 +585,15 @@ open_gl_check_error_status ( void )
 #endif
 };
 
+void clear_screen() {
+#ifdef HAVE_LIBGL
+	
+  if ( use_open_gl )
+    glClear(GL_COLOR_BUFFER_BIT);
+#endif
+
+}
+
 /* ----------------------------------------------------------------------
  * Initialize the OpenGL interface.
  * ---------------------------------------------------------------------- */
@@ -603,6 +612,8 @@ initialzize_our_default_open_gl_parameters ( void )
   glOrtho(0.0f,640.0f,480.0f,0.0f,-1.0f,1.0f);
   glMatrixMode(GL_MODELVIEW);
 
+  glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+  
   //--------------------
   // We turn off a lot of stuff for faster blitting.  All this can
   // be turned on again later anyway as needed.  
@@ -630,7 +641,6 @@ initialzize_our_default_open_gl_parameters ( void )
   //
   glEnable( GL_ALPHA_TEST );  
   glAlphaFunc ( GL_GREATER , 0.5 ) ;
-  
 
   //--------------------
   // NeHe docu reveals, that it can happen (and it does happen) that textures
@@ -662,7 +672,7 @@ initialzize_our_default_open_gl_parameters ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture ) 
+blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture, int blend ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -695,11 +705,13 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   // But alpha check functions ARE a bit faster, even on my hardware, so
   // let's stick with that possibility for now, especially with the floor.
   //
-  // glEnable(GL_BLEND);
-  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+  if(blend && GameConfig . transparency) {
+   glEnable(GL_BLEND);
+   glBlendFunc( GL_SRC_ALPHA , GL_DST_ALPHA);
+  }
   //
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+ // glEnable( GL_ALPHA_TEST );  
+ // glAlphaFunc ( GL_GREATER , 0.5 ) ;
   
   // glDisable(GL_BLEND);
   // glDisable( GL_ALPHA_TEST );  
@@ -748,7 +760,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // + 255
   image_start_y = target_rectangle . y ;
   image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // + 127
-  
+ 
   // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
   
   texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
@@ -790,7 +802,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
  *
  * ---------------------------------------------------------------------- */
 void
-blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture ) 
+blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture , int blend) 
 {
 
 #ifdef HAVE_LIBGL
@@ -824,9 +836,12 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   // But alpha check functions ARE a bit faster, even on my hardware, so
   // let's stick with that possibility for now, especially with the floor.
   //
-  // glEnable(GL_BLEND);
-  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
   //
+  if(blend && GameConfig . transparency) {
+   glEnable(GL_BLEND);
+   glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+  }
+
   glEnable( GL_ALPHA_TEST );  
   glAlphaFunc ( GL_GREATER , 0.5 ) ;
   

@@ -584,7 +584,7 @@ blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
 {
   if ( use_open_gl )
     {
-      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE ) ;
+      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
     }
   else
     {
@@ -635,7 +635,7 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 		if ( use_open_gl )
 		{
 		    blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-								  ((float)col)+0.5 , ((float)line) +0.5 , 1.0 , 1.0 , 1.0 , FALSE );
+								  ((float)col)+0.5 , ((float)line) +0.5 , 1.0 , 1.0 , 1.0 , FALSE , FALSE);
 		}
 		else
 		{
@@ -724,7 +724,7 @@ There was an obstacle type given, that exceeds the number of\n\
 						   obs_onscreen_position . x , obs_onscreen_position . y , 
 						   ( SDL_GetTicks() % 3) / 2.0  , 
 						   ( ( SDL_GetTicks() + 1 ) % 3) / 2.0 , 
-						   ( ( SDL_GetTicks() + 2 ) % 3) / 2.0 , TRUE ) ;
+						   ( ( SDL_GetTicks() + 2 ) % 3) / 2.0 , TRUE , FALSE) ;
 	}
 	else
 	{
@@ -747,7 +747,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	    if ( darkness > 1 ) darkness = 1.0 ;
 	    if ( darkness < 0 ) darkness = 0 ;
 	    blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						   our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness , FALSE ) ;
+						   our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness , FALSE, obstacle_map[our_obstacle->type].transparent ) ;
 	}
 	else
 	{
@@ -786,7 +786,7 @@ There was an obstacle type given, that exceeds the number of\n\
   if ( use_open_gl )
     {
       blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-					     our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE ) ;
+					     our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE, FALSE ) ;
     }
   else
     {
@@ -833,7 +833,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	{
 	  blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
 							our_obstacle -> pos . x , our_obstacle -> pos . y , 
-							1.0 , 1.0, 1.0 , 0.25 );
+							1.0 , 1.0, 1.0 , 0.25, FALSE );
 	}
       else
 	{
@@ -862,7 +862,7 @@ There was an obstacle type given, that exceeds the number of\n\
       if ( use_open_gl )
 	{
 	  blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
-							our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0, 1.0 , 0.25 );
+							our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0, 1.0 , 0.25, obstacle_map[our_obstacle->type].transparent  );
 	}
       else
 	{
@@ -1676,6 +1676,8 @@ AssembleCombatPicture (int mask)
   int i;
   int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 
+  clear_screen() ;
+  
   //--------------------
   // We generate a list of obstacles (and other stuff) that might
   // emitt some light.  It should be sufficient to establish this
@@ -1712,16 +1714,17 @@ AssembleCombatPicture (int mask)
 	    PutItem ( i , mask , PUT_NO_THROWN_ITEMS , FALSE ); 
 	}
     }
-
-  if ( ! GameConfig . skip_light_radius ) blit_light_radius();
-
-  PutMiscellaneousSpellEffects ( );
-      
-  PutMouseMoveCursor ( );
+ // if ( ! GameConfig . skip_light_radius ) blit_light_radius();
 
   set_up_ordered_blitting_list ( mask );
 
   blit_nonpreput_objects_according_to_blitting_list ( mask );
+  
+  if ( ! GameConfig . skip_light_radius ) blit_light_radius();
+  
+  PutMiscellaneousSpellEffects ( );
+      
+  PutMouseMoveCursor ( );
 
   if (mask & ONLY_SHOW_MAP) 
     {
@@ -3019,14 +3022,11 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   //
   Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
   
-  printf("e is %f , max is %f, width is %i\n", AllEnemys [ Enum ] . energy, Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy , Percentage) ;
-  
   FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
   FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
   FillRect . h = 7 ; 
   FillRect . w = Percentage ;
 
-  printf("width is %i\n", Percentage) ;
   //--------------------
   // If the enemy is friendly, then we needn't display his health, right?
   // Or better yet, we might show a green energy bar instead.  That's even
@@ -3240,19 +3240,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    {
 	      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 		{
-		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight ) ;
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		}
 	      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 		{
-		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight ) ;
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		}
 	      else if ( AllEnemys[Enum].frozen != 0 ) 
 		{
-		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight ) ;
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
 		}
 	      else
 		{
-		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 , highlight ) ;
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 , highlight, FALSE ) ;
 		}
 	    }
 	  else
@@ -3280,15 +3280,15 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 
 		  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 		    {
-		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight ) ;
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
 		    }
 		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 		    {
-		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight ) ;
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
 		    }
 		  else if ( AllEnemys[Enum].frozen != 0 ) 
 		    {
-		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight ) ;
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		  else
 		    {
@@ -3304,7 +3304,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		      if ( darkness > 1 ) darkness = 1.0 ;
 		      if ( darkness < 0 ) darkness = 0 ;
 
-		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , darkness , darkness , darkness , highlight ) ;
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , darkness , darkness , darkness , highlight , FALSE) ;
 		    }		  
 
 		}
@@ -3363,17 +3363,17 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		  if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
 		    {
 		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							     ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight ) ;
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		    }
 		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 		    {
 		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight ) ;
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		    }
 		  else if ( AllEnemys[Enum].frozen != 0 ) 
 		    {
 		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight ) ;
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		  else
 		    {
@@ -3388,7 +3388,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		      if ( darkness > 1 ) darkness = 1.0 ;
 		      if ( darkness < 0 ) darkness = 0 ;
 
-		      blit_open_gl_texture_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y , darkness , darkness , darkness , highlight ) ;
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y , darkness , darkness , darkness , highlight , FALSE) ;
 		    }
 		}
 	      else // no OpenGL
@@ -3652,7 +3652,7 @@ There was -1 item type given to blit.  This must be a mistake! ",
       if ( use_open_gl )
 	{
 	  blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
-							CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25 );
+							CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25, FALSE );
 	}
       else
 	{
@@ -3667,7 +3667,7 @@ There was -1 item type given to blit.  This must be a mistake! ",
 	  blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 						 CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 						 CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-						 1.0 , 1.0 , 1.0 , highlight_item );
+						 1.0 , 1.0 , 1.0 , highlight_item , FALSE);
 	}
       else
 	{

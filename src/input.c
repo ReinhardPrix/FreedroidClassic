@@ -503,6 +503,7 @@ ReactToSpecialKeys(void)
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
+  static int TPressed_LastFrame;
   static int LPressed_LastFrame;
   static int TabPressed_LastFrame;
   static int Number1PressedLastFrame;
@@ -879,6 +880,23 @@ ReactToSpecialKeys(void)
   if ( PPressed () )
     Pause ();
   
+  //--------------------
+  // t key turns on/off transparency mode
+  //
+  if ( TPressed() )
+    {
+      if ( !TPressed_LastFrame ) 
+	{
+	  GameConfig.transparency = ! GameConfig.transparency;
+	}
+
+      TPressed_LastFrame = TRUE;
+    }
+  else
+    {
+      TPressed_LastFrame = FALSE;
+    }
+
   //--------------------
   // Now we handle keyboard movement...
   //
@@ -2317,7 +2335,6 @@ MouseWheelUpPressed(void)
 {
   // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
   // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-
   if ( MouseWheelUpMovesRecorded )
     {
       MouseWheelUpMovesRecorded--;
@@ -2333,7 +2350,6 @@ MouseWheelDownPressed(void)
 {
   // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
   // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-
   if ( MouseWheelDownMovesRecorded )
     {
       MouseWheelDownMovesRecorded--;

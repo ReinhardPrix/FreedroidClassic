@@ -113,6 +113,7 @@ typedef struct
     int number_of_big_screen_messages ;
     float delay_for_big_screen_messages ;
     int enable_cheatkeys;
+    int transparency ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -312,6 +313,7 @@ typedef struct
     //
     int emitted_light_strength;
 
+    int transparent;
     //--------------------
     // This is a special property for obstacles, that can be 
     // stepped on, like a rug or floor plate, for proper visibility...

@@ -1823,6 +1823,7 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . delay_for_big_screen_messages = 6.5 ;
     
     GameConfig . enable_cheatkeys = FALSE ;
+    GameConfig . transparency = FALSE ;
     
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
