@@ -9,9 +9,10 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/05/23 21:03:10  prix
- * Sun May 23 07:43:22 1993: Laufkonstanten hinzugefuegt
- * Sun May 23 16:29:09 1993: added druid related defines
+ * Revision 1.4  1994/06/19 16:17:44  prix
+ * Sat May 21 07:52:34 1994: neues Rahmenbild
+ * Sat May 21 11:40:01 1994: Wait_after_killed von 20 auf 35
+ * Sat May 21 11:55:23 1994: wait_after_killed von 35 auf 25
  *
  * Revision 1.3  1993/05/23  21:03:10  prix
  * Sun May 23 07:43:22 1993: Laufkonstanten hinzugefuegt
