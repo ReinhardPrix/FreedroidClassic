@@ -363,7 +363,7 @@ CheckBulletCollisions (int num)
 	    {
 	      xdist = Me.pos.x - CurBullet->pos.x;
 	      ydist = Me.pos.y - CurBullet->pos.y;
-	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)  // FIXME: don't use DRUIDHITDIST2!!
 		{
 		  GotHitSound ();
 	  
@@ -384,7 +384,7 @@ CheckBulletCollisions (int num)
 	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
 	      ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
 	  
-	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2) // FIXME
 		{
 		  // The enemy who was hit, loses some energy, depending on the bullet
 		  AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
@@ -411,17 +411,19 @@ CheckBulletCollisions (int num)
 	      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
 	      if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
 	      
-	      if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
-	      if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
+	      xdist = AllBullets[i].pos.x-CurBullet->pos.x;
+	      ydist = AllBullets[i].pos.y-CurBullet->pos.y;
+	      if ( xdist*xdist + ydist*ydist > BULLET_COLL_DIST2 ) continue;
+
 	      // it seems like we have a collision of two bullets!
 	      // both will be deleted and replaced by blasts..
 	      DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
 	  
-	      //CurBullet->type=OUT;
-	      //AllBullets[num].type=OUT;
 	      StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	      StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
-	      DeleteBullet( num );
+	      //	??why start two blasts? 
+	      // StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
+	      DeleteBullet (num);
+	      DeleteBullet (i);
 	    }
 	  
 	} // for numsteps < num_check_steps

@@ -97,6 +97,24 @@ InitiateMenu( void )
 
 } // void InitiateMenu(void)
 
+
+void 
+QuitGameMenu (void)
+{
+  InitiateMenu ();
+
+  PutString (ne_screen, User_Rect.x + User_Rect.w/10, 
+	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
+  SDL_Flip (ne_screen);
+
+  while ( (!NPressed()) && (!YPressed()) );
+  if (YPressed())
+    Terminate (OK);
+}
+
+
+
+
 /*@Function============================================================
 @Desc: This function provides a convenient cheat menu, so that any 
        tester does not have to play all through the game again and again
@@ -398,7 +416,7 @@ EscapeMenu (void)
 {
   enum
     { 
-      NEW_GAME=1, 
+      BACK2GAME=1, 
       FULL_WINDOW,
       SET_THEME,
       OPTIONS,
@@ -439,7 +457,7 @@ EscapeMenu (void)
       if (GameConfig.FullUserRect) strcat (window_string, "Full");
       else strcat (window_string, "Classic");
 
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y, "New Game");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y, "Back to Game");
       PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight, window_string);
       PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight, theme_string);
       PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+3*fheight,"Further Options");
@@ -466,9 +484,7 @@ EscapeMenu (void)
 
 	      switch (MenuPosition) 
 		{
-		case NEW_GAME:
-		  // just let influ die, that's enough to start a new game... ;)
-		  Me.energy = -1;
+		case BACK2GAME:
 		  finished = TRUE;
 		  break;
 		case FULL_WINDOW:
@@ -519,7 +535,7 @@ EscapeMenu (void)
 		  Credits_Menu();
 		  break;
 		case QUIT:
-		  Terminate(0);
+		  QuitGameMenu ();
 		  break;
 		default: 
 		  break;
@@ -951,7 +967,6 @@ enum
   { GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
-    EXP_MISSION,
     BACK };
 
   while ( EscapePressed() );
@@ -970,9 +985,7 @@ enum
 		   "Droid Talk" );
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
 		   "On-Screen Displays" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
-		   "Asteroid Mission (unfinished)");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, 
 		   "Back");
 
       SDL_Flip( ne_screen );
@@ -1001,9 +1014,6 @@ enum
 		  break;
 		case ON_SCREEN_DISPLAYS:
 		  On_Screen_Display_Options_Menu();
-		  break;
-		case EXP_MISSION:
-		  InitNewMission (NEW_MISSION);
 		  break;
 		case BACK:
 		  finished = TRUE;

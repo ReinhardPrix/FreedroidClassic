@@ -155,16 +155,9 @@ enum
 #define MENUITEMLENGTH 		50*2
 #define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
-/* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
-//NORMALISATION #define DRUIDRADIUSX		((10*2)/64.0)
-// #define DRUIDRADIUSX		(18/64.0)
-//NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
-// #define DRUIDRADIUSY		(18/64.0)
-// #define DRUIDRADIUSXY	        ((7*2)/64.0)
-#define BULLET_BULLET_COLLISION_DIST (10/64.0)
-// #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
-// #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
+#define BULLET_BULLET_COLLISION_DIST (10.0/64.0)
+#define BULLET_COLL_DIST2     0.0244140625
 // **********************************************************************
 //
 //

@@ -643,19 +643,11 @@ InitNewMission ( char *MissionName )
   //At first we do the things that must be done for all
   //missions, regardless of mission file given
   Activate_Conservative_Frame_Computation();
-  Total_Frames_Passed_In_Mission=0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
-  GameConfig.Draw_Framerate=TRUE;
-  // GameConfig.Draw_Energy=FALSE;
-  GameConfig.Draw_Energy=TRUE;
-  GameConfig.Draw_Position=TRUE;
-
-  RealScore = 0; // This should be done at the end of the highscore list procedure
-  ShowScore = 0; // This should be done at the end of the highscore list procedure
 
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
@@ -897,6 +889,9 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
+  GameConfig.Draw_Framerate=TRUE;
+  GameConfig.Draw_Energy=TRUE;
+  GameConfig.Draw_Position=TRUE;
   // this is the "classic" version, so defaults are set on "classic"
   sprintf (GameConfig.Theme_SubPath, "classic_theme/");
   GameConfig.FullUserRect = FALSE;

@@ -439,7 +439,6 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
   if ( startx != -1 ) MyCursorX = startx;		
   if ( starty != -1 ) MyCursorY = starty;
 
-
   SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
   if (clip)
     SDL_SetClipRect (ne_screen, clip);

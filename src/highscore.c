@@ -123,15 +123,23 @@ UpdateHighscores (void)
   BFont_Info *prev_font;
   struct tm *timeinfo;
   time_t tsec;
+  float score;
 
-  if (RealScore <= 0)  /* don't even bother.. */
+  score = RealScore;
+
+  // reset score counters
+  RealScore = 0.0; 
+  ShowScore = 0.0; 
+
+
+  if (score <= 0)  /* don't even bother.. */
     return;
 
   Me.status = DEBRIEFING;
 
   /* now find out the position of player's score in list */
   entry = 0;
-  while ( (entry < num_highscores) && (Highscores[entry]->score >= RealScore) )
+  while ( (entry < num_highscores) && (Highscores[entry]->score >= score) )
     entry ++;
 
   if (entry == num_highscores) /* sorry, you didnt' make it */
@@ -167,7 +175,7 @@ UpdateHighscores (void)
   sprintf (new_entry->date, "[%d/%d/%02d]", timeinfo->tm_mday, timeinfo->tm_mon,
 	   timeinfo->tm_year-100); 
 
-  new_entry->score = RealScore;
+  new_entry->score = score;
   Highscores[entry] = new_entry;
 
   SetCurrentFont (prev_font);

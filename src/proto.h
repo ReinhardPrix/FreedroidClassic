@@ -318,6 +318,7 @@ EXTERN int NoDirectionPressed (void);
 #endif
 
 EXTERN void InitiateMenu( void );
+EXTERN void QuitGameMenu (void);
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);

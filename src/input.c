@@ -169,30 +169,26 @@ void
 ReactToSpecialKeys(void)
 {
   if ( QPressed() ) /* user asked for quit */
-    Terminate (OK);
-  if ( DPressed() )
-    Me.energy = 0;
+    QuitGameMenu();
 
-  if ( GPressed () )
-    {
-      Me.TextToBeDisplayed="Hello!  Greetings to all other Freedom Fighters.";
-      Me.TextVisibleTime=0;
-    }
+/*   if ( DPressed() ) */
+/*     Me.energy = 0; */
+
   
   // To debug the Debriefing() I added a function to add or subtract
   // a thousand points of score via numerical keyboard functions.
   // Activate this if you want to test that.  
   
-  if ( KP0Pressed() )
-    {
-      while (KP0Pressed());
-      RealScore-=1000;
-    }
-  if ( KP1Pressed() )
-    {
-      while (KP1Pressed());
-      RealScore+=1000;
-    }
+/*   if ( KP0Pressed() ) */
+/*     { */
+/*       while (KP0Pressed()); */
+/*       RealScore-=1000; */
+/*     } */
+/*   if ( KP1Pressed() ) */
+/*     { */
+/*       while (KP1Pressed()); */
+/*       RealScore+=1000; */
+/*     } */
   
   
   if ( CPressed() && Alt_Was_Pressed()
@@ -200,14 +196,10 @@ ReactToSpecialKeys(void)
     Cheatmenu ();
   if ( EscapePressed() )
     EscapeMenu ();
+
   if ( PPressed () )
     Pause ();
   
-  if ( UPressed () )
-    {
-      InitNewMission ( STANDARD_MISSION ) ;
-      while (UPressed());
-    }
   
 } // void ReactToSpecialKeys(void)
 
