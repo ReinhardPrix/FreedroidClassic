@@ -600,7 +600,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 
   while (!finished)
     {
-      usleep ( 2 );
+      usleep ( 35 );
 
       //--------------------
       // We show all the info and the buttons that should be in this

@@ -1930,7 +1930,7 @@ Item name="2 mm Exterminator Ammunition"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="ammo_exterminator_sphere"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -1948,7 +1948,7 @@ Item description text="Exterminators need this kind of ammunition.  It can cause
 
 // Item No. 69
 ** Start of new item specification subsection **
-Item name="VMX Gas Granade"
+Item name="VMX Gas Grenade"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1965,7 +1965,7 @@ Picture number=56
 Rotation model number=0
 Sound number=4
 Base list price=250
-Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
+Item description text="This grenade has about the same effect as the dreaded radial vmx wave spell."
 ** End of new item specification subsection **
 
 // Item No. 70
@@ -1987,7 +1987,7 @@ Picture number=57
 Rotation model number=0
 Sound number=4
 Base list price=150
-Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
+Item description text="This grenade has about the same effect as the dreaded radial emp wave spell."
 ** End of new item specification subsection **
 
 // Item No. 71
@@ -2010,6 +2010,28 @@ Rotation model number=0
 Sound number=4
 Base list price=32
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+** End of new item specification subsection **
+
+// Item No. 72
+** Start of new item specification subsection **
+Item name="Plasma Grenade"
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="plasma_grenade"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=59
+Rotation model number=0
+Sound number=4
+Base list price=250
+Item description text="This grenade has about the same effect as the dreaded radial fire wave spell."
 ** End of new item specification subsection **
 
 
