@@ -449,6 +449,39 @@ MoveActiveSpells (void)
 	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
 	}
 
+      //--------------------
+      // Now we handle the fire waves...
+      //
+      if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE )
+	{
+	  AllActiveSpells [ i ] . spell_radius += 6.0 * PassedTime;
+
+	  //--------------------
+	  // Here we also do the spell-collision checking in this case
+	  //
+	  for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	    {
+	      if ( AllEnemys [ j ] . Status == OUT ) continue;
+	      if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
+
+	      DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
+					  ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) +
+					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) *
+					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) );
+	      
+	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
+		{
+		  AllEnemys [ j ] . energy -= 1000.0 * Frame_Time();
+		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
+		}
+	    }
+
+	  //--------------------
+	  // Such a spell can not live for longer than 1.0 seconds, say
+	  //
+	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
+	}
+
     }
 
 }; // void MoveActiveSpells( ... )

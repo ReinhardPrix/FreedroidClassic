@@ -113,7 +113,8 @@ enum _spell_names
   SPELL_PARALYZE_BOLT, // 9
   SPELL_DETECT_ITEM, // 10
   SPELL_RADIAL_EMP_WAVE, // 11 
-  SPELL_RADIAL_VMX_WAVE // 12
+  SPELL_RADIAL_VMX_WAVE, // 12
+  SPELL_RADIAL_FIRE_WAVE // 13
 };
 
 //--------------------

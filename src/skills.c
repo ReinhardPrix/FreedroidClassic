@@ -433,6 +433,51 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
+RadialFireWave ( gps ExpCenter , int SpellCostsMana )
+{
+  int SpellCost = ManaCostTable [ SPELL_RADIAL_FIRE_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int i;
+
+  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
+    {
+      //--------------------
+      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
+      //
+      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+      //
+      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+
+      //--------------------
+      // First we find a new entry in the active spells list
+      //
+      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	{
+	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	}
+      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+      
+      //--------------------
+      // Now we start our new emp wave
+      //
+      AllActiveSpells [ i ] . type = SPELL_RADIAL_FIRE_WAVE ; 
+      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+      AllActiveSpells [ i ] . spell_radius = 0.3 ;
+      AllActiveSpells [ i ] . spell_age = 0 ; 
+      
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void RadialFireWave ( finepoint ExpCenter )
+
+/* ----------------------------------------------------------------------
+ * This function handles the ForceExplosionCircle skill.
+ * ---------------------------------------------------------------------- */
+void
 ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
@@ -618,6 +663,15 @@ HandleCurrentlyActivatedSkill( void )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
 	      RadialVMXWave ( Me [ 0 ] . pos , TRUE );
+	    }
+	}
+      break;
+    case SPELL_RADIAL_FIRE_WAVE:
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      RadialFireWave ( Me [ 0 ] . pos , TRUE );
 	    }
 	}
       break;

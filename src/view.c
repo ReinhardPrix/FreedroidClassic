@@ -427,6 +427,12 @@ PutMiscellaneousSpellEffects ( void )
 			       AllActiveSpells [ i ] . spell_center . y , 
 			       AllActiveSpells [ i ] . spell_radius , 1 );
 	}
+      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) 
+	{
+	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+			       AllActiveSpells [ i ] . spell_center . y , 
+			       AllActiveSpells [ i ] . spell_radius , 2 );
+	}
       else
 	{
 	  fprintf( stderr, "\n\nAllActiveSpells [ i ] . type: '%d'\n" , AllActiveSpells [ i ] . type );
@@ -1528,8 +1534,24 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
     {
       for ( k = 0 ; k < FIXED_NUMBER_OF_PROTOTYPES ; k ++ )
 	{
-	  if ( SparkType ) sprintf( ConstructedFilename , "green_mist_%d.png" , k );
-	  else sprintf( ConstructedFilename , "blue_sparks_%d.png" , k );
+	  switch ( SparkType )
+	    {
+	    case 0:
+	      sprintf( ConstructedFilename , "blue_sparks_%d.png" , k );
+	      break;
+	    case 1:
+	      sprintf( ConstructedFilename , "green_mist_%d.png" , k );
+	      break;
+	    case 2:
+	      sprintf( ConstructedFilename , "red_fire_%d.png" , 1 );
+	      break;
+	    default:
+	      fprintf( stderr, "\n\nSparkType: %d\n" , SparkType );
+	      GiveStandardErrorMessage ( "PutRadialBlueSparks(...)" , "\
+Freedroid encountered a radial wave type that does not exist in Freedroid.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }	      
+	  
 	  fpath = find_file ( ConstructedFilename , GRAPHICS_DIR, FALSE );
 
 	  tmp_surf = IMG_Load( fpath );
