@@ -194,7 +194,6 @@ PositionX=265  PositionY=437
 Subtitle="What do you want?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
-DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 DoSomethingExtra="ExecuteSubdialog:subdlg_kevin_reward1"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

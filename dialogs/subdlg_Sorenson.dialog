@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Improve spellcasting ability (cost 10 training points, 100 cash) "
+New Option Nr=5  OptionText=" Improve spellcasting ability (cost 5 training points, 100 cash) "
 OptionSample="Tux_SOR_I_Want_Learn_0.wav"
 PositionX=311  PositionY=146  
 ChangeOption=5 ChangeToValue=0

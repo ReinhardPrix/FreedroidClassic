@@ -74,6 +74,7 @@ ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="GiveItem:13"
+DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -87,6 +88,7 @@ ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
+DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -101,6 +103,7 @@ ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 DoSomethingExtra="AddGold:400"
+DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -115,6 +118,7 @@ ChangeOption=3 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="GiveItem:78"
+DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

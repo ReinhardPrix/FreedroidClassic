@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" What can you tell me about this place? "
 OptionSample="Chandra/Tux_what_can_you.wav"
 PositionX=114  PositionY=310  
-Subtitle="This small town exiisted since before the Great Assault.  It once was a moderatly successful mining community."
+Subtitle="This small town existed since before the Great Assault.  It once was a moderatly successful mining community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But now after the Great Assault, the planet gets bombarded by automated bot ships now and then, so being down here isn't so bad at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
