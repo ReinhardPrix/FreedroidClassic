@@ -222,6 +222,7 @@ UpdateCountersForThisFrame ( int player_num )
   Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   float my_speed ;
   enemy* this_bot;
+  float latest_frame_time = Frame_Time();
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -231,24 +232,24 @@ UpdateCountersForThisFrame ( int player_num )
   //
   if ( player_num == 0 )
     {
-      GameConfig.Mission_Log_Visible_Time += Frame_Time();
-      GameConfig.Inventory_Visible_Time += Frame_Time();
+      GameConfig.Mission_Log_Visible_Time += latest_frame_time;
+      GameConfig.Inventory_Visible_Time += latest_frame_time;
 
       // The next couter counts the frames displayed by freedroid during this
       // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
       Overall_Frames_Displayed++;
       Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
-			 + Frame_Time()) / Overall_Frames_Displayed;
+			 + latest_frame_time) / Overall_Frames_Displayed;
 
       // Here are some things, that were previously done by some periodic */
       // interrupt function
       ThisMessageTime++;
 
-      LastGotIntoBlastSound += Frame_Time ();
-      LastRefreshSound += Frame_Time ();
+      LastGotIntoBlastSound += latest_frame_time ;
+      LastRefreshSound += latest_frame_time ;
 
-      LevelDoorsNotMovedTime += Frame_Time();
-      LevelGunsNotFiredTime += Frame_Time();
+      LevelDoorsNotMovedTime += latest_frame_time;
+      LevelGunsNotFiredTime += latest_frame_time;
       if ( SkipAFewFrames ) SkipAFewFrames--;
 
       //--------------------
@@ -257,7 +258,7 @@ UpdateCountersForThisFrame ( int player_num )
       //
       if ( timeout_from_item_drop > 0 )
 	{
-	  timeout_from_item_drop -= Frame_Time ();
+	  timeout_from_item_drop -= latest_frame_time ;
 	  if ( timeout_from_item_drop < 0 ) timeout_from_item_drop = 0 ; 
 	}
 
@@ -266,7 +267,7 @@ UpdateCountersForThisFrame ( int player_num )
 	{
 	  if ( AllBullets [ i ] . time_to_hide_still > 0 )
 	    {
-	      AllBullets [ i ] . time_to_hide_still -= Frame_Time();
+	      AllBullets [ i ] . time_to_hide_still -= latest_frame_time;
 	      if ( AllBullets [ i ] . time_to_hide_still < 0 )
 		AllBullets [ i ] . time_to_hide_still = 0 ; 
 	    }
@@ -280,7 +281,7 @@ UpdateCountersForThisFrame ( int player_num )
 	{
 	  if ( item_level -> ItemList [ i ] . type == ( -1 ) ) continue;
 	  if ( item_level -> ItemList [ i ] . throw_time > 0 ) 
-	    item_level -> ItemList [ i ] . throw_time += Frame_Time();
+	    item_level -> ItemList [ i ] . throw_time += latest_frame_time;
 	  if ( item_level -> ItemList [ i ] . throw_time > ( M_PI / 3.0 ) ) 
 	    item_level -> ItemList [ i ] . throw_time = 0 ;
 	}
@@ -293,37 +294,37 @@ UpdateCountersForThisFrame ( int player_num )
 	  
 	  if ( this_bot -> warten > 0 ) 
 	    {
-	      this_bot -> warten -= Frame_Time() ;
+	      this_bot -> warten -= latest_frame_time ;
 	      if ( this_bot -> warten < 0 ) this_bot -> warten = 0;
 	    }
 	  
 	  if ( this_bot -> frozen > 0 ) 
 	    {
-	      this_bot -> frozen -= Frame_Time() ;
+	      this_bot -> frozen -= latest_frame_time ;
 	      if ( this_bot -> frozen < 0 ) this_bot -> frozen = 0;
 	    }
 	  
 	  if ( this_bot -> poison_duration_left > 0 ) 
 	    {
-	      this_bot -> poison_duration_left -= Frame_Time() ;
+	      this_bot -> poison_duration_left -= latest_frame_time ;
 	      if ( this_bot -> poison_duration_left < 0 ) this_bot -> poison_duration_left = 0 ;
-	      this_bot -> energy -= Frame_Time() * this_bot -> poison_damage_per_sec ;
+	      this_bot -> energy -= latest_frame_time * this_bot -> poison_damage_per_sec ;
 	    }
 	  
 	  if ( this_bot -> paralysation_duration_left > 0 ) 
 	    {
-	      this_bot -> paralysation_duration_left -= Frame_Time() ;
+	      this_bot -> paralysation_duration_left -= latest_frame_time ;
 	      if ( this_bot -> paralysation_duration_left < 0 ) this_bot -> paralysation_duration_left = 0 ;
-	      // this_bot -> energy -= Frame_Time() * this_bot -> paralysation_damage_per_sec ;
+	      // this_bot -> energy -= latest_frame_time * this_bot -> paralysation_damage_per_sec ;
 	    }
 	  
 	  if ( this_bot -> firewait > 0 ) 
 	    {
-	      this_bot -> firewait -= Frame_Time() ;
+	      this_bot -> firewait -= latest_frame_time ;
 	      if ( this_bot -> firewait <= 0 ) this_bot -> firewait = 0 ;
 	    }
 	  
-	  this_bot -> TextVisibleTime += Frame_Time();
+	  this_bot -> TextVisibleTime += latest_frame_time;
 	} // for (i=0;...
 
     }; // things that need to be done only once per program, not per player
@@ -334,10 +335,10 @@ UpdateCountersForThisFrame ( int player_num )
   //
   Me [ player_num ] . FramesOnThisLevel++;
 
-  Me [ player_num ] . LastCrysoundTime += Frame_Time ();
-  Me [ player_num ] . MissionTimeElapsed += Frame_Time();
-  Me [ player_num ] . LastTransferSoundTime += Frame_Time();
-  Me [ player_num ] . TextVisibleTime += Frame_Time();
+  Me [ player_num ] . LastCrysoundTime += latest_frame_time ;
+  Me [ player_num ] . MissionTimeElapsed += latest_frame_time;
+  Me [ player_num ] . LastTransferSoundTime += latest_frame_time;
+  Me [ player_num ] . TextVisibleTime += latest_frame_time;
 
   //--------------------
   // We take care of the running stamina...
@@ -346,11 +347,11 @@ UpdateCountersForThisFrame ( int player_num )
 		    Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
   if ( my_speed >= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
     {
-      Me [ player_num ] . running_power -= Frame_Time() * 5.0 ;
+      Me [ player_num ] . running_power -= latest_frame_time * 5.0 ;
     }
   else
     {
-      Me [ player_num ] . running_power += Frame_Time() * 5.0 ;
+      Me [ player_num ] . running_power += latest_frame_time * 5.0 ;
       if ( Me [ player_num ] . running_power > Me [ player_num ] . max_running_power )
 	Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
 
@@ -359,12 +360,12 @@ UpdateCountersForThisFrame ( int player_num )
     }
 
 
-  if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += Frame_Time();
-  if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += Frame_Time();
+  if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
+  if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
 
   if ( Me [ player_num ] . firewait > 0 )
     {
-      Me [ player_num ] . firewait -= Frame_Time ( ) ;
+      Me [ player_num ] . firewait -= latest_frame_time ;
       if ( Me [ player_num ] . firewait < 0 ) Me [ player_num ] . firewait = 0 ;
     }
   // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
@@ -380,7 +381,7 @@ UpdateCountersForThisFrame ( int player_num )
 	{
 	  if ( Me [ player_num ] . time_since_last_visit_or_respawn [ i ] > (-1) )
 	    {
-	      Me [ player_num ] . time_since_last_visit_or_respawn [ i ] += Frame_Time() ;
+	      Me [ player_num ] . time_since_last_visit_or_respawn [ i ] += latest_frame_time ;
 	    }
 
 	  //--------------------
