@@ -412,6 +412,7 @@ InitFreedroid (void)
       Terminate (ERR);
     }
 
+  CurLevel = NULL; // please leave this here BEFORE InitPictures
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
     {		

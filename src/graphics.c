@@ -264,7 +264,11 @@ InitPictures (void)
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
-
+  
+  // Loading all these pictures might take a while...
+  // and we do not want do deal with huge frametimes, which
+  // could box the influencer out of the ship....
+  Activate_Conservative_Frame_Computation();
 
   /* 
      create the internal storage for all our blocks 
@@ -315,8 +319,14 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
-  ne_map_block =
-    ne_get_blocks (NE_MAP_BLOCK_FILE, NUM_MAP_BLOCKS, 9, 0, block_line++);
+  if ( CurLevel == NULL )
+    ne_map_block =
+      ne_get_blocks (NE_MAP_BLOCK_FILE, NUM_MAP_BLOCKS, 9, 0, block_line++);
+  else 
+    {
+      SetLevelColor ( CurLevel->color );
+      block_line++;
+    }
 
   ne_influ_block =
     ne_get_blocks (NE_DROID_BLOCK_FILE, DROID_PHASES, 0, 0, block_line++);
@@ -439,9 +449,6 @@ SetLevelColor (int ColorEntry)
     NULL
   };
 
-  
-  //TRUECOLORS SetColors (FIRSTBLOCKCOLOR, FARBENPROLEVEL, LevelColorArray + ColorEntry * 3 * FARBENPROLEVEL);
-
   ne_map_block =
     ne_get_blocks ( ColoredBlockFiles[ ColorEntry ] , NUM_MAP_BLOCKS, 9, 0, 0);
 
@@ -557,32 +564,8 @@ Init_Video (void)
 void
 UnfadeLevel (void)
 {
-  char *CMAPBuffer;
-  int i, j, Color;
 
-  Color = CurLevel->color;
-  if (CurLevel->empty)
-    Color = PD_DARK;
-
-  // NONSENSE FROM THE OLD ENGINE GetView ();
-  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-
-  /* Speicher reservieren */
-  CMAPBuffer = MyMalloc (257 * 3);	// wird wieder freigegeben
-  memset (CMAPBuffer, 0, 256 * 3);
-
-  for (j = 0; j < 64; j++)
-    {
-      for (i = 3; i < ((1 + FARBENPROLEVEL) * 3 + 1); i++)
-	{
-	  if (CMAPBuffer[i] <
-	      LevelColorArray[(i - 3) + (Color * 3 * FARBENPROLEVEL)])
-	    CMAPBuffer[i]++;
-	}
-      //SetColors (1, FARBENPROLEVEL, CMAPBuffer + 3);
-    }
-  SetColors (1, FARBENPROLEVEL, CMAPBuffer + 3);
-  free (CMAPBuffer);
+  SetLevelColor( CurLevel->color );
 }				// void UnfadeLevel(void)
 
 /* *********************************************************************** */
