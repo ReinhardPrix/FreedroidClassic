@@ -32,7 +32,9 @@ IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringe
 
 (?)  delete that old RealScreen crap from all the code!!
 
-(?)  add scaling and zooming of freedroid screen (via the options menu at first)
+(?)  delete old INTERNBREITE and INTERNHOEHE crap
+
+(DONE)  add scaling and zooming of freedroid screen
 
 (?)  Ein dat file verwenden fuer die Anfangstexte
 
@@ -42,21 +44,19 @@ IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringe
 
 (?)  Ein dat file verwenden fuer die Blastdaten und die Blastbildfilenamen 
 
-(?)  Read more about SDL_net
-
-(?)  Add networking support
-
-(?)  write a new format for levels and maps.
-
 (?)  write dokumentation about the new format for levels and maps.
 
-(?)  get the Paradroid font working in a PNG file for BFont 
+(DONE)  get the Paradroid font working in a PNG file for BFont 
+
+(?)  Read more about SDL_net &&  Add networking support
 
 3. Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
    this.  This will be good to for later, if someone designs new and better animated
    bullets with multiple pictures in EACH direction.
 
 4. Add more documentation concerning framerate calculation
+
+((?))  write a new format for levels and maps.
 
 
 rp
