@@ -205,8 +205,8 @@ ShowLifts (int level, int liftrow)
   SDL_Rect src, dst;
   int i;
 
-  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, FALSE));
-  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, FALSE));
+  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
+  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
 
   // clear the whole screen
   //  ClearGraphMem();
