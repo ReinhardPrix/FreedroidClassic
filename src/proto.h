@@ -647,7 +647,7 @@ EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid );
 #define EXTERN extern
 #endif
 EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
-EXTERN void DisplayBanner (const char* left, const char* right, int flags );
+EXTERN void DisplayBanner ( void );
 
 // shop.c 
 #undef EXTERN

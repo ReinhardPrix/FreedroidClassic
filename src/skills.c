@@ -141,7 +141,7 @@ DetectItemsSpell ( void )
  * This function creates a paralyzing bolt (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
-ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+ParalyzeBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_PARALYZE_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
@@ -149,7 +149,6 @@ ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
     {
       Me[0].mana -= SpellCost;
 
-      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
       FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
@@ -167,7 +166,7 @@ ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
  * This function creates a firey bolt (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
-FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+FireyBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_FIREY_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
@@ -175,7 +174,6 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
     {
       Me[0].mana -= SpellCost;
 
-      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
       FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
@@ -193,7 +191,7 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
  * This function creates a cold bolt. (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
-ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+ColdBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_COLD_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
@@ -201,7 +199,6 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
     {
       Me[0].mana -= SpellCost;
 
-      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
       FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
@@ -219,7 +216,7 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
  * This function creates a poison bolt.  (spell, but really a bullet)
  * ---------------------------------------------------------------------- */
 void
-PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+PoisonBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
 
@@ -527,7 +524,6 @@ void
 HandleCurrentlyActivatedSkill( int player_num )
 {
   static int RightPressedPreviousFrame = 0;
-  moderately_finepoint TargetPoint;
   int i;
   float xdist, ydist, dist2;
   Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -709,9 +705,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
-	      FireyBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	      FireyBoltSpell ( Me [ 0 ] . pos );
 	    }
 	}
       break;
@@ -721,9 +715,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
-	      ColdBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	      ColdBoltSpell ( Me [ 0 ] . pos );
 	    }
 	}
       break;
@@ -761,9 +753,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
-	      PoisonBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	      PoisonBoltSpell ( Me [ 0 ] . pos );
 	    }
 	}
       break;
@@ -773,9 +763,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
-	      ParalyzeBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	      ParalyzeBoltSpell ( Me [ 0 ] . pos );
 	    }
 	}
       break;

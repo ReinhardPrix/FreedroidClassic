@@ -50,14 +50,6 @@ EXTERN void LevelEditor(void);
 extern int MyCursorX;
 extern int MyCursorY;
 
-#define FIRST_MENU_ITEM_POS_X (1*Block_Width)
-#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
-#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
-
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-#define ITEM_FIRST_POS_Y 130
-
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
 
@@ -980,7 +972,7 @@ InitiateMenu( int background_code )
 
   if ( background_code == ( -1 ) )
     {
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      DisplayBanner ( ) ;
       AssembleCombatPicture ( 0 );
       MakeGridOnScreen( NULL );
     }
@@ -1284,7 +1276,7 @@ Cheatmenu (void)
 void
 StartupMenu (void)
 {
-#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_X (0.0)
 #define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
 enum
   { 
@@ -1544,7 +1536,7 @@ New_Graphics_Options_Menu (void)
 	    }
 	  
 	  ClearGraphMem();
-	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	  DisplayBanner ( ) ;
 	  our_SDL_flip_wrapper( Screen );
 	  
 	  break;
@@ -1566,7 +1558,7 @@ New_Graphics_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( ) ;
   InitBars = TRUE;
 
   return;
@@ -1688,7 +1680,7 @@ New_Sound_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   return;
@@ -1857,7 +1849,7 @@ Unhandles Tux image update policy encountered!",
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   return;
@@ -1944,7 +1936,7 @@ On_Screen_Display_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   return;
@@ -2039,7 +2031,7 @@ Droid_Talk_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   return;
@@ -2121,7 +2113,7 @@ enum
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   return;
@@ -2921,7 +2913,7 @@ Show_Mission_Details ( int MissionNumber )
 
       DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
       MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
-      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+      DisplayBanner( );
       //InitiateMenu();
 
       CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
@@ -3003,7 +2995,7 @@ Show_Mission_Log_Menu (void)
 
       DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
       MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
-      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+      DisplayBanner( );
 
       SetCurrentFont( Para_BFont );
 
@@ -3046,7 +3038,7 @@ Show_Mission_Log_Menu (void)
 		    -1 , -1 , Mission_Window_Pointer );
 
       // Highlight currently selected option with an influencer before it
-      blit_tux( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 , 0 );
+      blit_tux( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - 16 , 0 );
 
       // If the user pressed up or down, the cursor within
       // the level editor menu has to be moved, which is done here:

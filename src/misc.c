@@ -554,15 +554,15 @@ Pause (void)
       SetNewBigScreenMessage( " Pause " );
       AnimateInfluence ( 0 );
       AnimateCyclingMapTiles ();
-      DisplayBanner (NULL, NULL, 0);
+      DisplayBanner ( );
       AssembleCombatPicture ( 0 );
       CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
       our_SDL_flip_wrapper ( Screen );
       
       if (CPressed ())
 	{
-	  Me[0].status = CHEESE;
-	  DisplayBanner (NULL, NULL,  0 );
+	  Me [ 0 ] . status = CHEESE;
+	  DisplayBanner ( ) ;
 	  AssembleCombatPicture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */

@@ -136,7 +136,7 @@ PlayATitleFile ( char* Filename )
     }
 
   ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  DisplayBanner ( );
   our_SDL_flip_wrapper( Screen );
   
 }; // void PlayATitleFile ( char* Filename )
@@ -1585,7 +1585,7 @@ PrepareStartOfNewCharacter ( void )
 
   // show the banner for the game
   ClearGraphMem();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   InitBars = TRUE;
 
   SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ->Background_Song_Name );
@@ -2004,7 +2004,7 @@ ThouArtDefeated (void)
       StartTakingTimeForFPSCalculation(); 
 
       AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS );
-      DisplayBanner (NULL, NULL,  0 );
+      DisplayBanner ( );
       animate_blasts ();
       MoveBullets ();
       MoveEnemys ();

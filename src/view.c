@@ -1653,7 +1653,7 @@ AssembleCombatPicture (int mask)
       ShowQuickInventory ();
       DisplayButtons( );
       if ( ! GameOver )
-	DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
+	DisplayBanner ( );
     }
 
   if ( ServerMode )
@@ -2550,10 +2550,10 @@ blit_tux ( int x , int y , int player_num )
   int alpha_value;
   point UpperLeftBlitCorner;
 
-  Text_Rect . x = UserCenter_x + Block_Width/3;
-  Text_Rect . y = UserCenter_y  - Block_Height/2;
-  Text_Rect . w = User_Rect.w/2 - Block_Width/3;
-  Text_Rect . h = User_Rect.h/2;
+  Text_Rect . x = UserCenter_x + 21 ;
+  Text_Rect . y = UserCenter_y  - 32 ;
+  Text_Rect . w = ( User_Rect . w / 2 ) - 21 ;
+  Text_Rect . h = ( User_Rect . h / 2 );
 
   DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
 
@@ -2570,8 +2570,8 @@ blit_tux ( int x , int y , int player_num )
       if ( Me [ player_num ] . status == OUT ) return;
       if ( Me [ player_num ] . pos . z != Me [ 0 ] . pos . z ) return;
       
-      UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
-      UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
+      UpperLeftBlitCorner.x = UserCenter_x - 32 ;
+      UpperLeftBlitCorner.y = UserCenter_y - 32 ;
 
     }
   else
@@ -2644,13 +2644,9 @@ blit_tux ( int x , int y , int player_num )
   //
   if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
-      //      PutStringFont ( Screen , FPS_Display_BFont , 
-      //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
-      //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
-      //		      Me [ player_num ].TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me [ player_num ].TextToBeDisplayed , UserCenter_x + Block_Width/3,
-		   UserCenter_y - Block_Height/2 , &Text_Rect );
+      DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
+		   UserCenter_y - 32 , &Text_Rect );
     }
 
   DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
@@ -3536,7 +3532,7 @@ function used for this did not succeed.",
 
     }
 
-  NumberOfPicturesToUse = 2 * ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ SparkType ] [ PictureType ] -> w;
+  NumberOfPicturesToUse = 2 * ( 2 * Radius * 64 * 3.14 ) / (float) SparkPrototypeSurface[ SparkType ] [ PictureType ] -> w;
   NumberOfPicturesToUse += 3 ; // we want some overlap
 
   //--------------------
@@ -3627,7 +3623,7 @@ function used for this did not succeed.",
       SDL_FreeSurface( tmp_surf );
     }
 
-  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface -> w;
+  NumberOfPicturesToUse = ( 2 * Radius * 64 * 3.14 ) / (float) SparkPrototypeSurface -> w;
   NumberOfPicturesToUse += 3 ; // we want some overlap
 
   //--------------------
@@ -3638,15 +3634,15 @@ function used for this did not succeed.",
     {
       Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
       
-      Displacement . x = 0 ; Displacement . y = - Radius * Block_Height ;
+      Displacement . x = 0 ; Displacement . y = - Radius * 64 ;
 
       RotateVectorByAngle ( &Displacement , Angle );
 
       tmp_surf = 
 	rotozoomSurface( SparkPrototypeSurface , Angle , 1.0 , FALSE );
 
-      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( (tmp_surf -> w) / 2 );
-      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( (tmp_surf -> h) / 2 );
+      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * 64 + Displacement . x - ( (tmp_surf -> w) / 2 );
+      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * 64 + Displacement . y - ( (tmp_surf -> h) / 2 );
       
       our_SDL_blit_surface_wrapper( tmp_surf , NULL , Screen , &TargetRectangle);
 

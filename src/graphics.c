@@ -1198,9 +1198,6 @@ UNABLE TO LOAD STANDARD TILE!",
 int
 InitPictures (void)
 {
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-
   //--------------------
   // First thing to do is get the size of a typical isometric
   // floor tile, i.e. height and width of the corresponding graphics

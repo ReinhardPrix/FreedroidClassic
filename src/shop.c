@@ -36,17 +36,6 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
-#define FIRST_MENU_ITEM_POS_X (1*Block_Width)
-#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
-#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
-
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-#define ITEM_FIRST_POS_Y 130
-
-// #define SELL_PRICE_FACTOR (0.25)
-#define SELL_PRICE_FACTOR (0.5)
-
 #define SHOP_ROW_LENGTH 8
 
 typedef struct

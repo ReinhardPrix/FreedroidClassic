@@ -197,9 +197,9 @@ EnterConsole (void)
 
     } // while (!finished) 
 
-  Me[0].status = MOBILE;
+  Me [ 0 ] . status = MOBILE;
   ClearGraphMem ( );
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( );
   our_SDL_flip_wrapper( Screen );
 
   while (SpacePressed ());

@@ -192,7 +192,7 @@ Takeover (int enemynum)
 
   SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
-  DisplayBanner ( NULL , NULL ,  BANNER_FORCE_UPDATE );
+  DisplayBanner ( ) ;
   Me [ 0 ] . status = MOBILE; /* the new status _after_ the takeover game */
 
   //--------------------

@@ -215,29 +215,6 @@ enum _spell_names
 #define UserCenter_x (User_Rect.x+User_Rect.w/2)
 #define UserCenter_y (User_Rect.y+User_Rect.h/2)
 
-/* 
- * these macros are a bit of a hack, as they will work correctly only
- * as long as INITIAL_BLOCK_WIDTH = INITIAL_BLOCK_HEIGHT
- * but the handling of the grob/fein coordinates should be changed anyway
- * in the longer term...
- */
-#define Grob2Fein(grob) 	\
- ((grob)* INITIAL_BLOCK_WIDTH + INITIAL_BLOCK_WIDTH / 2)
-
-#define Fein2Grob(fein)		\
-  ((int)(fein) / INITIAL_BLOCK_WIDTH)
-
-/* Macros */
-#define GrobX (Me[0].pos.x / INITIAL_BLOCK_WIDTH)
-#define GrobY (Me[0].pos.y / INITIAL_BLOCK_HEIGHT)
-#define FeinX (Me[0].pos.x%INITIAL_BLOCK_WIDTH)
-#define FeinY (Me[0].pos.y%INITIAL_BLOCK_HEIGHT)
-
-#define CLFeinY ((Me[0].pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobY ((Me[0].pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
-#define CLFeinX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
-
 #define MAX_CHARACTER_NAME_LENGTH (25)
 #define MAX_LENGTH_FOR_DIALOG_SECTION_NAME 100
 #define MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING 200
@@ -316,6 +293,14 @@ enum
 //
 #define SKILL_LEVEL_BUTTON_HEIGHT 32
 #define SKILL_LEVEL_BUTTON_WIDTH 30
+
+#define FIRST_MENU_ITEM_POS_X (64)
+#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
+#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
+
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+#define ITEM_FIRST_POS_Y 130
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
