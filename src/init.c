@@ -92,6 +92,8 @@ PlayATitleFile ( char* Filename )
   char* TitleSongName;
   int ThisTextLength;
 
+  while ( SpacePressed() );
+
   //--------------------
   // Now its time to start loading the title file...
   //

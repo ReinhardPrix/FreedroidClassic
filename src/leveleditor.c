@@ -1207,6 +1207,12 @@ enum
 void 
 ShowLevelEditorKeymap ( void )
 {
+
+  PlayATitleFile ( "level_editor_help.title" );
+
+
+  /*
+
   int k=1;
 
   DisplayImage (find_file ( NE_CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE));
@@ -1230,7 +1236,9 @@ ShowLevelEditorKeymap ( void )
   while ( SpacePressed() || EscapePressed() );
   while ( !SpacePressed() && !EscapePressed() );
   while ( SpacePressed() || EscapePressed() );
-  
+  */
+
+
 }; // void ShowLevelEditorKeymap ( void )
 
 /* ----------------------------------------------------------------------
