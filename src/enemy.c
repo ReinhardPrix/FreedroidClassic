@@ -570,7 +570,14 @@ MoveThisEnemy( int EnemyNum )
       RealScore += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y, DRUIDBLAST);
       if (LevelEmpty ())
-	CurLevel->empty = WAIT_LEVELEMPTY;
+	{
+
+	  RealScore += DECKCOMPLETEBONUS;
+	  ShowScore += DECKCOMPLETEBONUS;
+
+	  CurLevel->empty = TRUE;
+	  CurLevel->timer = WAIT_LEVELEMPTY;
+	}
       return;	// this one's down, so we can move on to the next
     }
   

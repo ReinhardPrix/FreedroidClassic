@@ -137,6 +137,7 @@ Takeover (int enemynum)
   int FinishTakeover = FALSE;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
+  SDL_Rect buf;
   Uint32 now;
 
   /* Prevent distortion of framerate by the delay coming from 
@@ -146,9 +147,9 @@ Takeover (int enemynum)
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
-  /* Get a new Internfenster without any robots, blasts bullets etc
-     for use as background in transparent version of Takeover-game */
-  //  GetInternFenster (SHOW_MAP);
+  // Takeover game always uses Classic User_Rect:
+  Copy_Rect (User_Rect, buf);
+  Copy_Rect (Classic_User_Rect, User_Rect);
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
@@ -263,6 +264,10 @@ Takeover (int enemynum)
       while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT) );
 
     }	/* while !FinishTakeover */
+
+  // restore User_Rect
+  Copy_Rect (buf, User_Rect);
+
 
   ClearGraphMem();
 

@@ -479,10 +479,6 @@ LevelEmpty (void)
 	return FALSE;
     }
 
-  CurLevel->empty = TRUE;
-  RealScore += DECKCOMPLETEBONUS;
-  ShowScore += DECKCOMPLETEBONUS;
-
   if (ShipEmpty ())
     ThouArtVictorious ();
 
@@ -648,7 +644,7 @@ Paradroid to eliminate all rogue robots.",
       break;
     case -2: // Takeover: unit that you wish to control
       sprintf (InfoText, "Unit type %s - %s\n \
-This is the unit that you wish to control. Prepare to takeover.", 
+This is the unit that you wish to control.\n\n Prepare to takeover.", 
 	       Druidmap[droidtype].druidname, 
 	       Classname[Druidmap[droidtype].class]);
       break;

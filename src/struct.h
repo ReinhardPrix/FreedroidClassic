@@ -228,6 +228,7 @@ typedef struct
   int type;
   double phase;
   int MessageWasDone;
+  bool mine;
 }
 blast, *Blast;
 
@@ -264,6 +265,7 @@ waypoint, *Waypoint;
 typedef struct
 {
   int empty;
+  float timer;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
   char *Background_Song_Name;

@@ -1204,7 +1204,9 @@ int
 SpacePressed (void)
 {
   keyboard_update ();
-  return CurrentlySpacePressed;
+  // hack hack: we map return-> space, so that it 
+  // generally acts as "fire" in the game, should be convenient:
+  return (CurrentlySpacePressed|CurrentlyEnterPressed);
 }				// int SpacePressed(void)
 
 int

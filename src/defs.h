@@ -56,8 +56,6 @@
 // Constants influencing code generation and
 // constants defining flags for some functions:
 
-#define USE_SDL_FRAMERATE
-
 /* ************************************************************
  * Highscore related defines 
  *************************************************************/
@@ -237,7 +235,7 @@ enum _sounds
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 
-#define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
+#define WAIT_LEVELEMPTY		1.0	/* warte bevor Graufaerben (in seconds)*/
 #define WAIT_AFTER_KILLED	1500  // time (in ms) to wait and still display pictures after the destruction of 
 #define SHOW_WAIT           3500   // std amount of time to show something
                                    // the players droid.  This is now measured in seconds and can be a float
@@ -333,7 +331,7 @@ enum _explosions
 {
   BULLETBLAST=0,
   DRUIDBLAST,
-  OWNBLAST
+  REJECTBLAST
 };
 
 #define BLINKENERGY 25

@@ -160,11 +160,9 @@ MoveInfluence (void)
       if (Me.type != DRUID001)
 	{
 	  Me.type = DRUID001;
-	  Me.speed.x = 0;
-	  Me.speed.y = 0;
-	  Me.energy = PreTakeEnergy;
+	  Me.energy = BLINKENERGY;
 	  Me.health = BLINKENERGY;
-	  StartBlast (Me.pos.x, Me.pos.y, DRUIDBLAST);
+	  StartBlast (Me.pos.x, Me.pos.y, REJECTBLAST);
 	}
       else
 	{
@@ -994,21 +992,19 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
       if (InvincibleMode)
 	return;
       
-      /* This old code used class difference to determine collision damage.
-	 But now we use Weight-Difference. 
       Me.energy -=
-	(Druidmap[enemytype].class -
-	 Druidmap[Me.type].class) * BOUNCE_LOSE_FACT;
-      */
-      Me.energy -=
+	(Druidmap[enemytype].class - Druidmap[Me.type].class) * collision_lose_energy_calibrator;
+
+
+      /*      Me.energy -=
 	(Druidmap[enemytype].weight -
-	 Druidmap[Me.type].weight ) * collision_lose_energy_calibrator * 0.01 ;
+	Druidmap[Me.type].weight ) * collision_lose_energy_calibrator * 0.01 ; */
     }
   else
     AllEnemys[enemynum].energy -=
-      (Druidmap[Me.type].weight -
-       Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
-
+	 - (Druidmap[enemytype].class - Druidmap[Me.type].class) * collision_lose_energy_calibrator;
+  //      (Druidmap[Me.type].weight -
+  //       Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
   //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
 
   return;

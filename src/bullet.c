@@ -165,6 +165,15 @@ StartBlast (float x, float y, int type)
   /* Get Pointer to it: more comfortable */
   NewBlast = &(AllBlasts[i]);
 
+
+  if (type == REJECTBLAST)
+    {
+      NewBlast->mine = TRUE;
+      type = DRUIDBLAST;    // not really a different type, just avoid damaging influencer
+    }
+  else
+    NewBlast->mine = FALSE;
+
   /* Einen Blast an x/y erzeugen */
   NewBlast->PX = x;
   NewBlast->PY = y;
@@ -174,9 +183,10 @@ StartBlast (float x, float y, int type)
 
   NewBlast->MessageWasDone = 0;
 
+
   if (type == DRUIDBLAST)
     {
-      DruidBlastSound ();
+     DruidBlastSound (); 
     }
 
 }				/* StartBlast */
@@ -435,7 +445,8 @@ CheckBlastCollisions (int num)
   int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
   Bullet CurBullet;
-  // static int RHBZaehler = 0;
+  float dist2;
+  vect vdist;
 
   /* check Blast-Bullet Collisions and kill hit Bullets */
   for (i = 0; i < MAXBULLETS; i++)
@@ -446,17 +457,16 @@ CheckBlastCollisions (int num)
       if (CurBlast->phase > 4)
 	break;
 
-      if (abs (CurBullet->pos.x - CurBlast->PX) < Blast_Radius)
-	if (abs (CurBullet->pos.y - CurBlast->PY) < Blast_Radius)
-	  {
-	    /* KILL Bullet silently */
-	    //AllBullets[i].type = OUT;
-	    //AllBullets[i].mine = FALSE;
-	    StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
-	    DeleteBullet( i );
-	  }
+      vdist.x = CurBullet->pos.x - CurBlast->PX;
+      vdist.y = CurBullet->pos.y - CurBlast->PY;
+      dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
+      if (dist2 < Blast_Radius*Blast_Radius)
+	{
+	  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
+	  DeleteBullet( i );
+	}
 
-    }				/* for */
+    }	/* for */
 
   /* Check Blast-Enemy Collisions and smash energy of hit enemy */
   for (i = 0; i < NumEnemys; i++)
@@ -465,14 +475,15 @@ CheckBlastCollisions (int num)
 	  || (AllEnemys[i].levelnum != level))
 	continue;
 
-      //      if ( ( abs (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius + Druid_Radius_X ) &&
-      //         ( abs (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius + Druid_Radius_Y ) )
-      if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius ) &&
-	   ( fabsf (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius ) )
-	  {
-	    /* drag energy of enemy */
-	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
-	  }
+      vdist.x = AllEnemys[i].pos.x - CurBlast->PX;
+      vdist.y = AllEnemys[i].pos.y - CurBlast->PY;
+      dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
+
+      if (dist2 < Blast_Radius*Blast_Radius)
+	{
+	  /* drag energy of enemy */
+	  AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
+	}
 
       if (AllEnemys[i].energy < 0)
 	AllEnemys[i].energy = 0;
@@ -480,9 +491,11 @@ CheckBlastCollisions (int num)
     }				/* for */
 
   /* Check influence-Blast collisions */
-  if ( (Me.status != OUT) && 
-       ( fabsf (Me.pos.x - CurBlast->PX) < Blast_Radius ) &&
-       ( fabsf (Me.pos.y - CurBlast->PY) < Blast_Radius ) )
+  vdist.x = Me.pos.x - CurBlast->PX;
+  vdist.y = Me.pos.y - CurBlast->PY;
+  dist2 = vdist.x*vdist.x + vdist.y*vdist.y;
+
+  if ( (Me.status != OUT) && (!CurBlast->mine) && (dist2 < Blast_Radius*Blast_Radius) )
     {
       if (!InvincibleMode)
 	{

@@ -882,8 +882,7 @@ InitFreedroid (void)
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     AllBullets[i].Surfaces_were_generated = FALSE;
 
-  Overall_Average=0.041;
-  SkipAFewFrames = 0;
+  SkipAFewFrames = FALSE;
   Me.TextVisibleTime = 0;
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 

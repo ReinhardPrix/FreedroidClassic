@@ -240,7 +240,7 @@ ScrollText (char *Text, SDL_Rect *rect)
   char *textpt;			/* bewegl. Textpointer */
   float InsertLine = 1.0*rect->y;
   int speed = 30;   // in pixel / sec
-  int maxspeed = 50;
+  int maxspeed = 150;
   SDL_Surface* Background;
   int ret = 0;
   Uint32 prev_tick, now;
@@ -256,24 +256,6 @@ ScrollText (char *Text, SDL_Rect *rect)
 
   while (1)
     {
-      if (UpPressed ())
-	{
-	  speed -= 5;
-	  if (speed < -maxspeed)
-	    speed = -maxspeed;
-	}
-      if (DownPressed ())
-	{
-	  speed +=5;
-	  if (speed > maxspeed)
-	    speed = maxspeed;
-	}
-      if (SpacePressed())
-	{
-	  ret = 1;
-	  break;
-	}
-
       prev_tick = SDL_GetTicks ();
       SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
       if (!DisplayText (Text, rect->x, (int)InsertLine, rect))
@@ -282,6 +264,7 @@ ScrollText (char *Text, SDL_Rect *rect)
 	  break;  
 	}
       SDL_Flip (ne_screen);
+
 
       if (just_started)
 	{
@@ -296,7 +279,26 @@ ScrollText (char *Text, SDL_Rect *rect)
 	  prev_tick = SDL_GetTicks ();
 	}
 
-      InsertLine -= 1.0 * (SDL_GetTicks() - prev_tick) * speed /1000;
+
+      if (UpPressed () || WheelUpPressed())
+	{
+	  speed -= 5;
+	  if (speed < -maxspeed)
+	    speed = -maxspeed;
+	}
+      if (DownPressed () || WheelDownPressed ())
+	{
+	  speed +=5;
+	  if (speed > maxspeed)
+	    speed = maxspeed;
+	}
+      if (SpacePressed())
+	{
+	  ret = 1;
+	  break;
+	}
+
+      InsertLine -= 1.0 * (SDL_GetTicks() - prev_tick) * speed /1000.0;
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > rect->y + rect->h)

@@ -85,18 +85,21 @@ main (int argc, char *const argv[])
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );
+
       if (first_time)   // make sure title is displayed long enough on fast machines.
 	{
 	  while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ; 
 	  first_time = FALSE;
 	}
 
+      while (SpacePressed ());
       show_droid_info (Me.type, -3);  // show unit-intro page
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+
       now=SDL_GetTicks();
       while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
 
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       GameOver = FALSE;
 
       while (!GameOver && !QuitProgram)
@@ -138,10 +141,9 @@ main (int argc, char *const argv[])
 	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
 	  CheckInfluenceEnemyCollision ();
 
-	  if (CurLevel->empty == 2)
+	  if (CurLevel->empty == TRUE && CurLevel->timer <= 0.0 && CurLevel->color != PD_DARK)
 	    {
 	      CurLevel->color = PD_DARK;
-	      CurLevel->empty = TRUE;
 	      Switch_Background_Music_To (BYCOLOR);  // start new background music
 	    }			/* if */
 
@@ -178,11 +180,12 @@ UpdateCountersForThisFrame (void)
   LastRefreshSound += Frame_Time ();
   Me.LastCrysoundTime += Frame_Time ();
   Me.timer += Frame_Time();
+  if (CurLevel->timer >= 0.0) CurLevel->timer -= Frame_Time ();
+    
   Me.LastTransferSoundTime += Frame_Time();
   Me.TextVisibleTime += Frame_Time();
   LevelDoorsNotMovedTime += Frame_Time();
-
-  if ( SkipAFewFrames ) SkipAFewFrames--;
+  if (SkipAFewFrames) SkipAFewFrames = FALSE;
 
   if ( Me.firewait > 0 )
     {

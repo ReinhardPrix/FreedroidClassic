@@ -593,31 +593,36 @@ void
 Pause (void)
 {
   int Pause = TRUE;
-
-  Activate_Conservative_Frame_Computation();
+  int Cheese = FALSE;
 
   Me.status = PAUSE;
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
   while ( Pause )
     {
-      // usleep(10);
-      AnimateInfluence ();
-      AnimateRefresh ();
-      AnimateEnemys ();
+      StartTakingTimeForFPSCalculation();
+
+      if (!Cheese)
+	{
+	  AnimateInfluence ();
+	  AnimateRefresh ();
+	  AnimateEnemys ();
+	}
+      
       DisplayBanner (NULL, NULL, 0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-      
+
+      usleep (50);
+
+      ComputeFPSForThisFrame();
+
       if (CPressed ())
 	{
-	  Me.status = CHEESE;
-	  DisplayBanner (NULL, NULL,  0 );
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+	  while (CPressed());
+	  if (Me.status != CHEESE) Me.status = CHEESE;
+	  else Me.status = PAUSE;
+	  Cheese = !Cheese;
 
-	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
-	  while ( SpacePressed() ); /* then wait for Space released */
-	  
-	  Me.status = PAUSE;       /* return to normal PAUSE */
 	} /* if (CPressed) */
 
       if ( SpacePressed() )
@@ -627,8 +632,9 @@ Pause (void)
 	}
 
     } /* while (Pause) */
+
   return;
-}; // Pause () 
+} // Pause () 
 
 
 /*@Function============================================================
@@ -650,10 +656,9 @@ StartTakingTimeForFPSCalculation(void)
    * (DO NOT MOVE THIS COMMAND PLEASE!) */
   framenr++;
   
-#ifdef USE_SDL_FRAMERATE
-  One_Frame_SDL_Ticks=SDL_GetTicks();
+  One_Frame_SDL_Ticks = SDL_GetTicks();
   if (framenr % 10 == 1)
-    Ten_Frame_SDL_Ticks=SDL_GetTicks();
+    Ten_Frame_SDL_Ticks = SDL_GetTicks();
   if (framenr % 100 == 1)
     {
       Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
@@ -663,16 +668,6 @@ StartTakingTimeForFPSCalculation(void)
       //printf("Me.maxspeed.x: %g \n",
       //	     Druidmap[Me.type].maxspeed );
     }
-#else
-  gettimeofday (&oneframetimestamp, NULL);
-  if (framenr % 10 == 1)
-    gettimeofday (&tenframetimestamp, NULL);
-  if (framenr % 100 == 1)
-    {
-      gettimeofday (&onehundredframetimestamp, NULL);
-      printf("\n%f",1/Frame_Time());
-    }
-#endif
   
 } // void StartTakingTimeForFPSCalculation(void)
 
@@ -708,7 +703,7 @@ ComputeFPSForThisFrame(void)
   // SPACE KEY, SO PLEASE DO NOT ERASE EITHER METHOD.  PLEASE ASK JP FIRST.
   //
 
-#ifdef USE_SDL_FRAMERATE
+  if (SkipAFewFrames) return;
 
   Now_SDL_Ticks=SDL_GetTicks();
   oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
@@ -718,35 +713,6 @@ ComputeFPSForThisFrame(void)
   FPSover1 = 1000 * 1 / (float) oneframedelay;
   FPSover10 = 1000 * 10 / (float) tenframedelay;
   FPSover100 = 1000 * 100 / (float) onehundredframedelay;
-  
-#else
-  
-  gettimeofday (&now, NULL);
-  
-  oneframedelay =
-    (now.tv_usec - oneframetimestamp.tv_usec) + (now.tv_sec -
-						 oneframetimestamp.
-						 tv_sec) * 1000000;
-  if (framenr % 10 == 0)
-    tenframedelay =
-      ((now.tv_usec - tenframetimestamp.tv_usec)) + (now.tv_sec -
-						     tenframetimestamp.
-						     tv_sec) *
-      1000000;
-  if ((framenr % 100) == 0)
-    {
-      onehundredframedelay =
-	(now.tv_sec - onehundredframetimestamp.tv_sec) * 1000000 +
-	(now.tv_usec - onehundredframetimestamp.tv_usec);
-      framenr = 0;
-    }
-  
-  FPSover1 = 1000000 * 1 / (float) oneframedelay;
-  FPSover10 = 1000000 * 10 / (float) tenframedelay;
-  FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
-  
-#endif
-  
   
 } // void ComputeFPSForThisFrame(void)
 
@@ -777,25 +743,17 @@ ComputeFPSForThisFrame(void)
 float
 Frame_Time (void)
 {
-  float Rate_To_Be_Returned;
+  static float previous_time;
   
   if ( SkipAFewFrames ) 
-    {
-      Rate_To_Be_Returned = Overall_Average;
-      return Rate_To_Be_Returned;
-    }
+    return previous_time;
 
-  Rate_To_Be_Returned = (1.0 / FPSover1);
+  previous_time = (1.0 / FPSover1);
 
-  return Rate_To_Be_Returned;
+  return (previous_time);
 
 } // float Frame_Time(void)
 
-int
-Get_Average_FPS ( void )
-{
-  return ( (int) ( 1.0 / Overall_Average ) );
-}; // int Get_Average_FPS( void )
 
 /*@Function============================================================
 @Desc: 
@@ -818,9 +776,7 @@ Get_Average_FPS ( void )
 void 
 Activate_Conservative_Frame_Computation(void)
 {
-  // SkipAFewFrames=212;
-  // SkipAFewFrames=22;
-  SkipAFewFrames=3;
+  SkipAFewFrames=TRUE;
 
   // Now we are in some form of pause.  It can't
   // hurt to have the top status bar redrawn after that,
