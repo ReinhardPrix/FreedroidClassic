@@ -176,9 +176,9 @@ EnterElevator (void)
 
       /* Position des Influencer richtig setzen */
       Me.pos.x =
-	curShip.AllElevators[curElev].x * Block_Width + Block_Width / 2;
+	curShip.AllElevators[curElev].x; //NORMALISATION * Block_Width + Block_Width / 2;
       Me.pos.y =
-	curShip.AllElevators[curElev].y * Block_Height + Block_Height / 2;
+	curShip.AllElevators[curElev].y; //NORMALISATION* Block_Height + Block_Height / 2;
 
       /* Alle Blasts und Bullets loeschen */
       for (i = 0; i < MAXBLASTS; i++)

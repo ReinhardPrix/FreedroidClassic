@@ -128,7 +128,10 @@ GetCurrentElevator (void)
 {
   int i;
   int curlev = CurLevel->levelnum;
-  int gx = Me.pos.x, gy = Me.pos.y;
+  int gx, gy;
+
+  gx = rintf(Me.pos.x);
+  gy = rintf(Me.pos.y);
 
   for (i = 0; i < curShip.num_lifts; i++)
     {
@@ -148,7 +151,7 @@ GetCurrentElevator (void)
 
 /*@Function============================================================
 @Desc: ActSpecialField: checks Influencer on SpecialFields like
-							Elevators and Konsoles and acts on it 
+Elevators and Konsoles and acts on it 
 
 @Ret: void
 @Int:
@@ -157,7 +160,7 @@ void
 ActSpecialField (float x, float y)
 {
   unsigned char MapBrick;
-  int cx, cy;			/* tmp: NullPunkt im Blockzentrum */
+  float cx, cy;			/* tmp: NullPunkt im Blockzentrum */
 
   DebugPrintf
     ("\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
@@ -168,11 +171,11 @@ ActSpecialField (float x, float y)
     {
     case LIFT:
       if (!((Me.status == TRANSFERMODE) &&
-	    (Me.speed.x == 0) && (Me.speed.y == 0)))
+	    ( abs(Me.speed.x) <= 1) && ( abs(Me.speed.y) <= 1)))
 	break;
 
-      cx = (((int) rintf (x)) % Block_Width) - Block_Width / 2;
-      cy = (((int) rintf (y)) % Block_Height) - Block_Height / 2;
+      cx = rintf(x) - x ;
+      cy = rintf(y) - y ;
 
       /* Lift nur betreten, wenn ca. im Zentrum */
       if ((cx * cx + cy * cy) < DRUIDRADIUSX * DRUIDRADIUSX)
@@ -1470,7 +1473,7 @@ IsPassable (float x, float y, int Checkpos)
 
 
 /*@Function============================================================
-@Desc: 	IsVisible(): 	determines wether object on x/y is visible to
+@Desc: 	IsVisible(): determines wether object on x/y is visible to
 						the 001 or not
 @Ret: TRUE/FALSE
 @Int:
@@ -1478,27 +1481,25 @@ IsPassable (float x, float y, int Checkpos)
 int
 IsVisible (Finepoint objpos)
 {
-  signed int a_x;		/* Vector Influencer->objectpos */
-  signed int a_y;
-  vect step;			/* effective step */
-  int step_len = 7;		/* the approx. length of a step-vect. */
+  float a_x;		/* Vector Influencer->objectpos */
+  float a_y;
+  finepoint step;			/* effective step */
+  float step_len = (7/64.0);		/* the approx. length of a step-vect. */
   int step_num;			/* number of neccessary steps */
-  int a_len;			/* Lenght of a */
+  float a_len;			/* Lenght of a */
   int i;
-  point testpos;
-  int influ_x = Me.pos.x;
-  int influ_y = Me.pos.y;
+  finepoint testpos;
+  double influ_x = Me.pos.x;
+  double influ_y = Me.pos.y;
 
   DebugPrintf ("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
-
-  // NORMALISATION return TRUE;
 
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;
 
-  a_len = (int) sqrt ((float) ((unsigned long) a_x * a_x + a_y * a_y));
+  a_len = sqrt (  a_x * a_x + a_y * a_y );
+  step_num = a_len * 3;
 
-  step_num = a_len / step_len;
   if (step_num == 0)
     step_num = 1;
 

@@ -747,28 +747,26 @@ Reibung (void)
 {
   int i;
 
-  // return;
-
-      if (!UpPressed () && !DownPressed ())
-	{
-	  /*
-	  if (Me.speed.y < 0)
-	    Me.speed.y++;
-	  if (Me.speed.y > 0)
-	    Me.speed.y--;
-	  */
-	  Me.speed.y *= exp(log(0.2) * Frame_Time());
-	}
-      if (!RightPressed () && !LeftPressed ())
-	{
-	  /*
-	  if (Me.speed.x < 0)
-	    Me.speed.x++;
-	  if (Me.speed.x > 0)
-	    Me.speed.x--;
-	  */
-	  Me.speed.x *= exp(log(0.2) * Frame_Time());
-	}
+  if (!UpPressed () && !DownPressed ())
+    {
+      /*
+	if (Me.speed.y < 0)
+	Me.speed.y++;
+	if (Me.speed.y > 0)
+	Me.speed.y--;
+      */
+      Me.speed.y *= exp(log(0.02) * Frame_Time());
+    }
+  if (!RightPressed () && !LeftPressed ())
+    {
+      /*
+	if (Me.speed.x < 0)
+	Me.speed.x++;
+	if (Me.speed.x > 0)
+	Me.speed.x--;
+      */
+      Me.speed.x *= exp(log(0.02) * Frame_Time());
+    }
 
 }				// void Reibung(void)
 
