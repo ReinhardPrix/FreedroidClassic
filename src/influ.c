@@ -2013,7 +2013,7 @@ check_for_droids_to_attack ( int player_num )
 
       tux_wants_to_attack_now ( player_num ) ;
     }
-};
+}; // void check_for_droids_to_attack ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 

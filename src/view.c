@@ -149,7 +149,7 @@ ShowAutomapData( void )
   int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
   // int ItemColor = SDL_MapRGB( Screen->format, 255 , 0 , 255 );  pink
   int ItemColor = SDL_MapRGB( Screen->format, 255 , 255 , 0 ); 
-  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int level = Me [ 0 ] . pos . z ;
 
   //--------------------
@@ -167,21 +167,39 @@ ShowAutomapData( void )
   // At first, we only blit the known data about the pure wall-type
   // obstacles on this level
   //
-  for ( y = 0 ; y < AutomapLevel->ylen ; y ++ )
+  for ( y = 0 ; y < automap_level->ylen ; y ++ )
     {
-      for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
+      for ( x = 0 ; x < automap_level->xlen ; x ++ )
 	{
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & RIGHT_WALL_BIT )
 	    {
-	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & LEFT_WALL_BIT )
 	    {
-	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 
+			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
+			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
+	      // putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
 	    }
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & UP_WALL_BIT )
 	    {
@@ -209,15 +227,15 @@ ShowAutomapData( void )
       // without casting a spell and then only a copy is made and only updated
       // once, so the player must really get on with much less information.
       //
-      // if ( AutomapLevel -> ItemList [ i ] . type == (-1) ) continue;
+      // if ( automap_level -> ItemList [ i ] . type == (-1) ) continue;
       if ( Me [ 0 ] . DetectedItemList [ i ] . x == 0 ) continue;
 
       for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
 	{
 	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	    {
-	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AutomapLevel -> ItemList [ i ].pos.x + x , 
-			 AUTOMAP_SQUARE_SIZE * AutomapLevel -> ItemList [ i ].pos.y + y , ItemColor );
+	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.x + x , 
+			 AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.y + y , ItemColor );
 	    }
 	}
     }
@@ -230,7 +248,7 @@ ShowAutomapData( void )
     {
       if ( AllEnemys [ i ] . Status  == OUT ) continue;
       if ( AllEnemys [ i ] . type == (-1) ) continue;
-      if ( AllEnemys [ i ] . pos . z != AutomapLevel -> levelnum ) continue;
+      if ( AllEnemys [ i ] . pos . z != automap_level -> levelnum ) continue;
 
       for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
 	{
@@ -238,13 +256,13 @@ ShowAutomapData( void )
 	    {
 	      if ( AllEnemys [ i ] . is_friendly )
 		{
-		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
-			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , FriendColor );
+		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
+			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , FriendColor );
 		}
 	      else
 		{
-		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
-			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
+		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
+			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
 		}
 	    }
 	}
@@ -258,7 +276,9 @@ ShowAutomapData( void )
     {
       for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	{
-	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . y + y , TuxColor );
+	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - Me [ 0 ] . pos . y ) + x , 
+		     AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . y + y , TuxColor );
+
 	  
 	  for ( i = 1 ; i < MAX_PLAYERS ; i ++ )
 	    {
@@ -1065,6 +1085,14 @@ blit_preput_objects_according_to_blitting_list ( int mask )
     {
       if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
       if ( blitting_list [ i ] . element_type != BLITTING_TYPE_OBSTACLE ) continue ;
+
+      if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
+	{
+	  GiveStandardErrorMessage ( "blit_preput_objects_according_to_blitting_list (...)" , 
+"The blitting list contained an illegal blitting object type.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+
       if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
 
       //--------------------

@@ -658,61 +658,6 @@ This bug can be resolved by simply raising a contant by one, but it needs to be 
 }; // glue_obstacles_to_floor_tiles_for_level ( int level_num )
 
 /* ----------------------------------------------------------------------
- * This function returns TRUE for blocks classified as "Walls" and false
- * otherwise.
- * ---------------------------------------------------------------------- */
-/*
-int
-IsWallBlock (int block)
-{
-  switch (block)
-    {
-    case KREUZ:
-    case H_WALL:
-    case V_WALL:
-    case H_SHUT_DOOR:
-    case V_SHUT_DOOR:
-    case LOCKED_H_SHUT_DOOR:
-    case LOCKED_V_SHUT_DOOR:
-    case CORNER_LD:
-    case T_D:
-    case CORNER_RD:
-    case T_L:
-    case T_R:
-    case CORNER_LU:
-    case T_U:
-    case CORNER_RU:
-    case ENHANCER_LD:
-    case ENHANCER_RD:
-    case ENHANCER_LU:
-    case ENHANCER_RU:
-    case BLOCK1:
-    case BLOCK2:
-    case BLOCK3:
-    case AUTOGUN_L:
-    case AUTOGUN_R:
-    case AUTOGUN_U:
-    case AUTOGUN_D:
-    case ALERT:
-    case CONSUMER_1:
-    case CONSUMER_2:
-    case CONSUMER_3:
-    case CONSUMER_4:
-    case CAVE_V_WALL:
-    case CAVE_H_WALL:
-    case CAVE_CORNER_LU:
-    case CAVE_CORNER_RU:
-    case CAVE_CORNER_LD:
-    case CAVE_CORNER_RD:
-
-      return (TRUE);
-    default:
-      return (FALSE);
-    }				// switch
-}; // int IsWallBlock( .. )
-*/
-
-/* ----------------------------------------------------------------------
  * This function collects the automap data and stores it in the Me data
  * structure.
  * ---------------------------------------------------------------------- */
@@ -723,7 +668,10 @@ CollectAutomapData ( void )
   int start_x, start_y, end_x, end_y;
   gps ObjPos;
   static int TimePassed;
-  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int i;
+  Obstacle our_obstacle;
+  int level = Me [ 0 ] . pos . z ;
 
   ObjPos . z = Me [ 0 ] . pos . z ;
 
@@ -744,7 +692,7 @@ CollectAutomapData ( void )
   //--------------------
   // Earlier we had
   //
-  // start_x = 0 ; start_y = 0 ; end_x = AutomapLevel->xlen ; end_y = AutomapLevel->ylen ;
+  // start_x = 0 ; start_y = 0 ; end_x = automap_level->xlen ; end_y = automap_level->ylen ;
   //
   // when maximal automap was generated.  Now we only add to the automap what really is on screen...
   //
@@ -754,9 +702,9 @@ CollectAutomapData ( void )
   end_y = Me [ 0 ] . pos . y + 7 ; 
 
   if ( start_x < 0 ) start_x = 0 ; 
-  if ( end_x > AutomapLevel->xlen ) end_x = AutomapLevel->xlen ;
+  if ( end_x >= automap_level->xlen ) end_x = automap_level->xlen-1 ;
   if ( start_y < 0 ) start_y = 0 ; 
-  if ( end_y > AutomapLevel->ylen ) end_y = AutomapLevel->ylen ;
+  if ( end_y >= automap_level->ylen ) end_y = automap_level->ylen-1 ;
 
   //--------------------
   // Now we do the actual checking for visible wall components.
@@ -765,8 +713,20 @@ CollectAutomapData ( void )
     {
       for ( x = start_x ; x < end_x ; x ++ )
 	{
+
+	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    {
+	      if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+
+	      our_obstacle = & ( automap_level -> obstacle_list [ automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ] ) ;
+	      if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_RECTANGLE )
+		{
+		  Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | RIGHT_WALL_BIT ;
+		  Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | LEFT_WALL_BIT ;
+		}
+	    }
 	  /*
-	  if ( IsWallBlock( AutomapLevel->map[y][x]  . floor_value ) ) 
+	  if ( IsWallBlock( automap_level->map[y][x]  . floor_value ) ) 
 	    {
 	      //--------------------
 	      // First we check, if there are some right sides of walls visible
@@ -3247,6 +3207,11 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   float right_border;
 
   int obs_type = our_obstacle -> type ;
+
+  //--------------------
+  // First we check for non-existent obstacle.
+  //
+  if ( obs_type <= -1 ) return ( FALSE );
 
   //--------------------
   // If the obstacle doesn't even have a collision rectangle, then
