@@ -46,6 +46,11 @@
 #define SHIELD_POS_X 240
 #define SHIELD_POS_Y 16
 
+#define SPECIAL_RECT_WIDTH 32
+#define SPECIAL_RECT_HEIGHT 32
+#define SPECIAL_POS_X 93
+#define SPECIAL_POS_Y 29
+
 
 void
 ApplyItemFromInventory( int ItemNum )
@@ -285,6 +290,30 @@ CursorIsInShieldRect( int x , int y )
 }; // int CursorIsInShieldRect( int x , int y )
 
 /* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the armour slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInSpecialRect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= SPECIAL_POS_X ) && ( CurPos.x <= SPECIAL_POS_X + SPECIAL_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + SPECIAL_POS_Y ) && 
+	   ( CurPos.y <= User_Rect.y + SPECIAL_POS_Y + SPECIAL_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInSpecialRect( int x , int y )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
  * where the inventory of the player is usually located or not.
  * ---------------------------------------------------------------------- */
@@ -502,6 +531,22 @@ DropHeldItemToShieldSlot ( void )
 
 }; // void DropHeldItemToShieldSlot ( void )
 
+void
+DropHeldItemToSpecialSlot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].special_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToShieldSlot ( void )
+
 /* ----------------------------------------------------------------------
  * If an item is held and then clicked again in the inventory field, this
  * item should be dropped into the inventory field, provided there is room
@@ -661,6 +706,15 @@ ShowInventoryScreen ( void )
   TargetRect.w = 50;
   TargetRect.h = 50;
   SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer special slot
+  //
+  TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
+  TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
   
 
   //--------------------
@@ -833,6 +887,25 @@ ShowInventoryScreen ( void )
 	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot )
 	    {
 	      DropHeldItemToShieldSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
+      //--------------------
+      // If the cursor is in the special rect, i.e. the small box to the top left, then
+      // the item should be dropped onto the players current weapon slot
+      //
+      if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot )
+	    {
+	      DropHeldItemToSpecialSlot ( );
 	      Item_Held_In_Hand = ( -1 );
 	    }
 	  else
