@@ -567,7 +567,11 @@ typedef struct
   float Current_Victim_Resistance_Factor;
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
   
-  int readied_skill; // which skill does the influencer currently have readied?
+  //--------------------
+  // Here we note all the 'skill levels' of the Tux and also which skill is
+  // currently readied and that...
+  //
+  int readied_skill; 
   int SkillLevel[ NUMBER_OF_SKILLS ];
   int base_skill_level [ NUMBER_OF_SKILLS ];
   int melee_weapon_skill;
@@ -575,6 +579,11 @@ typedef struct
   int spellcasting_skill;
   int hacking_skill;
 
+  //--------------------
+  // The inventory slots.  Some items are residing in general inventory,
+  // other items might be equiped in some of the corresponding slots of
+  // the inventory screen.
+  //
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
   item drive_item;
@@ -584,12 +593,23 @@ typedef struct
   item aux1_item;
   item aux2_item;
 
-  unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
+  //--------------------
+  // A record of when and if the tux has been on some maps...
+  //
+  unsigned char HaveBeenToLevel [ MAX_LEVELS ]; // record of the levels the player has visited yet.
+  int time_since_last_visit_or_respawn [ MAX_LEVELS ]; // record of the levels the player has visited yet.
 
+  //--------------------
+  // Some story-based variables:  which persons has the Tux talked to and
+  // what are the dialog options currently open, which 'cookies' have been
+  // set by the dialogs for coordination among each other, and also status
+  // of the Tux like town guard member or not and the like...
+  //
   unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
   int clearance_list[ MAX_CLEARANCES ];
   char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
   char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
+  int is_town_guard_member;
 
   //--------------------
   // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED

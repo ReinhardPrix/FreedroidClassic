@@ -1318,6 +1318,25 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
       return;
     }
 
+  //--------------------
+  // First some error-checking against illegal values.  This should not normally
+  // occur, but some items on the map are from very old times and therefore the
+  // engine might have made some mistakes back then or also changes that broke these
+  // items, so some extra care will be taken here...
+  //
+  if ( SellItem -> multiplicity < 1 )
+    {
+      GiveStandardErrorMessage ( "TryToSellItem( ... )" , "\
+An item sold seemed to have multiplicity < 1.  This might be due to some\n\
+fatal errors in the engine OR it might be due to some items droped on the\n\
+maps somewhere long ago still had multiplicity=0 setting, which should not\n\
+normally occur with 'freshly' generated items.  Well, that's some dust from\n\
+the past, but now it should be fixed and not occur in future releases (0.9.10\n\
+or later) of the game.  If you encounter this message after release 0.9.10,\n\
+please inform the developers...",
+				 PLEASE_INFORM, IS_WARNING_ONLY );
+    }
+
   if ( AmountToSellAtMost > SellItem -> multiplicity )
     AmountToSellAtMost = SellItem -> multiplicity ;
 
@@ -1353,11 +1372,16 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
     }
   else
     {
-      Me[0].Gold += calculate_item_sell_price ( SellItem ) * 
-	((float)AmountToSellAtMost) / ((float)SellItem->multiplicity) ;
-      if ( AmountToSellAtMost < SellItem->multiplicity )
-	SellItem->multiplicity -= AmountToSellAtMost;
-      else DeleteItem( SellItem );
+      //--------------------
+      // Ok.  Here we silently sell the item.
+      //
+      Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem ) * 
+	( (float) AmountToSellAtMost ) / ( (float) SellItem -> multiplicity ) ;
+      if ( AmountToSellAtMost < SellItem -> multiplicity )
+	SellItem -> multiplicity -= AmountToSellAtMost;
+      else 
+	DeleteItem( SellItem );
+
       PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
     }
 }; // void TryToSellItem( item* SellItem )
@@ -1600,7 +1624,7 @@ InitTradeWithCharacter( int CharacterCode )
   while ( ItemSelected != (-1) )
     {
 
-      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
+      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( & ( TuxItemsList [ 0 ] ) , FALSE , 0 );
       
       for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
@@ -1612,7 +1636,7 @@ InitTradeWithCharacter( int CharacterCode )
 	}
 
       ItemSelected = GreatShopInterface ( NumberOfItemsInShop , BuyPointerList , 
-					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , FALSE );
+					  NumberOfItemsInTuxRow , TuxItemsList , & ( ShopOrder ) , FALSE );
 
       switch ( ShopOrder . shop_command )
 	{
@@ -1664,7 +1688,7 @@ InitTradeWithCharacter( int CharacterCode )
 	  Buy_Pointer_List [ i ] = NULL ; 
 	}
       */
-      AssembleItemListForTradeCharacter ( & (SalesList[0]) , CharacterCode );
+      AssembleItemListForTradeCharacter ( & ( SalesList [ 0 ] ) , CharacterCode );
       for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
 	  if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;

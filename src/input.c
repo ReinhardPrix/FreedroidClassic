@@ -339,6 +339,59 @@ ReactToSpecialKeys(void)
 
   // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
 
+  //--------------------
+  // Here we insert some cheat codes for assigning and completing missions
+  //
+  if ( Number0Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
+	}
+    }
+  if ( Number1Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
+	}
+    }
+  if ( Number2Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
+	}
+    }
+  if ( Number3Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
+	}
+    }
+  if ( Number4Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
+	}
+    }
+  if ( Number5Pressed() )
+    {
+      if ( CPressed() )
+	{
+	  Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
+	  Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
+	}
+    }
+
+  
   if ( Number1Pressed() )
     {
       if ( Shift_Was_Pressed () )

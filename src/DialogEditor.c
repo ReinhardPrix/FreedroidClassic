@@ -3158,7 +3158,7 @@ gui_create_main_window ( void )
   //--------------------
   // Now we create the main window
   wnd = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_widget_set_usize (GTK_WIDGET (wnd), 800, 600);
+  gtk_widget_set_usize (GTK_WIDGET (wnd), 980, 740);
   gtk_signal_connect (GTK_OBJECT (wnd), "delete_event", GTK_SIGNAL_FUNC ( delete_event ), NULL);
 
   //--------------------

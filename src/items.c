@@ -331,7 +331,7 @@ calculate_item_sell_price ( item* BuyItem )
 {
   float PrefixMultiplier = 1;
   float SuffixMultiplier = 1;
-  float Multiplicity = BuyItem->multiplicity ;
+  float Multiplicity = BuyItem -> multiplicity ;
 
   //--------------------
   // Maybe the item is magical in one way or the other.  Then we have to
@@ -340,10 +340,10 @@ calculate_item_sell_price ( item* BuyItem )
   //
   if ( BuyItem -> prefix_code != (-1) )
     {
-      PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
+      PrefixMultiplier = PrefixList [ BuyItem -> prefix_code ] . price_factor;
     }
   if ( BuyItem -> suffix_code != (-1) )
-    SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
+    SuffixMultiplier = SuffixList [ BuyItem -> suffix_code ] . price_factor;
 
   //--------------------
   // When selling an item, you don't get the full value of the item, but
@@ -359,12 +359,12 @@ calculate_item_sell_price ( item* BuyItem )
   //
   if ( BuyItem->max_duration != (-1 ) )
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
-	       ( BuyItem->current_duration ) / BuyItem->max_duration ); 
+      return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier *
+	       ( BuyItem -> current_duration ) / BuyItem -> max_duration ); 
     }
   else
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+      return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier );
     }
 
   return 0; // just to make compilers happy (no warnings...)
@@ -429,9 +429,9 @@ void
 FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 {
 
-  ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
-  ThisItem->damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
-  ThisItem->ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
+  ThisItem -> damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
+  ThisItem -> damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
+  ThisItem -> ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
     MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
 
   //--------------------
@@ -448,12 +448,12 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   // as well as a current duration, the later of which will be
   // a fraction of the maximum duration.
   //
-  if ( ItemMap[ ThisItem->type ].base_item_duration != (-1) )
+  if ( ItemMap [ ThisItem->type ] . base_item_duration != (-1) )
     {
-      ThisItem->max_duration = ItemMap[ ThisItem->type ].base_item_duration +
-	MyRandom( ItemMap[ ThisItem->type ].item_duration_modifier );
+      ThisItem -> max_duration = ItemMap [ ThisItem -> type ] . base_item_duration +
+	MyRandom ( ItemMap[ ThisItem->type ] . item_duration_modifier );
       if ( FullDuration ) ThisItem->current_duration = ThisItem->max_duration ;
-      else ThisItem->current_duration = ThisItem->max_duration / 4 + MyRandom( ThisItem->max_duration / 2 ) ;
+      else ThisItem->current_duration = ThisItem->max_duration / 4 + MyRandom ( ThisItem -> max_duration / 2 ) ;
     }
   else
     {
@@ -466,20 +466,20 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   // the basic ranges for the modifiers given in the prefix and suffix lists
   // and just need to create random values in the given ranges for the item.
   //
-  ThisItem->bonus_to_str = 0;
-  ThisItem->bonus_to_dex = 0;
-  ThisItem->bonus_to_mag = 0;
-  ThisItem->bonus_to_vit = 0;
-  ThisItem->bonus_to_all_attributes = 0;
+  ThisItem -> bonus_to_str = 0;
+  ThisItem -> bonus_to_dex = 0;
+  ThisItem -> bonus_to_mag = 0;
+  ThisItem -> bonus_to_vit = 0;
+  ThisItem -> bonus_to_all_attributes = 0;
 
-  ThisItem->bonus_to_life = 0;
-  ThisItem->bonus_to_force = 0;
-  ThisItem->bonus_to_tohit = 0;
-  ThisItem->bonus_to_ac_or_damage = 0;
+  ThisItem -> bonus_to_life = 0;
+  ThisItem -> bonus_to_force = 0;
+  ThisItem -> bonus_to_tohit = 0;
+  ThisItem -> bonus_to_ac_or_damage = 0;
 
-  ThisItem->bonus_to_resist_fire = 0;
-  ThisItem->bonus_to_resist_electricity = 0;
-  ThisItem->bonus_to_resist_force = 0;
+  ThisItem -> bonus_to_resist_fire = 0;
+  ThisItem -> bonus_to_resist_electricity = 0;
+  ThisItem -> bonus_to_resist_force = 0;
 
   ThisItem->throw_time = 0 ; 
 
@@ -596,18 +596,18 @@ item types.  This indicates a severe bug in Freedroid.",
   //--------------------
   // Now we can construct the new item
   //
-  CurLevel->ItemList[ i ].type = ItemType;
-  CurLevel->ItemList[ i ].pos.x = x;
-  CurLevel->ItemList[ i ].pos.y = y;
-  CurLevel->ItemList[ i ].prefix_code = prefix;
-  CurLevel->ItemList[ i ].suffix_code = suffix;
+  CurLevel -> ItemList [ i ] . type = ItemType;
+  CurLevel -> ItemList [ i ] . pos . x = x;
+  CurLevel -> ItemList [ i ] . pos . y = y;
+  CurLevel -> ItemList [ i ] . prefix_code = prefix;
+  CurLevel -> ItemList [ i ] . suffix_code = suffix;
 
   FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE, TreasureChestRange );
 
-  CurLevel->ItemList[ i ].multiplicity = multiplicity ;
-  CurLevel->ItemList[ i ].throw_time = 0.01 ; // something > 0 
-  if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) CurLevel->ItemList[ i ].is_identified = TRUE ;
-  else CurLevel->ItemList[ i ].is_identified = FALSE ;
+  CurLevel -> ItemList [ i ] . multiplicity = multiplicity ;
+  CurLevel -> ItemList [ i ] . throw_time = 0.01 ; // something > 0 
+  if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) CurLevel -> ItemList [ i ] . is_identified = TRUE ;
+  else CurLevel -> ItemList [ i ] . is_identified = FALSE ;
 
   // PlayItemSound( ItemMap[ ItemType ].sound_number );
   play_item_sound( ItemType );
