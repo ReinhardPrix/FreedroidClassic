@@ -2012,6 +2012,118 @@ enum
   return ( FALSE );
 }; // int Select_Hero_Class_Menu ( void );
 
+/* ----------------------------------------------------------------------
+ * The GNU C Library is SOOOO COOOL!!! It contains functions for directory
+ * manipulations that are SOOOO powerful, it's really awesome.  One of
+ * these very powerful functions can be used to filter directory entries,
+ * so that only a certain kind of files will be displayed any more.  How
+ * convenient.  So as a parameter to this powerful function (scandir), you
+ * have to specify a sorting function of a certain kind.  And this is just
+ * the sorting function that seems appropriate for our little program.
+ * ---------------------------------------------------------------------- */
+static int
+one (const struct dirent *unused)
+{
+  if ( strstr ( unused->d_name , "savegame" ) != NULL )
+    {
+      return ( 1 ) ;
+    }
+  else
+    {
+      return ( 0 ) ;
+    }
+
+  // to make compilers happy...
+  return ( 0 );
+
+}; // static int one (struct dirent *unused)
+
+/* ----------------------------------------------------------------------
+ * This is the function available from the freedroid startup menu, that
+ * should display the available characters in the users home directory
+ * and eventually let the player select one of his old characters there.
+ * ---------------------------------------------------------------------- */
+int 
+Load_Existing_Hero_Menu ( void )
+{
+  char *homedir;
+  // DIR *dp;
+  // struct dirent *ep;
+  struct dirent **eps;
+  int n;  
+  int cnt;
+  char* MenuTexts[10];
+  int MenuPosition;
+
+  DebugPrintf ( 0 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
+  InitiateMenu( NE_TITLE_PIC_FILE );
+  MenuTexts[0]="";
+  MenuTexts[1]="";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[8]="";
+  MenuTexts[9]="";
+
+  // get home-directory to save in
+  if ( (homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      return (ERR);
+    }
+
+  // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
+
+  //--------------------
+  // This is a slightly modified copy of the code sniplet from the
+  // GNU C Library description on directory operations...
+  //
+  n = scandir ( homedir , &eps, one , alphasort);
+  if (n >= 0)
+    {
+      for (cnt = 0; cnt < n; ++cnt) 
+	{
+	  puts ( eps[cnt]->d_name );
+	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
+	  if ( cnt < 10 ) 
+	    {
+	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+	      // MenuTexts[ cnt ] = eps[cnt]->d_name;
+	    }
+	}
+
+      MenuPosition = DoMenuSelection( "The first 10 characters: " , MenuTexts , 1 , NE_TITLE_PIC_FILE );
+
+      if ( MenuPosition == (-1) ) return ( FALSE );
+      else
+	{
+	  InitNewMissionList ( NEW_MISSION );
+	  strcpy( Me.character_name , MenuTexts[ MenuPosition ] );
+	  LoadGame( );
+	  return ( TRUE );
+	}
+      
+      
+    }
+  else
+    {
+      DebugPrintf( 0 , "\n\nERROR!! Couldn't open the directory in int Load_Existing_Hero_Menu ( void ).\nTerminatin...");
+      Terminate( ERR );
+    }
+
+
+  SDL_Flip( Screen );
+  // while ( !SpacePressed() );
+  // while (  SpacePressed() );
+
+  return ( OK );
+}; // int Load_Existing_Hero_Menu ( void )
+
 
 /* ----------------------------------------------------------------------
  * This function provides the single player menu.  It offers to start a
@@ -2064,8 +2176,18 @@ enum
 	  break;
 	case LOAD_EXISTING_HERO_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
-	  
-	  return ( FALSE );
+
+	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
+	    {
+	      Weiter = TRUE;
+	      return ( TRUE );
+	    }
+	  else
+	    {
+	      Weiter = FALSE;
+	      // return ( FALSE );
+	    }
+
 	  break;
 	case BACK_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;

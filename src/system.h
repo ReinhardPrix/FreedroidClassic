@@ -59,6 +59,7 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <dirent.h>
 
 #include "SDL.h"
 #include "SDL_image.h"
