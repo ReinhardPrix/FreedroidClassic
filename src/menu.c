@@ -2099,6 +2099,8 @@ PrepareNewHero (void)
   Me[0].base_dexterity = 15;
   Me[0].base_magic = 40;
 
+  Me [ 0 ] . is_town_guard_member = FALSE ;
+
   Get_New_Character_Name( );
 
   //--------------------

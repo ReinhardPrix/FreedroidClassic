@@ -123,7 +123,7 @@ typedef struct
 } 
 known_do_extra, *Known_do_extra;
 
-#define ALL_KNOWN_EXTRAS 26
+#define ALL_KNOWN_EXTRAS 27
 
 known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
   {
@@ -152,7 +152,8 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "DeleteAllInventoryItemsWithCode:" , 22 , '\0' } , 
     { "DeleteAllInventoryItemsOfType:" , 23 , '\0' } ,
     { "ExecuteSubdialog:", 24 , '\0' } ,
-    { "EverybodyBecomesHostile",  25 , '\0' } 
+    { "EverybodyBecomesHostile",  25 , '\0' } ,
+    { "MakeTuxTownGuardMember",  26 , '\0' } 
   };
 
 typedef struct
@@ -163,7 +164,7 @@ typedef struct
 } 
 known_on_goto_condition, *Known_on_goto_condition;
 
-#define ALL_KNOWN_ON_GOTO_CONDITIONS 8
+#define ALL_KNOWN_ON_GOTO_CONDITIONS 9
 
 known_on_goto_condition on_goto_map [ ALL_KNOWN_ON_GOTO_CONDITIONS ] =
   {
@@ -175,6 +176,7 @@ known_on_goto_condition on_goto_map [ ALL_KNOWN_ON_GOTO_CONDITIONS ] =
     { "CookieIsPlanted:" , 5 , ':' } ,
     { "MissionAssigned:" , 6 , '\0' } , 
     { "HaveItemWithCode:" , 7 , '\0' } , 
+    { "OldTownMissionScoreAtLeast:" , 8 , '\0' } , 
   };
 
 #include "DialogEditor.h"

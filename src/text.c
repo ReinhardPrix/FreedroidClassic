@@ -488,6 +488,12 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	  AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
 	}
     }
+  else if ( ! strcmp ( ExtraCommandString , "MakeTuxTownGuardMember" ) )
+    {
+      DebugPrintf ( -1000 , "\nTux should now be a member of the old town's guard." );
+      Me [ 0 ] . is_town_guard_member = TRUE ;
+      Mission_Status_Change_Sound();
+    }
   else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
     {
       Me [ 0 ] . melee_weapon_skill ++; 
@@ -826,6 +832,7 @@ TextConditionIsTrue ( char* ConditionString )
   int TempValue;
   char* CookieText;
   int i ;
+  int old_town_mission_score;
 
   if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
     {
@@ -923,6 +930,33 @@ TextConditionIsTrue ( char* ConditionString )
 
       return ( FALSE );
 
+    }
+  else if ( CountStringOccurences ( ConditionString , "OldTownMissionScoreAtLeast" ) )
+    {
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for old town mission score." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned mission score of : %d old town mission points." , 
+		    TempValue );
+
+      old_town_mission_score = 0 ;
+      if ( Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete )
+	old_town_mission_score += 10 ;
+      if ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete )
+	old_town_mission_score += 15 ;
+      if ( Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete )
+	old_town_mission_score += 10 ;
+      if ( Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete )
+	old_town_mission_score += 10 ;
+      if ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete )
+	old_town_mission_score += 20 ;
+      if ( Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete )
+	old_town_mission_score += 15 ;
+
+      if ( old_town_mission_score >= TempValue )
+	return ( TRUE );
+      else
+	return ( FALSE );
     }
 
   fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );

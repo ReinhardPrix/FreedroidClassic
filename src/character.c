@@ -639,6 +639,13 @@ ShowCharacterScreen ( void )
   // Name, Class, Level, Exp, Strength, Dex, ...
   //
   DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+
+  if ( Me [ 0 ] . is_town_guard_member )
+    DisplayText( "Standard Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+  else
+    DisplayText( "No Memberships" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+
+  /*
   switch ( Me[0].character_class )
     {
     case WAR_BOT:
@@ -655,6 +662,7 @@ ShowCharacterScreen ( void )
       Terminate( ERR );
       break;
     }
+  */
 
   sprintf( CharText , "%4d", Me[0].exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
