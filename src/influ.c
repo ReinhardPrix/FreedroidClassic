@@ -46,7 +46,7 @@
 #define TIMETILLNEXTBULLET 14
 
 #define REFRESH_ENERGY		3
-#define COLLISION_PUSHSPEED	4
+#define COLLISION_PUSHSPEED	70
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
@@ -672,10 +672,12 @@ InfluenceEnemyCollision (void)
 	{
 
 	  if (first_collision)
-	    {			/* nur beim ersten mal !!! */
+	    {			
+	      /* nur beim ersten mal !!! */
 	      /* den Geschwindigkeitsvektor des Influencers invertieren */
 	      Me.speed.x = -Me.speed.x;
 	      Me.speed.y = -Me.speed.y;
+
 	      if (Me.speed.x != 0)
 		Me.speed.x +=
 		  COLLISION_PUSHSPEED * (Me.speed.x / abs (Me.speed.x));

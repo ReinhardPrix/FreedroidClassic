@@ -150,9 +150,9 @@ typedef struct
   byte nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   byte lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  float warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
-  byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+  float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
   int Shield[4];		// Status of Partial shields
 }

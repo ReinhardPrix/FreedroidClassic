@@ -49,8 +49,6 @@
 #include "proto.h"
 
 
-#define ENEMYMAXWAIT 2		/* seconds: wait after reached waypoint */
-
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
 /* Distance, where to attack Influencer */
@@ -314,7 +312,7 @@ MoveEnemys (void)
       if ((Restweg.x == 0) && (Restweg.y == 0))
 	{
 	  Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-	  Feindesliste[i].warten = MyRandom (ENEMYMAXWAIT) * 18;
+	  Feindesliste[i].warten = MyRandom (ENEMYMAXWAIT);
 
 	  /* suche moegliche Verbindung von hier */
 	  DebugPrintf ("/* suche moegliche Verbindung von hier */");
@@ -459,7 +457,7 @@ AttackInfluence (int enemynum)
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
       Feindesliste[enemynum].firewait =
-	MyRandom (Druidmap[Feindesliste[enemynum].type].firewait) * 18 + 4;
+	MyRandom (Druidmap[Feindesliste[enemynum].type].firewait) ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;

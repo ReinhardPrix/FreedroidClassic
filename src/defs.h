@@ -224,7 +224,15 @@ enum _sounds
 #define WAIT_AFTER_KILLED	45	/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
-					   stand still with space pressed, before switching into transfermode */
+					   stand still with space pressed, before switching into transfermode 
+					   This variable describes the amount in SECONDS */
+#define WAIT_COLLISION		1 // after a little collision with influ, enemys hold position for a while
+                                  // this variable describes the amount of time in SECONDS 
+#define ENEMYMAXWAIT 2		  // after each robot has reached its current destination waypoint is waits a
+                                  // while.  This variable describes the amount of time in SECONDS.  However,
+                                  // the final wait time is a random number within [0,ENEMYMAXWAIT].
+
+
 
 /* Soundblasterkonstanten */
 #define SBCHANNELS 		7
@@ -297,8 +305,6 @@ enum _directions
 #define MAXWAYPOINTS 30
 #define MAX_DOORS_ON_LEVEL 20
 #define MAX_REFRESHES_ON_LEVEL	10
-
-#define WAIT_COLLISION		9	/* enemy bleibt nach coll. stehen */
 
 /* Macros */
 #define GrobX (Me.pos.x / BLOCKBREITE)

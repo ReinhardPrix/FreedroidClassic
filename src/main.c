@@ -307,8 +307,11 @@ main (int argc, char *const argv[])
 
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (Feindesliste[i].warten > 0)
-		Feindesliste[i].warten--;
+	      if (Feindesliste[i].warten > 0) 
+		{
+		  Feindesliste[i].warten -= Frame_Time() ;
+		  if (Feindesliste[i].warten < 0) Feindesliste[i].warten = 0;
+		}
 	      if (Feindesliste[i].firewait > 0) 
 		{
 		  Feindesliste[i].firewait -= Frame_Time() ;
