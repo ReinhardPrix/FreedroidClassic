@@ -158,7 +158,9 @@ Takeover ( int enemynum )
     int Finished = FALSE;
     int WasPressed = FALSE ;
     int Displacement = 0 ;
-    
+    int reward = 0;
+    char game_message_text [ 5000 ] ;
+
     //--------------------
     // Prevent distortion of framerate by the delay coming from 
     // the time spent in the menu.
@@ -309,7 +311,12 @@ Takeover ( int enemynum )
 	    
 	    Me [ 0 ] . type = AllEnemys [ enemynum ] . type;
 	    Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
-	    Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
+
+	    reward = Druidmap [ AllEnemys [ enemynum ] . type ] . experience_reward * 3 ;
+	    Me [ 0 ] . Experience += reward;
+	    sprintf ( game_message_text , "For taking control of your enemy, you receive %d experience." ,
+		      reward );
+	    append_new_game_message ( game_message_text );
 
 	    //--------------------
 	    // Maybe the enemy in question was a kind of 'boss monster' or it had

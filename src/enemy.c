@@ -1370,6 +1370,8 @@ The offending bot will be deleted silently.",
 void 
 InitiateDeathOfEnemy ( Enemy ThisRobot )
 {
+    char game_message_text [ 5000 ] ;
+    int reward;
 
     DebugPrintf ( 1 , "\n%s():  another death of a bot/human initiated..." , __FUNCTION__ );
 
@@ -1387,7 +1389,11 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	//--------------------
 	// The Tux gains experience from this, only for non-friends
 	//
-	Me [ 0 ] . Experience += Druidmap [ ThisRobot -> type ] . experience_reward;
+	reward = Druidmap [ ThisRobot -> type ] . experience_reward;
+	Me [ 0 ] . Experience += reward;
+	sprintf ( game_message_text , "For defeating your enemy, you receive %d experience." ,
+		  reward );
+	append_new_game_message ( game_message_text );
     }
     
     ThisRobot -> Status = OUT;

@@ -314,6 +314,8 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
 
     if ( ! GameConfig . show_subtitles_in_dialogs ) return;
     
+    SetCurrentFont( FPS_Display_BFont );
+    
     //--------------------
     // First we define our subtitle window.  We formerly had a small
     // narrow subtitle window of a format like this:
@@ -1228,6 +1230,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	chat_protocol = MyMalloc ( 500000 ); // enough for any chat...
 	strcpy ( chat_protocol , "--- Start of Dialog ---\n" );
 	chat_protocol_scroll_override_from_user = 0 ;
+	SetCurrentFont ( FPS_Display_BFont );
     }
     
     PrepareMultipleChoiceDialog ( ChatDroid , TRUE );
