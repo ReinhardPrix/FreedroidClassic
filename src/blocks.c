@@ -841,7 +841,7 @@ void
 get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image , int use_offset_file ) 
 {
   SDL_Surface* Whole_Image;
-
+  
   //--------------------
   // First we (try to) load the image given in the parameter
   // from hard disk into memory and convert it to the right
@@ -2865,6 +2865,78 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . filename = "iso_shop_furniture_0006.png" ;
+
+  obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N1 ] . filename = "iso_outer_walls_0002.png" ;
+  obstacle_map [ ISO_OUTER_WALL_N2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_N2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N2 ] . filename = "iso_outer_walls_0006.png" ;
+  obstacle_map [ ISO_OUTER_WALL_N3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_N3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_N3 ] . filename = "iso_outer_walls_0010.png" ;
+
+  obstacle_map [ ISO_OUTER_WALL_S1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_S1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S1 ] . filename = "iso_outer_walls_0004.png" ;
+  obstacle_map [ ISO_OUTER_WALL_S2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_S2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S2 ] . filename = "iso_outer_walls_0008.png" ;
+  obstacle_map [ ISO_OUTER_WALL_S3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_S3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_S3 ] . filename = "iso_outer_walls_0012.png" ;
+
+  obstacle_map [ ISO_OUTER_WALL_E1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_E1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E1 ] . filename = "iso_outer_walls_0003.png" ;
+  obstacle_map [ ISO_OUTER_WALL_E2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_E2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E2 ] . filename = "iso_outer_walls_0007.png" ;
+  obstacle_map [ ISO_OUTER_WALL_E3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_E3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_E3 ] . filename = "iso_outer_walls_0011.png" ;
+
+  obstacle_map [ ISO_OUTER_WALL_W1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_W1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W1 ] . filename = "iso_outer_walls_0001.png" ;
+  obstacle_map [ ISO_OUTER_WALL_W2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_W2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W2 ] . filename = "iso_outer_walls_0005.png" ;
+  obstacle_map [ ISO_OUTER_WALL_W3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_W3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_W3 ] . filename = "iso_outer_walls_0009.png" ;
+
+
+
+  
+  obstacle_map [ ISO_OUTER_WALL_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_1 ] . filename = "iso_outer_walls_0013.png" ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_2 ] . filename = "iso_outer_walls_0014.png" ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_3 ] . filename = "iso_outer_walls_0015.png" ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . filename = "iso_outer_walls_0016.png" ;
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
