@@ -14,8 +14,10 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-*  Add code to allow for top views of the robot DROPPING FINALLY THE OLD
-   BALL WITH NUMBER DESIGN!!
+([[*]])  Add code to allow for top views of the robot DROPPING FINALLY THE OLD
+         BALL WITH NUMBER DESIGN!!
+	 --> rethink this issue:  will it still be easy to tell the types immediately??
+
 *  Add documentation about how to incorporate new map tiles into the game
 *  Make the map tile reading function decide the number of tiles from the
    size of the picuture itself.  (Eliminate the contant for the number of
@@ -36,7 +38,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
 
 0. Extend the level Editor
    DONE Extend the Level Editor to show waypoint connections
-   b. Extend the Level Editor to allow for resizing of decks
+   DONE Extend the Level Editor to allow for resizing of decks
    DONE Extend the Level Editor to allow for changing of color
    DONE Extend the Level Editor to allow for changing of deck map
    DONE Extend the Level Editor to connect new waypoints to other waypoints 
