@@ -1697,14 +1697,15 @@ InitNewMissionList ( char *MissionName )
   Druidmap[ Me.type ].aux1_item.currently_held_in_hand = FALSE;
   Druidmap[ Me.type ].aux2_item.currently_held_in_hand = FALSE;
 
-  Druidmap[ Me.type ].weapon_item.current_duration = 20;
-  Druidmap[ Me.type ].weapon_item.max_duration = 20;
-  Druidmap[ Me.type ].weapon_item.damage = 10;
-  Druidmap[ Me.type ].weapon_item.ac_bonus = 0;
+  FillInItemProperties ( & ( Druidmap[ Me.type ].weapon_item ) , TRUE );
+  FillInItemProperties ( & ( Druidmap[ Me.type ].drive_item ) , TRUE );
+
+  /*
   Druidmap[ Me.type ].drive_item.current_duration = 20;
   Druidmap[ Me.type ].drive_item.max_duration = 20;
   Druidmap[ Me.type ].drive_item.ac_bonus = 0;
   Druidmap[ Me.type ].drive_item.damage = 0;
+  */
 
 
   Item_Held_In_Hand = ( -1 );
