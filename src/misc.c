@@ -1252,6 +1252,7 @@ ExecuteEvent ( int EventNumber )
 	{
 	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
 	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
+	  GetDoors( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
 	}
     }
 
