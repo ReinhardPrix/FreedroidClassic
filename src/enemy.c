@@ -672,15 +672,19 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 
       //--------------------
       // This statement should make hostile droids with aggresssion
+      // and a ranged weapon
       // wait, if they see the influencer and are at their waypoint now.
       // Then they (in some other function) open fire and should do
       // that, until the influencer vanishes out of sight, which should cause them
       // to go into a hunting mode. (to be implemented later).
       //
-      if ( Druidmap[ThisRobot->type].aggression &&
+      if ( ( !( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change > 0 ) ) &&
+	   Druidmap[ThisRobot->type].aggression &&
 	   IsVisible ( & ( ThisRobot -> pos ) , 0 ) && // WARNING!  Player 0 here always is wrong
 	   // ! ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ].item_gun_angle_change  &&
-	   ! ThisRobot->Friendly )
+	   ! ThisRobot->Friendly &&
+	   ( sqrt ( ( ThisRobot->pos.x - Me[0].pos.x ) * ( ThisRobot->pos.x - Me[0].pos.x ) +
+		    ( ThisRobot->pos.y - Me[0].pos.y ) * ( ThisRobot->pos.y - Me[0].pos.y ) ) > 1.5 ) )
 	{
 	  // But now that the enemy is are almost ready to fire, it just
 	  // might also say something.  But of course it will not repeat this
@@ -887,6 +891,7 @@ MoveThisEnemy( int EnemyNum )
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
 
+  //--------------------
   // Now check if the robot is still alive
   // if the robot just got killed, initiate the
   // explosion and all that...
@@ -942,18 +947,25 @@ MoveThisEnemy( int EnemyNum )
       return;	// this one's down, so we can move on to the next
     }
   
+  //--------------------
   // ignore all enemys with CompletelyFixed flag set...
+  //
   if ( ThisRobot->CompletelyFixed ) return;
 
+  //--------------------
   // robots that still have to wait also do not need to
   // be processed for movement
+  //
   if ( ThisRobot->warten > 0) return;
 
+  //--------------------
   // Now check for collisions of this enemy with his colleagues
+  //
   CheckEnemyEnemyCollision ( EnemyNum );
 
   //--------------------
   // Now comes the real movement part
+  //
   MoveThisRobotThowardsHisWaypoint( EnemyNum );
 
 
@@ -1289,7 +1301,7 @@ AttackInfluence (int enemynum)
   // hit the influencer,  In most cases, we will have to move thowards
   // our target.  Here, this need is hopefully satisfied....
   //
-  if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change > 0 )
+  if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
     {
       //--------------------
       // If the distance is not yet right, we find a new location to move to.  We
@@ -1366,16 +1378,112 @@ AttackInfluence (int enemynum)
 		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
 		}
 	    }
-	}
-
-      //--------------------
-      // Melee weapons have a certain limited range.  If such a weapon is used,
-      // don't fire if the influencer is several squares away!
-      //
-      if ( ( ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ] .item_gun_angle_change != 0 ) && 
-	   ( dist2 > 1.5 ) ) return;
+	} // if a melee weapon is given.
     }
+  else if (dist2 < 1.5)
+    {
+      //--------------------
+      // Even if no melee weapon is used by this droid, there might still
+      // be some reason to move (regardless of waypoints):  This is the case
+      // if the influencer/tux gets too close.  Then the droid should try to
+      // take advantage of his greater range and back of somewhat, so that
+      // the tux does not just need to kill the sitting duck.  This shall be
+      // accomplished here.
+      //
+      
+      //--------------------
+      // If the distance is not yet right, we find a new location to move to.  We
+      // do this WITHOUT consulting the waypoints, so that the robots become more
+      // 'intelligent' in their movement.
+      //
+      // ThisRobot->TextVisibleTime = 0 ;
+      // ThisRobot->TextToBeDisplayed = "Seeking to farther away from target...";
+      //
+      ThisRobot -> persuing_given_course = TRUE;
+      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
+      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
+      
+      //--------------------
+      // Now we check if it's perhaps time to make a step to the left/right in 
+      // order to get close enough to the target tux for a successful melee weapon
+      // swing.
+      //
+      TargetRange = 1.5;
+      StepSize = -1.0;
+      if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) < TargetRange )
+	{
+	  if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
+	    {
+	      if ( ( DirectLineWalkable ( ThisRobot -> PrivatePathway [ 0 ] . x + StepSize , 
+					  ThisRobot -> PrivatePathway [ 0 ] . y ,
+					  ThisRobot -> PrivatePathway [ 0 ] . x , 
+					  ThisRobot -> PrivatePathway [ 0 ] . y ,
+					  ThisRobot -> pos.z ) == TRUE ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
+						ThisRobot->pos.z , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
+		}
+	    }
+	  else
+	    {
+	      if ( ( DirectLineWalkable( ThisRobot->PrivatePathway[ 0 ].x - StepSize , 
+					 ThisRobot->PrivatePathway[ 0 ].y ,
+					 ThisRobot->PrivatePathway[ 0 ].x , 
+					 ThisRobot->PrivatePathway[ 0 ].y ,
+					 ThisRobot->pos.z ) == TRUE ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
+						ThisRobot->pos.z , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
+		}
+	    }
+	}
+      
+      //--------------------
+      // Now we check if it's perhaps time to make a step up/down in order to
+      // get close enough for a successful melee weapon swing at a tux.
+      //
+      if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) < TargetRange )
+	{
+	  if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
+	    {
+	      if ( ( DirectLineWalkable ( ThisRobot->PrivatePathway[ 0 ].x , 
+					  ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
+					  ThisRobot->PrivatePathway[ 0 ].x , 
+					  ThisRobot->PrivatePathway[ 0 ].y ,
+					  ThisRobot->pos.z ) == TRUE ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
+						ThisRobot->pos.z , enemynum ) ) )
+		ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
+	    }
+	  else
+	    {
+	      if ( ( DirectLineWalkable ( ThisRobot->PrivatePathway[ 0 ].x , 
+					  ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
+					  ThisRobot->PrivatePathway[ 0 ].x , 
+					  ThisRobot->PrivatePathway[ 0 ].y ,
+					  ThisRobot->pos.z ) == TRUE ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
+						ThisRobot->pos.z , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
+		}
+	    }
+	} // the case, that with no melee weapon distance is very short
+    } // else the case, that no melee weapon 
 
+  //--------------------
+  // Melee weapons have a certain limited range.  If such a weapon is used,
+  // don't fire if the influencer is several squares away!
+  //
+  if ( ( ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ] .item_gun_angle_change != 0 ) && 
+       ( dist2 > 1.5 ) ) return;
+  
   if ( ThisRobot->firewait ) return;
   
   if ( ( MyRandom ( AGGRESSIONMAX ) >= Druidmap[ThisRobot->type].aggression ) &&
