@@ -71,6 +71,71 @@ extern int TimerFlag;
 
 
 /*@Function============================================================
+@Desc: 	int InitPictures(void):
+				get the pics for: druids, bullets, blasts
+				
+				reads all blocks and puts the right pointers into
+				the various structs
+
+@Ret: FALSE: ERROR  	TRUE: OK
+@Int:
+* $Function----------------------------------------------------------*/
+int InitPictures(void) {
+
+  int i;
+  char *druidpics;
+  char *tmp;
+  int druidmem;
+  int picts;
+
+  /* First read the map blocks */
+  GetMapBlocks();
+
+  /* Get the enemy-blocks */
+  GetBlocks(ENEMYBILD, 0, 0);
+  Enemypointer = GetBlocks(NULL, 0, ENEMYPHASES);
+
+  /* Get the influence-blocks */
+  GetBlocks(INFLUENCEBILD, 0, 0);
+  Influencepointer = GetBlocks(NULL, 0, ENEMYPHASES);
+	
+  /* the same game for the bullets */
+  GetBlocks(BULLETBILD, 0, 0);
+  for (i=0; i<ALLBULLETTYPES; i++) {
+    Bulletmap[i].picpointer = GetBlocks(NULL, i, Bulletmap[i].phases);
+  }
+
+  /* ...and the blasts */
+  GetBlocks(BLASTBILD, 0, 0);
+  for (i=0; i<ALLBLASTTYPES; i++) {
+    Blastmap[i].picpointer = GetBlocks(NULL, i, Blastmap[i].phases);
+  }
+
+  /* Get the Frame */
+  LadeLBMBild(RAHMENBILD1,InternalScreen,FALSE); 
+  RahmenPicture = (unsigned char *)MyMalloc(RAHMENBREITE*RAHMENHOEHE+10);
+  IsolateBlock(InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE, RAHMENHOEHE);
+
+  /* get the Elevator-Blocks */
+  ElevatorBlocks = (unsigned char*)MyMalloc(NUM_EL_BLOCKS*EL_BLOCK_MEM+100);
+  LadeLBMBild(EL_BLOCKS_FILE,InternalScreen,FALSE);
+  for( i=0; i<NUM_EL_BLOCKS; i++)
+    IsolateBlock(
+		 InternalScreen, 
+		 ElevatorBlocks+i*EL_BLOCK_MEM,
+		 1+i*(EL_BLOCK_LEN+1), 1,
+		 EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
+		
+
+  /* get Menublocks */
+  LadeLBMBild(CONSOLENBILD,InternalScreen,FALSE);
+  MenuItemPointer=MyMalloc(MENUITEMMEM);
+  IsolateBlock(InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH, MENUITEMHEIGHT);	
+
+  return TRUE;
+}  // int InitPictures(void)
+
+/*@Function============================================================
 @Desc: MemSearch(): Sucht Binary-Area zwischen SStart und SEnd nach
 SString ab. liefer Pointer auf gef. String oder NULL
 
@@ -878,7 +943,7 @@ void Flimmern(void){
     memset(Screenptr+(USERFENSTERPOSY+USERFENSTERHOEHE-i)*SCREENBREITE
 	   +USERFENSTERPOSX,
 	   0, USERFENSTERBREITE);
-    delay(2);
+    usleep(200);
   }
   
   /* make the central line white */
@@ -886,7 +951,7 @@ void Flimmern(void){
     (USERFENSTERPOSY+USERFENSTERHOEHE/2)*SCREENBREITE+USERFENSTERPOSX;
   memset( Junkptr, FONT_WHITE, USERFENSTERBREITE);
   
-  delay(500);
+  usleep(50000);
 
 
   /* horizontal close userfenster */
@@ -894,10 +959,10 @@ void Flimmern(void){
   for(i=0; i<USERFENSTERBREITE/2-2; i++) {
     *(Junkptr + i) = 0;
     *(Junkptr + USERFENSTERBREITE - i) = 0;
-    delay(1);
+    usleep(100);
   }
   
-  delay(300);
+  usleep(30000);
   /* Clear the rest */
   memset(Junkptr, 0, USERFENSTERBREITE);
   
@@ -912,7 +977,7 @@ void Flimmern(void){
     memset(Screenptr+(USERFENSTERPOSY+USERFENSTERHOEHE-i)*SCREENBREITE
 	   +USERFENSTERPOSX,
 	   0, USERFENSTERBREITE);
-    delay(2);
+    usleep(200);
   }
   
 	
@@ -923,17 +988,17 @@ void Flimmern(void){
     (USERFENSTERPOSY+USERFENSTERHOEHE/2)*SCREENBREITE+USERFENSTERPOSX;
   /*	memset( Junkptr, FONT_WHITE, USERFENSTERBREITE);
    */
-  delay(500);
+  usleep(50000);
   
   /* horizontal close userfenster */
   
   for(i=0; i<USERFENSTERBREITE/2-2; i++) {
     *(Junkptr + i) = 0;
     *(Junkptr + USERFENSTERBREITE - i) = 0;
-    delay(1);
+    usleep(100);
   }
   
-  delay(300);
+  usleep(30000);
   /* Clear the rest */
   memset(Junkptr, 0, USERFENSTERBREITE);
   

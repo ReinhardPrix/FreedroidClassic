@@ -13,22 +13,25 @@
 #endif
 
 EXTERN float Frame_Time(void);
-EXTERN void CalibratedDelay(long);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;
-EXTERN void delay(int);
-EXTERN void gotoxy(int,int);
-EXTERN int kbhit(void);
-EXTERN int MyRandom(int);
-EXTERN void Title(void);
-EXTERN void InitParaplus(void);
-EXTERN void InitNewGame(void);
-EXTERN int InitPictures(void);
 EXTERN void PutEnergy(void);
 EXTERN void ThouArtDefeated(void);
 EXTERN void ThouArtVictorious(void);
 EXTERN void StandardEnergieLieferungen(void);
+
+/* paraplus.c */
+#undef EXTERN
+#ifdef _parainit_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+EXTERN void Title(void);
+EXTERN void InitParaplus(void);
+EXTERN void InitNewGame(void);
 
 /* influ.c */
 #undef EXTERN
@@ -151,6 +154,7 @@ EXTERN int MergeBlockToWindow(
 #define EXTERN extern
 #endif
 
+EXTERN int InitPictures(void);
 EXTERN void SwapScreen(void);
 EXTERN void ClearVGAScreen(void);
 EXTERN void Monitorsignalunterbrechung(int);
@@ -257,6 +261,8 @@ EXTERN void JoystickControl(void);
 #define EXTERN extern
 #endif
 
+EXTERN void gotoxy(int,int);
+EXTERN int MyRandom(int);
 EXTERN void reverse(char*);
 EXTERN char* itoa(int,char*,int);
 EXTERN char* ltoa(long,char*,int);

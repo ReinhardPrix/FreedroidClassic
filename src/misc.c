@@ -64,6 +64,35 @@ message* Queue=NULL;
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
 
+void gotoxy(int x, int y){
+
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+int MyRandom(int Obergrenze)
+{
+  float Zwisch;
+  double ReinerZufall;
+  int Endwert;
+
+  //  printf("\nint MyRandom(int Obergrenze): Obergrenze ist jetzt: %d.",Obergrenze);
+  ReinerZufall=(double)rand();
+  //  printf("\nint MyRandom(int Obergrenze): Reiner Zufall ist jetzt: %f.",ReinerZufall);
+  Zwisch=((float)ReinerZufall) / ((float)RAND_MAX);
+  //  printf("\nint MyRandom(int Obergrenze): Zwisch ist jetzt: %f.",Zwisch);
+  Zwisch=Zwisch*((float)Obergrenze);
+  Endwert=(unsigned int)Zwisch;
+#ifdef DEBUG_MYRANDOM
+  printf("\nint MyRandom(int Obergrenze): Endwert ist jetzt: %d.",Endwert);
+#endif
+  return Endwert;
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
 void reverse(char s[])
 {
   int c,i,j;
