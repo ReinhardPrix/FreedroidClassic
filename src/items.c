@@ -76,6 +76,12 @@ GetHeldItemInventoryIndex( void )
 item* GetHeldItemPointer( void )
 {
   int InvIndex;
+  int i;
+
+  // We must not access the levels item array, if the level was not yet
+  // initialized!!! Or a SEGFAULT will occur!!!  Therefore we check for
+  // ininitialized level first.!
+  if ( CurLevel == NULL ) return ( NULL );
 
   InvIndex = GetHeldItemInventoryIndex(  );
 
@@ -121,6 +127,20 @@ item* GetHeldItemPointer( void )
     }
   else
     {
+      // --------------------
+      // Not that we find that no item is held in hand in the entire inventory 
+      // and all the slots, we go and look if one of the items on this levels
+      // map is perhaps held in hand, but if that also fails, then no item at
+      // all was held in hand.
+      //
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	{
+	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+	  if ( ! CurLevel->ItemList[ i ].currently_held_in_hand ) continue;
+	  return ( & (CurLevel->ItemList[ i ] ) );
+	}
+
+
       DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
       return ( NULL );
     }
@@ -497,6 +517,27 @@ GetInventorySquare_y( int y )
 int
 GetHeldItemCode ( void )
 {
+  item* ItemPointer;
+
+  ItemPointer = GetHeldItemPointer( );
+
+  if ( ItemPointer != NULL )
+    {
+      return ( ItemPointer->type );
+    }
+
+  //--------------------
+  // If we ever reach this point, that means that the held items code
+  // could not be correctly computed, which should mean a reason to
+  // terminate immediately with severe error
+  //
+
+  DebugPrintf( 0 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
+  // Terminate( ERR );
+  return ( -1 );
+  
+
+  /*
   int InvPos;
 
   // --------------------
@@ -545,18 +586,9 @@ GetHeldItemCode ( void )
     {
       return ( Druidmap[ Me.type ].aux2_item.type );
     }
+  */
 
-  //--------------------
-  // If we ever reach this point, that means that the held items code
-  // could not be correctly computed, which should mean a reason to
-  // terminate immediately with severe error
-  //
 
-  DebugPrintf( 0 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
-  // Terminate( ERR );
-  return ( -1 );
-  
-  
 }; // int GetHeldItemCode ( void )
 
 /* ----------------------------------------------------------------------
@@ -632,6 +664,7 @@ DropHeldItemToTheFloor ( void )
   CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) );
   CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
   // CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   // CurLevel->ItemList[ i ].pos.y = Me.pos.y;
   // CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
@@ -944,6 +977,8 @@ ManageInventoryScreen ( void )
   point CurPos;
   point Inv_GrabLoc;
   int Grabbed_InvPos;
+  int i;
+  finepoint MapPositionOfMouse;
   // static int Item_Grabbed = FALSE;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
@@ -1101,11 +1136,31 @@ ManageInventoryScreen ( void )
 	      Druidmap[ Me.type ].aux2_item.currently_held_in_hand = TRUE;
 	    }
 	}
+      else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in user rect!" );
+	  MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+	  MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	    {
+	      if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+	      
+	      if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
+		   ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+		{
+		  // We've found some item to grab!!! How wonderful!!!
+		  Item_Held_In_Hand = ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
+		  CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+		  break;
+		}
+	    }
+	}
       else
 	{
 	  // Nothing grabbed, so we need not do anything more here..
 	  Item_Held_In_Hand = ( -1 );
-	  DebugPrintf( 0 , "\nGrabbing in WEAPON rect FAILED!" );
+	  DebugPrintf( 0 , "\nGrabbing UTTERLY FAILED!" );
 	}
       goto NoMoreGrabbing;
     }
