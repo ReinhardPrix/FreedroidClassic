@@ -124,6 +124,41 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
       ThisItem->max_duration = ( -1 );
       ThisItem->current_duration = 1 ;
     }
+
+  //--------------------
+  // Now it's time to fill in the magic properties of the item.  We have
+  // the basic ranges for the modifiers given in the prefix and suffix lists
+  // and just need to create random values in the given ranges for the item.
+  //
+  if ( ThisItem -> suffix_code != (-1) )
+    {
+      ThisItem->bonus_to_str = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_str ) ;
+      ThisItem->bonus_to_dex = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_dex +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_dex ) ;
+      ThisItem->bonus_to_mag = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mag +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mag ) ;
+      ThisItem->bonus_to_vit = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_vit ) ;
+
+      ThisItem->bonus_to_life = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
+      ThisItem->bonus_to_force = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
+
+      ThisItem->bonus_to_tohit = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
+      ThisItem->bonus_to_ac_or_damage = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+
+      ThisItem->bonus_to_resist_fire = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
+      ThisItem->bonus_to_resist_electricity = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
+      ThisItem->bonus_to_resist_force = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_force +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_force ) ;
+
+    }
 }; // void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------

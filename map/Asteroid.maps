@@ -71,21 +71,21 @@ Start of pure codepanel information for this level
 PanelposX=4 PanelposY=10 Secret Code="gnu"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=20  X=24.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=21  X=25.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=29  X=32.000000  Y=8.000000  AC=4  DoDamage=0  ModifyDamage=0  MaxDur=25  CurDur=2.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=30  X=33.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=39  CurDur=30.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=31  X=34.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=35  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=33  X=34.000000  Y=10.000000  AC=27  DoDamage=0  ModifyDamage=0  MaxDur=29  CurDur=21.000000  Gold=0  PrefixCode=0  SuffixCode=0 
+New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=20  X=24.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=21  X=25.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=29  X=32.000000  Y=8.000000  AC=4  DoDamage=0  ModifyDamage=0  MaxDur=25  CurDur=2.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=30  X=33.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=39  CurDur=30.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=31  X=34.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=35  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=33  X=34.000000  Y=10.000000  AC=27  DoDamage=0  ModifyDamage=0  MaxDur=29  CurDur=21.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
@@ -236,7 +236,14 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=19  X=29.000000  Y=20.000000  AC=3  DoDamage=0  ModifyDamage=0  MaxDur=10  CurDur=7.000000  Gold=9  PrefixCode=-1  SuffixCode=-1 
+New item: type=19  X=29.000000  Y=20.000000  AC=3  DoDamage=0  ModifyDamage=0  MaxDur=10  CurDur=7.000000  Gold=9  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=23.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=3.000000  Gold=29  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=23.000000  Y=7.296000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=29  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=23.760000  Y=11.230000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=18  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=1  X=23.304739  Y=24.190001  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=31.108999  Y=21.121000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=16  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=37  X=31.861000  Y=21.636000  AC=0  DoDamage=1  ModifyDamage=3  MaxDur=12  CurDur=3.000000  Gold=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=2  X=34.000000  Y=24.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=   5 y=   1	 connections:    2   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -383,23 +390,23 @@ PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0 
+New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -561,9 +568,10 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=1  X=40.992001  Y=14.292000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=10  PrefixCode=-1  SuffixCode=-1 
-New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0 
+New item: type=1  X=40.992001  Y=14.292000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=10  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=55.000000  Y=25.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=4  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  36 y=  26	 connections:   26   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
