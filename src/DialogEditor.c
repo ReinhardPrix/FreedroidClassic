@@ -1,7 +1,5 @@
 /* 
- *
  *   Copyright (c) 2003 Johannes Prix
- *
  *
  *  This file is part of Freedroid
  *
@@ -123,7 +121,7 @@ typedef struct
 } 
 known_do_extra, *Known_do_extra;
 
-#define ALL_KNOWN_EXTRAS 27
+#define ALL_KNOWN_EXTRAS 28
 
 known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
   {
@@ -153,7 +151,8 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "DeleteAllInventoryItemsOfType:" , 23 , '\0' } ,
     { "ExecuteSubdialog:", 24 , '\0' } ,
     { "EverybodyBecomesHostile",  25 , '\0' } ,
-    { "MakeTuxTownGuardMember",  26 , '\0' } 
+    { "MakeTuxTownGuardMember",  26 , '\0' } ,
+    { "IncreaseSpellcastingSkill", 27 , '\0' } 
   };
 
 typedef struct
