@@ -388,7 +388,7 @@ Update_Tux_Working_Copy ( void )
 {
   int i;
 
-  DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
+  // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
 
   if ( ( Me.weapon_item.type == (-1) ) || ( Me.weapon_item.currently_held_in_hand ) )
     {

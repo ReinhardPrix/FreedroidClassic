@@ -22,12 +22,14 @@
  *  MA  02111-1307  USA
  *
  */
-/*----------------------------------------------------------------------
- *
- * Desc: contains functions to update and draw the top status line with
- *	score and status etc...
- *
- *----------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This file contains all functions to update and draw the top status 
+ * displays with status etc...
+ * ---------------------------------------------------------------------- */
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please just kill it mercilessly.
+ */
 
 #define _rahmen_c
 
@@ -41,86 +43,6 @@
 #include "items.h"
 
 extern char *InfluenceModeNames[];
-
-// Dieses Array enth"alt die Datenstrukturen "uber alle im Spiel vorkommenden
-// Anzeigebalken.
-//
-// { {point pos}, int len, int hgt, int oldval, int col }
-//
-
-bar AllBars[] = {
-// Bar for the Energydisplay
-  {{3, 52}, 300, 10, 0, FONT_RED},
-// Bars for Shield1-4
-  {{260, 5}, 50, 5, 0, FONT_GREEN},
-  {{260, 12}, 50, 5, 0, FONT_GREEN},
-  {{260, 19}, 50, 5, 0, FONT_GREEN},
-  {{260, 26}, 50, 5, 0, FONT_GREEN}
-};
-
-void DrawBar (int, int, unsigned char *);
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
-{
-  unsigned char *BarPoint = Parameter_Screen;
-  int xlen;
-  int barcol = 0;
-  int i;
-
-  DebugPrintf (2, "\nvoid DrawBar(...):  real function call confirmed.");
-
-  if (Wert < 0)
-    Wert = 0;
-  BarPoint += AllBars[BarCode].pos.x + AllBars[BarCode].pos.y * SCREENLEN;
-
-  if (InitBars)
-    {
-      for (i = 0; i < AllBars[BarCode].hgt; i++)
-	{
-	  memset (BarPoint, AllBars[BarCode].col, Wert);
-	  memset (BarPoint + Wert, 0, abs (AllBars[BarCode].len - Wert));
-	  BarPoint += SCREENLEN;
-	}
-      AllBars[BarCode].oldval = Wert;
-      return;
-    }
-
-  if (Wert == AllBars[BarCode].oldval)
-    {
-      DebugPrintf (2, "\nvoid DrawBar(...):  end of function reached.");
-      return;
-    }
-
-  xlen = abs (Wert - AllBars[BarCode].oldval);
-
-  // Den Cursor an die Position stellen und rot oder schwarz einstellen.        
-  if (Wert > AllBars[BarCode].oldval)
-    {
-      barcol = AllBars[BarCode].col;
-      BarPoint += AllBars[BarCode].oldval;
-    }
-  else
-    BarPoint += Wert;
-
-  // Balken soweit zeichnen, wie die Ver"anderung ausmacht.
-  for (i = 0; i < AllBars[BarCode].hgt; i++)
-    {
-      memset (BarPoint, barcol, xlen);
-      BarPoint += SCREENLEN;
-    }
-
-  AllBars[BarCode].oldval = Wert;
-
-  DebugPrintf (2, "\nvoid DrawBar(...):  end of function reached.");
-
-} // void DrawBar(...)
 
 /* ----------------------------------------------------------------------
  * This function writes the description of an item into the item description
@@ -354,10 +276,7 @@ Sorry...\n\
 	  sprintf( linebuf , "+%d to all attributes \n" , SuffixList[ CurItem->suffix_code ].bonus_to_all_attributes );
 	  strcat( ItemDescText , linebuf );
 	}
-
     }
-  
-
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 
 /* ----------------------------------------------------------------------
@@ -696,7 +615,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   char right_box[RIGHT_TEXT_LEN + 10];
   static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
   static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
-  int left_len, right_len;   /* the actualy string-lens */
+  int left_len, right_len;   // the actualy string lengths
 
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
