@@ -1633,11 +1633,6 @@ InitFreedroid (void)
   GameConfig.Theme_SubPath="lanzz_theme/";
   Copy_Rect (Full_User_Rect, User_Rect);
 
-  Copy_Rect (Full_User_Rect, Console_Rect);
-  Console_Rect.x += 137
-  Set_Rect (Console_Rect, Full_User_Rect.x + text_offs,  Full_User_Rect.y,
-	    User_Rect.w-text_offs, User_Rect.h);
-
 
   /*
   ItemMap[ 0 ].ItemName = "Item one";
