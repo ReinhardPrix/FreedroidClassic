@@ -53,9 +53,6 @@
 // SDL_Surface *screen;
 // SDL_Surface *ScaledSurface;
 
-extern int FullScreen_Requested_By_Player;
-
-
 void 
 PrepareScaledSurface()
 {
@@ -371,21 +368,16 @@ int keyboard_keypressed(int scancode)
 
 int vga_setmode(int mode)
 {
+  Uint32 flags;  /* flags for SDL video mode */
+
+  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
+  if (use_fullscreen) flags |= SDL_FULLSCREEN;
+
   /* Open the display device */
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN|SDL_HWPALETTE );
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN );
   // screen = SDL_SetVideoMode(320 , 200, 8, SDL_SWSURFACE | SDL_HWPALETTE );
-  if (FullScreen_Requested_By_Player == TRUE) 
-    {
-      ScaledSurface = SDL_SetVideoMode(320*SCALE_FACTOR , 200*SCALE_FACTOR, 8, 
-				       SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
-    }
-  else
-    { 
-      ScaledSurface = SDL_SetVideoMode(320*SCALE_FACTOR , 200*SCALE_FACTOR, 8, 
-				       SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE );
-    }
-
+  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, flags);
   // ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
   if ( ScaledSurface == NULL ) {
     fprintf(stderr, "Couldn't set 320x200 video mode: %s\n",
