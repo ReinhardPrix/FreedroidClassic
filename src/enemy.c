@@ -415,7 +415,7 @@ ShuffleEnemys ( int LevelNum )
  *
  * ---------------------------------------------------------------------- */
 int 
-CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
+CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot ) // int ExceptedDroid )
 {
   float LargerDistance;
   int Steps;
@@ -450,7 +450,9 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	  if ( AllEnemys[j].pos.z != OurLevel ) continue;
 	  if ( AllEnemys[j].Status == OUT ) continue;
 	  if ( AllEnemys[j].energy <= 0 ) continue;
-	  if ( j == ExceptedDroid ) continue;
+
+	  // if ( j == ExceptedDroid ) continue;
+	  if ( & ( AllEnemys [ j ] ) == ExceptedRobot ) continue;
 
 	  // so it seems that we need to test this one!!
 	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
@@ -544,7 +546,7 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
  * there, the function does nothing more.
  * ---------------------------------------------------------------------- */
 void 
-MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
+MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 {
   Waypoint WpList;		/* Pointer to waypoint-list */
   finepoint nextwp_pos;
@@ -552,7 +554,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   int HistoryIndex;
   Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
-  DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisWaypoint ( int EnemyNum ) : real function call confirmed. ");
+  DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum ) : real function call confirmed. ");
 
   // We do some definitions to save us some more typing later...
   WpList = WaypointLevel->AllWaypoints;
@@ -568,7 +570,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   // We determine our movement target, either the preset course or the 
   // current classical waypoint that has been set.
   //
-  if ( ThisRobot->persuing_given_course )
+  if ( ThisRobot -> persuing_given_course )
     {
       nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
       nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
@@ -611,7 +613,111 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
   RawEnemyApproachPosition ( ThisRobot , nextwp_pos );
 
-}; // void MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
+}; // void MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+RawSetNewRandomWaypoint ( Enemy ThisRobot )
+{
+  int i,j;
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  float maxspeed;
+  int FreeWays[ MAX_WP_CONNECTIONS ];
+  int SolutionFound;
+  int TestConnection;
+  Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
+
+  DebugPrintf( 2 , "\nvoid RawSetNewRandomWaypoint ( Enemy ThisRobot ): real function call confirmed. ");
+
+  //--------------------
+  // We do some definitions to save us some more typing later...
+  //
+  WpList = WaypointLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+  ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
+  
+  // search for possible connections from here...
+  DebugPrintf (2, "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): searching for possible connections...");
+  
+  // search for the first connection, that doesn't exist any more, so
+  // that we know, which connections surely do exist
+  for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
+    if ( WpList[nextwp].connections[j] == -1 )
+      break;
+  
+  DebugPrintf ( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ):  Found %d possible targets." , j );
+  
+  // Of course, only if such connections exist at all, we do the
+  // following change of target waypoint procedure
+  if ( j < MAX_WP_CONNECTIONS )
+    {
+      //--------------------
+      // At this point, we should check, if there is another waypoint 
+      // and also if the way there is free of other droids
+      //
+      for ( i = 0; i < j ; i++ )
+	{
+	  FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->pos.z , ThisRobot );
+	}
+      
+      //--------------------
+      // Now see whether any way point at all is free in that sense
+      // otherwise we set this robot to waiting and return;
+      //
+      for ( i = 0 ; i < j ; i++ )
+	{
+	  if ( FreeWays[i] ) break;
+	}
+      if ( i == j )
+	{
+	  DebugPrintf( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
+	  ThisRobot->warten = 1;
+	  return;
+	}
+      
+      //--------------------
+      // Now that we know, there is some way out of this, we can test around
+      // and around randomly until we finally find some solution.
+      //
+      // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
+      // 
+      SolutionFound=FALSE;
+      while ( !SolutionFound )
+	{
+	  TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
+	  
+	  if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
+	  if ( !FreeWays[TestConnection] ) continue;
+	  
+	  trywp = WpList[nextwp].connections[ TestConnection ];
+	  SolutionFound = TRUE;
+	}
+      
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "RawSetNewRandomWaypoint ( ... )" , "\
+There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
+This is an error in the waypoint structure of this level.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
+    }
+  
+  // set new waypoint...
+  ThisRobot->nextwaypoint = trywp;
+  
+  DebugPrintf ( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ):  A new waypoint has been set." );
+  
+}; // void RawSetNewRandomWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
  * This function moves one robot in an advanced way, that hasn't been
@@ -620,18 +726,13 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 void 
 SelectNextWaypointAdvanced ( int EnemyNum )
 {
-  int i,j;
-  finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  int trywp;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  int FreeWays[ MAX_WP_CONNECTIONS ];
-  int SolutionFound;
-  int TestConnection;
   Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
+  finepoint Restweg;
 
   DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
@@ -662,116 +763,51 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   //
   if ((Restweg.x == 0) && (Restweg.y == 0))
     {
-      ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
-      ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
-
-      //--------------------
-      // This statement should make hostile droids with aggresssion
-      // and a ranged weapon
-      // wait, if they see the influencer and are at their waypoint now.
-      // Then they (in some other function) open fire and should do
-      // that, until the influencer vanishes out of sight, which should cause them
-      // to go into a hunting mode. (to be implemented later).
-      //
-      if ( ( !( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change > 0 ) ) &&
-	   Druidmap[ThisRobot->type].aggression &&
-	   IsVisible ( & ( ThisRobot -> pos ) , 0 ) && // WARNING!  Player 0 here always is wrong
-	   // ! ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ].item_gun_angle_change  &&
-	   ! ThisRobot->is_friendly &&
-	   ( sqrt ( ( ThisRobot->pos.x - Me[0].pos.x ) * ( ThisRobot->pos.x - Me[0].pos.x ) +
-		    ( ThisRobot->pos.y - Me[0].pos.y ) * ( ThisRobot->pos.y - Me[0].pos.y ) ) > 1.5 ) )
-	{
-	  // But now that the enemy is are almost ready to fire, it just
-	  // might also say something.  But of course it will not repeat this
-	  // sentence every frame.  Therefore we may only say something when
-	  // this happens the first time i.e. when the robot was not waiting
-	  // already.
-	  //
-	  if ( ThisRobot->warten == 0)
-	    {
-	      AddStandingAndAimingText( EnemyNum );
-	    }
-
-
-	  ThisRobot->warten=2;
-	  return;
-	}
-
-      // search for possible connections from here...
-      DebugPrintf (2, "\nSelectNextWaypointAdvanced: searching for possible connections...");
-
-      // search for the first connection, that doesn't exist any more, so
-      // that we know, which connections surely do exist
-      for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
-	if ( WpList[nextwp].connections[j] == -1 )
-	  break;
-
-      DebugPrintf ( 2 , "\nSelectNextWaypointAdvanced:  Found %d possible targets." , j );
-
-      // Of course, only if such connections exist at all, we do the
-      // following change of target waypoint procedure
-      if ( j < MAX_WP_CONNECTIONS )
-	{
-
-	  //--------------------
-	  // At this point, we should check, if there is another waypoint 
-	  // and also if the way there is free of other droids
-	  //
-	  for ( i = 0; i < j ; i++ )
-	    {
-	      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->pos.z , EnemyNum );
-	    }
-
-	  //--------------------
-	  // Now see whether any way point at all is free in that sense
-	  // otherwise we set this robot to waiting and return;
-	  //
-	  for ( i = 0 ; i < j ; i++ )
-	    {
-	      if ( FreeWays[i] ) break;
-	    }
-
-	  if ( i == j )
-	    {
-	      DebugPrintf( 2 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
-	      ThisRobot->warten = 1;
-	      return;
-	    }
-
-	  //--------------------
-	  // Now that we know, there is some way out of this, we can test around
-	  // and around randomly until we finally find some solution.
-	  //
-	  // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
-	  // 
- 	  SolutionFound=FALSE;
-	  while ( !SolutionFound )
-	    {
-	      TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
-	      
-	      if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
-	      if ( !FreeWays[TestConnection] ) continue;
-
-	      trywp = WpList[nextwp].connections[ TestConnection ];
-	      SolutionFound = TRUE;
-	    }
-
-	}
-      else
-	{
-	  GiveStandardErrorMessage ( "SelectNextWaypointAdvanced(...)" , "\
-There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
-This is an error in the waypoint structure of this level.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
-	}
-      
-      // set new waypoint...
-      ThisRobot->nextwaypoint = trywp;
-
-      DebugPrintf ( 2 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
-
+      RawSetNewRandomWaypoint ( ThisRobot );
     } // if
+
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
+
+/* ----------------------------------------------------------------------
+ * This function moves one robot in an advanced way, that hasn't been
+ * present within the classical paradroid game.
+ * ---------------------------------------------------------------------- */
+float 
+RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
+{
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  float maxspeed;
+  Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
+  finepoint Restweg;
+
+  DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
+
+  //--------------------
+  // Maybe currently we do not stick to the whole waypoint system but rather 
+  // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
+  // we select waypoints as we're used to...
+  //
+  // if ( ThisRobot->persuing_given_course == TRUE ) return;
+
+  //--------------------
+  // We do some definitions to save us some more typing later...
+  //
+  WpList = WaypointLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+  // determine the remaining way until the target point is reached
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+
+  return ( sqrt ( Restweg.x * Restweg.x + Restweg.y * Restweg.y ) ) ;
+
+}; // float RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
  * This function swaps two enemys in the AllEnemys array.
@@ -1062,9 +1098,6 @@ MoveThisEnemy( int EnemyNum )
   // At first, we check for a lot of cases in which we do not
   // need to move anything for this reason or for that
   //
-  // ignore robots on other levels, except, it it's following influ's trail
-  // if ( ( ThisRobot->pos.z != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
-  if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && ( ! ThisRobot -> FollowingInflusTail ) ) return;
 
   //--------------------
   // ignore all enemys with CompletelyFixed flag set...
@@ -1112,7 +1145,7 @@ MoveThisEnemy( int EnemyNum )
   //--------------------
   // Now comes the real movement part
   //
-  MoveThisRobotThowardsHisWaypoint( EnemyNum );
+  MoveThisRobotThowardsHisCurrentTarget( EnemyNum );
 
   SelectNextWaypointAdvanced( EnemyNum );
 
@@ -1152,6 +1185,14 @@ MoveEnemys ( void )
 	   InitiateDeathOfEnemy ( ThisRobot );
 	   continue;
 	 }
+
+       //--------------------
+       // Ignore robots on other levels, except perhaps those, 
+       // that are following Tux' trail
+       // 
+       if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && 
+	    ( ! ThisRobot -> FollowingInflusTail ) ) 
+	 continue;
   
        //--------------------
        // Now we do the movement, either to the next waypoint OR if one
@@ -1515,12 +1556,13 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
        ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 				    ThisRobot->pos.x + StepVector . x , 
 				    ThisRobot->pos.y + StepVector . y ,
-				    ThisRobot->pos.z , enemynum ) ) )
+				    ThisRobot->pos.z , ThisRobot ) ) )
     {
       return TRUE;
     }
   
   return FALSE;
+
 }; // int ConsideredMoveIsFeasible ( Enemy ThisRobot , finepoint StepVector )
 
 /* ----------------------------------------------------------------------
@@ -1529,7 +1571,7 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
  * cause it is still too far away for a strike.  So the robot must move
  * in closer to the target.  This is what this function is for.  It is
  * called by the 'AttachInfluencer' functions and NOT directly by the
- * MoveThisRobotThowardsHisWaypoint or so, cause what this function does
+ * MoveThisRobotThowardsHisCurrentTarget or so, cause what this function does
  * is setting some new course parameters, NOT really alter the position
  * of this robot directly.
  *
@@ -1666,7 +1708,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
  * target by now or not.
  * ---------------------------------------------------------------------- */
 int
-TurnABitThowardsTux ( Enemy ThisRobot , float TurnSpeed )
+TurnABitThowardsPosition ( Enemy ThisRobot , float x , float y , float TurnSpeed )
 {
   float RightAngle;
   float AngleInBetween;
@@ -1682,8 +1724,8 @@ TurnABitThowardsTux ( Enemy ThisRobot , float TurnSpeed )
   // moving down and descends when moving 'up' on the scren.  So that
   // one sign must be corrected, so that everything is right again.
   //
-  RightAngle = ( atan2 ( - ( Me [ 0 ] . pos . y - ThisRobot -> pos . y ) ,  
-			 + ( Me [ 0 ] . pos . x - ThisRobot -> pos . x ) ) * 180.0 / M_PI ) ;
+  RightAngle = ( atan2 ( - ( y - ThisRobot -> pos . y ) ,  
+			 + ( x - ThisRobot -> pos . x ) ) * 180.0 / M_PI ) ;
   //
   // Another thing there is, that must also be corrected:  '0' begins
   // with facing 'down' in the current rotation models.  Therefore angle
@@ -1794,7 +1836,7 @@ ProcessAttackStateMachine (int enemynum)
   //
   switch ( ThisRobot -> combat_state )
     {
-    case UNAWARE_OF_TUX:
+    case MOVE_ALONG_RANDOM_WAYPOINTS:
       ThisRobot->TextToBeDisplayed = "state:  Unaware of Tux." ;
       break;
     case STOP_AND_EYE_TUX:
@@ -1838,18 +1880,24 @@ ProcessAttackStateMachine (int enemynum)
   dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
   // dist2 = DistanceToTux ( ThisRobot );
 
-  //====================
-  //
-  // From here on, it's classical Paradroid robot behaviour concerning fireing....
-  //
-  // if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->is_friendly == FALSE ) ) return; // distance limitation only for MS mechs
-
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
 
-  if ( ThisRobot -> combat_state == UNAWARE_OF_TUX )
+  if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
     {
 
-      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+      // MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+
+      MoveThisRobotThowardsHisCurrentTarget( enemynum );
+
+      if ( RemainingDistanceToNextWaypoint ( ThisRobot ) < 0.1 ) 
+	{
+	  SelectNextWaypointAdvanced( enemynum );
+	  ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	  return;
+	}
+
+      DetermineAngleOfFacing ( enemynum );
+
 
       //--------------------
       // In case that the enemy droid isn't even aware of Tux and
@@ -1880,13 +1928,34 @@ ProcessAttackStateMachine (int enemynum)
 
       return; 
     }
+  else if ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT )
+    {
+      //--------------------
+      // We allow arbitrary turning speed in this case... so we disable
+      // the turning control in display function...
+      //
+      ThisRobot -> last_phase_change = 100 ; 
+      if ( 
+	  TurnABitThowardsPosition ( ThisRobot , 
+				     curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
+				     AllWaypoints [ ThisRobot->nextwaypoint ] . x ,
+				     curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
+				     AllWaypoints [ ThisRobot->nextwaypoint ] . y ,
+				     240 )
+	  )
+	{
+	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	}
+      return;
+
+    }
   else if ( ThisRobot -> combat_state == STOP_AND_EYE_TUX )
     {
       //--------------------
       // While eyeing the Tux, we stay right where we are, but
       // maybe we should turn to face right thowards the Tux..
       //
-      TurnABitThowardsTux ( ThisRobot , 90 );
+      TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 120 );
 
       //--------------------
       // After some time, we'll no longer eye the Tux but rather do something,
@@ -1901,7 +1970,7 @@ ProcessAttackStateMachine (int enemynum)
 	  
 	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) )
 	    {
-	      ThisRobot -> combat_state = UNAWARE_OF_TUX ;
+	      ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	      ThisRobot -> persuing_given_course = FALSE ;
 	    }
 	  else
@@ -1950,7 +2019,7 @@ ProcessAttackStateMachine (int enemynum)
 
       if ( ! EnemyOfTuxCloseToThisRobot ( ThisRobot , & vect_to_target ) ) 
 	{
-	  ThisRobot -> combat_state = UNAWARE_OF_TUX ;
+	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	  return;
 	}
     }
