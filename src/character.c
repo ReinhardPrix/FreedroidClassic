@@ -408,6 +408,10 @@ UpdateAllCharacterStats ( void )
     {
       Me.AC += Me.shield_item.ac_bonus;
     }
+  if ( Me.special_item.type != (-1) )
+    {
+      Me.AC += Me.special_item.ac_bonus;
+    }
 
   //--------------------
   // So at this point we can finally apply all the modifiers to the influencers
