@@ -349,12 +349,13 @@ Init_Video (void)
   printf("\nSDL Menu Font initialisation successful.\n");
 
   if ( ( Para_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
-  // if ( ( Para_BFont = LoadFont("../graphics/font01.png") ) == NULL )
     {
       fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
       Terminate(ERR);
     } else
       printf("\nSDL Para Font initialisation successful.\n");
+
+  SetCurrentFont(Menu_BFont);
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
@@ -377,11 +378,11 @@ Init_Video (void)
    * once this is up and running, we'll provide others modes
    * as well.
    */
-  ne_bpp = 8; /* start with the simplest */
+  ne_bpp = 16; /* start with the simplest */
 
   #define SCALE_FACTOR 2
 
-  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 200*SCALE_FACTOR , ne_bpp , flags)) )
+  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 200*SCALE_FACTOR , 0 , flags)) )
     {
       fprintf(stderr, "Couldn't set 320x200*SCALE_FACTOR video mode: %s\n", SDL_GetError());
       exit(-1);

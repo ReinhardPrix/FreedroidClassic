@@ -45,7 +45,7 @@
 #define BLOCK_HEIGHT		BLOCKHOEHE
 #define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
 
-#define DIGITLENGTH (9*2)
+#define DIGITLENGTH (8*2)
 #define DIGITHEIGHT (9*2)
 #define DIGITNUMBER 22
 #define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
@@ -77,13 +77,13 @@
 			   actually displayed screen shall be bigger than the 320x200 window. */
 
 #define RAHMENBREITE		SCREENBREITE
-#define RAHMENHOEHE		32
+#define RAHMENHOEHE		BLOCKHOEHE
 
 /* Startpos + lens of Rahmen-Texts */
-#define LEFTINFO_X 	12
-#define LEFTINFO_Y	8
-#define RIGHTINFO_X	242
-#define RIGHTINFO_Y	8
+#define LEFTINFO_X 	(12*2)
+#define LEFTINFO_Y	(8*2)
+#define RIGHTINFO_X	(242*2)
+#define RIGHTINFO_Y	(8*2)
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 
@@ -170,7 +170,7 @@ enum _sounds
 #define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
 #define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
 #define NE_DIGIT_BLOCK_FILE     "../graphics/ne_digits.bmp"
-#define NE_RAHMEN_BLOCK_FILE    "../graphics/rahmen.bmp"
+#define NE_RAHMEN_BLOCK_FILE    "../graphics/ne_rahmen.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"

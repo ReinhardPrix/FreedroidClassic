@@ -378,10 +378,6 @@ DisplayText (char *Text,
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
-  // #ifdef NEW_ENGINE
-  //   return;
-  // #endif
-
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
 
@@ -460,8 +456,6 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
   unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
   char Dummystring[]=" ";
 
-#ifdef NEW_ENGINE
-
   // printf("\nDisplay Char called...");
   if (Zeichen == '\n')
     {
@@ -477,63 +471,17 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
 
   Dummystring[0]=Zeichen;
   SDL_SetClipRect( ne_screen , NULL );
-  PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY ,     
-		    "%s" , Dummystring );
+  PrintStringFont ( ne_screen , Menu_BFont, MyCursorX , MyCursorY , "%s" , Dummystring );
+  //  PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY , "%s" , Dummystring );
   // PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY , "AB" );
 
 
   // DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
   // FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
 
-  MyCursorX += FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
+  MyCursorX += 2*FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
   DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
-  return;
-#else
 
-  if (Zeichen == '\n')
-    {
-      MakeUmbruch ();
-      return;
-    }
-
-  if ( (Zeichen < ' ') || (Zeichen > 131) )
-    {
-      DebugPrintf ("Illegal Char an DisplayChar() uebergeben!");
-      Terminate(ERR);
-    }
-
-  if (screen == RealScreen)
-    {
-      DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
-		    FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
-    }
-
-  else
-    {
-      for (i = 0; i < FONTHOEHE; i++)
-	{
-	  if (MyCursorY + FONTHOEHE <= UpperTextBorder)
-	    break;
-	  if ((MyCursorY + i) <= UpperTextBorder)
-	    continue;
-	  if ((MyCursorY + i) >= LowerTextBorder)
-	    break;
-	  if ((MyCursorX > RightTextBorder) ||
-	      (MyCursorX + FONTBREITE < LeftTextBorder))
-	    break;
-
-	  target =
-	    screen + MyCursorX + MyCursorY * SCREENBREITE + i * SCREENBREITE;
-	  memcpy (target, Zeichenpointer[ZNum] + i * (1 + ZLen) * FONTBREITE,
-		  FONTBREITE * (1 + ZLen));
-	}			// for(i=0;i<FONT...
-    }				// if (screen==RealScreen)
-
-  MyCursorX += FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
-
-  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
-  return;
-#endif
 }				// void DisplayChar(...)
 
 /*@Function============================================================

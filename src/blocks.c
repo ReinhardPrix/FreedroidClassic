@@ -319,9 +319,9 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
-      rect.x = (i%blocks_per_line)*(DIGITLENGTH);
+      rect.x = (i%blocks_per_line)*(DIGITLENGTH+2);
       rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
-      rect.w = DIGITLENGTH-3;
+      rect.w = DIGITLENGTH-1;
       rect.h = DIGITHEIGHT;
       
       ret[i].x = i*DIGITLENGTH;
