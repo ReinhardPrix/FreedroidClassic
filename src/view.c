@@ -873,8 +873,10 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/05/22 21:49:22  rp
- * Sat May 22 17:48:39 1993: written junk
+ * Revision 1.3  1993/05/23 21:04:51  prix
+ * Sat May 22 19:54:01 1993: Energiebalken anzeigen
+ * Sun May 23 08:21:48 1993: Internal
+ * Sun May 23 12:17:02 1993: Level replaced by CurLevel.map struct
  *
  * Revision 1.6  1993/09/22  14:27:14  prix
  * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
