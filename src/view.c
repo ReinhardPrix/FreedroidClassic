@@ -1228,12 +1228,11 @@ blit_light_radius ( void )
 	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
 	}
 
-      pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x + 0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y -0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) ;
-      pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x + 0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y -0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) ;
+      pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
+      pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
 
-
-      chunk_size_x = ( iso_floor_tile_width / 2 ) * LIGHT_RADIUS_CHUNK_SIZE ; 
-      chunk_size_y = ( iso_floor_tile_height / 2 ) * LIGHT_RADIUS_CHUNK_SIZE ;
+      chunk_size_x = 26 /2 + 1 ;
+      chunk_size_y = 14 /2 ; 
 
       for ( i = 0 ; i < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; i ++ )
 	{
@@ -1242,29 +1241,14 @@ blit_light_radius ( void )
 	      //--------------------
 	      // This case handles the assembly of the first row of chunks (southward movement)
 	      //
-
-	      /*
-		WOW!
 	      if ( ( j == 0 ) && ( i > 0 ) )
 		{
 		  pos_x_grid [ i ] [ j ] = pos_x_grid [ i-1 ] [ j ] + chunk_size_x ;
-		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y + 1 ;
+		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y ;
 		}
 	      else if ( i > 0 )
 		{
-		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x + 1 ;
-		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y ;
-		}
-	      */
-
-	      if ( ( j == 0 ) && ( i > 0 ) )
-		{
-		  pos_x_grid [ i ] [ j ] = pos_x_grid [ i-1 ] [ j ] + chunk_size_x ;
-		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y + 1 ;
-		}
-	      else if ( i > 0 )
-		{
-		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x - 1 ;
+		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x + 0 ;
 		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y + 0 ;
 		}
 

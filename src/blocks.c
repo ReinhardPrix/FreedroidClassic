@@ -1901,6 +1901,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_CAVE_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_END_S ] . filename = "iso_cave_wall_0010.png" ;
 
+  obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_W ] . filename = "iso_walls_0005.png" ;
+  obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_N ] . filename = "iso_walls_0006.png" ;
+  obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_E ] . filename = "iso_walls_0007.png" ;
+  obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
+
 
 
 }; // void init_obstacle_data( void )
