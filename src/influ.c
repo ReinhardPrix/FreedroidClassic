@@ -224,7 +224,7 @@ AutoFireBullet (void)
 void
 MoveInfluence (void)
 {
-  signed int accel = Druidmap[Me.type].accel;
+  float accel = Druidmap[Me.type].accel;
   static float TransferCounter = 0;
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter = -1;
@@ -445,14 +445,16 @@ void
 BounceInfluencer (void)
 {
   int sign;
-  float SX = Me.speed.x * Frame_Time ();
-  float SY = Me.speed.y * Frame_Time ();
+  double SX = Me.speed.x * Frame_Time ();
+  double SY = Me.speed.y * Frame_Time ();
   finepoint lastpos;
   int res; /* Ergebnis aus DruidPassable() */
   int NumberOfShifts=0;
   int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
+
+  return;
 
   lastpos.x = Me.pos.x - SX;
   lastpos.y = Me.pos.y - SY;
@@ -575,7 +577,7 @@ BounceInfluencer (void)
 void
 AdjustSpeed (void)
 {
-  int maxspeed = Druidmap[Me.type].maxspeed;
+  double maxspeed = Druidmap[Me.type].maxspeed;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
   if (Me.speed.x < (-maxspeed))
@@ -600,23 +602,29 @@ Reibung (void)
 {
   int i;
 
-  for (i = 0; i < 5; i++)
-    {
+  // return;
+
       if (!UpPressed () && !DownPressed ())
 	{
+	  /*
 	  if (Me.speed.y < 0)
 	    Me.speed.y++;
 	  if (Me.speed.y > 0)
 	    Me.speed.y--;
+	  */
+	  Me.speed.y *= exp(log(0.2) * Frame_Time());
 	}
       if (!RightPressed () && !LeftPressed ())
 	{
+	  /*
 	  if (Me.speed.x < 0)
 	    Me.speed.x++;
 	  if (Me.speed.x > 0)
 	    Me.speed.x--;
+	  */
+	  Me.speed.x *= exp(log(0.2) * Frame_Time());
 	}
-    }
+
 }				// void Reibung(void)
 
 /*@Function============================================================
@@ -671,6 +679,8 @@ InfluenceEnemyCollision (void)
   long dist2;
   int swap;
   int first_collision = TRUE;	/* marker */
+
+  return;
 
   for (i = 0; i < NumEnemys; i++)
     {

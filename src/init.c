@@ -240,30 +240,30 @@ InitNewGame (void)
   DebugPrintf
     ("\nvoid InitNewGame(void): All levels have been set to 'active'...");
 
+  // NORMALISATION Me.pos.x = 4*INITIAL_BLOCK_WIDTH;
+  // NORMALISATION Me.pos.y = 1.5*INITIAL_BLOCK_HEIGHT;
+  // Me.pos.x = 4;
+  // Me.pos.y = 1.5;
+  Me.pos.x = 1;
+  Me.pos.y = 1;
+  
   i = MyRandom (3);  /* chose one out of 4 possible start positions */
+  i = 3;
   switch (i)
     {
     case 0:
-      Me.pos.x = Block_Width*4;
-      Me.pos.y = Block_Height*1.5;
       CurLevel = curShip.AllLevels[4];
       break;
 
     case 1:
-      Me.pos.x = Block_Width*4;
-      Me.pos.y = Block_Height*1.5;
       CurLevel = curShip.AllLevels[5];
       break;
 
     case 2:
-      Me.pos.x = Block_Width*4;
-      Me.pos.y = Block_Height*1.5;
       CurLevel = curShip.AllLevels[6];
       break;
 
     case 3:
-      Me.pos.x = Block_Width*4;
-      Me.pos.y = Block_Height*1.5;
       CurLevel = curShip.AllLevels[7];
       break;
 
@@ -328,7 +328,7 @@ InitNewGame (void)
   Me.phase = 0;
   
 
-  ShowDeckMap( CurLevel );
+  // ShowDeckMap( CurLevel );
 
 
   return;

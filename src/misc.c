@@ -364,16 +364,17 @@ Cheatmenu (void)
 		  if (!(l % 20) )  
 		    {
 		      printf (clearscr);
-		      printf ("\n\n NR.\tID\tX\tY\tENERGY.\n");
+		      printf ("\n\n NR.\tID\tX\tY\tENERGY\tspeedX\n");
 		      printf ("---------------------------------------------\n");
 		    }
 		  
 		  l ++;
-		  printf ("%d.\t%s\t%d\t%d\t%d.\n", i,
+		  printf ("%d.\t%s\t%f\t%f\t%d\t%g.\n", i,
 			  Druidmap[Feindesliste[i].type].druidname,
-			  Fein2Grob (Feindesliste[i].pos.x),
-			  Fein2Grob (Feindesliste[i].pos.y),
-			  (int)Feindesliste[i].energy);
+			  Feindesliste[i].pos.x,
+			  Feindesliste[i].pos.y,
+			  (int)Feindesliste[i].energy,
+			  Feindesliste[i].speed.x);
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 
@@ -393,14 +394,15 @@ Cheatmenu (void)
 	      if ( !(i % 20) )
 		{
 		  printf (clearscr);
-		  printf ("\n\nNr.\tLev.\tID\tEnergy\n");
+		  printf ("\n\nNr.\tLev.\tID\tEnergy\nSpeed.x\n");
 		  printf ("------------------------------\n");
 		}
 	      
-	      printf ("%d\t%d\t%s\t%d\n",
+	      printf ("%d\t%d\t%s\t%d\t%g\n",
 		      i, Feindesliste[i].levelnum,
 		      Druidmap[Feindesliste[i].type].druidname,
-		      (int)Feindesliste[i].energy);
+		      (int)Feindesliste[i].energy,
+		      Feindesliste[i].speed.x);
 	    } /* for (i<NumEnemys) */
 
 	  printf (" --- END --- \n");

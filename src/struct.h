@@ -85,8 +85,8 @@ point, *Point;
 
 typedef struct
 {
-  float x;
-  float y;
+  double x;
+  double y;
 }
 finepoint, *Finepoint;
 
@@ -105,11 +105,11 @@ typedef grob_Point Vect;
 typedef struct
 {
   const char *druidname;
-  float maxspeed;		/* the maximum of speed it can go */
+  double maxspeed;		/* the maximum of speed it can go */
   int class;
-  byte accel;			/* its acceleration */
-  float maxenergy;		/* the maximum energy the batteries can carry */
-  float lose_health;		/* the energy/time the duid loses under influence-control */
+  double accel;			/* its acceleration */
+  double maxenergy;		/* the maximum energy the batteries can carry */
+  double lose_health;		/* the energy/time the duid loses under influence-control */
   byte gun;			/* Which gun does this druid use */
   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
   byte aggression;		/* The aggressiveness of this druidtype */
@@ -127,10 +127,10 @@ typedef struct
   byte status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   finepoint pos;		/* current position in level levelnum */
-  float health;			/* the max. possible energy in the moment */
-  float energy;			/* current energy */
-  float firewait;		/* counter after fire */
-  float phase;			/* the current phase of animation */
+  double health;			/* the max. possible energy in the moment */
+  double energy;			/* current energy */
+  double firewait;		/* counter after fire */
+  double phase;			/* the current phase of animation */
   int autofire;			/* Status of the Firecontrolautomatics */
   int vneut;			/* Status of Velocityneutralizer for the gun */
   int MyFCU;			/* FCU (Fire Control Unit) installed */
@@ -146,21 +146,21 @@ typedef struct
   int levelnum;			/* Level in dem sich enemy befindet */
   finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;		/* current speed  */
-  float energy;			/* gibt die Energie dieses Robots an */
-  float feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
+  double energy;			/* gibt die Energie dieses Robots an */
+  double feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
   byte nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   byte lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  float warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  double warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
-  float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+  double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
 }
 enemy, *Enemy;
 
 typedef struct
 {
-  int speed;			/* speed of the bullet */
+  double speed;			/* speed of the bullet */
   int damage;			/* damage done by this bullettype */
   int time;		        // ??? SENSELESS VARIABLE?  how long does bullet exist, measured in number of frames
   byte phases;			/* how many phases in motion to show */
@@ -179,7 +179,7 @@ typedef struct
   byte type;
   byte phase;
   int time_in_frames;           // how long does the bullet exist, measured in number of frames
-  float time_in_seconds;        // how long does the bullet exist in seconds
+  double time_in_seconds;        // how long does the bullet exist in seconds
   signed char mine;
   int owner;
 }
@@ -195,10 +195,10 @@ blastspec, *Blastspec;
 
 typedef struct
 {
-  int PX;			/* PosX */
-  int PY;			/* PosY */
+  double PX;			/* PosX */
+  double PY;			/* PosY */
   byte type;
-  float phase;
+  double phase;
 }
 blast, *Blast;
 

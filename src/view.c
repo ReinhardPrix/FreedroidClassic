@@ -190,8 +190,8 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x=USER_FENSTER_CENTER_X + ( -(Me.pos.x/INITIAL_BLOCK_WIDTH)+col )   *Block_Width;
-	      TargetRectangle.y=USER_FENSTER_CENTER_Y + ( -(Me.pos.y/INITIAL_BLOCK_HEIGHT)+line ) *Block_Height;
+	      TargetRectangle.x=USER_FENSTER_CENTER_X + ( -Me.pos.x+col-0.5 )   *Block_Width;
+	      TargetRectangle.y=USER_FENSTER_CENTER_Y + ( -Me.pos.y+line-0.5 ) *Block_Height;
 	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
@@ -541,9 +541,9 @@ PutEnemy (int Enum)
   phase = Feindesliste[Enum].feindphase;
 
   TargetRectangle.x=USER_FENSTER_CENTER_X+ 
-    ( (-Me.pos.x+Feindesliste[Enum].pos.x )/INITIAL_BLOCK_WIDTH ) * Block_Width  -Block_Width/2;
+    ( (-Me.pos.x+Feindesliste[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
-    ( (-Me.pos.y+Feindesliste[Enum].pos.y )/INITIAL_BLOCK_WIDTH ) * Block_Height -Block_Height/2;
+    ( (-Me.pos.y+Feindesliste[Enum].pos.y ) ) * Block_Height -Block_Height/2;
   // TargetRectangle.w=Block_Width;
   // TargetRectangle.h=Block_Height;
 
@@ -551,16 +551,22 @@ PutEnemy (int Enum)
 
   // Now the numbers should be blittet.
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
+  TargetRectangle.x=USER_FENSTER_CENTER_X - 
+    (Me.pos.x-Feindesliste[Enum].pos.x) * Block_Width + DIGIT_POS_X  - Block_Width/2; 
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - 
+    (Me.pos.y-Feindesliste[Enum].pos.y) * Block_Height + DIGIT_POS_Y - Block_Height/2;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X + DIGITLENGTH-1;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X - 
+    (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Height + DIGIT_POS_X + DIGITLENGTH-1 - Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - 
+    (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Height + DIGIT_POS_Y - Block_Height/2 ;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Width - Block_Width/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Width - Block_Height/2 + DIGIT_POS_Y;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 

@@ -1458,6 +1458,8 @@ IsVisible (Finepoint objpos)
 
   DebugPrintf ("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
+  return TRUE;
+
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;
 

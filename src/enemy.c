@@ -156,11 +156,10 @@ ShuffleEnemys (void)
 	  Terminate (-1);
 	}
 
-      Feindesliste[i].pos.x =
-	Grob2Fein (CurLevel->AllWaypoints[wp].x);
-
-      Feindesliste[i].pos.y =
-	Grob2Fein (CurLevel->AllWaypoints[wp].y);
+      // NORMALISATION Feindesliste[i].pos.x = Grob2Fein (CurLevel->AllWaypoints[wp].x);
+      // NORMALISATION Feindesliste[i].pos.y = Grob2Fein (CurLevel->AllWaypoints[wp].y);
+      Feindesliste[i].pos.x = CurLevel->AllWaypoints[wp].x;
+      Feindesliste[i].pos.y = CurLevel->AllWaypoints[wp].y;
 
       Feindesliste[i].lastwaypoint = wp;
       Feindesliste[i].nextwaypoint = wp;
@@ -174,8 +173,7 @@ ShuffleEnemys (void)
   influ_coord.y = Me.pos.y;
   Me.pos.x = Me.pos.y = 0;
 
-  for (i = 0; i < 30; i++)
-    MoveEnemys ();
+  for (i = 0; i < 30; i++)     MoveEnemys ();
 
   /* influencer wieder her */
   Me.pos.x = influ_coord.x;
@@ -193,15 +191,17 @@ void
 MoveEnemys (void)
 {
   int i,j;
-  point Restweg;
+  finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
   int trywp;
 
+  // NORMALISATION if (! MPressed() ) return;
+
   PermanentHealRobots ();
 
-   for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < NumEnemys; i++)
      {
 
        /* 
@@ -214,11 +214,12 @@ MoveEnemys (void)
        if (Feindesliste[i].levelnum != CurLevel->levelnum)
 	 continue;
 
-       /* Wenn der robot tot ist dann weiter */
+       // ignore dead robots as well...
        if (Feindesliste[i].Status == OUT)
 	 continue;
 
-       /* ist der Robot gerade toedlich getroffen worden ?? */
+       // if the robot just got killed, initiate the
+       // explosion and all that...
        if (Feindesliste[i].energy <= 0)
 	 {
 	   Feindesliste[i].Status = OUT;
@@ -230,40 +231,46 @@ MoveEnemys (void)
 	   continue;		/* naechster Enemy, der ist hin */
 	 }
 
+       // If its a combat droid, then if might attack...
        if (Druidmap[Feindesliste[i].type].aggression)
 	 AttackInfluence (i);
 
-       /* Wenn der Robot noch zu warten hat dann gleich weiter */
+       // robots that still have to wait also do not need to
+       // be processed...
        if (Feindesliste[i].warten > 0)
 	 continue;
 
-       /* collision mit anderem Druid */
-       EnemyEnemyCollision (i);
+       // Now check for collisions of this enemy with his colleagues
+       // NORMALISATION EnemyEnemyCollision (i);
 
        /* Ermittlung des Restweges zum naechsten Ziel */
        WpList = CurLevel->AllWaypoints;
        nextwp = Feindesliste[i].nextwaypoint;
-       nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
-       nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
+       // NORMALISATION nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
+       // NORMALISATION nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
+       nextwp_pos.x = WpList[nextwp].x;
+       nextwp_pos.y = WpList[nextwp].y;
 
        Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
        Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
 
+       // printf("\n Restweg.x: %g Restweg.y: %g ", Restweg.x, Restweg.y );
+       // printf("\n NextWP.x: %g NextWP.y: %g ", nextwp_pos.x , nextwp_pos.y );
 
-       /* Bewegung wenn der Abstand noch groesser als maxspeed ist */
-       if ((abs (Restweg.x) >=
-	    Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	   && (Restweg.x != 0))
+
+       // --------------------
+       // As long a the distance from the current position of the enemy
+       // to its next wp is large, movement is rather sinple:
+
+       if (( fabsf (Restweg.x * Block_Width) >= 1) )
 	 {
 	   Feindesliste[i].speed.x =
-	     (Restweg.x / abs (Restweg.x)) *
+	     (Restweg.x / fabsf (Restweg.x)) *
 	     Druidmap[Feindesliste[i].type].maxspeed;
 	   Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time ();
 	 }
 
-       if ((abs (Restweg.y) >=
-	    Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	   && (Restweg.y != 0))
+       if (( fabsf (Restweg.y * Block_Height ) >= 1) )
 	 {
 	   Feindesliste[i].speed.y =
 	     (Restweg.y / fabsf (Restweg.y)) *
@@ -271,22 +278,24 @@ MoveEnemys (void)
 	   Feindesliste[i].pos.y += Feindesliste[i].speed.y * Frame_Time ();
 	 }
 
-       /* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
-       DebugPrintf
-	 ("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
-       if (abs (Restweg.x) <
-	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
+       // --------------------
+       // Once this enemy is close to his final destination waypoint, we have
+       // to do some fine tuning, and then of course set the next waypoint.
+
+       if ( fabsf(Restweg.x * Block_Width ) < 1 )
 	 {
 	   Feindesliste[i].pos.x = nextwp_pos.x;
 	   Feindesliste[i].speed.x = 0;
+	   // printf("\n Final Destination in x reached.");
 	 }
 
-       if (abs (Restweg.y) <
-	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
+       if ( fabsf(Restweg.y * Block_Height ) < 1 )
 	 {
 	   Feindesliste[i].pos.y = nextwp_pos.y;
 	   Feindesliste[i].speed.y = 0;
+	   // printf("\n Final Destination in y reached.");
 	 }
+
 
        if ((Restweg.x == 0) && (Restweg.y == 0))
 	 {
@@ -305,6 +314,7 @@ MoveEnemys (void)
 	   else
 	     {
 	       printf ("\nWeird waypoint %d has no connections!\n", nextwp);
+	       Terminate(ERR);
 	     }
 
 	  /* setze neuen Waypoint */

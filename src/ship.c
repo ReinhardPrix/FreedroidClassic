@@ -715,7 +715,7 @@ GreatDruidShow (void)
 void
 ShowDeckMap (Level deck)
 {
-  int i;
+  int i, j;
   SDL_Surface *tmp;
   SDL_Surface *zwisch;
   float ResizeFactor;
@@ -735,6 +735,41 @@ ShowDeckMap (Level deck)
       ne_map_block[i].w *= ResizeFactor;
       ne_map_block[i].h *= ResizeFactor;
     }
+
+  for (i=0; i< DROID_PHASES ; i++)
+    {
+      ne_influ_block[i].x *= ResizeFactor;
+      ne_influ_block[i].y *= ResizeFactor;
+      ne_influ_block[i].w *= ResizeFactor;
+      ne_influ_block[i].h *= ResizeFactor;
+    }
+
+  for (i=0; i< DROID_PHASES ; i++)
+    {
+      ne_droid_block[i].x *= ResizeFactor;
+      ne_droid_block[i].y *= ResizeFactor;
+      ne_droid_block[i].w *= ResizeFactor;
+      ne_droid_block[i].h *= ResizeFactor;
+    }
+
+  for (i=0; i < ALLBULLETTYPES; i++)
+    for (j=0; j < Bulletmap[i].phases; j++)
+      {
+	Bulletmap[i].block[j].x *= ResizeFactor;
+	Bulletmap[i].block[j].y *= ResizeFactor;
+	Bulletmap[i].block[j].w *= ResizeFactor; 
+	Bulletmap[i].block[j].h *= ResizeFactor;
+      }
+
+  for (i=0; i < ALLBLASTTYPES; i++)
+    for (j=0; j < Bulletmap[i].phases; j++)
+      {
+	Blastmap[i].block[j].x *= ResizeFactor;
+	Blastmap[i].block[j].y *= ResizeFactor;
+	Blastmap[i].block[j].w *= ResizeFactor; 
+	Blastmap[i].block[j].h *= ResizeFactor;
+      }
+
 
   Block_Width *= ResizeFactor;
   Block_Height *= ResizeFactor;
