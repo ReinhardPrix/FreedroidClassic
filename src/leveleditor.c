@@ -732,6 +732,28 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 }; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
+ * This function should associate the current mouse position with an
+ * index in the level editor item drop screen.
+ * (-1) is returned when cursor is not on any item in the item drop grid.
+ * ---------------------------------------------------------------------- */
+int
+level_editor_item_drop_index ( int row_len , int line_len )
+{
+    if ( (GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X > 55 ) && ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X < 55 + 64 * line_len ) &&
+	 (GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y > 32 ) && ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y < 32 + 66 * row_len ) )
+	{
+	    return ( ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 55 ) / 64 + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 32 ) / 66 * line_len ) ;
+	}
+
+    //--------------------
+    // If no level editor item grid index was found under the current
+    // mouse cursor position, we just return (-1) to indicate that.
+    //
+    return ( -1 ) ;
+    
+}; // int level_editor_item_drop_index ( void )
+
+/* ----------------------------------------------------------------------
  * This function drops an item onto the floor.  It works with a selection
  * of item images and clicking with the mouse on an item image or on one
  * of the buttons presented to the person editing the level.
@@ -739,80 +761,98 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 void
 ItemDropFromLevelEditor( void )
 {
-  int SelectionDone = FALSE;
-  int NewItemCode = ( -1 );
-  int i;
-  int j;
-  item temp_item;
-  int row_len = 5 ;
-  int line_len = 8 ; 
-  int our_multiplicity = 1 ;
-  int item_group = 0 ; 
-
-  while ( GPressed() );
-
-  while ( !SelectionDone )
+    int SelectionDone = FALSE;
+    int NewItemCode = ( -1 );
+    int i;
+    int j;
+    item temp_item;
+    int row_len = 5 ;
+    int line_len = 8 ; 
+    int our_multiplicity = 1 ;
+    int item_group = 0 ; 
+    static int previous_mouse_position_index = (-1) ;
+    int mouse_position_index = (-1) ;
+    
+    while ( GPressed() );
+    
+    while ( !SelectionDone )
     {
-
-      while ( SpacePressed() );
-
-      our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
-
-      for ( j = 0 ; j < row_len ; j ++ )
+	
+	while ( SpacePressed() );
+	
+	our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
+	
+	for ( j = 0 ; j < row_len ; j ++ )
 	{
-	  for ( i = 0 ; i < line_len ; i ++ ) 
+	    for ( i = 0 ; i < line_len ; i ++ ) 
 	    {
-	      temp_item . type = i + j * line_len + item_group * line_len * row_len ;
-	      if ( temp_item.type >= Number_Of_Item_Types )  temp_item.type = 1 ;
-	      ShowRescaledItem ( i , 32 + (64+2) * j, & ( temp_item ) );
+		temp_item . type = i + j * line_len + item_group * line_len * row_len ;
+		if ( temp_item.type >= Number_Of_Item_Types )  temp_item.type = 1 ;
+		ShowRescaledItem ( i , 32 + (64+2) * j, & ( temp_item ) );
 	    }
 	}
-
-      ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON );
-      ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON );
-      ShowGenericButtonFromList ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON );
-
-      our_SDL_flip_wrapper( Screen );
-
-      while ( ! SpacePressed() ) SDL_Delay(1);
-
-      if ( CursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
-			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	
+	ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON );
+	
+	if ( level_editor_item_drop_index ( row_len , line_len ) != (-1) )
 	{
-	  item_group ++ ;
+	    previous_mouse_position_index = level_editor_item_drop_index ( row_len , line_len ) + 
+		item_group * line_len * row_len ;
+	    if ( previous_mouse_position_index >= Number_Of_Item_Types ) 
+	    {
+		previous_mouse_position_index = Number_Of_Item_Types - 1 ;
+	    }
+	    PutStringFont ( Screen , FPS_Display_BFont , 20 , 440 , ItemMap [ previous_mouse_position_index ] . item_name ) ;
 	}
-      else if ( CursorIsOnButton ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
-			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	
+	our_SDL_flip_wrapper( Screen );
+	
+	while ( ( ! SpacePressed() ) && ( level_editor_item_drop_index ( row_len , line_len ) + 
+					  item_group * line_len * row_len == previous_mouse_position_index ) )
+	    SDL_Delay(1);
+	
+	if ( SpacePressed() )
 	{
-	  if ( item_group > 0 ) item_group -- ;
-	}
-      else if ( CursorIsOnButton ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON ,
-			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
-	{
-	  return ;
-	}
-      else if ( (GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X > 55 ) && ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X < 55 + 64 * line_len ) &&
-		(GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y > 32 ) && ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y < 32 + 66 * row_len ) )
-	{
-	  SelectionDone = TRUE ;
-	  NewItemCode = ( ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 55 ) / 64 + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 32 ) / 66 * line_len + item_group * line_len * row_len ) ;
+	    if ( CursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
+				    GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		item_group ++ ;
+	    }
+	    else if ( CursorIsOnButton ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
+					 GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		if ( item_group > 0 ) item_group -- ;
+	    }
+	    else if ( CursorIsOnButton ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON ,
+					 GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		return ;
+	    }
+	    else if ( level_editor_item_drop_index ( row_len , line_len ) != (-1) )
+	    {
+		SelectionDone = TRUE ;
+		NewItemCode = level_editor_item_drop_index ( row_len , line_len ) + item_group * line_len * row_len ;
+		if ( NewItemCode < 0 ) NewItemCode = 0 ; // just if the mouse has moved away in that little time...
+	    }
 	}
     }
-
-  if ( NewItemCode >= Number_Of_Item_Types ) 
+    
+    if ( NewItemCode >= Number_Of_Item_Types ) 
     {
-      NewItemCode=0;
+	NewItemCode=0;
     }
-  
-
-  if ( ItemMap [ NewItemCode ] . item_group_together_in_inventory )
+    
+    
+    if ( ItemMap [ NewItemCode ] . item_group_together_in_inventory )
     {
-      our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100 );
+	our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100 );
     }
-  DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 , our_multiplicity );
-
-  while ( SpacePressed() );
-
+    DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 , our_multiplicity );
+    
+    while ( SpacePressed() );
+    
 }; // void ItemDropFromLevelEditor( void )
 
 /* ----------------------------------------------------------------------
