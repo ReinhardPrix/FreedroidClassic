@@ -1971,6 +1971,10 @@ IsPassable (float x, float y, int Checkpos)
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
+    case CONVEY_L:
+    case CONVEY_D:
+    case CONVEY_R:
+    case CONVEY_U:
     case TELE_1:
     case TELE_2:
     case TELE_3:

@@ -447,7 +447,8 @@ enum
   LIFT=32,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
   TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,
   LOCKED_H_ZUTUERE=43,         LOCKED_V_ZUTUERE,
-  BOX_1=49,      BOX_2,        BOX_3,        BOX_4
+  BOX_1=49,      BOX_2,        BOX_3,        BOX_4,        UNUSED_BRICK,
+  CONVEY_L=54,   CONVEY_D,     CONVEY_R,     CONVEY_U
 };
 
 
