@@ -667,13 +667,17 @@ InitNewMission ( char *MissionName )
       AllBlasts[i].type = OUT;
     }
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All blasts have been deleted...");
-
+  for (i=0; i < MAX_ENEMYS_ON_SHIP; i++)
+    {
+      AllEnemys[i].type = OUT;
+      AllEnemys[i].energy = -1;
+    }
+  DebugPrintf (2, "\nvoid InitNewMission( ... ): All enemys have been deleted...");
   
   //--------------------
   //Now its time to start decoding the mission file.
   //For that, we must get it into memory first.
   //The procedure is the same as with LoadShip
-
 
   oldfont = GetCurrentFont ();
 
@@ -723,7 +727,11 @@ InitNewMission ( char *MissionName )
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission
   //
-  if (Me.TextToBeDisplayed) free (Me.TextToBeDisplayed);
+
+  // NO! these strings are allocated elsewhere or even static, so free'ing them
+  // here would SegFault eventually!
+  //  if (Me.TextToBeDisplayed) free (Me.TextToBeDisplayed);
+
   Me.TextToBeDisplayed =
     ReadAndMallocStringFromData ( MainMissionPointer , "Influs mission start comment=\"" , "\"" ) ;
   Me.TextVisibleTime = 0;
