@@ -245,6 +245,14 @@ typedef struct
   // how good is the item as armour???
   double item_armour_ac_bonus;
 
+  // how good is the item as a shield???
+  double item_shield_ac_bonus;
+
+  // which requirement for strength, dexterity and magic (force) does the item have?
+  int item_require_strength;
+  int item_require_dexterity;
+  int item_require_magic;
+
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
   int sound_number;
