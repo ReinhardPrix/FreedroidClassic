@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 29
+#define ALL_SOUNDS 30
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -75,7 +75,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Laser_Rifle_Sound_0.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
-   "Mission_Status_Change_Sound_0.wav"
+   "Mission_Status_Change_Sound_0.wav",
+   "Item_Taken_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -337,6 +338,12 @@ void
 CrySound (void)
 {
   Play_Sound ( CRY_SOUND );
+}
+
+void
+ItemTakenSound (void)
+{
+  Play_Sound ( ITEM_TAKEN_SOUND );
 }
 
 /*@Function============================================================

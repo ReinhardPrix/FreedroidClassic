@@ -219,7 +219,8 @@ enum _sounds
   FIRE_BULLET_LASER_RIFLE_SOUND,
   CRY_SOUND,
   TRANSFER_SOUND,
-  MISSION_STATUS_CHANGE_SOUND
+  MISSION_STATUS_CHANGE_SOUND,
+  ITEM_TAKEN_SOUND
 };
 
 // The sounds when the influencers energy is low or when he is in transfer mode

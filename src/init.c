@@ -256,6 +256,7 @@ Get_Item_Data ( char* DataPointer )
 
 #define ITEM_NAME_INDICATION_STRING "Item name=\""
 #define ITEM_CAN_BE_APPLIED_IN_COMBAT "Item can be applied in combat=\""
+#define ITEM_CAN_BE_INSTALLED_IN_INFLU "Item can be installed in influ=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -292,7 +293,7 @@ Get_Item_Data ( char* DataPointer )
       // Now we read in the name of this item
       ItemMap[ItemIndex].ItemName = ReadAndMallocStringFromData ( ItemPointer , ITEM_NAME_INDICATION_STRING , "\"" ) ;
 
-      // Now we read in the name of this item
+      // Now we read in if this item can be used by the influ without help
       YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_APPLIED_IN_COMBAT , "\"" ) ;
       if ( strcmp( YesNoString , "yes" ) == 0 )
 	{
@@ -301,6 +302,37 @@ Get_Item_Data ( char* DataPointer )
       else if ( strcmp( YesNoString , "no" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_applied_in_combat = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
+      // Now we read in if this item can be installed by a mechanics bot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_INFLU , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_influ = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_influ = FALSE;
 	}
       else
 	{

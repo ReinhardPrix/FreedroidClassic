@@ -117,28 +117,31 @@ ChatWithFriendlyDroid( int Enum )
   char* RequestString;
   char* DecisionString;
   int i;
+  int InventoryIndex;
   char *fpath;
   char fname[500];
   char ReplyString[10000];
+  char TextAddition[10000];
   SDL_Surface* Small_Droid;
   SDL_Surface* Large_Droid;
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
 
+  // From initiating transfer mode, space might still have been pressed. 
+  // So we wait till it's released...
   while (SpacePressed());
-  
-  Chat_Window.x=242;
-  Chat_Window.y=100;
-  Chat_Window.w=380;
-  Chat_Window.h=314;
 
-  Droid_Image_Window.x=15;
-  Droid_Image_Window.y=82;
-  Droid_Image_Window.w=215;
-  Droid_Image_Window.h=330;
+  // We define our input and image windows...
+  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+  Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+
 
   Activate_Conservative_Frame_Computation( );
+
+  //--------------------
+  // Next we prepare the whole background for all later text operations
+  //
   Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
@@ -151,42 +154,31 @@ ChatWithFriendlyDroid( int Enum )
   Small_Droid = IMG_Load (fpath) ;
   Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-
   SDL_BlitSurface( Background , NULL , ne_screen , NULL );
   SDL_Flip( ne_screen );
-  
+
+  // All droid chat should be done in the paradroid font I would say...
   SetCurrentFont( Para_BFont );
 
+  // We print out a little greeting message...
   DisplayTextWithScrolling ( 
 			    "Transfer channel protocol set up for text transfer...\n\n" , 
 			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
 
-      //--------------------
-      // In some cases we will not want the default answers to be given,
-      // cause they are the same for all droids.
-      //
-      // We therefore will search this robots question-answer-list FIRST
-      // and look for a 
-      // match in the question entries and if applicable print out the
-      // matching answer of course, and if that is wo, we will continue
-      // and not proceed to the default answers.
-      //
-      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+  //--------------------
+  // If the droid has a visual desciption in his question-response-list, then we print
+  // out this visual description first, so the player get's a better feeling for the
+  // chat partner he's facing...
+  //
+  for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+    {
+      if ( !strcmp ( "DESCRIPTION" , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
 	{
-	  if ( !strcmp ( "DESCRIPTION" , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	    {
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-					 -1 , -1 , &Chat_Window , Background );
-	      break;
-	    }
+	  DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
+				     -1 , -1 , &Chat_Window , Background );
+	  break;
 	}
-      //--------------------
-      // If a keyword matched already, we do not process the default keywords any more
-      // so that some actions can be caught!
-      //
-      // if ( i != MAX_CHAT_KEYWORDS_PER_DROID ) continue;
-
-      // printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
+    }
 
   while (1)
     {
@@ -300,7 +292,7 @@ ChatWithFriendlyDroid( int Enum )
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
 	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
-Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT\n\
+Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT INSTALL \n\
 Often useful information requests are: JOB NAME MS HELLO \n\
 Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
 				   -1 , -1 , &Chat_Window , Background );
@@ -373,6 +365,48 @@ Of course you can ask the droid about anything else it has told you or about wha
 	    strcat( ReplyString , "I'm free to move.\n" );
 
 	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
+
+	  continue;
+	}
+      if ( !strcmp ( RequestString , "install" ) )
+	{
+	  sprintf( ReplyString , "Let's see which of your items I can install into your system:" );
+	  
+	  for ( InventoryIndex = 0 ; InventoryIndex < MAX_ITEMS_IN_INVENTORY ; InventoryIndex++ )
+	    {
+	      // Some items don't exist or can't be installed.  These will be skipped...
+	      if ( Me.Inventory[ InventoryIndex ].type == (-1) ) continue;
+	      if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].item_can_be_installed_in_influ == FALSE ) continue;
+
+	      // At this point we know, that it's an installable item
+	      sprintf( TextAddition , "\nSlot %d: %s could be installed." , InventoryIndex , 
+		       ItemMap[ Me.Inventory[ InventoryIndex ].type ].ItemName );
+	      strcat ( ReplyString, TextAddition );
+	    }
+
+	  strcat( ReplyString , "\nWhich slot shall be installed? (0-9 , q for none)" );
+	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
+	  
+	  //--------------------
+	  // Now we read in his answer and we do this as long as often as it takes for the influ
+	  // to give a valid answer
+	  DecisionString = "XASDFASDF";
+
+	  while ( 1 )
+	    {
+	      DecisionString = GetChatWindowInput( Background , &Chat_Window );
+
+	      if ( strcmp ( DecisionString , "q" ) == 0 ) 
+		{
+		  DisplayTextWithScrolling ( "Good then, how else may I be of assistance?" , 
+					     -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+
+	      DisplayTextWithScrolling ( "Please answer '0'-'9' or 'q'." , -1 , -1 , &Chat_Window , Background );
+	    }
+	      
+	  // DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
 
 	  continue;
 	}

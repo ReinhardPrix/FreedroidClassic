@@ -288,6 +288,7 @@ ReactToSpecialKeys(void)
 	      strcpy ( Me.TextToBeDisplayed , TempText );
 	      Me.Inventory[ InvPos ].type = AllItems[ i ].type;
 	      AllItems[ i ].type = (-1);
+	      ItemTakenSound();
 	    }
 	}
     }
