@@ -1927,6 +1927,10 @@ Reset_GameConfig_To_Default_Values ( void )
   GameConfig.Draw_Energy=FALSE;
   GameConfig.Draw_Position=FALSE;
   GameConfig.All_Texts_Switch = FALSE;
+
+  GameConfig.terminate_on_missing_speech_sample = FALSE ;
+  GameConfig.show_subtitles_in_dialogs = TRUE ;
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------

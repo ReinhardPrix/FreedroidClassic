@@ -423,7 +423,7 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 10:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Have_I_Done_0.wav" , TRUE );
-	      GiveSubtitleNSample( " No, not really.  Get going.  There's still a lot of things to do for you." , "Chandra_No_Not_Really_0.wav" );
+	      GiveSubtitleNSample( " No, not yet.  Get going.  There's still a lot of things to do for you." , "Chandra_No_Not_Really_0.wav" );
 	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 0 ; // but don't ask this twice.
 	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // this should lead on...
 	      break;
