@@ -10,8 +10,13 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/07/29 17:28:56  prix
- * Initial revision
+ * Revision 1.2  1994/06/19 16:25:08  prix
+ * Sat May 21 14:27:44 1994: PutMessages written
+ * Sat May 21 17:29:48 1994: Arbeit an PutMessages
+ * Sat May 21 17:53:41 1994: Testversion (very very alpha
+ * Sat May 21 18:03:46 1994: InsertMessage hinzugef"ugt
+ * Tue Jun 14 10:16:33 1994: Terminate() is now in this module
+ * Wed Jun 15 13:27:09 1994: CheatMenu transported to here
  *
  * Revision 1.1  1993/07/29  17:28:56  prix
  * Initial revision
