@@ -445,9 +445,8 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/05/23 21:07:07  prix
- * Sun May 23 08:17:27 1993: internal
- * Sun May 23 08:20:01 1993: Internal
+ * Revision 1.3  1993/05/30 16:57:49  prix
+ * Sun May 30 10:29:15 1993: struct.h must be included before proto.h
  *
  * Revision 1.6  1993/08/29  23:37:44  prix
  * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
