@@ -1190,11 +1190,126 @@ EncodeBigMapInsertsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
  *
+ * 
+ * ---------------------------------------------------------------------- */
+void
+WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut ) 
+{
+  char linebuf[5000];	  
+
+  strcat( LevelMem , ITEM_CODE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->type );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_POS_X_STRING );
+  sprintf( linebuf , "%f " , ItemToWriteOut->pos.x );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_POS_Y_STRING );
+  sprintf( linebuf , "%f " , ItemToWriteOut->pos.y );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_AC_BONUS_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->ac_bonus );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_DAMAGE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->damage );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->damage_modifier );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_MAX_DURATION_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->max_duration );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_CUR_DURATION_STRING );
+  sprintf( linebuf , "%f " , ItemToWriteOut->current_duration );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->gold_amount );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_MULTIPLICITY_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->multiplicity );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->prefix_code );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->suffix_code );
+  strcat( LevelMem , linebuf );
+  
+  // Now we save the primary stat (attribute) boni
+  
+  strcat( LevelMem , ITEM_BONUS_TO_STR_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_str );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_DEX_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_dex );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_VIT_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_vit );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_MAG_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_mag );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_ALLATT_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_all_attributes );
+  strcat( LevelMem , linebuf );
+  
+  // Now we save the secondary stat boni
+  
+  strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_life );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_force );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_tohit );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_ACDAM_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_ac_or_damage );
+  strcat( LevelMem , linebuf );
+  
+  // Now we save the resistanc boni
+  
+  strcat( LevelMem , ITEM_BONUS_TO_RESELE_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_electricity );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_force );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_fire );
+  strcat( LevelMem , linebuf );
+  
+  strcat( LevelMem , "\n" );
+  
+}; // void WriteOutOneItem ( LevelMem , ItemToWriteOut ) 
+
+/* ----------------------------------------------------------------------
+ *
  * ---------------------------------------------------------------------- */
 void
 EncodeItemSectionOfThisLevel ( char* LevelMem , Level Lev ) 
 {
-  char linebuf[5000];	// Buffer 
+  // char linebuf[5000];	// Buffer 
   int i;
 
   //--------------------
@@ -1210,109 +1325,8 @@ EncodeItemSectionOfThisLevel ( char* LevelMem , Level Lev )
     {
       if ( Lev->ItemList[ i ].type == (-1) ) continue;
 
-      strcat( LevelMem , ITEM_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
-      strcat( LevelMem , linebuf );
+      WriteOutOneItem ( LevelMem , & ( Lev->ItemList[ i ] ) ); 
 
-      strcat( LevelMem , ITEM_POS_X_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_POS_Y_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_AC_BONUS_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].ac_bonus );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage_modifier );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_MAX_DURATION_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_CUR_DURATION_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].current_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].gold_amount );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_MULTIPLICITY_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].multiplicity );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].prefix_code );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].suffix_code );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the primary stat (attribute) boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_STR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_str );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_DEX_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_dex );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_VIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_vit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_MAG_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_mag );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ALLATT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_all_attributes );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the secondary stat boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_life );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_tohit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ACDAM_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_ac_or_damage );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the resistanc boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESELE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_electricity );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_fire );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , "\n" );
     }
   //--------------------
   // Now we write out a marker to announce the end of the items data
