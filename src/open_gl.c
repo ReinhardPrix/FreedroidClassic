@@ -1131,8 +1131,11 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 
 	glEnable ( GL_BLEND );
 	glDisable ( GL_ALPHA_TEST );
+	
 	// glDisable ( GL_BLEND );
 	// glEnable ( GL_ALPHA_TEST );
+
+	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
     }
     
     //--------------------
