@@ -44,6 +44,7 @@ EXTERN int ShipEmptyCounter;
 #else
 #define EXTERN extern
 #endif
+EXTERN void ShowStartupPercentage ( int Percentage ) ;
 EXTERN void AssignMission( int MissNum );
 EXTERN void parse_command_line (int argc, char *const argv[]);
 EXTERN void Title ( char *MissionBriefingPointer );

@@ -51,10 +51,32 @@ char* DebriefingSong;
 char* NextMissionName;
 char Previous_Mission_Name[1000];
 
+/* ---------------------------------------------------------------------- 
+ * This function displays a startup status bar that shows a certain
+ * percentage of loading done.
+ * ---------------------------------------------------------------------- */
+void 
+ShowStartupPercentage ( int Percentage )
+{
+  SDL_Rect Bar_Rect;
+  Uint32 FillColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
+
+  Bar_Rect . x = 200 ;
+  Bar_Rect . y = 200 ;
+  Bar_Rect . w = 2 * Percentage ;
+  Bar_Rect . h = 30 ;
+
+  SDL_FillRect ( Screen , & Bar_Rect , FillColor ) ;
+
+  PrintString ( Screen , 200 + 80 , 200 + 4 , "%d%%", Percentage ) ;
+
+  SDL_UpdateRect ( Screen , 200 , 200 , 200 , 30  ) ;
+
+}; // void ShowStartupPercentage ( int Percentage )
+
 /* ----------------------------------------------------------------------
  * This function loads all the constant variables of the game from
  * a data file, that should be optimally human readable.
- *
  * ---------------------------------------------------------------------- */
 void
 Get_General_Game_Constants ( void* DataPointer )
@@ -1897,14 +1919,24 @@ InitFreedroid (void)
 
   Init_Video ();
 
+  ShowStartupPercentage ( 2 ) ; 
+
   Init_Audio ();
+
+  ShowStartupPercentage ( 4 ) ; 
   
   Init_Joy ();
 
+  ShowStartupPercentage ( 6 ) ; 
+
   Init_Network ();
+
+  ShowStartupPercentage ( 8 ) ; 
 
   Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be
 			       // overwritten from the mission file.
+
+  ShowStartupPercentage ( 10 ) ; 
 
   // The default should be, that no rescaling of the
   // combat window at all is done.
@@ -1934,6 +1966,9 @@ InitFreedroid (void)
       DebugPrintf (1, "\n Error in InitPictures reported back...\n");
       Terminate(ERR);
     }
+
+  ShowStartupPercentage ( 99 ) ; 
+
 
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();

@@ -537,12 +537,16 @@ InitPictures (void)
   // could box the influencer out of the ship....
   Activate_Conservative_Frame_Computation();
 
+  ShowStartupPercentage ( 12 ) ; 
+
   // In the following we will be reading in image information.  But the number
   // of images to read in and the way they are displayed might be strongly dependant
   // on the theme.  That is not at all a problem.  We just got to read in the
   // theme configuration file again.  After that is done, the following reading
   // commands will do the right thing...
   LoadThemeConfigurationFile();
+
+  ShowStartupPercentage ( 15 ) ; 
 
   SDL_SetCursor( init_system_cursor( arrow ) );
 
@@ -569,42 +573,69 @@ InitPictures (void)
       return (FALSE);
     }
 
+  ShowStartupPercentage ( 18 ) ; 
+
   //--------------------
   // And now we read in the blocks from various files 
   //
   Load_MapBlock_Surfaces();
 
+  ShowStartupPercentage ( 20 ) ; 
+
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
 
   Load_Influencer_Surfaces();
+
+  ShowStartupPercentage ( 25 ) ; 
+
   Load_Enemy_Surfaces();
+
+  ShowStartupPercentage ( 30 ) ; 
+
   Load_Tux_Surfaces();
+
+  ShowStartupPercentage ( 60 ) ; 
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
 
   Load_Bullet_Surfaces();
 
+  ShowStartupPercentage ( 65 ) ; 
+
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
   Load_Blast_Surfaces();
+
+  ShowStartupPercentage ( 70 ) ; 
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load items image file." );
 
   Load_Item_Surfaces();
 
+  ShowStartupPercentage ( 75 ) ; 
+
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
 
   Load_SkillIcon_Surfaces();
+
+  ShowStartupPercentage ( 80 ) ; 
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
   Load_Digit_Surfaces();
 
+  ShowStartupPercentage ( 84 ) ; 
+
   fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
   tmp = IMG_Load (fpath); 
+
+  ShowStartupPercentage ( 86 ) ; 
+
   banner_pic = SDL_DisplayFormat (tmp);
   SDL_FreeSurface (tmp);  
+
+  ShowStartupPercentage ( 88 ) ; 
 
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
@@ -612,7 +643,11 @@ InitPictures (void)
   fpath = find_file (NE_CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
   console_pic = IMG_Load (fpath); 
 
+  ShowStartupPercentage ( 90 ) ; 
+
   GetTakeoverGraphics();
+
+  ShowStartupPercentage ( 92 ) ; 
   
   return (TRUE);
 };  // int InitPictures ( void )
@@ -793,6 +828,11 @@ Sorry...\n\
 	      SDL_GetError()); 
       exit(-1);
     }
+
+  DisplayImage ( find_file( FREEDROID_LOADING_PICTURE_NAME , GRAPHICS_DIR, FALSE) );
+  SDL_Flip ( Screen ) ;
+
+  ShowStartupPercentage ( 10 ) ; 
 
   if (!mouse_control)  /* hide mouse pointer if not needed */
     SDL_ShowCursor (SDL_DISABLE);
