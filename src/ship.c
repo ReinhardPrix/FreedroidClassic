@@ -427,19 +427,21 @@ void
 PaintConsoleMenu (void)
 {
   char MenuText[200];
-  unsigned int fg, bg;
+  // unsigned int fg, bg;
 
   ClearGraphMem (Outline320x200);
-  GetTextColor (&bg, &fg);	/* store text color settings */
+  // GetTextColor (&bg, &fg);	/* store text color settings */
 
   DisplayRahmen (Outline320x200);
   SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
-  SetUserfenster (KON_BG_COLOR, Outline320x200);
+  // SetUserfenster (KON_BG_COLOR, Outline320x200);
+  SetUserfenster (208, Outline320x200);
 
   /* Konsolen-Menue Farbe setzen */
-  SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
+  // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
+  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 
   SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
@@ -468,7 +470,7 @@ PaintConsoleMenu (void)
    *
    */
 
-  DisplayBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
+  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
 		MenuItemPointer,
 		MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
 
@@ -478,7 +480,7 @@ PaintConsoleMenu (void)
 		     BLOCKBREITE, BLOCKHOEHE, Outline320x200);
 
 
-  SetTextColor (bg, fg); /* restore text color settings */
+  // SetTextColor (bg, fg); /* restore text color settings */
 
   return;
 }	// PaintConsoleMenu ()
