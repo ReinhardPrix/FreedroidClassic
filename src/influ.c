@@ -1089,6 +1089,7 @@ FireBullet (void)
   CurBullet->bullet_lifetime = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_lifetime;
   CurBullet->angle_change_rate = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_angle_change;
   CurBullet->fixed_offset = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_fixed_offset;
+  CurBullet->ignore_wall_collisions = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
   CurBullet->owner_pos = & ( Me.pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;

@@ -490,6 +490,7 @@ enum _druids
 //
 enum _status
 {
+  TERMINATED=-1,
   MOBILE,
   TRANSFERMODE,
   WEAPON,
@@ -498,7 +499,6 @@ enum _status
   REJECTED,
   CONSOLE,
   DEBRIEFING,
-  TERMINATED,
   PAUSE,
   CHEESE,
   ELEVATOR,

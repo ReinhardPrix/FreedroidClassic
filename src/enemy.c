@@ -1024,6 +1024,8 @@ AttackInfluence (int enemynum)
       AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
       AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
       AllBullets[j].owner_pos = & ( ThisRobot->pos );
+      AllBullets[j].ignore_wall_collisions = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
 
       // Now we set the damage of this bullet to the correct value
       AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
@@ -1145,9 +1147,9 @@ AttackInfluence (int enemynum)
       AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
       AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
       AllBullets[j].owner_pos = & ( ThisRobot->pos );
+      AllBullets[j].ignore_wall_collisions = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
 
-
-      //}	/* if */
 
 }   /* AttackInfluence */
 

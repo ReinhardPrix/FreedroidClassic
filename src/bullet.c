@@ -86,7 +86,7 @@ MoveBullets (void)
       //--------------------
       // We need not move any bullets, that are OUT already...
       //
-      if (CurBullet->type == OUT)
+      if ( CurBullet->type == OUT )
 	continue;
 
       //--------------------
@@ -152,6 +152,33 @@ MoveBullets (void)
       map_x= (int) rintf( CurBullet->pos.x );
       map_y= (int) rintf( CurBullet->pos.y );
 
+      //--------------------
+      // But maybe the bullet is also outside the map already, which would
+      // cause a SEGFAULT directly afterwards, when the map is queried.
+      // Therefore we introduce some extra security here...
+      //
+      if ( ( map_x < 0 ) || ( map_x >= CurLevel->xlen ) ||
+	   ( map_y < 0 ) || ( map_y >= CurLevel->ylen ) )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
+This is an idication for a severe error in Freedroid.\n\
+\n\
+Please report the problem to the Freedroid developers.
+\n\
+Sorry for interrupting your game, but Freedroid will terminate now\n\
+to draw attention to the internal problem that indicates an error\n\
+in the code.  Please tell the developers about the problem detected\n\
+from the function MoveBullets().  Sorry for destroying your game...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+	}
+      
+
       switch ( CurLevel->map[ map_y ] [ map_x ] )
 	{
 	case CONVEY_L:
@@ -178,7 +205,7 @@ MoveBullets (void)
       //          CheckBulletCollisions(i);
 
     }				/* for */
-}				// void MoveBullets(void)
+}; // void MoveBullets(void)
 
 
 /*@Function============================================================
@@ -441,8 +468,15 @@ CheckBulletCollisions (int num)
       // Check for collision with background
       if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
 	{
-	  DeleteBullet ( num , TRUE ); // we want a bullet-explosion
-	  return;			
+	  if ( CurBullet->ignore_wall_collisions )
+	    {
+	      StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
+	    }
+	  else
+	    {
+	      DeleteBullet ( num , TRUE ); // we want a bullet-explosion
+	      return;			
+	    }
 	}
       
       // check for collision with influencer
