@@ -50,6 +50,8 @@
 #define ERR 	-1
 #define OK		0
 
+#define max(x,y) ((x) < (y) ? (y) : (x) ) 
+
 #define USE_SDL_FRAMERATE
 
 //--------------------

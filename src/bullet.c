@@ -40,6 +40,86 @@
 #define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_this_bullet_and_check_its_collisions ( int num )
+{
+  Bullet CurBullet = & ( AllBullets [ num ] ) ; 
+  moderately_finepoint dist_vector;
+  moderately_finepoint bullet_step_vector;
+  float whole_step_size;
+  int i;
+  float number_of_steps;
+
+  //--------------------
+  // In case of a bullet, which is not a melee weapon, we just move
+  // the bullets as specified in it's speed vector.  But of course we
+  // must make several stops and check for collisions in case the 
+  // planned step would be too big to crash into walls...
+  //
+  whole_step_size = max ( fabsf ( CurBullet->speed.x * Frame_Time () ) , 
+			  fabsf ( CurBullet->speed.y * Frame_Time () ) );
+
+  //--------------------
+  // NOTE:  The number 0.25 here is the value of thickness of the collision
+  // rectangle of a standard wall.  Since we might not have loaded all wall tiles
+  // at every time of the game, also during game, guessing the minimum thickness
+  // of walls at runtime is a bit hard and would be unconvenient and complicated,
+  // so I leave this with the hard-coded constant for now...
+  //
+  number_of_steps = rintf ( whole_step_size / 0.25 ) + 1 ;
+
+  bullet_step_vector . x = CurBullet -> speed . x * Frame_Time () / number_of_steps ;
+  bullet_step_vector . y = CurBullet -> speed . y * Frame_Time () / number_of_steps ;
+
+  for ( i = 0 ; i < number_of_steps ; i ++ )
+    {
+      CurBullet -> pos . x += bullet_step_vector . x ;
+      CurBullet -> pos . y += bullet_step_vector . y ;
+  
+      CheckBulletCollisions ( num ) ;
+    }
+
+  //--------------------
+  // Now we move the angle-changing melee weapons.  These should leave the
+  // code anyway as soon as bastian can start doing the enemy movement cycles
+  // so we're a bit careless here for now...
+  //
+  if ( CurBullet->angle_change_rate > 0 )
+    {
+      //--------------------
+      // We change the angle of the bullet itself.  That's the easier part.
+      // Rotation by selecting angle.  Very easy indead.
+      //
+      DebugPrintf( 1 , "\n Angle change rate : %f " , CurBullet->angle_change_rate );
+      CurBullet->angle += CurBullet->angle_change_rate * Frame_Time();
+      
+      //--------------------
+      // Now we must rotate the bullet around the influence device or other
+      // owner as specified in the bullets owner pointer
+      //
+      dist_vector.x = 0;
+      dist_vector.y = - CurBullet->fixed_offset;
+      
+      DebugPrintf( 1 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
+      
+      RotateVectorByAngle ( &dist_vector , CurBullet->angle );
+      
+      CurBullet->pos.x = CurBullet->owner_pos->x + dist_vector.x;
+      CurBullet->pos.y = CurBullet->owner_pos->y + dist_vector.y;
+      
+      // We tell the graphics functions, that they shall generate new pictures...
+      if ( CurBullet->Surfaces_were_generated )
+	{
+	  SDL_FreeSurface( CurBullet->SurfacePointer[0] );
+	  CurBullet->Surfaces_were_generated = FALSE ;
+	}
+    }
+}; // void move_this_bullet_and_check_its_collisions ( CurBullet )
+
+/* ----------------------------------------------------------------------
  * This function moves all the bullets according to their speeds and the
  * current frame rate of course.
  * ---------------------------------------------------------------------- */
@@ -50,7 +130,6 @@ MoveBullets (void)
   int map_x;
   int map_y;
   Bullet CurBullet;
-  moderately_finepoint dist_vector;
   Level BulletLevel;
 
   // movement of hte bullets
@@ -62,42 +141,7 @@ MoveBullets (void)
       if ( CurBullet->type == OUT )
 	continue;
 
-      //--------------------
-      // In case of a bullet, which is not a melee weapon, we just move
-      // the bullets as specified in it's speed vector
-      //
-      CurBullet->pos.x += CurBullet->speed.x * Frame_Time ();
-      CurBullet->pos.y += CurBullet->speed.y * Frame_Time ();
-      if ( CurBullet->angle_change_rate > 0 )
-	{
-	  //--------------------
-	  // We change the angle of the bullet itself.  That's the easier part.
-	  // Rotation by selecting angle.  Very easy indead.
-	  //
-	  DebugPrintf( 1 , "\n Angle change rate : %f " , CurBullet->angle_change_rate );
-	  CurBullet->angle += CurBullet->angle_change_rate * Frame_Time();
-
-	  //--------------------
-	  // Now we must rotate the bullet around the influence device or other
-	  // owner as specified in the bullets owner pointer
-	  //
-	  dist_vector.x = 0;
-	  dist_vector.y = - CurBullet->fixed_offset;
-
-	  DebugPrintf( 1 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
-
-	  RotateVectorByAngle ( &dist_vector , CurBullet->angle );
-
-	  CurBullet->pos.x = CurBullet->owner_pos->x + dist_vector.x;
-	  CurBullet->pos.y = CurBullet->owner_pos->y + dist_vector.y;
-
-	  // We tell the graphics functions, that they shall generate new pictures...
-	  if ( CurBullet->Surfaces_were_generated )
-	    {
-	      SDL_FreeSurface( CurBullet->SurfacePointer[0] );
-	      CurBullet->Surfaces_were_generated = FALSE ;
-	    }
-	}
+      move_this_bullet_and_check_its_collisions ( i );
 
       //--------------------
       // Maybe the bullet has a limited lifetime.  In that case we check if the

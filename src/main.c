@@ -141,7 +141,12 @@ main (int argc, char *const argv[])
 	      SDL_Flip ( Screen );
 	    }
 
-	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
+	  //--------------------
+	  // This will now be done inside the move bullets function, because there
+	  // might be need to check for collisions on several positions whenever a
+	  // bullet is moving very fast...
+	  //
+	  // for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  if ( ! ClientMode )
 	    for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	// change Influ-speed depending on keys pressed, but

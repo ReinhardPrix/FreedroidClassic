@@ -62,7 +62,6 @@
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
 
-#define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
 
 /* ----------------------------------------------------------------------
