@@ -777,7 +777,7 @@ Level_Editor(void)
 		  
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  SaveShip("Testship");
+		  SaveShip("Testship.shp");
 		  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		  SDL_Flip ( Screen );
 		  while (!EnterPressed() && !SpacePressed() ) ;

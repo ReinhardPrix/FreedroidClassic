@@ -178,8 +178,8 @@ EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
 EXTERN int GetCurrentLift (void);
 EXTERN void ActSpecialField (float, float);
 
-EXTERN int LoadShip (char *shipname);
-EXTERN int SaveShip(char *shipname);
+EXTERN int LoadShip (char *filename);
+EXTERN int SaveShip(char *filename);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
 EXTERN int GetLiftConnections (char *shipname);

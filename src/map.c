@@ -328,7 +328,6 @@ AnimateTeleports (void)
 int
 LoadShip (char *filename)
 {
-  char *fpath;
   char *ShipData;
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
@@ -338,8 +337,7 @@ LoadShip (char *filename)
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
 
   /* Read the whole ship-data to memory */
-  fpath = find_file (filename, MAP_DIR, FALSE);
-  ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
+  ShipData = ReadAndMallocAndTerminateFile( filename , END_OF_SHIP_DATA_STRING ) ;
 
   //--------------------
   // Now we read the shipname information from the loaded data
@@ -667,21 +665,16 @@ char *Encode_Level_For_Saving(Level Lev)
 @Ret: OK | ERR
 @Int:
 * $Function----------------------------------------------------------*/
-int SaveShip(char *shipname)
+int SaveShip(char *filename)
 {
   char *LevelMem;		/* linear memory for one Level */
   char *MapHeaderString;
   FILE *ShipFile;  // to this file we will save all the ship data...
-  char filename[FILENAME_LEN+1];
   int level_anz;
   int array_i, array_num;
   int i;
 
   DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
-  
-  /* Get the complete filename */
-  strcpy(filename, shipname);
-  strcat(filename, SHIP_EXT);
   
   /* count the levels */
   level_anz = 0;

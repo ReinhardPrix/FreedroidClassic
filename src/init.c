@@ -1582,8 +1582,8 @@ InitNewMissionList ( char *MissionName )
   //
   Shipname = 
     ReadAndMallocStringFromData ( MainMissionPointer , SHIPNAME_INDICATION_STRING , "\n" ) ;
-
-  if ( LoadShip ( Shipname ) == ERR )
+  fpath = find_file (Shipname, MAP_DIR, FALSE);
+  if ( LoadShip (fpath) == ERR )
     {
       DebugPrintf (1, "Error in LoadShip\n");
       Terminate (ERR);

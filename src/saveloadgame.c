@@ -56,14 +56,21 @@ SaveGame( void )
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
   char linebuf[10000];
+  char *homedir;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
 
+  // get home-directory to save in
+  if ( (homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf (0, "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      return (ERR);
+    }
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  strcpy( filename , "../map/" );
-  strcat( filename , Me.character_name );
+  sprintf( filename , "%s/%s%s", homedir, Me.character_name, SHIP_EXT );
   if ( SaveShip( filename ) != OK )
     {
       fprintf(stderr, "\n\
@@ -89,11 +96,9 @@ Sorry...\n\
   //--------------------
   // First, we must determine the save game file name
   //
-  strcpy( filename , "../map/" );
-  strcat( filename , Me.character_name );
-  strcat( filename, ".savegame" );
+  sprintf (filename, "%s/%s%s", homedir, Me.character_name, ".savegame");
   
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ...");
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
 
   //--------------------
   // Now that we know which filename to use, we can open the save file for writing
@@ -203,7 +208,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 int 
 LoadGame( void )
 {
-  char *fpath;
+  char *homedir;
   char *LoadGameData;
   char filename[1000];
   unsigned char* InfluencerRawDataPointer;
@@ -221,23 +226,31 @@ LoadGame( void )
   // information for the old game.  This is not very difficult, since
   // we have very old and proven functions to do it.
   //
-  strcpy(filename, Me.character_name );
-  strcat(filename, SHIP_EXT );
+
+  // get home-directory to load from
+  if ( (homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf (0, "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for loading. Abort.\n");
+      return (ERR);
+    }
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", homedir, Me.character_name, SHIP_EXT);
   LoadShip( filename );
 
   //--------------------
   // First, we must determine the savedgame data file name
   //
-  strcpy(filename, Me.character_name );
-  strcat(filename, SAVEDGAME_EXT );
+  sprintf (filename, "%s/%s%s", homedir, Me.character_name, SAVEDGAME_EXT);
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
 
   //--------------------
   // Now we can read the whole savegame data into memory with one big flush
   //
-  fpath = find_file ( filename , MAP_DIR , FALSE );
-  LoadGameData = ReadAndMallocAndTerminateFile( fpath , END_OF_SAVEDGAME_DATA_STRING ) ;
+  LoadGameData = ReadAndMallocAndTerminateFile( filename , END_OF_SAVEDGAME_DATA_STRING ) ;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
 
