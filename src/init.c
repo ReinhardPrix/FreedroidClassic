@@ -45,8 +45,91 @@
 #define SCROLLSTARTY		SCREENHOEHE
 
 void Init_Game_Data( char* Datafilename );
+void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
 char* NextMissionName;
+
+void 
+Get_Bullet_Data ( char* DataPointer )
+{
+  int RobotIndex = 0;
+  char *BulletPointer;
+  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
+                       // interchanging of the order of appearance of parameters in the game.dat file
+  int StringLength;
+  int i;
+
+  double bullet_speed_calibrator;
+  double bullet_damage_calibrator;
+
+#define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
+#define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
+#define BULLET_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
+#define BULLET_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
+
+
+  if ( (BulletPointer = strstr ( DataPointer , BULLET_SECTION_BEGIN_STRING ) ) == NULL)
+    {
+      printf("\n\nBegin of Bullet Data Section string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\n\nBegin of Bullet Data Section found. Good.");  
+      fflush(stdout);
+    }
+  
+  if ( ( strstr ( DataPointer , BULLET_SECTION_END_STRING ) ) == NULL)
+    {
+      printf("\n\nEnd of Bullet Data Section string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\n\nEnd of Bullet Data Section found. Good.");  
+      fflush(stdout);
+    }
+  
+  printf("\n\nStarting to read bullet calibration section\n\n");
+
+  // Now we read in the speed calibration factor for all bullets
+  if ( (ValuePointer = strstr ( BulletPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO BULLET SPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &bullet_speed_calibrator );
+      printf("\nBullet speed calibrator found!  It reads: %f" , bullet_speed_calibrator );
+    }
+
+  // Now we read in the damage calibration factor for all bullets
+  if ( (ValuePointer = strstr ( BulletPointer, BULLET_DAMAGE_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO BULLET DAMAGE CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &bullet_damage_calibrator );
+      printf("\nBullet damage calibrator found!  It reads: %f" , bullet_damage_calibrator );
+    }
+
+  //--------------------
+  // Now that all the calibrations factors have been read in, we can start to
+  // apply them to all the bullet types
+  //
+  for ( i = 0 ; i < ALLBULLETTYPES ; i++ )
+    {
+      Bulletmap[i].speed *= bullet_speed_calibrator;
+      Bulletmap[i].damage *= bullet_damage_calibrator;
+    }
+
+} // void Get_Bullet_Data ( char* DataPointer );
+
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -582,6 +665,8 @@ Init_Game_Data ( char * Datafilename )
   printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
 
   Get_Robot_Data ( Data );
+
+  Get_Bullet_Data ( Data );
 
   // free ( Data ); DO NOT FREE THIS AREA UNLESS YOU REALLOCATE MEMORY FOR THE
   // DROIDNAMES EVERY TIME!!!

@@ -18,6 +18,17 @@ as you stick to the following rules:
 YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
 That will not cause any problems.  
 
+----------------------------------------------------------------------
+
+*** Start of Bullet Data Section: ***
+
+Common factor for all bullet's speed values: 0.8
+Common factor for all bullet's damage values: 1.0
+
+*** End of Bullet Data Section: ***
+
+----------------------------------------------------------------------
+
 *** Start of Robot Data Section: *** 
 
 This is the header part of the robot data section:

@@ -88,7 +88,9 @@ Allowed Type of Random Droid for this level: 476
 Allowed Type of Random Droid for this level: 493
 Allowed Type of Random Droid for this level: 516
 // Adv.Comm. 1 is ATTACK_FIXED_MAP_POSITION-->Par.1 and Par.2 are the position
-SpecialForce: Type=999 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=4 Parameter2=2
+// This is commented out by inserting the two asterisks.  It's not needed for
+// the classical paradroid mission.
+S**pecialForce: Type=999 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=4 Parameter2=2
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -124,7 +126,7 @@ Allowed Type of Random Droid for this level: 249
 Allowed Type of Random Droid for this level: 296
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 329
-SpecialForce: Type=999 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=4 Parameter2=2
+S**pecialForce: Type=999 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=4 Parameter2=2
 ** End of this levels droid data **
 
 ** Beginning of new Level **

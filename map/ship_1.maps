@@ -41,14 +41,14 @@ Nr.= 17 x=  36 y=  11	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 18 x=   0 y=   0	 connections:   74 -36  10 -44  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 19 x=   0 y=   0	 connections:    0   0  31   0  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 20 x=   0 y=   0	 connections:   15   0   8   0  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=   0 y=   0	 connections:   -1  93  -1 -100   0   0   0   0   1   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:   -1  93  -1 -100   0   0   0   0   0   1   1   1
 Nr.= 22 x=   0 y=   0	 connections:   68 106   4  90  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=   0 y=   0	 connections:  -61  73 -125   5   5   5   5   5   1   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -61  73 -125   5   5   5   5   5   5   1   1   1
 Nr.= 24 x=   0 y=   0	 connections:    1  41 -88  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 25 x=   0 y=   0	 connections:   66 -85  66 -85  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 26 x=   0 y=   0	 connections:   32 113  96  88  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 27 x=   0 y=   0	 connections:    0  64  96  88  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=   0 y=   0	 connections:    1 -110   0   0   0   0   4   5   1   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:    1 -110   0   0   0   0   0   4   5   1   1   1
 Nr.= 29 x=   0 y=   0	 connections:  -22  -1 -88  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -143,20 +143,20 @@ beginning_of_map
 ''''+--------------+-----+''''''''''''|....|''''
 ''''''''''''''''''''''''''''''''''''''+----+''''
 wp
-Nr.=  0 x=  20 y=   1	 connections:    0   0   0  20  20   1   0   0   0   0   0   0
-Nr.=  1 x=  24 y=   1	 connections:   10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=  20 y=   1	 connections:    1   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=  24 y=   1	 connections:   10   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=   2 y=   3	 connections:    3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=   3 y=   4	 connections:    2   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  11 y=   4	 connections:    3   6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  5 x=   8 y=   7	 connections:    6   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  6 x=  11 y=   7	 connections:    7   4   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=  20 y=   7	 connections:    0   6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  42 y=   8	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=  20 y=  11	 connections:    7   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=  24 y=  11	 connections:    9  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 11 x=  42 y=  11	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 12 x=  46 y=  11	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=  39 y=  14	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=  20 y=   7	 connections:    0   6   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  42 y=   8	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=  20 y=  11	 connections:    7  10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=  24 y=  11	 connections:    9   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 11 x=  42 y=  11	 connections:   13  12   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 12 x=  46 y=  11	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 13 x=  39 y=  14	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 14 x=   0 y=   0	 connections:  117  32  99 117  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=   0 y=   0	 connections:  101 110 116 108  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 16 x=   0 y=   0	 connections:   99 111 110 116  -1  -1  -1  -1  -1  -1  -1  -1
@@ -261,7 +261,7 @@ beginning_of_map
 |1..)..+-----+''''
 +------+''''''''''
 wp
-Nr.=  0 x=   5 y=   1	 connections:    0   0   0   5   5   1   0   0   0   0   0   0
+Nr.=  0 x=   5 y=   1	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   1 y=   3	 connections:    6   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=   3 y=   3	 connections:    1   3   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=   8 y=   3	 connections:    2   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -381,15 +381,15 @@ beginning_of_map
 |1.....+-------+'''''''''''''''
 +------+'''''''''''''''''''''''
 wp
-Nr.=  0 x=   2 y=   4	 connections:    0   0   0   2   2   4   0   0   0   0   0   0
+Nr.=  0 x=   2 y=   4	 connections:    1  12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   5 y=   4	 connections:    0   2   3   4  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=  16 y=   4	 connections:    9   3   1   0  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=  16 y=   4	 connections:    9   3   1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  20 y=   4	 connections:    2  10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=   5 y=   6	 connections:    1   5   6  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  5 x=  10 y=   6	 connections:    4   6  14  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  6 x=  14 y=   6	 connections:    5  15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  7 x=  23 y=   6	 connections:   11   8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  27 y=   6	 connections:    7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  28 y=   6	 connections:    7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  9 x=  16 y=   7	 connections:    2  10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 10 x=  20 y=   7	 connections:    9   3  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 11 x=  22 y=   7	 connections:   10   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -397,20 +397,20 @@ Nr.= 12 x=   2 y=   9	 connections:    0  13  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 13 x=   6 y=   9	 connections:   12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 14 x=  10 y=  10	 connections:    5  15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=  14 y=  10	 connections:   14   6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 16 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 17 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 18 x=   0 y=   0	 connections:  -125   5   5   5   5   5   4   4   1   1   1   1
-Nr.= 19 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 20 x=   0 y=   0	 connections:  -125   5   5   5   5   5   6   6   1   1   1   1
-Nr.= 21 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 22 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 23 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -127   7   7   7   7   7   8   8   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   1   1   1   1
-Nr.= 29 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
+Nr.= 16 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 17 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 18 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   4   4   1   1   1
+Nr.= 19 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 20 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   6   6   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7  -1  -1   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -128  -1  -1  -1  -1  -1  -1  -1  -1   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -128  -1  -1  -1  -1  -1  -1  -1  -1   1   1   1
+Nr.= 29 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -518,9 +518,9 @@ Nr.= 13 x=  16 y=  10	 connections:   12   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 14 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 16 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
-Nr.= 17 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 18 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 19 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
+Nr.= 17 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 18 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 19 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
 Nr.= 20 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 21 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 22 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
@@ -773,7 +773,7 @@ Nr.= 24 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   
 Nr.= 25 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 26 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 27 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
 Nr.= 29 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -888,15 +888,15 @@ Nr.= 17 x=   1 y=  13	 connections:   18   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 18 x=  11 y=  13	 connections:   17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 19 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 20 x=   0 y=   0	 connections:  124 125 125 126  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=   0 y=   0	 connections:  127 127 127 -128   8   8   8   8   1   1   1   1
-Nr.= 22 x=   0 y=   0	 connections:  -127   7   7   7   7   6   7   7   1   1   1   1
-Nr.= 23 x=   0 y=   0	 connections:  -125   5   5   5   5   5   4   4   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 29 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:  127 127 127 -128   8   8   8   8   8   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -127   7   7   7   7   7   6   7   7   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   4   4   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 29 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -999,9 +999,9 @@ Nr.=  9 x=  12 y=   7	 connections:   10   8   5  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 10 x=  14 y=   7	 connections:    7   9   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 11 x=  34 y=  10	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 12 x=  36 y=  10	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 14 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 15 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
+Nr.= 13 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 14 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 15 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
 Nr.= 16 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 17 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 18 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
@@ -1010,7 +1010,7 @@ Nr.= 20 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   
 Nr.= 21 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 22 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 23 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
 Nr.= 25 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 26 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 27 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
@@ -1106,31 +1106,31 @@ Nr.=  1 x=  12 y=   5	 connections:    0   4  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=  14 y=   5	 connections:    0   4   3  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  17 y=   5	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  13 y=   6	 connections:    1   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.=  6 x=   0 y=   0	 connections:  -122   2   2   2   2   2   1   1   1   1   1   1
+Nr.=  5 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.=  6 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   1   1   1   1   1
 Nr.=  7 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
-Nr.=  8 x=   0 y=   0	 connections:  -121   1   1   1   1   1   2   2   1   1   1   1
-Nr.=  9 x=   0 y=   0	 connections:  -121   1   1   1   1   1   2   2   1   1   1   1
-Nr.= 10 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 11 x=   0 y=   0	 connections:  -123   3   3   3   3   4   4   4   1   1   1   1
-Nr.= 12 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 13 x=   0 y=   0	 connections:  -124   4   4   4   4   5   5   5   1   1   1   1
-Nr.= 14 x=   0 y=   0	 connections:  -126   6   6   6   6   6   7   7   1   1   1   1
-Nr.= 15 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 16 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 17 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   1   1   1   1
-Nr.= 18 x=   0 y=   0	 connections:  -128   8   8   8   8   8   7   7   1   1   1   1
-Nr.= 19 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 20 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 21 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 22 x=   0 y=   0	 connections:  -126   6   6   6   6   6   6   5   1   1   1   1
-Nr.= 23 x=   0 y=   0	 connections:  -125   5   5   5   5   5   4   4   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -125   5   5   5   5   5   4   4   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -125   5   5   5   5   5   6   6   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   4   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 29 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
+Nr.=  8 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   2   2   1   1   1
+Nr.=  9 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   2   2   1   1   1
+Nr.= 10 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 11 x=   0 y=   0	 connections:  -123   3   3   3   3   3   4   4   4   1   1   1
+Nr.= 12 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 13 x=   0 y=   0	 connections:  -124   4   4   4   4   4   5   5   5   1   1   1
+Nr.= 14 x=   0 y=   0	 connections:  -126   6   6   6   6   6   6   7   7   1   1   1
+Nr.= 15 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 16 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 17 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   8   1   1   1
+Nr.= 18 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   7   7   1   1   1
+Nr.= 19 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 20 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -126   6   6   6   6   6   6   6   5   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   4   4   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   4   4   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   6   6   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   4   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 29 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1213,18 +1213,18 @@ beginning_of_map
 |.......5.5.a.....@.@|
 +--------------------+
 wp
-Nr.=  0 x=  13 y=   1	 connections:    0   0   0  13  13   1   0   0   0   0   0   0
+Nr.=  0 x=  13 y=   1	 connections:    3   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  17 y=   1	 connections:    0   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=   2 y=   2	 connections:    3   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  12 y=   2	 connections:    2   4   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  18 y=   2	 connections:    1   3   2  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.=  6 x=   0 y=   0	 connections:  -122   2   2   2   2   2   3   3   1   1   1   1
-Nr.=  7 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.=  8 x=   0 y=   0	 connections:  -124   4   4   4   4   4   5   5   1   1   1   1
-Nr.=  9 x=   0 y=   0	 connections:  -125   5   5   5   5   6   6   6   1   1   1   1
-Nr.= 10 x=   0 y=   0	 connections:  -127   7   7   7   7   7   8   8   1   1   1   1
-Nr.= 11 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   1   1   1   1
+Nr.=  5 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.=  6 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   3   3   1   1   1
+Nr.=  7 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.=  8 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   5   5   1   1   1
+Nr.=  9 x=   0 y=   0	 connections:  -125   5   5   5   5   5   6   6   6   1   1   1
+Nr.= 10 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   8   8   1   1   1
+Nr.= 11 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   8   1   1   1
 Nr.= 12 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 13 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 14 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1335,12 +1335,12 @@ beginning_of_map
 |...........=..........=....|.=..|
 +-----------+----------+----+-+--+
 wp
-Nr.=  0 x=   8 y=   1	 connections:    0   0   0   8   8   1   0   0   0   0   0   0
+Nr.=  0 x=   8 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  24 y=   1	 connections:    8   2   0  15  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=  32 y=   1	 connections:    9   1   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=  32 y=   1	 connections:    9   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  15 y=   4	 connections:    6   4  10  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  19 y=   4	 connections:    7   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=   8 y=   7	 connections:    6   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=   8 y=   7	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  6 x=  15 y=   7	 connections:    3  10   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  7 x=  22 y=   7	 connections:    8   9  11   4  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  8 x=  24 y=   7	 connections:    7   1  15   9  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1353,18 +1353,18 @@ Nr.= 14 x=   3 y=  13	 connections:   15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=  24 y=  13	 connections:   14  12   8   1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 16 x=  29 y=  13	 connections:   17  13  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 17 x=  32 y=  13	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 19 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   3   1   1   1   1
-Nr.= 20 x=   0 y=   0	 connections:  -123   3   3   3   3   3   2   2   1   1   1   1
-Nr.= 21 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 22 x=   0 y=   0	 connections:  -122   2   2   2   2   2   1   1   1   1   1   1
+Nr.= 18 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 19 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   3   1   1   1
+Nr.= 20 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   2   2   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   1   1   1   1   1
 Nr.= 23 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -120   0   0   0   0   9   9   9   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   1   1   1   1
-Nr.= 29 x=   0 y=   0	 connections:  -120   0   0   0   0   0   0   0   1   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -120  -1  -1  -1  -1  -1   9   9   9   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   9   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   9   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   9   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -119   9   9   9   9   9   9   9   9   1   1   1
+Nr.= 29 x=   0 y=   0	 connections:  -120  -1  -1  -1  -1  -1  -1  -1  -1   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1458,8 +1458,8 @@ beginning_of_map
 |.............|...........33|.).o|
 +-------------+-------------+----+
 wp
-Nr.=  0 x=  15 y=   1	 connections:    0   0   0  15  15   1   0   0   0   0   0   0
-Nr.=  1 x=  27 y=   1	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=  15 y=   1	 connections:    4   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=  27 y=   1	 connections:    6   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  2 x=   4 y=   4	 connections:   10   3   4  16  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  10 y=   4	 connections:    2   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  15 y=   4	 connections:    5   3   2   0  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1600,16 +1600,16 @@ Nr.= 15 x=  31 y=  13	 connections:   16   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 16 x=  32 y=  13	 connections:   15   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 17 x=   0 y=   0	 connections:  126 126 126 126  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 18 x=   0 y=   0	 connections:  127 127 127 127  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   1   1   1   1
-Nr.= 20 x=   0 y=   0	 connections:  -127   7   7   7   7   7   6   6   1   1   1   1
-Nr.= 21 x=   0 y=   0	 connections:  -126   6   6   6   6   5   5   5   1   1   1   1
-Nr.= 22 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 23 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -122   2   2   2   2   2   1   1   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -121   1   1   1   1   0   0   0   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -120   0   0   0   0   0   0   0   1   1   1   1
+Nr.= 19 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   8   8   1   1   1
+Nr.= 20 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   6   6   1   1   1
+Nr.= 21 x=   0 y=   0	 connections:  -126   6   6   6   6   6   5   5   5   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   1   1   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -121   1   1   1   1   1   0   0   0   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -120   0   0   0   0   0   0   0   0   1   1   1
 Nr.= 29 x=   0 y=   0	 connections:  -121   1   1   1   1   1   1   1   1   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1692,7 +1692,7 @@ beginning_of_map
 |.....=....+-+...........|
 |..+"-+..+-+'+-+...+-+...|
 |..|..|..|('''(|.+-+'+-+.|
-|o.|..|..|''.''|.|('.'(|.|
+|o.|..|..|'''''|.|('''(|.|
 |..|a.|..|''''a|.|'''''|.|
 |..+-"+..|'''''|.|''''a|.|
 |..|..|..|'''''|.|'''''|.|
@@ -1718,9 +1718,9 @@ Nr.= 10 x=   8 y=  14	 connections:    9   2  11  13  -1  -1  -1  -1  -1  -1  -1
 Nr.= 11 x=  12 y=  14	 connections:   10  12   6  13  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 12 x=  16 y=  14	 connections:    3  11  13  10  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 13 x=  20 y=  14	 connections:   12   7  10  11  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 14 x=   0 y=   0	 connections:  -125   5   5   5   5   6   6   6   1   1   1   1
-Nr.= 15 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   1   1   1   1
-Nr.= 16 x=   0 y=   0	 connections:  -127   7   7   7   7   7   8   8   1   1   1   1
+Nr.= 14 x=   0 y=   0	 connections:  -125   5   5   5   5   5   6   6   6   1   1   1
+Nr.= 15 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   7   7   1   1   1
+Nr.= 16 x=   0 y=   0	 connections:  -127   7   7   7   7   7   7   8   8   1   1   1
 Nr.= 17 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 18 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 19 x=   0 y=   0	 connections:  125 125 125 125  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1814,7 +1814,7 @@ beginning_of_map
 |........|
 |........|
 |..+-+...|
-|.++.++..|
+|.++'++..|
 |.|('(|..|
 |.|'''|..|
 |.|'''|..|
@@ -1848,14 +1848,14 @@ Nr.= 18 x=   0 y=   0	 connections:  125 125 125 124  -1  -1  -1  -1  -1  -1  -1
 Nr.= 19 x=   0 y=   0	 connections:  124 124 125 126  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 20 x=   0 y=   0	 connections:  126 126 127 127  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 21 x=   0 y=   0	 connections:  127 127 127 127  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=   0 y=   0	 connections:  -128   8   8   8   8   8   7   7   1   1   1   1
-Nr.= 23 x=   0 y=   0	 connections:  -126   6   6   6   6   6   6   6   1   1   1   1
-Nr.= 24 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   1   1   1   1
-Nr.= 25 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   1   1   1   1
-Nr.= 26 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 27 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   1   1   1   1
-Nr.= 28 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
-Nr.= 29 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   1   1   1   1   1
+Nr.= 22 x=   0 y=   0	 connections:  -128   8   8   8   8   8   8   7   7   1   1   1
+Nr.= 23 x=   0 y=   0	 connections:  -126   6   6   6   6   6   6   6   6   1   1   1
+Nr.= 24 x=   0 y=   0	 connections:  -125   5   5   5   5   5   5   5   5   1   1   1
+Nr.= 25 x=   0 y=   0	 connections:  -124   4   4   4   4   4   4   4   4   1   1   1
+Nr.= 26 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 27 x=   0 y=   0	 connections:  -123   3   3   3   3   3   3   3   3   1   1   1
+Nr.= 28 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   2   1   1   1
+Nr.= 29 x=   0 y=   0	 connections:  -122   2   2   2   2   2   2   2   1   1   1   1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
