@@ -42,6 +42,7 @@
 #include "global.h"
 #include "text.h"
 
+int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
 
 char *Wordpointer;
 unsigned char *Fontpointer;
@@ -71,34 +72,103 @@ void
 ChatWithFriendlyDroid( int Enum )
 {
   char* RequestString;
+  int i;
+  SDL_Surface* Background;
 
   Activate_Conservative_Frame_Computation( );
   MakeGridOnScreen();
+  // Now the background is basically there as we need it.  We store it
+  // in its current pure form for later use as background for scrolling
+  //
+  Background = SDL_DisplayFormat( ne_screen );
+  
 
+  DisplayTextWithScrolling ( 
+			    "Transfer channel protocol set up for text transfer...\n\n" , 
+			    User_Rect.x , User_Rect.y , NULL , Background );
 
-  DisplayText( "Transfer channel protocol set up for text transfer...\n\n" , User_Rect.x , User_Rect.y , NULL );
   printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
 
   while (1)
     {
-      printf_SDL( ne_screen, -1 , -1 , "What is your request? [type quit to cancel communication]\n" );
-      printf_SDL( ne_screen, -1 , -1 , ">" );
+      DisplayTextWithScrolling ( 
+				"\n\nWhat is your request? [type quit to cancel communication]\n" ,
+				-1 , -1 , NULL , Background );
+      DisplayTextWithScrolling ( ">" , -1 , -1 , NULL , Background );
+
       SDL_Flip ( ne_screen );
       RequestString = GetString( 20 , FALSE );
       printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
 
+      //--------------------
+      // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
+      // the given input string into lower cases.  That will make pattern matching afterwards
+      // much more reliable.
+      //
+      i=0;
+      while ( RequestString[i] != 0 ) { RequestString[i]=tolower( RequestString[i] ); i++; }
+
+      //--------------------
+      // the quit command is always simple and clear.  We just need to end
+      // the communication function. hehe.
+      //
       if ( !strcmp ( RequestString , "quit" ) ) return;
+
+      //--------------------
+      // the help command is always simple and clear.  We just need to print out the 
+      // following help text describing common command and keyword options and that's it.
+      //
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
-	  DisplayText( 
+	  DisplayTextWithScrolling( 
 "You have opend a communication channel to a friendly droid by touching it while in transfer mode.\n\
 You can enter command phrases to make the droid perform some action.\n\
 Or you can ask the droid for valuable information by entering the keywords you request information about.\n\
 Most useful command phrases are: follow stay\n\
 Often useful information requests are: job name status MS\n\
-Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL );
+Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL , Background );
+	  continue;
 	}
       
+      //--------------------
+      // If the player requested the robot to follow him, this robot should switch to 
+      // following mode and follow the 001 robot.  But this is at the moment not implemented.
+      // Instead the robot will just print out the message, that he would follow, but don't
+      // do anything at this time.
+      //
+      // Same holds true for the 'stay' command
+      //
+      if ( !strcmp ( RequestString , "follow" ) ) 
+	{
+	  DisplayText( 
+		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up.\n" , 
+		      MyCursorX , MyCursorY , NULL );
+	  continue;
+	}
+      if ( !strcmp ( RequestString , "stay" ) )
+	{
+	  DisplayText( 
+		      "Ok.  I'll stay here and wait for further instructions from you.  \n\
+I hope you know what you're doing.\n" , 
+		      MyCursorX , MyCursorY , NULL );
+	  continue;
+	}
+
+      //--------------------
+      // At this point we know, that none of the default answers applied.
+      // We therefore will search this robots question-answer-list for a
+      // match in the question entries and if applicable print out the
+      // matching answer of course.
+      //
+
+      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+	{
+	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
+	    {
+	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
+					 -1 , -1 , NULL , Background );
+	    }
+	}
     }
 }; // void ChatWithFriendlyDroid( int Enum );
 
@@ -345,6 +415,97 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 }				// void ScrollText(void)
 
 /*-----------------------------------------------------------------
+ * This function is much like DisplayText, but with the main difference,
+ * that in case of the whole clipping window filled, the function will
+ * display a ---more--- line, wait for a key and then scroll the text
+ * further up.
+ *
+ * @Desc: prints *Text beginning at positions startx/starty, 
+ * 
+ *	and respecting the text-borders set by clip_rect
+ *      -> this includes clipping but also automatic line-breaks
+ *      when end-of-line is reached
+ * 
+ *      if clip_rect==NULL, no clipping is performed
+ *      
+ *      NOTE: the previous clip-rectange is restored before
+ *            the function returns!
+ *
+ *      NOTE2: this function _does not_ update the screen
+ *
+ * @Ret: TRUE if some characters where written inside the clip rectangle
+ *       FALSE if not (used by ScrollText to know if Text has been scrolled
+ *             out of clip-rect completely)
+ *-----------------------------------------------------------------*/
+int
+DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
+{
+  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
+
+  SDL_Rect store_clip;
+
+  if ( startx != -1 ) MyCursorX = startx;		
+  if ( starty != -1 ) MyCursorY = starty;
+
+  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  if (clip)
+    SDL_SetClipRect (ne_screen, clip);
+  else
+    {
+      clip = & User_Rect;
+    }
+
+
+  tmp = Text;			/* running text-pointer */
+
+  while ( *tmp && (MyCursorY < clip->y + clip->h) )
+    {
+      if ( *tmp == '\n' )
+	{
+	  MyCursorX = clip->x;
+	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+
+	  //--------------------
+	  // Here we plant in the question for ---more--- and a key to be pressed,
+	  // before we clean the screen and restart displaying text from the top
+	  // of the given Clipping rectangle
+	  //
+	  if ( abs( MyCursorY - ( clip->h ) ) <= FontHeight(GetCurrentFont()) * TEXT_STRETCH )
+	    {
+	      DisplayText( "--- more --- more --- more --- more ---\n" , MyCursorX , MyCursorY , clip );
+	      SDL_Flip( ne_screen );
+	      while ( !SpacePressed() );
+	      while (  SpacePressed() );
+	      SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+	      MyCursorY = clip->y;
+	      SDL_Flip( ne_screen );
+	    };
+	}
+      else
+	DisplayChar (*tmp);
+
+      tmp++;
+
+      if (clip)
+	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
+
+    } // while !FensterVoll()
+
+   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
+
+  /*
+   * ScrollText() wants to know if we still wrote something inside the
+   * clip-rectangle, of if the Text has been scrolled out
+   */
+   if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
+     return FALSE;  /* no text was written inside clip */
+   else
+     return TRUE; 
+
+};
+
+/*-----------------------------------------------------------------
  * @Desc: prints *Text beginning at positions startx/starty, 
  * 
  *	and respecting the text-borders set by clip_rect
@@ -370,8 +531,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
   SDL_Rect store_clip;
 
-  MyCursorX = startx;		
-  MyCursorY = starty;
+  if ( startx != -1 ) MyCursorX = startx;		
+  if ( starty != -1 ) MyCursorY = starty;
 
 
   SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */

@@ -249,6 +249,11 @@ ClearEnemys (void)
 	  AllEnemys[i].PrivatePathway[j].x=0;
 	  AllEnemys[i].PrivatePathway[j].y=0;
 	}
+
+      for ( j = 0 ; j < MAX_CHAT_KEYWORDS_PER_DROID * 2 ; j++ )
+	{
+	  AllEnemys[i].QuestionResponseList[j]="";
+	}
     }
 
   return;

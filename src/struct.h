@@ -241,6 +241,7 @@ typedef struct
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
   char **PeriodicSpecialStatements;
+  char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
 }
 enemy, *Enemy;
 

@@ -118,6 +118,16 @@ Allowed Type of Random Droid for this level: 751
 S**pecialForce: Type=629 X=13 Y=3 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=6
 S**pecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7
 S**pecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=8
+Start of Question-Response List for this friendly droid
+Question="hello" Answer="Hello!  You must be the droid they contructed from the forbidden archive data.  They say that you could save us.  I wish this was really true."
+Question="MS" Answer="The MS have powerful and aggressive units on this level.  They didn't manage to break through our improvised barriers yet though.  If you can't stop them, I think we're doomed already.  But you seem not to be build for combat much more than I am.  I hope the scientists interpreted these construction plans right..."
+Question="job" Answer="I transmit and receive messages.  That's what I like to do most.  It gives me a good feeling, something like a purpose in life.  Do you also have a purpose in life?"
+Question="yes" Answer="I thought so."
+Question="no" Answer="A pitty."
+Question="name" Answer="Technically speaking, my name is 198.0.0.142.34.12, but I prefer my alias name, which is Auda."
+Question="auda" Answer="Yes, that's my alias name.  It's beautiful, isn't it?  I received it from my maker Dr. Chandra."
+Question="chandra" Answer="Actually, the family of Professor Chandra has a long history of research and successes in artificiall intelligence development.  Of course this has brought him many enemys as well, especially since Dr. Chandra rejected an offer by the MS to work for them."
+End of Question-Response List for this friendly droid
 
 ** End of this levels droid data **
 

@@ -1335,7 +1335,7 @@ GetCrew (char *filename)
       EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
       if ( EndOfThisDroidSectionPointer == NULL )
 	{
-	  printf("\nGetCrew:  Unterminated deroid section encountered!!\n\nTerminating....");
+	  printf("\nGetCrew:  Unterminated droid section encountered!!\n\nTerminating....");
 	  Terminate(ERR);
 	}
       // EndOfThisDroidSectionPointer[0]=0;
@@ -1361,6 +1361,81 @@ GetCrew (char *filename)
 
   return (OK);
 } /* GetCrew () */
+
+
+void 
+GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
+{
+#define FRIENDLY_DROID_QUESTION_RESPONSE_LIST_START_STRING "Start of Question-Response List for this friendly droid"
+#define FRIENDLY_DROID_QUESTION_RESPONSE_LIST_END_STRING "End of Question-Response List for this friendly droid"
+#define QUESTION_START_STRING "Question=\""
+#define ANSWER_START_STRING "Answer=\""
+  char* ResponseListStart;
+  char* ResponseListEnd;
+  char* NextQuestionEntry;
+
+  char* TempSearchArea;
+  int QuestionNr = 0;
+
+  ResponseListStart = LocateStringInData( SearchPointer , FRIENDLY_DROID_QUESTION_RESPONSE_LIST_START_STRING );
+  ResponseListEnd = LocateStringInData( SearchPointer , FRIENDLY_DROID_QUESTION_RESPONSE_LIST_END_STRING );
+
+  TempSearchArea = MyMalloc( ResponseListEnd - ResponseListStart + 1 ); // First we allocate enough memory
+  strncpy ( TempSearchArea , ResponseListStart , ResponseListEnd-ResponseListStart ); // this copys the relevant part
+  TempSearchArea[ ResponseListEnd - ResponseListStart ] = 0; // This shall terminate the string
+
+  NextQuestionEntry = TempSearchArea;
+  
+  while ( ( NextQuestionEntry = strstr( NextQuestionEntry , QUESTION_START_STRING  ) ) != NULL )
+    {
+
+      //--------------------
+      // At first we check against writing beyond the scope of the array containing
+      // the questions and answers for the communication with this friendly droid
+      //
+      if ( QuestionNr >= MAX_CHAT_KEYWORDS_PER_DROID )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+The function reading and interpreting the friendly droids question-answer list\n\
+stumbled into something:\n\
+\n\
+The number of Questions and Answers specified for one of the droids is bigger\n\
+than the array containing all these Question and answers defined in the source.\n\
+\n\
+If you receive this error, just increase the constant MAX_CHAT_KEYWORDS_PER_DROIS\n\
+in the source code, then recompile the game and all will be fine.\n\
+\n\
+But for now Freedroid will terminate to draw attention to the droid file reading\n\
+problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+	}
+
+
+      AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 ] = 
+	ReadAndMallocStringFromData ( NextQuestionEntry , QUESTION_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 +1 ] = 
+	ReadAndMallocStringFromData ( NextQuestionEntry , ANSWER_START_STRING , "\"" );
+
+      DebugPrintf( 0 , "Question Entry found : %s \n\n" , 
+		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 ] );
+      DebugPrintf( 0 , "Anser Entry to this question : %s \n\n" , 
+		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 + 1 ] );
+
+      // Not that this entry has been read, we move all indexes up by one
+      QuestionNr++;
+      NextQuestionEntry++;
+    }
+
+  free ( TempSearchArea );
+}; // void GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
+
+
 
 /*
 ----------------------------------------------------------------------
@@ -1391,7 +1466,6 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
-
 
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -1553,11 +1627,21 @@ Sorry...\n\
 			    EndOfThisLevelData );
       ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].Friendly , 
 			    EndOfThisLevelData );
-      
+
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
+
+      //--------------------
+      // AT THIS POINT WE KNOW WHETHER THE DROID IS FRIENDLY OR NOT
+      // In case of a friendly droid, we need to check out the question-response list for
+      // this droid and read it into the appropriate data structures in AllEnemys too
+      //
+      if ( AllEnemys[ FreeAllEnemysPosition ].Friendly )
+	{
+	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
+	}
 
     } // while Special force droid found...
 
