@@ -113,12 +113,12 @@ void ClearEnemys(void)
 * $Function----------------------------------------------------------*/
 void ShuffleEnemys(void)
 {
-	int curlevel = CurLevel->levelnum;
-	int i;
-	int nth_enemy;
-	int wp_num;
-	int wp;
-	int influ_x, influ_y;
+  int curlevel = CurLevel->levelnum;
+  int i;
+  int nth_enemy;
+  int wp_num;
+  int wp;
+  finepoint influ_coord;
 	
 	/* Anzahl der Waypoints auf CurLevel abzaehlen */
 	wp_num = 0;
@@ -153,15 +153,15 @@ void ShuffleEnemys(void)
 	/* enemys ein bisschen sich selbst ueberlassen */
 	
 	/* Influencer zuerst entfernen */
-	influ_x = Me.pos.x;
-	influ_y = Me.pos.y;
+	influ_coord.x  = Me.pos.x;
+	influ_coord.y  = Me.pos.y;
 	Me.pos.x = Me.pos.y = 0;
 	
 	for( i=0; i<30; i++ ) MoveEnemys();
 
 	/* influencer wieder her */
-	Me.pos.x = influ_x;
-	Me.pos.y = influ_y;
+	Me.pos.x = influ_coord.x;
+	Me.pos.y = influ_coord.y;
 	
 } /* ShuffleEnemys() */
 

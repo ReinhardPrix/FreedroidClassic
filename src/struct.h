@@ -32,6 +32,11 @@ typedef struct {
 } point, *Point;
 
 typedef struct {
+  float x;
+  float y;
+} finepoint, *Finepoint;
+
+typedef struct {
    signed char x;
    signed char y;
 } grob_point, *grob_Point;
@@ -61,7 +66,7 @@ typedef struct {
   int type;         /* what kind of druid is this ? */
   byte status;       /* attacking, defense, dead, ... */
   vect speed;       /* the current speed of the druid */
-  point pos;        /* current position in level levelnum */
+  finepoint pos;        /* current position in level levelnum */
   float health;		/* the max. possible energy in the moment */
   float energy;       /* current energy */
   byte firewait;	/* counter after fire */
@@ -201,6 +206,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.14  1997/06/08 23:46:44  jprix
+ * influence_t uses floats now for the coodinates of the influ.  transition successful.
+ *
  * Revision 1.13  1997/06/08 23:19:38  jprix
  * Transition to floating point coordinates started.  This version is still working.
  *

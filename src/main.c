@@ -213,9 +213,9 @@ int main(void)
 
       /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
       printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
-      printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
-      Me.pos.x+=SpeedX;
-      Me.pos.y+=SpeedY;
+      gl_printf(1,40,"\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
+      Me.pos.x+=SpeedX * Frame_Time();
+      Me.pos.y+=SpeedY * Frame_Time();
       AdjustSpeed();
 
       BounceInfluencer();       /* Testen ob der Weg nicht durch Mauern verstellt ist */

@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.16  1997/06/08 23:46:45  jprix
+ * influence_t uses floats now for the coodinates of the influ.  transition successful.
+ *
  * Revision 1.15  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -347,7 +350,7 @@ void GetConceptInternFenster(void)
 	}
 
 	// Darstellen des Influencers, wenn er nicht schon vernichtet wurde
-	if (Me.energy>0) SmallEnemy(Me.pos.x/4,Me.pos.y/4,-10+Druidmap[Me.type].class,InternWindow,INTERNBREITE*BLOCKBREITE);
+	if (Me.energy>0) SmallEnemy(((int)Me.pos.x)/4,((int)Me.pos.y)/4,-10+Druidmap[Me.type].class,InternWindow,INTERNBREITE*BLOCKBREITE);
 	
 	// Darstellen der Blasts
 	for(i=0;i<MAXBLASTS;i++) {
@@ -396,7 +399,7 @@ void GetConceptInternFenster(void)
 			}
 
 			if (!InvincibleMode && !Druidmap[Me.type].flashimmune &&
-				Affected[Me.pos.x/BLOCKBREITE+Me.pos.y/BLOCKHOEHE*CurLevel->xlen])
+				Affected[((int)Me.pos.x)/BLOCKBREITE+((int)Me.pos.y)/BLOCKHOEHE*CurLevel->xlen])
 				Me.energy-=Bulletmap[FLASH].damage/2;
 
 			free( Affected );
@@ -644,9 +647,9 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 		BLOCKBREITE*INTERNBREITE*BLOCKHOEHE/2;
 				
 	/* Verschiebung zum Influencer  (linkes oberes Eck !!) */
- 	InternWindowOffset += ((Me.pos.y % BLOCKHOEHE) - BLOCKHOEHE/2 )*
+ 	InternWindowOffset += ((((int)Me.pos.y) % BLOCKHOEHE) - BLOCKHOEHE/2 )*
 			BLOCKBREITE*INTERNBREITE +
-			(Me.pos.x % BLOCKBREITE) - BLOCKBREITE/2;
+			(((int)Me.pos.x) % BLOCKBREITE) - BLOCKBREITE/2;
 
 	/* relative Verschiebung des Objekts zum Influencer */
 	InternWindowOffset += DifY * BLOCKBREITE*INTERNBREITE + DifX;
@@ -697,8 +700,8 @@ void PutInternFenster(void)
     return;
   }
 			
-  StartX=(Me.pos.x % BLOCKBREITE)-BLOCKBREITE/2;
-  StartY=((Me.pos.y % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
+  StartX=(((int)Me.pos.x) % BLOCKBREITE)-BLOCKBREITE/2;
+  StartY=((((int)Me.pos.y) % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
 
    //   WaitVRetrace();		/* dont waste time with this */
 

@@ -346,7 +346,7 @@ void BounceInfluencer(void)
 {
   int sign;
   int SX=SpeedX, SY=SpeedY;
-  point lastpos;
+  finepoint lastpos;
   int res;		/* Ergebnis aus DruidPassable() */
   int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
   
@@ -548,8 +548,8 @@ void InfluenceEnemyCollision(void) {
 	  Me.speed.y = COLLISION_PUSHSPEED * (ydist/abs(ydist));
 	
 				/* den Influencer etwas aus dem Feind hinausschieben */	 
-	Me.pos.x += SpeedX;
-	Me.pos.y += SpeedY;
+	Me.pos.x += SpeedX * Frame_Time();
+	Me.pos.y += SpeedY * Frame_Time();
 
 				/* etwaige Wand - collisionen beruecksichtigen */
 	BounceInfluencer();
