@@ -1778,17 +1778,20 @@ blit_open_gl_cheap_light_radius ( void )
 
   window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
 
-  for ( our_height = 0 ; our_height < 40 ; our_height ++ )
+#define SHADOW_SQUARE_HEIGHT 12
+#define SHADOW_SQUARE_WIDTH 16
+
+  for ( our_height = 0 ; our_height < SCREEN_HEIGHT/SHADOW_SQUARE_HEIGHT ; our_height ++ )
     {
-      for ( our_width = 0 ; our_width < 40 ; our_width ++ )
+      for ( our_width = 0 ; our_width < SCREEN_WIDTH/SHADOW_SQUARE_WIDTH ; our_width ++ )
 	{
 	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 
-	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 16 ,
-							   ( 0 + our_height ) * 12 - UserCenter_y + 16 , TRUE );
-	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 16 ,
-							   ( 0 + our_height ) * 12 - UserCenter_y + 16 , FALSE );
+	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
+							   ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , TRUE );
+	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
+							   ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , FALSE );
 
 	  light_strength = get_light_strength ( target_pos );
 
@@ -1801,10 +1804,10 @@ blit_open_gl_cheap_light_radius ( void )
 	  glColor4ub( r , g , b , a );
 	  
 	  glBegin(GL_QUADS);
-	  glVertex2i( ( 0 + our_width ) * 16 , ( 1 + our_height ) * 12 ) ;
-	  glVertex2i( ( 0 + our_width ) * 16 , ( 0 + our_height ) * 12 ) ;
-	  glVertex2i( ( 1 + our_width ) * 16 , ( 0 + our_height ) * 12 ) ;
-	  glVertex2i( ( 1 + our_width ) * 16 , ( 1 + our_height ) * 12 ) ;
+	  glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	  glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	  glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	  glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
 	  glEnd( );
 
 	}

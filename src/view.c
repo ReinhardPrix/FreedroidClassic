@@ -798,8 +798,9 @@ The blitting list size was exceeded!",
 }; // void insert_obstacles_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Several different things must be inserted into the blitting list.
+ * Therefore this function is an abstraction, that will insert a generic
+ * object into the blitting list.
  * ---------------------------------------------------------------------- */
 void
 insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , void* new_element_pointer , int code_number )
