@@ -18,17 +18,19 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- decrease CPU usage in menu and maybe console(?)
-  (done in menus)
-
 - implement the 'Alert' feature of the original version
 
 - add "white noise" sound to the ThouArtDefeated() ceremony
 
 - acoustic "countdown" in takeover game might be useful!
-  --> implemented now, but need better sounds and allow
-  turning it off...
+  --> implemented now, but need better sounds and allow turning it off...
+
+- adapt LevelEditor to new waypoint/connections scheme
   
+- update level displayed when changed in LevelEditor
+
+- increase sound-channels to allow playing more sounds simultaneously
+
 - load all droid pics at startup, to avoid delays in DroidShow
 
 - force "release key" instead of waiting for it
@@ -312,4 +314,7 @@ Resolved bugs
 
 - make sure droid shuffling is randon enough, also concerning the 
   waypoints used (seems a a bit predictable right now...)
+  (done)
+
+- decrease CPU usage in menu and maybe console(?)
   (done)
