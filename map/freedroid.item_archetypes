@@ -491,8 +491,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 11
 ** Start of new item specification subsection **
 Item name="Boots"
-Position_X=632
-Position_Y=46
+Position_X=633
+Position_Y=84
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -503,7 +503,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=3
-Base item duration=13 plus duration modifier=5
+Base item duration=23 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
@@ -3731,8 +3731,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 92
 ** Start of new item specification subsection **
 Item name="Strength Capsule"
-Position_X=244
-Position_Y=91
+Position_X=16
+Position_Y=145
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3771,8 +3771,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 93
 ** Start of new item specification subsection **
 Item name="Dexterity Capsule"
-Position_X=245
-Position_Y=126
+Position_X=40
+Position_Y=150
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3810,24 +3810,24 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 94
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Position_X=245
-Position_Y=164
+Item name="Light Boots"
+Position_X=636
+Position_Y=121
 Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
-Items of this type collect together in inventory="yes"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="drive"
+Item uses rotation series with prefix="boots_simple"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item as defensive item: base_ac_bonus=4
+Item as defensive item: ac_bonus_modifier=3
+Base item duration=13 plus duration modifier=5
+File or directory name for inventory image="boots_simple/inv_image.png"
+Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Base list price=65
+Item description text="These boots are a bit lighter than the normal version, giving of course worse protection but certainly extra comfort for the long-time wearer."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3850,24 +3850,24 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 95
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Position_X=242
-Position_Y=200
+Item name="Reinforced Boots"
+Position_X=655
+Position_Y=141
 Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
-Items of this type collect together in inventory="yes"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="drive"
+Item uses rotation series with prefix="boots_simple"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item as defensive item: base_ac_bonus=12
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=27 plus duration modifier=5
+File or directory name for inventory image="boots_simple/inv_image.png"
+Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Base list price=175
+Item description text="These boots were originally normal boots, but have been fitted with some extra reinforcements to give better protection to the wearer.  Of course this makes them a bit less elegant and also less comfy to wear, but the extra protection might be worth it, at not the full price of hiking boots."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3890,24 +3890,24 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 96
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Position_X=242
-Position_Y=235
+Item name="Hiking Boots"
+Position_X=653
+Position_Y=100
 Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
-Items of this type collect together in inventory="yes"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="drive"
+Item uses rotation series with prefix="boots_simple"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item as defensive item: base_ac_bonus=17
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=37 plus duration modifier=5
+File or directory name for inventory image="boots_simple/inv_image.png"
+Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Base list price=275
+Item description text="These hiking boots are very sophisticated products, combining optimal comfort for the wearer with a good protection from collisions with blunt objects like stones and the like, which of course also makes for a higher price too."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3931,8 +3931,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 97
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=239
-Position_Y=267
+Position_X=244
+Position_Y=166
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3971,8 +3971,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 98
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=239
-Position_Y=301
+Position_X=245
+Position_Y=198
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4011,8 +4011,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 99
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=238
-Position_Y=333
+Position_X=244
+Position_Y=230
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4051,8 +4051,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 100
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=238
-Position_Y=367
+Position_X=244
+Position_Y=260
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4491,8 +4491,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 111
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=263
-Position_Y=380
+Position_X=245
+Position_Y=293
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4611,8 +4611,8 @@ Item as gun: weapon requires both hands="no"
 // Item No. 114
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"
-Position_X=238
-Position_Y=402
+Position_X=246
+Position_Y=327
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
