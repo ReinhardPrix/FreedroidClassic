@@ -56,6 +56,7 @@ typedef struct
     char *button_image_file_name;
     SDL_Rect button_rect;
     int scale_this_button;
+    int use_true_alpha_blending;
 }
 mouse_press_button, *Mouse_press_button;
 
