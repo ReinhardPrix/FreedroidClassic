@@ -866,23 +866,28 @@ enum
 
 enum
 {
+
+  ISO_UNUSED_BRICK = 0 ,
+  ISO_ANOTHER_UNUSED_BRICK = 5 ,
+
+
   //--------------------
-  // These obstacles currently don't have a blender file in the cvs tree,
-  // but their meaning should be fairly obvious:
+  // These obstacles originate from wall_tiles.blend.
   //
-  ISO_ERROR_BRICK = 0 ,
   ISO_V_WALL = 1 ,
   ISO_H_WALL = 2 ,
+  ISO_V_WALL_WITH_DOT = 3 ,
+  ISO_H_WALL_WITH_DOT = 4 ,
 
-  ISO_ERROR_UNUSED = 3 ,
-  ISO_CRUDE_BLOCK = 4 ,
 
+  //--------------------
+  // These obstacles originate from door_tiles.blend.
+  //
   ISO_H_DOOR_000_OPEN = 6,
   ISO_H_DOOR_025_OPEN = 7,
   ISO_H_DOOR_050_OPEN = 8,
   ISO_H_DOOR_075_OPEN = 9,
   ISO_H_DOOR_100_OPEN = 10,
-
   ISO_V_DOOR_000_OPEN = 11,
   ISO_V_DOOR_025_OPEN = 12,
   ISO_V_DOOR_050_OPEN = 13,

@@ -1333,6 +1333,17 @@ init_obstacle_data( void )
   //
   obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
+  obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . filename = "iso_walls_0003.png"; 
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
+
 
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
@@ -1364,20 +1375,27 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . filename = "iso_doors_0005.png" ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
 
+  
+  obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_2 = 0.6 ;
+  obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_2 = 0.6 ;
+
+
   //--------------------
   // These files originate from iso_machinery.blend
   //
-  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_2 = 0.6 ;
   obstacle_map [ ISO_TV_PILLAR_W ] . filename = "iso_machinery_0001.png" ;
-  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_2 = 0.6 ;
   obstacle_map [ ISO_TV_PILLAR_N ] . filename = "iso_machinery_0002.png" ;
-  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_2 = 0.6 ;
   obstacle_map [ ISO_TV_PILLAR_E ] . filename = "iso_machinery_0003.png" ;
-  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_1 = 0.6 ;
+  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_2 = 0.6 ;
   obstacle_map [ ISO_TV_PILLAR_S ] . filename = "iso_machinery_0004.png" ;
   obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_2 = 0.8 ;
@@ -1438,10 +1456,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
   
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_2 = 0.8 ;
-
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
