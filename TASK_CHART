@@ -25,16 +25,6 @@ THESE ITEMS HAVE FIRST PRIORITY:
    DONE Do segfault protection from planting tiles outside map structure
    i. Allow for more things to be set directly: Elevators & Boxes
 
-1. Introduce "Mission" files consisting of:
-   DONE Mission target specification: KILLALL
-   a. Mission target specification: REACH_POS
-   DONE Mission target specification: KILL_TYPE
-   DONE Briefing text
-   DONE EndTitle text
-   DONE "Ship" to be loaded
-   DONE Next mission file after completition of mission
-   DONE Add a function "CheckMissionSuccess" for a.
-
 5. Write a new ship/area for testing purposes: "The mining community"
    2.a One deck at least.
    2.b A second deck
@@ -53,9 +43,13 @@ THESE ITEMS HAVE FIRST PRIORITY:
        by the combat situation
      * Movement to new waypoint immediately if threatened by enemy fire
 
+4. Add more doku extra lines to the 
+   a. external game dat file, 
+   b. droids files and 
+   c. mission files.
+
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
-  DONE Druid specifications
     a. Blast radius
     b. Bullet damage
 

@@ -139,6 +139,7 @@ typedef struct
   finepoint Position_History[11]; // History of the places the influ has been during the last 10 frames
   missiontarget mission;         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
+  int Marker;                   // In case you've taken over a marked droid, this will contain the marker
 }
 influence_t, *Influence_t;
 
@@ -153,13 +154,13 @@ typedef struct
   int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  int marker;                   // Is this droid somehow specially marked for this mission?
   double warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
-  int SpecialForce;
+  int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
+  int Marker;                   // This provides a marker for special mission targets
 }
 enemy, *Enemy;
 

@@ -68,8 +68,10 @@ Possible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=2 YPos=1
 Mission target is to kill all droids : 0
 Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : 1
 Mission target is to become class : -1
 Mission target is to become type : 1
+Mission target is to overtake a droid with marker : -1
 Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1

@@ -1138,7 +1138,6 @@ GetLiftConnections (char *shipname)
 int
 GetCrew (char *filename)
 {
-  // char filename[FILENAME_LEN + 1];
   FILE *DroidsFile;
   char *MainDroidsFilePointer;
   char *EndOfDroidsFilePointer;
@@ -1150,16 +1149,6 @@ GetCrew (char *filename)
 #define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
 #define DROIDS_LEVEL_DESCRIPTION_START_STRING "** Beginning of new Level **"
 #define DROIDS_LEVEL_DESCRIPTION_END_STRING "** End of this levels droid data **"
-
-  // int level_num;
-  // int enemy_nr;
-  // int type_anz;
-  // int types[MAX_TYPES_ON_LEVEL];
-  // int upper_limit, lower_limit;
-  // int this_limit;
-  // int linelen = CREW_LINE_LEN;
-  // char line[CREW_LINE_LEN];
-  // char *pos;
 
   /* Clear Enemy - Array */
   ClearEnemys ();
@@ -1460,6 +1449,11 @@ Sorry...\n\
       SearchPointer += strlen ( "Fixed=" );
       sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
       printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
+      
+      SearchPointer = strstr ( SearchPointer , "Marker=" );
+      SearchPointer += strlen ( "Marker=" );
+      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].Marker );
+      printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].Marker );
       
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;

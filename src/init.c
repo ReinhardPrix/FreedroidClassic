@@ -773,14 +773,14 @@ InitNewMission ( char *MissionName )
 #define MISSION_START_POINT_STRING "Possible Start Point : "
 #define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
 #define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
-#define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droid with marker : "
+#define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droids with marker : "
 #define MISSION_TARGET_MUST_REACH_LEVEL_STRING "Mission target is to reach level : "
 #define MISSION_TARGET_MUST_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
 #define MISSION_TARGET_MUST_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
 #define MISSION_TARGET_MUST_LIVE_TIME_STRING "Mission target is to live for how many seconds : "
 #define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
 #define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
-#define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake droid with marker : "
+#define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake a droid with marker : "
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
 
@@ -1106,6 +1106,18 @@ InitNewMission ( char *MissionName )
       printf("\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
     }
 
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_ONE_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET KILLONE ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ONE_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillOne );
+      printf("\nMission target killone entry found!  It reads: %d" , Me.mission.KillOne );
+    }
+
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_CLASS_STRING )) == NULL )
     {
       printf("\nERROR! NO MISSION TARGET MUST BE CLASS ENTRY FOUND! TERMINATING!");
@@ -1128,6 +1140,18 @@ InitNewMission ( char *MissionName )
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_TYPE_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeType );
       printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
+    }
+
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_ONE_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST BE ONE ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_ONE_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeOne );
+      printf("\nMission target MustBeOne entry found!  It reads: %d" , Me.mission.MustBeOne );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_LEVEL_STRING )) == NULL )
@@ -1175,7 +1199,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_LIVE_TIME_STRING );
       sscanf ( MissionTargetPointer , "%lf" , &Me.mission.MustLiveTime );
-      printf("\nMission target MustReachPoint.y entry found!  It reads: %f" , Me.mission.MustLiveTime );
+      printf("\nMission target MustLiveTime entry found!  It reads: %f" , Me.mission.MustLiveTime );
     }
 
   //--------------------
@@ -1563,13 +1587,27 @@ CheckIfMissionIsComplete (void)
   int Robot_Counter;
   char LoadWhichMission[2000]=MAP_DIR;
 
-  if ( Me.mission.KillAll )
+  if ( Me.mission.KillOne != (-1) )
+    {
+      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	{
+	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
+	    {
+	      printf("\nOne of the marked droids is still alive...");
+	      fflush(stdout);
+	      return;
+	    }
+	}
+    }
+
+  if ( Me.mission.KillAll != (-1) )
     {
       for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	{
 	  if ( AllEnemys[Robot_Counter].energy > 0 ) 
 	    {
-	      // printf("\nThere are some robots still alive...");
+	      printf("\nThere are some robots still alive, and you should kill them all...");
+	      fflush(stdout);
 	      return;
 	    }
 	}
@@ -1583,7 +1621,7 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
 	    {
-	      // printf("\nOne is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+	      // printf("\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
 	      // Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
 	      // AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
 	      return;
@@ -1643,6 +1681,16 @@ CheckIfMissionIsComplete (void)
       if ( Me.MissionTimeElapsed < Me.mission.MustLiveTime ) 
 	{
 	  // printf("\nTime Limit not yet reached...");
+	  return;
+	}
+    }
+
+  if ( Me.mission.MustBeOne != (-1) )
+    {
+      if ( Me.Marker != Me.mission.MustBeOne ) 
+	{
+	  printf("\nYou're not yet one of the marked ones...");
+	  fflush(stdout);
 	  return;
 	}
     }
