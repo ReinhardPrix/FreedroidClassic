@@ -485,6 +485,7 @@ PutInfluence ( int x , int y )
   point UpperLeftBlitCorner;
   float angle;
   SDL_Surface* tmp_influencer;
+  moderately_finepoint in_tile_shift;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
   Text_Rect.y=UserCenter_y  - Block_Height/2;
@@ -564,7 +565,7 @@ PutInfluence ( int x , int y )
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
       tmp_influencer = 
-	rotozoomSurface( TuxSurfacePointer [ 0 ] , angle , 1.0 , FALSE );
+	rotozoomSurface( TuxSurfacePointer [ ((int) Me.phase) % TUX_PHASES ] , angle , 1.0 , FALSE );
 
       //--------------------
       // The rotation may of course have changed the dimensions of the
@@ -573,8 +574,12 @@ PutInfluence ( int x , int y )
       //
       if ( x == -1 ) 
 	{
-	  TargetRectangle.x = UserCenter_x - tmp_influencer->w / 2 ;
-	  TargetRectangle.y = UserCenter_y - tmp_influencer->h / 2 ;
+	  in_tile_shift.x = 0 ;
+	  in_tile_shift.y = - Block_Height/2 ; // tux is half a tile lower the tux_tile center
+	  RotateVectorByAngle ( & in_tile_shift , angle );
+	  
+	  TargetRectangle.x = UserCenter_x - tmp_influencer->w / 2 + in_tile_shift.x ;
+	  TargetRectangle.y = UserCenter_y - tmp_influencer->h / 2 + in_tile_shift.y ;
 	}
       else
 	{

@@ -184,6 +184,8 @@ UpdateCountersForThisFrame (void)
   Me.MissionTimeElapsed += Frame_Time();
   Me.LastTransferSoundTime += Frame_Time();
   Me.TextVisibleTime += Frame_Time();
+  if ( Me.weapon_swing_time != (-1) ) Me.weapon_swing_time += Frame_Time();
+
   LevelDoorsNotMovedTime += Frame_Time();
 
   if ( SkipAFewFrames ) SkipAFewFrames--;

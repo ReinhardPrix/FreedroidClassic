@@ -343,9 +343,25 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence (void)
 {
+#define TOTAL_SWING_TIME 0.7
+
+  if ( Me.weapon_swing_time == (-1) )
+    {
+      Me.phase = 0;
+    }
+  else
+    {
+      Me.phase = Me.weapon_swing_time * TUX_PHASES * 1.0 / TOTAL_SWING_TIME ;
+      if ( Me.weapon_swing_time > TOTAL_SWING_TIME ) Me.weapon_swing_time = (-1) ;
+    }
+
+
+
+  /*
   Me.phase +=
     (Me.energy / ( Me.maxenergy)) * Frame_Time () *
     DROID_PHASES * 3;
+  */
 
   /*
   if (Me.type != DRUID001)
@@ -745,6 +761,9 @@ FireBullet (void)
 
   // make the sound of a fired bullet
   Fire_Bullet_Sound ( guntype );
+
+  Me.weapon_swing_time = 0;
+  return;
 
   // search for the next free bullet list entry
   for (i = 0; i < (MAXBULLETS); i++)

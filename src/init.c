@@ -1735,6 +1735,7 @@ InitNewMissionList ( char *MissionName )
   Me.MissionTimeElapsed=0;
   Me.Current_Victim_Resistance_Factor=1;
   Me.FramesOnThisLevel=0;
+  Me.weapon_swing_time = (-1);  // currently not swinging this means...
 
   Me.PointsToDistribute = 0;
   Me.ExpRequired = 1500;
