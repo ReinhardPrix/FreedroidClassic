@@ -862,6 +862,9 @@ AttackInfluence (int enemynum)
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
 
+  // ignore friendly robots as well...
+  if ( ThisRobot->Friendly == TRUE ) return;
+
   /* Ermittlung des Abstandsvektors zum Influencer */
   xdist = Me.pos.x - ThisRobot->pos.x;
   ydist = Me.pos.y - ThisRobot->pos.y;

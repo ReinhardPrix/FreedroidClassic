@@ -58,7 +58,7 @@ directly form the following example.
 
 *** Start of Mission File ***
 
-Mission Name: Invading Asteroid Command Central
+Mission Name: Restabilize Reactor Plant
 
 +++
 +++ At first we specify the other files, that also contain essential
@@ -66,11 +66,11 @@ Mission Name: Invading Asteroid Command Central
 +++
 Physics ('game.dat') file to use for this mission: freedroid.ruleset
 Ship file to use for this mission: Asteroid.maps
-Lift file to use for this mission: CleanPrivateQuartersDeck.elevators
-Crew file to use for this mission: CleanPrivateQuartersDeck.droids
+Lift file to use for this mission: RestabilizeReactorPlant.elevators
+Crew file to use for this mission: RestabilizeReactorPlant.droids
 Lifts On file to use for this mission: asteroid_on.png
 Lifts Off file to use for this mission: asteroid_off.png
-After completing this mission, load mission : RestabilizeReactorPlant.mission
+After completing this mission, load mission : Paradroid.mission
 
 +++
 +++ For the asteroid command central invasion mission, 
@@ -86,8 +86,8 @@ Possible Start Point : Level=2 XPos=10 YPos=7
 +++ to eliminate all droids with the specified marker
 +++ namely '1'.  Thats also quite simple.
 +++
-Mission target is to kill all droids : -1
-Mission target is to kill class of droids : 7
+Mission target is to kill all droids : 1
+Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
@@ -147,9 +147,8 @@ T**he title song in the sound subdirectory for this mission is : Agony-Highlands
 Song name to play in the end title if the mission is completed: Beachhead_2.mod
 
 * New Mission Briefing Text Subsection *
-Now that you've successfully removed the droids assaulting the scientists retreat, they could shortly leave the bunker and get new parts required to shortly suspend the communication of the battle cruiser with the new MS headquater.  Once that is done, the local command cyborgs will be in charge.  Several of them have automatically beamed down to organize the destruction of the facility.  
-They must all be destroyed so that the last hiding scientists can finally leave their hideouts, bandage the wounds of the injured colleagues and help the others in preparing a way to escape from the station.
-
+After the battle droids on the quarters deck suddenly fell out, the MS head quarters has reacted and sent new instructions and a new plan to the corvette crew.  An alert is set off from the reactor room.
+Since the scientists are all busy finishing the teleportation unit they are creating (and the reactor room of off limits to humans anyway) Dr. Chandra asked you to investigate the matter.  They do not know the exact cause of the problem, but you will find out anyway they are sure.
 
 Press Fire to Play
 
@@ -162,15 +161,16 @@ Press Fire to Play
 ** Beginning of End Title Text Section **
 Congratulations!!
 
-It seems that you have made it!  The private quarters deck is cleared.  The last hiding scientists rush off either to join
-the others working feverishly on the teleportation device, that shall sooner or later warp them out of this whole
-misery or to bandage the wounds of those that were injured.  Only an hour later, again an alarm is set off.
+It seems that you have made it!  
 
-Dr. Chandra turns to you to investigate the matter.
+SORRY, BUT AT THIS POINT, THE THREAD OF ACTION IS INTERUPTED.
+WE HAVE NOT YET HAD THE TIME TO CREATE MORE STORY AND MORE
+MISSION FILES.  THAT MIGHT CHANGE SOON.  STAY TUNED.....
 
+For now you will be redirected to the classical paradroid
+mission.  Sorry.
 
-
-Press Fire to play
+Press Fire to move on to the next mission
 
 ** End of End Title Text Section **
 

@@ -30,8 +30,8 @@ Outstanding release-critical bugs (priority: high)
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
-- Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
-  as the current ship.
+- DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
+       as the current ship.
 
 - Correct the console map:  Do scaling in a way that allows to bring the whole map
   exactly on the screen and perhaps also give the scaling factor used for generating
@@ -49,13 +49,14 @@ Outstanding normal bugs (priority: normal)
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
-- (jp) some missing "color rotations": bullets, takeover-mode 
+- (jp) some missing "color rotations": takeover-mode 
 
 - Walls are too "sticky", would be better playable if one could "slide"
   (jp:)  That has been completely resolved, at least for my machine!!
          Please tell me if you still experience trouble.
 
 - (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
+       
 
 Wishlist
 --------

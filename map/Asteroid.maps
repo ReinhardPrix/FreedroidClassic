@@ -1088,7 +1088,7 @@ xlen of this level: 38
 ylen of this level: 40
 color of this level: 0
 Name of this level=Main reactor block
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Comment of the Influencer on entering this level="This must be the main reactor level.  Humans are not allowed here.
 Name of background song for this level=The_Last_V8.mod
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1132,17 +1132,17 @@ beginning_of_map
  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33 
   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  33 
 wp
-Nr.=  0 x=  14 y=   5	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  1 x=  14 y=   8	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=  18 y=   5	 connections:    4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  3 x=  18 y=   9	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  32 y=   9	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=  30 y=  33	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=   6 y=  33	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=   6 y=   9	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=   4 y=   8	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=   4 y=  35	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=  32 y=  35	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=  14 y=   5	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=  14 y=   8	 connections:    8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=  18 y=   5	 connections:    0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  3 x=  18 y=   9	 connections:    2   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=  32 y=   9	 connections:    3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=  30 y=  33	 connections:   10   6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=   6 y=  33	 connections:    7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=   6 y=   9	 connections:    3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=   4 y=   8	 connections:    9  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=   4 y=  35	 connections:   10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=  32 y=  35	 connections:    4   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 11 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 12 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 13 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
