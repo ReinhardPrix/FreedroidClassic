@@ -11,8 +11,6 @@ jp
 
 The list of things I'm going to work on next:
 
-1. Get the lift function working again.
-
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
 

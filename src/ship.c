@@ -678,14 +678,22 @@ GreatDruidShow (void)
 void
 ShowDeckMap (Level deck)
 {
+  finepoint tmp;
+  tmp.x=Me.pos.x;
+  tmp.y=Me.pos.y;
 
   ClearUserFenster ();
+  Me.pos.x = CurLevel->xlen/2;
+  Me.pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
-  Assemble_Combat_Picture( 0 );
+  Assemble_Combat_Picture( ONLY_SHOW_MAP );
 
   PrepareScaledSurface(TRUE);
+
+  Me.pos.x=tmp.x;
+  Me.pos.y=tmp.y;
 
   // ne_blocks=zwisch;
 } /* ShowDeckMap() */
