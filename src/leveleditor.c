@@ -1967,6 +1967,58 @@ Unable to load the level editor floor cursor.",
 } // void Highlight_Current_Block(void)
 
 /* ----------------------------------------------------------------------
+ * This function is used to draw a line between given map tiles.  It is
+ * mainly used for the map editor to highlight connections and the 
+ * current map tile target.
+ * ---------------------------------------------------------------------- */
+void 
+draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int Color )
+{
+  float steps;
+  float dist;
+  int i;
+  static iso_image level_editor_dot_cursor = { NULL , 0 , 0 };
+  char* fpath;
+
+  //--------------------
+  // Maybe, if the level editor dot cursor has not yet been loaded,
+  // we need to load it.
+  //
+  if ( level_editor_dot_cursor . surface == NULL )
+    {
+      fpath = find_file ( "level_editor_waypoint_dot.png" , GRAPHICS_DIR, FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_dot_cursor ) ) ;
+      if ( level_editor_dot_cursor . surface == NULL )
+	{
+	  GiveStandardErrorMessage ( "draw_connection_between_tiles (...)" , "\
+Unable to load the level editor waypoint dot cursor.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+    }
+
+  //--------------------
+  // So now that the dot cursor has been loaded, we can start to
+  // actually draw the dots.
+  //
+
+  //--------------------
+  // We measure the distance that we have to go and then we draw some
+  // dots at some convex combinations of our two vectors.  Very fine.
+  //
+  dist = sqrt ( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2 ) );
+
+  steps = dist * 4;  // let's say 4 dots per square to mark the line, ok?
+
+  for ( i = 0 ; i < steps+1 ; i ++ )
+    {
+      blit_iso_image_to_map_position ( level_editor_dot_cursor ,
+				       ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
+				       ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+    }
+
+}; // void draw_connection_between_tiles ( .... )
+
+/* ----------------------------------------------------------------------
  * This function is used by the Level Editor integrated into 
  * freedroid.  It marks all waypoints with a cross.
  * ---------------------------------------------------------------------- */
@@ -2005,12 +2057,9 @@ Unable to load the level editor waypoint cursor.",
 	}
     }
 
-
-  BlockX=rintf(Me[0].pos.x);
-  BlockY=rintf(Me[0].pos.y);
+  BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
+  BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
 	  
-  // SDL_LockSurface( Screen );
-
   for (wp=0; wp<MAXWAYPOINTS; wp++)
     {
 
@@ -2018,40 +2067,7 @@ Unable to load the level editor waypoint cursor.",
 
       blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
 				       EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
-				       EditLevel->AllWaypoints [ wp ] . y + 0.5 ) ;
-
-      /*
-
-      //--------------------
-      // Draw the cross in the middle of the middle of the tile
-      //
-      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
-	{
-	  // This draws a (double) line at the upper border of the current block
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-
-		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2- (( Me[0].pos.y)-EditLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	  // This draws a line at the lower border of the current block
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-EditLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-EditLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	}
-      */
+				       EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
       
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
@@ -2095,14 +2111,18 @@ Unable to load the level editor waypoint cursor.",
 					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y ,
 					color );
 		  */
+
+		  draw_connection_between_tiles ( EditLevel->AllWaypoints[wp].x + 0.5 , EditLevel->AllWaypoints[wp].y + 0.5 , 
+						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x + 0.5 , 
+						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y + 0.5 ,
+						  color );
+
 		}
 	    }
 	}
-	      
     }
-  // SDL_UnlockSurface( Screen );
 
-} // void ShowWaypoints( int PrintConnectionList );
+}; // void ShowWaypoints( int PrintConnectionList );
 
 /* ----------------------------------------------------------------------
  * This function is used by the Level Editor integrated into 

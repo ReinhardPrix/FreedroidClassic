@@ -162,7 +162,6 @@ EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image 
 #endif
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
-EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );
