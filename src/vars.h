@@ -106,8 +106,14 @@ char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
     "iso_miscellaneous_floor_0013.png" ,
     "iso_miscellaneous_floor_0014.png" ,
     "iso_miscellaneous_floor_0015.png" ,
-    "iso_miscellaneous_floor_0016.png" 
-    
+    "iso_miscellaneous_floor_0016.png" ,
+    "iso_miscellaneous_floor_0017.png" ,
+    "iso_miscellaneous_floor_0018.png" ,
+    "iso_miscellaneous_floor_0019.png" ,
+    "iso_miscellaneous_floor_0020.png" ,
+    "iso_miscellaneous_floor_0021.png" ,
+    "iso_miscellaneous_floor_0022.png" 
+
     // , "ERROR_UNUSED.png" , 
   };
 

@@ -2387,13 +2387,32 @@ init_obstacle_data( void )
   // This is the wonderful new room lamp from basse
   // (Vision can pass through.  Later, light might radiate from it.)
   //
-  obstacle_map [ ISO_LAMP ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_LAMP ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_LAMP ] . block_area_parm_2 = 0.5 ;
-  obstacle_map [ ISO_LAMP ] . is_smashable = FALSE ;
-  obstacle_map [ ISO_LAMP ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_LAMP ] . emitted_light_strength = 5 ; // how much light emitted from here...
-
+  obstacle_map [ ISO_LAMP_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_LAMP_N ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_LAMP_N ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_LAMP_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LAMP_N ] . emitted_light_strength = 5 ; // how much light emitted from here...
+  obstacle_map [ ISO_LAMP_N ] . filename = "iso_obstacle_0055.png" ;
+  
+  obstacle_map [ ISO_LAMP_E ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_LAMP_E ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_LAMP_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LAMP_E ] . emitted_light_strength = 5 ;
+  obstacle_map [ ISO_LAMP_E ] . filename = "iso_obstacle_0056.png" ;
+  
+  obstacle_map [ ISO_LAMP_S ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_LAMP_S ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_LAMP_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LAMP_S ] . emitted_light_strength = 5 ;
+  obstacle_map [ ISO_LAMP_S ] . filename = "iso_obstacle_0054.png" ;
+  
+  obstacle_map [ ISO_LAMP_W ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_LAMP_W ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_LAMP_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LAMP_W ] . emitted_light_strength = 5 ;
+  obstacle_map [ ISO_LAMP_W ] . filename = "iso_obstacle_0057.png" ;
+  
+  
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.00 ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.0 ;
