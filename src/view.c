@@ -151,7 +151,6 @@ ShowAutomapData( void )
   int TuxColor = SDL_MapRGB( Screen->format, 0 , 0 , 255 ); 
   int FriendColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ); 
   int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
-  // int ItemColor = SDL_MapRGB( Screen->format, 255 , 0 , 255 );  pink
   int ItemColor = SDL_MapRGB( Screen->format, 255 , 255 , 0 ); 
   Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int level = Me [ 0 ] . pos . z ;
@@ -1278,12 +1277,81 @@ show_obstacle_labels ( int mask )
 int 
 get_light_strength ( moderately_finepoint target_pos )
 {
+#define MAX_NUMBER_OF_LIGHT_SOURCES 10
   int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
-  // int final_darkness = NUMBER_OF_SHADOW_IMAGES;
+  int final_darkness = NUMBER_OF_SHADOW_IMAGES;
+  moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
+  int i;
 
+  Level light_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
+  //--------------------
+  // At first we fill out the light sources array with 'empty' information,
+  // i.e. such positions, that won't affect our location for sure.
+  //
+  for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    {
+      light_sources [ i ] . x = -200 ;
+      light_sources [ i ] . y = -200 ;
+    }
 
-  return ( (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ) ;
+  //--------------------
+  // Now we fill in the Tux position as the very first light source, that will
+  // always be present.
+  //
+  light_sources [ 0 ] . x = Me [ 0 ] . pos . x ;
+  light_sources [ 0 ] . y = Me [ 0 ] . pos . y ;
+
+  //--------------------
+  // Now we can fill in the remaining light sources of this level
+  //
+  for ( i = 1 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    {
+      if ( light_level -> teleporter_obstacle_indices [ i-1 ] != (-1) )
+	{
+	  light_sources [ i ] . x = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . x ;
+	  light_sources [ i ] . y = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . y ;
+	}
+    }
+
+  //--------------------
+  // Now that the light sources array is fully set up, we can start
+  // to compute the individual light strength at any given position
+  //
+  for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    {
+      //--------------------
+      // We could of course use a maximum function to find out the proper light at
+      // any place.  But maybe addition of light would be better, so we use the latter
+      // code.
+      //
+      // if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+      // ( light_sources [ i ] . x - target_pos . x ) + 
+      // ( light_sources [ i ] . y - target_pos . y ) * 
+      // ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+      // - light_bonus ) < final_darkness )
+      // final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+      // ( light_sources [ i ] . x - target_pos . x ) + 
+      // ( light_sources [ i ] . y - target_pos . y ) * 
+      // ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+      // - light_bonus ;
+      // 
+      if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+			    ( light_sources [ i ] . x - target_pos . x ) + 
+			    ( light_sources [ i ] . y - target_pos . y ) * 
+			    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+	     - light_bonus ) < NUMBER_OF_SHADOW_IMAGES )
+	final_darkness -= ( NUMBER_OF_SHADOW_IMAGES -  ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+									( light_sources [ i ] . x - target_pos . x ) + 
+									( light_sources [ i ] . y - target_pos . y ) * 
+									( light_sources [ i ] . y - target_pos . y ) ) * 
+								 4.0 )
+							 - light_bonus ) ) ;
+    }
+
+  return ( final_darkness );
+
+  // return ( (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ) ;
 
 }; // int get_light_strength ( moderately_finepoint target_pos )
 
