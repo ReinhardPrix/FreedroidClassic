@@ -120,7 +120,7 @@ typedef struct
 } 
 known_do_extra, *Known_do_extra;
 
-#define ALL_KNOWN_EXTRAS 25
+#define ALL_KNOWN_EXTRAS 26
 
 known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
   {
@@ -148,7 +148,8 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "AddGold:" , 21 , '\0' } , 
     { "DeleteAllInventoryItemsWithCode:" , 22 , '\0' } , 
     { "DeleteAllInventoryItemsOfType:" , 23 , '\0' } ,
-    { "ExecuteSubdialog:", 24 , '\0' } 
+    { "ExecuteSubdialog:", 24 , '\0' } ,
+    { "EverybodyBecomesHostile",  25 , '\0' } 
   };
 
 typedef struct

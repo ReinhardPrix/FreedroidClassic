@@ -1991,7 +1991,10 @@ iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
     {
       if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 )
 	{
-	  iso_put_tux_part ( PART_GROUP_WEAPON , "iso_sword" , x , y , player_num , rotation_index );
+	  if ( Me [ player_num ] . weapon_item . type == ITEM_MACE )
+	    iso_put_tux_part ( PART_GROUP_WEAPON , "iso_mace" , x , y , player_num , rotation_index );
+	  else
+	    iso_put_tux_part ( PART_GROUP_WEAPON , "iso_sword" , x , y , player_num , rotation_index );
 	}
       else
 	{

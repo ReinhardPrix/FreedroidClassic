@@ -476,6 +476,15 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       ChatDroid -> is_friendly = FALSE ;
       ChatDroid -> combat_state = MAKE_ATTACK_RUN ;
     }
+  else if ( ! strcmp ( ExtraCommandString , "EverybodyBecomesHostile" ) )
+    {
+      DebugPrintf ( -1000 , "\nEverybody SHOULD NOW BE HOSTILE!" );
+      for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+	{
+	  AllEnemys [ i ] . is_friendly = FALSE ;
+	  AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
+	}
+    }
   else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
     {
       Me [ 0 ] . melee_weapon_skill ++; 
