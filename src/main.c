@@ -833,20 +833,45 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.9  1993/07/30 22:19:13  prix
- * Wed Jul 28 20:58:33 1993: keine Phasen mehr bei den Bullets
- * Wed Jul 28 21:03:11 1993: phases ausradiert, Richtungen fuer Bullets
- * Wed Jul 28 21:07:08 1993: Phasen nicht erhoehen und neu beginnen bei Bullets
- * Thu Jul 29 07:26:01 1993: phases auf 3 gesetzt
- * Thu Jul 29 07:33:25 1993: Richtung fuer Bullets verwirklicht
- * Thu Jul 29 07:42:26 1993: warten wird dekrementiert
- * Thu Jul 29 10:11:31 1993: MemoryAmount jetzt voellig ohne Sicherheit
- * Thu Jul 29 12:21:15 1993: Bullet etwas versetzt abschiessen
- * Thu Jul 29 12:31:58 1993: Inlfuencer treffbar
- * Fri Jul 30 07:30:39 1993: Agression wird initialisiert
- * Fri Jul 30 07:47:26 1993: Defeated soll anschauricher sein
- * Fri Jul 30 11:58:57 1993: MoveLevelDoors:  now 6 phases !!
- * Fri Jul 30 18:15:16 1993: INFLUENCEGETROFFENOFF Schalter added
+ * Revision 1.10  1993/08/04 15:13:22  prix
+ * Fri Jul 30 18:26:16 1993: working on new MoveLevelDoors()
+ * Fri Jul 30 18:57:29 1993: still working
+ * Fri Jul 30 19:16:35 1993: First Release of New MoveLevelDoors
+ * Sat Jul 31 07:25:14 1993: SetColors hinzugefuegt
+ * Sat Jul 31 07:40:46 1993: farbwerte hinzugefuegt
+ * Sat Jul 31 11:04:54 1993: Waypointliste - Array nun ausserhalb der Feindliste: Pointer
+ * Sat Jul 31 11:22:27 1993: made HALBTUERE3 passable
+ * Sat Jul 31 11:48:28 1993: changes in druidsped: init
+ * Sat Jul 31 12:18:31 1993: adapts to new druid-struct: firewait in FireBullet
+ * Sat Jul 31 18:30:11 1993: Speicher reservieren in Druidmap[0].type
+ * Sat Jul 31 19:44:47 1993: added levelnum init in Feindliste
+ * Sat Jul 31 19:48:38 1993: EnemyCollision only for living druid on current level
+ * Sat Jul 31 20:25:37 1993: BounceBack stoppt nun Influencer statt zu reflektieren
+ * Sat Jul 31 21:02:07 1993: removed brain-damaged shifts of Influence coordinates
+ * Sat Jul 31 22:04:39 1993: New MoveLevelDoors: open for all druids
+ * Sun Aug 01 08:23:53 1993: MoveLevelDoors: 0/0 beendet Funktion
+ * Sun Aug 01 13:30:50 1993: dist - Werte in MoveLevelDoors long !!
+ * Sun Aug 01 13:52:40 1993: rewriting NotPassable; exact checks
+ * Sun Aug 01 14:59:31 1993: New NotPassable
+ * Sun Aug 01 15:01:00 1993: Aufrufe von NotPassable an neue Paramter angepasst
+ * Sun Aug 01 15:08:52 1993: mod. notPassable
+ * Sun Aug 01 16:42:59 1993: New BounceBack
+ * Mon Aug 02 09:26:30 1993: rotateBulletColor() aktiviert
+ * Mon Aug 02 10:03:01 1993: schussgeschwindigkeit erhoeht
+ * Tue Aug 03 12:34:41 1993: some unnescesary extras transfered into the file "plusjunk"
+ * Tue Aug 03 13:52:28 1993: documentation and influence mortal
+ * Tue Aug 03 14:33:11 1993: removed drive init of Druidmap (struct changed !)
+ * Tue Aug 03 14:41:01 1993: NotPassable verbessert: Tuerraender
+ * Tue Aug 03 14:49:22 1993: use of Me.firedir removed in MoveInfluence() und FireBullet
+ * Tue Aug 03 14:51:13 1993: removed init of Me.firedir
+ * Tue Aug 03 17:34:59 1993: BounceBack verbessert: schnelles Abgleiten an Mauer
+ * Tue Aug 03 18:20:23 1993: written DoorCatch()
+ * Tue Aug 03 18:22:59 1993: call to DoorCatch in CheckWallHit
+ * Tue Aug 03 18:30:43 1993: killed CheckWallHit. New: BounceInfluencer
+ * Tue Aug 03 19:41:52 1993: fighting with Pos-correction-functions (SHIITTTT)
+ * Tue Aug 03 20:55:37 1993: written BounceInfluencer(), NotPassable() and DruidPassable()
+ * Tue Aug 03 22:24:21 1993: changed DruidPassable and BounceInfluencer
+ * Wed Aug 04 10:20:23 1993: added some lines to DruidPassable
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
