@@ -225,8 +225,9 @@ typedef struct
 {
   double PX;			/* PosX */
   double PY;			/* PosY */
-  byte type;
+  int type;
   double phase;
+  int MessageWasDone;
 }
 blast, *Blast;
 

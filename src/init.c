@@ -1394,7 +1394,7 @@ InitFreedroid (void)
   Me.TextVisibleTime = 0;
   Me.TextToBeDisplayed = "Hello, I'm 001.";
 
-  GameConfig.WantedTextVisibleTime = 5;
+  GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
 
   Init_Video ();

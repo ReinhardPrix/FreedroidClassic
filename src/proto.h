@@ -408,6 +408,8 @@ void PaintConsoleMenu (void);
 #define EXTERN extern
 #endif
 
+EXTERN void AddInfluBurntText( void );
+EXTERN void AddStandingAndAimingText ( int Enum );
 EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
 EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 

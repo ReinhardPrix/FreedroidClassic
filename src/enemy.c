@@ -441,6 +441,18 @@ MoveThisRobotAdvanced ( int EnemyNum )
 	   Druidmap[ThisRobot->type].aggression &&
 	   ! ThisRobot->Friendly )
 	{
+	  // But now that the enemy is are almost ready to fire, it just
+	  // might also say something.  But of course it will not repeat this
+	  // sentence every frame.  Therefore we may only say something when
+	  // this happens the first time i.e. when the robot was not waiting
+	  // already.
+	  //
+	  if ( ThisRobot->warten == 0)
+	    {
+	      AddStandingAndAimingText( EnemyNum );
+	    }
+
+
 	  ThisRobot->warten=2;
 	  return;
 	}

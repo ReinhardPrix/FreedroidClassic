@@ -76,6 +76,51 @@ unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
 
+void 
+AddStandingAndAimingText ( int Enum )
+{
+  Enemy ThisRobot=&AllEnemys[ Enum ];
+
+  ThisRobot->TextVisibleTime=0;
+	      
+  if ( ( fabsf (Me.speed.x) < 1 ) && ( fabsf (Me.speed.y) < 1 ) )
+    {
+      ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
+    }
+  else
+    {
+      ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
+    }
+
+} // void AddStandingAndAimingText( int Enum )
+
+
+void
+AddInfluBurntText( void )
+{
+  int FinalTextNr;
+
+  Me.TextVisibleTime=0;
+  
+  FinalTextNr=MyRandom(2);
+  switch ( FinalTextNr )
+    {
+    case 0:
+      Me.TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
+      break;
+    case 1:
+      Me.TextToBeDisplayed="Hell, that blast was hot!";
+      break;
+    case 2:
+      Me.TextToBeDisplayed="Ghaart, I hate to stain my skin like that.";
+      break;
+    default:
+      printf("\nError in AddInfluBurntText! That shouldn't be happening.");
+      Terminate(ERR);
+      break;
+    }
+} // void AddInfluBurntText
+
 /*-----------------------------------------------------------------
  * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
  * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt

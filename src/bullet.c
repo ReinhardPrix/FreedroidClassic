@@ -141,6 +141,7 @@ StartBlast (float x, float y, int type)
   NewBlast->type = type;
   NewBlast->phase = 0;
 
+  NewBlast->MessageWasDone = 0;
 
   if (type == DRUIDBLAST)
     {
@@ -420,6 +421,15 @@ CheckBlastCollisions (int num)
 	    if ((PlusExtentionsOn) && (LastBlastHit > 5))
 	      InsertMessage ("Blast hit me! OUCH!");
 	    LastBlastHit = 0;
+	    
+	    // So the influencer got some damage from the hot blast
+	    // Now most likely, he then will also say so :)
+	    if ( !CurBlast->MessageWasDone )
+	      {
+		AddInfluBurntText();
+		CurBlast->MessageWasDone=TRUE;
+	      }
+
 	  }
 	// In order to avoid a new sound EVERY frame we check for how long the previous blast 
 	// lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!

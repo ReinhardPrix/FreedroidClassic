@@ -1057,7 +1057,7 @@ RefreshInfluencer (void)
   else
     {
       // If nothing more is to be had, the influencer might also say so...
-      Me.TextToBeDisplayed="Oh, it seems that was if for now. ";
+      Me.TextToBeDisplayed="Oh, it seems that was it again.";
       Me.TextVisibleTime=0;
     }
 
