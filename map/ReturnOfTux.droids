@@ -89,6 +89,11 @@ SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1
 SpecialForce: Type=PRO X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RichardStartGameSquare" RushTux="no" DialogSectionToUse="RMS" ShortLabel="Richard -- Programmer" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
+// This is Benjamin, the ranged weapons teacher
+//
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminCitadelStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Benjamin -- Ranged Weapons Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+//--------------------
 // This is Dixon 'DIX', who maintains the teleporter system of the colony
 //
 SpecialForce: Type=GUA X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="Dixon" ShortLabel="Dixon -- Teleport Administrator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
@@ -452,7 +457,7 @@ Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 420
 
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Ernie -- Ranged Weapons Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Spe***cialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminCitadelStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Benjamin -- Ranged Weapons Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 

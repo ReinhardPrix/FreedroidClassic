@@ -901,8 +901,6 @@ ob_type=117 ob_x=68.50 ob_y=47.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=68.50 ob_y=46.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=68.50 ob_y=45.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=68.50 ob_y=44.50 ob_na=-1 ob_de=-1 
-ob_type=117 ob_x=68.50 ob_y=43.50 ob_na=-1 ob_de=-1 
-ob_type=117 ob_x=68.50 ob_y=42.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=68.50 ob_y=41.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=68.50 ob_y=40.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=68.50 ob_y=39.50 ob_na=-1 ob_de=-1 
@@ -2289,6 +2287,12 @@ ob_type=194 ob_x=30.50 ob_y=8.50 ob_na=-1 ob_de=33
 ob_type=194 ob_x=30.50 ob_y=10.50 ob_na=-1 ob_de=34 
 ob_type=194 ob_x=30.50 ob_y=12.50 ob_na=-1 ob_de=35 
 ob_type=49 ob_x=22.50 ob_y=12.50 ob_na=-1 ob_de=36 
+ob_type=11 ob_x=68.50 ob_y=42.50 ob_na=-1 ob_de=-1 
+ob_type=11 ob_x=68.50 ob_y=43.50 ob_na=-1 ob_de=-1 
+ob_type=34 ob_x=74.50 ob_y=40.50 ob_na=-1 ob_de=-1 
+ob_type=34 ob_x=74.50 ob_y=44.50 ob_na=-1 ob_de=-1 
+ob_type=33 ob_x=77.50 ob_y=44.50 ob_na=-1 ob_de=-1 
+ob_type=35 ob_x=77.50 ob_y=40.50 ob_na=-1 ob_de=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=49 label.pos.y=19 label.label_name="StoneStartGameSquare"
@@ -2323,6 +2327,7 @@ label.pos.x=64 label.pos.y=27 label.label_name="RichardStartGameSquare"
 label.pos.x=62 label.pos.y=38 label.label_name="LukasStartGameSquare"
 label.pos.x=73 label.pos.y=23 label.label_name="OracleStart"
 label.pos.x=41 label.pos.y=75 label.label_name="DucanStartGameSquare"
+label.pos.x=71 label.pos.y=42 label.label_name="BenjaminCitadelStartGameSquare"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 obstacle_label.index=0 obstacle_label_name="NoviceArenaAccessDoor"
@@ -2351,6 +2356,7 @@ PosX=57 PosY=38 Statement=""
 End of pure statement information for this level
 
 Start of pure items information for this level
+New item: type=98  X=13.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=39  X=30.500000  Y=78.750000  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
@@ -2468,6 +2474,9 @@ Nr.=108 x=  41 y=  42 rnd=0	 connections:   20 106
 Nr.=109 x=  36 y=  77 rnd=0	 connections:   95  96
 Nr.=110 x=  14 y=  58 rnd=0	 connections:   69
 Nr.=111 x=  61 y=  37 rnd=0	 connections:   92  91
+Nr.=112 x=  71 y=  42 rnd=0	 connections:  114 113
+Nr.=113 x=  73 y=  44 rnd=0	 connections:  114 112
+Nr.=114 x=  73 y=  40 rnd=0	 connections:  113 112
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 1
@@ -7942,7 +7951,7 @@ ob_type=1 ob_x=35.00 ob_y=24.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 ob_de=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 ob_de=2 
-ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 ob_de=5 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=27.00 ob_na=-1 ob_de=-1 
@@ -7951,14 +7960,14 @@ ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=49.42 ob_y=26.58 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=38.87 ob_y=27.27 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 ob_de=3 
-ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 ob_de=4 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 ob_de=-1 
@@ -8470,7 +8479,7 @@ ob_type=52 ob_x=39.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=88.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=88.50 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=86.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=88.50 ob_na=-1 ob_de=-1 
@@ -8519,7 +8528,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8535,8 +8544,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -10789,7 +10798,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 
 Start of pure items information for this level
-New item: type=98  X=90.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
