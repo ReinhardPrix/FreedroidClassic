@@ -730,6 +730,8 @@ void
 LevelGrauFaerben (void)
 {
   SetLevelColor (PD_DARK);
+  ActivateConservativeFrameTimeComputation();  // to prevent a "jump" when the level turns gray
+                                               // observed and reported by rp.
 }
 
 

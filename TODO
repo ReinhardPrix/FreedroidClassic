@@ -6,13 +6,17 @@ Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 
 - (jp) Collision with robo can still kick you out of level..
+       jp: --> absolutely not on my machine!!!!!
 
-- (jp/rp) "Ghost" bullets firing on me on empyt levels (eg. level 5) 
+- (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5) 
   then also had some ghost bullets coming from nowhere on other
   (no-empty) levels
+  ---> has already been removed.  That was only a symtom while I was
+       extending.  Problem is fixed I think.
 
 - (jp) Before any release the levelcolor changing procedure must be rearranged to work
        well together with the combat screen resizing code
+  ---> Done.
 
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
@@ -21,20 +25,23 @@ Outstanding release-critical bugs (priority: high)
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
        to make sure all the constants are in the right range for slow machines
        too.  I don't experience many bugs, because the constants are well suited
-       for my 1400 Mhz machine.  I could use the 166 Mhz Pentium of irene.
+       for my 1400 Mhz machine.  I could use the 166 Mhz Pentium of Irene.
 
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - (rp) Joystick shooting should determine direction more precisely
-  (difficult to shoot "straight")
+       (difficult to shoot "straight")
 
 - (jp) leaving level-editor in zoom-factor!= 1 is not restored when
-  going back to game
+       going back to game
+       (Going back to game is a "development feature, that should of
+        course not be present in the real game.)
 
 - (jp) level-empty switch to grey is too slow and causes a "jump"
-  this should only be a shift of a vector (ne_screen) and not take any
-  time at all!!
+       this should only be a shift of a vector (ne_screen) and not take any
+       time at all!!
+
 
 - Our game lacks the "takeover announcement", i.e. in the original game after initiating
   takeover, takeover game does not immediately start but the opposing units are displayed
@@ -45,11 +52,6 @@ Outstanding normal bugs (priority: normal)
 
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
   (seems ok so far..)
-
-- We really should have a "dat" file, where the constants involving
-  only the game physics are stored, so that people can write their
-  own "mods" and also transfer their mods to new versions of freed.
-  Theis "dat" file should be well documented and ascii editable.
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
@@ -101,6 +103,11 @@ Wishlist
 
 Resolved bugs
 -------------
+-  DONE We really should have a "dat" file, where the constants involving
+        only the game physics are stored, so that people can write their
+        own "mods" and also transfer their mods to new versions of freed.
+        This "dat" file should be well documented and ascii editable.
+
 - DONE  Saving of Ships does NOT work correctly in the LevelEditor
         integrated in the game 
         (rp): PORT the map-editor 'maped' ?
