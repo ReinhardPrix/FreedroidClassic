@@ -971,17 +971,17 @@ Init_Game_Data ( char * Datafilename )
   /* Read the whole game data to memory */
   if ((DataFile = fopen (Datafilename, "r")) == NULL)
     {
-      DebugPrintf (1, "\nint Init_Game_Data( void ): Error opening file.... ");
+      DebugPrintf ( 0 , "\nint Init_Game_Data( void ): Error opening file.... ");
       Terminate(ERR);
     }
   else
     {
-      DebugPrintf (2, "\nOpening game data file succeeded...");
+      DebugPrintf ( 2 , "\nOpening game data file succeeded...");
     }
 
   if (fstat (fileno (DataFile), &stbuf) == EOF)
     {
-      DebugPrintf (1, "\nint Init_Game_Data ( void ): Error fstat-ing File....");
+      DebugPrintf ( 0 , "\nint Init_Game_Data ( void ): Error fstat-ing File....");
       Terminate(ERR);
     }
   else
@@ -991,17 +991,17 @@ Init_Game_Data ( char * Datafilename )
 
   if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
     {
-      DebugPrintf (1, "\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
+      DebugPrintf ( 0 , "\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
     }
 
   fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
 
-  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
+  DebugPrintf ( 2 , "\nReading dat file succeeded... Adding a 0 at the end of read data....");
 
   if ( (EndPointer = strstr( Data , END_OF_GAME_DAT_STRING ) ) == NULL )
     {
-      DebugPrintf (1, "\nERROR!  END OF GAME.DAT STRING NOT FOUND!  Terminating...");
+      DebugPrintf ( 0 , "\nERROR!  END OF GAME.DAT STRING NOT FOUND!  Terminating...");
       Terminate(ERR);
     }
   else

@@ -271,9 +271,10 @@ bullet, *Bullet;
 
 typedef struct
 {
-  byte phases;
+  int phases;
   unsigned char *picpointer;
   SDL_Rect *block;     /* the coordinates of the blocks in ne_blocks */
+  double total_animation_time;
 }
 blastspec, *Blastspec;
 
@@ -284,6 +285,7 @@ typedef struct
   int type;
   double phase;
   int MessageWasDone;
+  
 }
 blast, *Blast;
 

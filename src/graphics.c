@@ -342,6 +342,142 @@ SetCombatScaleTo(float ResizeFactor)
 
 } // void SetCombatScaleTo(float new_scale);
 
+/*
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+LoadThemeConfigurationFile(void)
+{
+  struct stat stbuf;
+  FILE *DataFile;
+  char *Data;
+  char *ReadPointer;
+  char filename[10000];
+#define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
+
+  strcpy ( filename , GRAPHICS_DIR );
+  strcat ( filename , GameConfig.Theme_SubPath );
+  strcat ( filename , "config.theme" );
+
+  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ) called.");
+  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , filename );
+
+  // Read the whole theme data to memory 
+  if ((DataFile = fopen (filename, "r")) == NULL)
+    {
+      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile( void ): Error opening file.... ");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\nOpening theme config file succeeded...");
+    }
+
+  if (fstat (fileno (DataFile), &stbuf) == EOF)
+    {
+      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ): Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 2 , "\nfstating theme config file succeeded...");
+    }
+
+  if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+    {
+      DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( char * constantsname ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
+
+  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
+
+  if ( (ReadPointer = strstr( Data , END_OF_THEME_DATA_STRING ) ) == NULL )
+    {
+      DebugPrintf (1, "\nERROR!  END OF THEME DATA STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      ReadPointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  DebugPrintf( 0 , "\n\nvoid LoadThemeConfigurationFile ( void ) : The content of the read file: \n%s" , Data );
+
+  //--------------------
+  // Now the file is read in entirely and
+  // we can start to analyze its content
+
+#define BLAST_ONE_NUMBER_OF_PHASES_STRING "How many phases in Blast one :"
+#define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
+#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
+#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
+
+  if ( ( ReadPointer = strstr ( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nNumber of phases for blast one string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nNumber of phases for blast one string found. Good.");  
+      ReadPointer += strlen ( BLAST_ONE_NUMBER_OF_PHASES_STRING );
+      sscanf ( ReadPointer , "%d" , &Blastmap[0].phases );
+      DebugPrintf( 0 , "\nBlastmap[0].phases now reads:  %d" , Blastmap[0].phases );
+      // getchar();
+    }
+  
+  if ( ( ReadPointer = strstr ( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nNumber of phases for blast two string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nNumber of phases for blast two string found. Good.");  
+      ReadPointer += strlen ( BLAST_TWO_NUMBER_OF_PHASES_STRING );
+      sscanf ( ReadPointer , "%d" , &Blastmap[1].phases );
+      DebugPrintf( 0 , "\nBlastmap[1].phases now reads:  %d" , Blastmap[1].phases );
+      // getchar();
+    }
+
+  //--------------------
+  // Now we read in the total time amount for each animation
+  
+  if ( ( ReadPointer = strstr ( Data , BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nAmount of total time for blast one string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nTotal amount of time for blast one string found. Good.");  
+      ReadPointer += strlen ( BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING );
+      sscanf ( ReadPointer , "%lf" , &Blastmap[0].total_animation_time );
+      DebugPrintf( 0 , "\nBlastmap[0].total_animation_time now reads:  %f" , Blastmap[0].total_animation_time );
+      // getchar();
+    }
+  
+  if ( ( ReadPointer = strstr ( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nAmount of total time for blast two string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nTotal amount of time for blast two string found. Good.");  
+      ReadPointer += strlen ( BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING );
+      sscanf ( ReadPointer , "%lf" , &Blastmap[1].total_animation_time );
+      DebugPrintf( 0 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
+      // getchar();
+    }
+  
+}; // void LoadThemeConfigurationFile ( void )
+
+
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
  * 				
@@ -371,6 +507,13 @@ InitPictures (void)
   // and we do not want do deal with huge frametimes, which
   // could box the influencer out of the ship....
   Activate_Conservative_Frame_Computation();
+
+  // In the following we will be reading in image information.  But the number
+  // of images to read in and the way they are displayed might be strongly dependant
+  // on the theme.  That is not at all a problem.  We just got to read in the
+  // theme configuration file again.  After that is done, the following reading
+  // commands will do the right thing...
+  LoadThemeConfigurationFile();
 
   /* 
      create the internal storage for all our blocks 

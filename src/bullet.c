@@ -170,8 +170,8 @@ ExplodeBlasts (void)
 	  CheckBlastCollisions (i);
 
 	// CurBlast->phase++;
-	CurBlast->phase += Frame_Time () * BLASTPHASES_PER_SECOND;
-	if (((int) rintf (CurBlast->phase)) >=
+	CurBlast->phase += Frame_Time () * Blastmap[ CurBlast->type ].phases / Blastmap[ CurBlast->type ].total_animation_time;
+	if (((int) floorf (CurBlast->phase)) >=
 	    Blastmap[CurBlast->type].phases)
 	  DeleteBlast (i);
       }				/* if */
