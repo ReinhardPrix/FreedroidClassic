@@ -45,6 +45,8 @@
 
 #define TIMETILLNEXTBULLET 14
 
+#define FRICTION_CONSTANT (0.02)
+
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
 
@@ -177,6 +179,7 @@ MoveInfluence ( int PlayerNum )
   float planned_step_y;
   static float TransferCounter = 0;
   moderately_finepoint RemainingWay;
+  moderately_finepoint MinimalWayAtThisSpeed;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -239,8 +242,42 @@ MoveInfluence ( int PlayerNum )
       // thowards this mouse move target.
       //
 	{
-	  RemainingWay.x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
-	  RemainingWay.y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+	  //--------------------
+	  // Let's do some mathematics:  We compute how far we have to go still
+	  // and we also compute how far we will inevitably go even if we pull the breakes
+	  // or even better use the usual friction with air to stop our motion immediately.
+	  // Once we know that, we can simply decide if we still have to build up speed or
+	  // if it's time to slow down again and so finally we will slide to a stop exactly
+	  // at the place where we intend to be.  So:  Mathematics is always helpful. :)
+	  //
+	  RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+	  RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+
+	  MinimalWayAtThisSpeed . x = Me [ PlayerNum ] . speed . x / log ( FRICTION_CONSTANT ) ;
+	  MinimalWayAtThisSpeed . y = Me [ PlayerNum ] . speed . y / log ( FRICTION_CONSTANT ) ;
+
+	  if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
+	    {
+	      if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
+	      else Me [ PlayerNum ] .speed.x += accel;
+	    }
+	  else
+	    {
+	      Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
+	    }
+	  if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
+	    {
+	      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
+	      else Me [ PlayerNum ] .speed.y += accel;
+	    }
+	  else
+	    {
+	      Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
+	    }
+	    
+
+
+	  /*
 
 	  //--------------------
 	  // In case we are close to the target already, we delete our current speed, so
@@ -269,6 +306,8 @@ MoveInfluence ( int PlayerNum )
 	      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
 	      else Me [ PlayerNum ] .speed.y += accel;
 	    }
+
+	  */
 	  
 	  //--------------------
 	  // In case we have reached our target, we can remove this mouse_move_target again,
@@ -706,11 +745,11 @@ InfluenceFrictionWithAir ( int PlayerNum )
 
   if ( ! ServerThinksUpPressed ( PlayerNum ) && ! ServerThinksDownPressed ( PlayerNum ) )
     {
-      Me [ PlayerNum ] . speed.y *= exp(log(0.02) * Frame_Time());
+      Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
     }
   if ( ! ServerThinksRightPressed ( PlayerNum ) && ! ServerThinksLeftPressed ( PlayerNum ) )
     {
-      Me [ PlayerNum ] . speed.x *= exp(log(0.02) * Frame_Time());
+      Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
     }
 
 }; // InfluenceFrictionWithAir ( int PlayerNum )
