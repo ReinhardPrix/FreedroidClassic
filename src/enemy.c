@@ -1016,8 +1016,12 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
     
     for ( i = 0 ; i < MAX_RANDOM_WALK_ATTEMPTS_BEFORE_GIVING_UP ; i ++ )
     {
-	target_candidate . x = ThisRobot -> pos . x + MyRandom ( 5 ) - 2 ; 
-	target_candidate . y = ThisRobot -> pos . y + MyRandom ( 5 ) - 2 ; 
+	//--------------------
+	// We select a possible new walktarget for this bot, not too
+	// far away from the current position...
+	//
+	target_candidate . x = ThisRobot -> pos . x + ( MyRandom ( 600 ) - 300 ) / 100 ; 
+	target_candidate . y = ThisRobot -> pos . y + ( MyRandom ( 600 ) - 300 ) / 100 ; 
 
 	if ( tux_can_walk_this_line ( 0 , ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				      target_candidate . x , target_candidate . y ) )

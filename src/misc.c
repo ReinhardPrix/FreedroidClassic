@@ -152,7 +152,14 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 130    , 32+5*66 , 0 ,  0 } } ,
+
+    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 32+5*66 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 32+5*66 , 0 ,  0 } } ,
+
+    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 72+5*66 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 72+5*66 , 0 ,  0 } } ,
+
+    { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } } ,
 
     { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
     { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,

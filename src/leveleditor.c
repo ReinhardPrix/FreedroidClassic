@@ -1254,6 +1254,8 @@ ItemDropFromLevelEditor( void )
     int our_multiplicity = 1 ;
     int item_group = 0 ; 
     static int previous_mouse_position_index = (-1) ;
+    static int previous_suffix_selected = (-1) ;
+    static int previous_prefix_selected = (-1) ;
     
     while ( GPressed() );
     
@@ -1276,6 +1278,10 @@ ItemDropFromLevelEditor( void )
 	
 	ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON );
 	ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_PREFIX_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_PREFIX_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_SUFFIX_BUTTON );
+	ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_SUFFIX_BUTTON );
 	ShowGenericButtonFromList ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON );
 	
 	if ( level_editor_item_drop_index ( row_len , line_len ) != (-1) )
@@ -1288,6 +1294,28 @@ ItemDropFromLevelEditor( void )
 	    }
 	    PutStringFont ( Screen , FPS_Display_BFont , 20 , 440 , ItemMap [ previous_mouse_position_index ] . item_name ) ;
 	}
+
+	if ( previous_prefix_selected != (-1) )
+	{
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 370 , 
+			    PrefixList [ previous_prefix_selected ] . bonus_name ) ;
+	}
+	else
+	{
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 370 , 
+			    "NO PREFIX" ) ;
+	}
+
+	if ( previous_suffix_selected != (-1) )
+	{
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 410 , 
+			    SuffixList [ previous_suffix_selected ] . bonus_name ) ;
+	}
+	else
+	{
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 410 , 
+			    "NO SUFFIX" ) ;
+	}
 	
 	our_SDL_flip_wrapper( Screen );
 	
@@ -1297,15 +1325,51 @@ ItemDropFromLevelEditor( void )
 	
 	if ( SpacePressed() )
 	{
-	    if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
-				    GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    if ( MouseCursorIsOnButton ( 
+		     LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
+		     GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+		     GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 		item_group ++ ;
 	    }
-	    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
-					 GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    else if ( MouseCursorIsOnButton ( 
+			  LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
+			  GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+			  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 		if ( item_group > 0 ) item_group -- ;
+	    }
+	    if ( MouseCursorIsOnButton ( 
+		     LEVEL_EDITOR_NEXT_PREFIX_BUTTON ,
+		     GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+		     GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		if ( previous_prefix_selected < 20 )
+		    previous_prefix_selected ++ ;
+	    }
+	    else if ( MouseCursorIsOnButton ( 
+			  LEVEL_EDITOR_PREV_PREFIX_BUTTON ,
+			  GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+			  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		if ( previous_prefix_selected > (-1) )
+		    previous_prefix_selected -- ;
+	    }
+	    if ( MouseCursorIsOnButton ( 
+		     LEVEL_EDITOR_NEXT_SUFFIX_BUTTON ,
+		     GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+		     GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		if ( previous_suffix_selected < 20 )
+		    previous_suffix_selected ++ ;
+	    }
+	    else if ( MouseCursorIsOnButton ( 
+			  LEVEL_EDITOR_PREV_SUFFIX_BUTTON ,
+			  GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+			  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		if ( previous_suffix_selected > (-1) )
+		    previous_suffix_selected -- ;
 	    }
 	    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON ,
 					 GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
@@ -1331,7 +1395,8 @@ ItemDropFromLevelEditor( void )
     {
 	our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100 );
     }
-    DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 , our_multiplicity );
+    DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
+		previous_prefix_selected , previous_suffix_selected , 0 , our_multiplicity );
     
     while ( SpacePressed() );
     
