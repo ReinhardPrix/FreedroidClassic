@@ -116,7 +116,7 @@ typedef struct
   int sensor2;
   int sensor3;
   int armament;
-  int AdvancedFighting;         // Does this droid fight better than the Paradroid random algorithm?
+  int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   char *notes;			/* notes on the druid of this type */
 }
 druidspec, *Druidspec;

@@ -480,8 +480,14 @@ char *StructToMem(Level Lev)
       for( j=0; j<MAX_WP_CONNECTIONS; j++) 
       // for( j=0; j< 12 ; j++)  THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
 	{
-	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, "con=%3d \t ", -1 );
-	  else sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, " %3d", -1 );
+	  else 
+	    {
+	      if (Lev->AllWaypoints[i].x == 0 )
+		sprintf(linebuf, " %3d", (-1) );
+	      else 
+		sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	    }
 	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");

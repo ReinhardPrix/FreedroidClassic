@@ -195,7 +195,7 @@ ShuffleEnemys (void)
 }	/* ShuffleEnemys() */
 
 void 
-DoEnemyMovement( int EnemyNum )
+MoveThisRobotClassical( int EnemyNum )
 {
   int i,j;
   finepoint Restweg;
@@ -205,49 +205,6 @@ DoEnemyMovement( int EnemyNum )
   int trywp;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-
-  //--------------------
-  // At first, we check for a lot of cases in which we do not
-  // need to move anything for this reason or for that
-  //
-
-  // ignore robots on other levels 
-  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
-
-  // ignore dead robots as well...
-  if ( ThisRobot->Status == OUT ) return;
-
-  // Now check if the robot is still alive
-  // if the robot just got killed, initiate the
-  // explosion and all that...
-  if ( ThisRobot->energy <= 0)
-    {
-      ThisRobot->Status = OUT;
-      RealScore += Druidmap[ ThisRobot->type ].score;
-      StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
- 		  DRUIDBLAST);
-      if (LevelEmpty ())
-	CurLevel->empty = WAIT_LEVELEMPTY;
-      return;	// this one's down, so we can move on to the next
-    }
-  
-  // ignore all enemys with CompletelyFixed flag set...
-  if ( ThisRobot->CompletelyFixed ) return;
-
-  // robots that still have to wait also do not need to
-  // be processed for movement
-  if ( ThisRobot->warten > 0) return;
-
-  // Now check for collisions of this enemy with his colleagues
-  CheckEnemyEnemyCollision ( EnemyNum );
-
-
-
-  //--------------------
-  // Now comes the real movement part
-  // We have to prepare a lot of things...
-  //
-  //
 
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
@@ -315,6 +272,214 @@ DoEnemyMovement( int EnemyNum )
 		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
       else
 	{
+	  DebugPrintf ( 2, "\nWeird waypoint %d has no connections!\n", nextwp);
+	  Terminate(ERR);
+	}
+      
+      /* setze neuen Waypoint */
+      ThisRobot->nextwaypoint = trywp;
+    }			/* if */
+
+} // void MoveThisRobotClassical ( int Enemynum );
+
+/* ----------------------------------------------------------------------
+ * This function checks if the connection between two points is free of
+ * droids.  
+ *
+ * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
+ *
+ ----------------------------------------------------------------------*/
+int 
+CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
+{
+  float LargerDistance;
+  int Steps;
+  int i, j;
+  finepoint step;
+  finepoint CheckPosition;
+
+  DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+  fflush(stdout);
+
+  if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  else LargerDistance=fabsf(y1-y2);
+
+  Steps=LargerDistance * 4 ;   // We check four times on each map tile...
+  if ( Steps == 0 ) return TRUE;
+
+  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+  step.x = (x2 - x1) / Steps;
+  step.y = (y2 - y1) / Steps;
+
+  DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
+
+  // We start from position (x1, y1)
+  CheckPosition.x = x1;
+  CheckPosition.y = y1;
+
+  for ( i = 0 ; i < Steps ; i++ )
+    {
+      for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	{
+	  if ( AllEnemys[j].levelnum != OurLevel ) continue;
+	  if ( AllEnemys[j].Status == OUT ) continue;
+	  if ( AllEnemys[j].energy <= 0 ) continue;
+	  if ( j == ExceptedDroid ) continue;
+
+	  // so it seems that we need to test this one!!
+	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*DRUIDRADIUSX ) &&
+	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*DRUIDRADIUSY ) ) 
+	    {
+	      DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
+	      return FALSE;
+	    }
+	}
+
+      if ( ( fabsf( Me.pos.x - CheckPosition.x ) < 2*DRUIDRADIUSX ) &&
+	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*DRUIDRADIUSY ) ) 
+	{
+	  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
+	  return FALSE;
+	}
+
+
+      CheckPosition.x += step.x;
+      CheckPosition.y += step.y;
+    }
+
+  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : FREE!");
+  return TRUE;
+}; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
+
+
+/* ----------------------------------------------------------------------
+ * This function moves one robot in an advanced way, that hasn't been
+ * present within the classical paradroid game.
+ *
+ ----------------------------------------------------------------------*/
+void 
+MoveThisRobotAdvanced ( int EnemyNum )
+{
+  int i,j;
+  finepoint Restweg;
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  float maxspeed;
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  int FreeWays[ MAX_WP_CONNECTIONS ];
+  int SolutionFound;
+  int TestConnection;
+
+  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
+
+  // We do some definitions to save us some more typing later...
+  WpList = CurLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+
+  // determine the remaining way until the target point is reached
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+
+  // --------------------
+  // As long a the distance from the current position of the enemy
+  // to its next wp is large, movement is rather sinple:
+
+  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.x =
+	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
+      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
+    } 	 
+  else
+    {
+      // --------------------
+      // Once this enemy is close to his final destination waypoint, we have
+      // to do some fine tuning, and then of course set the next waypoint.
+      ThisRobot->pos.x = nextwp_pos.x;
+      ThisRobot->speed.x = 0;
+    }
+
+
+  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.y =
+	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
+      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
+    }
+  else
+    {
+      // ThisRobot->pos.y += (nextwp_pos.y-ThisRobot->pos.y)*Frame_Time();
+      ThisRobot->pos.y = nextwp_pos.y;
+      ThisRobot->speed.y = 0;
+    }
+
+
+  //--------------------
+  // Now we can see if we are perhaps already there?
+  // then it might be time to set a new waypoint.
+  //
+  if ((Restweg.x == 0) && (Restweg.y == 0))
+    {
+      ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
+      ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
+      
+      // search for possible connections from here...
+      DebugPrintf (2, "\nMoveRobotAdvanced: searching for possible connections...");
+
+      // search for the first connection, that doesn't exist any more, so
+      // that we know, which connections surely do exist
+      for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
+	if ( WpList[nextwp].connections[j] == -1 )
+	  break;
+
+      // Of course, only if such connections exist at all, we do the
+      // following change of target waypoint procedure
+      if ( j < MAX_WP_CONNECTIONS )
+	{
+
+	  // At this point, we should check, if there is another waypoint 
+	  // and also if the way there is free of other droids
+	  for ( i = 0; i < j ; i++ )
+	    {
+	      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->levelnum , EnemyNum );
+	    }
+
+	  // Now see whether any way point at all is free in that sense
+	  // otherwise we set this robot to waiting and return;
+	  for ( i = 0 ; i < j ; i++ )
+	    {
+	      if ( FreeWays[i] ) break;
+	    }
+
+	  if ( i == j )
+	    {
+	      DebugPrintf( 2 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
+	      ThisRobot->warten = 1;
+	      return;
+	    }
+
+	  // Now that we know, there is some way out of this, we can test around
+	  // and around randomly until we finally find some solution.
+	  SolutionFound=FALSE;
+	  while ( !SolutionFound )
+	    {
+	      TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
+	      
+	      if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
+	      if ( !FreeWays[TestConnection] ) continue;
+
+	      trywp = WpList[nextwp].connections[ TestConnection ];
+	      SolutionFound = TRUE;
+	    }
+	}
+      else
+	{
 	  DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
 	  // Terminate(ERR);
 	}
@@ -322,9 +487,58 @@ DoEnemyMovement( int EnemyNum )
       /* setze neuen Waypoint */
       ThisRobot->nextwaypoint = trywp;
     }			/* if */
+} // void MoveThisRobotAdvanced ( int EnemyNum )
+
+
+void 
+MoveThisEnemy( int EnemyNum )
+{
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+
+  //--------------------
+  // At first, we check for a lot of cases in which we do not
+  // need to move anything for this reason or for that
+  //
+
+  // ignore robots on other levels 
+  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+
+  // ignore dead robots as well...
+  if ( ThisRobot->Status == OUT ) return;
+
+  // Now check if the robot is still alive
+  // if the robot just got killed, initiate the
+  // explosion and all that...
+  if ( ThisRobot->energy <= 0)
+    {
+      ThisRobot->Status = OUT;
+      RealScore += Druidmap[ ThisRobot->type ].score;
+      StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
+ 		  DRUIDBLAST);
+      if (LevelEmpty ())
+	CurLevel->empty = WAIT_LEVELEMPTY;
+      return;	// this one's down, so we can move on to the next
+    }
   
-  
-} // void DoEnemyMovement ( int EnemyNum )
+  // ignore all enemys with CompletelyFixed flag set...
+  if ( ThisRobot->CompletelyFixed ) return;
+
+  // robots that still have to wait also do not need to
+  // be processed for movement
+  if ( ThisRobot->warten > 0) return;
+
+  // Now check for collisions of this enemy with his colleagues
+  CheckEnemyEnemyCollision ( EnemyNum );
+
+  //--------------------
+  // Now comes the real movement part
+
+  if ( Druidmap[ThisRobot->type].AdvancedBehaviour )
+    MoveThisRobotAdvanced( EnemyNum );
+  else
+    MoveThisRobotClassical( EnemyNum );
+
+} // void MoveThisEnemy ( int EnemyNum )
 
 /*@Function============================================================
 @Desc: This is the function, that move each of the enemys according to
@@ -335,13 +549,7 @@ their orders and their program
 void
 MoveEnemys (void)
 {
-  int i,j;
-  finepoint Restweg;
-  Waypoint WpList;		/* Pointer to waypoint-liste */
-  int nextwp;
-  finepoint nextwp_pos;
-  int trywp;
-  float maxspeed;
+  int i;
 
   PermanentHealRobots ();  // enemy robots heal as time passes...
 
@@ -350,13 +558,11 @@ MoveEnemys (void)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
      {
 
-       DoEnemyMovement(i);
+       MoveThisEnemy(i);
 
        // If its a combat droid, then if might attack...
        if (Druidmap[AllEnemys[i].type].aggression)
 	 AttackInfluence (i);
-
-
 
     }	/* for (MAX_ENEMYS_ON_SHIP) */
 
@@ -376,10 +582,22 @@ AttackInfluence (int enemynum)
   int guntype;
   float xdist, ydist;
   float dist2;
+  Enemy ThisRobot=&AllEnemys[ enemynum ];
+
+  //--------------------
+  // At first, we check for a lot of cases in which we do not
+  // need to move anything for this reason or for that
+  //
+
+  // ignore robots on other levels 
+  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+
+  // ignore dead robots as well...
+  if ( ThisRobot->Status == OUT ) return;
 
   /* Ermittlung des Abstandsvektors zum Influencer */
-  xdist = Me.pos.x - AllEnemys[enemynum].pos.x;
-  ydist = Me.pos.y - AllEnemys[enemynum].pos.y;
+  xdist = Me.pos.x - ThisRobot->pos.x;
+  ydist = Me.pos.y - ThisRobot->pos.y;
 
   if (xdist == 0) xdist = 0.01;
   if (ydist == 0) ydist = 0.01;
@@ -391,7 +609,7 @@ AttackInfluence (int enemynum)
   //    ydist = 2;
 
   /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
-  guntype = Druidmap[AllEnemys[enemynum].type].gun;
+  guntype = Druidmap[ThisRobot->type].gun;
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
 
@@ -399,13 +617,13 @@ AttackInfluence (int enemynum)
   // If some special command was given, like 
   // ATTACK_FIXED_MAP_POSITION=1, then we do the following:
   //
-  if ( AllEnemys[enemynum].AdvancedCommand == 1 )
+  if ( ThisRobot->AdvancedCommand == 1 )
     {
-      if (AllEnemys[enemynum].firewait) return;  // can't fire:  gun not yet reloaded...
+      if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
 
 
-      xdist = AllEnemys[enemynum].Parameter1 - AllEnemys[enemynum].pos.x;
-      ydist = AllEnemys[enemynum].Parameter2 - AllEnemys[enemynum].pos.y;
+      xdist = ThisRobot->Parameter1 - ThisRobot->pos.x;
+      ydist = ThisRobot->Parameter2 - ThisRobot->pos.y;
 
       Fire_Bullet_Sound ( guntype );
 
@@ -459,8 +677,8 @@ AttackInfluence (int enemynum)
 	}
 
       /* Bullets im Zentrum des Schuetzen starten */
-      AllBullets[j].pos.x = AllEnemys[enemynum].pos.x;
-      AllBullets[j].pos.y = AllEnemys[enemynum].pos.y;
+      AllBullets[j].pos.x = ThisRobot->pos.x;
+      AllBullets[j].pos.y = ThisRobot->pos.y;
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
@@ -472,12 +690,12 @@ AttackInfluence (int enemynum)
       // the fraction of the maxspeed times constant!
       // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
       // frame, the robot cant move into its own bullet.
-      // AllBullets[j].pos.x+=isignf(AllEnemys[enemynum].speed.x)*Block_Width/2;      
-      // AllBullets[j].pos.y+=isignf(AllEnemys[enemynum].speed.y)*Block_Height/2;
+      // AllBullets[j].pos.x+=isignf(ThisRobot->speed.x)*Block_Width/2;      
+      // AllBullets[j].pos.y+=isignf(ThisRobot->speed.y)*Block_Height/2;
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      AllEnemys[enemynum].firewait = Bulletmap[Druidmap[AllEnemys[enemynum].type].gun].recharging_time ;
+      ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
@@ -492,14 +710,14 @@ AttackInfluence (int enemynum)
 
   /* Only fire, if the influencer is in range.... */
   if ((dist2 < FIREDIST2) &&
-      (!AllEnemys[enemynum].firewait) &&
-      IsVisible (&AllEnemys[enemynum].pos))
+      (!ThisRobot->firewait) &&
+      IsVisible (&ThisRobot->pos))
     {
 
       if ( MyRandom (AGGRESSIONMAX)  >=
- 	  Druidmap[AllEnemys[enemynum].type].aggression )
+ 	  Druidmap[ThisRobot->type].aggression )
 	{
-	  AllEnemys[enemynum].firewait += drand48()*10; //MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
+	  ThisRobot->firewait += drand48()*10; //MyRandom (Druidmap[ThisRobot->type].firewait);
 	  return;
 	}
 
@@ -556,8 +774,8 @@ AttackInfluence (int enemynum)
 	}
 
       /* Bullets im Zentrum des Schuetzen starten */
-      AllBullets[j].pos.x = AllEnemys[enemynum].pos.x;
-      AllBullets[j].pos.y = AllEnemys[enemynum].pos.y;
+      AllBullets[j].pos.x = ThisRobot->pos.x;
+      AllBullets[j].pos.y = ThisRobot->pos.y;
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
@@ -569,12 +787,12 @@ AttackInfluence (int enemynum)
       // the fraction of the maxspeed times constant!
       // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
       // frame, the robot cant move into its own bullet.
-      // AllBullets[j].pos.x+=isignf(AllEnemys[enemynum].speed.x)*Block_Width/2;      
-      // AllBullets[j].pos.y+=isignf(AllEnemys[enemynum].speed.y)*Block_Height/2;
+      // AllBullets[j].pos.x+=isignf(ThisRobot->speed.x)*Block_Width/2;      
+      // AllBullets[j].pos.y+=isignf(ThisRobot->speed.y)*Block_Height/2;
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      AllEnemys[enemynum].firewait = Bulletmap[Druidmap[AllEnemys[enemynum].type].gun].recharging_time ;
+      ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;

@@ -534,7 +534,7 @@ Get_Robot_Data ( void* DataPointer )
       else
 	{
 	  ValuePointer += strlen ( ADVANCED_FIGHTING_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].AdvancedFighting );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].AdvancedBehaviour );
 	  // printf("\nDroid AdvancedFighting entry found!  It reads: %d" , Druidmap[RobotIndex].AdvancedFighting );
 	}
 
