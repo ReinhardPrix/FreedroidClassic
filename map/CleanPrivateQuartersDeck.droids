@@ -112,12 +112,9 @@ Allowed Type of Random Droid for this level: 993
 
 ** Beginning of new Level **
 Level=7
-Maximum number of Random Droids=4
-Minimum number of Random Droids=3
-Allowed Type of Random Droid for this level: 249
-Allowed Type of Random Droid for this level: 296
-Allowed Type of Random Droid for this level: 302
-Allowed Type of Random Droid for this level: 329
+Maximum number of Random Droids=15
+Minimum number of Random Droids=15
+Allowed Type of Random Droid for this level: 751
 S**pecialForce: Type=629 X=13 Y=3 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=6
 S**pecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7
 S**pecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=8

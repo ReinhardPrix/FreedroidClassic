@@ -66,11 +66,11 @@ Mission Name: The Outbreak
 +++
 Physics ('game.dat') file to use for this mission: freedroid.ruleset
 Ship file to use for this mission: Asteroid.maps
-Lift file to use for this mission: The_Outbreak.elevators
-Crew file to use for this mission: The_Outbreak.droids
+Lift file to use for this mission: CleanPrivateGoodsStorageCellar.elevators
+Crew file to use for this mission: CleanPrivateGoodsStorageCellar.droids
 Lifts On file to use for this mission: asteroid_on.png
 Lifts Off file to use for this mission: asteroid_off.png
-After completing this mission, load mission : Invading_Asteroid_Command_Central.mission
+After completing this mission, load mission : CleanPrivateQuartersDeck.mission
 
 +++
 +++ For the Outbreak mission, there is only one single starting point allowed,

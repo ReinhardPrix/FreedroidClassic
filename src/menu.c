@@ -415,9 +415,8 @@ enum
 
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Skip Classic Paradroid Episode");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Asteroid Research");
 
-      // SDL_UpdateRect(ne_screen, 0, 0, SCREENLEN*SCALE_FACTOR, SCREENHEIGHT*SCALEb_FACTOR);
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING

@@ -70,7 +70,7 @@ Lift file to use for this mission: Paradroid.elevators
 Crew file to use for this mission: Paradroid.droids
 Lifts On file to use for this mission: ship_on.png
 Lifts Off file to use for this mission: ship_off.png
-After completing this mission, load mission : The_Outbreak.mission
+After completing this mission, load mission : CleanPrivateGoodsStorageCellar.mission
 
 +++
 +++ For the classical paradroid mission, several different

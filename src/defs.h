@@ -96,7 +96,7 @@ enum
 #define NE_CREDITS_PIC_FILE     "ne_credits.jpg"
 
 #define STANDARD_MISSION        "Paradroid.mission"
-#define NEW_MISSION             "The_Outbreak.mission"
+#define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
 #define PARA_FONT_FILE 		"parafont.png"
 #define MENU_FONT_FILE 		"ArialGold.png"
