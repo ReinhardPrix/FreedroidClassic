@@ -573,9 +573,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   // We initialize the text rectangle
   //
   Cons_Text_Rect . x = 258 ;
-  Cons_Text_Rect . y = 89 ;
+  Cons_Text_Rect . y = 108 ;
   Cons_Text_Rect . w = 346 ;
-  Cons_Text_Rect . h = 282 ;
+  Cons_Text_Rect . h = 255 ;
 
   /*
   if ( ( ShowPointerList[0] == NULL ) && ( TuxItemsList[0] == NULL ) )
@@ -701,8 +701,8 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  Sell100ButtonActive = FALSE ;
 	}
 
-      sprintf ( GoldString , "Your Gold: %d." , (int) Me [ 0 ] . Gold );
-      PutStringFont ( Screen , Menu_BFont, 10, 141, GoldString );
+      sprintf ( GoldString , "%d." , (int) Me [ 0 ] . Gold );
+      PutStringFont ( Screen , Menu_BFont, 90, 141, GoldString );
 
       SDL_Flip( Screen );
 
