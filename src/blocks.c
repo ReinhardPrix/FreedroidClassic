@@ -407,34 +407,57 @@ Update_Tux_Working_Copy ( void )
       Previous_special_item = Me.special_item.type ; 
     }
     
+  //--------------------
+  // First we blit the chest and feet of the influencer, paying attention to the currently
+  // equipped armour
+  //
+  if ( Me.armour_item.type == (-1) ) 
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormat( TuxMotionArchetypes[7][i] );
+	  SDL_SetAlpha( TuxWorkingCopy[i] , 0 , SDL_ALPHA_TRANSPARENT );
+	  SDL_SetColorKey ( TuxWorkingCopy[i] , SDL_SRCCOLORKEY, 
+			    SDL_MapRGB( TuxWorkingCopy[i]->format, 255, 0, 255) ); 
+	}
+    }
+  else 
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormat( TuxMotionArchetypes[8][i] );
+	  SDL_SetAlpha( TuxWorkingCopy[i] , 0 , SDL_ALPHA_TRANSPARENT );
+	  SDL_SetColorKey ( TuxWorkingCopy[i] , SDL_SRCCOLORKEY, 
+			    SDL_MapRGB( TuxWorkingCopy[i]->format, 255, 0, 255) ); 
+	}
+    }
   
-
   // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
 
   if ( ( Me.weapon_item.type == (-1) ) || ( Me.weapon_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[4][i] );
+	  SDL_BlitSurface ( TuxMotionArchetypes[4][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
   else if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[2][i] );
+	  SDL_BlitSurface ( TuxMotionArchetypes[2][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
   else
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[0][i] );
+	  SDL_BlitSurface ( TuxMotionArchetypes[0][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
+
 
   //--------------------
   // Now we blit the shields OVER it.
@@ -462,6 +485,17 @@ Update_Tux_Working_Copy ( void )
 	  SDL_BlitSurface ( TuxMotionArchetypes[5][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
+  else
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_SetAlpha( TuxMotionArchetypes[6][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[6][i] , SDL_SRCCOLORKEY, 
+			    SDL_MapRGB( TuxMotionArchetypes[6][i]->format, 255, 0, 255) ); 
+	  SDL_BlitSurface ( TuxMotionArchetypes[6][i] , NULL , TuxWorkingCopy[i] , NULL );
+	}
+    }
+    
   
 }; // void Update_Tux_Working_Copy ( void )
 
