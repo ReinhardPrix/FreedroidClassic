@@ -39,9 +39,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <vga.h>
-// #include <vgagl.h>
-#include <vgakeyboard.h>
 
 #include "SDL.h"
 // #include "SDL_mixer.h"
@@ -510,12 +507,6 @@ Set_SVGALIB_Video_ON (void)
     }
   */
 
-  // Translate to 4 keypad cursor keys, and unify enter key. 
-  keyboard_translatekeys (TRANSLATE_CURSORKEYS | TRANSLATE_KEYPADENTER |
-			  TRANSLATE_DIAGONAL);
-  /* (TRANSLATE_DIAGONAL seems to give problems.) Michael: No doesn't...
-     but might not do what you expect.. */
-
 }				// void Set_SVGALIB_Video_ON(void)
 
 void
@@ -528,7 +519,6 @@ Set_SVGALIB_Video_OFF (void)
 
   DebugPrintf
     ("\nvoid Set_SVGALIB_Video_OFF(void): shutting console back to text mode....\n");
-  vga_setmode (TEXT);
 
 }				// Set_SVGALIB_Video_OFF(void)
 

@@ -40,8 +40,6 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <vga.h>
-// #include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"

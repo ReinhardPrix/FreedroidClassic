@@ -33,8 +33,6 @@
 #define _ship_c
 #include <stdio.h>
 #include <math.h>
-#include <vgakeyboard.h>
-// #include <vgagl.h>
 #include <string.h>
 
 #include "defs.h"

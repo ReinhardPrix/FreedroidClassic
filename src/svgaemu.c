@@ -36,9 +36,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <vga.h>
-// #include <vgagl.h>
-#include <vgakeyboard.h>
 
 #include "SDL.h"
 // #include "SDL_mixer.h"

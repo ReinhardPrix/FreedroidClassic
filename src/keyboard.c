@@ -37,9 +37,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-// #include <vga.h>
-// #include <vgagl.h>
-// #include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"

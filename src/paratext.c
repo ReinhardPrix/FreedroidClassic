@@ -40,9 +40,6 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
-#include <vga.h>
-// #include <vgagl.h>
-#include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -686,7 +683,8 @@ GetString (int MaxLen)
     {
 
       /* Backspace: ausfuehren */
-      if (keyboard_keypressed (SCANCODE_BACKSPACE))
+      // if (keyboard_keypressed (SCANCODE_BACKSPACE))
+      if ( BackspacePressed() )
 	{
 	  /* Wenn nicht schon am Beginn des STrings: */
 	  if (charcounter)
@@ -695,7 +693,7 @@ GetString (int MaxLen)
 	      instring[charcounter] = '\0';	/* und abschliessen */
 	      DisplayText (loeschstring, TextOutX, TextOutY, RealScreen,
 			   FALSE);
-	      while (keyboard_keypressed (SCANCODE_BACKSPACE))
+	      while ( BackspacePressed() )
 		keyboard_update ();
 	    }
 	}
@@ -709,8 +707,8 @@ GetString (int MaxLen)
 
       if ( APressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() 
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'A';
 	    }
@@ -725,8 +723,8 @@ GetString (int MaxLen)
 
       if ( BPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() 
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'B';
 	    }
@@ -741,8 +739,8 @@ GetString (int MaxLen)
 
       if ( CPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() 
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'C';
 	    }
@@ -757,8 +755,8 @@ GetString (int MaxLen)
 
       if ( DPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed()
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'D';
 	    }
@@ -773,8 +771,8 @@ GetString (int MaxLen)
 
       if ( EPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed()
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'E';
 	    }
@@ -789,8 +787,8 @@ GetString (int MaxLen)
 
       if ( FPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed()
+	      || RightPressed() )
 	    {
 	      instring[charcounter++] = 'F';
 	    }
@@ -805,8 +803,7 @@ GetString (int MaxLen)
 
       if ( GPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'G';
 	    }
@@ -821,8 +818,7 @@ GetString (int MaxLen)
 
       if ( HPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'H';
 	    }
@@ -837,8 +833,7 @@ GetString (int MaxLen)
 
       if ( IPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'I';
 	    }
@@ -853,8 +848,7 @@ GetString (int MaxLen)
 
       if ( JPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'J';
 	    }
@@ -869,8 +863,7 @@ GetString (int MaxLen)
 
       if ( KPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'K';
 	    }
@@ -885,8 +878,7 @@ GetString (int MaxLen)
 
       if ( APressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'A';
 	    }
@@ -901,8 +893,7 @@ GetString (int MaxLen)
 
       if ( LPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'L';
 	    }
@@ -917,8 +908,7 @@ GetString (int MaxLen)
 
       if ( MPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'M';
 	    }
@@ -933,8 +923,7 @@ GetString (int MaxLen)
 
       if ( NPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'N';
 	    }
@@ -949,8 +938,7 @@ GetString (int MaxLen)
 
       if ( OPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'O';
 	    }
@@ -965,8 +953,7 @@ GetString (int MaxLen)
 
       if ( PPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'P';
 	    }
@@ -981,8 +968,7 @@ GetString (int MaxLen)
 
       if ( QPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'Q';
 	    }
@@ -997,8 +983,7 @@ GetString (int MaxLen)
 
       if ( RPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'R';
 	    }
@@ -1013,8 +998,7 @@ GetString (int MaxLen)
 
       if ( SPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'S';
 	    }
@@ -1029,8 +1013,7 @@ GetString (int MaxLen)
 
       if ( TPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'T';
 	    }
@@ -1045,8 +1028,7 @@ GetString (int MaxLen)
 
       if ( UPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'U';
 	    }
@@ -1061,8 +1043,7 @@ GetString (int MaxLen)
 
       if ( VPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'V';
 	    }
@@ -1077,8 +1058,7 @@ GetString (int MaxLen)
 
       if ( WPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'W';
 	    }
@@ -1093,8 +1073,7 @@ GetString (int MaxLen)
 
       if ( XPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'X';
 	    }
@@ -1109,8 +1088,7 @@ GetString (int MaxLen)
 
       if ( YPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'Y';
 	    }
@@ -1125,8 +1103,7 @@ GetString (int MaxLen)
 
       if ( ZPressed()  && charcounter < MaxLen) 
 	{
-	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
-	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
+	  if ( LeftPressed() || RightPressed() )
 	    {
 	      instring[charcounter++] = 'Z';
 	    }

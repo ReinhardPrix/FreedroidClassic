@@ -47,9 +47,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-// #include <vga.h>
-// #include <vgagl.h>
-// #include <vgakeyboard.h>
 #include <math.h>
 
 #include "SDL.h"
