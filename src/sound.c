@@ -1070,8 +1070,8 @@ Influencer_Scream_Sound (void)
   // For a test, let's try using not my samples but rather this
   // one and only sound sample, formerly used for got-into-blast
   // occasions.
-  PlaySound (GOT_INTO_BLAST_SOUND);
-  return;
+  // PlaySound (GOT_INTO_BLAST_SOUND);
+  // return;
 
   switch( MyRandom( 4 ) )
     {

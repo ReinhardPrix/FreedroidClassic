@@ -761,7 +761,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 void 
 DamageItem( item* CurItem )
 {
-
+  
+  return;
+  
   //--------------------
   // If the item mentioned as parameter exists and if it is of 
   // a destructable sort, then we apply the usual damage to it

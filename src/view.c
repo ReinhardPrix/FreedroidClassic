@@ -1245,61 +1245,8 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
     }
 
   return TRUE;
+
 }; // int ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function is here to blit the 'body' of a droid to the screen, 
- * but the 'body' in the classical paradroid-like form, i.e. some ball-
- * shaped form where the digits can later be filled in.
- * ---------------------------------------------------------------------- */
-void
-PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
-{
-  int phase = AllEnemys[Enum].phase;
-  int alpha_value;
-  int i;
-
-  if ( ! AllEnemys[Enum].is_friendly ) 
-    {
-      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
-	{
-	  SDL_BlitSurface( RedEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
-	{
-	  SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else if ( AllEnemys[Enum].frozen != 0 ) 
-	{
-	  SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else
-	{
-	  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-
-    }
-  else
-    {
-      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-
-      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
-	{
-	  // In case of low energy, do the fading effect...
-	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
-				fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
-				( alpha_offset ) );
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
-	}
-      else
-	{
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
-    }
-
-}; // void PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
 
 /* ----------------------------------------------------------------------
  *
@@ -1378,6 +1325,33 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   RotationIndex = ( ( AllEnemys [ Enum ] . current_angle + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
   while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+
+  //--------------------
+  // Now to prevent some jittering in some cases, where the droid uses an angle that is
+  // right at the borderline between two possible 8-way directions, we introduce some
+  // enforced consistency onto the droid...
+  //
+  if ( RotationIndex == AllEnemys [ Enum ] . previous_phase )
+    {
+      AllEnemys [ Enum ] . last_phase_change += Frame_Time ();
+    }
+  else
+    {
+      if ( AllEnemys [ Enum ] . last_phase_change >= 0.33 )
+	{
+	  AllEnemys [ Enum ] . last_phase_change = 0.0 ;
+	  AllEnemys [ Enum ] . previous_phase = RotationIndex ;
+	}
+      else
+	{
+	  //--------------------
+	  // In this case we don't permit to use a new 8-way direction now...
+	  //
+	  RotationIndex = AllEnemys [ Enum ] . previous_phase ;
+	  AllEnemys [ Enum ] . last_phase_change += Frame_Time ();
+	}
+    }
+
   // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
   RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
   
@@ -1510,7 +1484,6 @@ There was a droid type on this level, that does not really exist.",
   TargetRectangle.y = UpperLeftBlitCorner.y ;
   // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
-  // PutBallShapedDroidBody ( Enum , TargetRectangle );
   PutIndividuallyShapedDroidBody ( Enum , TargetRectangle );
 
   if ( GameConfig . enemy_energy_bars_visible )

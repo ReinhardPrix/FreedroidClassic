@@ -288,7 +288,14 @@ ClearEnemys ( void )
       AllEnemys[i].persuing_given_course = FALSE;
       AllEnemys[i].FollowingInflusTail = FALSE;
       AllEnemys[i].StayHowManySecondsBehind = 5;
-      
+
+      AllEnemys[i].previous_angle = 0 ;         // which angle has this robot been facing the frame before?
+      AllEnemys[i].current_angle = 0 ;          // which angle will the robot be facing now?
+      AllEnemys[i].last_phase_change = 100 ;      // when did the robot last change his (8-way-)direction of facing
+      AllEnemys[i].previous_phase = 0 ;         // which (8-way) direction did the robot face before?
+      AllEnemys[i].has_greeted_influencer = FALSE ;   // has this robot issued his first-time-see-the-Tux message?
+      AllEnemys[i].will_rush_tux = FALSE ; 
+      AllEnemys[i].last_combat_step = 100 ;       // when did this robot last make a step to move in closer or farther away from Tux in combat?      
       for ( j=0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
 	{
 	  AllEnemys[i].PrivatePathway[j].x=0;
@@ -1990,14 +1997,26 @@ ProcessAttackStateMachine (int enemynum)
   // hit the influencer,  In most cases, we will have to move thowards
   // our target.  Here, this need is hopefully satisfied....
   //
-  if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
+  // But this moving around can lead to jittering of droids moving back and 
+  // forth between two positions very rapidly.  Therefore we will not do this
+  // movement thing every frame, but rather only sometimes
+  //
+  if ( ThisRobot -> last_combat_step > 0.20 )
     {
-      MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
-    } // if a melee weapon is given.
-  else if (dist2 < 1.5)
+      ThisRobot -> last_combat_step = 0 ; 
+      if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	{
+	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
+	} // if a melee weapon is given.
+      else if (dist2 < 1.5)
+	{
+	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
+	} // else the case, that no melee weapon 
+    }
+  else
     {
-      MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
-    } // else the case, that no melee weapon 
+      ThisRobot -> last_combat_step += Frame_Time ();
+    }
 
   //--------------------
   // Melee weapons have a certain limited range.  If such a weapon is used,

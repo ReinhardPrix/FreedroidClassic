@@ -2114,6 +2114,7 @@ InitFreedroid ( void )
     {
       DeleteSpell( i );
     }
+  ClearEnemys ();
 
   ServerMode = FALSE;
   ClientMode = FALSE;

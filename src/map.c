@@ -2500,7 +2500,6 @@ GetCrew (char *filename)
       return (OK);
     }
 
-  /* Clear Enemy - Array */
   ClearEnemys ();
 
   //--------------------

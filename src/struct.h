@@ -633,7 +633,7 @@ typedef struct
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
-  double phase;		// current phase of rotation of this droid
+  double phase;	                // current phase of rotation of this droid
 
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
@@ -668,6 +668,9 @@ typedef struct
   int has_greeted_influencer;   // has this robot issued his first-time-see-the-Tux message?
   float previous_angle;         // which angle has this robot been facing the frame before?
   float current_angle;          // which angle will the robot be facing now?
+  float last_phase_change;      // when did the robot last change his (8-way-)direction of facing
+  float previous_phase;         // which (8-way) direction did the robot face before?
+  float last_combat_step;       // when did this robot last make a step to move in closer or farther away from Tux in combat?
 
   //--------------------
   // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE
