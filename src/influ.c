@@ -1093,6 +1093,7 @@ FireBullet (void)
   CurBullet->owner_pos = & ( Me.pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
+  CurBullet->was_reflected = FALSE;
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me.to_hit;

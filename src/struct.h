@@ -462,6 +462,7 @@ typedef struct
   byte miss_hit_influencer;
   int to_hit;
   int ignore_wall_collisions;
+  int was_reflected;
 
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;

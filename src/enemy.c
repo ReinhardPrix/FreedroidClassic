@@ -953,6 +953,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   AllBullets[j].miss_hit_influencer = FALSE;
   AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
+  AllBullets[j].was_reflected = FALSE;
   
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 

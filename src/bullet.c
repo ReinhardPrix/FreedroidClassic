@@ -590,9 +590,33 @@ CheckBulletCollisions (int num)
 	  
 	  //CurBullet->type=OUT;
 	  //AllBullets[num].type=OUT;
-	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	  StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
-	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
+
+	  if ( CurBullet->was_reflected )
+	    {
+	      /********
+	      StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
+	      StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
+	      DeleteBullet( num , TRUE ); // we want a bullet-explosion
+	      */
+	    }
+	  else
+	    {
+	      CurBullet->speed.x = - CurBullet->speed.x;
+	      CurBullet->speed.y = - CurBullet->speed.y;
+	      CurBullet->was_reflected = TRUE;
+	    }
+
+	  if ( AllBullets[ i ].was_reflected )
+	    {
+
+	    }
+	  else
+	    {
+	      AllBullets[i].speed.x = - AllBullets[i].speed.x;
+	      AllBullets[i].speed.y = - AllBullets[i].speed.y;
+	      AllBullets[i].was_reflected = TRUE;
+	    }
+
 	}
       break;
     } // switch ( Bullet-Type )
