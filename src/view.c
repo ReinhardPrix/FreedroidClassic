@@ -3794,8 +3794,8 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
   if ( ( ! Me[0].weapon_item.currently_held_in_hand ) && ( Me[0].weapon_item.type != (-1) ) )
     {
-      TargetRect.x += 32 * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
-      TargetRect.y += 32 * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
+      TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
+      TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
       our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
@@ -3871,10 +3871,10 @@ ShowInventoryScreen( void )
 	{
 	  for ( j = 0 ; j < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . x ; j++ )
 	    {
-	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
-	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
-	      TargetRect.w = 32 ;
-	      TargetRect.h = 32 ;
+	      TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
+	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
+	      TargetRect.w = INVENTORY_SUBSQUARE_WIDTH ;
+	      TargetRect.h = INVENTORY_SUBSQUARE_WIDTH ;
 	      if ( ItemUsageRequirementsMet ( & ( Me [ 0 ] . Inventory [ SlotNum ] ) , FALSE ) )
 		draw_inventory_occupied_rectangle ( TargetRect , TRUE );
 	      else
@@ -3882,8 +3882,8 @@ ShowInventoryScreen( void )
 	    }
 	}
 
-      TargetRect.x = INVENTORY_RECT_X + 32 * Me[0].Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me[0].Inventory[ SlotNum ].inventory_position.y;
+      TargetRect.x = INVENTORY_RECT_X + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.x;
+      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.y;
       
       our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
 

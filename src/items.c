@@ -1775,11 +1775,11 @@ CursorIsInInventoryGrid( int x , int y )
   CurPos.x = x ;
   CurPos.y = y ;
 
-  if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * 32 ) )
+  if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INVENTORY_SUBSQUARE_WIDTH ) )
     {
       DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
-	   ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + 32 * INVENTORY_GRID_HEIGHT ) )
+	   ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * INVENTORY_GRID_HEIGHT ) )
 	{
 	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
 	  return( TRUE );
@@ -1795,7 +1795,7 @@ CursorIsInInventoryGrid( int x , int y )
 int
 GetInventorySquare_x( int x )
 {
-  return ( ( x - INVENTORY_RECT_X ) / 32 );
+  return ( ( x - INVENTORY_RECT_X ) / INVENTORY_SUBSQUARE_WIDTH );
 }; // int GetInventorySquare_x( x )
 
 /* ----------------------------------------------------------------------
@@ -1805,7 +1805,7 @@ GetInventorySquare_x( int x )
 int
 GetInventorySquare_y( int y )
 {
-  return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / 32 );
+  return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / INVENTORY_SUBSQUARE_WIDTH );
 }; // int GetInventorySquare_y( y )
 
 /* ----------------------------------------------------------------------
@@ -2314,7 +2314,7 @@ ShowQuickInventory ( void )
   //
   for ( i = 0 ; i < 9 ; i ++ )
     {
-      PutCharFont ( Screen , FPS_Display_BFont , SCREEN_WIDTH - 32 , 100 + i * 32 , '1' + i );
+      PutCharFont ( Screen , FPS_Display_BFont , SCREEN_WIDTH - INVENTORY_SUBSQUARE_WIDTH , 100 + i * 32 , '1' + i );
       if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
 	   ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
 	   ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
