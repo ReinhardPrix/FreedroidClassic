@@ -1383,7 +1383,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect)
   Uint8 color;
   SDL_Surface *tmp, *tmp2;
   SDL_Surface *noise_tiles[NOISE_TILES];
-  int used_tiles[NOISE_TILES/2+1];
+  char used_tiles[NOISE_TILES/2+1];
   int next_tile;
 
   for (i=0; i< NOISE_COLORS; i++)
