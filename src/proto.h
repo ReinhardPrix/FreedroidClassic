@@ -737,7 +737,7 @@ EXTERN void append_new_game_message ( char* game_message_text );
 #endif
 EXTERN void ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem );
 EXTERN int TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost );
-EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int player_num );
+EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int player_num , moderately_finepoint chest_pos );
 EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int player_num );
 EXTERN void InitTradeWithCharacter( int CharacterCode ) ;
 EXTERN void Sell_Items( int ForHealer );

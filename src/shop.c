@@ -401,45 +401,46 @@ AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWorn
  * chest.
  * ---------------------------------------------------------------------- */
 int
-AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum )
+AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum , 
+				  moderately_finepoint chest_pos )
 {
-  int i;
-  item** CurrentItemPointer;
-  int NumberOfItems = 0 ;
+    int i;
+    item** CurrentItemPointer;
+    int NumberOfItems = 0 ;
 
-  //--------------------
-  // First we clean out the new Show_Pointer_List
-  //
-  CurrentItemPointer = ItemPointerListPointer ;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    //--------------------
+    // First we clean out the new Show_Pointer_List
+    //
+    CurrentItemPointer = ItemPointerListPointer ;
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      *CurrentItemPointer = NULL;
-      CurrentItemPointer++;
+	*CurrentItemPointer = NULL;
+	CurrentItemPointer++;
     }
-
-  CurrentItemPointer = ItemPointerListPointer;
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    
+    CurrentItemPointer = ItemPointerListPointer;
+    
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . type == (-1) ) continue;
-
-      //--------------------
-      // All the items in chests within a range of 1 square around the Tux 
-      // will be collected together to be shown in the chest inventory.
-      //
-      if ( sqrt ( ( Me [ PlayerNum ] . pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) *
-		  ( Me [ PlayerNum ] . pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) +
-		  ( Me [ PlayerNum ] . pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  *
-		  ( Me [ PlayerNum ] . pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  ) < 1 )
+	if ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . type == (-1) ) continue;
+	
+	//--------------------
+	// All the items in chests within a range of 1 square around the Tux 
+	// will be collected together to be shown in the chest inventory.
+	//
+	if ( sqrt ( ( chest_pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) *
+		    ( chest_pos . x - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . x ) +
+		    ( chest_pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  *
+		    ( chest_pos . y - curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . pos . y )  ) < 1 )
 	{
-	  *CurrentItemPointer = & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] );
-	  CurrentItemPointer ++;
-	  NumberOfItems ++;
+	    *CurrentItemPointer = & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] );
+	    CurrentItemPointer ++;
+	    NumberOfItems ++;
 	}
     }
-  
-  return ( NumberOfItems );
-  
+    
+    return ( NumberOfItems );
+    
 }; // void AssemblePointerListForChestShow ( .. )
   
 /* ----------------------------------------------------------------------
@@ -804,7 +805,15 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
 		    }
 		    else
-			ShopOrder -> number_selected = 1;
+		    {
+
+			if ( ( ShowChestButtons == 1 ) && ( ShowPointerList [ ItemIndex ] -> multiplicity > 1 ) )
+			{
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
+			}
+			else
+			    ShopOrder -> number_selected = 1;
+		    }
 		    
 		    return ( 0 );
 		}
@@ -1213,49 +1222,49 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 void 
 TryToRepairItem( item* RepairItem )
 {
-  int MenuPosition;
-  char linebuf[1000];
-
+    int MenuPosition;
+    char linebuf[1000];
+    
 #define ANSWER_YES 1
 #define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
+    
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    while ( SpacePressed() || EnterPressed() );
+    
+    if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
-      return;
+	PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
+	MenuTexts[0]=" BACK ";
+	MenuTexts[1]="";
+	DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
+	return;
     }
-
-  while ( 1 )
+    
+    while ( 1 )
     {
-      GiveItemDescription( linebuf , RepairItem , TRUE );
-      strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
-      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-      switch (MenuPosition) 
+	GiveItemDescription( linebuf , RepairItem , TRUE );
+	strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
+	MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+	switch (MenuPosition) 
 	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
-	  RepairItem->current_duration = RepairItem->max_duration;
-	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
+	    case (-1):
+		return;
+		break;
+	    case ANSWER_YES:
+		while (EnterPressed() || SpacePressed() );
+		Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
+		RepairItem->current_duration = RepairItem->max_duration;
+		PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
+		return;
+		break;
+	    case ANSWER_NO:
+		while (EnterPressed() || SpacePressed() );
+		return;
+		break;
 	}
     }
 }; // void TryToRepairItem( item* RepairItem )
@@ -1266,57 +1275,57 @@ TryToRepairItem( item* RepairItem )
 void 
 TryToIdentifyItem( item* IdentifyItem )
 {
-  int MenuPosition;
-  char linebuf[1000];
-
+    int MenuPosition;
+    char linebuf[1000];
+    
 #define ANSWER_YES 1
 #define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( 100 > Me[0].Gold )
+    
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    while ( SpacePressed() || EnterPressed() );
+    
+    if ( 100 > Me[0].Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
-      return;
+	PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE , FALSE );
+	MenuTexts[0]=" BACK ";
+	MenuTexts[1]="";
+	DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
+	return;
     }
-
-  while ( 1 )
+    
+    while ( 1 )
     {
-      GiveItemDescription( linebuf , IdentifyItem , TRUE );
-      strcat ( linebuf , "\n\n    Are you sure you want this item identified?" );
-      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-      // MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
-      switch (MenuPosition) 
+	GiveItemDescription( linebuf , IdentifyItem , TRUE );
+	strcat ( linebuf , "\n\n    Are you sure you want this item identified?" );
+	MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+	// MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
+	switch (MenuPosition) 
 	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold -= 100 ;
-	  IdentifyItem -> is_identified = TRUE ;
-	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
-
-	  MenuTexts[0]=" BACK ";
-	  MenuTexts[1]="";
-	  GiveItemDescription( linebuf , IdentifyItem , TRUE );
-	  strcat ( linebuf , "\n\n " );
-	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
+	    case (-1):
+		return;
+		break;
+	    case ANSWER_YES:
+		while (EnterPressed() || SpacePressed() );
+		Me[0].Gold -= 100 ;
+		IdentifyItem -> is_identified = TRUE ;
+		PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
+		
+		MenuTexts[0]=" BACK ";
+		MenuTexts[1]="";
+		GiveItemDescription( linebuf , IdentifyItem , TRUE );
+		strcat ( linebuf , "\n\n " );
+		MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+		
+		return;
+		break;
+	    case ANSWER_NO:
+		while (EnterPressed() || SpacePressed() );
+		return;
+		break;
 	}
     }
 }; // void TryToIdentifyItem( item* IdentifyItem )
@@ -1329,36 +1338,36 @@ TryToIdentifyItem( item* IdentifyItem )
 void 
 TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 {
-  int MenuPosition;
-  char linebuf[1000];
-
+    int MenuPosition;
+    char linebuf[1000];
+    
 #define ANSWER_YES 1
 #define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  //--------------------
-  // We catch the case, that not even one item was selected
-  // for buying in the number selector...
-  //
-  if ( AmountToSellAtMost <= 0 ) 
+    
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    //--------------------
+    // We catch the case, that not even one item was selected
+    // for buying in the number selector...
+    //
+    if ( AmountToSellAtMost <= 0 ) 
     {
-      DebugPrintf ( 0 , "\nTried to sell 0 items of a kind... doing nothing... " );
-      return;
+	DebugPrintf ( 0 , "\nTried to sell 0 items of a kind... doing nothing... " );
+	return;
     }
-
-  //--------------------
-  // First some error-checking against illegal values.  This should not normally
-  // occur, but some items on the map are from very old times and therefore the
-  // engine might have made some mistakes back then or also changes that broke these
-  // items, so some extra care will be taken here...
-  //
-  if ( SellItem -> multiplicity < 1 )
+    
+    //--------------------
+    // First some error-checking against illegal values.  This should not normally
+    // occur, but some items on the map are from very old times and therefore the
+    // engine might have made some mistakes back then or also changes that broke these
+    // items, so some extra care will be taken here...
+    //
+    if ( SellItem -> multiplicity < 1 )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 An item sold seemed to have multiplicity < 1.  This might be due to some\n\
 fatal errors in the engine OR it might be due to some items droped on the\n\
 maps somewhere long ago still had multiplicity=0 setting, which should not\n\
@@ -1366,55 +1375,55 @@ normally occur with 'freshly' generated items.  Well, that's some dust from\n\
 the past, but now it should be fixed and not occur in future releases (0.9.10\n\
 or later) of the game.  If you encounter this message after release 0.9.10,\n\
 please inform the developers...",
-				 PLEASE_INFORM, IS_WARNING_ONLY );
+				   PLEASE_INFORM, IS_WARNING_ONLY );
     }
-
-  if ( AmountToSellAtMost > SellItem -> multiplicity )
-    AmountToSellAtMost = SellItem -> multiplicity ;
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( WithBacktalk )
+    
+    if ( AmountToSellAtMost > SellItem -> multiplicity )
+	AmountToSellAtMost = SellItem -> multiplicity ;
+    
+    while ( SpacePressed() || EnterPressed() );
+    
+    if ( WithBacktalk )
     {
-      while ( 1 )
+	while ( 1 )
 	{
-	  GiveItemDescription( linebuf , SellItem , TRUE );
-	  strcat ( linebuf , "\n\n    Are you sure you wish to sell this/(some of these) item(s)?" );
-	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-	  switch (MenuPosition) 
+	    GiveItemDescription( linebuf , SellItem , TRUE );
+	    strcat ( linebuf , "\n\n    Are you sure you wish to sell this/(some of these) item(s)?" );
+	    MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+	    switch (MenuPosition) 
 	    {
-	    case (-1):
-	      return;
-	      break;
-	    case ANSWER_YES:
-	      while (EnterPressed() || SpacePressed() );
-
-	      Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem );
-	      DeleteItem( SellItem );
-	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
-
-	      return;
-	      break;
-	    case ANSWER_NO:
-	      while (EnterPressed() || SpacePressed() );
-	      return;
-	      break;
+		case (-1):
+		    return;
+		    break;
+		case ANSWER_YES:
+		    while (EnterPressed() || SpacePressed() );
+		    
+		    Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem );
+		    DeleteItem( SellItem );
+		    PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+		    
+		    return;
+		    break;
+		case ANSWER_NO:
+		    while (EnterPressed() || SpacePressed() );
+		    return;
+		    break;
 	    }
 	}
     }
-  else
+    else
     {
-      //--------------------
-      // Ok.  Here we silently sell the item.
-      //
-      Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem ) * 
-	( (float) AmountToSellAtMost ) / ( (float) SellItem -> multiplicity ) ;
-      if ( AmountToSellAtMost < SellItem -> multiplicity )
-	SellItem -> multiplicity -= AmountToSellAtMost;
-      else 
-	DeleteItem( SellItem );
-
-      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+	//--------------------
+	// Ok.  Here we silently sell the item.
+	//
+	Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem ) * 
+	    ( (float) AmountToSellAtMost ) / ( (float) SellItem -> multiplicity ) ;
+	if ( AmountToSellAtMost < SellItem -> multiplicity )
+	    SellItem -> multiplicity -= AmountToSellAtMost;
+	else 
+	    DeleteItem( SellItem );
+	
+	PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1431,88 +1440,88 @@ please inform the developers...",
 int
 TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
 {
-  int x, y;
-  int FreeIndex;
-  char linebuf[1000];
-  int i;
-  char* MenuTexts[ 10 ];
-
-  //--------------------
-  // At first we try to see if we can just add the multiplicity of the item in question
-  // to the existing multiplicity of an item of the same type
-  //
-  if ( ItemMap [ BuyItem->type ] . item_group_together_in_inventory )
+    int x, y;
+    int FreeIndex;
+    char linebuf[1000];
+    int i;
+    char* MenuTexts[ 10 ];
+    
+    //--------------------
+    // At first we try to see if we can just add the multiplicity of the item in question
+    // to the existing multiplicity of an item of the same type
+    //
+    if ( ItemMap [ BuyItem->type ] . item_group_together_in_inventory )
     {
-      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
-	  if ( Me [ 0 ] . Inventory [ i ] . type == BuyItem->type )
+	    if ( Me [ 0 ] . Inventory [ i ] . type == BuyItem->type )
 	    {
-	      while ( 1 )
+		while ( 1 )
 		{
-		  while (EnterPressed() || SpacePressed() );
-		  Me [ 0 ] . Inventory [ i ] . multiplicity += AmountToBuyAtMost ;
-
-		  //--------------------
-		  // This is new.  I hope it's not dangerous.
-		  //
-		  if ( AmountToBuyAtMost >= BuyItem->multiplicity )
-		    DeleteItem ( BuyItem );
-		  else
-		    BuyItem->multiplicity -= AmountToBuyAtMost ;
-		  return ( TRUE );
+		    while (EnterPressed() || SpacePressed() );
+		    Me [ 0 ] . Inventory [ i ] . multiplicity += AmountToBuyAtMost ;
+		    
+		    //--------------------
+		    // This is new.  I hope it's not dangerous.
+		    //
+		    if ( AmountToBuyAtMost >= BuyItem->multiplicity )
+			DeleteItem ( BuyItem );
+		    else
+			BuyItem->multiplicity -= AmountToBuyAtMost ;
+		    return ( TRUE );
 		}
 	    }
 	}
     }
-
-  //--------------------
-  // Now we must find out if there is an inventory position where we can put the
-  // item in question.
-  //
-  FreeIndex = GetFreeInventoryIndex(  );
-
-  for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
+    
+    //--------------------
+    // Now we must find out if there is an inventory position where we can put the
+    // item in question.
+    //
+    FreeIndex = GetFreeInventoryIndex(  );
+    
+    for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
     {
-      for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
+	for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
 	{
-	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
+	    if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
 	    {
-	      while ( 1 )
+		while ( 1 )
 		{
-		  while (EnterPressed() || SpacePressed() );
-
-		  CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , FALSE );
-		  Me[0].Inventory[ FreeIndex ] . multiplicity = AmountToBuyAtMost ;
-
-		  Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-		  Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
-		  Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
-
-		  //--------------------
-		  // This is new.  I hope it's not dangerous.
-		  //
-		  if ( BuyItem -> multiplicity <= AmountToBuyAtMost ) DeleteItem ( BuyItem );
-		  else BuyItem -> multiplicity -= AmountToBuyAtMost ;
-
-		  return ( TRUE );
+		    while (EnterPressed() || SpacePressed() );
+		    
+		    CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , FALSE );
+		    Me[0].Inventory[ FreeIndex ] . multiplicity = AmountToBuyAtMost ;
+		    
+		    Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+		    Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
+		    Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
+		    
+		    //--------------------
+		    // This is new.  I hope it's not dangerous.
+		    //
+		    if ( BuyItem -> multiplicity <= AmountToBuyAtMost ) DeleteItem ( BuyItem );
+		    else BuyItem -> multiplicity -= AmountToBuyAtMost ;
+		    
+		    return ( TRUE );
 		}
 	    }
 	}
     }
-
-  //--------------------
-  // If this point is ever reached, we know that an item has been selected 
-  // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
-  // Therefore a message must be displayed, saying what the problem is.
-  //
-  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE , FALSE );
-  MenuTexts[0]=" BACK ";
-  MenuTexts[1]="";
-  GiveItemDescription( linebuf , BuyItem , TRUE );
-  strcat ( linebuf , "\n\n   No room for this item in inventory!" );
-  DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-  return ( FALSE );
-
+    
+    //--------------------
+    // If this point is ever reached, we know that an item has been selected 
+    // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
+    // Therefore a message must be displayed, saying what the problem is.
+    //
+    PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE , FALSE );
+    MenuTexts[0]=" BACK ";
+    MenuTexts[1]="";
+    GiveItemDescription( linebuf , BuyItem , TRUE );
+    strcat ( linebuf , "\n\n   No room for this item in inventory!" );
+    DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+    return ( FALSE );
+    
 }; // void TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
 
 /* ----------------------------------------------------------------------
@@ -1523,30 +1532,30 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
 void 
 TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
 {
-  int StoredItemType;
-
-  StoredItemType = BuyItem -> type ;
-
-  //--------------------
-  // We catch the case, that not even one item was selected
-  // for taking out from the chest in the number selector...
-  //
-  if ( AmountToBuyAtMost <= 0 ) 
+    int StoredItemType;
+    
+    StoredItemType = BuyItem -> type ;
+    
+    //--------------------
+    // We catch the case, that not even one item was selected
+    // for taking out from the chest in the number selector...
+    //
+    if ( AmountToBuyAtMost <= 0 ) 
     {
-      DebugPrintf ( 0 , "\nTried to take 0 items of a kind from chest or cointainer... doing nothing... " );
-      return;
+	DebugPrintf ( 0 , "\nTried to take 0 items of a kind from chest or cointainer... doing nothing... " );
+	return;
     }
-
-  //--------------------
-  // We prevent some take-put-cheating here.  For buying items this must
-  // NOT be done.
-  //
-  if ( AmountToBuyAtMost >= BuyItem -> multiplicity ) AmountToBuyAtMost = BuyItem -> multiplicity ;
-
-  if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
+    
+    //--------------------
+    // We prevent some take-put-cheating here.  For buying items this must
+    // NOT be done.
+    //
+    if ( AmountToBuyAtMost >= BuyItem -> multiplicity ) AmountToBuyAtMost = BuyItem -> multiplicity ;
+    
+    if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
-      // PlayItemSound( ItemMap[ StoredItemType ].sound_number );
-      play_item_sound( StoredItemType );
+	// PlayItemSound( ItemMap[ StoredItemType ].sound_number );
+	play_item_sound( StoredItemType );
     }
 }; // void TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
 
@@ -1558,543 +1567,563 @@ TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
 void 
 TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 {
-  int FreeIndex;
-  char linebuf[1000];
-  float PotentialPrice;
-
+    int FreeIndex;
+    char linebuf[1000];
+    float PotentialPrice;
+    
 #define ANSWER_YES 1
 #define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
-
-  //--------------------
-  // We catch the case, that not even one item was selected
-  // for buying in the number selector...
-  //
-  if ( AmountToBuyAtMost <= 0 ) 
+    
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
+    
+    //--------------------
+    // We catch the case, that not even one item was selected
+    // for buying in the number selector...
+    //
+    if ( AmountToBuyAtMost <= 0 ) 
     {
-      DebugPrintf ( 0 , "\nTried to buy 0 items of a kind... doing nothing... " );
-      return;
+	DebugPrintf ( 0 , "\nTried to buy 0 items of a kind... doing nothing... " );
+	return;
     }
-
-  BuyItem -> multiplicity = AmountToBuyAtMost ;
-
-  FreeIndex = GetFreeInventoryIndex(  );
-
-  while ( SpacePressed() || EnterPressed() || axis_is_active );
-
-  if ( calculate_item_buy_price ( BuyItem ) > Me [ 0 ] . Gold )
+    
+    BuyItem -> multiplicity = AmountToBuyAtMost ;
+    
+    FreeIndex = GetFreeInventoryIndex(  );
+    
+    while ( SpacePressed() || EnterPressed() || axis_is_active );
+    
+    if ( calculate_item_buy_price ( BuyItem ) > Me [ 0 ] . Gold )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE , FALSE );
-      if ( WithBacktalk )
+	PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE , FALSE );
+	if ( WithBacktalk )
 	{
-	  MenuTexts[0]=" BACK ";
-	  MenuTexts[1]="";
-	  GiveItemDescription( linebuf , BuyItem , TRUE );
-	  strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
-	  DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
+	    MenuTexts[0]=" BACK ";
+	    MenuTexts[1]="";
+	    GiveItemDescription( linebuf , BuyItem , TRUE );
+	    strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
+	    DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	}
-      return;
+	return;
     }
-
-  //--------------------
-  // In the case that the item could be afforded in theory, we need to
-  // calculate the price, then have the item integrated into the inventory
-  // if that's possible, and if so, subtract the items price from the
-  // current gold.
-  //
-  PotentialPrice = calculate_item_buy_price ( BuyItem ) ;
-
-  if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
+    
+    //--------------------
+    // In the case that the item could be afforded in theory, we need to
+    // calculate the price, then have the item integrated into the inventory
+    // if that's possible, and if so, subtract the items price from the
+    // current gold.
+    //
+    PotentialPrice = calculate_item_buy_price ( BuyItem ) ;
+    
+    if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
-      Me[0].Gold -= PotentialPrice ;
-      PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
+	Me[0].Gold -= PotentialPrice ;
+	PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
     }
-  else
+    else
     {
-      // bad luck.  couldn't store item in inventory, so no price paid...
+	// bad luck.  couldn't store item in inventory, so no price paid...
     }
-
+    
 }; // void TryToBuyItem( item* BuyItem )
 
 /* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
+ * This is some preparation for the shop interface.  We assemble some
+ * pointer list with the stuff Tux has to sell and the stuff the shop
+ * has to offer.
+ *
+ * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
+ *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
+ *
  * ---------------------------------------------------------------------- */
 void
 InitTradeWithCharacter( int CharacterCode )
 {
-
 #define FIXED_SHOP_INVENTORY TRUE
 #define NUMBER_OF_ITEMS_IN_SHOP 17
-  // #define NUMBER_OF_ITEMS_IN_SHOP 4
-
-  item SalesList[ MAX_ITEMS_IN_INVENTORY ];
-  item* BuyPointerList[ MAX_ITEMS_IN_INVENTORY ];
-  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
-  int i;
-  int ItemSelected=0;
-  shop_decision ShopOrder;
-  int NumberOfItemsInTuxRow=0;
-  int NumberOfItemsInShop=0;
-
-  AssembleItemListForTradeCharacter ( & (SalesList[0]) , CharacterCode );
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    // #define NUMBER_OF_ITEMS_IN_SHOP 4
+    
+    item SalesList[ MAX_ITEMS_IN_INVENTORY ];
+    item* BuyPointerList[ MAX_ITEMS_IN_INVENTORY ];
+    item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+    int i;
+    int ItemSelected=0;
+    shop_decision ShopOrder;
+    int NumberOfItemsInTuxRow=0;
+    int NumberOfItemsInShop=0;
+    
+    AssembleItemListForTradeCharacter ( & (SalesList[0]) , CharacterCode );
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
-      else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
+	if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
+	else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
     }
-  
-  //--------------------
-  // Now here comes the new thing:  This will be a loop from now
-  // on.  The buy and buy and buy until at one point we say 'BACK'
-  //
-  while ( ItemSelected != (-1) )
+    
+    //--------------------
+    // Now here comes the new thing:  This will be a loop from now
+    // on.  The buy and buy and buy until at one point we say 'BACK'
+    //
+    while ( ItemSelected != (-1) )
     {
-
-      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( & ( TuxItemsList [ 0 ] ) , FALSE , 0 );
-      
-      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	
+	NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( & ( TuxItemsList [ 0 ] ) , FALSE , 0 );
+	
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
-	  if ( BuyPointerList [ i ] == NULL )
+	    if ( BuyPointerList [ i ] == NULL )
 	    {
-	      NumberOfItemsInShop = i ;
-	      break;
+		NumberOfItemsInShop = i ;
+		break;
 	    }
 	}
-
-      ItemSelected = GreatShopInterface ( NumberOfItemsInShop , BuyPointerList , 
-					  NumberOfItemsInTuxRow , TuxItemsList , & ( ShopOrder ) , FALSE );
-
-      switch ( ShopOrder . shop_command )
+	
+	ItemSelected = GreatShopInterface ( NumberOfItemsInShop , BuyPointerList , 
+					    NumberOfItemsInTuxRow , TuxItemsList , & ( ShopOrder ) , FALSE );
+	
+	switch ( ShopOrder . shop_command )
 	{
-	case BUY_1_ITEM:
-	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
-	  break;
-	case BUY_10_ITEMS:
-	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
-	  break;
-	case BUY_100_ITEMS:
-	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
-	  break;
-	case SELL_1_ITEM:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
-	  break;
-	case SELL_10_ITEMS:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
-	  break;
-	case SELL_100_ITEMS:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
-	  break;
-	case REPAIR_ITEM:
-	  TryToRepairItem( TuxItemsList[ ShopOrder . item_selected ] );
-	  break;
-	case IDENTIFY_ITEM:
-	  TryToIdentifyItem( TuxItemsList[ ShopOrder . item_selected ] );
-	  break;
-	default:
-	  
-	  break;
+	    case BUY_1_ITEM:
+		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
+		break;
+	    case BUY_10_ITEMS:
+		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
+		break;
+	    case BUY_100_ITEMS:
+		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
+		break;
+	    case SELL_1_ITEM:
+		TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
+		break;
+	    case SELL_10_ITEMS:
+		TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
+		break;
+	    case SELL_100_ITEMS:
+		TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
+		break;
+	    case REPAIR_ITEM:
+		TryToRepairItem( TuxItemsList[ ShopOrder . item_selected ] );
+		break;
+	    case IDENTIFY_ITEM:
+		TryToIdentifyItem( TuxItemsList[ ShopOrder . item_selected ] );
+		break;
+	    default:
+		
+		break;
 	};
-
-      //--------------------
-      // And since it can be assumed that the shop never runs
-      // out of supply for a certain good, we can as well restore
-      // the shop inventory list at this position.
-      //
-      /*
-      if ( FIXED_SHOP_INVENTORY )
-	{
+	
+	//--------------------
+	// And since it can be assumed that the shop never runs
+	// out of supply for a certain good, we can as well restore
+	// the shop inventory list at this position.
+	//
+	/*
+	  if ( FIXED_SHOP_INVENTORY )
+	  {
 	  for ( i = 0 ; i < NUMBER_OF_ITEMS_IN_SHOP ; i++ )
-	    {
-	      SalesList[ i ].type = StandardShopInventory [ i ];
-	      SalesList[ i ].prefix_code = ( -1 );
-	      SalesList[ i ].suffix_code = ( -1 );
-	      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-	      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
-	    }
+	  {
+	  SalesList[ i ].type = StandardShopInventory [ i ];
+	  SalesList[ i ].prefix_code = ( -1 );
+	  SalesList[ i ].suffix_code = ( -1 );
+	  FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
+	  Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
+	  }
 	  Buy_Pointer_List [ i ] = NULL ; 
-	}
-      */
-      AssembleItemListForTradeCharacter ( & ( SalesList [ 0 ] ) , CharacterCode );
-      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	  }
+	*/
+	AssembleItemListForTradeCharacter ( & ( SalesList [ 0 ] ) , CharacterCode );
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
-	  if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
-	  else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
+	    if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
+	    else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
 	}
-
+	
     }
-
+    
 }; // void InitTradeWithCharacter( void )
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can select items for repair.
+ *
+ * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
+ *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
+ *
  * ---------------------------------------------------------------------- */
 void
 Repair_Items( void )
 {
 #define BASIC_ITEMS_NUMBER 10
-  item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
-  int Pointer_Index;
-  int i;
-  // int InMenuPosition = 0;
-  // int MenuInListPosition = 0;
-  int ItemSelected=0;
-  //char DescriptionText[5000];
-  char* MenuTexts[ 10 ];
-  int NumberOfItemsInTuxRow = 0 ;
-  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
-  shop_decision ShopOrder;
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-
-  Activate_Conservative_Frame_Computation();
-
-  while ( ItemSelected != (-1) )
+    item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
+    int Pointer_Index;
+    int i;
+    // int InMenuPosition = 0;
+    // int MenuInListPosition = 0;
+    int ItemSelected=0;
+    //char DescriptionText[5000];
+    char* MenuTexts[ 10 ];
+    int NumberOfItemsInTuxRow = 0 ;
+    item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+    shop_decision ShopOrder;
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    
+    Activate_Conservative_Frame_Computation();
+    
+    while ( ItemSelected != (-1) )
     {
-      Pointer_Index=0;
-
-  //--------------------
-  // First we clean out the new Repair_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Repair_Pointer_List[ i ] = NULL;
-    }
-
-  //--------------------
-  // Now we start to fill the Repair_Pointer_List
-  //
-  if ( ( Me[0].weapon_item.current_duration < Me[0].weapon_item.max_duration ) && 
-       ( Me[0].weapon_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].drive_item.current_duration < Me[0].drive_item.max_duration ) &&
-       ( Me[0].drive_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].armour_item.current_duration < Me[0].armour_item.max_duration ) &&
-       ( Me[0].armour_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].shield_item.current_duration < Me[0].shield_item.max_duration ) &&
-       ( Me[0].shield_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].special_item.current_duration < Me[0].special_item.max_duration ) &&
-       ( Me[0].special_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].special_item );
-      Pointer_Index ++;
-    }
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].max_duration == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].current_duration < Me[0].Inventory [ i ] .max_duration ) 
+	Pointer_Index=0;
+	
+	//--------------------
+	// First we clean out the new Repair_Pointer_List
+	//
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
-	  Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-	  Pointer_Index ++;
+	    Repair_Pointer_List[ i ] = NULL;
+	}
+	
+	//--------------------
+	// Now we start to fill the Repair_Pointer_List
+	//
+	if ( ( Me[0].weapon_item.current_duration < Me[0].weapon_item.max_duration ) && 
+	     ( Me[0].weapon_item.type != ( -1 ) ) )
+	{
+	    Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
+	    Pointer_Index ++;
+	}
+	if ( ( Me[0].drive_item.current_duration < Me[0].drive_item.max_duration ) &&
+	     ( Me[0].drive_item.type != ( -1 ) ) )
+	{
+	    Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
+	    Pointer_Index ++;
+	}
+	if ( ( Me[0].armour_item.current_duration < Me[0].armour_item.max_duration ) &&
+	     ( Me[0].armour_item.type != ( -1 ) ) )
+	{
+	    Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
+	    Pointer_Index ++;
+	}
+	if ( ( Me[0].shield_item.current_duration < Me[0].shield_item.max_duration ) &&
+	     ( Me[0].shield_item.type != ( -1 ) ) )
+	{
+	    Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
+	    Pointer_Index ++;
+	}
+	if ( ( Me[0].special_item.current_duration < Me[0].special_item.max_duration ) &&
+	     ( Me[0].special_item.type != ( -1 ) ) )
+	{
+	    Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].special_item );
+	    Pointer_Index ++;
+	}
+	
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	{
+	    if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+	    if ( Me[0].Inventory [ i ].max_duration == (-1) ) continue;
+	    if ( Me[0].Inventory [ i ].current_duration < Me[0].Inventory [ i ] .max_duration ) 
+	    {
+		Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
+		Pointer_Index ++;
+	    }
+	}
+	
+	if ( Pointer_Index == 0 )
+	{
+	    PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE , FALSE );
+	    MenuTexts[0]=" BACK ";
+	    MenuTexts[1]="";
+	    DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
+	    return;
+	}
+	
+	//--------------------
+	// Now here comes the new thing:  This will be a loop from now
+	// on.  The buy and buy and buy until at one point we say 'BACK'
+	//
+	//ItemSelected = 0;
+	
+	NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
+	
+	ItemSelected = GreatShopInterface ( Pointer_Index,  Repair_Pointer_List, 
+					    0 , 0 , &(ShopOrder) , 2 );
+		
+	if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
+	
+	switch ( ShopOrder . shop_command )
+	{
+	    case BUY_1_ITEM:
+		TryToRepairItem( Repair_Pointer_List[ ShopOrder . item_selected ] );
+		break;
 	}
     }
-
-  if ( Pointer_Index == 0 )
-    {
-      PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
-      return;
-    }
-
-  //--------------------
-  // Now here comes the new thing:  This will be a loop from now
-  // on.  The buy and buy and buy until at one point we say 'BACK'
-  //
-  //ItemSelected = 0;
-
-      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
-
-      ItemSelected = GreatShopInterface ( Pointer_Index,  Repair_Pointer_List, 
-					  0 , 0 , &(ShopOrder) , 2 );
-
-
-      if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
-
-      switch ( ShopOrder . shop_command )
-	{
-	case BUY_1_ITEM:
-	  TryToRepairItem( Repair_Pointer_List[ ShopOrder . item_selected ] );
-	  break;
-	}
-    }
-  /*while ( ItemSelected != (-1) )
-    {
+    /*while ( ItemSelected != (-1) )
+      {
       sprintf( DescriptionText , " I COULD REPAIR THESE ITEMS           YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Repair_Pointer_List , PRICING_FOR_REPAIR );
       if ( ItemSelected != (-1) ) TryToRepairItem( Repair_Pointer_List[ ItemSelected ] ) ;
       }*/
-
+    
 }; // void Repair_Items( void )
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can buy basic items.
+ *
+ * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
+ *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
+ *
  * ---------------------------------------------------------------------- */
 void
 Identify_Items ( void )
 {
 #define BASIC_ITEMS_NUMBER 10
-  item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
-  int Pointer_Index=0;
-  int i;
-  // int InMenuPosition = 0;
-  // int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  int ItemSelected;
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  //--------------------
-  // First we clean out the new Identify_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
+    int Pointer_Index=0;
+    int i;
+    // int InMenuPosition = 0;
+    // int MenuInListPosition = 0;
+    char DescriptionText[5000];
+    int ItemSelected;
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    //--------------------
+    // First we clean out the new Identify_Pointer_List
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Identify_Pointer_List[ i ] = NULL;
+	Identify_Pointer_List[ i ] = NULL;
     }
-
-  //--------------------
-  // Now we start to fill the Identify_Pointer_List
-  //
-  if ( ( !Me[0].weapon_item.is_identified ) && 
-       ( Me[0].weapon_item.type != ( -1 ) ) )
+    
+    //--------------------
+    // Now we start to fill the Identify_Pointer_List
+    //
+    if ( ( !Me[0].weapon_item.is_identified ) && 
+	 ( Me[0].weapon_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
-      Pointer_Index ++;
+	Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
+	Pointer_Index ++;
     }
-  if ( ( !Me[0].drive_item.is_identified ) &&
-       ( Me[0].drive_item.type != ( -1 ) ) )
+    if ( ( !Me[0].drive_item.is_identified ) &&
+	 ( Me[0].drive_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
-      Pointer_Index ++;
+	Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
+	Pointer_Index ++;
     }
-  if ( ( !Me[0].armour_item.is_identified ) &&
-       ( Me[0].armour_item.type != ( -1 ) ) )
+    if ( ( !Me[0].armour_item.is_identified ) &&
+	 ( Me[0].armour_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
-      Pointer_Index ++;
+	Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
+	Pointer_Index ++;
     }
-  if ( ( !Me[0].shield_item.is_identified ) &&
-       ( Me[0].shield_item.type != ( -1 ) ) )
+    if ( ( !Me[0].shield_item.is_identified ) &&
+	 ( Me[0].shield_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
-      Pointer_Index ++;
+	Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
+	Pointer_Index ++;
     }
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].is_identified ) continue;
-
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-      Pointer_Index ++;
+	if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+	if ( Me[0].Inventory [ i ].is_identified ) continue;
+	
+	Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
+	Pointer_Index ++;
     }
-
-  if ( Pointer_Index == 0 )
+    
+    if ( Pointer_Index == 0 )
     {
-      PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
-      return;
+	PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE , FALSE );
+	MenuTexts[0]=" BACK ";
+	MenuTexts[1]="";
+	DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
+	return;
     }
-
-  //--------------------
-  // Now here comes the new thing:  This will be a loop from now
-  // on.  The buy and buy and buy until at one point we say 'BACK'
-  //
-  ItemSelected = 0;
-
-  while ( ItemSelected != (-1) )
+    
+    //--------------------
+    // Now here comes the new thing:  This will be a loop from now
+    // on.  The buy and buy and buy until at one point we say 'BACK'
+    //
+    ItemSelected = 0;
+    
+    while ( ItemSelected != (-1) )
     {
-      sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
-      ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
-      if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
+	sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
+	ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
+	if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
     }
-
+    
 }; // void Identify_Items( void )
 
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can sell inventory items.
+ *
+ * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
+ *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
+ *
  * ---------------------------------------------------------------------- */
 void
 Sell_Items( int ForHealer )
 {
 #define BASIC_ITEMS_NUMBER 10
-  item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
-  int Pointer_Index=0;
-  int i;
-  int ItemSelected;
-  //  int InMenuPosition = 0;
-  //  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  //--------------------
-  // First we clean out the new Sell_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+    int Pointer_Index=0;
+    int i;
+    int ItemSelected;
+    //  int InMenuPosition = 0;
+    //  int MenuInListPosition = 0;
+    char DescriptionText[5000];
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    //--------------------
+    // First we clean out the new Sell_Pointer_List
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Sell_Pointer_List[ i ] = NULL;
+	Sell_Pointer_List[ i ] = NULL;
     }
-
-  //--------------------
-  // Now we start to fill the Sell_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    
+    //--------------------
+    // Now we start to fill the Sell_Pointer_List
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      else
+	if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+	else
 	{
-	  //--------------------
-	  // Now depending on whether we sell to the healer or to
-	  // the weaponsmith, we can either sell one thing or the
-	  // other
-	  //
-	  if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  Sell_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-	  Pointer_Index ++;
+	    //--------------------
+	    // Now depending on whether we sell to the healer or to
+	    // the weaponsmith, we can either sell one thing or the
+	    // other
+	    //
+	    if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	    if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	    Sell_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
+	    Pointer_Index ++;
 	}
     }
-
-  if ( Pointer_Index == 0 )
+    
+    if ( Pointer_Index == 0 )
     {
-      PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
-			MenuTexts, 1 , -1 , NULL );
-      return;
+	PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE , FALSE );
+	MenuTexts[0]=" BACK ";
+	MenuTexts[1]="";
+	DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
+			  MenuTexts, 1 , -1 , NULL );
+	return;
     }
-
-  //--------------------
-  // Now here comes the new thing:  This will be a loop from now
-  // on.  The buy and buy and buy until at one point we say 'BACK'
-  //
-  ItemSelected = 0;
-
-  while ( ItemSelected != (-1) )
+    
+    //--------------------
+    // Now here comes the new thing:  This will be a loop from now
+    // on.  The buy and buy and buy until at one point we say 'BACK'
+    //
+    ItemSelected = 0;
+    
+    while ( ItemSelected != (-1) )
     {
-      sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
-      ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
-      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE , 1 ) ;
+	sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
+	ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
+	if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE , 1 ) ;
     }
-
+    
 }; // void Sell_Items( int ForHealer )
 
 /* ----------------------------------------------------------------------
  * This function does all the buying/selling interaction with the 
  * weaponsmith Mr. Stone.
+ *
+ * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
+ *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
+ *
  * ---------------------------------------------------------------------- */
 void
 BuySellMenu ( void )
 {
-enum
-  { 
-    BUY_BASIC_ITEMS=1, 
-    BUY_PREMIUM_ITEMS, 
-    SELL_ITEMS, 
-    REPAIR_ITEMS,
-    IDENTIFY_ITEMS,
-    LEAVE_BUYSELLMENU
-  };
-
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-
-  Me[0].status=MENU;
-
-  DebugPrintf (2, "\nvoid BuySellMenu(void): real function call confirmed."); 
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-  while ( EscapePressed() );
-
-  while (!Weiter)
+    enum
+	{ 
+	    BUY_BASIC_ITEMS=1, 
+	    BUY_PREMIUM_ITEMS, 
+	    SELL_ITEMS, 
+	    REPAIR_ITEMS,
+	    IDENTIFY_ITEMS,
+	    LEAVE_BUYSELLMENU
+	};
+    
+    int Weiter = 0;
+    int MenuPosition=1;
+    char* MenuTexts[10];
+    
+    Me[0].status=MENU;
+    
+    DebugPrintf (2, "\nvoid BuySellMenu(void): real function call confirmed."); 
+    
+    // Prevent distortion of framerate by the delay coming from 
+    // the time spend in the menu.
+    Activate_Conservative_Frame_Computation();
+    while ( EscapePressed() );
+    
+    while (!Weiter)
     {
-      MenuTexts[0]="Buy Basic Items";
-      MenuTexts[1]="Buy Premium Items";
-      MenuTexts[2]="Sell Items";
-      MenuTexts[3]="Repair Items";
-      MenuTexts[5]="Leave the Sales Representative";
-      MenuTexts[4]="Identify Items";
-      MenuTexts[8]="";
-
-      // MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE_CODE , Message_BFont );
-
-      switch (MenuPosition) 
+	MenuTexts[0]="Buy Basic Items";
+	MenuTexts[1]="Buy Premium Items";
+	MenuTexts[2]="Sell Items";
+	MenuTexts[3]="Repair Items";
+	MenuTexts[5]="Leave the Sales Representative";
+	MenuTexts[4]="Identify Items";
+	MenuTexts[8]="";
+	
+	// MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
+	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE_CODE , Message_BFont );
+	
+	switch (MenuPosition) 
 	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-	case BUY_BASIC_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  InitTradeWithCharacter( FALSE );
-	  break;
-	case BUY_PREMIUM_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  InitTradeWithCharacter( FALSE );
-	  break;
-	case SELL_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Sell_Items( FALSE );
-	  break;
-	case REPAIR_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Repair_Items();
-	  break;
-	case IDENTIFY_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Identify_Items();
-	  break;
-	case LEAVE_BUYSELLMENU:
-	  Weiter = !Weiter;
-	  break;
-	default: 
-	  break;
+	    case (-1):
+		Weiter=!Weiter;
+		break;
+	    case BUY_BASIC_ITEMS:
+		while (EnterPressed() || SpacePressed() );
+		InitTradeWithCharacter( FALSE );
+		break;
+	    case BUY_PREMIUM_ITEMS:
+		while (EnterPressed() || SpacePressed() );
+		InitTradeWithCharacter( FALSE );
+		break;
+	    case SELL_ITEMS:
+		while (EnterPressed() || SpacePressed() );
+		Sell_Items( FALSE );
+		break;
+	    case REPAIR_ITEMS:
+		while (EnterPressed() || SpacePressed() );
+		Repair_Items();
+		break;
+	    case IDENTIFY_ITEMS:
+		while (EnterPressed() || SpacePressed() );
+		Identify_Items();
+		break;
+	    case LEAVE_BUYSELLMENU:
+		Weiter = !Weiter;
+		break;
+	    default: 
+		break;
 	} 
     }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  Me[0].status=MOBILE;
-
-  return;
+    
+    ClearGraphMem();
+    // Since we've faded out the whole scren, it can't hurt
+    // to have the top status bar redrawn...
+    Me[0].status=MOBILE;
+    
+    return;
 }; // void BuySellMenu ( void )
 
 /* ----------------------------------------------------------------------
@@ -2105,56 +2134,56 @@ enum
 void
 EnterChest ( moderately_finepoint pos )
 {
-  int ItemSelected = 0 ;
-  int NumberOfItemsInTuxRow = 0 ;
-  int NumberOfItemsInChest = 0 ;
-  item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
-  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
-  shop_decision ShopOrder;
-
-  Activate_Conservative_Frame_Computation();
-
-  play_open_chest_sound();
-
-  while ( ItemSelected != (-1) )
+    int ItemSelected = 0 ;
+    int NumberOfItemsInTuxRow = 0 ;
+    int NumberOfItemsInChest = 0 ;
+    item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+    item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+    shop_decision ShopOrder;
+    
+    Activate_Conservative_Frame_Computation();
+    
+    play_open_chest_sound();
+    
+    while ( ItemSelected != (-1) )
     {
-      
-      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
-      NumberOfItemsInChest = AssemblePointerListForChestShow ( &( Buy_Pointer_List[0]), 0 );
-
-      ItemSelected = GreatShopInterface ( NumberOfItemsInChest , Buy_Pointer_List , 
-					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , TRUE );
-
-      if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
-
-      switch ( ShopOrder . shop_command )
+	
+	NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
+	NumberOfItemsInChest = AssemblePointerListForChestShow ( &( Buy_Pointer_List[0]), 0 , pos );
+	
+	ItemSelected = GreatShopInterface ( NumberOfItemsInChest , Buy_Pointer_List , 
+					    NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , TRUE );
+	
+	if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
+	
+	switch ( ShopOrder . shop_command )
 	{
-	case BUY_1_ITEM:
-	  // TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
-	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , ShopOrder . number_selected ) ;
-	  break;
-	case BUY_10_ITEMS:
-	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 10 ) ;
-	  break;
-	case BUY_100_ITEMS:
-	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 100 ) ;
-	  break;
-	case SELL_1_ITEM:
-	  // TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 , pos ) ;
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , ShopOrder . number_selected , pos ) ;
-	  break;
-	case SELL_10_ITEMS:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 , pos ) ;
-	  break;
-	case SELL_100_ITEMS:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 100 , pos ) ;
-	  break;
-	default:
-	  
-	  break;
+	    case BUY_1_ITEM:
+		// TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
+		TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , ShopOrder . number_selected ) ;
+		break;
+	    case BUY_10_ITEMS:
+		TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 10 ) ;
+		break;
+	    case BUY_100_ITEMS:
+		TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 100 ) ;
+		break;
+	    case SELL_1_ITEM:
+		// TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 , pos ) ;
+		TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , ShopOrder . number_selected , pos ) ;
+		break;
+	    case SELL_10_ITEMS:
+		TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 , pos ) ;
+		break;
+	    case SELL_100_ITEMS:
+		TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 100 , pos ) ;
+		break;
+	    default:
+		
+		break;
 	};
     }
-
+    
 }; // void EnterChest (void)
 
 

@@ -591,6 +591,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_LOOT_CHEST_OR_DEAD_BODY:
+
+	    /*
 	    //--------------------
 	    // If the right mouse button wasn't pressed at all, then there
 	    // is nothing to do here...
@@ -671,7 +673,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
 	    break;
-	    
+	    */
+
 /*
 	case SPELL_TRANSFERMODE:
 	    if (MouseRightPressed() == 1)
