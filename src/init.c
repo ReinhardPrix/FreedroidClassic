@@ -260,6 +260,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_SHIELD_SLOT "Item can be installed in shield slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_SPECIAL_SLOT "Item can be installed in special slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT "Item can be installed in aux slot=\""
+#define ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME "Item can be installed in slot with name=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
 
@@ -360,170 +361,41 @@ Sorry...\n\
 	  Terminate( ERR );
 	}
 
-      // Now we read in if this item can be installed in weapon slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_WEAPON_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      // Now we read the label telling us in which slot the item can be installed
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME , "\"" ) ;
+      ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot = FALSE;
+      ItemMap[ItemIndex].item_can_be_installed_in_shield_slot = FALSE;
+      ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = FALSE;
+      ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = FALSE;
+      ItemMap[ItemIndex].item_can_be_installed_in_special_slot = FALSE;
+      ItemMap[ItemIndex].item_can_be_installed_in_aux_slot = FALSE;
+      if ( strcmp( YesNoString , "weapon" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot = TRUE;
 	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot = FALSE;
-	}
-      else
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-
-      // Now we read in if this item can be installed in the drive slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_DRIVE_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      else if ( strcmp( YesNoString , "drive" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = TRUE;
 	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = FALSE;
-	}
-      else
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-
-      // Now we read in if this item can be installed in the armour slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_ARMOUR_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = TRUE;
-	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = FALSE;
-	}
-      else
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-
-      // Now we read in if this item can be installed in the shield slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_SHIELD_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      else if ( strcmp( YesNoString , "shield" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_shield_slot = TRUE;
 	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
+      else if ( strcmp( YesNoString , "armour" ) == 0 )
 	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_shield_slot = FALSE;
+	  ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = TRUE;
 	}
-      else
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-
-      // Now we read in if this item can be installed in special slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_SPECIAL_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      else if ( strcmp( YesNoString , "special" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_special_slot = TRUE;
 	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_special_slot = FALSE;
-	}
-      else
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
-	}
-
-      // Now we read in if this item can be installed in special slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      else if ( strcmp( YesNoString , "aux" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_aux_slot = TRUE;
 	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
+      else if ( strcmp( YesNoString , "none" ) == 0 )
 	{
-	  ItemMap[ItemIndex].item_can_be_installed_in_aux_slot = FALSE;
+	  // good.  Everything is ok, as long as at least 'none' was found
 	}
       else
 	{
@@ -532,21 +404,27 @@ Sorry...\n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+answer for the slot installation possiblieties, that was neither 
+'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.\n\
 \n\
 This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
+the item specification section.  \n\
+\n\
+The item specification number, where the error occured was: %d.\n\
+\n\
+Please correct the error or send mail to the freedroid development team.\n\
 \n\
 But for now Freedroid will terminate to draw attention \n\
 to the initialisation problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" );
+\n" , ItemIndex );
 	  Terminate( ERR );
 	}
 
+      //--------------------
       // Now we read in minimum strength, dex and magic required to wear/wield this item
+      //
       ReadValueFromString( ItemPointer , "Strength minimum required to wear/wield this item=" , "%d" , 
 			   &ItemMap[ItemIndex].item_require_strength , EndOfItemData );
       ReadValueFromString( ItemPointer , "Dexterity minimum required to wear/wield this item=" , "%d" , 
