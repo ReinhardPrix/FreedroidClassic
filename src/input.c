@@ -1230,10 +1230,14 @@ keyboard_update(void)
 	case SDL_MOUSEMOTION:
 	  if (mouse_control)
 	    {
-	      //
+	      //--------------------
 	      // Since the new mouse cursor does have it's tip at the top left corner
 	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
 	      // cursor, we need to correct the given axis a little (16 pixels) bit.
+	      //
+	      // ATTENTION!! THIS ALSO MEANS THAT THE MOUSE CURSOR NEVER NEEDS TO BE
+	      // CORRECTED BY 16 PIXELS ANYWHERE ELSE IN THE CODE, OR WE'LL GET AN
+	      // OVERCORRECTION AND A WRONG RESULT FOR THE MOUSE POSITION!!!
 	      //
 	      input_axis.x = event.button.x - UserCenter_x + 16; 
 	      input_axis.y = event.button.y - UserCenter_y + 16; 	  

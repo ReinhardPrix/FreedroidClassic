@@ -36,9 +36,6 @@
 #include "global.h"
 #include "proto.h"
 
-#define SELL_PRICE_FACTOR (0.25)
-#define REPAIR_PRICE_FACTOR (0.5)
-
 int New_Game_Requested=FALSE;
 SDL_Surface* StoredMenuBackground = NULL;
 
@@ -54,6 +51,13 @@ EXTERN char Previous_Mission_Name[1000];
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
+
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+#define ITEM_FIRST_POS_Y 130
+
+#define SELL_PRICE_FACTOR (0.25)
+#define REPAIR_PRICE_FACTOR (0.5)
 
 /* ----------------------------------------------------------------------
  * This function restores the menu background, that must have been stored
@@ -100,6 +104,7 @@ void
 TryToRepairItem( item* RepairItem )
 {
   int MenuPosition;
+  char linebuf[1000];
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -122,13 +127,15 @@ TryToRepairItem( item* RepairItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 , NULL , NULL );
+      GiveItemDescription( linebuf , RepairItem , TRUE );
+      strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
+      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -155,6 +162,7 @@ void
 TryToIdentifyItem( item* IdentifyItem )
 {
   int MenuPosition;
+  char linebuf[1000];
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -177,13 +185,16 @@ TryToIdentifyItem( item* IdentifyItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM IDENTIFIED! " , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
+      GiveItemDescription( linebuf , IdentifyItem , TRUE );
+      strcat ( linebuf , "\n\n    Are you sure you want this item identified?" );
+      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+      // MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -212,6 +223,7 @@ void
 TryToSellItem( item* SellItem )
 {
   int MenuPosition;
+  char linebuf[1000];
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -232,7 +244,9 @@ TryToSellItem( item* SellItem )
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 , NULL , NULL );
+      GiveItemDescription( linebuf , SellItem , TRUE );
+      strcat ( linebuf , "\n\n    Are you sure you wish to sell this item?" );
+      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -288,7 +302,9 @@ TryToBuyItem( item* BuyItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 , NULL , NULL );
+      GiveItemDescription( linebuf , BuyItem , TRUE );
+      strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
+      DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
@@ -330,6 +346,64 @@ TryToBuyItem( item* BuyItem )
 
 }; // void TryToBuyItem( item* BuyItem )
 
+/* ----------------------------------------------------------------------
+ * This function tells us which item in the menu has been clicked upon.
+ * It does not check for lower than 4 items in the menu available.
+ * ---------------------------------------------------------------------- */
+int
+ClickedMenuItemPosition( void )
+{
+  int CursorX, CursorY;
+  int i;
+
+  CursorX = GetMousePos_x() + 16 ; // this is already the position corrected for 16 pixels!!
+  CursorY = GetMousePos_y() + 16 ; // this is already the position corrected for 16 pixels!!
+
+#define ITEM_MENU_DISTANCE 80
+#define ITEM_FIRST_POS_Y 130
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+
+  //--------------------
+  // When a character is blitted to the screen at x y, then the x and y
+  // refer to the top left corner of the coming blit.  Using this information
+  // we will define the areas where a click 'on the blitted text' has occured
+  // or not.
+  //
+  if ( CursorY < ITEM_FIRST_POS_Y )
+    return (-1);
+  if ( CursorY > ITEM_FIRST_POS_Y + NUMBER_OF_ITEMS_ON_ONE_SCREEN * ITEM_MENU_DISTANCE )
+    return (-1);
+
+  for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
+    {
+      if ( CursorY < ITEM_FIRST_POS_Y + ( i+1 ) * ITEM_MENU_DISTANCE ) return i;
+    }
+  
+  //--------------------
+  // At this point we've already determined and returned to right click-area.
+  // if this point is ever reached, a severe error has occured, and Freedroid
+  // should therefore also say so.
+  //
+  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a severe problem:\n\
+The MENU CODE was unable to properly resolve a mouse button press\n\
+in the function int ClickedMenuItemPosition( void ) in menu.c.\n\
+\n\
+This indicates a bug in Freedroid.  Please contact the developers.\n\
+\n\
+For now Freedroid will terminate to draw attention \n\
+to the position resolution problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+  Terminate(ERR);
+
+  return ( 3 ); // to make compilers happy :)
+
+}; // int ClickedMenuItemPosition( void )
+
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can buy basic items.
@@ -337,8 +411,6 @@ TryToBuyItem( item* BuyItem )
 void
 Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
   item SalesList[ 1000 ];
   int i;
   int InMenuPosition = 0;
@@ -429,7 +501,15 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	}      
     } // while not space pressed...
 
-  if ( SpacePressed() ) TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
+  if ( SpacePressed() && !axis_is_active ) 
+    {
+      TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
+    }
+  else
+    {
+      if ( ClickedMenuItemPosition() != (-1) )
+	TryToBuyItem( & ( SalesList[ ClickedMenuItemPosition() + MenuInListPosition ] ) ) ;
+    }
 
   while ( SpacePressed() || EscapePressed() );
 
@@ -442,8 +522,6 @@ void
 Repair_Items( void )
 {
 #define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
   item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
   int Pointer_Index=0;
   int i;
@@ -578,7 +656,17 @@ Repair_Items( void )
 	}      
     } // while not space pressed...
 
-  if ( SpacePressed() ) TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+  if ( SpacePressed() && !axis_is_active ) 
+    {
+      TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+    }
+  else
+    {
+      if ( ClickedMenuItemPosition() != (-1) )
+	TryToRepairItem( Repair_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
+    }
+
+  // if ( SpacePressed() ) TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
 
   while ( SpacePressed() || EscapePressed() );
 
@@ -591,8 +679,6 @@ void
 Identify_Items ( void )
 {
 #define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
   item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
   int Pointer_Index=0;
   int i;
@@ -724,7 +810,17 @@ Identify_Items ( void )
 	}      
     } // while not space pressed...
 
-  if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+  if ( SpacePressed() && !axis_is_active ) 
+    {
+      if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+    }
+  else
+    {
+      if ( ClickedMenuItemPosition() != (-1) )
+	TryToIdentifyItem( Identify_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
+    }
+
+  // if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
 
   while ( SpacePressed() || EscapePressed() );
 
@@ -737,8 +833,6 @@ void
 Sell_Items( int ForHealer )
 {
 #define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
   item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
   int Pointer_Index=0;
   int i;
@@ -855,7 +949,17 @@ Sell_Items( int ForHealer )
 	}      
     } // while not space pressed...
 
-  if ( SpacePressed() ) TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+  if ( SpacePressed() && !axis_is_active ) 
+    {
+      TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+    }
+  else
+    {
+      if ( ClickedMenuItemPosition() != (-1) )
+	TryToSellItem( Sell_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
+    }
+
+  // if ( SpacePressed() ) TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
 
   while ( SpacePressed() || EscapePressed() );
 
@@ -870,6 +974,10 @@ MouseCursorIsOverMenuItem( first_menu_item_pos_y )
 {
   int h = FontHeight ( GetCurrentFont() );
   
+  //--------------------
+  // The value of GetMousePos_y() NOT YET corrected for 16 pixels!!
+  // Therefore we can write:
+  //
   return ( ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ) + 1 );
 
 }; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
@@ -1048,7 +1156,8 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
+      // MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , Menu_Filled_BFont );
 
       switch (MenuPosition) 
 	{

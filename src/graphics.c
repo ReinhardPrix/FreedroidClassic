@@ -1211,13 +1211,15 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
+
   //--------------------
-  // Now we initialize the fonts needed by BFont functions
-  fpath = find_file (MENU_FONT_FILE, GRAPHICS_DIR, FALSE);
+  // Now we initialize the fonts needed by BFont functions.
+  //
+  fpath = find_file ( MENU_FONT_FILE , GRAPHICS_DIR , FALSE);
   if ( ( Menu_BFont = LoadFont (fpath) ) == NULL )
-      {
+    {
       fprintf (stderr,
-	     "\n\
+	       "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -1230,9 +1232,30 @@ Freedroid will terminate now to point at the error.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , MENU_FONT_FILE );
-        Terminate(ERR);
-  } else
-  DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
+      Terminate(ERR);
+    } else
+      DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
+  
+  fpath = find_file ( MENU_FILLED_FONT_FILE , GRAPHICS_DIR , FALSE);
+  if ( ( Menu_Filled_BFont = LoadFont (fpath) ) == NULL )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A font file named %s it wanted to load was not found.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , MENU_FONT_FILE );
+      Terminate(ERR);
+    } else
+      DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
   
   fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, FALSE);
   if ( ( Para_BFont = LoadFont (fpath) ) == NULL )

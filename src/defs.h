@@ -234,6 +234,7 @@ enum
 
 #define PARA_FONT_FILE 		"font/parafont.png"
 #define MENU_FONT_FILE 		"font/ArialGold_Depleted.png"
+#define MENU_FILLED_FONT_FILE 	"font/ArialGold.png"
 // #define RED_FONT_FILE 	"font/redfont.png"
 #define RED_FONT_FILE 		"font/font05_red.png"
 #define BLUE_FONT_FILE 		"font/font05_white.png"
