@@ -48,6 +48,257 @@
 #define REPAIR_PRICE_FACTOR (0.5)
 
 /* ----------------------------------------------------------------------
+ * This function tells us which item in the menu has been clicked upon.
+ * It does not check for lower than 4 items in the menu available.
+ * ---------------------------------------------------------------------- */
+int
+ClickedMenuItemPosition( void )
+{
+  int CursorX, CursorY;
+  int i;
+
+  CursorX = GetMousePos_x() + 16 ; // this is already the position corrected for 16 pixels!!
+  CursorY = GetMousePos_y() + 16 ; // this is already the position corrected for 16 pixels!!
+
+#define ITEM_MENU_DISTANCE 80
+#define ITEM_FIRST_POS_Y 130
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+
+  //--------------------
+  // When a character is blitted to the screen at x y, then the x and y
+  // refer to the top left corner of the coming blit.  Using this information
+  // we will define the areas where a click 'on the blitted text' has occured
+  // or not.
+  //
+  if ( CursorY < ITEM_FIRST_POS_Y )
+    return (-1);
+  if ( CursorY > ITEM_FIRST_POS_Y + NUMBER_OF_ITEMS_ON_ONE_SCREEN * ITEM_MENU_DISTANCE )
+    return (-1);
+
+  for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
+    {
+      if ( CursorY < ITEM_FIRST_POS_Y + ( i+1 ) * ITEM_MENU_DISTANCE ) return i;
+    }
+  
+  //--------------------
+  // At this point we've already determined and returned to right click-area.
+  // if this point is ever reached, a severe error has occured, and Freedroid
+  // should therefore also say so.
+  //
+  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a severe problem:\n\
+The MENU CODE was unable to properly resolve a mouse button press\n\
+in the function int ClickedMenuItemPosition( void ) in menu.c.\n\
+\n\
+This indicates a bug in Freedroid.  Please contact the developers.\n\
+\n\
+For now Freedroid will terminate to draw attention \n\
+to the position resolution problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+  Terminate(ERR);
+
+  return ( 3 ); // to make compilers happy :)
+
+}; // int ClickedMenuItemPosition( void )
+
+/* ----------------------------------------------------------------------
+ * There are numerous functions in shops where you have to select one out
+ * of may pieces of equippment.  Therefore a function is provided, that 
+ * should be able to perform this selection process with the user and also
+ * check for unwanted events, like non-present items selected and that.
+ *
+ * Several pricing methods exist and can be given as parameter, useful
+ * for using this function either for buy, sell, repair or identification
+ * purposes.
+ *
+ * ---------------------------------------------------------------------- */
+#define PRICING_FOR_BUY 1
+#define PRICING_FOR_SELL 2
+#define PRICING_FOR_IDENTIFY 3
+#define PRICING_FOR_REPAIR 4
+int 
+DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] , int PricingMethod )
+{
+  int Pointer_Index=0;
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
+  float PriceFound;
+  
+  //--------------------
+  // First we make sure, that neither space nor Escape are
+  // pressed in the beginning, so that a real menu selection
+  // will be done.
+  //
+  while ( SpacePressed() || EscapePressed() );
+
+  //--------------------
+  // At first we count how many items are really in this list.
+  // The last one is indicated by a NULL pointer following directly
+  // after it.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    {
+      if ( Item_Pointer_List[ i ] == NULL ) 
+	{
+	  Pointer_Index = i ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // Now we can perform the actual menu selection.
+  // We will loop until a decision of one kind or the other
+  // has been made.
+  //
+  while ( !SpacePressed() && !EscapePressed() )
+    {
+      // InitiateMenu( NULL );
+      InitiateMenu( SHOP_BACKGROUND_IMAGE );
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      DisplayText( Startstring , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+
+      // DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && ( Item_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
+	{
+	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , Item_Pointer_List [ i + MenuInListPosition ] , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+
+	  //--------------------
+	  // Now we print out the price for this item, depending of course
+	  // on the context in which we display this item.
+	  //
+	  switch ( PricingMethod )
+	    {
+	    case PRICING_FOR_SELL:
+	      PriceFound = SELL_PRICE_FACTOR * 
+		( (float) CalculateItemPrice ( Item_Pointer_List[ i + MenuInListPosition] , FALSE ) ) ;
+	      break;
+	    case PRICING_FOR_BUY:
+	      PriceFound = 
+		CalculateItemPrice ( Item_Pointer_List [ i + MenuInListPosition ] , FALSE ) ;
+	      break;
+	    case PRICING_FOR_IDENTIFY:
+	      PriceFound = 100.0 ;
+	      break;
+	    case PRICING_FOR_REPAIR:
+	      PriceFound = REPAIR_PRICE_FACTOR * 
+		( (float) CalculateItemPrice ( Item_Pointer_List[ i + MenuInListPosition] , TRUE ) );
+	      break;
+	    default:
+	      DebugPrintf( 0 , "ERROR:  PRICING METHOD UNSPECIFIED IN SHOP.C!!!\n\nTerminating...\n\n" );
+	      Terminate ( ERR );
+	      break;
+
+	    }
+	  sprintf( DescriptionText , "%6.0f" , PriceFound );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	}
+
+      //--------------------
+      // Now we add a 'BACK' button outside the normal item display area.
+      // Where exactly we put this button is pretty much unimportant, cause any
+      // click outside the items displayed will return -1 to the calling function
+      // and that's the same as clicking directly on the back button.
+      //
+      // DisplayText( "BACK" , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+      // CenteredPutStringFont( Screen , Menu_Filled_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+      //
+      CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      //--------------------
+      // Maybe the cursor key up or cursor key down was pressed.  Then of
+      // course the cursor must either move down or the whole menu must
+      // scroll one step down, if that is still possible.
+      // 
+      // Mouse wheel action will be checked for further down.
+      //
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
+	       ( InMenuPosition < Pointer_Index -1 ) )
+	    {
+	      InMenuPosition ++;
+	    }
+	  else 
+	    {
+	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}      
+
+      //--------------------
+      // Maybe the mouse wheel was pressed up or down.  Then of course we
+      // must not move the cursor, which is only used for keyboard input
+      // but instead we have the menu scrolling up or down, depending on
+      // what's currently requested.
+      //
+      if ( MouseWheelUpPressed() )
+	{
+	  if ( MenuInListPosition > 0 )
+	    MenuInListPosition --;
+
+	  while ( MouseWheelUpPressed() );
+	}
+      if ( MouseWheelDownPressed() )
+	{
+	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	    MenuInListPosition ++;
+
+	  while ( MouseWheelDownPressed() );
+	}      
+
+    } // while not space pressed...
+
+  if ( SpacePressed() && !axis_is_active ) 
+    {
+      return ( InMenuPosition + MenuInListPosition ) ;
+    }
+  else
+    {
+      if ( ( ClickedMenuItemPosition() != (-1) ) && ( ClickedMenuItemPosition() < Pointer_Index ) )
+	return ( ClickedMenuItemPosition() + MenuInListPosition ) ;
+    }
+
+  while ( SpacePressed() || EscapePressed() );
+
+  return (-1); // just to make compilers happy :)
+
+}; // int DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] )
+
+/* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
  * is just drops the item to the floor under the influencer and will
  * reduce influencers money.
@@ -306,76 +557,19 @@ TryToBuyItem( item* BuyItem )
 }; // void TryToBuyItem( item* BuyItem )
 
 /* ----------------------------------------------------------------------
- * This function tells us which item in the menu has been clicked upon.
- * It does not check for lower than 4 items in the menu available.
- * ---------------------------------------------------------------------- */
-int
-ClickedMenuItemPosition( void )
-{
-  int CursorX, CursorY;
-  int i;
-
-  CursorX = GetMousePos_x() + 16 ; // this is already the position corrected for 16 pixels!!
-  CursorY = GetMousePos_y() + 16 ; // this is already the position corrected for 16 pixels!!
-
-#define ITEM_MENU_DISTANCE 80
-#define ITEM_FIRST_POS_Y 130
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-
-  //--------------------
-  // When a character is blitted to the screen at x y, then the x and y
-  // refer to the top left corner of the coming blit.  Using this information
-  // we will define the areas where a click 'on the blitted text' has occured
-  // or not.
-  //
-  if ( CursorY < ITEM_FIRST_POS_Y )
-    return (-1);
-  if ( CursorY > ITEM_FIRST_POS_Y + NUMBER_OF_ITEMS_ON_ONE_SCREEN * ITEM_MENU_DISTANCE )
-    return (-1);
-
-  for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
-    {
-      if ( CursorY < ITEM_FIRST_POS_Y + ( i+1 ) * ITEM_MENU_DISTANCE ) return i;
-    }
-  
-  //--------------------
-  // At this point we've already determined and returned to right click-area.
-  // if this point is ever reached, a severe error has occured, and Freedroid
-  // should therefore also say so.
-  //
-  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a severe problem:\n\
-The MENU CODE was unable to properly resolve a mouse button press\n\
-in the function int ClickedMenuItemPosition( void ) in menu.c.\n\
-\n\
-This indicates a bug in Freedroid.  Please contact the developers.\n\
-\n\
-For now Freedroid will terminate to draw attention \n\
-to the position resolution problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-  Terminate(ERR);
-
-  return ( 3 ); // to make compilers happy :)
-
-}; // int ClickedMenuItemPosition( void )
-
-
-/* ----------------------------------------------------------------------
  * This is the menu, where you can buy basic items.
  * ---------------------------------------------------------------------- */
 void
 Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
-  item SalesList[ 1000 ];
+  item SalesList[ MAX_ITEMS_IN_INVENTORY ];
+  item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
   int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
+  // int InMenuPosition = 0;
+  // int MenuInListPosition = 0;
   char DescriptionText[5000];
-  int basic_items_number = 10;
+  int basic_items_number = 20; // this must be <= MAX_ITEMS_IN_INVENTORY -1 !!!
+  int ItemSelected;
 
   //--------------------
   // First we make a selection of items, that can be considered 'basic'.
@@ -403,103 +597,23 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       else SalesList[ i ].suffix_code = ( -1 );
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
       SalesList[ i ].is_identified = TRUE;
+
+      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
     }
+  //--------------------
+  // Now me make sure that this list really gets terminated
+  // as required by the item selection function.
+  //
+  Buy_Pointer_List [ i ] = NULL ; 
+  
+  //--------------------
+  // Now we display the list of items for sale and react
+  // to the given user selection.
+  //
+  sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
+  ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
 
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      // InitiateMenu ( NULL );
-      InitiateMenu ( SHOP_BACKGROUND_IMAGE );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
-	{
-	  // DisplayText( ItemMap [ SalesList[ i ].type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%4ld" , 
-		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) , FALSE ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      //--------------------
-      // Maybe the cursor key up or cursor key down was pressed.  Then of
-      // course the cursor must either move down or the whole menu must
-      // scroll one step down, if that is still possible.
-      // 
-      // Mouse wheel action will be checked for further down.
-      //
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
-	  else 
-	    {
-	      if ( MenuInListPosition < basic_items_number - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-
-      //--------------------
-      // Maybe the mouse wheel was pressed up or down.  Then of course we
-      // must not move the cursor, which is only used for keyboard input
-      // but instead we have the menu scrolling up or down, depending on
-      // what's currently requested.
-      //
-      if ( MouseWheelUpPressed() )
-	{
-	  if ( MenuInListPosition > 0 )
-	    MenuInListPosition --;
-
-	  while ( MouseWheelUpPressed() );
-	}
-      if ( MouseWheelDownPressed() )
-	{
-	  if ( MenuInListPosition < basic_items_number - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-	    MenuInListPosition ++;
-
-	  while ( MouseWheelDownPressed() );
-	}      
-
-    } // while not space pressed...
-
-  if ( SpacePressed() && !axis_is_active ) 
-    {
-      TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
-    }
-  else
-    {
-      if ( ClickedMenuItemPosition() != (-1) )
-	TryToBuyItem( & ( SalesList[ ClickedMenuItemPosition() + MenuInListPosition ] ) ) ;
-    }
-
-  while ( SpacePressed() || EscapePressed() );
+  if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
 
 }; // void Buy_Basic_Items( void )
 
@@ -513,8 +627,9 @@ Repair_Items( void )
   item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
   int Pointer_Index=0;
   int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
+  // int InMenuPosition = 0;
+  // int MenuInListPosition = 0;
+  int ItemSelected;
   char DescriptionText[5000];
   char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
@@ -584,108 +699,14 @@ Repair_Items( void )
       return;
     }
 
+  //--------------------
+  // Now we display the list of items for repair and react
+  // to the given user selection.
+  //
+  sprintf( DescriptionText , " I COULD REPAIR THESE ITEMS           YOUR GOLD:  %4ld" , Me[0].Gold );
+  ItemSelected = DoEquippmentListSelection( DescriptionText , Repair_Pointer_List , PRICING_FOR_REPAIR );
 
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      InitiateMenu ( NULL );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I COULD REPAIR THESE ITEMS                YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Repair_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Repair_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 
-		   REPAIR_PRICE_FACTOR * 
-		   CalculateItemPrice ( Repair_Pointer_List[ i + MenuInListPosition] , TRUE ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      //--------------------
-      // Maybe the cursor key up or cursor key down was pressed.  Then of
-      // course the cursor must either move down or the whole menu must
-      // scroll one step down, if that is still possible.
-      // 
-      // Mouse wheel action will be checked for further down.
-      //
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-
-      //--------------------
-      // Maybe the mouse wheel was pressed up or down.  Then of course we
-      // must not move the cursor, which is only used for keyboard input
-      // but instead we have the menu scrolling up or down, depending on
-      // what's currently requested.
-      //
-      if ( MouseWheelUpPressed() )
-	{
-	  if ( MenuInListPosition > 0 )
-	    MenuInListPosition --;
-
-	  while ( MouseWheelUpPressed() );
-	}
-      if ( MouseWheelDownPressed() )
-	{
-	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-	    MenuInListPosition ++;
-
-	  while ( MouseWheelDownPressed() );
-	}      
-
-    } // while not space pressed...
-
-  if ( SpacePressed() && !axis_is_active ) 
-    {
-      TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-    }
-  else
-    {
-      if ( ClickedMenuItemPosition() != (-1) )
-	TryToRepairItem( Repair_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
-    }
-
-  // if ( SpacePressed() ) TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
+  if ( ItemSelected != (-1) ) TryToRepairItem( Repair_Pointer_List[ ItemSelected ] ) ;
 
 }; // void Repair_Items( void )
 
@@ -699,9 +720,10 @@ Identify_Items ( void )
   item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
   int Pointer_Index=0;
   int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
+  // int InMenuPosition = 0;
+  // int MenuInListPosition = 0;
   char DescriptionText[5000];
+  int ItemSelected;
   char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
@@ -758,7 +780,6 @@ Identify_Items ( void )
 
       Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
       Pointer_Index ++;
-
     }
 
   if ( Pointer_Index == 0 )
@@ -769,109 +790,16 @@ Identify_Items ( void )
       return;
     }
 
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      InitiateMenu ( NULL );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I COULD IDENTIFY THESE ITEMS              YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Identify_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Identify_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Identify_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 100.0 );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      //--------------------
-      // Maybe the cursor key up or cursor key down was pressed.  Then of
-      // course the cursor must either move down or the whole menu must
-      // scroll one step down, if that is still possible.
-      // 
-      // Mouse wheel action will be checked for further down.
-      //
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-
-      //--------------------
-      // Maybe the mouse wheel was pressed up or down.  Then of course we
-      // must not move the cursor, which is only used for keyboard input
-      // but instead we have the menu scrolling up or down, depending on
-      // what's currently requested.
-      //
-      if ( MouseWheelUpPressed() )
-	{
-	  if ( MenuInListPosition > 0 )
-	    MenuInListPosition --;
-
-	  while ( MouseWheelUpPressed() );
-	}
-      if ( MouseWheelDownPressed() )
-	{
-	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-	    MenuInListPosition ++;
-
-	  while ( MouseWheelDownPressed() );
-	}      
-
-
-    } // while not space pressed...
-
-  if ( SpacePressed() && !axis_is_active ) 
-    {
-      if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-    }
-  else
-    {
-      if ( ClickedMenuItemPosition() != (-1) )
-	TryToIdentifyItem( Identify_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
-    }
-
-  // if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
+  //--------------------
+  // Now we display the list of items for identification and react
+  // to the given user selection.
+  //
+  sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
+  ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
+  if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
 
 }; // void Identify_Items( void )
+
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can sell inventory items.
@@ -883,8 +811,9 @@ Sell_Items( int ForHealer )
   item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
   int Pointer_Index=0;
   int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
+  int ItemSelected;
+  //  int InMenuPosition = 0;
+  //  int MenuInListPosition = 0;
   char DescriptionText[5000];
   char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
@@ -931,113 +860,19 @@ Sell_Items( int ForHealer )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , 
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
 			MenuTexts, 1 , NULL , NULL );
       return;
     }
 
+  //--------------------
+  // Now we display the list of items for sale and react
+  // to the given user selection.
+  //
+  sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
+  ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
 
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      // InitiateMenu( NULL );
-      InitiateMenu( SHOP_BACKGROUND_IMAGE );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Sell_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 
-		   SELL_PRICE_FACTOR * ( (float) CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] , FALSE ) ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      //--------------------
-      // Maybe the cursor key up or cursor key down was pressed.  Then of
-      // course the cursor must either move down or the whole menu must
-      // scroll one step down, if that is still possible.
-      // 
-      // Mouse wheel action will be checked for further down.
-      //
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-
-      //--------------------
-      // Maybe the mouse wheel was pressed up or down.  Then of course we
-      // must not move the cursor, which is only used for keyboard input
-      // but instead we have the menu scrolling up or down, depending on
-      // what's currently requested.
-      //
-      if ( MouseWheelUpPressed() )
-	{
-	  if ( MenuInListPosition > 0 )
-	    MenuInListPosition --;
-
-	  while ( MouseWheelUpPressed() );
-	}
-      if ( MouseWheelDownPressed() )
-	{
-	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-	    MenuInListPosition ++;
-
-	  while ( MouseWheelDownPressed() );
-	}      
-
-    } // while not space pressed...
-
-  if ( SpacePressed() && !axis_is_active ) 
-    {
-      TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-    }
-  else
-    {
-      if ( ClickedMenuItemPosition() != (-1) )
-	TryToSellItem( Sell_Pointer_List[ ClickedMenuItemPosition() + MenuInListPosition ] ) ;
-    }
-
-  // if ( SpacePressed() ) TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
+  if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
 
 }; // void Sell_Items( void )
 
