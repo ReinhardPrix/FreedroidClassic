@@ -42,44 +42,44 @@ Allowed Type of Random Droid for this level: 476
 //**********************************************************************
 // This is Dr. Chandra, from whom you will receive your first mission
 //**********************************************************************
-SpecialForce: Type=CHA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ChandraStartGameSquare"
+SpecialForce: Type=CHA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ChandraStartGameSquare" RushTux="no"
 
 //**********************************************************************
 // This is Mr. Stone, a sales representative of the UMC
 //**********************************************************************
-SpecialForce: Type=STO X=33 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=STO X=33 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 
 //**********************************************************************
 // This is Sorenson, a former preferred person of the MS
 //**********************************************************************
-SpecialForce: Type=SOR X=7 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare"
+SpecialForce: Type=SOR X=7 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no"
 
 //**********************************************************************
 // This is the healer of the small starting town
 //**********************************************************************
-SpecialForce: Type=HEA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="HealerStartGameSquare"
+SpecialForce: Type=HEA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="HealerStartGameSquare" RushTux="no"
 
 // **********************************************************************
 // This is a security bot guarding the former resistance camp.
 // **********************************************************************
-SpecialForce: Type=614 X=17 Y=10 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare1"
-SpecialForce: Type=614 X=18 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare2"
-SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare3"
+SpecialForce: Type=614 X=17 Y=10 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare1" RushTux="no"
+SpecialForce: Type=614 X=18 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare2" RushTux="no"
+SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare3" RushTux="no"
 
 // **********************************************************************
 // This is Richard 'RMS', who lost most of his code
 // **********************************************************************
-SpecialForce: Type=RMS X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RMSStartGameSquare"
+SpecialForce: Type=RMS X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RMSStartGameSquare" RushTux="no"
 
 // **********************************************************************
 // This is Dixon 'DIX', who escaped from the second level
 // **********************************************************************
-SpecialForce: Type=DIX X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare"
+SpecialForce: Type=DIX X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no"
 
 // **********************************************************************
 // This is Pendragon 'PEN', who can train you in the fighting arts.
 // **********************************************************************
-SpecialForce: Type=PEN X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare"
+SpecialForce: Type=PEN X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no"
 
 ** End of this levels droid data **
 
@@ -106,7 +106,7 @@ Allowed Type of Random Droid for this level: 140
 Allowed Type of Random Droid for this level: 124
 Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
-SpecialForce: Type=DAP X=29 Y=21 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=DAP X=29 Y=21 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -115,7 +115,7 @@ Maximum number of Random Droids=50
 Minimum number of Random Droids=50
 Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
-SpecialForce: Type=DAP X=8 Y=3 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=DAP X=8 Y=3 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -128,7 +128,7 @@ Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
 Allowed Type of Random Droid for this level: 303
 S**pecialForce: Type=DAP X=29 Y=21 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-SpecialForce: Type=GOT X=10 Y=37 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=GOT X=10 Y=37 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -147,7 +147,7 @@ Allowed Type of Random Droid for this level: 124
 Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
 
-SpecialForce: Type=GOT X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="ToolkitBossMonsterStartGameSquare"
+SpecialForce: Type=GOT X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="ToolkitBossMonsterStartGameSquare" RushTux="no"
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -160,7 +160,7 @@ Allowed Type of Random Droid for this level: 711
 Allowed Type of Random Droid for this level: 742
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=MER X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare"
+SpecialForce: Type=MER X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no"
 
 ** End of this levels droid data **
 
@@ -178,7 +178,7 @@ S**pecialForce: Type=821 X=4 Y=9 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0
 S**pecialForce: Type=821 X=16 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
 S**pecialForce: Type=821 X=14 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
 S**pecialForce: Type=420 X=15 Y=32.5 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=FRA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare"
+SpecialForce: Type=FRA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes"
 
 ** End of this levels droid data **
 
@@ -246,20 +246,20 @@ Allowed Type of Random Droid for this level: 614
 Allowed Type of Random Droid for this level: 615
 
 // These are the three droids fireing at the front door of the retreatment
-SpecialForce: Type=629 X=13 Y=4 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=629 X=13 Y=4 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 
 // These are the droids guarding the back entrance
-SpecialForce: Type=629 X=3 Y=3 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=629 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=751 X=1 Y=7 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=751 X=1 Y=10 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=629 X=3 Y=3 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=629 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=751 X=1 Y=7 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=751 X=1 Y=10 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 S**pecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
 
 // These two are guarding the lift, so that noone can escape the level
-SpecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
+SpecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 ** End of this levels droid data **
 
 //**********************************************************************
@@ -274,11 +274,11 @@ S**pecialForce: Type=302 X=6 Y=7 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0
 
 //**********************************************************************
 // This is the friendly 296 'Butch' unit inside the bunker
-SpecialForce: Type=296 X=29 Y=11 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=296 X=29 Y=11 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 
 //**********************************************************************
 // This is the friendly 123 'Gert' unit hiding behind some boxes
-SpecialForce: Type=123 X=34 Y=2 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=123 X=34 Y=2 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no"
 
 //----------------------------------------------------------------------
 // This marker must mark the very end of this file.

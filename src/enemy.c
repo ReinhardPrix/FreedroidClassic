@@ -1122,10 +1122,32 @@ MoveThisEnemy( int EnemyNum )
   if ( ThisRobot->warten > 0) return;
 
   if ( ThisRobot->AdvancedCommand == 2 ) TeleportToClosestWaypoint ( ThisRobot );
-  //--------------------
-  // Now check for collisions of this enemy with his colleagues
-  //
-  CheckEnemyEnemyCollision ( EnemyNum );
+
+  if ( ThisRobot -> will_rush_tux )
+    {
+      if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
+	{
+	  ThisRobot -> persuing_given_course = TRUE ;
+	  ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
+	  ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
+
+	  if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
+		      ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
+	    {
+	      ChatWithFriendlyDroid ( ThisRobot );
+	      ThisRobot -> will_rush_tux = FALSE ;
+	      ThisRobot -> persuing_given_course = FALSE ; 
+	    }
+	}
+    }
+  else
+    {
+      //--------------------
+      // Checking collisions with colleagues is only nescessary for
+      // those not busy rushing the Tux...
+      //
+      CheckEnemyEnemyCollision ( EnemyNum );
+    }
 
   //--------------------
   // Now comes the real movement part

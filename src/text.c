@@ -776,7 +776,7 @@ ERROR:  UNKNOWN COMMAND STRING GIVEN!",
  * image of the dialog partner and also sets the right font.
  * ---------------------------------------------------------------------- */
 void
-PrepareMultipleChoiceDialog ( int Enum )
+PrepareMultipleChoiceDialog ( Enemy ChatDroid )
 {
   SDL_Rect Droid_Image_Window;
   SDL_Surface* Small_Droid;
@@ -833,7 +833,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   SetCurrentFont( FPS_Display_BFont );
 
   strcpy( fname, "droids/" );
-  strcat( fname, Druidmap[ AllEnemys[Enum].type ].portrait_filename_without_ext );
+  strcat( fname, Druidmap[ ChatDroid -> type ].portrait_filename_without_ext );
   strcat( fname , ".png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
   Small_Droid = IMG_Load (fpath) ;
@@ -933,14 +933,14 @@ Freedroid was unable to determine the type of said condition.",
  *
  * ---------------------------------------------------------------------- */
 void
-DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
+DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 {
   int i ;
   SDL_Rect Chat_Window;
   int MenuSelection = (-1) ;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
-  PrepareMultipleChoiceDialog ( Enum );
+  PrepareMultipleChoiceDialog ( ChatDroid );
 
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
@@ -959,7 +959,18 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 
   while (1)
     {
-      MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
+      //--------------------
+      // Now maybe this is one of the bots that is rushing the Tux!  Then of course
+      // we won't do the first selection, but instead immediately call the very first
+      // dialog option and then continue with normal dialog.
+      //
+      if ( ChatDroid -> will_rush_tux )
+	{
+	  MenuSelection = 1 ;
+	  ChatDroid -> will_rush_tux = FALSE ;
+	}
+      else
+	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
 
       //--------------------
       // We do some correction of the menu selection variable:
@@ -1065,7 +1076,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 	  //--------------------
 	  // It can't hurt to have the overall background redrawn after each extra command
 	  // which could have destroyed the background by drawing e.g. a shop interface
-	  PrepareMultipleChoiceDialog ( Enum ) ;
+	  PrepareMultipleChoiceDialog ( ChatDroid ) ;
 	}
 
       if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
@@ -1082,7 +1093,8 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
  * transfer mode touched a friendly droid.
  * ---------------------------------------------------------------------- */
 void 
-ChatWithFriendlyDroid( int Enum )
+// ChatWithFriendlyDroid( int Enum )
+ChatWithFriendlyDroid( Enemy ChatDroid )
 {
   int i ;
   SDL_Rect Chat_Window;
@@ -1116,32 +1128,32 @@ ChatWithFriendlyDroid( int Enum )
   //
   InitChatRosterForNewDialogue(  );
 
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
+  if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "CHA" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "CHA" );
-      DoChatFromChatRosterData( 0 , PERSON_CHA , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_CHA , ChatDroid );
     } // end of conversation with Chandra.
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "SOR" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "SOR" );
-      DoChatFromChatRosterData( 0 , PERSON_SOR , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_SOR , ChatDroid );
     }
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "614" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "614" );
-      DoChatFromChatRosterData( 0 , PERSON_614 , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_614 , ChatDroid );
     } // 614 character dialog
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "STO" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "STO" );
-      DoChatFromChatRosterData( 0 , PERSON_STO , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_STO , ChatDroid );
     } // STO character dialog
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "PEN" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "PEN" );
-      DoChatFromChatRosterData( 0 , PERSON_PEN , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_PEN , ChatDroid );
     } // PEN character dialog
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "DIX" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "DIX" ) == 0 )
     {
       //--------------------
       // Now we do the dialog with DIX...
@@ -1176,9 +1188,9 @@ ChatWithFriendlyDroid( int Enum )
 	}
 
       LoadChatRosterWithChatSequence ( "DIX" );
-      DoChatFromChatRosterData( 0 , PERSON_DIX , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_DIX , ChatDroid );
     }
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "RMS" ) == 0 )
     {
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
@@ -1188,21 +1200,27 @@ ChatWithFriendlyDroid( int Enum )
 	}
 
       LoadChatRosterWithChatSequence ( "RMS" );
-      DoChatFromChatRosterData( 0 , PERSON_RMS , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_RMS , ChatDroid );
     }
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "MER" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "MER" ) == 0 )
     {
 
       LoadChatRosterWithChatSequence ( "MER" );
-      DoChatFromChatRosterData( 0 , PERSON_MER , Enum );
+      DoChatFromChatRosterData( 0 , PERSON_MER , ChatDroid );
     }
-  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "FRA" ) == 0 )
+    {
+
+      LoadChatRosterWithChatSequence ( "FRA" );
+      DoChatFromChatRosterData( 0 , PERSON_FRA , ChatDroid );
+    }
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "HEA" ) == 0 )
     {
       HealerMenu( );
     }
   else
     {
-      fprintf( stderr, "\n\nDruidmap[ AllEnemys[ Enum ].type ].druidname: %s. \n" , Druidmap[ AllEnemys[ Enum ].type ].druidname );
+      fprintf( stderr, "\n\nDruidmap[ ChatDroid -> type ].druidname: %s. \n" , Druidmap[ ChatDroid -> type ].druidname );
       GiveStandardErrorMessage ( "ChatWithFriendlyDroid(...)" , "\
 There was a dialogue with a friendly droid or person supposed to be initiated.\n\
 But the character name of the person in question could not be handled by the\n\

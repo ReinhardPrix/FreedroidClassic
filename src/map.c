@@ -2305,6 +2305,7 @@ GetThisLevelsSpecialForces ( char* SearchPointer , int OurLevelNumber , int Free
   char TypeIndicationString[1000];
   int ListIndex;
   char* StartMapLabel;
+  char* YesNoString;
   location StartupLocation;
 
   while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
@@ -2362,13 +2363,30 @@ file you use.",
 			    EndOfThisLevelData );
       ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].is_friendly , 
 			    EndOfThisLevelData );
-
       StartMapLabel = 
 	ReadAndMallocStringFromData ( SearchPointer , "StartUpAtLabel=\"" , "\"" ) ;
-
       ResolveMapLabelOnShip ( StartMapLabel , &StartupLocation );
       AllEnemys[ FreeAllEnemysPosition ].pos.x = StartupLocation.x;
       AllEnemys[ FreeAllEnemysPosition ].pos.y = StartupLocation.y;
+
+      YesNoString = ReadAndMallocStringFromData ( SearchPointer , "RushTux=\"" , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  AllEnemys[ FreeAllEnemysPosition ] . will_rush_tux = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  AllEnemys[ FreeAllEnemysPosition ] . will_rush_tux = FALSE;
+	}
+      else
+	{
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
+The item specification of an item in ReturnOfTux.droids should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;

@@ -510,7 +510,8 @@ EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels 
 EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );
 EXTERN void DisplayBigScreenMessage( void );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
-EXTERN void ChatWithFriendlyDroid( int Enum );
+// EXTERN void ChatWithFriendlyDroid( int Enum );
+EXTERN void ChatWithFriendlyDroid( Enemy ChatDroid );
 EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );
 EXTERN void AddInfluBurntText( void );

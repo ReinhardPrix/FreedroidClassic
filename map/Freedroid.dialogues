@@ -813,11 +813,213 @@ ChangeOption=1 ChangeToValue=1 ; // reallow to ask why the ms erased his code
 
 ----------------------------------------------------------------------
 
-End of chat dialog for character="RMS"
+End of chat dialog for character="MER"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
+Beginning of new chat dialog for character="FRA"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText="THIS WILL NEVER BE VISIBLE" ; 
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+
+Subtitle="Hello Tux!  You seem to be alive and well!  How wonderful!"
+ReplySample="RMS_Welcome_Then_Im_0.wav"
+Subtitle="Maybe now some of the riddles I'm after will be solved, at last!"
+ReplySample="RMS_Alas_That_Time_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+ChangeOption=2 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+ChangeOption=3 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText="Tux?  Is that me?" ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="You seem to be still a bit dazed and confused!"
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Maybe that's quite normal from the stasis you were trapped in."
+ReplySample="RMS_This_Monopoly_They_0.wav"
+Subtitle="You must have slept for at least several hundred years."
+ReplySample="RMS_And_Now_They_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText="What?" ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="You seem to be still a bit dazed and confused!"
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Maybe that's quite normal from the stasis you were trapped in."
+ReplySample="RMS_This_Monopoly_They_0.wav"
+Subtitle="You must have slept for at least several hundred years."
+ReplySample="RMS_And_Now_They_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
+
+----------------------------------------------------------------------
+
+New Option Nr=3 OptionText="Huh?" ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="You seem to be still a bit dazed and confused!"
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Maybe that's quite normal from the stasis you were trapped in."
+ReplySample="RMS_This_Monopoly_They_0.wav"
+Subtitle="You must have slept for ages, I mean literally thousands of years."
+ReplySample="RMS_And_Now_They_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
+ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
+
+----------------------------------------------------------------------
+
+New Option Nr=4 OptionText="A stasis?  You mean I've been sleeping in a stasis field?" 
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Exactly!"
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=4 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=5 OptionText="You mean I'm thousands of years old?  Are you sure?  What else can you tell me about myself?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Well, to be honest there's not much I can tell.  That's why I'm here."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="I'm studying these ancient ruins and machines to find out more about this alien race that has lived here long before the dawn of mankind."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="But the attempt seems partly futile.  I had hoped perhaps you could be the key to learn more about them."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=5 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=6 ChangeToValue=1 ; // allow to ask for the aliens
+
+----------------------------------------------------------------------
+
+New Option Nr=6 OptionText="You mean there is an alien race?  What do you mean?  Am I an alien?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="No... and yes.  You are a well known species of intelligent penguins that evolved on a planet called Linaria."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="So in a way you are a different race than I am.  But that's not what I meant by alien."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="The alien race I was talking about populated this universe a few hundred years ago, long before mankind or the Linarians ever developed any form of civilisation."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="So in this sense, you are not *the* alien race I meant."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=6 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+T:  And why was I held in this stasis field?  
+F:  I got no idea.  What is even more amazing is why suddenly
+you were set free.  I do not recall doing anything special.  I
+was sleeping close to here on the ground, when I was awoken by
+the rumbling of the machines.  It's very strange that now after
+all these ages the stasis field suddently was negated, very
+stange indeed.  
+
+T:  Where can I get a weapon?
+F:  A weapon is something you will need around here.  You might
+try searching the area.  Maybe you can find something suitable.
+
+T:  What can you tell me about this place.
+F:  This place is a system of underground tunnels and halls on a
+planet near the outskirts of our universe.  It's in a part where
+the MS didn't initially have such a strong presence.  That's why
+after the great assault many people have fled to this place.
+
+T:  The great assault?  What do you mean?
+F:  After mankind had begun to settle the universe, people were
+relying more and more on robots, commonly called droids, for
+almost any menial and sometimes also dangerous task.  Especially
+like police or military services very mostly done via droids. 
+Now there was a great Software company called 'MegaSoft', that
+supplied the operating systems for almost all droids and
+computers existing.  This was the key for the MS to incite a
+great revolution.  Via a back door in their OS, they could
+suddenly enslave the universe cause the droids would suddenly
+only respond to their signals and enforced their new rule and
+the new MS government.  
+T:  So this is what is called the 'Great Assault'?
+F:  No, not quite.  This is only the beginning, that finally led
+to the great assault.  At first everything seemed to work.  The
+MS has successfully seized control of the universe.  But then
+they fucked up.  Their own control mechanisms were somehow
+unreliable and flaky.  Is suddenly backfired and the droids went
+completely out of control, attacking almost anything on sight. 
+Mankind had to flee from their own bots.  You can guess that the
+vast majority didn't make it to any safe place.  
+
+T:  So has there been any attempt to reclaim control of the
+universe so far?
+Of course this is something everybody here is dreaming of.  And
+some people are not afraid to enthrall whoever will listen with
+promises of this eternal dream.  But if you ask me for my honest
+oppinion, I must say that this is absolutely futile.  There are
+far too many bots and more coming ever out of the automated
+factories on many planets.  We must see that we can survive in
+here and make this a safe place to live at least.  There are no
+chances of winning back the universe.
+
+T:  Who are those people promising to regain control of the
+universe.
+F:  There are two main groups.  One is trying to build the
+ultimate battle machine in order to destroy the existing droid
+forces.  These are called the builders.  The other is a fanatic
+sect, claiming to have some form of spiritual contact to the
+alien race that once populated the universe.  They claim that
+with their help, they would overthrow the bot dominion, but they
+never say how this should work.
+
+T:  Why are you helping me?
+F:  Because you needed help.  And also because I think that
+biological life forms must stick together, or they will all be
+swept away by a mass of bots and their completely automated
+battle ships.
+
+T:  What became of the original Software company, that initially
+controlled all the bots?
+F:  Well, after the great assault, these guys were the very
+first to bite into the dust.  The help calls from their planet
+echoes throughout the universe.  I think no living being exists
+any more even close to their planet.  The presence of MS
+controlled bots there was simply too strong to allow anybody to
+escape.  And now the planet is a dead tomb, probably the most
+dangerous of all places a human or Linarian could ever be.
+ 
+T:  Thanks a lot for your for you help!  B/W, what is your name?
+F:  My name is Francis.  I am glad if I could help you along a
+bit.  Please let me know if anything of your memory should
+return.  I would be glad if I could learn some more about this
+alien race.  And maybe from a more reliable source than the
+crazy sectarians.  Also you should be careful around here.  Best
+head straight for our town.  It's directly to the northeast. 
+And don't go too deep into the tunnels.  There are many bots
+also on this planet.  I wish you the best of luck.
+
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText=" END ";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+ChangeOption=1 ChangeToValue=1 ; // reallow to ask why the ms erased his code
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="FRA"
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
 
 
 

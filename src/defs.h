@@ -406,6 +406,7 @@ enum _non_player_characters
     PERSON_PEN,
     PERSON_614,
     PERSON_MER,
+    PERSON_FRA,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)

@@ -629,7 +629,7 @@ MoveInfluence ( int PlayerNum )
 	{
 	  //--------------------
 	  // We chat with the friendly droid
-	  ChatWithFriendlyDroid ( Me [ PlayerNum ] . mouse_move_target_is_enemy ) ;
+	  ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] ) ) ;
 	  
 	  //--------------------
 	  // and then we deactivate this mouse_move_target_is_enemy to prevent
@@ -1056,7 +1056,7 @@ CheckInfluenceEnemyCollision (void)
       if ( Me[0].status == TRANSFERMODE )
 	{
 	  if ( ! AllEnemys[i].is_friendly ) Takeover (i);
-	  else ChatWithFriendlyDroid( i );
+	  else ChatWithFriendlyDroid( & ( AllEnemys [ i ] ) );
 
 	  if (LevelEmpty ())
 	    CurLevel->empty = WAIT_LEVELEMPTY;

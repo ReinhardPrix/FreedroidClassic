@@ -646,6 +646,7 @@ typedef struct
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
   int is_friendly;                 // is this a friendly droid or is it a MS controlled one?
+  int will_rush_tux;            // will this robot approach the Tux on sight and open communication?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
