@@ -111,6 +111,8 @@ char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
     "iso_sidewalk_0019.png" ,
     "iso_sidewalk_0020.png" ,
 
+    "iso_miscellaneous_floor_0023.png" ,
+    
     // , "ERROR_UNUSED.png" , 
   };
 
