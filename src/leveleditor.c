@@ -3955,8 +3955,9 @@ LevelEditor(void)
       if ( !Done ) Done = DoLevelEditorMainMenu ( EditLevel );
       
     } // while (!Done)
-
+  
   RespectVisibilityOnMap = TRUE ;
+  level_editor_marked_obstacle = NULL ; 
 
   Activate_Conservative_Frame_Computation();
 
