@@ -8722,7 +8722,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8734,8 +8734,8 @@ ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1
 ob_type=1 ob_x=50.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
@@ -8743,7 +8743,7 @@ ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1
 ob_type=1 ob_x=50.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
@@ -9211,7 +9211,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=24 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=22 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -9409,7 +9409,7 @@ ob_type=2 ob_x=75.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=76.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=22 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9593,8 +9593,8 @@ ob_type=117 ob_x=67.50 ob_y=13.50 ob_na=-1
 ob_type=121 ob_x=67.50 ob_y=14.50 ob_na=-1 
 ob_type=116 ob_x=68.50 ob_y=14.50 ob_na=-1 
 ob_type=116 ob_x=70.50 ob_y=14.50 ob_na=-1 
-ob_type=20 ob_x=69.50 ob_y=12.50 ob_na=-1 
-ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=12.50 ob_na=-1 
+ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=0 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9649,6 +9649,7 @@ label.pos.x=69 label.pos.y=12 label.label_name="TeleportIntoTheWarehouse"
 label.pos.x=68 label.pos.y=12 label.label_name="ArrivePointBackFromWarehouse"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
+obstacle_label.index=0 obstacle_label_name="AccessDoorToWarehouse"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level

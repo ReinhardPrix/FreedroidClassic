@@ -252,12 +252,49 @@ Event Action to be triggered by this trigger="stay_with_first_mission_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **********************************************************************
 **********************************************************************
 **********************************************************************
 +++
 +++ Now we define ACTIONS, that can be triggered by triggers
 +++
+
+* Start of an Event Action Subsection *
+Action label for this action="open_warehouse_access_door"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+modify_obstacle_with_label="AccessDoorToWarehouse"
+modify_obstacle_to_type=6
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Thanks for unlocking the access door to the warehouse!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
 Action label for this action="open_novice_arena_exit_door"
