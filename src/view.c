@@ -940,8 +940,8 @@ insert_one_blast_into_blitting_list ( int blast_num )
 }; // void insert_one_blast_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * The blitting list must contain the enemies too.  This function is 
+ * responsible for inserting the enemies at the right positions.
  * ---------------------------------------------------------------------- */
 void
 insert_enemies_into_blitting_list ( void )
@@ -949,20 +949,19 @@ insert_enemies_into_blitting_list ( void )
     int i;
     float enemy_norm;
     float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
-    enemy* ThisRobot = & ( AllEnemys [ 0 ] ) ;
+    enemy* ThisRobot;
     
-    ThisRobot -- ;
-    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    for ( i = first_index_of_bot_on_level [ Me [ 0 ] . pos . z ] ; 
+	  i <= last_index_of_bot_on_level [ Me [ 0 ] . pos . z ] ; i ++ )
     {
-	ThisRobot ++ ;
+	ThisRobot = & ( AllEnemys [ i ] ) ; 
+
 	if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) continue;
 	if ( ( ThisRobot -> Status == OUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
 	{
-	    // asdf 
 	    // DebugPrintf ( -4 , "\n%s():  enemy blitting suppressed because of status and no animation..." , __FUNCTION__ );
 	    // continue;
 	}
-
 
 	enemy_norm = ThisRobot -> pos . x + ThisRobot -> pos . y ;
 	
