@@ -226,7 +226,7 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL_image.framework/Versions/A/Headers\" \"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL.framework/Versions/A/Headers\" \"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL_mixer.framework/Versions/A/Headers\"";
+				HEADER_SEARCH_PATHS = "\"~/Library/Frameworks/SDL_image.framework/Versions/A/Headers\" \"~/Library/Frameworks/SDL.framework/Versions/A/Headers\" \"~/Library/Frameworks/SDL_mixer.framework/Versions/A/Headers\"";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OPTIMIZATION_CFLAGS = "-O2";
@@ -254,16 +254,22 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>FreeDroid</string>
+	<key>CFBundleGetInfoString</key>
+	<string>FreeDroid 1.0.2 </string>
 	<key>CFBundleIconFile</key>
 	<string>icon</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>FreeDroid</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>FreeDroid v1.0.2; see http://freedroid.sourceforge.net for Coyright Information</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.1</string>
+	<string>1.0.2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -450,20 +456,23 @@
 		824E61640432590C00E329D9 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			path = getopt.c;
-			refType = 2;
+			name = getopt.c;
+			path = "/Users/jasonk/projects/freedroid-1.0.2/src/getopt.c";
+			refType = 0;
 		};
 		824E61650432590C00E329D9 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			path = getopt.h;
-			refType = 2;
+			name = getopt.h;
+			path = "/Users/jasonk/projects/freedroid-1.0.2/src/getopt.h";
+			refType = 0;
 		};
 		824E61660432590C00E329D9 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			path = getopt1.c;
-			refType = 2;
+			name = getopt1.c;
+			path = "/Users/jasonk/projects/freedroid-1.0.2/src/getopt1.c";
+			refType = 0;
 		};
 		824E61670432590C00E329D9 = {
 			fileRef = 824E61640432590C00E329D9;
