@@ -2095,7 +2095,7 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
 #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
 #define TO_BG_FILE		"lanzz_theme/to_background.jpg"
-#define QUEST_BROWSER_BACKGROUND_IMAGE_FILE "backgrounds/QuestBrowser.png"
+#define QUEST_BROWSER_BACKGROUND_IMAGE_FILE "backgrounds/quest_browser.png"
 
 #define ALL_KNOWN_BACKGROUNDS 30
 

@@ -233,6 +233,7 @@ typedef struct
 
     int mission_description_visible [ MAX_MISSION_DESCRIPTION_TEXTS ] ;    
     float mission_description_time [ MAX_MISSION_DESCRIPTION_TEXTS ] ;
+    int expanded_display_for_this_mission;
 }
 mission, *Mission;
 

@@ -222,7 +222,13 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 506 , 3 , 99 ,  14 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } , FALSE , FALSE } ,
 
-  }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
+
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 486 , 324  , 73 ,  73 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_open_quests.png"                  , { 473 , 97  , 153 ,  38 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_done_quests.png"                  , { 478 , 149 , 153 ,  38 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_notes.png"                        , { 478 , 203 , 153 ,  38 } , FALSE , FALSE } ,
+
+  }; // mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 //--------------------
 // We make these global variables here, as we might want to use

@@ -46,7 +46,15 @@
 
 int currently_selected_mission = (-1) ;
 SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ; 
-SDL_Rect mission_description_rect = { 290 , 30 , 335 , 420 } ; 
+SDL_Rect mission_description_rect = { 134 , 86 , 280 , 420 } ; 
+
+char complete_mission_display_text [ 50000 ];
+
+#define QUEST_BROWSER_SHOW_OPEN_MISSIONS (-1011)
+#define QUEST_BROWSER_SHOW_DONE_MISSIONS (-1012)
+#define QUEST_BROWSER_SHOW_NOTES (-1013)
+
+int current_quest_browser_mode = QUEST_BROWSER_SHOW_OPEN_MISSIONS ;
 
 /* ----------------------------------------------------------------------
  * This function is responsible for making a new quest diary entry 
@@ -135,51 +143,6 @@ classic_show_mission_list ( void )
 }; // void classic_show_mission_list ( void )
 
 /* ----------------------------------------------------------------------
- * Inside the quest browser, when the user clicks on a mission from the
- * mission list, this mission should then become the currently selected
- * mission.  For this it is important, that a mouse click position can 
- * be resolved to a mission index.  This function is responsible for
- * exactly this.
- * ---------------------------------------------------------------------- */
-int
-resolve_mouse_click_to_mission_index ( void )
-{
-    int mis_num ;
-    SDL_Rect current_rectangle;
-
-    current_rectangle . x = mission_list_rect . x ;
-    current_rectangle . y = mission_list_rect . y ;
-    current_rectangle . w = mission_list_rect . w ;
-    current_rectangle . h = FontHeight ( FPS_Display_BFont ) ;
-
-    if ( GetMousePos_x() < mission_list_rect . x ) return ( -1 ) ;
-    if ( GetMousePos_x() > mission_list_rect . x + mission_list_rect . w ) return ( -1 ) ;
-    if ( GetMousePos_y() < mission_list_rect . y ) return ( -1 ) ;
-    if ( GetMousePos_x() > mission_list_rect . y + mission_list_rect . h ) return ( -1 ) ;
-
-    for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
-    {
-	// In case the mission does not exist at all, we need not do anything more...
-	if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionExistsAtAll != TRUE ) continue;
-	
-	//  In case the mission was not yet assigned, we need not do anything more...
-	if ( Me [ 0 ] . AllMissions[ mis_num ].MissionWasAssigned != TRUE ) continue;
-
-	if ( MouseCursorIsInRect ( & current_rectangle , 
-				   GetMousePos_x() , GetMousePos_y() ) )
-	{
-	    return ( mis_num );
-	}
-
-	current_rectangle . y += FontHeight ( FPS_Display_BFont ) ;
-
-    }
-
-    return (-1) ;
-
-}; // int resolve_mouse_click_to_mission_index ( void )
-
-/* ----------------------------------------------------------------------
  * If there is some mission selected inside the quest browser, then we
  * should also display all info on the current status and history of that
  * particular mission, which is exactly what this function is responsible
@@ -231,19 +194,67 @@ There was an illegal mission number received.",
 }; // void quest_browser_show_mission_info ( int mis_num )
 
 /* ----------------------------------------------------------------------
+ * If there is some mission selected inside the quest browser, then we
+ * should also display all info on the current status and history of that
+ * particular mission, which is exactly what this function is responsible
+ * for.
+ * ---------------------------------------------------------------------- */
+void
+quest_browser_append_mission_info ( int mis_num )
+{
+    char temp_text[10000];
+    int mission_diary_index;
+
+    if ( ( mis_num < 0 ) || ( mis_num >= MAX_MISSIONS_IN_GAME ) )
+    {
+	fprintf ( stderr , "\nmission number received: %d." , mis_num );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was an illegal mission number received.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+
+    SetTextCursor ( mission_description_rect . x , 
+		    mission_description_rect . y );
+
+    strcat ( complete_mission_display_text , "Mission: " );
+    strcat ( complete_mission_display_text , Me [ 0 ] . AllMissions [ mis_num ] . MissionName );
+    strcat ( complete_mission_display_text , "\nStatus: " );
+    if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionIsComplete )
+	strcat ( complete_mission_display_text , "COMPLETE" );
+    else if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionWasFailed )
+	strcat ( complete_mission_display_text , "FAILED" );
+    else
+	strcat ( complete_mission_display_text , "STILL OPEN" );
+    strcat ( complete_mission_display_text , "\nDetails: " );
+    
+    for ( mission_diary_index = 0 ; mission_diary_index < MAX_MISSION_DESCRIPTION_TEXTS ;
+	  mission_diary_index ++ )
+    {
+	if ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mission_diary_index ] )
+	{
+	    sprintf ( temp_text , "[day %d %02d:%02d] " , 
+		      get_days_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
+		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
+		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
+	    strcat ( complete_mission_display_text , temp_text );	    
+	    strcat ( complete_mission_display_text , mission_diary_texts [ mis_num ] [ mission_diary_index ] );	    
+	    strcat ( complete_mission_display_text , "\n" );
+	}
+    }
+
+}; // void quest_browser_append_mission_info ( int mis_num )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-quest_browser_fill_out_mission_list ( SDL_Rect list_rectangle )
+quest_browser_display_mission_list ( int list_type )
 {
     int mis_num ;
-    point current_text_cursor = { list_rectangle . x , list_rectangle . y } ;
 
-    //--------------------
-    // We enter the current list of *known* missions (i.e. those assigned) into
-    // the appropriate field.
-    //
+    strcpy ( complete_mission_display_text , "" );
+
     for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
     {
 	// In case the mission does not exist at all, we need not do anything more...
@@ -252,32 +263,27 @@ quest_browser_fill_out_mission_list ( SDL_Rect list_rectangle )
 	//  In case the mission was not yet assigned, we need not do anything more...
 	if ( Me [ 0 ] . AllMissions[ mis_num ] . MissionWasAssigned != TRUE ) continue;
 
-	if ( mis_num == currently_selected_mission )
+	if ( ( list_type == QUEST_BROWSER_SHOW_OPEN_MISSIONS ) &&
+	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete == FALSE ) )
 	{
-	    PutStringFont ( Screen , Blue_BFont , 
-			    current_text_cursor . x , current_text_cursor . y ,
-			    Me [ 0 ] . AllMissions [ mis_num ] . MissionName );
+	    quest_browser_append_mission_info ( mis_num );
 	}
-	else
+
+	if ( ( list_type == QUEST_BROWSER_SHOW_DONE_MISSIONS ) &&
+	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete != FALSE ) )
 	{
-	    if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionIsComplete == TRUE )
-	    {
-		PutStringFont ( Screen , FPS_Display_BFont , 
-				current_text_cursor . x , current_text_cursor . y ,
-				Me [ 0 ] . AllMissions [ mis_num ] . MissionName );
-	    }
-	    else
-	    {
-		PutStringFont ( Screen , Red_BFont , 
-				current_text_cursor . x , current_text_cursor . y ,
-				Me [ 0 ] . AllMissions [ mis_num ] . MissionName );
-	    }
+	    quest_browser_append_mission_info ( mis_num );
 	}
-	current_text_cursor . y += FontHeight ( FPS_Display_BFont );
+
     }
+
+    SetTextCursor ( mission_description_rect . x , 
+		    mission_description_rect . y );
+
+    DisplayText( complete_mission_display_text , -1 , -1 , &mission_description_rect );	    
     
-}; // void quest_browser_fill_out_mission_list ( void )
-        
+}; // void quest_browser_display_mission_list ( void )
+
 /* ----------------------------------------------------------------------
  * This function manages the quest browser.
  * ---------------------------------------------------------------------- */
@@ -301,7 +307,27 @@ quest_browser_interface ( void )
     while ( ! back_to_game )
     {
 	blit_special_background ( QUEST_BROWSER_BACKGROUND_CODE );
-	quest_browser_fill_out_mission_list( mission_list_rect );
+	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_OPEN_MISSIONS )
+	{
+	    ShowGenericButtonFromList ( QUEST_BROWSER_OPEN_QUESTS_BUTTON );
+	}
+	else if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_DONE_MISSIONS )
+	{
+	    ShowGenericButtonFromList ( QUEST_BROWSER_DONE_QUESTS_BUTTON );
+	}
+	else if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_NOTES )
+	{
+	    ShowGenericButtonFromList ( QUEST_BROWSER_NOTES_BUTTON );
+	}
+	else
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Illegal quest browser status encountered.",
+				       PLEASE_INFORM, IS_FATAL );
+	}
+
+	quest_browser_display_mission_list ( current_quest_browser_mode );
+
 	if ( currently_selected_mission != (-1) )
 	    quest_browser_show_mission_info ( currently_selected_mission );
 	our_SDL_flip_wrapper ( Screen );
@@ -314,8 +340,26 @@ quest_browser_interface ( void )
 
 	if ( SpacePressed() )
 	{
-	    currently_selected_mission = resolve_mouse_click_to_mission_index ( );
-	    while ( SpacePressed() );
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_OPEN_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		current_quest_browser_mode = QUEST_BROWSER_SHOW_OPEN_MISSIONS ;
+		while ( SpacePressed() );
+	    }
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_DONE_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		current_quest_browser_mode = QUEST_BROWSER_SHOW_DONE_MISSIONS ;
+		while ( SpacePressed() );
+	    }
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_NOTES_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		current_quest_browser_mode = QUEST_BROWSER_SHOW_NOTES ;
+		while ( SpacePressed() );
+	    }
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_EXIT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		back_to_game = TRUE ;
+		while ( SpacePressed() );
+	    }
 	}
 	    
     }
@@ -434,8 +478,8 @@ CheckIfMissionIsComplete (void)
 		     ( Druidmap[AllEnemys[Robot_Counter].type].class == Me[0].AllMissions[ mis_num ].KillClass ) ) 
 		{
 		    DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
-				  Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
-				  AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+				  Robot_Counter , AllEnemys [ Robot_Counter ] . pos . z , 
+				  AllEnemys [ Robot_Counter ] . pos . x , AllEnemys [ Robot_Counter ] . pos . y );
 		    this_mission_seems_completed = FALSE ;
 		    break;
 		}

@@ -595,6 +595,11 @@ enum
     LEVEL_EDITOR_PLANTS_TAB,
     LEVEL_EDITOR_ALL_TAB,
 
+    QUEST_BROWSER_EXIT_BUTTON,
+    QUEST_BROWSER_OPEN_QUESTS_BUTTON,
+    QUEST_BROWSER_DONE_QUESTS_BUTTON,
+    QUEST_BROWSER_NOTES_BUTTON,
+
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
     // automatically counts the number of buttons defined.  Other buttons
