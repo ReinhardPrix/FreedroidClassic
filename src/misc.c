@@ -179,7 +179,7 @@ LoadGameConfig (void)
 
   if( (fp = fopen (fname, "r")) == NULL)
     {
-      DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
+      DebugPrintf (0, "WARNING: failed to open config-file: %s\n", fname);
       return (ERR);
     }
 
