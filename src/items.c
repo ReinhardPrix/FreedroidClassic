@@ -1842,7 +1842,6 @@ ShowQuickInventory ( void )
 void 
 ManageInventoryScreen ( void )
 {
-  // SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
   static int RightPressedPreviousFrame = FALSE;
   point CurPos;
@@ -1851,12 +1850,20 @@ ManageInventoryScreen ( void )
   int i;
   finepoint MapPositionOfMouse;
   Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  // static int Item_Grabbed = FALSE;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
   DebugPrintf ( INVENTORY_MOUSE_BUTTON_DEBUG , "\nRight: %d Left: %d Held: %d ", 
 		RightPressedPreviousFrame , MouseButtonPressedPreviousFrame , Item_Held_In_Hand );
+
+  //--------------------
+  // In case the Tux is dead already, we do not need to display any inventory screen
+  // or even to pick up any stuff for the Tux...
+  //
+  if ( Me [ 0 ] . energy <= 0 ) 
+    {
+      return;
+    }
 
 
   // --------------------
