@@ -103,15 +103,6 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
-long BlastSoundSampleLength=0;
-long CollisionSoundSampleLength=0;
-long FireSoundSampleLength=0;
-
-unsigned char *BlastSoundSamplePointer;
-unsigned char *CollisionSoundSamplePointer;
-unsigned char *FireSoundSamplePointer;
-
-
 #if HAVE_LIBY2
 
 // The following Lines define several channels for sound output to the yiff sound server!!!
@@ -327,9 +318,13 @@ Switch_Background_Music_To(int Tune)
     {
 
       DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Now starting new background tune...\n");
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  The following file will be loaded: ");
+      DebugPrintf( ExpandedSoundSampleFilenames[ Tune ] );
 
       BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, 
 							     ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Tune has been loaded: ");
+      DebugPrintf( ExpandedSoundSampleFilenames[ Tune ] );
       DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  preparing endless loop...\n");
 
       Current_Tune = Tune;
