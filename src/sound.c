@@ -69,7 +69,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/EnterElevator_Sound_0.wav",
   "/../sound/ThouArtDefeated_Sound_0.wav",
   "/../sound/Got_Hit_Sound_0.wav",
-  "/../sound/TakeoverSetCapsuleSound.wav",
+  "/../sound/TakeoverSetCapsule_Sound_0.wav",
   "/../sound/Menu_Item_Selected_Sound_0.wav",
   "/../sound/Move_Menu_Position_Sound_0.wav",
   "/../sound/Takeover_Game_Won_Sound_0.wav",
