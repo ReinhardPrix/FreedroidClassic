@@ -245,6 +245,7 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
       ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
       ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
       ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
+      
     }
   else if ( ShopCharacterCode == PERSON_SORENSON )
     {
