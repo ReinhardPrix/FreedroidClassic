@@ -504,7 +504,8 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
 
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
@@ -604,7 +605,8 @@ Persue_Given_Course ( int EnemyNum )
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 
@@ -652,7 +654,8 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 
