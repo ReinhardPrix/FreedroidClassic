@@ -416,7 +416,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 49
+#define MAX_MOUSE_PRESS_BUTTONS 52
 enum
   { 
     CHA_BUTTON, 
@@ -467,7 +467,10 @@ enum
     RIGHT_TUX_SHOP_BUTTON,
     BUY_BUTTON,
     BUY_10_BUTTON,
-    BUY_100_BUTTON
+    BUY_100_BUTTON,
+    SELL_BUTTON,
+    SELL_10_BUTTON,
+    SELL_100_BUTTON
   };
 
 

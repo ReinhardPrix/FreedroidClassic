@@ -50,6 +50,30 @@
 
 #define SHOP_ROW_LENGTH 8
 
+typedef struct
+{
+  int shop_command;
+  int item_selected;
+}
+shop_decision, *Shop_decision;
+
+enum
+  {
+    DO_NOTHING = -1 , 
+    BUY_1_ITEM = 1 , 
+    BUY_10_ITEMS = 2 , 
+    BUY_100_ITEMS = 3 , 
+    SELL_1_ITEM = 4 , 
+    SELL_10_ITEMS = 5 , 
+    SELL_100_ITEMS = 6 , 
+    PUT_1_ITEM = 6 , 
+    PUT_10_ITEMS = 7 , 
+    PUT_100_ITEMS = 8 , 
+    TAKE_1_ITEM = 9 , 
+    TAKE_10_ITEMS = 10 , 
+    TAKE_100_ITEMS = 11
+  };
+
 SDL_Rect ShopItemRowRect;
 SDL_Rect TuxItemRowRect;
 
@@ -156,19 +180,19 @@ int
 ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 {
 
-  if ( !TuxItemRow )
+  if ( TuxItemRow )
     {
-      if ( y < ShopItemRowRect . y ) return (-1) ;
-      if ( y > ShopItemRowRect . y + ShopItemRowRect.h ) return (-1) ;
-      if ( x < ShopItemRowRect . x ) return (-1) ;
-      if ( x > ShopItemRowRect . x + ShopItemRowRect.w ) return (-1) ;
+      if ( y < TuxItemRowRect . y ) return (-1) ;
+      if ( y > TuxItemRowRect . y + TuxItemRowRect.h ) return (-1) ;
+      if ( x < TuxItemRowRect . x ) return (-1) ;
+      if ( x > TuxItemRowRect . x + TuxItemRowRect.w ) return (-1) ;
       
       //--------------------
       // Now at this point we know, that the click really was in the item
       // overview row.  Therefore we just need to find out the index and
       // can return;
       //
-      return ( ( x - ShopItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+      return ( ( x - TuxItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
     }
   else
     {
@@ -202,12 +226,12 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   float RescaleFactor;
   SDL_Rect TargetRectangle;
 
-  ShopItemRowRect . x = 50 ;
+  ShopItemRowRect . x = 55 ;
   ShopItemRowRect . y = 410;
   ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
   ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
 
-  TuxItemRowRect . x = 50 ;
+  TuxItemRowRect . x = 55 ;
   TuxItemRowRect . y = 10;
   TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
   TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
@@ -245,13 +269,15 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
  * show from the console menu.
  * ---------------------------------------------------------------------- */
 int
-GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
+GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] , 
+		     int NumberOfItemsInTuxRow , item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY] , 
+		     shop_decision* ShopOrder )
 {
-  int ItemType;
+  // int ItemType;
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
-  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+  // item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
   // int NumberOfItems;
   int PasswordIndex = (-1) ;
   // int ClearanceIndex = (-1) ;
@@ -262,12 +288,17 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   static int RowStart=0;
   static int TuxRowStart=0;
   static int ItemIndex=0;
-  static int TuxItemIndex=0;
+  static int TuxItemIndex=-1;
   int RowLength=SHOP_ROW_LENGTH;
   int TuxRowLength=SHOP_ROW_LENGTH;
-  int NumberOfItemsInTuxRow=0;
-
-  NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
+  char GoldString[1000];
+  SDL_Rect HighlightRect;
+  int BuyButtonActive = FALSE ;
+  int SellButtonActive = FALSE ;
+  int Buy10ButtonActive = FALSE ;
+  int Sell10ButtonActive = FALSE ;
+  int Buy100ButtonActive = FALSE ;
+  int Sell100ButtonActive = FALSE ;
 
   //--------------------
   // We add some secutiry against indexing beyond the
@@ -275,11 +306,19 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   //
   if ( RowLength > NumberOfItems ) RowLength = NumberOfItems;
   while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
-  if ( RowStart + RowLength > NumberOfItems ) RowStart = 0 ;
+  while ( RowStart + RowLength > NumberOfItems ) RowStart -- ;
+  if ( RowStart < 0 ) RowStart = 0 ;
 
   if ( TuxRowLength > NumberOfItemsInTuxRow ) TuxRowLength = NumberOfItemsInTuxRow;
   while ( TuxItemIndex >= NumberOfItemsInTuxRow ) TuxItemIndex -- ;
-  if ( TuxRowStart + TuxRowLength > NumberOfItemsInTuxRow ) TuxRowStart = 0 ;
+  while ( TuxRowStart + TuxRowLength > NumberOfItemsInTuxRow ) TuxRowStart -- ;
+  if ( TuxRowStart < 0 ) TuxRowStart = 0 ;
+
+  if ( NumberOfItemsInTuxRow <= 0 ) 
+    TuxItemIndex = (-1) ;
+  if ( NumberOfItems <= 0 ) 
+    ItemIndex = (-1) ;
+
 
   //--------------------
   // We initialize the text rectangle
@@ -289,9 +328,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   Cons_Text_Rect . w = 346 ;
   Cons_Text_Rect . h = 282 ;
 
-  // NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
-
-  if ( ShowPointerList[0] == NULL )
+  if ( ( ShowPointerList[0] == NULL ) && ( TuxItemsList[0] == NULL ) )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -300,7 +337,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       return (-1) ;
     }
 
-  ItemType = ShowPointerList [ ItemIndex ] -> type ;
+  // ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
   Displacement = 0;
 
@@ -308,12 +345,17 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
     {
 
       usleep ( 35 );
+      ShopOrder -> shop_command = DO_NOTHING ;
 
       //--------------------
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
+      if ( ItemIndex >= 0 )
+	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
+      else if ( TuxItemIndex >= 0 )
+	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
+      else DisplayImage ( find_file( "backgrounds/item_browser_shop.jpg" , GRAPHICS_DIR, FALSE) );
 
       for ( i = 0 ; i < RowLength ; i++ )
 	{
@@ -325,18 +367,68 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  ShowRescaledItem ( i , TRUE , TuxItemsList [ i + TuxRowStart ] );
 	}
 
+      if ( ItemIndex >= 0 ) 
+	{
+	  HighlightRect . x = ShopItemRowRect . x + ( ItemIndex - RowStart ) * INITIAL_BLOCK_WIDTH ;
+	  HighlightRect . y = ShopItemRowRect . y ;
+	  HighlightRect . w = INITIAL_BLOCK_WIDTH ;
+	  HighlightRect . h = INITIAL_BLOCK_HEIGHT ;
+	  HighlightRectangle ( Screen , HighlightRect );
+	}
+      if ( TuxItemIndex >= 0 )
+	{
+	  HighlightRect . x = TuxItemRowRect . x + ( TuxItemIndex - TuxRowStart ) * INITIAL_BLOCK_WIDTH ;
+	  HighlightRect . y = TuxItemRowRect . y ;
+	  HighlightRect . w = INITIAL_BLOCK_WIDTH ;
+	  HighlightRect . h = INITIAL_BLOCK_HEIGHT ;
+	  HighlightRectangle ( Screen , HighlightRect );
+	}
+
       ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
       ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
 
       ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
       ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
 
-      ShowGenericButtonFromList ( BUY_BUTTON );
-      if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
+      if ( ItemIndex >= 0 )
 	{
-	  ShowGenericButtonFromList ( BUY_10_BUTTON );
-	  ShowGenericButtonFromList ( BUY_100_BUTTON );
+	  ShowGenericButtonFromList ( BUY_BUTTON );
+	  BuyButtonActive = TRUE; 
+	  SellButtonActive = FALSE ;
+	  Sell10ButtonActive = FALSE ;
+	  Sell100ButtonActive = FALSE ;
+	  if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
+	    {
+	      ShowGenericButtonFromList ( BUY_10_BUTTON );
+	      ShowGenericButtonFromList ( BUY_100_BUTTON );
+	      Buy10ButtonActive = TRUE ;
+	      Buy100ButtonActive = TRUE ;
+	    }
 	}
+      if ( TuxItemIndex >= 0 )
+	{
+	  ShowGenericButtonFromList ( SELL_BUTTON );
+	  SellButtonActive = TRUE; 
+	  BuyButtonActive = FALSE ;
+	  BuyButtonActive = FALSE ;
+	  Buy100ButtonActive = FALSE ;
+	  if ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory )
+	    {
+	      ShowGenericButtonFromList ( SELL_10_BUTTON );
+	      ShowGenericButtonFromList ( SELL_100_BUTTON );
+	      Sell10ButtonActive = TRUE; 
+	      Sell100ButtonActive = TRUE; 
+	    }
+	}
+
+      sprintf ( GoldString , "Your Gold: %d." , (int) Me [ 0 ] . Gold );
+      PutStringFont ( Screen , Menu_BFont, 10, 110, GoldString );
+      /*
+      sprintf ( GoldString , "T-RowStart: %d T-IIndex: %d." , TuxRowStart, TuxItemIndex );
+      PutStringFont ( Screen , FPS_Display_BFont, 10, 110, GoldString );
+      sprintf ( GoldString , "RowStart: %d IIndex: %d." , RowStart, ItemIndex );
+      PutStringFont ( Screen , FPS_Display_BFont, 10, 130, GoldString );
+      */
 
       SDL_Flip( Screen );
 
@@ -353,10 +445,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	    }
 	}
 
-      ItemType = ShowPointerList [ ItemIndex ] -> type ;
+      // ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
+	  /*
 	  if ( CursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ItemIndex < NumberOfItems -1 ) 
@@ -375,7 +468,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  Displacement = 0;
 		}
 	    }
-	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else 
+	  */
+	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement += FontHeight ( GetCurrentFont () );
@@ -417,21 +512,63 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClickTarget < NumberOfItems )
-		ItemIndex = RowStart + ClickTarget ;
+		{
+		  ItemIndex = RowStart + ClickTarget ;
+		  TuxItemIndex = (-1) ;
+		}
+	    }
+	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ClickTarget < NumberOfItemsInTuxRow )
+		{
+		  TuxItemIndex = TuxRowStart + ClickTarget ;
+		  ItemIndex = (-1) ;
+		}
 	    }
 	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      return ( ItemIndex );
+	      if ( BuyButtonActive )
+		{
+		  ShopOrder -> item_selected = ItemIndex ;
+		  ShopOrder -> shop_command = BUY_1_ITEM ;
+		  return ( 0 );
+		}
+	      else if ( SellButtonActive )
+		{
+		  ShopOrder -> item_selected = TuxItemIndex ;
+		  ShopOrder -> shop_command = SELL_1_ITEM ;
+		  return ( 0 );
+		}
 	    }
 	  else if ( CursorIsOnButton( BUY_10_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      ShowPointerList [ ItemIndex ] -> multiplicity = 10 ;
-	      return ( ItemIndex );
+	      if ( Buy10ButtonActive )
+		{
+		  ShopOrder -> item_selected = ItemIndex ;
+		  ShopOrder -> shop_command = BUY_10_ITEMS ;
+		  return ( 0 );
+		}
+	      else if ( Sell10ButtonActive )
+		{
+		  ShopOrder -> item_selected = TuxItemIndex ;
+		  ShopOrder -> shop_command = SELL_10_ITEMS ;
+		  return ( 0 );
+		}
 	    }
 	  else if ( CursorIsOnButton( BUY_100_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      ShowPointerList [ ItemIndex ] -> multiplicity = 100 ;
-	      return ( ItemIndex );
+	      if ( Buy100ButtonActive )
+		{
+		  ShopOrder -> item_selected = ItemIndex ;
+		  ShopOrder -> shop_command = BUY_100_ITEMS ;
+		  return ( 0 );
+		}
+	      else if ( Sell100ButtonActive )
+		{
+		  ShopOrder -> item_selected = TuxItemIndex ;
+		  ShopOrder -> shop_command = SELL_100_ITEMS ;
+		  return ( 0 );
+		}
 	    }
 	}
 
@@ -453,13 +590,13 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
-	  if ( ItemType < Me[0].type) ItemType ++;
+	  // if ( ItemType < Me[0].type) ItemType ++;
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
-	  if (ItemType > 0) ItemType --;
+	  // if (ItemType > 0) ItemType --;
 	}
       
       if ( EscapePressed() )
@@ -914,7 +1051,7 @@ TryToIdentifyItem( item* IdentifyItem )
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 void 
-TryToSellItem( item* SellItem )
+TryToSellItem( item* SellItem , int WithBacktalk )
 {
   int MenuPosition;
   char linebuf[1000];
@@ -1145,9 +1282,12 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
   int i;
   char DescriptionText[5000];
   int ItemSelected=0;
+  shop_decision ShopOrder;
+  int NumberOfItemsInTuxRow=0;
 
   /*
   int LargeShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
@@ -1244,8 +1384,38 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
-      ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
-      if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] , FALSE ) ;
+
+      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
+
+      ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List , 
+					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) );
+
+      switch ( ShopOrder . shop_command )
+	{
+	case BUY_1_ITEM:
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	case BUY_10_ITEMS:
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	case BUY_100_ITEMS:
+	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	case SELL_1_ITEM:
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	case SELL_10_ITEMS:
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	case SELL_100_ITEMS:
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE ) ;
+	  break;
+	default:
+	  
+	  break;
+	};
+
+      // if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] , FALSE ) ;
 
       //--------------------
       // And since it can be assumed that the shop never runs
@@ -1530,7 +1700,7 @@ Sell_Items( int ForHealer )
     {
       sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
-      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
+      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE ) ;
     }
 
 }; // void Sell_Items( int ForHealer )

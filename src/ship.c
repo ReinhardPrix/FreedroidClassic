@@ -948,13 +948,26 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
     sprintf( TextChunk, "Indestructible\n" );
   strcat ( InfoText , TextChunk );
 
-  sprintf( TextChunk, "Required Str: %d\n\
+  strcat ( InfoText , "Attributes required: " );
+  
+  if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
+       ( ItemMap [ ShowItem->type ] . item_require_dexterity == (-1) ) &&
+       ( ItemMap [ ShowItem->type ] . item_require_magic == (-1) ) )
+    {
+      strcat ( InfoText , "NONE\n" );
+    }
+  else
+    {
+      sprintf( TextChunk, "Required Str: %d\n\
 Required Dex: %d\n\
-Required Mag: %d\n\
-Base list price: %d\n", 
-	   ItemMap [ ShowItem->type ] . item_require_strength,
-	   ItemMap [ ShowItem->type ] . item_require_dexterity,
-	   ItemMap [ ShowItem->type ] . item_require_magic,
+Required Mag: %d\n", 
+	       ItemMap [ ShowItem->type ] . item_require_strength,
+	       ItemMap [ ShowItem->type ] . item_require_dexterity,
+	       ItemMap [ ShowItem->type ] . item_require_magic );
+      strcat ( InfoText , TextChunk );
+    }
+
+  sprintf( TextChunk, "Base list price: %d\n", 
 	   ItemMap [ ShowItem->type ] . base_list_price );
   strcat ( InfoText , TextChunk );
 
