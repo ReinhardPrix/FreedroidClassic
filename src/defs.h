@@ -130,9 +130,8 @@ enum _alertnames {
 // if not, we set it here:
 #ifndef DATADIR
 
-// FIXME: why does MacOSX need this?? does ".." not work??
 #ifdef MACOSX
-#define DATADIR "/usr/local/share/freedroid"   // our local fallback
+#define DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
 #else
 #define DATADIR ".."   // our local fallback
 #endif
