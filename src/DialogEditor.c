@@ -101,7 +101,9 @@ static int currently_marked_dialog_option = (-1);
 static int DialogOptionCovered = (-1);
 static GtkWidget *popup_meta_tool_tip = NULL ;
 
-static char file_name_found[10000] = "NO_NAME_GIVEN" ;
+#define NO_NAME_GIVEN_STRING "NO_NAME_GIVEN"
+
+static char file_name_found[10000] = NO_NAME_GIVEN_STRING ;
 
 // GtkWidget *hpaned;
 GtkWidget *vpaned;
@@ -3742,6 +3744,7 @@ For more information about these matters, see the file named COPYING.\n";
 char usage_string[] ="\
 Usage: DialogEditor [-v|--version] \n\
                     [-d|--debug=LEVEL]\n\
+                    [-h|--help]\n\
 \n\
 Please report bugs either by entering them into the bug-tracking\n\
 system on our sourceforge-website via this link:\n\n\
@@ -3793,11 +3796,12 @@ Thanks a lot in advance, the Freedroid dev team.\n\n";
 	    default:
 		printf ("\nOption %c not implemented yet! Ignored.", c);
 		break;
-	}			/* switch(c) */
-    }				/* while(1) */
+	}		   // switch(c) 
+    }			   // while(1) 
 
     //--------------------
-    // Print any remaining command line arguments (not options). */
+    // Print any remaining command line arguments (not options)
+    //
     if ( optind < argc )
     {
 	DebugPrintf ( 1 , "non-option ARGV-elements: ");
@@ -3828,7 +3832,16 @@ load_command_line_file ( void )
     DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
     
     strcpy ( LastUsedFileName , file_name_found );
-    LoadChatRosterWithChatSequence ( file_name_found );
+    if ( strcmp ( LastUsedFileName , NO_NAME_GIVEN_STRING ) )
+    {
+	DebugPrintf ( -4 ,"\nUsing file name found on the command line.\n\n" );
+	LoadChatRosterWithChatSequence ( file_name_found );
+    }
+    else
+    {
+        DebugPrintf ( -4 ,"\nNo file name on the command line found...." );
+	DebugPrintf ( -4 ,"\nTrying to start with a dummy name...\n\n" );
+    }
     
     //--------------------
     // Now that we have loaded something, the main window should show the current file name
