@@ -176,7 +176,11 @@ Takeover (int enemynum)
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
 
-  DebugPrintf ("\nvoid Takeover(int enemynum): Funktion echt aufgerufen.");
+  DebugPrintf ("\nvoid Takeover(int enemynum): real function call confirmed.");
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
 
   Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
   DebugPrintf

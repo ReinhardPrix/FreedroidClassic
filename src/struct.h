@@ -129,7 +129,7 @@ typedef struct
   finepoint pos;		/* current position in level levelnum */
   float health;			/* the max. possible energy in the moment */
   float energy;			/* current energy */
-  byte firewait;		/* counter after fire */
+  float firewait;		/* counter after fire */
   float phase;			/* the current phase of animation */
   int autofire;			/* Status of the Firecontrolautomatics */
   int vneut;			/* Status of Velocityneutralizer for the gun */

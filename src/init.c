@@ -193,6 +193,8 @@ InitNewGame (void)
 
   DebugPrintf ("\nvoid InitNewGame(void): real function call confirmed...");
 
+  Activate_Conservative_Frame_Computation();
+
   InterruptInfolineUpdate = TRUE;
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;

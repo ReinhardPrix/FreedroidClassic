@@ -38,6 +38,7 @@
 #endif
 
 EXTERN float Frame_Time (void);
+EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;

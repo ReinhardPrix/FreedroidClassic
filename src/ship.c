@@ -132,7 +132,14 @@ EnterElevator (void)
 
   DebugPrintf ("\nvoid EnterElevator(void): Function call confirmed.");
 
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+
+  // Prevent the influ from coming out of the elevator in transfer mode
+  // by turning off transfer mode as soon as the influ enters the elevator
   Me.status= ELEVATOR;
+
   UpdateInfoline();
   curLevel = CurLevel->levelnum;
 
@@ -382,6 +389,10 @@ EnterKonsole (void)
   int TasteOK;
 
   DebugPrintf ("\nvoid EnterKonsole(void): real function call confirmed.");
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
 
   Me.status = CONSOLE;
 

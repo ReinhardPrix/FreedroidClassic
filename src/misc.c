@@ -293,6 +293,11 @@ Cheatmenu (void)
   int LNum, X, Y, i;
   int X0 = 20, Y0 = 5;		// startpos for gl_- text writing
 
+  
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+
   // return to normal keyboard operation
   keyboard_close ();
 
@@ -476,6 +481,9 @@ OptionsMenu (void)
 #define HELP_POSITION 1
 #define QUIT_POSITION 5
 
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
 
   // return to normal keyboard operation
   // keyboard_close ();

@@ -107,6 +107,9 @@ float FPSover1 = 10;
 float FPSover10 = 10;
 float FPSover100 = 10;
 int framenr = 0;
+int SkipAFewFrames = 0;
+long Overall_Frames_Displayed=0;
+float Overall_Average=0.014;
 
 int TestSound (void);
 void CalibratedDelay (long);
@@ -115,21 +118,91 @@ void ShowHighscoreList (void);
 void Pause (void);
 void UpdateCountersForThisFrame (void);
 
-/* This function is the key to independance of the framerate for various game elements.
+
+
+/*@Function============================================================
+@Desc: 
+
+ * This function is the key to independence of the framerate for various game elements.
  * It returns the average time needed to draw one frame.
  * Other functions use this to calculate new positions of moving objects, etc..
  *
  * BEWARE!  Using the average over 1 frame (the previous frame that is) is no good.
- * The sound server tends to
- */
+ * The sound server tends to case moderate distortions in the frame rate, which seems
+ * not to matter too much on my system at least, when using overalls over 10 frames.
+
+ * Also there is of course a serious problem when some interuption occurs, like e.g.
+ * the options menu is called or the debug menu is called or the console or the elevator
+ * is entered or a takeover game takes place.
+
+ * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
+ * which instructs Rate_To_Be_Returned to return only the overall default framerate since
+ * no better substitute exists at this moment.
+
+ * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
+ * which can be conveniently called from eveywhere.
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
 float
 Frame_Time (void)
 {
-  if (FPSover10 > 10)
-    return (1.0 / FPSover10);
+  float Rate_To_Be_Returned;
+  
+
+  // Rate_To_Be_Returned = (1.0 / FPSover10);
+  Rate_To_Be_Returned = (1.0 / FPSover100);
+
+  // if (FPSover10 > 20)
+  if (FPSover100 > 20)
+    {
+      Rate_To_Be_Returned = (1.0 / FPSover100);
+    }
   else
-    return (1.0 / 10.0);
-}				/* Frame_Time */
+    {
+      Rate_To_Be_Returned = (1.0 / 20.0);
+    }
+
+  if ( SkipAFewFrames ) 
+    {
+      Rate_To_Be_Returned = Overall_Average;
+    }
+
+  return Rate_To_Be_Returned;
+
+} // float Frame_Time(void)
+
+/*@Function============================================================
+@Desc: 
+
+ * This function is the key to independence of the framerate for various game elements.
+ * It returns the average time needed to draw one frame.
+ * Other functions use this to calculate new positions of moving objects, etc..
+ *
+ * BEWARE!  Using the average over 1 frame (the previous frame that is) is no good.
+ * The sound server tends to case moderate distortions in the frame rate, which seems
+ * not to matter too much on my system at least, when using overalls over 10 frames.
+
+ * Also there is of course a serious problem when some interuption occurs, like e.g.
+ * the options menu is called or the debug menu is called or the console or the elevator
+ * is entered or a takeover game takes place.
+
+ * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
+ * which instructs Rate_To_Be_Returned to return only the overall default framerate since
+ * no better substitute exists at this moment.
+
+ * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
+ * which can be conveniently called from eveywhere.
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void 
+Activate_Conservative_Frame_Computation(void)
+{
+  SkipAFewFrames=112;
+} // void Activate_Conservative_Frame_Computation(void)
 
 /*-----------------------------------------------------------------
  * @Desc: the heart of the Game 
@@ -236,8 +309,11 @@ main (int argc, char *const argv[])
 	    {
 	      if (Feindesliste[i].warten > 0)
 		Feindesliste[i].warten--;
-	      if (Feindesliste[i].firewait > 0)
-		Feindesliste[i].firewait--;
+	      if (Feindesliste[i].firewait > 0) 
+		{
+		  Feindesliste[i].firewait -= Frame_Time() ;
+		  if (Feindesliste[i].firewait <= 0) Feindesliste[i].firewait=0;
+		}
 	    }
 
 	  MoveBullets ();	/* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
@@ -311,10 +387,12 @@ main (int argc, char *const argv[])
 	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
 	  FPSover10 = 1000000 * 10 / (float) tenframedelay;
 	  FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
-	  // gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
-	  // gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay,FPSover10);
+
+	  gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
+	  gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay, (1/FPSover10) );
+	  gl_printf( -1 , -1 , " Overall: %f \n" , Overall_Average );
 	  //       gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
-	  // gl_printf( 1 , 33 , "Frame_Time(): %f \n" , Frame_Time() );
+	  gl_printf( -1 , -1 , "Frame_Time(): %f \n" , Frame_Time() );
 	  // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec,now.tv_usec);
 	  // gl_printf(-1,-1,"sec : %d usec : %d \n",onehundredframetimestamp.tv_sec,onehundredframetimestamp.tv_usec);
 	  // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec-onehundredframetimestamp.tv_sec,now.tv_usec-onehundredframetimestamp.tv_usec);
@@ -604,13 +682,20 @@ ShowHighscoreList (void)
 void
 UpdateCountersForThisFrame (void)
 {
+  // The next couter counts the frames displayed by freedroid during this
+  // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
+  Overall_Frames_Displayed++;
+  Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1) + Frame_Time()) / Overall_Frames_Displayed;
+
   // Here are some things, that were previously done by some periodic interrupt function
   ThisMessageTime++;
 
   LastGotIntoBlastSound += Frame_Time ();
   LastRefreshSound += Frame_Time ();
 
-  if (Me.firewait > 0)
+  if ( SkipAFewFrames ) SkipAFewFrames--;
+
+  if ( Me.firewait > 0 )
     Me.firewait--;
   if (ShipEmptyCounter > 1)
     ShipEmptyCounter--;

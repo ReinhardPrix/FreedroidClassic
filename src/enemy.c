@@ -376,12 +376,12 @@ AttackInfluence (int enemynum)
       (!Feindesliste[enemynum].firewait) &&
       IsVisible (&Feindesliste[enemynum].pos))
     {
-      if (MyRandom (AGGRESSIONMAX) >=
-	  Druidmap[Feindesliste[enemynum].type].aggression)
+      if ( MyRandom (AGGRESSIONMAX)  >=
+ 	  Druidmap[Feindesliste[enemynum].type].aggression )
 	{
 	  /* Diesmal nicht schiessen */
 	  Feindesliste[enemynum].firewait =
-	    MyRandom (Druidmap[Feindesliste[enemynum].type].firewait) * 18;
+	    MyRandom (Druidmap[Feindesliste[enemynum].type].firewait);
 	  return;
 	}
 
@@ -464,9 +464,9 @@ AttackInfluence (int enemynum)
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
-    }				/* if */
+    }	/* if */
 
-}				/* AttackInfluence */
+}   /* AttackInfluence */
 
 /*@Function============================================================
 @Desc: EnemyEnemyCollision()
