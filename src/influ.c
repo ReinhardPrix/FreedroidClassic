@@ -2360,7 +2360,7 @@ PerformTuxAttackRaw ( int player_num )
 	  //
 	  if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
 	    {
-	      PlayStartAttackSound( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
+	      play_enter_attack_run_state_sound ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
 	    }
 
 	  //--------------------

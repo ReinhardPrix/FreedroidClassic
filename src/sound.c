@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 59
+#define ALL_SOUNDS 62
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -106,7 +106,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Influencer_Scream_Sound_4.wav",
    "Spell_ForceToEnergy_Sound_0.wav",
    "Spell_DetectItems_Sound_0.wav",
-   "No_Ammo_Sound_0.wav"
+   "No_Ammo_Sound_0.wav",
+   "bot_sounds/123_death_sound.wav",
+   "bot_sounds/247_death_sound.wav",
+   "bot_sounds/302_death_sound.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -207,6 +210,31 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   char Temp_Filename[5000];
   char* fpath;
 #endif
+
+  //--------------------
+  // Some voice samples need to be played rather fast, but still
+  // they are a bit config-file dependent, so we check for some
+  // special file names we know and handle these differenty...
+  //
+  if ( ! strcmp ( "../effects/bot_sounds/123_death_sound.wav" , SoundSampleFileName ) )
+    {
+      PlaySound ( DEATH_SOUND_123 );
+      DebugPrintf ( -3 , "\nPrematurely caught 123 death sound for safe playing..." );
+      return;
+    }
+  if ( ! strcmp ( "../effects/bot_sounds/247_death_sound.wav" , SoundSampleFileName ) )
+    {
+      PlaySound ( DEATH_SOUND_247 );
+      DebugPrintf ( -3 , "\nPrematurely caught 247 death sound for safe playing..." );
+      return;
+    }
+  if ( ! strcmp ( "../effects/bot_sounds/302_death_sound.wav" , SoundSampleFileName ) )
+    {
+      PlaySound ( DEATH_SOUND_302 );
+      DebugPrintf ( -3 , "\nPrematurely caught 302 death sound for safe playing..." );
+      return;
+    }
+
 
   //--------------------
   // In case the same sample is played again and again in a very
@@ -878,11 +906,39 @@ play_death_sound_for_bot ( enemy* ThisRobot )
 }; // void play_death_sound_for_bot ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
+ * Whenever a bot dies, that should create a dying sound.  But so far,
+ * this will be done only for fully animated bots, since the other bots
+ * just explode and that has a sound of it's own.
+ * ---------------------------------------------------------------------- */
+void
+play_attack_animation_sound_for_bot ( enemy* ThisRobot )
+{
+  char filename[5000];
+
+  //--------------------
+  // If the keyword 'none' for the death sound file name is encountered,
+  // nothing will be done...
+  //
+  if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name , "none" ) )
+    return;
+
+  //--------------------
+  // Now we play the given death sound, looking for the file in the
+  // appropriate sound folder.
+  //
+  strcpy ( filename , "../effects/bot_sounds/" );
+  strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name );
+  PlayOnceNeededSoundSample ( filename , FALSE );
+
+}; // play_attack_animation_sound_for_bot ( enemy* ThisRobot )
+
+
+/* ----------------------------------------------------------------------
  * Whenever a bot starts to attack the Tux, he'll issue the attack cry.
  * This is done here, and no respect to loading time issues for now...
  * ---------------------------------------------------------------------- */
 void
-PlayStartAttackSound ( int SoundCode )
+play_enter_attack_run_state_sound ( int SoundCode )
 {
   switch ( SoundCode )
     {

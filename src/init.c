@@ -646,6 +646,7 @@ Get_Robot_Data ( void* DataPointer )
 #define GREETING_SOUND_STRING "Greeting Sound number="
 #define ENEMY_GOT_HIT_SOUND_STRING "Got Hit Sound number="
 #define DROID_DEATH_SOUND_FILE_NAME "Death sound file name=\""
+#define DROID_ATTACK_ANIMATION_SOUND_FILE_NAME "Attack animation sound file name=\""
 #define TO_HIT_STRING "Chance of this robot scoring a hit="
 #define GETTING_HIT_MODIFIER_STRING "Chance modifier, that this robot gets hit="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
@@ -732,6 +733,13 @@ Get_Robot_Data ( void* DataPointer )
       //
       Druidmap [ RobotIndex ] . droid_death_sound_file_name =
 	ReadAndMallocStringFromData ( RobotPointer , DROID_DEATH_SOUND_FILE_NAME , "\"" ) ;
+
+      //--------------------
+      // Now we read in the file name of the attack animation sound for this droid.  
+      // Is should be enclosed in double-quotes.
+      //
+      Druidmap [ RobotIndex ] . droid_attack_animation_sound_file_name =
+	ReadAndMallocStringFromData ( RobotPointer , DROID_ATTACK_ANIMATION_SOUND_FILE_NAME , "\"" ) ;
 
       // Now we read in the maximal speed this droid can go. 
       ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 

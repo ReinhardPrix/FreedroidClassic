@@ -1342,15 +1342,11 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   float OffsetFactor;
   bullet* NewBullet=NULL;
   int bullet_index = 0 ;
+  enemy* target_robot;
 
   if ( ThisRobot -> animation_phase > 0 ) return ;
+  // if ( ThisRobot -> animation_type != WALK_ANIMATION ) return ;
 
-  //--------------------
-  // Only in case of a conventional sword strike, i.e. no real animation
-  // yet will we start the sound for that 'bullet'.
-  //
-  Fire_Bullet_Sound ( guntype );
-  
   // find a bullet entry, that isn't currently used... 
   for (j = 0; j < MAXBULLETS; j++)
     {
@@ -1397,7 +1393,6 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // Newly, also enemys have to respect the angle modifier in their weapons...
   //
   RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
-  
   
   NewBullet->angle = - ( 90 + 45 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
 
@@ -1469,10 +1464,43 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     {
       ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
       ThisRobot -> animation_type = ATTACK_ANIMATION;
+      
       DeleteBullet ( bullet_index , FALSE );
       ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
-      Me [ 0 ] . energy -= 10 ;
+
+      if ( ThisRobot -> is_friendly )
+	{
+	  target_robot = & ( AllEnemys [ 0 ] ) ;
+	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	    {
+	      if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
+	      if ( target_robot -> Status == OUT ) continue ;
+	      if ( fabsf ( target_robot -> pos . x - ThisRobot -> pos . x ) > 2.5 ) continue;
+	      if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
+	      if ( target_robot == ThisRobot ) continue;
+
+	      target_robot -> energy -= 100 ; 
+
+	      target_robot ++ ;
+	    }
+	}
+      else
+	{
+	  Me [ 0 ] . energy -= 10 ;
+	}
+
+      play_death_sound_for_bot ( ThisRobot );
+
     }
+  else
+    {
+      //--------------------
+      // Only in case of a conventional sword strike, i.e. no real animation
+      // yet will we start the sound for that 'bullet'.
+      //
+      Fire_Bullet_Sound ( guntype );
+    }
+
 
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
@@ -2241,7 +2269,8 @@ ProcessAttackStateMachine (int enemynum)
 		  //
 		  if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 		    {
-		      PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+		      // PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+		      play_enter_attack_run_state_sound ( Druidmap[ ThisRobot->type ].greeting_sound_type );
 		    }
 
 		}

@@ -323,8 +323,10 @@ Takeover (int enemynum)
 	{
 	  if ( LeaderColor == YourColor )
 	    {
-	      AllEnemys[enemynum].Status = OUT;
-	      AllEnemys[enemynum].energy = -1.0;  /* to be sure */
+	      // AllEnemys[enemynum].Status = OUT;
+	      // AllEnemys[enemynum].energy = -1.0; 
+	      AllEnemys[enemynum].energy = 100.0; 
+	      AllEnemys[enemynum]. is_friendly = TRUE ;
 	      OpponentType = -1;	/* dont display enemy any more */
 	    }
 	  else
