@@ -91,13 +91,14 @@ main (int argc, char * argv[])
   //           just helps for debugging the code.  Feel free to slimply cut away
   //           these instructions in case they give you any porting problems...
   //--------------------
-  // 
+#ifndef __WIN32__
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_INEXACT ) ;
   feenableexcept ( FE_DIVBYZERO ) ;
   // feenableexcept ( FE_UNDERFLOW ) ;
   // feenableexcept ( FE_OVERFLOW ) ;
   feenableexcept ( FE_INVALID ) ;
+#endif
 
   /*
   if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )

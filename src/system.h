@@ -97,6 +97,6 @@
 
 #ifdef HAVE_LIBGL
 #include "GL/gl.h"
+#include "GL/glext.h"
 #endif
-
 

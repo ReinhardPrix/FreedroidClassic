@@ -350,8 +350,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
       // At this the while (1) overloop ends.  But for the menu, we really do not
       // need to hog the CPU.  Therefore some waiting should be introduced here.
       //
-      // SDL_Delay (1);
-      usleep ( 1 ) ;
+      SDL_Delay (1);
+      //usleep ( 1 ) ;
     }
 
   SDL_ShowCursor( SDL_ENABLE );
@@ -810,7 +810,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 		  DebugPrintf ( 1 , "\nChatDoMenuSelection:  mouse now over different item, therefore new main cycle..." );
 		}
 	    }
-	  usleep ( 1 ) ;
+	  //	  usleep ( 1 ) ;
+	  SDL_Delay(1);
 	}
 
       //--------------------

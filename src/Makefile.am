@@ -1,11 +1,8 @@
 ## Process this file with automake to produce Makefile.in
-if WIN32
-win32_res = freedroidRPG.rc
-freedroidRPG_LDADD = freedroidRPG.coff
-else
-win32_res = 
-endif
 
+if WIN32
+freedroidRPG_LDADD = ../win32/freedroidRPG.coff
+endif
 
 ## compile Dialog-editor if gtk-libs were found
 if FOUND_GTK
@@ -26,15 +23,9 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	colodefs.h itemdefs.h defs.h map.h vars.h ship.h takeover.h global.h \
 	proto.h struct.h system.h BFont.h DialogEditor.h \
 	SDL_rotozoom.c SDL_rotozoom.h open_gl.c \
-	getopt.c getopt1.c getopt.h scandir.c scandir.h  \
-	$(win32_res)
+	getopt.c getopt1.c getopt.h scandir.c scandir.h 
 
 DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 
 INCLUDES        = @GTK_CFLAGS@
 LDADD           = @GTK_LIBS@
-
-WINDRES = i586-mingw32msvc-windres
-freedroidRPG.coff: freedroidRPG.rc ../graphics/freedroidRPG.ico
-	$(WINDRES) -i freedroidRPG.rc -o freedroidRPG.coff -O COFF
-

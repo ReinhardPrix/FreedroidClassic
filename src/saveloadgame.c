@@ -740,9 +740,9 @@ This indicates a serious bug in this installation of Freedroid.",
     {
       show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\n\nSorry, but I refuse to load it for safety/stability reasons..." );
       our_SDL_flip_wrapper( Screen );
-      while ( SpacePressed() ) usleep ( 3 );
-      while ( !SpacePressed() ) usleep ( 3 );
-      while ( SpacePressed() ) usleep ( 3 );
+      while ( SpacePressed() ) SDL_Delay ( 3 );
+      while ( !SpacePressed() ) SDL_Delay ( 3 );
+      while ( SpacePressed() ) SDL_Delay ( 3 );
       return ( ERR ) ;
     }
 
