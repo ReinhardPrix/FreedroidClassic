@@ -304,7 +304,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_1.png"
+File or directory name for inventory image="cyberbucks/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_2.wav"
 Base list price=1
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -336,7 +336,7 @@ Position_Y=339
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="wheel_drive"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -344,7 +344,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_5.png"
+File or directory name for inventory image="wheel_drive/inv_image.png"
 Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
 Base list price=100
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -424,7 +424,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_10.png"
+File or directory name for inventory image="bi_pedal_drive/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=300
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -2064,7 +2064,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=5
 Item as defensive item: ac_bonus_modifier=3
 Base item duration=18 plus duration modifier=10
-File or directory name for inventory image="inventory_image_36.png"
+File or directory name for inventory image="helmet_yellow/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=75
 Item description text="A rather useful helmet, has a few defense issues here and there but mainly is worth the wear."
