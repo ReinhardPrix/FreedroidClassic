@@ -164,6 +164,7 @@ clear_automap_texture_completely ( void )
 	pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
     }
 
+    glEnable ( GL_TEXTURE_2D );
     glBindTexture ( GL_TEXTURE_2D , *automap_texture );
     glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
 		      0 , 
@@ -369,10 +370,20 @@ automap_update_texture_for_square ( int x , int y )
     int i;
     Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     obstacle* our_obstacle ;
+    static int first_call = TRUE;
+
+    if ( first_call )
+    {
+	first_call = FALSE ;
+	DebugPrintf ( -4 , "\n%s(): iso_floor_tile_width: %f. iso_floor_tile_height: %f." , 
+		      __FUNCTION__ , iso_floor_tile_width , iso_floor_tile_height );
+    }
+
+    // DebugPrintf ( -4 , "x: %d. y: %d. ** " , x , y ) ;
 
     for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
     {
-	if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+	if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) break;
 	
 	our_obstacle = & ( automap_level -> obstacle_list [ automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ] ) ;
 	if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_RECTANGLE )
@@ -388,18 +399,34 @@ automap_update_texture_for_square ( int x , int y )
 	    // 0 , obstacle_map [ our_obstacle -> type ] . automap_version -> w *
 	    // obstacle_map [ our_obstacle -> type ] . automap_version -> h );
 	    // 
-	    // glEnable ( GL_TEXTURE_2D );
+	    glEnable ( GL_TEXTURE_2D );
 	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
 	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
 			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
 			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> h ,
-			      // GL_RGBA, 
 			      GL_BGRA, 
 			      GL_UNSIGNED_BYTE, 
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> pixels );
     
+
+	    /*
+	    switch ( glGetError( ) )
+	    {
+		case GL_NO_ERROR:
+		    //--------------------
+		    // All is well.  No messages need to be generated...
+		    break;
+		default:
+		    DebugPrintf ( -4 , "\n%s(): GL_OUT_OF_MEMORY (most likely) w: %d. h: %d. " ,
+				  __FUNCTION__ , 
+				  obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
+				  obstacle_map [ our_obstacle -> type ] . automap_version -> h );
+		    raise ( SIGSEGV );
+		    break;
+	    }	
+	    */    
 	    open_gl_check_error_status ( __FUNCTION__ );
 	}
     }
@@ -575,12 +602,17 @@ show_automap_data_ogl ( void )
     local_iso_image . original_image_height = AUTOMAP_TEXTURE_HEIGHT ;
     blit_semitransparent_open_gl_texture_to_screen_position ( 
 	local_iso_image , 
-	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) + GameConfig . screen_width / 2 -
-	GameConfig . automap_manual_shift_x -
-	( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
-	- ( AUTOMAP_TEXTURE_HEIGHT / 2 ) + GameConfig . screen_height / 2 -
-	GameConfig . automap_manual_shift_y -
-	( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) );
+	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) 
+	+ GameConfig . screen_width / 2 
+	- GameConfig . automap_manual_shift_x 
+	- ( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * 
+	  ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
+
+	// + ( AUTOMAP_TEXTURE_HEIGHT / 2 ) 
+	+ GameConfig . screen_height / 2 
+	- GameConfig . automap_manual_shift_y 
+	- ( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * 
+          ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) );
 
     //--------------------
     // Now that the map has been blitted, it's time to add some icon for the
@@ -599,11 +631,16 @@ show_automap_data_ogl ( void )
     //--------------------
     // Now we can blit the icon on the automap too
     //
-    blit_semitransparent_open_gl_texture_to_screen_position ( tux_on_the_map_iso_image , 
-							      GameConfig . screen_width / 2 -
-							      GameConfig . automap_manual_shift_x ,
-							      - GameConfig . screen_height / 2 -
-							      GameConfig . automap_manual_shift_y ) ;
+    blit_semitransparent_open_gl_texture_to_screen_position ( 
+	tux_on_the_map_iso_image , 
+	+ ( tux_on_the_map_iso_image . original_image_width / 2 ) 
+	+ ( GameConfig . screen_width / 2 ) 
+	- GameConfig . automap_manual_shift_x ,
+
+	- ( tux_on_the_map_iso_image . original_image_height / 2 )
+	+ ( GameConfig . screen_height / 2 ) 
+	+ 50 
+	- GameConfig . automap_manual_shift_y );
 
 }; // void show_automap_data_ogl ( void )
 

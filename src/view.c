@@ -61,16 +61,6 @@ part_group_strings [ ALL_PART_GROUPS ] =
 #define ALL_TUX_MOTION_CLASSES 2
 iso_image loaded_tux_images [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
 
-int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
-{ 
-    { 1 , 1 } , // head
-    { 1 , 1 } , // shield
-    { 1 , 1 } , // torso
-    { 1 , 1 } , // feet
-    { 1 , 1 } , // sword
-    { 1 , 1 } , // weaponarm
-} ;
-
 char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
 int previously_used_motion_class = -4 ; // something we'll never really use...
 
@@ -247,6 +237,8 @@ ShowMissionCompletitionMessages( void )
     if ( GameConfig.Mission_Log_Visible == FALSE ) return;
     if ( GameConfig.Mission_Log_Visible_Time >= GameConfig.Mission_Log_Visible_Max_Time ) return;
     
+    SetCurrentFont ( FPS_Display_BFont );
+
     //--------------------
     // At this point we know, that the quest log is desired and
     // therefore we display it in-game:
@@ -2190,58 +2182,20 @@ PutMouseMoveCursor ( void )
     }
 
 }; // void PutMouseMoveCursor ( void )
-
+    
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
-void
-clear_all_loaded_tux_images ( int with_free )
-{
-    int i , j , k;
-
-    //--------------------
-    // We clear the Tux part strings
-    //
-    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-    {
-	strcpy ( previous_part_strings [ i ] , NOT_LOADED_MARKER );
-    }
-    
-    //--------------------
-    // Some more debug output...
-    //
-    DebugPrintf ( -4 , "\n%s(): clearing tux surfaces.  with_free=%d." , __FUNCTION__ , with_free );
-
-    //--------------------
-    // We clear all the surfaces currently in use
-    //
-    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-    {
-	for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
-	{
-	    for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
-	    {
-		if ( ( with_free ) && ( loaded_tux_images [ i ] [ j ] [ k ] . surface != NULL ) )
-		    SDL_FreeSurface ( loaded_tux_images [ i ] [ j ] [ k ] . surface ) ;
-		loaded_tux_images [ i ] [ j ] [ k ] . surface = NULL ;
-	    }
-	}
-    }
-    
-}; // void clear_all_loaded_tux_images ( int force_free )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
+/*
 void 
 free_single_tux_image ( tux_part_group , our_phase , rotation_index )
 {
-    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
-	SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
+    // if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
+    SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
     loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = NULL ;
 }; // free_single_tux_image ( tux_part_group , our_phase , rotation_index )
+*/
 
 /* ----------------------------------------------------------------------
  *
@@ -2254,7 +2208,18 @@ free_one_loaded_tux_image_series ( int tux_part_group )
     int k;
     
     // DebugPrintf ( -3 , "\nfree_one_loaded_tux_image_series:  part_group = %d." , tux_part_group );
-    
+
+    //--------------------
+    if ( strcmp ( previous_part_strings [ tux_part_group ] , NOT_LOADED_MARKER ) == 0 )
+    {
+	DebugPrintf ( 1 , "\n%s(): refusing to free group %d because it's free already." , 
+		      __FUNCTION__ , tux_part_group ) ;
+	return;
+    }
+
+
+    DebugPrintf ( 1 , "\n%s(): starting to free group %d..." , __FUNCTION__ , tux_part_group ) ;
+
     strcpy ( previous_part_strings [ tux_part_group ] , NOT_LOADED_MARKER );
 
     for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
@@ -2264,11 +2229,55 @@ free_one_loaded_tux_image_series ( int tux_part_group )
 	    // if ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface != NULL )
 	    // SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface ) ;
 	    // loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
-	    free_single_tux_image ( tux_part_group , j , k );
+	    // free_single_tux_image ( tux_part_group , j , k );
+
+	    SDL_FreeSurface ( 
+		loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface ) ;
+	        loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
 	}
     }
     
+    DebugPrintf ( 1 , "...done freeing group." ) ;
+
 }; // void free_one_loaded_tux_image_series ( int tux_part_group )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+clear_all_loaded_tux_images ( int with_free )
+{
+    int i , j , k;
+
+    //--------------------
+    // Some more debug output...
+    //
+    DebugPrintf ( 1 , "\n%s(): clearing tux surfaces.  with_free=%d." , __FUNCTION__ , with_free );
+
+    if ( with_free )
+    {
+	for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	{
+	    free_one_loaded_tux_image_series ( i );
+	}
+    }
+    else
+    {
+	for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	{
+	    strcpy ( previous_part_strings [ i ] , NOT_LOADED_MARKER );
+	    for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
+	    {
+		for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+		{
+		    loaded_tux_images [ i ] [ j ] [ k ] . surface = NULL ;
+		}
+	    }
+	}
+    }
+
+}; // void clear_all_loaded_tux_images ( int force_free )
 
 /* ----------------------------------------------------------------------
  * Now we determine the phase to use.  This is not all the same phase any 
@@ -2280,7 +2289,7 @@ get_current_phase ( int tux_part_group , int player_num , int motion_class )
     int our_phase = (int) Me [ player_num ] . phase ;
     float my_speed;
     
-    if ( ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
+    if ( Me [ player_num ] . weapon_swing_time < 0 )
     {
 	our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
 	
@@ -2391,6 +2400,18 @@ This indicates a serious bug in this installation of Freedroid.",
 	DebugPrintf ( 1 , "\ngrab_tux_images_from_archive (...): Opening file succeeded...");
     }
 
+    //--------------------
+    // We store the currently loaded part string, so that we can later
+    // decide if we need to do something upon an equipment change or
+    // not.
+    //
+    strcpy ( previous_part_strings [ tux_part_group ] , part_string );
+    DebugPrintf ( 1 , "\n%s(): getting image series for group %d." , __FUNCTION__ , tux_part_group );
+
+
+    //--------------------
+    // Now we can start to really load the images.
+    //
     for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
     {
 	// for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
@@ -2409,10 +2430,30 @@ This indicates a serious bug in this installation of Freedroid.",
 		fread ( & ( img_x_offs ) , 1 , sizeof ( img_x_offs ) , DataFile ) ;
 		fread ( & ( img_y_offs ) , 1 , sizeof ( img_y_offs ) , DataFile ) ;
 		
+		//--------------------
+		// Some extra checks against illegal values for the length and height
+		// of the tux images.
+		//
+		if ( ( img_xlen <= 0 ) || ( img_ylen <= 0 ) )
+		{
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Received some non-positive Tux surface dimensions.  That's a bug for sure!",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
-		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
-		chunks_read = fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
-		if ( chunks_read < 1 )
+		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen , 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
+		
+		if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
+		{
+		    DebugPrintf ( -1000 , "\n\nError code from SDL: %s." , SDL_GetError() );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Creation of an empty Tux SDL software surface failed.",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
+		chunks_read = fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 1 , 4 * img_xlen * img_ylen , DataFile ) ;
+		if ( chunks_read < 4 * img_xlen * img_ylen )
 		{
 		    fprintf( stderr, "\n\ntux_part_group: %d, our_phase: %d rotation_index: %d\n" , 
 			     tux_part_group, our_phase , rotation_index );
@@ -2444,7 +2485,18 @@ Reading the image archive file met an unexpected lack of read data.",
 		if ( ! use_open_gl ) 		  
 		    flip_image_horizontally ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
 
-		strcpy ( previous_part_strings [ tux_part_group ] , part_string );
+	    }
+	    else
+	    {
+		//--------------------
+		// If the surface pointer hasn't been NULL in the first place, then
+		// obviously something with the initialisation was wrong in the first
+		// place...
+		//
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
+Surface to be loaded didn't have empty (NULL) pointer in the first place.",
+					   PLEASE_INFORM, IS_FATAL );
+
 	    }
 	}
     }

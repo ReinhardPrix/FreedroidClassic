@@ -1647,7 +1647,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     // At this point we mention, that when not moving anywhere, the robot should also
     // face into the direction of the shot
     //
-    ThisRobot->previous_angle = NewBullet->angle + 180 ;
+    ThisRobot->previous_angle = NewBullet -> angle + 180 ;
   
     // start all bullets in the center of the shooter first...
     NewBullet -> pos . x = ThisRobot -> virt_pos . x;
@@ -1667,11 +1667,11 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     }
     
     // fire bullets so, that they don't hit the shooter...
-    if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+    if ( NewBullet -> angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
     NewBullet->pos.x +=
-	(NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
+	( NewBullet -> speed.x) / ( bullet_speed ) * OffsetFactor ;
     NewBullet->pos.y +=
-	(NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
+	( NewBullet -> speed.y) / ( bullet_speed ) * OffsetFactor ;
 
     // now we set the bullet type right
     // DebugPrintf( 0 , "Setting gun type : %d." , guntype );

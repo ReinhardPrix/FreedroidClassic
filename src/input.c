@@ -749,18 +749,29 @@ ReactToSpecialKeys(void)
   // We assign the Tab key to turn on/off the auto map
   //
   if ( TabPressed() )
-    {
+  {
       if ( !TabPressed_LastFrame ) 
-	{
+      {
 	  GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
-	}
 
+	  //--------------------
+	  // We reset the map position whenever the map is switched off
+	  // and back on again.  That way it should be made certain, that
+	  // even if the map has slided off so some edge of the screen.
+	  //
+	  if ( GameConfig.Automap_Visible )
+	  {
+	      GameConfig . automap_manual_shift_x = 0 ;
+	      GameConfig . automap_manual_shift_y = 0 ; 
+	  }
+      }
+      
       TabPressed_LastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       TabPressed_LastFrame = FALSE;
-    }
+  }
 
   //--------------------
   // We assign the G key to send greetings either to the server

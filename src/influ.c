@@ -1972,97 +1972,97 @@ set_up_intermediate_course_for_tux ( int player_num )
 void
 move_tux_thowards_intermediate_point ( int player_num )
 {
-  int i;
-  Level PlayerLevel;
-
-  // DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
-
-  //--------------------
-  // If there is no intermediate course, we don't need to do anything
-  // in this function.
-  //
-  if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
+    int i;
+    Level PlayerLevel;
+    
+    // DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
+    
+    //--------------------
+    // If there is no intermediate course, we don't need to do anything
+    // in this function.
+    //
+    if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
     {
-      //--------------------
-      // The fact that there is no more intermediate course can mean, that
-      // there never has been any intermediate course or we have now arrived
-      // at the end of the previous intermediate course.
-      //
-      // But that maybe means, that it is now time for the combo_action, that
-      // can occur on the end of any intermediate course, like e.g. open a
-      // chest or pick up some item.
-      //
-      // DebugPrintf ( 2 , "\nAm I now at the last intermediate point???" );
-      
-      switch ( Me [ player_num ] . mouse_move_target_combo_action_type )
+	//--------------------
+	// The fact that there is no more intermediate course can mean, that
+	// there never has been any intermediate course or we have now arrived
+	// at the end of the previous intermediate course.
+	//
+	// But that maybe means, that it is now time for the combo_action, that
+	// can occur on the end of any intermediate course, like e.g. open a
+	// chest or pick up some item.
+	//
+	// DebugPrintf ( 2 , "\nAm I now at the last intermediate point???" );
+	
+	switch ( Me [ player_num ] . mouse_move_target_combo_action_type )
 	{
-	case NO_COMBO_ACTION_SET:
-	  break;
-	case COMBO_ACTION_OPEN_CHEST:
-	  check_for_chests_to_open ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
-	  break;
-	case COMBO_ACTION_SMASH_BARREL:
-	  check_for_barrels_to_smash ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
-	  break;
-	case COMBO_ACTION_PICK_UP_ITEM:
-	  DebugPrintf ( -4 , "\nNOW WE'VE REACHED A CASE OF PICKUP COMBO ACTION!!!" );
-	  //--------------------
-	  // We check if the item is still there (cause it could have
-	  // been picked up in the meantime or maybe another player
-	  // could have picked it up).
-	  //
-	  PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos. z ] ;
-	  if ( PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] . type != (-1) )
-	    {
-	      DebugPrintf ( -4 , "\nITEM FOR COMBO SEEMS TO BE STILL THERE!" );
-	      silently_unhold_all_items( );
-	      AddFloorItemDirectlyToInventory ( & PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] );
-	    }
-	  DebugPrintf ( -4 , "\nCOMBO ACTION NOW UNSET..." );
-	  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
-	  break;
-	default:
-	  GiveStandardErrorMessage ( __FUNCTION__  , 
-				     "Unhandled combo action for intermediate course encountered!" ,
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
+	    case NO_COMBO_ACTION_SET:
+		break;
+	    case COMBO_ACTION_OPEN_CHEST:
+		check_for_chests_to_open ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
+		break;
+	    case COMBO_ACTION_SMASH_BARREL:
+		check_for_barrels_to_smash ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
+		break;
+	    case COMBO_ACTION_PICK_UP_ITEM:
+		DebugPrintf ( 1 , "\n%s():  Now we've reached a case of pickup combo action." , __FUNCTION__ );
+		//--------------------
+		// We check if the item is still there (cause it could have
+		// been picked up in the meantime or maybe another player
+		// could have picked it up).
+		//
+		PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos. z ] ;
+		if ( PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] . type != (-1) )
+		{
+		    DebugPrintf ( 1 , "\n%s(): Item for combo seems to be still there." , __FUNCTION__ );
+		    silently_unhold_all_items( );
+		    AddFloorItemDirectlyToInventory ( & PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] );
+		}
+		DebugPrintf ( 1 , "\n%s(): Combo action now unset." , __FUNCTION__ );
+		Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+		break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , 
+					   "Unhandled combo action for intermediate course encountered!" ,
+					   PLEASE_INFORM, IS_FATAL );
+		break;
 	}
-      return;
+	return;
     }
-
-  //--------------------
-  // Now we move the Tux thowards the next intermediate course point
-  //
-  if ( move_tux_thowards_raw_position ( player_num , Me [ player_num ] . next_intermediate_point [ 0 ] . x , 
-					Me [ player_num ] . next_intermediate_point [ 0 ] . y ) )
+    
+    //--------------------
+    // Now we move the Tux thowards the next intermediate course point
+    //
+    if ( move_tux_thowards_raw_position ( player_num , Me [ player_num ] . next_intermediate_point [ 0 ] . x , 
+					  Me [ player_num ] . next_intermediate_point [ 0 ] . y ) )
     {
-
-      if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
+	
+	if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
 	{
-	  // find_new_intermediate_point ( player_num );
+	    // find_new_intermediate_point ( player_num );
 	}
-      else // if ( Me [ player_num ] . next_intermediate_point [ 1 ] . x != (-1) )
+	else // if ( Me [ player_num ] . next_intermediate_point [ 1 ] . x != (-1) )
 	{
-	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nMOVING ON TO NEXT INTERMEDIATE WAYPOINT! " );
-	  for ( i = 1 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+	    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nMOVING ON TO NEXT INTERMEDIATE WAYPOINT! " );
+	    for ( i = 1 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
 	    {
-	      Me [ player_num ] . next_intermediate_point [ i-1 ] . x = 
-		Me [ player_num ] . next_intermediate_point [ i ] . x ;
-	      Me [ player_num ] . next_intermediate_point [ i-1 ] . y = 
-		Me [ player_num ] . next_intermediate_point [ i ] . y ;
+		Me [ player_num ] . next_intermediate_point [ i-1 ] . x = 
+		    Me [ player_num ] . next_intermediate_point [ i ] . x ;
+		Me [ player_num ] . next_intermediate_point [ i-1 ] . y = 
+		    Me [ player_num ] . next_intermediate_point [ i ] . y ;
 	    }
 	}
-      /*
-      else
-	{
+	/*
+	  else
+	  {
 	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nLAST INTERMEDIATE WAYPOINT HAS BEEN REACHED! --> clearing setup." );
 	  clear_out_intermediate_points ( player_num ) ;
 	  // find_new_intermediate_point ( player_num );
-	}
-      */
+	  }
+	*/
 	// find_new_intermediate_point ( player_num );
     }
-
+    
 }; // void move_tux_thowards_intermediate_point ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -2395,7 +2395,7 @@ check_tux_enemy_collision (void)
 	
 	// BounceSound ();
 	
-	DebugPrintf ( -4 , "\n%s(): Collision of Enemy with Tux detected.  Fixing..." , __FUNCTION__ );
+	DebugPrintf ( 1 , "\n%s(): Collision of enemy with Tux detected.  Fixing..." , __FUNCTION__ );
 
 	//--------------------
 	// shortly stop this enemy, then send him back to previous waypoint

@@ -52,16 +52,18 @@ int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 void
 make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
 {
-  if ( our_iso_image -> zoomed_out_surface == NULL )
+    if ( our_iso_image -> zoomed_out_surface == NULL )
     {
 	our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) ,
-							  ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) , FALSE );
+							    ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) , FALSE );
     }
 }; // void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * The automap (in OpenGL mode) uses some smaller version of the graphics
+ * used to assemble the in-game obstacle images.  These smaller versions 
+ * of the graphics have to be generated.  We do that on the fly at 
+ * runtime once and for all obstacles at the first game startup.
  * ---------------------------------------------------------------------- */
 void
 make_sure_automap_surface_is_there ( obstacle_spec* our_obstacle_spec )
@@ -69,6 +71,12 @@ make_sure_automap_surface_is_there ( obstacle_spec* our_obstacle_spec )
     our_obstacle_spec -> automap_version = 
 	zoomSurface ( our_obstacle_spec -> image . surface , ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) ,
 		      ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) , FALSE );
+    if ( ! our_obstacle_spec -> automap_version )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Creation of automap surface failed!  That is fatal!",
+				   PLEASE_INFORM, IS_FATAL );
+    }
 }; // void make_sure_automap_surface_is_there ( iso_image* our_iso_image )
 
 /* ----------------------------------------------------------------------

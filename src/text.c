@@ -1298,33 +1298,33 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 void
 DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int clear_protocol )
 {
-  int i ;
-  SDL_Rect Chat_Window;
-  int MenuSelection = (-1) ;
-  char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
-
-  //--------------------
-  // We always should clear the chat protocol.  Only for SUBDIALOGS it is
-  // suitable not to clear the chat protocol.
-  //
-  if ( clear_protocol )
+    int i ;
+    SDL_Rect Chat_Window;
+    int MenuSelection = (-1) ;
+    char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+    
+    //--------------------
+    // We always should clear the chat protocol.  Only for SUBDIALOGS it is
+    // suitable not to clear the chat protocol.
+    //
+    if ( clear_protocol )
     {
-      if ( chat_protocol != NULL ) free ( chat_protocol );
-      chat_protocol = MyMalloc ( 500000 ); // enough for any chat...
-      strcpy ( chat_protocol , "--- Start of Dialog ---\n" );
-      chat_protocol_scroll_override_from_user = 0 ;
+	if ( chat_protocol != NULL ) free ( chat_protocol );
+	chat_protocol = MyMalloc ( 500000 ); // enough for any chat...
+	strcpy ( chat_protocol , "--- Start of Dialog ---\n" );
+	chat_protocol_scroll_override_from_user = 0 ;
     }
-
-  PrepareMultipleChoiceDialog ( ChatDroid , TRUE );
-
-  Chat_Window . x = 242 ; Chat_Window . y = 100 ; Chat_Window . w = 380; Chat_Window . h = 314 ;
-
-  //--------------------
-  // We load the option texts into the dialog options variable..
-  //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    
+    PrepareMultipleChoiceDialog ( ChatDroid , TRUE );
+    
+    Chat_Window . x = 242 ; Chat_Window . y = 100 ; Chat_Window . w = 380; Chat_Window . h = 314 ;
+    
+    //--------------------
+    // We load the option texts into the dialog options variable..
+    //
+    for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      if ( strlen ( ChatRoster [ i ] . option_text ) )
+	if ( strlen ( ChatRoster [ i ] . option_text ) )
 	{
 	  DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
 	}

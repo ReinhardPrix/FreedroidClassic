@@ -740,7 +740,8 @@ open_gl_check_error_status ( char* name_of_calling_function  )
 	case GL_OUT_OF_MEMORY:
 	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
-				       "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
+				       "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_WARNING_ONLY );
+	    // raise ( SIGSEGV );
 	    break;
 	default:
 	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
@@ -1410,9 +1411,9 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
+    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; 
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
+    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ;
     
     if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;

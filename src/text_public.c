@@ -51,6 +51,7 @@ void *
 MyMalloc ( long Mamount )
 {
     void *Mptr = NULL;
+    // static long total_so_far = 0 ;
     
     // make Gnu-compatible even if on a broken system:
     if (Mamount == 0)
@@ -62,8 +63,17 @@ MyMalloc ( long Mamount )
 	fflush (stderr);
 	Terminate(ERR);
     }
-    
+
+/*
+    total_so_far += Mamount ;
+    if ( Mamount > 10000 )
+    {
+	DebugPrintf ( -4 , "\n%s(): big malloc: %ld. total: %ld " , __FUNCTION__ , Mamount , total_so_far );
+    }
+*/
+  
     return Mptr;
+
 }; // void* MyMalloc ( long Mamount )
 
 /* ----------------------------------------------------------------------
@@ -109,13 +119,14 @@ Freedroid has encountered a problem:\n" );
     
     if ( InformDevelopers )
     {
-	fprintf (stderr, 
-		 "If you encounter this message, please inform the Freedroid developers\n\
+	fprintf (stderr, "\
+If you encounter this message, please inform the Freedroid developers\n\
 about the problem, best by sending e-mail to \n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n\
-Or you might mention it to someone of the developers on our IRC channel.  The channel is:\n\
+Or you might mention it to someone of the developers on our\n\
+IRC channel.  The channel is:\n\
 \n\
 channel: #freedroid on irc.freenode.net\n\
 \n\
@@ -1989,16 +2000,18 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 int
 FS_filelength (FILE *f)
 {
-  int		pos;
-  int		end;
-
-  pos = ftell (f);
-  fseek (f, 0, SEEK_END);
-  end = ftell (f);
-  fseek (f, pos, SEEK_SET);
-  
-  return end;
-}
+    int		pos;
+    int		end;
+    
+    pos = ftell (f);
+    fseek (f, 0, SEEK_END);
+    end = ftell (f);
+    fseek (f, pos, SEEK_SET);
+    
+    // DebugPrintf ( -4 , "\n%s(): file length: %d." , __FUNCTION__ , end );
+	
+    return end;
+}; // int FS_filelength (FILE *f)
 
 
 #undef _text_public_c
