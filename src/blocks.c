@@ -1909,15 +1909,12 @@ load_one_isometric_floor_tile ( int tile_type )
 {
   char *fpath;
   char ConstructedFileName[2000];
-  char NumberBuffer[1000];
 
   //--------------------
   // At first we construct the file name of the single tile file we are about to load...
   //
-  strcpy ( ConstructedFileName , "iso_floor_" );
-  sprintf ( NumberBuffer , "%04d" , tile_type );
-  strcat ( ConstructedFileName , NumberBuffer );
-  strcat ( ConstructedFileName , ".png" );
+  strcpy ( ConstructedFileName , "floor_tiles/" );
+  strcat ( ConstructedFileName , floor_tile_filenames [ tile_type ] );
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
 
   get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;

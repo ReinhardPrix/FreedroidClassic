@@ -2646,129 +2646,191 @@ ManageInventoryScreen ( void )
  *
  *
  * ---------------------------------------------------------------------- */
+void
+raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , point Inv_Loc )
+{
+  char TempText[1000];
+  int SourceCode , DestCode ;
+
+  // We announce that we have taken the item
+  Me[0].TextVisibleTime = 0;
+  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
+  Me[0].TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
+  strcpy ( Me[0].TextToBeDisplayed , TempText );
+  
+  // We add the new item to the inventory
+  CopyItem( ItemPointer , TargetPointer , FALSE );
+  TargetPointer -> inventory_position . x = Inv_Loc . x ;
+  TargetPointer -> inventory_position.y = Inv_Loc . y ;
+  
+  // We make the sound of an item being taken
+  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+  
+  DeleteItem( ItemPointer );
+  
+  //--------------------
+  // And of course we shouldn't forget to tell the server about this 
+  // movement as well....
+  //
+  if ( ClientMode && ! ServerMode ) 
+    {
+      SourceCode = GetPositionCode ( ItemPointer ) ;
+      DestCode = GetPositionCode ( TargetPointer ) ;
+      SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
+    }
+}; // void move_picked_up_item_to_entry ( ItemPointer , TargetPointer )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 AddFloorItemDirectlyToInventory( item* ItemPointer )
 {
   int InvPos;
   int item_height;
   int item_width;
-  point Inv_Loc;
-  char TempText[1000];
-  int SourceCode , DestCode ;
+  point Inv_Loc = { -1 , -1 } ;
   int TargetItemIndex;
 
   //--------------------
   // In case we found an item on the floor, we remove it from the floor
   // and add it to influs inventory
   //
-  if ( ItemPointer != NULL )
+  if ( ItemPointer == NULL ) return;
+
+  //--------------------
+  // In the special case of money, we add the amount of money to our
+  // money counter and eliminate the item on the floor.
+  //
+  if ( ItemPointer->type == ITEM_MONEY )
     {
-      //--------------------
-      // In the special case of money, we add the amount of money to our
-      // money counter and eliminate the item on the floor.
-      //
-      if ( ItemPointer->type == ITEM_MONEY )
+      PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+      Me[0].Gold += ItemPointer->gold_amount;
+      DeleteItem( ItemPointer );
+      return;
+    }
+  
+  //--------------------
+  // In the special case, that this is an item, that groups together with others
+  // of the same type AND we also have as item of this type already in inventory,
+  // then we just need to manipulate multiplicity a bit and we're done.  Very easy.
+  //
+  if ( ItemMap [ ItemPointer->type ] . item_group_together_in_inventory )
+    {
+      if ( CountItemtypeInInventory ( ItemPointer->type , PLAYER_NR_0 ) )
 	{
+	  TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
+	  Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
 	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	  Me[0].Gold += ItemPointer->gold_amount;
 	  DeleteItem( ItemPointer );
 	  return;
 	}
-
-      if ( ItemMap [ ItemPointer->type ] . item_group_together_in_inventory )
+    }
+  
+  //--------------------
+  // Maybe the item is of a kind that can be equipped right now.  Then
+  // we decide to directly drop it to the corresponding slot.
+  //
+  if ( ( Me [ 0 ] . weapon_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_weapon_slot ) )
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+      return;
+    }
+  if ( ( Me [ 0 ] . shield_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_shield_slot ) )
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+      return;
+    }
+  if ( ( Me [ 0 ] . armour_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_armour_slot ) )
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
+      return;
+    }
+  if ( ( Me [ 0 ] . drive_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_drive_slot ) )
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
+      return;
+    }
+  if ( ( Me [ 0 ] . special_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_special_slot ) )
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
+      return;
+    }
+  
+  
+  // find a free position in the inventory list
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
+    {
+      if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
+    }
+  if ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 )
+    {
+      GiveStandardErrorMessage ( "AddFloorItemDirectlyToInventory(...)" , 
+				 "Ran out of inventory positions.  This doesn't mean inventory is simpy full.\nIt means that FreedroidRPG is wasting inventory positions due to internal bugs.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  
+  // find enough free squares in the inventory to fit
+  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.y + 1 ; Inv_Loc.y ++ )
+    {
+      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.x + 1 ; Inv_Loc.x ++ )
 	{
-	  if ( CountItemtypeInInventory ( ItemPointer->type , PLAYER_NR_0 ) )
+	  
+	  for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.y ; item_height ++ )
 	    {
-	      TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
-	      Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
-	      PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	      DeleteItem( ItemPointer );
-	      return;
-	    }
-	}
-
-      // find a free position in the inventory list
-      for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
-	{
-	  if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
-	}
-      
-
-      // find enough free squares in the inventory to fit
-      for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.y + 1 ; Inv_Loc.y ++ )
-	{
-	  for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.x + 1 ; Inv_Loc.x ++ )
-	    {
-	      
-	      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.y ; item_height ++ )
+	      for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.x ; item_width ++ )
 		{
-		  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.x ; item_width ++ )
+		  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
+		  if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
+					 Inv_Loc.y + item_height ) )
 		    {
-		      DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
-		      if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
-					     Inv_Loc.y + item_height ) )
-			{
-			  Me[0].Inventory[ InvPos ].inventory_position.x = -1;
-			  Me[0].Inventory[ InvPos ].inventory_position.y = -1;
-			  goto This_Is_No_Possible_Location;
-			}
+		      Me[0].Inventory[ InvPos ].inventory_position.x = -1;
+		      Me[0].Inventory[ InvPos ].inventory_position.y = -1;
+		      goto This_Is_No_Possible_Location;
 		    }
 		}
-	      // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
-	      
-	      // At this point we know we have reached a position where we can plant this item.
-	      Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-	      Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-	      DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
-	      goto Inv_Loc_Found;
-	      
-	    This_Is_No_Possible_Location:
-	      
 	    }
+	  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
 	  
-	}
-      
-    Inv_Loc_Found:
-      
-      if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
-	{
-	  Me[0].TextVisibleTime = 0;
-	  Me[0].TextToBeDisplayed = "I can't carry any more.";
-	  CantCarrySound();
-	  // can't take any more items,
-	}
-      else
-	{
-	  // We announce that we have taken the item
-	  Me[0].TextVisibleTime = 0;
-	  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
-	  Me[0].TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
-	  strcpy ( Me[0].TextToBeDisplayed , TempText );
-	  
-	  // We add the new item to the inventory
-	  CopyItem( ItemPointer , & ( Me[0].Inventory[ InvPos ] ) , FALSE );
+	  // At this point we know we have reached a position where we can plant this item.
 	  Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
 	  Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-
-	  // We make the sound of an item being taken
-	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	  //ItemTakenSound();
-
-	  // ItemPointer->type = (-1);
-	  DeleteItem( ItemPointer );
-
+	  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
+	  
 	  //--------------------
-	  // And of course we shouldn't forget to tell the server about this 
-	  // movement as well....
-	  //
-	  if ( ClientMode && ! ServerMode ) 
+	  if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
 	    {
-	      SourceCode = GetPositionCode ( ItemPointer ) ;
-	      DestCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ InvPos ] ) ) ;
-	      SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
+	      Me[0].TextVisibleTime = 0;
+	      Me[0].TextToBeDisplayed = "I can't carry any more.";
+	      CantCarrySound();
+	      // can't take any more items,
 	    }
+	  else
+	    {
+	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+	    }
+	  return;
+	  
+	This_Is_No_Possible_Location:
+	  
 	}
+      
     }
+  
+
+
+  if ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) )
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "I can't carry any more.";
+      CantCarrySound();
+    }
+  else
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+    }
+      
   
 }; // void AddFloorItemDirectlyToInventory( item* ItemPointer )
 

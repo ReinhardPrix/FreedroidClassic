@@ -59,6 +59,44 @@ SDL_Rect Cons_Text_Rect = {175, 180, SCREEN_WIDTH-175, 305};
   char* filename;
 */
 
+char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
+  {
+    "iso_miscellaneous_floor_0000.png" , 
+    "iso_miscellaneous_floor_0001.png" , 
+    "iso_miscellaneous_floor_0002.png" , 
+    "iso_miscellaneous_floor_0003.png" , 
+    "iso_miscellaneous_floor_0004.png" , 
+    "iso_miscellaneous_floor_0005.png" , 
+    "iso_grass_floor_0000.png" , 
+    "iso_grass_floor_0001.png" , 
+    "iso_grass_floor_0002.png" , 
+    "iso_grass_floor_0003.png" , 
+    "iso_grass_floor_0004.png" , 
+    "iso_grass_floor_0005.png" , 
+    "iso_grass_floor_0006.png" , 
+    "iso_grass_floor_0007.png" , 
+    "iso_grass_floor_0008.png" , 
+    "iso_grass_floor_0009.png" , 
+    "iso_grass_floor_0010.png" , 
+    "iso_grass_floor_0011.png" , 
+    "iso_grass_floor_0012.png" , 
+    "iso_grass_floor_0013.png" , 
+    "iso_grass_floor_0014.png" , 
+    "iso_grass_floor_0015.png" , 
+    "iso_grass_floor_0016.png" , 
+    "iso_grass_floor_0017.png" , 
+    "iso_grass_floor_0018.png" , 
+    "iso_grass_floor_0019.png" , 
+    "iso_grass_floor_0020.png" , 
+    "iso_grass_floor_0021.png" , 
+    "iso_grass_floor_0022.png" , 
+    "iso_grass_floor_0023.png" , 
+    "iso_miscellaneous_floor_0006.png" , 
+    "iso_miscellaneous_floor_0007.png" , 
+    "iso_miscellaneous_floor_0008.png" 
+    // , "ERROR_UNUSED.png" , 
+  };
+
 obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] = 
   {
     // iso_image                block_area_type     bl_parm1 bl_parm2 smashable preput drop_treas. filename
