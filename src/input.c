@@ -261,12 +261,8 @@ void
 ReactToSpecialKeys(void)
 {
   int i;
-  int InvPos;
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
-  grob_point Inv_Loc;
-  int item_width;
-  int item_height;
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -452,6 +448,18 @@ ReactToSpecialKeys(void)
     {
       while (KP2Pressed());
       RealScore *= 2;
+    }
+
+  if ( KP8Pressed() )
+    {
+      LoadGame(  );
+      while ( KP8Pressed(  ) );
+    }
+
+  if ( KP9Pressed() )
+    {
+      SaveGame(  );
+      while ( KP9Pressed(  ) );
     }
 
   

@@ -39,6 +39,15 @@
 #include "colodefs.h"
 #endif
 
+//--------------------
+// Here you can control the debug level for the various modules, or at least
+// that's the way it is planned to be.  Turn on and off debugging as you like.
+//
+#define SAVE_LOAD_GAME_DEBUG 0
+#define INVENTORY_RECTANGLE_DEBUG_LEVEL 2 
+#define INVENTORY_MOUSE_BUTTON_DEBUG 2
+
+
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
 #define Set_Rect(rect, xx, yy, ww, hh) {\

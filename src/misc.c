@@ -37,7 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-
 // The definition of the message structure can stay here,
 // because its only needed in this module.
 typedef struct
@@ -74,6 +73,55 @@ Uint32 One_Frame_SDL_Ticks;
 Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
+
+
+/* ----------------------------------------------------------------------
+ * This function does something similar to memmem.  Indeed, it would be
+ * best perhaps if it did exactly the same as memmem, but since we do not
+ * use gnu extensions for compatibility reasons, we go this way.
+ *
+ * Be careful with using this function for searching just one byte!!
+ *
+ * Be careful with using this function for non-string NEEDLE!!
+ *
+ * Haystack can of course have ANY form!!!
+ *
+ * ---------------------------------------------------------------------- */
+void *
+MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen)
+{
+  unsigned char* NextFoundPointer;
+  void* MatchPointer;
+  size_t SearchPos=0;
+
+  while ( haystacklen - SearchPos > 0 )
+    {
+      //--------------------
+      // We search for the first match OF THE FIRST CHARACTER of needle
+      //
+      NextFoundPointer = memchr ( haystack+SearchPos , needle[0] , haystacklen-SearchPos );
+      
+      //--------------------
+      // if not even that was found, we can immediately return and report our failure to find it
+      //
+      if ( NextFoundPointer == NULL ) return ( NULL );
+
+      //--------------------
+      // Otherwise we see, if also the rest of the strings match this time ASSUMING THEY ARE STRINGS!
+      // In case of a match, we can return immediately
+      //
+      MatchPointer = strstr( NextFoundPointer , needle );
+      if ( MatchPointer != NULL ) return ( MatchPointer );
+
+      //--------------------
+      // At this point, we know that we had no luck with this one occasion of a first-character-match
+      // and must continue after this one occasion with our search
+      SearchPos = NextFoundPointer - haystack + 1;
+    }
+
+  return( NULL );
+}; // void *MyMemmem ( ... );
+
 
 /*
 ----------------------------------------------------------------------
@@ -196,6 +244,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   FILE *DataFile;
   char *Data;
   char *ReadPointer;
+  long MemoryAmount;
   // char *fpath;
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
@@ -243,7 +292,8 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded...");
     }
 
-  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2 + 10000 )) == NULL)
+  MemoryAmount = stbuf.st_size + 64*2 + 10000;
+  if ( ( Data = (char *) MyMalloc ( MemoryAmount  ) ) == NULL )
     {
       DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Out of Memory? ");
       Terminate(ERR);
@@ -265,7 +315,11 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Adding a 0 at the end of read data....");
 
-  if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
+  // NOTE: Since we do not assume to always have pure text files here, we switched to
+  // MyMemmem, so that we can handle 0 entries in the middle of the file content as well
+  //
+  // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
+  if ( ( ReadPointer = MyMemmem ( Data , (size_t) MemoryAmount , File_End_String , (size_t) strlen( File_End_String ) ) ) == NULL )
     {
       fprintf(stderr, "\n\
 \n\
