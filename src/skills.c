@@ -401,12 +401,12 @@ HandleCurrentlyActivatedSkill( void )
   // gps TargetLocation;
   moderately_finepoint TargetPoint;
 
-  if ( Me[0].readied_skill == 0 )
+  if ( Me[0].readied_skill == SPELL_TRANSFERMODE )
     {
       if (MouseRightPressed() == 1)
 	Me[0].status = TRANSFERMODE;
     }
-  else if ( Me[0].readied_skill == 1 )
+  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_RAY )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -414,7 +414,7 @@ HandleCurrentlyActivatedSkill( void )
 	    ForceExplosionCircle( Me[0].pos );
 	}
     }
-  else if ( Me[0].readied_skill == 2 )
+  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_RAY )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -424,7 +424,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 3 )
+  else if ( Me[0].readied_skill == SPELL_FORCE_TO_ENERGY )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -434,7 +434,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 4 )
+  else if ( Me[0].readied_skill == SPELL_TELEPORT_HOME )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -445,7 +445,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 5 )
+  else if ( Me[0].readied_skill == SPELL_FIREY_BOLT )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -457,7 +457,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 6 )
+  else if ( Me[0].readied_skill == SPELL_COLD_BOLT )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -469,7 +469,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 8 )
+  else if ( Me[0].readied_skill == SPELL_POISON_BOLT )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -481,7 +481,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 9 )
+  else if ( Me[0].readied_skill == SPELL_PARALYZE_BOLT )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -493,7 +493,7 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
-  else if ( Me[0].readied_skill == 10 )
+  else if ( Me[0].readied_skill == SPELL_DETECT_ITEM )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{

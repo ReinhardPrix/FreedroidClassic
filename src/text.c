@@ -150,6 +150,12 @@ RestoreChatVariableToInitialValue( int PlayerNum )
       Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ;
     }
 
+  //--------------------
+  // You can always ask the moron 614 bots the same things and they
+  // will always respond in the very same manner, so no need to
+  // remember anything that has been talked in any previous conversation
+  // with them.
+  //
   Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 0 ] = 1 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 1 ] = 1 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 1 ;
@@ -202,6 +208,18 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 }; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 
 /* ----------------------------------------------------------------------
+ * This function should first display a subtitle and then also a sound
+ * sample.  It is not very sophisticated or complicated, but nevertheless
+ * important, because this combination does indeed occur so often.
+ * ---------------------------------------------------------------------- */
+void
+GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
+{
+  DisplaySubtitle ( SubtitleText , Background );
+  PlayOnceNeededSoundSample( SampleFilename , TRUE );
+}; // void GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
+
+/* ----------------------------------------------------------------------
  * This function prepares the chat background window and displays the
  * image of the dialog partner and also sets the right font.
  * ---------------------------------------------------------------------- */
@@ -235,7 +253,12 @@ PrepareMultipleChoiceDialog ( int Enum )
     }
   if ( Background == NULL )
     {
-      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+ChatWithFriendlyDroid: ERROR LOADING BACKGROUND IMAGE FILE!!!!  \n\
+Error code: %s \n\
+Freedroid will terminate now to draw attention to the graphics loading\n\
+problem it could not resolve.  Sorry.\n\
+----------------------------------------------------------------------\n" , SDL_GetError() );
       Terminate(ERR);
     }
 
@@ -313,11 +336,10 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 6 ] = " I want to get in contact with the MS." ;
       DialogMenuTexts [ 7 ] = " I would like to get in contact with the Rebellion." ;
       DialogMenuTexts [ 8 ] = " How can I gain their trust?" ;
-      DialogMenuTexts [ 9 ] = " Have I done enough quest yet for my meeting with the Resistance?" ;
+      DialogMenuTexts [ 9 ] = " Have I done enough quests yet for my meeting with the Resistance?" ;
       DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
-      DisplaySubtitle( " Welcome Traveller! " , Background );
-      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      GiveSubtitleNSample( " Welcome Traveller! ", "Chandra_Welcome_Traveller_0.wav" );
       
 
       while (1)
@@ -330,8 +352,7 @@ ChatWithFriendlyDroid( int Enum )
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Who_Are_You_0.wav" , TRUE );
-	      DisplaySubtitle( " Welcome to this camp!  My name is Chandra.  " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_My_Name_Is_0.wav" , TRUE );
+	      GiveSubtitleNSample( " Welcome to this camp!  My name is Chandra.  " , "Chandra_My_Name_Is_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 0 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 1 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 1 ;
@@ -339,55 +360,37 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
-	      DisplaySubtitle( " This place is owned by refugees like me, who hide from the MS. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_This_Place_Consists_0.wav" , TRUE );
-	      DisplaySubtitle( " Formerly this was a camp of the resistance movement. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Formerly_This_Was_0.wav" , TRUE );
-	      DisplaySubtitle( " But they have left long ago. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_But_They_Have_0.wav" , TRUE );
+	      GiveSubtitleNSample( " This place is owned by refugees like me, who hide from the MS. " , "Chandra_This_Place_Consists_0.wav" );
+	      GiveSubtitleNSample( " Formerly this was a camp of the resistance movement. " , "Chandra_Formerly_This_Was_0.wav" );
+	      GiveSubtitleNSample( " But they have left long ago. " , "Chandra_But_They_Have_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 0 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 1 ;
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
-	      DisplaySubtitle( " You might try it at the shop. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_You_Might_Try_0.wav" , TRUE );
-	      DisplaySubtitle( " They have all kinds of equipment there. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_They_Have_All_0.wav" , TRUE );
-	      DisplaySubtitle( " Talk to Mr. Stone, the shop bot. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
+	      GiveSubtitleNSample( " You might try it at the shop. " , "Chandra_You_Might_Try_0.wav" );
+	      GiveSubtitleNSample( " They have all kinds of equipment there. " , "Chandra_They_Have_All_0.wav" );
+	      GiveSubtitleNSample( " Talk to Mr. Stone, the shop bot. " , "Chandra_Talk_To_The_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
-	      DisplaySubtitle( " Use the left mouse button to move around, talk to friends or attack enemies. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_1.wav" , TRUE );
-	      DisplaySubtitle( " Hold down the left mouse button to keep moving. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_2.wav" , TRUE );
-	      DisplaySubtitle( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_3.wav" , TRUE );
-	      DisplaySubtitle( " Use the right mouse button to activate your currently readied skill or spell. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_4.wav" , TRUE );
-	      DisplaySubtitle( " Use the I key to open or close the inventory screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_5.wav" , TRUE );
-	      DisplaySubtitle( " Use the C key to open or close the character screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
-	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
+	      GiveSubtitleNSample( " Use the left mouse button to move around, talk to friends or attack enemies. " , "Chandra_Controls_1.wav" );
+	      GiveSubtitleNSample( " Hold down the left mouse button to keep moving. " , "Chandra_Controls_2.wav" );
+	      GiveSubtitleNSample( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , "Chandra_Controls_3.wav" );
+	      GiveSubtitleNSample( " Use the right mouse button to activate your currently readied skill or spell. " , "Chandra_Controls_4.wav" );
+	      GiveSubtitleNSample( " Use the I key to open or close the inventory screen. " , "Chandra_Controls_5.wav" );
+	      GiveSubtitleNSample( " Use the C key to open or close the character screen. " , "Chandra_Controls_6.wav" );
+	      GiveSubtitleNSample( " Use the S key to open or close the skills screen. " , "Chandra_Controls_7.wav" );
 	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 3 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
-	      DisplaySubtitle( " Currently, the MS is the most powerful organisation in the universe. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Currently_The_MS_0.wav" , TRUE );
-	      DisplaySubtitle( " But maybe not for very much longer:  A rebellion has started." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_But_Maybe_Not_0.wav" , TRUE );
-	      DisplaySubtitle( " The rebels have small supporters throughout the universe." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_The_Rebels_Have_0.wav" , TRUE );
-	      DisplaySubtitle( " The number of the rebels has grown a lot in the last decade." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_The_Number_Of_0.wav" , TRUE );
-	      DisplaySubtitle( " It might be that in the end they can win their struggle for freedom." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_It_Might_Well_0.wav" , TRUE );
+	      GiveSubtitleNSample( " Currently, the MS is the most powerful organisation in the universe. " , "Chandra_Currently_The_MS_0.wav" );
+	      GiveSubtitleNSample( " But maybe not for very much longer:  A rebellion has started." , "Chandra_But_Maybe_Not_0.wav" );
+	      GiveSubtitleNSample( " The rebels have small supporters throughout the universe." , "Chandra_The_Rebels_Have_0.wav" );
+	      GiveSubtitleNSample( " The number of the rebels has grown a lot in the last decade." , "Chandra_The_Number_Of_0.wav" );
+	      GiveSubtitleNSample( " It might be that in the end they can win their struggle for freedom." , "Chandra_It_Might_Well_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 1 ; // some new possibilities...
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 1 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 1 ;
@@ -395,39 +398,29 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Wouldnt_That_Mean_0.wav" , TRUE );
-	      DisplaySubtitle( " By no means.  The rebellion is carried on by individuals. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_By_No_Means_0.wav" , TRUE );
-	      DisplaySubtitle( " They are neither bound to some central authority nor are they paid in any way." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_They_Are_Neither_0.wav" , TRUE );
-	      DisplaySubtitle( " They work together for the goal of freedom." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_They_Work_Together_0.wav" , TRUE );
-	      DisplaySubtitle( " They will not change their goal to support the power and will of only one." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_They_Will_Not_0.wav" , TRUE );
+	      GiveSubtitleNSample( "By no means.  The rebellion is carried on by individuals. " , "Chandra_By_No_Means_0.wav" );
+	      GiveSubtitleNSample( "They are neither bound to some central authority nor are they paid in any way." , "Chandra_They_Are_Neither_0.wav" );
+	      GiveSubtitleNSample( "They work together for the goal of freedom." , "Chandra_They_Work_Together_0.wav" );
+	      GiveSubtitleNSample( "They will not change their goal to support the power and will of only one." , "Chandra_They_Will_Not_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 7:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Want_To_0.wav" , TRUE );
-	      DisplaySubtitle( " This will be difficult.  As a non-member of the MS, their machines will attack you." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_This_Will_Be_0.wav" , TRUE );
-	      DisplaySubtitle( " But maybe there is a way.  I just don't know." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_But_Maybe_There_0.wav" , TRUE );
+	      GiveSubtitleNSample( "This will be difficult.  As a non-member of the MS, their machines will attack you." , "Chandra_This_Will_Be_0.wav" );
+	      GiveSubtitleNSample( "But maybe there is a way.  I just don't know." , "Chandra_But_Maybe_There_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 8:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Would_Like_0.wav" , TRUE );
-	      DisplaySubtitle( " This should be possible.  But you must gain their trust first." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_This_Should_Be_0.wav" , TRUE );
+	      GiveSubtitleNSample( "This should be possible.  But you must gain their trust first." , "Chandra_This_Should_Be_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 0 ; // but don't ask this twice.
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 1 ; // this should lead on...
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_How_Can_I_0.wav" , TRUE );
-	      DisplaySubtitle( " Ask around.  I'll tell everybody to find some quests for you." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Ask_Around_Ill_0.wav" , TRUE );
-	      DisplaySubtitle( " If you do well on them, I'll hear that and I'll count it in your favour." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_If_You_Do_0.wav" , TRUE );
-	      DisplaySubtitle( " If you think you've done enough quests, come back here and I'll see what I can do." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_If_You_Think_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Ask around.  I'll tell everybody to find some quests for you." , "Chandra_Ask_Around_Ill_0.wav" );
+	      GiveSubtitleNSample( "If you do well on them, I'll hear that and I'll count it in your favour." , "Chandra_If_You_Do_0.wav" );
+	      GiveSubtitleNSample( "If you think you've done enough quests, come back here and I'll see what I can do." , "Chandra_If_You_Think_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // but don't ask this twice.
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 1 ; // this should lead on...
 
@@ -440,8 +433,7 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 10:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Have_I_Done_0.wav" , TRUE );
-	      DisplaySubtitle( " No, not really.  Hurry up.  There's still a lot to do for you." , Background );
-	      PlayOnceNeededSoundSample( "Chandra_No_Not_Really_0.wav" , TRUE );
+	      GiveSubtitleNSample( " No, not really.  Get going.  There's still a lot of things to do for you." , "Chandra_No_Not_Really_0.wav" );
 	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 0 ; // but don't ask this twice.
 	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // this should lead on...
 	      break;
@@ -453,9 +445,15 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    }
 	}
+    } // end of conversation with Chandra.
 
-    }
-
+  //**********************************************************************
+  // Here comes the dialog interface for conversation with SORENSON, the
+  // SOR person for short.
+  //
+  // This should be a teacher of magical abilities.
+  // He does not assign any quests so far.
+  //
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
       //--------------------
@@ -472,8 +470,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 6 ] = " BACK ";
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      DisplaySubtitle( " Welcome Traveller! " , Background );
-      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
@@ -493,18 +490,19 @@ ChatWithFriendlyDroid( int Enum )
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
-	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , 
-			       Background );
-	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
+	      GiveSubtitleNSample( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , "SOR_Welcome_Then_To_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 0 ; // this should disallow to be new again...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
+	      GiveSubtitleNSample( "That depends.  What would you like to learn?" , "SOR_That_Depends_What_0.wav" );
+	      GiveSubtitleNSample( "I could help to to enhance your magical abilities and the power of your mind." , "SOR_I_could_help_0.wav" );
+	      GiveSubtitleNSample( "I could also teach you how to properly cast the so called 'Remote strike' spell." , "SOR_I_could_also_0.wav" );
+	      GiveSubtitleNSample( "Now, what will it be?" , "SOR_Now_What_Will_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 1 ; // this enables some learning option
@@ -521,6 +519,12 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
+	      GiveSubtitleNSample( "The Remote Strike spell is one of the easiest spells to learn, simply perfect for a novice." , "SOR_I_could_also_0.wav" );
+	      GiveSubtitleNSample( "Concentrate on the power of the force.  Think of how you would strike your opponent if he were close." , "SOR_Concentrate_On_The_0.wav" );
+	      GiveSubtitleNSample( "Now use your hold of the force to transfer the energy of the thought to make a bullet out of it." , "SOR_Now_Use_Your_0.wav" );
+	      GiveSubtitleNSample( "When you fling this bullet at your opponent, you will do the same damage as with your real weapon." , "SOR_When_You_Fling_0.wav" );
+	      GiveSubtitleNSample( "That's it.  Now you have learned the remote strike spell." , "SOR_Thats_It_Now_0.wav" );
+	      Me [ 0 ] . base_skill_level [ SPELL_REMOTE_STRIKE ] ++ ;
 	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
@@ -561,8 +565,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 3 ] = " What are your orders?" ;
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      DisplaySubtitle( " Welcome Traveller! " , Background );
-      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -575,37 +578,27 @@ ChatWithFriendlyDroid( int Enum )
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_614_Who_Are_You_0.wav" , TRUE );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 0 ] = 0 ; // don't say this twice...
+	      GiveSubtitleNSample( "I am a 614 security bot, once one of the best-selling products of the Nicolson company ever. " , "614_I_Am_A_0.wav" );
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_614_Have_You_Detected_0.wav" , TRUE );
-	      DisplaySubtitle( "No.  The MS Bots have not shown any activity within the last 24 hours. " , Background );
-	      PlayOnceNeededSoundSample( "614_No_The_MS_0.wav" , TRUE );
+	      GiveSubtitleNSample( "No.  The MS Bots have not shown any activity within the last 24 hours. " , "614_No_The_MS_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 1 ] = 0 ; // don't say this twice...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_614_What_Can_You_0.wav" , TRUE );
-	      DisplaySubtitle( "The official manual classifies the 614 as a low security droid." , Background );
-	      PlayOnceNeededSoundSample( "614_The_Official_Manual_0.wav" , TRUE );
-	      DisplaySubtitle( "It is mainly used within ships to protect certain areas of the ship from intruders." , Background );
-	      PlayOnceNeededSoundSample( "614_It_Is_Mainly_0.wav" , TRUE );
-	      DisplaySubtitle( "It is considered a slow but sure device." , Background );
-	      PlayOnceNeededSoundSample( "614_It_Is_Considered_0.wav" , TRUE );
-	      DisplaySubtitle( "Today it is used only by rebellion and it's supporters, not by the MS any more." , Background );
-	      PlayOnceNeededSoundSample( "614_Today_It_Is_0.wav" , TRUE );
-	      DisplaySubtitle( "This is because the 614 is by now a discontinued product." , Background );
-	      PlayOnceNeededSoundSample( "614_This_Is_Because_0.wav" , TRUE );
-	      DisplaySubtitle( "But don't worry.  I'm still in pretty good shape." , Background );
-	      PlayOnceNeededSoundSample( "614_But_Dont_Worry_0.wav" , TRUE );
+	      GiveSubtitleNSample( "The official manual classifies the 614 as a low security droid." , "614_The_Official_Manual_0.wav" );
+	      GiveSubtitleNSample( "It is mainly used within ships to protect certain areas of the ship from intruders." , "614_It_Is_Mainly_0.wav" );
+	      GiveSubtitleNSample( "It is considered a slow but sure device." , "614_It_Is_Considered_0.wav" );
+	      GiveSubtitleNSample( "Today it is used only by rebellion and it's supporters, not by the MS any more." , "614_Today_It_Is_0.wav" );
+	      GiveSubtitleNSample( "This is because the 614 is by now a discontinued product." , "614_This_Is_Because_0.wav" );
+	      GiveSubtitleNSample( "But don't worry.  I'm still in pretty good shape." , "614_But_Dont_Worry_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 0 ; // don't say this twice...
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_614_What_Are_Your_0.wav" , TRUE );
-	      DisplaySubtitle( "My orders are to protect the living beings in this camp from attacks by MS bots." , 
-			       Background );
-	      PlayOnceNeededSoundSample( "614_My_Orders_Are_0.wav" , TRUE );
-	      DisplaySubtitle( "This has top priority.  There are no other priorities." , 
-			       Background );
-	      PlayOnceNeededSoundSample( "614_This_Has_Top_0.wav" , TRUE );
+	      GiveSubtitleNSample( "My orders are to protect the living beings in this camp from attacks by MS bots." , "614_My_Orders_Are_0.wav" );
+	      GiveSubtitleNSample( "This has top priority.  There are no other priorities." , "614_This_Has_Top_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 0 ; // don't say this twice...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
@@ -633,10 +626,13 @@ ChatWithFriendlyDroid( int Enum )
 
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
       DialogMenuTexts [ 1 ] = " Is everything alright with the teleporter system?" ; 
+      DialogMenuTexts [ 2 ] = " Maybe I can help somehow." ; 
+      DialogMenuTexts [ 3 ] = " I'll go give it a try." ; 
+      DialogMenuTexts [ 4 ] = " Sorry, this does not really sound like something I could do." ; 
+      DialogMenuTexts [ 5 ] = " I have found your toolset. Here you are. " ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      DisplaySubtitle( " Welcome Traveller! " , Background );
-      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -648,16 +644,13 @@ ChatWithFriendlyDroid( int Enum )
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Hi_Im_New_0.wav" , TRUE );
-	      DisplaySubtitle( "Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp." , 
-			       Background );
-	      PlayOnceNeededSoundSample( "DIX_Hello_And_Welcome_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp." , "DIX_Hello_And_Welcome_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
-	      DisplaySubtitle( "Well, I'm still working on it.  Not much news to tell so far." , 
-			       Background );
-	      PlayOnceNeededSoundSample( "DIX_Well_Im_Still_0.wav" , TRUE );
+	      GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_Well_Im_Still_0.wav" );
+	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could Well, I'm still working on it, but I'm not making much progress." , "DIX_Well_Im_Still_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
@@ -701,8 +694,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
       
-      DisplaySubtitle( " Welcome Traveller! " , Background );
-      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
@@ -721,29 +713,20 @@ ChatWithFriendlyDroid( int Enum )
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Chandra_Said_You_0.wav" , TRUE );
-	      DisplaySubtitle( " Oh Yes! " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Oh_Yes_0.wav" , TRUE );
-	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_You_Are_The_0.wav" , TRUE );
-	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Chandra_Told_Me_0.wav" , TRUE );
+	      GiveSubtitleNSample( " Oh Yes! " , "RMS_Oh_Yes_0.wav" );
+	      GiveSubtitleNSample( " You are the one who wants to get in contact with the resistance then. " , "RMS_You_Are_The_0.wav" );
+	      GiveSubtitleNSample( " Chandra told me about you and indeed I do have a test for you. " , "RMS_Chandra_Told_Me_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ; // don't say this twice...
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_RMS_So_0.wav" , TRUE );
-	      DisplaySubtitle( " After the revolution, I was forced to flee to this place. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_After_The_Revolution_0.wav" , TRUE );
-	      DisplaySubtitle( " Most of my belongings stayed behind. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Most_Of_My_0.wav" , TRUE );
-	      DisplaySubtitle( " Among them is an old coffee machine, an inheritance from my father. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Among_Them_Is_0.wav" , TRUE );
-	      DisplaySubtitle( " Now here is what I want you to do: Go to the private quarters level of my former place." , Background );
-	      PlayOnceNeededSoundSample( "RMS_Now_Here_Is_0.wav" , TRUE );
-	      DisplaySubtitle( " Find the coffee machine and bring it back to me. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Find_The_Coffee_0.wav" , TRUE );
-	      DisplaySubtitle( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_If_You_Do_0.wav" , TRUE );
+	      GiveSubtitleNSample( " After the revolution, I was forced to flee to this place. " , "RMS_After_The_Revolution_0.wav" );
+	      GiveSubtitleNSample( " Most of my belongings stayed behind. " , "RMS_Most_Of_My_0.wav" );
+	      GiveSubtitleNSample( " Among them is an old coffee machine, an inheritance from my father. " , "RMS_Among_Them_Is_0.wav" );
+	      GiveSubtitleNSample( " Now here is what I want you to do: Go to the private quarters level of my former place." , "RMS_Now_Here_Is_0.wav" );
+	      GiveSubtitleNSample( " Find the coffee machine and bring it back to me. " , "RMS_Find_The_Coffee_0.wav" );
+	      GiveSubtitleNSample( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , "RMS_If_You_Do_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 0 ; // don't say this twice in one dialog
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 1 ; // this should allow to ask how-can-i.. 
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 5 ] = 1 ; // this should allow to ask why-didnt-you...
@@ -751,14 +734,10 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_RMS_How_Can_I_0.wav" , TRUE );
-	      DisplaySubtitle( " As you might know, a great magnetic storm has shaken the universe. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_As_You_Might_0.wav" , TRUE );
-	      DisplaySubtitle( " Almost all of the existing teleporter connections were disrupted or redirected. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_Almost_All_Of_0.wav" , TRUE );
-	      DisplaySubtitle( " It was during this storm that you arrived at our teleporter terminal." , Background );
-	      PlayOnceNeededSoundSample( "RMS_It_Was_During_0.wav" , TRUE );
-	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
-	      PlayOnceNeededSoundSample( "RMS_But_Anyway_The_0.wav" , TRUE );
+	      GiveSubtitleNSample( " As you might know, a great magnetic storm has shaken the universe. " , "RMS_As_You_Might_0.wav" );
+	      GiveSubtitleNSample( " Almost all of the existing teleporter connections were disrupted or redirected. " , "RMS_Almost_All_Of_0.wav" );
+	      GiveSubtitleNSample( " It was during this storm that you arrived at our teleporter terminal." , "RMS_It_Was_During_0.wav" );
+	      GiveSubtitleNSample( " But anyway, the teleporter now points back to my former home. " , "RMS_But_Anyway_The_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 0 ; // don't say this twice in one dialgo
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 1 ; // this should allow to ask about the mag-storm...
 	      break;

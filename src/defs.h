@@ -128,6 +128,21 @@
 #define NUMBER_OF_SKILLS_PER_SKILL_LEVEL 5
 #define NUMBER_OF_SKILLS ( NUMBER_OF_SKILLS_PER_SKILL_LEVEL * NUMBER_OF_SKILL_LEVELS )
 
+enum _spell_names
+{
+  SPELL_TRANSFERMODE = 0, // 0
+  SPELL_FORCE_EXPLOSION_CIRCLE, // 1
+  SPELL_FORCE_EXPLOSION_RAY, // 2
+  SPELL_FORCE_TO_ENERGY, // 3
+  SPELL_TELEPORT_HOME, // 4
+  SPELL_FIREY_BOLT, // 5 
+  SPELL_COLD_BOLT, // 6
+  SPELL_REMOTE_STRIKE, // 7
+  SPELL_POISON_BOLT, // 8
+  SPELL_PARALYZE_BOLT, // 9
+  SPELL_DETECT_ITEM, // 10
+};
+
 //--------------------
 // This is old and should go out, but that must be done from at home, 
 // cause here I can't check if the code is still running without it
