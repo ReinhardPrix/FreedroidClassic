@@ -649,6 +649,26 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 char *
 find_file (char *fname, char *subdir, int use_theme)
 {
+
+  //--------------------
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+  // This hack will only work if there is NEVER ANY NESTED use of find_file!!
+  // Otherwise one file is found, a new search is started and overwrites the
+  // previous file name.  If that one is then used again, unpredictable results
+  // may occur.
+  //
+  // But the benefit of it is, of course, that memory leaking will be reduced,
+  // even if the returned string is never freed, as it must be to prevent
+  // segmentation faults this way anyway!
+  //
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+
   static char File_Path[5000];   /* hope this will be enough */
   FILE *fp;  // this is the file we want to find?
   int i;

@@ -173,6 +173,7 @@ EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 #else
 #define EXTERN extern
 #endif
+EXTERN void LoadAndShowThumbnail ( char* CoreFilename );
 EXTERN int SaveGame( void );
 EXTERN int LoadGame( void );
 

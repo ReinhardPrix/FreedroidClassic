@@ -591,7 +591,9 @@ LoadShip (char *filename)
 
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
 
-  /* Read the whole ship-data to memory */
+  //--------------------
+  // Read the whole ship-data to memory 
+  //
   ShipData = ReadAndMallocAndTerminateFile( filename , END_OF_SHIP_DATA_STRING ) ;
 
   //--------------------
@@ -627,6 +629,12 @@ LoadShip (char *filename)
       TranslateMap ( curShip . AllLevels [ i ] ) ;
 
     }
+
+  //--------------------
+  // Now that all the information has been copied, we can free the loaded data
+  // again.
+  //
+  free ( ShipData );
 
   return OK;
 

@@ -54,6 +54,51 @@
 #define SAVE_GAME_THUMBNAIL_EXT ".thumbnail.bmp"
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAndShowThumbnail ( char* CoreFilename )
+{
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
+  char filename[1000];
+  SDL_Surface* NewThumbnail;
+  SDL_Rect TargetRectangle;
+
+  DebugPrintf ( 2 , "\nTrying to load thumbnail for character '%s'. " , CoreFilename );
+
+  //--------------------
+  // get home-directory to save in
+  if ( ( homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      // return (ERR);
+    }
+
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+
+  NewThumbnail = IMG_Load ( filename );
+  if ( NewThumbnail == NULL ) return;
+
+  // TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
+  TargetRectangle.x = 10 ;
+  TargetRectangle.y = SCREEN_HEIGHT - NewThumbnail ->h - 10 ;
+  
+  SDL_BlitSurface ( NewThumbnail , NULL , Screen , &TargetRectangle );
+
+  SDL_FreeSurface( NewThumbnail );
+
+}; // void LoadAndShowThumbnail ( char* CoreFilename )
+
+/* ----------------------------------------------------------------------
  * This function stores a thumbnail of the currently running game, so that
  * these thumbnails can be browsed when choosing which game to load.
  * ---------------------------------------------------------------------- */
@@ -429,6 +474,8 @@ The game however could NOT be saved.\n\
   CountNumberOfDroidsOnShip (  ) ;
 
   SwitchBackgroundMusicTo( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
+
+  free ( LoadGameData );
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
 

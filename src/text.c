@@ -72,6 +72,8 @@ static SDL_Surface* Background;
 #define MAX_REPLIES_PER_OPTION 100
 #define MAX_SUBTITLES_N_SAMPLES_PER_DIALOGUE_OPTION 20
 #define MAX_EXTRAS_PER_OPTION 10
+#define CHAT_DEBUG_LEVEL 1
+
 typedef struct
 {
   char* option_text;
@@ -102,23 +104,63 @@ InitChatRosterForNewDialogue( void )
 {
   int i;
   int j;
+  static int FirstInitialisation = TRUE;
 
   for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
     {
+
+      //--------------------
+      // If this is not the first initialisation, we have to free the allocated
+      // strings first, or we'll be leaking memory otherwise...
+      //
+      if ( !FirstInitialisation )
+	{
+	  if ( strlen ( ChatRoster[i].option_text ) ) free ( ChatRoster[i].option_text );
+	  if ( strlen ( ChatRoster[i].option_sample_file_name ) ) free ( ChatRoster[i].option_sample_file_name );
+	}
       ChatRoster[i].option_text="";
       ChatRoster[i].option_sample_file_name="";
 
       for ( j = 0 ; j < MAX_REPLIES_PER_OPTION ; j++ )
 	{
+	  //--------------------
+	  // If this is not the first initialisation, we have to free the allocated
+	  // strings first, or we'll be leaking memory otherwise...
+	  //
+	  if ( !FirstInitialisation )
+	    {
+	      if ( strlen ( ChatRoster [ i ] . reply_sample_list [ j ] ) ) 
+		free ( ChatRoster [ i ] . reply_sample_list [ j ] );
+	      if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) ) 
+		free ( ChatRoster [ i ] . reply_subtitle_list [ j ] );
+	    }
 	  ChatRoster [ i ] . reply_sample_list [ j ] = "";
 	  ChatRoster [ i ] . reply_subtitle_list [ j ] = "";
 	}
 
       for ( j = 0 ; j < MAX_EXTRAS_PER_OPTION ; j++ )
 	{
+	  //--------------------
+	  // If this is not the first initialisation, we have to free the allocated
+	  // strings first, or we'll be leaking memory otherwise...
+	  //
+	  if ( !FirstInitialisation )
+	    {
+	      if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) ) 
+		free ( ChatRoster [ i ] . extra_list [ j ] );
+	    }
 	  ChatRoster [ i ] . extra_list [ j ] = "";
 	}
 
+      //--------------------
+      // If this is not the first initialisation, we have to free the allocated
+      // strings first, or we'll be leaking memory otherwise...
+      //
+      if ( !FirstInitialisation )
+	{
+	  if ( strlen ( ChatRoster [ i ] . on_goto_condition ) ) 
+	    free ( ChatRoster [ i ] . on_goto_condition );
+	}
       ChatRoster [ i ] . on_goto_condition = "";
       ChatRoster [ i ] . on_goto_first_target = (-1);
       ChatRoster [ i ] . on_goto_second_target = (-1);
@@ -129,7 +171,13 @@ InitChatRosterForNewDialogue( void )
 	  ChatRoster [ i ] . change_option_to_value [ j ] = (-1); 
 	}
     }
-  
+
+  //--------------------
+  // Next time, we WILL have to free every used entry before cleaning it
+  // out, or we will be leaking memory...
+  //
+  FirstInitialisation = FALSE ;
+
 }; // void InitChatRosterForNewDialogue( void )
 
 /* ----------------------------------------------------------------------
@@ -182,17 +230,21 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
   // Now we search for the desired chat section, cause most likely
   // there will be more than one person to chat in this chat file soon
   //
-  NextChatSectionCode = "NOPERSONATALL";
+#define UNINITIALIZED_SECTION_CODE "NOPERSONATALL"
+  NextChatSectionCode = UNINITIALIZED_SECTION_CODE ;
   SectionPointer = ChatData;
 
   while ( strcmp ( NextChatSectionCode , SequenceCode ) )
     {
       SectionPointer = LocateStringInData ( SectionPointer, CHAT_CHARACTER_BEGIN_STRING );
+      if ( strcmp ( NextChatSectionCode , UNINITIALIZED_SECTION_CODE ) )
+	free ( NextChatSectionCode );
       NextChatSectionCode = ReadAndMallocStringFromData ( SectionPointer , CHAT_CHARACTER_BEGIN_STRING , "\"" ) ;
-      DebugPrintf( 0 , "\nChat section beginning found.  Chat code given: %s." , NextChatSectionCode );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nChat section beginning found.  Chat code given: %s." , NextChatSectionCode );
       SectionPointer++;
     }
-  DebugPrintf( 0 , "\nThat seems to be the chat section we're looking for.  Great!" ) ;
+  DebugPrintf( CHAT_DEBUG_LEVEL , "\nThat seems to be the chat section we're looking for.  Great!" ) ;
+  free ( NextChatSectionCode );
 
   //--------------------
   // Now we locate the end of this chat section and put a 
@@ -207,7 +259,7 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
   // to decode from this section.
   //
   NumberOfOptionsInSection = CountStringOccurences ( SectionPointer , NEW_OPTION_BEGIN_STRING ) ;
-  DebugPrintf( 0 , "\nWe have counted %d Option entries in this section." , NumberOfOptionsInSection ) ;
+  DebugPrintf( CHAT_DEBUG_LEVEL , "\nWe have counted %d Option entries in this section." , NumberOfOptionsInSection ) ;
 
   //--------------------
   // Now we see which option index is assigned to this option.
@@ -220,7 +272,7 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       SectionPointer = LocateStringInData ( SectionPointer, NEW_OPTION_BEGIN_STRING );
       ReadValueFromString( SectionPointer , NEW_OPTION_BEGIN_STRING, "%d" , 
 			   &OptionIndex , EndOfSectionPointer );
-      DebugPrintf( 0 , "\nFound New Option entry.  Index found is: %d. " , OptionIndex ) ;
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nFound New Option entry.  Index found is: %d. " , OptionIndex ) ;
       SectionPointer++;
 
       //--------------------
@@ -228,12 +280,15 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       // fill the roster with real information.  At first, this will be only
       // the Option string and sample
       //
+      // Anything that is loaded into the chat roster doesn't need to be freed,
+      // cause this will be done by the next 'InitChatRoster' function anyway.
+      //
       ChatRoster[ OptionIndex ] . option_text = 
 	ReadAndMallocStringFromData ( SectionPointer , "OptionText=\"" , "\"" ) ;
-      DebugPrintf( 0 , "\nOptionText found : \"%s\"." , ChatRoster[ OptionIndex ] . option_text );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nOptionText found : \"%s\"." , ChatRoster[ OptionIndex ] . option_text );
       ChatRoster[ OptionIndex ] . option_sample_file_name = 
 	ReadAndMallocStringFromData ( SectionPointer , "OptionSample=\"" , "\"" ) ;
-      DebugPrintf( 0 , "\nOptionSample found : \"%s\"." , ChatRoster[ OptionIndex ] . option_sample_file_name );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nOptionSample found : \"%s\"." , ChatRoster[ OptionIndex ] . option_sample_file_name );
 
 
       //--------------------
@@ -243,7 +298,7 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       // 
       if ( ( OptionSectionsLeft = CountStringOccurences ( SectionPointer , NEW_OPTION_BEGIN_STRING ) ) )
 	{
-	  DebugPrintf ( 0 , "\nThere are still %d option sections in the file.  \n\
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nThere are still %d option sections in the file.  \n\
 Therefore we must add a new temporary termination character in between." , OptionSectionsLeft );
 	  TempEndPointer = LocateStringInData ( SectionPointer, NEW_OPTION_BEGIN_STRING );
 	  TempSavedCharacter = *TempEndPointer;
@@ -252,7 +307,7 @@ Therefore we must add a new temporary termination character in between." , Optio
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nThere is no more option section left in the file.  \n\
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nThere is no more option section left in the file.  \n\
 Therefore we need not add an additional termination character now." );
 	  RestoreTempDamage = FALSE;
 	}
@@ -285,7 +340,7 @@ Freedroid will terminate now to draw attention to the problem...\n\
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nThere were %d reply samples and an equal number of subtitles\n\
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nThere were %d reply samples and an equal number of subtitles\n\
 found in this option of the dialogue, which is fine.", NumberOfReplySamples );
 	}
 
@@ -298,10 +353,10 @@ found in this option of the dialogue, which is fine.", NumberOfReplySamples );
 	{
 	  ChatRoster[ OptionIndex ] . reply_subtitle_list [ j ] =
 	    ReadAndMallocStringFromData ( ReplyPointer , "Subtitle=\"" , "\"" ) ;
-	  DebugPrintf( 0 , "\nReplySubtitle found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_subtitle_list [ j ] );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nReplySubtitle found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_subtitle_list [ j ] );
 	  ChatRoster[ OptionIndex ] . reply_sample_list [ j ] =
 	    ReadAndMallocStringFromData ( ReplyPointer , "ReplySample=\"" , "\"" ) ;
-	  DebugPrintf( 0 , "\nReplySample found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_sample_list [ j ] );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nReplySample found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_sample_list [ j ] );
 
 	  //--------------------
 	  // Now we must move the reply pointer to after the previous combination.
@@ -336,7 +391,7 @@ Freedroid will terminate now to draw attention to the problem...\n\
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nThere were %d option changes and an equal number of new option values\n\
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nThere were %d option changes and an equal number of new option values\n\
 found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	}
 
@@ -351,7 +406,7 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 			       & ( ChatRoster[ OptionIndex ] . change_option_nr [ j ] ) , TempEndPointer );
 	  ReadValueFromString( OptionChangePointer , "ChangeToValue=" , "%d" , 
 			       & ( ChatRoster[ OptionIndex ] . change_option_to_value [ j ] ) , TempEndPointer );
-	  DebugPrintf( 0 , "\nOption Nr. %d will change to value %d. " , 
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nOption Nr. %d will change to value %d. " , 
 		       ChatRoster[ OptionIndex ] . change_option_nr [ j ] ,
 		       ChatRoster[ OptionIndex ] . change_option_to_value [ j ] );
 
@@ -367,7 +422,7 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
       // we will read them out
       //
       NumberOfExtraEntries = CountStringOccurences ( SectionPointer , "DoSomethingExtra" ) ;
-      DebugPrintf( 0 , "\nThere were %d 'Extras' specified in this option." , 
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere were %d 'Extras' specified in this option." , 
 		   NumberOfExtraEntries );
       
       //--------------------
@@ -382,7 +437,7 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	  ChatRoster[ OptionIndex ] . extra_list [ j ] =
 	    ReadAndMallocStringFromData ( ExtraPointer , "DoSomethingExtra=\"" , "\"" ) ;
 
-	  DebugPrintf( 0 , "\nOption will execute this extra: %s. " , 
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nOption will execute this extra: %s. " , 
 		       ChatRoster[ OptionIndex ] . extra_list [ j ] );
 
 	  //--------------------
@@ -399,21 +454,21 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
       //
       if ( CountStringOccurences ( SectionPointer , "OnCondition" ) ) 
 	{
-	  DebugPrintf( 0 , "\nWe've found an ON-GOTO-CONDITION IN THIS OPTION!" );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nWe've found an ON-GOTO-CONDITION IN THIS OPTION!" );
 	  ChatRoster[ OptionIndex ] . on_goto_condition = 
 	    ReadAndMallocStringFromData ( SectionPointer , "OnCondition=\"" , "\"" ) ;
-	  DebugPrintf( 0 , "\nOnCondition text found : \"%s\"." , ChatRoster[ OptionIndex ] . on_goto_condition );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nOnCondition text found : \"%s\"." , ChatRoster[ OptionIndex ] . on_goto_condition );
 	  ReadValueFromString( SectionPointer , "JumpToOption=" , "%d" , 
 			       & ( ChatRoster[ OptionIndex ] . on_goto_first_target ) , TempEndPointer );
 	  ReadValueFromString( SectionPointer , "ElseGoto=" , "%d" , 
 			       & ( ChatRoster[ OptionIndex ] . on_goto_second_target ) , TempEndPointer );
-	  DebugPrintf( 0 , "\nOnCondition jump targets: TRUE--> %d FALSE-->%d." , 
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nOnCondition jump targets: TRUE--> %d FALSE-->%d." , 
 		       ChatRoster[ OptionIndex ] . on_goto_first_target ,
 		       ChatRoster[ OptionIndex ] . on_goto_second_target  );
 	}
       else
 	{
-	  DebugPrintf( 0 , "\nThere seems to be NO ON-GOTO-CONDITION AT ALL IN THIS OPTION." );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere seems to be NO ON-GOTO-CONDITION AT ALL IN THIS OPTION." );
 	}
 
       //--------------------
@@ -423,73 +478,25 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
       //
       if ( RestoreTempDamage )
 	{
-	  DebugPrintf ( 0 , "\nWe have now restored the damage from the temporary termination character." );
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWe have now restored the damage from the temporary termination character." );
 	  *TempEndPointer = TempSavedCharacter ;
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nSince we didn't add any temp termination character, there's nothing to restore now." );
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nSince we didn't add any temp termination character, there's nothing to restore now." );
 	}
     }
+
+  //--------------------
+  // Now we've got all the information we wanted from the dialogues file.
+  // We can now free the loaded file again.  Upon a new character dialogue
+  // being initiated, we'll just reload the file.  This is very conveninet,
+  // for it allows making and testing changes to the dialogues without even
+  // having to restart Freedroid!  Very cool!
+  //
+  free( ChatData );
 
 }; // void LoadChatRosterWithChatSequence ( char* SequenceCode )
-
-/* ----------------------------------------------------------------------
- * This function does all the (text) interaction with a friendly droid
- * and maybe also does special interacions like Chandra and Stone.
- * ---------------------------------------------------------------------- */
-char* 
-GetChatWindowInput( SDL_Surface* ChatBackground , SDL_Rect* Chat_Window_Pointer )
-{
-  int OldTextCursorX, OldTextCursorY;
-  int j;
-  char* RequestString;
-  SDL_Rect Input_Window;
-  Input_Window.x=15;
-  Input_Window.y=434;
-  Input_Window.w=606;
-  Input_Window.h=37;
-
-
-  OldTextCursorX=MyCursorX;
-  OldTextCursorY=MyCursorY;
-  
-  // Now we clear the text window, since the old text is still there
-  SDL_BlitSurface( ChatBackground, &Input_Window , Screen , &Input_Window );
-  DisplayText ( "What do you say? >" ,
-		Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
-		&Input_Window ); // , ChatBackground );
-  // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , ChatBackground );
-  SDL_Flip ( Screen );
-  RequestString = GetString( 20 , FALSE );
-  MyCursorX=OldTextCursorX;
-  MyCursorY=OldTextCursorY;
-  
-  DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , Chat_Window_Pointer , ChatBackground );
-  
-  //--------------------
-  // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
-  // the given input string into lower cases.  That will make pattern matching afterwards
-  // much more reliable.
-  //
-  // Also leading spaces should be removed
-  j=0;
-  while ( RequestString[j] != 0 ) { RequestString[j]=tolower( RequestString[j] ); j++; }
-  while ( RequestString[0] == ' ' ) 
-    {
-      j=0;
-      while ( RequestString [ j + 1 ] != 0 )
-	{
-	  RequestString[ j ] = RequestString[ j + 1 ];
-	  j++;
-	}
-      RequestString[ j ] = 0;
-    }
-
-
-
-  return ( RequestString );
-}; // char* GetChatWindowInput( void )
 
 /* ----------------------------------------------------------------------
  * This function restores all chat-with-friendly-droid variables to their
@@ -647,53 +654,53 @@ ExecuteChatExtra ( char* ExtraCommandString )
     }
   else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked execution of action with label: %s. Doing it... " ,
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked execution of action with label: %s. Doing it... " ,
 		   ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) );
       ExecuteActionWithLabel ( ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) , 0 ) ;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "AssignMission:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked assigning of mission. --> have to decode... " );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked assigning of mission. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "AssignMission:" , "%d" , 
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-      DebugPrintf( 0 , "\n...decoding...Mission to assign is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Mission to assign is: %d." , TempValue );
       AssignMission ( TempValue );
     }
   else if ( CountStringOccurences ( ExtraCommandString , "MarkMissionComplete:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked marking a mission as completed. --> have to decode... " );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked marking a mission as completed. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "MarkMissionComplete:" , "%d" , 
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-      DebugPrintf( 0 , "\n...decoding...Mission to mark as complete is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Mission to mark as complete is: %d." , TempValue );
       Me [ 0 ] . AllMissions[ TempValue ] . MissionIsComplete = TRUE;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "AddBaseMagic:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked adding some base magic points. --> have to decode... " );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding some base magic points. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "AddBaseMagic:" , "%d" , 
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-      DebugPrintf( 0 , "\n...decoding... amount of magic points mentioned is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of magic points mentioned is: %d." , TempValue );
       Me [ 0 ] . base_magic += TempValue;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "SubtractPointsToDistribute:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked subtracting points to distribute. --> have to decode... " );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked subtracting points to distribute. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "SubtractPointsToDistribute:" , "%d" , 
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-      DebugPrintf( 0 , "\n...decoding... amount of points mentioned is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of points mentioned is: %d." , TempValue );
       Me [ 0 ] . points_to_distribute -= TempValue;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "SubtractGold:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked subtracting gold. --> have to decode... " );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked subtracting gold. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "SubtractGold:" , "%d" , 
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-      DebugPrintf( 0 , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
       Me [ 0 ] . Gold -= TempValue;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsOfType:" ) )
     {
-      DebugPrintf( 0 , "\nExtra invoked deletion of all inventory items of type '%s'. --> have to decode... " ,
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked deletion of all inventory items of type '%s'. --> have to decode... " ,
 		   ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
 
       if ( !strcmp ( ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) , "ITEM_DIXONS_TOOLBOX" ) )
@@ -702,7 +709,7 @@ ExecuteChatExtra ( char* ExtraCommandString )
 	}
       else
 	{
-	  DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+	  fprintf ( stderr , "\n----------------------------------------------------------------------\n\
 ExecuteChatExtra: ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!!!!  \n\
 Errorneous string: %s \n\
 \n\
@@ -713,13 +720,13 @@ problem it could not resolve.  Sorry.\n\
 	  Terminate ( ERR ) ;
 	}
 
-      DebugPrintf( 0 , "\n...decoding...item to remove is: %d." , TempValue );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...item to remove is: %d." , TempValue );
       DeleteAllInventoryItemsOfType( TempValue , 0 );      
 
     }
   else 
     {
-      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+      fprintf( stderr , "\n----------------------------------------------------------------------\n\
 ExecuteChatExtra: ERROR:  UNKNOWN COMMAND STRING GIVEN!!!!  \n\
 Errorneous string: %s \n\
 \n\
@@ -777,7 +784,7 @@ PrepareMultipleChoiceDialog ( int Enum )
     }
   if ( Background == NULL )
     {
-      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+      fprintf ( stderr , "\n----------------------------------------------------------------------\n\
 PrepareMultipleChoiceDialog: ERROR LOADING BACKGROUND IMAGE FILE!!!!  \n\
 Error code: %s \n\
 Freedroid will terminate now to draw attention to the graphics loading\n\
@@ -844,10 +851,10 @@ TextConditionIsTrue ( char* ConditionString )
 
   if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
     {
-      DebugPrintf ( 0 , "\nCondition String identified as question for mission complete." );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission complete." );
       ReadValueFromString( ConditionString , ":", "%d" , 
 			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( 0 , "\nCondition String referred to mission number: %d." , TempValue );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
 
       if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionIsComplete )
 	return ( TRUE );
@@ -856,10 +863,10 @@ TextConditionIsTrue ( char* ConditionString )
     }
   else if ( CountStringOccurences ( ConditionString , "PointsToDistributeAtLeast" ) )
     {
-      DebugPrintf ( 0 , "\nCondition String identified as question for available skill points to distribute." );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for available skill points to distribute." );
       ReadValueFromString( ConditionString , ":", "%d" , 
 			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( 0 , "\nCondition String mentioned number of points: %d." , TempValue );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned number of points: %d." , TempValue );
 
       if ( Me [ 0 ] . points_to_distribute >= TempValue )
 	return ( TRUE );
@@ -868,10 +875,10 @@ TextConditionIsTrue ( char* ConditionString )
     }
   else if ( CountStringOccurences ( ConditionString , "GoldIsLessThan" ) )
     {
-      DebugPrintf ( 0 , "\nCondition String identified as question for amount of gold Tux has on him." );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for amount of gold Tux has on him." );
       ReadValueFromString( ConditionString , ":", "%d" , 
 			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( 0 , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
 
       if ( Me [ 0 ] . Gold < TempValue )
 	return ( TRUE );
@@ -880,10 +887,10 @@ TextConditionIsTrue ( char* ConditionString )
     }
   else if ( CountStringOccurences ( ConditionString , "MeleeSkillLesserThan" ) )
     {
-      DebugPrintf ( 0 , "\nCondition String identified as question for melee skill lesser than value." );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for melee skill lesser than value." );
       ReadValueFromString( ConditionString , ":", "%d" , 
 			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( 0 , "\nCondition String mentioned level: %d." , TempValue );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned level: %d." , TempValue );
 
       if ( Me [ 0 ] . melee_weapon_skill < TempValue )
 	return ( TRUE );
@@ -976,16 +983,16 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
       //
       while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
 	{
-	  DebugPrintf( 0 , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
 	  if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
 	    {
-	      DebugPrintf( 0 , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
+	      DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
 			   ChatRoster [ MenuSelection ] . on_goto_first_target );
 	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
 	    }
 	  else
 	    {
-	      DebugPrintf( 0 , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
+	      DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
 			   ChatRoster [ MenuSelection ] . on_goto_second_target );
 	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
 	    }
@@ -1023,7 +1030,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 
 	  Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
 	    ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
-	  DebugPrintf ( 0 , "\nChanged chat flag nr. %d to new value %d." ,
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nChanged chat flag nr. %d to new value %d." ,
 			ChatRoster [ MenuSelection ] . change_option_nr[i] ,
 			ChatRoster [ MenuSelection ] . change_option_to_value[i] );
 	}
@@ -1041,7 +1048,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 	  if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
 	    break;
 
-	  DebugPrintf ( 0 , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
+	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
 			ChatRoster [ MenuSelection ] . extra_list[i] );
 
 	  ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] );
