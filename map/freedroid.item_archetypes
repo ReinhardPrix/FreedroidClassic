@@ -1,6 +1,8 @@
- ----------------------------------------------------------------------
+
+----------------------------------------------------------------------
  *
- *  Copyright (c) 2002, 2003 Johannes Prix
+ *   Copyright (c) 2003 Johannes Prix
+ *
  *
  *  This file is part of Freedroid
  *
@@ -21,15 +23,15 @@
  *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG items editor.
+This file was generated using the FreedroidRPG item editor.
 If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-You can use this text field to make some notes on anything.  These otes will get saved with the items file.
-This is intended purely for the author's reference when using the items editor, while the engine of the game itself will ignore this entry.
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
 
 END OF AUTORS NOTES
 
@@ -66,10 +68,6 @@ Picture number=7
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -110,10 +108,6 @@ Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=50
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -152,10 +146,6 @@ Picture number=0
 Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=150
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -196,10 +186,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=350
 Item description text="The twin laser is small, but does its job. A somewhat cheap weapon but effective."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
@@ -238,10 +224,6 @@ Picture number=3
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=900
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -282,10 +264,6 @@ Item uses drop sound with filename="Item_Drop_Sound_1.wav"
 Base list price=27
 Item description text="These simple boots are designed for comfort of the wearer more than to give actual protection."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=5.000000
-Item drive acceleration=4.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -324,10 +302,6 @@ Picture number=1
 Item uses drop sound with filename="Item_Drop_Sound_2.wav"
 Base list price=1
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -368,10 +342,6 @@ Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
 Base list price=100
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=3.000000
-Item drive acceleration=3.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -410,10 +380,6 @@ Picture number=8
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=5.000000
-Item drive acceleration=9.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -454,10 +420,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=300
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=6.000000
-Item drive acceleration=9.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -496,10 +458,6 @@ Picture number=11
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=2.000000
-Item drive acceleration=6.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -540,10 +498,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
 Item description text="These boots are similar to the simple boots, but the material used is specially hardend, so that they last longer and also give improved protection."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=7.000000
-Item drive acceleration=6.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -582,10 +536,6 @@ Picture number=14
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=600
 Item description text="In the superior class of the laser family, the laser rifle is best known for its consistency in tight situations."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
 Item as gun: speed of bullets=16.000000
@@ -626,10 +576,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1200
 Item description text="While this weapon is capable of firing quite powerful shots, beware of the exceptionally long loading times.  (Don't get swarmed by enemies with this weapon unless you got powerful armour!)"
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=3.000000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
@@ -668,10 +614,6 @@ Picture number=13
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=2500
 Item description text=" This weapons name speaks for itself-more of a brute force weapon than most, it is best used on high defense enemies."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.000000
 Item as gun: speed of bullets=16.000000
@@ -712,10 +654,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=800
 Item description text="Think of the laser rifle with twice the power, the twin laser has made a name for itself with its high power."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=1.400000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
@@ -754,10 +692,6 @@ Picture number=2
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=250
 Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.200000
 Item as gun: speed of bullets=16.000000
@@ -798,10 +732,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5000
 Item description text="This bad boy has been known to blow away enemies with a single blast. A dangerous weapon that you dont want to be on the receiving end of."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.150000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
@@ -840,10 +770,6 @@ Picture number=23
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=12500
 Item description text="Defense is acquired at a high level with this durable piece of armor."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -884,10 +810,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=30
 Item description text="Your run of the mill shield, nothing special. Low priced and does its job."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -926,10 +848,6 @@ Picture number=16
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=25
 Item description text="A simple cover for your head. Dont expect to be incognito"
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -970,10 +888,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1012,10 +926,6 @@ Picture number=18
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=100
 Item description text="A basic laser, has good uses in certain situations."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.800000
 Item as gun: speed of bullets=16.000000
@@ -1056,10 +966,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=40
 Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.850000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
@@ -1098,10 +1004,6 @@ Picture number=20
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=350
 Item description text="In an age of high tech guns and lasers, this modified sword still reigns supreme."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.450000
 Item as gun: speed of bullets=0.100000
@@ -1142,10 +1044,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=40
 Item description text="Does a decent job of protection."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1184,10 +1082,6 @@ Picture number=20
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=450
 Item description text=" This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: speed of bullets=0.100000
@@ -1228,10 +1122,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -1270,10 +1160,6 @@ Picture number=25
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=120
 Item description text="A nice handy weapon, a good swing every now and then will prove useful in critical hits."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: speed of bullets=0.010000
@@ -1314,10 +1200,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=75
 Item description text="A light garment that is basically more for looks than defense."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1356,10 +1238,6 @@ Picture number=40
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=200
 Item description text="Very strong for its size, does a good job of absorbing basic blows."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1400,10 +1278,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=300
 Item description text="Tough as nails and able to withstand medium, and some high end blows."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1442,10 +1316,6 @@ Picture number=14
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=450
 Item description text="A melee weapon that requires skill and coordination to use. A fine handler can control one of the finest weapons ever made."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: speed of bullets=8.100000
@@ -1486,10 +1356,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=250
 Item description text="Better than a buckler, but only a bit more effective."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1528,10 +1394,6 @@ Picture number=21
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A reliable weapon whose destructive history is well known over the years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.450000
 Item as gun: speed of bullets=0.100000
@@ -1572,10 +1434,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=240
 Item description text="This saber is poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.450000
 Item as gun: speed of bullets=0.100000
 Item as gun: angle change of bullets=720.000000
@@ -1614,10 +1472,6 @@ Picture number=21
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=310
 Item description text="A short, but sharp and very dangerous sword. Has many uses other than offensive if used correctly."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.850000
 Item as gun: speed of bullets=0.100000
@@ -1658,10 +1512,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=60
 Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.250000
 Item as gun: speed of bullets=0.100000
 Item as gun: angle change of bullets=720.000000
@@ -1700,10 +1550,6 @@ Picture number=19
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=50
 Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal&but then again they didnt have the extra laser edge to depend on. "
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.650000
 Item as gun: speed of bullets=0.100000
@@ -1744,10 +1590,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=50
 Item description text="More of a weapon for those with skill, as this is not known for a brute attack but more of a balanced one."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.550000
 Item as gun: speed of bullets=0.100000
 Item as gun: angle change of bullets=720.000000
@@ -1786,10 +1628,6 @@ Picture number=19
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=80
 Item description text="The power of an axe combined with modern technology is a force to be reckoned with. This easily acquired but much talked about weapon has a storied past."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.350000
 Item as gun: speed of bullets=0.100000
@@ -1830,10 +1668,6 @@ Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=50
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1872,10 +1706,6 @@ Picture number=29
 Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=150
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1916,10 +1746,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=90
 Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -1958,10 +1784,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2002,10 +1824,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2044,10 +1862,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2088,10 +1902,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2130,10 +1940,6 @@ Picture number=34
 Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=100
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2174,10 +1980,6 @@ Item uses drop sound with filename="potion_drop_sound.wav"
 Base list price=100
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2216,10 +2018,6 @@ Picture number=36
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=75
 Item description text="A rather useful helmet, has a few defense issues here and there but mainly is worth the wear."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2260,10 +2058,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2302,10 +2096,6 @@ Picture number=42
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2346,10 +2136,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=175
 Item description text="Now this is head protection. Feel safe with sturdy iron protecting your head. Not as comfortable as other hats"
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2388,10 +2174,6 @@ Picture number=38
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=275
 Item description text="Top of the line head gear, manages to protect against a myriad of close range and long range attacks."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2432,10 +2214,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=375
 Item description text="Used by select fighter this helmet is very hard to penetrate. Can be counted on for a long amount of time, and if taken care of can be used frequently."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2474,10 +2252,6 @@ Picture number=44
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=450
 Item description text="A powerful shield in large size."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2518,10 +2292,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=12
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2560,10 +2330,6 @@ Picture number=65
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=15
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2604,10 +2370,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=150
 Item description text="This is a common teleporter service toolbox.  It's complete and orderly, though a few dents on the outside give prof of frequent use.  'C. Dixon' is carved into the outside with fine print."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2646,10 +2408,6 @@ Picture number=12
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5000
 Item description text="This is one of the most powerful ranged weapons in the game."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.350000
 Item as gun: speed of bullets=16.000000
@@ -2690,10 +2448,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2732,10 +2486,6 @@ Picture number=49
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2776,10 +2526,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robot types."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2818,10 +2564,6 @@ Picture number=51
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2862,10 +2604,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2904,10 +2642,6 @@ Picture number=54
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1
 Item description text="This is the most common ammunition for modern plasma weapons."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2948,10 +2682,6 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=2
 Item description text="This is standard ammunition for most modern laser rifles."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -2990,10 +2720,6 @@ Picture number=55
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5
 Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3034,10 +2760,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial vmx wave spell."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3076,10 +2798,6 @@ Picture number=57
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=150
 Item description text="This grenade has about the same effect as the dreaded radial emp wave spell."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3120,10 +2838,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=32
 Item description text="What would modern science be without this important item?"
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3162,10 +2876,6 @@ Picture number=59
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial fire wave spell."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3206,10 +2916,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=32
 Item description text="Not even the most primitive of civilisations can survive even for the shortest time without a large supply of those close by."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3248,10 +2954,6 @@ Picture number=45
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
 Item description text="These dilitium crystals are used as energy source in many modern electricity or heat based devices.  Energy is extracted from the crystal by making use of the energy contained in the order of the crystal molecules.  This principle has allowed to build devices that while consuming a lot of energy do not need to be connected to a power line."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3292,10 +2994,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
 Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings.  Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user.  Still, the collected map data will be split up by the device into several sectors for convenient viewing."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3334,10 +3032,6 @@ Picture number=61
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise strength within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3378,10 +3072,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise dexterity within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3420,10 +3110,6 @@ Picture number=62
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise magic within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3464,10 +3150,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net.  The galaxy-wide guild of medics has recommended not to respond to these adds at all, while attempts to entirely ban the distribution of those pills was never completely successful."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3506,10 +3188,6 @@ Picture number=64
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3550,10 +3228,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3592,10 +3266,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3636,10 +3306,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3678,10 +3344,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3722,10 +3384,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3764,10 +3422,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3808,10 +3462,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3850,10 +3500,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3894,10 +3540,6 @@ Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -3936,10 +3578,6 @@ Picture number=32
 Item uses drop sound with filename="book_drop_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3980,10 +3618,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4022,10 +3656,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4066,10 +3696,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4108,10 +3734,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4152,10 +3774,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4194,10 +3812,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4238,10 +3852,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4280,10 +3890,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4324,10 +3930,6 @@ Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4366,10 +3968,6 @@ Picture number=66
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4410,10 +4008,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4452,10 +4046,6 @@ Picture number=19
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
@@ -4496,10 +4086,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4538,10 +4124,6 @@ Picture number=19
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
@@ -4582,10 +4164,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4624,10 +4202,6 @@ Picture number=19
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
@@ -4668,10 +4242,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4710,10 +4280,6 @@ Picture number=19
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
@@ -4754,10 +4320,6 @@ Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4796,10 +4358,6 @@ Picture number=19
 Item uses drop sound with filename="sword_drop_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: speed of bullets=0.010000
@@ -4840,10 +4398,6 @@ Item uses drop sound with filename="Item_Drop_Sound_1.wav"
 Base list price=200
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=5.000000
-Item drive acceleration=4.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4882,10 +4436,6 @@ Picture number=4
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=450
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
------ the following part is only relevant for weapons -----
-Item drive maxspeed=7.000000
-Item drive acceleration=6.000000
------ end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -4926,10 +4476,6 @@ Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=120
 Item description text="A mace, good for crushing bones."
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
@@ -4969,10 +4515,6 @@ Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=1000
 Item description text="This isn't really any item of the game.  It's just a dummy/error value!"
 ----- the following part is only relevant for weapons -----
-Item drive maxspeed=0.000000
-Item drive acceleration=0.000000
------ end of part that is only relevant for weapons -----
------ the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
@@ -4990,6 +4532,8 @@ Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
+
+
 
 *** End of item data section: ***
 
