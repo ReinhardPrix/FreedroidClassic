@@ -92,6 +92,7 @@ BigGraphicsInsertPosX=8 BigGraphicsInsertPosY=23 BigGraphicsInsertType=4
 BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
 BigGraphicsInsertPosX=29 BigGraphicsInsertPosY=29 BigGraphicsInsertType=5 
 BigGraphicsInsertPosX=29 BigGraphicsInsertPosY=25 BigGraphicsInsertType=5 
+BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
 End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -1038,7 +1039,7 @@ beginning_of_map
  11   0   0  11   0  11   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33   7  10   3   0   0   0   0   0  11   0   0   0   0   0   0   0   0  11 
  11   0   0   1  18   3   0   0  24  11  33  33  33  33  33  33  33  33  33  33   7  10   3   0   0   0   0   0   0   0  11   0  15  14   0   0   0   0   0  11 
  11  12   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33   7  10   3   0   0   0   0   0   0   0   0   0  11   0  15  14   0   0   0   0   0  11 
-  1  10  10  10  10  10  10   9  32  11  33  33  33  33  33  33   7  10   3   0   0   0   0   0   7  10   9   0   0   0  11   0   0   0   0   0   0   0   0  11 
+  1  10  10  10  10  10  10   9   0  11  33  33  33  33  33  33   7  10   3   0   0   0   0   0   7  10   9   0   0   0  11   0   0   0   0   0   0   0   0  11 
  33  33  33  33  33  33  33   4  18   6  33  33  33  33   7  10   3   0   0   0   0   0   7  10   3  33  11   0   0   0  11   0   0  17   0  52   0  50  49  11 
  33  33  33  33  33  33  33  11   0  11  33  33   7  10   3   0   0   0   0   0   7  10   3  33  33  33  11   0   0   0  11  15  13  16  13  16  15  13  17  11 
   7  10  10  10   8  10  10   6   0   1  10  10   3   0   0   0   0   0   7  10   3  33  33  33  33  33  11   0   0   0   4  10  10  10  10  10  10  10  10   3 
@@ -1067,6 +1068,7 @@ beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
+PosX=24 PosY=5 Statement=""
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
@@ -1079,12 +1081,12 @@ End of pure items information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   7 y=   1	 connections:    4   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   4 y=   4	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=   4 y=   4	 connections:    6  30  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=   1 y=  10	 connections:    5   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=   7 y=  11	 connections:    7   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  5 x=   3 y=  12	 connections:    6   3   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=   4 y=  12	 connections:    5   7   2  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=   8 y=  12	 connections:    4   6   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=   4 y=  12	 connections:    5   7   2  29  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=   8 y=  12	 connections:    4   6   5  31  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  8 x=  35 y=   3	 connections:    9  11  12  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  9 x=  36 y=   3	 connections:    8  12  10  11  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 10 x=  37 y=   3	 connections:    9  11  12  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1103,36 +1105,36 @@ Nr.= 22 x=  35 y=  13	 connections:   21  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 23 x=  34 y=  13	 connections:   21  22  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 24 x=  35 y=   9	 connections:   14  25  16  15  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 25 x=  36 y=   9	 connections:   24  16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 33 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 35 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 36 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 37 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 38 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 39 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 40 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 41 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 42 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 43 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 44 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 45 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 46 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 47 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 48 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 49 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 50 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 51 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 52 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 53 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 54 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 55 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=   4 y=   7	 connections:   28  27  30  29  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=   3 y=   7	 connections:   26  30  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=   5 y=   7	 connections:   26  30  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=   4 y=   8	 connections:   26  27  28   6  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 30 x=   4 y=   6	 connections:   27  28  26   2  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 31 x=   8 y=  18	 connections:   32   7  38  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 32 x=   3 y=  18	 connections:   31  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 33 x=  13 y=  30	 connections:   35  34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 34 x=  12 y=  30	 connections:   33  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 35 x=  13 y=  31	 connections:   36  33  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 36 x=  15 y=  31	 connections:   35  37  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 37 x=  15 y=  32	 connections:   36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 38 x=  13 y=  18	 connections:   31  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 39 x=  24 y=   5	 connections:   43  42  40  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 40 x=  22 y=   4	 connections:   43  39  41  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 41 x=  20 y=   5	 connections:   43  40  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 42 x=  22 y=   6	 connections:   43  39  41  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 43 x=  22 y=   5	 connections:   39  40  42  41  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 44 x=  28 y=  35	 connections:   47  48  46  49  45  -1  -1  -1  -1  -1  -1  -1
+Nr.= 45 x=  27 y=  36	 connections:   49  47  46  44  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 46 x=  28 y=  37	 connections:   49  47  44  45  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 47 x=  29 y=  36	 connections:   46  44  48  45  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 48 x=  29 y=  34	 connections:   44  47  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 49 x=  26 y=  37	 connections:   46  45  44  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 50 x=   2 y=  36	 connections:   52  55  51  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 51 x=   5 y=  36	 connections:   53  54  50  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 52 x=   3 y=  35	 connections:   50  54  55  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 53 x=   4 y=  37	 connections:   55  51  54  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 54 x=   4 y=  35	 connections:   51  52  53  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 55 x=   3 y=  37	 connections:   50  53  52  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 56 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 57 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 58 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
