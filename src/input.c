@@ -852,10 +852,26 @@ ReactToSpecialKeys(void)
 
   //--------------------
   // The 'Esc' key is assigned to the big main menu, the so called
-  // Escape Menu.
+  // Escape Menu.  But this will only pop up, if there were no screens
+  // open at that time.  Otherwise, the 'Esc' key will just be interpreted
+  // as a 'close-all-screens' button.
   //
   if ( EscapePressed() )
-    EscapeMenu ();
+  {
+      if ( GameConfig . Inventory_Visible ||
+	   GameConfig . CharacterScreen_Visible ||
+	   GameConfig . SkillScreen_Visible )
+      {
+	  GameConfig . Inventory_Visible = FALSE ;
+	  GameConfig . CharacterScreen_Visible = FALSE ;
+	  GameConfig . SkillScreen_Visible = FALSE ;
+	  while ( EscapePressed() );
+      }
+      else
+      {
+	  EscapeMenu ();
+      }
+  }
 
   //--------------------
   // The 'P' key is assigned to pause mode.
