@@ -45,6 +45,8 @@ void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
 EXTERN void LevelEditor(void);
+extern int MyCursorX;
+extern int MyCursorY;
 
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
@@ -362,6 +364,64 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 }; // int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , ... 
 
 /* ----------------------------------------------------------------------
+ * Without destroying or changing anything, this function should determine
+ * how many lines of text it takes to write a string with the current 
+ * font into the given rectangle, provided one would start at the left
+ * side as one usually does...
+ * ---------------------------------------------------------------------- */
+int
+GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
+{
+  SDL_Surface* BackupOfScreen;
+  int BackupOfMyCursorX, BackupOfMyCursorY;
+  int TextLinesNeeded;
+  int i;
+  int TestPosition;
+
+  //--------------------
+  // First we make a backup of everything, so that we don't destory anything.
+  //
+  BackupOfScreen = Screen ; 
+  BackupOfMyCursorX = MyCursorX;
+  BackupOfMyCursorY = MyCursorY;
+  Screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp, 0, 0, 0, 0);
+
+  //--------------------
+  // Now in our simulated environment, we can blit the Text and see how many lines it takes...
+  //
+  MyCursorX = GivenRectangle . x ;
+  MyCursorY = GivenRectangle . y ;
+  TestPosition = MyCursorY ;
+  DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle );
+
+  //--------------------
+  // Now we estimate how many lines that must have meant...
+  //
+  for ( i = 0 ; i < 10 ; i ++ )
+    {
+      if ( MyCursorY == TestPosition ) 
+	{
+	  break;
+	}
+      TestPosition += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+    }
+
+  TextLinesNeeded = i + 1 ;
+  DebugPrintf ( 0 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
+
+  //--------------------
+  // Now that we have found our solution, we can restore everything back to normal
+  //
+  SDL_FreeSurface ( Screen );
+  Screen = BackupOfScreen ;
+  MyCursorX = BackupOfMyCursorX;
+  MyCursorY = BackupOfMyCursorY;
+
+  return ( TextLinesNeeded );
+
+}; // int GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window )
+
+/* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
  * keyboard or mouse wheel.
  * ---------------------------------------------------------------------- */
@@ -369,31 +429,29 @@ int
 ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem , char* BackgroundToUse , void* MenuFont )
 {
   int h = FontHeight (GetCurrentFont());
-  int i;
+  int i , j ;
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
 #define ITEM_DIST 50
   int MenuPosX[20] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
   int MenuPosY[20] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
       90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
+  int MenuOptionLineRequirement[20] ;
   SDL_Rect Choice_Window;
   SDL_Rect HighlightRect;
+  int MaxLinesInMenuRectangle;
 
   //--------------------
-  // This is the old (before Bastians redesign) choice window:
-  //
-  // Choice_Window.x= 260; Choice_Window.y=60; Choice_Window.w=640 - 10 - 260; Choice_Window.h= 480 - 60;
-  // 
-  // Now we have a new design:
+  // Now we set some viable choice window and we compute the maximum number of lines
+  // that will still fit well into the choice window.
   //
   Choice_Window . x = 35; Choice_Window . y = 340; Choice_Window . w = 640 - 70; Choice_Window . h = 110;
+  MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+  DebugPrintf ( 0 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
 
   //--------------------
-  // At first we hide the mouse cursor, so that there can not be any
-  // ambiguity whether to think of the tux cursor or the mouse cursor
-  // to be the pointer we use.
-  //
-  // SDL_ShowCursor( SDL_DISABLE );
+  // We make sure the mouse cursor is visible, so that the user can
+  // see where he's clicking...
   //
   SDL_ShowCursor( SDL_ENABLE );
 
@@ -410,13 +468,28 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   NumberOfOptionsGiven = i;
 
   //--------------------
+  // At first we find out how many lines, i.e. what height each of the menu
+  // options should have...  Based on that we can then determine the right
+  // line distances and the right highlight-rectangle-size for each menu option.
+  //
+  for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
+    {
+      MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window );
+    }
+  
+  //--------------------
   // Now that we have a new choice window, we should automatically compute the right
   // positions for the various chat alternatives.
   //
   for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
     {
       MenuPosX[ i ]  = Choice_Window . x ;
-      MenuPosY[ i ]  = Choice_Window . y + i * Choice_Window .h / NumberOfOptionsGiven ;
+      MenuPosY[ i ]  = Choice_Window . y ;
+      // + i * Choice_Window .h / NumberOfOptionsGiven ;
+      for ( j = 0 ; j < i ; j ++ )
+	{
+	  MenuPosY[ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+	}
     }
 
   //--------------------
@@ -448,18 +521,14 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       HighlightRect.x = MenuPosX[ MenuPosition -1 ] - 0 * h ;
       HighlightRect.y = MenuPosY[ MenuPosition -1 ] ;
       HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 0 * h ;
-      HighlightRect.h = h;		    
+      HighlightRect.h = MenuOptionLineRequirement [ MenuPosition - 1 ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
       HighlightRectangle ( Screen , HighlightRect );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
-	  // PutString ( Screen ,  MenuPosX[i] , MenuPosY[i] , MenuTexts[ i ] );
 	  DisplayText ( MenuTexts[i] , MenuPosX[i] , MenuPosY[i] , &Choice_Window );
 	}
-
-      // if ( strlen( InitialText ) > 0 ) DisplayText ( InitialText , 50 , 50 , NULL );
-
 
       SDL_Flip( Screen );
   
