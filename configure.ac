@@ -74,21 +74,23 @@ you need the SDL_mixer library if you want sound!
 --> compiling without sound support]))
 
 
- Checks for header files.
+# Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
 			  unistd.h dirent.h getopt.h sys/soundcard.h])
 
- Checks for typedefs, structures, and compiler characteristics.
+# Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 
- Checks for library functions.
+# Checks for library functions.
 AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
 
+dnl Don't Check for getopt_long 
+dnl just use bundled version like hello does, and gnuchess
 
 
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
@@ -99,8 +101,3 @@ AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile
 		graphics/lanzz_theme/Makefile])
 
 AC_OUTPUT
-
-
-
-
-
