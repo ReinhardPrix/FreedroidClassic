@@ -812,6 +812,31 @@ TextConditionIsTrue ( char* ConditionString )
       else
 	return ( FALSE );
     }
+  else if ( CountStringOccurences ( ConditionString , "PointsToDistributeAtLeast" ) )
+    {
+      DebugPrintf ( 0 , "\nCondition String identified as question for available skill points to distribute." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( 0 , "\nCondition String mentioned number of points: %d." , TempValue );
+
+      if ( Me [ 0 ] . points_to_distribute >= TempValue )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
+  else if ( CountStringOccurences ( ConditionString , "GoldIsLessThan" ) )
+    {
+      DebugPrintf ( 0 , "\nCondition String identified as question for amount of gold Tux has on him." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( 0 , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
+
+      if ( Me [ 0 ] . Gold < TempValue )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
+
 
   fprintf (stderr, "\n\
 ----------------------------------------------------------------------\n\
@@ -881,15 +906,21 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
       // Now a menu section has been made.  We do the reaction:
       // say the samples and the replies, later we'll set the new option values
       //
-      // PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+      // But it might be the case that this option is more technical and not accompanied
+      // by any reply.  This case must also be caught.
       //
-      PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+      if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
+	{
+	  // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+	  GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
+			        ChatRoster [ MenuSelection ] . option_sample_file_name ) ;
+	}
       
       //--------------------
       // Maybe there was an ON-GOTO-CONDITION specified for this option.
       // Then of course we have to jump to the new location!!!
       //
-      if ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+      while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
 	{
 	  DebugPrintf( 0 , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
 	  if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
@@ -1043,6 +1074,20 @@ ChatWithFriendlyDroid( int Enum )
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
       //--------------------
+      // We clean out the chat roster from any previous use
+      //
+      InitChatRosterForNewDialogue(  );
+
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "SOR" );
+
+      DoChatFromChatRosterData( 0 , PERSON_SOR , Enum );
+
+      return;
+
+      //--------------------
       // Now we do the dialog with SOR...
       //
       PrepareMultipleChoiceDialog( Enum );
@@ -1178,6 +1223,8 @@ ChatWithFriendlyDroid( int Enum )
       return; 
       
     }
+
+
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
     {
@@ -1405,159 +1452,9 @@ ChatWithFriendlyDroid( int Enum )
 
       //--------------------
       // Since there won't be anyone else to talk to when already having
-      // talked to the STO, we can safely return here.
-      //
-      return; 
-
-
-      PrepareMultipleChoiceDialog( Enum );
-
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " Is everything alright with the teleporter system?" ; 
-      DialogMenuTexts [ 2 ] = " Maybe I can help somehow." ; 
-      DialogMenuTexts [ 3 ] = " I'll go give it a try." ; 
-      DialogMenuTexts [ 4 ] = " Sorry, this does not really sound like something I could do." ; 
-      DialogMenuTexts [ 5 ] = " I have found your toolset. Here you are. " ; 
-      DialogMenuTexts [ 6 ] = " Where do all these teleporters lead to?" ; 
-      DialogMenuTexts [ 7 ] = " About this toolset you're missing..." ; 
-      DialogMenuTexts [ END_ANSWER ] = " END ";
-
-      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
-
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
-	}
-      else
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
-
-	  if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
-	       ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
-	    {
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
-
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
-	    }
-	}
-
-      while (1)
-	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_DIX ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp." , "DIX_Hello_And_Welcome_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 1 ; // don't say this twice...
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
-	      if ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE )
-		{
-		  GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_On_The_Contrary_0.wav" );
-		  GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Its_A_Pitty_0.wav" );
-		  GiveSubtitleNSample( "But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots." , "DIX_It_All_Happend_0.wav" );
-		  GiveSubtitleNSample( "I must have lost it down there and we had to seal the entrance." , "DIX_I_Must_Have_0.wav" );
-		  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 0 ; // don't say this twice...
-		  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 1 ; // now you can offer help...
-		}
-	      else
-		{
-		  GiveSubtitleNSample( "Basically the teleporter system is now working again." , "DIX_Basically_The_Teleporter_0.wav" );
-		  GiveSubtitleNSample( "But it's still locked since we don't have the calibration data from the other cities." , "DIX_But_Its_Still_0.wav" );
-		  GiveSubtitleNSample( "Someone needs to go there and collect them by hand.  But that's none of my problems." , "DIX_Someone_Needs_To_0.wav" );
-		  GiveSubtitleNSample( "The person responsible for this part is Arlas, but he isn't in town right now.  So there's nothing we could do." , "DIX_The_Person_Responsible_0.wav" );
-		}
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Maybe_I_Can_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Well, maybe you really could help.  But it would be dangerous to even try." , "DIX_Well_Maybe_You_0.wav" );
-	      GiveSubtitleNSample( "You would have to go down the maintainance teleporter way and fetch me the toolkit." , "DIX_You_Would_Have_0.wav" );
-	      GiveSubtitleNSample( "I'm pretty sure it is still lying around somewhere down there. But it's dangerous." , "DIX_Im_Pretty_Sure_0.wav" );
-	      GiveSubtitleNSample( "Are you sure you really want to try on that?  You better be well prepared." , "DIX_Are_You_Sure_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 1 ; // allow for yes or no answer to this.
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 1 ; // allow for yes or no answer to this.
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 0 ; // end not allowed right now...
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Ill_Go_Give_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Great!  I appreciate that.  I'll unlock the northern maintainance access.  Good Luck." , "DIX_Great_I_Appreciate_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
-	      
-	      //--------------------
-	      // Here we have to start an event, namely to unlock the door mentioned
-	      // above in the comment.  We need to call the right event for this.
-	      //
-	      ExecuteActionWithLabel ( "unlock_northern_maintainance_door" , 0 );
-	      AssignMission ( 4 ); // this should assign the toolbox mission...
-	      break;
-	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Sorry_This_Does_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Maybe it's better this way.  No use to have you torn apart by those rogue bots." , "DIX_Maybe_Its_Better_0.wav" );
-	      GiveSubtitleNSample( "Perhaps later, when you feel more like it, you might want to still give it a try." , "DIX_Perhaps_Later_When_0.wav" );
-	      GiveSubtitleNSample( "You know, just tell me in case you change your mind some time." , "DIX_You_Know_Just_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
-	      break;
-	    case 6:
-	      //--------------------
-	      // At this point we know the Tux has completed the mission and
-	      // should get his reward.
-	      //
-	      PlayOnceNeededSoundSample( "Tux_DIX_I_Have_Found_0.wav" , TRUE );
-	      DeleteAllInventoryItemsOfType( ITEM_DIXONS_TOOLBOX , 0 );
-	      Me [ 0 ] . AllMissions[ 4 ] . MissionIsComplete = TRUE;
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; // don't say this twice...
-
-	      GiveSubtitleNSample( "Oh great!  How did you manage to get that?  Well anyway, thanks a lot." , "DIX_Oh_Great_How_0.wav" );
-	      GiveSubtitleNSample( "With this I'll be able to fix the damage at the teleporters immediately." , "DIX_With_This_Ill_0.wav" );
-	      // GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
-	      break;
-	    case 8:
-	      //--------------------
-	      // At this point we know the Tux has completed the mission and
-	      // should get his reward.
-	      //
-	      PlayOnceNeededSoundSample( "Tux_DIX_About_This_Toolset_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Yes, have you found it?" , "DIX_Have_You_Found_0.wav" );
-	      PlayOnceNeededSoundSample( "Tux_DIX_No_I_Havent_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Keep searching.  I really need this toolset!" , "DIX_Keep_Searching_I_0.wav" );
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 1 ; // from now on, always allow question 1
-	      return;
-	      break;
-	    }
-	}
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
       // talked to the DIX, we can safely return here.
       //
       return; 
-      
     }
 
   //--------------------

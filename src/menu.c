@@ -2102,6 +2102,8 @@ Credits_Menu (void)
    PROGRAMMING:\n\n\
                                       Johannes Prix\n\n\
                                       Reinhard Prix\n\n\n\
+   ADDITIONAL PROGRAMMING:\n\n\
+                                      Leslie Viljonen\n\n\n\
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\
                                       Lanzz\n\n\n\
