@@ -1012,11 +1012,18 @@ GreatItemShow (void)
 	      if (page > 0) page --;
 	      key_pressed = TRUE;
 	    }
+	  else if ( CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      Show_Pointer_List [ ItemIndex ] ->is_identified = TRUE;
+	      key_pressed = TRUE;
+	    }
 
 	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
 	       ! CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
 	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -1292,6 +1299,9 @@ Notes: %s",
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
   if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
+
+  if ( ShowItem->is_identified ) ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_YELLOW );
+  else ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_GREEN );
 
   SDL_Flip (Screen);
 

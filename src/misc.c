@@ -88,7 +88,11 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } } ,
     { NULL , "MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } } ,
     { NULL , "MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } 
+    { NULL , "MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } ,
+
+    { NULL , "ConsoleIdentifyButton_green.png"  , {  50 ,   5 , 100 ,  50 } } ,
+    { NULL , "ConsoleIdentifyButton_red.png"    , {  50 ,   5 , 100 ,  50 } } ,
+    { NULL , "ConsoleIdentifyButton_yellow.png" , {  50 ,   5 , 100 ,  50 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
