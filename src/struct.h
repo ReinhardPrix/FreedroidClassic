@@ -633,7 +633,7 @@ typedef struct
   int lastwaypoint;		// the waypoint from whence this robot just came
   int Status;			// current status like OUT=TERMINATED or not OUT
 
-  int combat_state;             // UNAWARE_OF_TUX, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION
+  int combat_state;             // UNAWARE_OF_TUX, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION...
 
   float frozen;                 // is this droid currently frozen and for how long will it stay this way?
   float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?

@@ -2461,6 +2461,7 @@ ReviveAllDroidsOnShip ( void )
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = MOBILE; // !OUT;
       AllEnemys[i].has_greeted_influencer = FALSE ;
+      AllEnemys[i].combat_state = UNAWARE_OF_TUX ;
     }
 }; // void ReviveAllDroidsOnShip ( void )
 

@@ -355,8 +355,8 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   "This is the skill you must ready in order to open chests or search dead bodies.  To do this, just ready the skill and stand in front of the chest or over the dead body and press the right mouse button to open the chest/corpse looting interface." } ,
   { 0 , "Repair Skill"           , "RepairSkill.png"           , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
   "This skill allows to repair a given item from inventory.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to repair.  While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value." } ,
-  { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill manly used for training purposes.  It is very simple and also of very limited use.  But every adept usually has to learn it sooner or later in the course of his training in making use of the force." } ,
+  { 0 , "Attack with weapon"     , "WeaponSkill.png"           , NULL , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
+  "This is the main weapon skill.  Right clicking somewhere will now cause an attack.  You can still use left click to move around.  In general, peaceful humans will not appreciate people running around with weapons drawn." } ,
   { 1 , "Force -> Energy "       , "FirstAidSpell.png"         , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
   "This is maybe the most vital spell/skill of them all.  With this spell, you can regain some of your health lost in combat for a comparatively little cost of mana." } ,
   { 1 , "Teleport Old Town" , "TeleportHomeSpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
@@ -392,8 +392,8 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   "This skill represents the knowledge of how to extract certain parts, such as entropy inverters from dead bodies of droids.  It is a passive skill, i.e. it is not nescessary to ready this skill in order to use it.  The effect automatically takes place when a dead body of a droid is examined.  Any inverters that can still be used will automatically appear in the dead bodys inventory.This is a skill" } ,
   { 1 , "Ex. Tach. Condensator"  , "ExtractTachyonCondensator.png"  , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
   "This skill represents the knowledge of how to extract certain parts, such as tachyon condensators from dead bodies of droids.  It is a passive skill, i.e. it is not nescessary to ready this skill in order to use it.  The effect automatically takes place when a dead body of a droid is examined.  Any condensators that can still be used will automatically appear in the dead bodys inventory." } ,
-  { 1 , "Unused spell Nr. 19"    , "NoSkillAvailable.png"           , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
+  { 0 , "Force Explosion Ray"    , "ExplosionRaySpell.png"     , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
+  "This is a skill manly used for training purposes.  It is very simple and also of very limited use.  But every adept usually has to learn it sooner or later in the course of his training in making use of the force." } ,
 
 
   { 1 , "Unused spell Nr. 21"    , "NoSkillAvailable.png"      , NULL , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,

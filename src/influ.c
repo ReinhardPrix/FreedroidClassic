@@ -612,37 +612,6 @@ MoveInfluence ( int PlayerNum )
 
   AnimateInfluence ( PlayerNum ) ;	// move the "phase" of influencers rotation
 
-  //--------------------
-  // Now we check if perhaps the influencer is close to some friendly droid
-  // and this friendly droid is also target of the mouse move.  Then of course
-  // a chat with this droid must be initiated.
-  //
-  /*
-  if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
-       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x -
-		Me [ PlayerNum ] . pos . x ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
-       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y -
-		Me [ PlayerNum ] . pos . y ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
-       ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
-	   Me [ PlayerNum ] . pos . z ) == 0 ) )
-    {
-      //--------------------
-      // This whole action only makes sence for FRIENDLY droids of course!
-      //
-      if ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly )
-	{
-	  //--------------------
-	  // We chat with the friendly droid
-	  ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] ) ) ;
-	  
-	  //--------------------
-	  // and then we deactivate this mouse_move_target_is_enemy to prevent
-	  // immediate recurrence of the very same chat.
-	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
-	}
-    }
-  */
-
   if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
        ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
 	   Me [ PlayerNum ] . pos . z ) == 0 ) &&
@@ -1599,6 +1568,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 void
 AnalyzePlayersMouseClick ( int PlayerNum )
 {
+
   DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int PlayerNum ) : real function call confirmed. " ) ;
 
   if ( ButtonPressWasNotMeantAsFire( PlayerNum ) ) return;
@@ -1627,7 +1597,6 @@ AnalyzePlayersMouseClick ( int PlayerNum )
       Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
       return; // no attack motion since no target given!!
     }
-
 
   if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
     {
@@ -1669,6 +1638,8 @@ AnalyzePlayersMouseClick ( int PlayerNum )
 	       ) )
 	  return;
     }
+
+  return;
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if ( Me [ PlayerNum ] .firewait > 0 )
