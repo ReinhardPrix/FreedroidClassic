@@ -1702,7 +1702,7 @@ InitVideo (void)
   blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
   our_SDL_flip_wrapper ( Screen ) ;
 
-  ShowStartupPercentage ( 10 ) ; 
+  ShowStartupPercentage ( 1 ) ; 
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
