@@ -8591,7 +8591,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=16 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -8607,8 +8607,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=16 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=16 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
@@ -8840,7 +8840,6 @@ New item: type=19  X=70.414711  Y=15.728155  AC=1  DoDamage=0  ModifyDamage=0  M
 New item: type=27  X=38.500568  Y=56.310379  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=9.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=66  X=37.647896  Y=55.831619  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=9  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=27  X=31.664930  Y=63.512535  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=19  CurDur=12.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=80  X=49.650000  Y=27.500000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=6  X=35.363293  Y=62.329144  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=2  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=39  X=29.846935  Y=63.314075  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=70  CurDur=27.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=0  StrBon=0  StrDex=2  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=0 
 End of pure items information for this level
@@ -8857,6 +8856,7 @@ New item: type=93  X=41.500000  Y=17.250000  AC=0  DoDamage=0  ModifyDamage=0  M
 New item: type=73  X=38.911911  Y=29.688046  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=71  X=38.911911  Y=29.688046  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=5  X=38.911911  Y=29.688046  AC=4  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=6.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
+New item: type=80  X=49.419998  Y=26.580000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure chest item information for this level
 wp
 Nr.=  0 x=  14 y=  20 rnd=0	 connections:    1   2
