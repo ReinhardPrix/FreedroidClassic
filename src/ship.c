@@ -42,8 +42,6 @@
 
 int NoKeyPressed (void);
 
-int ConsoleMenuPos=0;
-
 
 /*-----------------------------------------------------------------
  * @Desc: does all the work when we enter a lift
@@ -501,91 +499,74 @@ This function runs the consoles. This means the following duties:
 void
 EnterKonsole (void)
 {
-  int ReenterGame = 0;
-  int TasteOK;
+  int finished = FALSE;
+  int menu_pos = 0;
+  int key;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
   Me.status = CONSOLE;
 
-  SetCurrentFont( Para_BFont );
-
   Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
+
+  SetCurrentFont( Para_BFont );
+  SDL_SetClipRect ( Screen , NULL );
 
   while (SpacePressed ());  /* wait for user to release Space */
 
-  ConsoleMenuPos=0;
-
-  /* Gesamtkonsolenschleife */
-
-  while (!ReenterGame)
+  while (!finished)
     {
-
-      PaintConsoleMenu ();
+      PaintConsoleMenu (menu_pos);
       SDL_Flip (Screen);
 
-      /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
-      TasteOK = 0;
-      while (!TasteOK)
+      key = getchar_raw();
+      switch (key)
 	{
-	  if (UpPressed ())
-	    {
-	      ConsoleMenuPos--;
-	      TasteOK = 1;
-	    }
-	  if (DownPressed ())
-	    {
-	      ConsoleMenuPos++;
-	      TasteOK = 1;
-	    }
-	  if ( SpacePressed () )
-	    TasteOK = 1;
-	  if ( EscapePressed() )
-	    {
-	      TasteOK = 1;
-	      ReenterGame = TRUE;
-	      while ( EscapePressed() );
-	    }
-	}
+	case SDLK_DOWN:
+	  if (menu_pos < 3) menu_pos++;
+	  break;
+	case SDLK_UP:
+	  if (menu_pos > 0) menu_pos--;
+	  break;
 
-      /* Verhindern, da"s der Menucursor das Menu verl"a"st */
-      if (ConsoleMenuPos < 0)
-	ConsoleMenuPos = 0;
-      if (ConsoleMenuPos > 3)
-	ConsoleMenuPos = 3;
+	case SDLK_SPACE:
+	case SDLK_RETURN:
+	  switch (menu_pos)
+	    {
+	    case 0:
+	      finished = TRUE;
+	      break;
+	    case 1:
+	      GreatDruidShow ();
+	      break;
+	    case 2:
+	      ClearGraphMem();
+	      ShowDeckMap (CurLevel);
+	      getchar_raw();
+	      SetCombatScaleTo( 1 );
+	      break;
+	    case 3:
+	      ClearGraphMem();
+	      ShowLifts (CurLevel->levelnum, -1);
+	      getchar_raw();
+	      break;
+	    default:
+	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
+	      Terminate(-1);
+	      break;
+	    } /* switch menu_pos */
+	  break;
 
-      /* gew"ahlte Menupunkte betreten */
-      if ((ConsoleMenuPos == 0) & (SpacePressed ()))
-	ReenterGame = TRUE;
-      if ((ConsoleMenuPos == 1) & (SpacePressed ()))
-	GreatDruidShow ();
-      if ((ConsoleMenuPos == 2) & (SpacePressed ()))
-	{
-	  ShowDeckMap (CurLevel);
-	  /* this is not very elegant at the moment, but it works ok.. */
-	  while ( SpacePressed() );  /* wait for space-release */
-	  while (!SpacePressed () ); /* and wait for another space before leaving */
-	  // Now that we leave, we restore the combat screen scaling factor..
-	  // if ( CurrentCombatScaleFactor == 1 ) ReInitPictures();
-	  // else {
-	  // if ( CurrentCombatScaleFactor != 0.5 ) SetCombatScaleTo( CurrentCombatScaleFactor );
-	  // }
-	  SetCombatScaleTo( 1 );
-	  while ( SpacePressed() ); /* but also wait for the release before going on..*/
-	}
-      if ((ConsoleMenuPos == 3) & (SpacePressed ()))
-	{
-	  while (SpacePressed ());
-	  ClearGraphMem();
-	  ShowLifts (CurLevel->levelnum, -1);
-	  while (!SpacePressed ());
-	  while (SpacePressed ());
-	}
+	case SDLK_ESCAPE:
+	  finished = TRUE;
+	  break;
 
-      while (DownPressed ());
-      while (UpPressed ());
-    }				/* (while !ReenterGane) */
+	default:
+	  break;
+	} /* switch key */
+
+    } /* while (!finished) */
 
   Me.status = MOBILE;
   ClearGraphMem ( );
@@ -612,19 +593,15 @@ EnterKonsole (void)
  *
  *-----------------------------------------------------------------*/
 void
-PaintConsoleMenu (void)
+PaintConsoleMenu (int menu_pos)
 {
   char MenuText[1000];
 
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
 
-  ClearGraphMem ();
-
-  SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
-
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE |BANNER_FORCE_UPDATE);
 
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
@@ -640,11 +617,9 @@ PaintConsoleMenu (void)
   DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
   /*
-   * Hier werden die Icons des Menus ausgegeben
-   *
+   * display the console menu-bar
    */
-
-  SourceRectangle.x=(CONS_MENU_LENGTH+2)*ConsoleMenuPos;
+  SourceRectangle.x=(CONS_MENU_LENGTH+2)*menu_pos;
   SourceRectangle.y=0;
   SourceRectangle.w=CONS_MENU_LENGTH;
   SourceRectangle.h=CONS_MENU_HEIGHT;
@@ -655,261 +630,112 @@ PaintConsoleMenu (void)
 }	// PaintConsoleMenu ()
 
 /*@Function============================================================
-@Desc: Zeigt alle erlaubten Roboter.
-
+@Desc: Allows viewing of all droid specs for droids <= your current droid
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 void
 GreatDruidShow (void)
 {
-  char InfoText[1000];
-  int Infodroid;
-  int LeaveThisInformationPart;
-  char PassOn = 0;
+  int droidtype;
+  int key;
+  int finished;
+  int page;
 
-  DebugPrintf (2, "\nvoid GreadDruidShow(void): Function call confirmed.");
+  droidtype = Me.type;
+  page = 0;
 
-  // wait for user to release the space, that has been pressed for transfer-mode
-  while (SpacePressed ()) ;
-
-  for (Infodroid = Me.type; Infodroid > -1;)
+  finished = FALSE;
+  while (!finished)
     {
+      show_droid_info (droidtype, page);
 
-      //--------------------
-      // At first we print out the most general information about this droid
-      //
-      
-      LeaveThisInformationPart = FALSE;
-      while ( !LeaveThisInformationPart )
+      key = getchar_raw();
+      switch (key)
 	{
+	case SDLK_ESCAPE:
+	  finished = TRUE;
+	  break;
+	case SDLK_UP:
+	  if (droidtype < Me.type) droidtype ++;
+	  break;
+	case SDLK_DOWN:
+	  if (droidtype > 0) droidtype --;
+	  break;
+	case SDLK_RIGHT:
+	  if (page < 2) page ++;
+	  break;
+	case SDLK_LEFT:
+	  if (page > 0) page --;
+	  break;
+	default:
+	  break;
+	} /* switch (key) */
 
-	  SDL_SetClipRect ( Screen , NULL );
-	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+    } /* while !finished */
 
-	  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  Infodroid );
+  return;
+} /* GreatDroidShow() */
 
-	  sprintf( InfoText, 
-		   "Unit type %s - %s\n\
-Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s",  
-		   Druidmap[Me.type].druidname,
-		   Classname[Druidmap[Me.type].class],
-		   Infodroid+1, 
-		   Classes[Druidmap[Infodroid].class],
-		   Druidmap[Infodroid].height,
-		   Druidmap[Infodroid].weight,
-		   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName,
-		   Brainnames[ Druidmap[Infodroid].brain ]);
+/*------------------------------------------------------------
+ * display infopage page of droidtype
+ *
+ *  does update the screen, no SDL_Flip() necesary !
+ *
+ *------------------------------------------------------------*/
+void 
+show_droid_info (int droidtype, int page)
+{
+  char InfoText[1000];
 
-	  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
-	  SDL_Flip (Screen);
+  SDL_SetClipRect ( Screen , NULL );
+  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
-	  PassOn = 0;
-	  while (!PassOn)
-	    {
-	      if ( EscapePressed () )
-		{
-		  PassOn = 1;
-		  while ( EscapePressed() );
-		  return;
-		}
+  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype);
 
-	      if (UpPressed ())
-		{
-		  PassOn = 1;
-		  Infodroid--;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
-	      
-	      if (DownPressed ())
-		{
-		  Infodroid++;
-		  PassOn = 1;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
+  switch (page)
+    {
+    case 0:
+      sprintf( InfoText, "\
+Unit type %s - %s\n\
+Entry : %d\n\
+Class : %s\n\
+Height : %f\n\
+Weight: %f \n\
+Drive : %s \n\
+Brain : %s", Druidmap[Me.type].druidname, Classname[Druidmap[Me.type].class],
+	       droidtype+1, Classes[Druidmap[droidtype].class],
+	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
+	       ItemMap [ Druidmap[ droidtype ].drive_item ].ItemName,
+	       Brainnames[ Druidmap[droidtype].brain ]);
+      break;
+    case 1:
+      sprintf( InfoText , "\
+Unit type %s - %s\n\
+Armamant : %s\n\
+Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
+	       Classname[Druidmap[droidtype].class],
+	       ItemMap[ Druidmap[droidtype].weapon_item ].ItemName,
+	       Sensornames[ Druidmap[droidtype].sensor1 ],
+	       Sensornames[ Druidmap[droidtype].sensor2 ],
+	       Sensornames[ Druidmap[droidtype].sensor3 ]);
+      break;
+    case 2:
+      sprintf (InfoText, "\
+Unit type %s - %s\n\
+Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
+	       Druidmap[droidtype].notes);
+      break;
+    default:
+      sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
+      break;
+    } /* switch (page) */
 
-	      if (Infodroid > Me.type)
-		Infodroid = DRUID001;
-	      if (Infodroid < DRUID001)
-		Infodroid = Me.type;
-	      
-	      if ( (LeftPressed ()) || (RightPressed ()))
-		{
-		  PassOn = 1;
-		  while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-			 || (DownPressed ())) ;
-		  LeaveThisInformationPart = TRUE;
-		}
-	      if (SpacePressed ())
-		{
-		  while (SpacePressed ()) ;
-		  DebugPrintf (2, "\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
-		  return;
-		}
-	    }
-	}; // while !LeaveThisInformationPart
+  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+  SDL_Flip (Screen);
 
-
-      //--------------------
-      // Next we print the equipment this droid comes with, which includes the sensors he has,
-      // and the fake 'armament' from the original game.
-      //
-
-      LeaveThisInformationPart = FALSE;
-      while ( !LeaveThisInformationPart )
-	{
-	  ClearUserFenster( );
-	  SDL_SetClipRect ( Screen , NULL );
-	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-	  
-	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
-	  
-	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y, &Cons_Rect);
-	  
-	  ShowRobotPicture (Cons_Rect.x, Cons_Rect.y + 2 * FONTHOEHE, Infodroid);
-	  
-	  strcpy (InfoText, "Armamant : ");
-	  // strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
-	  strcat (InfoText, ItemMap[ Druidmap[Infodroid].weapon_item ].ItemName );
-	  strcat (InfoText, "\nSensors  1: ");
-	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor1 ]);
-	  strcat (InfoText, "\n          2: ");
-	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor2 ]);
-	  strcat (InfoText, "\n          3: ");
-	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor3 ]);
-	  
-	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y + FontHeight (Menu_BFont),
-		       &Cons_Rect);
-	  
-	  SDL_Flip (Screen);
-	  
-	  PassOn = 0;
-	  while (!PassOn)
-	    {
-	      if ( EscapePressed () )
-		{
-		  PassOn = 1;
-		  while ( EscapePressed() );
-		  return;
-		}
-
-	      if (UpPressed ())
-		{
-		  PassOn = 1;
-		  Infodroid--;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
-	      
-	      if (DownPressed ())
-		{
-		  Infodroid++;
-		  PassOn = 1;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
-	      
-	      if (Infodroid > Me.type)
-		Infodroid = DRUID001;
-	      if (Infodroid < DRUID001)
-		Infodroid = Me.type;
-	      
-	      if ( (RightPressed ()) || (LeftPressed ()) )
-		{
-		  LeaveThisInformationPart = TRUE;
-		  PassOn = 1;
-		  while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-			 || (DownPressed ())) ;
-		}
-	      if (SpacePressed ())
-		{
-		  while (SpacePressed ()) ;
-		  return;
-		}
-	    }
-	}; // while !LeaveThisInformationPart
-	  
-	  
-      /*
-       * Ausgabe der Informationen bezuglich des Druidhintergrundes
-       *
-       */
-
-      LeaveThisInformationPart = FALSE;
-      while ( !LeaveThisInformationPart )
-	{
-	  SDL_SetClipRect ( Screen , NULL );
-	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-	  
-
-	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
-
-	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y, &Cons_Rect);
-
-	  ShowRobotPicture (Cons_Rect.x, Cons_Rect.y + 2 * FONTHOEHE, Infodroid );
-
-	  strcpy (InfoText, "Notes: ");
-	  strcat (InfoText, Druidmap[Infodroid].notes);
-
-	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y + FontHeight (Menu_BFont),
-		       &Cons_Rect);
-	  
-	  SDL_Flip (Screen);
-      
-	  PassOn = 0;
-	  while (!PassOn)
-	    {
-	      if ( EscapePressed () )
-		{
-		  PassOn = 1;
-		  while ( EscapePressed() );
-		  return;
-		}
-
-	      if (UpPressed ())
-		{
-		  PassOn = 1;
-		  Infodroid--;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
-	      
-	      if (DownPressed ())
-		{
-		  Infodroid++;
-		  PassOn = 1;
-		  // Einem zu schnellen Weiterbl"attern vorbeugen
-		  while (UpPressed () || DownPressed ()) ;
-		}
-	      
-	      if (Infodroid > Me.type)
-		Infodroid = DRUID001;
-	      if (Infodroid < DRUID001)
-		Infodroid = Me.type;
-	      
-	      if ( (RightPressed ()) || (LeftPressed ()) )
-		{
-		  PassOn = 1;
-		  LeaveThisInformationPart = TRUE;
-		  while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-			 || (DownPressed ())) ;
-		}
-	      if (SpacePressed ())
-		{
-		  while (SpacePressed ()) ;
-		  return;
-		}
-	    }
-	}				/* for */
-      
-    }; // while !LeaveThisInformationPart
-  DebugPrintf (2, "\nvoid GreadDruidShow(void): End of function reached.");
-}; // GreatDruidShow() 
+} /* show_droid_info */
 
 
 /*-----------------------------------------------------------------

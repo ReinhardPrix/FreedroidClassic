@@ -421,8 +421,9 @@ EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
+void show_droid_info (int droidtype, int page);
 void ShowLifts (int level, int liftrow);
-void PaintConsoleMenu (void);
+void PaintConsoleMenu (int menu_pos);
 
 /* text.c */
 #undef EXTERN
