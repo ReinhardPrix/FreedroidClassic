@@ -66,10 +66,10 @@
 #define CHARACTERRECT_W (SCREENLEN/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
-#define ENERGY_GAIN_PER_VIT_POINT 10
-#define DAMAGE_GAIN_PER_STR_POINT 10
-#define AC_GAIN_PER_DEX_POINT 10
-#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 15
+#define ENERGY_GAIN_PER_VIT_POINT 4
+#define DAMAGE_GAIN_PER_STR_POINT 2
+#define AC_GAIN_PER_DEX_POINT 1
+#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 3
 
 // #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
@@ -232,6 +232,22 @@ CursorIsOnVitButton( int x , int y )
 void 
 UpdateAllCharacterStats ( void )
 {
+  int BaseExpRequired = 1500;
+
+  //--------------------
+  // Maybe the influencer has reached a new experience level?
+  // Let's check this.
+  // 
+  // if ( Me.exp_level == 1 ) Me.ExpRequired = BaseExpRequired;
+  Me.ExpRequired = BaseExpRequired * ( exp ( ( Me.exp_level - 1 ) * log ( 2 ) ) ) ;
+
+  if ( RealScore > Me.ExpRequired ) 
+    {
+      Me.exp_level ++ ;
+      Me.PointsToDistribute += 5;
+      
+    }
+
 
   //--------------------
   // First we compute the maximum energy of the influencer
@@ -344,8 +360,18 @@ ShowCharacterScreen ( void )
 
   //--------------------
   // Now we can start to fill in the character values:
-  // Strength, Dex, ...
+  // Level, Exp, Strength, Dex, ...
   //
+  sprintf( CharText , "%d", Me.exp_level );
+  DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
+
+  Me.Experience = RealScore;
+  sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
+  DisplayText( CharText , 250 + CharacterRect.x ,  58 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%6ld", Me.ExpRequired ); 
+  DisplayText( CharText , 250 + CharacterRect.x ,  85 + CharacterRect.y , &CharacterRect );
+
   sprintf( CharText , "%d", Me.Strength );
   DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Strength );
@@ -368,12 +394,6 @@ ShowCharacterScreen ( void )
 
   sprintf( CharText , "%d", Me.PointsToDistribute );
   DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
-
-  Me.Experience = RealScore;
-  sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
-  DisplayText( CharText , 250 + CharacterRect.x ,  58 + CharacterRect.y , &CharacterRect );
-  // sprintf( CharText , "%d", Me.Vitality );
-  // DisplayText( CharText , 148 + CharacterRect.x , 227 + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", (int) Druidmap[ DRUID001 ].maxenergy );
   DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );

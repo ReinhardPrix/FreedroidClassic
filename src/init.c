@@ -1714,7 +1714,9 @@ InitNewMissionList ( char *MissionName )
   Me.Strength = 15;
   Me.Dexterity = 15;
   Me.Magic = 15;
-  Me.PointsToDistribute = 5;
+  Me.PointsToDistribute = 15;
+  Me.ExpRequired = 1500;
+  Me.exp_level = 1;
 
   Druidmap[ Me.type ].weapon_item.currently_held_in_hand = FALSE;
   Druidmap[ Me.type ].armour_item.currently_held_in_hand = FALSE;
