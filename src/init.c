@@ -245,11 +245,20 @@ Get_Bullet_Data ( char* DataPointer )
     }
 
   // Not that we know how many bullets are defined in game.dat, we can allocate
-  // a fitting amount of memory.
-  i=sizeof(bulletspec);
-  Bulletmap = MyMalloc ( i * (Number_Of_Bullet_Types + 1) + 1 );
-  DebugPrintf (0, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Droid_Types );
-  DebugPrintf (0, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+  // a fitting amount of memory, but of course only if the memory hasn't been allocated
+  // aready!!!
+  //
+  // If we would do that in any case, every Init_Game_Data call would destroy the loaded
+  // image files AND MOST LIKELY CAUSE A SEGFAULT!!!
+  //
+  if ( Bulletmap == NULL )
+    {
+      i=sizeof(bulletspec);
+      Bulletmap = MyMalloc ( i * (Number_Of_Bullet_Types + 1) + 1 );
+      DebugPrintf (0, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
+      DebugPrintf (0, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+      // getchar();
+    }
 
   //--------------------
   // Now we start to read the values for each bullet type:
@@ -1964,6 +1973,8 @@ void
 InitFreedroid (void)
 {
   struct timeval timestamp;
+
+  Bulletmap=NULL;  // That will cause the memory to be allocated later
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;

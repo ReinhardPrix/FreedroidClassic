@@ -312,6 +312,8 @@ enum _directions
 #define MAX_DOORS_ON_LEVEL 	30
 #define MAX_REFRESHES_ON_LEVEL	10
 
+#define MAX_PHASES_IN_A_BULLET 12
+
 /* Macros */
 #define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)
 #define GrobY (Me.pos.y / INITIAL_BLOCK_HEIGHT)

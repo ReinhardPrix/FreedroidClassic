@@ -14,13 +14,8 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-DONE Put each bullet specification variable under the control of the game.dat file
-DONE Make fash independent of framerate
-DONE Correct the way flash damage is handled:  once and not every frame damage should be done
-
 4. Think of a way new tiles can be incorporated into the game
 5. Add documentation about how to incorporate new map tiles into the game
-6. Add function to select map tile code directly
 
 7. Add additional map tiles:  destroyed console left/right/up/down 
    but only a dummy and leave the details to the creative people
@@ -32,56 +27,34 @@ DONE Correct the way flash damage is handled:  once and not every frame damage s
 
 10. Remove all german from the code
 
+11. Allow for more than one 'phase' of the bullet, especially now that there
+    is only one native picture anyway
+
+12. Enable mod files as well for the background music
+
 *  Add code to animate the autoshooting gun
 *  Add new weapon type: laser: drawing (double) lines from source to target.
 *  Add new weapon type: dumb missile 
 *  Add new weapon type: homing missile
 *  Add old explosions of larger size to make the game graphically more advanced
-*  Add old sparks and lightning flashed on a robot to make the game graphically
+*  Add old sparks and lightning flash on a robot to make the game graphically
    more advanced
 *  Add new third mission with bomb defusal mission target and heavy guard and
    time limit for the defusal of the bomb.
 *  Add surface lift to the asteroid map, that should not be accessible from the start.
 
 
-0. Extend the level Editor
-   DONE Extend the Level Editor to show waypoint connections
-   DONE Extend the Level Editor to allow for resizing of decks
-   DONE Extend the Level Editor to allow for changing of color
-   DONE Extend the Level Editor to allow for changing of deck map
-   DONE Extend the Level Editor to connect new waypoints to other waypoints 
-   f. Allow to change the level name
-   DONE Write doku for the usage of the level editor
-   DONE Do segfault protection from planting tiles outside map structure
-   DONE Allow for more things to be set directly: Elevators & Boxes
-   DONE Add safety/correction check against leading -1 waypoint connections
-   DONE Add a function to specify map tiles to be planted using their number
-        instead of a fixed key.  That should provide a fallback for freshly
-        self-implemented tiles, that do not have their own key sequence in
-        the level-editor yet.
-
-1. Extend the game dat file
-   DONE Add direct control over all individual bullet speeds and damages
-   DONE Add direct control over blast radiuses and blast damages
-
 2. Extend the game/graphics engine
-   DONE Takeover sound should be added
    b. Takeover graphics effect (alpha-blending?) should be added
-   DONE collision damage should be done to the "lighter" droid
    d. dimensions of combat window should be enlarged vertically
    e. use fixed pictures for each droid.  when no image found-->generate generic ones
-   DONE use ints instead of chars to write the map file to the disk
-   DONE introduce friendly droids, that can be added via the droids file
    h. add new tiles: barred door horizontally/vertically (of about wall size)
 
 3. Extend the freedroid world/missions
-   DONE one deck at least.
-   DONE a second deck
-   DONE one elevator connecting them
-   DONE draw a side elevation of the new area
-	(Outline for later:  other settings: )
-         Command cyborg experiment facility (999, 998, 997, ... 990),
-                 Mining community, Police station
+   * (Outline for later:  other settings: )
+   * Command cyborg experiment facility (999, 998, 997, ... 990),
+   * Mining community
+   * Police station, where a rebel is held
              
 4. New combat behaviour
    a. introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
@@ -92,11 +65,6 @@ DONE Correct the way flash damage is handled:  once and not every frame damage s
    e. split up state machines for fireing and movement
    f. movement to new waypoint immediately if threatened by enemy fire
 
-5. Add more doku extra lines to the 
-   a. external game dat file, 
-   b. droids files and 
-   c. mission files.
-
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------
 
@@ -105,8 +73,10 @@ THESE ITEMS ARE OF SECOND PRIORITY:
 
 (?). Restore the rest of the animation of Refreshes
 
-DONE Adapt the crew file format, so that you can enter types by
-     their names instead of their numbers
+(?) Add more doku extra lines to the 
+    a. external game dat file, 
+    b. droids files and 
+    c. mission files.
 
 -1. Write doku on how to control the game
 
@@ -116,11 +86,6 @@ THESE ITEMS ARE OF THIRD PRIORITY:
 (?) Update the task list on the sourceforge
 
 (?) Read more about SDL_net &&  Add networking support
-
-(?) Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
-    this.  This will be good to for later, if someone designs new and better animated
-    bullets with multiple pictures in EACH direction.
-    --->  Will this really make sense?  What if someone designed fine new multicolored shots?
 
 rp
 --

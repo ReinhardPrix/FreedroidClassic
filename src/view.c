@@ -67,10 +67,14 @@ Cent (int Val)
 }
 
 /*@Function============================================================
-@Desc: 
-
+@Desc: There is more than one approach to the problem of disruptor flashes.
+       (*) One solution is to just completely fill the visible screen white and
+           black altenatingly.
+       (*) The other solution is to start in the center and then recursively
+           proceed through the passable tiles and using this method fill 
+           exactly the whole room where you're currently in.  That is perhaps
+           the more sophisticated method.  Right now however, it's disabled.
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
 void
 RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
@@ -628,6 +632,7 @@ PutBullet (int BulletNummer)
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
   SDL_Surface *tmp;
+  int PhaseOfBullet;
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
@@ -662,10 +667,12 @@ PutBullet (int BulletNummer)
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
   TargetRectangle.y = USER_FENSTER_CENTER_Y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
-  // SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
-  // tmp = rotozoomSurface( ne_bullet[CurBullet->type] , 45*CurBullet->phase , 1.0 , FALSE );
-  tmp = rotozoomSurface( ne_bullet[CurBullet->type] , CurBullet->angle , 1.0 , FALSE );
+  PhaseOfBullet = (CurBullet->time_in_seconds * 10 );
+
+  PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
+
+  tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
 
   // SDL_BlitSurface( ne_bullet[CurBullet->type] , NULL, ne_screen , &TargetRectangle );
   SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
@@ -673,7 +680,7 @@ PutBullet (int BulletNummer)
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
-}	/* PutBullet */
+}; // void PutBullet (int Bulletnumber )
 
 /*@Function============================================================
 @Desc:  PutBlast: This function draws a blast into the combat window.

@@ -249,6 +249,8 @@ typedef struct
   int phases;			/* how many phases in motion to show */
   int blast;			/* which blast does this bullet create */
   int oneshotonly;	        /* if this is set, there is only 1 shot */
+  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
+                                                           // the bullet images of this bullet
   SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
 }
 bulletspec, *Bulletspec;
