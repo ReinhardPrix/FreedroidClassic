@@ -184,27 +184,26 @@ void GetDigits(void){
 
 /* *********************************************************************** */
 
-/*@Function============================================================
-@Desc: 	Diese Prozedur isoliert einzelne Teile aus dem momentan angezeigten Bild
-	und legt diese im Speicher ab
-
-	Parameter:
-		unsigned char *screen: Screen, auf dem Grafik steht
-		char *target: Ziel, in das der Block kopiert wird
-					==> muss schon reserviert sein !!
-					
-		Links/Oben : Koordinaten des linken oberen Eck des Blocks
-	
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void IsolateBlock(
-		  unsigned char *screen,
-	unsigned char *target,
-	int BlockEckLinks,
-	int BlockEckOben,
-	int Blockbreite,
-	int Blockhoehe)
+/*-----------------------------------------------------------------
+ *@Desc: Diese Prozedur isoliert einzelne Teile aus *screen
+ *	 angezeigten Bild und legt diese in *target
+ *
+ * Parameter: screen: Screen, auf dem Grafik steht
+ *	      target: Ziel, in das der Block kopiert wird
+ *		==> muss schon reserviert sein !!
+ *					
+ *	Links/Oben : Koordinaten des linken oberen Eck des Blocks
+ *
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void 
+IsolateBlock (unsigned char *screen,
+	      unsigned char *target,
+	      int BlockEckLinks,
+	      int BlockEckOben,
+	      int Blockbreite,
+	      int Blockhoehe)
 {
   int row;
   unsigned char *source;
@@ -217,8 +216,9 @@ void IsolateBlock(
     memcpy(tmp, source, Blockbreite);
     tmp += Blockbreite;
     source += SCREENLEN;
-  }
-} // void IsolateBlock(...)
+  } 
+
+} /* IsolateBlock */
 
 /* ***********************************************************************/
 void GetMapBlocks(void)
@@ -351,76 +351,91 @@ void DisplayBlock(
   // THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER DIRECTLY ACCESSIBLE
   //
 
-    if( screen == RealScreen ) {
-      // printf("\nvoid DisplayBlock(...): screen parameter is NULL... Outputing DIRECTLY!\n");
-      for(i=0;i<height;i++) {
-	for(j=0;j<len;j++) {
-	  vga_setcolor(*source);
-	  source++;
-	  vga_drawpixel(j+x,i+y);
-	}
-      }
-      return;
-    } // if (screen==RealScreen)
-  
-  
-
-  // 
-  // HERE COMES THE OLD STUFF FROM BEFORE THE PORT
-  //
-  
+    if (screen == RealScreen) 
+      {
+	for (i=0;i<height;i++) 
+	  {
+	    for (j=0;j<len;j++) 
+	      {
+		vga_setcolor(*source);
+		source++;
+		vga_drawpixel(j+x,i+y);
+	      } /* for j */
+	  } /* for i */
+      } /*  if (screen==RealScreen) */
+    else
+      {
 	screenpos = screen + y*SCREENLEN + x;
 
-	for( row = 0; row < height; row++ ) {
-		memcpy(screenpos, source, len);
-		screenpos += SCREENLEN;
-		source += len;
-	}
+    	for (row = 0; row < height; row++) 
+	  {
+	    memcpy(screenpos, source, len);
+	    screenpos += SCREENLEN;
+	    source += len;
+	  } /* for row */
+      } /* else */
+    
+    return;
+    
+} /* DisplayBlock */
 
-	return;
-}
-
-
-/*@function============================================================
-@Desc: void DisplayMergeBlock(): setzt Block *block (len*height) an angegebener
-								Bildschirmposition x/y in den angeg. Bildschirm
-								-beachtet dabei TRANSPARENTCOLOR 
-
-						
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void DisplayMergeBlock(
-int x, int y,
-unsigned char *block,
-int len, int height,
-unsigned char *screen)
+/*-----------------------------------------------------------------
+ *@Desc: setzt Block *block (len*height) an angegebener
+ *	Bildschirmposition x/y in den angeg. Bildschirm
+ *	-beachtet dabei TRANSPARENTCOLOR 
+ *						
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void 
+DisplayMergeBlock (int x, int y, unsigned char *block,
+		   int len, int height,
+		   unsigned char *screen)
 {
-	int row, col;
-	unsigned char *Screenpos;
-	unsigned char *source = block;
+  int row, col;
+  unsigned char *Screenpos;
+  unsigned char *source = block;
 
-	if( screen == NULL )
-		return;
-		
-	Screenpos = screen + y*SCREENLEN + x;
 
-	for( row = 0; row < height; row++ ) {
-		for( col = 0; col < len; col ++ ) 
-			if( *source != TRANSPARENTCOLOR ) *Screenpos++ = *source ++;
-			else {
-				Screenpos ++;
-				source ++;
-			}
-		Screenpos += SCREENLEN-len;
-	}
+  if( screen == NULL )
+    return;
 
-	return;
-}
+  /* PORT: we do as Johannes did in DisplayBlock(): */  
+  if (screen == RealScreen ) 
+    {
+      for (col=0;col<height;col++) 
+	{
+	  for (row=0;row<len;row++) 
+	    {
+	      vga_setcolor(*source);
+	      source++;
+	      if (*source != TRANSPARENTCOLOR) vga_drawpixel(row+x,col+y);
+	    } /* for row */
+	} /* for col */
+    } /*  if (screen==RealScreen) */
+  else
+    {
+      for (row = 0; row < height; row++) 
+	{
+	  for (col = 0; col < len; col ++) 
+	    {
+	      if (*source != TRANSPARENTCOLOR ) *Screenpos ++ = *source ++;
+	      else 
+		{
+		  Screenpos ++;
+		  source ++;
+		}
+	    } /* for (col) */
+	} /* for (row) */
+    } /* else */
+
+  return;
+
+} /* DisplayMergeBlock */
 
 /*@Function============================================================
 @Desc: CopyMergeBlock(): copies a block in memory, but doesn't copy
-								Transparent-color 
+		Transparent-color 
 
 @Ret: void
 @Int:
