@@ -86,6 +86,214 @@ load_item_surfaces_for_item_type ( int item_type )
 {
 };
 
+void
+PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
+{
+  int bpp = surface->format->BytesPerPixel;
+  Uint8 *p;
+
+/*
+  if ( use_open_gl )
+    {
+      if ( surface == Screen ) 
+	{
+	  PutPixel_open_gl ( x , y , pixel ) ;
+	  return;
+	}
+    }
+
+*/
+
+  //--------------------
+  // Here I add a security query against segfaults due to writing
+  // perhaps even far outside of the surface pixmap data.
+  //
+  if ( ( x < 0 ) || ( y < 0 ) || ( x >= surface->w ) || ( y >= surface->h ) ) return;
+
+  /* Here p is the address to the pixel we want to set */
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
+
+  switch (bpp)
+    {
+    case 1:
+      *p = pixel;
+      break;
+
+    case 2:
+      *(Uint16 *) p = pixel;
+      break;
+
+    case 3:
+      // pixel = pixel & 0x0ffffff ;
+      if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+	{
+	  p[0] = (pixel >> 16) & 0xff;
+	  p[1] = (pixel >> 8) & 0xff;
+	  p[2] = pixel & 0xff;
+	}
+      else
+	{
+	  p[0] = pixel & 0xff;
+	  p[1] = (pixel >> 8) & 0xff;
+	  p[2] = (pixel >> 16) & 0xff;
+	}
+      break;
+
+    case 4:
+      *(Uint32 *) p = pixel;
+      break;
+    }
+
+}; // void PutPixel ( ... )
+
+/* ----------------------------------------------------------------------
+ * NOTE:  I THINK THE SURFACE MUST BE LOCKED FOR THIS!
+ *
+ * ---------------------------------------------------------------------- */
+Uint32
+GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+{
+
+  Uint8 *bits;
+  Uint32 Bpp;
+
+  //--------------------
+  // First some security checks against segfaulting due to
+  // coordinates out of bounds...
+  //
+  if (X < 0)
+    {
+      DebugPrintf ( 1 , "x too small in GetPixel!" );
+      return -1;
+    }
+  if (X >= Surface->w)
+    {
+      DebugPrintf ( 1 , "x too big in GetPixel!" );
+      return -1;
+    }
+  if (Y < 0)
+    {
+      DebugPrintf ( 1 , "y too small in GetPixel!" );
+      return -1;
+    }
+  if (Y >= Surface->h)
+    {
+      DebugPrintf ( 1 , "y too big in GetPixel!" );
+      return -1;
+    }
+
+  Bpp = Surface->format->BytesPerPixel;
+
+  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * Bpp;
+
+  // Get the pixel
+  switch (Bpp)
+    {
+    case 1:
+      return *((Uint8 *) Surface->pixels + Y * Surface->pitch + X);
+      break;
+    case 2:
+      return *((Uint16 *) Surface->pixels + Y * Surface->pitch / 2 + X);
+      break;
+    case 3:
+      {				// Format/endian independent
+	Uint8 r, g, b;
+	r = *((bits) + Surface->format->Rshift / 8);
+	g = *((bits) + Surface->format->Gshift / 8);
+	b = *((bits) + Surface->format->Bshift / 8);
+	return SDL_MapRGB (Surface->format, r, g, b);
+      }
+      break;
+    case 4:
+      return *((Uint32 *) Surface->pixels + Y * Surface->pitch / 4 + X);
+      break;
+    }
+
+  return -1;
+}
+
+/* ----------------------------------------------------------------------
+ * There is need to do some padding, cause OpenGL textures need to have
+ * a format: width and length both each a power of two.  Therefore some
+ * extra alpha to the sides must be inserted.  This is what this function
+ * is supposed to do:  manually adding hte proper amount of padding to
+ * the surface, so that the dimensions will reach the next biggest power
+ * of two in both directions, width and length.
+ * ---------------------------------------------------------------------- */
+SDL_Surface*
+pad_image_for_texture ( SDL_Surface* our_surface ) 
+{
+    int i ; 
+    int x = 1 ;
+    int y = 1 ;
+    SDL_Surface* padded_surf;
+    SDL_Surface* tmp_surf;
+    SDL_Rect dest;
+    Uint32 target_color;
+    
+    for ( i = 1 ; i < 100 ; i ++ )
+    {
+	if ( x >= our_surface -> w )
+	    break;
+	x = x * 2 ;
+    }
+    
+    for ( i = 1 ; i < 100 ; i ++ )
+    {
+	if ( y >= our_surface -> h )
+	    break;
+	y = y * 2 ;
+    }
+    
+    if ( x < 64 )
+    {
+	DebugPrintf ( 1 , "\nWARNING!  Texture x < 64 encountered.  Raising to 64 x." ) ;
+	x = 64 ;
+    }
+    if ( y < 64 )
+    {
+	DebugPrintf ( 1 , "\nWARNING!  Texture y < 64 encountered.  Raising to 64 y." ) ;
+	y = 64 ;
+    }
+    
+    DebugPrintf ( 1 , "\nPadding image to texture size: final is x=%d, y=%d." , x , y );
+    
+    padded_surf = SDL_CreateRGBSurface( 0 , x , y , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+    
+    //--------------------
+    // This might fail, since in gluem, there is no current video mode set...
+    // --> disabling it...
+    //
+    // tmp_surf = SDL_DisplayFormatAlpha ( padded_surf ) ;
+    // SDL_FreeSurface ( padded_surf );
+    //
+    
+    tmp_surf = padded_surf ;
+    
+    SDL_SetAlpha( our_surface , 0 , 0 );
+    SDL_SetColorKey( our_surface , 0 , 0x0FF );
+    
+    dest . x = 0;
+    dest . y = y - our_surface -> h ;
+    dest . w = our_surface -> w ;
+    dest . h = our_surface -> h ;
+    
+    target_color = SDL_MapRGBA( tmp_surf -> format, 0, 0, 0, 0 );
+    for ( x = 0 ; x < tmp_surf -> w ; x ++ )
+    {
+	for ( y = 0 ; y < tmp_surf -> h ; y ++ )
+	{
+	    PutPixel ( tmp_surf , x , y , target_color ) ;
+	}
+    }
+    
+    SDL_BlitSurface ( our_surface, NULL , tmp_surf , & dest );
+    
+    return ( tmp_surf );
+    
+}; // SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) 
+
+
 /* ----------------------------------------------------------------------
  * This function gives the green component of a pixel, using a value of
  * 255 for the most green pixel and 0 for the least green pixel.
@@ -118,9 +326,9 @@ GetGreenComponent ( SDL_Surface* surface , int x , int y )
   //--------------------
   // Now we can extract the green component
   //
-  temp = pixel&fmt->Gmask; /* Isolate green component */
-  temp = temp>>fmt->Gshift;/* Shift it down to 8-bit */
-  temp = temp<<fmt->Gloss; /* Expand to a full 8-bit number */
+  temp = pixel&fmt->Gmask;  /* Isolate green component */
+  temp = temp>>fmt->Gshift; /* Shift it down to 8-bit */
+  temp = temp<<fmt->Gloss;  /* Expand to a full 8-bit number */
   green = (Uint8)temp;
 
   return ( green ) ;
@@ -697,6 +905,16 @@ main (int argc, char *const argv[])
 	    else
 	    {
 		DebugPrintf ( 0 , "\nSuccessfully loaded input image %s." , current_filename );
+	    }
+
+	    //--------------------
+	    // If this is supposed to become an open_gl prepadded image, we need
+	    // to do the padding here...
+	    //
+	    if ( open_gl_sized_images )
+	    {
+		input_surface = pad_image_for_texture ( input_surface ) ;
+		DebugPrintf ( 0 , "\nImage padded to match powers of two." );
 	    }
 	    
 	    //--------------------
