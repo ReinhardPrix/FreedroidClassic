@@ -60,6 +60,8 @@
 #define ITEM_POS_Y_STRING " Y="
 #define ITEM_AC_BONUS_STRING " AC="
 #define ITEM_DAMAGE_STRING " DoDamage="
+#define ITEM_MAX_DURATION_STRING " MaxDur="
+#define ITEM_CUR_DURATION_STRING " CurDur="
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
@@ -602,6 +604,14 @@ char *Encode_Level_For_Saving(Level Lev)
       sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
       strcat( LevelMem , linebuf );
 
+      strcat( LevelMem , ITEM_MAX_DURATION_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_CUR_DURATION_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].current_duration );
+      strcat( LevelMem , linebuf );
+
       strcat( LevelMem , "\n" );
     }
   //--------------------
@@ -999,7 +1009,7 @@ Decode_Loaded_Leveldata (char *data)
   NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
   DebugPrintf( 0 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
 
-  // Now we decode all the codepanel information
+  // Now we decode all the item information
   ItemPointer=ItemsSectionBegin;
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
     {
@@ -1014,6 +1024,10 @@ Decode_Loaded_Leveldata (char *data)
 			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
 			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
+			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
 
       DebugPrintf( 0 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
 		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );

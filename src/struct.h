@@ -251,6 +251,10 @@ typedef struct
   int item_require_strength;
   int item_require_dexterity;
   int item_require_magic;
+  
+  // what duration does the item have?
+  int base_item_duration;
+  int item_duration_modifier;
 
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
@@ -271,7 +275,7 @@ typedef struct
   int suffix_code;
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item
-  float max_duration;     // the maximum item durability reachable for this item
+  int max_duration;     // the maximum item durability reachable for this item
   float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;
 } item, *Item;

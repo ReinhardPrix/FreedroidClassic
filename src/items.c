@@ -66,12 +66,24 @@ DropSpecificItemAtPosition( int x , int y , int NewItemCode )
   CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
 
   //--------------------
-  // Now we fix the details of this one dropped item
+  // Now we fix the details of this one dropped item, like ac_bonus, damage, duration
   //
   CurLevel->ItemList[ ItemIndex ].ac_bonus = 
     ItemMap [ NewItemCode ].base_ac_bonus + MyRandom( ItemMap [ NewItemCode ].ac_bonus_modifier );
   CurLevel->ItemList[ ItemIndex ].damage = 
     ItemMap [ NewItemCode ].base_item_gun_damage + MyRandom( ItemMap [ NewItemCode ].item_gun_damage_modifier );
+  if ( ItemMap[ NewItemCode ].base_item_duration == (-1) )
+    {
+      CurLevel->ItemList[ ItemIndex ].current_duration = 1;
+      CurLevel->ItemList[ ItemIndex ].max_duration = -1;
+    }
+  else
+    {
+      CurLevel->ItemList[ ItemIndex ].max_duration = 
+	ItemMap [ NewItemCode ].base_item_duration + MyRandom( ItemMap [ NewItemCode ].item_duration_modifier );
+      CurLevel->ItemList[ ItemIndex ].current_duration = 
+	CurLevel->ItemList[ ItemIndex ].max_duration/2 + MyRandom ( CurLevel->ItemList[ ItemIndex ].max_duration/2 );
+    }
 
 }; // void DropSpecificItemAtPosition( int x , int y , int NewItemCode )
 

@@ -605,6 +605,14 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as defensive item: ac_bonus_modifier=" , "%d" , 
 			   &ItemMap[ItemIndex].ac_bonus_modifier , EndOfItemData );
 
+      // Now we read in the base item duration and the duration modifier
+      ReadValueFromString( ItemPointer ,  "Base item duration=" , "%d" , 
+			   &ItemMap[ItemIndex].base_item_duration , EndOfItemData );
+      ReadValueFromString( ItemPointer ,  "Item duration modifier=" , "%d" , 
+			   &ItemMap[ItemIndex].item_duration_modifier , EndOfItemData );
+
+      
+
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
