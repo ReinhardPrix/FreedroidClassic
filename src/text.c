@@ -1178,8 +1178,10 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERNIE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Bender" ) == 0 ) return PERSON_BENDER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Darwin" ) == 0 ) return PERSON_DARWIN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Doc Moore" ) == 0 ) return PERSON_DOC_MOORE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Melfis" ) == 0 ) return PERSON_MELFIS;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
 
@@ -1323,8 +1325,8 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     {
       Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 0 ; 
       
-      if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
-	   ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
+      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
+	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
 	{
 	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
 	  
@@ -1340,11 +1342,9 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   //--------------------
   // Now we prepare the dialog with Michelangelo, the colony cook...
   //
-
-  if ( ( Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned ) &&
-       ( !Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete ) )
+  if ( ( Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned ) &&
+       ( !Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete ) )
     {
-      
       if ( CountItemtypeInInventory( ITEM_RED_DILITIUM_CRYSTAL , 0 ) )
 	{
 	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 7 ] = TRUE ; // we allow to give the crystals...
@@ -1354,9 +1354,19 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 6 ] = TRUE ; // we allow to report no success yet...
 	}
     }
-  if ( Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete )
+  if ( Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete )
     {
       Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 8 ] = TRUE ; // we allow to ask for reward again...
+    }
+
+  //--------------------
+  // Now we prepare the dialog with Doc Moore, the old town medic...
+  //
+  if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
+       ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 2 ] = TRUE ; // we allow to give the crystals...
+      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 3 ] = TRUE ; // we allow to report no success yet...
     }
 
   //--------------------

@@ -40,9 +40,19 @@ Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 476
 
 //--------------------
+// This is Bender, who suffers from brain enlargement pills...
+//
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- Strongest man in town"
+
+//--------------------
 // This is Dr. Chandra.
 //
 SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ChandraStartGameSquare" RushTux="no" DialogSectionToUse="Chandra" ShortLabel="Chandra -- Town Sage"
+
+//--------------------
+// This is Doc Moore, the only medic in the old town
+//
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="Doc Moore" ShortLabel="Doc Moore -- Old Town Medic"
 
 //--------------------
 // This is Mr. Stone, running the main shop of the old town

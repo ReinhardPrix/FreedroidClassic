@@ -96,99 +96,10 @@ Possible Start Point : Level=0 XPos=2 YPos=3
 +++
 
 ** Start of this mission target subsection **
-
 +++
-+++ The first mission is to remove the droids lurking directly in front
-+++ of the scientists improvised refuge bunker.
-+++ These droids are marked with the 1 label.
++++ This is the first mission:  Find a cure for Bender, suffering from brain enlargement pills
 +++
-
-Mission Name="Clean Goods Storage"
-Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : -1
-Mission target is to kill all droids : -1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : 1
-Mission target is to become class : -1
-Mission target is to become type : -1
-Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : -1
-
-On mission assignment immediately trigger action Nr. : 0
-
-On mission completition immediately trigger action labeled="open_barrier"
-On mission completition immediately trigger action labeled="wow_done_mission_zero"
-
-** End of this mission target subsection **
-
-** Start of this mission target subsection **
-+++
-+++ This is the second mission:  Fetch ultimate coffee pot...
-+++
-Mission Name="Fetch THE ultimate Coffee machine"
-Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : 57
-Mission target is to kill all droids : -1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : -1
-Mission target is to become class : -1
-Mission target is to become type : -1
-Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : -1
-
-** End of this mission target subsection **
-
-** Start of this mission target subsection **
-+++
-+++ This is the FIRST TUX MISSION (consisting of removing the first DAP)
-+++ from the second level.
-+++
-Mission Name="Clean Dark Apprentice (DAP)"
-Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : -1
-Mission target is to kill all droids : -1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : 101
-Mission target is to become class : -1
-Mission target is to become type : -1
-Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : -1
-
-** End of this mission target subsection **
-
-** Start of this mission target subsection **
-+++
-+++ This is the fourth mission:  Fetch energetic heart...
-+++
-Mission Name="Fetch Droid Energetic Heart"
-Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : 4
-Mission target is to kill all droids : -1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : -1
-Mission target is to become class : -1
-Mission target is to become type : -1
-Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : -1
-** End of this mission target subsection **
-
-** Start of this mission target subsection **
-+++
-+++ This is the fifth mission:  Fetch the toolkit for DIX
-+++
-Mission Name="Fetch Dixon's toolkit"
+Mission Name="Find cure for Bender"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 57
 Mission target is to kill all droids : -1
@@ -204,10 +115,23 @@ Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
-+++
-+++ This is the fifth mission:  Fetch the toolkit for DIX
-+++
-Mission Name="Fetch energy crystals for Michelangelo"
+Mission Name="Dixon's toolkit"
+Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : 57
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : -1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+** End of this mission target subsection **
+
+** Start of this mission target subsection **
+Mission Name="Energy crystals for Michelangelo"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 74
 Mission target is to kill all droids : -1
@@ -221,6 +145,59 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
+
+** S---tart of this mission target subsection **
+Mission Name="Clean Dark Apprentice (DAP)"
+Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : -1
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : 101
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+** E---nd of this mission target subsection **
+
+** St---art of this mission target subsection **
+Mission Name="Clean Goods Storage"
+Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : -1
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : 1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+On mission assignment immediately trigger action Nr. : 0
+On mission completition immediately trigger action labeled="open_barrier"
+On mission completition immediately trigger action labeled="wow_done_mission_zero"
+** En---d of this mission target subsection **
+
+** St---art of this mission target subsection **
+Mission Name="Fetch Droid Energetic Heart"
+Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : 4
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : -1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+** E---nd of this mission target subsection **
+
+
 
 **********************************************************************
 **********************************************************************
