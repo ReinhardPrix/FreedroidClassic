@@ -20,6 +20,7 @@ AC_MSG_NOTICE([[Checking for SDL libraries]])
 AC_MSG_NOTICE([[-----------------------------------]])
 AC_CHECK_LIB([SDL], [SDL_Init])
 AC_CHECK_LIB([SDL_image], [IMG_Load])
+AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio])
 
 # Checks for header files.
 AC_HEADER_STDC
