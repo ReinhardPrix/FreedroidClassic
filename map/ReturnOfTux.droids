@@ -46,9 +46,9 @@ Allowed Type of Random Droid for this level: 476
 //--------------------
 // These are the north gate guards.
 //
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard2" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard1" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuardLeader" RushTux="yes" DialogSectionToUse="OldTownGateGuardLeader" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard2" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard1" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuardLeader" RushTux="yes" DialogSectionToUse="OldTownGateGuardLeader" ShortLabel="Old Town Gate Guard"
 
 
 //--------------------
@@ -69,12 +69,12 @@ SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1
 //--------------------
 // This is Mr. Stone, running the main shop of the old town
 //
-SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="Stone" ShortLabel="Stone -- Shopowern"
+SpecialForce: Type=MUM X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="Stone" ShortLabel="Stone -- Shopowner"
 
 //--------------------
 // This is Sorenson, a former preferred person of the MS
 //
-SpecialForce: Type=PRO X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Magics Teacher"
+SpecialForce: Type=FSC X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Magics Teacher"
 
 //--------------------
 // This is a security bot.
