@@ -833,12 +833,11 @@ MoveThisEnemy( int EnemyNum )
 
 } // void MoveThisEnemy ( int EnemyNum )
 
-/*@Function============================================================
-@Desc: This is the function, that move each of the enemys according to
-their orders and their program
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function moves all enemys individually, using MoveThisEnems(i)
+ * and it also initiates the robots fireing behaviour via 
+ * AttackInfluence (i) all individually.
+ * ---------------------------------------------------------------------- */
 void
 MoveEnemys (void)
 {
@@ -848,7 +847,6 @@ MoveEnemys (void)
 
   AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
-  // for (i = 0; i < Number_Of_Droids_On_Ship MAX_ENEMYS_ON_SHIP ; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
      {
 
@@ -874,6 +872,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
   int j;
   float OffsetFactor;
+  bullet* NewBullet=NULL;
 
   Fire_Bullet_Sound ( guntype );
   
@@ -881,11 +880,14 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   for (j = 0; j < MAXBULLETS; j++)
     {
       if (AllBullets[ j ].type == OUT)
-	break;
+	{
+	  NewBullet = & ( AllBullets[j] );
+	  break;
+	}
     }
-  if (j >= MAXBULLETS)
+  if ( NewBullet == NULL )
     {
-      DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+      DebugPrintf ( 0 , "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
       Terminate (ERR);
     }
   
@@ -895,65 +897,65 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   
   if (fabsf (xdist) > fabsf (ydist))
     {
-      AllBullets[j].speed.x = bullet_speed;
-      AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
+      NewBullet->speed.x = bullet_speed;
+      NewBullet->speed.y = ydist * NewBullet->speed.x / xdist;
       if (xdist < 0)
 	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	  NewBullet->speed.x = -NewBullet->speed.x;
+	  NewBullet->speed.y = -NewBullet->speed.y;
 	}
     }
   
   if (fabsf (xdist) < fabsf (ydist))
     {
-      AllBullets[j].speed.y = bullet_speed;
-      AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
+      NewBullet->speed.y = bullet_speed;
+      NewBullet->speed.x = xdist * NewBullet->speed.y / ydist;
       if (ydist < 0)
 	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	  NewBullet->speed.x = -NewBullet->speed.x;
+	  NewBullet->speed.y = -NewBullet->speed.y;
 	}
     }
   
   //--------------------
   // Newly, also enemys have to respect the angle modifier in their weapons...
   //
-  RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+  RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
   
   
-  AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
+  NewBullet->angle = - ( 90 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
   
   // now we set the bullet type right
   // DebugPrintf( 0 , "Setting gun type : %d." , guntype );
-  AllBullets[j].type = guntype;
+  NewBullet->type = guntype;
   
   // Now we set the damage of this bullet to the correct value
-  AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
+  NewBullet->damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
   
-  AllBullets[j].time_in_seconds = 0;
-  AllBullets[j].time_in_frames = 0;
-  AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
+  NewBullet->time_in_seconds = 0;
+  NewBullet->time_in_frames = 0;
+  NewBullet->bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
   
-  AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
-  AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
-  AllBullets[j].owner_pos = & ( ThisRobot->pos );
-  AllBullets[j].ignore_wall_collisions = 
+  NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
+  NewBullet->fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
+  NewBullet->owner_pos = & ( ThisRobot->pos );
+  NewBullet->ignore_wall_collisions = 
     ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  AllBullets[j].miss_hit_influencer = FALSE;
-  AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
-  AllBullets[j].was_reflected = FALSE;
+  memset( NewBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+  NewBullet->miss_hit_influencer = FALSE;
+  NewBullet->to_hit = Druidmap [ ThisRobot->type ].to_hit ;
+  NewBullet->was_reflected = FALSE;
   
-// start all bullets in the center of the shooter first...
-  AllBullets[j].pos.x = ThisRobot->pos.x;
-  AllBullets[j].pos.y = ThisRobot->pos.y;
+  // start all bullets in the center of the shooter first...
+  NewBullet->pos.x = ThisRobot->pos.x;
+  NewBullet->pos.y = ThisRobot->pos.y;
   
   // fire bullets so, that they don't hit the shooter...
-  if ( AllBullets[j].angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
-  AllBullets[j].pos.x +=
-    (AllBullets[j].speed.x) / (bullet_speed) * OffsetFactor ;
-  AllBullets[j].pos.y +=
-    (AllBullets[j].speed.y) / (bullet_speed) * OffsetFactor ;
+  if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+  NewBullet->pos.x +=
+    (NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
+  NewBullet->pos.y +=
+    (NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
   
   // wait for as long as is usual for this weapon type until making the next shot
   ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
@@ -969,8 +971,7 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 {
   int j;
 
-  // if ( ThisRobot->Friendly == TRUE )
-  if ( ThisRobot->Friendly == 23 )
+  if ( ThisRobot->Friendly == TRUE )
     {
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
@@ -1066,8 +1067,6 @@ AttackInfluence (int enemynum)
 
   if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
-  if ( ThisRobot->firewait ) return;
-  
   if ( !IsVisible ( &ThisRobot->pos ) && ( ThisRobot->Friendly == FALSE ) ) return;
 
   //--------------------
@@ -1083,15 +1082,6 @@ AttackInfluence (int enemynum)
 	}
     }
 
-  if ( ( MyRandom (AGGRESSIONMAX) >= Druidmap[ThisRobot->type].aggression ) &&
-       ( ThisRobot->Friendly == FALSE ) )
-    {
-      ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
-      return;
-    }
-  
-      
-  // if ( dist2 > 2 )
   if ( ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change > 0 )
     {
       //--------------------
@@ -1169,6 +1159,16 @@ AttackInfluence (int enemynum)
       if ( ( ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ] .item_gun_angle_change != 0 ) && 
 	   ( dist2 > 1.5 ) ) return;
     }
+
+  if ( ThisRobot->firewait ) return;
+  
+  if ( ( MyRandom ( AGGRESSIONMAX ) >= Druidmap[ThisRobot->type].aggression ) &&
+       ( ThisRobot->Friendly == FALSE ) )
+    {
+      ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
+      return;
+    }
+  
   
   RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
@@ -1197,7 +1197,7 @@ CheckEnemyEnemyCollision (int enemynum)
   // Enemys persuing a specific course may pass through other enerys
   // and are therefore exempted from the collision check
   //
-  if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
+  // if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
 
   check_x = OurBot->pos.x;
   check_y = OurBot->pos.y;
@@ -1281,14 +1281,6 @@ AnimateEnemys (void)
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
-      //      if (AllEnemys[i].type == DRUID598)
-      //	{
-	  //   AllEnemys[i].feindrehcode,
-	  //   Druidmap[AllEnemys[i].type].maxenergy,
-	  //   AllEnemys[i].energy,
-	  //  AllEnemys[i].feindphase);
-      //}
-
       /* ignore enemys that are dead or on other levels or dummys */
       // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
