@@ -477,20 +477,7 @@ ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 void
 ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
-  int PictureIndex;
-  float RescaleFactor;
   SDL_Rect TargetRectangle;
-  static int IsFirstFunctionCall = TRUE;
-  static SDL_Surface* ScaledItemImageBackups[ NUMBER_OF_ITEM_PICTURES ];
-  SDL_Surface* tmp_surface;
-  int i;
-
-  if ( IsFirstFunctionCall )
-    {
-      for ( i = 0 ; i < NUMBER_OF_ITEM_PICTURES ; i ++ )
-	ScaledItemImageBackups [ i ] = NULL ;
-      IsFirstFunctionCall = FALSE ;
-    }
 
   TuxItemRowRect . x = 55 ;
   TuxItemRowRect . y = 410;
@@ -518,24 +505,7 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
       TargetRectangle . y = TuxItemRow ;
     }
 
-  PictureIndex = ItemMap [ ShowItem->type ] . picture_number ;
-
-  if ( ( ItemImageList[ PictureIndex ] . inv_size . x == 1 ) &&
-       ( ItemImageList[ PictureIndex ] . inv_size . y == 1 ) )
-    RescaleFactor = 2.0 ;
-  else if ( ItemImageList[ PictureIndex ] . inv_size . y == 3 ) 
-    RescaleFactor = 2.0 / 3.0 ;
-  else RescaleFactor = 1.0;
-
-  if ( ScaledItemImageBackups [ PictureIndex ] == NULL )
-    {
-      DebugPrintf ( 1 , "\nShowRescaledItem:  first call, so scaling has to be done...\n" );
-      tmp_surface = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
-      ScaledItemImageBackups [ PictureIndex ] = our_SDL_display_format_wrapperAlpha ( tmp_surface ) ;
-      SDL_FreeSurface ( tmp_surface );
-    }
-  
-  our_SDL_blit_surface_wrapper( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
+  our_SDL_blit_surface_wrapper( ItemMap [ ShowItem -> type ] . inv_image . scaled_surface_for_shop , NULL , Screen , &TargetRectangle );
 
 }; // void ShowRescaledItem ( int position , item* ShowItem )
 

@@ -390,10 +390,10 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   // And then of course we also have to take into account the size of the
   // item, wich is also not always the same.
   //
-  TargetRect.x = GetMousePos_x() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
-  TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.y * 16;
+  TargetRect.x = GetMousePos_x() + 16 - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
+  TargetRect.y = GetMousePos_y() + 16 - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
 
-  our_SDL_blit_surface_wrapper( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+  our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
 
 /* ----------------------------------------------------------------------
@@ -408,14 +408,14 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
 
   if ( AlarmItem->type == ( -1 ) ) return;
 
-  ItemImageCode = ItemMap [ AlarmItem->type ].picture_number ;
+  ItemImageCode = AlarmItem -> type ;
 
   TargetRect.x = 60 * Position ;
   TargetRect.y = 400;
 
   if ( AlarmItem->current_duration < 5 )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 }; // void ShowOneItemAlarm( item* AlarmItem )
 
@@ -3217,13 +3217,6 @@ PutItem( int ItemNumber , int mask , int put_thrown_items_flag )
 There was -1 item type given to blit.  This must be a mistake! ",
 				 PLEASE_INFORM, IS_FATAL );
     }
-  if ( ItemMap[ CurItem->type ].picture_number >= NUMBER_OF_ITEM_PICTURES ) 
-    {
-      fprintf( stderr, "\n\nItemMap[ CurItem->type ].picture_number '%d'\n" , ItemMap[ CurItem->type ].picture_number );
-      GiveStandardErrorMessage ( "PutItem(...)" , "\
-There was an item type given, that exceeds the range of item images loaded.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
 
@@ -3243,7 +3236,7 @@ There was an item type given, that exceeds the range of item images loaded.",
   // load the inventory surface instead, so we really can assume that
   // we have something to use afterwards.
   //
-  if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image . surface == NULL )
+  if ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . surface == NULL )
     try_to_load_ingame_item_surface ( CurItem -> type );
 
   //--------------------
@@ -3255,18 +3248,18 @@ There was an item type given, that exceeds the range of item images loaded.",
 	{
 	  return ;
 
-	  blit_zoomed_open_gl_texture_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
+	  blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 							CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25 );
 	}
       else
 	{
-	  blit_zoomed_iso_image_to_map_position ( & ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image ) , 
+	  blit_zoomed_iso_image_to_map_position ( & ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image ) , 
 						  CurItem -> pos . x , CurItem -> pos . y );
 	}
     }
   else
     {
-      blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
+      blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
 				       CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 				       CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
     }
@@ -3725,7 +3718,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
   if ( ( ! Me[0].drive_item.currently_held_in_hand ) && ( Me[0].drive_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . drive_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3737,9 +3730,9 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
   if ( ( ! Me[0].weapon_item.currently_held_in_hand ) && ( Me[0].weapon_item.type != (-1) ) )
     {
-      TargetRect.x += 32 * 0.5 * ( 2 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . x ) ;
-      TargetRect.y += 32 * 0.5 * ( 3 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . y ) ;
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ] . Surface , NULL , Screen , &TargetRect );
+      TargetRect.x += 32 * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
+      TargetRect.y += 32 * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3749,7 +3742,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
   if ( ( ! Me[0].armour_item.currently_held_in_hand ) && ( Me[0].armour_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . armour_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3759,7 +3752,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
   if ( ( ! Me[0].shield_item.currently_held_in_hand ) && ( Me[0].shield_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
   
   //--------------------
@@ -3769,7 +3762,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
   if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . special_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3779,7 +3772,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
   if ( ( ! Me[0].aux1_item.currently_held_in_hand ) && ( Me[0].aux1_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux1_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3789,7 +3782,7 @@ ShowInventoryScreen( void )
   TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
   if ( ( ! Me[0].aux2_item.currently_held_in_hand ) && ( Me[0].aux2_item.type != (-1) ) )
     {
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . aux2_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3810,9 +3803,9 @@ ShowInventoryScreen( void )
 	  continue;
 	}
 
-      for ( i = 0 ; i < ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].inv_size.y ; i++ )
+      for ( i = 0 ; i < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . y ; i++ )
 	{
-	  for ( j = 0 ; j < ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].inv_size.x ; j++ )
+	  for ( j = 0 ; j < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . x ; j++ )
 	    {
 	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
 	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
@@ -3828,7 +3821,7 @@ ShowInventoryScreen( void )
       TargetRect.x = INVENTORY_RECT_X + 32 * Me[0].Inventory[ SlotNum ].inventory_position.x;
       TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me[0].Inventory[ SlotNum ].inventory_position.y;
       
-      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
 
     }
 }; // void ShowInventoryScreen( void )

@@ -1121,7 +1121,6 @@ This indicated a corrupted FreedroidRPG dialog.",
 
 }; // void LoadChatRosterWithChatSequence ( char* SequenceCode )
 
-
 /*----------------------------------------------------------------------
  * This function reads in all the item data from the freedroid.ruleset file,
  * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
@@ -1160,6 +1159,7 @@ Get_Item_Data ( char* DataPointer )
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
 #define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
+#define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -1512,8 +1512,16 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 			   &ItemMap[ItemIndex].item_duration_modifier , EndOfItemData );
 
       // Now we read in the number of the picture to be used for this item
-      ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
-			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
+      // ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
+      // &ItemMap[ItemIndex].picture_number , EndOfItemData );
+
+      //--------------------
+      // Now we read in the name of the inventory item image, that is to be used
+      // on the inventory screen.
+      //
+      ItemMap [ ItemIndex ] . item_inv_file_name = 
+	ReadAndMallocStringFromData ( ItemPointer , ITEM_INVENTORY_IMAGE_FILE_NAME , "\"" ) ;
+      // DebugPrintf ( 0 , "\nName of item %d is: '%s'." , ItemIndex , ItemMap [ ItemIndex ] . item_name );
 
       // Now we read in the name of the sound sample to be played when this item is moved
       ItemMap[ItemIndex].item_drop_sound_file_name = 
@@ -1526,6 +1534,13 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 
       // Now we read in the description string of this item
       ItemMap[ItemIndex].item_description = ReadAndMallocStringFromData ( ItemPointer , ITEM_DESCRIPTION_INDICATION_STRING , "\"" ) ;
+
+      //--------------------
+      // Now that the picture name has been loaded, we can already load the
+      // surfaces associated with the picture...
+      //
+      load_item_surfaces_for_item_type ( ItemIndex );
+
 
       ItemIndex++;
 
@@ -1748,10 +1763,15 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
-      // We write out picture number....
+      // We write out the inventory image file name to use for this item
       //
-      sprintf ( linebuf , "Picture number=%d\n" , ItemMap [ i ] . picture_number ) ;
+      sprintf ( linebuf , ITEM_INVENTORY_IMAGE_FILE_NAME ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      sprintf ( linebuf , ItemMap [ i ] . item_inv_file_name );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      sprintf ( linebuf , "\"\n" );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
 
       //--------------------
       // We write out the sound sample file name to use for this item

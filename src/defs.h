@@ -116,7 +116,7 @@ enum
 #define MAX_ITEMS_IN_INVENTORY 100
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
-#define NUMBER_OF_ITEM_PICTURES 72
+#define NUMBER_OF_ITEM_PICTURES 70
 // #define NUMBER_OF_OBSTACLE_TYPES 125
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 
@@ -258,7 +258,6 @@ enum
 #define MAP_DIR			"map/"
 #define DIALOG_DIR		"dialogs/"
 
-#define NE_ITEMS_BLOCK_FILE     "items.png"
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
 #define SKILL_LEVEL_BUTTON_FILE "skill_buttons.png"

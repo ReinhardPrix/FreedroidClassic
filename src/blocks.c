@@ -90,62 +90,86 @@ Load_Blast_Surfaces( void )
 
 }; // void Load_Blast_Surfaces( void )
 
-
 /* ----------------------------------------------------------------------
- * This function loads the items image and decodes it into the multiple
- * small item surfaces.
+ *
+ *
  * ---------------------------------------------------------------------- */
-void 
-Load_Item_Surfaces( void )
+void
+load_item_surfaces_for_item_type ( int item_type )
 {
-  SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i=0;
-  int j;
   char *fpath;
+  char our_filename [ 2000 ] ;
+  float RescaleFactor;
+  
+  //--------------------
+  // First we load the inventory image.
+  //
+  sprintf ( our_filename , "items/%s" , ItemMap [ item_type ] . item_inv_file_name );
 
-  fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( j = 0 ; j < NUMBER_OF_ITEM_PICTURES ; j ++ )
+  fpath = find_file ( our_filename , GRAPHICS_DIR , FALSE );
+  tmp_surf = NULL ;
+  tmp_surf = IMG_Load( fpath ); 
+  if ( tmp_surf == NULL )
     {
-      Source.x = j * ( Block_Height + 2 );
-      Source.y = i * ( Block_Width  + 2 );
-      Source.w = (Block_Width/2) * ItemImageList [ j ] . inv_size . x ;
-      Source.h = (Block_Height/2) * ItemImageList [ j ] . inv_size . y ;
-      Target.x = 0 ;
-      Target.y = 0 ;
-      Target.w = Source . w ;
-      Target.h = Source . h ;
-
-      tmp_surf = SDL_CreateRGBSurface( 0 , Source . w , Source . h , vid_bpp , 0 , 0 , 0 , 0 );
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-      ItemImageList [ j ] . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
-      SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-      if ( use_open_gl )
-	flip_image_horizontally ( ItemImageList[ j ].Surface );
-
-      SDL_FreeSurface( tmp_surf );
-
-      //--------------------
-      // We must mark the in_game item surface as not yet loaded, so it
-      // will be loaded later as soon as there is some demand...
-      //
-      ItemImageList [ j ] . ingame_iso_image . surface = NULL ;
+      DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
+      GiveStandardErrorMessage ( "Load_Item_Surfaces(...)" , "\
+Inventory image specified above was not found!  That is fatal!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf ); 
+  SDL_FreeSurface ( tmp_surf );
+  if ( use_open_gl ) flip_image_horizontally ( ItemMap [ item_type ] . inv_image . Surface );
+  
+  //--------------------
+  // Now we try to guess the inventory image tile sizes (in the 
+  // inventory screen) from the pixel size of the inventory image
+  // loaded.
+  //
+  if ( ItemMap [ item_type ] . inv_image . Surface -> w % 32 )
+    {
+      DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
+      GiveStandardErrorMessage ( "Load_Item_Surfaces(...)" , "\
+Inventory image given doesn not have a width, that is a multiple of 32!\n\
+But FreedroidRPG needs a width of this type, so it can associate the right\n\
+number of inventory screen tiles with the item!  Fatal!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  else
+    {
+      ItemMap [ item_type ] . inv_image . inv_size . x = ItemMap [ item_type ] . inv_image . Surface -> w / 32 ;
+    }
+  if ( ItemMap [ item_type ] . inv_image . Surface -> h % 32 )
+    {
+      DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
+      GiveStandardErrorMessage ( "Load_Item_Surfaces(...)" , "\
+Inventory image given doesn not have a height, that is a multiple of 32!\n\
+But FreedroidRPG needs a height of this type, so it can associate the right\n\
+number of inventory screen tiles with the item!  Fatal!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  else
+    {
+      ItemMap [ item_type ] . inv_image . inv_size . y = ItemMap [ item_type ] . inv_image . Surface -> h / 32 ;
     }
 
-  SDL_FreeSurface( Whole_Image );
+  //--------------------
+  // For the shop, we need versions of each image, where the image is scaled so
+  // that it takes up a whole 64x64 shop display square.  So we prepare scaled
+  // versions here and now...
+  //
+  if ( ( ItemMap [ item_type ] . inv_image . inv_size . x == 1 ) &&
+       ( ItemMap [ item_type ] . inv_image . inv_size . y == 1 ) )
+    RescaleFactor = 2.0 ;
+  else if ( ItemMap [ item_type ] . inv_image . inv_size . y == 3 ) 
+    RescaleFactor = 2.0 / 3.0 ;
+  else RescaleFactor = 1.0;
 
-}; // void Load_Item_Surfaces( void )
+  tmp_surf = zoomSurface ( ItemMap [ item_type ] . inv_image . Surface , RescaleFactor , RescaleFactor , FALSE );
+  ItemMap [ item_type ] . inv_image . scaled_surface_for_shop = our_SDL_display_format_wrapperAlpha ( tmp_surf ) ;
+  SDL_FreeSurface ( tmp_surf );
+
+}; // void load_item_surfaces_for_item_type ( int item_type )
 
 /* ----------------------------------------------------------------------
  *
@@ -162,7 +186,7 @@ try_to_load_ingame_item_surface ( int item_type )
   // First we handle a case, that shouldn't really be happening due to
   // calling function checking already.  But it can't hurt to always double-check
   //
-  if ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . surface != NULL )
+  if ( ItemMap [ item_type ] . inv_image . ingame_iso_image . surface != NULL )
     {
       DebugPrintf ( 0 , "\ntry_to_load_ingame_item_surface (...): ERROR.  Surface appears to be loaded already..." );
       return;
@@ -197,9 +221,12 @@ Unable to load an item ingame surface on demand.\n\
 Since there seems to be no ingame item surface yet, the inventory\n\
 item surface will be used as a substitute for now.",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . surface = ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface ;
-      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . offset_x = - ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface -> w / 2 ;
-      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . offset_y = - ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface -> h / 2 ;
+      ItemMap [ item_type ] . inv_image . ingame_iso_image . surface  = 
+	ItemMap [ item_type ] . inv_image . Surface ;
+      ItemMap [ item_type ] . inv_image . ingame_iso_image . offset_x = 
+	- ItemMap [ item_type ] . inv_image . Surface -> w / 2 ;
+      ItemMap [ item_type ] . inv_image . ingame_iso_image . offset_y = 
+	- ItemMap [ item_type ] . inv_image . Surface -> h / 2 ;
     }
   else
     {
@@ -214,7 +241,7 @@ item surface will be used as a substitute for now.",
 	our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface , 0 , 0 ); // this should clear any color key in the dest surface
       */
-      get_iso_image_from_file_and_path ( fpath , & ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image ) , TRUE );
+      get_iso_image_from_file_and_path ( fpath , & ( ItemMap [ item_type ] . inv_image . ingame_iso_image ) , TRUE );
       SDL_FreeSurface( Whole_Image );
     }
 

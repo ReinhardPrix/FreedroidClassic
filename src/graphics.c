@@ -1256,7 +1256,8 @@ InitPictures (void)
   ShowStartupPercentage ( 70 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load items image file." );
-  Load_Item_Surfaces();
+
+  // Load_Item_Surfaces();
 
   ShowStartupPercentage ( 75 ) ; 
 

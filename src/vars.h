@@ -233,7 +233,7 @@ obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] =
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0124.png" }
   };
 
-
+/*
 item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } , // 0-3
   { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } , // 4
@@ -254,6 +254,8 @@ item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } , // 64-67
   { { 1 , 3 } , NULL } ,  { { 1 , 3 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL }   // 68-71
 } ;
+
+*/
 
 /*
 influence_t Me[ MAX_PLAYERS ] = {

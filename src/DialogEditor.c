@@ -203,6 +203,16 @@ enum
 
 GdkGC *Gui_Color[MAX_GC];
 
+//--------------------
+// We add this dummy, so that dialog editor and item editor
+// will properly compile...
+//
+void
+load_item_surfaces_for_item_type ( int item_type )
+{
+
+};
+
 /* ----------------------------------------------------------------------
  *
  *

@@ -299,6 +299,7 @@ typedef struct
   point inv_size;
   SDL_Surface* Surface;
   iso_image ingame_iso_image;
+  SDL_Surface* scaled_surface_for_shop;
 } item_image_spec , *Item_image_spec;
 
 typedef struct
@@ -346,6 +347,7 @@ typedef struct
   char* item_rotation_series_prefix;
   char* item_description;
   char* item_drop_sound_file_name;
+  char* item_inv_file_name;
 
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
@@ -396,7 +398,8 @@ typedef struct
   int item_duration_modifier;
 
   // Which picture to use for this item, when it's lying on the floor?
-  int picture_number;
+  // int picture_number;
+  item_image_spec inv_image ;
   int base_list_price;         // the base price of this item at the shop
 
 } itemspec , *Itemspec;

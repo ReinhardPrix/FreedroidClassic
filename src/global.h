@@ -38,7 +38,7 @@
 
 EXTERN char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] ;
 EXTERN obstacle_spec obstacle_map[ NUMBER_OF_OBSTACLE_TYPES ];
-EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
+// EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
 EXTERN item_bonus PrefixList[];
 EXTERN item_bonus SuffixList[];
 EXTERN char EndTitleText1[];
