@@ -573,6 +573,9 @@ local_update_of_automap_texture ( void )
 void
 show_automap_data_ogl ( float scale_factor )
 {
+
+#ifdef HAVE_LIBGL
+
     iso_image local_iso_image;
     static iso_image tux_on_the_map_iso_image = UNLOADED_ISO_IMAGE ;
     char *fpath;
@@ -653,7 +656,7 @@ show_automap_data_ogl ( float scale_factor )
 	+ 50 * scale_factor 
 	- GameConfig . automap_manual_shift_y , 1.0 );
 
-
+#endif
 
 }; // void show_automap_data_ogl ( void )
 

@@ -2598,7 +2598,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
     ReportRect.w = 600;
     ReportRect.h = 440;
     
-    AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
+    AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SKIP_LIGHT_RADIUS );
     
     DisplayText ( "\nThe list of inconsistencies of the jump interfaces for this level:\n\n" ,
 		  ReportRect.x, ReportRect.y + FontHeight ( GetCurrentFont () ) , &ReportRect , 1.0 );
@@ -5078,7 +5078,7 @@ LevelEditor(void)
 	    OldTicks = SDL_GetTicks ( ) ;
 	    
 	    ClearUserFenster();
-	    AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on | OMIT_BLASTS );
+	    AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on | OMIT_BLASTS | SKIP_LIGHT_RADIUS );
 	    
 	    Highlight_Current_Block();
 	    
