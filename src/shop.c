@@ -143,7 +143,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   // range of items given in the list.
   //
   while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
-  if ( RowStart + RowLength  > NumberOfItems ) RowStart = 0 ;
+  if ( RowStart + RowLength > NumberOfItems ) RowStart = 0 ;
 
 
   //--------------------
@@ -171,6 +171,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
   while (!finished)
     {
+
       usleep ( 35 );
 
       //--------------------
