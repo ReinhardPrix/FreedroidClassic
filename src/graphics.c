@@ -43,6 +43,8 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+EXTERN void Load_MapBlock_Surfaces( void );
+
 /*
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -229,10 +231,23 @@ allocations routine again.
 int
 ReInitPictures (void)
 {
-  // SDL_FreeSurface( ne_blocks );
-  SDL_FreeSurface( ne_static );
+  int i;
+  int j;
 
-  return (InitPictures());
+  for ( j=0 ; j < NUM_COLORS ; j++ )
+    {
+      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] ); // store the surface pointer for freeing it soon
+	}
+    }
+
+  Load_MapBlock_Surfaces();
+
+  // SDL_FreeSurface( ne_static );
+
+  return ( OK );
+  // return (InitPictures());
 } // int ReInitPictures(void)
 
 
@@ -248,7 +263,7 @@ SetCombatScaleTo(float ResizeFactor)
   int i, j;
   SDL_Surface *tmp;
 
-  return;
+  // return;
 
   CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
 
@@ -288,72 +303,18 @@ SetCombatScaleTo(float ResizeFactor)
     }
 */
 
-  for (i=0; i< NUM_MAP_BLOCKS ; i++)
+  for ( j=0 ; j < NUM_COLORS ; j++ )
     {
-      // ne_map_block[i].x *= ResizeFactor;
-      // ne_map_block[i].y *= ResizeFactor;
-      // ne_map_block[i].w *= ResizeFactor;
-      // ne_map_block[i].h *= ResizeFactor;
-    }
-
-  for (i=0; i< DROID_PHASES ; i++)
-    {
-      // ne_influ_block[i].x *= ResizeFactor;
-      // ne_influ_block[i].y *= ResizeFactor;
-      // ne_influ_block[i].w *= ResizeFactor;
-      // ne_influ_block[i].h *= ResizeFactor;
-    }
-
-  for (i=0; i< DROID_PHASES ; i++)
-    {
-      // ne_droid_block[i].x *= ResizeFactor;
-      // ne_droid_block[i].y *= ResizeFactor;
-      // ne_droid_block[i].w *= ResizeFactor;
-      // ne_droid_block[i].h *= ResizeFactor;
-    }
-
-  /*
-  for (i=0; i < Number_Of_Bullet_Types ; i++)
-    for (j=0; j < Bulletmap[i].phases; j++)
-      {
-	// Bulletmap[i].block[j].x *= ResizeFactor;
-	// Bulletmap[i].block[j].y *= ResizeFactor;
-	// Bulletmap[i].block[j].w *= ResizeFactor; 
-	// Bulletmap[i].block[j].h *= ResizeFactor;
-      }
-  */
-
-  for (i=0; i < ALLBLASTTYPES; i++)
-    for (j=0; j < Blastmap[i].phases; j++)
-      {
-	Blastmap[i].block[j].x *= ResizeFactor;
-	Blastmap[i].block[j].y *= ResizeFactor;
-	Blastmap[i].block[j].w *= ResizeFactor; 
-	Blastmap[i].block[j].h *= ResizeFactor;
-      }
-
-  for (i=0; i< DIGITNUMBER ; i++)
-    {
-      // ne_digit_block[i].x *= ResizeFactor;
-      // ne_digit_block[i].y *= ResizeFactor;
-      // ne_digit_block[i].w *= ResizeFactor;
-      // ne_digit_block[i].h *= ResizeFactor;
+      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
+	  MapBlockSurfacePointer[j][i]=zoomSurface( MapBlockSurfacePointer[j][i] , ResizeFactor , ResizeFactor , 0 );
+	  SDL_FreeSurface( tmp ); // free the old surface
+	}
     }
 
   Block_Width *= ResizeFactor;
   Block_Height *= ResizeFactor;
-
-  Digit_Length *= ResizeFactor;
-  Digit_Height *= ResizeFactor;
-
-  First_Digit_Pos_X *= ResizeFactor;
-  First_Digit_Pos_Y *= ResizeFactor;
-  Second_Digit_Pos_X *= ResizeFactor;
-  Second_Digit_Pos_Y *= ResizeFactor;
-  Third_Digit_Pos_X *= ResizeFactor;
-  Third_Digit_Pos_Y *= ResizeFactor;
-
-  // SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
 
 } // void SetCombatScaleTo(float new_scale);
 
@@ -759,6 +720,9 @@ Load_MapBlock_Surfaces( void )
     NULL
   };
 
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
+  
   for ( color = 0 ; color < NUM_COLORS ; color ++ )
     {
 
@@ -802,9 +766,7 @@ Load_MapBlock_Surfaces( void )
 int
 InitPictures (void)
 {
-  SDL_Surface *tmp;
   SDL_Surface *tmp2;
-  int block_line = 0;   /* keep track of line in ne_blocks we're writing */
   char *fpath;
 
   Block_Width=INITIAL_BLOCK_WIDTH;
@@ -827,50 +789,20 @@ InitPictures (void)
   */
   //tmp = SDL_CreateRGBSurface( 0 , NUM_MAP_BLOCKS*Block_Width,
   //		      18*Block_Height, ne_bpp, 0, 0, 0, 0);
+
   tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
-  if ( (tmp == NULL) || (tmp2 == NULL) )
+  if (tmp2 == NULL) 
     {
       DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-
-  /* 
-   * convert this to display format for fast blitting 
-   */
-  /*
-  ne_blocks = SDL_DisplayFormat(tmp);  // the surface is copied !
-  if (ne_blocks == NULL) 
-    {
-      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
-      return (FALSE);
-    }
-  */
-
   ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
+  SDL_FreeSurface( tmp2 );
   if (ne_static == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
-  // SDL_FreeSurface (tmp); /* and free the old one */
-
-  /* set the transparent color */
-  /*
-  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      return (FALSE);
-    }
-  */
-  /*
-  if (SDL_SetColorKey(ne_blocks, 0 , 0 ) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      return (FALSE);
-    }
-  */
 
   if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
@@ -884,34 +816,7 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
-  // fpath = find_file (ColoredBlockFiles[ 0 ], GRAPHICS_DIR, TRUE);
-  // ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
-
   Load_MapBlock_Surfaces();
-  
-
-  /*
-  for ( i = 0 ; i < 7 ; i++ )
-    {
-      fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-      ne_map_block =
-	ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
-    }
-  */
-
-  /*
-  if ( CurLevel == NULL )
-    {
-      fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-      ne_map_block =
-	ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
-    }
-  else 
-    {
-      SetLevelColor ( CurLevel->color );
-      block_line++;
-    }
-  */
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
 
