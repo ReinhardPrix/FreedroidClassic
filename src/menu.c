@@ -40,6 +40,7 @@
 #define REPAIR_PRICE_FACTOR (0.5)
 
 int New_Game_Requested=FALSE;
+SDL_Surface* StoredMenuBackground = NULL;
 
 int Single_Player_Menu (void);
 int Multi_Player_Menu (void);
@@ -53,6 +54,42 @@ EXTERN char Previous_Mission_Name[1000];
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
+
+/* ----------------------------------------------------------------------
+ * This function restores the menu background, that must have been stored
+ * before using the function of similar name.
+ * ---------------------------------------------------------------------- */
+void
+RestoreMenuBackground ( void )
+{
+  SDL_BlitSurface ( StoredMenuBackground , NULL , Screen , NULL );
+}; // void RestoreMenuBackground ( void )
+
+/* ----------------------------------------------------------------------
+ * This function stores the current background as the background for a
+ * menu, so that it can be refreshed much faster than by reassembling it
+ * every frame.
+ * ---------------------------------------------------------------------- */
+void
+StoreMenuBackground ( void )
+{
+  //--------------------
+  // If the memory was not yet allocated, we need to do that now...
+  //
+  // otherwise we free the old surface and create a new copy of the
+  // current screen content...
+  //
+  if ( StoredMenuBackground == NULL )
+    {
+      StoredMenuBackground = SDL_DisplayFormat ( Screen );
+    }
+  else
+    {
+      SDL_FreeSurface ( StoredMenuBackground );
+      StoredMenuBackground = SDL_DisplayFormat ( Screen );
+    }
+
+}; // void StoreMenuBackground ( void )
 
 /* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
@@ -872,10 +909,14 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 
   // DisplayText ( InitialText , 50 , 50 , &Full_Screen_Rect );
 
+  InitiateMenu( BackgroundToUse );
+
+  StoreMenuBackground ();
+
   while ( 1 )
     {
 
-      InitiateMenu( BackgroundToUse );
+      RestoreMenuBackground ();
 
       //--------------------
       // We highlight the currently selected option with an 
