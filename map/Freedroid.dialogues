@@ -834,6 +834,7 @@ ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
 ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
 ChangeOption=2 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
 ChangeOption=3 ChangeToValue=1 ; // this should allow to ask 'Tux?  Is that me?'
+ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of francis
 
 ----------------------------------------------------------------------
 
@@ -843,12 +844,15 @@ Subtitle="You seem to be still a bit dazed and confused!"
 ReplySample="RMS_One_Of_The_0.wav"
 Subtitle="Maybe that's quite normal from the stasis you were trapped in."
 ReplySample="RMS_This_Monopoly_They_0.wav"
-Subtitle="You must have slept for at least several hundred years."
+Subtitle="You must have slept for maybe more than hundreds of thousands of years."
 ReplySample="RMS_And_Now_They_0.wav"
 ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
+ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
+ChangeOption=10 ChangeToValue=1 ; // allow to ask for underground cavern
+ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of francis
 
 ----------------------------------------------------------------------
 
@@ -864,6 +868,9 @@ ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
+ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
+ChangeOption=10 ChangeToValue=1 ; // allow to ask for underground cavern
+ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of francis
 
 ----------------------------------------------------------------------
 
@@ -880,6 +887,7 @@ ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
 ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
+ChangeOption=10 ChangeToValue=1 ; // allow to ask for underground cavern
 
 ----------------------------------------------------------------------
 
@@ -891,9 +899,9 @@ ChangeOption=4 ChangeToValue=0 ; // don't say this twice in one dialog
 
 ----------------------------------------------------------------------
 
-New Option Nr=5 OptionText="You mean I'm thousands of years old?  Are you sure?  What else can you tell me about myself?"
+New Option Nr=5 OptionText="You mean I'm thousands of years old?  Anything else?"
 OptionSample="Tux_RMS_Why_Did_The_0.wav"
-Subtitle="Well, to be honest there's not much I can tell.  That's why I'm here."
+Subtitle="Well, to be honest there's not much more I can tell.  That's why I'm here."
 ReplySample="RMS_One_Of_The_0.wav"
 Subtitle="I'm studying these ancient ruins and machines to find out more about this alien race that has lived here long before the dawn of mankind."
 ReplySample="RMS_One_Of_The_0.wav"
@@ -904,7 +912,7 @@ ChangeOption=6 ChangeToValue=1 ; // allow to ask for the aliens
 
 ----------------------------------------------------------------------
 
-New Option Nr=6 OptionText="You mean there is an alien race?  What do you mean?  Am I an alien?"
+New Option Nr=6 OptionText="You mean there is an alien race?  Am I... an alien?"
 OptionSample="Tux_RMS_Why_Did_The_0.wav"
 Subtitle="No... and yes.  You are a well known species of intelligent penguins that evolved on a planet called Linaria."
 ReplySample="RMS_One_Of_The_0.wav"
@@ -915,102 +923,177 @@ ReplySample="RMS_One_Of_The_0.wav"
 Subtitle="So in this sense, you are not *the* alien race I meant."
 ReplySample="RMS_One_Of_The_0.wav"
 ChangeOption=6 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=7 ChangeToValue=1 ; // allow to ask for why
+ChangeOption=7 ChangeToValue=8 ; // allow to ask for who set free
 
 ----------------------------------------------------------------------
 
-T:  And why was I held in this stasis field?  
-F:  I got no idea.  What is even more amazing is why suddenly
-you were set free.  I do not recall doing anything special.  I
-was sleeping close to here on the ground, when I was awoken by
-the rumbling of the machines.  It's very strange that now after
-all these ages the stasis field suddently was negated, very
-stange indeed.  
-
-T:  Where can I get a weapon?
-F:  A weapon is something you will need around here.  You might
-try searching the area.  Maybe you can find something suitable.
-
-T:  What can you tell me about this place.
-F:  This place is a system of underground tunnels and halls on a
-planet near the outskirts of our universe.  It's in a part where
-the MS didn't initially have such a strong presence.  That's why
-after the great assault many people have fled to this place.
-
-T:  The great assault?  What do you mean?
-F:  After mankind had begun to settle the universe, people were
-relying more and more on robots, commonly called droids, for
-almost any menial and sometimes also dangerous task.  Especially
-like police or military services very mostly done via droids. 
-Now there was a great Software company called 'MegaSoft', that
-supplied the operating systems for almost all droids and
-computers existing.  This was the key for the MS to incite a
-great revolution.  Via a back door in their OS, they could
-suddenly enslave the universe cause the droids would suddenly
-only respond to their signals and enforced their new rule and
-the new MS government.  
-T:  So this is what is called the 'Great Assault'?
-F:  No, not quite.  This is only the beginning, that finally led
-to the great assault.  At first everything seemed to work.  The
-MS has successfully seized control of the universe.  But then
-they fucked up.  Their own control mechanisms were somehow
-unreliable and flaky.  Is suddenly backfired and the droids went
-completely out of control, attacking almost anything on sight. 
-Mankind had to flee from their own bots.  You can guess that the
-vast majority didn't make it to any safe place.  
-
-T:  So has there been any attempt to reclaim control of the
-universe so far?
-Of course this is something everybody here is dreaming of.  And
-some people are not afraid to enthrall whoever will listen with
-promises of this eternal dream.  But if you ask me for my honest
-oppinion, I must say that this is absolutely futile.  There are
-far too many bots and more coming ever out of the automated
-factories on many planets.  We must see that we can survive in
-here and make this a safe place to live at least.  There are no
-chances of winning back the universe.
-
-T:  Who are those people promising to regain control of the
-universe.
-F:  There are two main groups.  One is trying to build the
-ultimate battle machine in order to destroy the existing droid
-forces.  These are called the builders.  The other is a fanatic
-sect, claiming to have some form of spiritual contact to the
-alien race that once populated the universe.  They claim that
-with their help, they would overthrow the bot dominion, but they
-never say how this should work.
-
-T:  Why are you helping me?
-F:  Because you needed help.  And also because I think that
-biological life forms must stick together, or they will all be
-swept away by a mass of bots and their completely automated
-battle ships.
-
-T:  What became of the original Software company, that initially
-controlled all the bots?
-F:  Well, after the great assault, these guys were the very
-first to bite into the dust.  The help calls from their planet
-echoes throughout the universe.  I think no living being exists
-any more even close to their planet.  The presence of MS
-controlled bots there was simply too strong to allow anybody to
-escape.  And now the planet is a dead tomb, probably the most
-dangerous of all places a human or Linarian could ever be.
- 
-T:  Thanks a lot for your for you help!  B/W, what is your name?
-F:  My name is Francis.  I am glad if I could help you along a
-bit.  Please let me know if anything of your memory should
-return.  I would be glad if I could learn some more about this
-alien race.  And maybe from a more reliable source than the
-crazy sectarians.  Also you should be careful around here.  Best
-head straight for our town.  It's directly to the northeast. 
-And don't go too deep into the tunnels.  There are many bots
-also on this planet.  I wish you the best of luck.
-
+New Option Nr=7 OptionText="And why was I held in this stasis field?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="I got no idea.  Maybe some experiment of the aliens or something."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Unless you can regain your memory, we might never know."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=7 ChangeToValue=0 ; // don't say this twice in one dialog
 
 ----------------------------------------------------------------------
 
-New Option Nr=99 OptionText=" END ";
+New Option Nr=8 OptionText="Did you set me free?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="I do not recall doing anything special."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="I was sleeping close to here on the ground, when I was awoken by the rumbling of the machines."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="It's very strange that now after all these ages the stasis field suddently was negated, very stange indeed."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=8 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=9 OptionText="Where can I get a weapon?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="A weapon you will need.  But I have none to give you."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Take a look around outside this temple.  Maybe you can find something suitable there."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=9 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=10 OptionText="We are in an underground cavern here, right?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Right.  This whole area around you is a system of underground tunnels and halls very deep under ground."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="We had to retreat to this place to seek refuge from the bot armies after the Great Assault."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="But still may bots have made it down here.  So take care!"
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=10 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=12 ChangeToValue=1 ; // allow to ask for the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=11 OptionText="What is your name?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Around here I'm called Francis."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=11 ChangeToValue=0 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=12 OptionText="The great assault?  What do you mean?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="After mankind had begun to settle the universe, people were relying more and more on robots, commonly called droids, for almost any menial and sometimes also dangerous task."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Especially like police or military services very mostly done via droids."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Now there was a great Software company called 'MegaSoft', that supplied the operating systems for almost all droids and computers existing."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="This was the key for the MS to incite a great revolution."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Via a back door in their OS, they could suddenly enslave the universe cause the droids would suddenly only respond to their signals and enforced their new rule and the new MS government."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=12 ChangeToValue=0 ; // don't say this twice in one dialog
+ChangeOption=13 ChangeToValue=1 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=13 OptionText="So this is what is called the 'Great Assault'?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Not so fast my friend!  This is only the beginning, that finally led to the great assault."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="The MS has successfully seized control of the universe and reighned for a few years."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="But then something strange happened.  The bots wouldn't behave as they used to do under the MS rule any more."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="They started to issue strange noises, much like a language but unlike anything we could understand."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="They started forming armies and attacking any intelligent being they encountered."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="We then had to flee from our own bots.  You can guess that the vast majority of humans didn't make it to any safe place."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="And this is what today we call 'The Great Assault'."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=13 ChangeToValue=0 ; // allow to guess on the great assault
+ChangeOption=14 ChangeToValue=1 ; // allow to guess on the great assault
+ChangeOption=16 ChangeToValue=1 ; // allow to guess on the great assault
+ChangeOption=17 ChangeToValue=1 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=14 OptionText="Are there any attempts to reclaim the universe?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Of course this is something everybody here is dreaming of."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="And some people are not afraid to enthrall whoever will listen with promises of this eternal dream."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="But if you ask me for my honest oppinion, I must say that this is absolutely futile."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="There are far too many bots and more coming ever out of the automated factories on many planets."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="We must see that we can survive in here and make this a safe place to live at least."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="There are no chances of winning back the universe."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=14 ChangeToValue=0 ; // allow to guess on the great assault
+ChangeOption=15 ChangeToValue=1 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=15 OptionText="And who is promising to reclaim the galaxy?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="There are two main groups."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="One is trying to build the ultimate battle machine in order to destroy the existing droid forces."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="These are called the builders."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="The other is a fanatic sect, claiming to have some form of spiritual contact to the alien race that once populated the universe."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="You best talk to them yourselves, if you're really interested in their weird theories."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=15 ChangeToValue=0 ; // allow to guess on the great assault
+ChangeOption=16 ChangeToValue=1 ; // allow to ask for the reason for help
+
+----------------------------------------------------------------------
+
+New Option Nr=16 OptionText="Why are you helping me?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Because you needed help."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="And also because I think that biological life forms must stick together, or they will all be swept away by a mass of bots and their completely automated battle ships."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=16 ChangeToValue=0 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=17 OptionText="What became of MS Software company after that?"
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="Well, after The Great Assault, these guys were the very first to bite into the dust."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="The help calls from their planet echoes throughout the universe.  I think no living being exists any more even close to their planet."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="And now the planet is a dead tomb, probably the most dangerous place one could ever be."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=17 ChangeToValue=0 ; // allow to guess on the great assault
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText="Thanks for the help.  I'll be going now.";
 OptionSample="Tux_Ill_Be_Back_0.wav"
-ChangeOption=1 ChangeToValue=1 ; // reallow to ask why the ms erased his code
+Subtitle="I am glad if I could help you along."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Please let me know if anything of your memory should return."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="I would be glad if I could learn some more about this alien race.  And maybe from a more reliable source than the crazy sectarians."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="Also you should be careful around here.  Best head straight for our town."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="And don't go too deep into the tunnels.  There are many bots lurking in there."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="I wish you the best of luck."
+ReplySample="RMS_One_Of_The_0.wav"
+ChangeOption=1 ChangeToValue=1 ; // 
 
 ----------------------------------------------------------------------
 
