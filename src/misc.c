@@ -1399,8 +1399,11 @@ Closing all players connections to this server...\n\
     //
     // sprintf ( parameter_buf , "notepad stderr.txt stdout.txt" );
 #if __WIN32__
-    system ( "notepad stderr.txt" );
-    system ( "notepad stdout.txt" );
+    if ( ExitCode == ERR )
+    {
+	system ( "notepad stderr.txt" );
+	system ( "notepad stdout.txt" );
+    }
 #endif
 
     //--------------------
