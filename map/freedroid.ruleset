@@ -258,7 +258,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=3 
 Base list price=100
 ** End of new item specification subsection **
@@ -438,7 +438,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=0 
 Base list price=0
 ** End of new item specification subsection **
@@ -470,7 +470,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=0 
 Base list price=0
 ** End of new item specification subsection **
@@ -534,7 +534,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=0 
 Base list price=0
 ** End of new item specification subsection **
@@ -566,7 +566,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=0 
 Base list price=0
 ** End of new item specification subsection **
@@ -639,7 +639,7 @@ Base list price=30
 
 // Item No. 20
 ** Start of new item specification subsection **
-Item name="Module"
+Item name="Protective hat"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="special"
@@ -961,7 +961,7 @@ Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
-Picture number=18
+Picture number=14
 Sound number=0 
 Base list price=450
 ** End of new item specification subsection **
