@@ -208,11 +208,11 @@ DisplayRahmen ( int flags )
 	  strcpy( previous_left_box , left_box );
 	  PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
 	  strcpy( previous_right_box , right_box );
-	  printf("\nHad to update top status line box...");
+	  // printf("\nHad to update top status line box...");
 	}
 
       // finally update the whole top status box
-      printf("\nHad to update whole top status line box...");
+      // printf("\nHad to update whole top status line box...");
       SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
       RahmenIsDestroyed=FALSE;
       return;

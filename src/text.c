@@ -140,7 +140,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   int speed = +2;
   int maxspeed = 4;
 
-  printf("\nScrollTest should be starting to scroll now...");
+  // printf("\nScrollTest should be starting to scroll now...");
 
    /* Zeilen zaehlen */
   textpt = Text;

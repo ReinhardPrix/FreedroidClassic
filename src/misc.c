@@ -1650,8 +1650,7 @@ InsertMessage (char *MText)
   LQueue->NextMessage = NULL;
   LQueue->MessageCreated = FALSE;
 
-  printf ("\nvoid InsertMessage(char* MText): A message has been added:%s",
-	  MText);
+  // printf ("\nvoid InsertMessage(char* MText): A message has been added:%s", MText);
 
 }				// void InsertMessage(char* MText)
 

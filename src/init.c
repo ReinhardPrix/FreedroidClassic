@@ -194,6 +194,8 @@ InitNewGame (void)
 
   DebugPrintf ("\nvoid InitNewGame(void): real function call confirmed...");
 
+  printf("\nA new game is being initialized...");
+
   Activate_Conservative_Frame_Computation();
 
   LastBlastHit = 0;
@@ -239,31 +241,32 @@ InitNewGame (void)
   DebugPrintf
     ("\nvoid InitNewGame(void): All levels have been set to 'active'...");
 
-  // NORMALISATION Me.pos.x = 4*INITIAL_BLOCK_WIDTH;
-  // NORMALISATION Me.pos.y = 1.5*INITIAL_BLOCK_HEIGHT;
-  // Me.pos.x = 4;
-  // Me.pos.y = 1.5;
-  Me.pos.x = 1;
-  Me.pos.y = 1;
   
   i = MyRandom (3);  /* chose one out of 4 possible start positions */
-  i = 2;
   switch (i)
     {
     case 0:
       CurLevel = curShip.AllLevels[4];
+  Me.pos.x = 1;
+  Me.pos.y = 1;
       break;
 
     case 1:
       CurLevel = curShip.AllLevels[5];
+  Me.pos.x = 3;
+  Me.pos.y = 1;
       break;
 
     case 2:
       CurLevel = curShip.AllLevels[6];
+  Me.pos.x = 2;
+  Me.pos.y = 1;
       break;
 
     case 3:
       CurLevel = curShip.AllLevels[7];
+  Me.pos.x = 2;
+  Me.pos.y = 1;
       break;
 
     default:
@@ -273,9 +276,8 @@ InitNewGame (void)
       break;
     } /* switch */
 
-  printf
-    ("\nvoid InitNewGame(void): Starting point for the influencer has been set...:\n");
-  printf ("%f,%f", Me.pos.x, Me.pos.y);
+  // printf("\nvoid InitNewGame(void): Starting point for the influencer has been set...:\n");
+  // printf ("%f,%f", Me.pos.x, Me.pos.y);
 
   /* Alertcolor auf Gruen zurueckschalten */
   Alert = 0;
@@ -322,6 +324,9 @@ InitNewGame (void)
   Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
+
+  printf("done."); // this matches the printf at the beginning of this function
+  fflush(stdout);
   
   return;
 

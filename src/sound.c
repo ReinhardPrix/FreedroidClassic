@@ -108,6 +108,8 @@ Init_Audio(void)
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
 
+  printf("\nInitializing SDL Audio Systems....");
+
   // At first we set audio volume to maximum value.
   // This might be replaced later with values from a 
   // private user Freedroid config file.  But for now
@@ -139,10 +141,29 @@ Init_Audio(void)
 
   if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
+\n\
+Please check that your sound card is properly configured,\n\
+i.e. if other applications are able to play sounds.\n\
+\n\
+If you for some reason cannot get your sound card ready, \n\
+you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
       Terminate(ERR);
     } else
-      printf("\nSDL Audio initialisation successful.\n");
+      {
+	// printf("\nSDL Audio initialisation successful.\n");
+      }
 
   // Now that we have initialized the audio SubSystem, we must open
   // an audio channel.  This will be done here (see code from Mixer-Tutorial):
@@ -172,8 +193,7 @@ Sorry...\n\
     }
   else 
     {
-      printf("\nSuccessfully loaded sound file %s.", 
-	     SoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ] );
+      // printf("\nSuccessfully opened SDL audio channel." );
     }
 
   // Now that the audio channel is opend, its time to load all the
@@ -211,10 +231,12 @@ Sorry...\n\
 	} // if ( !Loaded_WAV...
       else
 	{
-	  printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
+	  // printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
 	}
     } // for (i=0; ...
 
+
+  printf("done.");
 #endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
@@ -345,7 +367,7 @@ Switch_Background_Music_To (int Tune)
   if ( Background_Music_Channel >= 0 )
     {
       Mix_HaltChannel( Background_Music_Channel );
-      printf("\nOld Background music channel has been halted.");
+      // printf("\nOld Background music channel has been halted.");
       Background_Music_Channel = -1;
     }
 

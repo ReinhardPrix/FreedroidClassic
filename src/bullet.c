@@ -403,7 +403,7 @@ CheckBlastCollisions (int num)
 	  {
 	    /* drag energy of enemy */
 	    Feindesliste[i].energy -= BLASTDAMAGE * Frame_Time ();
-	    printf (" Robot hit by Blast %d.\n", RHBZaehler++);
+	    // printf (" Robot hit by Blast %d.\n", RHBZaehler++);
 	  }
 
       if (Feindesliste[i].energy < 0)

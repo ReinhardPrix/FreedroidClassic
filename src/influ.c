@@ -453,6 +453,7 @@ CheckInfluenceWallCollisions (void)
   int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
+  int H_Door_Sliding_Active = FALSE;
   
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
@@ -512,8 +513,15 @@ CheckInfluenceWallCollisions (void)
 	  Me.pos.y = lastpos.y;
 	  Me.speed.y = 0;
 	  
-	  // if its an open door, we also correct the east-west position.
-	  // if (GetMapBrick(Me.pos.x , Me.pos.y 
+	  // if its an open door, we also correct the east-west position, in the
+	  // sense that we move thowards the middle
+	  if ( (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y - 0.5 ) == H_GANZTUERE ) || 
+	       (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y + 0.5 ) == H_GANZTUERE ) )
+	    {
+	      Me.pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me.pos.x) - Me.pos.x ));
+	      H_Door_Sliding_Active = TRUE;
+	      printf("\nDOOR SLIDING ACTIVATED!!!");
+	    }
 	}
 
       if ( EastWestAxisBlocked )
@@ -522,10 +530,10 @@ CheckInfluenceWallCollisions (void)
 	  // printf("\nCorrection movement and position in this direction...");
 
 	  // EastWestCorrectionDone=TRUE;
-	  Me.pos.x = lastpos.x;
+	  if ( !H_Door_Sliding_Active ) Me.pos.x = lastpos.x;
 	  Me.speed.x = 0;
 
-	  // if its an open door, we also correct the east-west position, in the
+	  // if its an open door, we also correct the north-south position, in the
 	  // sense that we move thowards the middle
 	  if ( (GetMapBrick(CurLevel, Me.pos.x +0.5 , Me.pos.y) == V_GANZTUERE ) || 
 	       (GetMapBrick(CurLevel, Me.pos.x -0.5 , Me.pos.y) == V_GANZTUERE ) )
@@ -537,26 +545,23 @@ CheckInfluenceWallCollisions (void)
 	  printf("\nBOTH AXES BLOCKED... Corner handling activated...");
 	}
 
+      // Here I introduce some extra security as a fallback:  Obviously
+      // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
+      // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
+      // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
+      // For this reason, a history of influ-coordinates has been introduced.  This will all
+      // be done here and now:
+      
+      if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
+	   (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
+	   (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
+	{
+	  Me.pos.x=Me.Position_History[2].x;
+	  Me.pos.y=Me.Position_History[2].y;
+	  printf("\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
+	}
 
     }
-
-  // Here I introduce some extra security as a fallback:  Obviously
-  // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
-  // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
-  // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
-  // For this reason, a history of influ-coordinates has been introduced.  This will all
-  // be done here and now:
-
-  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
-       (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
-       (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
-    {
-      Me.pos.x=Me.Position_History[2].x;
-      Me.pos.y=Me.Position_History[2].y;
-      printf("\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
-    }
-
-
 
   return;
 

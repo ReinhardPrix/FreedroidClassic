@@ -334,7 +334,7 @@ enum _directions
 
 /* Wegstossgeschw. von Tueren u.ae. */
 // NORMALISATION #define PUSHSPEED 2
-#define PUSHSPEED 2
+#define PUSHSPEED 20
 
 /* Schusstypen */
 enum _bullets
