@@ -69,6 +69,7 @@ enum _sounds {
   ENTER_ELEVATOR_SOUND,
   THOU_ART_DEFEATED_SOUND,
   GOT_HIT_SOUND,
+  TAKEOVER_SET_CAPSULE_SOUND
 };
 
 // **********************************************************************

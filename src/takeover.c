@@ -390,14 +390,14 @@ void PlayGame(void)
   int waiter = 0;
   int row;
 	
-  printf("\nvoid PlayGame(void): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid PlayGame(void): real function call confirmed.");
 
   while( !FinishTakeover) {
     keyboard_update();
     
     if( WPressed() ) {
       LeaderColor = YourColor;
-      printf("\nvoid PlayGame(void): Cheat invoked!  Funktion will return now....");
+      DebugPrintf("\nvoid PlayGame(void): Cheat invoked!  Funktion will return now....");
       return;
     } 
 
@@ -419,11 +419,11 @@ void PlayGame(void)
       FinishTakeover = TRUE;
     }
 
-    printf("\nvoid PlayGame(void): EnemyMovements wird aufgerufen.....");
+    DebugPrintf("\nvoid PlayGame(void): EnemyMovements wird aufgerufen.....");
 
     EnemyMovements();
 
-    printf("\nvoid PlayGame(void): EnemyMovements erfolgreich zuruckgekehrt.....");
+    DebugPrintf("\nvoid PlayGame(void): EnemyMovements erfolgreich zuruckgekehrt.....");
 
     JoystickControl();
 
@@ -455,6 +455,8 @@ void PlayGame(void)
 	ToPlayground[YourColor][0][row] = VERSTAERKER;
 	ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
 	CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN*2;
+	
+	Takeover_Set_Capsule_Sound();
       } /* if */
     }
 
@@ -521,62 +523,64 @@ void RollToColors(void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void  EnemyMovements(void)
+void  
+EnemyMovements(void)
 {
-	static int Actions = 3;
-	static int MoveProbability = 100;
-	static int TurnProbability = 10;
-	static int SetProbability = 80;
-
-	int action;
-	static int direction=1;		/* start with this direction */
-	int row = CapsuleCurRow[OpponentColor] -1;
-
-	if( NumCapsules[ENEMY] == 0 ) return;
+  static int Actions = 3;
+  static int MoveProbability = 100;
+  static int TurnProbability = 10;
+  static int SetProbability = 80;
+  
+  int action;
+  static int direction=1;		/* start with this direction */
+  int row = CapsuleCurRow[OpponentColor] -1;
+  
+  if( NumCapsules[ENEMY] == 0 ) return;
+  
+  action = MyRandom(Actions);
+  switch(action) {
+    
+  case 0:	/* Move along */
+    if( MyRandom(100) <= MoveProbability ) {
+      row += direction;
+      if( row > NUM_LINES-1 ) row = 0;
+      if( row < 0 ) row = NUM_LINES-1;
+    }
+    break;
+    
+  case 1: /* Turn around */
+    if( MyRandom(100) <= TurnProbability ) {
+      direction *= -1;
+    }
+    break;
+    
+  case 2:	/* Try to set  capsule */
+    if( MyRandom(100) <= SetProbability ) {
+      if( (row >= 0) &&
+	  (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
+	  (ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET) ) {
 	
+	NumCapsules[ENEMY] --;
+	ToPlayground[OpponentColor][0][row] = VERSTAERKER;
+	ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
+	CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
+	row = -1;	/* For the next capsule: startpos */
+	Takeover_Set_Capsule_Sound();
 	
-	action = MyRandom(Actions);
-	switch(action) {
-		
-		case 0:	/* Move along */
-			if( MyRandom(100) <= MoveProbability ) {
-				row += direction;
-				if( row > NUM_LINES-1 ) row = 0;
-				if( row < 0 ) row = NUM_LINES-1;
-			}
-			break;
-
-		case 1: /* Turn around */
-			if( MyRandom(100) <= TurnProbability ) {
-				direction *= -1;
-			}
-			break;
-
-		case 2:	/* Try to set  capsule */
-			if( MyRandom(100) <= SetProbability ) {
-				if( (row >= 0) &&
-					(ToPlayground[OpponentColor][0][row] != KABELENDE) &&
-					(ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET) ) {
-
-					NumCapsules[ENEMY] --;
-					ToPlayground[OpponentColor][0][row] = VERSTAERKER;
-					ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
-					CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
-					row = -1;	/* For the next capsule: startpos */
-				} /* if */
-			} /* if MyRandom */
-
-			break;
-
-		default:
-			break;
-			
-	} /* switch action */
-
-	CapsuleCurRow[OpponentColor] = row+1;
-
-	return;
-	
+      } /* if */
+    } /* if MyRandom */
+    
+    break;
+    
+  default:
+    break;
+    
+  } /* switch action */
+  
+  CapsuleCurRow[OpponentColor] = row+1;
+  
+  return;
+  
 } /* EnemyMovements */
 
 /*@Function============================================================

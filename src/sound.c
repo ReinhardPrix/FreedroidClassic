@@ -81,7 +81,7 @@ int rate = 8000;
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 15
+#define ALL_SOUNDS 16
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ERRORSOUND_NILL",
   "/../sound/Combat_Background_Music.wav",
@@ -97,7 +97,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/LeaveElevatorSound3.wav",
   "/../sound/EnterElevatorSound2.wav",
   "/../sound/ThouArtDefeatedSound2.wav",
-  "/../sound/Got_Hit_Sound_1.wav"
+  "/../sound/Got_Hit_Sound_1.wav",
+  "/../sound/TakeoverSetCapsuleSound.wav"
 };
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
@@ -303,9 +304,11 @@ Switch_Background_Music_To(int Tune)
   else
     {
 
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
+
       YDestroyPlaySoundObject( BackgroundMusic_con , BackgroundMusic_play_id );
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track stopped..\n");
       
     }
 
@@ -322,21 +325,30 @@ Switch_Background_Music_To(int Tune)
     }
   else
     {
+
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Now starting new background tune...\n");
+
       BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, 
 							     ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  preparing endless loop...\n");
 
       Current_Tune = Tune;
 
       Music_Parameters.repeats=0;
       Music_Parameters.total_repeats=-1; // -1 here means to repeat indefinately
-      Music_Parameters.left_volume=1;
-      Music_Parameters.right_volume=1;
+      Music_Parameters.left_volume=0.5;
+      Music_Parameters.right_volume=0.5;
       Music_Parameters.sample_rate=BackgroundMusic_sndobj_attrib.sample_rate;
       Music_Parameters.length=BackgroundMusic_sndobj_attrib.sample_size;
       Music_Parameters.position=0;
       Music_Parameters.yid=BackgroundMusic_play_id;
       Music_Parameters.flags=0xFFFFFFFF;
+
+
       YSetPlaySoundObjectValues( BackgroundMusic_con, BackgroundMusic_play_id, &Music_Parameters );
+
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
+
     }
 
   DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
@@ -662,6 +674,21 @@ void LeaveElevatorSound(void){
 void FireBulletSound(void){
 
 	Play_YIFF_Server_Sound(FIRESOUND);
+
+} // void FireBulletSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void 
+Takeover_Set_Capsule_Sound(void)
+{
+
+  Play_YIFF_Server_Sound( TAKEOVER_SET_CAPSULE_SOUND );
 
 } // void FireBulletSound(void)
 
