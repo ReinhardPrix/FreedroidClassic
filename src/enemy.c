@@ -769,6 +769,8 @@ SwapThisRobotToFrontPosition ( enemy* ThisRobot )
   int i;
   enemy Zwisch;
 
+  return; // for now disabled...
+
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
     {
       if ( AllEnemys[ i ] .Status != OUT )

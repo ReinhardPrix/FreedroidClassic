@@ -2209,10 +2209,12 @@ Get_Server_Name ( void )
   char* Temp;
   InitiateMenu( NE_TITLE_PIC_FILE );
 
-  DisplayText ( "\n Please enter name of server to connect to:\n\n\n      " , 
-		50 , 50 , NULL );
+  DisplayText ( "\n\
+ Please enter name of server to connect to:\n\
+ You can give an empty string for the local host.\n\
+ \n      " , 50 , 50 , NULL );
 
-  Temp = GetString( 40 , FALSE );
+  Temp = GetString( 140 , FALSE );
   strcpy ( ServerName , Temp );
   free( Temp );
 }; // void Get_New_Character_Name ( void )

@@ -537,7 +537,7 @@ Pause (void)
   while ( Pause )
     {
       // usleep(10);
-      AnimateInfluence ();
+      AnimateInfluence ( 0 );
       AnimateRefresh ();
       AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
