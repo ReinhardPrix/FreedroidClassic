@@ -37,11 +37,7 @@
 #include "global.h"
 #include "proto.h"
 
-
-
-
 #undef DIAGONAL_KEYS_AUS
-// #undef QUEUEDEBUG
 #define QUEUEDEBUG
 
 #define MESPOSX 0
@@ -71,16 +67,13 @@ void Multi_Player_Menu (void);
 void Options_Menu (void);
 void Show_Highscore_Menu (void);
 void Show_Mission_Instructions_Menu (void);
+void Level_Editor(void);
 
 int New_Game_Requested=FALSE;
 int VectsHaveBeenTurned = 0;
 unsigned char *MessageBar;
 message *Queue = NULL;
-
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
 
 void
 gotoxy (int x, int y)
@@ -577,7 +570,13 @@ EscapeMenu (void)
 
 #define FIRST_MENU_ITEM_POS_X 3*(BLOCKBREITE - 7)
 enum
-  { SINGLE_PLAYER_POSITION=1, MULTI_PLAYER_POSITION=2, OPTIONS_POSITION=3, HELP_POSITION=4, QUIT_POSITION=5 };
+  { 
+    SINGLE_PLAYER_POSITION=1, 
+    MULTI_PLAYER_POSITION=2, 
+    OPTIONS_POSITION=3, 
+    LEVEL_EDITOR_POSITION=4, 
+    QUIT_POSITION=5 
+  };
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -643,6 +642,11 @@ enum
 	      Options_Menu();
 	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
+	    case LEVEL_EDITOR_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Level_Editor();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
 	    case QUIT_POSITION:
 	      DebugPrintf("\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
 	      Terminate(0);
@@ -684,11 +688,12 @@ Options_Menu (void)
 
 #define OPTIONS_MENU_ITEM_POS_X (BLOCKBREITE/2)
 enum
-  { SET_BG_MUSIC_VOLUME=1, SET_SOUND_FX_VOLUME=2, SET_GAMMA_CORRECTION=3, SET_FULLSCREEN_FLAG=4, TOGGLE_FRAMERATE=5, LEAVE_OPTIONS_MENU=6 };
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
+  { SET_BG_MUSIC_VOLUME=1, 
+    SET_SOUND_FX_VOLUME=2, 
+    SET_GAMMA_CORRECTION=3, 
+    SET_FULLSCREEN_FLAG=4, 
+    TOGGLE_FRAMERATE=5, 
+    LEAVE_OPTIONS_MENU=6 };
 
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
@@ -1097,6 +1102,70 @@ Show_Mission_Instructions_Menu (void)
   return;
 } // ShowMissionInstructionsMenu
 
+void 
+Highlight_Current_Block(void)
+{
+  // int IntPosx, IntPosy;
+  int i, j;
+
+  // IntPosx=(int)(rintf(Me.pos.x));
+  // IntPosy=(int)(rintf(Me.pos.y));
+
+  for (i=0; i<BLOCKBREITE; i++)
+    {
+      // This draws a line at the upper border of the current block
+      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
+		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i]=BULLETCOLOR;
+      // This draws a line at the lower border of the current block
+      InternWindow[(INTERNHOEHE+1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
+		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i]=BULLETCOLOR;
+      // This draws a line at the left border of the current block
+      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
+		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i*INTERNBREITE*BLOCKBREITE]=BULLETCOLOR;
+      // This draws a line at the right border of the current block
+      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
+		   (INTERNBREITE+1)*(BLOCKBREITE/2)+i*INTERNBREITE*BLOCKBREITE]=BULLETCOLOR;
+    }
+}
+
+void 
+Level_Editor(void)
+{
+  while (!EscapePressed())
+    {
+      GetView();
+      GetInternFenster( SHOW_MAP );
+      Highlight_Current_Block();
+      PutInternFenster( FALSE );
+      PrepareScaledSurface( FALSE );
+      CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "LEVEL EDITOR");
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
+      if (LeftPressed()) 
+	{
+	  Me.pos.x-=BLOCKBREITE;
+	  while (LeftPressed());
+	}
+      if (RightPressed()) 
+	{
+	  Me.pos.x+=BLOCKBREITE;
+	  while (RightPressed());
+	}
+      if (UpPressed()) 
+	{
+	  Me.pos.y-=BLOCKHOEHE;
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  Me.pos.y+=BLOCKHOEHE;
+	  while (DownPressed());
+	}
+      
+    } // while (!EscapePressed())
+
+  while( EscapePressed() );
+}
 
 /*@Function============================================================
 @Desc: Testfunktion fuer InsertMessage()
