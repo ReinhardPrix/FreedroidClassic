@@ -753,7 +753,7 @@ InitPictures (void)
   //--------------------
   // Now we create the internal storage for all our blocks 
   //
-  tmp = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, vid_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp, 0, 0, 0, 0);
   if (tmp == NULL) 
     {
       DebugPrintf (1, "\nCould not create static_blocks surface: %s\n", SDL_GetError());
@@ -1022,7 +1022,7 @@ Sorry...\n\
 
   #define SCALE_FACTOR 2
 
-  if( !(Screen = SDL_SetVideoMode ( SCREENLEN, SCREENHEIGHT , 0 , flags)) )
+  if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , flags)) )
     {
       fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
 	      SDL_GetError()); 

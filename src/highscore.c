@@ -150,7 +150,7 @@ Show_Highscores (void)
 
   len = CharWidth (GetCurrentFont(), '9'); 
 
-  x0 = SCREENLEN/8;
+  x0 = SCREEN_WIDTH/8;
   x1 = x0 + 3*len;
   x2 = x1 + 9*len;
   x3 = x2 + MAX_NAME_LEN*len;

@@ -563,7 +563,7 @@ typedef struct
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
-  double feindphase;		// current phase of rotation of this droid
+  double phase;		// current phase of rotation of this droid
 
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
@@ -601,7 +601,7 @@ typedef struct
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
-  double feindphase;		// current phase of rotation of this droid
+  double phase;		// current phase of rotation of this droid
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
   int Status;			// current status like OUT=TERMINATED or not OUT

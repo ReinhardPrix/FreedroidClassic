@@ -225,7 +225,7 @@ ClearEnemys ( void )
     {
       AllEnemys[i].type = -1;
       AllEnemys[i].pos.z = AllEnemys[i].energy = 0;
-      AllEnemys[i].feindphase = 0;
+      AllEnemys[i].phase = 0;
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
       AllEnemys[i].Status = OUT;
       AllEnemys[i].warten = 0;
@@ -1498,26 +1498,26 @@ AnimateEnemys (void)
 	continue;
       if (AllEnemys[i].Status == OUT)
 	{
-	  AllEnemys[i].feindphase = DROID_PHASES ;
+	  AllEnemys[i].phase = DROID_PHASES ;
 	  continue;
 	}
 
       if ( AllEnemys[i].energy <= 0 ) 
 	{
 	  DebugPrintf( 0 , "\nWARNING:  Enemy with negative energy encountered.  Phase correction forced..." );
-	  AllEnemys[i].feindphase = 0 ;
+	  AllEnemys[i].phase = 0 ;
 	}
       else
 	{
 	  // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;
-	  AllEnemys[i].feindphase +=
+	  AllEnemys[i].phase +=
 	    (AllEnemys[i].energy / Druidmap[AllEnemys[i].type].maxenergy) *
 	    Frame_Time () * DROID_PHASES * 2.5;
 	}
 
-      if (AllEnemys[i].feindphase >= DROID_PHASES)
+      if (AllEnemys[i].phase >= DROID_PHASES)
 	{
-	  AllEnemys[i].feindphase = 0;
+	  AllEnemys[i].phase = 0;
 	}
     }
 }; // void AnimateEnemys ( void )

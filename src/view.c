@@ -522,22 +522,22 @@ Assemble_Combat_Picture (int mask)
   DisplayButtons( );
 
   if ( ServerMode )
-    CenteredPrintStringFont ( Screen , Menu_BFont , SCREENHEIGHT/2 , " S E R V E R ! ! ! " );
+    CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );
 
   if ( GameConfig.Inventory_Visible ) 
     {
-      User_Rect.x = SCREENLEN/2;
-      User_Rect.w = SCREENLEN/2;
+      User_Rect.x = SCREEN_WIDTH/2;
+      User_Rect.w = SCREEN_WIDTH/2;
     }
   else if ( GameConfig.CharacterScreen_Visible ) 
     {
-      User_Rect.x = 0; // SCREENLEN/2;
-      User_Rect.w = SCREENLEN/2;
+      User_Rect.x = 0; // SCREEN_WIDTH/2;
+      User_Rect.w = SCREEN_WIDTH/2;
     }
   else
     {
       User_Rect.x = 0;
-      User_Rect.w = SCREENLEN;
+      User_Rect.w = SCREEN_WIDTH;
     }
 
 
@@ -891,7 +891,7 @@ Sorry...\n\
   // The number will be blittet later
   //
   druidname = Druidmap[AllEnemys[Enum].type].druidname;
-  phase = AllEnemys[Enum].feindphase;
+  phase = AllEnemys[Enum].phase;
 
   TargetRectangle.x = UpperLeftBlitCorner.x ;
   TargetRectangle.y = UpperLeftBlitCorner.y ;
@@ -1219,7 +1219,7 @@ Sorry...\n\
   
 
   SDL_SetClipRect( Screen , NULL );
-  Set_Rect (target, PosX, PosY, SCREENLEN, SCREENHEIGHT);
+  Set_Rect (target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
   SDL_BlitSurface( tmp , NULL, Screen , &target);
 
   SDL_FreeSurface(tmp);
@@ -1269,9 +1269,9 @@ ShowInventoryScreen( void )
       // for our inventory screen.
       //
       InventoryRect.x = 0;
-      // InventoryRect.y = SCREENHEIGHT - InventoryImage->h;
+      // InventoryRect.y = SCREEN_HEIGHT - InventoryImage->h;
       InventoryRect.y = User_Rect.y;
-      InventoryRect.w = SCREENLEN/2;
+      InventoryRect.w = SCREEN_WIDTH/2;
       InventoryRect.h = User_Rect.h;
     }
 
