@@ -219,10 +219,6 @@ enum _spell_names
 #define MAX_LENGTH_FOR_DIALOG_SECTION_NAME 100
 #define MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING 200
 
-// The flags for DisplayBanner are:
-enum
-  { BANNER_FORCE_UPDATE=1 , BANNER_DONT_TOUCH_TEXT=2 , BANNER_NO_SDL_UPDATE=4 };
-
 // The flags for AssembleCombatWindow are:
 enum
 { ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 , ONLY_SHOW_MAP_AND_TEXT = 4 , SHOW_GRID = 8 , SHOW_TUX_AND_ENEMIES = 16 , SHOW_TEXT = 32 , SHOW_ITEMS = 64 , OMIT_OBSTACLES = 128 , OMIT_TUX = 256 , OMIT_ENEMIES = 512 , SHOW_OBSTACLE_NAMES = 1024 , ZOOM_OUT = 2048 , OMIT_BLASTS = 4096 };
@@ -304,17 +300,11 @@ enum
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
-// #define ISO_WIDTH               128.0
-// #define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
-// #define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 600
-// #define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 2000
 #define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 4000
 
-/* Scroll- Fenster */
 #define SCROLLSTARTX		User_Rect.x
 #define SCROLLSTARTY		SCREEN_HEIGHT
-
 
 #define INITIAL_DIGIT_LENGTH (8*2)
 #define INITIAL_DIGIT_HEIGHT (9*2)
@@ -353,8 +343,6 @@ enum
 #define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
 
-
-
 //--------------------
 // Some definitions for the menus
 //
@@ -381,13 +369,6 @@ enum _sounds
 // for these periodic happenings...
 #define CRY_SOUND_INTERVAL 2
 #define TRANSFER_SOUND_INTERVAL 1.1
-
-
-//--------------------
-// Ship-Elevator pictures
-//
-
-#define NUM_EL_BLOCKS		17
 
 // #define MAX_PLAYERS             5
 #define MAX_PLAYERS             1

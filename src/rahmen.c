@@ -885,6 +885,55 @@ ShowCurrentHealthAndForceLevel( void )
  *
  *
  * ---------------------------------------------------------------------- */
+int
+teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
+{
+  finepoint MapPositionOfMouse;
+  int i;
+  int action_number;
+
+  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+			   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+    {
+      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+
+      for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+	{
+	  if ( ( ( (int) MapPositionOfMouse . x ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . x ) )
+	    continue;
+	  if ( ( ( (int) MapPositionOfMouse . y ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . y ) )
+	    continue;
+	  if ( Me [ player_num ] . pos . z != AllEventTriggers [ i ] . Influ_Must_Be_At_Level )
+	    continue;
+	  
+	  // DebugPrintf ( -1000 , "\nSome trigger seems to be here..." );
+	  
+	  //--------------------
+	  // Now we know, that the mouse is currently exactly over an event trigger.  The
+	  // question to be answered still is whether this trigger also triggers a teleporter
+	  // action or not and if yes, where the connection leads to...
+	  //
+	  action_number = GiveNumberToThisActionLabel ( AllEventTriggers [ i ] . TargetActionLabel ) ;
+
+	  if ( AllTriggeredActions [ action_number ] . TeleportTargetLevel != (-1) )
+	    {
+	      sprintf ( ItemDescText , "To %s...." , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
+	      return ( TRUE );
+	    }
+	}
+    }
+  return ( FALSE );
+}; // void teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 ShowCurrentTextWindow ( void )
 {

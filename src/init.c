@@ -2036,6 +2036,7 @@ CheckIfMissionIsComplete (void)
   int MissNum;
   int ActionNum;
   static int CheckMissionGrid; 
+  int this_mission_seems_completed = TRUE ;
 #define MIS_COMPLETE_DEBUG 1
   
   //--------------------
@@ -2045,6 +2046,7 @@ CheckIfMissionIsComplete (void)
   CheckMissionGrid++;
   if ( ( CheckMissionGrid % 50 ) != 0 ) return;
 
+  
   for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME ; MissNum ++ )
     {
 
@@ -2053,27 +2055,29 @@ CheckIfMissionIsComplete (void)
       // the mission is already completed or if the mission does not exist
       // at all or if the mission was not assigned yet
       //
-      if ( Me[0].AllMissions[ MissNum ].MissionIsComplete == TRUE ) continue;
-      if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE ) continue;
-      if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
-      if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+      if ( Me [ 0 ] . AllMissions [ MissNum ] . MissionIsComplete == TRUE ) continue;
+      if ( Me [ 0 ] . AllMissions [ MissNum ] . MissionWasFailed == TRUE ) continue;
+      if ( Me [ 0 ] . AllMissions [ MissNum ] . MissionExistsAtAll != TRUE ) continue;
+      if ( Me [ 0 ] . AllMissions [ MissNum ] . MissionWasAssigned != TRUE ) continue;
 
       DebugPrintf ( MIS_COMPLETE_DEBUG , "\nSomething was assigned at all..... MissNum = %d " , MissNum );
+
+      this_mission_seems_completed = TRUE ;
 
       //--------------------
       // Continue if the Mission target KillOne is given but not fullfilled
       //
-      if ( Me[0].AllMissions[ MissNum ].KillOne != (-1) )
+      if ( Me [ 0 ] . AllMissions [ MissNum ].KillOne != (-1) )
 	{
-	  //	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
 	    {
 	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
-		   ( AllEnemys[Robot_Counter] . marker == Me[0].AllMissions[ MissNum ].KillOne ) )
+		   ( AllEnemys[Robot_Counter] . marker == Me [ 0 ] . AllMissions [ MissNum ] . KillOne ) )
 		{
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
-		  goto CheckNextMission;
+		  this_mission_seems_completed = FALSE ;
+		  break;
 		}
 	    }
 	}
@@ -2092,7 +2096,11 @@ CheckIfMissionIsComplete (void)
 		  break;
 		}
 	    }
-	  if ( ItemCounter >= MAX_ITEMS_IN_INVENTORY ) goto CheckNextMission;
+	  if ( ItemCounter >= MAX_ITEMS_IN_INVENTORY ) 
+	    {
+	      // goto CheckNextMission;
+	      this_mission_seems_completed = FALSE ;
+	    }
 	}
 
       //--------------------
@@ -2107,7 +2115,9 @@ CheckIfMissionIsComplete (void)
 		{
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
 		  fflush(stdout);
-		  goto CheckNextMission;
+
+		  this_mission_seems_completed = FALSE ;
+		  break;
 		}
 	    }
 	}
@@ -2127,7 +2137,8 @@ CheckIfMissionIsComplete (void)
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
 				Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
 				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
-		  goto CheckNextMission;
+		  this_mission_seems_completed = FALSE ;
+		  break;
 		}
 	    }
 	}
@@ -2148,7 +2159,8 @@ CheckIfMissionIsComplete (void)
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne bot on that first level is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
 				Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
 				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
-		  goto CheckNextMission;
+		  this_mission_seems_completed = FALSE ;
+		  break;
 		}
 	    }
 	}
@@ -2169,7 +2181,8 @@ CheckIfMissionIsComplete (void)
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne bot on that second level is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
 				Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
 				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
-		  goto CheckNextMission;
+		  this_mission_seems_completed = FALSE ;
+		  break;
 		}
 	    }
 	}
@@ -2263,20 +2276,22 @@ CheckIfMissionIsComplete (void)
 	    }
 	}
 
-      //--------------------
-      // AT THIS POINT WE KNOW THAT ALL OF THE GIVEN TARGETS FOR THIS MISSION ARE FULLFILLED
-      // We therefore mark the mission as completed
-      //
-      GameConfig.Mission_Log_Visible_Time = 0;
-      GameConfig.Mission_Log_Visible = TRUE;
-      Me[0].AllMissions[ MissNum ].MissionIsComplete = TRUE;
-      Mission_Status_Change_Sound ( );
-      for ( ActionNum = 0 ; ActionNum < MAX_MISSION_TRIGGERED_ACTIONS ; ActionNum ++ )
+      if ( this_mission_seems_completed )
 	{
-	  ExecuteEvent( Me[0].AllMissions[ MissNum ].ListOfActionsToBeTriggeredAtCompletition[ ActionNum ] , 0 );
+	  //--------------------
+	  // AT THIS POINT WE KNOW THAT ALL OF THE GIVEN TARGETS FOR THIS MISSION ARE FULLFILLED
+	  // We therefore mark the mission as completed
+	  //
+	  GameConfig.Mission_Log_Visible_Time = 0;
+	  GameConfig.Mission_Log_Visible = TRUE;
+	  Me[0].AllMissions[ MissNum ].MissionIsComplete = TRUE;
+	  Mission_Status_Change_Sound ( );
+	  for ( ActionNum = 0 ; ActionNum < MAX_MISSION_TRIGGERED_ACTIONS ; ActionNum ++ )
+	    {
+	      ExecuteEvent( Me[0].AllMissions[ MissNum ].ListOfActionsToBeTriggeredAtCompletition[ ActionNum ] , 0 );
+	    }
 	}
-      
-    CheckNextMission: // this is a label for goto jumps.  Please don't remove it.
+
     } // for AllMissions
       
 }; // void CheckIfMissionIsComplete

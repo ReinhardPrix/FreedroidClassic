@@ -3154,6 +3154,52 @@ raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , poi
 }; // void move_picked_up_item_to_entry ( ItemPointer , TargetPointer )
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+int
+place_item_on_this_position_if_you_can ( item* ItemPointer , point Inv_Loc , int InvPos )
+{
+  int item_height;
+  int item_width;
+
+  for ( item_height = 0 ; item_height < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y ; item_height ++ )
+    {
+      for ( item_width = 0 ; item_width < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . x ; item_width ++ )
+	{
+	  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
+	  if ( !Inv_Pos_Is_Free( Inv_Loc . x + item_width , 
+				 Inv_Loc . y + item_height ) )
+	    {
+	      Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = -1;
+	      Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = -1;
+	      // goto This_Is_No_Possible_Location;
+	      return ( FALSE ) ;
+	    }
+	}
+    }
+  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
+  
+  // At this point we know we have reached a position where we can plant this item.
+  Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = Inv_Loc . x ;
+  Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = Inv_Loc . y ;
+  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
+  
+  //--------------------
+  if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
+    {
+      Me [ 0 ] . TextVisibleTime = 0;
+      Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
+      CantCarrySound();
+      // can't take any more items,
+    }
+  else
+    {
+      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+    }
+  return ( TRUE );
+}; // int place_item_on_this_position_if_you_can ( ... )
+
+/* ----------------------------------------------------------------------
  * This function deals with the case, that WHILE THERE IS NO INVENTORY
  * SCREEN OPEN, the Tux still clicks some items on the floor to pick them
  * up.  So no big visible operation is required, but instead the items
@@ -3165,8 +3211,6 @@ void
 AddFloorItemDirectlyToInventory( item* ItemPointer )
 {
   int InvPos;
-  int item_height;
-  int item_width;
   point Inv_Loc = { -1 , -1 } ;
   int TargetItemIndex;
 
@@ -3304,48 +3348,9 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     {
       for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
 	{
-	  
-	  for ( item_height = 0 ; item_height < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y ; item_height ++ )
-	    {
-	      for ( item_width = 0 ; item_width < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . x ; item_width ++ )
-		{
-		  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
-		  if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
-					 Inv_Loc.y + item_height ) )
-		    {
-		      Me[0].Inventory[ InvPos ].inventory_position.x = -1;
-		      Me[0].Inventory[ InvPos ].inventory_position.y = -1;
-		      goto This_Is_No_Possible_Location;
-		    }
-		}
-	    }
-	  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
-	  
-	  // At this point we know we have reached a position where we can plant this item.
-	  Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-	  Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-	  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
-	  
-	  //--------------------
-	  if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
-	    {
-	      Me[0].TextVisibleTime = 0;
-	      Me[0].TextToBeDisplayed = "I can't carry any more.";
-	      CantCarrySound();
-	      // can't take any more items,
-	    }
-	  else
-	    {
-	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
-	    }
-	  return;
-	  
-	This_Is_No_Possible_Location:
-	  
+	  if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
 	}
-      
     }
-  
 
 
   if ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) )

@@ -158,7 +158,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
   int Newest_Sound_Channel=0;
   Mix_Chunk *One_Shot_WAV_File;
   char Temp_Filename[5000];
-  char* fpath;
+  char* fpath="no_fpath_has_been_set";
 #endif
 
   //--------------------

@@ -71,7 +71,23 @@ DoAllMovementAndAnimations ( void )
   if ( !ClientMode ) MoveBullets ();   
   
 }; // void DoAllMovementAndAnimations ( void )
-  
+
+/* ----------------------------------------------------------------------
+ * The following function is NOT 'standard' C but rather a GNU extention
+ * to the C standards.  We *DON'T* want to use such things, but in this
+ * case it helps debugging purposes of floating point operations just so
+ * much, that it's really worth using it (in development versions, not in
+ * releases).  But to avoid warnings from GCC (which we always set to not
+ * allow gnu extentions to the C standard by default), we declare the
+ * prototype of this function here.  If you don't use GCC or this 
+ * function should give you portability problems, it's ABSOLUTELY SAFE
+ * to just remove all instances of it, since it really only helps 
+ * debugging.  Proper documentation can be found in the GNU C Library,
+ * section about 'Arithmethic', subsection on floating point control
+ * functions.
+ * ---------------------------------------------------------------------- */
+int feenableexcept (int excepts);
+
 /* -----------------------------------------------------------------
  * This function is the heart of the game.  It contains the main
  * game loop.
