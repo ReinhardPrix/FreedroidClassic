@@ -1,11 +1,4 @@
 /* 
- *  _Definitions_ of global variables
- * This file should only be included in main.c, and 
- * the variable _declarations_ should be made in global.h under _main_c
- *
- */
-
-/* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -29,6 +22,14 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* 
+ *  _Definitions_ of global variables
+ * This file should only be included in main.c, and 
+ * the variable _declarations_ should be made in global.h under _main_c
+ *
+ */
+
 
 #include "colodefs.h"
 #include "ship.h"
@@ -158,27 +159,39 @@ item_bonus PrefixList[] = {
   { "Elite "                  ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 , 00 , 00 , 00 , 00 ,   3.0 }  // 2 
 };
 
-//    NAME                      DEX  STR  VIT  MAG  HP  MANA  TOHIT ALL AC/DA FIR  ELE  FOR   PRICE-FACTOR
+//    NAME                      DEX  STR  VIT  MAG  HP  MANA  TOHIT ALL AC/DA FIR  ELE  FOR   Alvl PRICE-FACTOR
 item_bonus SuffixList[] = {
-  { " of Dexterity"           ,  5 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  10.0 }, // 0
-  { " of Strength"            ,  0 ,  5 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  10.0 }, // 1
-  { " of Life"                ,  0 ,  0 ,  5 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  10.0 }, // 2 
-  { " of the Mind"            ,  0 ,  0 ,  0 ,  5 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  10.0 }, // 3
-  { " of the Fighter"         ,  2 ,  2 ,  2 , -2 ,  5 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, // 4 
-  { " of Life"                ,  0 ,  0 ,  0 ,  0 , 15 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  10.0 }, 
-  { " of the Force"           ,  0 ,  0 ,  0 ,  0 ,  0 , 15 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of the Sniper"          ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   5 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of the Open Source"     ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  5 , 00 , 00 , 00 , 00 ,  20.0 }, 
+  { " of Closed Source"       ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , -5 , 00 , 00 , 00 , 00 ,  0 ,  0.1 }, 
+  { " of Dexterity"           ,  5 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 10.0 }, 
+  { " of Strength"            ,  0 ,  5 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 10.0 }, 
+  { " of Life"                ,  0 ,  0 ,  5 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 10.0 }, 
+  { " of the Mind"            ,  0 ,  0 ,  0 ,  5 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 10.0 }, 
+  { " of the Fighter"         ,  2 ,  2 ,  2 , -2 ,  5 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 20.0 }, 
+  { " of Life"                ,  0 ,  0 ,  0 ,  0 , 15 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 10.0 }, 
+  { " of the Force"           ,  0 ,  0 ,  0 ,  0 ,  0 , 15 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  0 , 20.0 }, 
+  { " of the Sniper"          ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   5 ,  0 , 00 , 00 , 00 , 00 ,  0 , 20.0 }, 
+  { " of the Open Source"     ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  5 , 00 , 00 , 00 , 00 ,  0 , 20.0 }, 
 
-  { " of Agility"             , 10 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of the Bulldozer"       ,  0 , 10 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of toughness"           ,  0 ,  0 , 10 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of the Hacker"          ,  0 ,  0 ,  0 , 10 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  20.0 }, 
-  { " of the Warrior"         ,  4 ,  4 ,  4 , -4 , 10 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  40.0 }, 
-  { " of long life"           ,  0 ,  0 ,  0 ,  0 , 25 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  30.0 }, 
-  { " of the spirits"         ,  0 ,  0 ,  0 ,  0 ,  0 , 25 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  30.0 }, 
-  { " of the Guerillias"      ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  10 ,  0 , 00 , 00 , 00 , 00 ,  30.0 }, 
-  { " of the GPL"             ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , 10 , 00 , 00 , 00 , 00 ,  40.0 }  
+  { " of Agility"             , 10 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 20.0 }, 
+  { " of the Bulldozer"       ,  0 , 10 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 20.0 }, 
+  { " of toughness"           ,  0 ,  0 , 10 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 20.0 }, 
+  { " of the Hacker"          ,  0 ,  0 ,  0 , 10 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 20.0 }, 
+  { " of the Warrior"         ,  4 ,  4 ,  4 , -4 , 10 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 40.0 }, 
+  { " of long life"           ,  0 ,  0 ,  0 ,  0 , 25 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 30.0 }, 
+  { " of the spirits"         ,  0 ,  0 ,  0 ,  0 ,  0 , 25 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  1 , 30.0 }, 
+  { " of the Guerillias"      ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  10 ,  0 , 00 , 00 , 00 , 00 ,  1 , 30.0 }, 
+  { " of Aladin"              ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , 10 , 00 , 00 , 00 , 00 ,  1 , 40.0 },
+
+  { " of Perl scriper"        , 15 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 40.0 }, 
+  { " of Reiser FS"           ,  0 , 15 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 40.0 }, 
+  { " of toughness"           ,  0 ,  0 , 15 ,  0 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 40.0 }, 
+  { " of the Kernel Hacker"   ,  0 ,  0 ,  0 , 15 ,  0 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 60.0 }, 
+  { " of the Warrior"         ,  4 ,  4 ,  4 , -4 , 10 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 40.0 }, 
+  { " of long life"           ,  0 ,  0 ,  0 ,  0 , 25 ,  0 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 60.0 }, 
+  { " of the spirits"         ,  0 ,  0 ,  0 ,  0 ,  0 , 25 ,   0 ,  0 , 00 , 00 , 00 , 00 ,  2 , 50.0 }, 
+  { " of the Guerillias"      ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  10 ,  0 , 00 , 00 , 00 , 00 ,  2 , 50.0 }, 
+  { " of the GPL"             ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , 10 , 00 , 00 , 00 , 00 ,  2 , 80.0 }  
+
 };
 
 char *Shipnames[ALLSHIPS] = {
