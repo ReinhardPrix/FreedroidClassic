@@ -2089,6 +2089,7 @@ InitFreedroid ( void )
 
   ServerMode = FALSE;
   ClientMode = FALSE;
+  RespectVisibilityOnMap = TRUE ; 
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;

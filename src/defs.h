@@ -428,7 +428,7 @@ enum _non_player_characters
 #define MAX_ANSWERS_PER_PERSON 100
 #define END_ANSWER (MAX_ANSWERS_PER_PERSON-1)
 
-#define MAX_MAP_INSERTS         6
+#define MAX_MAP_INSERTS         8
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
 #define MAX_MOUSE_PRESS_BUTTONS 77

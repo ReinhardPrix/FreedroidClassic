@@ -96,6 +96,8 @@ map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] = {
   { "LongRangeTeleporter_Left" , "map_inserts/LongRangeTeleporter_Left.png" , { 3 , 3 } , NULL } ,
   { "LongRangeTeleporter_Right" , "map_inserts/LongRangeTeleporter_Right.png" , { 3 , 3 } , NULL } , 
   { "MaintainanceSquare1x1" , "map_inserts/MaintainanceSquare1x1.png" , { 1 , 1 } , NULL } , 
+  { "CookingPotOnEmptyFloor" , "map_inserts/CookingPotOnEmptyFloor.png" , { 1 , 1 } , NULL } , 
+  { "CookingPotOnRedFloor" , "map_inserts/CookingPotOnRedFloor.png" , { 1 , 1 } , NULL }  ,
 };
 
 /*
