@@ -4,21 +4,8 @@ Bugs
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- (rp) stabilise Highscore list
-- (rp) improve keyboard-repeat in takeover
 - (rp) fix small mouse-shooting inconsistencies
        ? which ones are left ?
-
-- (rp/jp) put a crosshair mouse-cursor
-  jp: --> done via taking and modifieing the example from the SDL doku
-          the current cursor is defines via pixel-map contants in the code, haha.
-
-- bullet to top-right seems to be "offset" to top with respect to
-  displayed bullet-pic (which is positioned correctly), i.e. 
-  collisions with wall or robots take place as if it was higher in y...
-  jp: --> Problem fixed.  The rotated Block is no longer of size Block_Width x Block_Height
-          but of the size of the smalled rectrangle containing the uncroped rotated 
-	  square of this size.
 
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
@@ -74,9 +61,6 @@ Wishlist
 --------
 - Add the original energy-upload-function from the C64 classical game start
   to Freedroid (instead of BeamLine perhaps...)
-
-- !! We should have a common bug/patch mailing address somewhere !!
-  freedroid@....
 
 - (jp) add more sounds:  
   We might use a new sound file for every different level. That would be
@@ -264,3 +248,20 @@ Resolved bugs
 - (rp?) The space for droids in the takeover game is a bit scarce.  The bottom tends to
         get chopped off.  Takeover should be rearranged to display the droids without
         chopped off parts indepentend of which theme is loaded.
+- (rp) stabilise Highscore list
+
+- (rp) improve keyboard-repeat in takeover
+- (rp/jp) put a crosshair mouse-cursor
+  jp: --> done via taking and modifieing the example from the SDL doku
+          the current cursor is defines via pixel-map contants in the code, haha.
+
+- bullet to top-right seems to be "offset" to top with respect to
+  displayed bullet-pic (which is positioned correctly), i.e. 
+  collisions with wall or robots take place as if it was higher in y...
+  jp: --> Problem fixed.  The rotated Block is no longer of size Block_Width x Block_Height
+          but of the size of the smalled rectrangle containing the uncroped rotated 
+	  square of this size.
+
+
+- !! We should have a common bug/patch mailing address somewhere !!
+  freedroid@....

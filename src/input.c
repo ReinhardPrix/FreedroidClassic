@@ -678,42 +678,47 @@ keyboard_update(void)
 	  
 	case SDL_JOYBUTTONDOWN:
 	  CurrentlySpacePressed = TRUE;
+	  axis_is_active = TRUE;
 	  break;
 
 	case SDL_JOYBUTTONUP:
 	  CurrentlySpacePressed = FALSE;
+	  axis_is_active = FALSE;
 	  break;
 
-
-
-	  /* Mouse control */
-	case SDL_MOUSEBUTTONDOWN:
+	case SDL_MOUSEMOTION:
 	  if (mouse_control)
 	    {
-	      if (event.button.button == SDL_BUTTON_LEFT)
-		{
-		  CurrentlySpacePressed = TRUE;
-		  //
-		  // Since the new mouse cursor does have it's tip at the top left corner
-		  // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
-		  // cursor, we need to correct the given axis a little (16 pixels) bit.
-		  //
-		  input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
-		  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 
-		}
-	      if (event.button.button == SDL_BUTTON_RIGHT)
-		CurrentlyMouseRightPressed = TRUE;
-	      
+	      //
+	      // Since the new mouse cursor does have it's tip at the top left corner
+	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
+	      // cursor, we need to correct the given axis a little (16 pixels) bit.
+	      //
+	      input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
+	      input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
 	    }
+	  break;
+	  
+	  /* Mouse control */
+	case SDL_MOUSEBUTTONDOWN:
+	  if (event.button.button == SDL_BUTTON_LEFT)
+	    {
+	      CurrentlySpacePressed = TRUE;
+	      axis_is_active = TRUE;
+	    }
+
+	  if (event.button.button == SDL_BUTTON_RIGHT)
+	    CurrentlyMouseRightPressed = TRUE;
+	  
 	  break;
 
         case SDL_MOUSEBUTTONUP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlySpacePressed = FALSE;
-	      input_axis.x = 0;
-	      input_axis.y = 0;
+	      axis_is_active = FALSE;
 	    }
+
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = FALSE;
 	
@@ -1193,7 +1198,7 @@ EscapePressed (void)
 int
 NoDirectionPressed (void)
 {
-  if (input_axis.x || input_axis.y ||
+  if ( (axis_is_active && (input_axis.x || input_axis.y)) ||
       DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
     return ( FALSE );
   else
