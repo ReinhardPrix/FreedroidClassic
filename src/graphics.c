@@ -376,7 +376,7 @@ InitPictures (void)
   /* 
      create the internal storage for all our blocks 
   */
-  tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*Block_Width,
+  tmp = SDL_CreateRGBSurface( SDL_SRCALPHA , NUM_MAP_BLOCKS*Block_Width,
 			     12*Block_Height, ne_bpp, 0, 0, 0, 0);
   tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
@@ -388,7 +388,7 @@ InitPictures (void)
   /* 
    * convert this to display format for fast blitting 
    */
-  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
+  ne_blocks = SDL_DisplayFormatAlpha(tmp);  /* the surface is copied !*/
   if (ne_blocks == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());

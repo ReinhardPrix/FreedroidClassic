@@ -85,7 +85,7 @@ enum
 // #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
 // #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
 #define NE_DROID_BLOCK_FILE	"ne_droids.gif"
-#define NE_BULLET_BLOCK_FILE 	"ne_bullet.gif"
+#define NE_BULLET_BLOCK_FILE 	"ne_bullet.png"
 // #define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.gif"
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.gif"
 #define NE_LIFT_PIC_FILE	GRAPHICS_DIR "ne_ship.gif"

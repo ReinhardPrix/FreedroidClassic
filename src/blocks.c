@@ -113,6 +113,9 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
       Terminate (ERR);
     }
 
+  SDL_SetAlpha( tmp , 0 ,  0 ); // this command is used to TAKE THE ALPHA CHANNEL WITH US IN THE BLIT AND 
+                                // NOT APPLY IT HERE
+
   if (!blocks_per_line) /* only one line here */
     blocks_per_line = num_blocks;
 
