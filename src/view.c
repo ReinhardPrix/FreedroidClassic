@@ -690,7 +690,7 @@ ShowRobotPicture (int PosX, int PosY, int Number, unsigned char *Screen)
   SDL_Surface *tmp;
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
-  char ImageFilename[100]="../graphics/";
+  char ImageFilename[100] = GRAPHICS_DIR;
 
   DebugPrintf ("\nvoid ShowRobotPicture(...): Function call confirmed.");
 

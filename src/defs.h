@@ -53,6 +53,37 @@ enum
 
 
 // **********************************************************************
+// Constants for Paths and names of Data-files
+// the root "DATADIR" should be defined in the Makefile as $(pkgdatadir)
+// if not, we set it here:
+#ifndef DATADIR
+#define DATADIR ".."   // our local fallback
+#endif
+
+#define GRAPHICS_DIR		DATADIR "/graphics/"
+#define SOUND_DIR		DATADIR "/sound/"
+#define MAP_DIR			DATADIR "/map/"
+
+#define NE_MAP_BLOCK_FILE	GRAPHICS_DIR "ne_block.bmp"
+#define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.bmp"
+#define NE_BULLET_BLOCK_FILE 	GRAPHICS_DIR "ne_bullet.bmp"
+#define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.bmp"
+#define NE_FRAME_FILE		GRAPHICS_DIR "rahmen.bmp"
+#define NE_ELEVATOR_PIC_FILE    GRAPHICS_DIR "ne_ship.bmp"
+#define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.bmp" 
+#define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.bmp"
+#define NE_RAHMEN_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.bmp"
+#define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.bmp"
+
+#define SHIPNAME		MAP_DIR "ship1"
+#define COLORFILE		MAP_DIR "levels.col"
+
+#define MENU_FONT_FILE 		GRAPHICS_DIR "para_font_for_BFont_01.png"
+#define PARA_FONT_FILE		GRAPHICS_DIR "para_font_for_BFont_01.png"
+#define ICON_FILE		GRAPHICS_DIR "paraicon.bmp"
+
+
+// **********************************************************************
 // Konstants about the size (and mem?) of pixmaps
 
 #define INITIAL_BLOCK_WIDTH	64
@@ -171,46 +202,11 @@ enum _sounds
 
 // **********************************************************************
 
-#define PARA64 						TRUE
-
 #define TRUE (1==1)
 #define FALSE (1==0)
 
 #define ERR 	-1
 #define OK		0
-
-#ifdef NEW_ENGINE
-#define NE_MAP_BLOCK_FILE	"../graphics/ne_block.bmp"
-#define NE_DROID_BLOCK_FILE	"../graphics/ne_droids.bmp"
-#define NE_BULLET_BLOCK_FILE 	"../graphics/ne_bullet.bmp"
-#define NE_BLAST_BLOCK_FILE 	"../graphics/ne_blast.bmp"
-#define NE_FRAME_FILE		"../graphics/rahmen.bmp"
-#define NE_ELEVATOR_PIC_FILE    "../graphics/ne_ship.bmp"
-#define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" 
-#define NE_DIGIT_BLOCK_FILE     "../graphics/ne_digits.bmp"
-#define NE_RAHMEN_BLOCK_FILE    "../graphics/ne_rahmen.bmp"
-#define NE_TITLE_PIC_FILE       "../graphics/ne_title.bmp"
-#else
-
-#define PALBILD_PCX                "../graphics/palbild.bmp"
-#define TITELBILD1_PCX             "../graphics/newtitle.bmp"
-#define RAHMENBILD1_PCX            "../graphics/rahmen.bmp"
-#define BLASTBILD_PCX              "../graphics/blast.bmp"
-#define BULLETBILD_PCX             "../graphics/bullet.bmp"
-#define ENEMYBILD_PCX              "../graphics/enemy.bmp"
-#define SEITENANSICHTBILD_PCX      "../graphics/ship.bmp"
-#define EL_BLOCKS_FILE_PCX         "../graphics/ship2.bmp"
-#define FONTBILD_PCX               "../graphics/parafont.bmp"
-#define CONSOLENBILD_PCX           "../graphics/console.bmp"
-#define ROBOTPICTUREBILD_PCX       "../graphics/robots.bmp"
-
-#define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
-
-#define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
-#endif
-
-#define SHIPNAME                   "../map/ship1"
-#define COLORFILE                  "../map/levels.col"
 
 /* Ship-Elevator Picture */
 #define NUM_EL_BLOCKS		17

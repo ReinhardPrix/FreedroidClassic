@@ -66,16 +66,18 @@ You need the SDL_mixer header if you want sound!
 
 # we don't want optimisation for the moment, as that makes 
 # debugging a bit more confusing
-CFLAGS="-g -Wall "
+CFLAGS="-g -Wall"
+
+CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
 
 
 #allow --enable-NE to choose the NEW_ENGINE :
-AC_ARG_ENABLE([NE],
-	AC_HELP_STRING( [--enable-NE],
-			[use new experimental graphics engine]),
-	[echo "--- New experimental graphics engine will be built!"; 
-		CFLAGS="$CFLAGS -DNEW_ENGINE"],
-	[echo "--- We'll build the old (but stable) graphics engine"])
+#AC_ARG_ENABLE([NE],
+#	AC_HELP_STRING( [--enable-NE],
+#			[use new experimental graphics engine]),
+#	[echo "--- New experimental graphics engine will be built!"; 
+#		CFLAGS="$CFLAGS -DNEW_ENGINE"],
+#	[echo "--- We'll build the old (but stable) graphics engine"])
 
 
 
@@ -83,6 +85,8 @@ AC_CONFIG_FILES([Makefile src/Makefile map/Makefile
 		graphics/Makefile sound/Makefile])
 
 AC_OUTPUT
+
+
 
 
 

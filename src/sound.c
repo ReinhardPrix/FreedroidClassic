@@ -58,30 +58,30 @@
 
 #define ALL_SOUNDS 24
 char *SoundSampleFilenames[ALL_SOUNDS] = {
-  "/../sound/ERRORSOUND_NILL",
-  "/../sound/Combat_Background_Music.wav",
-  "/../sound/Takeover_Background_Music.wav",
-  "/../sound/Console_Background_Music.wav",
-  "/../sound/Classical_Beep_Beep_Background_Music.wav",
-  "/../sound/Blast_Sound_0.wav",
-  "/../sound/Collision_Sound_0.wav",
-  "/../sound/GotIntoBlast_Sound_0.wav",
-  "/../sound/MoveElevator_Sound_0.wav",
-  "/../sound/Refresh_Sound_0.wav",
-  "/../sound/LeaveElevator_Sound_0.wav",
-  "/../sound/EnterElevator_Sound_0.wav",
-  "/../sound/ThouArtDefeated_Sound_0.wav",
-  "/../sound/Got_Hit_Sound_0.wav",
-  "/../sound/TakeoverSetCapsule_Sound_0.wav",
-  "/../sound/Menu_Item_Selected_Sound_0.wav",
-  "/../sound/Move_Menu_Position_Sound_0.wav",
-  "/../sound/Takeover_Game_Won_Sound_0.wav",
-  "/../sound/Takeover_Game_Deadlock_Sound_0.wav",
-  "/../sound/Takeover_Game_Lost_Sound_0.wav",
-  "/../sound/Fire_Bullet_Pulse_Sound_0.wav",
-  "/../sound/Fire_Bullet_Single_Pulse_Sound_0.wav",
-  "/../sound/Fire_Bullet_Military_Sound_0.wav",
-  "/../sound/Fire_Bullet_Flash_Sound_0.wav"
+  SOUND_DIR "ERRORSOUND_NILL",
+  SOUND_DIR "Combat_Background_Music.wav",
+  SOUND_DIR "Takeover_Background_Music.wav",
+  SOUND_DIR "Console_Background_Music.wav",
+  SOUND_DIR "Classical_Beep_Beep_Background_Music.wav",
+  SOUND_DIR "Blast_Sound_0.wav",
+  SOUND_DIR "Collision_Sound_0.wav",
+  SOUND_DIR "GotIntoBlast_Sound_0.wav",
+  SOUND_DIR "MoveElevator_Sound_0.wav",
+  SOUND_DIR "Refresh_Sound_0.wav",
+  SOUND_DIR "LeaveElevator_Sound_0.wav",
+  SOUND_DIR "EnterElevator_Sound_0.wav",
+  SOUND_DIR "ThouArtDefeated_Sound_0.wav",
+  SOUND_DIR "Got_Hit_Sound_0.wav",
+  SOUND_DIR "TakeoverSetCapsule_Sound_0.wav",
+  SOUND_DIR "Menu_Item_Selected_Sound_0.wav",
+  SOUND_DIR "Move_Menu_Position_Sound_0.wav",
+  SOUND_DIR "Takeover_Game_Won_Sound_0.wav",
+  SOUND_DIR "Takeover_Game_Deadlock_Sound_0.wav",
+  SOUND_DIR "Takeover_Game_Lost_Sound_0.wav",
+  SOUND_DIR "Fire_Bullet_Pulse_Sound_0.wav",
+  SOUND_DIR "Fire_Bullet_Single_Pulse_Sound_0.wav",
+  SOUND_DIR "Fire_Bullet_Military_Sound_0.wav",
+  SOUND_DIR "Fire_Bullet_Flash_Sound_0.wav"
 };
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
@@ -124,11 +124,16 @@ Init_Audio(void)
   // Also is the yiff is not used at all, the expanded file names cannot
   // hurt at all, since they are convenient for the SDL MIXER too.
 
+  /* RP: Sorry to interfere here, but pathnames are now absolute by
+   * default, so this should no longer be used
+
   for (i = 0; i < ALL_SOUNDS; i++)
     {
       ExpandedSoundSampleFilenames[i] =
 	ExpandFilename (SoundSampleFilenames[i]);
     }
+  */
+
 
   // Now SDL_AUDIO is initialized here:
 
@@ -168,7 +173,7 @@ Sorry...\n\
   else 
     {
       printf("\nSuccessfully loaded sound file %s.", 
-	     ExpandedSoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ] );
+	     SoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ] );
     }
 
   // Now that the audio channel is opend, its time to load all the
@@ -178,7 +183,7 @@ Sorry...\n\
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      Loaded_WAV_Files[i] = Mix_LoadWAV( ExpandedSoundSampleFilenames[ i ] );
+      Loaded_WAV_Files[i] = Mix_LoadWAV( SoundSampleFilenames[ i ] );
       if ( !Loaded_WAV_Files[i] )
 	{
 	  fprintf (stderr,
@@ -201,12 +206,12 @@ not complain any more.  But for now Freedroid will terminate to draw attention \
 to the sound problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , ExpandedSoundSampleFilenames[ i ]);
+\n" , SoundSampleFilenames[ i ]);
 	  Terminate (ERR);
 	} // if ( !Loaded_WAV...
       else
 	{
-	  printf("\nSuccessfully loaded file %s.", ExpandedSoundSampleFilenames[i]);
+	  printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
 	}
     } // for (i=0; ...
 
@@ -396,12 +401,12 @@ not complain any more.  Freedroid will NOT be terminated now to draw attention \
 to this sound problem, because the problem is not lethal and will not interfere\n\
 with game performance in any way.  I think this is really not dangerous.\n\
 ----------------------------------------------------------------------\n\
-\n" , ExpandedSoundSampleFilenames[ Tune ] , Mix_GetError() );
+\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
       // Terminate (ERR);
     } // if ( ... = -1
   else
     {
-      printf("\nSuccessfully playing file %s.", ExpandedSoundSampleFilenames[ Tune ]);
+      printf("\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
     }
 
 #endif // HAS_SDL_SOUND

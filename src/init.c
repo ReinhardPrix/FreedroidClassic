@@ -37,6 +37,7 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
+#include "paths.h"
 
 #include "ship.h"
 

@@ -43,6 +43,7 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+
 extern int TimerFlag;
 
 /*
@@ -352,7 +353,7 @@ InitPictures (void)
   // For debuggin purposes of the image loading procedure an
   // image of the filled ne_blocks surface is saved to a file...
 
-  SDL_SaveBMP (ne_blocks, "../graphics/debug.bmp");
+  SDL_SaveBMP (ne_blocks, "debug.bmp");
 
   return (TRUE);
 }
@@ -474,7 +475,7 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  if ( ( Menu_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
+  if ( ( Menu_BFont = LoadFont (MENU_FONT_FILE) ) == NULL )
     //  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
       {
         fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
@@ -482,7 +483,7 @@ Init_Video (void)
   } else
   printf("\nSDL Menu Font initialisation successful.\n");
 
-  if ( ( Para_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
+  if ( ( Para_BFont = LoadFont (PARA_FONT_FILE) ) == NULL )
     {
       fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
       Terminate(ERR);
@@ -501,8 +502,8 @@ Init_Video (void)
 
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
-      SDL_WM_SetCaption("Freedroid", "");
-      SDL_WM_SetIcon(SDL_LoadBMP("../graphics/paraicon.bmp"), NULL);
+      SDL_WM_SetCaption ("Freedroid", "");
+      SDL_WM_SetIcon(SDL_LoadBMP (ICON_FILE), NULL);
     }
 
 
