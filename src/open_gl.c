@@ -70,7 +70,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	{
 	  DebugPrintf ( -4 , "\nNull source surface received. --> doing nothing." );
 	  fflush ( stdout );
-	  
+	  raise ( SIGSEGV );
 	  return ( 0 );
 	}
 
@@ -667,7 +667,7 @@ initialzize_our_default_open_gl_parameters ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b ) 
+blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -722,10 +722,29 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
   // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
+  //--------------------
+  // Depending on whether to highlight the object in question, we
+  // set a different color for the way the texture is applied.
+  //
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
   glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  if ( highlight_texture )
+    {
+      // glBlendFunc ( GL_DST_COLOR, GL_SRC_COLOR ) ;
+      // glBlendFunc ( GL_ONE, GL_ONE ) ;
+      // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+      // glBlendFunc (GL_SRC_ALPHA ,GL_ONE_MINUS_SRC_ALPHA);
+      glColor3f( r , g , b );
+    }
+  else
+    {
+      glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+      glColor3f( r * 0.75 , g * 0.75 , b * 0.75 );
+    }
+
+
 
   //--------------------
   // Now we can begin to draw the actual textured rectangle.
@@ -740,13 +759,8 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
   
-  // glColor3f( 0.5 , 0.5 , 0.5 );
-  glColor3f( r , g , b );
-  // glColor4f( 1, 1 , 1 , 1 );
 
   glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
-
-  // glColor4f(1,1,1,1);
 
   glBegin(GL_QUADS);
   
@@ -776,6 +790,133 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
 #endif
 
 }; // void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture ) 
+{
+
+#ifdef HAVE_LIBGL
+
+  SDL_Rect target_rectangle;
+  float texture_start_y;
+  float texture_end_y;
+  int image_start_x;
+  int image_end_x;
+  int image_start_y;
+  int image_end_y;
+
+  //--------------------
+  // At first we need to enable texture mapping for all of the following.
+  // Without that, we'd just get (faster, but plain white) rectangles.
+  //
+  glEnable( GL_TEXTURE_2D );
+  
+  //--------------------
+  // Linear Filtering is slow and maybe not nescessary here, so we
+  // stick to the faster 'nearest' variant.
+  //
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+  
+  //--------------------
+  // Blending can be used, if there is no suitable alpha checking so that
+  // I could get it to work right....
+  //
+  // But alpha check functions ARE a bit faster, even on my hardware, so
+  // let's stick with that possibility for now, especially with the floor.
+  //
+  // glEnable(GL_BLEND);
+  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+  //
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+  // glDisable(GL_BLEND);
+  // glDisable( GL_ALPHA_TEST );  
+  
+  //--------------------
+  // Now of course we need to find out the proper target position.
+  //
+  target_rectangle . x = 
+    translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , TRUE ) + 
+    our_floor_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , FALSE ) +
+    our_floor_iso_image . offset_y ;
+  
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+  //--------------------
+  // Depending on whether to highlight the object in question, we
+  // set a different color for the way the texture is applied.
+  //
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  if ( highlight_texture )
+    {
+      // glBlendFunc ( GL_DST_COLOR, GL_SRC_COLOR ) ;
+      // glBlendFunc ( GL_ONE, GL_ONE ) ;
+      // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+      // glBlendFunc (GL_SRC_ALPHA ,GL_ONE_MINUS_SRC_ALPHA);
+      glColor3f( r , g , b );
+    }
+  else
+    {
+      glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+      glColor3f( r * 0.75 , g * 0.75 , b * 0.75 );
+    }
+
+  //--------------------
+  // Now we can begin to draw the actual textured rectangle.
+  //
+  image_start_x = target_rectangle . x ;
+  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * 0.25 ; // + 255
+  image_start_y = target_rectangle . y ;
+  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * 0.25 ; // + 127
+  
+  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+  
+  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_end_y = 0.0 ;
+  
+
+  glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+
+  glBegin(GL_QUADS);
+  
+  glTexCoord2i( 0.0f, texture_start_y ); 
+  glVertex2i( image_start_x , image_start_y );
+  glTexCoord2i( 0.0f, texture_end_y ); 
+  glVertex2i( image_start_x , image_end_y );
+  glTexCoord2i( 1.0f, texture_end_y ); 
+  glVertex2i( image_end_x , image_end_y );
+  glTexCoord2f( 1.0f, texture_start_y ); 
+  glVertex2i( image_end_x , image_start_y );
+  
+  glEnd( );
+  
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+#endif
+
+}; // void blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -858,6 +999,89 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 #endif
 
 }; // void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) 
+{
+
+#ifdef HAVE_LIBGL
+
+  SDL_Rect target_rectangle;
+  float texture_start_y;
+  float texture_end_y;
+  int image_start_x;
+  int image_end_x;
+  int image_start_y;
+  int image_end_y;
+
+  if ( set_gl_parameters )
+    {
+      //--------------------
+      // At first we need to enable texture mapping for all of the following.
+      // Without that, we'd just get (faster, but plain white) rectangles.
+      //
+      glEnable( GL_TEXTURE_2D );
+      
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+      glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+      glEnable ( GL_BLEND );
+      glDisable ( GL_ALPHA_TEST );
+    }
+
+  //--------------------
+  // Now of course we need to find out the proper target position.
+  //
+  target_rectangle . x = x ;
+  target_rectangle . y = y ;
+
+  //--------------------
+  // Now we can begin to draw the actual textured rectangle.
+  //
+  image_start_x = target_rectangle . x ;
+  image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width * zoom_factor ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
+  image_start_y = target_rectangle . y ;
+  image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * zoom_factor ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
+  
+  if ( image_start_x > 640 ) return ;
+  if ( image_end_x < 0 ) return ;
+  if ( image_start_y > 480 ) return;
+  if ( image_end_y < 0 ) return;
+
+  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+  
+  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_end_y = 0.0 ;
+
+  // glColor3f( 1 , 1 , 1 );
+
+  glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
+  glBegin(GL_QUADS);
+  glTexCoord2i( 0.0f, texture_start_y ); 
+  glVertex2i( image_start_x , image_start_y );
+  glTexCoord2i( 0.0f, texture_end_y ); 
+  glVertex2i( image_start_x , image_end_y );
+  glTexCoord2i( 1.0f, texture_end_y ); 
+  glVertex2i( image_end_x , image_end_y );
+  glTexCoord2f( 1.0f, texture_start_y ); 
+  glVertex2i( image_end_x , image_start_y );
+  glEnd( );
+
+  if ( set_gl_parameters )
+    {
+      glDisable( GL_TEXTURE_2D );
+    }
+
+#endif
+
+}; // void blit_zoomed_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) 
+
 
 /* ----------------------------------------------------------------------
  *

@@ -644,19 +644,40 @@ ShowLevelEditorTopMenu( int Highlight )
 	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
 
 	  //--------------------
-	  // We create a scaled version of the obstacle in question
+	  // We find the proper zoom_factor, so that the obstacle in question will
+	  // fit into one tile in the level editor top status selection row.
 	  //
-	  zoom_factor = min ( 
-			     ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
-			     ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
-	  tmp = zoomSurface ( obstacle_map [ selected_index ] . image . surface , zoom_factor , zoom_factor , FALSE );
-	  
-	  //--------------------
-	  // Now we can show and free the scaled verion of the floor tile again.
-	  //
-	  our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-	  SDL_FreeSurface ( tmp );
-	  
+	  if ( use_open_gl )
+	    {
+	      zoom_factor = min ( 
+				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . original_image_width ) ,
+				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . original_image_height ) );
+	    }
+	  else
+	    {
+	      zoom_factor = min ( 
+				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
+				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
+	    }
+
+	  if ( use_open_gl )
+	    {
+	      blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ selected_index ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
+	    }
+	  else
+	    {
+	      //--------------------
+	      // We create a scaled version of the obstacle in question
+	      //
+	      tmp = zoomSurface ( obstacle_map [ selected_index ] . image . surface , zoom_factor , zoom_factor , FALSE );
+	      
+	      //--------------------
+	      // Now we can show and free the scaled verion of the floor tile again.
+	      //
+	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+	      SDL_FreeSurface ( tmp );
+	    }
+
 	  if ( selected_index == Highlight ) 
 	    HighlightRectangle ( Screen , TargetRectangle );
 	  
@@ -2289,12 +2310,12 @@ Unable to load the level editor floor cursor.",
  * current map tile target.
  * ---------------------------------------------------------------------- */
 void 
-draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 )
+draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int mask )
 {
   float steps;
   float dist;
   int i;
-  static iso_image level_editor_dot_cursor = { NULL , 0 , 0 };
+  static iso_image level_editor_dot_cursor = UNLOADED_ISO_IMAGE ;
   char* fpath;
 
   //--------------------
@@ -2311,6 +2332,9 @@ draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 )
 Unable to load the level editor waypoint dot cursor.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
+
+      if ( use_open_gl )
+	make_texture_out_of_surface ( & level_editor_dot_cursor ) ;
     }
 
   //--------------------
@@ -2328,9 +2352,30 @@ Unable to load the level editor waypoint dot cursor.",
 
   for ( i = 0 ; i < steps+1 ; i ++ )
     {
-      blit_iso_image_to_map_position ( level_editor_dot_cursor ,
-				       ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
-				       ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+      if ( mask & ZOOM_OUT )
+	{
+	  if ( use_open_gl )
+	    blit_zoomed_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
+							  ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
+							  ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
+							  1.0 , 1.0 , 1.0 , 0.25 );
+	  else
+	    blit_iso_image_to_map_position ( level_editor_dot_cursor ,
+					     ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
+					     ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+	}
+      else
+	{
+	  if ( use_open_gl )
+	    blit_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
+						   ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
+						   ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
+						   1.0 , 1.0 , 1.0 , TRUE );
+	  else
+	    blit_iso_image_to_map_position ( level_editor_dot_cursor ,
+					     ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
+					     ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+	}
     }
 
 }; // void draw_connection_between_tiles ( .... )
@@ -2348,7 +2393,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
   char ConnectionText[5000];
   char TextAddition[1000];
   Level EditLevel;
-  static iso_image level_editor_waypoint_cursor = { NULL , 0 , 0 } ;
+  static iso_image level_editor_waypoint_cursor = UNLOADED_ISO_IMAGE ;
   char* fpath;
   waypoint *this_wp;
 
@@ -2360,7 +2405,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
   // Maybe, if the level editor floor cursor has not yet been loaded,
   // we need to load it.
   //
-  if ( level_editor_waypoint_cursor . surface == NULL )
+  if ( ( level_editor_waypoint_cursor . surface == NULL ) && ( ! level_editor_waypoint_cursor . texture_has_been_created ) )
     {
       fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor ) , TRUE ) ;
@@ -2370,6 +2415,9 @@ ShowWaypoints( int PrintConnectionList , int mask )
 Unable to load the level editor waypoint cursor.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
+
+      if ( use_open_gl )
+	make_texture_out_of_surface ( & level_editor_waypoint_cursor );
     }
 
   BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
@@ -2381,11 +2429,27 @@ Unable to load the level editor waypoint cursor.",
       if ( this_wp->x == 0 && this_wp->y == 0) continue;
 
       if ( mask && ZOOM_OUT )
-	blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor ) , 
-						this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
+	{
+	  if ( use_open_gl )
+	    {
+	      blit_zoomed_open_gl_texture_to_map_position ( level_editor_waypoint_cursor , 
+							    this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
+	    }
+	  else
+	    {
+	      blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor ) , 
+						      this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
+	    }
+	}
       else
-	blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
-					 this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
+	{
+	  if ( use_open_gl )
+	    blit_open_gl_texture_to_map_position ( level_editor_waypoint_cursor , 
+						   this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
+	  else
+	    blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
+					     this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
+	}
       
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
@@ -2424,7 +2488,7 @@ Unable to load the level editor waypoint cursor.",
 
 		  draw_connection_between_tiles ( this_wp->x + 0.5, this_wp->y + 0.5 , 
 						  EditLevel->AllWaypoints[this_wp->connections[i]].x + 0.5 , 
-						  EditLevel->AllWaypoints[this_wp->connections[i]].y + 0.5 );
+						  EditLevel->AllWaypoints[this_wp->connections[i]].y + 0.5 , mask );
 
 		}
 	    }
@@ -2442,7 +2506,7 @@ ShowMapLabels( int mask )
 {
   int LabelNr;
   Level EditLevel;
-  static iso_image map_label_indicator;
+  static iso_image map_label_indicator = UNLOADED_ISO_IMAGE ;
   static int first_function_call = TRUE ;
   char* fpath;
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -2457,6 +2521,9 @@ ShowMapLabels( int mask )
       first_function_call = FALSE;
       fpath = find_file ( "level_editor_map_label_indicator.png" , GRAPHICS_DIR, FALSE);
       get_iso_image_from_file_and_path ( fpath , & ( map_label_indicator ) , TRUE );
+
+      if ( use_open_gl ) 
+	make_texture_out_of_surface ( & map_label_indicator ) ;
     }
   
   //--------------------
@@ -2468,13 +2535,21 @@ ShowMapLabels( int mask )
 
       if ( ! ( mask && ZOOM_OUT ) )
 	{
-	  blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
-					   EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
+	  if ( use_open_gl )
+	    blit_open_gl_texture_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+						   EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0, 1.0 , 1.0 , FALSE );
+	    else
+	      blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+					       EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
 	}
       else
 	{
-	  blit_zoomed_iso_image_to_map_position ( & ( map_label_indicator ) , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
-						  EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
+	  if ( use_open_gl )
+	    blit_zoomed_open_gl_texture_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+							  EditLevel -> labels [ LabelNr ] . pos . y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 );
+	  else
+	    blit_zoomed_iso_image_to_map_position ( & ( map_label_indicator ) , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+						    EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
 	}
     }
 

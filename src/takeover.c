@@ -906,7 +906,7 @@ ShowPlayground ( void )
 
   if ( AllEnemys[DroidNum].Status != OUT )
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
-	      yoffs + DruidStart[!YourColor].y , FALSE );
+	      yoffs + DruidStart[!YourColor].y , FALSE , FALSE );
 
 
   Set_Rect (Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,

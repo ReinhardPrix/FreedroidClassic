@@ -492,8 +492,17 @@ blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x ,
     translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE ) +
     our_iso_image -> offset_y / FIXED_ZOOM_OUT_FACT ;
 
-  make_sure_zoomed_surface_is_there ( our_iso_image );
-  our_SDL_blit_surface_wrapper( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
+  if ( use_open_gl )
+    {
+      raise ( SIGSEGV );
+      blit_zoomed_open_gl_texture_to_screen_position ( our_iso_image , target_rectangle . x , 
+						       target_rectangle . y , TRUE , 0.25 ) ;
+    }
+  else
+    {
+      make_sure_zoomed_surface_is_there ( our_iso_image );
+      our_SDL_blit_surface_wrapper( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
+    }
 
 }; // void blit_zoomed_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
 
