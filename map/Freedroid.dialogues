@@ -290,7 +290,7 @@ Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot.
 ReplySample="DIX_Oh_Great_How_0.wav"
 Subtitle="With this I'll be able to fix the damage at the teleporters immediately."
 ReplySample="DIX_With_This_Ill_0.wav"
-// GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
+ // GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
 
 ----------------------------------------------------------------------
 

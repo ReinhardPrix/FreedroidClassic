@@ -637,9 +637,43 @@ ExecuteChatExtra ( char* ExtraCommandString )
     {
       DebugPrintf( 0 , "\nExtra invoked assigning of mission. --> have to decode... " );
       ReadValueFromString( ExtraCommandString , "AssignMission:" , "%d" , 
-			   &TempValue , ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) + 2 );
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( 0 , "\n...decoding...Mission to assign is: %d." , TempValue );
       AssignMission ( TempValue );
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "MarkMissionComplete:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked marking a mission as completed. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "MarkMissionComplete:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( 0 , "\n...decoding...Mission to mark as complete is: %d." , TempValue );
+      Me [ 0 ] . AllMissions[ TempValue ] . MissionIsComplete = TRUE;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsOfType:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked deletion of all inventory items of type '%s'. --> have to decode... " ,
+		   ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
+
+      if ( !strcmp ( ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) , "ITEM_DIXONS_TOOLBOX" ) )
+	{
+	  TempValue = ITEM_DIXONS_TOOLBOX;
+	}
+      else
+	{
+	  DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+ExecuteChatExtra: ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!!!!  \n\
+Errorneous string: %s \n\
+\n\
+Freedroid will terminate now to draw attention to the chat code\n\
+problem it could not resolve.  Sorry.\n\
+----------------------------------------------------------------------\n" , 
+		       ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
+	  Terminate ( ERR ) ;
+	}
+
+      DebugPrintf( 0 , "\n...decoding...item to remove is: %d." , TempValue );
+      DeleteAllInventoryItemsOfType( TempValue , 0 );      
+
     }
   else 
     {
