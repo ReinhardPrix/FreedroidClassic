@@ -31,7 +31,7 @@
 #include "colodefs.h"
 
 #undef EXTERN
-#ifdef _freedroid_c
+#ifdef _main_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -185,7 +185,7 @@ EXTERN unsigned char *Robotptr;
 EXTERN unsigned char *ShieldBlocks;
 
 #undef EXTERN
-#ifdef _paratext_c
+#ifdef _text_c
 #define EXTERN
 #else
 #define EXTERN extern
