@@ -411,10 +411,10 @@ void EnterKonsole(void)
   KillTastaturPuffer();
   Me.status=MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
-  SetTextColor(FONT_WHITE,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
+  SetTextColor( FONT_WHITE , FONT_RED );  /* BG: Rahmenwei"s FG: FONT_RED */
   UpdateInfoline();
-  InterruptInfolineUpdate = TRUE;
-  InitBars=TRUE;
+  // InterruptInfolineUpdate = TRUE;
+  // InitBars=TRUE;
 
   while (SpacePressed()) {
     keyboard_update();
@@ -427,7 +427,7 @@ void EnterKonsole(void)
       DebugPrintf("\nvoid EnterKonsole(void):  Console background music stopped.");
     }
 
-  printf("\nvoid EnterKonsole(void): Normal end of function reached.");
+  printf("\nvoid EnterKonsole(void): Normal end of function reached.\n\n");
 } // void EnterKonsole(void)
 
 /*@Function============================================================

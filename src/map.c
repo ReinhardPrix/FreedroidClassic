@@ -149,22 +149,22 @@ int GetCurrentElevator(void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void ActSpecialField(int x, int y)
+void ActSpecialField( float x, float y )
 {
   unsigned char MapBrick;
   int cx, cy;		/* tmp: NullPunkt im Blockzentrum */
 	
   DebugPrintf("\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
 
-  MapBrick = GetMapBrick(CurLevel,(float) x,(float) y);
+  MapBrick = GetMapBrick( CurLevel , x , y );
 
-  switch(MapBrick) {
+  switch( MapBrick ) {
   case LIFT:
     if (!((Me.status == TRANSFERMODE) &&
 	  (Me.speed.x == 0) && (Me.speed.y == 0))) break;
     
-    cx = x % BLOCKBREITE - BLOCKBREITE/2;
-    cy = y % BLOCKHOEHE - BLOCKHOEHE/2;
+    cx = ( ((int)rintf(x)) % BLOCKBREITE ) - BLOCKBREITE/2;
+    cy = ( ((int)rintf(y)) % BLOCKHOEHE  ) - BLOCKHOEHE/2;
 			
     /* Lift nur betreten, wenn ca. im Zentrum */
     if( (cx*cx + cy*cy) < DRUIDRADIUSX*DRUIDRADIUSX)
@@ -175,8 +175,11 @@ void ActSpecialField(int x, int y)
   case KONSOLE_L:
   case KONSOLE_O:
   case KONSOLE_U:
-    if( Me.status == TRANSFERMODE)
-      EnterKonsole();
+    if( Me.status == TRANSFERMODE )
+      {
+	EnterKonsole();
+	DebugPrintf("\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+      }
     break;
 
     

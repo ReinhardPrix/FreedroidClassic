@@ -193,8 +193,8 @@ void MoveInfluence(void)
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter=-1;
 
-  printf("\nvoid MoveInfluence(void):  Real function call confirmed.");
-  printf("\nvoid MoveInfluence(void):  accel ist jetzt: %d.",accel);
+  DebugPrintf("\nvoid MoveInfluence(void):  Real function call confirmed.");
+  // printf("\nvoid MoveInfluence(void):  accel ist jetzt: %d.",accel);
 
   if (BeamLine) return;
 	
@@ -216,7 +216,7 @@ void MoveInfluence(void)
     } else {
       Me.status = OUT;
       ThouArtDefeated();
-      printf("\nvoid MoveInfluence(void):  Alternate end of function reached.");
+      DebugPrintf("\nvoid MoveInfluence(void):  Alternate end of function reached.");
       return;
     }
   }
@@ -249,9 +249,9 @@ void MoveInfluence(void)
 	(Me.firewait == 0) && (NoInfluBulletOnWay())) FireBullet();
   
   /* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
-  ActSpecialField(Me.pos.x, Me.pos.y);
+  ActSpecialField( Me.pos.x , Me.pos.y );
   
-  printf("\nvoid MoveInfluence(void):  Usual end of function reached.");
+  DebugPrintf("\nvoid MoveInfluence(void):  Usual end of function reached.");
 } /* MoveInfluence */
 
 

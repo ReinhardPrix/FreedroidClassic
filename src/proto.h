@@ -215,7 +215,7 @@ EXTERN void Flimmern(void);
 #endif
 EXTERN unsigned char GetMapBrick(Level deck, float x, float y);
 EXTERN int GetCurrentElevator(void);
-EXTERN void ActSpecialField(int x, int y);
+EXTERN void ActSpecialField( float , float );
 
 EXTERN int LoadShip(char *shipname);
 EXTERN Level LevelToStruct(char *data);

@@ -87,6 +87,8 @@ void DrawBar(int BarCode,int Wert,unsigned char* Screen){
   int barcol=0;
   int i;
 
+  DebugPrintf("\nvoid DrawBar(...):  real function call confirmed.");
+
   if (Wert<0) Wert=0;
   BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
 
@@ -100,7 +102,11 @@ void DrawBar(int BarCode,int Wert,unsigned char* Screen){
     return;
   }
 	
-  if (Wert==AllBars[BarCode].oldval) return;
+  if (Wert==AllBars[BarCode].oldval) 
+    {
+      DebugPrintf("\nvoid DrawBar(...):  end of function reached.");
+      return;
+    }
   
   xlen=abs(Wert-AllBars[BarCode].oldval);
 
@@ -117,6 +123,9 @@ void DrawBar(int BarCode,int Wert,unsigned char* Screen){
   }
 
   AllBars[BarCode].oldval=Wert;
+
+  DebugPrintf("\nvoid DrawBar(...):  end of function reached.");
+
 } // void DrawBar(...)
 
 /*@Function============================================================

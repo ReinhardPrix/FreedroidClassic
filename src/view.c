@@ -872,7 +872,9 @@ ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen)
 
   printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
-  gl_putbox(PosX, PosY, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT, Druidmap[Number].image );
+  // Is the following line a reason for segfaults?  I turn is of for test purposes
+  // gl_putbox(PosX, PosY, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT, Druidmap[Number].image );
+  DisplayBlock( PosX , PosY , Druidmap[Number].image , DRUIDIMAGE_LENGTH , DRUIDIMAGE_HEIGHT , Screen );
 
   printf("\nvoid ShowRobotPicture(...): Usual end of function reached.");
 
