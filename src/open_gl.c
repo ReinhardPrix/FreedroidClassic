@@ -808,6 +808,7 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   int image_end_x;
   int image_start_y;
   int image_end_y;
+  float zoom_factor = 0.25 ;
 
   //--------------------
   // At first we need to enable texture mapping for all of the following.
@@ -843,10 +844,10 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   //
   target_rectangle . x = 
     translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , TRUE ) + 
-    our_floor_iso_image . offset_x ;
+    our_floor_iso_image . offset_x * zoom_factor ;
   target_rectangle . y = 
     translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , FALSE ) +
-    our_floor_iso_image . offset_y ;
+    our_floor_iso_image . offset_y * zoom_factor ;
   
   // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
   // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -877,9 +878,9 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   // Now we can begin to draw the actual textured rectangle.
   //
   image_start_x = target_rectangle . x ;
-  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * 0.25 ; // + 255
+  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * zoom_factor ; // + 255
   image_start_y = target_rectangle . y ;
-  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * 0.25 ; // + 127
+  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * zoom_factor ; // + 127
   
   // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
   

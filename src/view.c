@@ -719,7 +719,7 @@ There was an obstacle type given, that exceeds the number of\n\
       if ( use_open_gl )
 	{
 	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						 our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE ) ;
+						 our_obstacle -> pos . x , our_obstacle -> pos . y , ( SDL_GetTicks() % 3) / 2.0  , ( ( SDL_GetTicks() + 1 ) % 3) / 2.0 , ( ( SDL_GetTicks() + 2 ) % 3) / 2.0 , TRUE ) ;
 	}
       else
 	{
