@@ -96,6 +96,10 @@ Get_General_Game_Constants ( void* DataPointer )
   ReadValueFromString( DataPointer ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%lf" , 
 		       &Blast_Damage_Per_Second , EndOfDataPointer );
 
+  // Now we read in the speed of the conveyor belt
+  ReadValueFromString( DataPointer ,  "Conveyor belt speed (in squares per second )=", "%lf" , 
+		       &Conveyor_Belt_Speed , EndOfDataPointer );
+
   // Now we read in the time is takes for the door to move one phase 
   ReadValueFromString( DataPointer ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%lf" , 
 		       &Time_For_Each_Phase_Of_Door_Movement , EndOfDataPointer );

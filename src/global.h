@@ -128,6 +128,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+EXTERN double Conveyor_Belt_Speed;
 EXTERN long Total_Frames_Passed_In_Mission;
 EXTERN int Number_Of_Droids_On_Ship;
 EXTERN double Time_For_Each_Phase_Of_Door_Movement;
