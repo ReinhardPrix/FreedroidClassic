@@ -35,6 +35,8 @@
 +++
 +++ This is the first mission:  Find a cure for Bender, suffering from brain enlargement pills
 +++
++++ note: the number code for this mission (like from inside dialogs and such) is 0
++++ 
 Mission Name="Find cure for Bender"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 79
@@ -56,6 +58,11 @@ Mission diary entry="Bender was delighted about the antidote for the brain enlar
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
++++
++++ This is the second mission:  Retrieve the toolkit lost by Dixon
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 1
++++ 
 Mission Name="Dixon's toolkit"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 59
@@ -71,15 +78,17 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="description text 1 here (for Dixon mission)"
-Mission diary entry="description text 2 here (for Dixon mission)"
-Mission diary entry="description text 3 here (for Dixon mission)"
-Mission diary entry="description text 4 here (for Dixon mission)"
-Mission diary entry="description text 5 here (for Dixon mission)"
+Mission diary entry="Dixon, the teleporter admistrator of the settlement has asked me to retrieve his toolkit.  He has opend the entrance to the maintainance tunnels from inside of town.  The toolkit was lost when Dixon was attacked by rogue bots in the tunnels below the city.  Maybe they still have the kit?"
+Mission diary entry="I've managed to retrieve the toolkit initally lost by Dixon.  He seemed quite delighted.  Maybe it was also emotional value associated with that old toolkit."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
-Mission Name="Energy crystals for Michelangelo"
++++
++++ This is the third mission:  Find some energy crystals for the cook Michelangelo
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 2
++++ 
+Mission Name="Energy crystals"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 74
 Mission target is to kill all droids : -1
@@ -94,14 +103,16 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="description text 1 here (for Mich. mission)"
-Mission diary entry="description text 2 here (for Mich. mission)"
-Mission diary entry="description text 3 here (for Mich. mission)"
-Mission diary entry="description text 4 here (for Mich. mission)"
-Mission diary entry="description text 5 here (for Mich. mission)"
+Mission diary entry="The cook Michelangelo needs some energy crystals for his advanced oven.  He said those crystals could be found in the caverns east of town.  Maybe I can find some there."
+Mission diary entry="Despite some resistance from bots, I've managed to find some energy crystals of the desired type.  I guess it will cheer up the whole community to finally enjoy decently cooked meals again."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
++++
++++ This is the fourth mission:  Defeat the bots in the novice arena
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 3
++++ 
 Mission Name="Novice Arena"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
@@ -118,14 +129,16 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_novice_arena_exit_door"
-Mission diary entry="description text 1 here (for nov. Arena mission)"
-Mission diary entry="description text 2 here (for nov. Arena mission)"
-Mission diary entry="description text 3 here (for nov. Arena mission)"
-Mission diary entry="description text 4 here (for nov. Arena mission)"
-Mission diary entry="description text 5 here (for nov. Arena mission)"
+Mission diary entry="Butch, the arena master, has offered me a challenge in the novice arena.  All I need to do is defeat the 4 bots down there.  Seems pretty easy, even if it won't raise my reputation in the settlement overly much."
+Mission diary entry="I've defeated the bots in the novice arena as requested.  I think they have made a life broadcast over the net and are charging for it.  How else would the arena be able to make any profit?"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
++++
++++ This is the fifth mission:  Defeat the bots in the master arena
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 4
++++ 
 Mission Name="Master Arena"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
@@ -142,15 +155,17 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_master_arena_exit_door"
-Mission diary entry="description text 1 here (for master Arena mission)"
-Mission diary entry="description text 2 here (for master Arena mission)"
-Mission diary entry="description text 3 here (for master Arena mission)"
-Mission diary entry="description text 4 here (for master Arena mission)"
-Mission diary entry="description text 5 here (for master Arena mission)"
+Mission diary entry="Despite the warnings of the arena master, I've accepted a challenge in the master arena.  The bots there are said to be quite tough, but with suitable disruptor protection, it might not be so much of a problem.  Maybe the disruptor attach will even hurt some of the bots themselves and I only need to finish the last one."
+Mission diary entry="Exceeding the expectations of the arena master, I've defeated the bots in the master arena as well.  I got the feeling, that my reputation in the settlement has grown considerable after this."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
-Mission Name="MS Warehouse"
++++
++++ This is the sixth mission:  Clean out the first level of the warehouse
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 5
++++ 
+Mission Name="Underground Warehouse"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -165,7 +180,6 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-O***n mission completition immediately trigger action labeled="open_master_arena_exit_door"
 Mission diary entry="description text 1 here (for warehouse mission)"
 Mission diary entry="description text 2 here (for warehouse mission)"
 Mission diary entry="description text 3 here (for warehouse mission)"
