@@ -164,7 +164,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   // (hopefully sensibly) above.
   //
   Steps = LargerDistance * step_multiplier ; 
-  if ( Steps == 0 ) return TRUE;
+  if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
 
   //--------------------
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
@@ -475,28 +475,28 @@ ShuffleEnemys ( int LevelNum )
  *
  * ---------------------------------------------------------------------- */
 int 
-CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot ) // int ExceptedDroid )
+CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot , int ExceptTux ) 
 {
   float LargerDistance;
   int Steps;
   int i, j;
-  finepoint step;
-  finepoint CheckPosition;
+  moderately_finepoint step;
+  moderately_finepoint CheckPosition;
 
-  DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
-  fflush(stdout);
+  // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+  // fflush(stdout);
 
   if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
-  Steps=LargerDistance * 4 ;   // We check four times on each map tile...
-  if ( Steps == 0 ) return TRUE;
+  Steps = LargerDistance * 4 + 1 ;   // We check four times on each map tile...
+  // if ( Steps == 0 ) return TRUE;
 
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  step.x = (x2 - x1) / Steps;
-  step.y = (y2 - y1) / Steps;
+  step.x = (x2 - x1) / ((float)Steps) ;
+  step.y = (y2 - y1) / ((float)Steps) ;
 
-  DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
+  // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
 
   // We start from position (x1, y1)
   CheckPosition.x = x1;
@@ -517,27 +517,31 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	  if ( AllEnemys[j].warten > 0 ) continue;
 
 	  // so it seems that we need to test this one!!
-	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
-	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
+	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2.0 * Druid_Radius_X ) &&
+	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2.0 * Druid_Radius_Y ) ) 
 	    {
-	      DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
+	      // DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
 	      return FALSE;
 	    }
 	}
 
-      if ( ( fabsf( Me[0].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
-	   ( fabsf( Me[0].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
+      //--------------------
+      // Whether we should except the Tux or not, we do also a tux collision check
+      //
+      if ( ! ExceptTux )
 	{
-	  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
-	  return FALSE;
+	  if ( ( fabsf( Me[0].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
+	       ( fabsf( Me[0].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
+	    {
+	       DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
+	      return FALSE;
+	    }
 	}
-
-
+	      
       CheckPosition.x += step.x;
       CheckPosition.y += step.y;
     }
 
-  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : FREE!");
   return TRUE;
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 
@@ -738,7 +742,7 @@ This is an error in the waypoint structure of this level.",
   //
   for ( i = 0; i < num_conn ; i++ )
     {
-      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot );
+      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot , FALSE );
     }
   
   //--------------------
@@ -1700,7 +1704,7 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
        ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 				    ThisRobot->pos.x + StepVector . x , 
 				    ThisRobot->pos.y + StepVector . y ,
-				    ThisRobot->pos.z , ThisRobot ) ) )
+				    ThisRobot->pos.z , ThisRobot , FALSE ) ) )
     {
       return TRUE;
     }

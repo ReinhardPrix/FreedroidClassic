@@ -44,7 +44,7 @@
 #define BEST_MELEE_DISTANCE (1.0)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
 // #define DISTANCE_TOLERANCE (0.2)
-#define DISTANCE_TOLERANCE (0.002)
+#define DISTANCE_TOLERANCE (0.00002)
 
 #define FORCE_FIRE_DISTANCE (1.5)
 #define ATTACK_BOXES_DISTANCE (2.0)
@@ -935,7 +935,12 @@ streamline_tux_intermediate_course ( int player_num )
 					Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
 					Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
 					Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
-					Me [ player_num ] . next_intermediate_point [ scan_index ] . y ) )
+					Me [ player_num ] . next_intermediate_point [ scan_index ] . y ) &&
+	       CheckIfWayIsFreeOfDroids ( Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
+					  Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
+					  Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
+					  Me [ player_num ] . next_intermediate_point [ scan_index ] . y , 
+					  Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) )
 	    {
 	      last_index = scan_index ;
 	    }
@@ -991,7 +996,8 @@ recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int 
   // go any further, but instead we select the current position as the preliminary
   // walkable target for the Tux.
   //
-  if ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) )
+  if ( ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) ) &&
+       ( CheckIfWayIsFreeOfDroids ( x1 , y1 , x2 , y2 , Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) ) ) 
     {
       //--------------------
       // If the current position is still directly reachable for the Tux, we set it
@@ -1094,12 +1100,16 @@ recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int 
 
   for ( i = 0 ; i < 4 ; i ++ )
     {
-      if ( ( tux_can_walk_this_line ( 0 , x1, y1 , 
+      if ( ( recursion_grid 
+	     [ (int) ( x1 + ordered_moves [ i ] . x ) ] 
+	     [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) &&
+	   ( tux_can_walk_this_line ( 0 , x1, y1 , 
 				      x1 + ordered_moves [ i ] . x , 
 				      y1 + ordered_moves [ i ] . y ) ) &&
-	   ( recursion_grid 
-	     [ (int) ( x1 + ordered_moves [ i ] . x ) ] 
-	     [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) )
+	   ( CheckIfWayIsFreeOfDroids ( x1 , y1 , 
+					x1 + ordered_moves [ i ] . x , 
+					y1 + ordered_moves [ i ] . y , 
+					Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) ) )
 	{
 	  
 	  last_sight_contact . x = x1 ;
@@ -1207,6 +1217,18 @@ set_up_intermediate_course_for_tux ( int player_num )
 		    Me [ player_num ] . mouse_move_target . z ) )
     {
       DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
+      return;
+    }
+
+  //--------------------
+  // If the target position cannot be reached at all, because of being inside an obstacle
+  // for example, then we know what to do:  Set up one waypoint to the target and that's it.
+  //
+  if ( ! IsPassable ( Me [ player_num ] . pos . x ,
+		      Me [ player_num ] . pos . y ,
+		      Me [ player_num ] . pos . z ) )
+    {
+      DebugPrintf ( -3 , "\nSKIPPING RECURSION BECAUSE CURRENTLY TUX IS MOVING *THROUGH* WALL!" );
       return;
     }
 
@@ -1706,10 +1728,9 @@ CheckInfluenceEnemyCollision (void)
   int i;
   float xdist;
   float ydist;
-  float dist2;
+  // float dist2;
   float max_step_size;
-  int swap;
-  int first_collision = TRUE;	/* marker */
+  // int swap;
 
   //--------------------
   // We need to go through the whole list of enemys...
@@ -1731,8 +1752,8 @@ CheckInfluenceEnemyCollision (void)
       // We determine the distance and back out immediately if there
       // is still one whole square distance or even more...
       //
-      xdist = Me[0].pos.x - AllEnemys[i].pos.x;
-      ydist = Me[0].pos.y - AllEnemys[i].pos.y;
+      xdist = Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x;
+      ydist = Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y;
       if (abs (xdist) > 1)
 	continue;
       if (abs (ydist) > 1)
@@ -1743,8 +1764,12 @@ CheckInfluenceEnemyCollision (void)
       // to calculate the exact distance and to see if the exact distance
       // indicates a collision or not, in which case we can again back out
       //
-      dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
-      if ( dist2 > 2 * Druid_Radius_X )
+      // dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
+      // if ( dist2 > 2 * Druid_Radius_X )
+      // continue;
+      //
+      if ( ( fabsf( xdist ) >= 2.0*Druid_Radius_X ) ||
+	   ( fabsf( ydist ) >= 2.0*Druid_Radius_Y ) ) 
 	continue;
 
       //--------------------
@@ -1763,46 +1788,22 @@ CheckInfluenceEnemyCollision (void)
 	  return;
 	}
 
-      //--------------------
-      // Now we've arrived at a real classical 'boing'-influencer-enemy-collision
-      //
-      // THE FIRST_COLLSION VARIABLE IS CURRENTLY WITHOUT MEANING ALWAYS TRUE!!!
-      //
-      if (first_collision)
-	{			
-	  //--------------------
-	  // we invert the speed vector of the influencer
-	  //
-	  Me[0].speed.x = -Me[0].speed.x * 0.25 ;
-	  Me[0].speed.y = -Me[0].speed.y * 0.25 ;
-	  
-	  /*
-	    This old code has cause the annoying collision behavious.  Maybe we
-	    dont need this at all any more right now, so let's try without.  I hope
-	    no occasions of getting 'sucked in' occur with it.
+      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
+      max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+      // Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+      // Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+      // evasion_vector . x = Me [ 0 ] . speed . x ;
+      // evasion_vector . y = Me [ 0 ] . speed . y ;
+      // evasion_vector . x *= Frame_Time();
+      // evasion_vector . y *= Frame_Time();
 
-	  if (Me[0].speed.x != 0)
-	    Me[0].speed.x +=
-	      COLLISION_PUSHSPEED * (Me[0].speed.x / fabsf (Me[0].speed.x));
-	  else if (xdist)
-	    Me[0].speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
-	  if (Me[0].speed.y != 0)
-	    Me[0].speed.y +=
-	      COLLISION_PUSHSPEED * (Me[0].speed.y / fabsf (Me[0].speed.y));
-	  else if (ydist)
-	    Me[0].speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
-	  */
+      AllEnemys[i].pos.x -= copysignf( 0.6 * Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+      AllEnemys[i].pos.y -= copysignf( 0.6 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
 
-	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
-	  Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
-	  Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
-	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
-	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+      // AllEnemys[i].pos.x += evasion_vector . x ;
+      // AllEnemys[i].pos.y += evasion_vector . y ;copysignf( 5.1 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
 	  
-	  BounceSound ();
-	  
-	} // if first_collision (ALWAYS TRUE ANYWAY...)
+      // BounceSound ();
       
       //--------------------
       // shortly stop this enemy, then send him back to previous waypoint
@@ -1810,9 +1811,9 @@ CheckInfluenceEnemyCollision (void)
       if ( ! AllEnemys[i].warten )
 	{
 	  AllEnemys[i].warten = WAIT_COLLISION;
-	  swap = AllEnemys[i].nextwaypoint;
-	  AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
-	  AllEnemys[i].lastwaypoint = swap;
+	  // swap = AllEnemys[i].nextwaypoint;
+	  // AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
+	  // AllEnemys[i].lastwaypoint = swap;
 
 	  //--------------------
 	  // Maybe we add some fun collision text, but only
@@ -1821,7 +1822,8 @@ CheckInfluenceEnemyCollision (void)
 	  EnemyInfluCollisionText ( i );
 	  
 	}
-      InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
+
+      // InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
       
     }				/* for */
 

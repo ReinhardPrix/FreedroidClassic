@@ -1818,7 +1818,8 @@ Empty part string received!",
   //
   if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
     {
-      blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
+      blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+				       Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
     }
   else
     {

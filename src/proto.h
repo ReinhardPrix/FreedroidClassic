@@ -546,6 +546,7 @@ EXTERN void AttackInfluence (int enemynum);
 EXTERN void ClearEnemys (void);
 EXTERN void SwapEnemys ( int First , int Second ) ;
 EXTERN int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z );
+EXTERN int CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot , int ExceptTux ) ;
 EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
 
 // ship.c 
