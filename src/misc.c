@@ -414,7 +414,7 @@ Cheatmenu (void)
 	  for (i = 0; i < NumEnemys; i++)
 	    {
 	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
-		Feindesliste[i].energy = 0;
+		Feindesliste[i].energy = -100;
 	    }
 	  printf ("\n\nAll robots on this deck killed! \n");
 	  getchar_raw ();

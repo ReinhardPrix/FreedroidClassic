@@ -428,9 +428,25 @@ InitLevelColorTable (void)
 void
 SetLevelColor (int ColorEntry)
 {
-  SetColors (FIRSTBLOCKCOLOR, FARBENPROLEVEL,
-	     LevelColorArray + ColorEntry * 3 * FARBENPROLEVEL);
-}				// void SetLevelColor(int ColorEntry)
+  char *ColoredBlockFiles[] = {
+    GRAPHICS_DIR "ne_block_red.bmp",
+    GRAPHICS_DIR "ne_block_yellow.bmp",
+    GRAPHICS_DIR "ne_block_green.bmp",
+    GRAPHICS_DIR "ne_block_gray.bmp",
+    GRAPHICS_DIR "ne_block_blue.bmp",
+    GRAPHICS_DIR "ne_block_turquoise.bmp",
+    GRAPHICS_DIR "ne_block_dark.bmp",
+    NULL
+  };
+
+  
+  //TRUECOLORS SetColors (FIRSTBLOCKCOLOR, FARBENPROLEVEL, LevelColorArray + ColorEntry * 3 * FARBENPROLEVEL);
+
+  ne_map_block =
+    ne_get_blocks ( ColoredBlockFiles[ ColorEntry ] , NUM_MAP_BLOCKS, 9, 0, 0);
+
+  
+} // void SetLevelColor(int ColorEntry)
 
 
 /*-----------------------------------------------------------------
@@ -525,8 +541,8 @@ Init_Video (void)
   ne_transp_key = SDL_MapRGB(ne_screen->format, ne_transp_rgb.rot,
 			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
 
-  SDL_SetGamma( 2 , 2 , 2 );
-  Current_Gamma_Correction=2;
+  SDL_SetGamma( 1 , 1 , 1 );
+  Current_Gamma_Correction=1;
 
   return;
 
