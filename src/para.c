@@ -833,8 +833,66 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.7  1993/05/31 20:28:27  prix
- * Mon May 31 16:07:42 1993: InternFenster wird nicht mehr auf off=0 ausgerichtet
+ * Revision 1.8  1993/07/29 00:57:39  prix
+ * Mon May 31 17:40:13 1993: InternWindow wieder ausgerichtet (voruebergehend !)
+ * Mon May 31 17:42:22 1993: PutInternFenster ausgeschaltet (debug)
+ * Mon May 31 17:45:14 1993: Bild wird direkt am Screen aufgebaut (zum testen !!)
+ * Mon May 31 17:55:48 1993: InternWindow stimmt wieder
+ * Mon May 31 17:57:44 1993: added init of ScreenPointer
+ * Mon May 31 17:58:55 1993: PutInternFenster wieder aktiviert !
+ * Mon May 31 20:08:52 1993: No DrawBulletDir..ToInfluence any more
+ * Tue Jun 01 08:53:20 1993: Energie geht nicht beliebig in die Hoehe (bis maxenergy)
+ * Tue Jun 01 09:37:29 1993: ExplodeBlasts an neue structs angepasst
+ * Tue Jun 01 10:06:30 1993: New Blast has 7 phases
+ * Tue Jun 01 11:56:07 1993: every bullet can have its own blast !
+ * Tue Jun 01 11:59:51 1993: addit init of blast in Bulletmap (new !)
+ * Tue Jun 01 12:15:57 1993: No ShowBlocks any more
+ * Tue Jun 01 13:51:39 1993: added AnimateInfluence
+ * Tue Jun 01 15:29:38 1993: andere Steuerung fuer Me.turnable == TRUE !
+ * Tue Jun 01 15:40:55 1993: Drehung etwas bremsen, wenn man auf Taste bleibt
+ * Tue Jun 01 15:55:10 1993: neuer Drive-Typ wird unterstuetzt: ROCKETS
+ * Tue Jun 01 15:57:06 1993: 001 now has ROCKETS
+ * Fri Jul 23 09:59:19 1993: Bewegung wieder urspruenglich
+ * Fri Jul 23 10:03:32 1993: Versuch, die Schussrichtung zu restaurieren
+ * Fri Jul 23 10:09:22 1993: Schussrichtung von Richtungsangebe abhaengig
+ * Fri Jul 23 10:17:29 1993: Energiebalken wieder anzeigen
+ * Fri Jul 23 10:22:48 1993: Energiehaushalt ueberpruefen und verstehen
+ * Fri Jul 23 10:39:26 1993: Debug eingeschaltet
+ * Fri Jul 23 10:43:59 1993: Debugswitch eingefuehrt
+ * Fri Jul 23 11:09:02 1993: Anpassung von CheckWallHit an die verschobenen Y-Koordinaten
+ * Fri Jul 23 11:22:53 1993: MoveLevelDoors an die veraenderte Me.pos.y-Variable angepasst
+ * Fri Jul 23 11:56:57 1993: Drehung entsprechend der momentanenergie zu maxenergie
+ * Fri Jul 23 12:20:05 1993: math library includiert
+ * Sat Jul 24 06:43:58 1993: Weiterdrehung jetzt ohne Floatzahlen
+ * Sat Jul 24 06:53:03 1993: Reactor ausgeschaltet, Standardenergielieferungen auch
+ * Sat Jul 24 07:03:26 1993: Energieverlust in Abhaengigkeit des Robottypes realisiert
+ * Sat Jul 24 07:15:25 1993: mathh wird nicht mehr benoetigt
+ * Sat Jul 24 07:23:37 1993: GetDigits() eingefuehrt (als Namen)
+ * Sat Jul 24 07:57:44 1993: Position von GetDigits veraendert
+ * Sat Jul 24 11:11:17 1993: Inlfuencepointer eingefuehrt
+ * Sat Jul 24 11:22:27 1993: RedrawInfluenceNumber wieCrd aufgerufen
+ * Sat Jul 24 14:08:28 1993: Enemypointer hinzugefuegt
+ * Sat Jul 24 14:23:21 1993: Feindesliste eingefuehrt
+ * Sat Jul 24 14:29:41 1993: Enemymaxonlevel wird verwendet
+ * Sat Jul 24 15:30:27 1993: GetEnemybox aktiviert !!!!! ich dodl
+ * Sat Jul 24 16:57:50 1993: Feinde drehen sich gemaess ihrem energielevel
+ * Sun Jul 25 08:08:00 1993: Feindesliste an die neue enemystruktur angepasst
+ * Sun Jul 25 08:29:58 1993: MoveEnemys eingefuehrt
+ * Sun Jul 25 12:50:26 1993: Endannaeherung und waypointweiterzaehlung realisiert
+ * Sun Jul 25 14:10:38 1993: Robotter-Bullet-Kollisionen werden registriert
+ * Sun Jul 25 15:15:58 1993: Feinde nicht bewegen wenn diese abgeschossen sind
+ * Mon Jul 26 08:21:56 1993: giveBackMemory aktiviert
+ * Mon Jul 26 09:49:03 1993: Bullets die treffen sind OUT
+ * Mon Jul 26 12:56:50 1993: more notes added
+ * Mon Jul 26 14:12:57 1993: Joystickabfrage eingefuehrt
+ * Mon Jul 26 14:52:22 1993: Joystick kann abgeschaltet werden
+ * Wed Jul 28 09:17:35 1993: New Testmap: authentic to paradroid on c64
+ * Wed Jul 28 12:42:38 1993: JoystickControl eingefuehrt
+ * Wed Jul 28 19:58:39 1993: CheckEnemyCollision aktiviert
+ * Wed Jul 28 20:12:40 1993: Transfermode wird angezeigt
+ * Wed Jul 28 20:27:38 1993: waitafter wird beruecksichtigt
+ * Wed Jul 28 20:33:13 1993: Int1Ch wird auch verbogen
+ * Wed Jul 28 20:44:36 1993: WEAPON als neuen Modus hinzuaddiert
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
