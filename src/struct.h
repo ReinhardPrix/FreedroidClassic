@@ -290,6 +290,11 @@ typedef struct
   int MyFCU;			/* FCU (Fire Control Unit) installed */
   int MyShield;			/* Shield device installed */
   int Shield[4];		/* Status of Partial Shields */
+  int Strength;  // character Strength value = 'power supply max. capacity'
+  int Magic;     // character Magic value = 
+  int Dexterity; // character Dexterity value = 'power redistribution speed'
+  int Vitality;  // character Vitality value = 'cloaking field maximum strength'
+  long Experience; // character Experience = 'spare droid elements found'
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
