@@ -564,7 +564,7 @@ CheckBulletCollisions (int num)
 
       //--------------------
       // Check for collision with enemys
-      // for (i = 0; i < NumEnemys; i++)
+      //
       for (i = 0; i < Number_Of_Droids_On_Ship; i++)
 	{
 	  if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != level)

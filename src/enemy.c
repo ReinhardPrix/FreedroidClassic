@@ -937,10 +937,28 @@ MoveThisEnemy( int EnemyNum )
   // explosion and all that...
   if ( ThisRobot->energy <= 1)
     {
+      //--------------------
+      // If the Tux has killed his friend, he will regret it, or at least
+      // say so.
+      //
+      if ( ThisRobot->is_friendly )
+	{
+	  Activate_Conservative_Frame_Computation();
+	  PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE );
+	}
+      else
+	{
+	  //--------------------
+	  // The Tux gains experience from this, only for non-friends
+	  //
+	  Me[0].Experience += Druidmap[ ThisRobot->type ].score;
+	}
+      //--------------------
+      // The dead enemy will now explode.
+      //
       ThisRobot->Status = OUT;
-      Me[0].Experience += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
-      Me[0].KillRecord[ ThisRobot->type ] ++;
+      Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
 
       //--------------------
       // Maybe that robot did have something with him?  The item should then
