@@ -1,0 +1,83 @@
+
+----------------------------------------------------------------------
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+----------------------------------------------------------------------
+
+This file was generated using the FreedroidRPG dialog editor.
+If you have questions concerning FreedroidRPG, please send mail to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+
+
+
+You can use this text field to make some notes on anything.  These notes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+
+
+
+END OF AUTORS NOTES
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Hi!  I'm new here. "
+OptionSample="Tux_Hi_Im_New_0.wav"
+PositionX=44  PositionY=157  
+Subtitle="Hello!  I'm Ewald.  I run this bar."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText="How is your business doing?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=168  PositionY=138  
+Subtitle="Not so good.  Times are dire and few dare to travel these days.  But do you know what's funny?  Somehow saying this makes me feel like a flat rpg character.  Stange feeling, eh?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" END "
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=253  PositionY=186  
+Subtitle="See you later."
+ReplySample="Tux_See_You_Later_0.wav"
+Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
+
