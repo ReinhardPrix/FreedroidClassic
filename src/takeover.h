@@ -34,14 +34,17 @@
 #define TO_BG_COLOR			63
 
 /* File containing the Takeover-blocks */
-#define TO_BLOCK_FILE		GRAPHICS_DIR "to_elem.jpg"
+#define TO_BLOCK_FILE		GRAPHICS_DIR "ne_to_elem.bmp"
 
 /* --------------- individual block dimensions --------------- */
+#define NUM_PHASES		4       /* number of color-phases for current "flow" */
+					/* inclusive "inactive" phase */
 
 /* Dimensions of the game-blocks */
 #define TO_BLOCKS		11	/* anzahl versch. Game- blocks */
-#define NUM_TO_BLOCKS		4*TO_BLOCKS  /* total number of takover blocks */
-#define TO_ELEMENTS		 6
+
+#define NUM_TO_BLOCKS		2*NUM_PHASES*TO_BLOCKS // total number of takover blocks 
+#define TO_ELEMENTS		6
 #define TO_BLOCKLEN		2*32	/* dimension of a Game- block */
 #define TO_BLOCKHEIGHT	 	2*8
 
@@ -95,9 +98,9 @@
 #define VIOLETT_DRUID_Y		GELB_DRUID_Y
 
 /* Left-Capsules positions */
-#define GELB_LEFT_CAPSULES_X	0   + USERFENSTERPOSX
+#define GELB_LEFT_CAPSULES_X	4   + USERFENSTERPOSX
 #define GELB_LEFT_CAPSULES_Y	2*27  + USERFENSTERPOSY
-#define VIOLETT_LEFT_CAPSULES_X	USERFENSTERPOSX + RIGHT_OFFS_X + COLUMNBLOCKLEN
+#define VIOLETT_LEFT_CAPSULES_X	USERFENSTERPOSX + RIGHT_OFFS_X + COLUMNBLOCKLEN -10
 #define VIOLETT_LEFT_CAPSULES_Y	2*27  + USERFENSTERPOSY
 
 /* start-pos of Current Capsule */
@@ -135,14 +138,14 @@ enum _groundblocks
   VIOLETT_UNTEN
 };
 
-/* the flag of an active Elements (has to be added to Element) */
-#define ACTIVE_OFFSET		2*TO_BLOCKS
 
 /* Konditions in Connection-layer */
 enum condition
 {
-  INAKTIV = 0,
-  AKTIV
+  INACTIVE = 0,
+  ACTIVE1,
+  ACTIVE2,
+  ACTIVE3
 };
 
 /* Names for you and "him" */

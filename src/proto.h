@@ -96,6 +96,7 @@ EXTERN void CheckBlastCollisions (int num);
 #else
 #define EXTERN extern
 #endif
+EXTERN void Fill_Rect (SDL_Rect rect, SDL_Color color);
 EXTERN unsigned char *FeindZusammenstellen (const char *, int);
 // EXTERN void SetColors(int,int,char*);
 EXTERN void RotateBulletColor (void);
@@ -455,6 +456,7 @@ EXTERN void InventPlayground (void);
 EXTERN void ProcessPlayground (void);
 EXTERN void ProcessDisplayColumn (void);
 EXTERN void ProcessCapsules (void);
+EXTERN void AnimateCurrents (void);
 
 EXTERN void ClearPlayground (void);
 EXTERN int IsActive (int color, int row);

@@ -105,7 +105,7 @@ point DruidStart[TO_COLORS] = {
 };
 
 int CapsuleCurRow[TO_COLORS] = { 0, 0 };
-int CapsuleCountdown[TO_COLORS][NUM_LINES];
+
 
 int LeaderColor = GELB;		/* momentary leading color */
 int YourColor = GELB;
@@ -118,8 +118,11 @@ int DisplayColumn[NUM_LINES] = {
   GELB, VIOLETT
 };
 
+SDL_Color to_bg_color = {199, 43, 43};
 
 playground_t ToPlayground;
+playground_t ActivationMap;
+playground_t CapsuleCountdown;
 
 void RollToColors (void);
 
@@ -171,7 +174,8 @@ Takeover (int enemynum)
   //  GetInternFenster (SHOW_MAP);
 
   DisplayBanner ( BANNER_FORCE_UPDATE );
-  SetUserfenster ( TO_BG_COLOR );  /* set takeover color */
+  
+  Fill_Rect (User_Rect, to_bg_color);
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
@@ -183,8 +187,8 @@ Takeover (int enemynum)
       for (row = 0; row < NUM_LINES; row++)
 	{
 	  DisplayColumn[row] = (row % 2);
-	  CapsuleCountdown[GELB][row] = -1;
-	  CapsuleCountdown[VIOLETT][row] = -1;
+	  CapsuleCountdown[GELB][0][row] = -1;
+	  CapsuleCountdown[VIOLETT][0][row] = -1;
 	}			/* for row */
 
       YourColor = GELB;
@@ -446,24 +450,28 @@ PlayGame (void)
 	      row = CapsuleCurRow[YourColor] - 1;
 	      if ((row >= 0) &&
 		  (ToPlayground[YourColor][0][row] != KABELENDE) &&
-		  (ToPlayground[YourColor][0][row] < ACTIVE_OFFSET))
+		  (ActivationMap[YourColor][0][row] == INACTIVE))
 		{
 		  NumCapsules[YOU]--;
 		  CapsuleCurRow[YourColor] = 0;
 		  ToPlayground[YourColor][0][row] = VERSTAERKER;
-		  ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
-		  CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN * 2;
+		  ActivationMap[YourColor][0][row] = ACTIVE1;
+		  CapsuleCountdown[YourColor][0][row] = CAPSULE_COUNTDOWN * 2;
 
 		  Takeover_Set_Capsule_Sound ();
 		}	/* if (row > 0 && ... ) */
 	    } /* if ( set ) */
 
 	  ProcessCapsules ();	/* count down the lifetime of the capsules */
+
 	  ProcessPlayground ();
 	  ProcessPlayground ();
 	  ProcessPlayground ();
 	  ProcessPlayground ();	/* this has to be done some times to be sure */
+
 	  ProcessDisplayColumn ();
+
+	  AnimateCurrents ();  /* do some animation on the active cables */
 	} /* if (motion_tick has occurred) */
 
       ShowPlayground ();
@@ -561,13 +569,13 @@ EnemyMovements (void)
 	{
 	  if ((row >= 0) &&
 	      (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
-	      (ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET))
+	      (ActivationMap[OpponentColor][0][row] == INACTIVE))
 	    {
 	      NumCapsules[ENEMY]--;
 	      Takeover_Set_Capsule_Sound ();
 	      ToPlayground[OpponentColor][0][row] = VERSTAERKER;
-	      ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
-	      CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
+	      ActivationMap[OpponentColor][0][row] = ACTIVE1;
+	      CapsuleCountdown[OpponentColor][0][row] = CAPSULE_COUNTDOWN;
 	      row = -1;		/* For the next capsule: startpos */
 	    }
 	} /* if MyRandom */
@@ -595,8 +603,9 @@ GetTakeoverGraphics (void)
 {
   int i,j;
   int curx = 0, cury = 0;
-  int block;
-  
+  SDL_Rect tmp;
+
+  Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
   to_blocks = IMG_Load (TO_BLOCK_FILE);
 
   /* Set the fill-blocks */
@@ -611,26 +620,14 @@ GetTakeoverGraphics (void)
   cury += FILL_BLOCK_HEIGHT + 2;
 
   /* get the game-blocks */
-  block = 0;
-  for (j = 0; j < 4; j++)
+
+  for (j = 0; j < 2*NUM_PHASES; j++)
     {
-      for (i = 0; i < 7; i++)
+      for (i = 0; i < TO_BLOCKS; i++)
 	{
-	  Set_Rect (ToGameBlocks[block], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
-	  block++;
+	  Set_Rect (ToGameBlocks[j*TO_BLOCKS+i], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
 	  curx += TO_BLOCKLEN + 2;
 	}
-
-      curx = 0;
-      cury += TO_BLOCKHEIGHT + 2;
-
-      for (i = 0; i < 4; i++)
-	{
-	  Set_Rect (ToGameBlocks[block], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
-	  block ++;
-	  curx += TO_BLOCKLEN + 2;
-	}
-
       curx = 0;
       cury += TO_BLOCKHEIGHT + 2;
     }
@@ -650,10 +647,7 @@ GetTakeoverGraphics (void)
 
   Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
 
-  //  SDL_SaveBMP(to_blocks, "to_test.bmp");
-
   return OK;
-
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------
@@ -675,27 +669,18 @@ ShowPlayground (void)
   int color, player;
   unsigned char *LeftDruid, *RightDruid;
   unsigned char *Enemypic;
-  register int curx, cury;
-  unsigned char *tmp;
-  int caps_row, caps_x, caps_y;	/* Play-capsule state */
+  int block;
   SDL_Rect Target_Rect;
-  static unsigned char *WorkBlock = NULL;
 
   SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  SetUserfenster ( TO_BG_COLOR );
+  Fill_Rect (User_Rect, to_bg_color);
 
   if (YourColor == GELB)
     player = YOU;
   else
     player = ENEMY;
-
-  if (NumCapsules[player] > 0)
-    caps_row = CapsuleCurRow[GELB];
-  else
-    caps_row = -1;
-
 
   Set_Rect (Target_Rect, User_Rect.x + LEFT_OFFS_X, User_Rect.y + LEFT_OFFS_Y,
 	    User_Rect.w, User_Rect.h);
@@ -736,11 +721,6 @@ ShowPlayground (void)
   else
     player = YOU;
 
-  if (NumCapsules[player] > 0)
-    caps_row = CapsuleCurRow[VIOLETT];
-  else
-    caps_row = -1;
-
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
 		   ne_screen, &Target_Rect);
   Target_Rect.y += GROUNDBLOCKHEIGHT;
@@ -776,8 +756,8 @@ ShowPlayground (void)
       {
 	Set_Rect (Target_Rect, PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[ToPlayground[GELB][i][j]],
-			 ne_screen, &Target_Rect);
+	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
       }
 
 
@@ -788,9 +768,9 @@ ShowPlayground (void)
 	Set_Rect (Target_Rect,
 		  PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
 		  PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
-	SDL_BlitSurface (to_blocks, 
-			 &ToGameBlocks[ToPlayground[VIOLETT][i][j]+TO_BLOCKS],
-			 ne_screen, &Target_Rect);
+	block = ToPlayground[VIOLETT][i][j]+
+	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
       }
 
   /* Show the capsules left for each player */
@@ -868,7 +848,7 @@ ShowPlayground (void)
 
 
 /*-----------------------------------------------------------------
- * @Desc: Clears Playground to default start-values
+ * @Desc: Clears Playground (and ActivationMap) to default start-values
  * @Ret:  void
  *
  *-----------------------------------------------------------------*/
@@ -880,11 +860,13 @@ ClearPlayground (void)
   for (color = GELB; color < TO_COLORS; color++)
     for (layer = 0; layer < NUM_LAYERS; layer++)
       for (row = 0; row < NUM_LINES; row++)
-	if (layer < TO_COLORS - 1)
-	  ToPlayground[color][layer][row] = KABEL;
-	else
-	  ToPlayground[color][layer][row] = INAKTIV;
-
+	{
+	  ActivationMap[color][layer][row] = INACTIVE;
+	  if (layer < TO_COLORS - 1)
+	    ToPlayground[color][layer][row] = KABEL;
+	  else
+	    ToPlayground[color][layer][row] = INACTIVE;
+	}
 
   for (row = 0; row < NUM_LINES; row++)
     DisplayColumn[row] = row % 2;
@@ -1074,7 +1056,6 @@ ProcessPlayground (void)
 {
   int color, layer, row;
   int TurnActive = FALSE;
-  int TestElement;
 
   for (color = GELB; color < TO_COLORS; color++)
     {
@@ -1085,37 +1066,32 @@ ProcessPlayground (void)
 	      if (layer == NUM_LAYERS - 1)
 		{
 		  if (IsActive (color, row))
-		    ToPlayground[color][layer][row] = AKTIV;
+		    ActivationMap[color][layer][row] = ACTIVE1;
 		  else
-		    ToPlayground[color][layer][row] = INAKTIV;
+		    ActivationMap[color][layer][row] = INACTIVE;
 
 		  continue;
 		}		/* if last layer */
 
 	      TurnActive = FALSE;
 
-	      TestElement = ToPlayground[color][layer][row];
-	      if (TestElement >= ACTIVE_OFFSET)
-		TestElement -= ACTIVE_OFFSET;
-
-	      switch (TestElement)
+	      switch (ToPlayground[color][layer][row])
 		{
 		case FARBTAUSCHER:
 		case VERZWEIGUNG_M:
 		case GATTER_O:
 		case GATTER_U:
 		case KABEL:
-		  if (ToPlayground[color][layer - 1][row] >= ACTIVE_OFFSET)
+		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
-
 		  break;
 
 		case VERSTAERKER:
-		  if (ToPlayground[color][layer - 1][row] >= ACTIVE_OFFSET)
+		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
 		  /* Verstaerker halten sich aber auch selbst aktiv !! */
-		  if (ToPlayground[color][layer][row] >= ACTIVE_OFFSET)
+		  if (ActivationMap[color][layer][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
 		  break;
@@ -1124,42 +1100,35 @@ ProcessPlayground (void)
 		  break;
 
 		case VERZWEIGUNG_O:
-		  if (ToPlayground[color][layer][row + 1] >= ACTIVE_OFFSET)
+		  if (ActivationMap[color][layer][row + 1] >= ACTIVE1)
 		    TurnActive = TRUE;
-
 		  break;
 
 		case VERZWEIGUNG_U:
-		  if (ToPlayground[color][layer][row - 1] >= ACTIVE_OFFSET)
+		  if (ActivationMap[color][layer][row - 1] >= ACTIVE1)
 		    TurnActive = TRUE;
-
 		  break;
 
 		case GATTER_M:
-		  if ((ToPlayground[color][layer][row - 1] >= ACTIVE_OFFSET)
-		      && (ToPlayground[color][layer][row + 1] >=
-			  ACTIVE_OFFSET))
+		  if ((ActivationMap[color][layer][row - 1] >= ACTIVE1)
+		      && (ActivationMap[color][layer][row + 1] >= ACTIVE1))
 		    TurnActive = TRUE;
 
 		  break;
 
 		default:
 		  break;
-
 		}		/* switch */
 
 	      if (TurnActive)
 		{
-		  if (ToPlayground[color][layer][row] < ACTIVE_OFFSET)
-		    ToPlayground[color][layer][row] += ACTIVE_OFFSET;
-
+		  if (ActivationMap[color][layer][row] == INACTIVE)
+		    ActivationMap[color][layer][row] = ACTIVE1;
 		  TurnActive = FALSE;
 		}
-	      else
-		{
-		  if (ToPlayground[color][layer][row] >= ACTIVE_OFFSET)
-		    ToPlayground[color][layer][row] -= ACTIVE_OFFSET;
-		}		/* else */
+	      else 
+		ActivationMap[color][layer][row] = INACTIVE;
+
 
 	    }			/* for row */
 
@@ -1186,19 +1155,17 @@ ProcessDisplayColumn (void)
   static int flicker_color = 0;
   int row;
   int GelbCounter, ViolettCounter;
-  int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
 
   flicker_color = !flicker_color;
 
   for (row = 0; row < NUM_LINES; row++)
     {
-
       /* eindeutig gelb */
-      if ((ToPlayground[GELB][CLayer][row] == AKTIV) &&
-	  (ToPlayground[VIOLETT][CLayer][row] == INAKTIV))
+      if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
+	  (ActivationMap[VIOLETT][CLayer][row] == INACTIVE))
 	{
 	  /* Farbtauscher ??? */
-	  if (ToPlayground[GELB][CLayer - 1][row] == Tauscher)
+	  if (ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = VIOLETT;
 	  else
 	    DisplayColumn[row] = GELB;
@@ -1206,11 +1173,11 @@ ProcessDisplayColumn (void)
 	}
 
       /* eindeutig violett */
-      if ((ToPlayground[GELB][CLayer][row] == INAKTIV) &&
-	  (ToPlayground[VIOLETT][CLayer][row] == AKTIV))
+      if ((ActivationMap[GELB][CLayer][row] == INACTIVE) &&
+	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
 	  /* Farbtauscher ??? */
-	  if (ToPlayground[VIOLETT][CLayer - 1][row] == Tauscher)
+	  if (ToPlayground[VIOLETT][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = GELB;
 	  else
 	    DisplayColumn[row] = VIOLETT;
@@ -1219,15 +1186,15 @@ ProcessDisplayColumn (void)
 	}
 
       /* unentschieden: Flimmern */
-      if ((ToPlayground[GELB][CLayer][row] == AKTIV) &&
-	  (ToPlayground[VIOLETT][CLayer][row] == AKTIV))
+      if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
+	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
 	  /* Farbtauscher - Faelle */
-	  if ((ToPlayground[GELB][CLayer - 1][row] == Tauscher) &&
-	      (ToPlayground[VIOLETT][CLayer - 1][row] != Tauscher))
+	  if ((ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER) &&
+	      (ToPlayground[VIOLETT][CLayer - 1][row] != FARBTAUSCHER))
 	    DisplayColumn[row] = VIOLETT;
-	  else if ((ToPlayground[GELB][CLayer - 1][row] != Tauscher) &&
-		   (ToPlayground[VIOLETT][CLayer - 1][row] == Tauscher))
+	  else if ((ToPlayground[GELB][CLayer - 1][row] != FARBTAUSCHER) &&
+		   (ToPlayground[VIOLETT][CLayer - 1][row] == FARBTAUSCHER))
 	    DisplayColumn[row] = GELB;
 	  else
 	    {
@@ -1257,6 +1224,7 @@ ProcessDisplayColumn (void)
   else
     LeaderColor = REMIS;
 
+  return;
 }				/* ProcessDisplayColumn */
 
 /*@Function============================================================
@@ -1275,12 +1243,13 @@ ProcessCapsules (void)
   for (color = GELB; color <= VIOLETT; color++)
     for (row = 0; row < NUM_LINES; row++)
       {
-	if (CapsuleCountdown[color][row] > 0)
-	  CapsuleCountdown[color][row]--;
+	if (CapsuleCountdown[color][0][row] > 0)
+	  CapsuleCountdown[color][0][row]--;
 
-	if (CapsuleCountdown[color][row] == 0)
+	if (CapsuleCountdown[color][0][row] == 0)
 	  {
-	    CapsuleCountdown[color][row] = -1;
+	    CapsuleCountdown[color][0][row] = -1;
+	    ActivationMap[color][0][row] = INACTIVE;
 	    ToPlayground[color][0][row] = KABEL;
 	  }
 
@@ -1291,7 +1260,7 @@ ProcessCapsules (void)
 
 /*@Function============================================================
 @Desc: IsInactive(color, row): tells, wether a Column-connection
-									is active or not
+						is active or not
 
 @Ret: TRUE/FALSE
 @Int:
@@ -1302,13 +1271,37 @@ IsActive (int color, int row)
   int CLayer = 3;		/* the connective Layer */
   int TestElement = ToPlayground[color][CLayer - 1][row];
 
-  if ((TestElement >= ACTIVE_OFFSET) &&
-      (BlockClass[TestElement - ACTIVE_OFFSET] == CONNECTOR))
-
+  if ((ActivationMap[color][CLayer-1][row] >= ACTIVE1) &&
+      (BlockClass[TestElement] == CONNECTOR))
     return TRUE;
-
   else
     return FALSE;
 }				/* IsActive */
+
+/*-----------------------------------------------------------------
+ *
+ * Animate the active cables: this is done by cycling over
+ * the active phases ACTIVE1-ACTIVE3, which are represented by 
+ * different pictures in the playground
+ *
+ *-----------------------------------------------------------------*/
+void
+AnimateCurrents (void)
+{
+  int color, layer, row;
+
+  for (color = GELB; color <= VIOLETT; color ++)
+    for (layer = 0; layer < NUM_LAYERS; layer ++)
+      for (row = 0; row < NUM_LINES; row ++)
+	if (ActivationMap[color][layer][row] >= ACTIVE1)
+	  {
+	    ActivationMap[color][layer][row] ++; 
+	    if (ActivationMap[color][layer][row] == NUM_PHASES)
+	      ActivationMap[color][layer][row] = ACTIVE1;
+	  }
+
+  return;
+}
+
 
 #undef _takeover_c
