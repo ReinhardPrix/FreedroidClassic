@@ -190,86 +190,27 @@ Event Action to be triggered by this trigger="open_barrier"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
-//-------------------------------------------------------------
-// the following triggers close the barrier behind the influencer
-// after he has left the retreatment bunker: These are pure location
-// triggers.
-
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=2 
-Influencer must be at y-coordinate=7
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=2
-Influencer must be at y-coordinate=8
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=2
-Influencer must be at y-coordinate=6
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=3
-Influencer must be at y-coordinate=6
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=3
-Influencer must be at y-coordinate=8
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
 // ------------------------------------------------------------
 // The following triggers launch comments of the influ on the situation on
 // board the ship
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=10
-Influencer must be at y-coordinate=7
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=3
+Influencer must be at X=10 Y=7 Lev=2
 Event Action to be triggered by this trigger="barrier_bullet_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=19
-Influencer must be at y-coordinate=5
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=5
+Influencer must be at X=19 Y=5 Lev=2
 Event Action to be triggered by this trigger="stay_with_first_mission_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=6
-Influencer must be at y-coordinate=6
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=4
+Influencer must be at X=6 Y=6 Lev=2
 Event Action to be triggered by this trigger="teleport_not_working_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -464,4 +405,39 @@ Press Fire to continue
 *** End of Mission File ***
 
 
+
+//-------------------------------------------------------------
+// the following triggers close the barrier behind the influencer
+// after he has left the retreatment bunker: These are pure location
+// triggers.
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=7 Lev=2
+Event Action to be triggered by this trigger="close_barrier"
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=8 Lev=2
+Event Action to be triggered by this trigger="close_barrier"
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=6 Lev=2
+Event Action to be triggered by this trigger="close_barrier"
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=3 Y=6 Lev=2
+Event Action to be triggered by this trigger="close_barrier"
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=3 Y=8 Lev=2
+Event Action to be triggered by this trigger="close_barrier"
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
 
