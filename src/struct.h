@@ -65,7 +65,7 @@ typedef struct {
 typedef struct {
   int type;         /* what kind of druid is this ? */
   byte status;       /* attacking, defense, dead, ... */
-  vect speed;       /* the current speed of the druid */
+  finepoint speed;       /* the current speed of the druid */
   finepoint pos;        /* current position in level levelnum */
   float health;		/* the max. possible energy in the moment */
   float energy;       /* current energy */
@@ -81,7 +81,7 @@ typedef struct {
 typedef struct {
   byte type;		/* gibt die Nummer in Druidmap an */
   int levelnum;		/* Level in dem sich enemy befindet */
-  point pos;		/* gibt die Koordinaten der Momentanposition an */
+  finepoint pos;	/* gibt die Koordinaten der Momentanposition an */
   vect speed;		/* current speed  */
   float energy;		/* gibt die Energie dieses Robots an */
   byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
@@ -206,6 +206,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.15  1997/06/09 10:50:29  jprix
+ * Halfway through with making robot coordinates also info floats.  Still works :->
+ *
  * Revision 1.14  1997/06/08 23:46:44  jprix
  * influence_t uses floats now for the coodinates of the influ.  transition successful.
  *

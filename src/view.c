@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.17  1997/06/09 10:50:29  jprix
+ * Halfway through with making robot coordinates also info floats.  Still works :->
+ *
  * Revision 1.16  1997/06/08 23:46:45  jprix
  * influence_t uses floats now for the coodinates of the influ.  transition successful.
  *
@@ -160,7 +163,7 @@ int i;
 void GetView(void)
 {
   int col, line;
-  point testpos;
+  finepoint testpos;
   int me_gx, me_gy;		/* influ- Grobkoord. */	
   signed int mapX0, mapY0;
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
@@ -392,8 +395,8 @@ void GetConceptInternFenster(void)
 	 
 			for (j=0;j<MAX_ENEMYS_ON_SHIP;j++) {
 				if (Feindesliste[j].levelnum != CurLevel->levelnum) continue;
-				if ( Affected[Feindesliste[j].pos.x/BLOCKBREITE+Feindesliste[j].pos.y/BLOCKHOEHE*CurLevel->xlen] &&
-					  (!Druidmap[Feindesliste[j].type].flashimmune) ) {
+				if ( Affected[((int)rintf(Feindesliste[j].pos.x))/BLOCKBREITE+((int)rintf(Feindesliste[j].pos.y))/BLOCKHOEHE*CurLevel->xlen] &&
+					  (!Druidmap[((int)rintf(Feindesliste[j].type))].flashimmune) ) {
 							Feindesliste[j].energy-=Bulletmap[FLASH].damage/2;
 				}
 			}

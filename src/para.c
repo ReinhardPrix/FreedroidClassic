@@ -207,13 +207,13 @@ int main(void)
       AnimateEnemys();   // Bei den Feinden auch Phasen weiterzaehlen 
 
       /* Raeder bremsen die Fahrt des Influencers erheblich */
-      printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
-      printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
+      printf("\nvoid main(void): SpeedX ist jetzt: %f!",SpeedX);
+      printf("\nvoid main(void): SpeedY ist jetzt: %f!",SpeedY);
       Reibung();
 
       /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
-      printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
-      gl_printf(1,40,"\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
+      printf("\nvoid main(void): SpeedX: %f!",SpeedX);
+      gl_printf(1,40,"\nvoid main(void): SpeedY: %f!",SpeedY);
       Me.pos.x+=SpeedX * Frame_Time();
       Me.pos.y+=SpeedY * Frame_Time();
       AdjustSpeed();

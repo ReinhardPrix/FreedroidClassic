@@ -202,7 +202,7 @@ EXTERN void AnimateRefresh(void);
 EXTERN void MoveLevelDoors(void);
 EXTERN int IsPassable(int x, int y, int Checkpos);
 EXTERN int DruidPassable(int x, int y);
-EXTERN int IsVisible(Point objpos);
+EXTERN int IsVisible(Finepoint objpos);
 EXTERN int TranslateMap(Level Lev);
 
 /* sound.c */

@@ -986,7 +986,7 @@ int IsPassable(int x, int y, int Checkpos) {
 @Ret: TRUE/FALSE
 @Int:
 * $Function----------------------------------------------------------*/
-int IsVisible(Point objpos){
+int IsVisible(Finepoint objpos){
   signed int a_x;		/* Vector Influencer->objectpos */
   signed int a_y;
   vect step;			/* effective step */
@@ -1046,6 +1046,9 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
+ * Revision 1.13  1997/06/09 10:50:29  jprix
+ * Halfway through with making robot coordinates also info floats.  Still works :->
+ *
  * Revision 1.12  1997/06/08 23:19:38  jprix
  * Transition to floating point coordinates started.  This version is still working.
  *
