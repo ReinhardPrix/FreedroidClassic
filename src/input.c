@@ -232,13 +232,63 @@ ReactToSpecialKeys(void)
   if ( Number9Pressed() )
     ApplyItemFromInventory( 9 );
 
+  //--------------------
+  // For debugging purposes, we introduce a key, that causes several 
+  // values to be printed out.  This MUST be removed for the next release.
+  //
   if ( MPressed() )
     {
+
       for ( i=0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
 	{
 	  DebugPrintf( 1 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
 		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
 	}
+
+      for ( i=0 ; i < ALL_ITEMS ; i ++ )
+	{
+	  if ( ItemMap[ i ].ItemName == NULL ) continue;
+	  DebugPrintf( 0 , "\n\nItemName: %s " , ItemMap[ i ].ItemName );
+	  DebugPrintf( 0 , "\nItemClass: %s " , ItemMap[ i ].ItemClass );
+	  DebugPrintf( 0 , "\nitem_can_be_applied_in_combat: %d " , ItemMap[ i ].item_can_be_applied_in_combat );
+	  DebugPrintf( 0 , "\nitem_can_be_installed_in_influ: %d " , ItemMap[ i ].item_can_be_installed_in_influ );
+	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );
+	  DebugPrintf( 0 , "\nitem_can_be_installed_in_drive_slot: %d " , ItemMap[ i ].item_can_be_installed_in_drive_slot );
+	  DebugPrintf( 0 , "\nitem_gun_damage: %d " , ItemMap[ i ].item_gun_damage );
+
+/*
+  int New_Laser_Type_After_Installation;
+  int New_Drive_Type_After_Installation;
+  double energy_gain_uppon_application_in_combat;
+  double item_weight;
+
+  // How good is the item as drive???
+  double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
+  double item_drive_accel;	// as drive, how fast can you accelerate with this item
+
+  // How good is the item as weapon???
+  double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
+  double item_gun_speed;			// speed of the bullet 
+  int item_gun_damage;			// damage done by this bullettype 
+  int item_gun_blast;			// which blast does this bullet create 
+  int item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
+
+  // Which picture to use for this item, when it's lying on the floor?
+  int picture_number;
+*/
+
+	}
+
+
+      for ( i=0 ; i < Number_Of_Droid_Types ; i ++ )
+	{
+	  if ( Druidmap[ i ].druidname == NULL ) continue;
+	  DebugPrintf( 0 , "\n\ndruidname: %s " , Druidmap[ i ].druidname );
+	  DebugPrintf( 0 , "\ndrive_item: %d (%s)" , Druidmap[ i ].drive_item , ItemMap[ Druidmap[ i ].drive_item ].ItemName );
+	  DebugPrintf( 0 , "\nweapon_item: %d (%s) " , Druidmap[ i ].weapon_item , ItemMap[ Druidmap[ i ].weapon_item ].ItemName );
+	}
+
+
       while ( MPressed() );
     }
 

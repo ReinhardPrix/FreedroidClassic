@@ -333,15 +333,19 @@ CheckBulletCollisions (int num)
 	  if ( IsVisible (&AllEnemys[i].pos) &
 	       (!Druidmap[AllEnemys[i].type].flashimmune) )
 	    {
-	      AllEnemys[i].energy -= Bulletmap[FLASH].damage;
+	      // ITEMS AllEnemys[i].energy -= Bulletmap[FLASH].damage;
+	      AllEnemys[i].energy -= CurBullet->damage;
 	      // Since the enemy just got hit, it might as well say so :)
 	      EnemyHitByBulletText( i );
 	    }
 	}
       
       if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
-	Me.energy -= Bulletmap[FLASH].damage ;
-      
+	{
+	  // ITEMS Me.energy -= Bulletmap[FLASH].damage ;
+	  Me.energy -= CurBullet->damage ;
+	}
+
       return;
       break;
 
@@ -370,7 +374,10 @@ CheckBulletCollisions (int num)
 	  GotHitSound ();
 	  
 	  if (!InvincibleMode)
-	    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
+	    {
+	      // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
+	      Me.energy -= CurBullet->damage;	// loose some energy
+	    }
 	  
 	  // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
 	  // ATTENTION!  These instructions belong here and must not be moved up.
@@ -393,7 +400,8 @@ CheckBulletCollisions (int num)
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
 	      // The enemy who was hit, loses some energy, depending on the bullet
-	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+	      // ITEMS AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+	      AllEnemys[i].energy -= CurBullet->damage;
 	      GotHitSound ();
 
 	      // Maybe he will also stop doing his fixed routine and return to normal
