@@ -460,7 +460,6 @@ Warning.  Received empty or nearly empty string!",
   //--------------------
   // First we make a backup of everything, so that we don't destory anything.
   //
-  // if ( ! use_open_gl ) StoreMenuBackground ( 1 ) ;
   display_char_disabled = TRUE ;
   BackupOfMyCursorX = MyCursorX;
   BackupOfMyCursorY = MyCursorY;
@@ -488,9 +487,12 @@ Warning.  Received empty or nearly empty string!",
 	}
       TestPosition += FontHeight ( GetCurrentFont() ) * text_stretch;
     }
-
   TextLinesNeeded = i + 1 ;
+
+  // TextLinesNeeded = ( MyCursorY - GivenRectangle . y + 1 ) / ( FontHeight ( GetCurrentFont() ) * text_stretch ) ;
+  // TextLinesNeeded ++ ;
   DebugPrintf ( 1 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
+
 
   //--------------------
   // Now that we have found our solution, we can restore everything back to normal

@@ -324,8 +324,6 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
   dest.x = x;
   dest.y = y;
 
-  
-
   if ( ( c != ' ' ) && ( c != '\n' ) )
     {
       //--------------------
@@ -359,8 +357,7 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 		{
 		  if ( Font -> char_iso_image [ c ] . surface == NULL )
 		    {
-		      GiveStandardErrorMessage ( "PutCharFont(...)" , "\
-Surface was NULL pointer!",
+		      GiveStandardErrorMessage ( "PutCharFont(...)" , "Surface was NULL pointer!",
 						 PLEASE_INFORM, IS_FATAL );
 		    }
 		  make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;

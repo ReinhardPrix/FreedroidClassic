@@ -490,7 +490,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
-  Steps = LargerDistance * 4 + 1 ;   // We check four times on each map tile...
+  Steps = LargerDistance * 2 + 1 ;   // We check four times on each map tile...
   // if ( Steps == 0 ) return TRUE;
 
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps

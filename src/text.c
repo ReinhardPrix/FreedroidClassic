@@ -462,16 +462,14 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
   Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
 
   //--------------------
-  // First we need to know where to begin with with out little display.
+  // First we need to know where to begin with our little display.
   //
   lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
   DebugPrintf ( -1000 , "\nLines needed: %d. " , lines_needed );
 
   if ( lines_needed <= 9 ) protocol_offset = 0 ;
   else
-    {
-      protocol_offset = ( lines_needed - 8 ) * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ;
-    }
+    protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) * ( lines_needed - 9 ) * 1.04 ;
 
   //--------------------
   // Now we need to clear this window, cause there might still be some
@@ -1166,10 +1164,10 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
   if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
     {
       // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
-      strcat ( chat_protocol , "\1 TUX:" );
+      strcat ( chat_protocol , "\1TUX:" );
       GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
 			    ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid ) ;
-      strcat ( chat_protocol , "\2 " );
+      strcat ( chat_protocol , "\2" );
     }
   
   //--------------------
@@ -1892,7 +1890,6 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	{
 	  MyCursorX = clip->x;
 	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
-
 	}
       else
 	DisplayChar (*tmp);
@@ -1916,7 +1913,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	};
       
       if (clip)
-	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
+	ImprovedCheckLineBreak(tmp, clip);   /* dont write over right border */
 
     } // while !FensterVoll()
 
@@ -2047,11 +2044,11 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       tmp++;
 
       if (clip)
-	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
+	ImprovedCheckLineBreak(tmp, clip);   /* dont write over right border */
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
+  SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
@@ -2108,8 +2105,7 @@ files of Freedroid.",
   //
   MyCursorX += CharWidth ( GetCurrentFont() , c);
   
-} // void DisplayChar(...)
-
+}; // void DisplayChar(...)
 
 /* ----------------------------------------------------------------------
  * This function checks if the next word still fits in this line
@@ -2119,14 +2115,14 @@ files of Freedroid.",
  *  
  * The function could perhaps still need a little improvement.  But for
  * now its good enough and improvement enough in comparison to the old
- * CheckUmbruch function.
+ * CheckLineBreak function.
  *
  * rp: added argument clip, which contains the text-window we're writing in
  *     (formerly known as "TextBorder")
  *
  * ---------------------------------------------------------------------- */
 void
-ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
+ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip)
 {
   int i;
   int NeededSpace=0;
@@ -2137,7 +2133,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
   if ( *Resttext == ' ' ) {
     for ( i = 1 ; i < MAX_WORD_LENGTH ; i ++ ) 
       {
-	if ( (Resttext[i] != ' ') && (Resttext[i] != '\n') && (Resttext[i] != 0) )
+	if ( ( Resttext [ i ] != ' ') && ( Resttext [ i ] != '\n') && ( Resttext [ i ] != 0 ) )
 	  { 
 	    NeededSpace += CharWidth ( GetCurrentFont() , Resttext [ i ] );
 	    if ( MyCursorX + NeededSpace > clip->x + clip->w - 10 )
@@ -2151,7 +2147,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 	  return;
       }
   }
-}; // void ImprovedCheckUmbruch(void)
+}; // void ImprovedCheckLineBreak(void)
 
 /* -----------------------------------------------------------------
  * This function reads a string of "MaxLen" from User-input, and 
