@@ -2005,19 +2005,31 @@ Level_Editor(void)
 	  // corresponding map tile.  This is done here:
 	  if (Number1Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK1;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=BOX_1;
+	      else
+		CurLevel->map[BlockY][BlockX]=BLOCK1;
 	    }
 	  if (Number2Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK2;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=BOX_2;
+	      else
+		CurLevel->map[BlockY][BlockX]=BLOCK2;
 	    }
 	  if (Number3Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK3;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=BOX_3;
+	      else
+		CurLevel->map[BlockY][BlockX]=BLOCK3;
 	    }
 	  if (Number4Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK4;
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=BOX_4;
+	      else
+		CurLevel->map[BlockY][BlockX]=BLOCK4;
 	    }
 	  if (Number5Pressed()) 
 	    {
@@ -2045,6 +2057,8 @@ Level_Editor(void)
 		CurLevel->map[BlockY][BlockX]=KONSOLE_U;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
+	      else if ( Alt_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CONVEY_D;
 	      else CurLevel->map[BlockY][BlockX]=T_U;
 	    }
 	  if (KP3Pressed()) 
@@ -2057,6 +2071,8 @@ Level_Editor(void)
 		CurLevel->map[BlockY][BlockX]=KONSOLE_L;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
+	      else if ( Alt_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CONVEY_R;
 	      else CurLevel->map[BlockY][BlockX]=T_L;
 	    }
 	  if (KP5Pressed()) 
@@ -2071,6 +2087,8 @@ Level_Editor(void)
 		CurLevel->map[BlockY][BlockX]=KONSOLE_R;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
+	      else if ( Alt_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CONVEY_L;
 	      else CurLevel->map[BlockY][BlockX]=T_R;
 	    }
 	  if (KP7Pressed()) 
@@ -2083,6 +2101,8 @@ Level_Editor(void)
 		CurLevel->map[BlockY][BlockX]=KONSOLE_O;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
+	      else if ( Alt_Was_Pressed() ) 
+		CurLevel->map[BlockY][BlockX]=CONVEY_U;
 	      else CurLevel->map[BlockY][BlockX]=T_O;
 	    }
 	  if (KP9Pressed()) 
