@@ -30,11 +30,7 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-This is the 'Richard' (RMS) character.  Currently he's positioned right inside the guardhouse.  
-
-* He is sort of a chief of this liberation movement.  Alas, he doesn't have a mission to assign to the player yet, but instead he'll inform the player, that he's reached the end of the current FreedroidRPG story line.
-* He will also explain some basics about the ideas of the Free Software Movement, of course in very basic terms, since this game is also intended for people never having heard of 'Linux' or Free Software and don't know what 'Programming' is.
+This is the 'Richard' (RMS) character.  Currently he's positioned right inside the guardhouse.  He is the administrator of the computer cluster of the red guard.
 
 
 END OF AUTORS NOTES
@@ -48,6 +44,19 @@ PositionX=107  PositionY=282
 Subtitle="Welcome, then!  I'm Richard.  I oversee the computer cluster of our community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText="A computer cluster?  What's that?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=209  PositionY=280  
+Subtitle="A cluster is a collection of litterally thousands of normal computers into a whole new entity."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It can be used to perform the most complex of operations in comparatively little time, provided suitable methods for analyzing the data are used."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -80,6 +89,48 @@ New Option Nr=4  OptionText=" What are these magnetic storms really? "
 OptionSample="Tux_RMS_What_Are_These_0.wav"
 PositionX=679  PositionY=108  
 ChangeOption=4 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=109  PositionY=116  
+ChangeOption=5 ChangeToValue=0
+OnCondition="HaveItemWithCode:100" JumpToOption=8 ElseGoto=7
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText="I have a data cube with confidential cruicial information on the colony installations "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=303  PositionY=152  
+Subtitle="Interesting.  Let me see this thing.  Wow, the amount of data is incredible.  Maybe we could use our cluster to evalute the data."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Hey, what's that.  The data are already prepared for processing by a cluster like ours.  Wow!  That's good work!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'll feed it into the cluster right away."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:7"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="DO NOTING HERE...
+"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=206  PositionY=62  
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=202  PositionY=146  
+ChangeOption=8 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

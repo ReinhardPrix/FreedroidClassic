@@ -30,17 +30,7 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-
-
 This is Kevin, a most formidable hacker and teacher of hacking skills.
-
-
-
-
-
 
 END OF AUTORS NOTES
 
@@ -164,6 +154,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=116  PositionY=460  
 ChangeOption=9 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
+ChangeOption=14 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -203,6 +194,43 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 DoSomethingExtra="ExecuteSubdialog:subdlg_kevin_reward1"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="About that project you had running..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=190  PositionY=535  
+Subtitle="Yes, since the energy supply has been constant, results were much better.  I've been able to achive my goal."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I've managed to obtain secret data on the colony surroundings.  But the data is so vast, we'll need a big computer cluster to evaluate it properly. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Once we've evaluated the data, we might find a way to secure the colony and ensure our survival.  But it's too early to tell yet."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If I only had a suitable cluster.  Then we could start data evaluation right away. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=14 ChangeToValue=0
+ChangeOption=15 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="Maybe I can help somehow to find a suitable cluster."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=281  PositionY=572  
+Subtitle="That would be great of course.  I know that the old town is maintaining a suitable information infrastructure and has a proper cluster running for some time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The only problem is, that I can't go back to town.  They would probably kill me because of that accident years ago."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And also the cluster is inside of the guard citadel.  I hear it's only allowed for members of the guard to enter the complex."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But maybe you can arrange that somehow.  For me it would be impossible, because of my bad reputation."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'll give you the data cube.  Take it to the computer cluster administration people.  They will know what to do.  And don't mention me there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=15 ChangeToValue=0
+DoSomethingExtra="GiveItem:100"
+DoSomethingExtra="AssignMission:7"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
