@@ -55,7 +55,12 @@ That will not cause any problems.
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 
 Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
-Amount of damage done by contact to a blast per second of time=45.0
+Amount of damage done by contact to a blast per second of time= 60.0
+
+// blast 'one' is the explosions of bullets hitting e.g. the wall
+Time in seconds for the animation of blast one : 0.5
+// blast 'two' is the explosions of droids hitting e.g. the wall
+Time in seconds for the animation of blast two : 0.4
 
 Droid radius: 0.3
 
@@ -64,6 +69,9 @@ Time for the doors to move by one subphase of their movement=0.05
 Deathcount drain speed = 10.0
 First alert threshold = 300
 Alert bonus per second = 5
+
+
+
 
 *** End of General Game Constants Section: ***
 
@@ -126,7 +134,7 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 // this is the laser rifle of the 614
 ** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.5
+Time is takes to recharge this bullet/weapon in seconds : 1.4
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 40
 Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
@@ -250,7 +258,7 @@ Droidname: 249
 Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 40.1
+Maximum energy of this droid: 24.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
