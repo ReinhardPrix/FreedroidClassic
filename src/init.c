@@ -1662,10 +1662,6 @@ InitNewMissionList ( char *MissionName )
   Me.type = DRUID001;
   Me.speed.x = 0;
   Me.speed.y = 0;
-  Me.energy = Druidmap[DRUID001].maxenergy;
-  Me.mana = Druidmap[DRUID001].maxmana;
-  printf("\n Me.energy : %f . " , Me.energy );
-  Me.health = Me.energy;	/* start with max. health */
   Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
@@ -1676,7 +1672,7 @@ InitNewMissionList ( char *MissionName )
   Me.Strength = 15;
   Me.Dexterity = 15;
   Me.Magic = 15;
-  Me.PointsToDistribute = 15;
+  Me.PointsToDistribute = 0;
   Me.ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me.KillRecord[ i ] = 0;
   Me.exp_level = 1;
@@ -1684,6 +1680,13 @@ InitNewMissionList ( char *MissionName )
   // strcpy ( Me.character_name , "R2D2 v.0.8.5." );
   strcpy ( Me.character_name , "character_name" );
   // strcpy ( Me.class_name , "Force bot" );
+
+  UpdateAllCharacterStats();
+
+  Me.energy = Druidmap[DRUID001].maxenergy;
+  Me.mana = Druidmap[DRUID001].maxmana;
+  DebugPrintf( 1 , "\n Me.energy : %f . " , Me.energy );
+  Me.health = Me.energy;	/* start with max. health */
 
   Druidmap[ Me.type ].weapon_item.currently_held_in_hand = FALSE;
   Druidmap[ Me.type ].armour_item.currently_held_in_hand = FALSE;
@@ -1984,7 +1987,7 @@ ThouArtDefeated (void)
   // update_highscores ();
   EscapeMenu();
 
-  GameOver = TRUE;
+  // GameOver = TRUE;
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
   DebugPrintf (1, "\n\n DefeatedDone \n\n");
