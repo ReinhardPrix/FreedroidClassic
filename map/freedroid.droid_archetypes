@@ -354,7 +354,7 @@ Aggression rate of this droid: 80
 Physical (base) damage an attack of this droid will do: 8.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 90
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.0
 Time spent eyeing Tux=2.5
@@ -463,7 +463,7 @@ Aggression rate of this droid: 93
 Physical (base) damage an attack of this droid will do: 12.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 140
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.5
 Time spent eyeing Tux=2.25
@@ -516,7 +516,7 @@ Aggression rate of this droid: 99
 Physical (base) damage an attack of this droid will do: 14.0
 Is this droid immune to disruptor blasts? 1
 Experience_Reward gained for destroying one of this type: 180
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.75
 Time spent eyeing Tux=2.0
@@ -569,7 +569,7 @@ Aggression rate of this droid: 90
 Physical (base) damage an attack of this droid will do: 16.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=5.0
 Time spent eyeing Tux=2.0
@@ -622,7 +622,7 @@ Aggression rate of this droid: 94
 Physical (base) damage an attack of this droid will do: 18.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 240
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=5.25
 Time spent eyeing Tux=1.75
@@ -675,7 +675,7 @@ Aggression rate of this droid: 98
 Physical (base) damage an attack of this droid will do: 20.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 280
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=5.5
 Time spent eyeing Tux=1.75
@@ -728,7 +728,7 @@ Aggression rate of this droid: 81
 Physical (base) damage an attack of this droid will do: 22.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 320
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=5.75
 Time spent eyeing Tux=1.5
@@ -781,7 +781,7 @@ Aggression rate of this droid: 0
 Physical (base) damage an attack of this droid will do: 24.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 400
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=6.0
 Time spent eyeing Tux=1.5
@@ -834,7 +834,7 @@ Aggression rate of this droid: 90
 Physical (base) damage an attack of this droid will do: 26.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 460
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=6.25
 Time spent eyeing Tux=1.25
@@ -887,7 +887,7 @@ Aggression rate of this droid: 30
 Physical (base) damage an attack of this droid will do: 28.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 500
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=6.5
 Time spent eyeing Tux=1.25
@@ -940,7 +940,7 @@ Aggression rate of this droid: 40
 Physical (base) damage an attack of this droid will do: 30.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 600
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=6.75
 Time spent eyeing Tux=1.0
@@ -993,7 +993,7 @@ Aggression rate of this droid: 60
 Physical (base) damage an attack of this droid will do: 32.0
 Is this droid immune to disruptor blasts? 1
 Experience_Reward gained for destroying one of this type: 650
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=7.0
 Time spent eyeing Tux=1.0
@@ -1046,7 +1046,7 @@ Aggression rate of this droid: 60
 Physical (base) damage an attack of this droid will do: 34.0
 Is this droid immune to disruptor blasts? 1
 Experience_Reward gained for destroying one of this type: 700
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=7.25
 Time spent eyeing Tux=0.75
@@ -1099,7 +1099,7 @@ Aggression rate of this droid: 80
 Physical (base) damage an attack of this droid will do: 36.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 800
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=7.5
 Time spent eyeing Tux=0.75
@@ -1152,7 +1152,7 @@ Aggression rate of this droid: 65
 Physical (base) damage an attack of this droid will do: 38.0
 Is this droid immune to disruptor blasts? 1
 Experience_Reward gained for destroying one of this type: 1000
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=7.75
 Time spent eyeing Tux=0.5
@@ -1205,7 +1205,7 @@ Aggression rate of this droid: 55
 Physical (base) damage an attack of this droid will do: 40.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 1200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=8.0
 Time spent eyeing Tux=0.5
@@ -1258,7 +1258,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 42.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 1500
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=1
 Range of vision of this droid=8.25
 Time spent eyeing Tux=0.25
@@ -1311,7 +1311,7 @@ Aggression rate of this droid: 90
 Physical (base) damage an attack of this droid will do: 44.0
 Is this droid immune to disruptor blasts? 1
 Experience_Reward gained for destroying one of this type: 2000
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=8.5
 Time spent eyeing Tux=0.25
@@ -1364,7 +1364,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1417,7 +1417,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1470,7 +1470,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1523,7 +1523,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1576,7 +1576,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1629,7 +1629,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1682,7 +1682,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1735,7 +1735,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
@@ -1789,7 +1789,7 @@ Aggression rate of this droid: 92
 Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=4
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
 Time spent eyeing Tux=3
