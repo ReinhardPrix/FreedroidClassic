@@ -1358,6 +1358,7 @@ ShowCurrentTextWindow ( void )
     char* LongTextPointer;
     int InterLineDistance;
     int StringLength;
+    int lines_needed;
 
     //--------------------
     // During the title display phase, we need not have this window visible...
@@ -1397,6 +1398,17 @@ ShowCurrentTextWindow ( void )
 
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
+
+    //--------------------
+    // We count the text lines needed for the banner rectangle, just
+    // to make sure we don't wast too much space here.
+    //
+    lines_needed = GetNumberOfTextLinesNeeded ( ItemDescText , Banner_Text_Rect , 1.0 ) ;
+    if ( lines_needed <= 20 )
+    {
+	// Banner_Text_Rect . y += ( Banner_Text_Rect . h - ( lines_needed + 2 ) *  FontHeight( FPS_Display_BFont ) ) / 2 ;
+	Banner_Text_Rect . h = ( lines_needed + 2 ) *  FontHeight( FPS_Display_BFont );
+    }
 
     //--------------------
     // Now we add some extra correction, so that the banner rectangle can not
@@ -1444,7 +1456,7 @@ ShowCurrentTextWindow ( void )
     //--------------------
     // Now we separate the lines and fill them into the line-array
     //
-    InterLineDistance = ( UPPER_BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
+    InterLineDistance = ( Banner_Text_Rect . h - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
 	( NumberOfLinesInText + 1 );
     
     LongTextPointer = ItemDescText;
