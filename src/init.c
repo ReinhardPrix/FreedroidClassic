@@ -1629,7 +1629,6 @@ InitFreedroid (void)
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
-  // GameConfig.Theme_SubPath="default_theme/";
   GameConfig.Theme_SubPath="lanzz_theme/";
   User_Rect.x=0;
   User_Rect.w=640;
