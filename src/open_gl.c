@@ -1604,16 +1604,21 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define NE_CONSOLE_FG_4_FILE     "backgrounds/console_fg_4.png" 
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
-#define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
+#define LEVEL_EDITOR_BANNER_FILE1 "backgrounds/LevelEditorSelectionBar1.png"
+#define LEVEL_EDITOR_BANNER_FILE2 "backgrounds/LevelEditorSelectionBar2.png"
+#define LEVEL_EDITOR_BANNER_FILE3 "backgrounds/LevelEditorSelectionBar3.png"
+#define LEVEL_EDITOR_BANNER_FILE4 "backgrounds/LevelEditorSelectionBar4.png"
+#define LEVEL_EDITOR_BANNER_FILE5 "backgrounds/LevelEditorSelectionBar5.png"
+#define LEVEL_EDITOR_BANNER_FILE6 "backgrounds/LevelEditorSelectionBar6.png"
+#define LEVEL_EDITOR_BANNER_FILE7 "backgrounds/LevelEditorSelectionBar7.png"
 #define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
 #define MOUSE_BUTTON_CHA_BACKGROUND_PICTURE "mouse_buttons/CHAButton.png"           
 #define MOUSE_BUTTON_INV_BACKGROUND_PICTURE "mouse_buttons/INVButton.png"           
 #define MOUSE_BUTTON_SKI_BACKGROUND_PICTURE "mouse_buttons/SKIButton.png"           
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
 #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
-#define LEVEL_EDITOR_WALLS_MENU_FILE "backgrounds/LevelEditorWallsMenu.png"
 
-#define ALL_KNOWN_BACKGROUNDS 23
+#define ALL_KNOWN_BACKGROUNDS 28
 
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
 static int backgrounds_should_be_loaded_now = TRUE;
@@ -1642,15 +1647,20 @@ blit_special_background ( int background_code )
 								  NE_CONSOLE_FG_3_FILE ,              // 11
 								  NE_CONSOLE_FG_4_FILE ,              // 12
 								  NE_CONSOLE_BG_PIC1_FILE ,           // 13
-                                                                  LEVEL_EDITOR_BANNER_FILE ,          // 14
-								  FREEDROID_LOADING_PICTURE_NAME ,    // 15
-								  MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 16
-								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 17
-								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 18 
-								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 19
-								  CHAT_BACKGROUND_IMAGE_FILE ,        // 20
-								  CHAT_BACKGROUND_IMAGE_FILE ,        // 21
-								  LEVEL_EDITOR_WALLS_MENU_FILE };      // 22
+                                                                  LEVEL_EDITOR_BANNER_FILE1 ,          // 14
+                                                                  LEVEL_EDITOR_BANNER_FILE2 ,          // 15
+                                                                  LEVEL_EDITOR_BANNER_FILE3 ,          // 16
+                                                                  LEVEL_EDITOR_BANNER_FILE4 ,          // 17
+                                                                  LEVEL_EDITOR_BANNER_FILE5 ,          // 18
+                                                                  LEVEL_EDITOR_BANNER_FILE6 ,          // 19
+                                                                  LEVEL_EDITOR_BANNER_FILE7 ,          // 20
+								  FREEDROID_LOADING_PICTURE_NAME ,    // 21
+								  MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 22
+								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 23
+								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 24 
+								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 25
+								  CHAT_BACKGROUND_IMAGE_FILE ,        // 26
+								  CHAT_BACKGROUND_IMAGE_FILE };        // 27
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1669,16 +1679,21 @@ blit_special_background ( int background_code )
 							      { 0 , 0 , 0 , 0 } ,               // 13
 							      { 0 , 0 , 0 , 0 } ,               // 14
 							      { 0 , 0 , 0 , 0 } ,               // 15
-							      { 560 , 434 ,  38 ,  45 } ,       // 16
-							      { 600 , 420 ,  38 ,  40 } ,       // 17 
-							      { 590 , 376 ,  38 ,  47 } ,       // 18
-							      { 560 , 434 ,  38 ,  45 } ,       // 19
-                                                              { 0 , 0 , 0 , 0 } ,               // 20
+							      { 0 , 0 , 0 , 0 } ,               // 16
+							      { 0 , 0 , 0 , 0 } ,               // 17
+							      { 0 , 0 , 0 , 0 } ,               // 18
+							      { 0 , 0 , 0 , 0 } ,               // 19
+							      { 0 , 0 , 0 , 0 } ,               // 20
+							      { 0 , 0 , 0 , 0 } ,               // 21
+							      { 560 , 434 ,  38 ,  45 } ,       // 22
+							      { 600 , 420 ,  38 ,  40 } ,       // 23 
+							      { 590 , 376 ,  38 ,  47 } ,       // 24
+							      { 560 , 434 ,  38 ,  45 } ,       // 25
+                                                              { 0 , 0 , 0 , 0 } ,               // 26
                                                               { CHAT_SUBDIALOG_WINDOW_X , 
 								CHAT_SUBDIALOG_WINDOW_Y , 
 								CHAT_SUBDIALOG_WINDOW_W , 
-								CHAT_SUBDIALOG_WINDOW_H } ,
-							      { 0 , 0 , 0 , 0 } ,          } ;  // 22
+								CHAT_SUBDIALOG_WINDOW_H } } ;  // 27
   int i;
   char *fpath;
   

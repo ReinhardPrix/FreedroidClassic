@@ -63,79 +63,286 @@ SDL_Rect EditorBannerRect = { 0 , 0 , 640 , 90 } ;
 int FirstBlock = 0 ;
 int Highlight = 3 ;
 
-int number_of_walls;
+int number_of_walls [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] ;
 
-int wall_indices[ 5000 ] = { 
-  ISO_V_WALL ,
-  ISO_H_WALL ,
-  ISO_V_WALL_WITH_DOT ,
-  ISO_H_WALL_WITH_DOT ,
-  ISO_GREY_WALL_END_W ,
-  ISO_GREY_WALL_END_N ,
-  ISO_GREY_WALL_END_E ,
-  ISO_GREY_WALL_END_S ,
-  ISO_CAVE_WALL_H ,
-  ISO_CAVE_WALL_V ,
-  ISO_CAVE_CORNER_NE ,
-  ISO_CAVE_CORNER_SE ,
-  ISO_CAVE_CORNER_NW ,
-  ISO_CAVE_CORNER_SW ,
-  ISO_CAVE_WALL_END_W ,
-  ISO_CAVE_WALL_END_N ,
-  ISO_CAVE_WALL_END_E ,
-  ISO_CAVE_WALL_END_S ,
-  ISO_V_WOOD_FENCE ,
-  ISO_H_WOOD_FENCE , 
-  ISO_V_DENSE_FENCE ,
-  ISO_H_DENSE_FENCE ,
-  ISO_V_MESH_FENCE ,
-  ISO_H_MESH_FENCE , 
-  ISO_V_WIRE_FENCE ,
-  ISO_H_WIRE_FENCE ,
-  ISO_V_CURTAIN ,
-  ISO_H_CURTAIN ,
-  ISO_THICK_WALL_H ,
-  ISO_THICK_WALL_V ,
-  ISO_THICK_WALL_CORNER_NE ,
-  ISO_THICK_WALL_CORNER_SE ,
-  ISO_THICK_WALL_CORNER_NW ,
-  ISO_THICK_WALL_CORNER_SW ,
-  ISO_THICK_WALL_T_N ,
-  ISO_THICK_WALL_T_E ,
-  ISO_THICK_WALL_T_S ,
-  ISO_THICK_WALL_T_W ,
-  ISO_BRICK_WALL_H ,
-  ISO_BRICK_WALL_V ,
-  ISO_BRICK_WALL_END ,
-  ISO_BRICK_WALL_CORNER_1 , 
-  ISO_BRICK_WALL_CORNER_2 , 
-  ISO_BRICK_WALL_CORNER_3 , 
-  ISO_BRICK_WALL_CORNER_4 ,
-  ISO_ROOM_WALL_V_RED ,
-  ISO_ROOM_WALL_H_RED ,
-  ISO_ROOM_WALL_V_GREEN ,
-  ISO_ROOM_WALL_H_GREEN ,
-  ISO_OUTER_WALL_N1,
-  ISO_OUTER_WALL_N2,
-  ISO_OUTER_WALL_N3,
-  ISO_OUTER_WALL_S1,
-  ISO_OUTER_WALL_S2,
-  ISO_OUTER_WALL_S3,
+int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] = 
+{
+    //--------------------
+    // First the floor group.  (this is a pure dummy right now...)
+    //
+    {
+	-1,
+	-1,
+	-1
+    },
+    //--------------------
+    // Now the 'walls' group.
+    //
+    { 
+	ISO_V_WALL ,
+	ISO_H_WALL ,
+	ISO_V_WALL_WITH_DOT ,
+	ISO_H_WALL_WITH_DOT ,
+	ISO_GREY_WALL_END_W ,
+	ISO_GREY_WALL_END_N ,
+	ISO_GREY_WALL_END_E ,
+	ISO_GREY_WALL_END_S ,
+	ISO_H_DOOR_000_OPEN ,
+	ISO_H_DOOR_025_OPEN ,
+	ISO_H_DOOR_050_OPEN ,
+	ISO_H_DOOR_075_OPEN ,
+	ISO_H_DOOR_100_OPEN ,
+	ISO_V_DOOR_000_OPEN ,
+	ISO_V_DOOR_025_OPEN ,
+	ISO_V_DOOR_050_OPEN ,
+	ISO_V_DOOR_075_OPEN ,
+	ISO_V_DOOR_100_OPEN ,
+	ISO_H_DOOR_LOCKED,
+	ISO_V_DOOR_LOCKED,
+	ISO_CAVE_WALL_H ,
+	ISO_CAVE_WALL_V ,
+	ISO_CAVE_CORNER_NE ,
+	ISO_CAVE_CORNER_SE ,
+	ISO_CAVE_CORNER_NW ,
+	ISO_CAVE_CORNER_SW ,
+	ISO_CAVE_WALL_END_W ,
+	ISO_CAVE_WALL_END_N ,
+	ISO_CAVE_WALL_END_E ,
+	ISO_CAVE_WALL_END_S ,
+	ISO_V_WOOD_FENCE ,
+	ISO_H_WOOD_FENCE , 
+	ISO_V_DENSE_FENCE ,
+	ISO_H_DENSE_FENCE ,
+	ISO_V_MESH_FENCE ,
+	ISO_H_MESH_FENCE , 
+	ISO_V_WIRE_FENCE ,
+	ISO_H_WIRE_FENCE ,
+	ISO_V_CURTAIN ,
+	ISO_H_CURTAIN ,
+	ISO_THICK_WALL_H ,
+	ISO_THICK_WALL_V ,
+	ISO_THICK_WALL_CORNER_NE ,
+	ISO_THICK_WALL_CORNER_SE ,
+	ISO_THICK_WALL_CORNER_NW ,
+	ISO_THICK_WALL_CORNER_SW ,
+	ISO_THICK_WALL_T_N ,
+	ISO_THICK_WALL_T_E ,
+	ISO_THICK_WALL_T_S ,
+	ISO_THICK_WALL_T_W ,
+	ISO_BRICK_WALL_H ,
+	ISO_BRICK_WALL_V ,
+	ISO_BRICK_WALL_END ,
+	ISO_BRICK_WALL_CORNER_1 , 
+	ISO_BRICK_WALL_CORNER_2 , 
+	ISO_BRICK_WALL_CORNER_3 , 
+	ISO_BRICK_WALL_CORNER_4 ,
+	ISO_ROOM_WALL_V_RED ,
+	ISO_ROOM_WALL_H_RED ,
+	ISO_ROOM_WALL_V_GREEN ,
+	ISO_ROOM_WALL_H_GREEN ,
+	ISO_OUTER_WALL_N1,
+	ISO_OUTER_WALL_N2,
+	ISO_OUTER_WALL_N3,
+	ISO_OUTER_WALL_S1,
+	ISO_OUTER_WALL_S2,
+	ISO_OUTER_WALL_S3,
+	
+	ISO_OUTER_WALL_E1,
+	ISO_OUTER_WALL_E2,
+	ISO_OUTER_WALL_E3,
+	ISO_OUTER_WALL_W1,
+	ISO_OUTER_WALL_W2,
+	ISO_OUTER_WALL_W3,
+	
+	ISO_OUTER_WALL_CORNER_1 ,
+	ISO_OUTER_WALL_CORNER_2 ,
+	ISO_OUTER_WALL_CORNER_3 ,
+	ISO_OUTER_WALL_CORNER_4 ,
+	-1
+    } ,
+    //--------------------
+    // Now the 'machinery' group.
+    //
+    {
+	ISO_ENHANCER_RU ,
+	ISO_ENHANCER_LU ,
+	ISO_ENHANCER_RD ,
+	ISO_ENHANCER_LD ,
 
-  ISO_OUTER_WALL_E1,
-  ISO_OUTER_WALL_E2,
-  ISO_OUTER_WALL_E3,
-  ISO_OUTER_WALL_W1,
-  ISO_OUTER_WALL_W2,
-  ISO_OUTER_WALL_W3,
-  
-  ISO_OUTER_WALL_CORNER_1 ,
-  ISO_OUTER_WALL_CORNER_2 ,
-  ISO_OUTER_WALL_CORNER_3 ,
-  ISO_OUTER_WALL_CORNER_4 ,
-  -1
-};
+	ISO_TELEPORTER_1 ,
+	ISO_TELEPORTER_2 ,
+	ISO_TELEPORTER_3 ,
+	ISO_TELEPORTER_4 ,
+	ISO_TELEPORTER_5 ,
+	
+	ISO_REFRESH_1 ,
+	ISO_REFRESH_2 ,
+	ISO_REFRESH_3 ,
+	ISO_REFRESH_4 ,
+	ISO_REFRESH_5 ,
 
+	ISO_AUTOGUN_W ,
+	ISO_AUTOGUN_N ,
+	ISO_AUTOGUN_E ,
+	ISO_AUTOGUN_S ,
+
+	ISO_COOKING_POT ,
+
+	ISO_CONSOLE_S ,
+	ISO_CONSOLE_E ,
+	ISO_CONSOLE_N ,
+	ISO_CONSOLE_W ,
+
+	ISO_TV_PILLAR_W ,
+	ISO_TV_PILLAR_N ,
+	ISO_TV_PILLAR_E ,
+	ISO_TV_PILLAR_S ,
+
+	-1,
+	-1,
+	-1,
+	-1
+    } ,
+    //--------------------
+    // Now the 'furniture' group.
+    //
+    {
+	ISO_BLOCK_1 ,
+	ISO_BLOCK_2 ,
+
+	ISO_LAMP ,  
+	
+	ISO_N_TOILET_SMALL ,
+	ISO_E_TOILET_SMALL ,
+	ISO_S_TOILET_SMALL ,
+	ISO_W_TOILET_SMALL ,
+	ISO_N_TOILET_BIG ,
+	ISO_E_TOILET_BIG ,
+	ISO_S_TOILET_BIG ,
+	ISO_W_TOILET_BIG ,
+	ISO_N_CHAIR ,
+	ISO_E_CHAIR ,
+	ISO_S_CHAIR ,
+	ISO_W_CHAIR ,
+	ISO_N_DESK ,
+	ISO_E_DESK ,
+	ISO_S_DESK ,
+	ISO_W_DESK ,
+	ISO_N_SCHOOL_CHAIR ,
+	ISO_E_SCHOOL_CHAIR ,
+	ISO_S_SCHOOL_CHAIR ,
+	ISO_W_SCHOOL_CHAIR ,
+
+	ISO_N_BED ,
+	ISO_E_BED ,
+	ISO_S_BED ,
+	ISO_W_BED ,
+	ISO_N_EMPTY_BOOKSHELF ,
+	ISO_E_EMPTY_BOOKSHELF ,
+	ISO_S_EMPTY_BOOKSHELF ,
+	ISO_W_EMPTY_BOOKSHELF ,
+	ISO_N_FULL_BOOKSHELF ,
+	ISO_E_FULL_BOOKSHELF ,
+	ISO_S_FULL_BOOKSHELF ,
+	ISO_W_FULL_BOOKSHELF ,
+	ISO_N_FULL_PARK_BENCH ,
+	ISO_E_FULL_PARK_BENCH ,
+	ISO_S_FULL_PARK_BENCH ,
+	ISO_W_FULL_PARK_BENCH ,
+
+	ISO_H_BATHTUB , 
+	ISO_V_BATHTUB ,
+	ISO_H_WASHTUB , 
+	ISO_V_WASHTUB ,
+	ISO_V_CURTAIN ,
+	ISO_H_CURTAIN ,
+	ISO_E_SOFA , 
+	ISO_S_SOFA , 
+	ISO_W_SOFA , 
+	ISO_N_SOFA ,
+
+	ISO_EXIT_1 ,
+	ISO_EXIT_2 ,
+
+	ISO_SHOP_FURNITURE_1,
+	ISO_SHOP_FURNITURE_2,
+	ISO_SHOP_FURNITURE_3,
+	ISO_SHOP_FURNITURE_4,
+	ISO_SHOP_FURNITURE_5,
+	ISO_SHOP_FURNITURE_6,
+
+	ISO_YELLOW_CHAIR_N ,
+	ISO_YELLOW_CHAIR_E ,
+	ISO_YELLOW_CHAIR_S ,
+	ISO_YELLOW_CHAIR_W ,
+	ISO_RED_CHAIR_N ,
+	ISO_RED_CHAIR_E ,
+	ISO_RED_CHAIR_S ,
+	ISO_RED_CHAIR_W ,
+
+	-1,
+	-1,
+	-1,
+	-1
+    } ,
+    //--------------------
+    // Now the 'containers' group.
+    //
+    {
+	ISO_H_CHEST_CLOSED ,
+	ISO_V_CHEST_CLOSED ,
+	ISO_H_CHEST_OPEN ,
+	ISO_V_CHEST_OPEN ,
+
+	ISO_BARREL_1 ,
+	ISO_BARREL_2 ,
+	ISO_BARREL_3 ,
+	ISO_BARREL_4 ,
+
+	//--------------------
+	// We repeat the same obstacles once more, cause we should have at
+	// least 10 things in each groups for technical reasons...
+	//
+	ISO_BARREL_1 ,
+	ISO_BARREL_2 ,
+	ISO_BARREL_3 ,
+	ISO_BARREL_4 ,
+
+	-1,
+	-1,
+	-1,
+	-1
+    } ,
+    //--------------------
+    // Now the 'plants' group.
+    //
+    {
+	ISO_TREE_1 ,
+	ISO_TREE_2 ,
+	ISO_TREE_3 ,
+	ISO_TREE_4 ,
+	ISO_TREE_5 ,
+
+	ISO_ROCKS_N_PLANTS_1 ,
+	ISO_ROCKS_N_PLANTS_2 ,
+	ISO_ROCKS_N_PLANTS_3 ,
+	ISO_ROCKS_N_PLANTS_4 ,
+
+	-1,
+	-1,
+	-1,
+	-1
+    } ,
+    //--------------------
+    // Now the 'all' group.  (this is a pure dummy...)
+    //
+    {
+	-1,
+	-1,
+	-1,
+	-1
+    }
+}; // end of definition of selection groups
 
 enum
   {
@@ -200,30 +407,32 @@ close_all_chests_on_level ( int l_num )
 void
 create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y )
 {
-  int i;
-  int free_index = ( -1 ) ;
-
-  //--------------------
-  // The special 'obstacle_type' (-1) can be given, which means that this
-  // function will have to find out the proper type all by itself...
-  //
-  if ( our_obstacle_type == (-1) )
+    int i;
+    int free_index = ( -1 ) ;
+    
+    //--------------------
+    // The special 'obstacle_type' (-1) can be given, which means that this
+    // function will have to find out the proper type all by itself...
+    //
+    if ( our_obstacle_type == (-1) )
     {
-      switch ( GameConfig . level_editor_edit_mode )
+	switch ( GameConfig . level_editor_edit_mode )
 	{
-	case LEVEL_EDITOR_EDIT_FLOOR:
-	  break;
-	case LEVEL_EDITOR_EDIT_OBSTACLES:
-	  our_obstacle_type = Highlight ;
-	  break;
-	case LEVEL_EDITOR_EDIT_WALLS:
-	  our_obstacle_type = wall_indices [ Highlight ] ;
-	  break;
-	default:
-	  GiveStandardErrorMessage ( "create_new_obstacle_on_level (...)" , "\
+	    case LEVEL_EDITOR_SELECTION_FLOOR :
+		break;
+	    case LEVEL_EDITOR_SELECTION_WALLS :
+	    case LEVEL_EDITOR_SELECTION_MACHINERY:
+	    case LEVEL_EDITOR_SELECTION_FURNITURE:
+	    case LEVEL_EDITOR_SELECTION_CONTAINERS:
+	    case LEVEL_EDITOR_SELECTION_PLANTS:
+	    case LEVEL_EDITOR_SELECTION_ALL:
+		our_obstacle_type = wall_indices [ GameConfig . level_editor_edit_mode ] [ Highlight ] ;
+		break;
+	    default:
+		GiveStandardErrorMessage ( "create_new_obstacle_on_level (...)" , "\
 Illegal level editor mode encountered!" , 
-				     PLEASE_INFORM , IS_FATAL );
-	  break;
+					   PLEASE_INFORM , IS_FATAL );
+		break;
 	}	  
     }
 
@@ -638,16 +847,53 @@ ClickWasInEditorBannerRect( void )
 void
 update_number_of_walls ( void )
 {
-  int i;
+  int inside_index ;
+  int group_index ;
 
-  for ( i = 0 ; i < 5000 ; i ++ )
-    {
-      if ( wall_indices [ i ] == (-1) )
-	{
-	  number_of_walls = i ;
-	  break;
-	}
-    }
+  for ( group_index = 0 ; group_index < NUMBER_OF_LEVEL_EDITOR_GROUPS ; group_index ++ )
+  {
+      for ( inside_index = 0 ; inside_index < NUMBER_OF_OBSTACLE_TYPES ; inside_index ++ )
+      {
+	  switch ( group_index )
+	  {
+	      case LEVEL_EDITOR_SELECTION_FLOOR:
+		  number_of_walls [ group_index ] = ALL_ISOMETRIC_FLOOR_TILES ;
+		  if ( inside_index < ALL_ISOMETRIC_FLOOR_TILES )
+		      wall_indices [ group_index ] [ inside_index ] = inside_index ;
+		  else
+		      wall_indices [ group_index ] [ inside_index ] = (-1);
+		  break;
+	      case LEVEL_EDITOR_SELECTION_WALLS:
+	      case LEVEL_EDITOR_SELECTION_MACHINERY:
+	      case LEVEL_EDITOR_SELECTION_FURNITURE:
+	      case LEVEL_EDITOR_SELECTION_CONTAINERS:
+	      case LEVEL_EDITOR_SELECTION_PLANTS:
+		  if ( wall_indices [ group_index ] [ inside_index ] == (-1) )
+		  {
+		      number_of_walls [ group_index ] = inside_index ;
+		      inside_index = NUMBER_OF_OBSTACLE_TYPES ; // --> we MUST leave the loop here!
+		      break;
+		  }
+		  break;
+	      case LEVEL_EDITOR_SELECTION_ALL:
+		  //--------------------
+		  // In this case we have to fill the array with data, cause it's
+		  // not hard-coded for this group...
+		  //
+		  number_of_walls [ group_index ] = NUMBER_OF_OBSTACLE_TYPES ;
+		  if ( inside_index < NUMBER_OF_OBSTACLE_TYPES )
+		      wall_indices [ group_index ] [ inside_index ] = inside_index ;
+		  else
+		      wall_indices [ group_index ] [ inside_index ] = (-1);
+		  break;
+	      default:
+		  GiveStandardErrorMessage ( "update_number_of_walls (...)" , "\
+Unhandled level editor edit mode received.",
+					     PLEASE_INFORM , IS_FATAL );
+		  break;
+	  }
+      }
+  }
 
 }; // void update_number_of_walls ( void )
 
@@ -660,12 +906,6 @@ HandleBannerMouseClick( void )
 {
   SDL_Rect TargetRect;
   int i;
-  int limit ;
- 
-  if( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR) 
-    limit = ALL_ISOMETRIC_FLOOR_TILES ;
-  else
-    limit = NUMBER_OF_OBSTACLE_TYPES ;
 
   if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
     {
@@ -692,33 +932,19 @@ HandleBannerMouseClick( void )
     }
 
   // check limits
-  if(FirstBlock < 0)
-    FirstBlock = 0;
+  if ( FirstBlock < 0 )
+      FirstBlock = 0;
  
-  if(FirstBlock+8 > limit -1)
-    FirstBlock = limit -9 ;
+  if ( FirstBlock + 9 >= number_of_walls [ GameConfig . level_editor_edit_mode ] )
+      FirstBlock = number_of_walls [ GameConfig . level_editor_edit_mode ] - 9 ;
   
   //--------------------
   // Now some extra security against selecting indices that would point to
   // undefined objects (floor tiles or obstacles) later
   // The following should never occur now - SN
   //
-  update_number_of_walls ( ) ;
-  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
-    {
-      if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
-	Highlight = ALL_ISOMETRIC_FLOOR_TILES - 1;
-    }
-  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
-    {
-      if ( Highlight >= NUMBER_OF_OBSTACLE_TYPES )
-	Highlight = NUMBER_OF_OBSTACLE_TYPES - 1;
-    }
-  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
-    {
-      if ( Highlight >= number_of_walls )
-	Highlight = number_of_walls - 1;
-    }
+  if ( Highlight >= number_of_walls [ GameConfig . level_editor_edit_mode ] )
+      Highlight = number_of_walls [ GameConfig . level_editor_edit_mode ] -1 ;
 
 }; // void HandleBannerMouseClick( void )
 
@@ -730,94 +956,209 @@ HandleBannerMouseClick( void )
 void
 ShowLevelEditorTopMenu( int Highlight )
 {
-  int i;
-  SDL_Rect TargetRectangle;
-  int selected_index = FirstBlock;
-  SDL_Surface *tmp = NULL;
-  float zoom_factor;
+    int i;
+    SDL_Rect TargetRectangle;
+    int selected_index = FirstBlock;
+    SDL_Surface *tmp = NULL;
+    float zoom_factor;
 
-  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
-    blit_special_background ( LEVEL_EDITOR_WALL_MENU_CODE );
-  else
-    blit_special_background ( LEVEL_EDITOR_BANNER_CODE );
+    blit_special_background ( LEVEL_EDITOR_BANNER_CODE + GameConfig . level_editor_edit_mode );
 
-  //--------------------
-  // Time to fill something into the top selection banner, so that the
-  // user can really has something to select from there.  But this must be
-  // done differently, depending on whether we show the menu for the floor
-  // edit mode or for the obstacle edit mode.
-  //
-  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+    //--------------------
+    // Time to fill something into the top selection banner, so that the
+    // user can really has something to select from there.  But this must be
+    // done differently, depending on whether we show the menu for the floor
+    // edit mode or for the obstacle edit mode.
+    //
+    for ( i = 0 ; i < 9 ; i ++ )
     {
-      for ( i = 0 ; i < 9 ; i ++ )
+	if ( selected_index >= number_of_walls [ GameConfig . level_editor_edit_mode ] ) continue;
+
+	TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+	    
+
+	switch ( GameConfig . level_editor_edit_mode )
 	{
-	  if ( selected_index >= ALL_ISOMETRIC_FLOOR_TILES ) continue;
+	    case LEVEL_EDITOR_SELECTION_FLOOR:
+		if ( use_open_gl )
+		{
+		    blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
+		}
+		else
+		{
+		    //--------------------
+		    // We create a scaled version of the floor tile in question
+		    //
+		    tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
+		    
+		    //--------------------
+		    // Now we can show and free the scaled verion of the floor tile again.
+		    //
+		    our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+		    SDL_FreeSurface ( tmp );
+		}
+		break;
+		
+	    case LEVEL_EDITOR_SELECTION_WALLS:
+	    case LEVEL_EDITOR_SELECTION_MACHINERY:
+	    case LEVEL_EDITOR_SELECTION_FURNITURE:
+	    case LEVEL_EDITOR_SELECTION_CONTAINERS:
+	    case LEVEL_EDITOR_SELECTION_PLANTS:
+	    case LEVEL_EDITOR_SELECTION_ALL:
+		//--------------------
+		// We find the proper zoom_factor, so that the obstacle in question will
+		// fit into one tile in the level editor top status selection row.
+		//
+		if ( use_open_gl )
+		{
+		    zoom_factor = min ( 
+			( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . original_image_width ) ,
+			( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . original_image_height ) );
+		}
+		else
+		{
+		    zoom_factor = min ( 
+			( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface->w ) ,
+			( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface->h ) );
+		}
+		if ( use_open_gl )
+		{
+		    blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
+		}
+		else
+		{
+		    //--------------------
+		    // We create a scaled version of the obstacle in question
+		    //
+		    tmp = zoomSurface ( obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
+		    
+		    //--------------------
+		    // Now we can show and free the scaled verion of the floor tile again.
+		    //
+		    our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+		    SDL_FreeSurface ( tmp );
+		}
+		break;
+		
+	    default:
+		GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , 
+					   "Unhandled level editor edit mode received.",
+					   PLEASE_INFORM , IS_FATAL );
+		break;
+		
+	};
 
-	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-	  
-	  if ( use_open_gl )
-	    {
-	      blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
-	    }
-	  else
-	    {
-	      //--------------------
-	      // We create a scaled version of the floor tile in question
-	      //
-	      tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
-	      
-	      //--------------------
-	      // Now we can show and free the scaled verion of the floor tile again.
-	      //
-	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-	      SDL_FreeSurface ( tmp );
-	    }
-
-	  if ( selected_index == Highlight ) 
+	//--------------------
+	// Maybe we've just displayed the obstacle/floorpiece that is currently
+	// selected.  In this case we should also draw the marker right on it.
+	//
+	if ( selected_index == Highlight ) 
 	    HighlightRectangle ( Screen , TargetRectangle );
 	  
-	  // if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
-	  selected_index ++ ;
+	//--------------------
+	// We can proceed here, since 'out of bounds' checks are done
+	// above anyway.
+	//
+	selected_index ++ ;
+    }
+    
+    ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
+    ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
+    
+}; // void ShowLevelEditorTopMenu( void )
+
+/*
+void
+ShowLevelEditorTopMenu( int Highlight )
+{
+    int i;
+    SDL_Rect TargetRectangle;
+    int selected_index = FirstBlock;
+    SDL_Surface *tmp = NULL;
+    float zoom_factor;
+
+    blit_special_background ( LEVEL_EDITOR_BANNER_CODE + GameConfig . level_editor_edit_mode );
+
+    //--------------------
+    // Time to fill something into the top selection banner, so that the
+    // user can really has something to select from there.  But this must be
+    // done differently, depending on whether we show the menu for the floor
+    // edit mode or for the obstacle edit mode.
+    //
+    if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_SELECTION_FLOOR )
+    {
+	for ( i = 0 ; i < 9 ; i ++ )
+	{
+	    if ( selected_index >= ALL_ISOMETRIC_FLOOR_TILES ) continue;
+	    
+	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+	    
+	    if ( use_open_gl )
+	    {
+		blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
+	    }
+	  else
+	    {
+		//--------------------
+		// We create a scaled version of the floor tile in question
+		//
+		tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
+		
+		//--------------------
+		// Now we can show and free the scaled verion of the floor tile again.
+		//
+		our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+		SDL_FreeSurface ( tmp );
+	    }
+	    
+	    if ( selected_index == Highlight ) 
+		HighlightRectangle ( Screen , TargetRectangle );
+	    
+	    // if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
+	    selected_index ++ ;
 	}
     }
-  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+    else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
     {
-      for ( i = 0 ; i < 9 ; i ++ )
+	for ( i = 0 ; i < 9 ; i ++ )
 	{
-	  if ( selected_index >= NUMBER_OF_OBSTACLE_TYPES ) continue ;
-
-
-	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-
-	  //--------------------
-	  // We find the proper zoom_factor, so that the obstacle in question will
-	  // fit into one tile in the level editor top status selection row.
-	  //
-	  if ( use_open_gl )
+	    if ( selected_index >= NUMBER_OF_OBSTACLE_TYPES ) continue ;
+	    
+	    
+	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+	    
+	    //--------------------
+	    // We find the proper zoom_factor, so that the obstacle in question will
+	    // fit into one tile in the level editor top status selection row.
+	    //
+	    if ( use_open_gl )
 	    {
-	      zoom_factor = min ( 
-				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . original_image_width ) ,
-				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . original_image_height ) );
+		zoom_factor = min ( 
+		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . original_image_width ) ,
+		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . original_image_height ) );
 	    }
-	  else
+	    else
 	    {
-	      zoom_factor = min ( 
-				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
-				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
+		zoom_factor = min ( 
+		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
+		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
 	    }
-
+	    
 	  if ( use_open_gl )
-	    {
+	  {
 	      blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ selected_index ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
-	    }
+	  }
 	  else
-	    {
+	  {
 	      //--------------------
 	      // We create a scaled version of the obstacle in question
 	      //
@@ -828,79 +1169,79 @@ ShowLevelEditorTopMenu( int Highlight )
 	      //
 	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
 	      SDL_FreeSurface ( tmp );
-	    }
-
+	  }
+	  
 	  if ( selected_index == Highlight ) 
-	    HighlightRectangle ( Screen , TargetRectangle );
+	      HighlightRectangle ( Screen , TargetRectangle );
 	  
 	  if ( selected_index < NUMBER_OF_OBSTACLE_TYPES -1 ) selected_index ++ ;
 	}
     }
-  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+    else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
     {
-      for ( i = 0 ; i < 9 ; i ++ )
+	for ( i = 0 ; i < 9 ; i ++ )
 	{
-	  update_number_of_walls();
-
-	  if ( selected_index >= number_of_walls ) continue ;
-
-	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-
-	  //--------------------
-	  // We find the proper zoom_factor, so that the obstacle in question will
-	  // fit into one tile in the level editor top status selection row.
-	  //
-	  if ( use_open_gl )
+	    if ( selected_index >= number_of_walls ) continue ;
+	    
+	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+	    
+	    //--------------------
+	    // We find the proper zoom_factor, so that the obstacle in question will
+	    // fit into one tile in the level editor top status selection row.
+	    //
+	    if ( use_open_gl )
 	    {
-	      zoom_factor = min ( 
-				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_width ) ,
-				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_height ) );
+		zoom_factor = min ( 
+		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_width ) ,
+		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_height ) );
 	    }
-	  else
+	    else
 	    {
-	      zoom_factor = min ( 
-				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->w ) ,
-				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->h ) );
+		zoom_factor = min ( 
+		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->w ) ,
+		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->h ) );
 	    }
-
-	  if ( use_open_gl )
+	    
+	    if ( use_open_gl )
 	    {
-	      blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
+		blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
 	    }
-	  else
+	    else
 	    {
-	      //--------------------
-	      // We create a scaled version of the obstacle in question
-	      //
-	      tmp = zoomSurface ( obstacle_map [ wall_indices [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
-	      
-	      //--------------------
-	      // Now we can show and free the scaled verion of the floor tile again.
-	      //
-	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-	      SDL_FreeSurface ( tmp );
+		//--------------------
+		// We create a scaled version of the obstacle in question
+		//
+		tmp = zoomSurface ( obstacle_map [ wall_indices [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
+		
+		//--------------------
+		// Now we can show and free the scaled verion of the floor tile again.
+		//
+		our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+		SDL_FreeSurface ( tmp );
 	    }
-
-	  if ( selected_index == Highlight ) 
-	    HighlightRectangle ( Screen , TargetRectangle );
-	  
-	  if ( selected_index < number_of_walls -1 ) selected_index ++ ;
+	    
+	    if ( selected_index == Highlight ) 
+		HighlightRectangle ( Screen , TargetRectangle );
+	    
+	    if ( selected_index < number_of_walls -1 ) selected_index ++ ;
 	}
     }
-  else
+    else
     {
-      GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , "\
+	GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , "\
 Unhandled level editor edit mode received.",
-				 PLEASE_INFORM , IS_FATAL );
+				   PLEASE_INFORM , IS_FATAL );
     }
-
-  ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
-  ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
-
+    
+    ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
+    ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
+    
 }; // void ShowLevelEditorTopMenu( void )
+
+*/
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints east of this
@@ -2810,25 +3151,11 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   //
   if ( TPressed()) 
     {
-      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_MACHINERY ;
       FirstBlock = Highlight = ISO_TELEPORTER_1 ;
     }
-  if (APressed())
-    {
-      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-      FirstBlock = Highlight = ISO_LAMP ;
-    }
-  if (RPressed())
-    {
-      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-      FirstBlock = Highlight = ISO_REFRESH_1 ;
-    }
-  if (UPressed())
-    {
-      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-      FirstBlock = Highlight = ISO_V_CHEST_CLOSED ;
-    }
-  
+
+/*  
   //--------------------
   // Pressing the '1' to '5' keys will insert either classic 'block'
   // fixed map tiles or decructible 'box' map blocks.
@@ -2873,6 +3200,8 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
       FirstBlock = Highlight = ISO_H_DENSE_FENCE ;
     }
+*/
+
   /*
   if (KP_PLUS_Pressed()) 
     {
@@ -2947,13 +3276,6 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	    create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_LOCKED , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
 	}
       while ( DPressed() );
-    }
-  if (SpacePressed() && !axis_is_active )
-    {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =FINE_GRID;	            	      	    
-      else
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR;	            	      	    
     }
   
 }; // void HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
@@ -3556,6 +3878,12 @@ LevelEditor(void)
   int main_menu_requested;
 
   //--------------------
+  // We initialize some arrays with info for proper handling
+  // of the level editor selection bar later...
+  //
+  update_number_of_walls ( );
+
+  //--------------------
   // We set the Tux position to something 'round'.
   //
   Me [ 0 ] . pos . x = rintf ( Me [ 0 ] . pos . x ) + 0.5 ;
@@ -3787,27 +4115,14 @@ LevelEditor(void)
 	  // The FKEY can be used to toggle between 'floor' and 'obstacle' edit modes
 	  //
 	  if ( FPressed () )
-	    {
-	      if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
-		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
-		{
-		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_WALLS ;
-		}
-	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
-		{
-		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
-		}
-	      else
-		{
-		  GiveStandardErrorMessage ( "LevelEditor(...)" , "\
-Illegal editor mode encountered!" , 
-					     PLEASE_INFORM , IS_FATAL );
-		}
+	  {
+	      GameConfig . level_editor_edit_mode ++ ;
+	      if ( GameConfig . level_editor_edit_mode >= NUMBER_OF_LEVEL_EDITOR_GROUPS )
+		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
 	      while ( FPressed ( ) );
 	      Highlight = 0 ;
 	      FirstBlock = 0 ;
-	    }
+	  }
 
 	  //--------------------
 	  // If the person using the level editor decides he/she wants a different
@@ -3920,20 +4235,13 @@ Illegal editor mode encountered!" ,
 	    }
 
  
-	    if ( MouseWheelDownPressed() )
-	      {
-	        if( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR) 
-	          {
-	            if ( Highlight < ALL_ISOMETRIC_FLOOR_TILES -1 )
-	              Highlight++;
-	          } else 
-	          {
-                    if ( Highlight < NUMBER_OF_OBSTACLE_TYPES -1 )
-	              Highlight++;
-	          }
+	  if ( MouseWheelDownPressed() )
+	  {
+	      if ( Highlight < number_of_walls [ GameConfig . level_editor_edit_mode ] -1 )
+		  Highlight++;
 
 	        // check if we have to scroll the list
-		if(Highlight < FirstBlock )
+		if( Highlight < FirstBlock )
 	          // block is to the left
 	          FirstBlock = Highlight ;
 	        else if (Highlight > FirstBlock +8)
@@ -4045,25 +4353,12 @@ Illegal editor mode encountered!" ,
 		  ItemDropFromLevelEditor(  );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
-		{
-		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
-		  {
-		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-		    if( FirstBlock > NUMBER_OF_OBSTACLE_TYPES -9 )
-		      {	    
-		        FirstBlock = NUMBER_OF_OBSTACLE_TYPES -9 ;
-			Highlight = NUMBER_OF_OBSTACLE_TYPES -1 ;
-		      }
-		  }
-		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
-		  {
-		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
-		    if( FirstBlock > ALL_ISOMETRIC_FLOOR_TILES -9 )
-		      {	    
-		        FirstBlock = ALL_ISOMETRIC_FLOOR_TILES -9 ;
-			Highlight = ALL_ISOMETRIC_FLOOR_TILES -1 ;
-		      }
-		  }	
+	      {
+		  GameConfig . level_editor_edit_mode ++ ;
+		  if ( GameConfig . level_editor_edit_mode >= NUMBER_OF_LEVEL_EDITOR_GROUPS )
+		      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
+		  if ( FirstBlock >= number_of_walls [ GameConfig . level_editor_edit_mode ] )
+		      FirstBlock = 0 ;
 		  while ( SpacePressed() );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
@@ -4156,17 +4451,13 @@ Illegal editor mode encountered!" ,
 		   ( (int)TargetSquare . y >= 0 ) &&
 		   ( (int)TargetSquare . y <= EditLevel->ylen-1 ) )
 		{
-		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
-		    EditLevel -> map [ (int)TargetSquare . y ] [ (int)TargetSquare . x ] . floor_value = Highlight ;
-		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+		    
+		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_SELECTION_FLOOR )
+		      EditLevel -> map [ (int)TargetSquare . y ] [ (int)TargetSquare . x ] . floor_value = Highlight ;
+		  else 
 		    {
-		      add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , Highlight );
+			add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , wall_indices [ GameConfig . level_editor_edit_mode ] [ Highlight ] );
 		    }
-		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
-		    {
-		      add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , wall_indices [ Highlight ] );
-		    }
-
 		}
 	    }
 

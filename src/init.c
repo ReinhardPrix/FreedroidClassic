@@ -1865,10 +1865,9 @@ InitFreedroid ( void )
   // will never be set again if not Surfaces are allocated too and then they
   // can of course also be freed as well.
   //
-  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
+  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
 
   clear_out_arrays_for_fresh_game ();
-
 
   ServerMode = FALSE;
   ClientMode = FALSE;

@@ -1090,13 +1090,13 @@ Cheatmenu (void)
 		stop_influencer = !stop_influencer;
 		break;
 		
-	    case 'a': /* armageddon */
+	    case 'a': // armageddon: kills all robots on ship...
 		Weiter = 1;
 		Armageddon ();
 		break;
 		
-	    case 'l': /* robot list of this deck */
-		l = 0; /* line counter for enemy output */
+	    case 'l': // robot list of this deck 
+		l = 0;  // l is counter for lines of display of enemy output
 		for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 		{
 		    if (AllEnemys[i].pos.z == CurLevel->levelnum) 
@@ -1104,6 +1104,7 @@ Cheatmenu (void)
 			if (l && !(l%20)) 
 			{
 			    printf_SDL (Screen, -1, -1, " --- MORE --- \n");
+			    our_SDL_flip_wrapper ( Screen );
 			    if( getchar_raw () == 'q')
 				break;
 			}
@@ -1131,8 +1132,8 @@ Cheatmenu (void)
 			else printf_SDL (Screen, -1, -1, " NO" );
 			printf_SDL (Screen, -1, -1, "\n" );
 			
-		    } /* if (enemy on current level)  */
-		} /* for ( i < Number_Of_Droids_On_Ship ) */
+		    } // if (enemy on current level)  
+		} // for ( i < Number_Of_Droids_On_Ship ) 
 		
 		printf_SDL (Screen, 15, -1," --- END --- \n");
 		printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
@@ -1141,7 +1142,7 @@ Cheatmenu (void)
 		while ( SpacePressed() || EscapePressed() );
 		break;
 		
-	    case 'g': /* complete robot list of this ship */
+	    case 'g': // complete robot list of this ship 
 		for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 		{
 		    if ( AllEnemys[i].type == (-1) ) continue;
@@ -1165,7 +1166,7 @@ Cheatmenu (void)
 				Druidmap[AllEnemys[i].type].druidname,
 				(int)AllEnemys[i].energy,
 				AllEnemys[i].speed.x);
-		} /* for ( i < Number_Of_Droids_On_Ship ) */
+		} // for ( i < Number_Of_Droids_On_Ship ) 
 		
 		printf_SDL (Screen, -1, -1, " --- END ---\n");
 		our_SDL_flip_wrapper ( Screen );
@@ -1173,7 +1174,7 @@ Cheatmenu (void)
 		break;
 		
 		
-	    case 'd': /* destroy all robots on this level, haha */
+	    case 'd': // destroy all robots on this level, very useful
 		for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 		{
 		    if (AllEnemys[i].pos.z == CurLevel->levelnum)
@@ -1185,7 +1186,7 @@ Cheatmenu (void)
 		break;
 		
 		
-	    case 't': /* Teleportation */
+	    case 't': // Teleportation 
 		ClearGraphMem ();
 		input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "\nEnter Level, X, Y\n(and please don't forget the commas...)\n> " );
 		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
@@ -1194,7 +1195,7 @@ Cheatmenu (void)
 		Teleport ( LNum , X , Y , 0 , TRUE , TRUE ) ;
 		break;
 		
-	    case 'r': /* change to new robot type */
+	    case 'r': // change to new robot type 
 		ClearGraphMem ();
 		input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Type number of new robot: ");
 		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
@@ -1220,31 +1221,29 @@ Cheatmenu (void)
 		free (input);
 		break;
 		
-	    case 'i': /* togge Invincible mode */
+	    case 'i': // togge Invincible mode 
 		InvincibleMode = !InvincibleMode;
 		break;
 		
-	    case 'e': /* complete heal */
+	    case 'e': // set current energy to arbitrary value
 		ClearGraphMem();
-		// printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
-		// printf_SDL (Screen, -1, -1, "Enter your new energy: ");
 		input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Enter your new energy: " );
 		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 		sscanf (input, "%d", &num);
 		free (input);
-		Me[0].energy = (double) num;
-		if (Me[0].energy > Me[0].health) Me[0].health = Me[0].energy;
+		Me [ 0 ] . energy = (double) num;
+		if ( Me [ 0 ] . energy > Me [ 0 ] . health ) Me [ 0 ] . health = Me [ 0 ] . energy;
 		break;
 		
 	    case 'h': // auto-aquire all skills
 		for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) Me [ 0 ] . base_skill_level [ i ] = 1 ;
 		break;
 		
-	    case 'n': /* toggle display of all droids */
+	    case 'n': // toggle display of all droids 
 		show_all_droids = !show_all_droids;
 		break;
 		
-	    case 's': /* toggle sound on/off */
+	    case 's': // toggle sound on/off 
 		sound_on = !sound_on;
 		break;
 		
@@ -1253,7 +1252,7 @@ Cheatmenu (void)
 		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 		sscanf (input, "%d", &LNum);
 		free (input);
-		ShowDeckMap (curShip.AllLevels[LNum]);
+		ShowDeckMap ( curShip . AllLevels [ LNum ] );
 		getchar_raw ();
 		break;
 		
