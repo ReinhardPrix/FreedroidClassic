@@ -81,7 +81,8 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	  // fflush ( stdout );
 
 	  if ( dstrect == NULL )
-	    glRasterPos2f( 0 , 479 );
+	    // glRasterPos2f( 0 , 480 );
+	    glRasterPos2f( 1 , 479 );
 	  else
 	    {
 	      if ( dstrect -> x == 0 )
@@ -588,8 +589,8 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
 
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
   //--------------------
   // Now we can begin to draw the actual textured rectangle.

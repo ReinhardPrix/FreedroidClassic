@@ -2017,6 +2017,8 @@ ShowQuickInventory ( void )
   SDL_Rect TargetRect;
   int Index;
 
+  if ( ! GameConfig . show_quick_inventory ) return;
+
   //--------------------
   // We must not blit something right over the active character screen or the
   // active skill screen of course.  That would be irritating.

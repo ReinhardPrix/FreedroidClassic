@@ -266,6 +266,7 @@ PermanentHealRobots (void)
   //
   time_since_last_heal += Frame_Time() ;
   if ( time_since_last_heal < HEAL_INTERVAL ) return;
+  time_since_last_heal = 0 ;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)

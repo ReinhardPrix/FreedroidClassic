@@ -499,8 +499,14 @@ ShowCombatScreenTexts ( int mask )
       TimeSinceLastFPSUpdate += Frame_Time();
       if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
 	{
-	  FPS_Displayed=(int)(1.0/Frame_Time());
+	  if ( Frame_Time() > 0 )
+	    FPS_Displayed=(int)(1.0/Frame_Time());
+	  else
+	    FPS_Displayed=(int)9999;
 	  TimeSinceLastFPSUpdate=0;
+
+	  DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
+
 	}
       
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 

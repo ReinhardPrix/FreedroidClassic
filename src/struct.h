@@ -115,6 +115,7 @@ typedef struct
   int level_editor_edit_mode;
   int zoom_is_on;
   int use_bars_instead_of_energy_o_meter;
+  int show_quick_inventory;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

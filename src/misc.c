@@ -646,10 +646,10 @@ ComputeFPSForThisFrame(void)
 
 #ifdef USE_SDL_FRAMERATE
 
-  Now_SDL_Ticks=SDL_GetTicks();
-  oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
-  tenframedelay=Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
-  onehundredframedelay=Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
+  Now_SDL_Ticks = SDL_GetTicks();
+  oneframedelay = Now_SDL_Ticks-One_Frame_SDL_Ticks;
+  tenframedelay = Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
+  onehundredframedelay = Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
   
   if ( !oneframedelay ) FPSover1 = 1000 * 1 / 0.5 ;
   else FPSover1 = 1000 * 1 / (float) oneframedelay;
@@ -759,6 +759,8 @@ Activate_Conservative_Frame_Computation(void)
   // hurt to have the top status bar redrawn after that,
   // so we set this variable...
   BannerIsDestroyed=TRUE;
+
+  DebugPrintf ( -2 , "\nConservative_Frame_Computation activated!" );
 
 }; // void Activate_Conservative_Frame_Computation(void)
 

@@ -149,6 +149,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   // it can be accessed with proper speed later...
   //
   InitiateMenu( BackgroundToUse );
+
   if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
       SetCurrentFont ( FPS_Display_BFont );
@@ -1435,12 +1436,14 @@ PerformanceTweaksOptionsMenu (void)
   char Options2[1000];
   char Options3[1000];
   char Options4[1000];
+  char Options5[1000];
   char* MenuTexts[10];
   enum
     { 
       SET_HOG_CPU_FLAG = 1,
       SET_HIGHLIGHTING_MODE,
       SET_MENU_HANDLING_MODE,
+      SHOW_QUICK_INVENTORY_MODE,
       SKIP_LIGHT_RADIUS_MODE,
       USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
       LEAVE_PERFORMANCE_TWEAKS_MENU 
@@ -1458,8 +1461,9 @@ PerformanceTweaksOptionsMenu (void)
       sprintf ( Options0 , "Hog CPU for max. performance: %s", 
 	        GameConfig.hog_CPU ? "YES" : "NO" );
       sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
-      sprintf ( Options3 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
-      sprintf ( Options4 , "Use bars for energy display: %s", 
+      sprintf ( Options3 , "Show quick inventory: %s", GameConfig . show_quick_inventory ? "YES" : "NO" );
+      sprintf ( Options4 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
+      sprintf ( Options5 , "Use bars for energy display: %s", 
 		GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
       strcpy ( Options2 , "Menu handling: " );
 
@@ -1484,8 +1488,9 @@ PerformanceTweaksOptionsMenu (void)
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
       MenuTexts[4]=Options4;
-      MenuTexts[5]="Back";
-      MenuTexts[6]="";
+      MenuTexts[5]=Options5;
+      MenuTexts[6]="Back";
+      MenuTexts[7]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1513,6 +1518,11 @@ PerformanceTweaksOptionsMenu (void)
 	    GameConfig . menu_mode = MENU_MODE_DOUBLE;
 	  else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
 	    GameConfig . menu_mode = MENU_MODE_FAST;
+	  break;
+
+	case SHOW_QUICK_INVENTORY_MODE:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . show_quick_inventory = ! GameConfig . show_quick_inventory ;
 	  break;
 
 	case SKIP_LIGHT_RADIUS_MODE:

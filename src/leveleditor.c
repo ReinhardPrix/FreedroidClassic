@@ -2908,8 +2908,6 @@ show_button_tooltip ( char* tooltip_text )
 {
   SDL_Rect TargetRect;
 
-  Activate_Conservative_Frame_Computation();
-
   TargetRect . w = 400 ; 
   TargetRect . h = 220 ; 
   TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
@@ -3282,11 +3280,18 @@ LevelEditor(void)
       while ( ( ! EscapePressed() ) && ( !Done ) && ( ! main_menu_requested ) )
 	{
 	  //--------------------
+	  // Even the level editor might be fast or slow or too slow, so we'd like to 
+	  // know speed in here too, so that we can identify possible unnescessary lags
+	  // and then maybe do something about them...
+	  //
+	  StartTakingTimeForFPSCalculation(); 
+
+	  //--------------------
 	  // Also in the Level-Editor, there is no need to go at full framerate...
 	  // We can do with less, cause there are no objects supposed to be 
 	  // moving fluently anyway.  Therefore we introduce some rest for the CPU.
 	  //
-	  SDL_Delay (1);
+	  if ( ! GameConfig . hog_CPU ) SDL_Delay (3);
 
 	  BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
 	  BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
@@ -3761,6 +3766,8 @@ LevelEditor(void)
 	  LeftMousePressedPreviousFrame = axis_is_active; 
 	  RightMousePressedPreviousFrame = MouseRightPressed() ;
 
+	  ComputeFPSForThisFrame();
+
 	} // while (!EscapePressed())
       while( EscapePressed() );
 
@@ -3773,6 +3780,8 @@ LevelEditor(void)
     } // while (!Done)
 
   RespectVisibilityOnMap = TRUE ;
+
+  Activate_Conservative_Frame_Computation();
 
 }; // void LevelEditor ( void )
 
