@@ -998,7 +998,13 @@ Show_Waypoints(void)
   int i;
   int x;
   int y;
-  
+  int BlockX, BlockY;
+  int color;
+#define ACTIVE_WP_COLOR 0x0FFFFFFFF
+
+  BlockX=rintf(Me.pos.x);
+  BlockY=rintf(Me.pos.y);
+	  
   SDL_LockSurface( ne_screen );
 
   for (wp=0; wp<MAXWAYPOINTS; wp++)
@@ -1037,17 +1043,20 @@ Show_Waypoints(void)
 	}
 
       //--------------------
-      // Draw the cross in the middle of the middle of the tile
+      // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
       //
       for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
 	{
 	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
 	    {
-	      // printf(" Found a connection!! ");
-	      DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
-				    HIGHLIGHTCOLOR );
+	       if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
+		 // color = ACTIVE_WP_COLOR ;
+		 // else color = HIGHLIGHTCOLOR ; 
+		 // printf(" Found a connection!! ");
+		 DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
+				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+				       color );
 	    }
 	}
     }
@@ -1076,7 +1085,7 @@ Level_Editor(void)
   int Weiter=FALSE;
   int MenuPosition=1;
   int i,j,k;
-  finepoint TargetCandidate;
+  int OriginWaypoint = (-1);
 
   enum
     { SAVE_LEVEL_POSITION=1, SET_LEVEL_NAME_POSITION=2, BACK_TO_LEVEL_EDITING=3, QUIT_LEVEL_EDITOR_POSITION=4 };
@@ -1197,6 +1206,63 @@ Level_Editor(void)
 	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
 
 	      while ( WPressed() );
+	    }
+
+	  // If the person using the level editor presses C that indicated he/she wants
+	  // a connection between waypoints.  If this is the first selected waypoint, its
+	  // an origin and the second "C"-pressed waypoint will be used a target.
+	  // If origin and destination are the same, the operation is cancelled.
+	  if (CPressed())
+	    {
+	      // Determine which waypoint is currently targeted
+	      for (i=0 ; i < MAXWAYPOINTS ; i++)
+		{
+		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+		}
+
+	      if ( i == MAXWAYPOINTS )
+		{
+		  printf("\n\nSorry, don't know which waypoint you mean.");
+		}
+	      else
+		{
+		  printf("\n\nYou specified waypoint nr. %d.",i);
+		  if ( OriginWaypoint== (-1) )
+		    {
+		      printf("\nIt has been marked as the origin of the next connection.");
+		      OriginWaypoint = i;
+		    }
+		  else
+		    {
+		      if ( OriginWaypoint == i )
+			{
+			  printf("\n\nOrigin==Target --> Connection Operation cancelled.");
+			  OriginWaypoint = (-1);
+			}
+		      else
+			{
+			  printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
+			  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+			    {
+			      if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
+			    }
+			  if ( k == MAX_WP_CONNECTIONS ) 
+			    {
+			      printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
+			    }
+			  else
+			    {
+			      CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
+			      printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
+			    }
+			  OriginWaypoint = (-1);
+			}
+		    }
+		}
+
+	      while (CPressed());
+	      fflush(stdout);
 	    }
 
 	  // If the person using the level editor pressed some editing keys, insert the
