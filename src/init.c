@@ -1134,6 +1134,26 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].special_item.type , EndOfDataPointer );
 
+      // Now we read in the number of plasma transistors
+      ReadValueFromString( RobotPointer , "Number of Plasma Transistors=" , "%d" , 
+			   &Druidmap[RobotIndex].amount_of_plasma_transistors , EndOfDataPointer );
+
+      // Now we read in the number of plasma transistors
+      ReadValueFromString( RobotPointer , "Number of Superconductors=" , "%d" , 
+			   &Druidmap[RobotIndex].amount_of_superconductors , EndOfDataPointer );
+
+      // Now we read in the number of plasma transistors
+      ReadValueFromString( RobotPointer , "Number of Antimatter-Matter Converters=" , "%d" , 
+			   &Druidmap[RobotIndex].amount_of_antimatter_converters , EndOfDataPointer );
+
+      // Now we read in the number of plasma transistors
+      ReadValueFromString( RobotPointer , "Number of Entropy Inverters=" , "%d" , 
+			   &Druidmap[RobotIndex].amount_of_entropy_inverters , EndOfDataPointer );
+
+      // Now we read in the number of plasma transistors
+      ReadValueFromString( RobotPointer , "Number of Tach. Condensators=" , "%d" , 
+			   &Druidmap[RobotIndex].amount_of_tachyon_condensators , EndOfDataPointer );
+
       // Now we read in the greeting sound type of this droid type
       ReadValueFromString( RobotPointer , GREETING_SOUND_STRING , "%d" , 
 			   &Druidmap[RobotIndex].greeting_sound_type , EndOfDataPointer );

@@ -918,6 +918,19 @@ IsActiveLevel ( int levelnum )
 void
 DropEnemyTreasure ( Enemy ThisRobot )
 {
+
+  if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
+    DropChestItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+  if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
+    DropChestItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+  if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
+    DropChestItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+  if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
+    DropChestItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+  if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
+    DropChestItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+
+  /*
   int i;
 
   DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
@@ -949,6 +962,8 @@ DropEnemyTreasure ( Enemy ThisRobot )
 	  break;
 	}
     }
+  */
+
 }; // void DropEnemyTreasure ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------

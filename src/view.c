@@ -47,7 +47,6 @@
 #include "map.h"
 #include "proto.h"
 #include "colodefs.h"
-#include "items.h"
 #include "SDL_rotozoom.h"
 
 void FlashWindow (SDL_Color Flashcolor);

@@ -36,8 +36,6 @@
 #include "global.h"
 #include "proto.h"
 
-#include "items.h"
-
 #define ITEM_TAKE_DIST (1.2)
 
 enum

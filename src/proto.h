@@ -279,6 +279,7 @@ EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem , int ForRepair );
 EXTERN void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange );
 EXTERN void DamageAllEquipment( int PlayerNum ) ;
+EXTERN void DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange );
 EXTERN void DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange );
 EXTERN void Quick_ApplyItem( int ItemKey );
 EXTERN void ApplyItem( item* CurItem );

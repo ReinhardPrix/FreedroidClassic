@@ -38,9 +38,6 @@
 #include "global.h"
 #include "proto.h"
 
-#include "items.h"
-// #include "BFont.h"
-
 #define CLASS_X 175
 
 #define EXPERIENCE_Y 55

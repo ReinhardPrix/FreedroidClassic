@@ -428,6 +428,12 @@ typedef struct
   item aux1_item;
   item aux2_item;
 
+  int amount_of_plasma_transistors;
+  int amount_of_superconductors;
+  int amount_of_antimatter_converters;
+  int amount_of_entropy_inverters;
+  int amount_of_tachyon_condensators;
+
   int greeting_sound_type; // which sample to play in order to 'greet' the influencer?
   int got_hit_sound_type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target

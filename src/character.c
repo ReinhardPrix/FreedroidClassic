@@ -37,8 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-#include "items.h"
-
 //--------------------
 // Now we give some definitions for the computation of the
 // character stats
