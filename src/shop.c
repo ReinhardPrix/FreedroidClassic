@@ -159,6 +159,24 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
     }
 
   //--------------------
+  // Now we clean the list from any (-1) items, that might come from
+  // an items just having been sold and therefore deleted from the list.
+  //
+  for ( i = 0 ; i < Pointer_Index ; i++ )
+    {
+      if ( Item_Pointer_List[ i ]->type == (-1 ) )
+	{
+	  DebugPrintf ( 0 , "\n ALERT!  Cleaning a '-1' type item from the Item_Pointer_List... " );
+
+	  CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
+	  Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+	  Pointer_Index --;
+
+	  return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+	}
+    }
+
+  //--------------------
   // Now we can perform the actual menu selection.
   // We will loop until a decision of one kind or the other
   // has been made.
@@ -533,6 +551,9 @@ TryToBuyItem( item* BuyItem )
 		      Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
 		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
 		      Play_Shop_ItemBoughtSound( );
+		      //--------------------
+		      // This is new.  I hope it's not dangerous.
+		      DeleteItem ( BuyItem );
 		      return;
 		      break;
 		    case ANSWER_NO:
