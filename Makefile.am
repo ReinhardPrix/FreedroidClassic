@@ -10,17 +10,21 @@ freedroid_data = map graphics sound dialogs
 EXTRA_DIST = $(man_MANS) $(freedroid_data)
 
 dist-hook:
-	rm -rf `find $(distdir) -name CVS`
-	rm -f  `find $(distdir) -name "*.blend"`
+	find $(distdir) -name CVS                 | xargs rm -rf
+	find $(distdir) -name "*.blend"           | xargs rm -f
+	find $(distdir) -name "*~"                | xargs rm -f
+	find $(distdir) -name ".#*"               | xargs rm -f
 
 install-data-local:
 	echo "Installing the data-files ..."
 	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
 	cp -pr $(srcdir)/$(freedroid_data) $(DESTDIR)$(pkgdatadir)/
 	echo "... and cleaning CVS and blender-sources etc:"
-	rm -rf `find $(DESTDIR)$(pkgdatadir) -name CVS`
-	rm -f  `find $(DESTDIR)$(pkgdatadir) -name "*.blend"`
-	rm -f  `find $(DESTDIR)$(pkgdatadir) -name "Makefile*"`
+	find $(DESTDIR)$(pkgdatadir) -name CVS         | xargs rm -rf
+	find $(DESTDIR)$(pkgdatadir) -name "*.blend"   | xargs rm -f
+	find $(DESTDIR)$(pkgdatadir) -name "Makefile*" | xargs rm -f
+	find $(DESTDIR)$(pkgdatadir) -name "*~"        | xargs rm -f
+	find $(DESTDIR)$(pkgdatadir) -name ".#*"       | xargs rm -f
 	echo "..done."
 
 uninstall-local:
