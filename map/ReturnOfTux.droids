@@ -134,6 +134,11 @@ SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter
 //
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="TybaltStartGameSquare" RushTux="no" DialogSectionToUse="Tybalt" ShortLabel="Tybalt -- Citadel Gate Guard"
 
+//--------------------
+// This is Ewald barkeeper character, who now inherits RMS's former place.
+//
+SpecialForce: Type=GUA X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="EwaldStartGameSquare" RushTux="no" DialogSectionToUse="Ewald" ShortLabel="Ewald -- Barkeeper"
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
