@@ -1858,7 +1858,7 @@ AssembleCombatPicture ( int mask )
     if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
 	ShowItemAlarm();
-	ShowQuickInventory ();
+	// ShowQuickInventory ();
 	display_current_game_message_window ( ) ;
 	ShowCharacterScreen ( 0 );
 	ShowSkillsScreen ( );
@@ -1866,6 +1866,7 @@ AssembleCombatPicture ( int mask )
 	DisplayButtons( );
 	if ( ! GameOver )
 	    DisplayBanner ( );
+	ShowQuickInventory ();
     }
     
     if ( ServerMode )
