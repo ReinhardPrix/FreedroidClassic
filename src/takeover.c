@@ -127,6 +127,9 @@ playground_t ToPlayground;
 playground_t ActivationMap;
 playground_t CapsuleCountdown;
 
+void EvaluatePlayground ( void );
+float EvaluatePosition ( int color , int row , int layer );
+
 /*-----------------------------------------------------------------
  * @Desc: play takeover-game against a druid 
  *
@@ -143,18 +146,15 @@ Takeover (int enemynum)
   int key;
   int ClearanceIndex;
 
-  /* Prevent distortion of framerate by the delay coming from 
-   * the time spend in the menu.
-   */
+  //--------------------
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spent in the menu.
+  //
   Activate_Conservative_Frame_Computation ();
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
   SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
-
-  /* Get a new Internfenster without any robots, blasts bullets etc
-     for use as background in transparent version of Takeover-game */
-  //  GetInternFenster (SHOW_MAP);
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
@@ -165,10 +165,6 @@ Takeover (int enemynum)
   show_droid_info ( AllEnemys[enemynum].type, 0 , FALSE );
   key = 0;
 
-  /*
-  while ( (key != SDLK_SPACE) && (key != SDLK_ESCAPE) )
-    key = getchar_raw();
-  */
   while ( !SpacePressed() && !EscapePressed() && !axis_is_active );
   while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
 
@@ -198,6 +194,13 @@ Takeover (int enemynum)
       NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
 
       InventPlayground ();
+
+      EvaluatePlayground ();
+
+      DebugPrintf ( 0 , "\nFirst yellow position has gain: %f. " , EvaluatePosition ( GELB , 0 , 1 ) );
+      DebugPrintf ( 0 , "\nFirst violett position has gain: %f. " , EvaluatePosition ( VIOLETT , 0 , 1 ) );
+      DebugPrintf ( 0 , "\nSecond yellow position has gain: %f. " , EvaluatePosition ( GELB , 1 , 1 ) );
+      DebugPrintf ( 0 , "\nSecond violett position has gain: %f. " , EvaluatePosition ( VIOLETT , 1 , 1 ) );
 
       ShowPlayground ();
       SDL_Flip (Screen);
@@ -862,10 +865,7 @@ ClearPlayground (void)
 }; // void ClearPlayground ( void )
 
 /* -----------------------------------------------------------------
- * @Desc: generate a random Playground
- *	
- * @Ret: void
- *
+ * This function generates a random playground for the takeover game
  * ----------------------------------------------------------------- */
 void
 InventPlayground (void)
@@ -875,7 +875,9 @@ InventPlayground (void)
   int row, layer;
   int color = GELB;
 
-  /* first clear the playground: we depend on this !! */
+  //--------------------
+  // first clear the playground: we depend on this !! 
+  //
   ClearPlayground ();
 
   for (color = GELB; color < TO_COLORS; color++)
@@ -1031,6 +1033,180 @@ InventPlayground (void)
     }				/* for color */
 
 }				/* InventPlayground */
+
+/* -----------------------------------------------------------------
+ * This function generates a random playground for the takeover game
+ * ----------------------------------------------------------------- */
+void
+EvaluatePlayground (void)
+{
+  int newElement;
+  int row, layer;
+  int color = GELB;
+  float ScoreFound [ TO_COLORS ];
+
+  for (color = GELB; color < TO_COLORS; color++)
+    {
+      
+      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+Starting to evaluate side nr. %d.  Results displayed below:\n" , color );
+      ScoreFound [ color ] = 0;
+
+      for (layer = 1; layer < NUM_LAYERS - 1; layer++)
+	{
+	  for (row = 0; row < NUM_LINES; row++)
+	    {
+
+	      // we examine this particular spot
+	      newElement = ToPlayground[color][layer][row] ;
+
+	      switch (newElement)
+		{
+		case KABEL:	/* has not to be set any more */
+		case LEER:
+		  break;
+
+		case KABELENDE:
+		  DebugPrintf ( 0 , "KABELENDE found --> score -= 1.0\n" );
+		  ScoreFound [ color ] -= 1.0 ;
+		  break;
+
+		case VERSTAERKER:
+		  DebugPrintf ( 0 , "VERSTAERKER found --> score += 0.5\n" );
+		  ScoreFound [ color ] += 0.5 ;
+		  break;
+
+		case FARBTAUSCHER:
+		  DebugPrintf ( 0 , "FARBTAUSCHER found --> score -= 1.5\n" );
+		  ScoreFound [ color ] -= 1.5 ;
+		  break;
+
+		case VERZWEIGUNG_O:
+		case VERZWEIGUNG_U:
+		case VERZWEIGUNG_M:
+		  DebugPrintf ( 0 , "VERZWEIGUNG found --> score += 1.0\n" );
+		  ScoreFound [ color ] += 1.0 ;
+		  break;
+
+		case GATTER_M:
+		case GATTER_U:
+		case GATTER_O:
+		  DebugPrintf ( 0 , "GATTER found --> score -= 1.0\n" );
+		  ScoreFound [ color ] -= 1.0 ;
+		  break;
+
+		default:
+		  DebugPrintf ( 0 , "UNHANDLED TILE FOUND!!\n" );
+		  break;
+
+		}		/* switch NewElement */
+
+	    }			/* for row */
+
+	}			/* for layer */
+
+      DebugPrintf ( 0 , "\nResult for this side:  %f.\n" , ScoreFound [ color ] );
+
+    }				/* for color */
+
+  DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n" );
+
+}; // EvaluatePlayground 
+
+/* -----------------------------------------------------------------
+ * This function generates a random playground for the takeover game
+ * ----------------------------------------------------------------- */
+float
+EvaluatePosition ( int color , int row , int layer )
+{
+  int newElement;
+  // float ScoreFound [ TO_COLORS ];
+
+#define EVAL_DEBUG 1 
+
+  DebugPrintf ( EVAL_DEBUG , "\nEvaluatePlaygound ( %d , %d , %d ) called: " , color , row , layer );
+
+  if ( layer == NUM_LAYERS - 1 )
+    {
+      DebugPrintf ( EVAL_DEBUG , "End layer reached..." );
+      if ( DisplayColumn[row] == color ) 
+	{
+	  DebugPrintf ( EVAL_DEBUG , "same color... returning 0.5 " );
+	  return ( 0.5 );
+	}
+      else
+	{
+	  DebugPrintf ( EVAL_DEBUG , "different color... returning 1.5 " );
+	  return ( 1.5 );
+	}
+    }
+  
+  newElement = ToPlayground[color][layer][row] ;
+
+  switch (newElement)
+    {
+    case KABEL:	/* has not to be set any more */
+      DebugPrintf ( EVAL_DEBUG , "KABEL reached... continuing..." );
+      return ( EvaluatePosition ( color , row , layer+1 ) ) ;
+    case LEER:
+      DebugPrintf ( EVAL_DEBUG , "LEER reached... stopping..." );
+      return ( 0 );
+      break;
+      
+    case KABELENDE:
+      DebugPrintf ( EVAL_DEBUG , "KABELENDE reached... returning now..." );
+      return ( 0 );
+      break;
+      
+    case VERSTAERKER:
+      DebugPrintf ( EVAL_DEBUG , "VERSTAERKER reached... continuing..." );
+      return ( 1.5 * EvaluatePosition ( color , row , layer+1 ) ) ;
+      break;
+      
+    case FARBTAUSCHER:
+      DebugPrintf ( EVAL_DEBUG , "FARBTAUSCHER reached... continuing..." );
+      return ( -1.5 * EvaluatePosition ( color , row , layer+1 ) );
+      break;
+      
+    case VERZWEIGUNG_O:
+      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_O !!!\n" );
+      return ( 0 );
+      break;
+    case VERZWEIGUNG_U:
+      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_U !!!\n" );
+      return ( 0 );
+      break;
+    case GATTER_M:
+      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: GATTER_M !!!\n" );
+      return ( 0 );
+      break;
+
+    case VERZWEIGUNG_M:
+      DebugPrintf ( EVAL_DEBUG , "VERZWEIGUNG reached... double-continuing..." );
+      return ( EvaluatePosition ( color , row+1 , layer+1 ) + EvaluatePosition ( color , row-1 , layer+1 ) );
+      break;
+      
+
+    case GATTER_O:
+      DebugPrintf ( EVAL_DEBUG , "GATTER reached... stopping...\n" );
+      return ( 0.3 * EvaluatePosition ( color , row+1 , layer+1 ) ) ;
+      break;
+
+    case GATTER_U:
+      DebugPrintf ( EVAL_DEBUG , "GATTER reached... stopping...\n" );
+      return ( 0.3 * EvaluatePosition ( color , row-1 , layer+1 ) ) ;
+      break;
+      
+    default:
+      DebugPrintf ( 0 , "\nUNHANDLED TILE reached\n" );
+      break;
+      
+    }	// switch NewElement 
+  
+
+  return ( 0 );
+
+}; // float EvaluatePosition ( col , row , layer )
 
 /*-----------------------------------------------------------------
  * @Desc: process the playground following its intrinsic logic
