@@ -131,8 +131,8 @@ GetInfluPositionHistoryZ( int HowLongPast )
 }
 
 /* ----------------------------------------------------------------------
- * T
- *
+ * This function should check if the Tux is still ok, i.e. if he is still
+ * alive or if the death sequence should be initiated.
  * ---------------------------------------------------------------------- */
 void 
 CheckIfCharacterIsStillOk ( int PlayerNum ) 
@@ -183,7 +183,6 @@ MoveInfluence ( int PlayerNum )
   float accel;
   float planned_step_x;
   float planned_step_y;
-  static float TransferCounter = 0;
   moderately_finepoint RemainingWay;
   moderately_finepoint MinimalWayAtThisSpeed;
   float RemainingWayLength;
@@ -211,14 +210,6 @@ MoveInfluence ( int PlayerNum )
   // check, if the influencer is still ok
   CheckIfCharacterIsStillOk ( PlayerNum ) ;
   
-  // Time passed before entering Transfermode ??
-  if ( TransferCounter >= WAIT_TRANSFERMODE )
-    {
-      Me [ PlayerNum ] .status = TRANSFERMODE;
-      TransferCounter=0;
-    }
-
-
   //--------------------
   // Acceleration occurs, but only if there is at least some
   // drive unit present!!!  Otherwise only a comment will be
@@ -386,15 +377,10 @@ MoveInfluence ( int PlayerNum )
 	{
 	  Me [ PlayerNum ] .status = MOBILE;
 	}
-      if (TransferCounter == 1)
-	{
-	  Me [ PlayerNum ] .status = TRANSFERMODE;
-	  TransferCounter = 0;
-	}
 
       if ( ( ServerThinksSpacePressed ( PlayerNum ) ) && ( ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
-	   ( Me [ PlayerNum ] .status != WEAPON ) && ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
-	TransferCounter += Frame_Time();
+	   ( Me [ PlayerNum ] .status != WEAPON ) )
+	Me [ PlayerNum ] . status = TRANSFERMODE ;
 
       // if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
       if ( ( ServerThinksAxisIsActive ( PlayerNum ) ) && 
