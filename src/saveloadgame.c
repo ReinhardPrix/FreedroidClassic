@@ -525,7 +525,7 @@ LoadGame( void )
   //--------------------
   // First we load the full ship information, same as with the level editor
 
-  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
+  sprintf( filename , "%s/%s%s", ConfigDir, Me [ 0 ] . character_name, SHIP_EXT);
 
   //--------------------
   // Maybe there isn't any saved game by that name.  This case must be checked for

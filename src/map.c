@@ -184,7 +184,7 @@ decode_floor_tiles_of_this_level (Level Lev)
       //
       Lev -> map [ row ] = Buffer;
 
-    }				/* for (row=0..) */
+    } // for ( row = 0 ..) 
 
   DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
 
@@ -660,9 +660,10 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
       //
       if ( next_free_index >= MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
 	{
+	  // 
+	  // We disable this VERY FREQUENT warning now...
+	  //   
 	  /*
-	    We disable this VERY FREQUENT warning now...
-	    
 	  DebugPrintf ( 0 , "The position where the problem occured is: x_tile=%d, y_tile=%d." , x_tile , y_tile );
 	  GiveStandardErrorMessage ( "glue_obstacles_to_floor_tiles_for_level (...)" , "\
 FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
@@ -877,25 +878,6 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
       //
       StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST );
 
-      /*
-      target_obstacle -> type = ( -1 ) ;
-      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] = (-1) ;
-
-      //--------------------
-      // Maybe there are other obstacles glued to here.  Then we need to fill the
-      // gap in the glue array that we have just created.
-      //
-      for ( j = i ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE - 1 ; j ++ )
-	{
-	  if ( BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] != (-1) )
-	    {
-	      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j ] = 
-		BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] ;
-	      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] = (-1) ;
-	    }
-	}
-      */
-
     }
 
   return ( smashed_something );
@@ -941,10 +923,10 @@ GetMapBrick (Level deck, float x, float y)
   Uint16 BrickWanted;
   int RoundX, RoundY;
   
-  /* 
-   * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
-   * not an exact foating point division!  Beware of "improvements" here!!!
-   */
+  //--------------------
+  // ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
+  // not an exact foating point division!  Beware of "improvements" here!!!
+  //
   RoundX = (int) rintf (x) ;
   RoundY = (int) rintf (y) ;
 
@@ -1150,8 +1132,8 @@ int
 LoadShip (char *filename)
 {
   char *ShipData;
-  char *endpt;				/* Pointer to end-strings */
-  char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
+  char *endpt;				// Pointer to end-strings 
+  char *LevelStart[MAX_LEVELS];		// Pointer to a level-start
   int level_anz;
   int i;
 
@@ -1667,12 +1649,18 @@ EncodeLevelForSaving(Level Lev)
   MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
   MemAmount += 500000;		// add some safety buffer for dimension-strings and marker strings...
   
-  /* allocate some memory */
-  if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
-    DebugPrintf( 0 , "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
-    Terminate(ERR);
-    return NULL;
-  }
+  //--------------------
+  // We allocate some memory, such that we should be able to fill
+  // all the data for the level into it.  If this estimate is wrong,
+  // we'll simply panic further below...
+  //
+  if ( ( LevelMem = (char*) MyMalloc ( MemAmount ) ) == NULL ) 
+    {
+      GiveStandardErrorMessage ( "EncodeLevelForSaving(...)" , 
+				 "Did not get any more memory." ,
+				 PLEASE_INFORM, IS_FATAL );
+      return ( NULL ) ;
+    }
 
   // Write the data to memory:
   // Here the levelnumber and general information about the level is written
@@ -1749,10 +1737,10 @@ jump target west: %d\n",
   // This is unwanted and shall be corrected here.
   CheckWaypointIntegrity( Lev );
 
-  strcat(LevelMem, WP_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
+  strcat( LevelMem , WP_SECTION_BEGIN_STRING );
+  strcat( LevelMem , "\n" );
   
-  for(i=0; i< Lev->num_waypoints ; i++)
+  for ( i = 0 ; i < Lev -> num_waypoints ; i++ )
     {
       sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
@@ -1760,13 +1748,13 @@ jump target west: %d\n",
       strcat (LevelMem, CONNECTION_STRING);
 
       this_wp = &Lev->AllWaypoints[i];
-      for( j=0; j < this_wp->num_connections; j++) 
+      for ( j = 0 ; j < this_wp -> num_connections ; j++ ) 
 	{
 	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
 	  strcat(LevelMem, linebuf);
-	} /* for connections */
+	} // for connections 
       strcat(LevelMem, "\n");
-    } /* for waypoints */
+    } // for waypoints 
   
   strcat(LevelMem, LEVEL_END_STRING);
   strcat(LevelMem, "\n----------------------------------------------------------------------\n");
@@ -1778,12 +1766,15 @@ jump target west: %d\n",
   //
   if ( strlen ( LevelMem ) >= MemAmount ) 
     {
-      printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
-      Terminate(ERR);
-      return NULL;
+      GiveStandardErrorMessage ( "EncodeLevelForSaving(...)" , 
+				 "Estimate of needed memory was wrong!  How stupid!" ,
+				 PLEASE_INFORM, IS_FATAL );
+      return ( NULL ) ;
     } 
   
-  /* all ok : */
+  //--------------------
+  // all ok : 
+  //
   return LevelMem;
   
 }; // char *EncodeLevelForSaving ( Level Lev )
@@ -1797,30 +1788,33 @@ jump target west: %d\n",
 int 
 SaveShip(char *filename)
 {
-  char *LevelMem;		/* linear memory for one Level */
+  char *LevelMem;	 // linear memory for one Level 
   char *MapHeaderString;
-  FILE *ShipFile;  // to this file we will save all the ship data...
+  FILE *ShipFile;        // to this file we will save all the ship data...
   int level_anz;
   int array_i, array_num;
   int i;
 
-  DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
+  DebugPrintf ( 2 , "\nint SaveShip(char *shipname): real function call confirmed." );
   
   ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
 
-  /* count the levels */
+  //--------------------
+  // We count the levels 
+  //
   level_anz = 0;
   while(curShip.AllLevels[level_anz++]);
   level_anz --;
   
-  DebugPrintf (2, "\nint SaveShip(char *shipname): now opening the ship file...");
-
-  /* open file */
-  if( (ShipFile = fopen(filename, "w")) == NULL) {
-    printf("\n\nError opening ship file...\n\nTerminating...\n\n");
-    Terminate(ERR);
-    return ERR;
-  }
+  //--------------------
+  // We open the shipo file 
+  //
+  if ( ( ShipFile = fopen ( filename , "w" ) ) == NULL ) 
+    {
+      GiveStandardErrorMessage ( "SaveShip(...)" , "Error opening ship file." ,
+				 PLEASE_INFORM, IS_FATAL );
+      return ERR;
+    }
   
   //--------------------
   // Now that the file is opend for writing, we can start writing.  And the first thing
@@ -1867,13 +1861,12 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);  
   fwrite( "\"\n\n  ", strlen( "\"\n\n  " ) , sizeof(char) , ShipFile );
 
-  /* Save all Levels */
-  
+  //--------------------
+  // Now we can save all the levels...
+  //
   DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
-
   for( i = 0 ; i < level_anz ; i++ ) 
     {
-
       //--------------------
       // What the heck does this do?
       // Do we really need this?  Why?
@@ -1886,31 +1879,28 @@ freedroid-discussion@lists.sourceforge.net\n\
 	    {
 	      if( array_num != -1 ) 
 		{
-		  printf("\n\nIdentical Levelnumber Error in SaveShip...\n\nTerminating\n\n");
-		  Terminate(ERR);
+		  GiveStandardErrorMessage ( "SaveShip(...)" , "Two identical levelnumbers found!" ,
+					     PLEASE_INFORM, IS_FATAL );
 		  return ERR;
 		} 
 	      else array_num = array_i;
 	    }
 	} // while 
-      if ( array_num == -1 ) {
-
-	printf("\n\nMissing Levelnumber error in SaveShip...\n\nTerminating\n\n");
-	Terminate(ERR);
-      
-	level_anz ++;
-	continue;
-      }
+      if ( array_num == -1 ) 
+	{
+	  GiveStandardErrorMessage ( "SaveShip(...)" , "Levelnumber is missing!" ,
+				     PLEASE_INFORM, IS_FATAL );
+	  level_anz ++;
+	  continue;
+	}
     
       //--------------------
       // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
       // then this string is wirtten to the file.  easy. simple.
       //
-      LevelMem = EncodeLevelForSaving (curShip.AllLevels[array_num]);
-      fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
-    
+      LevelMem = EncodeLevelForSaving ( curShip . AllLevels [ array_num ] ) ;
+      fwrite( LevelMem , strlen ( LevelMem ) , sizeof(char) , ShipFile );
       free(LevelMem);
-
       ShowSaveLoadGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) , TRUE ); 
     }
 
@@ -1924,13 +1914,12 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite( END_OF_SHIP_DATA_STRING , strlen( END_OF_SHIP_DATA_STRING ) , sizeof(char) , ShipFile );
   fwrite( "\n\n  ", strlen( "\n\n  " ) , sizeof(char) , ShipFile );
 
-  
   DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
 
-  if( fclose(ShipFile) == EOF) 
+  if ( fclose ( ShipFile ) == EOF ) 
     {
-      printf("\n\nClosing of ship file failed in SaveShip...\n\nTerminating\n\n");
-      Terminate(ERR);
+      GiveStandardErrorMessage ( "SaveShip(...)" , "Closing of ship file failed!" ,
+				 PLEASE_INFORM, IS_FATAL );
       return ERR;
     }
   
@@ -2143,8 +2132,8 @@ DecodeLoadedLeveldata ( char *data )
   DataPointer = strstr( data , "Levelnumber:" );
   if ( DataPointer == NULL )
     {
-      DebugPrintf( 0 , "No Levelnumber entry found! Terminating! ");
-      Terminate(ERR);
+      GiveStandardErrorMessage ( "DecodeLoadedLeveldata(...)" , "No levelnumber entry found!",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   DecodeInterfaceDataForThisLevel ( loadlevel , DataPointer );
@@ -2556,11 +2545,8 @@ GetCrew (char *filename)
       EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
       if ( EndOfThisDroidSectionPointer == NULL )
 	{
-	  DebugPrintf( 0 , "\n\
-----------------------------------------------------------------------\n\
-GetCrew:  Unterminated droid section encountered!!\n\nTerminating....\n\
-----------------------------------------------------------------------\n");
-	  Terminate(ERR);
+	  GiveStandardErrorMessage ( "GetCrew(...)" , "Unterminated droid section encountered!" ,
+				     PLEASE_INFORM, IS_FATAL );
 	}
       // EndOfThisDroidSectionPointer[0]=0;
       GetThisLevelsDroids( DroidSectionPointer );
@@ -2631,8 +2617,9 @@ file you use.",
 	}
       if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
-	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
-	  Terminate(ERR);
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , 
+				     "No more free position to fill special forces into in GetCrew." ,
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       ReadValueFromString ( SearchPointer ,"X=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.x , EndOfThisLevelData );
@@ -2829,8 +2816,9 @@ game data file with all droid type specifications.",
 	}
       if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
-	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
-	  Terminate(ERR);
+	  GiveStandardErrorMessage ( "GetThisLevelsDroids(...)" , 
+				     "No more free position to fill random droids into in GetCrew." ,
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
