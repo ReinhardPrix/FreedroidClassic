@@ -40,10 +40,6 @@
 #include "ship.h"
 
 
-/* Scroll- Fenster */
-#define SCROLLSTARTX		User_Rect.x
-#define SCROLLSTARTY		SCREENHEIGHT
-
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;

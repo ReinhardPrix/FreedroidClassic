@@ -144,10 +144,43 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
   int SelectedItemNumber;
+  char* MyText;
+	MyText = "Ah, influence device.  It's good that you have returned.  Dark proceedings are going on in
+the universe.\n\
+\n\
+Recently it has come out that the MS have started a project to upload even humans with their new OS brand, transforming them into their mindless zombies.\n\
+\n\
+When the government tried to stop them, they were taken out and a new MS government installed.  All the military and police droids running their OS are under their command and have gone berserk against anybody and anything not belonging to their organisatzion or their prefered person list.\n\
+\n\
+Someone must go out and try to stop these barbaric deeds.  \n\
+\n\
+Long ago, there was the socalled influence device project, which had to be abandoned due to MS legal action.  The former participants of the project have sent a distress call, that they are under attack and all the MS machines in their current location have turned against them.  Many of them were slain already, but their distress call has automatically
+revived you and sent you to help.\n\
+\n\
+I hope it is not too late, but the teleporter has been set up to transfer you directly to the Asteroid 232 research installation.\n\
+\n\
+If you need help, you can come to me.  I can identify many of the items you will find. And also Mr. Stone, a sales representative of the United Machines Corporation will offer you equippment and repairs.\n\
+\n\
+Please, you must go and try to save who you can!  Our best wishes will accompany you.\n\
+\n";
 
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
   while (SpacePressed());
+  
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
+    {
+
+      Switch_Background_Music_To ( "Chandra01.ogg" );
+
+      ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
+      // AnarchyMenu1.mod
+      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+      return;
+    }
+
+
 
   // We define our input and image windows...
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
@@ -640,7 +673,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   int maxspeed = 8;
   SDL_Surface* Background;
 
-  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+  if ( TitlePictureName != NULL )
+    DisplayImage ( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
+
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   Background = SDL_DisplayFormat( Screen );
