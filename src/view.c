@@ -1023,17 +1023,35 @@ PutMouseMoveCursor ( void )
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
     {
+      /*
       TargetRectangle . x = UserCenter_x - 
 	( Me[0].pos.x - Me [ 0 ] . mouse_move_target . x ) * Block_Width  - Block_Width  / 2  ;
       TargetRectangle . y = UserCenter_y - 
 	( Me[0].pos.y - Me [ 0 ] . mouse_move_target . y ) * Block_Height - Block_Height / 2 ;
+      */
+      TargetRectangle . x = - Block_Width  / 2 +
+	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
+      TargetRectangle . y = - Block_Height  / 2 +
+	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
+
     }
   else
     {
+      // translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+
+      TargetRectangle . x = - Block_Width  / 2 +
+	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
+					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , TRUE );
+      TargetRectangle . y = - Block_Height  / 2 +
+	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
+					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
+
+	/*
       TargetRectangle . x = UserCenter_x - 
 	( Me[0].pos.x - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x ) * Block_Width  - Block_Width  / 2  ;
       TargetRectangle . y = UserCenter_y - 
 	( Me[0].pos.y - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y ) * Block_Height - Block_Height / 2 ;
+	*/
     }
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )

@@ -1102,8 +1102,15 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
   int i;
   float Mouse_Blocks_X, Mouse_Blocks_Y;
 
-  Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( PlayerNum )) / ((float)Block_Width  ) ;
-  Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( PlayerNum )) / ((float)Block_Height ) ;
+  // Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( PlayerNum )) / ((float)Block_Width  ) ;
+  // Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( PlayerNum )) / ((float)Block_Height ) ;
+
+  Mouse_Blocks_X = translate_pixel_to_map_location ( PlayerNum , 
+						     (float) ServerThinksInputAxisX ( PlayerNum ) , 
+						     (float) ServerThinksInputAxisY ( PlayerNum ) , TRUE ) ;
+  Mouse_Blocks_Y = translate_pixel_to_map_location ( PlayerNum , 
+						     (float) ServerThinksInputAxisX ( PlayerNum ) , 
+						     (float) ServerThinksInputAxisY ( PlayerNum ) , FALSE ) ;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
@@ -1112,13 +1119,11 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( AllEnemys [ i ] . pos.x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( AllEnemys [ i ] . pos.y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
       
-
-
       //--------------------
       // So this must be a possible target for the next weapon swing.  Yes, there
       // is some living droid beneath the mouse cursor.
@@ -1193,8 +1198,16 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
   float DistanceFound = 1000;
   float CurrentDistance;
 
-  Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
-  Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
+  // Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
+  // Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
+
+  Mouse_Blocks_X = translate_pixel_to_map_location ( PlayerNum , 
+						     (float) ServerThinksInputAxisX ( PlayerNum ) , 
+						     (float) ServerThinksInputAxisY ( PlayerNum ) , TRUE ) ;
+  Mouse_Blocks_Y = translate_pixel_to_map_location ( PlayerNum , 
+						     (float) ServerThinksInputAxisX ( PlayerNum ) , 
+						     (float) ServerThinksInputAxisY ( PlayerNum ) , FALSE ) ;
+
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
@@ -1203,16 +1216,16 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
 
       CurrentDistance = 
-	( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
-	( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
-	( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
-	( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) ;
+	( fabsf (AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) ) *
+	( fabsf (AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) ) +
+	( fabsf (AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) ) *
+	( fabsf (AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) ) ;
 
 
       if ( CurrentDistance < DistanceFound )
@@ -1594,10 +1607,12 @@ translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , 
   if ( give_x )
     {
       return ( Me [ PlayerNum ] . pos . x + ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+      // return ( ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
   else
     {
       return ( Me [ PlayerNum ] . pos . y - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+      // return ( - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
 	      
 }; // int translate_pixel_to_map_location ( int PlayerNum , int axis_x , int axis_y , int give_x ) 

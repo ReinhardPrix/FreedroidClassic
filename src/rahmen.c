@@ -753,9 +753,19 @@ ShowCurrentTextWindow ( void )
   if ( CursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
     {
       // DebugPrintf( 2  , "\nCursor is in userfenster... --> see if hovering over an item...");
-      MapPositionOfMouse.x = Me[0].pos.x + (float)(CurPos.x - UserCenter_x) / (float) Block_Width;
-      MapPositionOfMouse.y = Me[0].pos.y + (float)(CurPos.y - UserCenter_y) / (float) Block_Height;
+      // MapPositionOfMouse.x = Me[0].pos.x + (float)(CurPos.x - UserCenter_x) / (float) Block_Width;
+      // MapPositionOfMouse.y = Me[0].pos.y + (float)(CurPos.y - UserCenter_y) / (float) Block_Height;
       // DebugPrintf( 2  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+
+      MapPositionOfMouse.x = translate_pixel_to_map_location ( 0 , 
+							       (float) ServerThinksInputAxisX ( 0 ) , 
+							       (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+      MapPositionOfMouse.y = translate_pixel_to_map_location ( 0 , 
+							       (float) ServerThinksInputAxisX ( 0 ) , 
+							       (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+
+
+
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;

@@ -79,6 +79,7 @@ EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
+EXTERN float translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) ;
 
 // bullet.c 
 #undef EXTERN
