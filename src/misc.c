@@ -1540,8 +1540,11 @@ The obstacle label given was NOT found in any levels obstacle label list." ,
 void 
 ExecuteEvent ( int EventNumber , int PlayerNum )
 {
+
   obstacle* our_obstacle;
   int obstacle_level_num ;
+  Level obstacle_level ;
+
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
 
@@ -1574,21 +1577,27 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
   //
   if ( strlen ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) > 0 )
     {
-      
       our_obstacle = give_pointer_to_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
       obstacle_level_num = give_level_of_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
       our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
+
+      obstacle_level = curShip . AllLevels [ obstacle_level_num ] ;
       //--------------------
       // Now we make sure the door lists and that are all updated...
       //
+
       GetAllAnimatedMapTiles ( curShip . AllLevels [ obstacle_level_num ] ) ;
       //--------------------
       // Also make sure the other maps realize the change too, if it
       // maybe happend in the border area where two maps are glued together
-      //
-      ExportLevelInterface ( obstacle_level_num ) ;
-    }
+      // only export if the obstacle falls within the interface zone
 
+      if( our_obstacle->pos.x <= obstacle_level->jump_threshold_west ||
+          our_obstacle->pos.x >= obstacle_level->xlen - obstacle_level->jump_threshold_east ||
+          our_obstacle->pos.y <= obstacle_level->jump_threshold_north ||
+          our_obstacle->pos.y >= obstacle_level->ylen - obstacle_level->jump_threshold_south
+	) ExportLevelInterface ( obstacle_level_num ) ;
+   
   // Does the action include a teleport of the influencer to some other location?
   if ( AllTriggeredActions[ EventNumber ].TeleportTarget.x != (-1) )
     {
@@ -1611,8 +1620,7 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       Me[0].TextVisibleTime=0;
       Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
-
-  
+  }
 
 }; // void ExecuteEvent ( int EventNumber )
 
@@ -1633,7 +1641,6 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
 {
   int i;
   int map_x, map_y;
-
   Level StatementLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
@@ -1677,7 +1684,7 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
 	{
 	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != StatementLevel->levelnum ) continue;
 	}
-
+     
       // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
       // ExecuteEvent( AllEventTriggers[i].EventNumber );
       ExecuteActionWithLabel ( AllEventTriggers [ i ] . TargetActionLabel , PlayerNum ) ;
