@@ -95,7 +95,7 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_CHA ] = "You see a man of around 80.  While his appearance seems rather fragile, the vivid eyes indicate a well aware man of still rather quick mind." ;
 
-    // character_descriptions [ PERSON_STONE ] = "You see 
+    character_descriptions [ PERSON_SORENSON ] = "You see a girl in her mid-twenties.  The glasses make her look older than she probably is.  You can feel a strange aura of magic emanate from her.  Or is it just her good looks?" ;
 
     /*
     PERSON_RMS,
@@ -105,6 +105,30 @@ init_character_descriptions ( void )
     PERSON_PENDRAGON,
     PERSON_614,
     PERSON_MER,
+    PERSON_FRANCIS,
+    PERSON_ERNIE,
+    PERSON_BENJAMIN,
+    PERSON_BENDER,
+    PERSON_SPENCER,
+    PERSON_BUTCH,
+    PERSON_DARWIN,
+    PERSON_DOC_MOORE,
+    PERSON_MELFIS,
+    PERSON_MICHELANGELO,
+    PERSON_SKIPPY,
+    PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
+    PERSON_STANDARD_NEW_TOWN_GATE_GUARD,
+    PERSON_OLD_TOWN_GATE_GUARD_LEADER,
+    PERSON_STANDARD_MS_FACILITY_GATE_GUARD,
+    PERSON_MS_FACILITY_GATE_GUARD_LEADER,
+    PERSON_HEA,
+    PERSON_STANDARD_BOT_AFTER_TAKEOVER,
+    PERSON_BRUCE,
+    PERSON_SUBDIALOG_DUMMY,
+    PERSON_TYBALT,
+    PERSON_EWALD,
+    PERSON_KEVINS_GUARD,
+    PERSON_KEVIN,
     */
 
 }; // void init_character_descriptions ( void )
@@ -202,7 +226,6 @@ PlayATitleFile ( char* Filename )
 	strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
 	PreparedBriefingText[ThisTextLength]=0;
 	fflush(stdout);
-	// ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
 	ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_BACKGROUND_CODE );
 	free ( PreparedBriefingText );
     }
@@ -276,11 +299,11 @@ Get_General_Game_Constants ( void* DataPointer )
 void 
 Get_Bullet_Data ( char* DataPointer )
 {
-  char *BulletPointer;
-  char *EndOfBulletData;
-  int i;
-  int BulletIndex=0;
-
+    char *BulletPointer;
+    char *EndOfBulletData;
+    int i;
+    int BulletIndex=0;
+    
 #define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
 #define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
 #define NEW_BULLET_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
@@ -291,47 +314,47 @@ Get_Bullet_Data ( char* DataPointer )
 #define BULLET_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
 #define BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
 
-  BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
-  EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
-
-  DebugPrintf ( 1 , "\n\nStarting to read bullet data...\n\n");
-  //--------------------
-  // At first, we must allocate memory for the droid specifications.
-  // How much?  That depends on the number of droids defined in freedroid.ruleset.
-  // So we have to count those first.  ok.  lets do it.
-
-  Number_Of_Bullet_Types = CountStringOccurences ( DataPointer , NEW_BULLET_TYPE_BEGIN_STRING ) ;
-
-  // Not that we know how many bullets are defined in freedroid.ruleset, we can allocate
-  // a fitting amount of memory, but of course only if the memory hasn't been allocated
-  // aready!!!
-  //
-  // If we would do that in any case, every Init_Game_Data call would destroy the loaded
-  // image files AND MOST LIKELY CAUSE A SEGFAULT!!!
-  //
-  if ( Bulletmap == NULL )
+    BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
+    EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
+    
+    DebugPrintf ( 1 , "\n\nStarting to read bullet data...\n\n");
+    //--------------------
+    // At first, we must allocate memory for the droid specifications.
+    // How much?  That depends on the number of droids defined in freedroid.ruleset.
+    // So we have to count those first.  ok.  lets do it.
+    
+    Number_Of_Bullet_Types = CountStringOccurences ( DataPointer , NEW_BULLET_TYPE_BEGIN_STRING ) ;
+    
+    // Not that we know how many bullets are defined in freedroid.ruleset, we can allocate
+    // a fitting amount of memory, but of course only if the memory hasn't been allocated
+    // aready!!!
+    //
+    // If we would do that in any case, every Init_Game_Data call would destroy the loaded
+    // image files AND MOST LIKELY CAUSE A SEGFAULT!!!
+    //
+    if ( Bulletmap == NULL )
     {
-      i = sizeof ( bulletspec ) ;
-      Bulletmap = MyMalloc ( i * ( Number_Of_Bullet_Types + 1 ) + 1 );
-      DebugPrintf ( 1 , "\nvoid Get_Bullet_Data( char* DatapPointer ) : We have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
-      // DebugPrintf ( 0 , "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
-      // getchar();
+	i = sizeof ( bulletspec ) ;
+	Bulletmap = MyMalloc ( i * ( Number_Of_Bullet_Types + 1 ) + 1 );
+	DebugPrintf ( 1 , "\nvoid Get_Bullet_Data( char* DatapPointer ) : We have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
+	// DebugPrintf ( 0 , "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+	// getchar();
     }
-
-  //--------------------
-  // Now we start to read the values for each bullet type:
-  // 
-  BulletPointer=DataPointer;
-
-  while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
+    
+    //--------------------
+    // Now we start to read the values for each bullet type:
+    // 
+    BulletPointer=DataPointer;
+    
+    while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
     {
-      DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
-      BulletPointer ++; // to avoid doubly taking this entry
-
-      BulletIndex++;
+	DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
+	BulletPointer ++; // to avoid doubly taking this entry
+	
+	BulletIndex++;
     }
-
-  DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
+    
+    DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
 } // void Get_Bullet_Data ( char* DataPointer );
 
 /* ----------------------------------------------------------------------
@@ -340,40 +363,40 @@ Get_Bullet_Data ( char* DataPointer )
 void
 clear_out_all_events_and_actions( void )
 {
-  int i;
-
-  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+    int i;
+    
+    for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
     {
-      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
-      
-      // Maybe the event is triggered by time
-      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
-      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
-      
-      // And now of course which event to trigger!!!!
-      // Thats propably the most important information at all!!!
-      // AllEventTriggers[i].EventNumber=-1;
-      AllEventTriggers[i].TargetActionLabel="none";
+	AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
+	AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
+	AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
+	
+	// Maybe the event is triggered by time
+	AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
+	AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
+	
+	// And now of course which event to trigger!!!!
+	// Thats propably the most important information at all!!!
+	// AllEventTriggers[i].EventNumber=-1;
+	AllEventTriggers[i].TargetActionLabel="none";
     }
-  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
+    for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
     {
-      // Maybe the triggered event consists of the influencer saying something
-      AllTriggeredActions[i].ActionLabel="";
-      AllTriggeredActions[i].InfluencerSayText="";
-
-      // Maybe the triggered action will change some obstacle on some level...
-      AllTriggeredActions[i].modify_obstacle_with_label="";
-      AllTriggeredActions[i].modify_obstacle_to_type=-1;
-
-      // Maybe the triggered event consists of the map beeing changed at some tile
-      AllTriggeredActions[i].ChangeMapLevel=-1;
-      AllTriggeredActions[i].ChangeMapLocation.x=-1;
-      AllTriggeredActions[i].ChangeMapLocation.y=-1;
-      AllTriggeredActions[i].ChangeMapTo=-1;
-      AllTriggeredActions[i].AssignWhichMission=-1;
-      // Maybe the triggered event consists of ??????
+	// Maybe the triggered event consists of the influencer saying something
+	AllTriggeredActions[i].ActionLabel="";
+	AllTriggeredActions[i].InfluencerSayText="";
+	
+	// Maybe the triggered action will change some obstacle on some level...
+	AllTriggeredActions[i].modify_obstacle_with_label="";
+	AllTriggeredActions[i].modify_obstacle_to_type=-1;
+	
+	// Maybe the triggered event consists of the map beeing changed at some tile
+	AllTriggeredActions[i].ChangeMapLevel=-1;
+	AllTriggeredActions[i].ChangeMapLocation.x=-1;
+	AllTriggeredActions[i].ChangeMapLocation.y=-1;
+	AllTriggeredActions[i].ChangeMapTo=-1;
+	AllTriggeredActions[i].AssignWhichMission=-1;
+	// Maybe the triggered event consists of ??????
     }
 }; // void clear_out_all_events_and_actions( void )
 

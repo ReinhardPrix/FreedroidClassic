@@ -1534,6 +1534,8 @@ Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int wi
 	     ( Me [ PlayerNum ] . pos . y >= curShip.AllLevels[ array_num ] -> ylen ) )
 	{
 	    fprintf( stderr, "\n\ntarget location was: lev=%d x=%f y=%f.\n" , LNum , X , Y );
+	    fprintf( stderr, "source location was: lev=%d x=%f y=%f." , Me [ PlayerNum ] . pos . z , 
+		     Me [ PlayerNum ] . pos . x , Me [ PlayerNum ] . pos . y );
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 A Teleport was requested, but the location to teleport to lies outside\n\
 the bounds of this 'ship' which means the current collection of levels.\n\
