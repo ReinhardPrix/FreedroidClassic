@@ -64,239 +64,6 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
-/* ----------------------------------------------------------------------
- * This function does the communication routine when the influencer in
- * transfer mode touched a friendly droid.
- *
- * ---------------------------------------------------------------------- */
-void 
-ChatWithFriendlyDroid( int Enum )
-{
-  char* RequestString;
-  int i;
-  int OldTextCursorX, OldTextCursorY;
-  char *fpath;
-  char fname[500];
-  char ReplyString[10000];
-  SDL_Surface* Small_Droid;
-  SDL_Surface* Large_Droid;
-  SDL_Surface* Background;
-  SDL_Rect Chat_Window;
-  SDL_Rect Input_Window;
-  SDL_Rect Droid_Image_Window;
-  
-  Chat_Window.x=242;
-  Chat_Window.y=100;
-  Chat_Window.w=380;
-  Chat_Window.h=314;
-
-  Input_Window.x=15;
-  Input_Window.y=434;
-  Input_Window.w=606;
-  Input_Window.h=37;
-
-  Droid_Image_Window.x=15;
-  Droid_Image_Window.y=82;
-  Droid_Image_Window.w=215;
-  Droid_Image_Window.h=330;
-
-  Activate_Conservative_Frame_Computation( );
-  // MakeGridOnScreen( NULL );
-  // Now the background is basically there as we need it.  We store it
-  // in its current pure form for later use as background for scrolling
-  //
-  // Background = SDL_DisplayFormat( ne_screen );
-  Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
-  if ( Background == NULL )
-    {
-      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
-      Terminate(ERR);
-    }
-  strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
-  strcat( fname , ".png" );
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  Small_Droid = IMG_Load (fpath) ;
-  Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-  SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-
-  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-  SDL_Flip( ne_screen );
-  
-  SetCurrentFont( Para_BFont );
-
-  DisplayTextWithScrolling ( 
-			    "Transfer channel protocol set up for text transfer...\n\n" , 
-			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
-
-  printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
-
-  while (1)
-    {
-      OldTextCursorX=MyCursorX;
-      OldTextCursorY=MyCursorY;
-
-      // Now we clear the text window, since the old text is still there
-      SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
-      DisplayText ( "What do you say? >" ,
-		    Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
-		    &Input_Window ); // , Background );
-      // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
-      SDL_Flip ( ne_screen );
-      RequestString = GetString( 20 , FALSE );
-      MyCursorX=OldTextCursorX;
-      MyCursorY=OldTextCursorY;
-
-      DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , &Chat_Window , Background );
-
-      //--------------------
-      // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
-      // the given input string into lower cases.  That will make pattern matching afterwards
-      // much more reliable.
-      //
-      i=0;
-      while ( RequestString[i] != 0 ) { RequestString[i]=tolower( RequestString[i] ); i++; }
-
-      //--------------------
-      // the quit command is always simple and clear.  We just need to end
-      // the communication function. hehe.
-      //
-      if ( ( !strcmp ( RequestString , "quit" ) ) || 
-	   ( !strcmp ( RequestString , "bye" ) ) ||
-	   ( !strcmp ( RequestString , "logout" ) ) ||
-	   ( !strcmp ( RequestString , "logoff" ) ) ||
-	   ( !strcmp ( RequestString , "" ) ) ) 
-	{
-	  Me.TextVisibleTime=0;
-	  Me.TextToBeDisplayed="Logging out.  Bye...";
-	  AllEnemys[ Enum ].TextToBeDisplayed="Connection closed.  See ya...";
-	  AllEnemys[ Enum ].TextVisibleTime=0;
-	  return;
-	}
-
-      //--------------------
-      // In some cases we will not want the default answers to be given,
-      // cause they are the same for all droids.
-      //
-      // We therefore will search this robots question-answer-list FIRST
-      // and look for a 
-      // match in the question entries and if applicable print out the
-      // matching answer of course, and if that is wo, we will continue
-      // and not proceed to the default answers.
-      //
-      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
-	{
-	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	    {
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-					 -1 , -1 , &Chat_Window , Background );
-	      break;
-	    }
-	}
-      //--------------------
-      // If a keyword matched already, we do not process the default keywords any more
-      // so that some actions can be caught!
-      //
-      if ( i != MAX_CHAT_KEYWORDS_PER_DROID ) continue;
-
-      //--------------------
-      // the help command is always simple and clear.  We just need to print out the 
-      // following help text describing common command and keyword options and that's it.
-      //
-      if ( !strcmp ( RequestString , "help" ) ) 
-	{
-	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
-Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT\n\
-Often useful information requests are: JOB NAME MS HELLO \n\
-Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
-				   -1 , -1 , &Chat_Window , Background );
-	  continue;
-	}
-      
-      //--------------------
-      // If the player requested the robot to follow him, this robot should switch to 
-      // following mode and follow the 001 robot.  But this is at the moment not implemented.
-      // Instead the robot will just print out the message, that he would follow, but don't
-      // do anything at this time.
-      //
-      // Same holds true for the 'stay' command
-      //
-      if ( !strcmp ( RequestString , "follow" ) ) 
-	{
-	  DisplayTextWithScrolling( 
-		      "Ok.  I'm on your tail.  I go where you go.  I will rest where you have rested.  I will follow your every step.  I try to do it at your speed.  You lead and I follow.  I hope you know where you're going.  I'll do my best to keep up." , 
-		      -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
-	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS ( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  AllEnemys[ Enum ].warten = AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  // printf(" Staying %d Frames behind.  Should be 5 seconds." , AllEnemys[ Enum ].StayHowManyFramesBehind );
-	  // fflush( stdout );
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "closer" ) )
-	{
-	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind > 1 ) AllEnemys[ Enum ].StayHowManySecondsBehind--;
-	  sprintf( ReplyString , "Ok.  I'll stay closer to you, lets say %d seconds back." , 
-		   AllEnemys[ Enum ].StayHowManySecondsBehind );
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "distant" ) )
-	{
-	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind < 10 ) AllEnemys[ Enum ].StayHowManySecondsBehind++;
-	  sprintf( ReplyString , "Ok.  I'll stay farther away from you, lets say %d seconds back." , 
-		   AllEnemys[ Enum ].StayHowManySecondsBehind );
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "stay" ) )
-	{
-	  DisplayTextWithScrolling( 
-				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  I hope you will come back sooner or later." , 
-		      -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
-	  AllEnemys[ Enum ].FollowingInflusTail = FALSE;
-	  continue;
-	}
-      if ( !strcmp ( RequestString , "status" ) )
-	{
-	  sprintf( ReplyString , "Here's my status report:\nEnergy: %d/%d.\n" , 
-		   (int) AllEnemys[ Enum ].energy , 
-		   (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
-	  if ( AllEnemys[ Enum ].FollowingInflusTail )
-	      strcat( ReplyString , "I'm currently following you.\n" );
-	  else
-	    strcat( ReplyString , "I'm currently not following you.\n" );
-	  if ( AllEnemys[ Enum ].CompletelyFixed )
-	    strcat( ReplyString , "I am instructed to wait here for your return.\n" );
-	  else
-	    strcat( ReplyString , "I'm free to move.\n" );
-
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-
-	  continue;
-	}
-
-      //--------------------
-      // In case non of the default keywords was said and also none of the
-      // special keywords this droid would understand were said, then the
-      // droid obviously hasn't understood the message and should also say
-      // so.
-      //
-      if ( i == MAX_CHAT_KEYWORDS_PER_DROID )
-	{
-	  DisplayTextWithScrolling ( "Sorry, but of that I know entirely nothing." , 
-				     -1 , -1 , &Chat_Window , Background );
-	}
-    }
-
-}; // void ChatWithFriendlyDroid( int Enum );
-
 void 
 EnemyHitByBulletText( int Enum )
 {
@@ -305,8 +72,8 @@ EnemyHitByBulletText( int Enum )
   if ( !GameConfig.Enemy_Hit_Text ) return;
   
   ThisRobot->TextVisibleTime=0;
-  if ( !ThisRobot->Friendly )
-    switch (MyRandom(4))
+
+  switch (MyRandom(4))
     {
     case 0:
       ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
@@ -324,8 +91,9 @@ EnemyHitByBulletText( int Enum )
       ThisRobot->TextToBeDisplayed="System error. Press any key to reboot.";
       break;
     }
-  else
-    ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
+
+  return;
+
 }; // void EnemyHitByBullet( int Enum );
 
 void 
@@ -337,22 +105,17 @@ EnemyInfluCollisionText ( int Enum )
   
   ThisRobot->TextVisibleTime=0;
 	      
-  if ( ThisRobot->Friendly )
+  switch (MyRandom(1))
     {
-      ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
+    case 0:
+      ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+      break;
+    case 1:
+      ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
+      break;
     }
-  else
-    {
-      switch (MyRandom(1))
-	{
-	case 0:
-	  ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
-	  break;
-	case 1:
-	  ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
-	  break;
-	}
-    }
+
+  return;
 
 } // void AddStandingAndAimingText( int Enum )
 

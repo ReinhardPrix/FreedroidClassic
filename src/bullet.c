@@ -44,7 +44,7 @@
 //NORMALISATION #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
 // #define DRUIDHITDIST2		0
 // #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
-#define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
+#define DRUIDHITDIST2		(0.3+MORE)*(Droid_Radius+MORE)
 // #define DRUIDHITDIST2		0
 
 
@@ -69,7 +69,7 @@ MoveBullets (void)
   /* Bewegung der Bullets */
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
-      if (CurBullet->type == OUT)
+      if ( (CurBullet->type == OUT) )
 	continue;
 
       CurBullet->prev_pos.x = CurBullet->pos.x;
@@ -80,16 +80,9 @@ MoveBullets (void)
 
       CurBullet->time_in_frames++;
       CurBullet->time_in_seconds += Frame_Time();
-
-      /*
-         UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
-         DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
-         DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
-
-      /* Kollisionen mit Mauern und Druids checken UND behandeln */
-      //          CheckBulletCollisions(i);
-
     }				/* for */
+
+  return;
 }				// void MoveBullets(void)
 
 
@@ -284,7 +277,7 @@ CheckBulletCollisions (int num)
       // Next we handle the case that the bullet is of type FLASH
     case FLASH:
       // if the flash is over, just delete it and return
-      if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
+      if (CurBullet->time_in_seconds >= FLASH_DURATION)
 	{
 	  CurBullet->time_in_frames = 0;
 	  CurBullet->time_in_seconds = 0;
@@ -301,10 +294,11 @@ CheckBulletCollisions (int num)
       // The second and more elegant method is to recursively fill
       // out the room where the flash-maker is in and to hurt all
       // robots in there except of course for those immune.
-      if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
+      if ( CurBullet->time_in_frames != 1 ) 
+	break; // we only do the damage once and thats at frame nr. 1 of the flash
       
       // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-      for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+      for (i = 0; i < NumEnemys; i++)
 	{
 	  if ( IsVisible (&AllEnemys[i].pos) &
 	       (!Druidmap[AllEnemys[i].type].flashimmune) )
@@ -372,7 +366,7 @@ CheckBulletCollisions (int num)
 	    } // if Bullet!=mine
 
 	      // check for collision with enemys
-	  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+	  for (i = 0; i < NumEnemys; i++)
 	    {
 	      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
 		continue;
@@ -385,14 +379,8 @@ CheckBulletCollisions (int num)
 		  // The enemy who was hit, loses some energy, depending on the bullet
 		  AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
 
-		  // Maybe he will also stop doing his fixed routine and return to normal
-		  // operation as well
-		  AllEnemys[i].AdvancedCommand = 0;
-
 		  DeleteBullet( num );
 		  GotHitSound ();
-
-		  Enemy_Post_Bullethit_Behaviour( i );
 
 		  if (!CurBullet->mine)
 		    {

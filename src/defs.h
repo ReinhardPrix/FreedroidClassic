@@ -163,7 +163,6 @@ enum
 //NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
 // #define DRUIDRADIUSY		(18/64.0)
 // #define DRUIDRADIUSXY	        ((7*2)/64.0)
-#define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
 // #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
 // #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
@@ -251,7 +250,7 @@ enum _sounds
 #define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
-#define FLASH_DURATION_IN_SECONDS 0.1
+#define FLASH_DURATION           0.1   // in seconds
 
 /* direction definitions (fireing bullets and testing blockedness of positions) */
 enum _directions
@@ -290,7 +289,7 @@ enum _directions
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
 #define MAX_CHAT_KEYWORDS_PER_DROID 30
-#define MAX_INFLU_POSITION_HISTORY 1000
+#define MAX_INFLU_POSITION_HISTORY 100
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

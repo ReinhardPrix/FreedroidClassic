@@ -159,12 +159,6 @@ char *Weaponnames[] = {
 
 // Robotnummern                 001     123     139     247     249     296     302     329     420     476     493     516     571     598     614     615     629     711     742     751     821     834     883     999
 
-FCU AllFCUs[] = {
-  {"none"},
-  {"SimpleA"},
-  {"Battle1234AD"}
-};
-
 Druidspec Druidmap;
 
 Bulletspec Bulletmap;

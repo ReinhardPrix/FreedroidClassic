@@ -50,37 +50,11 @@ void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on c
 void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 
-int CurrentZeroRingIndex=0;
-
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
+int CurrentZeroRingIndex=0;
 
-/*
-void
-Move_Influencers_Friends ( void )
-{
-  int Enum;
-
-  if ( Me.FramesOnThisLevel == MAX_INFLU_POSITION_HISTORY )
-    {
-
-      printf(" Level correction occured...\n");
-      fflush( stdout );
-
-      for ( Enum = 0 ; Enum < Number_Of_Droids_On_Ship ; Enum ++ )
-	{
-	  if ( ( AllEnemys[ Enum ].Friendly ) &&
-	       ( AllEnemys[ Enum ].FollowingInflusTail) )
-	    {
-	      AllEnemys[ Enum ].levelnum = CurLevel->levelnum;
-	      AllEnemys[ Enum ].pos.x = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].x;
-	      AllEnemys[ Enum ].pos.y = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].y;
-	    }
-	}
-    }
-}; // void Move_Influencers_Friends (void)
-*/
 
 void 
 InitInfluPositionHistory( void )
@@ -137,130 +111,6 @@ GetInfluPositionHistoryZ( int HowLongPast )
   return Me.Position_History_Ring_Buffer[ RingPosition ].z;
 }
 
-
-/*@Function============================================================
-@Desc: Fires Bullets automatically
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-AutoFireBullet (void)
-{
-  int j, i;
-  int TargetNum = -1;
-  signed long BestDist = 200000;
-  int guntype;
-  int xdist, ydist;
-  signed long LDist, LXDist, LYDist;
-
-  if (CurLevel->empty)
-    return;
-
-  if (Me.firewait)
-    return;
-  Me.firewait = Bulletmap[Druidmap[Me.type].gun].recharging_time;
-
-  // find out the number of the shots target
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-    {
-      if (AllEnemys[i].Status == OUT)
-	continue;
-      if (AllEnemys[i].levelnum != CurLevel->levelnum)
-	continue;
-      if (!IsVisible (&AllEnemys[i].pos))
-	continue;
-      LXDist = (AllEnemys[i].pos.x - Me.pos.x);
-      LYDist = (AllEnemys[i].pos.y - Me.pos.y);
-      LDist = LXDist * LXDist + LYDist * LYDist;
-      if (LDist <= 0)
-	{
-	  DebugPrintf (2, " ERROR determination of LDist !!.");
-	  getchar ();
-	  Terminate (-1);
-	}
-      if (LDist < BestDist)
-	{
-	  TargetNum = i;
-	  BestDist = LDist;
-	}
-    }
-  if (TargetNum == -1)
-    {
-      //                  gotoxy(1,1);
-      //                  printf(" Sorry, nobody in reach.");
-      //                  getchar();
-      //                  Terminate(-1);
-      return;
-    }
-
-  guntype = Druidmap[Me.type].gun;
-
-  Fire_Bullet_Sound ( guntype );
-
-  xdist = AllEnemys[TargetNum].pos.x - Me.pos.x;
-  ydist = AllEnemys[TargetNum].pos.y - Me.pos.y;
-
-  // some protection against division by zero
-  if (xdist == 0)
-    xdist = 2;
-  if (ydist == 0)
-    ydist = 2;
-  if (xdist == 1)
-    xdist = 2;
-  if (ydist == 1)
-    ydist = 2;
-  if (xdist == -1)
-    xdist = 2;
-  if (ydist == -1)
-    ydist = 2;
-
-  // find a bullet entry, that isn't used yet...
-  for (j = 0; j < MAXBULLETS - 1; j++)
-    {
-      if (AllBullets[j].type == OUT)
-	break;
-    }
-
-  // determine the direction of the shot
-  if (abs (xdist) > abs (ydist))
-    {
-      AllBullets[j].speed.x = Bulletmap[guntype].speed;
-      AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
-      if (xdist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-
-  if (abs (xdist) < abs (ydist))
-    {
-      AllBullets[j].speed.x = Bulletmap[guntype].speed;
-      AllBullets[j].speed.y = xdist * AllBullets[j].speed.y / ydist;
-      if (ydist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-
-  // determine the angle of the shot
-  AllBullets[j].angle= - ( atan2 ( AllBullets[j].speed.y , AllBullets[j].speed.x ) * 180 / M_PI + 90 );
-
-  // start the bullet in the center of the droid fireing
-  AllBullets[j].pos.x = Me.pos.x;
-  AllBullets[j].pos.y = Me.pos.y;
-
-  // fire bullet so, that the shooter doesn't hit himself
-  AllBullets[j].pos.x += AllBullets[j].speed.x;
-  AllBullets[j].pos.y += AllBullets[j].speed.y;
-  AllBullets[j].pos.x += Me.speed.x;
-  AllBullets[j].pos.y += Me.speed.y;
-
-  // set the type of bullet according to the gun used by the shooter
-  AllBullets[j].type = guntype;
-} // void AutoFireBullet(void)
 
 
 /*@Function============================================================
@@ -375,12 +225,9 @@ MoveInfluence (void)
     }
   else
     {
-  if (Me.autofire)
-    AutoFireBullet ();
-  else
-    if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
-	&& (Me.firewait == 0) && (NoInfluBulletOnWay ()))
-    FireBullet ();
+      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
+	  && (Me.firewait == 0) && (NoInfluBulletOnWay ()))
+	FireBullet ();
     }
 
 
@@ -440,12 +287,6 @@ NoInfluBulletOnWay (void)
 {
   int i;
 
-  if (PlusExtentionsOn)
-    return TRUE;
-
-  if (!Bulletmap[Druidmap[Me.type].gun].oneshotonly)
-    return TRUE;
-
   for (i = 0; i < MAXBULLETS; i++)
     {
       if ((AllBullets[i].type != OUT) && (AllBullets[i].mine))
@@ -489,6 +330,7 @@ AnimateInfluence (void)
 
 
 }				// void AnimateInfluence(void)
+
 
 /*@Function============================================================
 @Desc: This function checks for collisions of the influencer with walls,
@@ -870,9 +712,9 @@ ExplodeInfluencer (void)
 	}
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].PX =
-	Me.pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
+	Me.pos.x - Droid_Radius / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].PY =
-	Me.pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
+	Me.pos.y - Droid_Radius / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }
 
@@ -915,7 +757,7 @@ CheckInfluenceEnemyCollision (void)
 	continue;
 
       dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
-      if ( dist2 > 2 * Druid_Radius_X )
+      if ( dist2 > 2 * Droid_Radius )
 	continue;
 
 
@@ -973,8 +815,7 @@ CheckInfluenceEnemyCollision (void)
 	}
       else
 	{
-	  if ( ! AllEnemys[i].Friendly ) Takeover (i);
-	  else ChatWithFriendlyDroid( i );
+	  Takeover (i);
 
 	  if (LevelEmpty ())
 	    CurLevel->empty = WAIT_LEVELEMPTY;
@@ -1072,6 +913,8 @@ FireBullet (void)
   CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
   CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
 
+  CurBullet->time_in_frames = 0;
+  CurBullet->time_in_seconds=0;
 
   return;
 
@@ -1145,8 +988,6 @@ void
 InfluEnemyCollisionLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
-
-  if ( AllEnemys[enemynum].Friendly ) return;
 
   if (Me.type <= enemytype)
     {

@@ -135,6 +135,8 @@ EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile);
 #else
 #define EXTERN extern
 #endif
+EXTERN int ApplyFilter (SDL_Surface *surf, float fred, float fgreen, float fblue);
+EXTERN void GetRGBA ( SDL_Surface* surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a);
 
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
@@ -327,6 +329,8 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int LoadGameConfig (void);
+EXTERN int SaveGameConfig (void);
 EXTERN int sign (float x);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
@@ -455,7 +459,8 @@ EXTERN int IsActive (int color, int row);
 #else
 #define EXTERN extern
 #endif
-EXTERN void Init_Highscores (void);
-EXTERN void update_highscores (void);
-EXTERN void Show_Highscores (void);
+EXTERN void InitHighscores (void);
+EXTERN int SaveHighscores (void);
+EXTERN void UpdateHighscores (void);
+EXTERN void ShowHighscores (void);
 #endif

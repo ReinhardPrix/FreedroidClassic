@@ -184,26 +184,10 @@ EnterLift (void)
       Me.pos.x = curShip.AllLifts[curLift].x; 
       Me.pos.y = curShip.AllLifts[curLift].y; 
 
-      // We reset the time on this level and the position history
-      Me.FramesOnThisLevel=0;
-      // for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
-      // {
-      // Me.Position_History[ i ].x = Me.pos.x;
-      // Me.Position_History[ i ].y = Me.pos.y;
-      // }
-
-      // delete all bullets and blasts
       for (i = 0; i < MAXBLASTS; i++)
-	// AllBlasts[i].type = OUT;
 	DeleteBlast( i );
       for (i = 0; i < MAXBULLETS; i++)
-	{
-	  // AllBullets[i].type = OUT;
-	  // AllBullets[i].mine = FALSE;
-	  // Never remove bullets any other way than via DeleteBullet or you will
-	  // get SEGFAULTS!!!!!!!!!!
-	  DeleteBullet ( i ) ;
-	}
+	DeleteBullet ( i ) ;
     } // if real level change has occured
 
   LeaveLiftSound ( );
@@ -491,8 +475,7 @@ LevelEmpty (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((AllEnemys[i].Status != OUT)
-	  && (AllEnemys[i].levelnum == levelnum))
+      if ((AllEnemys[i].Status != OUT) && (AllEnemys[i].levelnum == levelnum))
 	return FALSE;
     }
 

@@ -115,8 +115,6 @@ main (int argc, char *const argv[])
 
 	  MoveLevelDoors ();	
 
-	  CheckForTriggeredEvents();
-
 	  AnimateRefresh ();	
 
 	  AnimateTeleports ();	
@@ -134,13 +132,10 @@ main (int argc, char *const argv[])
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
 
-	  // Move_Influencers_Friends (); // Transport followers to next level
-
 	  MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
 
 	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
-
 	  CheckInfluenceEnemyCollision ();
 
 	  if (CurLevel->empty == 2)
@@ -156,6 +151,8 @@ main (int argc, char *const argv[])
 
 	} /* while !GameOver */
     } /* while !QuitProgram */
+
+
   Terminate (0);
   return (0);
 }				// void main(void)
@@ -171,19 +168,7 @@ function.
 void
 UpdateCountersForThisFrame (void)
 {
-  static long Overall_Frames_Displayed=0;
   int i;
-
-
-  // if (ShipEmptyCounter == 1) GameOver = TRUE;
-
-  Total_Frames_Passed_In_Mission++;
-  Me.FramesOnThisLevel++;
-  // The next couter counts the frames displayed by freedroid during this
-  // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
-  Overall_Frames_Displayed++;
-  Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
-		     + Frame_Time()) / Overall_Frames_Displayed;
 
   // Here are some things, that were previously done by some periodic */
   // interrupt function
@@ -192,7 +177,7 @@ UpdateCountersForThisFrame (void)
   LastGotIntoBlastSound += Frame_Time ();
   LastRefreshSound += Frame_Time ();
   Me.LastCrysoundTime += Frame_Time ();
-  Me.MissionTimeElapsed += Frame_Time();
+  Me.timer += Frame_Time();
   Me.LastTransferSoundTime += Frame_Time();
   Me.TextVisibleTime += Frame_Time();
   LevelDoorsNotMovedTime += Frame_Time();

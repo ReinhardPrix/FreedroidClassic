@@ -46,7 +46,6 @@ typedef struct
   char name[MAX_NAME_LEN+5];
   long score;                  /* use -1 for an empty entry */
   char date[DATE_LEN+5];
-  int mission;    /* classic mission or extensions? */
 }
 highscore_entry, *Highscore_entry;
 
@@ -76,7 +75,7 @@ typedef struct
   int StandardEnemyMessages_On_Off;
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
-  char* Theme_SubPath;
+  char Theme_SubPath[100];  // pathname relative to graphics, where theme-graphics are found
   int FullUserRect;   // use "full" or "classic" (=small) User_Rect
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
@@ -97,12 +96,7 @@ typedef struct
 }
 finepoint, *Finepoint;
 
-typedef struct
-{
-  double x;
-  double y;
-  int z;
-} gps, *GPS;
+typedef finepoint vect;
 
 typedef struct
 {
@@ -112,63 +106,12 @@ typedef struct
 grob_point, *grob_Point;
 
 
-typedef grob_point vect;
-typedef grob_Point Vect;
-
 typedef struct
 {
-  int KillAll;
-  int KillClass;
-  int KillOne;
-  int   MustReachLevel;
-  point MustReachPoint;
-  double MustLiveTime;
-  int MustBeClass;
-  int MustBeType;
-  int MustBeOne;
-}
-missiontarget, *Missiontarget;
-
-// This structure can contain things, that might be triggered by a special
-// condition, that can be specified in the mission file as well.
-//
-typedef struct
-{
-  // Maybe the triggered event consists of the influencer saying something
-  int InfluencerSaySomething;
-  char* InfluencerSayText;
-  // Maybe the triggered event consists of the map beeing changed at some tile
-  int ChangeMap;
-  point ChangeMapLocation;
-  int ChangeMapTo;
-  int ChangeMapLevel;
-
-  // Maybe the triggered event consists of ??????
-
-}
-triggered_action , *Triggered_action;
-
-// This structure can contain conditions that must be fulfilled, so that a special
-// event is triggered.  Such conditions may be specified in the mission file as well
-//
-typedef struct
-{
-  // Maybe the event is triggerd by the influencer stepping somewhere
-  int Influ_Must_Be_At_Level;
-  point Influ_Must_Be_At_Point;
-
-  // Maybe the event is triggered by time
-  float Mission_Time_Must_Have_Passed;
-  float Mission_Time_Must_Not_Have_Passed;
-
-  int DeleteTriggerAfterExecution;
-  // And now of course which event to trigger!!!!
-  // Thats propably the most important information at all!!!
-  int EventNumber;
-}
-event_trigger , *Event_trigger;
-
-
+  double x;
+  double y;
+  int z;
+} gps, *GPS;
 
 typedef struct
 {
@@ -190,12 +133,10 @@ typedef struct
   int sensor2;
   int sensor3;
   int armament;
-  int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
-  int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
-                                     // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
 }
 druidspec, *Druidspec;
+
 
 typedef struct
 {
@@ -207,22 +148,14 @@ typedef struct
   double energy;		/* current energy */
   double firewait;		/* counter after fire */
   double phase;			/* the current phase of animation */
-  int autofire;			/* Status of the Firecontrolautomatics */
-  int vneut;			/* Status of Velocityneutralizer for the gun */
-  int MyFCU;			/* FCU (Fire Control Unit) installed */
-  int MyShield;			/* Shield device installed */
-  int Shield[4];		/* Status of Partial Shields */
-  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
-  // finepoint Position_History[ MAX_INFLU_POSITION_HISTORY ]; // History of the places the influ has been during the last 10 frames
-  missiontarget mission;         // What must be done to fullfill this mission?
-  float MissionTimeElapsed;
-  int Marker;                   // In case you've taken over a marked droid, this will contain the marker
+  float timer;
   float LastCrysoundTime;
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
-  int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+  SDL_Surface *pic;              // assembly of influ pic is done here.
 }
 influence_t, *Influence_t;
 
@@ -233,31 +166,17 @@ typedef struct
   finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;		/* current speed  */
   double energy;		/* gibt die Energie dieses Robots an */
-  double feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
+  double phase;		        /* gibt die Phase an in der der Feind gedreht ist */
   int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
   double warten;		// time till the droid will start to move again
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
-  // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
-  int CompletelyFixed;          // set this flat to make the robot entirely immobile
-  int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
-  int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
-  int Marker;                   // This provides a marker for special mission targets
-  int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
-  double Parameter1;            // This contains special information for AdvancedCommand
-  double Parameter2;            // This contains special information for AdvancedCommand
-  int Friendly;                 // is this a friendly droid or is it a MS controlled one?
-  int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
-  int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
-  int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
-  point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
   char **PeriodicSpecialStatements;
-  char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
 }
 enemy, *Enemy;
 
@@ -269,10 +188,8 @@ typedef struct
   int phases;			/* how many phases in motion to show */
   double phase_changes_per_second; // how many different phases to display every second
   int blast;			/* which blast does this bullet create */
-  int oneshotonly;	        /* if this is set, there is only 1 shot */
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
-                                                           // the bullet images of this bullet
-  // SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
+                                                          // the bullet images of this bullet
 }
 bulletspec, *Bulletspec;
 
@@ -311,7 +228,6 @@ typedef struct
   int type;
   double phase;
   int MessageWasDone;
-  
 }
 blast, *Blast;
 
@@ -376,14 +292,6 @@ typedef struct
   int num_level_rects[MAX_LEVELS];  /* how many rects has a level */
 }
 ship, *Ship;
-
-
-typedef struct
-{
-  char *FCUName;
-}
-FCU;
-
 
 typedef struct
 {

@@ -191,7 +191,7 @@ ActSpecialField (float x, float y)
       cy = rintf(y) - y ;
 
       /* Lift nur betreten, wenn ca. im Zentrum */
-      if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
+      if ((cx * cx + cy * cy) < Droid_Radius * Droid_Radius)
 	EnterLift ();
       break;
 
@@ -1347,99 +1347,18 @@ GetCrew (char *filename)
   // right structure, it's time to set the energy of the corresponding
   // droids to "full" which means to the maximum of each type.
   //
-  Number_Of_Droids_On_Ship=0;
+  NumEnemys = 0;
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       type = AllEnemys[i].type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = !OUT;
-      Number_Of_Droids_On_Ship++;
+      AllEnemys[i].Status = MOBILE;
+      NumEnemys++;
     }
 
   return (OK);
 } /* GetCrew () */
-
-
-/*-----------------------------------------------------------------
- * Friendly droids have a list of keywords they understand and they
- * can answer in a predefined way.  This list must be decoded from
- * the format style of the droids file to the AllEnemys arrays
- * fields and this is exactly what this function does.
- *-----------------------------------------------------------------*/
-void 
-GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
-{
-#define FRIENDLY_DROID_QUESTION_RESPONSE_LIST_START_STRING "Start of Question-Response List for this friendly droid"
-#define FRIENDLY_DROID_QUESTION_RESPONSE_LIST_END_STRING "End of Question-Response List for this friendly droid"
-#define QUESTION_START_STRING "Question=\""
-#define ANSWER_START_STRING "Answer=\""
-  char* ResponseListStart;
-  char* ResponseListEnd;
-  char* NextQuestionEntry;
-
-  char* TempSearchArea;
-  int QuestionNr = 0;
-
-  ResponseListStart = LocateStringInData( SearchPointer , FRIENDLY_DROID_QUESTION_RESPONSE_LIST_START_STRING );
-  ResponseListEnd = LocateStringInData( SearchPointer , FRIENDLY_DROID_QUESTION_RESPONSE_LIST_END_STRING );
-
-  TempSearchArea = MyMalloc( ResponseListEnd - ResponseListStart + 1 ); // First we allocate enough memory
-  strncpy ( TempSearchArea , ResponseListStart , ResponseListEnd-ResponseListStart ); // this copys the relevant part
-  TempSearchArea[ ResponseListEnd - ResponseListStart ] = 0; // This shall terminate the string
-
-  NextQuestionEntry = TempSearchArea;
-  
-  while ( ( NextQuestionEntry = strstr( NextQuestionEntry , QUESTION_START_STRING  ) ) != NULL )
-    {
-
-      //--------------------
-      // At first we check against writing beyond the scope of the array containing
-      // the questions and answers for the communication with this friendly droid
-      //
-      if ( QuestionNr >= MAX_CHAT_KEYWORDS_PER_DROID )
-	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
-The function reading and interpreting the friendly droids question-answer list\n\
-stumbled into something:\n\
-\n\
-The number of Questions and Answers specified for one of the droids is bigger\n\
-than the array containing all these Question and answers defined in the source.\n\
-\n\
-If you receive this error, just increase the constant MAX_CHAT_KEYWORDS_PER_DROIS\n\
-in the source code, then recompile the game and all will be fine.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the droid file reading\n\
-problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
-	}
-
-
-      AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 ] = 
-	ReadAndMallocStringFromData ( NextQuestionEntry , QUESTION_START_STRING , "\"" );
-      AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 +1 ] = 
-	ReadAndMallocStringFromData ( NextQuestionEntry , ANSWER_START_STRING , "\"" );
-
-      DebugPrintf( 1 , "Question Entry found : %s \n\n" , 
-		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 ] );
-      DebugPrintf( 1 , "Anser Entry to this question : %s \n\n" , 
-		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 + 1 ] );
-
-      // Not that this entry has been read, we move all indexes up by one
-      QuestionNr++;
-      NextQuestionEntry++;
-    }
-
-  free ( TempSearchArea );
-}; // void GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
-
-
 
 /*
 ----------------------------------------------------------------------
@@ -1469,7 +1388,6 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
-#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -1495,8 +1413,6 @@ GetThisLevelsDroids( char* SectionPointer )
       SearchPointer += strlen ( ALLOWED_TYPE_INDICATION_STRING );
       strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
       TypeIndicationString[3]=0;
-      // printf("\nType indication found!  It reads: %s." , TypeIndicationString );
-
       // Now that we have got a type indication string, we only need to translate it
       // into a number corresponding to that droid in the droid list
       for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
@@ -1505,32 +1421,13 @@ GetThisLevelsDroids( char* SectionPointer )
 	}
       if ( ListIndex >= Number_Of_Droid_Types )
 	{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
-The function reading and interpreting the crew file stunbled into something:\n\
-\n\
-It was unable to assign the droid type identification string '%s' found \n\
-in the entry of the droid types allowed for level %d to an entry in\n\
-the List of droids obtained from the gama data specification\n\
-file you use.  \n\
-\n\
-Please check that this type really is spelled correctly, that it consists of\n\
-only three characters and that it really has a corresponding entry in the\n\
-game data file with all droid type specifications.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the sound problem\n\
-it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , TypeIndicationString , OurLevelNumber );
+	  DebugPrintf (0, "ERROR: unknown droid type: %s found in data file for level %d\n", 
+		       TypeIndicationString , OurLevelNumber); 
 	  Terminate(ERR);
 	}
       else
-	{
-	  DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
-	}
+	DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , 
+		     TypeIndicationString , ListIndex );
       ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
       DifferentRandomTypes++;
     }
@@ -1558,99 +1455,12 @@ Sorry...\n\
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
+      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE;
 
     }  // while (enemy-limit of this level not reached) 
 
 
-  SearchPointer=SectionPointer;
-  while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
-    {
-      SearchPointer += strlen ( SPECIAL_FORCE_INDICATION_STRING );
-      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
-      TypeIndicationString[3]=0;
-      DebugPrintf( 1 , "\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
-
-      // Now that we have got a type indication string, we only need to translate it
-      // into a number corresponding to that droid in the droid list
-      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
-	{
-	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
-	}
-      if ( ListIndex == Number_Of_Droid_Types )
-	{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
-The function reading and interpreting the crew file stunbled into something:\n\
-\n\
-It was unable to assign the SPECIAL FORCE droid type identification string '%s' found \n\
-in the entry of the droid types allowed for level %d to an entry in\n\
-the List of droids obtained from the gama data specification\n\
-file you use.  \n\
-\n\
-Please check that this type really is spelled correctly, that it consists of\n\
-only three characters and that it really has a corresponding entry in the\n\
-game data file with all droid type specifications.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the sound problem\n\
-it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , TypeIndicationString , OurLevelNumber );
-	  Terminate(ERR);
-	}
-      else
-	{
-	  DebugPrintf( 1 , "\nSpecial force's Type indication string %s translated to type Nr.%d." , 
-		       TypeIndicationString , ListIndex );
-	}
-
-      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
-	{
-	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
-	}
-      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
-	{
-	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
-	  Terminate(ERR);
-	}
-
-      ReadValueFromString ( SearchPointer ,"X=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.x , EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Y=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.y , EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Fixed=","%d", &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Marker=","%d", &AllEnemys[ FreeAllEnemysPosition ].Marker , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"AdvancedCommand=","%d", &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Parameter1=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter1 , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Parameter2=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter2 , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].Friendly , 
-			    EndOfThisLevelData );
-
-      AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
-      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
-      AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
-
-      //--------------------
-      // AT THIS POINT WE KNOW WHETHER THE DROID IS FRIENDLY OR NOT
-      // In case of a friendly droid, we need to check out the question-response list for
-      // this droid and read it into the appropriate data structures in AllEnemys too
-      //
-      if ( AllEnemys[ FreeAllEnemysPosition ].Friendly )
-	{
-	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
-	}
-
-    } // while Special force droid found...
-
-  NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
-  // getchar();
+  return;
 }
 
 
@@ -1761,21 +1571,21 @@ DruidPassable (float x, float y)
 
   /* get 8 Check-Points on the druidsurface */
   testpos[OBEN].x = x;
-  testpos[OBEN].y = y - Druid_Radius_Y;
-  testpos[RECHTSOBEN].x = x + DRUIDRADIUSXY;
-  testpos[RECHTSOBEN].y = y - DRUIDRADIUSXY;
-  testpos[RECHTS].x = x + Druid_Radius_X;
+  testpos[OBEN].y = y - Droid_Radius;
+  testpos[RECHTSOBEN].x = x + Droid_Radius;
+  testpos[RECHTSOBEN].y = y - Droid_Radius;
+  testpos[RECHTS].x = x + Droid_Radius;
   testpos[RECHTS].y = y;
-  testpos[RECHTSUNTEN].x = x + DRUIDRADIUSXY;
-  testpos[RECHTSUNTEN].y = y + DRUIDRADIUSXY;
+  testpos[RECHTSUNTEN].x = x + Droid_Radius;
+  testpos[RECHTSUNTEN].y = y + Droid_Radius;
   testpos[UNTEN].x = x;
-  testpos[UNTEN].y = y + Druid_Radius_Y;
-  testpos[LINKSUNTEN].x = x - DRUIDRADIUSXY;
-  testpos[LINKSUNTEN].y = y + DRUIDRADIUSXY;
-  testpos[LINKS].x = x - Druid_Radius_X;
+  testpos[UNTEN].y = y + Droid_Radius;
+  testpos[LINKSUNTEN].x = x - Droid_Radius;
+  testpos[LINKSUNTEN].y = y + Droid_Radius;
+  testpos[LINKS].x = x - Droid_Radius;
   testpos[LINKS].y = y;
-  testpos[LINKSOBEN].x = x - DRUIDRADIUSXY;
-  testpos[LINKSOBEN].y = y - DRUIDRADIUSXY;
+  testpos[LINKSOBEN].x = x - Droid_Radius;
+  testpos[LINKSOBEN].y = y - Droid_Radius;
 
   for (i = 0; i < DIRECTIONS; i++)
     {
@@ -1812,21 +1622,8 @@ IsPassable (float x, float y, int Checkpos)
 
   MapBrick = GetMapBrick (CurLevel, x, y);
 
-  //NORMALISATION  fx = x % Block_Width;
-  //NORMALISATION  fy = y % Block_Height;
-  // fx = x - rintf(x);
-  // fy = y - rintf(y);
-
-  // ATTENTION!  
-  // With the new coodinates, the position of the Influencer is an integer,
-  // if and only if it is at the CENTER of a square brick.
-  // the fx and fy is designed to be the offset from THE TOP LEFT CORNER
-  // of the square.  This is from the old code.
-  // Therefore we have to do a short correction here:
   fx = (x-0.5) - floor(x-0.5);
   fy = (y-0.5) - floor(y-0.5);
-
-  // From here on, the old code can be left unchanged.
 
   switch (MapBrick)
     {

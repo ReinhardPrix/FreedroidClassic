@@ -37,6 +37,10 @@
 #include "global.h"
 #include "proto.h"
 
+// these are needed for stat()
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 // The definition of the message structure can stay here,
 // because its only needed in this module.
@@ -60,6 +64,9 @@ void AdvanceQueue (void);
 unsigned char *MessageBar;
 message *Queue = NULL;
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
+
+char *homedir = NULL;
+char ConfigDir[255]="\0";
 
 struct timeval now, oneframetimestamp, tenframetimestamp,
   onehundredframetimestamp, differenz;
@@ -88,16 +95,95 @@ int sign (float x)
     return (-1);
 }
 
+/*----------------------------------------------------------------------
+ * LoadGameConfig(): load saved options from config-file
+ *
+ * this should be the first of all load/save functions called
+ * as here we read the $HOME-dir and create the config-subdir if neccessary
+ *
+ *----------------------------------------------------------------------*/
+int
+LoadGameConfig (void)
+{
+  char fname[255];
+  FILE *config;
+  
+  struct stat statbuf;
+
+  // first we need the user's homedir for loading/saving stuff
+  if ( (homedir = getenv("HOME")) == NULL )
+    DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
+Cannot Load or Save settings.\n");
+
+  sprintf (ConfigDir, "%s/.freedroidClassic", homedir);
+  
+  if (stat(ConfigDir, &statbuf) == -1) {
+    DebugPrintf (1, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
+    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+      {
+	DebugPrintf (0, "WARNING: Failed to create config-dir: %s. Giving up...\n", ConfigDir);
+	return (ERR);
+      }
+    else
+      {
+	DebugPrintf (1, "ok\n");
+	return (OK);
+      }
+  }
+
+  sprintf (fname, "%s/config", ConfigDir);
+  if( (config = fopen (fname, "r")) == NULL)
+    {
+      DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
+      return (ERR);
+    }
+  
+  // Now read the actual data
+  // ok, this is neither very portable nor very flexible, we just want that working...
+  fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+
+  fclose (config);
+
+  return (OK);
+
+} // LoadGameConfig
+    
+
+/*----------------------------------------------------------------------
+ * SaveGameConfig: do just that
+ *
+ *----------------------------------------------------------------------*/
+int
+SaveGameConfig (void)
+{
+  char fname[255];
+  FILE *config;
+  
+  if ( ConfigDir[0] == '\0')
+    return (ERR);
+  
+  sprintf (fname, "%s/config", ConfigDir);
+  if( (config = fopen (fname, "w")) == NULL)
+    {
+      DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
+      return (ERR);
+    }
+  
+  // Now write the actual data
+  fwrite ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+
+  fclose (config);
+  return (OK);
+  
+} // SaveGameConfig()
 
 
-/*
-----------------------------------------------------------------------
+/*----------------------------------------------------------------------
 This function looks for a sting begin indicator and takes the string
 from after there up to a sting end indicator and mallocs memory for
 it, copys it there and returns it.
 The original source string specified should in no way be modified.
-----------------------------------------------------------------------
-*/
+----------------------------------------------------------------------*/
 char*
 ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString ) 
 {
@@ -886,19 +972,14 @@ Teleport (int LNum, int X, int Y)
 void
 Terminate (int ExitCode)
 {
-  DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
   printf("\n----------------------------------------------------------------------");
   printf("\nTermination of Freedroid initiated...");
-  // printf("\nUnallocation all resouces...");
 
-  // free the allocated surfaces...
-  // SDL_FreeSurface( ne_blocks );
-  // SDL_FreeSurface( ne_static );
+  DebugPrintf (2, "Writing config file\n");
+  SaveGameConfig ();
+  DebugPrintf (2, "Writing highscores to disk\n");
+  SaveHighscores ();
 
-  // free the mixer channels...
-  // Mix_CloseAudio();
-
-  // printf("\nAnd now the final step...\n\n");
   printf("Thank you for playing Freedroid.\n\n");
   SDL_Quit();
   exit (ExitCode);
@@ -954,98 +1035,5 @@ MyMalloc (long Mamount)
 
   return Mptr;
 }				// void* MyMalloc(long Mamount)
-
-/*@Function============================================================
-@Desc: This function checks for triggered events.  Those events are
-       usually entered via the mission file and read into the apropriate
-       structures via the InitNewMission function.  Here we check, whether
-       the nescessary conditions for an event are satisfied, and in case that
-       they are, we order the apropriate event to be executed.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
-void 
-ExecuteEvent ( int EventNumber )
-{
-  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
-  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
-
-  // Does the trigger include a change of a map tile?
-  if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
-    {
-      //YES.  So we need to check, if the location has been supplied fully first.
-      if ( ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.x == (-1) ) ||
-	   ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.y == (-1) ) ||
-	   ( AllTriggeredActions[ EventNumber ].ChangeMapLevel == (-1) ) )
-	{
-	  DebugPrintf( 0 , "\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
-	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
-	}
-    }
-
-  // Does the defined action make the influencer say something?
-  if ( AllTriggeredActions[ EventNumber ].InfluencerSaySomething != -1 )
-    {
-      //YES. So we need to output his sentence as usual
-      Me.TextVisibleTime=0;
-      Me.TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
-    }
-
-
-}; // void ExecuteEvent ( int EventNumber )
-
-/*@Function============================================================
-@Desc: This function checks for triggered events.  Those events are
-       usually entered via the mission file and read into the apropriate
-       structures via the InitNewMission function.  Here we check, whether
-       the nescessary conditions for an event are satisfied, and in case that
-       they are, we order the apropriate event to be executed.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
-void 
-CheckForTriggeredEvents ( void )
-{
-  int i;
-
-  for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
-    {
-      if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
-
-      // --------------------
-      // So at this point we know, that the event trigger is somehow meaningful. 
-      // Fine, so lets check the details, if the event is triggered now
-      //
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
-	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != rintf( Me.pos.x ) ) continue;
-	}
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
-	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me.pos.y ) ) continue;
-	}
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )
-	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != CurLevel->levelnum ) continue;
-	}
-
-      // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
-      ExecuteEvent( AllEventTriggers[i].EventNumber );
-
-      if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
-	{
-	  AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
-	}
-    }
-
-}; // CheckForTriggeredEvents (void )
 
 #undef _misc_c

@@ -97,16 +97,78 @@ void Load_Digit_Surfaces( void ) ;
 void Load_Bullet_Surfaces( void ) ;
 void Load_Blast_Surfaces( void ) ;
 
-/*
-----------------------------------------------------------------------
+
+/* ----------------------------------------------------------------------
+ * This function applies a color filter to a given surface
+ * ---------------------------------------------------------------------- */
+int
+ApplyFilter (SDL_Surface *surf, float fred, float fgreen, float fblue)
+{
+  int x , y ; // for processing through the surface...
+  Uint8 red, green, blue, alpha;
+
+  //--------------------
+  // First we check for null surfaces given...
+  //
+  if ( surf == NULL )
+    {
+      DebugPrintf (0 , "\nERROR: ApplyFilter called with NULL pointer\n" );
+      return (ERR);
+    }
+
+  //--------------------
+  // Now we start to process through the whole surface and examine each
+  // pixel.
+  //
+  for ( y = 0 ; y < surf -> h ; y ++ )
+    {
+      for ( x = 0 ; x < surf -> w ; x ++ )
+	{
+	  GetRGBA (surf, x, y, &red, &green, &blue, &alpha);
+
+	  if (alpha == SDL_ALPHA_TRANSPARENT) 
+	    continue;
+
+	  red *= fred;
+	  green *= fgreen;
+	  blue *= fblue;
+
+	  putpixel (surf, x, y, SDL_MapRGBA (surf->format, red, green, blue, alpha) ) ;
+	}
+    }
+
+  return (OK);
+
+} // Apply_Filter
+
+/* ----------------------------------------------------------------------
+ * This function gives the green component of a pixel, using a value of
+ * 255 for the most green pixel and 0 for the least green pixel.
+ * ---------------------------------------------------------------------- */
+void
+GetRGBA ( SDL_Surface* surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a)
+{
+  SDL_PixelFormat *fmt;
+  Uint32 pixel;
+
+  //--------------------
+  // First we extract the pixel itself and the
+  // format information we need.
+  //
+  fmt = surface -> format ;
+  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+
+  SDL_GetRGBA (pixel, fmt, r, g, b, a);
+
+}; // int GetRGBA
+
+
+/*----------------------------------------------------------------------
 This function was taken directly from the example in the SDL docu.
 Even there they say they have stolen if from the mailing list.
 Anyway it should create a new mouse cursor from an XPM.
 The XPM is defined above and not read in from disk or something.
-----------------------------------------------------------------------
-*/
-
-
+----------------------------------------------------------------------*/
 static SDL_Cursor *init_system_cursor(const char *image[])
 {
   int i, row, col;
@@ -690,12 +752,15 @@ Load_Influencer_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+
+  Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
+  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
+
   for ( i=0 ; i < DROID_PHASES ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( InfluencerSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); 
+
       // Now we can copy the image Information
       Source.x=i*(Block_Height+2);
       Source.y=0*(Block_Width+2);
@@ -706,10 +771,13 @@ Load_Influencer_Surfaces( void )
       Target.w=Block_Width;
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_SetAlpha( InfluencerSurfacePointer[i], 0, SDL_ALPHA_OPAQUE);
     }
 
-  SDL_FreeSurface( tmp_surf );
+  SDL_FreeSurface (tmp_surf);
+  SDL_FreeSurface (Whole_Image);
+
+  return;
 
 }; // void Load_Influencer_Surfaces( void )
 
@@ -732,12 +800,12 @@ Load_Digit_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < DIGITNUMBER ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha ( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha ( tmp_surf );
       // Now we can copy the image Information
       Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
       Source.y=0*( INITIAL_DIGIT_HEIGHT + 2); // first line
@@ -748,14 +816,11 @@ Load_Digit_Surfaces( void )
       Target.w=INITIAL_DIGIT_LENGTH;
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );      
+      SDL_SetAlpha( InfluDigitSurfacePointer[i], 0, SDL_ALPHA_OPAQUE);
     }
-  SDL_FreeSurface( tmp_surf );
 
   for ( i=0 ; i < DIGITNUMBER ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       EnemyDigitSurfacePointer[i] = SDL_DisplayFormatAlpha (tmp_surf); // now we have an alpha-surf of right size
       // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -768,9 +833,9 @@ Load_Digit_Surfaces( void )
       Target.w=INITIAL_DIGIT_LENGTH;
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
       SDL_SetAlpha( EnemyDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );      
     }
+
   SDL_FreeSurface( tmp_surf );
 
 }; // void Load_Digit_Surfaces( void )

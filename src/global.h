@@ -36,6 +36,7 @@
 #else
 #define EXTERN extern
 
+EXTERN char ConfigDir[255];
 EXTERN SDL_Rect User_Rect;
 EXTERN const SDL_Rect Classic_User_Rect;
 EXTERN const SDL_Rect Full_User_Rect;
@@ -75,7 +76,6 @@ EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
-EXTERN FCU AllFCUs[];
 EXTERN influence_t Me;		/* the influence data */
 // EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
 EXTERN Druidspec Druidmap;     
@@ -98,8 +98,6 @@ EXTERN float RealScore;
 EXTERN long ShowScore;
 
 EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];
-EXTERN event_trigger AllEventTriggers[MAX_EVENT_TRIGGERS];
-EXTERN triggered_action AllTriggeredActions[MAX_TRIGGERED_ACTIONS];
 
 EXTERN int NumEnemys;
 
@@ -131,12 +129,10 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #define EXTERN extern
 #endif
 EXTERN long Total_Frames_Passed_In_Mission;
-EXTERN int Number_Of_Droids_On_Ship;
 EXTERN double Time_For_Each_Phase_Of_Door_Movement;
 EXTERN double Blast_Damage_Per_Second;
 EXTERN double Blast_Radius;
-EXTERN double Druid_Radius_X;
-EXTERN double Druid_Radius_Y;
+EXTERN double Droid_Radius;
 EXTERN float LevelDoorsNotMovedTime;
 EXTERN double collision_lose_energy_calibrator;
 EXTERN configuration_for_freedroid GameConfig;

@@ -39,7 +39,6 @@
 #include "text.h"
 #include "ship.h"
 
-
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
@@ -65,8 +64,7 @@ Get_General_Game_Constants ( void* DataPointer )
 #define CONSTANTS_SECTION_END_STRING "*** End of General Game Constants Section: ***"
 #define COLLISION_LOSE_ENERGY_CALIBRATOR_STRING "Energy-Loss-factor for Collisions of Influ with hostile robots="
 #define BLAST_RADIUS_SPECIFICATION_STRING "Radius of explosions (as far as damage is concerned) in multiples of tiles="
-#define DRUID_RADIUS_X_SPECIFICATION_STRING "'Radius' of droids in x direction="
-#define DRUID_RADIUS_Y_SPECIFICATION_STRING "'Radius' of droids in x direction="
+#define DROID_RADIUS_SPECIFICATION_STRING "Droid radius:"
 #define BLAST_DAMAGE_SPECIFICATION_STRING "Amount of damage done by contact to a blast per second of time="
 #define TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING "Time for the doors to move by one subphase of their movement="
 
@@ -85,10 +83,8 @@ Get_General_Game_Constants ( void* DataPointer )
 		       &Blast_Radius , EndOfDataPointer );
 
   // Now we read in the druid 'radius' in x direction
-  ReadValueFromString( DataPointer , DRUID_RADIUS_X_SPECIFICATION_STRING , "%lf" , 
-		       &Druid_Radius_X , EndOfDataPointer );
-  ReadValueFromString( DataPointer , DRUID_RADIUS_Y_SPECIFICATION_STRING , "%lf" , 
-		       &Druid_Radius_Y , EndOfDataPointer );
+  ReadValueFromString( DataPointer , DROID_RADIUS_SPECIFICATION_STRING , "%lf" , 
+		       &Droid_Radius , EndOfDataPointer );
 
   // Now we read in the blast damage amount per 'second' of contact with the blast
   ReadValueFromString( DataPointer ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%lf" , 
@@ -184,10 +180,6 @@ Get_Bullet_Data ( char* DataPointer )
       ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
 			   &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
-      // Now we read in if you can fire before the previous bullet has expired
-      ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
-			   &Bulletmap[BulletIndex].oneshotonly , EndOfBulletData );
-
       // Now we read in the number of phases that are designed for this bullet type
       // THIS IS NOW SPECIFIED IN THE THEME CONFIG FILE
       // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
@@ -227,168 +219,6 @@ Get_Bullet_Data ( char* DataPointer )
 
   DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
 } // void Get_Bullet_Data ( char* DataPointer );
-
-
-/*
-----------------------------------------------------------------------
-
-----------------------------------------------------------------------
-*/
-
-void 
-Get_Mission_Events ( char* EventSectionPointer )
-{
-  char *EventPointer;
-  char *EndOfEvent;
-  int i;
-  int EventActionNumber;
-  int EventTriggerNumber;
-
-#define EVENT_TRIGGER_BEGIN_STRING "* Start of an Event Trigger Subsection *"
-#define EVENT_TRIGGER_END_STRING "* End of this Event Trigger Subsection *"
-#define EVENT_ACTION_BEGIN_STRING "* Start of an Event Action Subsection *"
-#define EVENT_ACTION_END_STRING "* End of this Event Action Subsection *"
-
-#define EVENT_ACTION_MAPCHANGE_POS_X_STRING "Action is mapchange at positionX="
-#define EVENT_ACTION_MAPCHANGE_POS_Y_STRING "Action is mapchange at positionY="
-#define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING "Action is mapchange at maplevel="
-#define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING "Action is change map there to new value="
-#define EVENT_ACTION_INFLUENCER_SAY_SOMETHING "Action is Influencer saying something="
-#define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer saying the following text=\""
-#define EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING "ACTION INDEX NUMBER TO USE="
-
-#define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
-#define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
-#define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
-#define EVENT_TRIGGER_WHICH_ACTION_STRING "Event Action to be triggered by this trigger="
-#define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
-
-  // Delete all events and event triggers
-  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
-    {
-      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
-      
-      // Maybe the event is triggered by time
-      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
-      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
-      
-      // And now of course which event to trigger!!!!
-      // Thats propably the most important information at all!!!
-      AllEventTriggers[i].EventNumber=-1;
-    }
-  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS ; i++ )
-    {
-      // Maybe the triggered event consists of the influencer saying something
-      AllTriggeredActions[i].InfluencerSaySomething=-1;
-      AllTriggeredActions[i].InfluencerSayText="";
-      // Maybe the triggered event consists of the map beeing changed at some tile
-      AllTriggeredActions[i].ChangeMap=-1;
-      AllTriggeredActions[i].ChangeMapLevel=-1;
-      AllTriggeredActions[i].ChangeMapLocation.x=-1;
-      AllTriggeredActions[i].ChangeMapLocation.y=-1;
-      AllTriggeredActions[i].ChangeMapTo=-1;
-      // Maybe the triggered event consists of ??????
-    }
-
-
-  //--------------------
-  // At first we decode ALL THE EVENT ACTIONS not the TRIGGERS!!!!
-  //
-  EventPointer=EventSectionPointer;
-  EventActionNumber=0;
-  while ( ( EventPointer = strstr ( EventPointer , EVENT_ACTION_BEGIN_STRING ) ) != NULL)
-    {
-      DebugPrintf(1, "\nBegin of a new Event Action Section found. Good. ");
-      EventPointer += strlen( EVENT_ACTION_BEGIN_STRING ) + 1;
-
-      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_ACTION_END_STRING );
-
-      DebugPrintf (1, "\n\nStarting to read details of this event action section\n\n");
-
-      //--------------------
-      // Now we decode the details of this event action section
-      //
-
-      // FIRST OF ALL, WE NEED TO KNOW AT WHICH INDEX WE MUST MODIFY OUR STRUTURE.
-      // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
-      ReadValueFromString( EventPointer , EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING , "%d" , 
-			   &EventActionNumber , EndOfEvent );
-
-      // Now we read in the map changing position in x and y coordinates
-      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_X_STRING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x , EndOfEvent );
-      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_Y_STRING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y , EndOfEvent );
-
-      // Now we read in the map changing position level
-      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel , EndOfEvent );
-
-      // Now we read in the new value for that map tile
-      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].ChangeMapTo , EndOfEvent );
-
-      // Now we read in if the influencer is to say something
-      ReadValueFromString( EventPointer , EVENT_ACTION_INFLUENCER_SAY_SOMETHING , "%d" , 
-			   &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething , EndOfEvent );
-
-      // Now we read in if the text for the influencer to say
-      AllTriggeredActions[ EventActionNumber].InfluencerSayText =
-	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_INFLUENCER_SAY_TEXT , "\"" ) ;
-
-    } // While Event action begin string found...
-
-
-  DebugPrintf (1, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
-
-
-  //----------------------------------------------------------------------
-
-  //--------------------
-  // Now we decode ALL THE EVENT TRIGGERS not the ACTIONS!!!!
-  //
-  EventPointer=EventSectionPointer;
-  EventTriggerNumber=0;
-  while ( ( EventPointer = strstr ( EventPointer , EVENT_TRIGGER_BEGIN_STRING ) ) != NULL)
-    {
-      DebugPrintf(1, "\nBegin of a new Event Trigger Section found. Good. ");
-      EventPointer += strlen( EVENT_TRIGGER_BEGIN_STRING ) + 1;
-
-      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_TRIGGER_END_STRING );
-
-      DebugPrintf ( 1 , "\nStarting to read details of this event trigger section\n\n");
-
-      //--------------------
-      // Now we decode the details of this event trigger section
-      //
-
-      // Now we read in the triggering position in x and y coordinates
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_X_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x , EndOfEvent );
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_Y_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y , EndOfEvent );
-
-      // Now we read in the triggering position in levels
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_MAPLEVEL_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level , EndOfEvent );
-
-      // Now we read whether or not to delete the trigger after being triggerd
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_DELETED_AFTER_TRIGGERING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution , EndOfEvent );
-
-      // Now we read in the action to be invoked by this trigger
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
-
-      EventTriggerNumber++;
-    } // While Event trigger begin string found...
-
-
-  DebugPrintf (1 , "\nThat must have been the last Event Trigger section.");
-
-} // void Get_Mission_Events ( char* EventSectionPointer );
 
 
 /*@Function============================================================
@@ -567,14 +397,6 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the armament of this droid type
       ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].armament , EndOfDataPointer );
-
-      // Now we read in the AdvancedFighing flag of this droid type
-      ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].AdvancedBehaviour , EndOfDataPointer );
-
-      // Now we read in if the droid tends to go to call for reinforcements
-      ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].CallForHelpAfterSufferingHit , EndOfDataPointer );
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.
@@ -781,10 +603,7 @@ InitNewMission ( char *MissionName )
   int i;
   char *MainMissionPointer;
   char *BriefingSectionPointer;
-  char *EventSectionPointer;
   char *StartPointPointer;
-  char *MissionTargetPointer;
-  char *EndOfMissionTargetPointer;
   char* Liftname;
   char* Crewname;
   char* GameDataName;
@@ -799,7 +618,6 @@ InitNewMission ( char *MissionName )
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
 #define MISSION_ENDTITLE_SONG_NAME_STRING "Song name to play in the end title if the mission is completed: "
-#define EVENT_SECTION_BEGIN_STRING "** Start of Mission Event Section **"
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
@@ -809,18 +627,6 @@ InitNewMission ( char *MissionName )
 #define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
 #define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
 #define MISSION_START_POINT_STRING "Possible Start Point : "
-#define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
-#define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
-#define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droids with marker : "
-#define MISSION_TARGET_MUST_REACH_LEVEL_STRING "Mission target is to reach level : "
-#define MISSION_TARGET_MUST_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
-#define MISSION_TARGET_MUST_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
-#define MISSION_TARGET_MUST_LIVE_TIME_STRING "Mission target is to live for how many seconds : "
-#define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
-#define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
-#define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake a droid with marker : "
-#define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
-#define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
   //--------------------
   // We store the mission name in case the influ
@@ -866,6 +672,7 @@ InitNewMission ( char *MissionName )
     }
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All blasts have been deleted...");
 
+  
   //--------------------
   //Now its time to start decoding the mission file.
   //For that, we must get it into memory first.
@@ -881,18 +688,10 @@ InitNewMission ( char *MissionName )
   fpath = find_file (MissionName, MAP_DIR, FALSE);
 
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
-  EndOfMissionTargetPointer = LocateStringInData ( MainMissionPointer , END_OF_MISSION_TARGET_STRING ) ;
 
   //--------------------
   // Now the mission file is read into memory.  That means we can start to decode the details given
   // in the body of the mission file.  
-
-  // Now we search for the beginning of the WHOLE event section within the mission file
-  EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
-  // Read in the events and triggers that can be used to cause and define something to happen
-  Get_Mission_Events ( EventSectionPointer );
-  printf_SDL (ne_screen, -1, -1, ".");
-  DebugPrintf (2, "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
 
   //--------------------
   // First we extract the game physics file name from the
@@ -1004,61 +803,16 @@ InitNewMission ( char *MissionName )
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me.pos.y=StartingYPos;
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
-  
+
+
+
   //--------------------
   // At this point the position history can be initialized
   //
   InitInfluPositionHistory();
   printf_SDL (ne_screen, -1, -1, ".");
-  //--------------------
-  // Now we read in the mission targets for this mission
-  // Several different targets may be specified simultaneously
-  //
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // jp seems to have forgotten to initialise MissionTargetPointer here...
-  // we propose this temporary fix to make it run:
-  MissionTargetPointer = StartPointPointer;
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
-		       &Me.mission.KillAll , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_CLASS_STRING , "%d" , 
-		       &Me.mission.KillClass , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
-		       &Me.mission.KillOne , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
-		       &Me.mission.MustBeClass , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_TYPE_STRING , "%d" , 
-		       &Me.mission.MustBeType , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_ONE_STRING , "%d" , 
-		       &Me.mission.MustBeOne , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_X_STRING , "%d" , 
-		       &Me.mission.MustReachPoint.x , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_Y_STRING , "%d" , 
-		       &Me.mission.MustReachPoint.y , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_LEVEL_STRING , "%d" , 
-		       &Me.mission.MustReachLevel , EndOfMissionTargetPointer );
-
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
-		       &Me.mission.MustLiveTime , EndOfMissionTargetPointer );
-  printf_SDL (ne_screen, -1, -1, ".");
-  //--------------------
-  // After the mission targets have been successfully loaded now,
-  // we need to add a pointer to the next mission, so that we will later
-  // now which mission to load after this mission has been completed.
-  //
-  NextMissionName =
-    ReadAndMallocStringFromData ( MainMissionPointer , NEXT_MISSION_NAME_STRING , "\n" ) ;
-
+  
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
@@ -1096,21 +850,11 @@ InitNewMission ( char *MissionName )
   Me.speed.y = 0;
   Me.energy = Druidmap[DRUID001].maxenergy;
   Me.health = Me.energy;	/* start with max. health */
-  Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
-  Me.MissionTimeElapsed=0;
+  Me.timer = 0.0;  // set clock to 0
   Me.Current_Victim_Resistance_Factor=1;  // this will never get changed in "classic" FD
   
-  Me.FramesOnThisLevel=0;
-
-  /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
-  // SetLevelColor (CurLevel->color); 
-
-  /* set correct Influ color */
-  // SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-  // Mobilecolor.blau);
-
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
@@ -1135,33 +879,17 @@ InitFreedroid (void)
 
   Bulletmap=NULL;  // That will cause the memory to be allocated later
 
-  //--------------------
-  // It might happen, that the uninitialized AllBullets array contains a 1
-  // somewhere and that the bullet is deleted and the surface freed, where
-  // it never has been allocated, resulting in a SEGFAULT.  This has never
-  // happend, but for security, we add this loop to clean out these important 
-  // flags.       It should be sufficient to do this here, since the flag
-  // will never be set again if not Surfaces are allocated too and then they
-  // can of course also be freed as well.
-  //
   for ( i = 0 ; i < MAXBULLETS ; i++ )
-    {
-      AllBullets[i].Surfaces_were_generated = FALSE;
-    }
+    AllBullets[i].Surfaces_were_generated = FALSE;
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;
   Me.TextVisibleTime = 0;
-  // Me.TextToBeDisplayed = "Hello, I'm 001.";
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
-  // At first we set audio volume to maximum value.
-  // This might be replaced later with values from a 
-  // private user Freedroid config file.  But for now
-  // this code is good enough...
+  // these are the hardcoded game-defaults, they can be overloaded by the config-file if present
   GameConfig.Current_BG_Music_Volume=0.6;
   GameConfig.Current_Sound_FX_Volume=0.5;
-
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
   GameConfig.All_Texts_Switch=FALSE;
@@ -1171,8 +899,11 @@ InitFreedroid (void)
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
   // this is the "classic" version, so defaults are set on "classic"
-  GameConfig.Theme_SubPath="classic_theme/";
+  sprintf (GameConfig.Theme_SubPath, "classic_theme/");
   GameConfig.FullUserRect = FALSE;
+
+  // now load saved options from the config-file
+  LoadGameConfig ();
 
   if (GameConfig.FullUserRect)
     Copy_Rect(Full_User_Rect, User_Rect);
@@ -1201,10 +932,9 @@ InitFreedroid (void)
    */
   srand((unsigned int)SDL_GetTicks() ); 
 
-  /* initialize the highscore list */
-  Init_Highscores ();
+  /* initialize/load the highscore list */
+  InitHighscores ();
  
-
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
   CurLevel = NULL; // please leave this here BEFORE InitPictures
@@ -1398,7 +1128,7 @@ ThouArtDefeated (void)
   now=SDL_GetTicks();
   while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
 
-  update_highscores ();
+  UpdateHighscores ();
 
   GameOver = TRUE;
 
@@ -1433,131 +1163,16 @@ CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
 
-  //--------------------
-  // We set up a cheat code, so that one can easily 'complete' a mission
-  //
-  if ( MPressed() && Alt_Was_Pressed()
-       && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
-    goto victory;
+  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+    if ( AllEnemys[Robot_Counter].energy > 0 )
+      return;
 
-
-#define MIS_COMPLETE_DEBUG 3
-
-  if ( Me.mission.KillOne != (-1) )
-    {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
-	       ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
-	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
-	      // fflush(stdout);
-	      return;
-	    }
-	}
-    }
-
-  if ( Me.mission.KillAll != (-1) )
-    {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Friendly == FALSE ) )
-	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
-	      return;
-	    }
-	}
-    }
-
-  if ( Me.mission.KillClass != (-1) )
-    {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
-	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
-	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
-			   Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
-			   AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
-	      return;
-	    }
-	}
-    }
-
-  if ( Me.mission.MustBeClass != (-1) )
-    {
-      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
-      if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.class does not match...");
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustBeType != (-1) )
-    {
-      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
-      if ( Me.type != Me.mission.MustBeType ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type does not match...");
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustReachLevel != (-1) )
-    {
-      if ( CurLevel->levelnum != Me.mission.MustReachLevel ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nLevel number does not match...");
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustReachPoint.x != (-1) )
-    {
-      if ( Me.pos.x != Me.mission.MustReachPoint.x ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nX coordinate does not match...");
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustReachPoint.y != (-1) )
-    {
-      if ( Me.pos.y != Me.mission.MustReachPoint.y ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nY coordinate does not match..."); 
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustLiveTime != (-1) )
-    {
-      if ( Me.MissionTimeElapsed < Me.mission.MustLiveTime ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nTime Limit not yet reached...");
-	  return;
-	}
-    }
-
-  if ( Me.mission.MustBeOne != (-1) )
-    {
-      if ( Me.Marker != Me.mission.MustBeOne ) 
-	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nYou're not yet one of the marked ones...");
-	  return;
-	}
-    }
-
-
- victory:
+  // mission complete: all droids have been killed
   RealScore += MISSION_COMPLETE_BONUS;
   EndTitle();
-  update_highscores();
+  UpdateHighscores();
 
-  InitNewMission ( NextMissionName);
+  GameOver = TRUE;
   
 } // void CheckIfMissionIsComplete
 

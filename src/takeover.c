@@ -218,7 +218,6 @@ Takeover (int enemynum)
 	  Me.health += Druidmap[OpponentType].maxenergy;
 
 	  Me.type = AllEnemys[enemynum].type;
-	  Me.Marker = AllEnemys[enemynum].Marker;
 
 	  RealScore += Druidmap[OpponentType].score;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
@@ -305,13 +304,13 @@ ChooseColor (void)
       
       if (RightPressed () || WheelDownPressed ())
 	{
-	  MoveMenuPositionSound();
+	  if (YourColor != VIOLETT) MoveMenuPositionSound();
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
       if (LeftPressed () || WheelUpPressed ())
 	{
-	  MoveMenuPositionSound();
+	  if (YourColor != GELB) MoveMenuPositionSound();
 	  YourColor = GELB;
 	  OpponentColor = VIOLETT;
 	}

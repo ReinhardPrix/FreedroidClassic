@@ -37,29 +37,77 @@
 
 /*-----------------------------------------------------------------
  *
- * set up a new highscore list: currently empty, but could be
- * read from disk, or even loaded from net in the future...
+ * set up a new highscore list: load from disk if found
  *
  *-----------------------------------------------------------------*/
 void 
-Init_Highscores (void)
+InitHighscores (void)
 {
   int i;
+  char fname[255];
+  FILE *file = NULL;
 
+  if (ConfigDir[0] != '\0')
+    {
+      sprintf (fname, "%s/highscores", ConfigDir);
+      if ( (file = fopen (fname, "r")) == NULL)
+	DebugPrintf (1, "WARNING: no highscores file found... \n");
+    }
+    
   num_highscores = MAX_HIGHSCORES;  /* hardcoded for now... */
-  Highscores = MyMalloc ( num_highscores * sizeof(Highscore_entry) + 10);
+  Highscores = MyMalloc (num_highscores * sizeof(Highscore_entry) + 10);
   
   for (i=0; i< num_highscores; i++)
     {
       Highscores[i] = MyMalloc (sizeof(highscore_entry));
-      strcpy (Highscores[i]->name, HS_EMPTY_ENTRY);
-      strcpy (Highscores[i]->date, " --- ");
-      Highscores[i]->score = -1;
-      Highscores[i]->mission = -1;
+      if (file)
+	fread (Highscores[i], sizeof(highscore_entry), sizeof(char), file);
+      else
+	{
+	  strcpy (Highscores[i]->name, HS_EMPTY_ENTRY);
+	  strcpy (Highscores[i]->date, " --- ");
+	  Highscores[i]->score = -1;
+	}
     }
 
+  if (file) fclose (file);
+
   return;
-} /* Init_Highscores */
+} /* InitHighscores */
+
+
+/*----------------------------------------------------------------------
+ * Save highscores to disk
+ *
+ *----------------------------------------------------------------------*/
+int
+SaveHighscores (void)
+{
+  int i;
+  char fname[255];
+  FILE *file = NULL;
+
+  if (ConfigDir[0] == '\0')
+    {
+      DebugPrintf (0, "WARNING: no config-dir found, cannot save highscores!\n");
+      return (ERR);
+    }
+
+  sprintf (fname, "%s/highscores", ConfigDir);
+  if ( (file = fopen (fname, "w")) == NULL)
+    {
+      DebugPrintf (0, "WARNING: failed to create highscores file. Giving up... \n");
+      return (ERR);
+    }
+    
+  for (i=0; i < MAX_HIGHSCORES;  i++)
+    fwrite (Highscores[i], sizeof(highscore_entry), sizeof(char), file);
+
+  fclose (file);
+
+  return (OK);
+
+} // SaveHighscores
 
 /*----------------------------------------------------------------------
  * managing of highscore entries: check if user has entered the list, 
@@ -67,7 +115,7 @@ Init_Highscores (void)
  *
  *----------------------------------------------------------------------*/
 void
-update_highscores (void)
+UpdateHighscores (void)
 {
   int i, entry;
   Highscore_entry new_entry;
@@ -83,7 +131,7 @@ update_highscores (void)
 
   /* now find out the position of player's score in list */
   entry = 0;
-  while (Highscores[entry]->score >= RealScore )
+  while ( (entry < num_highscores) && (Highscores[entry]->score >= RealScore) )
     entry ++;
 
   if (entry == num_highscores) /* sorry, you didnt' make it */
@@ -126,7 +174,7 @@ update_highscores (void)
 
   return;
 
-} /* update_highscores */
+} /* UpdateHighscores */
 
 
 /*-----------------------------------------------------------------
@@ -136,7 +184,7 @@ update_highscores (void)
  *
  *-----------------------------------------------------------------*/
 void
-Show_Highscores (void)
+ShowHighscores (void)
 {
   int x0, x1, x2, x3;
   int y0, height, len;
@@ -178,7 +226,7 @@ Show_Highscores (void)
   SetCurrentFont (prev_font);
 
   return;
-} // Show_Highscores
+} // ShowHighscores
 
 
 

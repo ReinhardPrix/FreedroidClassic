@@ -482,10 +482,10 @@ EscapeMenu (void)
 		  break;
 
 		case SET_THEME:
-		  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
-		    GameConfig.Theme_SubPath="lanzz_theme/";
+		  if ( !strcmp (GameConfig.Theme_SubPath , "classic_theme/" ) )
+		    sprintf (GameConfig.Theme_SubPath, "lanzz_theme/");
 		  else
-		    GameConfig.Theme_SubPath="classic_theme/";
+		    sprintf (GameConfig.Theme_SubPath, "classic_theme/");
 
 		  ReInitPictures();
 		  
@@ -512,7 +512,7 @@ EscapeMenu (void)
 		  break;
 
 		case HIGHSCORES:
-		  Show_Highscores();
+		  ShowHighscores();
 		  break;
 
 		case CREDITS:
@@ -1048,16 +1048,44 @@ enum
 void
 Credits_Menu (void)
 {
+  int h; 
+  SDL_Rect screen;
+  h = FontHeight(Menu_BFont);
+  
+  Copy_Rect (Full_Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
   DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
+  MakeGridOnScreen (&screen);
 
-  CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
-  LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
-  RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
-  RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
-  LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
-  RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
-  RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
+
+  printf_SDL (ne_screen, User_Rect.w/2 - 20, 20, "CREDITS\n");
+
+  printf_SDL (ne_screen, 20, -1, "PROGRAMMING:");
+  printf_SDL (ne_screen, 2*User_Rect.w/3, -1, "Johannes Prix\n");
+  printf_SDL (ne_screen, -1, -1, "Reinhard Prix\n");
+  printf_SDL (ne_screen, -1, -1, "\n");
+
+  printf_SDL (ne_screen, 20, -1, "ARTWORK:");
+  printf_SDL (ne_screen, 2*User_Rect.w/3, -1, "Bastian Salmela\n");
+  printf_SDL (ne_screen, -1 , -1, "Lanzz\n");
+  printf_SDL (ne_screen, -1, -1, "\n");
+
+  printf_SDL (ne_screen, 20, -1, "C64 LEGACY MUSIC mods:\n");
+  printf_SDL (ne_screen, -1, -1, "\n");
+
+  printf_SDL (ne_screen, 20, -1, "#dreamfish/trsi:");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Green Beret, Sanxion,\n");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Uridium2\n");
+
+  printf_SDL (ne_screen, 20, -1, "4-mat:");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "The last V8, Anarchy\n");
+
+  printf_SDL (ne_screen, 20, -1, "Kollaps:");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Tron\n");
+
+  printf_SDL (ne_screen, 20, -1, "Nashua:");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Starpaws\n");
+
 
   SDL_Flip( ne_screen );
 

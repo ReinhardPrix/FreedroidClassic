@@ -46,7 +46,11 @@
 
 #include "SDL_rotozoom.h"
 
-void FlashWindow (int Flashcolor);
+SDL_Color Flash_Light = {11, 11, 11};
+SDL_Color Flash_Dark  = {230, 230, 230};
+
+#define BLINK_LEN 1.0   // length of one blink cycle at low energy (in s)
+
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
@@ -293,10 +297,9 @@ for using the influencer as a cursor in the menus.
 void
 PutInfluence ( int x, int y)
 {
-  SDL_Rect TargetRectangle;
+  SDL_Rect dst;
   SDL_Rect Text_Rect;
-  int alpha_value;
-  int i;
+  float rest, filt;
 
   Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Width/3;
   Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Height/2;
@@ -305,35 +308,37 @@ PutInfluence ( int x, int y)
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
-  if ( x == -1 ) 
-    {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2;
-    }
-  else
-    {
-      TargetRectangle.x=x ;
-      TargetRectangle.y=y ;
-    }
 
-  //--------------------
-  // Maybe the influencer is fading due to low energy?
-  // to achive this, is might be nescessary to add some 
-  // alpha to the ne_blocks surface, that will later be
-  // removed again.  We do this here:
-  //
-  
-#define alpha_offset 80
-  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == (-1) ) ) 
-    {
+  // Now we draw the hat and shoes of the influencer
+  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Me.pic, NULL);
 
+
+  // Now we draw the first digit of the influencers current number.
+  dst.x = First_Digit_Pos_X ;
+  dst.y = First_Digit_Pos_Y ;
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ], NULL, Me.pic, &dst);
+
+  // Now we draw the second digit of the influencers current number.
+  dst.x= Second_Digit_Pos_X;
+  dst.y= Second_Digit_Pos_Y;
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ], NULL, Me.pic, &dst);
+
+  // Now we draw the third digit of the influencers current number.
+  dst.x = Third_Digit_Pos_X ;
+  dst.y = Third_Digit_Pos_Y;
+
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, Me.pic, &dst);
+
+  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == -1 ) ) 
+    {
       // In case of low energy, do the fading effect...
-      alpha_value = (int) ( ( 256 - alpha_offset ) * 
-			    fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
-			    ( alpha_offset ) );
+      rest = fmod(Me.timer, BLINK_LEN);  // period of fading is given by BLINK_LEN
+      if (rest  < BLINK_LEN/2 )
+	filt = 0.40 + (1.0 - 2.0*rest/BLINK_LEN)*0.60;   // decrease white->grey
+      else
+	filt = 0.40 + (2.0*rest/BLINK_LEN - 1.0)*0.60;  // increase back to white
 
-      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+      ApplyFilter (Me.pic, filt, filt, filt);
 
       // ... and also maybe start a new cry-sound
 
@@ -343,18 +348,15 @@ PutInfluence ( int x, int y)
 	  CrySound();
 	}
     }
-  else
-    {
-      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-    }
 
   //--------------------
   // In case of transfer mode, we produce the transfer mode sound
   // but of course only in some periodic intervall...
 
-  if ( Me.status == TRANSFERMODE )
+  if ( Me.status == TRANSFERMODE  && (x == -1))
     {
+      ApplyFilter (Me.pic, 1.0, 0.0, 0.0);
+
       if ( Me.LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
 	{
 	  Me.LastTransferSoundTime = 0;
@@ -363,67 +365,21 @@ PutInfluence ( int x, int y)
     }
 
 
-  // Now we draw the hat and shoes of the influencer
-  // SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , ne_screen, &TargetRectangle );
-
-
-  // Now we draw the first digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + First_Digit_Pos_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + First_Digit_Pos_Y;
+      dst.x=USER_FENSTER_CENTER_X - Block_Width/2;
+      dst.y=USER_FENSTER_CENTER_Y - Block_Height/2;
     }
   else
     {
-      TargetRectangle.x=x + First_Digit_Pos_X ;
-      TargetRectangle.y=y + First_Digit_Pos_Y ;
+      dst.x=x ;
+      dst.y=y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
-  // Now we draw the second digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
-  if ( x == -1 ) 
-    {
-      // TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + Digit_Length;
-      // TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Second_Digit_Pos_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Second_Digit_Pos_Y;
-    }
-  else
-    {
-      TargetRectangle.x=x + Second_Digit_Pos_X ;
-      TargetRectangle.y=y + Second_Digit_Pos_Y ;
-    }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
-  // Now we draw the third digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
-  if ( x == -1 ) 
-    {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Third_Digit_Pos_Y;
-    }
-  else
-    {
-      TargetRectangle.x=x + Third_Digit_Pos_X ;
-      TargetRectangle.y=y + Third_Digit_Pos_Y ;
-    }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  SDL_BlitSurface (Me.pic, NULL, ne_screen, &dst);
 
-  //--------------------
-  // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
-  // which is the oposite of TRANSPARENT :)
-  //
 
-  // SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 
   //--------------------
   // Maybe the influencer has something to say :)
@@ -456,8 +412,7 @@ PutEnemy (int Enum , int x , int y)
 {
   const char *druidname;	/* the number-name of the Enemy */
   int phase;
-  int alpha_value;
-  int i;
+
   SDL_Rect TargetRectangle;
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
@@ -512,7 +467,7 @@ Sorry...\n\
   // The number will be blittet later
 
   druidname = Druidmap[AllEnemys[Enum].type].druidname;
-  phase = AllEnemys[Enum].feindphase;
+  phase = AllEnemys[Enum].phase;
 
   if ( x == (-1) ) 
     {
@@ -527,41 +482,7 @@ Sorry...\n\
       TargetRectangle.y=y;
     }
 
-  if ( AllEnemys[Enum].Friendly == 0 ) 
-    {
-      // SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
-      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
-    }
-  else
-    {
-      // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
-      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
-
-      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
-	{
-	  
-	  // In case of low energy, do the fading effect...
-	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
-				fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
-				( alpha_offset ) );
-	  
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
-	  
-	  // ... and also maybe start a new cry-sound
-	  
-	  // if ( Me.LastCrysoundTime > CRY_SOUND_INTERVAL )
-	  // {
-	  // Me.LastCrysoundTime = 0;
-	  // CrySound();
-	  // }
-	}
-      else
-	{
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
-    }
+  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
 
   //--------------------
   // Now the numbers should be blittet.
@@ -580,17 +501,8 @@ Sorry...\n\
      TargetRectangle.y=y + First_Digit_Pos_Y;
     }
 
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-    }
-  else
-    {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
-      //       ne_screen, &TargetRectangle );
-    }
-
+  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  
   if ( x == (-1) )
     {
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
@@ -604,16 +516,7 @@ Sorry...\n\
      TargetRectangle.y=y + Second_Digit_Pos_Y;
     }
 
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-    }
-  else
-    {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
-      // ne_screen, &TargetRectangle );
-    }
+  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
   if ( x == (-1) )
     {
@@ -626,16 +529,7 @@ Sorry...\n\
      TargetRectangle.y=y + Third_Digit_Pos_Y;
     }
 
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-    }
-  else
-    {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
-      //       ne_screen, &TargetRectangle );
-    }
+  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
 
   //--------------------
@@ -688,16 +582,12 @@ PutBullet (int BulletNummer)
       // Now the whole window will be filled with either white
       // or black each frame until the flash is over.  (Flash 
       // deletion after some time is done in CheckBulletCollisions.)
-      if ( (CurBullet->time_in_frames % 2) == 1)
-	{
-	  FlashWindow (0);
-	  return;
-	}
-      if ( (CurBullet->time_in_frames % 2) == 0)
-	{
-	  FlashWindow (0x0FFFFFFFF);
-	  return;
-	}
+      if ( CurBullet->time_in_seconds <= FLASH_DURATION/2)
+	Fill_Rect (User_Rect, Flash_Light);
+      else if (CurBullet->time_in_seconds <= FLASH_DURATION)
+	Fill_Rect (User_Rect, Flash_Dark);
+
+      return;
     } // if type == FLASH
 
 
@@ -784,18 +674,6 @@ PutBlast (int BlastNummer)
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
 
 }  // void PutBlast(int BlastNummer)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-FlashWindow (int Flashcolor)
-{
-  SetUserfenster( Flashcolor );
-}				// void FlashWindow(int Flashcolor)
 
 /*@Function============================================================
 @Desc: This function fills the whole combat window with the one color
