@@ -2072,8 +2072,14 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
 }; // void make_sure_tux_image_is_loaded ( ... )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * While earlier we used lots and lots of isolated .png and .offset files
+ * to store the information about the Tux, we've now moved over to using
+ * a single archive file that holds all the image and all the offset 
+ * information, even in uncompressed form, making access at runtime even
+ * *much* faster than it was before.  This file grabs one tux part from
+ * such an archive file.  It's typically called once or twice whenever 
+ * either a fresh game is started/loaded or when the Tux is changing
+ * equipment.
  * ---------------------------------------------------------------------- */
 void
 grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* part_string )
@@ -2092,7 +2098,7 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     //--------------------
     // A short message for debug purposes
     //
-    DebugPrintf ( -1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
+    DebugPrintf ( 1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
 
     //--------------------
     // We need a file name!
@@ -2118,13 +2124,6 @@ This indicates a serious bug in this installation of Freedroid.",
     {
 	DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
     }
-
-    // MemoryAmount = FS_filelength( DataFile )  + 64*2 + 10000;
-    // Data = (char *) MyMalloc ( MemoryAmount );
-
-    // DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
-
-
 
     for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
     {
@@ -2177,12 +2176,9 @@ This indicates a serious bug in this installation of Freedroid.",
 		// the individual strings for previous tux parts...
 		//
 		strcpy ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string );
-		
-		// DebugPrintf ( -1000 , "\nmake_sure_tux_image_is_loaded ( ... ): new image has just been loaded!" );
 	    }
 	}
     }
-
 
     if ( fclose ( DataFile ) == EOF)
     {
@@ -2198,7 +2194,6 @@ belonging to Freedroid.",
     {
 	DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
     }
-
     
 }; // void grab_tux_images_from_archive ( ... )
 
