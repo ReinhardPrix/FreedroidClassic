@@ -138,7 +138,7 @@ float Frame_Time(void){
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-int main(void)
+int main(int argc, char * const argv[])
 {
   int i;
 
@@ -146,7 +146,13 @@ int main(void)
   QuitProgram = FALSE;
   Conceptview = FALSE;
 
-  sound_on=TRUE;
+  sound_on=TRUE;  /* default value, can be overridden by command-line */
+
+  /* Parse command line and set global switches 
+     this function exits program when error, so we don't need to 
+     check its success  (dunno if that's good design?)
+  */
+  parse_command_line (argc, argv);
   
   InterruptInfolineUpdate=TRUE;
 

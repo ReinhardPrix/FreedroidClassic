@@ -53,7 +53,7 @@ EXTERN void StandardEnergieLieferungen(void);
 #else
 #define EXTERN extern
 #endif
-
+EXTERN void parse_command_line (int argc, char * const argv[]);
 EXTERN void Title(void);
 EXTERN void InitParaplus(void);
 EXTERN void InitNewGame(void);

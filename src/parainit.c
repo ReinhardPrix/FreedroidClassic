@@ -50,12 +50,14 @@
 #include <vgagl.h>
 #include <vgakeyboard.h>
 #include <sys/stat.h>
+#include <getopt.h>
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
 #include "paratext.h"
+
 // #include "paravars.h"
 #include "ship.h"
 
@@ -76,25 +78,105 @@ char TitleText2[]="The 001 Influence Device consists\nof a helmet, which, when p
 char TitleText3[]="An Influence Device can transmitt\nconsole. A small-scale plan of the\nwhole deck is available, as well\nas a side elevation of the ship.\nRobots are represented on-screen\nas a symbol showing a three-digit\nnumber. The first digit shown is\nthe important one, the class of the\nrobot. It denotes the strength also.\nTo find out more about any given\nrobot, use the robot enquiry system\nat a console. Only data about units\nof a lower class than your current\nhost is available, since it is the\nhost's security clearance which is\nused to acces the console. \n  \n  \n  \n Press fire to play";
       
 
-//
-// This function is for stability while working with the SVGALIB, which otherwise would
-// be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
-// graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
-// console will NOT be returned to normal, the keyboard will remain useless and login from
-// outside and shutting down or reseting the console will be the only way to avoid a hard
-// reset!
-// Therefore this function is introduced.  When Paradroid starts up, the operating system is
-// instructed to generate a signal ALARM after a specified time has passed.  This signal will
-// be handled by this function, which in turn restores to console to normal and resets the
-// yiff sound server access if applicable. (All this is done via calling Terminate of course.)
-//                                                                           jp, 10.04.2002
-//
-
-static void timeout(int sig)
+/* -----------------------------------------------------------------
+ * This function is for stability while working with the SVGALIB, which otherwise would
+ * be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
+ * graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
+ * console will NOT be returned to normal, the keyboard will remain useless and login from
+ * outside and shutting down or reseting the console will be the only way to avoid a hard
+ * reset!
+ * Therefore this function is introduced.  When Paradroid starts up, the operating system is
+ * instructed to generate a signal ALARM after a specified time has passed.  This signal will
+ * be handled by this function, which in turn restores to console to normal and resets the
+ * yiff sound server access if applicable. (All this is done via calling Terminate
+ * of course.) 
+ * -----------------------------------------------------------------*/
+static void 
+timeout (int sig)
 {
   printf("\n\nstatic void timeout(int sig): Automatic termination NOW!!");
   Terminate(0);
-} // static void timeout(int sig)
+} /* timeout */
+
+char version_string[] = "FreeDroid 0.6.0
+Copyright (C) 2002 Johannes Prix, Reinhard Prix
+FreeDroid comes with NO WARRANTY to the extent permitted by law.
+You may redistribute copies of FreeDroid
+under the terms of the GNU General Public License.
+For more information about these matters, see the file named COPYING.\n";
+
+
+char usage_string[] = "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] [-t|--timeout=SECONDS]\n
+Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
+
+/* -----------------------------------------------------------------
+ *  parse command line arguments and set global switches 
+ *  exit on error, so we don't need to return success status
+ * -----------------------------------------------------------------*/
+void
+parse_command_line (int argc, char * const argv[])
+{
+  int c;
+  int timeout_time;  /* timeout to restore text-mode */
+
+  static struct option long_options[] =
+  {
+    {"version", 0, 0, 'v'},
+    {"help",    0, 0, 'h'},
+    {"nosound", 0, 0, 'q'},
+    {"sound",   0, 0, 's'},
+    {"timeout", 1, 0, 't'},
+    {0, 0, 0, 0 }
+  };
+
+  while (1)
+    {
+      c = getopt_long (argc, argv, "vqst:h?", long_options, NULL);
+      if (c == -1) break;
+      
+      switch (c) {
+	/* version statement -v or --version
+	 * following gnu-coding standards for command line interfaces */
+      case 'v':
+	printf (version_string);
+	exit(0); 
+	break;
+
+      case 'h':
+      case '?':
+	printf (usage_string);
+	exit(0);
+	break;
+
+      case 'q':
+	sound_on = FALSE;
+	break;
+
+      case 's':
+	sound_on = TRUE;
+	break;
+
+      case 't':
+	timeout_time = atoi (optarg);
+	if (timeout_time > 0) 
+	  {
+	    signal(SIGALRM,timeout);
+	    alarm(timeout_time);	/* Terminate after some seconds for safety. */
+	  }
+	break;
+
+      default:
+	printf ("\nOption %c not implemented yet! Ignored.", c);
+	break;
+      } /* switch(c) */
+
+    } /* while(1) */
+
+
+
+
+} /* parse_command_line */
+
 
 /*@Function============================================================
 @Desc: InitNewGame(): 	Startwerte fuer neues Spiel einstellen 
@@ -220,21 +302,8 @@ void InitNewGame(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void InitParaplus(void) {
-  int AutoTerminationTime;
 
   printf("void InitParaplus(void) wurde echt aufgerufen....\n");
-
-  printf("Auto Terminate after how many seconds? (0 for none): ");
-  scanf("%d", &AutoTerminationTime); getchar();
-  if( AutoTerminationTime==0 ) {
-    printf("\nNo AutoTermination... good luck!\n");
-    printf("...last chance to chicken out (i.e. C-c). Press RETURN to continue!\n");
-    getchar();
-  } else {
-    signal(SIGALRM,timeout);
-    printf("\nvoid InitParaplus(void): An alarm signal will be issued in %d seconds,terminating the program for safety.", AutoTerminationTime);
-    alarm(AutoTerminationTime);	/* Terminate after some seconds for safety. */
-  }
 
   Set_SVGALIB_Video_ON(); 
 
