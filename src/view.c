@@ -3017,13 +3017,16 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   //--------------------
   // Now we fill our bars...
   //
-  Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ; 
+  Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
+  
+  printf("e is %f , max is %f, width is %i\n", AllEnemys [ Enum ] . energy, Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy , Percentage) ;
   
   FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
   FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
   FillRect . h = 7 ; 
   FillRect . w = Percentage ;
 
+  printf("width is %i\n", Percentage) ;
   //--------------------
   // If the enemy is friendly, then we needn't display his health, right?
   // Or better yet, we might show a green energy bar instead.  That's even
@@ -3212,15 +3215,15 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
       if ( use_open_gl )
 	{
 	  blit_open_gl_texture_to_screen_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] , TargetRectangle . x , TargetRectangle . y , TRUE );
-	  if ( GameConfig . enemy_energy_bars_visible )
+/*	  if ( GameConfig . enemy_energy_bars_visible )
 	    PutEnemyEnergyBar ( Enum , TargetRectangle );
-	}
+*/	}
       else
 	{
 	  our_SDL_blit_surface_wrapper ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle );
-	  if ( GameConfig . enemy_energy_bars_visible )
+/*	  if ( GameConfig . enemy_energy_bars_visible )
 	    PutEnemyEnergyBar ( Enum , TargetRectangle );
-	}
+*/	}
       return;
     }
 
