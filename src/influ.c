@@ -1356,17 +1356,16 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
 /* ----------------------------------------------------------------------
  * This function is supposed to find out if a given line on the current
  * map of this player is walkable for the tux or not.
- *
  * ---------------------------------------------------------------------- */
 int
 tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float y2 )
 {
-  global_ignore_doors_for_collisions_flag = TRUE ;
-  if ( DirectLineWalkable ( x1 , y1 , x2 , y2 , Me [ player_num ] . pos . z ) )
-    return ( TRUE );
-  else
-    return ( FALSE ); 
-  global_ignore_doors_for_collisions_flag = FALSE ;
+    global_ignore_doors_for_collisions_flag = TRUE ;
+    if ( DirectLineWalkable ( x1 , y1 , x2 , y2 , Me [ player_num ] . pos . z ) )
+	return ( TRUE );
+    else
+	return ( FALSE ); 
+    global_ignore_doors_for_collisions_flag = FALSE ;
 }; // int tux_can_walk_this_line ( float x1, float y1 , float x2 , float y2 )
 
 /* ----------------------------------------------------------------------

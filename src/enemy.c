@@ -1037,6 +1037,21 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
+ * This function is supposed to find out if a given line on an 
+ * arbitrarily chosen map can be walked by a bot or not.
+ * ---------------------------------------------------------------------- */
+int
+droid_can_walk_this_line ( int level_num , float x1, float y1 , float x2 , float y2 )
+{
+    global_ignore_doors_for_collisions_flag = TRUE ;
+    if ( DirectLineWalkable ( x1 , y1 , x2 , y2 , level_num ) )
+	return ( TRUE );
+    else
+	return ( FALSE ); 
+    global_ignore_doors_for_collisions_flag = FALSE ;
+}; // int droid_can_walk_this_line ( int level_num , float x1, float y1 , float x2 , float y2 )
+
+/* ----------------------------------------------------------------------
  * If the droid in question is currently not following the waypoint system
  * but rather moving around on it's own and without any real destination,
  * this function sets up randomly chosen targets for the droid.
@@ -1063,7 +1078,7 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 	target_candidate . x = ThisRobot -> pos . x + ( MyRandom ( 600 ) - 300 ) / 100 ; 
 	target_candidate . y = ThisRobot -> pos . y + ( MyRandom ( 600 ) - 300 ) / 100 ; 
 
-	if ( tux_can_walk_this_line ( 0 , ThisRobot -> pos . x , ThisRobot -> pos . y , 
+	if ( droid_can_walk_this_line ( 0 , ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				      target_candidate . x , target_candidate . y ) )
 	{
 	    ThisRobot -> persuing_given_course = TRUE ;

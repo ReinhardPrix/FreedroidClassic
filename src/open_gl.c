@@ -2159,7 +2159,7 @@ blit_special_background ( int background_code )
 	    FALSE , // 25
 	    TRUE  , // 26
 	    TRUE  , // 27
-	    FALSE   // 28
+	    TRUE    // 28
 	};
 	    
     //--------------------
