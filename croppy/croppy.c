@@ -21,34 +21,9 @@
  *
  */
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
-#include <getopt.h>
-
-#include <sys/soundcard.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include <dirent.h>
-
-#include "SDL.h"
-#include "SDL_image.h"
+#include "../src/system.h"
 #include "../src/defs.h"
+#include "../src/getopt.h"
 
 void Terminate (int ExitCode);
 
