@@ -232,6 +232,8 @@ typedef struct
     int ListOfActionsToBeTriggeredAtCompletition[ MAX_MISSION_TRIGGERED_ACTIONS ];
 
     char* mission_description_texts [ MAX_MISSION_DESCRIPTION_TEXTS ] ;
+    int mission_description_visible [ MAX_MISSION_DESCRIPTION_TEXTS ] ;
+    
 }
 mission, *Mission;
 
