@@ -428,6 +428,22 @@ MoveThisRobotAdvanced ( int EnemyNum )
     {
       ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
       ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
+
+      // This statement should make hostile droids with aggresssion
+      // wait, if they see the influencer and are at their waypoint now.
+      // Then they (in some other function) open fire and should do
+      // that, until the influencer vanishes out of sight, which should cause them
+      // to go into a hunting mode. (to be implemented later).
+      //
+      if ( IsVisible ( &(ThisRobot->pos) ) &&
+	   Druidmap[ThisRobot->type].aggression &&
+	   ! ThisRobot->Friendly )
+	{
+	  ThisRobot->warten=2;
+	  return;
+	}
+
+						   
       
       // search for possible connections from here...
       DebugPrintf (2, "\nMoveRobotAdvanced: searching for possible connections...");
