@@ -1,5 +1,9 @@
 -*- mode: text -*-
 
+* We have moved to sourceforge now!
+Visit our project page on:
+http://sourceforge.net/projects/freedroid/
+
 * added joystick support, works ok.
 
 * SDL now used for graphics _and_ sound, yiff is no longer used.
