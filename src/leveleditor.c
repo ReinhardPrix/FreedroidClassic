@@ -1928,31 +1928,16 @@ CreateNewMapLevel( void )
     }
 
   //--------------------
-  // Now we add some dummy map content...
+  // Now we initialize the map obstacles with 'empty' information
   //
-  for ( i = 0 ; i < NewLevel->ylen ; i ++ )
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      NewLevel->map[i] = MyMalloc ( NewLevel->xlen + 1 );
-      if ( ( i == 0 ) || ( i == NewLevel->ylen -1 ) ) memset ( NewLevel->map[i] , H_WALL , NewLevel->xlen );
-      else memset ( NewLevel->map[i] , FLOOR , NewLevel->xlen );
-
-      if ( i == 0 )
-	{
-	  NewLevel->map[i][0] . floor_value = CORNER_LU;
-	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = CORNER_RU;
-	}
-      else if ( i == NewLevel->ylen -1 )
-	{
-	  NewLevel->map[i][0] . floor_value = CORNER_LD;
-	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = CORNER_RD;
-	}
-      else
-	{
-	  NewLevel->map[i][0] . floor_value = V_WALL;
-	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = V_WALL;
-	}
-
+      NewLevel -> obstacle_list [ i ] . type = ( -1 ) ;
+      NewLevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+      NewLevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+      NewLevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
     }
+
 
   //--------------------
   // Now we add empty waypoint information...
@@ -2247,7 +2232,23 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   //
   if ( TPressed()) 
     {
-      EditLevel -> map [ BlockY ] [ BlockX ]  . floor_value = TELE_1 ;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_TELEPORTER_1 ;
+    }
+  if (APressed())
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_ALERT ;
+    }
+  if (RPressed())
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_REFRESH_1 ;
+    }
+  if (UPressed())
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_V_CHEST_CLOSED ;
     }
   
   //--------------------
@@ -2256,40 +2257,45 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   //
   if (Number1Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =BOX_1;
-      else
-	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK1;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_V_WALL ;
     }
   if (Number2Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =BOX_2;
-      else
-	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK2;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_H_WALL ;
     }
   if (Number3Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =BOX_3;
-      else
-	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK3;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_CAVE_WALL_V ;
     }
   if (Number4Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =BOX_4;
-      else
-	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK4;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_CAVE_WALL_H ;
     }
   if (Number5Pressed()) 
     {
-      EditLevel->map[BlockY][BlockX] . floor_value =BLOCK5;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_V_WOOD_FENCE ;
     }
-  if (LPressed()) 
+  if (Number6Pressed()) 
     {
-      EditLevel->map[BlockY][BlockX] . floor_value =LIFT;
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_H_WOOD_FENCE ;
     }
+  if (Number7Pressed()) 
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_V_DENSE_FENCE ;
+    }
+  if (Number8Pressed()) 
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+      FirstBlock = Highlight = ISO_H_DENSE_FENCE ;
+    }
+  /*
   if (KP_PLUS_Pressed()) 
     {
       EditLevel->map[BlockY][BlockX] . floor_value =V_WALL;
@@ -2300,92 +2306,51 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       EditLevel->map[BlockY][BlockX] . floor_value =H_WALL;
       if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_H_WALL;
     }
+  */
   if (KP1Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_L;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_LD;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_LD;
-      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_LD;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 1.0 );
+      while ( KP1Pressed() );
     }
   if (KP2Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_D;
-      else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_D;
-      else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_D;
-      else EditLevel->map[BlockY][BlockX] . floor_value =T_D;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 1.0 );
+      while ( KP2Pressed() );
     }
   if (KP3Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_U;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_RD;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_RD;
-      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_RD;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 1.0 );
+      while ( KP3Pressed() );
     }
   if (KP4Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_L;
-      else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_L;
-      else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_R;
-      else EditLevel->map[BlockY][BlockX] . floor_value =T_L;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
+      while ( KP4Pressed() );
     }
   if (KP5Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =VOID;
-      else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET;
-      else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CAVE_FLOOR;
-      else EditLevel->map[BlockY][BlockX] . floor_value =KREUZ;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 0.5 );
+      while ( KP5Pressed() );
     }
   if (KP6Pressed()) 
     {
-      if ( LeftShiftWasPressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_R;
-      else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_R;
-      else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_L;
-      else EditLevel->map[BlockY][BlockX] . floor_value =T_R;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 0.5 );
+      while ( KP6Pressed() );
     }
   if (KP7Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_D;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_LU;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_LU;
-      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_LU;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) );
+      while ( KP7Pressed() ); 
     }
   if ( KP8Pressed() ) 
     {
-      if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_U;
-      else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_U;
-      else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_U;
-      else EditLevel->map[BlockY][BlockX] . floor_value =T_U;
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
+      while ( KP8Pressed() ); 
     }
   if (KP9Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_R;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_RU;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_RU;
-      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_RU;
-    }
-  if (APressed())
-    {
-      EditLevel->map[BlockY][BlockX] . floor_value =ALERT;	      
-    }
-  if (RPressed())
-    {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]  . floor_value = CONSUMER_1;
-      else EditLevel->map[BlockY][BlockX]  . floor_value = REFRESH1;	            
+      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) );
+      while ( KP9Pressed() ); 
     }
   if (DPressed())
     {
@@ -2404,21 +2369,6 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	    create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_LOCKED , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
 	}
       while ( DPressed() );
-    }
-  if (UPressed())
-    {
-      if ( !CtrlWasPressed())
-	{
-	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX] . floor_value =CHEST_U;	            	      
-	  else EditLevel->map[BlockY][BlockX] . floor_value =CHEST_D;	            	      
-	}
-      else
-	{
-	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX] . floor_value =CHEST_L;	            	      
-	  else EditLevel->map[BlockY][BlockX] . floor_value =CHEST_R;	            	      
-	}
     }
   if (SpacePressed() && !axis_is_active )
     {
