@@ -579,7 +579,7 @@ enum _directions
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
-#define MAX_LEVELS		29   	// how many map levels are allowed in one ship
+#define MAX_LEVELS		39   	// how many map levels are allowed in one ship
 				     	/* corresponds to a reserved palette range ! */
 #define MAX_LIFT_ROWS		15   	/* the different lift "rows" */
 					/* don't change this easily */
