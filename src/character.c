@@ -39,6 +39,25 @@
 
 #include "items.h"
 
+//--------------------
+// Now we give some definitions for the computation of the
+// character stats
+//
+float Energy_Gain_Per_Vit_Point[]={ -1 , 2 , 1.5 , 1 };
+float Mana_Gain_Per_Magic_Point[]={ -1 , 1 , 1.5 , 2 };
+float AC_Gain_Per_Dex_Point[]={ -1, 1, 1, 1 };
+// #define ENERGY_GAIN_PER_VIT_POINT 2
+// #define MANA_GAIN_PER_MAGIC_POINT 2
+// #define AC_GAIN_PER_DEX_POINT 1
+
+#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
+#define TOHIT_PERCENT_PER_DEX_POINT (0.5)
+
+//--------------------
+// At first we state some geometry constants for where to insert
+// which character stats in the character screen...
+//
+
 #define CLASS_X 175
 
 #define EXPERIENCE_Y 55
@@ -72,13 +91,6 @@
 // #define CHARACTERRECT_Y (User_Rect.y)
 #define CHARACTERRECT_W (SCREEN_WIDTH/2)
 #define CHARACTERRECT_H (User_Rect.h)
-
-#define ENERGY_GAIN_PER_VIT_POINT 2
-#define MANA_GAIN_PER_MAGIC_POINT 2
-// #define DAMAGE_GAIN_PER_STR_POINT 2
-#define AC_GAIN_PER_DEX_POINT 1
-#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
-#define TOHIT_PERCENT_PER_DEX_POINT (0.5)
 
 // #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
@@ -561,8 +573,12 @@ UpdateAllCharacterStats ( int PlayerNum )
   // stats can be applied as well.
   //
   Me [ PlayerNum ] .to_hit = 60 + ( Me [ PlayerNum ] .Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
-  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
-  Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * MANA_GAIN_PER_MAGIC_POINT;
+
+  //  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
+  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];
+
+  // Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * MANA_GAIN_PER_MAGIC_POINT;
+  Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
   // This includes damage done as well...
   if ( Me [ PlayerNum ] .weapon_item.type != (-1) )
     {
@@ -587,7 +603,7 @@ UpdateAllCharacterStats ( int PlayerNum )
       Me [ PlayerNum ] .damage_modifier = 1;
     }
   // ... and also armour class
-  Me [ PlayerNum ] .AC = ( Me [ PlayerNum ] .Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
+  Me [ PlayerNum ] .AC = ( Me [ PlayerNum ] .Dexterity - 15 ) * AC_Gain_Per_Dex_Point [ Me [ PlayerNum ] . character_class ];
   if ( Me [ PlayerNum ] .armour_item.type != (-1) )
     {
       Me [ PlayerNum ] .AC += Me [ PlayerNum ] .armour_item.ac_bonus;
@@ -809,14 +825,16 @@ ShowCharacterScreen ( void )
 	{
 	  Me[0].base_magic++;
 	  Me[0].PointsToDistribute--;
-	  Me[0].mana += MANA_GAIN_PER_MAGIC_POINT;
+	  Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	}
       if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_vitality++;
 	  Me[0].PointsToDistribute--;
-	  Me[0].health += ENERGY_GAIN_PER_VIT_POINT;
-	  Me[0].energy += ENERGY_GAIN_PER_VIT_POINT;
+	  // Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
+	  // Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
+	  Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
+	  Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
 	}
 
       //--------------------
