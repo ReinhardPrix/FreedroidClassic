@@ -85,7 +85,8 @@ main (int argc, char *const argv[])
   while (!QuitProgram)
     {
 
-      MissionSelectMenu ( );
+      StartupMenu ( );
+      // MissionSelectMenu ( );
       // InitNewMission ( STANDARD_MISSION );
       // InitNewMission ( NEW_MISSION );
 
