@@ -816,7 +816,7 @@ Error: hacking skill seems out of bounds.",
       else
       DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
     */
-}; // void show_character_screen_skills ( void )
+}; // void show_character_screen_skills ( int player_num )
 
 /* ----------------------------------------------------------------------
  * This function displays the character screen.

@@ -184,13 +184,13 @@ clear_automap_texture_completely ( void )
     {
 	empty_texture_is_available = TRUE ;
 	// pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
-	empty_automap_surface = MyMalloc ( 4 * ( AUTOMAP_TEXTURE_WIDTH * AUTOMAP_TEXTURE_HEIGHT + 1 ) ) ;
+	empty_automap_surface = MyMalloc ( 4 * ( ( AUTOMAP_TEXTURE_WIDTH + 2 )  * ( AUTOMAP_TEXTURE_HEIGHT + 2 ) ) ) ;
 	memset ( empty_automap_surface , 0 , 4 * AUTOMAP_TEXTURE_WIDTH * AUTOMAP_TEXTURE_HEIGHT ) ;
     }
 
     DebugPrintf ( 1 , "\n%s(): starting to clear automap." , __FUNCTION__ );
 
-    // glEnable ( GL_TEXTURE_2D );
+    glEnable ( GL_TEXTURE_2D );
     glBindTexture ( GL_TEXTURE_2D , *automap_texture );
     glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
 		      0 , 

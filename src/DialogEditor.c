@@ -2338,49 +2338,49 @@ gui_redraw_graph_completely ( void )
 void 
 load_dialog_file_selector( GtkWidget *w, GtkFileSelection *fs )
 {
-  DebugPrintf ( 1 ,"\n ATTENTION!  A file name has been selected (for loading)!" );
-  DebugPrintf ( 1 ,"\n The file name is : %s" , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
-  
-  DebugPrintf ( 1 ,"\n ...cleaning out old dialog roster from possible old data..." );
-  DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
-
-  InitChatRosterForNewDialogue(  );
-
-  DebugPrintf ( 1 ,"\n ...now attempting to load dialog file..." );
-  DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
-
-  strcpy ( LastUsedFileName , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
-  LoadChatRosterWithChatSequence ( gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) );
-
-  //--------------------
-  // Now that we have loaded something, the main window should show the current file name
-  //
-  gtk_window_set_title ( GTK_WINDOW ( wnd ), LastUsedFileName );
-
-  //--------------------
-  // Now we set the 'authors notes' text in the lower part of the split window...
-  //
-  gtk_text_set_point ( GTK_TEXT ( authors_notes_entry ) , 0 );
-  gtk_text_forward_delete ( GTK_TEXT ( authors_notes_entry ) , gtk_text_get_length ( GTK_TEXT ( authors_notes_entry ) ) ) ;
-  gtk_text_insert ( GTK_TEXT ( authors_notes_entry ) , authors_notes_entry->style->font,
-		    &authors_notes_entry->style->black,
-		    &authors_notes_entry->style->white,
-		    authors_notes ,
-		    -1 );
-  
-
-
-  DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
-  DebugPrintf ( 1 ,"\n ...Dialog file should be loaded now by now." );
-
-  gtk_widget_destroy ( filew ) ;
-
-  //--------------------
-  // Now that we have loaded a new dialog roster, we must redraw the current
-  // dialog graph as well...
-  //
-  gui_redraw_graph_completely (  );
-
+    DebugPrintf ( 1 ,"\n ATTENTION!  A file name has been selected (for loading)!" );
+    DebugPrintf ( 1 ,"\n The file name is : %s" , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
+    
+    DebugPrintf ( 1 ,"\n ...cleaning out old dialog roster from possible old data..." );
+    DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
+    
+    InitChatRosterForNewDialogue(  );
+    
+    DebugPrintf ( 1 ,"\n ...now attempting to load dialog file..." );
+    DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
+    
+    strcpy ( LastUsedFileName , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
+    LoadChatRosterWithChatSequence ( gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) );
+    
+    //--------------------
+    // Now that we have loaded something, the main window should show the current file name
+    //
+    gtk_window_set_title ( GTK_WINDOW ( wnd ), LastUsedFileName );
+    
+    //--------------------
+    // Now we set the 'authors notes' text in the lower part of the split window...
+    //
+    gtk_text_set_point ( GTK_TEXT ( authors_notes_entry ) , 0 );
+    gtk_text_forward_delete ( GTK_TEXT ( authors_notes_entry ) , gtk_text_get_length ( GTK_TEXT ( authors_notes_entry ) ) ) ;
+    gtk_text_insert ( GTK_TEXT ( authors_notes_entry ) , authors_notes_entry->style->font,
+		      &authors_notes_entry->style->black,
+		      &authors_notes_entry->style->white,
+		      authors_notes ,
+		      -1 );
+    
+    
+    
+    DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
+    DebugPrintf ( 1 ,"\n ...Dialog file should be loaded now by now." );
+    
+    gtk_widget_destroy ( filew ) ;
+    
+    //--------------------
+    // Now that we have loaded a new dialog roster, we must redraw the current
+    // dialog graph as well...
+    //
+    gui_redraw_graph_completely (  );
+    
 }; // void load_dialog_file_selector( GtkWidget *w, GtkFileSelection *fs )
 
 /* ----------------------------------------------------------------------
@@ -3734,54 +3734,56 @@ gui_create_graph_window ( GtkWidget* paned )
 int
 main( int argc, char *argv[] )
 {
-  //--------------------
-  // At first we initialize our dialog roster.  After all we don't want
-  // complete random data in our structure being displayed at program
-  // startup...
-  //
-  InitChatRosterForNewDialogue(  ) ;
+    //--------------------
+    // At first we initialize our dialog roster.  After all we don't want
+    // complete random data in our structure being displayed at program
+    // startup...
+    //
+    InitChatRosterForNewDialogue(  ) ;
+    
+    //--------------------
+    // This function call should filter out all the given parameters
+    // to the dialog editor, that aren't intended for the dialog editor
+    // anyway, but rather for the GTK library.  After this, we can process
+    // the rest of the given arguments, without having to fear that some
+    // GTK parameters are still in there.
+    //
+    gtk_init (&argc, &argv);
 
-  //--------------------
-  // This function call should filter out all the given parameters
-  // to the dialog editor, that aren't intended for the dialog editor
-  // anyway, but rather for the GTK library.  After this, we can process
-  // the rest of the given arguments, without having to fear that some
-  // GTK parameters are still in there.
-  //
-  gtk_init (&argc, &argv);
+    debug_level = 4 ;
 
-  //--------------------
-  // At first we need to create the main window of our dialog editor.
-  // Within this window, almost everything of the editor will take place...
-  //
-  gui_create_main_window ();
+    //--------------------
+    // At first we need to create the main window of our dialog editor.
+    // Within this window, almost everything of the editor will take place...
+    //
+    gui_create_main_window ();
 
-  //--------------------
-  // Now that we have our main window, we can add the top menu line
-  // with all the most important menu entries...
-  //
-  gui_create_top_menu_line ();
-
-  // Window Menu
-  // windowMenu = gtk_menu_new ();
-
-  // Attach Window Menu
-  // menuitem = gtk_menu_item_new_with_label ("Windows");
-  // gtk_widget_show (menuitem);
-  // gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), windowMenu);
-  // gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
-  // gtk_widget_show (menu);
-
-  vpaned = gtk_vpaned_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), vpaned, TRUE, TRUE, 2);
-  gtk_paned_set_handle_size (GTK_PANED (vpaned), 5);
-  // rp(30/05/04): deactivated for win32-crosscompiling
-  //gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
-  gtk_widget_show (vpaned);
-
-  // Accelerators
-  // gtk_window_add_accel_group (GTK_WINDOW (wnd), accel_group);
-
+    //--------------------
+    // Now that we have our main window, we can add the top menu line
+    // with all the most important menu entries...
+    //
+    gui_create_top_menu_line ();
+    
+    // Window Menu
+    // windowMenu = gtk_menu_new ();
+    
+    // Attach Window Menu
+    // menuitem = gtk_menu_item_new_with_label ("Windows");
+    // gtk_widget_show (menuitem);
+    // gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), windowMenu);
+    // gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
+    // gtk_widget_show (menu);
+    
+    vpaned = gtk_vpaned_new ();
+    gtk_box_pack_start (GTK_BOX (vbox), vpaned, TRUE, TRUE, 2);
+    gtk_paned_set_handle_size (GTK_PANED (vpaned), 5);
+    // rp(30/05/04): deactivated for win32-crosscompiling
+    //gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
+    gtk_widget_show (vpaned);
+    
+    // Accelerators
+    // gtk_window_add_accel_group (GTK_WINDOW (wnd), accel_group);
+    
   //--------------------
   // Now 
   gui_create_graph_window ( vpaned );

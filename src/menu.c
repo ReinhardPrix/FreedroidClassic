@@ -2494,6 +2494,12 @@ PrepareNewHero (void)
     Me [ 0 ] . is_town_guard_member = FALSE ;
 
     //--------------------
+    // If the special string "HaveNoName" is being supplied, then
+    // we treat this as no name given and will return false.
+    //
+    if ( ! strcmp ( Me [ 0 ] . character_name , "HaveNoName" ) ) return ( FALSE ) ;
+
+    //--------------------
     // If a real name has been given, then we can proceed and start the
     // game.  If no real name has been given or 'Escape' has been pressed,
     // then the calling function will return to the menu and do nothing
