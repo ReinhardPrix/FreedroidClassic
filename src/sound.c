@@ -455,19 +455,11 @@ LoadAllStaticWavFiles( void )
       Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
       if ( Loaded_WAV_Files [ i ] == NULL )
 	{
-	  fprintf (stderr, "\n\nfpath: '%s'.\n" , fpath );
-	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
-\n\
-Please check that your sound card is properly configured,\n\
-i.e. if other applications are able to play sounds.\n\
-\n\
-If you for some reason cannot get your sound card ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
+	  DebugPrintf (-1, "Sound sample %s not found. \n\
+Will continue with sound disabled.\n\
+If you want sound, please install the sound-samples.\n", Temp_Filename);
+	  sound_on = FALSE; // simply switch off sound
+	  return;
 	} // if ( !Loaded_WAV...
       else
 	{

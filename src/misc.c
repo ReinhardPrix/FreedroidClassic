@@ -378,8 +378,7 @@ find_file (char *fname, char *subdir, int use_theme)
       GiveStandardErrorMessage ( "find_file(...)" , "\
 A find_file call has been issued to generate the full path name of a\n\
 certain file, but the file name given is an empty string!\n\
-This is indicates a severe bug in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
     }
   if (!subdir)
     subdir = "";
@@ -410,7 +409,8 @@ This is indicates a severe bug in Freedroid.",
 	  if ( i == 0 )
 	    DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
 	  else
-	    GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+	    GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", 
+				       NO_NEED_TO_INFORM , IS_WARNING_ONLY );
 	}
     } // for i 
 
