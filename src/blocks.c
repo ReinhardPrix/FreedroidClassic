@@ -2841,11 +2841,11 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . filename = "iso_walls_0019.png" ;
 
-  obstacle_map [ ISO_SHOP_FURNITURE_1 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_1 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_1 ] . block_area_parm_1 = 3.5 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_1 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_SHOP_FURNITURE_1 ] . filename = "iso_shop_furniture_0001.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_1 = 1.5 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_2 = 3.5 ;
   obstacle_map [ ISO_SHOP_FURNITURE_2 ] . filename = "iso_shop_furniture_0002.png" ;
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_2 = standard_wall_thickness ;

@@ -3301,17 +3301,17 @@ int
 IsPassable ( float x , float y , int z )
 {
   Level PassLevel = curShip . AllLevels [ z ] ;
-  // int x_tile_start, y_tile_start;
-  // int x_tile_end, y_tile_end;
+  int x_tile_start, y_tile_start;
+  int x_tile_end, y_tile_end;
   int x_tile, y_tile;
   
   //--------------------
   // We take a look whether the position given in the parameter is 
   // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
   //
-  /*
-  x_tile_start = rintf ( x ) -1         ; y_tile_start = rintf ( y ) -1 ;
-  x_tile_end   = x_tile_start + 2       ; y_tile_end   = y_tile_start + 2 ;
+
+  x_tile_start = rintf ( x ) -2         ; y_tile_start = rintf ( y ) -2 ;
+  x_tile_end   = x_tile_start + 4       ; y_tile_end   = y_tile_start + 4 ;
   if ( x_tile_start < 0 ) x_tile_start = 0 ; 
   if ( y_tile_start < 0 ) y_tile_start = 0 ; 
   if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
@@ -3323,10 +3323,13 @@ IsPassable ( float x , float y , int z )
       // DebugPrintf ( 0 , " %d " , x_tile );
       for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
 	{
-	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( FALSE );
 	}
     }
-  */
+
+  return ( TRUE ) ;
+
+
 
   //--------------------
   // It should be safe to skip any out-of-map checks here, because the Tux
