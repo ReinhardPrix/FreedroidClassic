@@ -100,9 +100,6 @@
 #  ifdef HAVE_GL_GL_H
 #     include "GL/gl.h"
 #  endif
-#  ifdef HAVE_GL_H
-#     include "gl.h"
-#  endif
 #  ifdef HAVE_OPENGL_GL_H
 #     include "OpenGL/gl.h"
 #  endif
@@ -110,9 +107,6 @@
 
 #  ifdef HAVE_GL_GLEXT_H
 #     include "GL/glext.h"
-#  endif
-#  ifdef HAVE_GLEXT_H
-#     include "glext.h"
 #  endif
 #  ifdef HAVE_OPENGL_GLEXT_H
 #     include "OpenGL/glext.h"

@@ -127,8 +127,10 @@ else
    dnl for backwards compatibility with our previous check, define
    dnl the corresponding config.h-define
    AC_DEFINE(HAVE_LIBGL,1, [Define to 1 if openGL libs were found])
+   LIBS="$LIBS $GL_LIBS"
+   CFLAGS="$CFLAGS $GL_CFLAGS"
 fi
-AC_CHECK_HEADERS([GL/gl.h  OpenGL/gl.h gl.h])
+AC_CHECK_HEADERS([GL/gl.h  OpenGL/gl.h])
 
 AC_CHECK_HEADERS([GL/glext.h], [], [], [ #include <GL/gl.h> ])
 AC_CHECK_HEADERS([OpenGL/glext.h], [], [], [ #include <OpenGL/gl.h> ])

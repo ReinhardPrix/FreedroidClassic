@@ -1714,6 +1714,11 @@ LoadGameConfig (void)
     //--------------------
     // Now read the actual data
     // ok, this is neither very portable nor very flexible, we just want that working...
+
+    /* NOTE: we don't have to worry about endian-ness for the config-file
+     * because this is usually written and read on the same machine ! 
+     * Therefore simply freading/fwriting it should be fine
+     */
     fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
     fclose (config);
     
