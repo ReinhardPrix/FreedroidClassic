@@ -1551,15 +1551,21 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
     if (*textpt == '\n')
       Number_Of_Line_Feeds++;
 
-  while ( !SpacePressed () )
+  while ( !SpacePressed () 
+	  || ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	  || ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
     {
-      if (UpPressed ())
+      if ( UpPressed () 
+	   || ( SpacePressed () 
+		&& ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) ) )
 	{
 	  speed--;
 	  if (speed < -maxspeed)
 	    speed = -maxspeed;
 	}
-      if (DownPressed ())
+      if ( DownPressed ()
+	   || ( SpacePressed () 
+		&& ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) ) )
 	{
 	  speed++;
 	  if (speed > maxspeed)
@@ -1598,16 +1604,26 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 
       InsertLine -= speed;
 
+      //--------------------
+      // We might add some buttons to be displayed here, so that, if you don't have
+      // a mouse wheel and don't know about cursor keys, you can still click on these
+      // buttons to control the scrolling speed of the text.
+      //
+      ShowGenericButtonFromList ( SCROLL_TEXT_UP_BUTTON );
+      ShowGenericButtonFromList ( SCROLL_TEXT_DOWN_BUTTON );
+
       our_SDL_flip_wrapper (Screen);
 
-      /* Nicht bel. nach unten wegscrollen */
+      //--------------------
+      // impose some limit on the amount to scroll away downwards
+      //
       if (InsertLine > SCREEN_HEIGHT - 10 && (speed < 0))
 	{
 	  InsertLine = SCREEN_HEIGHT - 10;
 	  speed = 0;
 	}
 
-    } /* while !Space_Pressed */
+    } // while !Space_Pressed 
 
   while ( SpacePressed() ); // so that we don't touch again immediately.
 

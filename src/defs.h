@@ -547,6 +547,14 @@ enum
     MORE_DEX_BUTTON,
     MORE_VIT_BUTTON,
 
+    SCROLL_TEXT_UP_BUTTON,
+    SCROLL_TEXT_DOWN_BUTTON,
+
+    //--------------------
+    // Please leave this here as the last entry, since it conveniently and
+    // automatically counts the number of buttons defined.  Other buttons
+    // can be inserted above.
+    //
     MAX_MOUSE_PRESS_BUTTONS
   };
 
