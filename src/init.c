@@ -59,8 +59,7 @@ void
 Get_General_Game_Constants ( void* DataPointer )
 {
   char *ConstantPointer;
-  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the game.dat file
+  char *EndOfDataPointer;
 
 #define CONSTANTS_SECTION_BEGIN_STRING "*** Start of General Game Constants Section: ***"
 #define CONSTANTS_SECTION_END_STRING "*** End of General Game Constants Section: ***"
@@ -72,113 +71,43 @@ Get_General_Game_Constants ( void* DataPointer )
 #define TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING "Time for the doors to move by one subphase of their movement="
 
 
-  if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
-    {
-      DebugPrintf( 0 , "\n\nBegin of General Game Constants Section string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nBegin of General Game Constants Section found. Good.");  
-      // fflush(stdout);
-    }
-  
-  if ( ( strstr ( DataPointer , CONSTANTS_SECTION_END_STRING ) ) == NULL)
-    {
-      DebugPrintf( 0 , "\n\nEnd of General Game Constants Section string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nEnd of General Game Constants Section found. Good.");  
-      fflush(stdout);
-    }
-  
+  ConstantPointer = LocateStringInData ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING );
+  EndOfDataPointer = LocateStringInData ( DataPointer , CONSTANTS_SECTION_END_STRING );
+
   DebugPrintf ( 2 , "\n\nStarting to read contents of General Game Constants section\n\n");
 
   // Now we read in the speed calibration factor for all bullets
-  if ( (ValuePointer = strstr ( DataPointer, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO COLLISION LOSE ENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( COLLISION_LOSE_ENERGY_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &collision_lose_energy_calibrator );
-      DebugPrintf( 1 , "\ncollision_lose_energy_calibrator reads:  %f" , collision_lose_energy_calibrator );
-    }
+  ReadValueFromString( DataPointer , COLLISION_LOSE_ENERGY_CALIBRATOR_STRING , "%lf" , 
+		       &collision_lose_energy_calibrator , EndOfDataPointer );
 
   // Now we read in the blast radius
-  if ( (ValuePointer = strstr ( DataPointer, BLAST_RADIUS_SPECIFICATION_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO BLAST RADIUS SPECIFICATION ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( BLAST_RADIUS_SPECIFICATION_STRING );
-      sscanf ( ValuePointer , "%lf" , &Blast_Radius );
-      DebugPrintf( 1 , "\nBlast_Radius now reads:  %lf" , Blast_Radius );
-    }
+  ReadValueFromString( DataPointer , BLAST_RADIUS_SPECIFICATION_STRING , "%lf" , 
+		       &Blast_Radius , EndOfDataPointer );
 
   // Now we read in the druid 'radius' in x direction
-  if ( (ValuePointer = strstr ( DataPointer, DRUID_RADIUS_X_SPECIFICATION_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO DRUID RADIUS X SPECIFICATION ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( DRUID_RADIUS_X_SPECIFICATION_STRING );
-      sscanf ( ValuePointer , "%lf" , &Druid_Radius_X );
-      DebugPrintf( 1 , "\nDruid_Radius_X now reads:  %f" , Druid_Radius_X );
-    }
-  if ( (ValuePointer = strstr ( DataPointer, DRUID_RADIUS_Y_SPECIFICATION_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO DRUID RADIUS Y SPECIFICATION ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( DRUID_RADIUS_Y_SPECIFICATION_STRING );
-      sscanf ( ValuePointer , "%lf" , &Druid_Radius_Y );
-      DebugPrintf( 1 , "\nDruid_Radius_X now reads:  %f" , Druid_Radius_Y );
-    }
+  ReadValueFromString( DataPointer , DRUID_RADIUS_X_SPECIFICATION_STRING , "%lf" , 
+		       &Druid_Radius_X , EndOfDataPointer );
+  ReadValueFromString( DataPointer , DRUID_RADIUS_Y_SPECIFICATION_STRING , "%lf" , 
+		       &Druid_Radius_Y , EndOfDataPointer );
 
   // Now we read in the blast damage amount per 'second' of contact with the blast
-  if ( (ValuePointer = strstr ( DataPointer, BLAST_DAMAGE_SPECIFICATION_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO BLAST DAMAGE SPECIFICATION ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( BLAST_DAMAGE_SPECIFICATION_STRING );
-      sscanf ( ValuePointer , "%lf" , &Blast_Damage_Per_Second );
-      DebugPrintf( 1 , "\nBlast_Damage_Per_Second now reads:  %f" , Blast_Damage_Per_Second );
-    }
+  ReadValueFromString( DataPointer ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%lf" , 
+		       &Blast_Damage_Per_Second , EndOfDataPointer );
 
   // Now we read in the time is takes for the door to move one phase 
-  if ( ( ValuePointer = strstr ( DataPointer, TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO DOOR MOVEMENT SPEED SPECIFICATION ENTRY FOUND! TERMINATING!" );
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING );
-      sscanf ( ValuePointer , "%lf" , &Time_For_Each_Phase_Of_Door_Movement );
-      DebugPrintf( 1 , "\nTime_For_Each_Phase_Of_Door_Movement now reads:  %f" , Time_For_Each_Phase_Of_Door_Movement );
-    }
+  ReadValueFromString( DataPointer ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%lf" , 
+		       &Time_For_Each_Phase_Of_Door_Movement , EndOfDataPointer );
 
+  DebugPrintf( 1 , "\nvoid Get_General_Game_Constants ( void* DataPointer ): end of function reached." );
 
 } // void Get_General_Game_Constants ( void* DataPointer )
 
 /*----------------------------------------------------------------------
- *
- *
- *
+ * This function reads in all the bullet data from the game.dat file,
+ * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
+ * it only receives a pointer to the start of the bullet section from
+ * the calling function.
+ * 
  ----------------------------------------------------------------------*/
 
 void 
@@ -186,8 +115,7 @@ Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
   char *CountBulletsPointer;
-  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the game.dat file
+  char *EndOfBulletData;
   int i;
   int BulletIndex=0;
 
@@ -207,27 +135,8 @@ Get_Bullet_Data ( char* DataPointer )
 #define BULLET_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
 #define BULLET_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
 
-  if ( (BulletPointer = strstr ( DataPointer , BULLET_SECTION_BEGIN_STRING ) ) == NULL)
-    {
-      DebugPrintf(1, "\n\nBegin of Bullet Data Section string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\n\nBegin of Bullet Data Section found. Good.");  
-      // fflush(stdout);
-    }
-  
-  if ( ( strstr ( DataPointer , BULLET_SECTION_END_STRING ) ) == NULL)
-    {
-      DebugPrintf(1, "\n\nEnd of Bullet Data Section string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\n\nEnd of Bullet Data Section found. Good.");  
-      fflush(stdout);
-    }
+  BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
+  EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
 
   DebugPrintf (2, "\n\nStarting to read bullet data...\n\n");
   //--------------------
@@ -263,76 +172,32 @@ Get_Bullet_Data ( char* DataPointer )
   // Now we start to read the values for each bullet type:
   // 
   BulletPointer=DataPointer;
+
   while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
     {
       DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
       BulletPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the recharging time for this bullettype(=weapontype)
-      if ( (ValuePointer = strstr ( BulletPointer, BULLET_RECHARGE_TIME_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO BULLET RECHARGE TIME ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BULLET_RECHARGE_TIME_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].recharging_time );
-	  DebugPrintf( 1 , "\nrecharging time now reads: %f. " , Bulletmap[BulletIndex].recharging_time );
-	}
+      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%lf" , 
+			   &Bulletmap[BulletIndex].recharging_time , EndOfBulletData );
 
       // Now we read in the maximal speed this type of bullet can go.
-      if ( (ValuePointer = strstr ( BulletPointer, BULLET_SPEED_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO BULLET SPEED ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BULLET_SPEED_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].speed );
-	  DebugPrintf( 1 , "\nbullet speed now reads: %f. " , Bulletmap[BulletIndex].speed );
-	}
+      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%lf" , 
+			   &Bulletmap[BulletIndex].speed , EndOfBulletData );
 
       // Now we read in the damage this bullet can do
-      if ( (ValuePointer = strstr ( BulletPointer, BULLET_DAMAGE_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO BULLET DAMAGE ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BULLET_DAMAGE_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].damage );
-	  DebugPrintf( 1 , "\nbullet damage now reads: %d. " , Bulletmap[BulletIndex].damage );
-	}
+      ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
+			   &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
       // Now we read in the number of phases that are designed for this bullet type
-      if ( (ValuePointer = strstr ( BulletPointer, BULLET_NUMBER_OF_PHASES_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO NUMBER OF PHASES FOR THIS BULLET ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BULLET_NUMBER_OF_PHASES_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].phases );
-	  DebugPrintf( 1 , "\nbullet phases now reads: %d. " , Bulletmap[BulletIndex].phases );
-	}
+      ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
+			   &Bulletmap[BulletIndex].phases , EndOfBulletData );
 
       // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
-      if ( (ValuePointer = strstr ( BulletPointer, BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO TYPE OF BLAST CAUSED BY THIS BULLET ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].blast );
-	  DebugPrintf( 1 , "\nbullet causes blast of type : %d. " , Bulletmap[BulletIndex].blast );
-	}
-
+      ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
+			   &Bulletmap[BulletIndex].blast , EndOfBulletData );
+ 
       BulletIndex++;
     }
 
@@ -342,29 +207,14 @@ Get_Bullet_Data ( char* DataPointer )
   // the start to apply them right now, so they also take effect.
   
   DebugPrintf (1, "\n\nStarting to read bullet calibration section\n\n");
+
   // Now we read in the speed calibration factor for all bullets
-  if ( (ValuePointer = strstr ( DataPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO BULLET SPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &bullet_speed_calibrator );
-    }
+  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%lf" , 
+		       &bullet_speed_calibrator , EndOfBulletData );
 
   // Now we read in the damage calibration factor for all bullets
-  if ( (ValuePointer = strstr ( DataPointer, BULLET_DAMAGE_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf( 0 , "\nERROR! NO BULLET DAMAGE CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &bullet_damage_calibrator );
-    }
+  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%lf" , 
+		       &bullet_damage_calibrator , EndOfBulletData );
 
   //--------------------
   // Now that all the calibrations factors have been read in, we can start to
@@ -393,6 +243,7 @@ Get_Mission_Events ( char* EventSectionPointer )
   char *EventPointer;
   char *ValuePointer;  // we use ValuePointer while EventPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
+  char *EndOfEvent;
   int i;
   int EventActionNumber;
   int EventTriggerNumber;
@@ -453,20 +304,12 @@ Get_Mission_Events ( char* EventSectionPointer )
   EventActionNumber=0;
   while ( ( EventPointer = strstr ( EventPointer , EVENT_ACTION_BEGIN_STRING ) ) != NULL)
     {
-      DebugPrintf(2, "\nBegin of a new Event Action Section found. Good. ");
+      DebugPrintf(1, "\nBegin of a new Event Action Section found. Good. ");
       EventPointer += strlen( EVENT_ACTION_BEGIN_STRING ) + 1;
 
-      if ( ( strstr ( EventSectionPointer , EVENT_ACTION_END_STRING ) ) == NULL)
-	{
-	  DebugPrintf(0, "\n\nEnd of Event Action Section string not found...\n\nTerminating...\n\n");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  DebugPrintf (2, "\n\nEnd of this Event Action Section found. Good.");  
-	}
-  
-      DebugPrintf (2, "\n\nStarting to read details of this event action section\n\n");
+      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_ACTION_END_STRING );
+
+      DebugPrintf (1, "\n\nStarting to read details of this event action section\n\n");
 
       //--------------------
       // Now we decode the details of this event action section
@@ -474,82 +317,26 @@ Get_Mission_Events ( char* EventSectionPointer )
 
       // FIRST OF ALL, WE NEED TO KNOW AT WHICH INDEX WE MUST MODIFY OUR STRUTURE.
       // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INDEX NUMBER TO USE ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING );
-	  sscanf ( ValuePointer , "%d" , &EventActionNumber );
-	  DebugPrintf( 2 , "\nNEW EVENT ACTION NUMBER=%d" , EventActionNumber );
-	}
+      ReadValueFromString( EventPointer , EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING , "%d" , 
+			   &EventActionNumber , EndOfEvent );
 
-      // Now we read in the map changing position in x coordinates
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_X_STRING )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE POSITION X ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_X_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x );
-	  DebugPrintf( 2 , "\nMapchange at position x=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.x );
-	}
-
-      // Now we read in the map changing position in y coordinates
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_Y_STRING )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE POSITION Y ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_Y_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y );
-	  DebugPrintf( 2 , "\nMapchange at position y=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.y );
-	}
+      // Now we read in the map changing position in x and y coordinates
+      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_X_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x , EndOfEvent );
+      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_Y_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y , EndOfEvent );
 
       // Now we read in the map changing position level
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE MAPLEVEL ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel );
-	  DebugPrintf( 2 , "\nMapchange at Level=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLevel );
-	}
+      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel , EndOfEvent );
 
       // Now we read in the new value for that map tile
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE TO WHAT ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapTo );
-	  DebugPrintf( 1 , "\nChange map to new value that is=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapTo );
-	}
+      ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].ChangeMapTo , EndOfEvent );
 
       // Now we read in if the influencer is to say something
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_SOMETHING )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INFLUENCER SAY SOMETHING ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_INFLUENCER_SAY_SOMETHING );
-	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething );
-	  DebugPrintf( 1 , "\nInfluencer say something at tiggering of event is=%d" , AllTriggeredActions[ EventActionNumber].InfluencerSaySomething );
-	}
+      ReadValueFromString( EventPointer , EVENT_ACTION_INFLUENCER_SAY_SOMETHING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething , EndOfEvent );
 
       // Now we read in if the text for the influencer to say
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_TEXT )) == NULL )
@@ -592,87 +379,31 @@ Get_Mission_Events ( char* EventSectionPointer )
       DebugPrintf(1, "\nBegin of a new Event Trigger Section found. Good. ");
       EventPointer += strlen( EVENT_TRIGGER_BEGIN_STRING ) + 1;
 
-      if ( ( strstr ( EventSectionPointer , EVENT_TRIGGER_END_STRING ) ) == NULL)
-	{
-	  DebugPrintf(0, "\n\nEnd of Event Trigger Section string not found...\n\nTerminating...\n\n");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  DebugPrintf (2, "\n\nEnd of this Event Trigger Section found. Good.");  
-	  fflush(stdout);
-	}
-  
-      DebugPrintf (2, "\n\nStarting to read details of this event trigger section\n\n");
+      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_TRIGGER_END_STRING );
+
+      DebugPrintf ( 1 , "\nStarting to read details of this event trigger section\n\n");
 
       //--------------------
       // Now we decode the details of this event trigger section
       //
 
-      // Now we read in the triggering position in x coordinates
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_X_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER POSITION X ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_TRIGGER_POS_X_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
-	  DebugPrintf( 1 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
-	}
-
-      // Now we read in the triggering position in x coordinates
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_Y_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER POSITION Y ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_TRIGGER_POS_Y_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
-	  DebugPrintf( 1 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
-	}
+      // Now we read in the triggering position in x and y coordinates
+      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_X_STRING , "%d" , 
+			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x , EndOfEvent );
+      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_Y_STRING , "%d" , 
+			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y , EndOfEvent );
 
       // Now we read in the triggering position in levels
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_MAPLEVEL_STRING )) == NULL )
-	{
-	  DebugPrintf( 0, "\nERROR! NO EVENT TRIGGER POSITION MAPLEVEL ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_TRIGGER_POS_MAPLEVEL_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
-	  DebugPrintf( 1 , "\nEvent Trigger Position Level is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
-	}
+      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_MAPLEVEL_STRING , "%d" , 
+			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level , EndOfEvent );
 
-      // Now we read whether or not to delete the trigger after being triggers
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_DELETED_AFTER_TRIGGERING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER DELETE AFTER TRIGGERING ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_TRIGGER_DELETED_AFTER_TRIGGERING );
-	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
-	  DebugPrintf( 1 , "\nEvent Trigger Deleted after execution is=%d" , AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
-	}
+      // Now we read whether or not to delete the trigger after being triggerd
+      ReadValueFromString( EventPointer , EVENT_TRIGGER_DELETED_AFTER_TRIGGERING , "%d" , 
+			   &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution , EndOfEvent );
 
       // Now we read in the action to be invoked by this trigger
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_WHICH_ACTION_STRING )) == NULL )
-	{
-	  DebugPrintf(0, "\nERROR! NO EVENT TO TRIGGER ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_TRIGGER_WHICH_ACTION_STRING );
-	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].EventNumber );
-	  DebugPrintf( 1 , "\nEvent Trigger causes Action number is=%d" , AllEventTriggers[ EventTriggerNumber ].EventNumber );
-	}
+      ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
+			   &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
 
       EventTriggerNumber++;
     } // While Event trigger begin string found...

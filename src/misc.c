@@ -154,6 +154,131 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   return ( Data );
 }; // char* ReadAndMallocAndTerminateFile( char* filename) 
 
+/*
+----------------------------------------------------------------------
+This function tries to locate a string in some given data string.
+The data string is assumed to be null terminated.  Otherwise SEGFAULTS
+might happen.
+
+The return value is a pointer to the first instance where the substring
+we are searching is found in the main text.
+----------------------------------------------------------------------
+*/
+char* 
+LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
+{
+  char* temp;
+
+  if ( ( temp = strstr ( SearchBeginPointer , SearchTextPointer ) ) == NULL)
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ):\n\
+A string that was supposed to be in some data, most likely from an external\n\
+data file could not be found, which indicates a corrupted data file or \n\
+a serious bug in the reading functions.\n\
+\n\
+The string that couldn't be located was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , SearchTextPointer );
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf( 2 , "\nchar* LocateStringInDate ( char* SearchBeginText , char* SearchTextPointer ) : String %s successfully located within data. " , SearchTextPointer );
+    }
+  
+  return ( temp );
+
+};
+
+
+/*
+----------------------------------------------------------------------
+This function should analyze a given passage of text, locate an 
+indicator for a value, and read in the value.
+
+----------------------------------------------------------------------
+*/
+void
+ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
+{
+  char OldTerminaterCharValue;
+  char* SourceLocation;
+
+  // We shortly make a termination char into the string.
+  OldTerminaterCharValue=EndOfSearchSectionPointer[0];
+  EndOfSearchSectionPointer[0]=0;
+
+  // Now we locate the spot, where we finally will find our value
+  SourceLocation = LocateStringInData ( SearchBeginPointer , ValuePreceedText );
+  SourceLocation += strlen ( ValuePreceedText );
+
+  //--------------------
+  // Attention!!! 
+  // Now we try to read in the value!!!
+  if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'void ReadValueFromString ( .... ):\n\
+\n\
+Freedroid has tried to read a value conformant to the format string %s.\n\
+\n\
+But the reading via sscanf didn't work.\n\
+\n\
+This might be indicating that the data, most likely from an external\n\
+data file, was corrupt.\n\
+\n\
+Also a serious bug in the reading function might (less likely) be a cause for the problem.\n\
+\n\
+The text that should be preceeding the real value was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , FormatString , ValuePreceedText );
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf( 2 , "\nvoid ReadValueFromString ( .... ) : value read in successfully.");
+    }
+  
+
+  // Now that we are done, we restore the given SearchArea to former glory
+  EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
+};
+
+/*
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+char* 
+ReadAndMallocAndTerminateString( char* SearchBeginPointer, char* StringBeginText, char* StringEndText , char* EndOfSearchSectionPointer )
+{
+  
+
+  return NULL;
+
+};
 
 /*-----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 

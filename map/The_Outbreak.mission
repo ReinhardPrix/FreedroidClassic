@@ -121,11 +121,11 @@ Event Action to be triggered by this trigger=4
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
-// --------------------
+//-------------------------------------------------------------
 // the following triggers close the barrier behind the influencer
-// after he has left the retreatment bunker
+// after he has left the retreatment bunker: These are pure location
+// triggers.
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=7
@@ -134,7 +134,6 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=8
@@ -143,7 +142,6 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=6
@@ -152,7 +150,6 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=6
@@ -161,7 +158,6 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=8
@@ -170,7 +166,7 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
-// --------------------
+// ------------------------------------------------------------
 // The following triggers launch comments of the influ on the situation on
 // board the ship
 
