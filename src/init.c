@@ -1854,7 +1854,10 @@ Title ( char *MissionBriefingPointer )
   char* NextSubsectionStartPointer;
   char* PreparedBriefingText;
   char* TerminationPointer;
+  char* TitlePictureNamePointer;
+  char TitlePictureName[5000];
   int ThisTextLength;
+#define BRIEFING_TITLE_PICTURE_STRING "The title picture in the graphics subdirectory for this mission is : "
 #define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
 #define END_OF_BRIEFING_SUBSECTION_STRING "* End of Mission Briefing Text Subsection *"
 
@@ -1865,12 +1868,25 @@ Title ( char *MissionBriefingPointer )
   Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
-  SDL_SetClipRect ( ne_screen, NULL );
-  DisplayImage ( NE_TITLE_PIC_FILE );
-  SDL_Flip (ne_screen);
+  if ( ( TitlePictureNamePointer = strstr ( MissionBriefingPointer , BRIEFING_TITLE_PICTURE_STRING)) != NULL)
+    {
+      TitlePictureNamePointer += strlen ( BRIEFING_TITLE_PICTURE_STRING );
+      ThisTextLength = strstr(TitlePictureNamePointer , "\n" ) - TitlePictureNamePointer ;
+      strcpy( TitlePictureName , GRAPHICS_DIR );
+      strncat( TitlePictureName , TitlePictureNamePointer , ThisTextLength);
+      TitlePictureName[ ThisTextLength + strlen ( GRAPHICS_DIR ) ] = 0;
+      DebugPrintf( 1 , "\nvoid Title(...): The briefing picture name found is : %s." , TitlePictureName );
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nvoid Title(...): Title picture specification string not found....Terminating..." );
+      Terminate( ERR );
+    }
 
-  // while (!SpacePressed ());
-  // while (SpacePressed());
+  SDL_SetClipRect ( ne_screen, NULL );
+  // DisplayImage ( NE_TITLE_PIC_FILE );
+  DisplayImage ( TitlePictureName );
+  SDL_Flip (ne_screen);
 
   Me.status=BRIEFING;
 
@@ -1901,7 +1917,7 @@ Title ( char *MissionBriefingPointer )
       
       // DebugPrintf (1, "\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
       fflush(stdout);
-      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
       free ( PreparedBriefingText );
     }
 
@@ -1937,7 +1953,7 @@ EndTitle (void)
   // SetCurrentFont( FPS_Display_BFont );
   SetCurrentFont( Para_BFont );
 
-  ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_FILE );
 
   while ( SpacePressed() );
 

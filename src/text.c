@@ -219,7 +219,7 @@ SetTextCursor (int x, int y)
  *
  *-----------------------------------------------------------------*/
 int
-ScrollText (char *Text, int startx, int starty, int EndLine)
+ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
@@ -252,7 +252,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      DisplayImage ( NE_TITLE_PIC_FILE );
+      DisplayImage ( TitlePictureName );
       // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))

@@ -969,7 +969,7 @@ FireBullet (void)
   if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru NO RECHTSOBEN !!! */
     CurBullet->phase = RECHTSOBEN;
 
-  printf("\nPhase: %d." , CurBullet->phase );
+  DebugPrintf( 2 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
   
   //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);

@@ -419,7 +419,7 @@ EXTERN void SetLineLength (int);
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
 
 EXTERN void DisplayChar (unsigned char c);
-EXTERN int ScrollText (char *text, int startx, int starty, int EndLine);
+EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , char* TitlePictureName );
 
 EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);
