@@ -378,6 +378,9 @@ Switch_Background_Music_To ( char* filename_raw )
   return;
 #else
 
+  if ( !sound_on ) return;
+
+
   if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
     {
       //printf("\nOld Background music channel has been halted.");

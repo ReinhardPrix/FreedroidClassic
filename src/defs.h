@@ -180,9 +180,10 @@ enum
 // in the SoundSampleFilenames definition located in sound.c!
 
 #define COMBAT_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-#define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-#define CONSOLE_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-#define CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC "The_Last_V8.mod"
+// #define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
+#define TAKEOVER_BACKGROUND_MUSIC_SOUND "Intro-Music.mod"
+#define CONSOLE_BACKGROUND_MUSIC_SOUND "ARDA.MOD"
+#define CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC "A_City_at_Night.mod"
 
 // #define SILENCE (-1)
 #define SILENCE (NULL)
