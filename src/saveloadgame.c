@@ -199,6 +199,7 @@ LoadGame( void )
   unsigned char* InfluencerRawDataPointer;
   unsigned char* EnemyRawDataPointer;
   unsigned char* BulletRawDataPointer;
+  int i;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
@@ -249,6 +250,18 @@ LoadGame( void )
   BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
   memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
 
+  //--------------------
+  // When the original game was still going on, some dynamic things like pointers to some
+  // constructed text field might have been used.  Now these dynamic things somewhere in 
+  // memory of course do not exist, so any pointer previously refering to them, must be
+  // set to acceptable values before an accident (SEGFAULT) occurs!
+  //
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
+  Me.TextToBeDisplayed = NULL;
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
+    {
+      AllEnemys[ i ].TextToBeDisplayed = NULL ;
+    }
 
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");

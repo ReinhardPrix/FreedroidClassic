@@ -389,7 +389,7 @@ CheckBulletCollisions (int num)
 	      // NEW RULE:  Even when the bullet hits, there's still a chance that
 	      // the armour will compensate the shot
 	      //
-	      if ( MyRandom( 100 ) > Me.AC )
+	      if ( MyRandom( 100 ) < Me.AC )
 		{
 		  Me.TextVisibleTime = 0;
 		  Me.TextToBeDisplayed = "That one went into the armour.";		  
