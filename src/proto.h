@@ -271,6 +271,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #define EXTERN extern
 #endif
 
+EXTERN int Shift_Was_Pressed(void);
 EXTERN void Init_SDL_Keyboard(void);
 EXTERN int getchar_raw (void);
 EXTERN int keyboard_update(void);

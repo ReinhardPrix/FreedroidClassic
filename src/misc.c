@@ -1128,81 +1128,202 @@ void
 Level_Editor(void)
 {
   int BlockX, BlockY;
+  int Done=FALSE;
+  int Weiter=FALSE;
+  int MenuPosition=1;
 
-  while (!EscapePressed())
+  enum
+    { SAVE_LEVEL_POSITION=1, SET_LEVEL_NAME_POSITION=2, BACK_TO_LEVEL_EDITING=3, QUIT_LEVEL_EDITOR_POSITION=4 };
+
+  while ( !Done )
     {
-      BlockX=(int)(floor(Me.pos.x/BLOCKBREITE));
-      BlockY=(int)(floor(Me.pos.y/BLOCKHOEHE));
+      Weiter=FALSE;
+      while (!EscapePressed())
+	{
+	  BlockX=(int)(floor(Me.pos.x/BLOCKBREITE));
+	  BlockY=(int)(floor(Me.pos.y/BLOCKHOEHE));
+	  
+	  GetView();
+	  GetInternFenster( SHOW_MAP );
+	  Highlight_Current_Block();
+	  PutInternFenster( FALSE );
+	  PrepareScaledSurface( FALSE );
+	  CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "LEVEL EDITOR");
+	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
-      GetView();
-      GetInternFenster( SHOW_MAP );
-      Highlight_Current_Block();
-      PutInternFenster( FALSE );
-      PrepareScaledSurface( FALSE );
-      CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "LEVEL EDITOR");
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+	  // If the Level editor pressed some cursor keys, move the
+	  // highlited filed (that is Me.pos) accordingly. This is done here:
+	  if (LeftPressed()) 
+	    {
+	      Me.pos.x-=BLOCKBREITE;
+	      while (LeftPressed());
+	    }
+	  if (RightPressed()) 
+	    {
+	      Me.pos.x+=BLOCKBREITE;
+	      while (RightPressed());
+	    }
+	  if (UpPressed()) 
+	    {
+	      Me.pos.y-=BLOCKHOEHE;
+	      while (UpPressed());
+	    }
+	  if (DownPressed()) 
+	    {
+	      Me.pos.y+=BLOCKHOEHE;
+	      while (DownPressed());
+	    }
+	  
+	  // If the level editor pressed some editing keys, insert the
+	  // corresponding map tile.  This is done here:
+	  if (KP1Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_LU;
+	    }
+	  if (KP2Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_U;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+	    }
+	  if (KP3Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_RU;
+	    }
+	  if (KP4Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_L;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+	    }
+	  if (KP5Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=KREUZ;
+	    }
+	  if (KP6Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_R;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+	    }
+	  if (KP7Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_RO;
+	    }
+	  if (KP8Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_O;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+	    }
+	  if (KP9Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_RO;
+	    }
+	  if (APressed())
+	    {
+	      CurLevel->map[BlockY][BlockX]=ALERT;	      
+	    }
+	  if (RPressed())
+	    {
+	      CurLevel->map[BlockY][BlockX]=REFRESH1;	            
+	    }
+	  if (DPressed())
+	    {
+	      if (Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
+	      else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+	    }
+	  if (SpacePressed())
+	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	  if (QPressed())
+	    {
+	      Terminate(0);
+	    }
 
-      if (LeftPressed()) 
+	} // while (!EscapePressed())
+      while( EscapePressed() );
+
+      // After Level editing is done and escape has been pressed, 
+      // display the Menu with level save options and all that.
+
+      while (!Weiter)
 	{
-	  Me.pos.x-=BLOCKBREITE;
-	  while (LeftPressed());
-	}
-      if (RightPressed()) 
-	{
-	  Me.pos.x+=BLOCKBREITE;
-	  while (RightPressed());
-	}
-      if (UpPressed()) 
-	{
-	  Me.pos.y-=BLOCKHOEHE;
-	  while (UpPressed());
-	}
-      if (DownPressed()) 
-	{
-	  Me.pos.y+=BLOCKHOEHE;
-	  while (DownPressed());
+
+	  PutInternFenster( FALSE );
+
+	  MakeGridOnScreen( Outline320x200 );
+
+	  // Highlight currently selected option with an influencer before it
+	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+			     Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+	  
+	  PrepareScaledSurface(FALSE);
+
+	  CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "Save Level:");
+	  CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Set Level name:");
+	  CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Back to Level editing");
+	  CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Quit Level Editor");
+	  
+	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+	  
+	  // Wait until the user does SOMETHING
+	  
+	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() )  keyboard_update();
+	  
+	  if ( EscapePressed() )
+	    {
+	      while (EscapePressed());
+	      Weiter=!Weiter;
+	    }
+	  
+	  if (EnterPressed() || SpacePressed() ) 
+	    {
+	      MenuItemSelectedSound();
+	      while (EnterPressed() || SpacePressed() );
+	      switch (MenuPosition) 
+		{
+		  
+		case SAVE_LEVEL_POSITION:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  // Weiter=!Weiter;
+		  break;
+		case SET_LEVEL_NAME_POSITION: 
+		  while (EnterPressed() || SpacePressed() ) ;
+		  break;
+		case BACK_TO_LEVEL_EDITING:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  Weiter=!Weiter;
+		  break;
+		case QUIT_LEVEL_EDITOR_POSITION:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  Weiter=!Weiter;
+		  Done=TRUE;
+		  break;
+		default: 
+		  break;
+		}
+	    }
+
+	  // If the user pressed up or down, the cursor within
+	  // the level editor menu has to be moved, which is done here:
+	  if (UpPressed()) 
+	    {
+	      if (MenuPosition > 1) MenuPosition--;
+	      MoveMenuPositionSound();
+	      while (UpPressed());
+	    }
+	  if (DownPressed()) 
+	    {
+	      if (MenuPosition < 4) MenuPosition++;
+	      MoveMenuPositionSound();
+	      while (DownPressed());
+	    }
+
 	}
       
-      if (KP1Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=ECK_LU;
-	}
-      if (KP2Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=T_U;
-	}
-      if (KP3Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=ECK_RU;
-	}
-      if (KP4Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=T_L;
-	}
-      if (KP5Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=KREUZ;
-	}
-      if (KP6Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=T_R;
-	}
-      if (KP7Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=ECK_RO;
-	}
-      if (KP8Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=T_O;
-	}
-      if (KP9Pressed()) 
-	{
-	  CurLevel->map[BlockY][BlockX]=ECK_RO;
-	}
-    } // while (!EscapePressed())
-
-  while( EscapePressed() );
-}
+    } // while (!Done)
+} // void Level_Editor(void)
 
 /*@Function============================================================
 @Desc: Testfunktion fuer InsertMessage()

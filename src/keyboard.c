@@ -42,6 +42,7 @@
 
 
 SDL_Event event;
+int ShiftWasPressedInAddition=FALSE;
 int CurrentlyEnterPressed=0;
 int CurrentlySpacePressed=0;
 int CurrentlyLeftPressed=0;
@@ -87,6 +88,12 @@ int CurrentlyKP9Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
+int
+Shift_Was_Pressed(void)
+{
+  return (ShiftWasPressedInAddition);  
+}
+
 void 
 Init_SDL_Keyboard(void)
 {
@@ -112,6 +119,12 @@ keyboard_update(void)
 	  break;
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
+
+	  // Check for some additional modifiers and set flags accordingly
+	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
+	    ShiftWasPressedInAddition=TRUE;
+	  else ShiftWasPressedInAddition=FALSE;
+
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
 	    {
@@ -268,6 +281,12 @@ keyboard_update(void)
 	  /* and y velocity variables. But we must also be       */
 	  /* careful not to zero the velocities when we shouldn't*/
 	case SDL_KEYUP:
+
+	  // Check for some additional modifiers and set flags accordingly
+	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
+	    ShiftWasPressedInAddition=TRUE;
+	  else ShiftWasPressedInAddition=FALSE;
+
 	  switch( event.key.keysym.sym )
 	    {
 	    case SDLK_KP0:
