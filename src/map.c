@@ -820,90 +820,90 @@ CollectAutomapData ( void )
 int
 smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 {
-  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i ;
-  Obstacle target_obstacle;
-  int smashed_something = FALSE ;
-  moderately_finepoint blast_start_pos;
-
-  //--------------------
-  // First some security checks against touching the outsides of the map...
-  //
-  if ( ( map_x < 0 ) || ( map_y < 0 ) || ( map_x >= BoxLevel -> xlen ) || ( map_y >= BoxLevel -> ylen ) )
-    return ( FALSE ) ;
-
-  //--------------------
-  // We check all the obstacles on this square if they are maybe destructable
-  // and if they are, we destruct them, haha
-  //
-  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+    Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    int i ;
+    Obstacle target_obstacle;
+    int smashed_something = FALSE ;
+    moderately_finepoint blast_start_pos;
+    
+    //--------------------
+    // First some security checks against touching the outsides of the map...
+    //
+    if ( ( map_x < 0 ) || ( map_y < 0 ) || ( map_x >= BoxLevel -> xlen ) || ( map_y >= BoxLevel -> ylen ) )
+	return ( FALSE ) ;
+    
+    //--------------------
+    // We check all the obstacles on this square if they are maybe destructable
+    // and if they are, we destruct them, haha
+    //
+    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
     {
-      //--------------------
-      // First we see if there is something glued to this map tile at all.
-      //
-      if ( BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
-
-      target_obstacle = & ( BoxLevel -> obstacle_list [ BoxLevel -> map [ map_y ] [ map_x ] . 
-							obstacles_glued_to_here [ i ] ] );
-
-      if ( ! obstacle_map [ target_obstacle -> type ] . is_smashable ) continue;
-
-      //--------------------
-      // Now we check if the item really was close enough to the strike target.
-      // A range of 0.5 should do.
-      //
-      if ( fabsf ( x - target_obstacle -> pos . x ) > 0.4 ) continue ;
-      if ( fabsf ( y - target_obstacle -> pos . y ) > 0.4 ) continue ;
-
-      DebugPrintf ( 1 , "\nObject smashed at: (%f/%f) by hit/explosion at (%f/%f)." ,
-		    target_obstacle -> pos . x , target_obstacle -> pos . y ,
-		    x , y );
-
-      smashed_something = TRUE ;
-
-      //--------------------
-      // Before we destroy the obstacle (and lose the obstacle type) we see if we
-      // should maybe drop some item.
-      //
-      if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
-	  DropRandomItem( Me [ 0 ] . pos . z , target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
-
-      //--------------------
-      // Since the obstacle is destroyed, we start a blast at it's position.
-      // But here a WARNING WARNING WARNING! is due!  We must not start the
-      // blast before the obstacle is removed, because the blast will again
-      // cause this very obstacle removal function, so we need to be careful
-      // so as not to incide endless recursion.  We memorize the position for
-      // later, then delete the obstacle, then we start the blast.
-      //
-      blast_start_pos . x = target_obstacle -> pos . x ;
-      blast_start_pos . y = target_obstacle -> pos . y ;
-
-      //--------------------
-      // Now we really smash the obstacle, i.e. we can set it's type to the debirs that has
-      // been configured for this obstacle type.  In if there is nothing configured (i.e. -1 set)
-      // then we'll just delete the obstacle in question entirely.  For this we got a standard function to
-      // safely do it and not make some errors into the glue structure or obstacles lists...
-      //
-      if ( obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once == (-1) )
-      {
-	  delete_obstacle ( BoxLevel , target_obstacle );
-      }
-      else
-      {
-	  target_obstacle -> type = obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once ;
-      }
-
-      //--------------------
-      // Now that the obstacle is removed AND ONLY NOW that the obstacle is
-      // removed, we may start a blast at this position.  Otherwise we would
-      // run into trouble, see the warning further above.
-      //
-      StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST );
-
+	//--------------------
+	// First we see if there is something glued to this map tile at all.
+	//
+	if ( BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+	
+	target_obstacle = & ( BoxLevel -> obstacle_list [ BoxLevel -> map [ map_y ] [ map_x ] . 
+							  obstacles_glued_to_here [ i ] ] );
+	
+	if ( ! obstacle_map [ target_obstacle -> type ] . is_smashable ) continue;
+	
+	//--------------------
+	// Now we check if the item really was close enough to the strike target.
+	// A range of 0.5 should do.
+	//
+	if ( fabsf ( x - target_obstacle -> pos . x ) > 0.4 ) continue ;
+	if ( fabsf ( y - target_obstacle -> pos . y ) > 0.4 ) continue ;
+	
+	DebugPrintf ( 1 , "\nObject smashed at: (%f/%f) by hit/explosion at (%f/%f)." ,
+		      target_obstacle -> pos . x , target_obstacle -> pos . y ,
+		      x , y );
+	
+	smashed_something = TRUE ;
+	
+	//--------------------
+	// Before we destroy the obstacle (and lose the obstacle type) we see if we
+	// should maybe drop some item.
+	//
+	if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
+	    DropRandomItem( Me [ 0 ] . pos . z , target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
+	
+	//--------------------
+	// Since the obstacle is destroyed, we start a blast at it's position.
+	// But here a WARNING WARNING WARNING! is due!  We must not start the
+	// blast before the obstacle is removed, because the blast will again
+	// cause this very obstacle removal function, so we need to be careful
+	// so as not to incide endless recursion.  We memorize the position for
+	// later, then delete the obstacle, then we start the blast.
+	//
+	blast_start_pos . x = target_obstacle -> pos . x ;
+	blast_start_pos . y = target_obstacle -> pos . y ;
+	
+	//--------------------
+	// Now we really smash the obstacle, i.e. we can set it's type to the debirs that has
+	// been configured for this obstacle type.  In if there is nothing configured (i.e. -1 set)
+	// then we'll just delete the obstacle in question entirely.  For this we got a standard function to
+	// safely do it and not make some errors into the glue structure or obstacles lists...
+	//
+	if ( obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once == (-1) )
+	{
+	    delete_obstacle ( BoxLevel , target_obstacle );
+	}
+	else
+	{
+	    target_obstacle -> type = obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once ;
+	}
+	
+	//--------------------
+	// Now that the obstacle is removed AND ONLY NOW that the obstacle is
+	// removed, we may start a blast at this position.  Otherwise we would
+	// run into trouble, see the warning further above.
+	//
+	StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST );
+	
     }
 
-  return ( smashed_something );
+    return ( smashed_something );
 
 }; // int smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 
@@ -916,23 +916,23 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 int 
 smash_obstacle ( float x , float y )
 {
-  int map_x, map_y;
-  int smash_x, smash_y ;
-  int smashed_something = FALSE;
-
-  map_x=(int)rintf(x);
-  map_y=(int)rintf(y);
-
-  for ( smash_x = map_x - 1 ; smash_x < map_x + 2 ; smash_x ++ )
+    int map_x, map_y;
+    int smash_x, smash_y ;
+    int smashed_something = FALSE;
+    
+    map_x = (int) rintf ( x ) ;
+    map_y = (int) rintf ( y ) ;
+    
+    for ( smash_x = map_x - 1 ; smash_x < map_x + 2 ; smash_x ++ )
     {
-      for ( smash_y = map_y - 1 ; smash_y < map_y + 2 ; smash_y ++ )
+	for ( smash_y = map_y - 1 ; smash_y < map_y + 2 ; smash_y ++ )
 	{
-	  if ( smash_obstacles_only_on_tile ( x , y , smash_x , smash_y ) ) 
-	    smashed_something = TRUE ;
+	    if ( smash_obstacles_only_on_tile ( x , y , smash_x , smash_y ) ) 
+		smashed_something = TRUE ;
 	}
     }
-
-  return ( smashed_something );
+    
+    return ( smashed_something );
 
 }; // int smash_obstacle ( float x , float y );
 
@@ -2787,61 +2787,61 @@ the item specification section.",
 void
 GetThisLevelsDroids( char* SectionPointer )
 {
-  int OurLevelNumber;
-  char* SearchPointer;
-  char* EndOfThisLevelData;
-  int MaxRand;
-  int MinRand;
-  int RealNumberOfRandomDroids;
-  int DifferentRandomTypes;
-  int ListIndex;
-  char TypeIndicationString[1000];
-  int ListOfTypesAllowed[1000];
-  int FreeAllEnemysPosition = 0 ;
-
+    int OurLevelNumber;
+    char* SearchPointer;
+    char* EndOfThisLevelData;
+    int MaxRand;
+    int MinRand;
+    int RealNumberOfRandomDroids;
+    int DifferentRandomTypes;
+    int ListIndex;
+    char TypeIndicationString[1000];
+    int ListOfTypesAllowed[1000];
+    int FreeAllEnemysPosition = 0 ;
+    
 #define DROIDS_LEVEL_INDICATION_STRING "Level="
 #define DROIDS_LEVEL_END_INDICATION_STRING "** End of this levels droid data **"
 #define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
-
-  // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
-
-  EndOfThisLevelData = LocateStringInData ( SectionPointer , DROIDS_LEVEL_END_INDICATION_STRING );
-  EndOfThisLevelData[0]=0;
-
-  // Now we read in the level number for this level
-  ReadValueFromString( SectionPointer , DROIDS_LEVEL_INDICATION_STRING , "%d" , &OurLevelNumber , 
-		       EndOfThisLevelData );
-
-  // Now we read in the maximal number of random droids for this level
-  ReadValueFromString( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING , "%d" , &MaxRand , 
-		       EndOfThisLevelData );
-
-  // Now we read in the minimal number of random droids for this level
-  ReadValueFromString( SectionPointer , DROIDS_MINRAND_INDICATION_STRING , "%d" , &MinRand , 
-		       EndOfThisLevelData );
-
-  DifferentRandomTypes=0;
-  SearchPointer = SectionPointer;
-  while ( ( SearchPointer = strstr ( SearchPointer , ALLOWED_TYPE_INDICATION_STRING)) != NULL)
+    
+    // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
+    
+    EndOfThisLevelData = LocateStringInData ( SectionPointer , DROIDS_LEVEL_END_INDICATION_STRING );
+    EndOfThisLevelData[0]=0;
+    
+    // Now we read in the level number for this level
+    ReadValueFromString( SectionPointer , DROIDS_LEVEL_INDICATION_STRING , "%d" , &OurLevelNumber , 
+			 EndOfThisLevelData );
+    
+    // Now we read in the maximal number of random droids for this level
+    ReadValueFromString( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING , "%d" , &MaxRand , 
+			 EndOfThisLevelData );
+    
+    // Now we read in the minimal number of random droids for this level
+    ReadValueFromString( SectionPointer , DROIDS_MINRAND_INDICATION_STRING , "%d" , &MinRand , 
+			 EndOfThisLevelData );
+    
+    DifferentRandomTypes=0;
+    SearchPointer = SectionPointer;
+    while ( ( SearchPointer = strstr ( SearchPointer , ALLOWED_TYPE_INDICATION_STRING)) != NULL)
     {
-      SearchPointer += strlen ( ALLOWED_TYPE_INDICATION_STRING );
-      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
-      TypeIndicationString[3]=0;
-      // printf("\nType indication found!  It reads: %s." , TypeIndicationString );
-
-      // Now that we have got a type indication string, we only need to translate it
-      // into a number corresponding to that droid in the droid list
-      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
+	SearchPointer += strlen ( ALLOWED_TYPE_INDICATION_STRING );
+	strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
+	TypeIndicationString[3]=0;
+	// printf("\nType indication found!  It reads: %s." , TypeIndicationString );
+	
+	// Now that we have got a type indication string, we only need to translate it
+	// into a number corresponding to that droid in the droid list
+	for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
 	{
-	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
+	    if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
 	}
-      if ( ListIndex >= Number_Of_Droid_Types )
+	if ( ListIndex >= Number_Of_Droid_Types )
 	{
-	  fprintf ( stderr, "\n\nTypeIndicationString: '%s' OurLevelNumber: %d .\n" , 
-		    TypeIndicationString , OurLevelNumber );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    fprintf ( stderr, "\n\nTypeIndicationString: '%s' OurLevelNumber: %d .\n" , 
+		      TypeIndicationString , OurLevelNumber );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 The function reading and interpreting the crew file stunbled into something:\n\
 It was unable to assign the droid type identification string '%s' found \n\
 in the entry of the droid types allowed for level %d to an entry in\n\
@@ -2850,57 +2850,57 @@ file you use.  \n\
 Please check that this type really is spelled correctly, that it consists of\n\
 only three characters and that it really has a corresponding entry in the\n\
 game data file with all droid type specifications.",
-				     PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_FATAL );
 	}
-      else
+	else
 	{
-	  DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
+	    DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
 	}
-      ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
-      DifferentRandomTypes++;
+	ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
+	DifferentRandomTypes++;
     }
-  DebugPrintf( 1 , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
+    DebugPrintf( 1 , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
   
-  //--------------------
-  // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
-  // the allowed types.  The number of different allowed types found is also available.
-  // That means that now we can add the apropriate droid types into the list of existing
-  // droids in that mission.
-
-  RealNumberOfRandomDroids = MyRandom ( MaxRand - MinRand) + MinRand;
-
-  while ( RealNumberOfRandomDroids-- )
+    //--------------------
+    // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
+    // the allowed types.  The number of different allowed types found is also available.
+    // That means that now we can add the apropriate droid types into the list of existing
+    // droids in that mission.
+    
+    RealNumberOfRandomDroids = MyRandom ( MaxRand - MinRand) + MinRand;
+    
+    while ( RealNumberOfRandomDroids-- )
     {
-      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
+	for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
 	{
-	  if ( AllEnemys [ FreeAllEnemysPosition ] . Status == OUT ) break;
+	    if ( AllEnemys [ FreeAllEnemysPosition ] . Status == OUT ) break;
 	}
-      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
+	if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
-	  GiveStandardErrorMessage ( __FUNCTION__  , 
-				     "No more free position to fill random droids into in GetCrew." ,
-				     PLEASE_INFORM, IS_FATAL );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "No more free position to fill random droids into in GetCrew." ,
+				       PLEASE_INFORM, IS_FATAL );
 	}
-
-      AllEnemys [ FreeAllEnemysPosition ] . type = ListOfTypesAllowed[MyRandom ( DifferentRandomTypes - 1 ) ];
-      AllEnemys [ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
-      AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
-      AllEnemys [ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
-      if ( AllEnemys [ FreeAllEnemysPosition ] . is_friendly ) 
-	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = TRUE ;
-      else
-	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = FALSE ;
-
-      strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
-
-      strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
-
+	
+	AllEnemys [ FreeAllEnemysPosition ] . type = ListOfTypesAllowed[MyRandom ( DifferentRandomTypes - 1 ) ];
+	AllEnemys [ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
+	AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
+	AllEnemys [ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
+	if ( AllEnemys [ FreeAllEnemysPosition ] . is_friendly ) 
+	    AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = TRUE ;
+	else
+	    AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = FALSE ;
+	
+	strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
+	
+	strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
+	
     }  // while (enemy-limit of this level not reached) 
-
-  SearchPointer = SectionPointer;
-
-  GetThisLevelsSpecialForces ( SearchPointer , OurLevelNumber , FreeAllEnemysPosition , EndOfThisLevelData );
-
+    
+    SearchPointer = SectionPointer;
+    
+    GetThisLevelsSpecialForces ( SearchPointer , OurLevelNumber , FreeAllEnemysPosition , EndOfThisLevelData );
+    
 }; // void GetThisLevelsDroids( char* SectionPointer )
 
 /* ---------------------------------------------------------------------- 

@@ -3242,7 +3242,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 	    our_level -> obstacle_list [ barrel_index ] . pos . y ;
 	
 	//--------------------
-	// We make sure the barrel gets smashed, eben if the strike made by the
+	// We make sure the barrel gets smashed, even if the strike made by the
 	// Tux would be otherwise a miss...
 	//
 	smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 

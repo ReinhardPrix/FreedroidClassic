@@ -277,42 +277,42 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
 void
 StartBlast ( float x, float y, int level , int type)
 {
-  int i;
-  Blast NewBlast;
-
-  //--------------------
-  // Maybe there is a box under the blast.  In this case, the box will
-  // get smashed and perhaps an item will drop.
-  // SmashBox ( x , y );
-  smash_obstacle ( x , y );
-
-  // find out the position of the next free blast
-  for (i = 0; i < MAXBLASTS; i++)
-    if (AllBlasts[i].type == OUT)
-      break;
-
-  // didn't fine any --> then take the first one
-  if (i >= MAXBLASTS)
-    i = 0;
-
-  // get pointer to it: more comfortable 
-  NewBlast = &(AllBlasts[i]);
-
-  // create a blast at the specified x/y coordinates
-  NewBlast->pos.x = x;
-  NewBlast->pos.y = y;
-  NewBlast->pos.z = level;
-
-  NewBlast->type = type;
-  NewBlast->phase = 0;
-
-  NewBlast->MessageWasDone = 0;
-
-  if (type == DRUIDBLAST)
+    int i;
+    Blast NewBlast;
+    
+    //--------------------
+    // Maybe there is a box under the blast.  In this case, the box will
+    // get smashed and perhaps an item will drop.
+    // 
+    smash_obstacle ( x , y );
+    
+    // find out the position of the next free blast
+    for (i = 0; i < MAXBLASTS; i++)
+	if (AllBlasts[i].type == OUT)
+	    break;
+    
+    // didn't fine any --> then take the first one
+    if (i >= MAXBLASTS)
+	i = 0;
+    
+    // get pointer to it: more comfortable 
+    NewBlast = &(AllBlasts[i]);
+    
+    // create a blast at the specified x/y coordinates
+    NewBlast->pos.x = x;
+    NewBlast->pos.y = y;
+    NewBlast->pos.z = level;
+    
+    NewBlast->type = type;
+    NewBlast->phase = 0;
+    
+    NewBlast->MessageWasDone = 0;
+    
+    if (type == DRUIDBLAST)
     {
-      DruidBlastSound ();
+	DruidBlastSound ();
     }
-
+    
 }; // void StartBlast( ... )
 
 /* ----------------------------------------------------------------------

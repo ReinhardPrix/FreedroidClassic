@@ -429,127 +429,127 @@ void
 FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 {
 
-  ThisItem -> damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
-  ThisItem -> damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
-  ThisItem -> ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
-    MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
-
-  //--------------------
-  // In case of cyberbucks, we have to specify the amount of cyberbucks
-  //
-  if ( ThisItem->type == ITEM_MONEY )
+    ThisItem -> damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
+    ThisItem -> damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
+    ThisItem -> ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
+	MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
+    
+    //--------------------
+    // In case of cyberbucks, we have to specify the amount of cyberbucks
+    //
+    if ( ThisItem -> type == ITEM_MONEY )
     {
-      ThisItem->gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
+	ThisItem -> gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
     }
-  ThisItem->multiplicity = 1;
-
-  //--------------------
-  // We now have to set a duration, as well a maximum duration
-  // as well as a current duration, the later of which will be
-  // a fraction of the maximum duration.
-  //
-  if ( ItemMap [ ThisItem->type ] . base_item_duration != (-1) )
+    ThisItem->multiplicity = 1;
+    
+    //--------------------
+    // We now have to set a duration, as well a maximum duration
+    // as well as a current duration, the later of which will be
+    // a fraction of the maximum duration.
+    //
+    if ( ItemMap [ ThisItem->type ] . base_item_duration != (-1) )
     {
-      ThisItem -> max_duration = ItemMap [ ThisItem -> type ] . base_item_duration +
-	MyRandom ( ItemMap[ ThisItem->type ] . item_duration_modifier );
-      if ( FullDuration ) ThisItem->current_duration = ThisItem->max_duration ;
-      else ThisItem->current_duration = ThisItem->max_duration / 4 + MyRandom ( ThisItem -> max_duration / 2 ) ;
+	ThisItem -> max_duration = ItemMap [ ThisItem -> type ] . base_item_duration +
+	    MyRandom ( ItemMap[ ThisItem->type ] . item_duration_modifier );
+	if ( FullDuration ) ThisItem->current_duration = ThisItem->max_duration ;
+	else ThisItem->current_duration = ThisItem->max_duration / 4 + MyRandom ( ThisItem -> max_duration / 2 ) ;
     }
-  else
+    else
     {
-      ThisItem->max_duration = ( -1 );
-      ThisItem->current_duration = 1 ;
+	ThisItem->max_duration = ( -1 );
+	ThisItem->current_duration = 1 ;
     }
-
-  //--------------------
-  // Now it's time to fill in the magic properties of the item.  We have
-  // the basic ranges for the modifiers given in the prefix and suffix lists
-  // and just need to create random values in the given ranges for the item.
-  //
-  ThisItem -> bonus_to_str = 0;
-  ThisItem -> bonus_to_dex = 0;
-  ThisItem -> bonus_to_mag = 0;
-  ThisItem -> bonus_to_vit = 0;
-  ThisItem -> bonus_to_all_attributes = 0;
-
-  ThisItem -> bonus_to_life = 0;
-  ThisItem -> bonus_to_force = 0;
-  ThisItem -> bonus_to_tohit = 0;
-  ThisItem -> bonus_to_ac_or_damage = 0;
-
-  ThisItem -> bonus_to_resist_fire = 0;
-  ThisItem -> bonus_to_resist_electricity = 0;
-  ThisItem -> bonus_to_resist_disruptor = 0;
-
-  ThisItem->throw_time = 0 ; 
-
-  ThisItem->is_identified = TRUE;
-
-  if ( ThisItem -> suffix_code != (-1) )
+    
+    //--------------------
+    // Now it's time to fill in the magic properties of the item.  We have
+    // the basic ranges for the modifiers given in the prefix and suffix lists
+    // and just need to create random values in the given ranges for the item.
+    //
+    ThisItem -> bonus_to_str = 0;
+    ThisItem -> bonus_to_dex = 0;
+    ThisItem -> bonus_to_mag = 0;
+    ThisItem -> bonus_to_vit = 0;
+    ThisItem -> bonus_to_all_attributes = 0;
+    
+    ThisItem -> bonus_to_life = 0;
+    ThisItem -> bonus_to_force = 0;
+    ThisItem -> bonus_to_tohit = 0;
+    ThisItem -> bonus_to_ac_or_damage = 0;
+    
+    ThisItem -> bonus_to_resist_fire = 0;
+    ThisItem -> bonus_to_resist_electricity = 0;
+    ThisItem -> bonus_to_resist_disruptor = 0;
+    
+    ThisItem->throw_time = 0 ; 
+    
+    ThisItem->is_identified = TRUE;
+    
+    if ( ThisItem -> suffix_code != (-1) )
     {
-      ThisItem->bonus_to_str += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_str ) ;
-      ThisItem->bonus_to_dex += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_dex +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_dex ) ;
-      ThisItem->bonus_to_mag += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mag +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mag ) ;
-      ThisItem->bonus_to_vit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_vit ) ;
-      ThisItem->bonus_to_all_attributes += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_all_attributes +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_all_attributes ) ;
-
-      ThisItem->bonus_to_life += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
-      ThisItem->bonus_to_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
-
-      ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
-      ThisItem->bonus_to_ac_or_damage += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
-
-      ThisItem->bonus_to_resist_fire += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
-      ThisItem->bonus_to_resist_electricity += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
-      ThisItem->bonus_to_resist_disruptor += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_disruptor +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_disruptor ) ;
-
-      ThisItem->is_identified = FALSE;
+	ThisItem->bonus_to_str += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_str ) ;
+	ThisItem->bonus_to_dex += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_dex +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_dex ) ;
+	ThisItem->bonus_to_mag += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mag +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mag ) ;
+	ThisItem->bonus_to_vit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_vit ) ;
+	ThisItem->bonus_to_all_attributes += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_all_attributes +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_all_attributes ) ;
+	
+	ThisItem->bonus_to_life += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
+	ThisItem->bonus_to_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
+	
+	ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
+	ThisItem->bonus_to_ac_or_damage += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+	
+	ThisItem->bonus_to_resist_fire += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
+	ThisItem->bonus_to_resist_electricity += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
+	ThisItem->bonus_to_resist_disruptor += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_disruptor +
+	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_disruptor ) ;
+	
+	ThisItem->is_identified = FALSE;
     }
-  if ( ThisItem -> prefix_code != (-1) )
+    if ( ThisItem -> prefix_code != (-1) )
     {
-      ThisItem->bonus_to_str += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_str +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_str ) ;
-      ThisItem->bonus_to_dex += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_dex +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_dex ) ;
-      ThisItem->bonus_to_mag += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mag +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mag ) ;
-      ThisItem->bonus_to_vit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_vit +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_vit ) ;
-      ThisItem->bonus_to_all_attributes += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_all_attributes +
-	MyRandom ( SuffixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_all_attributes ) ;
-
-      ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
-      ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
-
-      ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
-      ThisItem->bonus_to_ac_or_damage += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_ac_or_damage +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_ac_or_damage ) ;
-
-      ThisItem->bonus_to_resist_fire += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_fire +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_fire ) ;
-      ThisItem->bonus_to_resist_electricity += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_electricity +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_electricity ) ;
-      ThisItem->bonus_to_resist_disruptor += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_disruptor +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_disruptor ) ;
-
-      ThisItem->is_identified = FALSE;
+	ThisItem->bonus_to_str += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_str +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_str ) ;
+	ThisItem->bonus_to_dex += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_dex +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_dex ) ;
+	ThisItem->bonus_to_mag += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mag +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mag ) ;
+	ThisItem->bonus_to_vit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_vit +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_vit ) ;
+	ThisItem->bonus_to_all_attributes += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_all_attributes +
+	    MyRandom ( SuffixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_all_attributes ) ;
+	
+	ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
+	ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
+	
+	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
+	ThisItem->bonus_to_ac_or_damage += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_ac_or_damage +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+	
+	ThisItem->bonus_to_resist_fire += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_fire +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_fire ) ;
+	ThisItem->bonus_to_resist_electricity += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_electricity +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_electricity ) ;
+	ThisItem->bonus_to_resist_disruptor += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_disruptor +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_disruptor ) ;
+	
+	ThisItem->is_identified = FALSE;
     }
-
+    
 }; // void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
@@ -562,6 +562,17 @@ DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int 
     int i;
     gps item_pos;
     level* item_drop_map_level = NULL ;
+
+    //--------------------
+    // Some check against illegal item types
+    //
+    if ( ( ItemType <= 0 ) || ( ItemType >= Number_Of_Item_Types ) )
+    {
+	DebugPrintf ( -1000 , "\n\nItemType received: %d." , ItemType );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Received an item type that was outside of range of the allowed item types.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
 
     //--------------------
     // Maybe the given position is from a virtual position of a dying robot.
@@ -609,8 +620,9 @@ item types.  This indicates a severe bug in Freedroid.",
     }
     if ( i >= MAX_ITEMS_PER_LEVEL )
     {
-	DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
-	Terminate( ERR );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Couldn't find another array entry to drop another item.",
+				   PLEASE_INFORM, IS_FATAL );
     }
     
     //--------------------
@@ -630,7 +642,7 @@ item types.  This indicates a severe bug in Freedroid.",
     else item_drop_map_level -> ItemList [ i ] . is_identified = FALSE ;
     
     // PlayItemSound( ItemMap[ ItemType ].sound_number );
-    play_item_sound( ItemType );
+    play_item_sound ( ItemType );
     
 }; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
@@ -672,23 +684,23 @@ item types.  This indicates a severe bug in Freedroid.",
     if ( i >= MAX_ITEMS_PER_LEVEL )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
-No more items dropable into this level!!  Fatal (for now..).",
+Couldn't find another array entry to drop another item.",
 				   PLEASE_INFORM, IS_FATAL );
     }
     
     //--------------------
     // Now we can construct the new item
     //
-    CurLevel->ChestItemList[ i ].type = ItemType;
-    CurLevel->ChestItemList[ i ].pos.x = x;
-    CurLevel->ChestItemList[ i ].pos.y = y;
-    CurLevel->ChestItemList[ i ].prefix_code = prefix;
-    CurLevel->ChestItemList[ i ].suffix_code = suffix;
+    CurLevel -> ChestItemList [ i ] . type = ItemType;
+    CurLevel -> ChestItemList [ i ] . pos.x = x;
+    CurLevel -> ChestItemList [ i ] . pos.y = y;
+    CurLevel -> ChestItemList [ i ] . prefix_code = prefix;
+    CurLevel -> ChestItemList [ i ] . suffix_code = suffix;
     
     FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
     
     // PlayItemSound( ItemMap[ ItemType ].sound_number );
-    play_item_sound( ItemType );
+    play_item_sound ( ItemType );
     
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
@@ -911,7 +923,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     //--------------------
     // We decide whether we drop something at all or not
     //
-    if ( ( !ForceDrop ) && ( DropDecision < 100 - GOLD_DROP_PERCENTAGE - ITEM_DROP_PERCENTAGE ) ) return;
+    if ( ( ! ForceDrop ) && ( DropDecision < 100 - GOLD_DROP_PERCENTAGE - ITEM_DROP_PERCENTAGE ) ) return;
     
     //--------------------
     // Since we don't drop real treasure any more, we just 
@@ -1248,7 +1260,7 @@ Unhandled treasure chest encountered!  This isn't supposed to happen.",
 	Pre = find_suitable_prefix_for_item ( drop_item_type , TreasureChestRange );
     }
     
-    DropItemAt( drop_item_type , level_num , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
+    DropItemAt ( drop_item_type , level_num , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
     
 }; // void DropRandomItem( int x , int y )
 
