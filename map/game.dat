@@ -1,0 +1,22 @@
+This is a data file for Freedroid.
+It contains the specification of all droids appearing in freedroid.
+You can edit it with a standard text editor of your choice.
+Feel free to make any modifications you like.
+Freedroid will still accept you modified game dada file as long
+as you stick to the following rules:
+1.) the Text indicating the Start of the Robot Data Section must not
+    be removed or changed.  It is needed by Freedroid in order to find
+    the robot section in your modified file.
+
+
+Lets see if it makes sense.
+*** Start of Robot Data Section: *** 
+** Start of new Robot: ** 
+Droidname: 001
+** Start of new Robot: ** 
+Droidname: 123
+** Start of new Robot: ** 
+Droidname: 139
+
+*** End of game.dat File ***
+

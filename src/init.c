@@ -44,33 +44,136 @@
 #define SCROLLSTARTX		USERFENSTERPOSX
 #define SCROLLSTARTY		SCREENHOEHE
 
+void Init_Game_Data(void);
+
 
 /*@Function============================================================
-@Desc: 
+@Desc: This function loads all the constant variables of the game from
+       a dat file, that should be optimally human readable.
 
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
-int
-Init_Game_Constants (void)
+void
+Get_Robot_Data ( void* DataPointer )
 {
-  FILE *ColorFile;
-  int i;
+  int RobotIndex = 0;
+  char *RobotPointer;
+  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
+                       // interchanging of the order of appearance of parameters in the game.dat file
+  int StringLength;
+#define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
+#define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
+#define DROIDNAME_BEGIN_STRING "Droidname: "
 
-  LevelColorArray = MyMalloc (ALLLEVELCOLORS * 3 * FARBENPROLEVEL + 10);
-	// NICHT FREIGEBEN !
-  if ((ColorFile = fopen (COLORFILE, "r")) == NULL)
-    return (FALSE);
-  for (i = 0; i < ALLLEVELCOLORS * FARBENPROLEVEL; i++)
+  if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
     {
-      if (fscanf (ColorFile, "%hhd %hhd %hhd", &LevelColorArray[i * 3],
-		  &LevelColorArray[3 * i + 1],
-		  &LevelColorArray[3 * i + 2]) == EOF)
-	return (FALSE);
+      printf("\n\nBegin of Robot Data Section not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
     }
-  fclose (ColorFile);
-  return (TRUE);
-} // int Init_Game_Constants ( void )
+  else
+    {
+      printf("\n\nBegin of Robot Data Section found. Good.  Starting to read Robot data...\n\n");
+      fflush(stdout);
+    }
+
+  while ( (RobotPointer = strstr ( RobotPointer, NEW_ROBOT_BEGIN_STRING )) != NULL)
+    {
+      printf("\n\nFound another Robot specification entry!  Lets add that to the others!");
+      RobotPointer ++; // to avoid doubly taking this entry
+      if ( (ValuePointer = strstr ( RobotPointer, DROIDNAME_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO DROIDNAME FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen (DROIDNAME_BEGIN_STRING);
+	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
+	  Druidmap[RobotIndex].druidname = malloc ( StringLength + 1 );
+	  strncpy ( (char*) Druidmap[RobotIndex].druidname , ValuePointer , StringLength );
+	  Druidmap[RobotIndex].druidname[StringLength]=0;
+	  printf("\nDroidname found!  It reads: %s" , Druidmap[RobotIndex].druidname );
+	}
+
+      RobotIndex++;
+    }
+  
+
+  printf("\n\nThat must have been the last robot.  We're done here.");
+
+
+} // int Init_Game_Data ( void )
+
+/*@Function============================================================
+@Desc: This function loads all the constant variables of the game from
+       a dat file, that should be optimally human readable.
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void
+Init_Game_Data (void)
+{
+  struct stat stbuf;
+  FILE *DataFile;
+  char *Data;
+  char *EndPointer;
+  char filename[]=MAP_DIR "game.dat";
+#define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
+
+  printf("\nint Init_Game_Data ( void ) called.");
+  printf("\nint Init_Game_Data ( void ): The filename is: %s" , filename );
+
+  /* Read the whole game data to memory */
+  if ((DataFile = fopen (filename, "r")) == NULL)
+    {
+      DebugPrintf ("\nint Init_Game_Data( void ): Error opening file.... ");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nOpening game.dat file succeeded...");
+    }
+
+  if (fstat (fileno (DataFile), &stbuf) == EOF)
+    {
+      printf
+	("\nint Init_Game_Data ( void ): Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nfstating game.dat file succeeded...");
+    }
+
+  if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+    {
+      DebugPrintf ("\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
+
+  printf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+
+  if ( (EndPointer = strstr( Data , END_OF_GAME_DAT_STRING ) ) == NULL )
+    {
+      printf("\nERROR!  END OF GAME.DAT STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+
+  Get_Robot_Data ( Data );
+
+  // free ( Data ); DO NOT FREE THIS AREA UNLESS YOU REALLOCATE MEMORY FOR THE
+  // DROIDNAMES EVERY TIME!!!
+
+} // int Init_Game_Data ( void )
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
@@ -433,6 +536,8 @@ InitFreedroid (void)
 
   /* Init the Takeover- Game */
   InitTakeover ();
+
+  Init_Game_Data ( );
 
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();

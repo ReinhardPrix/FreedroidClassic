@@ -1196,7 +1196,8 @@ Level_Editor(void)
 	  
 	  // Wait until the user does SOMETHING
 	  
-	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() )  keyboard_update();
+	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() )  
+	    keyboard_update();
 	  
 	  if ( EscapePressed() )
 	    {

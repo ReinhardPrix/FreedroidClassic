@@ -88,7 +88,7 @@ main (int argc, char *const argv[])
       while (!GameOver && !QuitProgram)
 	{
 
-	  StartTakingTimeForFPSCalculation();
+	  StartTakingTimeForFPSCalculation(); 
 
 	  UpdateCountersForThisFrame ();
 
@@ -106,9 +106,9 @@ main (int argc, char *const argv[])
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
-	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
-
 	  PutMessages ();
+
+	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
