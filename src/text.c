@@ -329,7 +329,6 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
       DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
       DialogMenuTexts [ 2 ] = " Where can I get better equipment? " ;
-      DialogMenuTexts [ 3 ] = " I have problems with my controls. " ;
 
       DialogMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
       DialogMenuTexts [ 5 ] = " Wouldn't that just mean replacing one evil with another?" ;
@@ -351,18 +350,17 @@ ChatWithFriendlyDroid( int Enum )
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_Who_Are_You_0.wav" , TRUE );
-	      GiveSubtitleNSample( " Welcome to this camp!  My name is Chandra.  " , "Chandra_My_Name_Is_0.wav" );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Welcome to this camp! I am Chandra. I care about visitors." , "Chandra_Welcome_To_This_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 0 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 1 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 1 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 3 ] = 1 ;
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
-	      GiveSubtitleNSample( " This place is owned by refugees like me, who hide from the MS. " , "Chandra_This_Place_Consists_0.wav" );
-	      GiveSubtitleNSample( " Formerly this was a camp of the resistance movement. " , "Chandra_Formerly_This_Was_0.wav" );
-	      GiveSubtitleNSample( " But they have left long ago. " , "Chandra_But_They_Have_0.wav" );
+	      GiveSubtitleNSample( "This place is owned by refugees like me, who hide from the MS. " , "Chandra_This_Place_Consists_0.wav" );
+	      GiveSubtitleNSample( "Formerly this was a camp of the resistance movement. " , "Chandra_Formerly_This_Was_0.wav" );
+	      GiveSubtitleNSample( "But they have left long ago. " , "Chandra_But_They_Have_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 0 ;
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 1 ;
 	      break;
@@ -372,17 +370,6 @@ ChatWithFriendlyDroid( int Enum )
 	      GiveSubtitleNSample( " They have all kinds of equipment there. " , "Chandra_They_Have_All_0.wav" );
 	      GiveSubtitleNSample( " Talk to Mr. Stone, the shop bot. " , "Chandra_Talk_To_The_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 0 ; // but don't ask this twice.
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
-	      GiveSubtitleNSample( " Use the left mouse button to move around, talk to friends or attack enemies. " , "Chandra_Controls_1.wav" );
-	      GiveSubtitleNSample( " Hold down the left mouse button to keep moving. " , "Chandra_Controls_2.wav" );
-	      GiveSubtitleNSample( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , "Chandra_Controls_3.wav" );
-	      GiveSubtitleNSample( " Use the right mouse button to activate your currently readied skill or spell. " , "Chandra_Controls_4.wav" );
-	      GiveSubtitleNSample( " Use the I key to open or close the inventory screen. " , "Chandra_Controls_5.wav" );
-	      GiveSubtitleNSample( " Use the C key to open or close the character screen. " , "Chandra_Controls_6.wav" );
-	      GiveSubtitleNSample( " Use the S key to open or close the skills screen. " , "Chandra_Controls_7.wav" );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 3 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
