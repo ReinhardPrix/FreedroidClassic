@@ -485,7 +485,7 @@ CheckBlastCollisions (int num)
       vdist.y = AllEnemys[i].pos.y - CurBlast->PY;
       dist = sqrt(vdist.x*vdist.x + vdist.y*vdist.y);
 
-      if (dist < Blast_Radius)
+      if (dist < Blast_Radius+Droid_Radius)
 	{
 	  /* drag energy of enemy */
 	  AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
@@ -501,7 +501,7 @@ CheckBlastCollisions (int num)
   vdist.y = Me.pos.y - CurBlast->PY;
   dist = sqrt(vdist.x*vdist.x + vdist.y*vdist.y);
 
-  if ( (Me.status != OUT) && (!CurBlast->mine) && (dist < Blast_Radius) )
+  if ( (Me.status != OUT) && (!CurBlast->mine) && (dist < Blast_Radius+Droid_Radius) )
     {
       if (!InvincibleMode)
 	{
