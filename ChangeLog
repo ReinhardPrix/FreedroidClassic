@@ -1,14 +1,1685 @@
-2002-04-19  rprix  <rprix@microwave>
+2002-06-04  rprix  <rprix@microwave>
 
-	* /home/prix/CVS/ParaPlus/TASK_CHART, /home/prix/CVS/ParaPlus/TODO:
-	small amendments, as usual
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Improved lift algorithm: first blit ship "lights off", then
+	blit active level and lift-row rectangles from "lights on" ship-picture,
+	then update screen. --> Results look&feel much more "stable".
 
-	* /home/prix/CVS/ParaPlus/README: slight changes of form...
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	some code cleanup: *completely* removed obsolete variables
+	RealScreen, InternalScreen, Outline320x200 , together with
+	old block display functions Display*Block().
 
-	* /home/prix/CVS/ParaPlus/map.c: ambiguous ret =-1 changed to ret = -1
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	some cleanup in the lift code and picture.
+	(don't forget to "install" new pics)
 
-2002-04-18  Reinhard Prix  <r.prix@maths.soton.ac.uk>
+2002-06-04  jprix  <jprix@microwave>
 
-	* README: removed non--conformant copyright notice
-	taken out Rene as a 'developer', for the moment he isnt'...
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Resized Bastians droids to fit into the console.  For now, thats the
+	easiest way to get the console working again.
+	Repaired the console text format to fit into the window.  Good. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Worked a bit on the briefing text of the new mission.
+	Corrected some smaller mistakes in the paradroid font.
+	Added missing feature to TODO list.
+
+2002-06-03  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Added a mission selection menu.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Added bastians "free droid" as the background for the credits menu subsection.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c:
+	Corrected the too slow map-read-routines.  Now its FAST!!!!
+	Corrected smaller bugs in classic paradroid map.
+	Saved all maps in new map file format.
+
+2002-06-03  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Useless detail: Global name change "elevator" -> "lift"
+
+2002-06-03  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/struct.h:
+	Worked a bit on the new area.
+	Introduced new robot types 998, 997, ... , 991 , 990.
+	Introduced flag for new fighting behaviour, but its not yet read in.
+	New mission is the default for now.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Corrected the aggression of droids being too high.
+	Elevators are currently broken:  I see only blue screen while in enevator!
+	Why is this?
+
+2002-06-03  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/ship.h, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	new method for ShowElevators():
+	show ship-picture "lights off" first, update screen, then Blit in the
+	ship picture "lights on", but update only the rectangles for the current
+	lift and level. Seems to work ok now.
+
+	This method has the advantage of requiring only two ship-pictures instead
+	of one per level and lift, but has the disadvantage of requiring the
+	lift and level rectangles to be provided. I still think this is an
+	improvement, as these rectangle-info could be entered in a "Ship-Editor",
+	say, if extensive "ship-editing" should ever become fashionable...
+
+2002-06-03  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Removed the obsolete "x"-encoding of waypoints within maps.
+	So we can now plant waypoints anywhere, on refreshed, lifts and all that too.
+	And I added the missing refresh under the waypoint on the yellow level.
+	Loading takes a bit long... I might remove the forced writing again in
+	favour of arbitrary dynamic waypoint structures.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c:
+	Fixed some bugs in the level loading function.
+	Set MAX_WP_CONNECTIONS from 4 to 12
+	Set MAPWAYPOINTS from 30 to 100
+	Changed the format of ships on disk into something better human-readable.
+
+2002-06-02  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Briefing texts are now taken from the mission file and therefore the long static
+	strings removed from the code.
+	Which ship file, elevator file and crew file to use is also deducted from the
+	mission file now. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Mission briefing text is now successfully read and used from the mission file.
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/defs.h:
+	Removed the limitation to ALLDRUIDTYPES different druid types maximal to
+	arbitrary number of droid types all specified in game.dat.
+	Started to set up a format and example of a mission file.
+
+	* /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Connections between waypoints can now conveniently be established via the
+	C key.  You should try it;) jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Waypoints can now also be toggled via the Level Editor.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Level editor now also shows the waypoint connections.  Most convenient. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Integrated the notes concerning the droids into game.dat.  Removed the static
+	Droid initialisation function from the code.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Added separate Height, Weight, Drive, Brain, Sensor 1, Sensor 2, Sensor 3,
+	and Armament variables into the Druidmap structure and under the control
+	of game.dat.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Added calibration entries to modify all droid simulaneously in game.dat.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Eliminated the Druidmap initialization from vars.h.  All info for the
+	Druidmap is now read from the external game.dat file, haha.
+
+2002-06-01  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Adapted calls to DisplayBanner() to new Parameters "left" and "right",
+	removed calls to old SetInfoline().
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	Takeover-game pretty much complete now: Added display of player-droids
+	and proper Infoline-display via DisplayBanner().
+
+	* /local/cvsRep/FD/FreeDroid/src/rahmen.c:
+	jp's new DisplayBanner() seems to have overtaken SetInfoline(), which I
+	have now removed.
+	Adapted DisplayBanner() to allow passing of non-standard left and
+	right entries, which is needed in Takeover-game.
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/takeover.h, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	Takeover game: "current" animation now complete.
+
+2002-06-01  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Almost all Druidmap variables now under control of game.dat.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	More variables put under control of the game.dat file.
+
+2002-06-01  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/takeover.h:
+	Further polishing of Takeover-game: "current" animation now works
+	"in principle", but is not finished yet in the details.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	set our window-dimensions to the more standard format (640x480,
+	ie. 320x240 * 2). Looks a bit "strange" in the beginning when you're
+	used to our "cut-off" window, but I think this is much more reasonable...
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	added new function Fill_Rect (SDL_Rect rect, SDL_Color color), which
+	fills the given rectangle with the RGB-color. This is now used in
+	Takeover to color the User_Rect.
+	SetUserfenster() is too specific to 8bpp and the UserFenster, and
+	should be dumped in favor of Fill_Rect() !!
+
+2002-06-01  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Adapted PutEnemy to better fit the needs of the takeover game.
+
+2002-05-31  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c:
+	Started to implement reading of droid data from outside file "game.dat".
+	Robot names are already read successfully from there.
+	The file is ascii-readable and well documented and flexible.
+
+2002-05-31  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/takeover.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Takeover game now at least "playable" again in new engine, but still quite
+	some polishing necessary...
+
+2002-05-31  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Split the (too big) misc.c up into misc.c and menu.c.
+	Menu should now contain all menu functions and their helper functions.
+	This includes the level editor, which is not too big.  Edited src/Makefile.am.
+
+2002-05-30  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Level editor now shows also the waypoints, but not yet the connections.
+	I'm sort of tired and think I'll close for today.  Have fun, jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	Hurray!  The SaveShip function now reproduces exactly the loaded Level.
+	That means we have a functioning Level editor again, allthough convenient
+	waypoint editing must still be incorporated into it.  But maps basically
+	can be edited.  I might do that later. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/map.c:
+	Save level procedure now seems to work almost:  wp are still missing.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/map.h:
+	Added a bit more documentation to the ship-loading functions and also improved
+	the ship file format to be a bit better human-readable in my opinion. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Improved the way the map is shown at the console:  Center of map now in center
+	of the combat window.  Still room for further improvement.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Elevators are now correctly highlighted too.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Elevator is now working (well) again.  New pictures needed and added.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	Replaced more bmps by gifs. That saves up to 30 times the space on disk.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/colodefs.h, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h:
+	Removed too small images from 0.7.4.
+	Removed more german.  Added some doku.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Replaced all SDL_LoadBMP commands with IMG_Load. --> complete file format independence.
+	Removed obsolete and redundant graphic files.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	Reduced redundant pixmaps and converted some to gif with costs 80% less. jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	The "jittering" bug has been resolved. At least on my old and new machine, jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Removed all german from misc.c.
+	Added and updated docu in the process.
+	Removed obsolete functions my_abs and my_sqrt.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/ReplaceIt.awk, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c:
+	Renamed "Feindesliste" to "AllEnemys" like in "AllBullets" and "AllBlasts".
+	Renamed "Rahmen" to "Banner" since thats english and describes it well.
+	Removed all german from main.c.
+	Removed all german from view.c.
+	We ARE and international project after all.  Have fun, jp.
+
+2002-05-29  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	Corrected the "title screen coped and bannerd when vied the second time" bug
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	Corrected the "framerate not well readable" bug.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Corrected the "garbage on screen outside ship" bug.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	more colde cleanup: obsolete prototypes, german dokus, messed main strucute,
+	senseless&obsolete german definitions.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	More code cleanup:  Moved special key reactions into a separate function in keyboard.c.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Moved the framerate computation into separate functions outside of main() and main.c.
+	The guy who called the code a mess is still right though ;)
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Corrected the stupid typo in the Credits section.  Also added background image to it.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Reactivated "Flashes" when fireing disruptor shots.
+	Credits section added to the big Escape Menu.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Modified Homepage to display sourceforge logo as required by the sourseforge.
+	Added background image for the homepage.  Tell me if you now find it hard to read.
+	Level editor is working all again, except for the saving menu option still.
+	Added Bastians latest graphics and made console react to larger image sizes.
+
+2002-05-28  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Reactivated most of the menus and also most of the level editor.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Reactivated and cleaned up single player menu.
+
+2002-05-28  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/system.h:
+	stupid script that executes aclocal, autoheader, automake & autoconf
+	to save typing. In addation automake is called with --add-missing,
+	so you don't have to worry about missing scripts.
+
+2002-05-27  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Finally reactivated the original Paradroid font, which is now available
+	via BFont/DisplayText etc.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Added a new and smaller font, that might be good for the scrolling text.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	Added a new Font, that might come in handy for some things.
+	Its not the original Paradroid font, which might come later, sorry.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Activated new title, also for the background of the scrolling font.
+	Had some sound problems:  The very first sound call of freedroid seems
+	to be always completely ignored??? THIS REMAINS UNEXPLAINED.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Improved sliding through H_GANZTUERE horizontal doors.  Now it seems smooth.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Finally removed the real "GetChar" bug by setting the ALLBLAST constant from
+	5 to 100.  Did the same for the ALLBULLETS.  Happy hacking,jp.   :-)
+
+2002-05-27  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	started writing proper Highscore-list handling (in Debriefing() )
+	not functional yet, so Debriefing now returns immediately.
+	Deactivated Takeover-game() which has to be ported to new engine yet.
+
+2002-05-27  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Deleted old InitPalette crap.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/influ.c:
+	"GetChar" bug removed by undoing free(ScoreText) which was never allocated?
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	The notion of conceptview has left the game, since resizing is possible anyway.
+	TakeScreenshot now has its own function in graphics.
+	GetString in Debriebing currently disabled:  See if "GetChar" bug vanishes?
+
+2002-05-26  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/ship.h, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	rp went Berserk on Text-handling machinery ;)
+
+	*) removed lots of old brain-damaged functions
+
+	*) Main player is now: DisplayText(), which now takes an
+	  SDL_Rect argument with the Text-window to write in. This takes care
+	  of clipping and line-breaks! The prev clip-rect is restored after this.
+	  if NULL is passed, no clipping/line-breaking is done.
+
+	  The line-breaks are handled by ImprovedCheckUmbruch() which has been
+	  adapted appropriately.
+
+	*) DisplayText now returns TRUE if text was written _inside_ the
+	   clip-rectangle, FALSE otherwise.
+	  This info is used by ScrollText to know when text has been scrolled out.
+
+	*) Therefore: SetTextBorder & Co useless and have been dumped.
+
+	*)  There are two global Rectangles: (def'd in vars.h)
+		User_Rect:  which is our Userfenster
+	        Menu_Rect:  used in Menu-writing
+	  please add further rectangles as you need them.
+
+	*) The CombatRectangle in Assemble_Combat_Picture() has been replaced
+	   by User_Rect, in an effort to minimise names for the same thing.
+
+	Ok, everythings seems to works ok so far, but please keep me updated
+	if problems appear of if you have questions concerning Text-writing.
+
+2002-05-26  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Little color bug removed.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Level colors should be restored now.
+	Pictures are also of a form that should well work with the new gamma=1 default.
+
+2002-05-26  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	erroneous #include of nonexistent "paths.h" removed. (sorry)
+
+2002-05-26  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/SDL_rotozoom.c, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Erradicated some warnings.
+	Eliminated some german expressions and function names.
+
+2002-05-26  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	"make install" ist now functional. (I hope ;)
+	freedroid now expects its data (graphics,sound,map) in DATADIR,
+	which is defined in src/Makefile to $(pkgdatadir), which defaults
+	to /usr/local/share/freedroid.
+	If you want to change this location, you can make with the command:
+	make pkgdatadir=<YOUR_DIR>
+
+	Please use GRAPHICS_DIR, SOUND_DIR, MAP_DIR  for loading data-files!
+	These are defined in defs.h
+
+2002-05-26  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Combat screen can be rescaled using the "O" and "I" keys.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Resizing of screen works!  You can try it at the console.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	Robots fire now correctly at the influencer again.
+	Hey, the game seems pretty much playable again, except for the
+	takeover game perhaps....
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Refreshes are now finally animated again, although not completely.
+	Influence-Enemy collisions have been repaired to work with the new coordinates.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	Reactivated and repaired EnemyEnemyCollisions.
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Visibility is now handled correctly and secure with the new coordinates.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/map.c:
+	Bullet-Robot collisions reactivated.
+	Influence-Wall collision handling improved.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Bullets and Blasts now use the new coordinates too, at least on the screen.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/map.h:
+	Improved Influence-Wall-Collision-Handling.  Still not perfect, but growing.
+	I think the whole function might be completely rewritten in the process...
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/map.h:
+	Doors open and close again, but especially there the weaknesses of the
+	influence-wall-collision handling become apparent.  Something has to be done.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Influence-Wall collisions are working again, although some fine-tuning should
+	occur at some point to ensure smooth gameplay.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Influ and Enemys now use the new coordinates.
+	Koodinates (1,1) mean that the influ is in the CENTER!!! of the square (1,1).
+	EnemyEnemyCollisions currently disabled.
+
+2002-05-25  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Activated scaling of blocksize.  Its a draft and I cant continue now because
+	of Ms. Schnedl.  To deactivate it, please comment out the last line in
+	InitNewGame, looking somewhat like "ShowDeckMap()". thanks, jp.
+
+2002-05-25  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	added SDL_rotozoom.[ch] to Makefile.am,
+	removed #include "SDL" in proto.h, as it's included in "system.h"
+
+2002-05-25  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/map.h, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/ReplaceIt, /local/cvsRep/FD/FreeDroid/src/ReplaceIt.awk, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Replaced ALL occurenced of BLOCKBREITE with Block_Width and ALL occurenced
+	of BLOCKHOEHE with Block_Height, using the new ReplaceIt script.
+	That was smooth!
+
+	* /local/cvsRep/FD/FreeDroid/src/SDL_rotozoom.c, /local/cvsRep/FD/FreeDroid/src/SDL_rotozoom.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	ShowDeckMap ceased to crash now, but still does not work correctly.
+	Therefore I added the zoom tools to prepare the function.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/ship.h, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	GreatDruidShow is working acceptably well again.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Console droid images are displayed correctly again.
+	The console now uses the jpg images found on a paradroid homepage directly.
+	Old small bmp images have been replaced accordingly.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Dropped the palette rotation in console.
+	Different images are used instead.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c:
+	Reactivated bullet-bullet collisions, now distance-based instead of pixel-based
+	as with old grafix engine.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Improved the rahmen handling:  Updated are only done if needed, which is
+	determined internally.
+	NEW: DisplayRahmen now also does the text in the 'rahmen'.  It should
+	     no longer be needed to call SetInfoline directly.  That should be
+	     incorporated into the DisplayRahmen function.
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	updated the ship graphics to new size.
+	Made the scrolltext function finally work well.
+	Removed some old engine code from here and there.
+	Startet to modify the structure of DisplayRahmen.
+
+2002-05-24  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Restored ScrollText to former glory.
+	Activated DisplayImage(char * filename).
+	Reactivated Title image.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Reactivated the title signation and ClearUserFenster.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	Acivated "NEW_ENGINE" definition by default in defs.h.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/main.c:
+	Updated my task chart.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	AssembleCombatWindow now accepts some FLAGS which are very convenient,
+	especially inside Menu functions and all that.
+	Take a look to inspect them.
+	The main loop and other loops have been shortend accordingly.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Restored the escape menu.  Needs still some work.
+
+2002-05-23  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am:
+	o) first step towards proper "install" target: automake-structure is
+	now better and will install map/ sound/ and graphics/ subdirs under
+	$(pkgdatadir)/freedroid/  , where the default for $pkgdatadir=/usr/local.
+	Remains to take account of that in the paths in the code...
+
+	o) added check for libpthread _before_ libSDL, as some installations
+	of SDL seem to depend on the posix-thread library!
+
+2002-05-23  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Reactivated the Escape Menu.  Submenus still need work.  Rahmen font fine now.
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/blocks.c:
+	Set the rahmen to the new size.
+	Now we let X resp. SDL decide about the best video mode:  works well!
+	Adapted the size of digits inside droids.
+	Added some files that are also used in the homepage.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Addepted software-sided to the new 2 pixel inter-block-distance.  Wow, that was easy!
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Upgraded code to use 64x64 pixel pixmaps.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Started deletion of old engine from the code.
+	Set default window size to 640x480.
+	Activated time-wasting scaling EVERY frame, which is bad, but shows some interesting alpha effect.
+
+2002-05-22  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/play_then_kill_yiff:
+	not used any more since yiff has been kicked out!
+
+2002-05-22  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	Updated my TASK_CHART section and resolved conflicts.
+
+2002-05-22  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	better user-input handling in takeover game allows higher precision
+	in setting capsules.
+	-> Pseudo "Key-repeat" sets in after some wait-cycles only, allows better
+	single-steps
+
+2002-05-21  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	corrected bug with SDL_mixer checking: I had put tests before
+	inclusion of <config.h>, which doesn't make much sense...
+
+	* /local/cvsRep/FD/FreeDroid/src/system.h:
+	conditional inclusion of <SDL/SDL_mixer.h> only when found by configure!
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	conditional compilation now takes accound of configure-defines:
+	HAVE_LIBSDL_MIXER and HAVE_SDL_SDL_H. If either is missing, sound
+	is "dummy-compiled", everything should work ok!.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	reactivated loading of Title-picture in Old engine
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c:
+	fixed bug in Initial Scroll-text: Text-screen is cleared before
+	scrolling to avoid "smearing"
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c:
+	default value for global joy_sensitivity = 1.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	added Joystick-event reading in keyboard_update(): joystick motion is
+	simply mapped to Motion-keys and Space.
+
+	* /local/cvsRep/FD/FreeDroid/src/joy.c:
+	complete Joystick initialisation in Init_Joy().
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	added new switch [-j|--sensitivity=<n>] that changes analog-joystick
+	sensitivity in the range [0,32].
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	added global joystick variables relating to joy.c
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	fixed (release-critical) bug in MoveEnemys() that produced
+	endless-loop if enemy was put on a waypoint with _zero_ connections.
+
+2002-05-21  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Sound can now really be completely turned of via command line, which was incomplete.
+	Corrected the bug in the scrolling text at the beginning.  Seems releasable.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Corrected out some damage done to the old engine while introducing new fonts.
+	Reactivated palette color operations, which cuts down FPS to about 65 but
+	Influs color is now always correct.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	Paradroid font funktioniert wieder, wenn auch noch nicht besonders schoen.
+
+2002-05-20  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Rahmen is displayed again, although without font.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	the numbers in influ and enemy droid are now visible again.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Elevator picture now visible again.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	Blasts are visible again.  dirty Blast-Bullet collision check disabled.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	Bullets are visible again, but bullet-bullet-collision checking remains disabled.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	Influencer is now visible again with the ne, but numbers are still omittet for now.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Enemys are visible again, although the numbers are omittet for now.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	Background scrolling works fully now!
+	The procedure is very abstract and very powerful in my opinion!
+	All of the clipping is done via SDL and its clipping capabilities.
+	I hope the SDL knows what to do and their code is really bugfree!!!
+	But it seems so.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Map now visible again with the new engine.  Movement and enemys and that
+	also runs well since there were no changes to this part.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Renamed GetInternFenster into Assemble_Combat_Picture, which will do the
+	assembling of the screen, but not into some internal window but rather into
+	the ne_screen.  PutInternFenster will be a dumb return and updating of the
+	screen can be done via SDL_Flip later.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c:
+	Added some more conditional compilations for the new engine.
+	Deactivated the termination after InitPicutres.
+
+2002-05-20  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	continued work on NEW_ENGINE: InitPictures now loads in some blocks
+	into SDL_Surface ne_blocks, using ne_get_blocks() that returns a
+	SDL_Rect array with the block-positions.
+	Old and new engine still compile and run ok.. well the new one doesnt
+	actually do much though.. ;)
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am:
+	included joy.c in files to compile
+
+	* /local/cvsRep/FD/FreeDroid/src/joy.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	added for Joystic/Gamepad code, has only Init_Joy() at the moment
+	(and doesnt detect my USB Logitech Gamepad yet! ;)
+
+2002-05-20  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Removed more bugs from the TODO buglist.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Corrected the way PermanentHealRobots treats droid:  Now the framerate is
+	taken into account.  Also adapted some associated constants.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/system.h, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/main.c:
+	I have thrown out all yiff code.  rp now can also remove the checks for
+	yiffs libraries and the linking of yiffs libraries, hoho.
+
+2002-05-19  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	The sound FX and BG music volume can now be conveniently set via the escape menu.
+	The game also does not terminate any more even when there is real shortage of free channels.
+	Is it time to dump the yiff?  It seems so.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Moved stupid flash-damage-handling from PutBullet to CheckBulletCollision,
+	where the rest of the bullet-collisions and bullet-damage is handled.
+	Corrected the way full sound buffers are treated by Freedroid:  Full buffers
+	will now not lead to termination of the program although warning messages
+	are generated.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Reactivated ConceptView.  Very handy for overview about level and RecFlashFill!
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Sound effects are now also played successfully by the SDL MIXER library.
+	Error checking, handling and prevention could still need improvement however.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	All background music files are now loaded and played successfully via
+	the SDL_MIXER sound library.  Cool!
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	SDL_Mixer is now successfully playing the background music!  Hurray!!
+	At least on my system.  (rp must add -lSDL_mixer as linker option in general.)
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/system.h:
+	In addition to new? video initialisation via Init_Video() now audio
+	initialisation is done via Init_Audio() in a similar fashion, nice and
+	clean for the caller in init.c.  All conditionals are handled inside.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Started transfer to SDL_AUDIO instead of the YIFF.
+	Variable USE_SDL_AUDIO controls the use of YIFF or NON-YIFF.
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c:
+	Influcolor palette manupilations every frame turned off now by default.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Removed the initialisation of SDL_TIMER, so that yiff can be started again.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Removed calls to svgalib dummy functions removed by rp before.
+
+2002-05-19  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/vars.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/colodefs.h, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c:
+	mainly started writing new engine, aktivated by #define NEW_ENGINE.
+	Old Code runs ok, new code compiles but doesnt work yet...
+
+2002-05-19  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	Resolved the strange WEAPON-mode--framerate-bug:  Influ color is now not
+	set every frame which gives us DOUBLE FRAMERATE!! cool, isn't it?
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Added extensive error docu and error explanation if there ever should be
+	a problem with the yiff and how to resolve it.  This was a "release-critical"
+	bug, that I consider now fixed.  Tell me if you are of different oppinion...
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Added framerate computation via SDL.  Gives very much the same results as
+	the old code using gettimeofday.  A switch USE_SDL_FRAMERATE has been added
+	in defs.h to allow for convenient switching between the two methods.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	Removed a nonexisting picture from the code.
+
+2002-05-18  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	More updates to the sound files.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c: Cleaned up sound files...
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c: Deleted unused sound files.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	cleaned up more sound files...
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	further restructurated sound files...
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c: Cleaned up sounds some more.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Changed some sound files and removed obsolete sounds.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	Removed another obsolete graphic.
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/main.c:
+	Removed?? the "GetChar" bug?  Remove an obsolete graphic.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	removed some obsolete graphics.  Console looks now quite clean to me.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Removed some obsolte graphics.  Modified console a little.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	Mainly updated the Homepage and added cleaned-up screenshots. (one less ;-) )
+
+2002-05-17  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am:
+	included maped.h, for distribution and dependencies
+
+	* /local/cvsRep/FD/FreeDroid/src/oldcode.c: shouldn't really be in CVS.
+	!! * If you want it, please keep a local copy * !!
+	i.e. rename it _before_ you do cvs update !!
+	(otherwise check out the previous revision with cvs update -r<rev>
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	mainly cleanup and reduced used of Real/Internal Screen.
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	- new Infoline-treatment (SetInfoline(r,l))
+	- greatly reduced use of obsolete Real/InternalScreen variables
+	  instead of Outline320x200. (Only remains are in GetTakeoverGraphics())
+
+	* /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	- some "clean-up" (removed some DebugPrintf's)
+	- some formatting to make it more readable
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	- New Info-line handling (SetInfoline(l,r))
+	- reduced use of Real/InternalScreen in favor of Outline320x200.
+	- some clean-up
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Infoline-handling now down solely by SetInfoline(left,right)
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	uncommented un-defined use of EditTextInfo which only worked in -O2
+	compilation.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c:
+	mainly cleanup, plus take account of new Infoline-handling via SetInfoline(l,r).
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	made deprecated KillTastaturPuffer() complain about being obsolete when called.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	Re-activated printing of PACKAGE and VERSION when command-line option
+	[-v|--version] is given. This should now even work on obsolete
+	build-environements  (-> jp ;)
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	some cleanup, and SwapScreen() and WaitVRetrace() are deprecated and
+	will complain about being obsolete when called ;)
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	some cleanup, and junked now obsolete LeftInfo[50], and RightInfo[]
+	globals.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	added Infoline-defines from rahmen.h into here, because some are
+	needed in global.h.
+
+	* /local/cvsRep/FD/FreeDroid/src/rahmen.c:
+	All infoline-functions have now been reduced to only one:
+	(replacing SayLeftInfo(), SayRightInfo() and UpdateInfoline())
+	SetInfoline (char *left, char *right), which is given the
+	strings  left,right to be displayed in the Infoline.
+	When NULL is passed, this displays the defaults i.e. Me.status left
+	and Score right.
+	NOTE1: this function only acts on Outline320x200 and does not update
+	the actual screen, so you have to call PrepareScaledSurface(TRUE) later.
+	NOTE2: DisplayRahmen() now just does that, no Infoline is added and
+	      the actualy screen is not updated either.
+
+	* /local/cvsRep/FD/FreeDroid/src/maped.h: added Copyleft to maped.h
+
+	* /local/cvsRep/FD/FreeDroid/src/maped.h:
+	removed all the nasty ^M 's at the line-endings...
+
+2002-05-17  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	Cleaned the Rahmen during the Takeover game (that was easy, haha)
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	Changed Highes/Lowest/Greatscore data type to float, like RealScore is.
+	This seems to have removed the "GetChar"-bug in Debriefing!
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Cleaned up Console:  Its now really working well.
+	Cleaned up the font colors in Debriefing.  Seems a little bit better this way.
+
+	* /local/cvsRep/FD/FreeDroid/src/maped.h:
+	Forgot to add the (slighly modified, but otherwise old) maped.h too :-)
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Added Save function to the level editor (now working completly correct,
+	but also not crashing).
+
+2002-05-16  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/colodefs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/ship.h, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Cleaned up the Rahmen and the console.  Not flawless, but rather clean now.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	The cheat menu is now hid a little bit better:  The new key to enter is
+	SHIFT-CTRL-ALT-C.  I hope thats enough.  We could also demand left AND right
+	shift and control and alt keys to be pressed, but for now I think its ok.
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c, /local/cvsRep/FD/FreeDroid/src/struct.h:
+	Ahhhh, I finally managed to cleanly correct the bug that sometime boxed you around,
+	sometimes even threw you out of the ship.  At least on my machine is works fine now.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Added better keyboard handling and even more level editor functionality.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/map.h, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Added more level editor functionality.
+
+2002-05-16  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	changed #includes and Makefile acccording to renaming:
+	para.c        -> main.c
+	paratext.[ch] -> text.[ch]
+	paravars.h    -> vars.h
+	parainit.c    -> init.c
+
+	* /local/cvsRep/FD/FreeDroid/src/text.h:
+	renamed "text.h" from "paratext.h"
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	taken account of new _file_ext  #defines due to renaming of para.c,
+	paratext.c, paravars.h, parainit.c
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c:
+	renamed "text.c" from "paratext.c"
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c:
+	renamed to "init.c" from "parainit.c"
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c: renamed "main.c" from "para.c"
+
+	* /local/cvsRep/FD/FreeDroid/src/paravars.h: * Renamed to "vars.h" !!
+
+	* /local/cvsRep/FD/FreeDroid/src/paratext.h, /local/cvsRep/FD/FreeDroid/src/text.h:
+	* Renamed to "text.h" !!
+
+	* /local/cvsRep/FD/FreeDroid/src/paratext.c: * Renamed to "text.c" !!
+
+	* /local/cvsRep/FD/FreeDroid/src/parainit.c: * Renamed to "init.c" !!
+
+	* /local/cvsRep/FD/FreeDroid/src/para.c: * Renamed to "main.c" !!
+
+2002-05-16  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Started Level editor, invokable via Options/Escape Menu.
+
+	* /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Further completed the options menu.
+	Cleaned up some sound code.
+
+2002-05-15  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/system.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	improved GetString() somewhat.
+
+2002-05-15  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Added TODO stuff.
+	Sound effect volume adjustment now completely operational.
+
+2002-05-15  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	takeover game now runs at constant timing-speed... ouff
+
+2002-05-15  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Added gamma corrections for to options menu.
+	Added background volume adjustment to the options menu.
+	Added full screen toggle to the options menu.
+	Added Mission instructions to the single player menu.
+	Added Framerate display option to the options menu.
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c:
+	Enlarged the options menu.
+
+2002-05-15  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	fixed jp's bug in "stuck" options menu: Have to set Weiter=TRUE to get
+	out of it!! ;-)
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/takeover.h:
+	-minor cleanup: remove obsolete InterruptInfolineUpdate,
+		Monitorsignalunterbrechung(), NOJUNKWHILEINIT, MODSCHASEIN,
+		+ several useless DebugPrintfs()
+
+	- started proper timing control in Takeover game, only implemented
+		yet for Color-choosing sequence.
+
+	* /local/cvsRep/FD/FreeDroid/src/system.h:
+	*@argh!! forgot to bloody check the bloody file in, dammit!
+
+2002-05-15  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/BFont.c, /local/cvsRep/FD/FreeDroid/src/BFont.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Extendes the options menu.  The problem of "stuck" escape key persists and
+	remains not understood by me.
+
+2002-05-14  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c:
+	fixed bug in getchar_raw () that could cause "stuck keys"
+	slightly modified Pause-function, leaving now always via "Space"
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/BFont.c, /local/cvsRep/FD/FreeDroid/src/BFont.h, /local/cvsRep/FD/FreeDroid/src/Makefile.am, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/colodefs.h, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/map.h, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/paratext.h, /local/cvsRep/FD/FreeDroid/src/paravars.h, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/ship.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/takeover.h, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/text.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	added BFont.c and BFont.h to src/Makefile.am
+	system-wide includes are now all in "system.h"
+	SDL-headers now included as <SDL/SDL.h>, to allow installation-path indep.
+	Project name now more consistently "Freedroid" rather than "FreeDroid".
+
+2002-05-14  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/BFont.c, /local/cvsRep/FD/FreeDroid/src/BFont.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Options menu is now based on great new fonts and therefore MUCH more flexible
+	than the old structure that used one fixed image for the menu.
+
+2002-05-14  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	properly wait for Space Press/Release at Deck-view in Console.
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c:
+	included <stdlib.h> for abs()
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	minor modifs: - some cleanup, e.g. line-breaks in comment-blocks
+		      - removed some (now) useless DebugPrintf()'s, now
+			deprecated  as we can properly debug with gdb.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	include <string.h> for memset() and memcopy() functions
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Flimmern() now takes an argument, GetString() now has 2. Added getchar_raw().
+
+	* /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	_completely_ rewritten GetString() (and hope nobody has seen the
+	old code... lol ;).
+	GetString now has _2_ arguments: MaxLen, and echo. The new argument
+	"echo" switches between no echo (echo=0), printf-echo (echo=1) and
+	SDL DisplayText (echo=2).
+	I'm afraid there might be a bug somewhere in there, as Debriefing()
+	now sometimes SegFaults, using this new functions. I'm working on it!
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	escaped multi-line string constants, as gcc-3.0 doesn't like them
+	unescaped any more.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c:
+	- adapted Pause() and ShowHighscoreList() to use the new
+	getchar_raw() and generally SDL.
+	- minor modifs mainly for consistency with my other global modifs, i.e.
+	 use_fullscreen -> fullscreen_on, second argument to GetSting() in
+	 Debriefing, ...
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	adapted Cheatmenu() to SDL_ libs: output is now done simply via
+	printf(), which shows the Cheat-menu in the text-window, while
+	keyboard input is done vie getchar_raw() using SDL. This should be
+	quite ok for a cheat-menu, which is intended for developers, not for
+	users anyway... ;)
+
+	This should now be 99% functional, please add/remove functionalities
+	as needed.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	- fixed bug in GetCrew() that lead to "strange" 001 enemys and 5xx
+	numbers on yellow deck etc.
+	- Remove some (now) useless DebugPrintf's. Since SDL, we can actually
+	use a proper debugger and should reduce the use of DebugPrintf to an
+	absolute useful minimum.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	choice of Flimmer-type is now passed as an argument to Flimmern(),
+	which might be useless but at least gets rid of the #ifdef conditional
+	compilation, and allows to try different ones before maybe chosing just one.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	added a new function, getchar_raw(), which allows to get the character
+	of the _next_ key pressed in a similar way getchar() does, but working
+	under the raw SDL keyboard mode. This is used in the new GetString()
+	function, and should generally come quite handy, I hope.
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	changed global toggle "use_fullscreen" to canonical name "fullscreen_on".
+	I recommand using this canonical form for future global toggles.!
+
+	* /local/cvsRep/FD/FreeDroid/src/TAGS:
+	TAGS file should be produced locally, and by using the command
+	make tags
+
+2002-05-14  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c:
+	Erradicated the last real SVGALIB dependencies and includes.
+	Added the link to SDL_Paradroid to the homepage.
+
+2002-05-12  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c:
+	Added a screenshoot function, that is accessible via the p key.
+	I hope I didn't mess anything up, because the server says I modified
+	EVERYTHING.  Lets see...
+
+2002-05-11  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	resolved some warnings about gettimeofday.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Removed all remaining putpixel calls from FreeDroid.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c:
+	putpixel(...)-calls entirely deleted from module blocks.c.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c:
+	Removed a bug in the new DisplayBlock routine that didn't display the elevtor picture.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/oldcode.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Added an icon and a window title for FreeDroid.
+	Also moved some unused but perhaps not yet useless code to the new module
+	oldcode.c.  PLEASE DO NOT INCLUDE OR COMPILE OR LINK THIS FILE.  THANKS.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Started a new way to assemble the internal picture before it is drawn to
+	the screen:  Now picture assembling is done in program memory, not in an
+	SDL screen called "screen".  The new working field is names
+	"Outline320x200" cause its the outline of what we later want to bring to
+	the screen and cause its size is 320x200.  putpixels should NEVER again
+	occur this way, not even in svgaemu.c, where PrepareScaledWindow has been
+	patched allready.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Resolved some conflicts, where there were local variables "screen"
+	logically conflicting with global variable "screen".
+	Turned off RotateBulletColor() and voila, 30 FPS at least again.
+
+2002-05-10  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Improved the technical details of PrepareScaledSurface:  This saves about
+	15% time for improved framerate.
+
+2002-05-10  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/TAGS: minor modifs
+
+	* /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	slightly changed the handling of the use_fullscreen toggle.
+
+	* /local/cvsRep/FD/FreeDroid/src/struct.h:
+	extended struct ship with num_levels, num_lifts, num_lift_rows
+	members, which replace the now obsolete LevelsOnShip
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.h:
+	we now reserve the following Palette ranges:
+	190 (EL_BG_COLOR),
+	191-220 (EL_FIRST_LEVEL_COLOR - EL_LAST_LEVEL_COLOR) for the
+		MAX_LEVELS level-colors
+
+	221-236 (EL_FIRST_ROW_COLOR-EL_LAST_ROW_COLOR) for the MAX_LIFTROWS
+		lift-rows.
+
+	This corresponds to the MAX_LEVELS=29 and MAX_LIFTROWS=15 settings in
+	defs.h and we hope this will be sufficient for future ships...?!
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	removed the "ship-puzzle", where we composed the ship-view by small
+	blocks, which now greatly simplifies this piece of code.
+	Activated correct coloring of lift-rows and levels, using the _new_
+	Palette range reserved for this (see ship.h).
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	extended/replaced Johannes' command-line code (sorry ;), and added the
+	new options [-f|--fullscreen] and [-w|--window], with corresponding
+	help-message. We use the toggle "use_fullscreen" rather than
+	"FullScreen_Requested_By_Player_Tired_of_Playing_in_Window"... (lol ;)
+
+	+ Use of new ship-struct members.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c:
+	set default value for use_fullscreen to FALSE (for easier debugging)
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	use now ship-defines MAX_LEVELS, MAX_LIFTS and MAX_LIFTROWS.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	we now longer read the (now) obsolete ELevator-blocks, which were used
+	to "puzzle" together the ship-view. Instead, the complete ship-picture
+	is loaded. Coloring of levels and lift-rows is done via color-palette.
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h: added use_fullscreen toggle.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	- new #defines MAX_LIFTS, MAX_LEVELS and MAX_LIFTROWS for upper
+	limits of lifts (formerly known as 'elevators'), levels and lift-rows
+	on any ship.
+	- removed ALLLEVELS, MAX_LEVELS_ON_SHIP and ALLELEVATORS.
+
+	The new defines are now used consistenly everywhere.
+
+	* /local/cvsRep/FD/FreeDroid/src/colodefs.h:
+	removed EL_* (elevator) color-definitions, they now stand all in
+	ship.h.
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c:
+	corrected bug in DisplayBlock(): source++ was _before_ putpixel
+		(should came after it)
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am:
+	new Makefile which includes svgaemu.c in order to allow
+	compilation...
+
+2002-05-09  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	Removed the delay command from Takeover function.  Still it is incredibpy slow!
+	Removed the bug, that the -f command line option didn't work.
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Added command line switch for fullscreen mode. (strange: only work in long form?)
+	Removed the lag at the beginning of the game menioned by Reinhard.
+	Added the new constand SCALE-FACTOR, that lets you decide between x2 and x3 magnification.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Deactivated the too slow unfading of levels after leaving the elevator.
+	This will be good to avail annoyed players for the new X11 release to be coming soon.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Ported Konsole to new Scale-Structured X11.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Portet SetUserfenster, GetString and the Debriefing and the Flimmern function to X11.
+	A lot of new keys are now accessible via the usual ?Pressed() functions.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Added comments about BULLETCOLOR rotation to be removed sooner or later.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/svgaemu.c, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Takeover and Title screen are now visible again, hey that rhymes.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Corrected the color handling.  Patched the too low framerate-constant at the
+	beginning.  Incorporated PrepareScaledSurface into PutInterFenster.
+
+	* /local/cvsRep/FD/FreeDroid/src/svgaemu.c:
+	Forgot to add this last file for the transfer to X11.  Hope all is well...
+
+	* /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/blocks.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	The game now runs under X11 using the SDL. (Thats why the many changes.)
+
+2002-05-09  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	mainly eliminated use of BeamLine in PutOject().
+	introduced use of some new gl_  svgalib functions, although Johannes
+	will throught them out immediately again... hope this will not cause
+	too many conflicts...
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	ShowPlayground(): takeover game now uses "frame-buffering"
+	(via InternalScreen) as well, for a smooth display.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	-removed BeamLine, and added initialisation of Random-number generator
+	  to make sure the game-beginning is really random too
+
+	* /local/cvsRep/FD/FreeDroid/src/misc.c:
+	mainly re-written MyRandom(). This function is now tested to give equally
+	probable integer numbers in the range [0, Obergrenze].
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c:
+	removed use of global variable BeamLine
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c: changed some comments.
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h:
+	removed useless (I hope ;) global variable BeamLine
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	- better waypoint-treatment should get rid of "ghost"-enemys going
+	through walls to (0,0).
+
+	- removed all reference and use of the global variable BeamLine, which
+	  seemed rather useless... (I hope)
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	added macros Grob2Fein(x) and Fein2Grob(x) for easier conversion between
+	Fein<-->Grob coordinates.
+	Note: for simplicity these macros can be used for x and y coords,
+	as long as BLOCKHOEHE=BLOCKBREITE, which is ok for the moment, but might
+	change in the future
+
+	However, a new concept for these grob/fein coordinates might be necessary
+	anyway, as it seems currently too specific to 320x200 resolution...
+
+2002-05-08  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Calibrated the effect of the refresh field:  more refreshment, same price.
+	Cleared out the bug, that the status line remained dead after visition Consoles.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	Filled the AUTHORS file with something sensible (like others did)
+	Commented out the PACKAGE_STRING again.
+
+2002-05-07  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	re-activated output of Version information with --version.
+	Note: PACKAGE_STRING must be #defined in your config.h file. Make sure you re-run
+	aclocal, autoheader, autoconf, automake if not. If this #define is still missing
+	in your config.h, your gnu-build environement might be broken, or you have to update it...
+
+2002-05-07  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Added more TitleText information, also about the controls of the game.
+	There might, no there will, be people, who NEVER heard of paradroid.
+	Removed the frame-rate-debug information that made the screen ugly.
+	Remove a SegFault cause:  High-Score name freed after it is displayed!
+
+2002-05-07  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	- some additions to Cheatmenu, in order to help track problems with map & "ghost robots"..
+	- added command-line option [--debug|-d[=LEVEL]] to switch on output of debug-messages
+	  (files currently gets *HUGE* very fast, so this should only be used when needed!)
+	  debug-levels supported _in principle_, but only ON/OFF (i.e. 0, >0) implemented
+	- Takeover game now non-transparent by default (looks much better ;)
+
+2002-05-06  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/para.c, /local/cvsRep/FD/FreeDroid/src/parainit.c, /local/cvsRep/FD/FreeDroid/src/paratext.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/text.c:
+	Added improved check for nescessary line-feeds.  Now it is no longer nescessary
+	to add a \n in any text to be displayed by DispalyText or ScrollText but the functions
+	will do line breaking themselves.  Removed all \n from Title Texts and Console Texts.
+	This will be much more convenient when changes are made to the text and guessing the
+	right time for a line feed can be omitted.  Added a missing letter in the fontpicture also.
+
+2002-05-05  jprix  <jprix@microwave>
+
+	* Started an EndTitle function that will be called as soon as all robots aboard
+	the ship are dead.  (The armageddon-cheat-option is very convenient to achieve
+	this.)  This new function also displays part of the new story line.
+
+	* Corrected the SegFault bug that came from too little accocated memory for the
+	text describing druids at the console, that faulted if 999 was displayed.
+	Now that Bug should be fixed.
+
+	* /local/cvsRep/FD/FreeDroid/src/view.c:
+	I activated a security check:  PutEnemy now sets the type of the druid to 001
+	whenever it encouters a druid with illegal type.  Please note, that this is only
+	a dirty workaround and not a solution to the problem, which in my opinion is due
+	to the DOS-TO-UNIX conversion problems of out ship- crew- and map-files, that cause
+	some (the last or first most likely) entrys to contain junk.  However the SegFault
+	bug for now disappears.
+
+	* Tracked a Segfault bug:  The cause seems to be a druid of type 33 where we
+	know only 24 different druid types.  Asked Reinhard to correct the bug.
+	Added a lot of additional debug messages and security checks in the process.
+
+	* Added some new sounds and imroved the sound behaviour in takeover game.
+	Also improved the flash behaviour, mainly the too short optical effect.
+
+	* Calibrated one but one very important constant for framerate
+	computation, that will staightens out the last time-distorting
+	after longer delays.  The only other time-distortion can happen at
+	the very first beginning of the game, where no data on the
+	framerate to be expected is yet available.  I think that is
+	tolerable. jp. 
+
+2002-05-04  jprix  <jprix@microwave>
+
+	* Inproved collision behaviour:  multiple collisions (immediately
+	destroying influ) should no longer occur.  Improved wait, firewait
+	and aggression behaviour of druids. Seems pretty much like the
+	original now, although I don't have the original game or even an
+	emu installed. 
+
+	* Since there were some unsmoothnesses in the flow of the game,
+	that had to do 	with framerates and distorted framerates I
+	corrected the flaw.  Apart from that there is now a function
+	called Activate_Conservative_Frame_Computation(); that 	should be
+	called whenever the game flow is stopped for possibly longer
+	periods of time, e.g. in elevators, consoles, takeover, options
+	menu, debug menu.  The 	new code seems to work pretty well, at
+	least on my machine. 
+
+	* Now different sounds for different bullet types are implemented.
+
+	* Takeover game has now more sounds, although these sounds could
+	perhaps use improvement. 
+
+	* Corrected the bug, that the influ is in transfermode by default
+	when coming out of the elevator, thereby often initiating
+	unintended takeover of inferiour droids. 
+
+	* Redid the TRANSFERCOUNTER code to make it frame_dependent (and useful again).
+
+	* Further improved the official menu, that is accessible via ESCAPE key.
+
+2002-05-03  jprix  <jprix@microwave>
+
+	* Added a preliminary options menu, that is of course not fully
+	functioning yet. The menu is accessible via the escape key.
+	Since this is not some debug window, it is intended to be
+	graphically impressive. 
+
+2002-05-02  rprix  <rprix@microwave>
+
+	* o) 'GNU-yfied' whole source by indent. Please try to stick to these conventions
+	   too  (by imitation, or by using indent). Ok, this is not compulory but it
+	   makes reading the code easier.
+
+	o) sound_on is now checked _by_ the sound-functions, not by the caller!
+	   Yiff is unconditionally initialised: this allows switching on/off
+	   of sound in real-time. Unfortunately this does not yet work for the
+	   background music, maybe Johannes can implement something along these
+	   lines..?
+	o) can't remember what else I did, probably nothing important... ;)
+
+2002-05-02  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	deleted more unused sound code.  improved debug logging a little bit more.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	added more doku to sound.c and remove some old unused code.
+
+2002-05-01  rprix  <rprix@microwave>
+
+	* o) changed all possible printf() statements into DebugPrintf()
+	o) Transparent takeover game now works nicely, but is it really useful? :|
+
+2002-05-01  jprix  <jprix@microwave>
+
+	* Added more and better debugmessages for better tracking of the
+	latest background music problem. However I am not sure I
+	understand it yet.  I hope the new debugmessages help a bit. 
+
+2002-05-01  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	fixed Bug in ShowPlayground() that caused a seg-fault when Takeover game
+	was finished (sorry ;)
+
+2002-05-01  jprix  <jprix@microwave>
+
+	* Set release nr. to 1 in configure.  Still had to comment the
+	"PACKAGE_STRING" line out in parainit.c in order to have it
+	compile.  Can someone else verify the crash related to sound?  I
+	seem to be unable to reproduce the bug. 
+
+2002-05-01  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/parainit.c:
+	Version and Package name output by --version are now set by configure!
+	Ideally the _only_ place to set version+name should be configure.ac .
+
+	* /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	o) added transparancy to takeover game (is not finished yet). I'm not sure
+	  if that will be usefull, but one only has to do a SetUserfenster(color)
+	  at the beginning to remove transparancy ...
+	o) jp has slightly messed up the code when adding his sound-effect
+	   this could not possibly have compiled like that??!!
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	fixed mini-bug in TranslateMap()  (NewBlock was not initialised)
+
+	* /local/cvsRep/FD/FreeDroid/src/defs.h:
+	why not try the new title-picture? (at least it gives the right _name_!)
+
+2002-05-01  jprix  <jprix@microwave>
+
+	* More debug messages added, while trying to track a reproducable
+	segfault bug. 
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Erredicated the bug in the GreatDruidShow keyboard controls.
+
+	* Takeover game now has more sound.
+
+	* Improved Background sounds:  More sound files + Background music
+	can be switched easily. Takeover, Console, Title and Combat each
+	have their own background music. 
+
+	* Refreshes now rotate at a adecent speed AND also work at decent speed.
+	Score is reduced in a moderate amount.
+	Made some corrections to the "Rahmen":  It now is displayed sans
+	red box around it. 
+
+2002-04-30  jprix  <jprix@microwave>
+
+	* Corrected the bug, that was recently made into SetUserfenster,
+	when rp ported the function.  Corrected the bug, that was in
+	ClearUserFenster, where the order of parameters was mixed up,
+	which made a setmem call useless. 
+
+	* Refresh fields rotate now at the right speed.  (Their effect and
+	scoredrain isn't fixed yet.) Corrected the bug of missing robot
+	rotation after the influ has been defeated. 
+	
+2002-04-30  rprix  <rprix@microwave>
+
+	* ported the SetUserfenster() function in view.c to use vgalib.
+	Takeover game now finished as far as the original version is concerned.
+
+2002-04-29  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/bullet.c,
+	/local/cvsRep/FD/FreeDroid/src/view.c: 
+	Robot blast damage now functioning correctly (same as influencer).
+	Influencer takes the right amount of damage when hit by bullets.
+	Improved Homepage a (little) bit. 
+
+	* Corrected the version number in the title screen.
+	Fixed the bug, that influencers damage from bullets was random.
+
+	* Erradicated some (justified) warnings.  Adapted some
+	robot-related constants. BTW, the autoconf/automake STILL does not
+	produce -Wall switch for the makefile in /src. 
+
+2002-04-28  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c,
+	/local/cvsRep/FD/FreeDroid/src/takeover.c: 
+	fixed small bug in DisplayMergeBlock(): source++ came _before_
+	check on TRANSPARENTCOLOR resulting in display Problems in
+	takeover-game. Takeover-game now well adjusted. Still lacking a
+	uniform Color background. what function to use? 
+
+2002-04-28  jprix  <jprix@microwave>
+
+	* Redid the somewhat flaky mathematics of enemy fire.  Enemy
+	robots are now perfect marksmen. They always hit (allthough they
+	do not consider current movement of the influencer but rather
+	shoot at his current position).  They never hit themselves,
+	although it can happen, that two bullets are fired to shortly
+	after each other, colliding and creating a blast that can harm the
+	enemy.  But that is seldom happening and also happening in the C64
+	version, as far as I know.  Game fun is drastically increased with
+	such enemys! Hoa! Cool!  See ya, jp. 
+
+	* Cleaned up the console, especially the "GreatDruidShow".
+	Allthough some minor flaws still exist, I find that it looks quite
+	passable.  Come and see for yourself. 
+
+	* Erased a stupid segfault due to unincluded headers due to
+	insufficient compiler warnings! Please someone sooner or later see
+	to that the autoconf/automake generated appropriate compiler 
+	switches that cause maximal warnings!  Thanks,jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	All druidimages should now be displayed at the console.
+	However, slight color distortions may still occur in some druidimages.
+	They are only minor however and should disappear, when the graphics are
+	worked over or if we set the vga palette separately.  Do that if you feel like it...
+
+	* Code added to read in the images of the druids for the console depiction.
+	Modifications were made to the image files go get their properties right...
+	Work is still left to do there.
+
+	* Since Reinhards new DisplayMergeBlock function tended to segfault because of
+	uninitialized pointers, I corrected the little mistake and also added some new
+	function "DebugPrintf" that should be used throughout the code for debug-messages,
+	CONSISTING ONLY OF ONE STRING, so that we can conveniently turn on and off the
+	crowd of debug messages as desired with one little switch in misc.c.  Have fun, jp.
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Added and activated GotHitSound produced by incoming bullets.
+
+	* /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	Portet the old "Flimmern" function to use svgalib calls instead of
+	writing to memory. 
+
+	* Redid some of the old unelegant sound code.  Its now much
+	shorter, more elegant and new sounds can be added much easier than
+	before.  Some new sounds added as well. 
+
+2002-04-28  rprix  <rprix@microwave>
+
+	* Command line parsing now works. Currently implemented [-v | --version]
+	[-? | -h | --help], [-q | --nosound ], [-s | --sound] (default),
+	[-t | --timeout=SECONDS ] ... sets alarm - timeout for debug purposes.
+
+	See the function parse_command_line() in parainit.c and "man getopt"
+	if you want to add further functionality.
+
+	* Takeover game now nearly perfect, uses only *our* graphics of to_elem.pcx
+	(-> no copyright problems...). Background still needs to be cleared...
+
+	* /local/cvsRep/FD/FreeDroid/src/blocks.c:
+	DisplayMergeBlock() now ported (in analogy to DisplayBlock())
+
+2002-04-28  jprix  <jprix@microwave>
+
+	* Improved the sound a bit more....
+
+2002-04-27  jprix  <jprix@microwave>
+
+	* Improved the sound a bit:  blasts and refreshes and elevators now
+	produce sound! have fun. 
+
+	* Added some new sounds.  Sound active as default.
+
+2002-04-25  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Sound working again!  Jiippiiiee!
+
+2002-04-24  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Tried to correct the sound bug.  Had to do it blindly, for the
+	project doesn't compile at my machine at the moment. 
+	So, good luck everybody with the changes I made...
+
+2002-04-22  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/nosound.c:
+	nosound.c is redundant now, conditional compilation in sound.c
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile:
+	Makefile is now _built_ by configure, should _not_ be checked in.
+
+	* NEW Project NAME:  FreeDroid (aka freedroid-0.6.0).
+	All c-files now include <config.h>, built from configure
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	uses #if HAVE_LIBY2 from <config.h> to compile conditionally, depending on
+	presence of Yiff-library as detected by configure.
+
+	* /local/cvsRep/FD/FreeDroid/src/Makefile.am:
+	Main source-files of the GNU build environement.
+	Run autoconf and automake to obtain the configure-script.
+
+
+
+
+
+
+
 
