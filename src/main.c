@@ -124,9 +124,6 @@ main (int argc, char * argv[])
 
 	  if ( ServerMode ) SendPeriodicServerMessagesToAllClients (  ) ;
 
-	  // DebugPrintf ( -2 , "\nCtrlWasPressed: %d." , CtrlWasPressed() );
-	  DebugPrintf ( -2 , "\nLeftCtrlPressed: %d." , LeftCtrlPressed() );
-
 	  StartTakingTimeForFPSCalculation(); 
 
 	  ReactToSpecialKeys();

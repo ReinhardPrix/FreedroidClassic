@@ -76,7 +76,7 @@ part_group_strings [ ALL_PART_GROUPS ] =
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
   { 
-    { 0 , 0 } , // head
+    { 1 , 0 } , // head
     { 1 , 0 } , // shield
     { 1 , 1 } , // torso
     { 1 , 1 } , // feet
@@ -1967,9 +1967,9 @@ iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int ro
     case 8:
       iso_put_tux_weapon ( x , y , player_num , rotation_index );
       iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
       iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 

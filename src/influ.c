@@ -812,13 +812,13 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
     { 
       planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
       planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
-      DebugPrintf ( -2 , "\nNow running..." );
+      // DebugPrintf ( -2 , "\nNow running..." );
     }
   else
     {
       planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
       planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
-      DebugPrintf ( -2 , "\nNow walking..." );
+      // DebugPrintf ( -2 , "\nNow walking..." );
     }
 
   //--------------------
