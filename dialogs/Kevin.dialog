@@ -133,7 +133,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=7  OptionText="I'm sorry, but I don't think there's anything I could do about that energy supply."
 OptionSample="Kevin/Tux_im_sorry_but.wav"
-PositionX=450  PositionY=391  
+PositionX=456  PositionY=414  
 Subtitle="That's too bad.  Because I can't leave here to fix it myself.  It's important that my research project can continue uninterrupted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
@@ -156,14 +156,14 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=116  PositionY=460  
 ChangeOption=9 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
-ChangeOption=14 ChangeToValue=1
+ChangeOption=18 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=10  OptionText="How about some reward for securing your energy supply area?"
 OptionSample="Kevin/Tux_how_about_some.wav"
-PositionX=185  PositionY=464  
+PositionX=176  PositionY=406  
 ChangeOption=10 ChangeToValue=0
 OnCondition="CookieIsPlanted:kevin_reward1_given:" JumpToOption=12 ElseGoto=13
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -180,7 +180,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=266  PositionY=525  
+PositionX=246  PositionY=455  
 Subtitle="I've already rewarded you for that.  Now go and don't steal any more of my time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
@@ -190,7 +190,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=265  PositionY=437  
+PositionX=247  PositionY=374  
 Subtitle="What do you want?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
@@ -199,9 +199,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=14  OptionText="About that project you said you have running..."
-OptionSample="Kevin/Tux_about_that_project.wav"
-PositionX=190  PositionY=535  
+New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=334  PositionY=485  
 Subtitle="Yes, since the energy supply has been constant, results were much better.  I've been able to achive my goal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I've managed to obtain secret data on the colony surroundings.  But the data is so vast, we'll need a big computer cluster to evaluate it properly. "
@@ -211,14 +211,14 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If I only had a suitable cluster.  Then we could start data evaluation right away. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
-ChangeOption=15 ChangeToValue=1
+ChangeOption=16 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=15  OptionText="Maybe I can help somehow to find a suitable cluster."
-OptionSample="Kevin/Tux_maybe_i_can.wav"
-PositionX=281  PositionY=572  
+New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=445  PositionY=474  
 Subtitle="That would be great of course.  I know that the old town is maintaining a suitable information infrastructure and has a proper cluster running for some time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The only problem is, that I can't go back to town.  They would probably kill me because of that accident years ago."
@@ -232,6 +232,48 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="GiveItem:100"
 DoSomethingExtra="AssignMission:7"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="Maybe I can help somehow to find a suitable cluster."
+OptionSample="Kevin/Tux_maybe_i_can.wav"
+PositionX=386  PositionY=520  
+ChangeOption=16 ChangeToValue=0
+OnCondition="MissionAssigned:7" JumpToOption=17 ElseGoto=15
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=452  PositionY=564  
+Subtitle="You've already agreed to take my data cube to the cluster.  I have no great influence of this matter any more."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The fate of our colony now rests in your hands.  Bring the data cube I gave you to the cluster.  Only there can the data be evaluated properly."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=17 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="About that project you said you have running..."
+OptionSample="Kevin/Tux_about_that_project.wav"
+PositionX=199  PositionY=512  
+ChangeOption=18 ChangeToValue=0
+OnCondition="MissionComplete:7" JumpToOption=19 ElseGoto=14
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=333  PositionY=554  
+Subtitle="I've already received the results from the evaluation of my data in the cluster."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Good work."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
