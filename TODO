@@ -1,12 +1,7 @@
 #-*- mode: text -*-
-
-- !! We should have a common bug/patch mailing address somewhere !!
-  freedroid@....
-
 Bugs
 ----
-- (rp) IMPORTANT:  The automake/autoconf procedure needs to be looked over again.
-  Compiler warnings SHOULD REALLY BE ENABLED AND STRICT if not pedantic!!!!
+- Game crashes now before the title-screen when I allow sound, works ok with --nosound 
 
 - (rp) The waypoints seem to have gone awry!  On the command bridge (red level) and
   on the gray level especially robots like to pass through walls and out of the map
@@ -15,19 +10,6 @@ Bugs
 
 - Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
   NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
-
-- Schuss nach Rechts-Unten geht nicht: ? (jp: kann ich nicht nachvollziehen.  Der rp
-  sollte eventuell sein keyboard reinigen... ;-)  )
-
-- Spiel "holpert" oefters: koennte von Scroll-schrift kommen
-  (sollte vielleicht in einem Parallel-prozess laufen, statt in
-  der Hauptschleife?) (jp: Kommt wahrscheinlich vom yiff sound server, wenn zu viele
-  sounds gleichzeitig angefordert werden, etwa, wenn man zwischen zwei robots eingeklemmt
-  und hin und her gebeppelt wird.  Andere Ursachen nicht ausgeschlossen.)
-  (liegt sicher auch daran, dass im Lift die Framerate verzerrt wird.  Naja.)
-
-- gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
-  jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
 
 - Laufschrift gehoert zu Paradroid-'extensions'
 
@@ -43,19 +25,18 @@ Bugs
 
 - (?) find more open and free sounds be can use legally
 
-- correct the too fast refresh movement and effect
-
 - correct the too fast explosion (blast) damage effect
 
 - (jp) add more sounds
-
-- (rp) Takeover game still looks 'unfinished'
 
 - (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
   sind nur ein paar "Brumm-brumm" Geraeusche
 
 Missing features
 -----------------
+- !! We should have a common bug/patch mailing address somewhere !!
+  freedroid@....
+
 - save highscores to disk
 - Options menu? 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
