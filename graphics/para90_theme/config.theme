@@ -1,0 +1,61 @@
+
+----------------------------------------------------------------------
+
+This is a theme configuration file for Freedroid.
+It contains information about the graphics definied
+for this theme and is read in from the Freedroid
+binary file at execution time.
+
+----------------------------------------------------------------------
+
+In this particular case, it describes the default
+theme configuration.
+
+----------------------------------------------------------------------
+
+**** Start of theme data section ****
+
+(The explosions within Freedroid are typically called 'blasts'.)
+
+// blast 'one' is the explosions of bullets hitting e.g. the wall
+How many phases in Blast one : 6
+
+// blast 'two' is the explosions of droids hitting e.g. the wall
+How many phases in Blast two : 9
+
+*** End of themes blast data section ***
+
+
++++
++++ Now we specify the number of phases for each bullet type 
++++ for this theme
++++
+For Bullettype Nr.=0 we will use number of phases=4 and number of phase changes per second=20
+For Bullettype Nr.=1 we will use number of phases=4 and number of phase changes per second=20
+For Bullettype Nr.=2 we will use number of phases=4 and number of phase changes per second=20
+For Bullettype Nr.=3 we will use number of phases=1 and number of phase changes per second=1
+For Bullettype Nr.=4 we will use number of phases=4 and number of phase changes per second=20
+For Bullettype Nr.=5 we will use number of phases=4 and number of phase changes per second=20
+
+*** End of themes bullet data section ***
+
+// In the following you can select the top left corner where to
+// put the first, second and third digit of the droid.
+//
+// 0 0 thereby means the top left corner of the droid image
+//
+// coordinates are specified in pixel units and refer to the position
+// in the standard 64x64 pixel block, but will be rescaled in case the
+// whole game window compontent set is resized, accordingly
+//
+
+First digit x : 10
+First digit y : 24
+Second digit x : 26
+Second digit y : 24
+Third digit x : 42
+Third digit y : 24
+
+*** End of themes digit data section ***
+
+**** End of theme data section ****
