@@ -1531,8 +1531,19 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
   for ( y = Area.y ; y < Area.y+Area.h ; y ++ )
     {
+      
+#define HIGHLIGHT_BLOCK_FRAME 2
+
+      // if ( ! ( ( y < Area . y + HIGHLIGHT_BLOCK_FRAME ) || ( y + HIGHLIGHT_BLOCK_FRAME >= Area.y+Area.h ) ) && 
+      // ! GameConfig.highlighting_mode_full ) continue ;
+
       for ( x = Area.x ; x < Area.x+Area.w ; x ++ )
 	{
+
+	  if ( ( ! ( ( x < Area . x + HIGHLIGHT_BLOCK_FRAME ) || ( x + HIGHLIGHT_BLOCK_FRAME >= Area.x+Area.w ) ) && 
+		 ! GameConfig.highlighting_mode_full ) &&
+	       ( ! ( ( y < Area . y + HIGHLIGHT_BLOCK_FRAME ) || ( y + HIGHLIGHT_BLOCK_FRAME >= Area.y+Area.h ) ) && 
+		 ! GameConfig.highlighting_mode_full ) ) continue ;			       
 
 	  green = GetGreenComponent ( Surface , x , y ) ;
 	  red = GetRedComponent ( Surface , x , y ) ;
@@ -1541,13 +1552,6 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 	  if ( green < red ) max = red; else max = green ; 
 	  if ( max < blue ) max = blue;
 
-	  /*
-	  EnhancementFactor = 254.0 / (float)max ;
-	  // EnhancementFactor = 0 ;
-	  red = (float)red * EnhancementFactor ;
-	  green = (float)green * EnhancementFactor ;
-	  blue = (float)blue * EnhancementFactor ;
-	  */
 	  EnhancementFactor = 90;
 	  
 	  if ( red < 255 - EnhancementFactor ) red += EnhancementFactor ;

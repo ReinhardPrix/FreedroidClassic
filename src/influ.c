@@ -1479,7 +1479,7 @@ PerformTuxAttackRaw ( int PlayerNum )
   moderately_finepoint Weapon_Target_Vector;
   int i;
 
-#define PERFORM_TUX_ATTACK_RAW_DEBUG 0
+#define PERFORM_TUX_ATTACK_RAW_DEBUG 1
 
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)

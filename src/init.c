@@ -2059,7 +2059,9 @@ ResetGameConfigToDefaultValues ( void )
 
   GameConfig.enemy_energy_bars_visible = TRUE ;
   
-  GameConfig.hog_CPU = TRUE;
+  GameConfig . hog_CPU = TRUE ;
+  GameConfig . highlighting_mode_full = TRUE ;
+  GameConfig . menu_mode = MENU_MODE_DEFAULT ;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 

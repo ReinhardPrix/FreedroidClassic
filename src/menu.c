@@ -200,15 +200,19 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
-  for ( i = 0 ; TRUE ; i ++ )
+  if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
+       ( GameConfig . menu_mode == MENU_MODE_FAST ) )
     {
-      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-      CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-      CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+      for ( i = 0 ; TRUE ; i ++ )
+	{
+	  if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+	  CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+	}
+      if ( strlen( InitialText ) > 0 ) 
+	DisplayText ( InitialText , 50 , 50 , NULL );
     }
-  if ( strlen( InitialText ) > 0 ) 
-    DisplayText ( InitialText , 50 , 50 , NULL );
-
+  
   StoreMenuBackground ();
 
   while ( 1 )
@@ -229,14 +233,18 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
       HighlightRect.h = h;		    
       HighlightRectangle ( Screen , HighlightRect );
 
-      // for ( i = 0 ; TRUE ; i ++ )
-      // {
-      // if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-      // CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-      // CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
-      // }
-      // if ( strlen( InitialText ) > 0 ) 
-      // DisplayText ( InitialText , 50 , 50 , NULL );
+      if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
+	   ( GameConfig . menu_mode == MENU_MODE_DEFAULT ) )
+	{
+	  for ( i = 0 ; TRUE ; i ++ )
+	    {
+	      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+	      CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+	      CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+	    }
+	  if ( strlen( InitialText ) > 0 ) 
+	    DisplayText ( InitialText , 50 , 50 , NULL );
+	}
 
       SDL_Flip( Screen );
   
@@ -1261,8 +1269,7 @@ New_GraphicsSound_Options_Menu (void)
   char Options4[1000];
   char Options5[1000];
   char Options6[1000];
-  char Options7[1000];
-  char* MenuTexts[10]; // ={ "" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
+  char* MenuTexts[10];
   enum
     { 
       SET_BG_MUSIC_VOLUME=1, 
@@ -1272,7 +1279,6 @@ New_GraphicsSound_Options_Menu (void)
       CW_SIZE,
       SET_TERMINATE_ON_MISSING_FLAG,
       SET_SHOW_SUBTITLE_FLAG,
-      SET_HOG_CPU_FLAG,
       LEAVE_OPTIONS_MENU 
     };
 
@@ -1294,8 +1300,6 @@ New_GraphicsSound_Options_Menu (void)
 	       GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
       sprintf( Options6 , "Show Subtitles in Dialogs: %s", 
 	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
-      sprintf( Options7 , "Hog CPU for max. performance: %s", 
-	       GameConfig.hog_CPU ? "YES" : "NO" );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
@@ -1303,9 +1307,8 @@ New_GraphicsSound_Options_Menu (void)
       MenuTexts[4]=Options4;
       MenuTexts[5]=Options5;
       MenuTexts[6]=Options6;
-      MenuTexts[7]=Options7;
-      MenuTexts[8]="Back";
-      MenuTexts[9]="";
+      MenuTexts[7]="Back";
+      MenuTexts[8]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1407,12 +1410,113 @@ New_GraphicsSound_Options_Menu (void)
 	  GameConfig.show_subtitles_in_dialogs = !GameConfig.show_subtitles_in_dialogs;
 	  break;
 
+	case LEAVE_OPTIONS_MENU:
+	  while (EnterPressed() || SpacePressed() );
+	  Weiter=TRUE;
+	  break;
+
+	default: 
+	  break;
+
+	} 
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // void New_GraphicsSound_Options_Menu (void)
+
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
+void
+PerformanceTweaksOptionsMenu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+  char Options0[1000];
+  char Options1[1000];
+  char Options2[1000];
+  char* MenuTexts[10];
+  enum
+    { 
+      SET_HOG_CPU_FLAG = 1,
+      SET_HIGHLIGHTING_MODE,
+      SET_MENU_HANDLING_MODE,
+      LEAVE_PERFORMANCE_TWEAKS_MENU 
+    };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      sprintf ( Options0 , "Hog CPU for max. performance: %s", 
+	        GameConfig.hog_CPU ? "YES" : "NO" );
+      sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
+      strcpy ( Options2 , "Menu handling: " );
+
+      switch ( GameConfig . menu_mode )
+	{
+	case MENU_MODE_FAST:
+	  strcat ( Options2, "FAST" );
+	  break;
+	case MENU_MODE_DEFAULT:
+	  strcat ( Options2, "DEFAULT" );
+	  break;
+	case MENU_MODE_DOUBLE:
+	  strcat ( Options2, "DOUBLE" );
+	  break;
+	default:
+	  
+	  break;
+	}
+      
+      MenuTexts[0]=Options0;
+      MenuTexts[1]=Options1;
+      MenuTexts[2]=Options2;
+      MenuTexts[3]="Back";
+      MenuTexts[4]="";
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+
 	case SET_HOG_CPU_FLAG:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig . hog_CPU = ! GameConfig . hog_CPU ;
 	  break;
 
-	case LEAVE_OPTIONS_MENU:
+	case SET_HIGHLIGHTING_MODE:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . highlighting_mode_full = ! GameConfig . highlighting_mode_full ;
+	  break;
+
+	case SET_MENU_HANDLING_MODE:
+	  while (EnterPressed() || SpacePressed() );
+	  if ( GameConfig . menu_mode == MENU_MODE_FAST )
+	    GameConfig . menu_mode = MENU_MODE_DEFAULT;
+	  else if ( GameConfig . menu_mode == MENU_MODE_DEFAULT )
+	    GameConfig . menu_mode = MENU_MODE_DOUBLE;
+	  else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
+	    GameConfig . menu_mode = MENU_MODE_FAST;
+	  break;
+
+	case LEAVE_PERFORMANCE_TWEAKS_MENU:
 	  while (EnterPressed() || SpacePressed() );
 	  Weiter=TRUE;
 	  break;
@@ -1636,6 +1740,7 @@ enum
     GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
+    PERFORMANCE_TWEAKS_OPTIONS,
     SAVE_OPTIONS, 
     LEAVE_OPTIONS_MENU 
   };
@@ -1643,13 +1748,10 @@ enum
   MenuTexts[0]="Graphics & Sound";
   MenuTexts[1]="Droid Talk";
   MenuTexts[2]="On-Screen Displays";
-  MenuTexts[3]="Save Options";
-  MenuTexts[4]="Back";
-  MenuTexts[5]="";
+  MenuTexts[3]="Performance Tweaks";
+  MenuTexts[4]="Save Options";
+  MenuTexts[5]="Back";
   MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
   while ( !Weiter )
     {
@@ -1672,6 +1774,10 @@ enum
 	case ON_SCREEN_DISPLAYS:
 	  while (EnterPressed() || SpacePressed() );
 	  On_Screen_Display_Options_Menu();
+	  break;
+	case PERFORMANCE_TWEAKS_OPTIONS:
+	  while (EnterPressed() || SpacePressed() );
+	  PerformanceTweaksOptionsMenu();
 	  break;
 	case SAVE_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );

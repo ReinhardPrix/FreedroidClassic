@@ -808,6 +808,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
   else if ( ! strcmp ( ExtraCommandString , "BreakOffAndBecomeHostile" ) )
     {
       ChatDroid -> is_friendly = FALSE ;
+      ChatDroid -> combat_state = MAKE_ATTACK_RUN ;
     }
   else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
     {

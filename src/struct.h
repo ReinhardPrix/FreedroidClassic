@@ -105,6 +105,8 @@ typedef struct
   int skill_explanation_screen_visible;
   int enemy_energy_bars_visible;
   int hog_CPU;
+  int highlighting_mode_full;
+  int menu_mode;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

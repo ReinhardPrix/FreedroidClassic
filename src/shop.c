@@ -468,6 +468,7 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   SDL_Rect TargetRectangle;
   static int IsFirstFunctionCall = TRUE;
   static SDL_Surface* ScaledItemImageBackups[ NUMBER_OF_ITEM_PICTURES ];
+  SDL_Surface* tmp_surface;
   int i;
 
   if ( IsFirstFunctionCall )
@@ -510,7 +511,9 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   if ( ScaledItemImageBackups [ PictureIndex ] == NULL )
     {
       DebugPrintf ( 1 , "\nShowRescaledItem:  first call, so scaling has to be done...\n" );
-      ScaledItemImageBackups [ PictureIndex ] = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+      tmp_surface = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+      ScaledItemImageBackups [ PictureIndex ] = SDL_DisplayFormatAlpha ( tmp_surface ) ;
+      SDL_FreeSurface ( tmp_surface );
     }
   
   SDL_BlitSurface( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
