@@ -742,60 +742,96 @@ fill_in_line_or_column ( SDL_Surface *to_buffer , int line_shift , int col_shift
  *
  * ---------------------------------------------------------------------- */
 void
-shift_buffers ( SDL_Surface *from_buffer , SDL_Surface *to_buffer, int line_shift , int col_shift )
+shift_buffers ( SDL_Surface *from_buffer , SDL_Surface *to_buffer, float shift_x , float shift_y )
 {
   SDL_Rect source_rect;
   SDL_Rect dest_rect;
 
-  source_rect . w = from_buffer -> w - iso_floor_tile_width;
-  source_rect . h = from_buffer -> h - iso_floor_tile_height;
+  //--------------------
+  // So now we determine our rectangles...
+  //
+  source_rect . w = from_buffer -> w - fabsf ( ( shift_x - shift_y ) * iso_floor_tile_width ) ;
+  source_rect . h = from_buffer -> h - fabsf ( ( shift_x + shift_y ) * iso_floor_tile_height ) ;
+  source_rect . x = ( shift_x - shift_y ) * iso_floor_tile_width ;
+  source_rect . y = ( shift_x + shift_y ) * iso_floor_tile_height ;
 
-  DebugPrintf ( 0 , "\nShift Buffers: line_shift=%d col_shift=%d." , line_shift , col_shift );
-
-  if ( col_shift == 1 ) 
+  if ( source_rect . x < 0 ) 
     {
-      source_rect . x = 0 + iso_floor_tile_width / 2 ;
-      source_rect . y = 0 + iso_floor_tile_height / 2 ; 
-      dest_rect . x = 0 ;
-      dest_rect . y = 0 ; 
-      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
-      fill_in_line_or_column ( to_buffer , 0 , col_shift );
-    }
-  else if ( col_shift == -1 )
-    {
+      dest_rect . x = - source_rect . x ;
       source_rect . x = 0 ;
-      source_rect . y = 0 ; 
-      dest_rect . x = 0 + iso_floor_tile_width / 2 ;
-      dest_rect . y = 0 + iso_floor_tile_height / 2 ; 
-      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
-      fill_in_line_or_column ( to_buffer , 0 , col_shift );
     }
-  if ( line_shift == 1 ) 
+  else
     {
-      source_rect . x = 0 ;
-      source_rect . y = 0 + iso_floor_tile_height / 2 ; 
-      dest_rect . x = iso_floor_tile_width / 2 ;
-      dest_rect . y = 0 ; 
-      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
-      fill_in_line_or_column ( to_buffer , line_shift , 0 );
-    }
-  else if ( line_shift == -1 )
-    {
-      source_rect . x = iso_floor_tile_width / 2 ;
-      source_rect . y = 0 ; 
       dest_rect . x = 0 ;
-      dest_rect . y = 0 + iso_floor_tile_height / 2 ; 
-      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
-      fill_in_line_or_column ( to_buffer , line_shift , 0 );
     }
 
-
+  if ( source_rect . y < 0 )
+    {
+      dest_rect . y = - source_rect . y ;
+      source_rect . y = 0 ; 
+    }
+  else
+    {
+      dest_rect . y = 0 ;
+    }
 
   //--------------------
-  // We can recycle some of the graphics we've assembled already...
+  // Now we're ready for the blit.
   //
+  SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
 
 }; // void shift_buffers ( SDL_Surface *from_buffer , SDL_Surface *to_buffer, int line_shift , int col_shift )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+restore_destoryed_floor_tiles_in_buffer ( SDL_Surface *current_buffer , float shift_x , float shift_y )
+{
+    int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect TargetRectangle;
+  float shift_pixels_x , shift_pixels_y;
+
+  //--------------------
+  // Maybe we should be using a more elegant function here, that will automatically
+  // compute the right amount of squares to blit in each direction from the known amount
+  // of pixel one floor tile takes...  But that must follow later...
+  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+
+  shift_pixels_x = ( shift_x - shift_y ) * iso_floor_tile_width ;
+  shift_pixels_y = ( shift_x + shift_y ) * iso_floor_tile_height ;
+                     
+  SDL_SetClipRect (Screen , &User_Rect);
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for (col = ColStart; col < ColEnd; col++)
+	{
+	  //--------------------
+	  // Now maybe the tile in question has not been destroyed at all
+	  // but rather got preserved in the previous copy operation.  Then
+	  // we can save some work here...
+	  //
+	  if ( iso_image_positioned_inside_copy_rectangle ( floor_iso_images [ MapBrick % 5 ] , 
+							    ((float)col)+0.5 , ((float)line) +0.5 , 
+							    shift_pixels_x , shift_pixels_y ) )
+	    continue;
+
+	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+	    {
+	      blit_iso_image_to_map_position_in_buffer ( current_buffer , floor_iso_images [ MapBrick % 5 ] , 
+							 ((float)col)+0.5 , ((float)line) +0.5 );
+
+	    }			// if !INVISIBLE_BRICK 
+	}			// for(col) 
+    }				// for(line) 
+
+}; // void restore_destoryed_floor_tiles_in_buffer ( current_buffer )
 
 /* ----------------------------------------------------------------------
  * This function should assemble the pure floor tiles that will be visible
@@ -815,9 +851,11 @@ isometric_show_floor_around_tux_with_doublebuffering ( int mask )
   static SDL_Surface *current_buffer;
   SDL_Rect target_rectangle;
   SDL_Rect source_rectangle;
-  static int previous_line_start = ( - 10 ) ;
-  static int previous_col_start = ( - 10 ) ;
-  static int previous_level = ( - 10 ) ;
+  static float previous_x = ( - 100 ) ;
+  static float previous_y = ( - 100 ) ;
+  static float shift_x = ( - 100 ) ;
+  static float shift_y = ( - 100 ) ;
+  static int previous_level = ( - 100 ) ;
 
   //--------------------
   // Upon the first call to this function, we need to allocate the surfaces we
@@ -826,89 +864,59 @@ isometric_show_floor_around_tux_with_doublebuffering ( int mask )
   if ( first_call )
     {
       first_call = FALSE ;
-      tmp = SDL_CreateRGBSurface( 0 , 2 * FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_width , 2 * FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_height , vid_bpp , 0 , 0 , 0 , 0 ) ;
+      tmp = SDL_CreateRGBSurface( 0 , SCREEN_WIDTH , SCREEN_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 ) ;
       buffer_surface_1 = SDL_DisplayFormat ( tmp ) ;
       buffer_surface_2 = SDL_DisplayFormat ( tmp ) ;
       SDL_FreeSurface ( tmp );
 
       SDL_SetColorKey ( buffer_surface_1 , 0 , 0 ); // this should clear any color key in the dest surface
-      SDL_SetAlpha ( buffer_surface_1 , 0 , SDL_ALPHA_OPAQUE );
-
+      SDL_SetColorKey ( buffer_surface_2 , 0 , 0 ); // this should clear any color key in the dest surface
+      SDL_SetAlpha ( buffer_surface_1 , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_SetAlpha ( buffer_surface_2 , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   //--------------------
-  // Now if we have a severe change of position (like after a teleport or at
-  // game startup too :) , then we need to redraw the whole area.  This will
-  // be done here.
+  // Now we find out how much we can recycle from the last call or 
+  // rather by how much we must shift.  And now that we know how much of
+  // a shift we have had, we can update our memory entries...
   //
-  LineStart = rintf ( Me [ 0 ] . pos . y )  - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  ColStart = rintf ( Me [ 0 ] . pos . x ) - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  shift_x = Me [ 0 ] . pos . x - previous_x ;
+  shift_y = Me [ 0 ] . pos . y - previous_y ;
+  previous_x = Me [ 0 ] . pos . x ;
+  previous_y = Me [ 0 ] . pos . y ;
 
-  if ( ( abs ( LineStart - previous_line_start ) > 1 ) ||
-       ( abs ( ColStart - previous_col_start ) > 1 ) ||
-       ( Me [ 0 ] . pos . z != previous_level ) )
+  //--------------------
+  // Now we shift the buffer (as much as we can :)
+  //
+  if ( current_buffer == buffer_surface_1 )
     {
-      previous_line_start = LineStart ;
-      previous_col_start = ColStart ;
-      previous_level = Me [ 0 ] . pos . z ;
-      fill_whole_double_buffer_with_floor ( buffer_surface_1 );
-      current_buffer = buffer_surface_1;
-      DebugPrintf ( 0 , "\nAssembled completely new double-buffer!" );
-    }
-  else if ( ( LineStart != previous_line_start ) ||
-	    ( ColStart != previous_col_start ) )
-    {
-      if ( current_buffer == buffer_surface_1 )
-	{
-	  shift_buffers ( buffer_surface_1 , buffer_surface_2 , LineStart - previous_line_start , ColStart - previous_col_start );
-	  current_buffer = buffer_surface_2 ;
-	  DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 2." );
-	}
-      else
-	{
-	  shift_buffers ( buffer_surface_2 , buffer_surface_1 , LineStart - previous_line_start , ColStart - previous_col_start );
-	  current_buffer = buffer_surface_1 ;
-	  DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 1." );
-	}
-
-      //--------------------
-      // Of course we must mark the shift as handled now...
-      //
-      previous_line_start = LineStart ;
-      previous_col_start = ColStart ;
-
+      shift_buffers ( buffer_surface_1 , buffer_surface_2 , shift_x , shift_y );
+      current_buffer = buffer_surface_2 ;
+      DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 2." );
     }
   else
     {
-      //--------------------
-      // No changes needed...
-      //
+      shift_buffers ( buffer_surface_2 , buffer_surface_1 , shift_x , shift_y );
+      current_buffer = buffer_surface_1 ;
+      DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 1." );
     }
+
+  //--------------------
+  // Now we can fill into the buffer what has been destroyed so far...
+  //
+  restore_destoryed_floor_tiles_in_buffer ( current_buffer , shift_x , shift_y );
 
   //--------------------
   // So the floor has been drawn inside of the buffering surface...
   // That means that we can now cut out the right rectangle and blit it 
   // to the screen...
   //
-  source_rectangle . x = buffer_surface_1 -> w / 2 - SCREEN_WIDTH / 2 
-     + 
-     ( Me [ 0 ] . pos . x - rintf ( Me [ 0 ] . pos . x ) ) * iso_floor_tile_width / 2 -
-     ( Me [ 0 ] . pos . y - rintf ( Me [ 0 ] . pos . y ) ) * iso_floor_tile_width / 2 ;
-  source_rectangle . y = buffer_surface_1 -> h / 2 - SCREEN_HEIGHT / 2 
-    + 
-    ( Me [ 0 ] . pos . x - rintf ( Me [ 0 ] . pos . x ) ) * iso_floor_tile_height / 2 +
-    ( Me [ 0 ] . pos . y - rintf ( Me [ 0 ] . pos . y ) ) * iso_floor_tile_height / 2 ;
-  source_rectangle . w = SCREEN_WIDTH ;
-  source_rectangle . h = SCREEN_HEIGHT ; 
+  SDL_SetClipRect (Screen , &User_Rect);
 
   target_rectangle . x = 0 ;
   target_rectangle . y = 0 ;
-  target_rectangle . w = SCREEN_WIDTH ;
-  target_rectangle . h = SCREEN_HEIGHT ; 
 
-  SDL_SetClipRect (Screen , &User_Rect);
-
-  SDL_BlitSurface ( current_buffer , & ( source_rectangle ) , Screen , & ( target_rectangle ) );
+  SDL_BlitSurface ( current_buffer , NULL , Screen , &( target_rectangle ) );
 
 }; // void isometric_show_floor_around_tux_with_doublebuffering ( int mask )
 
@@ -1486,6 +1494,7 @@ AssembleCombatPicture (int mask)
   // and all that remains to be done is updating the screen.
   // Depending on where we did our modifications, we update
   // an according portion of the screen.
+  //
   if ( mask & DO_SCREEN_UPDATE )
     {
       SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );

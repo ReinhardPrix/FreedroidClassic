@@ -148,6 +148,10 @@ EXTERN void Load_Blast_Surfaces (void);
 EXTERN void load_all_isometric_floor_tiles ( void );
 EXTERN void load_all_obstacles ( void );
 EXTERN void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y );
+EXTERN void blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer , 
+						       iso_image our_iso_image , float pos_x , float pos_y );
+EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos_x , float pos_y , 
+							float shift_x , float shift_y );
 
 // graphics.c 
 #undef EXTERN

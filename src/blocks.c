@@ -388,6 +388,55 @@ blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float p
  *
  * ---------------------------------------------------------------------- */
 void
+blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer , 
+					   iso_image our_iso_image , float pos_x , float pos_y )
+{
+
+  SDL_Rect target_rectangle;
+
+  target_rectangle . x = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    our_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    our_iso_image . offset_y ;
+
+  SDL_BlitSurface( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
+
+}; // void blit_iso_image_to_map_position_in_buffer ( ... )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos_x , float pos_y , 
+					     float shift_pixels_x , float shift_pixels_y )
+{
+  SDL_Rect target_rectangle;
+
+
+
+  target_rectangle . x = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    our_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    our_iso_image . offset_y ;
+
+  if ( ( target_rectangle . x > shift_pixels_x ) && ( target_rectangle . y > shift_pixels_y ) &&
+       ( target_rectangle . x + our_iso_image . surface -> w < SCREEN_WIDTH - shift_pixels_x ) &&
+       ( target_rectangle . y + our_iso_image . surface -> h < SCREEN_HEIGHT - shift_pixels_y ) )
+    return ( TRUE );
+
+  return ( FALSE );
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 get_offset_for_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image )
 {
   char offset_file_name[10000];
