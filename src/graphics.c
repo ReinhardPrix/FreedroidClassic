@@ -303,8 +303,7 @@ InitPictures (void)
 }				// int InitPictures(void)
 
 /*@Function============================================================
-@Desc: MemSearch(): Sucht Binary-Area zwischen SStart und SEnd nach
-SString ab. liefer Pointer auf gef. String oder NULL
+@Desc: 
 
 @Ret: 
 @Int:
@@ -318,7 +317,25 @@ SwapScreen (void)
     {
       vga_drawscanline (y, InternalScreen + SCREENBREITE * y);
     }
-}				// void SwapScreen(void)
+} // void SwapScreen(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+CopyScreenToInternalScreen(void)
+{
+  int y, x;
+
+  for (y = 0; y < SCREENHOEHE; y++)
+    {
+      for (x=0; x<SCREENBREITE; x++) 
+	InternalScreen[y*SCREENBREITE+x]=vga_getpixel(x,y);
+    }
+} // void CopyScreenToInternalScreen(void)
 
 /*-----------------------------------------------------------------
  * @Desc: 

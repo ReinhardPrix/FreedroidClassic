@@ -133,6 +133,34 @@ SpacePressed (void)
 }				// int SpacePressed(void)
 
 int
+EnterPressed (void)
+{
+  keyboard_update ();
+  if (keyboard_keypressed (SCANCODE_ENTER))
+    {
+      return (TRUE);
+    }
+  else
+    {
+      return (FALSE);
+    }
+}				// int SpacePressed(void)
+
+int
+EscapePressed (void)
+{
+  keyboard_update ();
+  if (keyboard_keypressed (SCANCODE_ESCAPE))
+    {
+      return (TRUE);
+    }
+  else
+    {
+      return (FALSE);
+    }
+}				// int SpacePressed(void)
+
+int
 CPressed (void)
 {
   keyboard_update ();

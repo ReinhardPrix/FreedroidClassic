@@ -81,7 +81,7 @@ int rate = 8000;
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 16
+#define ALL_SOUNDS 18
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ERRORSOUND_NILL",
   "/../sound/Combat_Background_Music.wav",
@@ -98,7 +98,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/EnterElevatorSound2.wav",
   "/../sound/ThouArtDefeatedSound2.wav",
   "/../sound/Got_Hit_Sound_1.wav",
-  "/../sound/TakeoverSetCapsuleSound.wav"
+  "/../sound/TakeoverSetCapsuleSound.wav",
+  "/../sound/Menu_Item_Selected_Sound_0.wav",
+  "/../sound/Move_Menu_Position_Sound_0.wav"
 };
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
@@ -549,6 +551,34 @@ MoveElevatorSound (void)
   if (!sound_on) return;
 
   Play_YIFF_Server_Sound (MOVE_ELEVATOR_SOUND);
+}				// void MoveElevatorSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+MenuItemSelectedSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound ( MENU_ITEM_SELECTED_SOUND );
+}				// void MoveElevatorSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+MoveMenuPositionSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound ( MOVE_MENU_POSITION_SOUND );
 }				// void MoveElevatorSound(void)
 
 
