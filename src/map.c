@@ -1037,13 +1037,20 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/08/04 16:31:59  prix
- * Sat Jul 31 12:07:52 1993: load levelnum with map
- * Sat Jul 31 21:42:35 1993: loadmap now generates a list of the doors
- * Sun Aug 01 09:54:04 1993: only one line-terminator !!!!!
- * Sun Aug 01 09:59:54 1993: init doors-map to 0
- * Wed Aug 04 10:41:35 1993: modified LoadMap to new symtrans struct
- * Wed Aug 04 12:31:39 1993: added some functions from paraplus.c
+ * Revision 1.4  1993/08/08 21:00:19  prix
+ * Wed Aug 04 12:44:47 1993: added include of global.h
+ * Wed Aug 04 15:06:42 1993: KONSOLEN richtig passable
+ * Thu Aug 05 11:03:16 1993: Walls und Konsolen in DruidPassable bedacht
+ * Thu Aug 05 11:20:21 1993: added ECK_RO
+ * Thu Aug 05 11:34:44 1993: added ECKEN to DruidPassable
+ * Fri Aug 06 14:14:23 1993: added T Kollision checkin in DruidPassable
+ * Fri Aug 06 15:38:27 1993: modified LoadMap: dont load from disk but from memory
+ * Fri Aug 06 16:12:04 1993: writing LoadShip
+ * Sat Aug 07 14:51:01 1993: added GetMapBrick()
+ * Sat Aug 07 14:54:21 1993: added calls to GetMapBrick()
+ * Sat Aug 07 15:20:35 1993: added ActSpecialField()
+ * Sat Aug 07 16:05:32 1993: added Elevator-load to LoadShip
+ * Sun Aug 08 16:59:37 1993: DruidPassable verbessert
  *
  * Revision 1.5  1993/10/02  16:23:07  prix
  * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
