@@ -264,6 +264,7 @@ typedef struct
   int is_smashable;
   int needs_pre_put; // this is a special property for obstacles, that can be stepped on, like a rug or floor plate.
   int drop_random_treasure;
+  char* filename;
 }
 obstacle_spec, *Obstacle_spec;
 

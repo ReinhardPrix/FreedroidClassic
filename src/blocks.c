@@ -1300,36 +1300,21 @@ Load_Tux_Surfaces( void )
 
 }; // void Load_Tux_Surfaces( void )
 
-/* ---------------------------------------------------------------------- 
- * This function should initialize all obstacle types that are known in
- * FreedroidRPG, such as walls and doors and pillars and teleporters and
- * the like...
+/* ----------------------------------------------------------------------
  *
- * for now it will not load 'offset' files, but rather just use hard-coded
- * info...
  *
  * ---------------------------------------------------------------------- */
 void
-load_all_obstacles ( void )
+init_obstacle_data( void )
 {
   int i;
-  char *fpath;
-  char ConstructedFileName[2000];
-  char NumberBuffer[1000];
 
+  //--------------------
+  // First we enter some default values.  The exceptions from the default values
+  // can be added after that.
+  //
   for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
     {
-      //--------------------
-      // At first we construct the file name of the single tile file we are about to load...
-      //
-      strcpy ( ConstructedFileName , "obstacles/iso_obstacle_" );
-      sprintf ( NumberBuffer , "%04d" , i );
-      strcat ( ConstructedFileName , NumberBuffer );
-      strcat ( ConstructedFileName , ".png" );
-      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
-      
-      get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
-
       //--------------------
       // In adition to the pure image information, we'll also need some
       // collision information for obstacles...
@@ -1340,35 +1325,45 @@ load_all_obstacles ( void )
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
+      // obstacle_map [ i ] . filename "ERROR_FILENAME_UNDEFINED" ;
     }
 
-  obstacle_map [ ISO_V_WALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  //--------------------
+  // Now we define all exceptions from the default values
+  //
   obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
 
-  obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_V_DOOR_000_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DOOR_000_OPEN ] . filename = "iso_doors_0006.png" ;
   obstacle_map [ ISO_V_DOOR_025_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DOOR_025_OPEN ] . filename = "iso_doors_0007.png" ;
   obstacle_map [ ISO_V_DOOR_050_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DOOR_050_OPEN ] . filename = "iso_doors_0008.png" ;
   obstacle_map [ ISO_V_DOOR_075_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DOOR_075_OPEN ] . filename = "iso_doors_0009.png" ;
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . is_smashable = FALSE ;
-  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_DOOR_100_OPEN ] . filename = "iso_doors_0010.png" ;
+  obstacle_map [ ISO_V_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
+
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . is_smashable = FALSE ;
 
   obstacle_map [ ISO_H_DOOR_LOCKED ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DOOR_000_OPEN ] . filename = "iso_doors_0001.png" ;
   obstacle_map [ ISO_H_DOOR_025_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DOOR_025_OPEN ] . filename = "iso_doors_0002.png" ;
   obstacle_map [ ISO_H_DOOR_050_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DOOR_050_OPEN ] . filename = "iso_doors_0003.png" ;
   obstacle_map [ ISO_H_DOOR_075_OPEN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DOOR_075_OPEN ] . filename = "iso_doors_0004.png" ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . is_smashable = FALSE ;
-
-  obstacle_map [ ISO_V_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
-
+  obstacle_map [ ISO_H_DOOR_100_OPEN ] . filename = "iso_doors_0005.png" ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
+
 
   obstacle_map [ ISO_REFRESH_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_1 ] . is_smashable = FALSE ;
@@ -1720,6 +1715,37 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . is_smashable = FALSE ;
+
+}; // void init_obstacle_data( void )
+
+/* ---------------------------------------------------------------------- 
+ * This function should initialize all obstacle types that are known in
+ * FreedroidRPG, such as walls and doors and pillars and teleporters and
+ * the like...
+ *
+ * for now it will not load 'offset' files, but rather just use hard-coded
+ * info...
+ *
+ * ---------------------------------------------------------------------- */
+void
+load_all_obstacles ( void )
+{
+  int i;
+  char *fpath;
+  char ConstructedFileName[2000];
+
+  init_obstacle_data();
+
+  for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+    {
+      //--------------------
+      // At first we construct the file name of the single tile file we are about to load...
+      //
+      strcpy ( ConstructedFileName , "obstacles/" );
+      strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
+      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
+    }
 
 }; // void load_all_obstacles ( void )
 
