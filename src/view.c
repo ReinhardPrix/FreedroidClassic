@@ -1510,7 +1510,7 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
 {
 #define FIXED_NUMBER_OF_SPARK_ANGLES 12
 #define FIXED_NUMBER_OF_PROTOTYPES 4
-#define NUMBER_OF_SPARK_TYPES 2
+#define NUMBER_OF_SPARK_TYPES 3
 
   SDL_Rect TargetRectangle;
   static SDL_Surface* SparkPrototypeSurface [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] = { { NULL , NULL , NULL , NULL } , { NULL , NULL , NULL , NULL } } ;
@@ -1544,6 +1544,20 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
     {
       for ( k = 0 ; k < FIXED_NUMBER_OF_PROTOTYPES ; k ++ )
 	{
+	  //--------------------
+	  // First a sanity check against illegal spark types, and 
+	  // ILLEGAL in this case means BIGGER THAN THE CONSTANT OF THE
+	  // STATIC ARRAY ABOVE!!!  Otherwise no segfault but crazy 
+	  // behaviour may follow....
+	  //
+	  if ( SparkType >= NUMBER_OF_SPARK_TYPES )
+	    {
+	      fprintf( stderr, "\n\nSparkType: %d\n" , SparkType );
+	      GiveStandardErrorMessage ( "PutRadialBlueSparks(...)" , "\
+Freedroid encountered a radial wave type that exceeds the CONSTANT for wave types.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+
 	  switch ( SparkType )
 	    {
 	    case 0:
@@ -1575,7 +1589,7 @@ function used for this did not succeed.",
 	    }
 
 	  // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
-	  SparkPrototypeSurface [ SparkType ] [k] = SDL_DisplayFormatAlpha ( tmp_surf );
+	  SparkPrototypeSurface [ SparkType ] [ k ] = SDL_DisplayFormatAlpha ( tmp_surf );
 	  SDL_FreeSurface( tmp_surf );
 
 	  //--------------------
@@ -1835,13 +1849,30 @@ ShowInventoryScreen( void )
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
+      if ( !tmp )
+	{
+	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
+	  GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
+The inventory screen background image could not be loaded.  This is a fatal error.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+
       InventoryImage = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
 
       fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
+      if ( !tmp )
+	{
+	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
+	  GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
+The transparent plate for the inventory could not be loaded.  This is a fatal error.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
       TransparentPlateImage = SDL_DisplayFormatAlpha ( tmp );
       SDL_FreeSurface ( tmp );
+
+    }
 
       //--------------------
       // We define the right side of the user screen as the rectangle
@@ -1852,7 +1883,13 @@ ShowInventoryScreen( void )
       InventoryRect.y = User_Rect.y;
       InventoryRect.w = SCREEN_WIDTH/2;
       InventoryRect.h = User_Rect.h;
-    }
+
+      InventoryRect.x = 0;
+      // InventoryRect.y = SCREEN_HEIGHT - InventoryImage->h;
+      InventoryRect.y = User_Rect.y;
+      InventoryRect.w = SCREEN_WIDTH/2;
+      InventoryRect.h = User_Rect.h;
+
 
   //--------------------
   // At this point we know, that the inventory screen is desired and must be
@@ -1861,7 +1898,8 @@ ShowInventoryScreen( void )
   // Into this inventory rectangle we draw the inventory mask
   //
   SDL_SetClipRect( Screen, NULL );
-  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
+  // SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
+  SDL_BlitSurface ( InventoryImage , NULL , Screen , NULL );
 
   //--------------------
   // Now we display the item in the influencer drive slot
