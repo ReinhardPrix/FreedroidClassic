@@ -102,6 +102,7 @@ EXTERN void CheckBlastCollisions (int num);
 #endif
 EXTERN void Fill_Rect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
+EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void Assemble_Combat_Picture (int );
 EXTERN void PutInfluence (int , int );
 EXTERN void PutBullet (int);
@@ -236,6 +237,8 @@ EXTERN void DropHeldItemToWeaponSlot ( void );
 EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
+EXTERN void ShowInventoryScreen ( void );
+EXTERN void ShowCharacterScreen ( void );
 
 /* input.c */
 #undef EXTERN

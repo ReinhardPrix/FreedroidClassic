@@ -81,6 +81,9 @@ typedef struct
   int Inventory_Visible;
   float Inventory_Visible_Time;
   float Inventory_Visible_Max_Time;
+  int CharacterScreen_Visible;
+  float CharacterScreen_Visible_Time;
+  float CharacterScreen_Visible_Max_Time;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
