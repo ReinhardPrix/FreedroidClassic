@@ -1441,10 +1441,10 @@ Item can be installed in slot with name="special"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=18 plus duration modifier=10
-Picture number=36
+Item as defensive item: base_ac_bonus=8
+Item as defensive item: ac_bonus_modifier=8
+Base item duration=28 plus duration modifier=15
+Picture number=38
 Sound number=0 
 Base list price=275
 ** End of new item specification subsection **
@@ -1458,10 +1458,10 @@ Item can be installed in slot with name="special"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=18 plus duration modifier=10
-Picture number=36
+Item as defensive item: base_ac_bonus=12
+Item as defensive item: ac_bonus_modifier=10
+Base item duration=38 plus duration modifier=20
+Picture number=37
 Sound number=0 
 Base list price=375
 ** End of new item specification subsection **
