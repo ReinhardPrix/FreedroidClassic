@@ -1553,12 +1553,18 @@ This indicates an error in the map system of Freedroid.",
 	// "Entering ThisAndThat..." should appear in bold font on the screen.
 	// although only if a level name is set
 	//
+	// This will be disabled now, as the current level name is written down in
+	// the top screen text line anyway, so no need for annoying messages in 
+	// the middle of the screen here.
+	//
+	/*
 	if ( strcmp ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname, "" ) ) 
 	{
 	    strcpy ( entering_message , "Entering " );
 	    strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
 	    SetNewBigScreenMessage ( entering_message );
 	}
+	*/
 
 	//--------------------
 	// After the level has been changed, the automap texture needs to be cleared.
