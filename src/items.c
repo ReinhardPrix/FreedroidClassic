@@ -666,7 +666,14 @@ DamageItem( item* CurItem )
   if ( ( CurItem->type != (-1) ) &&
        ( CurItem->max_duration != (-1) ) )
     {
-      CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
+      if ( ! CurItem->damage ) 
+	CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
+      else
+	{
+	  CurItem->current_duration -= 0.0003 * MyRandom( 100 ) ;
+	  DebugPrintf ( 0 , "\nDamaged item seems to be a weapon... lower damage done." );
+	}
+
 
       //--------------------
       // If the item has gone over it's threshhold of duration, it finally

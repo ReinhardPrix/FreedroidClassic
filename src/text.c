@@ -369,8 +369,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
 	      GiveSubtitleNSample( " You might try it at the shop. " , "Chandra_You_Might_Try_0.wav" );
-	      GiveSubtitleNSample( " They have all kinds of equipment there. " , "Chandra_They_Have_All_0.wav" );
-	      GiveSubtitleNSample( " Talk to Mr. Stone, the shop bot. " , "Chandra_Talk_To_The_0.wav" );
+	      GiveSubtitleNSample( " Mrs. Stone always has a good range of equipment there. " , "Chandra_They_Have_All_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 5:
