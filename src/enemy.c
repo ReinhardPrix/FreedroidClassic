@@ -1970,7 +1970,8 @@ ProcessAttackStateMachine (int enemynum)
 	  
 	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) )
 	    {
-	      ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	      // ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	      ThisRobot -> persuing_given_course = FALSE ;
 	    }
 	  else
