@@ -61,6 +61,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  13 y=   1	 connections:    6   0   2   3  -1  -1  -1  -1  -1  -1  -1  -1
@@ -207,6 +209,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   5 y=   1	 connections:    2   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   1 y=   3	 connections:    6   2   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -347,6 +351,9 @@ PosX=10 PosY=7 Statement="This barrier is scarred from lots of bullet holes and 
 PosX=6 PosY=6 Statement="This is a teleportation device.  Maybe Dr. Chandra can teleport me out this way?"
 PosX=8 PosY=6 Statement="Hey, there's a penguin command clone running on this console!  Or is that a game at all?"
 End of pure statement information for this level
+Start of pure codepanel information for this level
+PanelposX=4 PanelposY=8 Secret Code="haha"
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  12 y=   1	 connections:    0   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -476,6 +483,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   5 y=   8	 connections:   13   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   5 y=   4	 connections:    2   3   4  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -605,6 +614,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   5 y=   1	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   2 y=   4	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -736,6 +747,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  22 y=   7	 connections:   14  17   5  10  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   7 y=   3	 connections:   24   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -867,6 +880,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   4 y=   3	 connections:   19  18   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   8 y=   1	 connections:   18   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1009,6 +1024,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  17 y=   5	 connections:    1   7   3  18  23  88  92  -1  -1  -1  -1  -1
 Nr.=  1 x=   5 y=   5	 connections:    2   0  24  29  31  -1  -1  -1  -1  -1  -1  -1
@@ -1165,6 +1182,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  14 y=   5	 connections:    1   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  14 y=   8	 connections:    8   3   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1292,6 +1311,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  17 y=   5	 connections:    8   7   1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  13 y=   5	 connections:    0   9   6   2  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1421,6 +1442,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  17 y=   2	 connections:    3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  23 y=   6	 connections:    4   5   7   6  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1552,6 +1575,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  32 y=  10	 connections:   17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1684,6 +1709,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=  15 y=   1	 connections:   15   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  27 y=   1	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1831,6 +1858,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1966,6 +1995,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   8 y=   6	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   9 y=   6	 connections:    2   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -2097,6 +2128,8 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=   7 y=   1	 connections:    4   0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

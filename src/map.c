@@ -51,9 +51,14 @@
 #define MAP_END_STRING "End of pure map information for this level"
 #define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
 #define STATEMENT_END_STRING "End of pure statement information for this level"
+#define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
+#define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
+#define CODEPANEL_CODE_ANNOUNCE_STRING "Secret Code=\""
+#define POSITION_X_OF_CODEPANEL_STRING "PanelposX="
+#define POSITION_Y_OF_CODEPANEL_STRING "PanelposY="
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
@@ -101,7 +106,7 @@ GetMapBrick (Level deck, float x, float y)
     }
   return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
 } /* GetMapBrick() */
-
+ 
 /*@Function============================================================
 @Desc: int GetCurrentLift: finds Lift-number to your position 
 
@@ -515,6 +520,21 @@ char *Encode_Level_For_Saving(Level Lev)
   strcat(LevelMem, "\n");
   
 
+  //--------------------
+  // Now we write out a marker to announce the beginning of the codepanel data
+  //
+  strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+
+
+  //--------------------
+  // Now we write out a marker to announce the end of the codepanel data
+  //
+  strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+  
+
   // --------------------  
   // The next thing we must do is write the waypoints of this level also
   // to disk.
@@ -756,7 +776,11 @@ Decode_Loaded_Leveldata (char *data)
   char* StatementSectionBegin;
   char* StatementSectionEnd;
   char* StatementPointer;
+  char* CodepanelPointer;
+  char* CodepanelSectionBegin;
+  char* CodepanelSectionEnd;
   int NumberOfStatementsInThisLevel;
+  int NumberOfCodepanelsInThisLevel;
   char Preserved_Letter;
 
   /* Get the memory for one level */
@@ -819,7 +843,7 @@ Decode_Loaded_Leveldata (char *data)
       StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
       ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
 			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
-      ReadValueFromString( StatementPointer , "PosY=" , "%d" , 
+      ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
 			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
       loadlevel->StatementList[ i ].Statement_Text = 
 	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
@@ -830,6 +854,50 @@ Decode_Loaded_Leveldata (char *data)
 
   // Now we repair the damage done to the loaded level data
   StatementSectionEnd[0]=Preserved_Letter;
+
+  //--------------------
+  // From here on we take apart the codepanel section of the loaded level...
+  //
+  
+  // First we initialize the codepanel arrays with 'empty' information
+  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
+      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
+      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
+    }
+
+  // We look for the beginning and end of the codepanel section
+  CodepanelSectionBegin = LocateStringInData( data , CODEPANEL_SECTION_BEGIN_STRING );
+  CodepanelSectionEnd = LocateStringInData( data , CODEPANEL_SECTION_END_STRING );
+
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  Preserved_Letter=CodepanelSectionEnd[0];
+  CodepanelSectionEnd[0]=0;
+  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
+  DebugPrintf( 0 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
+
+  
+  // Now we decode all the codepanel information
+  CodepanelPointer=CodepanelSectionBegin;
+  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
+    {
+      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
+      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
+			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
+      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
+			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
+      loadlevel->CodepanelList[ i ].Secret_Code = 
+	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 0 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
+		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
+    }
+
+  
+
+  // Now we repair the damage done to the loaded level data
+  CodepanelSectionEnd[0]=Preserved_Letter;
 
   //--------------------
   // find the map data
