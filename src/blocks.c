@@ -2344,7 +2344,38 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 1 ;
     ModelMultiplier  [ i ] = 1 ;i++;
-    
+
+    PrefixToFilename [ i ] = "kevin" ; // 32
+    //--------------------
+    // As the professor now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 8 ;
+    droid_attack_animation_speed_factor [ i ] = 14 ;
+    droid_gethit_animation_speed_factor [ i ] = 6 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 2 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+        
     
 }; // void LoadEnemySurfaces( void )
 
