@@ -1431,6 +1431,31 @@ Debriefing (void)
 
 } /* Debriefing() */
 
+void 
+CheckIfMissionIsComplete (void)
+{
+  int AllRobotsDead=TRUE;
+  int Robot_Counter;
+
+  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+    {
+      if (AllEnemys[Robot_Counter].energy) AllRobotsDead=FALSE;
+    }
+  if (AllRobotsDead) 
+    {
+      EndTitle();
+      GameOver=TRUE;
+    }
+  
+  if (CurLevel->empty == 2)
+    {
+      LevelGrauFaerben ();
+      CurLevel->empty = TRUE;
+    }			/* if */
+} // void CheckIfMissionIsComplete
+
+
+
 #undef _init_c
 
 

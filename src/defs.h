@@ -100,7 +100,7 @@ enum
 // #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"
 // #define MENU_FONT_FILE		GRAPHICS_DIR "NeonFont.png"
 #define MENU_FONT_FILE 		GRAPHICS_DIR "ArialGold.png"
-#define FPS_FONT_FILE 		GRAPHICS_DIR "parafont.png"
+#define FPS_FONT_FILE 		GRAPHICS_DIR "font05.png"
 #define ICON_FILE		GRAPHICS_DIR "paraicon.bmp"
 
 

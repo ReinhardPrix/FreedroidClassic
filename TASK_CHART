@@ -11,52 +11,12 @@ jp
 
 The list of things I'm going to work on next:
 
-DONE Correct the console text display
-
-DONE Rescaling of Map should be working for Level Editor but not
-     for real game
-
-DONE Downscale Bastians graphics to fit into the console.
-
-DONE Introduce questioning screen at the beginning asking 
-     which mission to load ClassicParadroid/New
-
-(?). Put combat background music to play into the ship file
-     for every deck.
-
-(?). Restore the animation of Refreshes
-
-DONE Speed up the loading and interpreting time for the map file
-
-DONE Correct the aggression of droids
-
-DONE Introduce a flag for new and advanced combat behaviour
-     some new robots
-
-DONE Read in the flag for new and advanced combat behaviour
-
-3.   Implement the new and advanced combat behaviour:
-     * Introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
-       That should give the player a chance to compete.  Otherywise they might become too powerful.
-     * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
-     * Fireing state machine && Movement state machine: both independent decision processes
-     * Changing of waypoints not randomly but decision as demanded
-       by the combat situation
-     * Movement to new waypoint immediately if threatened by enemy fire
-
-(?). Adapt the crew file format, so that you can enter types by
-     their names instead of their numbers
-
-DONE Add instructions for using the Level editor in Freedroid perhaps on the home page
-
-DONE Split the home page up into the home page and a manual/leveleditor manual html file
-
--1. Write doku on how to control the game
+THESE ITEMS HAVE FIRST PRIORITY:
 
 0. Extend the level Editor
    DONE Extend the Level Editor to show waypoint connections
    b. Extend the Level Editor to allow for resizing of decks
-   c. Extend the Level Editor to allow for changing of color
+   DONE Extend the Level Editor to allow for changing of color
    DONE Extend the Level Editor to allow for changing of deck map
    DONE Extend the Level Editor to connect new waypoints to other waypoints 
    f. Allow to change the level name
@@ -81,19 +41,40 @@ DONE Split the home page up into the home page and a manual/leveleditor manual h
                  Mining community
                  Police station
              
-
-DONE Introduce new robots 
+3.   Implement the new and advanced combat behaviour:
+     * Introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
+       That should give the player a chance to compete.  Otherywise they might become too powerful.
+     * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
+     * Fireing state machine && Movement state machine: both independent decision processes
+     * Changing of waypoints not randomly but decision as demanded
+       by the combat situation
+     * Movement to new waypoint immediately if threatened by enemy fire
 
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
     a. Blast radius
     b. Bullet damage
 
-(?)  LATER: Read more about SDL_net &&  Add networking support
+THESE ITEMS ARE OF SECOND PRIORITY:
+
+(?). Put combat background music to play into the ship file
+     for every deck.
+
+(?). Restore the animation of Refreshes
+
+(?). Adapt the crew file format, so that you can enter types by
+     their names instead of their numbers
+
+-1. Write doku on how to control the game
+
+THESE ITEMS ARE OF THIRD PRIORITY:
+
+(?) Read more about SDL_net &&  Add networking support
 
 (?) Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
     this.  This will be good to for later, if someone designs new and better animated
     bullets with multiple pictures in EACH direction.
+    --->  Will this really make sense?  What if someone designed fine new multicolored shots?
 
 rp
 --

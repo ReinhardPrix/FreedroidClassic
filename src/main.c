@@ -124,22 +124,7 @@ main (int argc, char *const argv[])
 
 	  RotateBulletColor ();
 
-	  AllRobotsDead=TRUE;
-	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	    {
-	      if (AllEnemys[Robot_Counter].energy) AllRobotsDead=FALSE;
-	    }
-	  if (AllRobotsDead) 
-	    {
-	      EndTitle();
-	      GameOver=TRUE;
-	    }
-	  
-	  if (CurLevel->empty == 2)
-	    {
-	      LevelGrauFaerben ();
-	      CurLevel->empty = TRUE;
-	    }			/* if */
+	  CheckIfMissionIsComplete ();
 
 	  ComputeFPSForThisFrame();
 

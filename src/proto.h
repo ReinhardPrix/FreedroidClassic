@@ -52,6 +52,7 @@ EXTERN void InitNewMission (char *MissionName);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void Debriefing (void);
+EXTERN void CheckIfMissionIsComplete (void);
 
 /* influ.c */
 #undef EXTERN
