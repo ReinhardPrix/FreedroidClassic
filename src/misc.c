@@ -59,165 +59,167 @@ message, Message;
 
 extern SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, int smooth);
 
+// UNLOADED_ISO_IMAGE { NULL , 0 , 0 , NULL , 0 , 0 , 0 }
+
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 40 , - 60 ,  38 ,  40 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 50 , - 104 ,  38 ,  47 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapUnlockDoorButton_red.png"      , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnOffButton_gray.png"       , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnOffButton_yellow.png"     , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnOffButton_red.png"        , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapSecurityButtonMiddle.png"      , {  40 , 425 , 120 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapSecurityButtonLeft.png"        , {   5 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapSecurityButtonRight.png"       , { 170 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapPasswordButtonMiddle.png"      , { 310 , 425 , 120 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 40 , - 60 ,  38 ,  40 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 50 , - 104 ,  38 ,  47 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapUnlockDoorButton_red.png"      , { 200 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnOffButton_gray.png"       , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnOffButton_yellow.png"     , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnOffButton_red.png"        , { 350 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapSecurityButtonMiddle.png"      , {  40 , 425 , 120 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapSecurityButtonLeft.png"        , {   5 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapSecurityButtonRight.png"       , { 170 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapPasswordButtonMiddle.png"      , { 310 , 425 , 120 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/MapGunTypeButton1_red.png"        , { 570 ,  64 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton2_red.png"        , { 570 , 128 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton3_red.png"        , { 570 , 192 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton4_red.png"        , { 570 , 256 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnButton_gray.png"          , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnButton_yellow.png"        , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunOnButton_red.png"           , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton1_red.png"        , { 570 ,  64 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton2_red.png"        , { 570 , 128 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton3_red.png"        , { 570 , 192 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton4_red.png"        , { 570 , 256 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnButton_gray.png"          , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnButton_yellow.png"        , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunOnButton_red.png"           , { 500 ,   5 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/ConsoleIdentifyButton_green.png"  , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ConsoleIdentifyButton_green.png"  , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } , FALSE , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } , TRUE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } , TRUE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 201 , 340 ,  47 ,  47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 201 , 340 ,  47 ,  47 } , TRUE , FALSE } ,
 
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {  22 , 447 ,  26 ,  26 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } , TRUE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LeftShopButton.png"               , {  22 , 447 ,  26 ,  26 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/number_selector_ok_button.png"    , { 300 , 288 ,  71 ,  31 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/number_selector_ok_button.png"    , { 300 , 288 ,  71 ,  31 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/get_button.png"                   , { 192 ,  98 ,  60 ,  60 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/get_button.png"                   , { 192 ,  98 ,  60 ,  60 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , TRUE , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0 + 11 , 449 , 271 , 25 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 0 + 11 , 449 , 271 , 25 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { -50-6 , -50-8 , 25 ,  25 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { -50-6 , -4-25 , 25 ,  25 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { -25-4 , -43 , 25 , 25 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { -75-8 , -43 ,  0 , 0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { -60 , 90 , 0,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { -90 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 60 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 90 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 120 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { -120 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { -30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/GoLevelNorthButton.png"           , { -50-6 , -50-8 , 25 ,  25 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/GoLevelSouthButton.png"           , { -50-6 , -4-25 , 25 ,  25 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/GoLevelEastButton.png"            , { -25-4 , -43 , 25 , 25 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/GoLevelWestButton.png"            , { -75-8 , -43 ,  0 , 0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ExportThisLevelButton.png"        , { -60 , 90 , 0,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorSaveShipButton.png"    , { -90 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 60 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 90 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 120 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorKeymapButton.png"      , { -120 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorQuitButton.png"        , { -30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorToggleEnemiesButton.png"    , { 240 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorToggleEnemiesButtonOff.png"    , { 240 , 90 , 0 ,  0 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 270 , 90 , 0 ,  0 } , FALSE , FALSE } , 
-    { NULL , "mouse_buttons/LevelEditorToggleObstaclesButtonOff.png"  , { 270 , 90 , 0 ,  0 } , FALSE , FALSE } , 
-    { NULL , "mouse_buttons/LevelEditorToggleTooltipsButton.png"  , { 300 , 90 , 0 ,  0 } , FALSE , FALSE } , 
-    { NULL , "mouse_buttons/LevelEditorToggleTooltipsButtonOff.png"  , { 300 , 90 , 0 ,  0 } , FALSE , FALSE } , 
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleEnemiesButton.png"    , { 240 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleEnemiesButtonOff.png"    , { 240 , 90 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 270 , 90 , 0 ,  0 } , FALSE , FALSE } , 
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleObstaclesButtonOff.png"  , { 270 , 90 , 0 ,  0 } , FALSE , FALSE } , 
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleTooltipsButton.png"  , { 300 , 90 , 0 ,  0 } , FALSE , FALSE } , 
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleTooltipsButtonOff.png"  , { 300 , 90 , 0 ,  0 } , FALSE , FALSE } , 
 
-    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
 
-    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
 
-    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 72+5*66 , 0 ,  0 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 72+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 400    , 72+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55 + 150    , 72+5*66 , 0 ,  0 } , TRUE , FALSE } ,
 
-    { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,
 
-    { NULL , "backgrounds/SaveGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE , FALSE } ,
-    { NULL , "backgrounds/LoadGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "backgrounds/SaveGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "backgrounds/LoadGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_RECT_X  , SHIELD_RECT_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_RECT_X    , AUX1_RECT_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_RECT_X    , AUX2_RECT_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_X , HELMET_RECT_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_RECT_X  , ARMOUR_RECT_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_RECT_X  , SHIELD_RECT_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_RECT_X    , AUX1_RECT_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_RECT_X    , AUX2_RECT_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_X , HELMET_RECT_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_RECT_X  , ARMOUR_RECT_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } , FALSE , FALSE } ,
 
-    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE , FALSE } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE , FALSE } ,
 
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } , FALSE , FALSE } ,
 
     //--------------------
     // These two buttons are for the scrolling text during the
     // title display, the credits menu and the level editor 
     // keyboard explanation...
     //
-    { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , {  - 65 , 10 , 73 , 98 } , FALSE , FALSE } ,
-    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , {  - 65 , -10-98 , 73 , 98 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/arrow_up_for_scroll_text.png"     , {  - 65 , 10 , 73 , 98 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/arrow_down_for_scroll_text.png"   , {  - 65 , -10-98 , 73 , 98 } , FALSE , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } , FALSE , FALSE } ,
 
     //--------------------
     // Druidshow exit button...
     //
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 311 , 47 , 47 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 311 , 47 , 47 } , TRUE , FALSE } ,
 
     //--------------------
     // These are the scrollbuttons for the chat protocal inside the
     // chat window, like when talking to a character/bot.
     //
-    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
 
     //--------------------
     // These 7 buttons are for the level editor and will not need
     // any scaling...
     //
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 203 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 304 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 405 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 506 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 203 , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 304 , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 405 , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 506 , 3 , 99 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } , FALSE , FALSE } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -549,7 +551,8 @@ button index given exceeds the number of buttons defined in freedroid.",
     // Now we check if we have to load the button image still
     // or if it is perhaps already loaded into memory.
     //
-    if ( AllMousePressButtons[ ButtonIndex ] . button_surface == NULL )
+    if ( ( AllMousePressButtons [ ButtonIndex ] . button_image . surface == NULL ) &&
+	 ( ! AllMousePressButtons [ ButtonIndex ] . button_image . texture_has_been_created ) )
     {
 	fpath = find_file ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, FALSE);
 	tmp = our_IMG_load_wrapper( fpath );
@@ -562,14 +565,14 @@ be successfully loaded into memory.\n\
 This is an indication of a severe bug/installation problem of freedroid.",
 				       PLEASE_INFORM, IS_FATAL );
 	}
-	AllMousePressButtons[ ButtonIndex ] . button_surface = our_SDL_display_format_wrapperAlpha ( tmp );
+	AllMousePressButtons[ ButtonIndex ] . button_image . surface = our_SDL_display_format_wrapperAlpha ( tmp );
 	SDL_FreeSurface ( tmp );
 	
 	if ( AllMousePressButtons [ ButtonIndex ] . scale_this_button )
 	{
-	    tmp = zoomSurface( AllMousePressButtons[ ButtonIndex ] . button_surface , ((float)GameConfig . screen_width)/640.0 , ((float)GameConfig . screen_height)/480.0 , TRUE );
-	    SDL_FreeSurface ( AllMousePressButtons[ ButtonIndex ] . button_surface );
-	    AllMousePressButtons[ ButtonIndex ] . button_surface = our_SDL_display_format_wrapperAlpha ( tmp );
+	    tmp = zoomSurface( AllMousePressButtons[ ButtonIndex ] . button_image . surface , ((float)GameConfig . screen_width)/640.0 , ((float)GameConfig . screen_height)/480.0 , TRUE );
+	    SDL_FreeSurface ( AllMousePressButtons[ ButtonIndex ] . button_image . surface );
+	    AllMousePressButtons[ ButtonIndex ] . button_image . surface = our_SDL_display_format_wrapperAlpha ( tmp );
 	    SDL_FreeSurface ( tmp );
 
 	    AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)GameConfig . screen_width)/640.0 ;
@@ -578,8 +581,19 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	    AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)GameConfig . screen_height)/480.0 ;
 	    AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
 	}
+
+	//--------------------
+	// With OpenGL output method, we'll make a texture for faster and 
+	// better blitting.
+	//
+	if ( use_open_gl )
+	{
+	    make_texture_out_of_surface ( & ( AllMousePressButtons [ ButtonIndex ] . button_image ) );
+	}
+
     }
     
+
     //--------------------
     // Maybe we had '0' entries for the height or width of this button in the list.
     // This means that we will take the real width and the real height from the image
@@ -588,12 +602,12 @@ This is an indication of a severe bug/installation problem of freedroid.",
     if ( AllMousePressButtons[ ButtonIndex ] . button_rect . w == ( 0 ) )
     {
 	AllMousePressButtons[ ButtonIndex ] . button_rect . w =
-	    AllMousePressButtons[ ButtonIndex ] . button_surface -> w ;
+	    AllMousePressButtons[ ButtonIndex ] . button_image . surface -> w ;
     }
     if ( AllMousePressButtons[ ButtonIndex ] . button_rect . h == ( 0 ) )
     {
 	AllMousePressButtons[ ButtonIndex ] . button_rect . h =
-	    AllMousePressButtons[ ButtonIndex ] . button_surface -> h ;
+	    AllMousePressButtons[ ButtonIndex ] . button_image . surface -> h ;
     }
     
     //--------------------
@@ -605,10 +619,16 @@ This is an indication of a severe bug/installation problem of freedroid.",
     //
     Copy_Rect ( AllMousePressButtons[ ButtonIndex ] . button_rect , Temp_Blitting_Rect );
 
-    our_SDL_blit_surface_wrapper( 
-	AllMousePressButtons[ ButtonIndex ] . button_surface , 
-	NULL , Screen , &Temp_Blitting_Rect );
-
+    if ( use_open_gl )
+    {
+	blit_open_gl_texture_to_screen_position ( AllMousePressButtons [ ButtonIndex ] . button_image , Temp_Blitting_Rect . x , Temp_Blitting_Rect . y , TRUE ) ;
+    }
+    else
+    {
+	our_SDL_blit_surface_wrapper( 
+	    AllMousePressButtons[ ButtonIndex ] . button_image . surface , 
+	    NULL , Screen , &Temp_Blitting_Rect );
+    }
     
 }; // void ShowGenericButtonFromList ( int ButtonIndex )
 
