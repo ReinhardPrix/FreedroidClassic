@@ -477,6 +477,7 @@ EXTERN void SwapEnemys ( int First , int Second ) ;
 #else
 #define EXTERN extern
 #endif
+EXTERN int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
 EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );

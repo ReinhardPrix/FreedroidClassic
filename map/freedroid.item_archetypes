@@ -1683,6 +1683,112 @@ Base list price=5000
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
+// Item No. 61
+** Start of new item specification subsection **
+Item name="Plasma Transistor"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Rotation model number=0
+Sound number=4
+Base list price=10
+Item description text="This is an standard part within many robots types."
+** End of new item specification subsection **
+
+// Item No. 62
+** Start of new item specification subsection **
+Item name="Superconducting Relay Unit"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Rotation model number=0
+Sound number=4
+Base list price=10
+Item description text="This is an standard part within many robots types."
+** End of new item specification subsection **
+
+// Item No. 63
+** Start of new item specification subsection **
+Item name="Matter-Antimatter Converter"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Rotation model number=0
+Sound number=4
+Base list price=10
+Item description text="This is an standard part within many robots types."
+** End of new item specification subsection **
+
+// Item No. 64
+** Start of new item specification subsection **
+Item name="Entropy Inverter"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Rotation model number=0
+Sound number=4
+Base list price=10
+Item description text="This is an standard part within many robots types."
+** End of new item specification subsection **
+
+// Item No. 65
+** Start of new item specification subsection **
+Item name="Tachyon Condensator"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Rotation model number=0
+Sound number=4
+Base list price=10
+Item description text="This is an standard part within many robots types."
+** End of new item specification subsection **
+
+
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"

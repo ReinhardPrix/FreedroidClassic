@@ -730,7 +730,9 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
-      ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
+      // ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
+      // ItemSelected = DoEquippmentShowSelection ( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
+      ItemSelected = GreatItemShow ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
       if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
 
       //--------------------

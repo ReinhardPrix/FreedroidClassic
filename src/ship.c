@@ -54,7 +54,7 @@ enum
   };
 
 int NoKeyPressed (void);
-void GreatItemShow (void);
+int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
 void ShowItemInfo ( item* ShowItem , int page , char ShowArrows );
 void ShowDroidPicture (int PosX, int PosY, int Number );
 
@@ -102,6 +102,94 @@ If you are interested, please email to
 freedroid-discussion@lists.sourceforge.net. (You can expect approval of your message shortly.) You also might check out the cvs source code directly. The latest release of the rpg branch does not contain appropriate examples of what the dialogs look like.
 
 ";
+
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+int
+AssemblePointerListForItemShow ( item** ItemPointerListPointer , int PlayerNum )
+{
+  int i;
+  item** CurrentItemPointer;
+  int NumberOfItems = 0 ;
+
+  //--------------------
+  // First we clean out the new Show_Pointer_List
+  //
+  CurrentItemPointer = ItemPointerListPointer ;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      *CurrentItemPointer = NULL;
+      CurrentItemPointer++;
+    }
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items
+  // currently equipped
+  //
+  CurrentItemPointer = ItemPointerListPointer;
+  if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .weapon_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .drive_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .drive_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .armour_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .armour_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .shield_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .shield_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .special_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .special_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .aux1_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux1_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .aux2_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux2_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items in the
+  // pure unequipped inventory
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me [ PlayerNum ] .Inventory [ i ].type == (-1) ) continue;
+      else
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .Inventory[ i ] );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+    }
+
+  return ( NumberOfItems );
+
+}; // void AssemblePointerListForItemShow ( .. )
 
 /* ----------------------------------------------------------------------
  *
@@ -158,6 +246,8 @@ EnterConsole (void)
   int finished = FALSE;
   int menu_pos = 0;
   char* fpath;
+  int NumberOfItems;
+  item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
 
   //--------------------
   // Console picture need not be rendered fast or something.  This
@@ -237,7 +327,8 @@ EnterConsole (void)
 	      break;
 	    case 3:
 	      ClearGraphMem();
-	      GreatItemShow ();
+	      NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
+	      GreatItemShow ( NumberOfItems , ShowPointerList );
 	      break;
 	    default:
 	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
@@ -463,106 +554,18 @@ GreatDruidShow (void)
 }; // void GreatDroidShow( void ) 
 
 /* ----------------------------------------------------------------------
- * 
- *
- * ---------------------------------------------------------------------- */
-int
-AssemblePointerListForItemShow ( item** ItemPointerListPointer , int PlayerNum )
-{
-  int i;
-  item** CurrentItemPointer;
-  int NumberOfItems = 0 ;
-
-  //--------------------
-  // First we clean out the new Show_Pointer_List
-  //
-  CurrentItemPointer = ItemPointerListPointer ;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      *CurrentItemPointer = NULL;
-      CurrentItemPointer++;
-    }
-
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items
-  // currently equipped
-  //
-  CurrentItemPointer = ItemPointerListPointer;
-  if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .weapon_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .drive_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .drive_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .armour_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .armour_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .shield_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .shield_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .special_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .special_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .aux1_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux1_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .aux2_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux2_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items in the
-  // pure unequipped inventory
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me [ PlayerNum ] .Inventory [ i ].type == (-1) ) continue;
-      else
-	{
-	  *CurrentItemPointer = & ( Me [ PlayerNum ] .Inventory[ i ] );
-	  CurrentItemPointer ++;
-	  NumberOfItems ++;
-	}
-    }
-
-  return ( NumberOfItems );
-
-}; // void AssemblePointerListForItemShow ( .. )
-
-/* ----------------------------------------------------------------------
  * This function does the item show when the user has selected item
  * show from the console menu.
  * ---------------------------------------------------------------------- */
-void
-GreatItemShow (void)
+int
+GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 {
   int ItemType;
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
-  item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
-  int NumberOfItems;
+  // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
+  // int NumberOfItems;
   int ItemIndex=0;
   int PasswordIndex = (-1) ;
   // int ClearanceIndex = (-1) ;
@@ -580,7 +583,7 @@ GreatItemShow (void)
   Cons_Text_Rect . w = 346 ;
   Cons_Text_Rect . h = 282 ;
 
-  NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
+  // NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
 
   if ( ShowPointerList[0] == NULL )
     {
@@ -588,7 +591,7 @@ GreatItemShow (void)
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
 			MenuTexts, 1 , NULL , NULL );
-      return;
+      return (-1) ;
     }
 
   ItemType = ShowPointerList [ ItemIndex ] -> type ;
@@ -691,10 +694,18 @@ GreatItemShow (void)
 	  while (LeftPressed());
 	  if (ItemType > 0) ItemType --;
 	}
+      
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  return (-1);
+	}
 
     } // while !finished 
 
-}; // void GreatItemShow( void ) 
+  return ( ItemIndex ) ;  // Currently equippment selection is not yet possible...
+
+}; // int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 
 /* ------------------------------------------------------------
  * display infopage page of droidtype

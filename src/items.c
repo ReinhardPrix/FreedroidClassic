@@ -505,6 +505,33 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   if ( ( !ForceDrop ) && ( DropDecision < 100 - GOLD_DROP_PERCENTAGE - ITEM_DROP_PERCENTAGE ) ) return;
 
   //--------------------
+  // Since we don't drop real treasure any more, we just 
+  // drop some minimal stuff
+  //
+  if ( !ForceDrop ) 
+    {
+      switch ( MyRandom ( 4 ) )
+	{
+	case 0:
+	  DropItemAt( ITEM_DROID_PART_1 , x , y , -1 , -1 , TreasureChestRange );
+	  break;
+	case 1:
+	  DropItemAt( ITEM_DROID_PART_2 , x , y , -1 , -1 , TreasureChestRange );
+	  break;
+	case 2:
+	  DropItemAt( ITEM_DROID_PART_3 , x , y , -1 , -1 , TreasureChestRange );
+	  break;
+	case 3:
+	  DropItemAt( ITEM_DROID_PART_4 , x , y , -1 , -1 , TreasureChestRange );
+	  break;
+	case 4:
+	  DropItemAt( ITEM_DROID_PART_5 , x , y , -1 , -1 , TreasureChestRange );
+	  break;
+	}
+      return;
+    }
+
+  //--------------------
   // Perhaps it's some gold that will be dropped.  That's rather
   // simple, so we do this first.
   //
