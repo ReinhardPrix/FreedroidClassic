@@ -159,6 +159,17 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
     }
 
   //--------------------
+  // Maybe there is NO ITEM IN THE LIST AT ALL!
+  // Then of course we are done, hehe, and return the usual 'back'.
+  // Thats perfectly normal and ok.
+  //
+  if ( Pointer_Index == 0 )
+    {
+      DebugPrintf ( 0 , "\nDoEquippmentListSelection(..):  No item in given list.  Returning... " );
+      return ( -1 );
+    }
+
+  //--------------------
   // Now we clean the list from any (-1) items, that might come from
   // an items just having been sold and therefore deleted from the list.
   //
@@ -166,15 +177,67 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
     {
       if ( Item_Pointer_List[ i ]->type == (-1 ) )
 	{
-	  DebugPrintf ( 0 , "\n ALERT!  Cleaning a '-1' type item from the Item_Pointer_List... " );
+	  DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning a '-1' type item from the Item_Pointer_List... " );
 
 	  CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
+	  DeleteItem ( Item_Pointer_List[ Pointer_Index - 1 ] ); // this is for -1 cause of SOLD items
 	  Item_Pointer_List[ Pointer_Index -1 ] = NULL;
 	  Pointer_Index --;
 
 	  return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
 	}
     }
+
+  //--------------------
+  // Now IN CASE OF REPAIR_PRICING, we clean the list from any items, that 
+  // don't need repair.
+  //
+  // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
+  // Or we would destroy the Tux' inventory list!
+  //
+  if ( PricingMethod == PRICING_FOR_REPAIR )
+    {
+      for ( i = 0 ; i < Pointer_Index ; i++ )
+	{
+	  if ( Item_Pointer_List[ i ]->current_duration == Item_Pointer_List[ i ]->max_duration ) 
+	    {
+	      DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need repair from the pointer list... " );
+	      
+	      // CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
+	      Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
+	      Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+	      Pointer_Index --;
+	      
+	      return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+	    }
+	}
+    }
+
+  //--------------------
+  // Now IN CASE OF IDENTIFY_PRICING, we clean the list from any items, that 
+  // don't need to be identified.
+  //
+  // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
+  // Or we would destroy the Tux' inventory list!
+  //
+  if ( PricingMethod == PRICING_FOR_IDENTIFY )
+    {
+      for ( i = 0 ; i < Pointer_Index ; i++ )
+	{
+	  if ( Item_Pointer_List[ i ]->is_identified ) 
+	    {
+	      DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need to be identified from the pointer list... " );
+	      
+	      Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
+	      Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+	      Pointer_Index --;
+	      
+	      return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+	    }
+	}
+    }
+
+
 
   //--------------------
   // Now we can perform the actual menu selection.
@@ -631,12 +694,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   Buy_Pointer_List [ i ] = NULL ; 
   
   //--------------------
-  // Now we display the list of items for sale and react
-  // to the given user selection.
-  //
-  sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
-
-  //--------------------
   // Now here comes the new thing:  This will be a loop from now
   // on.  The buy and buy and buy until at one point we say 'BACK'
   //
@@ -644,6 +701,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 
   while ( ItemSelected != (-1) )
     {
+      sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
       if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
     }
@@ -734,13 +792,17 @@ Repair_Items( void )
     }
 
   //--------------------
-  // Now we display the list of items for repair and react
-  // to the given user selection.
+  // Now here comes the new thing:  This will be a loop from now
+  // on.  The buy and buy and buy until at one point we say 'BACK'
   //
-  sprintf( DescriptionText , " I COULD REPAIR THESE ITEMS           YOUR GOLD:  %4ld" , Me[0].Gold );
-  ItemSelected = DoEquippmentListSelection( DescriptionText , Repair_Pointer_List , PRICING_FOR_REPAIR );
+  ItemSelected = 0;
 
-  if ( ItemSelected != (-1) ) TryToRepairItem( Repair_Pointer_List[ ItemSelected ] ) ;
+  while ( ItemSelected != (-1) )
+    {
+      sprintf( DescriptionText , " I COULD REPAIR THESE ITEMS           YOUR GOLD:  %4ld" , Me[0].Gold );
+      ItemSelected = DoEquippmentListSelection( DescriptionText , Repair_Pointer_List , PRICING_FOR_REPAIR );
+      if ( ItemSelected != (-1) ) TryToRepairItem( Repair_Pointer_List[ ItemSelected ] ) ;
+    }
 
 }; // void Repair_Items( void )
 
@@ -826,12 +888,17 @@ Identify_Items ( void )
     }
 
   //--------------------
-  // Now we display the list of items for identification and react
-  // to the given user selection.
+  // Now here comes the new thing:  This will be a loop from now
+  // on.  The buy and buy and buy until at one point we say 'BACK'
   //
-  sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
-  ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
-  if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
+  ItemSelected = 0;
+
+  while ( ItemSelected != (-1) )
+    {
+      sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
+      ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
+      if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
+    }
 
 }; // void Identify_Items( void )
 
@@ -902,15 +969,36 @@ Sell_Items( int ForHealer )
     }
 
   //--------------------
-  // Now we display the list of items for sale and react
-  // to the given user selection.
+  // Now here comes the new thing:  This will be a loop from now
+  // on.  The buy and buy and buy until at one point we say 'BACK'
   //
+  ItemSelected = 0;
+
+  /*
+  //--------------------
+  // We will use recursion here instead of a loop...
+  //
+  // while ( ItemSelected != (-1) )
+  // {
   sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
   ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
+  if ( ItemSelected != (-1) ) 
+    {
+      TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
+      Sell_Items ( ForHealer );
+    }
+  // }
+  */
 
-  if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
+  //--------------------
+  while ( ItemSelected != (-1) )
+    {
+      sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
+      ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
+      if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
+    }
 
-}; // void Sell_Items( void )
+}; // void Sell_Items( int ForHealer )
 
 /* ----------------------------------------------------------------------
  * This function does all the buying/selling interaction with the 
