@@ -394,33 +394,33 @@ This indicates a corrupted or seriously outdated game data or saved game file.",
 void
 ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
 {
-  char OldTerminaterCharValue;
-  char* SourceLocation;
+    char OldTerminaterCharValue;
+    char* SourceLocation;
 
-  // We shortly make a termination char into the string.
-  OldTerminaterCharValue=EndOfSearchSectionPointer[0];
-  EndOfSearchSectionPointer[0]=0;
-
-  // Now we locate the spot, where we finally will find our value
-  SourceLocation = LocateStringInData ( SearchBeginPointer , ValuePreceedText );
-  SourceLocation += strlen ( ValuePreceedText );
-
-  //--------------------
-  // Attention!!! 
-  // Now we try to read in the value!!!
-  //
-  if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
+    // We shortly make a termination char into the string.
+    OldTerminaterCharValue=EndOfSearchSectionPointer[0];
+    EndOfSearchSectionPointer[0]=0;
+    
+    // Now we locate the spot, where we finally will find our value
+    SourceLocation = LocateStringInData ( SearchBeginPointer , ValuePreceedText );
+    SourceLocation += strlen ( ValuePreceedText );
+    
+    //--------------------
+    // Attention!!! 
+    // Now we try to read in the value!!!
+    //
+    if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
     {
-      fprintf( stderr, "\n\nFormatString: '%s'\n" , FormatString );
-      fprintf( stderr, "ValuePreceedText: '%s'\n" , ValuePreceedText );
-      GiveStandardErrorMessage ( "ReadValueFromString(...)" , "\
+	fprintf( stderr, "\n\nFormatString: '%s'\n" , FormatString );
+	fprintf( stderr, "ValuePreceedText: '%s'\n" , ValuePreceedText );
+	GiveStandardErrorMessage ( "ReadValueFromString(...)" , "\
 sscanf using a certain format string failed!\n\
 This indicates a corrupted or seriously outdated game data or saved game file.",
 				 PLEASE_INFORM, IS_FATAL );
     }
-
-  // Now that we are done, we restore the given SearchArea to former glory
-  EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
+    
+    // Now that we are done, we restore the given SearchArea to former glory
+    EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
 
 }; // void ReadValueFromString( ... )
 

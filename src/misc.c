@@ -1354,8 +1354,6 @@ SaveGameConfig (void)
 void
 Terminate (int ExitCode)
 {
-    char parameter_buf[5000];
-
     DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
     printf("\n----------------------------------------------------------------------");
     printf("\nTermination of freedroidRPG initiated...");
@@ -1397,7 +1395,6 @@ Closing all players connections to this server...\n\
     // the last debug output, since people in general won't know how and where
     // to find the material for proper reporting of bugs.
     //
-    // sprintf ( parameter_buf , "notepad stderr.txt stdout.txt" );
 #if __WIN32__
     if ( ExitCode == ERR )
     {
@@ -1460,7 +1457,7 @@ be identified as valid reference to an existing action.",
 void 
 ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum )
 {
-  ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) , PlayerNum );
+    ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) , PlayerNum );
 }; // void ExecuteActionWithLabel ( char* ActionLabel )
 
 /* ----------------------------------------------------------------------
@@ -1582,88 +1579,88 @@ The obstacle label given was NOT found in any levels obstacle label list." ,
 void 
 ExecuteEvent ( int EventNumber , int PlayerNum )
 {
+    obstacle* our_obstacle;
+    int obstacle_level_num ;
+    Level obstacle_level ;
+    
+    DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
 
-  obstacle* our_obstacle;
-  int obstacle_level_num ;
-  Level obstacle_level ;
-
-  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
-  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
-
-  // Do nothing in case of the empty action (-1) given.
-  if ( EventNumber == (-1) ) return;
-
-  // Does the action include a change of a map tile?
-  if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
+    // Do nothing in case of the empty action (-1) given.
+    if ( EventNumber == (-1) ) return;
+    
+    // Does the action include a change of a map tile?
+    if ( AllTriggeredActions [ EventNumber ] . ChangeMapTo != -1 )
     {
-      //YES.  So we need to check, if the location has been supplied fully first.
-      if ( ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.x == (-1) ) ||
-	   ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.y == (-1) ) ||
-	   ( AllTriggeredActions[ EventNumber ].ChangeMapLevel == (-1) ) )
+	//YES.  So we need to check, if the location has been supplied fully first.
+	if ( ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.x == (-1) ) ||
+	     ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.y == (-1) ) ||
+	     ( AllTriggeredActions[ EventNumber ].ChangeMapLevel == (-1) ) )
 	{
-	  DebugPrintf( 0 , "\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
-	  Terminate(ERR);
+	    DebugPrintf( 0 , "\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
+	    Terminate(ERR);
 	}
-      else
+	else
 	{
-	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
-	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  . floor_value  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
-	  
-	  GetAllAnimatedMapTiles ( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
+	    DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
+	    curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  . floor_value  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
+	    
+	    GetAllAnimatedMapTiles ( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
 	}
     }
-
-  //--------------------
-  // Maybe the action will cause a map obstacle to change type.  If that is so, we
-  // do it here...
-  //
-  if ( strlen ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) > 0 )
+    
+    //--------------------
+    // Maybe the action will cause a map obstacle to change type.  If that is so, we
+    // do it here...
+    //
+    if ( strlen ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) > 0 )
     {
-      our_obstacle = give_pointer_to_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
-      obstacle_level_num = give_level_of_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
-      our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
-
-      obstacle_level = curShip . AllLevels [ obstacle_level_num ] ;
-      //--------------------
-      // Now we make sure the door lists and that are all updated...
-      //
-
-      GetAllAnimatedMapTiles ( curShip . AllLevels [ obstacle_level_num ] ) ;
-      //--------------------
-      // Also make sure the other maps realize the change too, if it
-      // maybe happend in the border area where two maps are glued together
-      // only export if the obstacle falls within the interface zone
-
-      if( our_obstacle->pos.x <= obstacle_level->jump_threshold_west ||
-          our_obstacle->pos.x >= obstacle_level->xlen - obstacle_level->jump_threshold_east ||
-          our_obstacle->pos.y <= obstacle_level->jump_threshold_north ||
-          our_obstacle->pos.y >= obstacle_level->ylen - obstacle_level->jump_threshold_south
-	) ExportLevelInterface ( obstacle_level_num ) ;
-   
-  // Does the action include a teleport of the influencer to some other location?
-  if ( AllTriggeredActions[ EventNumber ].TeleportTarget.x != (-1) )
-    {
-      Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
-		 AllTriggeredActions[ EventNumber ].TeleportTarget.x + 0.5 ,
-		 AllTriggeredActions[ EventNumber ].TeleportTarget.y + 0.5 ,
-		 PlayerNum , FALSE , TRUE );
+	our_obstacle = give_pointer_to_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
+	obstacle_level_num = give_level_of_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
+	our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
+	
+	obstacle_level = curShip . AllLevels [ obstacle_level_num ] ;
+	//--------------------
+	// Now we make sure the door lists and that are all updated...
+	//
+	
+	GetAllAnimatedMapTiles ( curShip . AllLevels [ obstacle_level_num ] ) ;
+	//--------------------
+	// Also make sure the other maps realize the change too, if it
+	// maybe happend in the border area where two maps are glued together
+	// only export if the obstacle falls within the interface zone
+	
+	if( our_obstacle->pos.x <= obstacle_level->jump_threshold_west ||
+	    our_obstacle->pos.x >= obstacle_level->xlen - obstacle_level->jump_threshold_east ||
+	    our_obstacle->pos.y <= obstacle_level->jump_threshold_north ||
+	    our_obstacle->pos.y >= obstacle_level->ylen - obstacle_level->jump_threshold_south
+	    ) ExportLevelInterface ( obstacle_level_num ) ;
+	
     }
 
-  // Does the defined action assign the influencer a mission?
-  if ( AllTriggeredActions[ EventNumber ].AssignWhichMission != (-1) )
+    // Does the action include a teleport of the influencer to some other location?
+    if ( AllTriggeredActions [ EventNumber ] . TeleportTarget . x != (-1) )
     {
-      AssignMission( AllTriggeredActions[ EventNumber ].AssignWhichMission );
+	DebugPrintf( 1 , "\nvoid ExecuteEvent: Now a teleportation should occur!" );
+	Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
+		   AllTriggeredActions[ EventNumber ].TeleportTarget.x + 0.5 ,
+		   AllTriggeredActions[ EventNumber ].TeleportTarget.y + 0.5 ,
+		   PlayerNum , FALSE , TRUE );
     }
-
-  // Does the defined action make the influencer say something?
-  if ( strlen ( AllTriggeredActions[ EventNumber ].InfluencerSayText ) > 0 )
+    
+    // Does the defined action assign the influencer a mission?
+    if ( AllTriggeredActions[ EventNumber ].AssignWhichMission != (-1) )
     {
-      //YES. So we need to output his sentence as usual
-      Me[0].TextVisibleTime=0;
-      Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
+	AssignMission( AllTriggeredActions[ EventNumber ].AssignWhichMission );
     }
-  }
-
+    
+    // Does the defined action make the influencer say something?
+    if ( strlen ( AllTriggeredActions[ EventNumber ].InfluencerSayText ) > 0 )
+    {
+	//YES. So we need to output his sentence as usual
+	Me[0].TextVisibleTime=0;
+	Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
+    }
+    
 }; // void ExecuteEvent ( int EventNumber )
 
 /* ----------------------------------------------------------------------
@@ -1681,60 +1678,60 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 void 
 CheckForTriggeredEventsAndStatements ( int PlayerNum )
 {
-  int i;
-  int map_x, map_y;
-  Level StatementLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
-
-  //--------------------
-  // Now we check if some statment location is reached
-  //
-  map_x = (int) rintf( (float) Me [ PlayerNum ] . pos . x ); map_y = (int) rintf( (float)Me [ PlayerNum ] . pos . y ) ;
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i++ )
+    int i;
+    int map_x, map_y;
+    Level StatementLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
+    
+    //--------------------
+    // Now we check if some statment location is reached
+    //
+    map_x = (int) rintf( (float) Me [ PlayerNum ] . pos . x ); map_y = (int) rintf( (float)Me [ PlayerNum ] . pos . y ) ;
+    for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i++ )
     {
-      if ( ( map_x == StatementLevel -> StatementList [ i ] . x ) &&
-	   ( map_y == StatementLevel -> StatementList [ i ] . y ) )
+	if ( ( map_x == StatementLevel -> StatementList [ i ] . x ) &&
+	     ( map_y == StatementLevel -> StatementList [ i ] . y ) )
 	{
-	  Me [ PlayerNum ] . TextVisibleTime = 0 ;
-	  Me [ PlayerNum ] . TextToBeDisplayed = CurLevel -> StatementList [ i ] . Statement_Text ;
+	    Me [ PlayerNum ] . TextVisibleTime = 0 ;
+	    Me [ PlayerNum ] . TextToBeDisplayed = CurLevel -> StatementList [ i ] . Statement_Text ;
 	}
     }
-
-  //--------------------
-  // Now we check if some event trigger is fullfilled.
-  //
-  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+    
+    //--------------------
+    // Now we check if some event trigger is fullfilled.
+    //
+    for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
     {
-      // if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
-      if ( strcmp (AllEventTriggers[i].TargetActionLabel , "none" ) == 0 ) continue;  // thats a sure sign this event doesn't need attention
-
-      // --------------------
-      // So at this point we know, that the event trigger is somehow meaningful. 
-      // Fine, so lets check the details, if the event is triggered now
-      //
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
+	// if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
+	if ( strcmp (AllEventTriggers[i].TargetActionLabel , "none" ) == 0 ) continue;  // thats a sure sign this event doesn't need attention
+	
+	// --------------------
+	// So at this point we know, that the event trigger is somehow meaningful. 
+	// Fine, so lets check the details, if the event is triggered now
+	//
+	
+	if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != (int) ( Me [ PlayerNum ] . pos.x ) ) continue;
+	    if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != (int) ( Me [ PlayerNum ] . pos.x ) ) continue;
 	}
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
+	
+	if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != (int) ( Me [ PlayerNum ] . pos.y ) ) continue;
+	    if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != (int) ( Me [ PlayerNum ] . pos.y ) ) continue;
 	}
-
-      if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )
+	
+	if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != StatementLevel->levelnum ) continue;
+	    if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Level ) != StatementLevel->levelnum ) continue;
 	}
-     
-      // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
-      // ExecuteEvent( AllEventTriggers[i].EventNumber );
-      ExecuteActionWithLabel ( AllEventTriggers [ i ] . TargetActionLabel , PlayerNum ) ;
-
-      if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
+	
+	DebugPrintf( 2 , "\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
+	// ExecuteEvent( AllEventTriggers[i].EventNumber );
+	ExecuteActionWithLabel ( AllEventTriggers [ i ] . TargetActionLabel , PlayerNum ) ;
+	
+	if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
 	{
-	  // AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
-	  AllEventTriggers[i].TargetActionLabel = "none"; // That should prevent the event from being executed again.
+	    // AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
+	    AllEventTriggers[i].TargetActionLabel = "none"; // That should prevent the event from being executed again.
 	}
     }
 

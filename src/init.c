@@ -509,7 +509,7 @@ Leave out the label entry for obstacles if you don't want to use it!" );
 
   DebugPrintf (1, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
 
-}; // void 
+}; // void decode_all_event_actions ( char* EventSectionPointer )
 
 /* ---------------------------------------------------------------------- 
  *
@@ -518,67 +518,67 @@ Leave out the label entry for obstacles if you don't want to use it!" );
 void
 decode_all_event_triggers ( char* EventSectionPointer )
 {
-  char *EventPointer;
-  char *EndOfEvent;
-  int EventTriggerNumber;
-  char* TempMapLabelName;
-  location TempLocation;
-
-  EventPointer=EventSectionPointer;
-  EventTriggerNumber=0;
-  while ( ( EventPointer = strstr ( EventPointer , EVENT_TRIGGER_BEGIN_STRING ) ) != NULL)
+    char *EventPointer;
+    char *EndOfEvent;
+    int EventTriggerNumber;
+    char* TempMapLabelName;
+    location TempLocation;
+    
+    EventPointer=EventSectionPointer;
+    EventTriggerNumber=0;
+    while ( ( EventPointer = strstr ( EventPointer , EVENT_TRIGGER_BEGIN_STRING ) ) != NULL)
     {
-      DebugPrintf(1, "\nBegin of a new Event Trigger Section found. Good. ");
-      EventPointer += strlen( EVENT_TRIGGER_BEGIN_STRING ) + 1;
-
-      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_TRIGGER_END_STRING );
-
-      DebugPrintf ( 1 , "\nStarting to read details of this event trigger section\n\n");
-
-      //--------------------
-      // Now we decode the details of this event trigger section
-      //
-
-      // Now we read in the triggering position in x and y and z coordinates
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_X_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x , EndOfEvent );
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_Y_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y , EndOfEvent );
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_MAPLEVEL_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level , EndOfEvent );
-      // but maybe there was a label given.  This will override the pure coordinates...
-      TempMapLabelName = 
-	ReadAndMallocStringFromData ( EventPointer , EVENT_TRIGGER_LABEL_STRING , "\"" ) ;
-      if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
+	DebugPrintf(1, "\nBegin of a new Event Trigger Section found. Good. ");
+	EventPointer += strlen( EVENT_TRIGGER_BEGIN_STRING ) + 1;
+	
+	EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_TRIGGER_END_STRING );
+	
+	DebugPrintf ( 1 , "\nStarting to read details of this event trigger section\n\n");
+	
+	//--------------------
+	// Now we decode the details of this event trigger section
+	//
+	
+	// Now we read in the triggering position in x and y and z coordinates
+	ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_X_STRING , "%d" , 
+			     &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x , EndOfEvent );
+	ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_Y_STRING , "%d" , 
+			     &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y , EndOfEvent );
+	ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_MAPLEVEL_STRING , "%d" , 
+			     &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level , EndOfEvent );
+	// but maybe there was a label given.  This will override the pure coordinates...
+	TempMapLabelName = 
+	    ReadAndMallocStringFromData ( EventPointer , EVENT_TRIGGER_LABEL_STRING , "\"" ) ;
+	if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
 	{
-	  DebugPrintf ( 1 , "\nTrigger coordinates overridden by map label %s." , TempMapLabelName );
-	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
-	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . x = TempLocation . x ;
-	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . y = TempLocation . y ;
-	  AllEventTriggers[ EventTriggerNumber ] . Influ_Must_Be_At_Level = TempLocation . level ;
+	    DebugPrintf ( 1 , "\nTrigger coordinates overridden by map label %s." , TempMapLabelName );
+	    ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
+	    AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . x = TempLocation . x ;
+	    AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . y = TempLocation . y ;
+	    AllEventTriggers[ EventTriggerNumber ] . Influ_Must_Be_At_Level = TempLocation . level ;
 	}
-      else
+	else
 	{
-	  DebugPrintf ( 1 , "\nTrigger label unused..." );
+	    DebugPrintf ( 1 , "\nTrigger label unused..." );
 	}
-
-
-      // Now we read whether or not to delete the trigger after being triggerd
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_DELETED_AFTER_TRIGGERING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution , EndOfEvent );
-
-      // Now we read in the action to be invoked by this trigger
-      // ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
-      // &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
-      AllEventTriggers[ EventTriggerNumber ].TargetActionLabel = 
-	ReadAndMallocStringFromData ( EventPointer , TRIGGER_WHICH_TARGET_LABEL , "\"" ) ;
-
-      EventTriggerNumber++;
+	
+	
+	// Now we read whether or not to delete the trigger after being triggerd
+	ReadValueFromString( EventPointer , EVENT_TRIGGER_DELETED_AFTER_TRIGGERING , "%d" , 
+			     &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution , EndOfEvent );
+	
+	// Now we read in the action to be invoked by this trigger
+	// ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
+	// &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
+	AllEventTriggers[ EventTriggerNumber ].TargetActionLabel = 
+	    ReadAndMallocStringFromData ( EventPointer , TRIGGER_WHICH_TARGET_LABEL , "\"" ) ;
+	
+	EventTriggerNumber++;
     } // While Event trigger begin string found...
+    
+    DebugPrintf ( 1 , "\nThat must have been the last Event Trigger section.");
 
-  DebugPrintf (1 , "\nThat must have been the last Event Trigger section.");
-
-}; // void
+}; // void decode_all_event_triggers ( char* EventSectionPointer )
 
 /* ----------------------------------------------------------------------
  * This function reads in the game events, i.e. the locations and conditions

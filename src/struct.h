@@ -119,8 +119,8 @@ configuration_for_freedroid , *Configuration_for_freedroid;
 
 typedef struct
 {
-  int x;
-  int y;
+    int x;
+    int y;
 }
 point, *Point;
 
