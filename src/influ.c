@@ -588,6 +588,7 @@ CheckInfluenceWallCollisions ( int PlayerNum )
 			      Me [ PlayerNum ] . pos . z ) == CENTER ) Me [ PlayerNum ] .pos.y += SY;
 	}
 
+      //--------------------
       // Here I introduce some extra security as a fallback:  Obviously
       // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
       // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
@@ -596,12 +597,12 @@ CheckInfluenceWallCollisions ( int PlayerNum )
       // be done here and now:
       
       if ( ( DruidPassable ( Me [ PlayerNum ] .pos.x, Me [ PlayerNum ] .pos.y , Me [ PlayerNum ] . pos . z ) != CENTER) && 
-	   ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryY( 0 ) ) != CENTER) &&
-	   ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryY( 1 ) ) != CENTER) )
+	   ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) ) != CENTER) &&
+	   ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) ) != CENTER) )
 	{
 	  Me [ PlayerNum ] .pos.x = GetInfluPositionHistoryX( 2 );
 	  Me [ PlayerNum ] .pos.y = GetInfluPositionHistoryY( 2 );
-	  DebugPrintf(1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
+	  DebugPrintf ( 0, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
 	}
 
     }

@@ -912,7 +912,7 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
 }; // void Teleport( ... ) 
 
 /* ----------------------------------------------------------------------
- * This function saves GameConfig struct in freedroid.config the user's home
+ * This function saves GameConfig struct in '.freedroid.config' the user's home
  * directory.
  * ---------------------------------------------------------------------- */
 void
@@ -932,7 +932,7 @@ I need to know that for saving. Abort.\n");
     }
 
   //Create a filename
-  sprintf( filename , "%s/%s", homedir, "freedroid.config" );
+  sprintf( filename , "%s/%s", homedir, ".freedroid.config" );
 
   //Try to open file
   if( ( SettingsFile = fopen(filename, "w")) == NULL) {
@@ -990,12 +990,12 @@ freedroid-discussion@lists.sourceforge.net\n\
       return;
   }
 
-  printf("\nSuccessfully saved settings file (freedroid.config) in home directory.\n");
+  printf("\nSuccessfully saved settings file (.freedroid.config) in home directory.\n");
 
 };
 
 /* ----------------------------------------------------------------------
- * This function loads GameConfig struct in freedroid.config the user's home
+ * This function loads GameConfig struct in .freedroid.config the user's home
  * directory.
  * ---------------------------------------------------------------------- */
 void
@@ -1019,7 +1019,7 @@ I need to know that for loading.\n");
   //--------------------
   // First, we must determine the savedgame data file name
   //
-  sprintf (filename, "%s/%s", homedir, "freedroid.config");
+  sprintf (filename, "%s/%s", homedir, ".freedroid.config");
 
 
 
@@ -1049,7 +1049,7 @@ I need to know that for loading.\n");
   //I will have to load and save this separately...but for now just set it to default
   GameConfig.Theme_SubPath = "lanzz_theme/";
 
-  printf ("\nSuccessfully loaded settings file (freedroid.config) in home directory\n");
+  DebugPrintf ( 1 , "\nSuccessfully loaded settings file (.freedroid.config) in home directory\n");
 
 };
 
