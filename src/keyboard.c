@@ -127,20 +127,6 @@ ReactToSpecialKeys(void)
   if ( PPressed () )
     Pause ();
   
-  if ( OPressed () )
-    {
-      if (CurrentCombatScaleFactor > 0.5 )
-	CurrentCombatScaleFactor -= 0.5;
-      SetCombatScaleTo (CurrentCombatScaleFactor);
-      while (OPressed());
-    }
-  if ( IPressed () )
-    {
-      CurrentCombatScaleFactor += 0.5;
-      SetCombatScaleTo (CurrentCombatScaleFactor);
-      while (IPressed());
-    }
-  
   if ( UPressed () )
     {
       InitNewMission ( STANDARD_MISSION ) ;

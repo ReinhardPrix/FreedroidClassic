@@ -1238,6 +1238,24 @@ Level_Editor(void)
 	      while (DownPressed());
 	    }
 
+	  //--------------------
+	  //If the person using the level editor decides he/she wants a different
+	  //scale for the editing process, he/she may say so by using the O/I keys.
+	  //
+	  if ( OPressed () )
+	    {
+	      if (CurrentCombatScaleFactor > 0.5 )
+		CurrentCombatScaleFactor -= 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (OPressed());
+	    }
+	  if ( IPressed () )
+	    {
+	      CurrentCombatScaleFactor += 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (IPressed());
+	    }
+  
 	  // If the person using the level editor pressed w, the waypoint is
 	  // toggled on the current square.  That means either removed or added.
 	  // And in case of removal, also the connections must be removed.

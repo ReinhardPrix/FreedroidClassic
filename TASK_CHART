@@ -13,7 +13,7 @@ The list of things I'm going to work on next:
 
 0.   Correct the console text display
 
-1.   Rescaling of Map should be working for Level Editor but not
+DONE Rescaling of Map should be working for Level Editor but not
      for real game
 
 DONE Downscale Bastians graphics to fit into the console.
