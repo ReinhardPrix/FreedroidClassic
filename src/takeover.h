@@ -37,7 +37,7 @@
 #define TO_BLOCK_FILE		GRAPHICS_DIR "ne_to_elem.bmp"
 
 /* --------------- individual block dimensions --------------- */
-#define NUM_PHASES		4       /* number of color-phases for current "flow" */
+#define NUM_PHASES		5       /* number of color-phases for current "flow" */
 					/* inclusive "inactive" phase */
 
 /* Dimensions of the game-blocks */
@@ -145,7 +145,8 @@ enum condition
   INACTIVE = 0,
   ACTIVE1,
   ACTIVE2,
-  ACTIVE3
+  ACTIVE3,
+  ACTIVE4
 };
 
 /* Names for you and "him" */

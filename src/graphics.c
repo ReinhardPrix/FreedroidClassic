@@ -542,7 +542,8 @@ Sorry...\n\
 
   if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 240*SCALE_FACTOR , 0 , flags)) )
     {
-      fprintf(stderr, "Couldn't set 320x200*SCALE_FACTOR video mode: %s\n", SDL_GetError());
+      fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
+	      SDL_GetError()); 
       exit(-1);
     }
 

@@ -124,8 +124,6 @@ playground_t ToPlayground;
 playground_t ActivationMap;
 playground_t CapsuleCountdown;
 
-void RollToColors (void);
-
 /*-----------------------------------------------------------------
  * @Desc: Initialise the Takeover game
  *
@@ -270,7 +268,6 @@ Takeover (int enemynum)
 	{
 	  usleep (30000);
 	  waiter--;
-	  RollToColors ();
 	  SetInfoline( message, NULL , 0 );	
 	  ShowPlayground ();
 	} /* WHILE waiter */
@@ -409,9 +406,11 @@ PlayGame (void)
 	  sprintf (count_text, "Finish-%d", countdown);
 	  SetInfoline (count_text, NULL , 0 );
 
-	  RollToColors ();
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
+
+	  AnimateCurrents ();  /* do some animation on the active cables */
+
 	} /* if (countdown_tick has occurred) */
 
 
@@ -471,7 +470,6 @@ PlayGame (void)
 
 	  ProcessDisplayColumn ();
 
-	  AnimateCurrents ();  /* do some animation on the active cables */
 	} /* if (motion_tick has occurred) */
 
       ShowPlayground ();
@@ -488,10 +486,10 @@ PlayGame (void)
 
       prev_count_tick += count_tick_len;
       
-      RollToColors ();
-
       ProcessCapsules ();	/* count down the lifetime of the capsules */
       ProcessCapsules ();	/* do it twice this time to be faster */
+
+      AnimateCurrents ();
 
       ProcessPlayground ();
       ProcessPlayground ();
@@ -507,19 +505,6 @@ PlayGame (void)
   return;
 
 } /* PlayGame() */
-
-/*@Function============================================================
-@Desc: void RollToColors():
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-RollToColors (void)
-{
-  /* currently des-activated */
-  return;
-}
 
 /*-----------------------------------------------------------------
  * @Desc: animiert Gegner beim Uebernehm-Spiel
