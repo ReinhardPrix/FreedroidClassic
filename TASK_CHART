@@ -6,7 +6,7 @@ jp
 - "low level" graphics (SDL) and sound functions
 - sound issues, all of them.
 - more doku!
-- Web-page admin
+- Web-page admin  (--> Well, Bastian will take that over soom I hope :)
 - public relations ;)
 - level/ship-editor 
 
@@ -15,13 +15,15 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-* Add different spell levels and make them accessible from the
-  spell/skill screen.
+* (T) Add more spells on higher levels.
 
-* Make boxes possible attack targets
+* (T) Add proper NPC descriptions for the NPCs.
 
-* Add some handling for the communication with shop-owners and
-  also something suitable for the takeover touch process.
+* (T) Make computer console into something more sensible.
+
+* (T) Add teleporter connection to the telemetry level and vice versa
+
+* (T) Clean up the file/directory structure in the sound subdirectory
 
 
 THESE ITEMS ARE OF SECOND PRIORITY:
