@@ -288,35 +288,34 @@ ReactToSpecialKeys(void)
   if ( F6Pressed() )
     Me.readied_skill = 5;
 
-  if ( Number0Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 0 ] ) );
+  // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
 
   if ( Number1Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 1 ] ) );
+    Quick_ApplyItem ( 1 );
 
   if ( Number2Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 2 ] ) );
+    Quick_ApplyItem ( 2 );
 
   if ( Number3Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 3 ] ) );
+    Quick_ApplyItem ( 3 );
 
   if ( Number4Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 4 ] ) );
+    Quick_ApplyItem ( 4 );
 
   if ( Number5Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 5 ] ) );
+    Quick_ApplyItem ( 5 );
 
   if ( Number6Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 6 ] ) );
+    Quick_ApplyItem ( 6 );
 
   if ( Number7Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 7 ] ) );
+    Quick_ApplyItem ( 7 );
 
   if ( Number8Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 8 ] ) );
+    Quick_ApplyItem ( 8 );
 
   if ( Number9Pressed() )
-    ApplyItem ( & ( Me.Inventory[ 9 ] ) );
+    Quick_ApplyItem ( 9 );
 
   //--------------------
   // For debugging purposes, we introduce a key, that causes several 

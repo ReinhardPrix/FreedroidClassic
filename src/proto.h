@@ -249,6 +249,7 @@ EXTERN long CalculateItemPrice ( item* BuyItem , int ForRepair );
 EXTERN void FillInItemProperties( item* ThisItem , int FullDuration );
 EXTERN void DamageAllEquipment( void );
 EXTERN void DropItemAt( int ItemType , float x , float y , int prefix , int suffix );
+EXTERN void Quick_ApplyItem( int ItemKey );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
