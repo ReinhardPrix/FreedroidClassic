@@ -245,6 +245,39 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
 
+void 
+ShowCurrentHealthLevel( void )
+{
+  SDL_Rect Health_Rect;
+  SDL_Rect Unhealth_Rect;
+  SDL_Rect Whole_Health_Rect;
+  
+
+  Health_Rect.x = 15;
+  Health_Rect.y = 15;
+  Health_Rect.w = 115;
+  Health_Rect.h = ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
+  if ( Me.energy < 0 ) Health_Rect.h = 0;
+
+  Unhealth_Rect.x = 15;
+  Unhealth_Rect.y = 15 + ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.w = 115;
+  Unhealth_Rect.h = 100 - ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  if ( Unhealth_Rect.h <= 0 ) Unhealth_Rect.h = 0;
+
+  Whole_Health_Rect.x = 15;
+  Whole_Health_Rect.y = 15;
+  Whole_Health_Rect.w = 115;
+  Whole_Health_Rect.h = 100;
+
+  SDL_SetClipRect( Screen , NULL );
+  SDL_FillRect( Screen , & ( Health_Rect ) , 0x000FF00 );
+  SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF0000 );
+  SDL_UpdateRect( Screen , Whole_Health_Rect.x , Whole_Health_Rect.y , Whole_Health_Rect.w , Whole_Health_Rect.h );
+  //  SDL_Flip( Screen );
+}; // void ShowCurrentHealthLevel( void )
+
+
 /* -----------------------------------------------------------------
  * This function updates the top status bar. 
  * To save framerate on slow machines however it will only work
@@ -281,14 +314,16 @@ DisplayBanner (const char* left, const char* right,  int flags )
   int InterLineDistance;
   int StringLength;
 
+  ShowCurrentHealthLevel( );
+
+  //--------------------
+  // For testing purposes is bluntly insert the new banner element here:
+  //
   Banner_Text_Rect.x = BANNER_TEXT_RECT_X;
   Banner_Text_Rect.y = BANNER_TEXT_RECT_Y;
   Banner_Text_Rect.w = BANNER_TEXT_RECT_W;
   Banner_Text_Rect.h = BANNER_TEXT_RECT_H;
 
-  //--------------------
-  // For testing purposes is bluntly insert the new banner element here:
-  //
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle

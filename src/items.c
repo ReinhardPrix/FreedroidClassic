@@ -333,6 +333,7 @@ ApplyItem( item* CurItem )
   //
   Me.health += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
   Me.energy += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
+  if ( Me.energy > Druidmap [ Me.type ].maxenergy ) Me.energy = Druidmap [ Me.type ].maxenergy ;
 
   PlayItemSound( ItemMap[ CurItem->type ].sound_number );
 
