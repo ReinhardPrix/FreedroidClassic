@@ -666,24 +666,6 @@ enum
 #define FLASH_DURATION_IN_SECONDS 0.1
 
 //--------------------
-// direction definitions (fireing bullets and testing blockedness of positions) 
-//
-enum _directions
-{
-  OBEN = 0,
-  RECHTSOBEN,
-  RECHTS,
-  RECHTSUNTEN,
-  UNTEN,
-  LINKSUNTEN,
-  LINKS,
-  LINKSOBEN,
-  CENTER,
-  LIGHT				/* special: checking passability for light, not for a checkpos */
-};
-
-
-//--------------------
 // Maximal number of ...
 //
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?

@@ -181,21 +181,11 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
 
   for ( i = 0 ; i < Steps ; i++ )
     {
-
-
-      if ( IsPassable ( CheckPosition.x , CheckPosition.y , z ) != CENTER ) 
-	{
-	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
-	  return FALSE;
-	  }	
-
-      /*
-      if ( DruidPassable ( CheckPosition.x , CheckPosition.y , z ) != CENTER ) 
+      if ( ! IsPassable ( CheckPosition.x , CheckPosition.y , z ) ) 
 	{
 	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
 	}	
-      */
 
       CheckPosition.x += step.x;
       CheckPosition.y += step.y;
@@ -1706,7 +1696,7 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
 {
   if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 		      ThisRobot -> pos.y + StepVector.y ,
-		      ThisRobot -> pos.z ) == CENTER ) &&
+		      ThisRobot -> pos.z ) ) &&
        ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 				    ThisRobot->pos.x + StepVector . x , 
 				    ThisRobot->pos.y + StepVector . y ,
@@ -1843,7 +1833,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
       //
       if ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 			   ThisRobot -> pos.y + StepVector.y ,
-			   ThisRobot -> pos.z ) == CENTER )
+			   ThisRobot -> pos.z ) )
 	{
 	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
 	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;

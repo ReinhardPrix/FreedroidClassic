@@ -1201,9 +1201,9 @@ set_up_intermediate_course_for_tux ( int player_num )
   // If the target position cannot be reached at all, because of being inside an obstacle
   // for example, then we know what to do:  Set up one waypoint to the target and that's it.
   //
-  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x ,
+  if ( ! IsPassable ( Me [ player_num ] . mouse_move_target . x ,
 		    Me [ player_num ] . mouse_move_target . y ,
-		    Me [ player_num ] . mouse_move_target . z ) != CENTER )
+		    Me [ player_num ] . mouse_move_target . z ) )
     {
       DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
       return;

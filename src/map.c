@@ -3089,7 +3089,7 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   //
   if ( obstacle_map [ obs_type ] . block_area_type == COLLISION_TYPE_NONE )
     return ( FALSE );
-
+  /*
   if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
     {
       fprintf ( stderr, "\n\nCollision_area_type: %d.\n" , obstacle_map [ obs_type ] . block_area_type );
@@ -3097,6 +3097,7 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
 Error:  Unsupported type of collision area given.",
 				 PLEASE_INFORM, IS_FATAL );
     }
+  */
 
   //--------------------
   // first we find out where the borders of our collision rectangle
@@ -3142,7 +3143,6 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
     }
 
   return ( FALSE ) ;
-
   
 }; // int position_collides_with_obstacles_on_square ( int x , int y )
 
@@ -3158,14 +3158,15 @@ int
 IsPassable ( float x , float y , int z )
 {
   Level PassLevel = curShip . AllLevels [ z ] ;
-  int x_tile_start, y_tile_start;
-  int x_tile_end, y_tile_end;
+  // int x_tile_start, y_tile_start;
+  // int x_tile_end, y_tile_end;
   int x_tile, y_tile;
   
   //--------------------
   // We take a look whether the position given in the parameter is 
   // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
   //
+  /*
   x_tile_start = rintf ( x ) -1         ; y_tile_start = rintf ( y ) -1 ;
   x_tile_end   = x_tile_start + 2       ; y_tile_end   = y_tile_start + 2 ;
   if ( x_tile_start < 0 ) x_tile_start = 0 ; 
@@ -3182,8 +3183,54 @@ IsPassable ( float x , float y , int z )
 	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( -1 );
 	}
     }
+  */
 
-  return ( CENTER );
+  //--------------------
+  // It should be safe to skip any out-of-map checks here, because the Tux
+  // or any other object can't get this close to the map borders anyway.
+  //
+  x_tile = rintf ( x ) ;
+  y_tile = rintf ( y ) ;
+
+  if ( x_tile > 0 )
+    {
+      if ( position_collides_with_obstacles_on_square ( x , y , x_tile - 1 , y_tile , PassLevel ) ) 
+	return ( FALSE );
+
+      if ( y_tile > 0 )
+	if ( position_collides_with_obstacles_on_square ( x , y , x_tile - 1 , y_tile - 1 , PassLevel ) ) 
+	  return ( FALSE );
+
+      if ( y_tile + 1 < PassLevel -> ylen )
+	if ( position_collides_with_obstacles_on_square ( x , y , x_tile - 1 , y_tile + 1 , PassLevel ) ) 
+	  return ( FALSE );
+    }
+
+  if ( x_tile + 1 < PassLevel -> xlen )
+    {
+      if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile     , PassLevel ) ) return ( FALSE );
+
+      if ( y_tile + 1 < PassLevel -> ylen )
+	if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile + 1 , PassLevel ) ) 
+	  return ( FALSE );
+
+      if ( y_tile > 0 )
+	if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile - 1 , PassLevel ) ) 
+	  return ( FALSE );
+    }
+
+  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) 
+    return ( FALSE );
+
+  if ( y_tile + 1 < PassLevel -> ylen )
+    if ( position_collides_with_obstacles_on_square ( x , y , x_tile     , y_tile + 1 , PassLevel ) ) 
+      return ( FALSE );
+
+  if ( y_tile > 0 )
+    if ( position_collides_with_obstacles_on_square ( x , y , x_tile     , y_tile - 1 , PassLevel ) ) 
+      return ( FALSE );
+
+  return ( TRUE );
 
 }; // int IsPassable ( ... )
 

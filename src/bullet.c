@@ -616,7 +616,7 @@ void
 check_bullet_background_collisions ( bullet* CurBullet , int num )
 {
   // Check for collision with background
-  if ( IsPassable ( CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z ) != CENTER)
+  if ( ! IsPassable ( CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z ) )
     {
       if ( CurBullet->ignore_wall_collisions )
 	{
