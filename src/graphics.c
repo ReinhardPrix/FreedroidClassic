@@ -887,8 +887,6 @@ InitPictures (void)
   // could box the influencer out of the ship....
   Activate_Conservative_Frame_Computation();
 
-  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
-
   SetCurrentFont (FPS_Display_BFont);
   printf_SDL (ne_screen, User_Rect.x + 50, SCREENHEIGHT - 100, "Loading Theme config ...");
 

@@ -279,6 +279,7 @@ bulletspec, *Bulletspec;
 typedef struct
 {
   finepoint pos;
+  finepoint prev_pos;	 // use this for improved collision checks (for low FPS machines)
   finepoint speed;
   byte type;
   byte phase;

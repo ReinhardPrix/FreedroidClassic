@@ -112,6 +112,7 @@ update_highscores (void)
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);
+  printf_SDL(ne_screen, -1, -1, "\n");
 
   tsec = time (NULL);
   timeinfo = gmtime (&tsec);

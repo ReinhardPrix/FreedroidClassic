@@ -465,26 +465,23 @@ SetTextCursor (int x, int y)
 }
 
 /*-----------------------------------------------------------------
- *  scrolls a given text down inside the User-window, 
- *  defined by the global SDL_Rect User_Rect
- *
- *  startx/y give the Start-position, 
- *  EndLine is the last line (?)
+ *  scrolls a given text down inside the given rect
  *
  * returns : 0  if end of text was scolled out
  *           1  if user pressed space
  *-----------------------------------------------------------------*/
 int
-ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
+ScrollText (char *Text, SDL_Rect *rect)
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
-  float InsertLine = 1.0*starty;
+  float InsertLine = 1.0*rect->y;
   int speed = 30;   // in pixel / sec
   int maxspeed = 50;
   SDL_Surface* Background;
   int ret = 0;
-  Uint32 prev_tick;
+  Uint32 prev_tick, now;
+  bool just_started = TRUE;
 
   Background = SDL_DisplayFormat( ne_screen );
 
@@ -516,20 +513,33 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       prev_tick = SDL_GetTicks ();
       SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
-      if (!DisplayText (Text, startx, (int)InsertLine, &User_Rect))
+      if (!DisplayText (Text, rect->x, (int)InsertLine, rect))
 	{
-	  ret = 0;  /* Text has been scrolled outside User_Rect */
+	  ret = 0;  /* Text has been scrolled outside Rect */
 	  break;  
 	}
       SDL_Flip (ne_screen);
 
+      if (just_started)
+	{
+	  just_started = FALSE;
+	  now = SDL_GetTicks();
+	  while ( !SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ;  // wait before scrolling
+	  if (SpacePressed())
+	    {
+	      ret = 1;
+	      break;
+	    }
+	  prev_tick = SDL_GetTicks ();
+	}
+
       InsertLine -= 1.0 * (SDL_GetTicks() - prev_tick) * speed /1000;
 
       /* Nicht bel. nach unten wegscrollen */
-      if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
+      if (InsertLine > rect->y + rect->h)
 	{
-	  InsertLine = SCREENHEIGHT - 10;
-	  speed = 0;
+	  InsertLine = rect->y + rect->h;
+	  if (speed < 0) speed = 0;
 	}
 
     } /* while 1 */

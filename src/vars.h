@@ -60,25 +60,6 @@ influence_t Me = {
   DRUID001, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0
 };
 
-/*
-enum _status
-{
-  MOBILE,
-  TRANSFERMODE,
-  WEAPON,
-  CAPTURED,
-  COMPLETE,
-  REJECTED,
-  CONSOLE,
-  DEBRIEFING,
-  TERMINATED,
-  PAUSE,
-  CHEESE,
-  ELEVATOR,
-  BRIEFING
-};
-*/
-
 char *InfluenceModeNames[] = {
   "Mobile",
   "Transfer",
@@ -94,6 +75,7 @@ char *InfluenceModeNames[] = {
   "Elevator",
   "Briefing",
   "Menu",
+  "Victory",
   NULL
 };
 

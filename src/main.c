@@ -59,7 +59,8 @@ int
 main (int argc, char *const argv[])
 {
   int i;
-  int now;
+  Uint32 now;
+  bool first_time = TRUE;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -69,7 +70,6 @@ main (int argc, char *const argv[])
   fullscreen_on = TRUE; /* use X11-window or full screen */
   joy_sensitivity = 1;
   mouse_control = TRUE;
-
   /*
    *  Parse command line and set global switches 
    *  this function exits program when error, so we don't need to 
@@ -78,11 +78,17 @@ main (int argc, char *const argv[])
   parse_command_line (argc, argv);
 
 
+  now = SDL_GetTicks();
   InitFreedroid ();   // Initialisation of global variables and arrays
 
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );
+      if (first_time)   // make sure title is displayed long enough on fast machines.
+	{
+	  while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ; 
+	  first_time = FALSE;
+	}
 
       show_droid_info (Me.type, -3);  // show unit-intro page
       ClearGraphMem();
@@ -120,11 +126,9 @@ main (int argc, char *const argv[])
 
 	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
-
-	  PutMessages ();
-
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
+
+	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
@@ -170,8 +174,6 @@ UpdateCountersForThisFrame (void)
 
 
   // if (ShipEmptyCounter == 1) GameOver = TRUE;
-
-  LastBlastHit++;
 
   Total_Frames_Passed_In_Mission++;
   Me.FramesOnThisLevel++;

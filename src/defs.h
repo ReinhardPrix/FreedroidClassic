@@ -50,6 +50,7 @@
 
 #define Wait4Fire() do { while (!SpacePressed() && !EscapePressed()); while(SpacePressed() || EscapePressed());} while(0)
 
+#define COLLISION_STEPSIZE   0.1
 
 // **********************************************************************
 // Constants influencing code generation and
@@ -172,13 +173,6 @@ enum
 //
 //
 
-#define SINGLE_PLAYER_MENU_POINTER_POS_X (INITIAL_BLOCK_WIDTH/2)
-enum
-  { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
-    SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
-
-
-
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
 // The order of appearance here should match the order of appearance 
@@ -241,15 +235,6 @@ enum _sounds
 #define OK		0
 
 /* Ship-Elevator Picture */
-#define NUM_EL_BLOCKS		17
-
-#define EL_BLOCK_LEN		8
-#define EL_BLOCK_HEIGHT		8
-#define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT
-
-#define ELEVATOR_LEN		38
-#define ELEVATOR_HEIGHT		12
-
 #define BULLETSPEEDINFLUENCE 	2
 
 #define DIRECTIONS 		8
@@ -332,30 +317,6 @@ enum _directions
 #define MAX_PHASES_IN_A_BULLET 12
 #define MAX_STEPS_IN_GIVEN_COURSE 1000
 
-/* Macros */
-#define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)
-#define GrobY (Me.pos.y / INITIAL_BLOCK_HEIGHT)
-#define FeinX (Me.pos.x%INITIAL_BLOCK_WIDTH)
-#define FeinY (Me.pos.y%INITIAL_BLOCK_HEIGHT)
-
-#define CLFeinY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
-#define CLFeinX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
-
-
-/* 
- * these macros are a bit of a hack, as they will work correctly only
- * as long as INITIAL_BLOCK_WIDTH = INITIAL_BLOCK_HEIGHT
- * but the handling of the grob/fein coordinates should be changed anyway
- * in the longer term...
- */
-#define Grob2Fein(grob) 	\
- ((grob)* INITIAL_BLOCK_WIDTH + INITIAL_BLOCK_WIDTH / 2)
-
-#define Fein2Grob(fein)		\
-  ((int)(fein) / INITIAL_BLOCK_WIDTH)
-
 #define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
 
 /* Wegstossgeschw. von Tueren u.ae. */
@@ -430,7 +391,8 @@ enum _status
   CHEESE,
   ELEVATOR,
   BRIEFING,
-  MENU
+  MENU,
+  VICTORY
 };
 
 #define DECKCOMPLETEBONUS 500

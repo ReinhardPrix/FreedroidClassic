@@ -346,13 +346,8 @@ EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
-EXTERN void InsertNewMessage (void);
 EXTERN void Terminate (int);
-EXTERN void KillQueue (void);
-EXTERN void PutMessages (void);
-EXTERN void InsertMessage (char *MText);
 EXTERN void *MyMalloc (long);
-EXTERN void ShowDebugInfos (void);
 
 /* enemy.c */
 #undef EXTERN
@@ -411,8 +406,7 @@ EXTERN void SetLineLength (int);
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
 
 EXTERN void DisplayChar (unsigned char c);
-EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , char* TitlePictureName );
-
+EXTERN int ScrollText (char *Text, SDL_Rect *rect);
 EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);

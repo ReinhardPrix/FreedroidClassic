@@ -47,6 +47,8 @@ char* DebriefingSong;
 char* NextMissionName;
 char Previous_Mission_Name[1000];
 
+#define MISSION_COMPLETE_BONUS 1000
+
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
        a dat file, that should be optimally human readable.
@@ -836,7 +838,6 @@ InitNewMission ( char *MissionName )
   //missions, regardless of mission file given
   Activate_Conservative_Frame_Computation();
   Total_Frames_Passed_In_Mission=0;
-  LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
@@ -1130,7 +1131,6 @@ InitNewMission ( char *MissionName )
 void
 InitFreedroid (void)
 {
-  struct timeval timestamp;
   int i;
 
   Bulletmap=NULL;  // That will cause the memory to be allocated later
@@ -1177,6 +1177,9 @@ InitFreedroid (void)
 
   Init_Video ();
 
+  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE)); // show title pic
+  SDL_Flip(ne_screen);
+
   Init_Audio ();
   
   Init_Joy ();
@@ -1192,8 +1195,7 @@ InitFreedroid (void)
    * Initialise random-number generator in order to make 
    * level-start etc really different at each program start
    */
-  gettimeofday(&timestamp, NULL);
-  srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
+  srand((unsigned int)SDL_GetTicks() ); 
 
   /* initialize the highscore list */
   Init_Highscores ();
@@ -1201,11 +1203,7 @@ InitFreedroid (void)
 
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
-  MinMessageTime = 55;
-  MaxMessageTime = 850;
-
   CurLevel = NULL; // please leave this here BEFORE InitPictures
-
   
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
@@ -1230,13 +1228,13 @@ InitFreedroid (void)
 void
 Title ( char *MissionBriefingPointer )
 {
-  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
   char* NextSubsectionStartPointer;
   char* PreparedBriefingText;
   char* TerminationPointer;
   char* TitlePictureName;
   char* TitleSongName;
   int ThisTextLength;
+  SDL_Rect rect;
 #define BRIEFING_TITLE_PICTURE_STRING "The title picture in the graphics subdirectory for this mission is : "
 #define BRIEFING_TITLE_SONG_STRING "The title song in the sound subdirectory for this mission is : "
 #define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
@@ -1258,7 +1256,11 @@ Title ( char *MissionBriefingPointer )
   // DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
   // SDL_Flip (ne_screen);
 
+  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+  MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
   Me.status=BRIEFING;
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  SDL_Flip (ne_screen);
 
   // ClearGraphMem ();
   // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
@@ -1290,11 +1292,10 @@ Title ( char *MissionBriefingPointer )
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
 
-      DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-      MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-      if (ScrollText ( PreparedBriefingText, User_Rect.x, User_Rect.y + User_Rect.h -10, 
-		   ScrollEndLine , TitlePictureName ) == 1)
+      Copy_Rect(Full_User_Rect, rect);
+      rect.x += 10;
+      rect.w -= 10; //leave some border
+      if (ScrollText ( PreparedBriefingText, &rect) == 1)
 	break;  // User pressed 'fire'
  
       free ( PreparedBriefingText );
@@ -1315,20 +1316,23 @@ Title ( char *MissionBriefingPointer )
 void
 EndTitle (void)
 {
-  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
-
-  DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
+  SDL_Rect rect;
 
   Switch_Background_Music_To ( DebriefingSong );
 
+  ShowScore = (long)RealScore;
+  Me.status = VICTORY;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  SetTextColor (FONT_BLACK, FONT_RED);
 
   SetCurrentFont( Para_BFont);
 
-  ScrollText ( DebriefingText , User_Rect.x, User_Rect.y+User_Rect.h-10, 
-	       ScrollEndLine , NE_TITLE_PIC_FILE );
+  while (SpacePressed());
+
+  Copy_Rect(Full_User_Rect, rect);
+  MakeGridOnScreen (&rect);
+  rect.x += 10;
+  rect.w -= 20;  //leave some border
+  ScrollText (DebriefingText , &rect);
 
   while ( SpacePressed() );
 
@@ -1372,6 +1376,7 @@ ThouArtDefeated (void)
   SetCurrentFont (Para_BFont);
   DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
+  printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
   now=SDL_GetTicks();
   while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
@@ -1416,13 +1421,10 @@ CheckIfMissionIsComplete (void)
   //
   if ( MPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
-    {
-      EndTitle();
-      InitNewMission ( NextMissionName);
-    }
+    goto victory;
 
 
-  #define MIS_COMPLETE_DEBUG 3
+#define MIS_COMPLETE_DEBUG 3
 
   if ( Me.mission.KillOne != (-1) )
     {
@@ -1446,7 +1448,6 @@ CheckIfMissionIsComplete (void)
 	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Friendly == FALSE ) )
 	    {
 	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
-	      fflush(stdout);
 	      return;
 	    }
 	}
@@ -1534,8 +1535,10 @@ CheckIfMissionIsComplete (void)
     }
 
 
+ victory:
+  RealScore += MISSION_COMPLETE_BONUS;
   EndTitle();
-  // GameOver=TRUE;
+  update_highscores();
 
   InitNewMission ( NextMissionName);
   
