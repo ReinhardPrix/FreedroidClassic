@@ -1516,6 +1516,7 @@ InitNewMissionList ( char *MissionName )
   Me.speed.x = 0;
   Me.speed.y = 0;
   Me.energy = Druidmap[DRUID001].maxenergy;
+  printf("\n Me.energy : %f . " , Me.energy );
   Me.health = Me.energy;	/* start with max. health */
   Me.autofire = FALSE;
   Me.status = MOBILE;
@@ -1537,43 +1538,6 @@ InitNewMissionList ( char *MissionName )
 	  AssignMission( MissionTargetIndex );
 	}
     }
-
-  /*
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      CurLevel->ItemList[ i ].pos.x = 0;
-      CurLevel->ItemList[ i ].pos.y = 0;
-      CurLevel->ItemList[ i ].type = ( -1 ) ;
-    }
-
-  CurLevel->ItemList[ 0 ].pos.x = 7;
-  CurLevel->ItemList[ 0 ].pos.y = 7;
-  CurLevel->ItemList[ 0 ].type = 0 ;
-
-  CurLevel->ItemList[ 1 ].pos.x = 6;
-  CurLevel->ItemList[ 1 ].pos.y = 7;
-  CurLevel->ItemList[ 1 ].type = 1 ;
-
-  CurLevel->ItemList[ 2 ].pos.x = 7;
-  CurLevel->ItemList[ 2 ].pos.y = 6;
-  CurLevel->ItemList[ 2 ].type = 2 ;
-
-  CurLevel->ItemList[ 3 ].pos.x = 7;
-  CurLevel->ItemList[ 3 ].pos.y = 8;
-  CurLevel->ItemList[ 3 ].type = 3 ;
-
-  CurLevel->ItemList[ 4 ].pos.x = 5;
-  CurLevel->ItemList[ 4 ].pos.y = 6;
-  CurLevel->ItemList[ 4 ].type = 4 ;
-
-  CurLevel->ItemList[ 5 ].pos.x = 5;
-  CurLevel->ItemList[ 5 ].pos.y = 7;
-  CurLevel->ItemList[ 5 ].type = 5 ;
-
-  CurLevel->ItemList[ 6 ].pos.x = 5;
-  CurLevel->ItemList[ 6 ].pos.y = 8;
-  CurLevel->ItemList[ 6 ].type = 6 ;
-*/
 
 }; // void InitNewMissionList ( char* MissionName )
 
@@ -1632,23 +1596,6 @@ InitFreedroid (void)
   GameConfig.Inventory_Visible_Max_Time = 5;
   GameConfig.Theme_SubPath="lanzz_theme/";
   Copy_Rect (Full_User_Rect, User_Rect);
-
-
-  /*
-  ItemMap[ 0 ].ItemName = "Item one";
-  ItemMap[ 0 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
-  ItemMap[ 0 ].MaximumSpeed = 0; 
-
-  ItemMap[ 1 ].ItemName = "Item two";
-  ItemMap[ 1 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
-  ItemMap[ 1 ].MaximumSpeed = 0; 
-
-  ItemMap[ 2 ].ItemName = "Item three";
-  ItemMap[ 2 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
-  ItemMap[ 2 ].MaximumSpeed = 0; 
-  */
-
-
 
   Init_Video ();
 
@@ -1815,6 +1762,8 @@ ThouArtDefeated (void)
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status = TERMINATED;
+  GameConfig.Inventory_Visible=FALSE;
+  GameConfig.Mission_Log_Visible=FALSE;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 

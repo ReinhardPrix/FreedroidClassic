@@ -193,50 +193,64 @@ void
 ShowInventoryMessages( void )
 {
   int SlotNum;
-  SDL_Rect InventoryRect;
+  static SDL_Rect InventoryRect;
   SDL_Rect TargetRect;
-  SDL_Surface *InventoryImage;
+  static SDL_Surface *InventoryImage = NULL;
   char *fpath;
   char fname[]="inventory.png";
 
+
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
-
-  InventoryRect.x = 0;
-  InventoryRect.y = User_Rect.y;
-  InventoryRect.w = SCREENLEN/2;
-  InventoryRect.h = User_Rect.h;
-
-  User_Rect.x = 0;
-  User_Rect.w = SCREENLEN;
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 
-  // do anything more
+  // do anything more, but to restore the usual user rectangle size
+  // back to normal and to return...
   //
-  if ( GameConfig.Inventory_Visible == FALSE ) return;
-  // if ( GameConfig.Inventory_Visible_Time >= GameConfig.Inventory_Visible_Max_Time ) return;
+  if ( GameConfig.Inventory_Visible == FALSE ) 
+    {
+      User_Rect.x = 0;
+      User_Rect.w = SCREENLEN;
+      return;
+    }
+
+  // --------------------
+  // Some things like the loading of the inventory and initialisation of the
+  // inventory rectangle need to be done only once at the first call of this
+  // function. 
+  //
+  if ( InventoryImage == NULL )
+    {
+      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
+      fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
+      InventoryImage = IMG_Load( fpath );
+      //--------------------
+      // We define the right side of the user screen as the rectangle
+      // for our inventory screen.
+      //
+      InventoryRect.x = 0;
+      InventoryRect.y = User_Rect.y;
+      InventoryRect.w = SCREENLEN/2;
+      InventoryRect.h = User_Rect.h;
+    }
 
   //--------------------
-  // At this point we know, that the quest log is desired and
-  // therefore we display it in-game:
+  // At this point we know, that the inventory screen is desired and must be
+  // displayed in-game:
   //
-
-  // We split the screen to half, so that one half can be used for the inventory
-  // and the other 
+  // Therefore we split the screen to half, so that one half can be used for 
+  // the inventory and the other for the normal user (combat) rectangle
+  //
+  // Into this inventory rectangle we draw the inventory mask
+  //
   User_Rect.x = SCREENLEN/2;
   User_Rect.w = SCREENLEN/2;
-
   SDL_SetClipRect( Screen, &InventoryRect );
-  SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
- 
-  fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
-
-  InventoryImage = IMG_Load( fpath );
-
   SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
-  SDL_FreeSurface( InventoryImage );
-
+  //--------------------
+  // Now we display all the items the influencer is carrying with him
+  //
   for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
     {
       // In case the item does not exist at all, we need not do anything more...
@@ -247,7 +261,7 @@ ShowInventoryMessages( void )
 	}
 
       TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
+      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
       TargetRect.w = 50;
       TargetRect.h = 50;
 
@@ -255,29 +269,11 @@ ShowInventoryMessages( void )
       
     }
 
-
-  /*
-  MyCursorX=InventoryRect.x;
-  MyCursorY=InventoryRect.y;
-  DisplayText( "See inventory: \n" , InventoryRect.x , InventoryRect.y , &InventoryRect );
-  
-  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
-    {
-      // In case the item does not exist at all, we need not do anything more...
-      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
-	{
-	  DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
-	  continue;
-	}
-
-      sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
-      DisplayText( InventoryText , -1 , -1 , &InventoryRect );
-
-    }
-
-  DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &InventoryRect );
-  */
-
+  //--------------------
+  // Finally, we want the part of the screen we have been editing to become
+  // visible and therefore we must updated it here, since it is currently not
+  // contained within the user rectangle that also gets updated every frame.
+  //
   SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
 }; // void ShowInventoryMessages();

@@ -191,26 +191,6 @@ Inv_Pos_Is_Free( int x , int y )
   int i;
   int item_width;
   int item_height;
-  ItemSizeTable[ 0 ].x = 1;
-  ItemSizeTable[ 0 ].y = 1;
-  ItemSizeTable[ 1 ].x = 1;
-  ItemSizeTable[ 1 ].y = 1;
-  ItemSizeTable[ 2 ].x = 1;
-  ItemSizeTable[ 2 ].y = 1;
-  ItemSizeTable[ 3 ].x = 2;
-  ItemSizeTable[ 3 ].y = 2;
-  ItemSizeTable[ 4 ].x = 2;
-  ItemSizeTable[ 4 ].y = 2;
-  ItemSizeTable[ 5 ].x = 2;
-  ItemSizeTable[ 5 ].y = 2;
-  ItemSizeTable[ 6 ].x = 2;
-  ItemSizeTable[ 6 ].y = 2;
-  ItemSizeTable[ 7 ].x = 2;
-  ItemSizeTable[ 7 ].y = 2;
-  ItemSizeTable[ 8 ].x = 2;
-  ItemSizeTable[ 8 ].y = 2;
-  ItemSizeTable[ 9 ].x = 2;
-  ItemSizeTable[ 9 ].y = 2;
   
 
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
@@ -243,7 +223,29 @@ ReactToSpecialKeys(void)
   static int IPressed_LastFrame;
   char TempText[1000];
   grob_point Inv_Loc;
+  int item_width;
+  int item_height;
 
+  ItemSizeTable[ 0 ].x = 1;
+  ItemSizeTable[ 0 ].y = 1;
+  ItemSizeTable[ 1 ].x = 1;
+  ItemSizeTable[ 1 ].y = 1;
+  ItemSizeTable[ 2 ].x = 1;
+  ItemSizeTable[ 2 ].y = 1;
+  ItemSizeTable[ 3 ].x = 2;
+  ItemSizeTable[ 3 ].y = 2;
+  ItemSizeTable[ 4 ].x = 2;
+  ItemSizeTable[ 4 ].y = 2;
+  ItemSizeTable[ 5 ].x = 2;
+  ItemSizeTable[ 5 ].y = 2;
+  ItemSizeTable[ 6 ].x = 2;
+  ItemSizeTable[ 6 ].y = 2;
+  ItemSizeTable[ 7 ].x = 2;
+  ItemSizeTable[ 7 ].y = 2;
+  ItemSizeTable[ 8 ].x = 2;
+  ItemSizeTable[ 8 ].y = 2;
+  ItemSizeTable[ 9 ].x = 2;
+  ItemSizeTable[ 9 ].y = 2;
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -381,13 +383,32 @@ ReactToSpecialKeys(void)
 	    {
 	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemSizeTable[ CurLevel->ItemList[ i ].type ].x + 1 ; Inv_Loc.x ++ )
 		{
-		  if ( Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) )
+		  
+		  for ( item_height = 0 ; item_height < ItemSizeTable[ CurLevel->ItemList[ i ].type ].y ; item_height ++ )
 		    {
-		      Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-		      Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-		      goto Inv_Loc_Found;
+		      for ( item_width = 0 ; item_width < ItemSizeTable[ CurLevel->ItemList[ i ].type ].x ; item_width ++ )
+			{
+			  printf( "\nChecking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
+			  if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
+						 Inv_Loc.y + item_height ) )
+			    {
+			      Me.Inventory[ InvPos ].inventory_position.x = 3;
+			      Me.Inventory[ InvPos ].inventory_position.y = 3;
+			      goto This_Is_No_Possible_Location;
+			    }
+			}
 		    }
+		  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
+
+		  // At this point we know we have reached a position where we can plant this item.
+		  Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
+		  Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+		  goto Inv_Loc_Found;
+
+		This_Is_No_Possible_Location:
+
 		}
+
 	    }
 
 	Inv_Loc_Found:
