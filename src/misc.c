@@ -319,7 +319,7 @@ Cheatmenu (void)
     {
       printf (clearscr);
       printf ("\n\nCurrent position: Level=%d, X=%d, Y=%d\n\n",
-	      CurLevel->levelnum, (int)GrobX, (int)GrobY);
+	      CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
       printf (" a. Armageddon (alle Robots sprengen)\n");
       printf (" l. robot list of current level\n");
       printf (" g. complete robot list\n");

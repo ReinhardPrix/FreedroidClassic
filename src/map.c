@@ -84,36 +84,35 @@ GetMapBrick (Level deck, float x, float y)
    * not an exact foating point division!  Beware of "improvements" here!!!
    */
 
-  if (((int) rintf (y)) / Block_Height >= deck->ylen)
+  if (((int) rintf (y))  >= deck->ylen)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler1! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x)) / Block_Width >= deck->xlen)
+  if (((int) rintf (x))  >= deck->xlen)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler2! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (y)) / Block_Height < 0)
+  if (((int) rintf (y))  < 0)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler3! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x)) / Block_Width < 0)
+  if (((int) rintf (x))  < 0)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler4! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  return deck->map[((int) rintf (y)) / Block_Height][((int) rintf (x)) /
-						   Block_Width];
+  return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
 } /* GetMapBrick() */
 
 /*@Function============================================================
@@ -129,7 +128,7 @@ GetCurrentElevator (void)
 {
   int i;
   int curlev = CurLevel->levelnum;
-  int gx = GrobX, gy = GrobY;
+  int gx = Me.pos.x, gy = Me.pos.y;
 
   for (i = 0; i < curShip.num_lifts; i++)
     {
@@ -1089,9 +1088,9 @@ Direction:  Druid in Richtung Direction wegschubsen
 CENTER:		Position passable
 * $Function----------------------------------------------------------*/
 int
-DruidPassable (int x, int y)
+DruidPassable (float x, float y)
 {
-  point testpos[DIRECTIONS + 1];
+  finepoint testpos[DIRECTIONS + 1];
   int ret = -1;
   int i;
 
@@ -1140,7 +1139,7 @@ Directions mean Push Druid if it is one, else is's not passable
 @Int:
 * $Function----------------------------------------------------------*/
 int
-IsPassable (int x, int y, int Checkpos)
+IsPassable (float x, float y, int Checkpos)
 {
   int fx, fy;			/* Feinkoordinaten von x/y */
   unsigned char MapBrick;
@@ -1148,8 +1147,10 @@ IsPassable (int x, int y, int Checkpos)
 
   MapBrick = GetMapBrick (CurLevel, (float) x, (float) y);
 
-  fx = x % Block_Width;
-  fy = y % Block_Height;
+  //NORMALISATION  fx = x % Block_Width;
+  //NORMALISATION  fy = y % Block_Height;
+  fx = (int) (rintf(x));
+  fy = (int) (rintf(y));
 
   switch (MapBrick)
     {
@@ -1458,7 +1459,7 @@ IsVisible (Finepoint objpos)
 
   DebugPrintf ("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
-  return TRUE;
+  // NORMALISATION return TRUE;
 
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;

@@ -109,13 +109,13 @@ enum
 #define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
 /* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
-#define DRUIDRADIUSX		(10*2)
-#define DRUIDRADIUSY		(10*2)
-#define DRUIDRADIUSXY	        (7*2)
-#define BULLET_BULLET_COLLISION_DIST 10
+#define DRUIDRADIUSX		((10*2)/64.0)
+#define DRUIDRADIUSY		((10*2)/64.0)
+#define DRUIDRADIUSXY	        ((7*2)/64.0)
+#define BULLET_BULLET_COLLISION_DIST (10/64.0)
 
 /* Dimension eines Blasts */
-#define BLASTRADIUS		((INITIAL_BLOCK_WIDTH/3)*2)
+#define BLASTRADIUS		(((INITIAL_BLOCK_WIDTH/3)*2)/64.0)
 
 // **********************************************************************
 //
@@ -240,10 +240,6 @@ enum _sounds
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_FRAMES 10
 
-
-/* Soundblasterkonstanten */
-#define SBCHANNELS 		7
-
 /* Richtungsdefinitionen (fuer die Einstellung der Schussrichtung) */
 enum _directions
 {
@@ -269,13 +265,6 @@ enum _directions
 #define ENERGIEBALKENBREITE 15
 #define MAXENERGIEBALKENLAENGE 160
 #define ENERGIEPOSY 180
-
-#define CORNERHOEHE 3
-#define CORNERBREITE 3
-#define CORNERRECHTS 22
-#define CORNERLINKS 10
-#define CORNEROBEN 8
-#define CORNERUNTEN 18
 
 /* Maximale Anzahl von ... */
 

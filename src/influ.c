@@ -454,8 +454,6 @@ BounceInfluencer (void)
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
 
-  return;
-
   lastpos.x = Me.pos.x - SX;
   lastpos.y = Me.pos.y - SY;
 

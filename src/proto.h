@@ -233,8 +233,8 @@ EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
 EXTERN void MoveLevelDoors (void);
-EXTERN int IsPassable (int x, int y, int Checkpos);
-EXTERN int DruidPassable (int x, int y);
+EXTERN int IsPassable (float x, float y, int Checkpos);
+EXTERN int DruidPassable (float x, float y);
 EXTERN int IsVisible (Finepoint objpos);
 EXTERN int TranslateMap (Level Lev);
 
