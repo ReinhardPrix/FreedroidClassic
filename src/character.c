@@ -76,6 +76,7 @@
 #define DAMAGE_GAIN_PER_STR_POINT 2
 #define AC_GAIN_PER_DEX_POINT 1
 #define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 3
+#define TOHIT_PERCENT_PER_DEX_POINT (0.5)
 
 // #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
@@ -318,6 +319,11 @@ UpdateAllCharacterStats ( void )
   Me.RechargeTimeModifier = 100 - ( Me.Dexterity - 15 ) * RECHARGE_SPEED_PERCENT_PER_DEX_POINT;
   Me.RechargeTime = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_recharging_time * 
     0.01 * Me.RechargeTimeModifier;
+  //--------------------
+  // Now we compute the current to-hit chance of the influencer
+  // 
+  Me.to_hit = 60 + ( Me.Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+
 
 }; // void UpdateAllCharacterStats ( void )
 
@@ -441,7 +447,8 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me.Damage );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );
+  // sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );
+  sprintf( CharText , "%d", (int) Me.to_hit );
   strcat( CharText , "%" );
   DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect );
 
