@@ -886,7 +886,7 @@ PutItem( int ItemNumber )
   TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
 
-  SDL_BlitSurface( ItemMap[ CurItem->type ].SurfacePointer , NULL , ne_screen , &TargetRectangle);
+  SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , ne_screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------

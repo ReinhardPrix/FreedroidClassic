@@ -211,7 +211,7 @@ typedef struct
   double item_weight;
   int picture_number;
   char* MaximumSpeed; 
-  SDL_Surface* SurfacePointer;
+  // SDL_Surface* SurfacePointer;  // items don't each have individual pictures...
 } itemspec , *Itemspec;
 
 typedef struct

@@ -1508,17 +1508,14 @@ InitFreedroid (void)
   ItemMap[ 0 ].ItemName = "Item one";
   ItemMap[ 0 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
   ItemMap[ 0 ].MaximumSpeed = 0; 
-  ItemMap[ 0 ].SurfacePointer = NULL;
 
   ItemMap[ 1 ].ItemName = "Item two";
   ItemMap[ 1 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
   ItemMap[ 1 ].MaximumSpeed = 0; 
-  ItemMap[ 1 ].SurfacePointer = NULL;
 
   ItemMap[ 2 ].ItemName = "Item three";
   ItemMap[ 2 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
   ItemMap[ 2 ].MaximumSpeed = 0; 
-  ItemMap[ 2 ].SurfacePointer = NULL;
 
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
@@ -1547,10 +1544,13 @@ InitFreedroid (void)
   AllItems[ 4 ].pos.y = 6;
   AllItems[ 4 ].type = 4 ;
 
-  AllItems[ 5 ].pos.x = 6;
-  AllItems[ 5 ].pos.y = 6;
+  AllItems[ 5 ].pos.x = 5;
+  AllItems[ 5 ].pos.y = 7;
   AllItems[ 5 ].type = 5 ;
 
+  AllItems[ 6 ].pos.x = 5;
+  AllItems[ 6 ].pos.y = 8;
+  AllItems[ 6 ].type = 6 ;
 
   Init_Video ();
 

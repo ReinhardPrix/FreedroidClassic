@@ -140,6 +140,7 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 *** Start of item data section: ***
 
+// Item No. 0
 ** Start of new item specification subsection **
 Item name="Single Energy Capsule"
 Item can be applied in combat="yes"
@@ -151,6 +152,7 @@ Item weight=0.4
 Picture number=0
 ** End of new item specification subsection **
 
+// Item No. 1
 ** Start of new item specification subsection **
 Item name="Double Energy Capsule"
 Item can be applied in combat="yes"
@@ -159,9 +161,10 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=70
 Item weight=0.6
-Picture number=1
+Picture number=0
 ** End of new item specification subsection **
 
+// Item No. 2
 ** Start of new item specification subsection **
 Item name="Triple Energy Capsule"
 Item can be applied in combat="yes"
@@ -170,9 +173,10 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=105
 Item weight=0.8
-Picture number=2
+Picture number=0
 ** End of new item specification subsection **
 
+// Item No. 3
 ** Start of new item specification subsection **
 Item name="Mountable Lasers Class Alpha"
 Item can be applied in combat="no"
@@ -184,6 +188,7 @@ Item weight=0.8
 Picture number=2
 ** End of new item specification subsection **
 
+// Item No. 4
 ** Start of new item specification subsection **
 Item name="Droid Energetic Heart Class Beta"
 Item can be applied in combat="no"
@@ -192,9 +197,10 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
-Picture number=2
+Picture number=3
 ** End of new item specification subsection **
 
+// Item No. 5
 ** Start of new item specification subsection **
 Item name="Droid Antigrav Drive Class Alpha"
 Item can be applied in combat="no"
@@ -203,7 +209,19 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=2
 Energy gain on application in combat=60
 Item weight=0.8
-Picture number=2
+Picture number=4
+** End of new item specification subsection **
+
+// Item No. 6
+** Start of new item specification subsection **
+Item name="100 Cyberbucks"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=-1
+Energy gain on application in combat=0
+Item weight=0.0
+Picture number=1
 ** End of new item specification subsection **
 
 *** End of item data section: ***
