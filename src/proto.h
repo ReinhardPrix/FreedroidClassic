@@ -225,6 +225,13 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 EXTERN void ApplyItemFromInventory( int ItemNum );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
+EXTERN int CursorIsInInventoryGrid( int x , int y );
+EXTERN int CursorIsInUserRect( int x , int y );
+EXTERN int CursorIsInWeaponRect( int x , int y );
+EXTERN int GetInventorySquare_x( int x );
+EXTERN int GetInventorySquare_y( int x );
+EXTERN void DropHeldItemToInventory( void );
+EXTERN void DropHeldItemToTheFloor ( void );
 
 /* input.c */
 #undef EXTERN

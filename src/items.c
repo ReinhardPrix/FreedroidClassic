@@ -80,6 +80,7 @@ Inv_Pos_Is_Free( int x , int y )
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
     {
       if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
+      if ( Me.Inventory[ i ].currently_held_in_hand ) continue;
 
       // for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
       for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
@@ -104,7 +105,6 @@ GetInventoryItemAt ( int x , int y )
   int item_width;
   int item_height;
   
-
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
     {
       if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
@@ -116,7 +116,6 @@ GetInventoryItemAt ( int x , int y )
 	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
 		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
 		{
-		  
 		  return ( i );
 		}
 	    }
@@ -125,6 +124,220 @@ GetInventoryItemAt ( int x , int y )
   return ( -1 ); // Nothing found at this grabbing location!!
 
 };
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the user
+ * i.e. combat rectangle or not.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInUserRect( int x , int y )
+{
+  if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
+  if ( x < User_Rect.x ) return ( FALSE );
+  if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
+  if ( y < User_Rect.y ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsInUserRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the user
+ * i.e. combat rectangle or not.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInWeaponRect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+#define WEAPON_RECT_WIDTH 64
+#define WEAPON_RECT_HEIGHT 64
+
+  if ( ( CurPos.x >= 20 ) && ( CurPos.x <= 20 + WEAPON_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + 10 ) && 
+	   ( CurPos.y <= User_Rect.y + 10 + WEAPON_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInWeaponRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the grid
+ * where the inventory of the player is usually located or not.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInInventoryGrid( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + INVENTORY_GRID_WIDTH * 32 ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * INVENTORY_GRID_HEIGHT ) && 
+	   ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInInventoryGrid( int x , int y )
+
+int
+GetInventorySquare_x( int x )
+{
+  return ( ( x - 16 ) / 32 );
+}; // int GetInventorySquare_x( x )
+
+int
+GetInventorySquare_y( int y )
+{
+  return ( ( y - (User_Rect.y + 480 -16 - 64 - 32 * 6 ) ) / 32 );
+}; // int GetInventorySquare_y( y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given item type could be dropped into the 
+ * inventory grid at location x y.  Only the space is taken into account
+ * and if other items block the way or not.
+ * ---------------------------------------------------------------------- */
+int 
+ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
+{
+  int item_height;
+  int item_width;
+
+  //--------------------
+  // Perhaps the item reaches even outside the inventory grid.  Then of course
+  // it does not fit and we need/should not even test the details...
+  //
+  if ( ItemImageList[ ItemMap[ ItemType ].picture_number ].inv_size.x - 1 + InvPos_x >= 
+       INVENTORY_GRID_WIDTH  ) return ( FALSE );
+  if ( ItemImageList[ ItemMap[ ItemType ].picture_number ].inv_size.y - 1 + InvPos_y >= 
+       INVENTORY_GRID_HEIGHT ) return ( FALSE );
+
+  // --------------------
+  // Now that we know, that the desired position is at least inside the inventory
+  // grid, we can start to test for the details of the available inventory space
+  //
+  for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ ItemType ].picture_number ].inv_size.y ; item_height ++ )
+    {
+      for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ ItemType ].picture_number ].inv_size.x ; item_width ++ )
+	{
+	  if ( ! Inv_Pos_Is_Free( InvPos_x + item_width , InvPos_y + item_height ) ) return ( FALSE );
+	}
+    }
+  return ( TRUE );
+
+}; // int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
+
+
+  
+void 
+DropHeldItemToTheFloor ( void )
+{
+  // point CurPos;
+  int InvPos;
+  int i;
+
+  // --------------------
+  // First we find out the inventory index of the item we want to
+  // drop
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+    }
+  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+    {
+      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      return;
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+    }
+
+  // --------------------
+  // Now we want to drop the item to the floor.
+  // We therefore find a free position in the item list of this level
+  // where we can add the item later.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( CurLevel->ItemList [ i ].type == ( -1 ) ) break;
+    }
+  if ( i >= MAX_ITEMS_PER_LEVEL )
+    {
+      DebugPrintf( 0 , "\n No free position to drop item!!! ");
+      i = 0 ;
+      Terminate( ERR );
+    }
+
+  // --------------------
+  // Now we enter the item into the item list of this level
+  //
+  CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
+  CurLevel->ItemList[ i ].pos.x = Me.pos.x;
+  CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToTheFloor ( void )
+
+
+void 
+DropHeldItemToInventory( void )
+{
+  point CurPos;
+  int InvPos;
+
+  // --------------------
+  // First we find out the inventory index of the item we want to
+  // drop
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+    }
+  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+    {
+      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      return;
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+    }
+
+  // --------------------
+  // Now we want to drop the item to the right location again.
+  // Therefore we need to find out the right position, which of course
+  // depends as well on current mouse cursor location as well as the
+  // size of the dropped item.
+  //
+  CurPos.x = GetMousePos_x() + 16 - ( 16 * ItemImageList[ ItemMap[ Me.Inventory[ InvPos ].type ].picture_number ].inv_size.x - 16 ) ;
+  CurPos.y = GetMousePos_y() + 16 - ( 16 * ItemImageList[ ItemMap[ Me.Inventory[ InvPos ].type ].picture_number ].inv_size.y - 16 ) ;
+
+  if ( ItemCanBeDroppedInInv ( Me.Inventory[ InvPos ].type , GetInventorySquare_x ( CurPos.x ) , 
+			       GetInventorySquare_y ( CurPos.y ) ) )
+    {
+      Me.Inventory[ InvPos ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+      Me.Inventory[ InvPos ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+    }
+
+  // --------------------
+  // Now that we know the inventory index, we can as well make the item
+  // 'not held in hand' immediately.
+  //
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE ;
+
+}; // void DropHeldItemToInventory( void )
 
 
 #undef _items_c
