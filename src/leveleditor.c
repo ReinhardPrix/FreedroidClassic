@@ -56,7 +56,7 @@ int OriginWaypoint = (-1);
 
 char VanishingMessage[10000]="Hello";
 float VanishingMessageDisplayTime = 0;
-SDL_Rect EditorBannerRect;
+SDL_Rect EditorBannerRect = { 0 , 0 , 640 , 90 } ;
 int FirstBlock = 0 ;
 int Highlight = 3 ;
 

@@ -2514,8 +2514,6 @@ Credits_Menu (void)
                                       Lukas Huber\n\n\n\
    STORY AND CHARACTERS:\n\n\
                                       Johannes Prix\n\n\n\
-   OPENING TEXT:\n\n\
-                                      Pete Spicer\n\n\n\
    LEVEL DESIGN:\n\n\
                                       Johannes Prix\n\n\n\
    OGG COMPOSERS:\n\n\
