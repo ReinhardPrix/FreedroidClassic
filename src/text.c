@@ -650,10 +650,29 @@ problem it could not resolve.  Sorry.\n\
   SetCurrentFont( FPS_Display_BFont );
 
   strcpy( fname, "droids/" );
-  strcat( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+  strcat( fname, Druidmap[ AllEnemys[Enum].type ].portrait_filename_without_ext );
   strcat( fname , ".png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
   Small_Droid = IMG_Load (fpath) ;
+  if ( Small_Droid == NULL )
+    {
+      fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+It wanted to load a small portrait file in order to display it in the \n\
+chat interface of Freedroid.  But:  Loading this file has failed.\n\
+\n\
+The name of the problematic file was: %s.\n\
+\n\
+Please inform the Freedroid dev team about the problem, best by sending\n\
+e-mail to freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot for reporting the issue.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+	       fpath );
+      Terminate ( ERR );
+    }
   // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
   Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
@@ -848,8 +867,8 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
       
-      DialogMenuTexts [ 1 ] = "  " ;
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
+      DialogMenuTexts [ 1 ] = "  " ;
       DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
       DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
       DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
