@@ -1953,7 +1953,7 @@ ProcessAttackStateMachine (int enemynum)
 	}
       DetermineAngleOfFacing ( enemynum );
 
-      CheckEnemyEnemyCollision ( enemynum );
+      // CheckEnemyEnemyCollision ( enemynum );
 
       //--------------------
       // In case that the enemy droid isn't even aware of Tux and
