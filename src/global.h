@@ -234,6 +234,7 @@ EXTERN int last_index_of_bot_on_level [ MAX_LEVELS ] ;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface* StoredMenuBackground [ 2 ] ;
+EXTERN int current_mouse_cursor_shape;
 
 //--------------------
 // Now the iso-image pointers for the new individually shaped

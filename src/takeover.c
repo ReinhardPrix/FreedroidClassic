@@ -196,17 +196,17 @@ Takeover ( int enemynum )
 	ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
 	our_SDL_flip_wrapper ( Screen );
 	
-	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	{
 	    MoveMenuPositionSound();
 	    Displacement += FontHeight ( GetCurrentFont () );
 	}
-	else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	{
 	    MoveMenuPositionSound();
 	    Displacement -= FontHeight ( GetCurrentFont () );
 	}
-	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed ) 
+	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed ) 
 	{
 	    Finished = TRUE;
 	}
@@ -318,6 +318,11 @@ Takeover ( int enemynum )
 	    message = "Rejected";
 	    Me [ 0 ] . energy *= 0.5 ;
 	    FinishTakeover = TRUE;
+	    //--------------------
+	    // When the bot is taken over, it should not turn hostile when
+	    // the rest of his former group is attacked by the Tux.
+	    //
+	    AllEnemys [ enemynum ] . marker = 0 ;
 	}			// if LeadColor == OpponentColor 
 	else
 	{

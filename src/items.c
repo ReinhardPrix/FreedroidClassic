@@ -2152,9 +2152,9 @@ DropHeldItemToInventory( void )
   // depends as well on current mouse cursor location as well as the
   // size of the dropped item.
   //
-  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 
+  CurPos.x = GetMousePos_x()  - 
     ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . x - 1 ) ) ;
-  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 
+  CurPos.y = GetMousePos_y()  - 
     ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . y - 1 ) ) ;
 
   if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
@@ -2362,8 +2362,8 @@ get_floor_item_index_under_mouse_cursor ( int player_num )
 	    if ( PlayerLevel -> ItemList [ i ] . type == (-1) ) continue;
 
 	    if ( MouseCursorIsInRect ( & ( PlayerLevel -> ItemList [ i ] . text_slot_rectangle ) , 
-				       GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , 
-				       GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+				       GetMousePos_x ( )  , 
+				       GetMousePos_y ( )  ) )
 	    {
 		return ( i ) ;
 	    }
@@ -2435,8 +2435,8 @@ ManageInventoryScreen ( void )
   // --------------------
   // We will need the current mouse position on several spots...
   //
-  CurPos . x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
-  CurPos . y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
+  CurPos . x = GetMousePos_x() ;
+  CurPos . y = GetMousePos_y()  ;
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 

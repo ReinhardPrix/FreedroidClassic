@@ -302,7 +302,7 @@ GreatDruidShow (void)
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClearanceIndex < NumberOfClearances -1 ) 
 		{
@@ -311,7 +311,7 @@ GreatDruidShow (void)
 		  Displacement = 0 ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClearanceIndex > 0) 
 		{
@@ -320,17 +320,17 @@ GreatDruidShow (void)
 		  Displacement = 0 ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y( )  ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while ( SpacePressed ( ) || EscapePressed ( ) );
@@ -454,7 +454,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ItemIndex < NumberOfItems -1 ) 
 		{
@@ -463,7 +463,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 		  Displacement = 0;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ItemIndex > 0) 
 		{
@@ -472,18 +472,18 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 		  Displacement = 0;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      // if (page > 0) page --;
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -1195,7 +1195,7 @@ ShowDeckMap (Level deck)
 	  // Maybe that click went right onto the exit button.  Then
 	  // of course nothing else will be done but an exit performed.
 	  //
-	  if ( MouseCursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      ExitNow = TRUE;
 	    }
@@ -1203,7 +1203,7 @@ ShowDeckMap (Level deck)
 	  // Maybe that click went right onto the exit button.  Then
 	  // of course nothing else will be done but an exit performed.
 	  //
-	  else if ( MouseCursorIsOnButton( MAP_UNLOCK_BUTTON_GREEN , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_UNLOCK_BUTTON_GREEN , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( UnlockAllowed )
 		{
@@ -1219,7 +1219,7 @@ ShowDeckMap (Level deck)
 		  PlayOnceNeededSoundSample ( "../effects/console_sounds/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_GUNOFF_BUTTON_GREEN , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_GUNOFF_BUTTON_GREEN , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( GunOffAllowed )
 		{
@@ -1235,7 +1235,7 @@ ShowDeckMap (Level deck)
 		  PlayOnceNeededSoundSample ( "../effects/console_sounds/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );		  
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_GUNON_BUTTON_GREEN , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_GUNON_BUTTON_GREEN , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( GunOnAllowed )
 		{
@@ -1252,7 +1252,7 @@ ShowDeckMap (Level deck)
 		}
 	    }
 	  else if ( MouseCursorIsOnButton( MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON , 
-				      GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+				      GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( EnergyRate > 0 )
 		{
@@ -1272,7 +1272,7 @@ ShowDeckMap (Level deck)
 		}
 	    }
 	  else if ( MouseCursorIsOnButton( MAP_READ_EMAIL_GREEN_BUTTON , 
-				      GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+				      GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( ReadEmailAllowed )
 		{
@@ -1302,7 +1302,7 @@ ShowDeckMap (Level deck)
 	      else
 		PlayOnceNeededSoundSample ( "../effects/console_sounds/CONSOLE_Permission_Denied_0.wav" , FALSE , FALSE );		  
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( ClearanceIndex > 0 ) 
 		{
@@ -1312,7 +1312,7 @@ ShowDeckMap (Level deck)
 		  SelectedFunction = NO_FUNCTION ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( ClearanceIndex < MAX_CLEARANCES - 1 )
 		{
@@ -1325,7 +1325,7 @@ ShowDeckMap (Level deck)
 		    }
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_PASSWORDLEFT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_PASSWORDLEFT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( PasswordIndex > 0 ) 
 		{
@@ -1335,7 +1335,7 @@ ShowDeckMap (Level deck)
 		  SelectedFunction = NO_FUNCTION ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  else if ( MouseCursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 	    {
 	      if ( PasswordIndex < MAX_PASSWORDS - 1 )
 		{
@@ -1358,12 +1358,12 @@ ShowDeckMap (Level deck)
 	      //--------------------
 	      // First we find out which map square the player wishes us to operate on
 	      // 
-	      // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
-	      // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
-	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
+	      // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), FALSE );
 	      
 
 	      //--------------------
@@ -1372,14 +1372,14 @@ ShowDeckMap (Level deck)
 	      //
 	      if ( SelectedFunction == NO_FUNCTION )
 		{
-		  Me [ 0 ] . pos . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE );
+		  Me [ 0 ] . pos . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), TRUE );
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
 		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
 		  
-		  Me [ 0 ] . pos . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
+		  Me [ 0 ] . pos . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
 		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
@@ -1448,19 +1448,19 @@ ShowDeckMap (Level deck)
 		  // If the mouse button is just over a gun turret type, then
 		  // this turret type will be the new seceted turret type.
 		  //
-		  if ( MouseCursorIsOnButton( MAP_GUN_TYPE_1_BUTTON_RED , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		  if ( MouseCursorIsOnButton( MAP_GUN_TYPE_1_BUTTON_RED , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 		    {
 		      GunTypeSelected = 1 ;
 		    }
-		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_2_BUTTON_RED , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_2_BUTTON_RED , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 		    {
 		      GunTypeSelected = 2 ;
 		    }
-		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_3_BUTTON_RED , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_3_BUTTON_RED , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 		    {
 		      GunTypeSelected = 3 ;
 		    }
-		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_4_BUTTON_RED , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		  else if ( MouseCursorIsOnButton( MAP_GUN_TYPE_4_BUTTON_RED , GetMousePos_x ( )  , GetMousePos_y ( )  ) )
 		    {
 		      GunTypeSelected = 4 ;
 		    }

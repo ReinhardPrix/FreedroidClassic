@@ -44,7 +44,7 @@
 void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView );
 
 /* XPM */
-static const char *arrow[] = {
+static const char *crosshair_mouse_cursor[] = {
   /* width height num_colors chars_per_pixel */
   "    32    32        3            1",
   /* colors */
@@ -82,6 +82,50 @@ static const char *arrow[] = {
   "               X..X             ",
   "               X..X             ",
   "               XXXX             ",
+  "                                ",
+  "                                ",
+  "0,0"
+};
+
+/* XPM */
+static const char *arrow_mouse_cursor[] = {
+  /* width height num_colors chars_per_pixel */
+  "    32    32        3            1",
+  /* colors */
+  "X c #000000",
+  ". c #ffffff",
+  "  c None",
+  /* pixels */
+  "                                ",
+  "                                ",
+  "   XXXXXXXXXXXXXXXX             ",
+  "   X..............X             ",
+  "   X..............X             ",
+  "   X..............X             ",
+  "   X...XXXXXXXXXXXX             ",
+  "   X...X...X                    ",
+  "   X...X....X                   ",
+  "   X...X.....X                  ",
+  "   X...XX.....X                 ",
+  "   X...X X.....X                ",
+  "   X...X  X.....X               ",
+  "   X...X   X.....X              ",
+  "   X...X    X.....X             ",
+  "   X...X     X.....X            ",
+  "   XXXXX      X.....X           ",
+  "               X.....X          ",
+  "                X....X          ",
+  "                 X...X          ",
+  "                  XXXX          ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
+  "                                ",
   "                                ",
   "                                ",
   "0,0"
@@ -127,6 +171,33 @@ init_system_cursor(const char *image[])
   sscanf(image[4+row], "%d,%d", &hot_x, &hot_y);
   return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
 };
+
+/* ----------------------------------------------------------------------
+ * The shape of the mouse cursor might be changed in the course of the
+ * game.  Sometimes a crosshair might be good.  Sometimes it's rather an
+ * arrow, that is suitable for the mouse cursor shape.  This function
+ * should change the mouse cursor shape accordingly...
+ * ---------------------------------------------------------------------- */
+void
+set_mouse_cursor_to_shape ( int given_shape ) 
+{
+    switch ( given_shape )
+    {
+	case MOUSE_CURSOR_CROSSHAIR_SHAPE:
+	    SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
+	    current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
+	    break;
+	case MOUSE_CURSOR_ARROW_SHAPE:
+	    SDL_SetCursor( init_system_cursor( arrow_mouse_cursor ) );
+	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
+	    break;
+	default:
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+ERROR: Unhandled mouse cursor shape type received.",
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
+    }
+}; // void set_mouse_cursor_to_shape ( int given_shape ) 
 
 /* ----------------------------------------------------------------------
  * Occasionally it might come in handly to have the whole image fading
@@ -305,8 +376,8 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	  // Maybe the user has just 'grabbed the knob?  Then we need to
 	  // mark the knob as grabbed.
 	  //
-	  if ( ( abs ( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - ( knob_target_rect . x + knob_target_rect . w / 2 ) ) < knob_target_rect . w ) &&
-	       ( abs ( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - ( knob_target_rect . y + knob_target_rect . h / 2 ) ) < knob_target_rect . h ) )
+	  if ( ( abs ( GetMousePos_x ( )  - ( knob_target_rect . x + knob_target_rect . w / 2 ) ) < knob_target_rect . w ) &&
+	       ( abs ( GetMousePos_y ( )  - ( knob_target_rect . y + knob_target_rect . h / 2 ) ) < knob_target_rect . h ) )
 	    {
 	      knob_is_grabbed = TRUE ;
 	    }
@@ -315,13 +386,13 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	  // OK pressed?  Then we can return the current scale value and
 	  // that's it...
 	  //
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    ok_button_was_pressed = TRUE ;
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
 	      if ( knob_offset_x > 0 ) knob_offset_x -- ;
 	    }
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
 	      if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
 	    }
@@ -331,7 +402,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 
       if ( knob_is_grabbed )
 	{
-	  knob_offset_x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - knob_start_x ;
+	  knob_offset_x = GetMousePos_x()  - knob_start_x ;
 	  if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x ;
 	  if ( knob_offset_x <= 0 ) knob_offset_x = 0 ; 
 	}
@@ -1278,7 +1349,7 @@ InitPictures (void)
 
   ShowStartupPercentage ( 20 ) ; 
 
-  SDL_SetCursor( init_system_cursor( arrow ) );
+  set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
 
   ShowStartupPercentage ( 22 ) ; 
 

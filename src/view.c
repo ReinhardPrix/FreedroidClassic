@@ -209,8 +209,8 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   // And then of course we also have to take into account the size of the
   // item, wich is also not always the same.
   //
-  TargetRect.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
-  TargetRect.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
+  TargetRect.x = GetMousePos_x()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
+  TargetRect.y = GetMousePos_y()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
 
   our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
@@ -1518,8 +1518,8 @@ blit_all_item_slots ( void )
 	// background of the slot will be highlighted...
 	//
 	if ( MouseCursorIsInRect ( & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
-				   GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , 
-				   GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+				   GetMousePos_x ( )  , 
+				   GetMousePos_y ( )  ) )
 	    our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
 					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x099 ) );
 	else

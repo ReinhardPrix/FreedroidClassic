@@ -194,7 +194,7 @@ closed_chest_below_mouse_cursor ( int player_num )
   int i;
   int obst_index ;
 
-  if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+  if ( MouseCursorIsInUserRect( GetMousePos_x()  , GetMousePos_y()  ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
 							       (float) ServerThinksInputAxisX ( player_num ) , 
@@ -246,8 +246,8 @@ smashable_barred_below_mouse_cursor ( int player_num )
     int i;
     int obst_index ;
     
-    if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+    if ( MouseCursorIsInUserRect( GetMousePos_x()  , 
+				  GetMousePos_y()  ) && ( CurLevel != NULL ) )
     {
 	MapPositionOfMouse.x = translate_pixel_to_map_location ( 
 	    player_num , 
@@ -352,8 +352,8 @@ smashable_barred_below_mouse_cursor ( int player_num )
     // Now if the cursor is not inside the user rectangle at all, then
     // there can never be a barrel under the mouse cursor...
     //
-    if ( ! MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+    if ( ! MouseCursorIsInUserRect( GetMousePos_x()  , 
+				    GetMousePos_y()  ) && ( CurLevel != NULL ) )
 	return ( -1 ) ;
 
 
@@ -2672,9 +2672,9 @@ ButtonPressWasNotMeantAsFire( player_num )
   // not interpret this as a common in-game movement or firing command.
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
-       ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
-	 MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
-	 MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
+       ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	 MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	 MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;

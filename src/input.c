@@ -215,29 +215,32 @@ UnsetAllKeys( void )
 
 // grob_point ItemSizeTable[ ALL_ITEMS ];
 
+/* ----------------------------------------------------------------------
+ * This function returns the current mouse position in x direction.
+ * Depending on the current shape of the mouse cursor, the real 'pointer'
+ * position of the mouse cursor is returned.
+ * ---------------------------------------------------------------------- */
 int 
 GetMousePos_x(void)
 {
-  return( CurrentMouseAbsPos.x );
-};
-
-//
+    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+	return( CurrentMouseAbsPos . x + 16 );
+    else
+	return( CurrentMouseAbsPos . x + 0 );
+}; // int GetMousePos_x(void)
 int 
 GetMousePos_y(void)
 {
-  return( CurrentMouseAbsPos.y );
-};
+    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+	return( CurrentMouseAbsPos . y + 16 );
+    else
+	return( CurrentMouseAbsPos . y + 0 );
+}; // int GetMousePos_y(void)
 
-// 
-/*  use MouseRightPressed() instead!!
-int 
-GetMouseRightButton( void )
-{
-  return( CurrentlyMouseRightPressed );
-};
-*/
-
-
+/*----------------------------------------------------------------------
+ * A simple signum function. Strange that this seems not to be 
+ * implemented in some library already?!
+ * ---------------------------------------------------------------------- */
 int sgn (int x)
 {
   return (x ? ((x)/abs(x)) : 0);
@@ -1650,8 +1653,8 @@ keyboard_update(void)
 	  // CORRECTED BY 16 PIXELS ANYWHERE ELSE IN THE CODE, OR WE'LL GET AN
 	  // OVERCORRECTION AND A WRONG RESULT FOR THE MOUSE POSITION!!!
 	  //
-	  input_axis . x = event . button . x - UserCenter_x + MOUSE_CROSSHAIR_OFFSET_X ;
-	  input_axis . y = event . button . y - UserCenter_y + MOUSE_CROSSHAIR_OFFSET_Y ;
+	  input_axis . x = event . button . x - UserCenter_x  ;
+	  input_axis . y = event . button . y - UserCenter_y  ;
 	  CurrentMouseAbsPos.x = event.button.x;
 	  CurrentMouseAbsPos.y = event.button.y;
 	  // }

@@ -232,6 +232,7 @@ EXTERN void blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image 
 #else
 #define EXTERN extern
 #endif
+EXTERN void set_mouse_cursor_to_shape ( int given_shape );
 EXTERN SDL_Surface* rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect ) ;
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );

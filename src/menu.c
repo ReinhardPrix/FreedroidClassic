@@ -67,22 +67,16 @@ extern int MyCursorY;
 int
 MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 {
-  // int h = FontHeight ( GetCurrentFont() );
   int PureFraction;
 
-  //--------------------
-  // The value of GetMousePos_y() NOT YET corrected for MOUSE_CROSSHAIR_OFFSET_Y pixels!!
-  // Therefore we can write:
-  //
-  
-  PureFraction = ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y - first_menu_item_pos_y ) / h ;
+  PureFraction = ( GetMousePos_y ()  - first_menu_item_pos_y ) / h ;
 
   //--------------------
   // Now it can be that the pure difference is negative or that it is positive.
   // However we should not always round thowards zero here, but rather always to
   // the next LOWER integer!  This will be done here:
   //
-  if ( ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y - first_menu_item_pos_y ) < 0 )
+  if ( ( GetMousePos_y ()  - first_menu_item_pos_y ) < 0 )
     PureFraction--;
   else
     PureFraction++;
@@ -804,7 +798,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      
 	      ThisOptionEnd += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 	      
-	      if ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y < ThisOptionEnd )
+	      if ( GetMousePos_y ()  < ThisOptionEnd )
 		{
 		  cursors_menu_position = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
 		  break;
@@ -871,25 +865,25 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  //--------------------
 	  // First we see if there was perhaps a click on one of the active scroll buttons
 	  //
-	  if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
+	  if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x ()  , GetMousePos_y ()  ) ) &&
 	       ( BreakOffCauseNoRoom ) )
 	    {
 	      OptionOffset ++ ;
 	    }
-	  else if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
+	  else if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x ()  , GetMousePos_y ()  ) ) &&
 	       ( OptionOffset ) )
 	    {
 	      OptionOffset -- ;
 	    }
 	  else if ( MouseCursorIsOnButton ( CHAT_PROTOCOL_SCROLL_UP_BUTTON , 
-					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
-					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
+					 GetMousePos_x ()  , 
+					 GetMousePos_y ()  ) )
 	    {
 	      chat_protocol_scroll_override_from_user -- ;
 	    }
 	  else if ( MouseCursorIsOnButton ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON , 
-					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
-					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
+					 GetMousePos_x ()  , 
+					 GetMousePos_y ()  ) )
 	    {
 	      chat_protocol_scroll_override_from_user ++ ;
 	    }
@@ -966,7 +960,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      
 	      ThisOptionEnd += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 
-	      if ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y < ThisOptionEnd )
+	      if ( GetMousePos_y ()  < ThisOptionEnd )
 		{
 		  menu_position_to_remember = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
 		  break;

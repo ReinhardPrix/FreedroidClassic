@@ -137,8 +137,6 @@ enum
 #define INVENTORY_SUBSQUARE_WIDTH 30
 #define NUMBER_OF_ITEM_PICTURES 70
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
-#define MOUSE_CROSSHAIR_OFFSET_X 16
-#define MOUSE_CROSSHAIR_OFFSET_Y 16
 
 #define ITEM_DROP_PERCENTAGE 20
 #define GOLD_DROP_PERCENTAGE 20
@@ -822,11 +820,17 @@ enum _enemy_combat_state_machine_states
     // BACK_OFF_AFTER_GETTING_HIT, 
 };
 enum _enemy_combat_target_codes
-  {
+{
     ATTACK_TARGET_IS_ENEMY = -201,
     ATTACK_TARGET_IS_PLAYER = -202,
     ATTACK_TARGET_IS_NOTHING = -203
-  };
+};
+enum
+{
+    MOUSE_CURSOR_CROSSHAIR_SHAPE = -401 ,
+    MOUSE_CURSOR_ARROW_SHAPE = -402
+}; 
+
 
 //--------------------
 // The possible networking statuses of clients.

@@ -297,17 +297,17 @@ DisplayButtons( void )
   blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
 
 
-  if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+  if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
       GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
     }
 
-  if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+  if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
       GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
     }
 
-  if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+  if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
       GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
     }
@@ -757,8 +757,8 @@ ShowCharacterScreen ( void )
   // --------------------
   // We will need the current mouse position on several spots...
   //
-  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X;
-  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y;
+  CurPos.x = GetMousePos_x() ;
+  CurPos.y = GetMousePos_y() ;
 
   //--------------------
   // We define the right side of the user screen as the rectangle
@@ -911,23 +911,23 @@ ShowCharacterScreen ( void )
       ShowGenericButtonFromList ( MORE_VIT_BUTTON );
       ShowGenericButtonFromList ( MORE_MAG_BUTTON );
 
-      if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_strength++;
 	  Me[0].points_to_distribute--;
 	}
-      if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_dexterity++;
 	  Me[0].points_to_distribute--;
 	}
-      if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_magic++;
 	  Me[0].points_to_distribute--;
 	  Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	}
-      if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_vitality++;
 	  Me[0].points_to_distribute--;
