@@ -654,7 +654,7 @@ Sorry...\n\
 			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
 
   SDL_SetGamma( 1 , 1 , 1 );
-  Current_Gamma_Correction=1;
+  GameConfig.Current_Gamma_Correction=1;
 
   return;
 

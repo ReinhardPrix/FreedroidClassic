@@ -662,11 +662,11 @@ enum
 
 
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
-		       "Background Music Volume: %1.2f" , Current_BG_Music_Volume );
+		       "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
-		       "Sound Effects Volume: %1.2f", Current_Sound_FX_Volume );
+		       "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
-		       "Gamma Correction: %1.2f", Current_Gamma_Correction );
+		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
@@ -699,14 +699,14 @@ enum
 	      if (RightPressed()) 
 		{
 		  while (RightPressed());
-		  if ( Current_BG_Music_Volume < 1 ) Current_BG_Music_Volume += 0.05;
-		  Set_BG_Music_Volume( Current_BG_Music_Volume );
+		  if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
-		  if ( Current_BG_Music_Volume > 0 ) Current_BG_Music_Volume -= 0.05;
-		  Set_BG_Music_Volume( Current_BG_Music_Volume );
+		  if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		}
 	    }
 	  if (MenuPosition == SET_SOUND_FX_VOLUME ) 
@@ -714,14 +714,14 @@ enum
 	      if (RightPressed()) 
 		{
 		  while (RightPressed());
-		  if ( Current_Sound_FX_Volume < 1 ) Current_Sound_FX_Volume += 0.05;
-		  Set_Sound_FX_Volume( Current_Sound_FX_Volume );
+		  if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
+		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
-		  if ( Current_Sound_FX_Volume > 0 ) Current_Sound_FX_Volume -= 0.05;
-		  Set_Sound_FX_Volume( Current_Sound_FX_Volume );
+		  if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
+		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		}
 	    }
 	  if (MenuPosition == SET_GAMMA_CORRECTION ) 
@@ -729,14 +729,14 @@ enum
 	      if (RightPressed()) 
 		{
 		  while (RightPressed());
-		  Current_Gamma_Correction+=0.05;
-		  SDL_SetGamma( Current_Gamma_Correction , Current_Gamma_Correction , Current_Gamma_Correction );
+		  GameConfig.Current_Gamma_Correction+=0.05;
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
 		}
 	      if (LeftPressed()) 
 		{
 		  while (LeftPressed());
-		  Current_Gamma_Correction-=0.05;
-		  SDL_SetGamma( Current_Gamma_Correction , Current_Gamma_Correction , Current_Gamma_Correction );
+		  GameConfig.Current_Gamma_Correction-=0.05;
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
 		}
 	    }
 	}

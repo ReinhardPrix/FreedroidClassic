@@ -149,9 +149,6 @@ EXTERN int SkipAFewFrames;
 #define EXTERN extern
 #endif
 
-EXTERN float Current_BG_Music_Volume;
-EXTERN float Current_Sound_FX_Volume;
-
 #undef EXTERN
 #ifdef _graphics_c
 #define EXTERN
@@ -219,8 +216,6 @@ EXTERN unsigned char *Robotptr;
 #else
 #define EXTERN extern
 #endif
-
-EXTERN float Current_Gamma_Correction;
 
 #ifdef NEW_ENGINE  /* this is for the new graphics engine */
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */

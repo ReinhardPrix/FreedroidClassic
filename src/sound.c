@@ -98,8 +98,8 @@ Init_Audio(void)
   // This might be replaced later with values from a 
   // private user Freedroid config file.  But for now
   // this code is good enough...
-  Current_BG_Music_Volume=1.0;
-  Current_Sound_FX_Volume=1.0;
+  GameConfig.Current_BG_Music_Volume=1.0;
+  GameConfig.Current_Sound_FX_Volume=1.0;
 
   if ( !sound_on ) return;
 

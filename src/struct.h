@@ -63,6 +63,9 @@ typedef struct
   int Draw_Framerate;
   int Draw_Energy;
   int Draw_Position;
+  float Current_BG_Music_Volume;
+  float Current_Sound_FX_Volume;
+  float Current_Gamma_Correction;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -178,6 +181,8 @@ typedef struct
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
   int Friendly;                 // is this a friendly droid or is it a MS controlled one?
+  float TextVisibleTime;
+  char* TextToBeDisplayed;
 }
 enemy, *Enemy;
 
