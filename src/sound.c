@@ -51,9 +51,9 @@
 
 // Leave the following lines in.  They are for the yiff sound server!!
 #if HAVE_LIBY2
-#include <Y2/Y.h>         //  Basic Y types and constants. 
-#include <Y2/Ylib.h>      //  YLib functions and structs. 
-#endif 
+#include <Y2/Y.h>		//  Basic Y types and constants.
+#include <Y2/Ylib.h>		//  YLib functions and structs.
+#endif
 
 /* Change this to the address and port of the Y server you want
  * to connect to. Note that 127.0.0.1 is a symbolic address
@@ -70,8 +70,8 @@
 
 
 int handle = -1;
-int setting = 0x000C000D; // 12 fragments size 8kb
-int channels = 0;         // 0=mono 1=stereo
+int setting = 0x000C000D;	// 12 fragments size 8kb
+int channels = 0;		// 0=mono 1=stereo
 int format = AFMT_U8;
 int rate = 8000;
 
@@ -117,14 +117,15 @@ YEvent event;
 #endif /* HAVE_LIBY2 */
 
 
-void ExitProc() {
-  if (handle != -1) {
-    close( handle );
-  }
+void
+ExitProc ()
+{
+  if (handle != -1)
+      close (handle);
 }
 
 int i;
-unsigned char* ptr;
+unsigned char *ptr;
 unsigned char v = 128;
 int SampleLaenge;
 
@@ -135,33 +136,36 @@ int SampleLaenge;
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void YIFF_Server_Check_Events(void){
+void 
+YIFF_Server_Check_Events(void)
+{
 
-  // This function can and should only be compiled on machines, that have the YIFF sound
-  // server installed.  Compilation therefore is optional and can be toggled with the following
-  // definition.
+  if (!sound_on) return;
+  /* This function can and should only be compiled on machines, that have */
+  /* the YIFF sound server installed.  Compilation therefore is optional and */
+  /* can be toggled with the following  definition. */
 #if HAVE_LIBY2
-  if(YGetNextEvent( BackgroundMusic_con , &event , False ) > 0)
+  if (YGetNextEvent (BackgroundMusic_con, &event, False) > 0)
     {
       // Sound object stopped playing? 
-      if( (event.type == YSoundObjectKill) )
+      if ((event.type == YSoundObjectKill))
 	{
 	  // Our play has stopped. 
-	  DebugPrintf("Done playing.\n");
+	  DebugPrintf ("Done playing.\n");
 	}
       // Server disconnected us? 
-      else if(event.type == YDisconnect)
+      else if (event.type == YDisconnect)
 	{
 	  // Got disconnected.
-	  printf( "Y server disconnected us, reason %i.\n" , event.disconnect.reason );
-	  Terminate(ERR);
+	  printf ("Y server disconnected us, reason %i.\n" , event.disconnect.reason );
+	  Terminate (ERR);
 	}
       // Server shutdown? 
-      else if(event.type == YShutdown)
+      else if (event.type == YShutdown)
 	{
 	  // Server shutdown. 
-	  printf( "Y server shutdown, reason %i.\n", event.shutdown.reason );
-	  Terminate(ERR);
+	  printf ("Y server shutdown, reason %i.\n", event.shutdown.reason);
+	  Terminate (ERR);
 	}
       else
 	{
@@ -169,9 +173,9 @@ void YIFF_Server_Check_Events(void){
 	  // Some other Y event, ignore. 
 	}
     }
- 
+
 #endif /* HAVE_LIBY2 */
-} // void YIFF_Server_Check_Events(void)
+}				// void YIFF_Server_Check_Events(void)
 
 
 /*@Function============================================================
@@ -185,18 +189,21 @@ void YIFF_Server_Check_Events(void){
   @Ret: 
   @Int:
   * $Function----------------------------------------------------------*/
-char *ExpandFilename(char *LocalFilename){
+char *
+ExpandFilename (char *LocalFilename)
+{
   char *tmp;
 
-  tmp=malloc(strlen(LocalFilename)+strlen(getcwd(NULL,0)) + 1);
-  strcpy(tmp,getcwd(NULL,0));
+  tmp = malloc (strlen (LocalFilename) + strlen (getcwd (NULL, 0)) + 1);
+  strcpy (tmp, getcwd (NULL, 0));
 
-  // cut out the "/src" at the end of the sting, that is, make it 4 chars shorter
-  // tmp[strlen(tmp)-4]=0;
+  /* cut out the "/src" at the end of the sting, that is, make it */
+  /* 4 chars shorter */
+  /* tmp[strlen(tmp)-4]=0 */
 
-  strcat(tmp,LocalFilename);
-  return(tmp);
-} // char *ExpandFilename(char *LocalFilename){
+  strcat (tmp, LocalFilename);
+  return (tmp);
+}				// char *ExpandFilename(char *LocalFilename){
 
 
 /*@Function============================================================
@@ -205,11 +212,13 @@ char *ExpandFilename(char *LocalFilename){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void YIFF_Server_Close_Connections(void){
+void 
+YIFF_Server_Close_Connections (void)
+{
 
-  // This function can and should only be compiled on machines, that have the YIFF sound
-  // server installed.  Compilation therefore is optional and can be toggled with the following
-  // definition.
+  /* This function can and should only be compiled on machines, that have */
+  /* the YIFF sound server installed.  Compilation therefore is optional and */
+  /* can be toggled with the following definition. */
 #if HAVE_LIBY2
 
   /* Disconnect from the Y server. We need to pass the
@@ -226,13 +235,12 @@ void YIFF_Server_Close_Connections(void){
    * server stays running, you can pass True instead.
    */
 
-  YCloseConnection(BackgroundMusic_con, False);
+  YCloseConnection (BackgroundMusic_con, False);
   BackgroundMusic_con = NULL;
 
 #endif /* HAVE_LIBY2 */
 
-} // void YIFF_Server_Close_Connections(void)
-
+} /* void YIFF_Server_Close_Connections(void) */
 
 /*@Function============================================================
 @Desc: Starts a Tune.
@@ -240,9 +248,11 @@ void YIFF_Server_Close_Connections(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void StartSound(int Tune){
-    
-} // void StartSound(int Tune)
+void
+StartSound (int Tune)
+{
+
+} /* void StartSound(int Tune) */
 
 /*@Function============================================================
 @Desc: 
@@ -250,7 +260,8 @@ void StartSound(int Tune){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void CrySound(void)
+void
+CrySound (void)
 {
 
 }
@@ -272,84 +283,99 @@ Technical details:
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void 
-Switch_Background_Music_To(int Tune)
+void
+Switch_Background_Music_To (int Tune)
 {
-#if HAVE_LIBY2
+  static int Current_Tune = SILENCE;
 
-  static int Current_Tune=SILENCE;
+#if HAVE_LIBY2
   YEventSoundPlay Music_Parameters;
 
+  if (!sound_on) return;
 
-  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Real function call confirmed.\n");
+  DebugPrintf
+    ("\nvoid Switch_Background_Music_To(int Tune):  Real function call confirmed.\n");
 
-  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Shutting down old background music track...\n");
-  
-  if ( Current_Tune == SILENCE ) 
+  DebugPrintf
+    ("\nvoid Switch_Background_Music_To(int Tune):  Shutting down old background music track...\n");
+
+  if (Current_Tune == SILENCE)
     {
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  No old music there to be shut down...\n");
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  No old music there to be shut down...\n");
 
-    } 
+    }
   else
     {
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
 
-      YDestroyPlaySoundObject( BackgroundMusic_con , BackgroundMusic_play_id );
+      YDestroyPlaySoundObject (BackgroundMusic_con, BackgroundMusic_play_id);
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track stopped..\n");
-      
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  Old music track stopped..\n");
+
     }
 
-  Current_Tune=SILENCE;
+  Current_Tune = SILENCE;
 
-  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedSoundSampleFilenames[ Tune ], 
-				 &BackgroundMusic_sndobj_attrib ) )
+  if (YGetSoundObjectAttributes
+      (BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune],
+       &BackgroundMusic_sndobj_attrib))
     {
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
       // Can't get sound object attributes.
-      fprintf( stderr, "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n", 
-	       ExpandedSoundSampleFilenames[ Tune ] );
-      printf(" CWD: %s \n\n",getcwd(NULL,0));
-      Terminate(ERR);
+      fprintf (stderr,
+	       "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n",
+	       ExpandedSoundSampleFilenames[Tune]);
+      printf (" CWD: %s \n\n", getcwd (NULL, 0));
+      Terminate (ERR);
     }
   else
     {
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Now starting new background tune...\n");
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  The following file will be loaded: ");
-      DebugPrintf( ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf 
+	("\nvoid Switch_Background_Music_To(int Tune):  Now starting new background tune...\n");
+      DebugPrintf 
+	("\nvoid Switch_Background_Music_To(int Tune):  The following file will be loaded: ");
+      DebugPrintf (ExpandedSoundSampleFilenames[ Tune ]);
 
-      BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, 
+      BackgroundMusic_play_id = YStartPlaySoundObjectSimple (BackgroundMusic_con, 
 							     ExpandedSoundSampleFilenames[ Tune ] );
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Tune has been loaded: ");
-      DebugPrintf( ExpandedSoundSampleFilenames[ Tune ] );
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  preparing endless loop...\n");
+      DebugPrintf ("\nvoid Switch_Background_Music_To(int Tune):  Tune has been loaded: ");
+      DebugPrintf ( ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf ("\nvoid Switch_Background_Music_To(int Tune):  preparing endless loop...\n");
 
       Current_Tune = Tune;
 
-      Music_Parameters.repeats=0;
-      Music_Parameters.total_repeats=-1; // -1 here means to repeat indefinately
-      Music_Parameters.left_volume=0.5;
-      Music_Parameters.right_volume=0.5;
-      Music_Parameters.sample_rate=BackgroundMusic_sndobj_attrib.sample_rate;
-      Music_Parameters.length=BackgroundMusic_sndobj_attrib.sample_size;
-      Music_Parameters.position=0;
-      Music_Parameters.yid=BackgroundMusic_play_id;
-      Music_Parameters.flags=0xFFFFFFFF;
+      Music_Parameters.repeats = 0;
+      Music_Parameters.total_repeats = -1;	// -1 here means to repeat indefinately
+      Music_Parameters.left_volume = 0.5;
+      Music_Parameters.right_volume = 0.5;
+      Music_Parameters.sample_rate =
+	BackgroundMusic_sndobj_attrib.sample_rate;
+      Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+      Music_Parameters.position = 0;
+      Music_Parameters.yid = BackgroundMusic_play_id;
+      Music_Parameters.flags = 0xFFFFFFFF;
 
 
-      YSetPlaySoundObjectValues( BackgroundMusic_con, BackgroundMusic_play_id, &Music_Parameters );
+      YSetPlaySoundObjectValues (BackgroundMusic_con, BackgroundMusic_play_id,
+				 &Music_Parameters);
 
-      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
 
     }
 
-  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
+  DebugPrintf
+    ("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
 
-#endif  /* HAVE_LIBY2 */
-} // void Switch_Background_Music_To(int Tune)
+#endif /* HAVE_LIBY2 */
+}				// void Switch_Background_Music_To(int Tune)
 
 
 /*@Function============================================================
@@ -358,43 +384,51 @@ Switch_Background_Music_To(int Tune)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void Play_YIFF_Server_Sound(int Tune){
+void
+Play_YIFF_Server_Sound (int Tune)
+{
+  
+  if (!sound_on) return;
 
-  // This function can and should only be compiled on machines, that have the YIFF sound
-  // server installed.  Compilation therefore is optional and can be toggled with the following
-  // definition.
+  /* This function can and should only be compiled on machines, that have */
+  /* the YIFF sound server installed.  Compilation therefore is optional and */
+  /* can be toggled with the following  definition.*/
+
 #if HAVE_LIBY2
+  DebugPrintf
+    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
+  DebugPrintf
+    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
-  DebugPrintf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
-  DebugPrintf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
-
-
-  play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune] );
+  play_id =
+    YStartPlaySoundObjectSimple (BackgroundMusic_con,
+				 ExpandedSoundSampleFilenames[Tune]);
 
   return;
 
 
-  if (Tune == FIRESOUND) {
-    // TEST   if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
-    //    if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
-    //      {
-	// Can't get sound object attributes.
-    //  	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
-    //  		 ExpandedFireSoundSampleFilename );
-    //	printf(" CWD: %s \n\n",getcwd(NULL,0));
-    //  	Terminate(ERR);
-    //      }
-    //    else
-    //      {
-    //TEST	play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
-    // play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
-    //      }
-  }
+  if (Tune == FIRESOUND)
+    {
+      // TEST   if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
+      //    if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
+      //      {
+      // Can't get sound object attributes.
+      //          fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
+      //                   ExpandedFireSoundSampleFilename );
+      //  printf(" CWD: %s \n\n",getcwd(NULL,0));
+      //          Terminate(ERR);
+      //      }
+      //    else
+      //      {
+      //TEST      play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
+      // play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
+      //      }
+    }
 
 
 #endif /* HAVE_LIBY2 */
 
-} // void Play_YIFF_Server_Sound(int Tune)
+}				// void Play_YIFF_Server_Sound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -407,52 +441,54 @@ The connection argument is a string of the format ":".
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-
-int Init_YIFF_Sound_Server(void){
-
-  // This function can and should only be compiled on machines, that have the YIFF sound
-  // server installed.  Compilation therefore is optional and can be toggled with the following
-  // definition.
-#if HAVE_LIBY2
-  
+int
+Init_YIFF_Sound_Server (void)
+{
   int i;
 
-  DebugPrintf("\nint Init_YIFF_Sound_Server(void): real function call confirmed.\n");
+  /* This function can and should only be compiled on machines, that have */
+  /* the YIFF sound server installed.  Compilation therefore is optional */
+  /* and can be toggled with the following definition. */
+#if HAVE_LIBY2
 
-  // Because the yiff does not nescessarily have the same origin for relative paths as paradroid does,
-  // is is nescessary to first translate our path names to absolute pathnames.  This is done here:
+  DebugPrintf
+    ("\nint Init_YIFF_Sound_Server(void): real function call confirmed.\n");
 
-  for ( i=0; i < ALL_SOUNDS ; i++ ) {
-    ExpandedSoundSampleFilenames[i] = ExpandFilename( SoundSampleFilenames[i] );
-  }
+  /* Because the yiff does not nescessarily have the same origin for */
+  /* relative paths as paradroid does, it is nescessary to first translate */
+  /* our path names to absolute pathnames.  This is done here: */
+
+  for (i = 0; i < ALL_SOUNDS; i++)
+    {
+      ExpandedSoundSampleFilenames[i] =
+	ExpandFilename (SoundSampleFilenames[i]);
+    }
 
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
   // therefore a yiff server will be started even if none is running!!  great!!
-  BackgroundMusic_con = YOpenConnection(
-			"/usr/sbin/yiff",
-			CON_ARG
-			);
+  BackgroundMusic_con = YOpenConnection ("/usr/sbin/yiff", CON_ARG);
 
   // Attention!! First channel is to be opend now!
-  if(BackgroundMusic_con == NULL) {
-    // Failed to connect to the Y server. 
-    fprintf(
-	      stderr,
-	      "%s: Cannot connect to YIFF server for background music.\n",
-	      CON_ARG
-	      );
-      Terminate(ERR);
+  if (BackgroundMusic_con == NULL)
+    {
+      // Failed to connect to the Y server. 
+      fprintf (stderr,
+	       "%s: Cannot connect to YIFF server for background music.\n",
+	       CON_ARG);
+      Terminate (ERR);
     }
 
   // The connection to the sound server should now be established...
   // Printing debug message and going on...
 
-  DebugPrintf("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
-  DebugPrintf("\nint Init_YIFF_Sound_Server(void): end of function reached.\n");
+  DebugPrintf
+    ("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
+  DebugPrintf
+    ("\nint Init_YIFF_Sound_Server(void): end of function reached.\n");
 
 #endif
-  return(OK);
-} // void Init_YIFF_Sound_Server(void)
+  return (OK);
+}				// void Init_YIFF_Sound_Server(void)
 
 
 /*@Function============================================================
@@ -461,116 +497,44 @@ int Init_YIFF_Sound_Server(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void GotHitSound(void){
-
-  Play_YIFF_Server_Sound(GOT_HIT_SOUND);
-
-}  // void GotHitSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void GotIntoBlastSound(void){
-
-  Play_YIFF_Server_Sound(GOT_INTO_BLAST_SOUND);
-  
-  return;
-} // void GotIntoBlastSound(void)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void RefreshSound(void){
-
-  Play_YIFF_Server_Sound(REFRESH_SOUND);
-
-  return;
-} // void RefreshSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void MoveElevatorSound(void){
-  Play_YIFF_Server_Sound(MOVE_ELEVATOR_SOUND);
-} // void MoveElevatorSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void ThouArtDefeatedSound(void){
-  Play_YIFF_Server_Sound( THOU_ART_DEFEATED_SOUND);
-} // void MoveElevatorSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void EnterElevatorSound(void){
-
-  Play_YIFF_Server_Sound(ENTER_ELEVATOR_SOUND);
-
-  return;
-} // void EnterElevatorSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void LeaveElevatorSound(void){
-
-  Play_YIFF_Server_Sound(LEAVE_ELEVATOR_SOUND);
-
-  return;
-} // void LeaveElevatorSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void FireBulletSound(void){
-
-	Play_YIFF_Server_Sound(FIRESOUND);
-
-} // void FireBulletSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void 
-Takeover_Set_Capsule_Sound(void)
+void
+GotHitSound (void)
 {
+  if (!sound_on) return;
 
-  Play_YIFF_Server_Sound( TAKEOVER_SET_CAPSULE_SOUND );
+  Play_YIFF_Server_Sound (GOT_HIT_SOUND);
+}				// void GotHitSound(void)
 
-} // void FireBulletSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+GotIntoBlastSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (GOT_INTO_BLAST_SOUND);
+  return;
+}				// void GotIntoBlastSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+RefreshSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (REFRESH_SOUND);
+  return;
+}				// void RefreshSound(void)
 
 
 /*@Function============================================================
@@ -579,11 +543,14 @@ Takeover_Set_Capsule_Sound(void)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void BounceSound(void){
+void
+MoveElevatorSound (void)
+{
+  if (!sound_on) return;
 
-  Play_YIFF_Server_Sound(COLLISIONSOUND);
-  
-} // void BounceSound(void)
+  Play_YIFF_Server_Sound (MOVE_ELEVATOR_SOUND);
+}				// void MoveElevatorSound(void)
+
 
 /*@Function============================================================
 @Desc: 
@@ -591,11 +558,106 @@ void BounceSound(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void DruidBlastSound(void){
+void
+ThouArtDefeatedSound (void)
+{
+  if (!sound_on) return;
+  Play_YIFF_Server_Sound (THOU_ART_DEFEATED_SOUND);
+}				// void MoveElevatorSound(void)
 
-  Play_YIFF_Server_Sound(BLASTSOUND);
-  
-} // void BounceSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+EnterElevatorSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (ENTER_ELEVATOR_SOUND);
+  return;
+}				// void EnterElevatorSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+LeaveElevatorSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (LEAVE_ELEVATOR_SOUND);
+
+  return;
+}				// void LeaveElevatorSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+FireBulletSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (FIRESOUND);
+}				// void FireBulletSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Takeover_Set_Capsule_Sound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (TAKEOVER_SET_CAPSULE_SOUND);
+}				// void FireBulletSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+BounceSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (COLLISIONSOUND);
+
+}				// void BounceSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+DruidBlastSound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound (BLASTSOUND);
+
+}				// void BounceSound(void)
 
 
 #undef _sound_c

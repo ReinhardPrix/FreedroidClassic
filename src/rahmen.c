@@ -63,17 +63,17 @@ extern char *InfluenceModeNames[];
 // { {point pos}, int len, int hgt, int oldval, int col }
 //
 
-bar AllBars[]={
+bar AllBars[] = {
 // Bar for the Energydisplay
-	{   {3,52}  ,300, 10, 0, FONT_RED },
+  {{3, 52}, 300, 10, 0, FONT_RED},
 // Bars for Shield1-4
-	{ {260,5 } , 50, 5, 0, FONT_GREEN },
-	{ {260,12} , 50, 5, 0, FONT_GREEN },
-	{ {260,19} , 50, 5, 0, FONT_GREEN },
-	{ {260,26} , 50, 5, 0, FONT_GREEN }
+  {{260, 5}, 50, 5, 0, FONT_GREEN},
+  {{260, 12}, 50, 5, 0, FONT_GREEN},
+  {{260, 19}, 50, 5, 0, FONT_GREEN},
+  {{260, 26}, 50, 5, 0, FONT_GREEN}
 };
 
-void DrawBar(int,int,unsigned char*);
+void DrawBar (int, int, unsigned char *);
 
 /*@Function============================================================
 @Desc: 
@@ -81,52 +81,61 @@ void DrawBar(int,int,unsigned char*);
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void DrawBar(int BarCode,int Wert,unsigned char* Screen){
-  unsigned char* BarPoint=Screen;
+void
+DrawBar (int BarCode, int Wert, unsigned char *Screen)
+{
+  unsigned char *BarPoint = Screen;
   int xlen;
-  int barcol=0;
+  int barcol = 0;
   int i;
 
-  DebugPrintf("\nvoid DrawBar(...):  real function call confirmed.");
+  DebugPrintf ("\nvoid DrawBar(...):  real function call confirmed.");
 
-  if (Wert<0) Wert=0;
-  BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
+  if (Wert < 0)
+    Wert = 0;
+  BarPoint += AllBars[BarCode].pos.x + AllBars[BarCode].pos.y * SCREENBREITE;
 
-  if (InitBars) {
-    for(i=0;i<AllBars[BarCode].hgt;i++){
-      memset(BarPoint,AllBars[BarCode].col,Wert);
-      memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
-      BarPoint+=SCREENBREITE;
-    }
-    AllBars[BarCode].oldval=Wert;
-    return;
-  }
-	
-  if (Wert==AllBars[BarCode].oldval) 
+  if (InitBars)
     {
-      DebugPrintf("\nvoid DrawBar(...):  end of function reached.");
+      for (i = 0; i < AllBars[BarCode].hgt; i++)
+	{
+	  memset (BarPoint, AllBars[BarCode].col, Wert);
+	  memset (BarPoint + Wert, 0, abs (AllBars[BarCode].len - Wert));
+	  BarPoint += SCREENBREITE;
+	}
+      AllBars[BarCode].oldval = Wert;
       return;
     }
-  
-  xlen=abs(Wert-AllBars[BarCode].oldval);
 
-  // Den Cursor an die Position stellen und rot oder schwarz einstellen.	
-  if (Wert>AllBars[BarCode].oldval) {
-    barcol=AllBars[BarCode].col;
-    BarPoint+=AllBars[BarCode].oldval;
-  } else BarPoint+=Wert;
+  if (Wert == AllBars[BarCode].oldval)
+    {
+      DebugPrintf ("\nvoid DrawBar(...):  end of function reached.");
+      return;
+    }
+
+  xlen = abs (Wert - AllBars[BarCode].oldval);
+
+  // Den Cursor an die Position stellen und rot oder schwarz einstellen.        
+  if (Wert > AllBars[BarCode].oldval)
+    {
+      barcol = AllBars[BarCode].col;
+      BarPoint += AllBars[BarCode].oldval;
+    }
+  else
+    BarPoint += Wert;
 
   // Balken soweit zeichnen, wie die Ver"anderung ausmacht.
-  for(i=0;i<AllBars[BarCode].hgt;i++){
-    memset(BarPoint,barcol,xlen);
-    BarPoint+=SCREENBREITE;
-  }
+  for (i = 0; i < AllBars[BarCode].hgt; i++)
+    {
+      memset (BarPoint, barcol, xlen);
+      BarPoint += SCREENBREITE;
+    }
 
-  AllBars[BarCode].oldval=Wert;
+  AllBars[BarCode].oldval = Wert;
 
-  DebugPrintf("\nvoid DrawBar(...):  end of function reached.");
+  DebugPrintf ("\nvoid DrawBar(...):  end of function reached.");
 
-} // void DrawBar(...)
+}				// void DrawBar(...)
 
 /*@Function============================================================
 @Desc: SayLeftInfo( char* text):
@@ -136,23 +145,26 @@ void DrawBar(int BarCode,int Wert,unsigned char* Screen){
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void SayLeftInfo(char *text, unsigned char *screen ) {
+void
+SayLeftInfo (char *text, unsigned char *screen)
+{
   char textbox[LEFT_TEXT_LEN + 10];
-	
-  if (!PlusExtentionsOn) {
-    /* Hintergrund Textfarbe setzen */
-    SetTextColor(FONT_WHITE,FONT_RED);	// FONT_RED, 0
-    
-    strncpy(textbox, text, LEFT_TEXT_LEN);
-    if( strlen(text) < LEFT_TEXT_LEN )
-      strncat(textbox, "           ", LEFT_TEXT_LEN -strlen(text));
-    textbox[LEFT_TEXT_LEN] = '\0'; 	/* String abschliessen */
-    
-    /* Text ausgeben */
-    DisplayText( textbox, LEFTINFO_X, LEFTINFO_Y, screen,FALSE);
-    return;
-  }
-} // void SayLeftInfo(...)
+
+  if (!PlusExtentionsOn)
+    {
+      /* Hintergrund Textfarbe setzen */
+      SetTextColor (FONT_WHITE, FONT_RED);	// FONT_RED, 0
+
+      strncpy (textbox, text, LEFT_TEXT_LEN);
+      if (strlen (text) < LEFT_TEXT_LEN)
+	strncat (textbox, "           ", LEFT_TEXT_LEN - strlen (text));
+      textbox[LEFT_TEXT_LEN] = '\0';	/* String abschliessen */
+
+      /* Text ausgeben */
+      DisplayText (textbox, LEFTINFO_X, LEFTINFO_Y, screen, FALSE);
+      return;
+    }
+}				// void SayLeftInfo(...)
 
 /*@Function============================================================
 @Desc: SayRightInfo(char *text): wie SayLeftInfo()
@@ -160,26 +172,28 @@ void SayLeftInfo(char *text, unsigned char *screen ) {
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void SayRightInfo(char *text, unsigned char *screen)
+void
+SayRightInfo (char *text, unsigned char *screen)
 {
   char textbox[RIGHT_TEXT_LEN + 10];
 
-  if (!PlusExtentionsOn) {
-    /* Hintergrund Textfarbe richtig setzen */
-    SetTextColor(FONT_WHITE, FONT_RED);
-    
-    strncpy(textbox, text, RIGHT_TEXT_LEN);
-    if( strlen(text) < RIGHT_TEXT_LEN) 
-      strncat(textbox, "           ", RIGHT_TEXT_LEN-strlen(text));
-    textbox[RIGHT_TEXT_LEN] = '\0';
-		
-    /* Text ausgeben */
-    DisplayText( textbox, RIGHTINFO_X, RIGHTINFO_Y, screen,FALSE);
-  }
-  return;
-} /* SayRightInfo */
+  if (!PlusExtentionsOn)
+    {
+      /* Hintergrund Textfarbe richtig setzen */
+      SetTextColor (FONT_WHITE, FONT_RED);
 
- 
+      strncpy (textbox, text, RIGHT_TEXT_LEN);
+      if (strlen (text) < RIGHT_TEXT_LEN)
+	strncat (textbox, "           ", RIGHT_TEXT_LEN - strlen (text));
+      textbox[RIGHT_TEXT_LEN] = '\0';
+
+      /* Text ausgeben */
+      DisplayText (textbox, RIGHTINFO_X, RIGHTINFO_Y, screen, FALSE);
+    }
+  return;
+}				/* SayRightInfo */
+
+
 /*@Function============================================================
 @Desc: DisplayRahmen(*screen):  gibt Rahmen mit Info-Texten auf screen aus
     Die Funktion sichert und restauriert jetzt auch die Schriftfarben
@@ -187,21 +201,22 @@ void SayRightInfo(char *text, unsigned char *screen)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void DisplayRahmen(unsigned char *screen)
+void
+DisplayRahmen (unsigned char *screen)
 {
   // unsigned int bg;
   // unsigned int fg;
-  
-  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
-  DisplayMergeBlock( 0 , 0 , RahmenPicture , RAHMENBREITE , RAHMENHOEHE , screen);
 
-  /*	GetTextColor(&bg,&fg);
-	SetTextColor(FONT_WHITE,FONT_RED);    */    /* BG: Rahmenwei"s FG: FONT_RED */
-  SayRightInfo(RightInfo, screen);
-  SayLeftInfo(LeftInfo, screen);
-  /*	SetTextColor(bg,fg); */
+  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+  DisplayMergeBlock (0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+
+  /*    GetTextColor(&bg,&fg);
+   SetTextColor(FONT_WHITE,FONT_RED);    *//* BG: Rahmenwei"s FG: FONT_RED */
+  SayRightInfo (RightInfo, screen);
+  SayLeftInfo (LeftInfo, screen);
+  /*    SetTextColor(bg,fg); */
   return;
-} /* DisplayRahmen */
+}				/* DisplayRahmen */
 
 
 /*@Function============================================================
@@ -211,19 +226,20 @@ void DisplayRahmen(unsigned char *screen)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void SetInfoline(void)
+void
+SetInfoline (void)
 {
   char dummy[80];
   /* Modus des Influencers links angeben  */
-  strncpy(LeftInfo, InfluenceModeNames[Me.status], LEFT_TEXT_LEN-1);
-  LeftInfo[LEFT_TEXT_LEN-1] = '\0';
-	
+  strncpy (LeftInfo, InfluenceModeNames[Me.status], LEFT_TEXT_LEN - 1);
+  LeftInfo[LEFT_TEXT_LEN - 1] = '\0';
+
   /* Punkte des Users rechts ausgeben */
-  strncpy(RightInfo, ltoa(ShowScore, dummy, 10), RIGHT_TEXT_LEN-1);
-  RightInfo[RIGHT_TEXT_LEN-1] = '\0';
-	
+  strncpy (RightInfo, ltoa (ShowScore, dummy, 10), RIGHT_TEXT_LEN - 1);
+  RightInfo[RIGHT_TEXT_LEN - 1] = '\0';
+
   return;
-} /* SetInfoline */
+}				/* SetInfoline */
 
 
 /*@Function============================================================
@@ -233,43 +249,41 @@ void SetInfoline(void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void UpdateInfoline(void)
+void
+UpdateInfoline (void)
 {
-  static char LastLeft[50];			/* the change-detectors */
+  static char LastLeft[50];	/* the change-detectors */
   static char LastRight[50];
   int NoNeedToSaveEnv = 1;
 
-  DebugPrintf("\nvoid UpdateInfoline(void): Real function call confirmed....");
+  DebugPrintf
+    ("\nvoid UpdateInfoline(void): Real function call confirmed....");
 
-  if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
-	
-  if (!NoNeedToSaveEnv) StoreTextEnvironment();
+  if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING))
+    NoNeedToSaveEnv = 0;
 
-  if( strcmp(LastLeft, LeftInfo) != 0 ) {
-    SetTextColor(FONT_WHITE,FONT_RED);
-    SayLeftInfo(LeftInfo, RealScreen);
-    strcpy(LastLeft, LeftInfo);
-  }
+  if (!NoNeedToSaveEnv)
+    StoreTextEnvironment ();
 
-  if( strcmp(LastRight, RightInfo) != 0 ) {
-    SayRightInfo(RightInfo, RealScreen);
-    strcpy(LastRight, RightInfo);
-  }
+  if (strcmp (LastLeft, LeftInfo) != 0)
+    {
+      SetTextColor (FONT_WHITE, FONT_RED);
+      SayLeftInfo (LeftInfo, RealScreen);
+      strcpy (LastLeft, LeftInfo);
+    }
 
-  if (!NoNeedToSaveEnv) RestoreTextEnvironment();
+  if (strcmp (LastRight, RightInfo) != 0)
+    {
+      SayRightInfo (RightInfo, RealScreen);
+      strcpy (LastRight, RightInfo);
+    }
 
-  DebugPrintf("\nvoid UpdateInfoline(void): end of function reached.");
+  if (!NoNeedToSaveEnv)
+    RestoreTextEnvironment ();
+
+  DebugPrintf ("\nvoid UpdateInfoline(void): end of function reached.");
 
   return;
-} // void UpdateInfoline(void)
+}				// void UpdateInfoline(void)
 
 #undef _rahmen_c
-
-
-
-
-
-
-
-
-

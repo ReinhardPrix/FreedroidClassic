@@ -59,32 +59,37 @@
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void SmallBlock(int LX,int LY, int BlockN,unsigned char* Screen,int SBreite)
+void
+SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
 {
-  int i,j;
-  unsigned char *source=MapBlocks+BLOCKBREITE*BLOCKHOEHE*BlockN;
-  unsigned char *target=Screen+LY*SBreite+LX;
+  int i, j;
+  unsigned char *source = MapBlocks + BLOCKBREITE * BLOCKHOEHE * BlockN;
+  unsigned char *target = Screen + LY * SBreite + LX;
 
   //DebugPrintf("\nvoid SmallBlock(...): Function call confirmed.");
-  if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
-  for(i=0;i<8;i++) {
-    for(j=0;j<8;j++) {
-      *target=*source;
-      target++;
-      if (Screen == RealScreen) {
-	vga_setcolor(*source);
-	vga_drawpixel(LX+i,LY+j);
-      }
-      source+=4;
-      //Screen[LX+j+(LY+i)*SBreite]=
-      //MapBlocks[BlockN*BLOCKBREITE*BLOCKHOEHE+j*4+i*BLOCKBREITE*4];
+  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
+    return;
+  for (i = 0; i < 8; i++)
+    {
+      for (j = 0; j < 8; j++)
+	{
+	  *target = *source;
+	  target++;
+	  if (Screen == RealScreen)
+	    {
+	      vga_setcolor (*source);
+	      vga_drawpixel (LX + i, LY + j);
+	    }
+	  source += 4;
+	  //Screen[LX+j+(LY+i)*SBreite]=
+	  //MapBlocks[BlockN*BLOCKBREITE*BLOCKHOEHE+j*4+i*BLOCKBREITE*4];
+	}
+      target += SBreite - 8;
+      source += 4 * BLOCKBREITE - 4 * 8;
     }
-    target+=SBreite-8;
-    source+=4*BLOCKBREITE-4*8;
-  }
 
   //DebugPrintf("\nvoid SmallBlock(...): Usual end of function reached.");
-} // void SmallBlock(...)
+}				// void SmallBlock(...)
 
 /*@Function============================================================
 @Desc: 
@@ -92,17 +97,25 @@ void SmallBlock(int LX,int LY, int BlockN,unsigned char* Screen,int SBreite)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void SmallBlast(int LX,int LY, int BlastT,int phase,unsigned char* Screen,int SBreite)
+void
+SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Screen,
+	    int SBreite)
 {
-	int i,j;
+  int i, j;
 
-	if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
-	for(i=0;i<8;i++) {
-		for(j=0;j<8;j++)
-			if (*(Blastmap[BlastT].picpointer+j*4+i*BLOCKBREITE*4+phase*BLOCKMEM) != TRANSPARENTCOLOR )
-				Screen[LX-DIGITLENGTH/2+j+(LY+i-DIGITHEIGHT/2)*SBreite]=
-					*(Blastmap[BlastT].picpointer+j*4+i*BLOCKBREITE*4+phase*BLOCKMEM);
-	}
+  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
+    return;
+  for (i = 0; i < 8; i++)
+    {
+      for (j = 0; j < 8; j++)
+	if (*
+	    (Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	     phase * BLOCKMEM) != TRANSPARENTCOLOR)
+	  Screen[LX - DIGITLENGTH / 2 + j +
+		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
+	    *(Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	      phase * BLOCKMEM);
+    }
 }
 
 /*@Function============================================================
@@ -111,37 +124,54 @@ void SmallBlast(int LX,int LY, int BlastT,int phase,unsigned char* Screen,int SB
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void SmallBullet(int LX,int LY, int BulletT,int phase,unsigned char* Screen,int SBreite)
+void
+SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Screen,
+	     int SBreite)
 {
- 	Blast CurBlast = &(AllBlasts[0]);
-	int i,j;
+  Blast CurBlast = &(AllBlasts[0]);
+  int i, j;
 
-	if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
-	for(i=0;i<8;i++) {
-		for(j=0;j<8;j++) {
-			if (*(Bulletmap[BulletT].picpointer+j*4+i*BLOCKBREITE*4+phase*BLOCKMEM) != TRANSPARENTCOLOR) {
-				if ((unsigned char)Screen[LX-DIGITLENGTH/2+j+(LY+i-DIGITHEIGHT/2)*SBreite] == BULLETCOLOR) StartBlast(LX*4+2,LY*4+2,DRUIDBLAST);
-				Screen[LX-DIGITLENGTH/2+j+(LY+i-DIGITHEIGHT/2)*SBreite]=
-					*(Bulletmap[BulletT].picpointer+j*4+i*BLOCKBREITE*4+phase*BLOCKMEM);
-			}
-		}
+  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
+    return;
+  for (i = 0; i < 8; i++)
+    {
+      for (j = 0; j < 8; j++)
+	{
+	  if (*
+	      (Bulletmap[BulletT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	       phase * BLOCKMEM) != TRANSPARENTCOLOR)
+	    {
+	      if ((unsigned char)
+		  Screen[LX - DIGITLENGTH / 2 + j +
+			 (LY + i - DIGITHEIGHT / 2) * SBreite] == BULLETCOLOR)
+		StartBlast (LX * 4 + 2, LY * 4 + 2, DRUIDBLAST);
+	      Screen[LX - DIGITLENGTH / 2 + j +
+		     (LY + i - DIGITHEIGHT / 2) * SBreite] =
+		*(Bulletmap[BulletT].picpointer + j * 4 +
+		  i * BLOCKBREITE * 4 + phase * BLOCKMEM);
+	    }
 	}
-	for(j=0;j<MAXBLASTS;j++){
-	 	/* check Blast-Bullet Collisions and kill hit Bullets */
-		for( i=0; i<MAXBULLETS; i++ ) {
-			if( AllBullets[i].type == OUT ) continue;
-			if( CurBlast->phase > 4) break;
-		
-			if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
-				 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
-				 {
-				 	/* KILL Bullet silently */
-				 	AllBullets[i].type = OUT;
-				 	AllBullets[i].mine = FALSE;
-				 }
-		} /* for */
-	 	CurBlast++;
-	} /* for */
+    }
+  for (j = 0; j < MAXBLASTS; j++)
+    {
+      /* check Blast-Bullet Collisions and kill hit Bullets */
+      for (i = 0; i < MAXBULLETS; i++)
+	{
+	  if (AllBullets[i].type == OUT)
+	    continue;
+	  if (CurBlast->phase > 4)
+	    break;
+
+	  if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
+	    if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
+	      {
+		/* KILL Bullet silently */
+		AllBullets[i].type = OUT;
+		AllBullets[i].mine = FALSE;
+	      }
+	}			/* for */
+      CurBlast++;
+    }				/* for */
 }
 
 /*@Function============================================================
@@ -150,37 +180,46 @@ void SmallBullet(int LX,int LY, int BulletT,int phase,unsigned char* Screen,int 
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void SmallEnemy(int LX,int LY,int enemyclass,unsigned char* Screen,int SBreite)
+void
+SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Screen,
+	    int SBreite)
 {
-	int i,j;
-	enemyclass+=10;
+  int i, j;
+  enemyclass += 10;
 
-	if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
-	for(i=0;i<DIGITHEIGHT;i++) {
-		for(j=0;j<DIGITLENGTH-1;j++)
-			if (Digitpointer[enemyclass*DIGITLENGTH*DIGITHEIGHT+i*DIGITLENGTH+j]!=TRANSPARENTCOLOR)
-				Screen[LX-DIGITLENGTH/2+j+(LY+i-DIGITHEIGHT/2)*SBreite]=
-					Digitpointer[enemyclass*DIGITLENGTH*DIGITHEIGHT+i*DIGITLENGTH+j];
-//					Enemypointer[j*4+i*BLOCKBREITE*4];
-	}
+  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
+    return;
+  for (i = 0; i < DIGITHEIGHT; i++)
+    {
+      for (j = 0; j < DIGITLENGTH - 1; j++)
+	if (Digitpointer
+	    [enemyclass * DIGITLENGTH * DIGITHEIGHT + i * DIGITLENGTH + j] !=
+	    TRANSPARENTCOLOR)
+	  Screen[LX - DIGITLENGTH / 2 + j +
+		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
+	    Digitpointer[enemyclass * DIGITLENGTH * DIGITHEIGHT +
+			 i * DIGITLENGTH + j];
+//                                      Enemypointer[j*4+i*BLOCKBREITE*4];
+    }
 }
 
 /* *********************************************************************** */
 
-void GetDigits(void){
+void
+GetDigits (void)
+{
   int i;
 
-  Digitpointer=MyMalloc(DIGITMEM);
-  Load_PCX_Image( DIGITBILD_PCX , InternalScreen , FALSE );
+  Digitpointer = MyMalloc (DIGITMEM);
+  Load_PCX_Image (DIGITBILD_PCX, InternalScreen, FALSE);
 
-  for (i=0;i<20;i++) {
-    IsolateBlock(
-		 InternalScreen,
-		 Digitpointer+DIGITHEIGHT*DIGITLENGTH*i,
-		 i*DIGITLENGTH,
-		 0,DIGITLENGTH,DIGITHEIGHT);
-  }
-} // void GetDigits(void)
+  for (i = 0; i < 20; i++)
+    {
+      IsolateBlock (InternalScreen,
+		    Digitpointer + DIGITHEIGHT * DIGITLENGTH * i,
+		    i * DIGITLENGTH, 0, DIGITLENGTH, DIGITHEIGHT);
+    }
+}				// void GetDigits(void)
 
 /* *********************************************************************** */
 
@@ -197,31 +236,31 @@ void GetDigits(void){
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
-void 
+void
 IsolateBlock (unsigned char *screen,
 	      unsigned char *target,
 	      int BlockEckLinks,
-	      int BlockEckOben,
-	      int Blockbreite,
-	      int Blockhoehe)
+	      int BlockEckOben, int Blockbreite, int Blockhoehe)
 {
   int row;
   unsigned char *source;
   unsigned char *tmp;
 
-  source = screen + BlockEckOben*SCREENLEN + BlockEckLinks;
+  source = screen + BlockEckOben * SCREENLEN + BlockEckLinks;
   tmp = target;
-	
-  for( row = 0; row < Blockhoehe; row ++ ) {
-    memcpy(tmp, source, Blockbreite);
-    tmp += Blockbreite;
-    source += SCREENLEN;
-  } 
 
-} /* IsolateBlock */
+  for (row = 0; row < Blockhoehe; row++)
+    {
+      memcpy (tmp, source, Blockbreite);
+      tmp += Blockbreite;
+      source += SCREENLEN;
+    }
+
+}				/* IsolateBlock */
 
 /* ***********************************************************************/
-void GetMapBlocks(void)
+void
+GetMapBlocks (void)
 {
 /*
 	Diese Prozedur isoliert ueber Aufrufe der Funktion GetBlock aus dem
@@ -231,32 +270,33 @@ void GetMapBlocks(void)
    Parameter: keine
 */
 
-	int i;
-	unsigned char *tmp;
+  int i;
+  unsigned char *tmp;
 
-	MapBlocks=(unsigned char*)MyMalloc(BLOCKANZAHL*BLOCKMEM+100);
-	Load_PCX_Image(BLOCKBILD1_PCX , InternalScreen , FALSE );
+  MapBlocks = (unsigned char *) MyMalloc (BLOCKANZAHL * BLOCKMEM + 100);
+  Load_PCX_Image (BLOCKBILD1_PCX, InternalScreen, FALSE);
 
-	tmp = MapBlocks;
-	
-	for(i=0;i<9;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1),0, BLOCKBREITE, BLOCKHOEHE);
+  tmp = MapBlocks;
 
-   for(i=0;i<9;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), BLOCKHOEHE+1,
-			BLOCKBREITE, BLOCKHOEHE);
+  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1), 0, BLOCKBREITE,
+		  BLOCKHOEHE);
 
-   for(i=0;i<9;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), BLOCKHOEHE*2+2,
-			BLOCKBREITE, BLOCKHOEHE);
+  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1), BLOCKHOEHE + 1,
+		  BLOCKBREITE, BLOCKHOEHE);
 
-   for(i=0;i<7;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), BLOCKHOEHE*3+3,
-			BLOCKBREITE, BLOCKHOEHE);
+  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
+		  BLOCKHOEHE * 2 + 2, BLOCKBREITE, BLOCKHOEHE);
 
-	for(i=0;i<8;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), BLOCKHOEHE*4+4,
-			BLOCKBREITE, BLOCKHOEHE);
+  for (i = 0; i < 7; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
+		  BLOCKHOEHE * 3 + 3, BLOCKBREITE, BLOCKHOEHE);
+
+  for (i = 0; i < 8; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
+		  BLOCKHOEHE * 4 + 4, BLOCKBREITE, BLOCKHOEHE);
 
 }
 
@@ -266,30 +306,37 @@ void GetMapBlocks(void)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void GetShieldBlocks(void){
+void
+GetShieldBlocks (void)
+{
   int i;
 
   // Sicherheitsabfrage gegen doppeltes initialisieren
-  if (ShieldBlocks) {
-    DebugPrintf(" Die Schildbloecke waren schon initialisiert !");
-    getchar();
-    Terminate(ERR);
-  }
+  if (ShieldBlocks)
+    {
+      DebugPrintf (" Die Schildbloecke waren schon initialisiert !");
+      getchar ();
+      Terminate (ERR);
+    }
 
-  if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
-    DebugPrintf(" Keine Memory fuer ShieldBlocks !.");
-    getchar();
-    Terminate(ERR);
-  }
-	
+  if (!(ShieldBlocks = MyMalloc (4 * BLOCKMEM + 10)))
+    {
+      DebugPrintf (" Keine Memory fuer ShieldBlocks !.");
+      getchar ();
+      Terminate (ERR);
+    }
+
   // Laden des Bildes
-  Load_PCX_Image( SHIELDPICTUREBILD_PCX , InternalScreen , FALSE );
+  Load_PCX_Image (SHIELDPICTUREBILD_PCX, InternalScreen, FALSE);
 
   // Isolieren der Schildbl"ocke
-  for(i=0;i<4;i++){
-    IsolateBlock(InternalScreen, ShieldBlocks+i*BLOCKBREITE*BLOCKHOEHE, i*(BLOCKBREITE+1), 0, BLOCKBREITE, BLOCKHOEHE);
-  }
-} // void GetShieldBlocks(void)
+  for (i = 0; i < 4; i++)
+    {
+      IsolateBlock (InternalScreen,
+		    ShieldBlocks + i * BLOCKBREITE * BLOCKHOEHE,
+		    i * (BLOCKBREITE + 1), 0, BLOCKBREITE, BLOCKHOEHE);
+    }
+}				// void GetShieldBlocks(void)
 
 
 /*@Function============================================================
@@ -306,27 +353,30 @@ int num:	number of blocks to get from line
 @Ret: char * : pointer to 
 @Int:
 * $Function----------------------------------------------------------*/
-unsigned char *GetBlocks(char *picfile, int line, int num)
+unsigned char *
+GetBlocks (char *picfile, int line, int num)
 {
   int i;
   unsigned char *tmp;
   unsigned char *blocktarget;
-  
-  if(picfile) {
-    Load_PCX_Image( picfile , InternalScreen , FALSE );
-  }
-	
-  if(!num) return NULL; /* this was only an 'init'-call */
-	
-  blocktarget=MyMalloc(BLOCKMEM * num+1600);
+
+  if (picfile)
+    {
+      Load_PCX_Image (picfile, InternalScreen, FALSE);
+    }
+
+  if (!num)
+    return NULL;		/* this was only an 'init'-call */
+
+  blocktarget = MyMalloc (BLOCKMEM * num + 1600);
   tmp = blocktarget;
-	
-  for (i=0;i<num;tmp += BLOCKMEM, i++)
-    IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), line*(BLOCKHOEHE+1),
-		 BLOCKBREITE, BLOCKHOEHE );
+
+  for (i = 0; i < num; tmp += BLOCKMEM, i++)
+    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
+		  line * (BLOCKHOEHE + 1), BLOCKBREITE, BLOCKHOEHE);
 
   return blocktarget;
-} // unsigned char *GetBlocks(...)
+}				// unsigned char *GetBlocks(...)
 
 
 /*-----------------------------------------------------------------
@@ -336,44 +386,43 @@ unsigned char *GetBlocks(char *picfile, int line, int num)
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
-void 
+void
 DisplayBlock (int x, int y,
 	      unsigned char *block,
-	      int len, int height,
-	      unsigned char *screen)
+	      int len, int height, unsigned char *screen)
 {
-  int row,i,j;
+  int row, i, j;
   unsigned char *screenpos;
   unsigned char *source = block;
-  
-  
+
+
   /*
    * THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER
    * DIRECTLY ACCESSIBLE 
    */
-  if (screen == RealScreen) 
-    for (i=0;i<height;i++) 
-      for (j=0;j<len;j++) 
+  if (screen == RealScreen)
+    for (i = 0; i < height; i++)
+      for (j = 0; j < len; j++)
 	{
-	  vga_setcolor(*source);
+	  vga_setcolor (*source);
 	  source++;
-	  vga_drawpixel(j+x,i+y);
-	} /* for j */
+	  vga_drawpixel (j + x, i + y);
+	}			/* for j */
   else
     {
-      screenpos = screen + y*SCREENLEN + x;
+      screenpos = screen + y * SCREENLEN + x;
 
-      for (row = 0; row < height; row++) 
+      for (row = 0; row < height; row++)
 	{
-	  memcpy(screenpos, source, len);
+	  memcpy (screenpos, source, len);
 	  screenpos += SCREENLEN;
 	  source += len;
-	} /* for row */
-    } /* else */
-    
+	}			/* for row */
+    }				/* else */
+
   return;
-    
-} /* DisplayBlock */
+
+}				/* DisplayBlock */
 
 /*-----------------------------------------------------------------
  * @Desc: setzt Block *block (len*height) an angegebener
@@ -383,49 +432,50 @@ DisplayBlock (int x, int y,
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
-void 
+void
 DisplayMergeBlock (int x, int y, unsigned char *block,
-		   int len, int height,
-		   unsigned char *screen)
+		   int len, int height, unsigned char *screen)
 {
   int row, col;
   unsigned char *Screenpos;
   unsigned char *source = block;
 
-  Screenpos=screen+x+y*SCREENBREITE;
+  Screenpos = screen + x + y * SCREENBREITE;
 
-  if( screen == NULL )
+  if (screen == NULL)
     return;
 
-  /* PORT: we do as Johannes did in DisplayBlock(): */  
-  if (screen == RealScreen ) 
-    for (col=0;col<height;col++) 
+  /* PORT: we do as Johannes did in DisplayBlock(): */
+  if (screen == RealScreen)
+    for (col = 0; col < height; col++)
       {
-	for (row=0;row<len;row++) 
+	for (row = 0; row < len; row++)
 	  {
-	    vga_setcolor(*source);
-	    if (*source != TRANSPARENTCOLOR) vga_drawpixel(x+row,y+col);
+	    vga_setcolor (*source);
+	    if (*source != TRANSPARENTCOLOR)
+	      vga_drawpixel (x + row, y + col);
 	    source++;
-	  } /* for row */
-      } /* for col */
+	  }			/* for row */
+      }				/* for col */
   else
-    for (row = 0; row < height; row++) 
+    for (row = 0; row < height; row++)
       {
-	for (col = 0; col < len; col ++) 
+	for (col = 0; col < len; col++)
 	  {
-	    if (*source != TRANSPARENTCOLOR ) *Screenpos ++ = *source ++;
-	    else 
+	    if (*source != TRANSPARENTCOLOR)
+	      *Screenpos++ = *source++;
+	    else
 	      {
-		Screenpos ++;
-		source ++;
+		Screenpos++;
+		source++;
 	      }
-	  } /* for (col) */
-	Screenpos+=SCREENBREITE-len;
-      } /* for (row) */
-  
+	  }			/* for (col) */
+	Screenpos += SCREENBREITE - len;
+      }				/* for (row) */
+
   return;
 
-} /* DisplayMergeBlock */
+}				/* DisplayMergeBlock */
 
 /*@Function============================================================
 @Desc: CopyMergeBlock(): copies a block in memory, but doesn't copy
@@ -434,16 +484,17 @@ DisplayMergeBlock (int x, int y, unsigned char *block,
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void 
-CopyMergeBlock(unsigned char *target, unsigned char *source, int mem)
+void
+CopyMergeBlock (unsigned char *target, unsigned char *source, int mem)
 {
   int i;
 
-  for( i=0; i<mem; i++, source++, target++)
-    if( *source != TRANSPARENTCOLOR ) *target = *source;
-  
-} /* Copy merge Block */
-	
+  for (i = 0; i < mem; i++, source++, target++)
+    if (*source != TRANSPARENTCOLOR)
+      *target = *source;
+
+}				/* Copy merge Block */
+
 
 /*@Function============================================================
 @Desc: MergeBlockToWindow(source, target, linelen)
@@ -457,47 +508,55 @@ int check: TRUE/FALSE: Bullet-Collisionen checken
 @Ret: TRUE/FALSE: BulletCollision
 @Int:
 * $Function----------------------------------------------------------*/
-int MergeBlockToWindow(
-		       register unsigned char *source,
-		       register unsigned char *target,
-		       int WinLineLen,		/* in pixel ! */
-		       int check)
+int
+MergeBlockToWindow (register unsigned char *source, register unsigned char *target, int WinLineLen,	/* in pixel ! */
+		    int check)
 {
   register int i, j;
-  int ret=FALSE;
+  int ret = FALSE;
   register int lineskip = WinLineLen - BLOCKBREITE;
 
-  if (check) {
-    for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
-      for(j=0; j<BLOCKBREITE; j++) {
-	if( *source != TRANSPARENTCOLOR) {
-	  if (*target == BULLETCOLOR) ret=TRUE;
-	  *target++ = *source++;
-	} else {
-	  target++;
-	  source++;
-	}
-      }
-  } else {
-    for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
-      for(j=0; j<BLOCKBREITE; j++) {
-	
-	if( *source != TRANSPARENTCOLOR) {
-	  *target++ = *source++;
-	}
-	else {
-	  target++;
-	  source++;
-	}
-      }
-  } /* if else */
-  
+  if (check)
+    {
+      for (i = 0; i < BLOCKHOEHE; i++, target += lineskip)
+	for (j = 0; j < BLOCKBREITE; j++)
+	  {
+	    if (*source != TRANSPARENTCOLOR)
+	      {
+		if (*target == BULLETCOLOR)
+		  ret = TRUE;
+		*target++ = *source++;
+	      }
+	    else
+	      {
+		target++;
+		source++;
+	      }
+	  }
+    }
+  else
+    {
+      for (i = 0; i < BLOCKHOEHE; i++, target += lineskip)
+	for (j = 0; j < BLOCKBREITE; j++)
+	  {
+
+	    if (*source != TRANSPARENTCOLOR)
+	      {
+		*target++ = *source++;
+	      }
+	    else
+	      {
+		target++;
+		source++;
+	      }
+	  }
+    }				/* if else */
+
   return (ret);
-  
-} // int MergeBlockToWindow(...)
+
+}				// int MergeBlockToWindow(...)
 
 
 
 
 #undef _blocks_c
-
