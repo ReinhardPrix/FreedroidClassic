@@ -86,6 +86,9 @@ int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] =
 
 char previously_used_part_strings [ ALL_PART_GROUPS ] [ 2000 ] ;
 
+char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
+int previously_used_motion_class = -4 ; // something we'll never really use...
+
 
 void FlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
@@ -1693,6 +1696,37 @@ free_one_loaded_tux_image_series ( int tux_part_group )
   
 }; // void free_one_loaded_tux_image_series ( int tux_part_group )
 
+/* ----------------------------------------------------------------------
+ * Now we determine the phase to use.  This is not all the same phase any 
+ * more for all tux parts now that we've introduced a walk cycle.
+ * ---------------------------------------------------------------------- */
+int
+get_current_phase ( int tux_part_group , int player_num , int motion_class ) 
+{
+  int our_phase = (int) Me [ player_num ] . phase ;
+  float my_speed;
+
+  if ( ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
+    {
+      our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
+
+      //--------------------
+      // Maybe the Tux speed is so high, that he should be considered running...
+      // But then we should use the running motion, which is just 10 frames shifted
+      // but otherwise in sync with the normal walkcycle...
+      //
+      my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
+			Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
+      if ( my_speed > ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
+	our_phase += TUX_WALK_CYCLE_PHASES ;
+
+      // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
+    }
+
+  return ( our_phase );
+
+}; // int get_current_phase ( int tux_part_group , int player_num ) 
+
 /*----------------------------------------------------------------------
  * This function should blit the isometric version of the Tux to the
  * screen.
@@ -1706,9 +1740,6 @@ iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int 
   int our_phase = 0 ;
   int motion_class = 0 ;
   int weapon_type ;
-  char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
-  float my_speed;
-  static int previously_used_motion_class = -4 ; // something we'll never really use...
 
   //--------------------
   // Now we find out which weapon class to use in this case.
@@ -1763,24 +1794,7 @@ Empty part string received!",
   // Now we determine the phase to use.  This is not all the same
   // phase any more for all tux parts now that we've introduced a walk cycle.
   //
-  our_phase = (int) Me [ player_num ] . phase ;
-
-  if ( ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
-    {
-      our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
-
-      //--------------------
-      // Maybe the Tux speed is so high, that he should be considered running...
-      // But then we should use the running motion, which is just 10 frames shifted
-      // but otherwise in sync with the normal walkcycle...
-      //
-      my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
-			Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
-      if ( my_speed > ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
-	our_phase += TUX_WALK_CYCLE_PHASES ;
-
-      // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
-    }
+  our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
 
   //--------------------
   // Now if the iso_image we want to blit right now has not yet been loaded,
@@ -2802,7 +2816,7 @@ PutItem( int ItemNumber , int mask , int put_thrown_items_flag )
 {
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
-  gps ItemGPS;
+  // gps ItemGPS;
 
   //--------------------
   // The unwanted cases MUST be handled first...
@@ -2835,13 +2849,15 @@ There was an item type given, that exceeds the range of item images loaded.",
        ( CurItem -> throw_time > 0 ) ) 
     return;
 
-  
 
-
-  ItemGPS . x = CurItem -> pos . x ;
-  ItemGPS . y = CurItem -> pos . y ;
-  ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
-  if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap && ( CurItem -> throw_time == 0 ) ) return;
+  //--------------------
+  // A visibility check for items on the floor.  We'll omit that for now...
+  //
+  // ItemGPS . x = CurItem -> pos . x ;
+  // ItemGPS . y = CurItem -> pos . y ;
+  // ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
+  // if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap && ( CurItem -> throw_time == 0 ) ) return;
+  //
 
   //--------------------
   // Now we can go take a look if maybe there is an ingame surface 
