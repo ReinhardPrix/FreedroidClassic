@@ -238,24 +238,27 @@ closed_chest_below_mouse_cursor ( int player_num )
  * cursor and if this is so, then the obstacle index of that barrel will
  * be returned.  Else -1 is returned for no barrel.
  * ---------------------------------------------------------------------- */
+/*
 int
 smashable_barred_below_mouse_cursor ( int player_num ) 
 {
-  finepoint MapPositionOfMouse;
-  int i;
-  int obst_index ;
-
-  if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-			   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+    finepoint MapPositionOfMouse;
+    int i;
+    int obst_index ;
+    
+    if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
-      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-
-      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	MapPositionOfMouse.x = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	MapPositionOfMouse.y = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	
+	for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
 	{
 	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
 	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
@@ -282,6 +285,130 @@ smashable_barred_below_mouse_cursor ( int player_num )
     }
 
   return ( -1 ) ;
+
+}; // int smashable_barred_below_mouse_cursor ( int player_num ) 
+*/
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+mouse_cursor_is_on_that_iso_image ( float pos_x , float pos_y , iso_image* our_iso_image )
+{
+    // our_iso_image = & ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) this_bot -> animation_phase ] ) ;
+    SDL_Rect screen_rectangle ;
+
+    screen_rectangle . x = 
+	translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+	our_iso_image -> offset_x ;
+    screen_rectangle . y = 
+	translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+	our_iso_image -> offset_y ;
+    screen_rectangle . w = our_iso_image -> original_image_width ;
+    screen_rectangle . h = our_iso_image -> original_image_height ;
+    
+    if ( MouseCursorIsInRect ( & ( screen_rectangle ) , 
+			       ServerThinksInputAxisX ( 0 ) + User_Rect . w / 2 + User_Rect . x ,
+			       ServerThinksInputAxisY ( 0 ) + User_Rect . h / 2 + User_Rect . y ) )
+    {
+	return ( TRUE );
+    }      
+
+    return ( FALSE );
+};
+
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+mouse_cursor_is_on_that_obstacle ( int obst_index ) 
+{
+
+    if ( mouse_cursor_is_on_that_iso_image ( 
+	     CurLevel -> obstacle_list [ obst_index ] . pos . x ,
+	     CurLevel -> obstacle_list [ obst_index ] . pos . y ,
+	     & ( obstacle_map [ CurLevel -> obstacle_list [ obst_index ] . type ] . image ) ) )
+    {
+	return ( TRUE ) ;
+    }
+    return ( FALSE );
+}; // int mouse_cursor_is_on_that_obstacle ( int obst_index ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+smashable_barred_below_mouse_cursor ( int player_num ) 
+{
+    int x, y ;
+    finepoint MapPositionOfMouse;
+    int i;
+    int obst_index ;
+
+    //--------------------
+    // Now if the cursor is not inside the user rectangle at all, then
+    // there can never be a barrel under the mouse cursor...
+    //
+    if ( ! MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+	return ( -1 ) ;
+
+
+    //--------------------
+    // We find the approximate position of the mouse cursor on the floor.
+    // We will use that as the basis for our scanning for barrels under the
+    // current mouse cursor.
+    //
+    MapPositionOfMouse.x = translate_pixel_to_map_location ( 
+	player_num , 
+	(float) ServerThinksInputAxisX ( player_num ) , 
+	(float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+    MapPositionOfMouse.y = translate_pixel_to_map_location ( 
+	player_num , 
+	(float) ServerThinksInputAxisX ( player_num ) , 
+	(float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+    
+    for ( x = MapPositionOfMouse . x + 3 ; x > MapPositionOfMouse . x - 3 ; x -- )
+    {
+	for ( y = MapPositionOfMouse . y + 3 ; y > MapPositionOfMouse . y - 3 ; y -- )
+	{
+	    if ( ( ( (int) x ) < 0 ) ||
+		 ( ( (int) y ) < 0 ) ||
+		 ( ( (int) x ) >= CurLevel -> xlen ) ||
+		 ( ( (int) y ) >= CurLevel -> ylen ) ) continue ;
+	    
+	    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	    {
+		
+		obst_index = CurLevel -> map [ (int) y ] [ (int) x ] . obstacles_glued_to_here [ i ] ;
+		
+		if ( obst_index == (-1) ) continue;
+		
+		switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+		{
+		    case ISO_BARREL_1:
+		    case ISO_BARREL_2:
+		    case ISO_BARREL_3:
+		    case ISO_BARREL_4:
+			if ( mouse_cursor_is_on_that_obstacle ( obst_index ) )
+			{
+			    DebugPrintf ( 1 , "\n%s(): barrel under cursor identified." , __FUNCTION__ );		    
+			    return ( obst_index ) ;
+			}
+			break;
+			
+		    default: 
+			break;
+		}
+		
+	    }
+	}
+    }
+    
+    return ( -1 ) ;
 
 }; // int smashable_barred_below_mouse_cursor ( int player_num ) 
 
@@ -2268,7 +2395,7 @@ GetLivingDroidBelowMouseCursor ( int player_num )
     // float DistanceFound = 1000;
     // float CurrentDistance;
     enemy* this_bot;
-    SDL_Rect enemy_screen_rectangle;
+    // SDL_Rect enemy_screen_rectangle;
     int RotationModel, RotationIndex;
     iso_image* our_iso_image ;
 
@@ -2314,6 +2441,7 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 
 	our_iso_image = & ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) this_bot -> animation_phase ] ) ;
 
+/*
 	enemy_screen_rectangle . x = 
 	    translate_map_point_to_screen_pixel ( this_bot -> pos . x , this_bot -> pos . y , TRUE ) + 
 	    our_iso_image -> offset_x ;
@@ -2323,12 +2451,19 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 	enemy_screen_rectangle . w = our_iso_image -> original_image_width ;
 	enemy_screen_rectangle . h = our_iso_image -> original_image_height ;
 
-	if ( MouseCursorIsInRect ( & ( enemy_screen_rectangle ) , ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
-			      ServerThinksInputAxisY ( player_num ) + User_Rect . h / 2 + User_Rect . y ) )
+	if ( MouseCursorIsInRect ( & ( enemy_screen_rectangle ) , 
+				   ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
+				   ServerThinksInputAxisY ( player_num ) + User_Rect . h / 2 + User_Rect . y ) )
 	{
 	    TargetFound = i;
 	}      
-
+*/
+	if ( mouse_cursor_is_on_that_iso_image ( this_bot -> pos . x , 
+						 this_bot -> pos . y , 
+						 our_iso_image ) )
+	{
+	    TargetFound = i;
+	}
     }
     
     //--------------------
