@@ -2938,6 +2938,102 @@ add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type )
 }; // void add_obstacle ( Level EditLevel , float x , float y , int Highlight )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+delete_obstacle ( level* EditLevel , obstacle* our_obstacle )
+{
+  int i,j;
+  int obstacle_index = (-1) ;
+  int xtile, ytile;
+
+  //--------------------
+  // The likely case that no obstacle was currently marked.
+  //
+  if ( our_obstacle == NULL ) return;
+
+  //--------------------
+  // We need to find out the index of the obstacle in question,
+  // so that we can find out and eliminate any glue for this 
+  // obstacle.
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( our_obstacle == & ( EditLevel -> obstacle_list [ i ] ) )
+	{
+	  obstacle_index = i ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // Maybe there is a severe bug somewhere in FreedroidRPG.  We catch
+  // this case as well...
+  //
+  if ( obstacle_index == (-1) )
+    {
+      GiveStandardErrorMessage ( "delete_obstacle (...)" , "\
+Unhandles level editor edit mode received.",
+				 PLEASE_INFORM , IS_FATAL );
+    }
+
+  //--------------------
+  // Now we can eliminate all the glue...
+  //
+  for ( xtile = 0 ; xtile < EditLevel -> xlen ; xtile ++ )
+    {
+      for ( ytile = 0 ; ytile < EditLevel -> ylen ; ytile ++ )
+	{
+	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    if ( EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ i ] == 
+		 obstacle_index )
+	      {
+		EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ i ] = (-1) ;
+		//--------------------
+		// Maybe there are other obstacles glued to here.  Then we need to fill the
+		// gap in the glue array that we have just created.
+		//
+		for ( j = i ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE - 1 ; j ++ )
+		  {
+		    if ( EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] != (-1) )
+		      {
+			EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j ] = 
+			  EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] ;
+			EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] = (-1) ;
+		      }
+		  }
+		
+	      }
+	}
+    }
+
+  //--------------------
+  // And of course we must not forget to delete the obstalce itself
+  // as well, not only the glue...
+  //
+  our_obstacle -> type = ( -1 ) ;
+
+  //--------------------
+  // Now that we maybe have torn a gap into the current list of obstacles,
+  // we must see to fill this gap again...
+  //
+  for ( j = obstacle_index ; j < MAX_OBSTACLES_ON_MAP - 1 ; j ++ )
+    {
+      memcpy ( & ( EditLevel -> obstacle_list [ j ] ) , 
+	       & ( EditLevel -> obstacle_list [ j + 1 ] ) ,
+	       sizeof ( obstacle ) );
+    }
+
+  //--------------------
+  // Now doing that must have shifted the glue!  That is a problem.  We need to
+  // reglue everything to the map...
+  //
+  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+
+}; // void delete_obstacle ( obstacle* our_obstacle )
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -3196,6 +3292,13 @@ LevelEditor(void)
 	      Highlight = 0 ;
 	    }
 	  if ( IPressed () ) ZoomIn();
+
+	  if ( XPressed () )
+	    {
+	      delete_obstacle ( EditLevel , level_editor_marked_obstacle );
+	      level_editor_marked_obstacle = NULL ;
+	      while ( XPressed() );
+	    }
   
 	  //--------------------
 	  // If the person using the level editor pressed w, the waypoint is
@@ -3354,15 +3457,15 @@ LevelEditor(void)
 		  Me [ 0 ] . pos . x = 
 		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
 						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
-		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
-		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
-		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
+		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-1 )
+		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-1 ;
+		  if ( Me [ 0 ] . pos . x <= 0 ) Me [ 0 ] . pos . x = 0;
 		  Me [ 0 ] . pos . y = 
 		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
 						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
-		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
-		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
-		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-1 )
+		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-1 ;
+		  if ( Me [ 0 ] . pos . y <= 0 ) Me [ 0 ] . pos . y = 0;
 		}
 	    }
 

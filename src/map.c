@@ -1253,42 +1253,6 @@ CollectAutomapData ( void )
 }; // void CollectAutomapData ( void )
 
 /* ----------------------------------------------------------------------
- * When one of the box tiles gets hit, e.g. by a blast exploding on the
- * tile or a influencer melee hit on the tile, then the box explodes,
- * possibly leaving some goods behind.
- * ---------------------------------------------------------------------- */
-/*
-void 
-SmashBox ( float x , float y )
-{
-  int map_x, map_y;
-  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  map_x=(int)rintf(x);
-  map_y=(int)rintf(y);
-
-  //--------------------
-  // first we see if there are any destructible map tiles, that need to
-  // be destructed this way...
-  //
-  switch ( BoxLevel->map[ map_y ][ map_x ]  . floor_value )
-    { 
-    case BOX_4:
-    case BOX_3:
-    case BOX_2:
-    case BOX_1:
-      BoxLevel->map[ map_y ][ map_x ]  . floor_value = FLOOR;
-      StartBlast( map_x , map_y , BoxLevel->levelnum , DRUIDBLAST );
-      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
-      break;
-    default:
-      break;
-    }
-
-}; // void SmashBox ( float x , float y );
-*/
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
