@@ -9,9 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/05/23 20:19:19  prix
- * Sat May 22 18:19:55 1993: Soundblastervariablen hinzugefuegt
- * Sun May 23 12:19:11 1993: removed old Level array
+ * Revision 1.4  1993/05/23 21:08:14  prix
+ * Sun May 23 16:31:46 1993: added new-struct variables to replace old ones
  *
  * Revision 1.5  1993/05/28  20:53:58  prix
  * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
