@@ -116,6 +116,7 @@ typedef struct
   int zoom_is_on;
   int use_bars_instead_of_energy_o_meter;
   int show_quick_inventory;
+  int show_blood; // this can be used to make the game more friendly for children...
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -287,6 +288,10 @@ typedef struct
   int block_area_type;
   float block_area_parm_1;
   float block_area_parm_2;
+  float upper_border ;
+  float lower_border ;
+  float left_border ;
+  float right_border ;
   int is_smashable;
   int needs_pre_put; // this is a special property for obstacles, that can be stepped on, like a rug or floor plate.
   int drop_random_treasure;

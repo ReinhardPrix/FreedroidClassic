@@ -1671,7 +1671,7 @@ init_obstacle_data( void )
       //
       obstacle_map [ i ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
       obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
-      obstacle_map [ i ] . block_area_parm_2 = standard_wall_thickness ;
+      obstacle_map [ i ] . block_area_parm_2 = 1.2 ; // standard_wall_thickness ;
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
@@ -2134,20 +2134,20 @@ init_obstacle_data( void )
   obstacle_map [ ISO_THICK_WALL_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_V ] . filename = "iso_thick_wall_0002.png" ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . filename = "iso_thick_wall_0003.png" ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . filename = "iso_thick_wall_0004.png" ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . filename = "iso_thick_wall_0005.png" ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . filename = "iso_thick_wall_0006.png" ;
 
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -2272,6 +2272,21 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BLOOD_8 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_BLOOD_8 ] . filename = "iso_blood_0008.png" ;
   obstacle_map [ ISO_BLOOD_8 ] . needs_pre_put = TRUE ;
+
+
+  //--------------------
+  // Now that we have defined the block area paramters, it's time to do some
+  // simple but often required computations in advance:  Calculating the offsets
+  // each obstacle's block area has from the obstacle center.
+  //
+  for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+    {
+      obstacle_map [ i ] . upper_border = - obstacle_map [ i ] . block_area_parm_1 / 2.0 ;
+      obstacle_map [ i ] . lower_border = + obstacle_map [ i ] . block_area_parm_1 / 2.0 ;
+      obstacle_map [ i ] . left_border  = - obstacle_map [ i ] . block_area_parm_2 / 2.0 ;
+      obstacle_map [ i ] . right_border = + obstacle_map [ i ] . block_area_parm_2 / 2.0 ;
+    }
+
 
 }; // void init_obstacle_data( void )
 

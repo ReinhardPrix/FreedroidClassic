@@ -1249,7 +1249,7 @@ enum
  * things.
  * ---------------------------------------------------------------------- */
 void
-New_GraphicsSound_Options_Menu (void)
+New_Graphics_Options_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
@@ -1257,17 +1257,133 @@ New_GraphicsSound_Options_Menu (void)
   char Options1[1000];
   char Options2[1000];
   char Options3[1000];
-  char Options4[1000];
-  char Options5[1000];
-  char Options6[1000];
+  char* MenuTexts[10];
+  enum
+    { 
+      SET_GAMMA_CORRECTION = 1 , 
+      SET_FULLSCREEN_FLAG, 
+      CW_SIZE,
+      SET_SHOW_BLOOD_FLAG,
+      LEAVE_OPTIONS_MENU 
+    };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+      sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      sprintf( Options2 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
+      sprintf( Options3 , "Show Blood: %s", 
+	       GameConfig . show_blood ? "YES" : "NO" );
+      MenuTexts[0]=Options0;
+      MenuTexts[1]=Options1;
+      MenuTexts[2]=Options2;
+      MenuTexts[3]=Options3;
+      MenuTexts[4]="Back";
+      MenuTexts[5]="";
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+
+      switch (MenuPosition) 
+	{
+
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+
+	case SET_GAMMA_CORRECTION:
+
+	  if ( RightPressed() ) 
+	    {
+	      while ( RightPressed());
+	      GameConfig.Current_Gamma_Correction+=0.05;
+	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	    }
+
+	  if ( LeftPressed() ) 
+	    {
+	      while (LeftPressed());
+	      GameConfig.Current_Gamma_Correction-=0.05;
+	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	    }
+
+	  break;
+
+	case SET_FULLSCREEN_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  SDL_WM_ToggleFullScreen (Screen);
+	  fullscreen_on = !fullscreen_on;
+	  break;
+
+	case CW_SIZE:
+	  while (EnterPressed() || SpacePressed() );
+	  
+	  if (classic_user_rect)
+	    {
+	      classic_user_rect = FALSE;
+	      Copy_Rect (Full_User_Rect, User_Rect);
+	    }
+	  else
+	    {
+	      classic_user_rect = TRUE;
+	      Copy_Rect (Classic_User_Rect, User_Rect);
+	    }
+	  
+	  ClearGraphMem();
+	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	  our_SDL_flip_wrapper( Screen );
+	  
+	  break;
+
+	case SET_SHOW_BLOOD_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . show_blood = !GameConfig . show_blood;
+	  break;
+
+	case LEAVE_OPTIONS_MENU:
+	  while (EnterPressed() || SpacePressed() );
+	  Weiter=TRUE;
+	  break;
+
+	default: 
+	  break;
+
+	} 
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // void New_Graphics_Options_Menu (void)
+
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
+void
+New_Sound_Options_Menu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+  char Options0[1000];
+  char Options1[1000];
+  char Options2[1000];
+  char Options3[1000];
   char* MenuTexts[10];
   enum
     { 
       SET_BG_MUSIC_VOLUME=1, 
       SET_SOUND_FX_VOLUME, 
-      SET_GAMMA_CORRECTION, 
-      SET_FULLSCREEN_FLAG, 
-      CW_SIZE,
       SET_TERMINATE_ON_MISSING_FLAG,
       SET_SHOW_SUBTITLE_FLAG,
       LEAVE_OPTIONS_MENU 
@@ -1282,24 +1398,18 @@ New_GraphicsSound_Options_Menu (void)
   while (!Weiter)
     {
 
-      sprintf( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      sprintf( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      sprintf( Options2 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
-      sprintf( Options3 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      sprintf( Options4 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
-      sprintf( Options5 , "Terminate On Missing Sample: %s", 
+      sprintf ( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      sprintf ( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      sprintf( Options2 , "Terminate On Missing Sample: %s", 
 	       GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
-      sprintf( Options6 , "Show Subtitles in Dialogs: %s", 
+      sprintf( Options3 , "Show Subtitles in Dialogs: %s", 
 	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]=Options3;
-      MenuTexts[4]=Options4;
-      MenuTexts[5]=Options5;
-      MenuTexts[6]=Options6;
-      MenuTexts[7]="Back";
-      MenuTexts[8]="";
+      MenuTexts [ 0 ] = Options0;
+      MenuTexts [ 1 ] = Options1;
+      MenuTexts [ 2 ] = Options0;
+      MenuTexts [ 3 ] = Options1;
+      MenuTexts [ 4 ] = "Back";
+      MenuTexts [ 5 ] = "";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1347,50 +1457,6 @@ New_GraphicsSound_Options_Menu (void)
 
 	  break;
 
-	case SET_GAMMA_CORRECTION:
-
-	  if ( RightPressed() ) 
-	    {
-	      while ( RightPressed());
-	      GameConfig.Current_Gamma_Correction+=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
-	    }
-
-	  if ( LeftPressed() ) 
-	    {
-	      while (LeftPressed());
-	      GameConfig.Current_Gamma_Correction-=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
-	    }
-
-	  break;
-
-	case SET_FULLSCREEN_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  SDL_WM_ToggleFullScreen (Screen);
-	  fullscreen_on = !fullscreen_on;
-	  break;
-
-	case CW_SIZE:
-	  while (EnterPressed() || SpacePressed() );
-	  
-	  if (classic_user_rect)
-	    {
-	      classic_user_rect = FALSE;
-	      Copy_Rect (Full_User_Rect, User_Rect);
-	    }
-	  else
-	    {
-	      classic_user_rect = TRUE;
-	      Copy_Rect (Classic_User_Rect, User_Rect);
-	    }
-	  
-	  ClearGraphMem();
-	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-	  our_SDL_flip_wrapper( Screen );
-	  
-	  break;
-
 	case SET_TERMINATE_ON_MISSING_FLAG:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig.terminate_on_missing_speech_sample = !GameConfig.terminate_on_missing_speech_sample;
@@ -1418,7 +1484,7 @@ New_GraphicsSound_Options_Menu (void)
 
   return;
 
-}; // void New_GraphicsSound_Options_Menu (void)
+}; // void New_Sound_Options_Menu (void)
 
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
@@ -1750,7 +1816,8 @@ Options_Menu (void)
   char* MenuTexts[10];
 enum
   { 
-    GRAPHICS_SOUND_OPTIONS=1, 
+    GRAPHICS_OPTIONS=1, 
+    SOUND_OPTIONS,
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
     PERFORMANCE_TWEAKS_OPTIONS,
@@ -1758,13 +1825,14 @@ enum
     LEAVE_OPTIONS_MENU 
   };
 
-  MenuTexts[0]="Graphics & Sound";
-  MenuTexts[1]="Droid Talk";
-  MenuTexts[2]="On-Screen Displays";
-  MenuTexts[3]="Performance Tweaks";
-  MenuTexts[4]="Save Options";
-  MenuTexts[5]="Back";
-  MenuTexts[6]="";
+  MenuTexts[0]="Graphics Options";
+  MenuTexts[1]="Sound Options";
+  MenuTexts[2]="Droid Talk";
+  MenuTexts[3]="On-Screen Displays";
+  MenuTexts[4]="Performance Tweaks";
+  MenuTexts[5]="Save Options";
+  MenuTexts[6]="Back";
+  MenuTexts[7]="";
 
   while ( !Weiter )
     {
@@ -1776,9 +1844,13 @@ enum
 	case (-1):
 	  Weiter=!Weiter;
 	  break;
-	case GRAPHICS_SOUND_OPTIONS:
+	case GRAPHICS_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
-	  New_GraphicsSound_Options_Menu();
+	  New_Graphics_Options_Menu();
+	  break;
+	case SOUND_OPTIONS:
+	  while (EnterPressed() || SpacePressed() );
+	  New_Sound_Options_Menu();
 	  break;
 	case DROID_TALK_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );

@@ -179,7 +179,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   CheckPosition.x = x1;
   CheckPosition.y = y1;
 
-  for ( i = 0 ; i < Steps ; i++ )
+  for ( i = 0 ; i < Steps + 1 ; i++ )
     {
       if ( ! IsPassable ( CheckPosition.x , CheckPosition.y , z ) ) 
 	{

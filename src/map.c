@@ -3112,7 +3112,10 @@ Error:  Unsupported type of collision area given.",
   // Now if the position lies inside the collision rectangle, then there's
   // a collion.  Otherwise not.
   //
-  if ( ( x > upper_border ) && ( x < lower_border ) && ( y > left_border ) && ( y < right_border ) )
+  if ( ( x > our_obstacle -> pos . x + obstacle_map [ obs_type ] . upper_border ) && 
+       ( x < our_obstacle -> pos . x + obstacle_map [ obs_type ] . lower_border ) && 
+       ( y > our_obstacle -> pos . y + obstacle_map [ obs_type ] . left_border ) && 
+       ( y < our_obstacle -> pos . y + obstacle_map [ obs_type ] . right_border ) )
     return ( TRUE );
 
   return ( FALSE );
@@ -3208,7 +3211,8 @@ IsPassable ( float x , float y , int z )
 
   if ( x_tile + 1 < PassLevel -> xlen )
     {
-      if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile     , PassLevel ) ) return ( FALSE );
+      if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile     , PassLevel ) ) 
+	return ( FALSE );
 
       if ( y_tile + 1 < PassLevel -> ylen )
 	if ( position_collides_with_obstacles_on_square ( x , y , x_tile + 1 , y_tile + 1 , PassLevel ) ) 
