@@ -30,5 +30,7 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
 
+CFLAGS="$CFLAGS -Wall" 
+
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
