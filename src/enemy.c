@@ -194,11 +194,143 @@ ShuffleEnemys (void)
 
 }	/* ShuffleEnemys() */
 
-/*@Function============================================================
-@Desc: 
+void 
+DoEnemyMovement( int EnemyNum )
+{
+  int i,j;
+  finepoint Restweg;
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  float maxspeed;
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
-@Ret: 
-@Int:
+  //--------------------
+  // At first, we check for a lot of cases in which we do not
+  // need to move anything for this reason or for that
+  //
+
+  // ignore robots on other levels 
+  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+
+  // ignore dead robots as well...
+  if ( ThisRobot->Status == OUT ) return;
+
+  // Now check if the robot is still alive
+  // if the robot just got killed, initiate the
+  // explosion and all that...
+  if ( ThisRobot->energy <= 0)
+    {
+      ThisRobot->Status = OUT;
+      RealScore += Druidmap[ ThisRobot->type ].score;
+      StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
+ 		  DRUIDBLAST);
+      if (LevelEmpty ())
+	CurLevel->empty = WAIT_LEVELEMPTY;
+      return;	// this one's down, so we can move on to the next
+    }
+  
+  // ignore all enemys with CompletelyFixed flag set...
+  if ( ThisRobot->CompletelyFixed ) return;
+
+  // robots that still have to wait also do not need to
+  // be processed for movement
+  if ( ThisRobot->warten > 0) return;
+
+  // Now check for collisions of this enemy with his colleagues
+  CheckEnemyEnemyCollision ( EnemyNum );
+
+
+
+  //--------------------
+  // Now comes the real movement part
+  // We have to prepare a lot of things...
+  //
+  //
+
+  // We do some definitions to save us some more typing later...
+  WpList = CurLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+
+  // determine the remaining way until the target point is reached
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+
+  // --------------------
+  // As long a the distance from the current position of the enemy
+  // to its next wp is large, movement is rather sinple:
+
+  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.x =
+	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
+      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
+    } 	 
+  else
+    {
+      // --------------------
+      // Once this enemy is close to his final destination waypoint, we have
+      // to do some fine tuning, and then of course set the next waypoint.
+      ThisRobot->pos.x = nextwp_pos.x;
+      ThisRobot->speed.x = 0;
+    }
+
+
+  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.y =
+	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
+      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
+    }
+  else
+    {
+      // ThisRobot->pos.y += (nextwp_pos.y-ThisRobot->pos.y)*Frame_Time();
+      ThisRobot->pos.y = nextwp_pos.y;
+      ThisRobot->speed.y = 0;
+    }
+
+
+  //--------------------
+  // Now we can see if we are perhaps already there?
+  // then it might be time to set a new waypoint.
+  //
+  if ((Restweg.x == 0) && (Restweg.y == 0))
+    {
+      ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
+      ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
+      
+      /* suche moegliche Verbindung von hier */
+      DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
+      /* but only if there are connections possible */
+      for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
+	if ( WpList[nextwp].connections[j] != -1 )
+	  break;
+      if ( j < MAX_WP_CONNECTIONS )
+	while ( (trywp = WpList[nextwp].
+		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
+      else
+	{
+	  DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
+	  // Terminate(ERR);
+	}
+      
+      /* setze neuen Waypoint */
+      ThisRobot->nextwaypoint = trywp;
+    }			/* if */
+  
+  
+} // void DoEnemyMovement ( int EnemyNum )
+
+/*@Function============================================================
+@Desc: This is the function, that move each of the enemys according to
+their orders and their program
+
+@Ret: none
 * $Function----------------------------------------------------------*/
 void
 MoveEnemys (void)
@@ -217,116 +349,15 @@ MoveEnemys (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
      {
-       maxspeed = Druidmap[ AllEnemys[i].type ].maxspeed;
 
-       /* ignore robots on other levels */
-       if (AllEnemys[i].levelnum != CurLevel->levelnum)
-	 continue;
-
-       // ignore dead robots as well...
-       if (AllEnemys[i].Status == OUT)
-	 continue;
-
-       // if the robot just got killed, initiate the
-       // explosion and all that...
-       if (AllEnemys[i].energy <= 0)
-	 {
-	   AllEnemys[i].Status = OUT;
-	   RealScore += Druidmap[AllEnemys[i].type].score;
-	   StartBlast (AllEnemys[i].pos.x, AllEnemys[i].pos.y,
-		       DRUIDBLAST);
-	   if (LevelEmpty ())
-	     CurLevel->empty = WAIT_LEVELEMPTY;
-	   continue;		/* naechster Enemy, der ist hin */
-	 }
+       DoEnemyMovement(i);
 
        // If its a combat droid, then if might attack...
        if (Druidmap[AllEnemys[i].type].aggression)
 	 AttackInfluence (i);
 
-       // ignore all enemys with CompletelyFixed flag set...
-       if ( AllEnemys[i].CompletelyFixed ) continue;
 
 
-
-       // robots that still have to wait also do not need to
-       // be processed...
-       if (AllEnemys[i].warten > 0)
-	 continue;
-
-       // Now check for collisions of this enemy with his colleagues
-       CheckEnemyEnemyCollision (i);
-
-       // determine the remaining way until the target point is reached
-       WpList = CurLevel->AllWaypoints;
-       nextwp = AllEnemys[i].nextwaypoint;
-       nextwp_pos.x = WpList[nextwp].x;
-       nextwp_pos.y = WpList[nextwp].y;
-
-       Restweg.x = nextwp_pos.x - AllEnemys[i].pos.x;
-       Restweg.y = nextwp_pos.y - AllEnemys[i].pos.y;
-
-       // --------------------
-       // As long a the distance from the current position of the enemy
-       // to its next wp is large, movement is rather sinple:
-
-       if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
-	 {
-	   AllEnemys[i].speed.x =
-	     (Restweg.x / fabsf (Restweg.x)) * maxspeed;
-	   AllEnemys[i].pos.x += AllEnemys[i].speed.x * Frame_Time ();
-	 } 	 
-       else
-	 {
-	   // --------------------
-	   // Once this enemy is close to his final destination waypoint, we have
-	   // to do some fine tuning, and then of course set the next waypoint.
-	   AllEnemys[i].pos.x = nextwp_pos.x;
-	   AllEnemys[i].speed.x = 0;
-	 }
-
-
-       if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
-	 {
-	   AllEnemys[i].speed.y =
-	     (Restweg.y / fabsf (Restweg.y)) * maxspeed;
-	   AllEnemys[i].pos.y += AllEnemys[i].speed.y * Frame_Time ();
-	 }
-       else
-	 {
-	   // AllEnemys[i].pos.y += (nextwp_pos.y-AllEnemys[i].pos.y)*Frame_Time();
-	   AllEnemys[i].pos.y = nextwp_pos.y;
-	   AllEnemys[i].speed.y = 0;
-	 }
-
-
-       //--------------------
-       // Now we can see if we are perhaps already there?
-       // then it might be time to set a new waypoint.
-       //
-       if ((Restweg.x == 0) && (Restweg.y == 0))
-	 {
-	   AllEnemys[i].lastwaypoint = AllEnemys[i].nextwaypoint;
-	   AllEnemys[i].warten = MyRandom (ENEMYMAXWAIT);
-
-	   /* suche moegliche Verbindung von hier */
-	   DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
-	   /* but only if there are connections possible */
-	   for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
-	     if ( WpList[nextwp].connections[j] != -1 )
-	       break;
-	   if ( j < MAX_WP_CONNECTIONS )
-	     while ( (trywp = WpList[nextwp].
-		      connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
-	   else
-	     {
-	       DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
-	       // Terminate(ERR);
-	     }
-
-	  /* setze neuen Waypoint */
-	  AllEnemys[i].nextwaypoint = trywp;
-	}			/* if */
     }	/* for (MAX_ENEMYS_ON_SHIP) */
 
 } /* MoveEnemys() */
