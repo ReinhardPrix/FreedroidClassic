@@ -1278,11 +1278,10 @@ int
 get_light_strength ( moderately_finepoint target_pos )
 {
 #define MAX_NUMBER_OF_LIGHT_SOURCES 10
-  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   int final_darkness = NUMBER_OF_SHADOW_IMAGES;
   moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
+  int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
   int i;
-
   Level light_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   //--------------------
@@ -1293,6 +1292,7 @@ get_light_strength ( moderately_finepoint target_pos )
     {
       light_sources [ i ] . x = -200 ;
       light_sources [ i ] . y = -200 ;
+      light_source_strengthes [ i ] = 0 ;
     }
 
   //--------------------
@@ -1301,6 +1301,7 @@ get_light_strength ( moderately_finepoint target_pos )
   //
   light_sources [ 0 ] . x = Me [ 0 ] . pos . x ;
   light_sources [ 0 ] . y = Me [ 0 ] . pos . y ;
+  light_source_strengthes [ 0 ] = light_level -> light_radius_bonus ;
 
   //--------------------
   // Now we can fill in the remaining light sources of this level
@@ -1311,6 +1312,7 @@ get_light_strength ( moderately_finepoint target_pos )
 	{
 	  light_sources [ i ] . x = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . x ;
 	  light_sources [ i ] . y = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . y ;
+	  light_source_strengthes [ i ] = 10 ;
 	}
     }
 
@@ -1325,17 +1327,18 @@ get_light_strength ( moderately_finepoint target_pos )
       // any place.  But maybe addition of light would be better, so we use the latter
       // code.
       //
-      // if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-      // ( light_sources [ i ] . x - target_pos . x ) + 
-      // ( light_sources [ i ] . y - target_pos . y ) * 
-      // ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-      // - light_bonus ) < final_darkness )
-      // final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-      // ( light_sources [ i ] . x - target_pos . x ) + 
-      // ( light_sources [ i ] . y - target_pos . y ) * 
-      // ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-      // - light_bonus ;
-      // 
+      if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+			    ( light_sources [ i ] . x - target_pos . x ) + 
+			    ( light_sources [ i ] . y - target_pos . y ) * 
+			    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+	     - light_source_strengthes [ i ] ) < final_darkness )
+	final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+					( light_sources [ i ] . x - target_pos . x ) + 
+					( light_sources [ i ] . y - target_pos . y ) * 
+					( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+	  - light_source_strengthes [ i ] ;
+      
+      /*
       if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
 			    ( light_sources [ i ] . x - target_pos . x ) + 
 			    ( light_sources [ i ] . y - target_pos . y ) * 
@@ -1347,11 +1350,10 @@ get_light_strength ( moderately_finepoint target_pos )
 									( light_sources [ i ] . y - target_pos . y ) ) * 
 								 4.0 )
 							 - light_bonus ) ) ;
+      */
     }
 
   return ( final_darkness );
-
-  // return ( (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ) ;
 
 }; // int get_light_strength ( moderately_finepoint target_pos )
 

@@ -640,7 +640,6 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   float planned_step_x;
   float planned_step_y;
 
-
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
   // reported from people, that the influencer would (*very* rarely) jump throught walls
@@ -669,8 +668,21 @@ MoveTuxAccordingToHisSpeed ( int player_num )
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
     }
 
-  Me [ player_num ] .pos.x += planned_step_x;
-  Me [ player_num ] .pos.y += planned_step_y;
+  //--------------------
+  // Maybe the Tux is just executing a weapon strike.  In this case, there should
+  // be no movement at all, so in this case we'll just not go anywhere...
+  //
+  if ( Me [ player_num ] . weapon_swing_time > 0 )
+    {
+      planned_step_x = 0 ;
+      planned_step_y = 0 ;
+    }
+
+  //--------------------
+  // Now we can make the actual move
+  //
+  Me [ player_num ] . pos . x += planned_step_x;
+  Me [ player_num ] . pos . y += planned_step_y;
 
   //--------------------
   // Even the Tux must not leave the map!  A sanity check is done
