@@ -2958,7 +2958,9 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
     int droid_under_melee_attack_cursor; 
     int do_melee_strike ;
     finepoint MapPositionOfMouse;
-    
+    char game_message_text[5000];
+    int reward; 
+
 #define PERFORM_TUX_ATTACK_RAW_DEBUG 1
 
     //--------------------
@@ -3126,6 +3128,17 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    AllEnemys [ i ] . energy -= Me [ player_num ] . base_damage + MyRandom ( Me [ player_num ] . damage_modifier );
 	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 	    
+	    if ( AllEnemys [ i ] . energy <= 0 )
+	    {
+		reward = Druidmap [ AllEnemys [ i ] . type ] . experience_reward;
+		Me [ 0 ] . Experience += reward;
+		sprintf ( game_message_text , 
+			  "%s was destroyed by your melee attack.  For defeating your enemy, you receive %d experience." ,
+			  Druidmap [ AllEnemys [ i ] . type ] . druidname , 
+			  reward );
+		append_new_game_message ( game_message_text );
+	    }
+	    
 	    melee_weapon_hit_something = TRUE;
 	    
 	    start_gethit_animation_if_applicable ( & ( AllEnemys [ i ] ) ) ; 
@@ -3193,7 +3206,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	if ( melee_weapon_hit_something ) play_melee_weapon_hit_something_sound();
 	else play_melee_weapon_missed_sound();
 	
-      return;
+	return;
     }
 
     //--------------------

@@ -1602,7 +1602,7 @@ MoveEnemys ( void )
 	// Now check if the robot is still alive if the robot just got killed, 
 	// initiate the explosion and all that...
 	//
-	if ( ThisRobot->energy <= 1)
+	if ( ThisRobot->energy <= 0 )
 	{
 	    InitiateDeathOfEnemy ( ThisRobot );
 	    continue;
