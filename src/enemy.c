@@ -1039,6 +1039,20 @@ AttackInfluence (int enemynum)
   
   if ( !IsVisible ( &ThisRobot->pos ) && ( ThisRobot->Friendly == FALSE ) ) return;
 
+
+  //--------------------
+  // At this point we know, that the influencer is visible!  Perhaps we have
+  // not yet 'greeted' him!  If that is so, we need to do that now:
+  //
+  if ( ThisRobot->has_greeted_influencer == FALSE )
+    {
+      ThisRobot->has_greeted_influencer = TRUE;
+      if ( Druidmap[ ThisRobot->type ].Greeting_Sound_Type != (-1) )
+	{
+	  PlayGreetingSound( Druidmap[ ThisRobot->type ].Greeting_Sound_Type );
+	}
+    }
+
   // Only fire, if the target is in range (applies only to MS machines) .... 
   //  if ((dist2 < FIREDIST2) &&
   // (!ThisRobot->firewait) &&
@@ -1120,6 +1134,10 @@ AttackInfluence (int enemynum)
 
       // Now we set the damage of this bullet to the correct value
       AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
+
+      AllBullets[j].time_in_seconds = 0;
+      AllBullets[j].time_in_frames = 0;
+      AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
 
       //}	/* if */
 
