@@ -761,6 +761,34 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	    case AUTOGUN_R:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_E ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case AUTOGUN_L:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_W ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case AUTOGUN_U:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_N ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case AUTOGUN_D:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_S ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
 	    default:
 	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{

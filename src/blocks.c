@@ -1490,6 +1490,19 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_2 = 0.9 ;
 
+  obstacle_map [ ISO_AUTOGUN_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_2 = 0.9 ;
+
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 
 /* ---------------------------------------------------------------------- 
