@@ -1742,7 +1742,9 @@ jump target west: %d\n",
   
   for ( i = 0 ; i < Lev -> num_waypoints ; i++ )
     {
-      sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
+      sprintf(linebuf, "Nr.=%3d x=%4d y=%4d rnd=%1d" , i , 
+	      Lev -> AllWaypoints [ i ] . x , Lev -> AllWaypoints [ i ] . y ,
+	      Lev -> AllWaypoints [ i ] . suppress_random_spawn );
       strcat( LevelMem, linebuf );
       strcat( LevelMem, "\t ");
       strcat (LevelMem, CONNECTION_STRING);
@@ -2110,7 +2112,7 @@ DecodeLoadedLeveldata ( char *data )
   char *map_begin, *wp_begin;
   char *WaypointPointer;
   int i;
-  int nr, x, y;
+  int nr, x, y, wp_rnd;
   int k;
   int connection;
   char *this_line;
@@ -2205,7 +2207,7 @@ DecodeLoadedLeveldata ( char *data )
 	  loadlevel->num_waypoints = i;
 	  break;
 	}
-      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
+      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d   rnd=%d" , &nr , &x , &y , &wp_rnd );
 
       // completely ignore x=0/y=0 entries, which are considered non-waypoints!!
       if ( x == 0 && y == 0 )
@@ -2213,7 +2215,8 @@ DecodeLoadedLeveldata ( char *data )
       
       loadlevel -> AllWaypoints [ i ] . x = x;
       loadlevel -> AllWaypoints [ i ] . y = y;
-      loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
+      // loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
+      loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = wp_rnd ;
 
       pos = strstr (this_line, CONNECTION_STRING);
       pos += strlen (CONNECTION_STRING);	// skip connection-string
@@ -2835,10 +2838,10 @@ game data file with all droid type specifications.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
-      AllEnemys[ FreeAllEnemysPosition ] . type = ListOfTypesAllowed[MyRandom ( DifferentRandomTypes - 1 ) ];
-      AllEnemys[ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
-      AllEnemys[ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
+      AllEnemys [ FreeAllEnemysPosition ] . type = ListOfTypesAllowed[MyRandom ( DifferentRandomTypes - 1 ) ];
+      AllEnemys [ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
+      AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
+      AllEnemys [ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
 
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
@@ -3597,6 +3600,7 @@ CreateWaypoint (level *Lev, int x, int y)
   Lev -> AllWaypoints [ num ] . suppress_random_spawn = 0 ;
 
   return;
+
 } // CreateWaypoint()
 
 

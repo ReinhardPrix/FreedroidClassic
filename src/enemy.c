@@ -406,13 +406,13 @@ ShuffleEnemys ( int LevelNum )
   nth_enemy = 0;
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
-      if ( ( AllEnemys[i].Status == OUT ) || ( AllEnemys[i].pos.z != LevelNum ) )
+      if ( ( AllEnemys [ i ] . Status == OUT ) || ( AllEnemys [ i ] . pos . z != LevelNum ) )
 	continue;		// dont handle dead enemys or on other level 
 
-      AllEnemys[ i ].persuing_given_course = FALSE; // since position is now completely mixed up,
+      AllEnemys [ i ] . persuing_given_course = FALSE; // since position is now completely mixed up,
                                                     // the robot needs to forget about any previous given course.
 
-      if (AllEnemys[i].CompletelyFixed) continue;
+      if ( AllEnemys [ i ] . CompletelyFixed ) continue;
 
       //--------------------
       // A special force, that is not completely fixed, needs to be integrated
@@ -451,9 +451,24 @@ ShuffleEnemys ( int LevelNum )
 	  continue;
 	}
 
-      nth_enemy++;
-      if (nth_enemy < wp_num)
-	wp = nth_enemy;
+      nth_enemy++ ;
+      if ( nth_enemy < wp_num )
+      {
+	  //--------------------
+	  // Now if that waypoint is already useful for random-spawning
+	  // bots, that's good.  Otherwise we need to skip this waypoint
+	  // and try again...
+	  //
+	  if ( ! ShuffleLevel -> AllWaypoints [ nth_enemy ] . suppress_random_spawn )
+	  {
+	      wp = nth_enemy;
+	  }
+	  else
+	  {
+	      i -- ;
+	      continue ;
+	  }
+      }
       else
 	{
 	  DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
