@@ -1091,13 +1091,15 @@ Credits_Menu (void)
     {
 
       InitiateMenu();
+      
+      DisplayImage ( NE_TITLE_PIC_FILE );
 
       CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
       LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");
       LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix and Reinhard Prix");
       LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "");
       LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "ARTWORK:");
-      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Bastian Samela");
+      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Bastian Salmela");
       LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "");
 
       SDL_Flip( ne_screen );
