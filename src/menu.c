@@ -1370,75 +1370,75 @@ StartupMenu (void)
 {
 #define FIRST_MIS_SELECT_ITEM_POS_X (0.0)
 #define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
-enum
-  { 
-    SINGLE_PLAYER_POSITION=1, 
-    MULTI_PLAYER_POSITION,
-    CREDITS_POSITION,
-    CONTRIBUTE_POSITION,
-    EXIT_FREEDROID_POSITION
-  };
-  int can_continue = 0 ;
-  int MenuPosition = 1 ;
-  char* MenuTexts [ 10 ] ;
-
-  Me [ 0 ] . status = MENU ;
-
-  DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
-
-  SDL_SetClipRect( Screen , NULL );
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spent in the menu.
-  Activate_Conservative_Frame_Computation ( ) ;
-
-  while (!can_continue)
+    enum
+	{ 
+	    SINGLE_PLAYER_POSITION=1, 
+	    MULTI_PLAYER_POSITION,
+	    CREDITS_POSITION,
+	    CONTRIBUTE_POSITION,
+	    EXIT_FREEDROID_POSITION
+	};
+    int can_continue = 0 ;
+    int MenuPosition = 1 ;
+    char* MenuTexts [ 10 ] ;
+    
+    Me [ 0 ] . status = MENU ;
+    
+    DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
+    
+    SDL_SetClipRect( Screen , NULL );
+    
+    // Prevent distortion of framerate by the delay coming from 
+    // the time spent in the menu.
+    Activate_Conservative_Frame_Computation ( ) ;
+    
+    while (!can_continue)
     {
-      SetCurrentFont ( Menu_BFont );
-
-      MenuTexts[0]= SINGLE_PLAYER_STRING ;
-      MenuTexts[1]="Multi Player";
-      MenuTexts[2]="Credits";
-      MenuTexts[3]="Contribute";
-      MenuTexts[4]="Exit Freedroid";
-      MenuTexts[5]="";
-
-      if ( ! skip_initial_menus )
-	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-      else
-	  MenuPosition = SINGLE_PLAYER_POSITION ;
-
-      switch (MenuPosition) 
+	SetCurrentFont ( Menu_BFont );
+	
+	MenuTexts[0]= SINGLE_PLAYER_STRING ;
+	MenuTexts[1]="Multi Player";
+	MenuTexts[2]="Credits";
+	MenuTexts[3]="Contribute";
+	MenuTexts[4]="Exit Freedroid";
+	MenuTexts[5]="";
+	
+	if ( ! skip_initial_menus )
+	    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	else
+	    MenuPosition = SINGLE_PLAYER_POSITION ;
+	
+	switch (MenuPosition) 
 	{
-	case SINGLE_PLAYER_POSITION:
-	  can_continue = Single_Player_Menu ( );
-	  break;
-	case MULTI_PLAYER_POSITION:
-	  can_continue = Multi_Player_Menu();
-	  break;
-	case CREDITS_POSITION:
-	  Credits_Menu();
-	  break;
-	case CONTRIBUTE_POSITION:
-	  Contribute_Menu();
-	  break;
-	case (-1):
-	case EXIT_FREEDROID_POSITION:
-	  Terminate( OK );
-	  break;
-	default: 
-	  break;
+	    case SINGLE_PLAYER_POSITION:
+		can_continue = Single_Player_Menu ( );
+		break;
+	    case MULTI_PLAYER_POSITION:
+		can_continue = Multi_Player_Menu();
+		break;
+	    case CREDITS_POSITION:
+		Credits_Menu();
+		break;
+	    case CONTRIBUTE_POSITION:
+		Contribute_Menu();
+		break;
+	    case (-1):
+	    case EXIT_FREEDROID_POSITION:
+		Terminate( OK );
+		break;
+	    default: 
+		break;
 	} 
-
+	
     }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  Me[0].status=MOBILE;
-
-  return;
-
+    
+    ClearGraphMem();
+    // Since we've faded out the whole scren, it can't hurt
+    // to have the top status bar redrawn...
+    Me[0].status=MOBILE;
+    
+    return;
+    
 }; // void StartupMenu( void );
 
 /* ----------------------------------------------------------------------

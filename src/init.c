@@ -1605,6 +1605,8 @@ PrepareStartOfNewCharacter ( void )
     PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
     our_SDL_flip_wrapper ( Screen );
     
+    append_new_game_message ( "Starting new game." );
+
 }; // void PrepareStartOfNewCharacter ( char* MissionName )
 
 /* ----------------------------------------------------------------------
@@ -1935,6 +1937,7 @@ ThouArtDefeated (void)
 
     DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
     Me [ 0 ] . status = OUT ;
+    append_new_game_message ( "Game over.\n" );
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;
     GameConfig . Mission_Log_Visible = FALSE;

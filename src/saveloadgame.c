@@ -263,97 +263,97 @@ SaveThumbnailOfGame ( void )
 int 
 SaveGame( void )
 {
-  char *SaveGameHeaderString;
-  FILE *SaveGameFile;  // to this file we will save all the ship data...
-  char filename[1000];
-  char linebuf[10000];
-  char* MenuTexts[10]={ "Back" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
-
-  if (!ConfigDir)
-    return (OK);
-
-  //--------------------
-  // Saving might take a while, therefore we activate the conservative
-  // frame rate, just to be sure, so that no sudden jumps occur, perhaps
-  // placing the influencer or some bullets outside the map even!
-  //
-  Activate_Conservative_Frame_Computation();
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
-
-  //--------------------
-  // Now we add a security question to prevent the player from (accidentially)
-  // saving a game where his character is already dead
-  //
-  if ( Me[0].energy <= 0 )
+    char *SaveGameHeaderString;
+    FILE *SaveGameFile;  // to this file we will save all the ship data...
+    char filename[1000];
+    char linebuf[10000];
+    char* MenuTexts[10]={ "Back" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
+    
+    if (!ConfigDir)
+	return (OK);
+    
+    //--------------------
+    // Saving might take a while, therefore we activate the conservative
+    // frame rate, just to be sure, so that no sudden jumps occur, perhaps
+    // placing the influencer or some bullets outside the map even!
+    //
+    Activate_Conservative_Frame_Computation();
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
+    
+    //--------------------
+    // Now we add a security question to prevent the player from (accidentially)
+    // saving a game where his character is already dead
+    //
+    if ( Me[0].energy <= 0 )
     {
-      DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
-		       MenuTexts , 1 , -1 , NULL );
-      return ( OK );
+	DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
+			 MenuTexts , 1 , -1 , NULL );
+	return ( OK );
     }
-
-  //--------------------
-  // Now that we really start to save the game, it's time to display the save
-  // game progress meter...
-  //
-  ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
-
-  //--------------------
-  // We must make sure the version string in the Me struct is set 
-  // correctly for later loading...
-  // But not only the version, but also some struct sizes and array
-  // lengthes should be checked as well, so that we have some extra
-  // protection against saved game data not fitting into some structs
-  // any more...
-  //
-  sprintf ( Me [ 0 ] . freedroid_version_string , 
-	    "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
-	    VERSION , 
-	   (int) sizeof(tux_t) , 
-	   (int) sizeof(enemy) ,
-	   (int) sizeof(bullet) ,
-	   (int) MAXBULLETS ,
-	   (int) MAX_ENEMYS_ON_SHIP );
-
-  //--------------------
-  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT );
-  if ( SaveShip( filename ) != OK )
+    
+    //--------------------
+    // Now that we really start to save the game, it's time to display the save
+    // game progress meter...
+    //
+    ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
+    
+    //--------------------
+    // We must make sure the version string in the Me struct is set 
+    // correctly for later loading...
+    // But not only the version, but also some struct sizes and array
+    // lengthes should be checked as well, so that we have some extra
+    // protection against saved game data not fitting into some structs
+    // any more...
+    //
+    sprintf ( Me [ 0 ] . freedroid_version_string , 
+	      "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+	      VERSION , 
+	      (int) sizeof(tux_t) , 
+	      (int) sizeof(enemy) ,
+	      (int) sizeof(bullet) ,
+	      (int) MAXBULLETS ,
+	      (int) MAX_ENEMYS_ON_SHIP );
+    
+    //--------------------
+    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT );
+    if ( SaveShip( filename ) != OK )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
 or file permissions of ~/.freedroid_rpg are somehow not right.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     } 
-  else
+    else
     {
-      DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
+	DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
     }
-
-  // ShowSaveGameProgressMeter( 30 ) ;
-
-  //--------------------
-  // First, we must determine the save game file name
-  //
-  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, ".savegame");
-  
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
-
-  //--------------------
-  // Now that we know which filename to use, we can open the save file for writing
-  //
-  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) {
-    printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
-    Terminate(ERR);
-    // return ERR;
-  }
-  
-  //--------------------
-  // Now that the file is opend for writing, we can start writing.  And the first thing
-  // we will write to the file will be a fine header, indicating what this file is about
-  // and things like that...
-  //
-  SaveGameHeaderString="\n\
+    
+    // ShowSaveGameProgressMeter( 30 ) ;
+    
+    //--------------------
+    // First, we must determine the save game file name
+    //
+    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, ".savegame");
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
+    
+    //--------------------
+    // Now that we know which filename to use, we can open the save file for writing
+    //
+    if( ( SaveGameFile = fopen(filename, "wb")) == NULL) {
+	printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
+	Terminate(ERR);
+	// return ERR;
+    }
+    
+    //--------------------
+    // Now that the file is opend for writing, we can start writing.  And the first thing
+    // we will write to the file will be a fine header, indicating what this file is about
+    // and things like that...
+    //
+    SaveGameHeaderString="\n\
 ----------------------------------------------------------------------\n\
  *\n\
  *   Copyright (c) 1994, 2002 Johannes Prix\n\
@@ -384,76 +384,79 @@ If you have questions concerning Freedroid, please send mail to:\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n";
-  fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);  
-
-  //--------------------
-  // Since no other information than the dynamic pointer CurLevel is available
-  // to tell the current level number, we must write out that information explicitly
-  //
-  fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);  
-  sprintf( linebuf , "%d\n", CurLevel->levelnum );
-  fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);  
-
-  // ShowSaveGameProgressMeter( 40 ) ;
-
-  // --------------------
-  // Now we write the influencer raw data start string out to the file and of course
-  // then the real raw influencer data follow suit afterwards.
-  //
-  fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( &(Me) , sizeof( tux_t ) , sizeof( char ) , SaveGameFile );  
-  // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
-  // sizeof(char), SaveGameFile );  
-  // fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
-
-  // ShowSaveGameProgressMeter( 50 ) ;
-
-  // --------------------
-  // Now we write the enemy raw data start string out to the file and of course
-  // then the real raw enemy data follow suit afterwards.
-  //
-  fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );  
-
-  // ShowSaveGameProgressMeter( 60 ) ;
-
-  // --------------------
-  // Now we write the bullet raw data start string out to the file and of course
-  // then the real raw enemy data follow suit afterwards.
-  //
-  fwrite ( ALLBULLETS_RAW_DATA_STRING , strlen( ALLBULLETS_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );  
-
-  // ShowSaveGameProgressMeter( 70 ) ;
-
-  //--------------------
-  // Now that all the nescessary information has been written to the save game file
-  // (hopefully), we can finally add the 'end of saved game file'-marker string, that
-  // will be needed by the loading function to detect the end of the file and that the
-  // file is really there and complete.  So we add this last string to the file:
-  //
-  fwrite ( END_OF_SAVEDGAME_DATA_STRING , strlen( END_OF_SAVEDGAME_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );
-
-  if( fclose( SaveGameFile ) == EOF) 
+    fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);  
+    
+    //--------------------
+    // Since no other information than the dynamic pointer CurLevel is available
+    // to tell the current level number, we must write out that information explicitly
+    //
+    fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);  
+    sprintf( linebuf , "%d\n", CurLevel->levelnum );
+    fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);  
+    
+    // ShowSaveGameProgressMeter( 40 ) ;
+    
+    // --------------------
+    // Now we write the influencer raw data start string out to the file and of course
+    // then the real raw influencer data follow suit afterwards.
+    //
+    fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
+	     sizeof(char), SaveGameFile );  
+    fwrite ( &(Me) , sizeof( tux_t ) , sizeof( char ) , SaveGameFile );  
+    // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
+    // sizeof(char), SaveGameFile );  
+    // fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
+    
+    // ShowSaveGameProgressMeter( 50 ) ;
+    
+    // --------------------
+    // Now we write the enemy raw data start string out to the file and of course
+    // then the real raw enemy data follow suit afterwards.
+    //
+    fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ), 
+	     sizeof(char), SaveGameFile );  
+    fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );  
+    
+    // ShowSaveGameProgressMeter( 60 ) ;
+    
+    // --------------------
+    // Now we write the bullet raw data start string out to the file and of course
+    // then the real raw enemy data follow suit afterwards.
+    //
+    fwrite ( ALLBULLETS_RAW_DATA_STRING , strlen( ALLBULLETS_RAW_DATA_STRING ), 
+	     sizeof(char), SaveGameFile );  
+    fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );  
+    
+    // ShowSaveGameProgressMeter( 70 ) ;
+    
+    //--------------------
+    // Now that all the nescessary information has been written to the save game file
+    // (hopefully), we can finally add the 'end of saved game file'-marker string, that
+    // will be needed by the loading function to detect the end of the file and that the
+    // file is really there and complete.  So we add this last string to the file:
+    //
+    fwrite ( END_OF_SAVEDGAME_DATA_STRING , strlen( END_OF_SAVEDGAME_DATA_STRING ), 
+	     sizeof(char), SaveGameFile );
+    
+    if( fclose( SaveGameFile ) == EOF) 
     {
-      printf("\n\nClosing of save game file failed in SaveGame...\n\nTerminating\n\n");
-      Terminate(ERR);
-      // return ERR;
+	printf("\n\nClosing of save game file failed in SaveGame...\n\nTerminating\n\n");
+	Terminate(ERR);
+	// return ERR;
     }
-  
-  ShowSaveLoadGameProgressMeter( 99 , TRUE ); 
+    
+    ShowSaveLoadGameProgressMeter( 99 , TRUE ); 
+    
+    SaveThumbnailOfGame ( );
+    
+    ShowSaveLoadGameProgressMeter( 100 , TRUE ) ;
+    
+    append_new_game_message ( "Game saved." );
 
-  SaveThumbnailOfGame ( );
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
+    
+    return OK;
 
-  ShowSaveLoadGameProgressMeter( 100 , TRUE ) ;
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
-  
-  return OK;
 }; // int SaveGame( void )
 
 
@@ -512,7 +515,7 @@ LoadGame( void )
 	return (OK);
     }
     
-    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): function call confirmed...." , __FUNCTION__ );
     
     //--------------------
     // Loading might take a while, therefore we activate the conservative
@@ -544,6 +547,7 @@ LoadGame( void )
 	  This indicates a serious bug in this installation of Freedroid.",
 	  PLEASE_INFORM, IS_FATAL );
 	*/
+	append_new_game_message ( "Failed to load old game." );
 	return ( ERR ) ;
     }
     else
@@ -558,14 +562,14 @@ LoadGame( void )
     //
     sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
     
-    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): starting to read savegame data...." , __FUNCTION__ );
     
     //--------------------
     // Now we can read the whole savegame data into memory with one big flush
     //
     LoadGameData = ReadAndMallocAndTerminateFile( filename , END_OF_SAVEDGAME_DATA_STRING ) ;
     
-    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): starting to decode savegame data...." , __FUNCTION__ );
     
     //--------------------
     // Before we start decoding the details, we get the former level-number where the
@@ -613,7 +617,7 @@ LoadGame( void )
     // memory of course do not exist, so any pointer previously refering to them, must be
     // set to acceptable values before an accident (SEGFAULT) occurs!
     //
-    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): now correcting dangerous pointers...." , __FUNCTION__ );
     Me [ 0 ] . TextToBeDisplayed = "";
     for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
@@ -699,7 +703,7 @@ LoadGame( void )
     //
     GameOver = FALSE; 
     
-    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): end of function reached." , __FUNCTION__ );
     
     //--------------------
     // Now we know that right after loading an old saved game, the Tux might have
@@ -718,6 +722,8 @@ LoadGame( void )
     insert_old_map_info_into_texture (  );
 
     load_game_command_came_from_inside_running_game = TRUE ;
+
+    append_new_game_message ( "Game Loaded." );
 
     return OK;
 }; // int LoadGame ( void ) 

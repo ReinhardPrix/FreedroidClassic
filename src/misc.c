@@ -1473,6 +1473,7 @@ Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int wi
     int array_num = 0;
     Level tmp;
     int i;
+    char game_message_text [ 5000 ] ;
 
     //--------------------
     // Maybe the 'teleport' really comes from a teleportation device or
@@ -1639,6 +1640,8 @@ This indicates an error in the map system of Freedroid.",
     
     if ( with_sound_and_fading ) 
     {
+	sprintf ( game_message_text , "Arrived at %s." , curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> Levelname );
+	append_new_game_message ( game_message_text );
 	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	our_SDL_flip_wrapper ( Screen );
 	fade_in_using_gamma_ramp ();
