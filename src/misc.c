@@ -55,7 +55,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/CHAButton.png"                    , { 560 , 435 ,  38 ,  45 } } ,
     { NULL , "mouse_buttons/INVButton.png"                    , { 600 , 420 ,  38 ,  40 } } ,
     { NULL , "mouse_buttons/SKIButton.png"                    , { 590 , 376 ,  38 ,  47 } } ,
-    { NULL , "mouse_buttons/PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/PLUSButton.png"                   , { 560 , 435 ,  38 ,  45 } } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
@@ -113,6 +113,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/SellButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/TakeButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/PutButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/RepairButton.png"                 , { 363 , 375 , 120 ,  37 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
@@ -155,6 +156,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , 480-20-130-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , 480-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
+    { NULL , "mouse_buttons/PlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -245,6 +250,7 @@ button index given exceeds the number of buttons defined in freedroid.",
       tmp = IMG_Load( fpath );
       if ( tmp == NULL )
 	{
+	  fprintf ( stderr , "\nfpath: %s.\nButton Index: %d.\n" , fpath , ButtonIndex ) ;
 	  GiveStandardErrorMessage ( "ShowGenericButtonFromList(...)" , "\
 An image file for a button that should be displayed on the screen couldn't\n\
 be successfully loaded into memory.\n\

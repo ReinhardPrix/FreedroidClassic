@@ -472,7 +472,6 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         8
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 90
 enum
   { 
     CHA_BUTTON, 
@@ -533,6 +532,7 @@ enum
     SELL_BUTTON,
     TAKE_BUTTON,
     PUT_BUTTON,
+    REPAIR_BUTTON,
 
     OPEN_CLOSE_SKILL_EXPLANATION_BUTTON,
 
@@ -575,8 +575,31 @@ enum
 
     SCROLL_DIALOG_MENU_UP_BUTTON,
     SCROLL_DIALOG_MENU_DOWN_BUTTON,
+    
+    MORE_STR_BUTTON,
+    MORE_MAG_BUTTON,
+    MORE_DEX_BUTTON,
+    MORE_VIT_BUTTON,
+
+    MAX_MOUSE_PRESS_BUTTONS
   };
 
+#define STR_BASE_X 100
+#define STR_NOW_X 148
+#define STR_Y 143
+#define DEX_Y 171
+#define MAG_Y 197
+#define VIT_Y 227
+#define POINTS_Y 252
+
+#define BUTTON_MOD_X (-6)
+#define BUTTON_MOD_Y (-4)
+#define BUTTON_WIDTH 35
+#define BUTTON_HEIGHT 19
+
+#define CHARACTERRECT_X (SCREEN_WIDTH/2)
+#define CHARACTERRECT_W (SCREEN_WIDTH/2)
+#define CHARACTERRECT_H (User_Rect.h)
 
 #define EL_BLOCK_LEN		8
 #define EL_BLOCK_HEIGHT		8

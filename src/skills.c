@@ -46,8 +46,6 @@
 #define STR_BASE_X 100
 #define STR_NOW_X 148
 #define STR_Y 143
-#define MAG_Y 171
-#define DEX_Y 197
 #define VIT_Y 227
 #define POINTS_Y 252
 

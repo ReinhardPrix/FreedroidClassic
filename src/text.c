@@ -465,6 +465,10 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     {
       InitTradeWithCharacter( PERSON_STONE );
     }
+  else if ( ! strcmp ( ExtraCommandString , "Repair_Items" ) )
+    {
+      Repair_Items();
+    }
   else if ( ! strcmp ( ExtraCommandString , "BreakOffAndBecomeHostile" ) )
     {
       ChatDroid -> is_friendly = FALSE ;

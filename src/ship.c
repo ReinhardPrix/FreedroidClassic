@@ -909,6 +909,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   static SDL_Surface* BackgroundSurfaceBackup = NULL ;
   SDL_Surface* tmp_surface = NULL ;
   static char OldBackgroundFileName[2000];
+  int repairPrice = 0;
 
   SDL_SetClipRect ( Screen , NULL );
 
@@ -1026,6 +1027,16 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
 
   sprintf( TextChunk, "Base list price: %d\n", 
 	   ItemMap [ ShowItem->type ] . base_list_price );
+  strcat ( InfoText , TextChunk );
+
+  if ( ShowItem->current_duration == ShowItem->max_duration ||
+       ShowItem->max_duration == ( -1 ) )
+    repairPrice = 0;
+  else
+    repairPrice = CalculateItemPrice( ShowItem, TRUE );
+
+  sprintf( TextChunk, "Repair price: %d\n", 
+	   repairPrice );
   strcat ( InfoText , TextChunk );
 
   if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )

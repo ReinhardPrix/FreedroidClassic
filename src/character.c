@@ -59,19 +59,6 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 
 #define GOLD_Y 132
 
-#define STR_BASE_X 100
-#define STR_NOW_X 148
-#define STR_Y 143
-#define DEX_Y 171
-#define MAG_Y 197
-#define VIT_Y 227
-#define POINTS_Y 252
-
-#define BUTTON_MOD_X (-6)
-#define BUTTON_MOD_Y (-4)
-#define BUTTON_WIDTH 35
-#define BUTTON_HEIGHT 19
-
 #define DAMAGE_X 260
 #define DAMAGE_Y 225
 
@@ -80,10 +67,6 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 
 #define AC_X 260
 #define AC_Y 171
-
-#define CHARACTERRECT_X (SCREEN_WIDTH/2)
-#define CHARACTERRECT_W (SCREEN_WIDTH/2)
-#define CHARACTERRECT_H (User_Rect.h)
 
 #define MELEE_SKILL_X 130
 #define MELEE_SKILL_Y 346
@@ -611,7 +594,6 @@ UpdateAllCharacterStats ( int PlayerNum )
 void 
 ShowCharacterScreen ( void )
 {
-  // static SDL_Rect ButtonRect;
   static SDL_Surface *CharacterScreenImage = NULL;
   // static SDL_Surface *PlusButtonImage = NULL;
   SDL_Surface *tmp = NULL;
@@ -784,7 +766,7 @@ ShowCharacterScreen ( void )
     DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
   */
 
-  /*
+
 
   //--------------------
   // It might be the case, that the character has some points to distribute upon the character
@@ -793,36 +775,28 @@ ShowCharacterScreen ( void )
   // Me[0].points_to_distribute = 5;
   if ( Me[0].points_to_distribute > 0 )
     {
-      ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
-      ButtonRect.y = STR_Y + BUTTON_MOD_Y + CharacterRect.y;
-      SDL_BlitSurface ( PlusButtonImage , NULL , Screen , &ButtonRect );
-      ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
-      ButtonRect.y = MAG_Y + BUTTON_MOD_Y + CharacterRect.y;
-      SDL_BlitSurface ( PlusButtonImage , NULL , Screen , &ButtonRect );
-      ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
-      ButtonRect.y = DEX_Y + BUTTON_MOD_Y + CharacterRect.y;
-      SDL_BlitSurface ( PlusButtonImage , NULL , Screen , &ButtonRect );
-      ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
-      ButtonRect.y = VIT_Y + BUTTON_MOD_Y + CharacterRect.y;
-      SDL_BlitSurface ( PlusButtonImage , NULL , Screen , &ButtonRect );
+      ShowGenericButtonFromList ( MORE_STR_BUTTON );
+      ShowGenericButtonFromList ( MORE_DEX_BUTTON );
+      ShowGenericButtonFromList ( MORE_VIT_BUTTON );
+      ShowGenericButtonFromList ( MORE_MAG_BUTTON );
 
-      if ( CursorIsOnStrButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( CursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_strength++;
 	  Me[0].points_to_distribute--;
 	}
-      if ( CursorIsOnDexButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( CursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_dexterity++;
 	  Me[0].points_to_distribute--;
 	}
-      if ( CursorIsOnMagButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( CursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_magic++;
 	  Me[0].points_to_distribute--;
 	  Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	}
-      if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+      if ( CursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_vitality++;
 	  Me[0].points_to_distribute--;
@@ -838,8 +812,6 @@ ShowCharacterScreen ( void )
       //
       if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
-
-  */
 
   //--------------------
   // Finally, we want the part of the screen we have been editing to become

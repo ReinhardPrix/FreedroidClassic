@@ -641,7 +641,10 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       if ( ItemIndex >= 0 )
 	{
-	  if ( ShowChestButtons ) ShowGenericButtonFromList ( TAKE_BUTTON );
+	  if ( ShowChestButtons == 2 )
+	    ShowGenericButtonFromList ( REPAIR_BUTTON );
+	  else if ( ShowChestButtons > 0 )
+	    ShowGenericButtonFromList ( TAKE_BUTTON );
 	  else ShowGenericButtonFromList ( BUY_BUTTON );
 	  BuyButtonActive = TRUE; 
 	  SellButtonActive = FALSE ;
@@ -1621,16 +1624,26 @@ Repair_Items( void )
 {
 #define BASIC_ITEMS_NUMBER 10
   item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
-  int Pointer_Index=0;
+  int Pointer_Index;
   int i;
   // int InMenuPosition = 0;
   // int MenuInListPosition = 0;
-  int ItemSelected;
-  char DescriptionText[5000];
+  int ItemSelected=0;
+  //char DescriptionText[5000];
   char* MenuTexts[ 10 ];
+  int NumberOfItemsInTuxRow = 0 ;
+  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+  shop_decision ShopOrder;
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
+
+
+  Activate_Conservative_Frame_Computation();
+
+  while ( ItemSelected != (-1) )
+    {
+      Pointer_Index=0;
 
   //--------------------
   // First we clean out the new Repair_Pointer_List
@@ -1667,6 +1680,12 @@ Repair_Items( void )
       Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
       Pointer_Index ++;
     }
+  if ( ( Me[0].special_item.current_duration < Me[0].special_item.max_duration ) &&
+       ( Me[0].special_item.type != ( -1 ) ) )
+    {
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].special_item );
+      Pointer_Index ++;
+    }
 
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
@@ -1692,14 +1711,29 @@ Repair_Items( void )
   // Now here comes the new thing:  This will be a loop from now
   // on.  The buy and buy and buy until at one point we say 'BACK'
   //
-  ItemSelected = 0;
+  //ItemSelected = 0;
 
-  while ( ItemSelected != (-1) )
+      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
+
+      ItemSelected = GreatShopInterface ( Pointer_Index,  Repair_Pointer_List, 
+					  0 , 0 , &(ShopOrder) , 2 );
+
+
+      if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
+
+      switch ( ShopOrder . shop_command )
+	{
+	case BUY_1_ITEM:
+	  TryToRepairItem( Repair_Pointer_List[ ShopOrder . item_selected ] );
+	  break;
+	}
+    }
+  /*while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I COULD REPAIR THESE ITEMS           YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Repair_Pointer_List , PRICING_FOR_REPAIR );
       if ( ItemSelected != (-1) ) TryToRepairItem( Repair_Pointer_List[ ItemSelected ] ) ;
-    }
+      }*/
 
 }; // void Repair_Items( void )
 
