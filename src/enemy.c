@@ -611,7 +611,7 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
   // Since this robot is moving, we set the animation type to 
   // walking...
   //
-  ThisRobot -> animation_type = WALK_ANIMATION ; 
+  // ThisRobot -> animation_type = WALK_ANIMATION ; 
   if ( ThisRobot -> animation_phase == 0 )
     ThisRobot -> animation_phase = 0.1 ;
 
@@ -2488,7 +2488,7 @@ AnimateEnemys (void)
       //
       if ( our_enemy -> animation_phase > 0 )
 	{
-	  our_enemy -> animation_phase += Frame_Time() * 15 ;
+	  our_enemy -> animation_phase += Frame_Time() * droid_animation_speed_factor [ our_enemy -> type ] ;
 
 	  switch ( our_enemy -> animation_type )
 	    {
