@@ -13,7 +13,10 @@ The list of things I'm going to work on next:
 
 0.   Correct the console text display
 
-1.   Downscale Bastians graphics to fit into the console.
+1.   Rescaling of Map should be working for Level Editor but not
+     for real game
+
+DONE Downscale Bastians graphics to fit into the console.
 
 DONE Introduce questioning screen at the beginning asking 
      which mission to load ClassicParadroid/New
