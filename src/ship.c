@@ -59,48 +59,46 @@ void ShowDroidPicture (int PosX, int PosY, int Number );
 
 SDL_Surface *console_pic = NULL ;
 
-char *EmailText1 = "Freedroid Installation 
-======================
-
-[ 0) if you have downloaded your source from the cvs-archive 
-   you have to start by typing `./autogen.sh']
-
-1) autogen will run `./configure' - you don't need to
-2) type `make' to compile the package
-
-3)a) type `make install'. By default this will try to install in 
-   /usr/local/, in which case you have to be root to do that.
-   You can instead specify `--prefix=<yourdir>' to `configure', in
-   which case `make install' will install in <yourdir>.
-
-ALTERNATIVELY:
-
-3)b) you can run the game locally by typing: 
-   `cd src' followed by `./freedroid'
-
-If you don't have sound or SDL-sound installed, you might have to run
-freedroid with the command-line option `-q'.
-
-Have fun!
-Reinhard
-
-If you have problems with the compilation/installation, please send me an email:
-rprix@users.sourceforge.net
-or report bugs on the sourceforge website:
+char *EmailText1 = "Freedroid Installation\n\
+======================\n\
+\n\
+[ 0) if you have downloaded your source from the cvs-archive \n\
+   you have to start by typing `./autogen.sh']\n\
+\n\
+1) autogen will run `./configure' - you don't need to\n\
+2) type `make' to compile the package\n\
+\n\
+3)a) type `make install'. By default this will try to install in \n\
+   /usr/local/, in which case you have to be root to do that.\n\
+   You can instead specify `--prefix=<yourdir>' to `configure', in\n\
+   which case `make install' will install in <yourdir>.\n\
+\n\
+ALTERNATIVELY:\n\
+\n\
+3)b) you can run the game locally by typing: \n\
+   `cd src' followed by `./freedroid'\n\
+\n\
+If you don't have sound or SDL-sound installed, you might have to run\n\
+freedroid with the command-line option `-q'.\n\
+\n\
+Have fun!\n\
+Reinhard\n\
+\n\
+If you have problems with the compilation/installation, please send me an email:\n\
+rprix@users.sourceforge.net\n\
+or report bugs on the sourceforge website:\n\
 http://sourceforge.net/projects/freedroid/";
 
-char *EmailText2 = "
- The freedroid project is looking for a content writer, who could set up additional characters, plot and multiple-choice styled dialogs for the freedroid RPG branch.
-
-The story is a science-fiction one and in short goes like this:
-The MS has enslaved a far distant universe. The Tux, not natively belonging into this world arrives accidentially during a magnetic storm. He finds himself in a former resistance camp, having lost his memory. He should try to get in contact with the resistance to help him return to his native home plane of existence. (or somewhat like this). Adventures and missions will involve fighting the MS machines but also talking to other characters and helping the resistance (or the MS?).
-
-Not much expertise needed, but perhaps experience with (computer) role playing games. Some familiarity with C would help, since the dialogs will be integrated directly into the C code unless we decide to take them out into separate structures and files. Maybe some idea of open source and the MS in the real world would also be good.
-
-If you are interested, please email to
-freedroid-discussion@lists.sourceforge.net. (You can expect approval of your message shortly.) You also might check out the cvs source code directly. The latest release of the rpg branch does not contain appropriate examples of what the dialogs look like.
-
-";
+char *EmailText2 = "\
+ The freedroid project is looking for a content writer, who could set up additional characters, plot and multiple-choice styled dialogs for the freedroid RPG branch.\n\
+\n\
+The story is a science-fiction one and in short goes like this:\n\
+The MS has enslaved a far distant universe. The Tux, not natively belonging into this world arrives accidentially during a magnetic storm. He finds himself in a former resistance camp, having lost his memory. He should try to get in contact with the resistance to help him return to his native home plane of existence. (or somewhat like this). Adventures and missions will involve fighting the MS machines but also talking to other characters and helping the resistance (or the MS?).\n\
+\n\
+Not much expertise needed, but perhaps experience with (computer) role playing games. Some familiarity with C would help, since the dialogs will be integrated directly into the C code unless we decide to take them out into separate structures and files. Maybe some idea of open source and the MS in the real world would also be good.\n\
+\n\
+If you are interested, please email to\n\
+freedroid-discussion@lists.sourceforge.net. (You can expect approval of your message shortly.) You also might check out the cvs source code directly. The latest release of the rpg branch does not contain appropriate examples of what the dialogs look like.";
 
 /* ----------------------------------------------------------------------
  *

@@ -130,9 +130,9 @@ MoveBullets (void)
 	{
 	  GiveStandardErrorMessage ( "MoveBullets(...)" , "\
 A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
-This is an idication for an error of some form, but might also be due
-to short occasions of very low frame rates sometimes or it might be due
-to a melee weapon swing active when the swing robot was destroyed, which
+This is an idication for an error of some form, but might also be due\n\
+to short occasions of very low frame rates sometimes or it might be due\n\
+to a melee weapon swing active when the swing robot was destroyed, which\n\
 swapped him outside and the bullet thereby also outside.\n\
 \n\
 This problem is not severe, so this is a warning message only.",

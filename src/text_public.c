@@ -1328,8 +1328,8 @@ the item specification section.",
 	  fprintf(stderr, "\n\nItemIndex: %d.\n" ,ItemIndex ); 
 	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer for the slot installation possiblieties, that was neither 
-'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",
+answer for the slot installation possiblieties, that was neither \n\
+'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",\
 				     PLEASE_INFORM, IS_FATAL );
 	}
 

@@ -295,7 +295,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
 
       fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
       GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 The reason for this is as follows:  Speech files are stored in wav format\n\
 for technical reasons in conjunction with the SDL and the background music.\n\
 This tends to use up much space on disk, i.e. several megabytes which would\n\
