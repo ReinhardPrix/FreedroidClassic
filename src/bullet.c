@@ -138,7 +138,9 @@ MoveBullets (void)
       //--------------------
       // We need not move any bullets, that are OUT already...
       //
-      if ( CurBullet->type == OUT )
+      if ( CurBullet -> type == OUT )
+	continue;
+      if ( CurBullet -> time_to_hide_still > 0 )
 	continue;
 
       move_this_bullet_and_check_its_collisions ( i );

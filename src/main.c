@@ -218,6 +218,16 @@ UpdateCountersForThisFrame ( int PlayerNum )
       LevelGunsNotFiredTime += Frame_Time();
       if ( SkipAFewFrames ) SkipAFewFrames--;
 
+      for ( i = 0 ; i < MAXBULLETS ; i ++ )
+	{
+	  if ( AllBullets [ i ] . time_to_hide_still > 0 )
+	    {
+	      AllBullets [ i ] . time_to_hide_still -= Frame_Time();
+	      if ( AllBullets [ i ] . time_to_hide_still < 0 )
+		AllBullets [ i ] . time_to_hide_still = 0 ; 
+	    }
+	}
+
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	{
 	  

@@ -1286,6 +1286,7 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   double speed_norm;
   moderately_finepoint speed;
   float OffsetFactor;
+  moderately_finepoint offset;
 
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 
   //--------------------
@@ -1327,6 +1328,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   CurBullet->damage = Me [ PlayerNum ] . base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
+  CurBullet -> time_to_hide_still = 0.3 ;
   CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
   CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
   CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
@@ -1404,7 +1406,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   //
   RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ] . item_gun_start_angle_modifier );
 
-  speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
+  speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
   CurBullet->speed.x = (speed.x/speed_norm);
   CurBullet->speed.y = (speed.y/speed_norm);
 
@@ -1416,26 +1418,36 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // the picture of the bullet itself
   //
   
-  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 + 45 );
+  CurBullet -> angle = -( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 + 45 );
 
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
   
-  CurBullet->speed.x *= BulletSpeed;
-  CurBullet->speed.y *= BulletSpeed;
+  CurBullet -> speed . x *= BulletSpeed;
+  CurBullet -> speed . y *= BulletSpeed;
 
   //--------------------
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
   //
-  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.0; else OffsetFactor = 1;
-  CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
-  CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
+  if ( CurBullet -> angle_change_rate == 0 ) 
+    OffsetFactor = 0.0; 
+  else 
+    OffsetFactor = 1;
+
+  OffsetFactor = 0.25 ;
+
+  offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
+  offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
+  RotateVectorByAngle ( & ( offset ) , -45 );
+  CurBullet -> pos . x += offset . x ;
+  CurBullet -> pos . y += offset . y ; 
 
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , CurBullet->pos . x , CurBullet->pos . y );
+	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , 
+	       CurBullet->pos . x , CurBullet->pos . y );
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : BulletSpeed=%f." , BulletSpeed );
   

@@ -749,6 +749,7 @@ typedef struct
   int time_in_frames;    // how long does the bullet exist, measured in number of frames
   double time_in_seconds; // how long does the bullet exist in seconds
   double bullet_lifetime; // how long can this bullet exist at most
+  float time_to_hide_still; // countdown to when the bullet will actually appear
   signed char mine;
   int owner;
   double angle;
