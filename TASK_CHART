@@ -104,9 +104,6 @@ rp
 - Automake/configure/Makefile 
 - cheatmenu
 
-more detailed list of planned activities:
-
-*) Add the Homepage-Makefile into the general autoconf/automake machinery
 
 
 
