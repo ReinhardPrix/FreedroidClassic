@@ -394,6 +394,7 @@ CheckBulletCollisions (int num)
 	    {
 	      // The enemy who was hit, loses some energy, depending on the bullet
 	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+	      GotHitSound ();
 
 	      // Maybe he will also stop doing his fixed routine and return to normal
 	      // operation as well
