@@ -1543,7 +1543,7 @@ GetMapBrick (Level deck, float x, float y)
     }
 
   BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
-  if ( BrickWanted >= NUM_MAP_BLOCKS )
+  if ( BrickWanted >= ALL_ISOMETRIC_FLOOR_TILES )
     {
       fprintf( stderr , "\nBrickWanted: %d at pos X=%d Y=%d Z=%d." , BrickWanted , RoundX , RoundY , deck->levelnum );
       GiveStandardErrorMessage ( "GetMapBrick(...)" , "\
@@ -1782,6 +1782,157 @@ Error:  A teleporter index pointing not to a teleporter obstacle found.",
 }; // void AnimateTeleports ( void )
 
 /* ----------------------------------------------------------------------
+ * Now we change the floor, so that everything gets below the new number
+ * of isometric floor tiles...
+ * ---------------------------------------------------------------------- */
+void
+recode_floor_tiles_of_this_level ( Level our_level ) 
+{
+  int line, col;
+
+  return;
+
+  for ( line = 0 ; line < our_level -> ylen ; line ++ )
+    {
+      for ( col = 0 ; col < our_level -> xlen ; col ++ )
+	{
+	  switch ( our_level -> map [ line ] [ col ] . floor_value )
+	    {
+	    case FLOOR:
+	    case CORNER_LD:
+	    case T_D:
+	    case CORNER_RD:
+	    case T_L:
+	    case KREUZ:
+	    case T_R:
+	    case CORNER_LU:
+	    case T_U:
+	    case CORNER_RU:
+	    case H_WALL:
+	    case V_WALL:
+	    case ALERT:        
+	    case BLOCK1:
+	    case BLOCK2:
+	    case BLOCK3:
+	    case H_SHUT_DOOR:
+	    case H_HALF_DOOR1:
+	    case H_HALF_DOOR2:
+	    case H_HALF_DOOR3:
+	    case H_OPEN_DOOR:
+	    case CONSOLE_L:
+	    case CONSOLE_R:
+	    case CONSOLE_U:
+	    case CONSOLE_D:
+	    case V_SHUT_DOOR:
+	    case V_HALF_DOOR1:
+	    case V_HALF_DOOR2:
+	    case V_HALF_DOOR3:
+	    case V_OPEN_DOOR:
+	    case LIFT:
+	    case REFRESH1:
+	    case REFRESH2:
+	    case REFRESH3:
+	    case REFRESH4:
+	    case TELE_1:
+	    case TELE_2:
+	    case TELE_3:
+	    case TELE_4:
+	    case INVISIBLE_BRICK:
+	    case LOCKED_H_SHUT_DOOR:
+	    case LOCKED_V_SHUT_DOOR:
+	    case CODEPANEL_L:
+	    case CODEPANEL_R:
+	    case CODEPANEL_U:
+	    case CODEPANEL_D:
+	    case BOX_1:
+	    case BOX_2:
+	    case BOX_3:
+	    case BOX_4:
+	    case UNUSED_BRICK:
+	    case CONVEY_L:
+	    case CONVEY_D:
+	    case CONVEY_R:
+	    case CONVEY_U:
+	    case AUTOGUN_R:
+	    case AUTOGUN_D:
+	    case AUTOGUN_L:
+	    case AUTOGUN_U:
+	    case ENHANCER_RU:
+	    case ENHANCER_LU:
+	    case ENHANCER_RD:
+	    case ENHANCER_LD:
+	    case CONSUMER_1:
+	    case CONSUMER_2:
+	    case CONSUMER_3:
+	    case CONSUMER_4:
+	    case CHEST_U:
+	    case CHEST_L:
+	    case CHEST_D:
+	    case CHEST_R:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR ;
+	      break;
+
+	    case BLOCK4:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR_WITH_GRATE ;
+	      break;
+
+	    case BLOCK5:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR_WITH_DOT ;
+	      break;
+
+	    case VOID:
+	    case FINE_GRID:
+	    case FLOOR_CARPET_L:
+	    case FLOOR_CARPET_R:
+	    case FLOOR_CARPET_U:
+	    case FLOOR_CARPET_D:
+	    case FLOOR_CARPET:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_PARQUET ;
+	      break;
+
+	    case CAVE_FLOOR:
+	    case CAVE_V_WALL:
+	    case CAVE_H_WALL:
+	    case CAVE_CORNER_LU:
+	    case CAVE_CORNER_RU:
+	    case CAVE_CORNER_LD:
+	    case CAVE_CORNER_RD:
+	    case FLOOR_CAVE_L:
+	    case FLOOR_CAVE_R:
+	    case FLOOR_CAVE_U:
+	    case FLOOR_CAVE_D:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND ;
+	      break;
+
+	    case CAVE_WITH_WAY_TILE:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND ;
+	      break;
+
+	    case CAVE_WITH_GRASS_1:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_1 ;
+	      break;
+	    case CAVE_WITH_GRASS_2:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_2 ;
+	      break;
+	    case CAVE_WITH_GRASS_3:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_3 ;
+	      break;
+	    case CAVE_WITH_GRASS_4:
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_4 ;
+	      break;
+
+	    default:
+	      fprintf( stderr , "\nBrick code: %d." , our_level -> map [ line ] [ col ] . floor_value );
+	      GiveStandardErrorMessage ( "recode_floor_tiles_of_this_level ( ... )" , "\
+Unandles code given to floor recode function.",
+					 PLEASE_INFORM, IS_FATAL );
+	      break;
+	    }
+	}
+    }
+}; // void recode_floor_tiles_of_this_level ( Level our_level ) 
+
+/* ----------------------------------------------------------------------
  * This function loads the data for a whole ship
  * Possible return values are : OK and ERR
  * ---------------------------------------------------------------------- */
@@ -1830,6 +1981,8 @@ LoadShip (char *filename)
       curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
       decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
+
+      recode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
 
       //--------------------
       // We generate obstacles out of the current map info...

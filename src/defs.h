@@ -640,9 +640,6 @@ enum _directions
 //
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
-
-#define ALL_ISOMETRIC_FLOOR_TILES 8 // A pointer to the surfaces containing the pictures of the
-
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
@@ -938,6 +935,23 @@ enum
   ISO_ENHANCER_RD = 58 ,
   ISO_ENHANCER_LD = 55 
 
+};
+
+enum
+{
+  ISO_FLOOR_ERROR_TILE = 0 ,
+  ISO_FLOOR_STONE_FLOOR = 1 ,
+  ISO_FLOOR_STONE_FLOOR_WITH_DOT = 2 , 
+  ISO_FLOOR_STONE_FLOOR_WITH_GRATE = 3 ,
+  ISO_FLOOR_SAND = 4 ,
+  ISO_FLOOR_WATER = 5 ,
+  ISO_FLOOR_SAND_WITH_GRASS_1 = 6 ,
+  ISO_FLOOR_SAND_WITH_GRASS_2 = 7 ,
+  ISO_FLOOR_SAND_WITH_GRASS_3 = 8 ,
+  ISO_FLOOR_SAND_WITH_GRASS_4 = 9 ,
+  ISO_FLOOR_SAND_WITH_WAY = 10 ,
+  ISO_FLOOR_PARQUET = 11 ,
+  ALL_ISOMETRIC_FLOOR_TILES = 12 // this is always the last entry.  It's used to count the number of floor tiles.
 };
 
 
