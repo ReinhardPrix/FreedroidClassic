@@ -55,7 +55,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Classical_Beep_Beep_Background_Music.wav",
   "/../sound/Blast_Sound_0.wav",
   "/../sound/Collision_Sound_0.wav",
-  "/../sound/GotIntoBlastSound.wav",
+  "/../sound/GotIntoBlast_Sound_0.wav",
   "/../sound/MoveElevator_Sound_0.wav",
   "/../sound/Refresh_Sound_0.wav",
   "/../sound/LeaveElevator_Sound_0.wav",
@@ -95,7 +95,7 @@ int rate = 8000;
 #endif /* HAVE_LIBY2 */
 
 #ifdef USE_SDL_AUDIO
-Mix_Chunk *Combat_Background_Music = NULL;
+Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 int Background_Music_Channel = -1;
 #endif
 
@@ -182,13 +182,18 @@ Sorry...\n\
 	     ExpandedSoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ] );
     }
 
+  // Now that the audio channel is opend, its time to load all the
+  // WAV files into memory, something we NEVER did while using the yiff,
+  // because the yiff did all the loading, analyzing and playing...
 
-  Combat_Background_Music = Mix_LoadWAV( ExpandedSoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ] );
-
-  if ( !Combat_Background_Music )
+  Loaded_WAV_Files[0]=NULL;
+  for (i = 1; i < ALL_SOUNDS; i++)
     {
-      fprintf (stderr,
-	       "\n\
+      Loaded_WAV_Files[i] = Mix_LoadWAV( ExpandedSoundSampleFilenames[ i ] );
+      if ( !Loaded_WAV_Files[i] )
+	{
+	  fprintf (stderr,
+		   "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -207,9 +212,16 @@ not complain any more.  But for now Freedroid will terminate to draw attention \
 to the sound problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , ExpandedSoundSampleFilenames[ COMBAT_BACKGROUND_MUSIC_SOUND ]);
-      Terminate (ERR);
-    }
+\n" , ExpandedSoundSampleFilenames[ i ]);
+	  Terminate (ERR);
+	} // if ( !Loaded_WAV...
+      else
+	{
+	  printf("\nSuccessfully loaded file %s.", ExpandedSoundSampleFilenames[i]);
+	}
+    } // for (i=0; ...
+
+
 
 #else
 
@@ -550,9 +562,16 @@ Sorry...\n\
   //
   // Here comes the SDL-BASED Background music code:
 
+  if ( Background_Music_Channel >= 0 )
+    {
+      Mix_HaltChannel( Background_Music_Channel );
+      printf("\nOld Background music channel has been halted.");
+      Background_Music_Channel = -1;
+    }
+
   if (Background_Music_Channel < 0)
     {
-      Background_Music_Channel = Mix_PlayChannel(-1, Combat_Background_Music, -1);
+      Background_Music_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[ Tune ], -1);
     }
 
 #endif /* USE_SDL_AUDIO */
