@@ -1247,6 +1247,14 @@ Level_Editor(void)
 
 	  // If the person using the level editor pressed some editing keys, insert the
 	  // corresponding map tile.  This is done here:
+	  if (KP_PLUS_Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=V_WALL;
+	    }
+	  if (KP0Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=H_WALL;
+	    }
 	  if (KP1Pressed()) 
 	    {
 	      CurLevel->map[BlockY][BlockX]=ECK_LU;
@@ -1269,7 +1277,9 @@ Level_Editor(void)
 	    }
 	  if (KP5Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=KREUZ;
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=KREUZ;
+	      else CurLevel->map[BlockY][BlockX]=VOID;
 	    }
 	  if (KP6Pressed()) 
 	    {

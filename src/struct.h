@@ -41,27 +41,6 @@ typedef char bool;
 
 typedef struct
 {
-  char signature;
-  char version;
-  char encoding;
-  char bytes_per_pixel;
-  unsigned short int xmin;
-  unsigned short int ymin;
-  unsigned short int xmax;
-  unsigned short int ymax;
-  unsigned short int vres;
-  unsigned short int hres;
-  char palette[48];
-  char reserved;
-  char color_layers;
-  unsigned short int bytes_per_line;
-  unsigned short int palette_type;
-  char unused[58];
-}
-PCX_Header;
-
-typedef struct
-{
   char name[MAX_NAME_LEN+5];
   long score;                  /* use -1 for an empty entry */
   char date[DATE_LEN+5];
@@ -124,6 +103,7 @@ typedef struct
   int sensor2;
   int sensor3;
   int armament;
+  int AdvancedFighting;         // Does this droid fight better than the Paradroid random algorithm?
   char *notes;			/* notes on the druid of this type */
 }
 druidspec, *Druidspec;

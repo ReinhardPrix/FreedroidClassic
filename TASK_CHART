@@ -53,8 +53,13 @@ DONE Correct the aggression of droids
    2.b A second deck
    2.c One elevator connecting them
    2.d Draw a side elevation of the mining asteroid
+   2.e Outline:  Command cyborg experiment facility (999, 998, 997, ... 990),
+                 Mining community
+                 Police station
+             
 
-6. Introduce new robots and new fighting behaviour
+DONE Introduce new robots 
+     Introduce new fighting behaviour
    3.a Changing of waypoints not randomly but decision as demanded
        by the combat situation
    3.b Movement to new waypoint immediately if threatened by enemy fire

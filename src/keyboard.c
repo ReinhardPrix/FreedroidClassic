@@ -77,6 +77,11 @@ int CurrentlyWPressed=0;
 int CurrentlyXPressed=0;
 int CurrentlyYPressed=0;
 int CurrentlyZPressed=0;
+int CurrentlyKP_PLUS_Pressed=0;
+int CurrentlyKP_MINUS_Pressed=0;
+int CurrentlyKP_MULTIPLY_Pressed=0;
+int CurrentlyKP_DIVIDE_Pressed=0;
+int CurrentlyKP_ENTER_Pressed=0;
 int CurrentlyKP0Pressed=0;
 int CurrentlyKP1Pressed=0;
 int CurrentlyKP2Pressed=0;
@@ -93,55 +98,55 @@ int CurrentlyBackspacePressed=0;
 void 
 ReactToSpecialKeys(void)
 {
-	  if ( QPressed() ) /* user asked for quit */
-	    Terminate (OK);
-	  if ( DPressed() )
-	    Me.energy = 0;
-
-	  // To debug the Debriefing() I added a function to add or subtract
-	  // a thousand points of score via numerical keyboard functions.
-	  // Activate this if you want to test that.  
-
-	  if ( KP0Pressed() )
-	    {
-	      while (KP0Pressed());
-	      RealScore-=1000;
-	    }
-	  if ( KP1Pressed() )
-	    {
-	      while (KP1Pressed());
-	      RealScore+=1000;
-	    }
-
-
-	  if ( CPressed() && Alt_Was_Pressed()
-	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
-	    Cheatmenu ();
-	  if ( EscapePressed() )
-	    EscapeMenu ();
-	  if ( PPressed () )
-	    Pause ();
-
-	  if ( OPressed () )
-	    {
-	      if (CurrentCombatScaleFactor > 0.5 )
-		CurrentCombatScaleFactor -= 0.5;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (OPressed());
-	    }
-	  if ( IPressed () )
-	    {
-	      CurrentCombatScaleFactor += 0.5;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (IPressed());
-	    }
-
-	  if ( UPressed () )
-	    {
-	      InitNewMission ( STANDARD_MISSION ) ;
-	      while (UPressed());
-	    }
-
+  if ( QPressed() ) /* user asked for quit */
+    Terminate (OK);
+  if ( DPressed() )
+    Me.energy = 0;
+  
+  // To debug the Debriefing() I added a function to add or subtract
+  // a thousand points of score via numerical keyboard functions.
+  // Activate this if you want to test that.  
+  
+  if ( KP0Pressed() )
+    {
+      while (KP0Pressed());
+      RealScore-=1000;
+    }
+  if ( KP1Pressed() )
+    {
+      while (KP1Pressed());
+      RealScore+=1000;
+    }
+  
+  
+  if ( CPressed() && Alt_Was_Pressed()
+       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
+    Cheatmenu ();
+  if ( EscapePressed() )
+    EscapeMenu ();
+  if ( PPressed () )
+    Pause ();
+  
+  if ( OPressed () )
+    {
+      if (CurrentCombatScaleFactor > 0.5 )
+	CurrentCombatScaleFactor -= 0.5;
+      SetCombatScaleTo (CurrentCombatScaleFactor);
+      while (OPressed());
+    }
+  if ( IPressed () )
+    {
+      CurrentCombatScaleFactor += 0.5;
+      SetCombatScaleTo (CurrentCombatScaleFactor);
+      while (IPressed());
+    }
+  
+  if ( UPressed () )
+    {
+      InitNewMission ( STANDARD_MISSION ) ;
+      while (UPressed());
+    }
+  
 } // void ReactToSpecialKeys(void)
 
 int
@@ -197,6 +202,21 @@ keyboard_update(void)
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_KP_PLUS:
+	      CurrentlyKP_PLUS_Pressed=TRUE;
+	      break;
+	    case SDLK_KP_MINUS:
+	      CurrentlyKP_MINUS_Pressed=TRUE;
+	      break;
+	    case SDLK_KP_MULTIPLY:
+	      CurrentlyKP_MULTIPLY_Pressed=TRUE;
+	      break;
+	    case SDLK_KP_DIVIDE:
+	      CurrentlyKP_DIVIDE_Pressed=TRUE;
+	      break;
+	    case SDLK_KP_ENTER:
+	      CurrentlyKP_ENTER_Pressed=TRUE;
+	      break;
 	    case SDLK_KP0:
 	      CurrentlyKP0Pressed=TRUE;
 	      break;
@@ -361,6 +381,21 @@ keyboard_update(void)
 
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_KP_PLUS:
+	      CurrentlyKP_PLUS_Pressed=FALSE;
+	      break;
+	    case SDLK_KP_MINUS:
+	      CurrentlyKP_MINUS_Pressed=FALSE;
+	      break;
+	    case SDLK_KP_MULTIPLY:
+	      CurrentlyKP_MULTIPLY_Pressed=FALSE;
+	      break;
+	    case SDLK_KP_DIVIDE:
+	      CurrentlyKP_DIVIDE_Pressed=FALSE;
+	      break;
+	    case SDLK_KP_ENTER:
+	      CurrentlyKP_ENTER_Pressed=FALSE;
+	      break;
 	    case SDLK_KP0:
 	      CurrentlyKP0Pressed=FALSE;
 	      break;
@@ -590,6 +625,41 @@ getchar_raw (void)
 
 } /* getchar_raw() */
 
+
+int 
+KP_PLUS_Pressed (void)
+{
+  keyboard_update();
+  return CurrentlyKP_PLUS_Pressed;
+}
+
+int 
+KP_MULTIPLY_Pressed (void)
+{
+  keyboard_update();
+  return CurrentlyKP_MULTIPLY_Pressed;
+}
+
+int 
+KP_MINUS_Pressed (void)
+{
+  keyboard_update();
+  return CurrentlyKP_MINUS_Pressed;
+}
+
+int 
+KP_DIVIDE_Pressed (void)
+{
+  keyboard_update();
+  return CurrentlyKP_DIVIDE_Pressed;
+}
+
+int 
+KP_ENTER_Pressed (void)
+{
+  keyboard_update();
+  return CurrentlyKP_ENTER_Pressed;
+}
 
 int
 KP0Pressed (void)
