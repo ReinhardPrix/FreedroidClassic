@@ -6,8 +6,20 @@ Freedroid Installation
 [ 0) if you have downloaded your source from the cvs-archive 
    you have to start by typing `./autogen.sh']
 
-1) autogen will run `./configure' - you don't need to
+1) run `./configure' 
 2) type `make' to compile the package
+
+[ 2)a) If you have downloaded the 'minimal' package, then you need to
+       render the Tux images on your machine, a time-consuming but fully
+       automated process, that requires Blender (best version 2.27) to
+       be installed on your machine.  If you have that installed (and in
+       your search path, so that it can be found, you can now type
+       
+       sh render_and_symlink_images.sh
+
+       to create all the substitute symlinks and rendered images from the
+       blender sources.  This step is ONLY nescessary, if you try to build
+       from the 'minimal' download package.]
 
 3)a) type `make install'. By default this will try to install in 
    /usr/local/, in which case you have to be root to do that.
@@ -21,6 +33,9 @@ ALTERNATIVELY:
 
 If you don't have sound or SDL-sound installed, you might have to run
 freedroid with the command-line option `-q'.
+
+If you want to use your OpenGL hardware for more frames, you should run
+freedroid with the command-line option `-o'.
 
 Have fun!
 Reinhard
