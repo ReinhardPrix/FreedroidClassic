@@ -51,6 +51,16 @@
 #define SPECIAL_POS_X 93
 #define SPECIAL_POS_Y 29
 
+#define AUX1_RECT_WIDTH 32
+#define AUX1_RECT_HEIGHT 32
+#define AUX1_POS_X 99
+#define AUX1_POS_Y 104
+
+#define AUX2_RECT_WIDTH 32
+#define AUX2_RECT_HEIGHT 32
+#define AUX2_POS_X 191
+#define AUX2_POS_Y 108
+
 
 void
 ApplyItemFromInventory( int ItemNum )
@@ -314,6 +324,54 @@ CursorIsInSpecialRect( int x , int y )
 }; // int CursorIsInSpecialRect( int x , int y )
 
 /* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the aux1 slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInAux1Rect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= AUX1_POS_X ) && ( CurPos.x <= AUX1_POS_X + AUX1_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + AUX1_POS_Y ) && 
+	   ( CurPos.y <= User_Rect.y + AUX1_POS_Y + AUX1_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInAux1Rect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the aux2 slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInAux2Rect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= AUX2_POS_X ) && ( CurPos.x <= AUX2_POS_X + AUX2_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + AUX2_POS_Y ) && 
+	   ( CurPos.y <= User_Rect.y + AUX2_POS_Y + AUX2_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInAux2Rect( int x , int y )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
  * where the inventory of the player is usually located or not.
  * ---------------------------------------------------------------------- */
@@ -547,6 +605,38 @@ DropHeldItemToSpecialSlot ( void )
 
 }; // void DropHeldItemToShieldSlot ( void )
 
+void
+DropHeldItemToAux1Slot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].aux1_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToAux1Slot ( void )
+
+void
+DropHeldItemToAux2Slot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].aux2_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToAux2Slot ( void )
+
 /* ----------------------------------------------------------------------
  * If an item is held and then clicked again in the inventory field, this
  * item should be dropped into the inventory field, provided there is room
@@ -715,6 +805,24 @@ ShowInventoryScreen ( void )
   TargetRect.w = 50;
   TargetRect.h = 50;
   SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencers aux1 slot
+  //
+  TargetRect.x = InventoryRect.x + AUX1_POS_X ;
+  TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencers aux2 slot
+  //
+  TargetRect.x = InventoryRect.x + AUX2_POS_X ;
+  TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
   
 
   //--------------------
@@ -906,6 +1014,44 @@ ShowInventoryScreen ( void )
 	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot )
 	    {
 	      DropHeldItemToSpecialSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
+      //--------------------
+      // If the cursor is in the aux1 rect, i.e. the small box to the left middle, then
+      // the item should be dropped onto the players current aux1 slot
+      //
+      if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the aux1 rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot )
+	    {
+	      DropHeldItemToAux1Slot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
+      //--------------------
+      // If the cursor is in the aux2 rect, i.e. the small box to the left middle, then
+      // the item should be dropped onto the players current aux1 slot
+      //
+      if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the aux2 rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot )
+	    {
+	      DropHeldItemToAux2Slot ( );
 	      Item_Held_In_Hand = ( -1 );
 	    }
 	  else
