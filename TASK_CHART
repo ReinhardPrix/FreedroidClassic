@@ -43,7 +43,7 @@ more detailed list of planned activities:
 3. put proper timing in takeover game
 4. chase SegFault bug that might come from my new getchar_raw() or GetString()
    functions, and happens mostly after Highscore-entry (func. Debriefing())
-
+5. Add the Homepage-Makefile into the general autoconf/automake machinery
 
 limo
 ----

@@ -6,43 +6,73 @@ next release: 0.7.1  (bug-fix release)
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- in the first ~20 seconds the game runs _very_ slowly
-- complete SDL checks in autoconf
-- make sure all svgalib references are removed
+- (rp!!) SegFault caused by entering Highscore list?! also after/in takeover ?!
+  (rp?, check Debriefing() and GetString() )
+
+- in the first ~20 seconds the game runs _still_ slowly
+  NO, now runs too fast... lol, frame-time determination should be _immediate_!!
+
 - game should be able to check if yiff is actually _running_ and
-  complain if not
+  complain if not and/or continue 
+
+- (rp) Timing in takeover game 
+	- need to get machine-independent timing as in main-game
+
+- "hide" cheat menu from normal users (e.g. non-documented
+  command-line switch), otherwise it's too easy ;)
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-- Farbpalettenrotation fuer Bulletcolor austauschen, da sie die Framerate verschlingt!!
-
-- Spiel "holpert" oefters: koennte von Scroll-schrift kommen
-  (sollte vielleicht in einem Parallel-prozess laufen, statt in
-  der Hauptschleife?) (jp: Kommt wahrscheinlich vom yiff sound server, wenn zu viele
-  sounds gleichzeitig angefordert werden, etwa, wenn man zwischen zwei robots eingeklemmt
-  und hin und her gebeppelt wird.  Andere Ursachen nicht ausgeschlossen.)
-  (liegt sicher auch daran, dass im Lift die Framerate verzerrt wird.  Naja.)
-  Ein weiterer Ausl\"oser ist wenn man etwa ganz am rechts unteren Rand einer rechteckigen
-  Kartenform steht:  Die Framerate wird nachweislich bei mir HALBIERT!  Das liegt an den
-  vielen IsVisible-Abfragen, die scheinbar irgendwo aus der Karte hinaus im Speicher die
-  Sichtbarkeit uberpruefen.  Sehr fragwuerdig.
+- wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
+  steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
+  an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
+  Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
+  fragwuerdig. 
 
 
-Outstanding tuning/design bugs and general TODO(priority: low)
+Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
+- Colors sind allgemein ein wenig verdreht seit SDL Port
+
+- Highscore list + Debriefing ordentlich
+
+- Console
+
+- Lift-entry: man muss zu lange auf Space sein bis man in den Lift
+  kommt. Das "Lift-fahren" ist auch zu schwerfaellig.
+
+- Pause stopped working with SDL-port
+  (rp) PAUSE works now ok, but not perfectly yet (-> better keyboard-handling)
+
+- Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
+  Framerate verschlingt!! (we should check that first, though)
+
+- (rp) should have maximally one 999 on commando-bridge
+
+- hide mouse pointer
+
+- Blitz-schuesse flimmern jetzt zu stark/lang	
+
+- Concept view is ugly
+
+- level 11: console rechts unten ist verkehrt
+
+- proper Highscore list 
+
+- Endscreen after being killed ("Flimmern4") is too slow
+  (rp: now speeded up a bit, but should write a new one)
+
 - (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
+
 - Levelnumber should be the index in curShip.AllLevels for simplicity
+
 - 247 and 249 always in Blinkenergy 
 - 999 rotiert zu schnell
-- Uebernommener 302 is zu schnell, 420 is zu langsam...
-- Enemey visibility is a bit shakey (revisit visibility
-  calcuations...)
-- Also there are 516 in the yellow level, which shouldn't be the
-  case.
-- I also encounter OTHER 001 druids of black color! Especially after having died at
-  least once before!  Very strange!
-- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
+- Uebernommener 302 is zu schnell, 420 is zu langsam..., etc etc
 
+- Enemey visibility is a bit shakey (revisit visibility calcuations...)
+
+- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
 
 Wishlist
 --------
@@ -75,6 +105,8 @@ Wishlist
 
 Resolved bugs
 -------------
+- make sure all svgalib references are removed
+- (rp) autoconf/automake: complete SDL checks 
 - Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
   (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
   hoffe dass niemand sie doch gebraucht haette...
@@ -116,4 +148,7 @@ Resolved bugs
 	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
 	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
 
-
+- (DONE) Also there are 516 in the yellow level, which shouldn't be the  case.
+   I also encounter OTHER 001 druids of black color! Especially after having died at
+  least once before!  Very strange!
+  (rp: this should now work ok)
