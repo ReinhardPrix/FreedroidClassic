@@ -98,15 +98,17 @@ timeout (int sig)
   Terminate(0);
 } /* timeout */
 
-char version_string[] = "FreeDroid 0.6.0
-Copyright (C) 2002 Johannes Prix, Reinhard Prix
+char copyright[] = 
+"\nCopyright (C) 2002 Johannes Prix, Reinhard Prix
 FreeDroid comes with NO WARRANTY to the extent permitted by law.
 You may redistribute copies of FreeDroid
 under the terms of the GNU General Public License.
 For more information about these matters, see the file named COPYING.\n";
 
 
-char usage_string[] = "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] [-t|--timeout=SECONDS]\n
+char usage_string[] = 
+"Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] 
+			[-t|--timeout=SECONDS]\n
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
 /* -----------------------------------------------------------------
@@ -138,7 +140,8 @@ parse_command_line (int argc, char * const argv[])
 	/* version statement -v or --version
 	 * following gnu-coding standards for command line interfaces */
       case 'v':
-	printf (version_string);
+	printf (PACKAGE_STRING); 
+	printf (copyright);
 	exit(0); 
 	break;
 
