@@ -1,6 +1,9 @@
 SUBDIRS = src 
 
-EXTRA_DIST = map graphics sound dialogs
+man_MANS = freedroidRPG.6
+
+freedroid_data = map graphics sound dialogs
+EXTRA_DIST = $(man_MANS) $(freedroid_data)
 
 dist-hook:
 	rm -rf `find $(distdir) -name CVS`
@@ -9,7 +12,7 @@ dist-hook:
 install-data-local:
 	echo "Installing the data-files ..."
 	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
-	cp -pr $(srcdir)/$(EXTRA_DIST) $(DESTDIR)$(pkgdatadir)/
+	cp -pr $(srcdir)/$(freedroid_data) $(DESTDIR)$(pkgdatadir)/
 	echo "... and cleaning CVS and blender-sources etc:"
 	rm -rf `find $(DESTDIR)$(pkgdatadir) -name CVS`
 	rm -f  `find $(DESTDIR)$(pkgdatadir) -name "*.blend"`
