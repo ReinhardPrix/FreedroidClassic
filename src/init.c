@@ -1064,7 +1064,7 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the greeting sound type of this droid type
       ReadValueFromString( RobotPointer , GREETING_SOUND_STRING , "%d" , 
-			   &Druidmap[RobotIndex].Greeting_Sound_Type , EndOfDataPointer );
+			   &Druidmap[RobotIndex].greeting_sound_type , EndOfDataPointer );
 
       // Now we read in the greeting sound type of this droid type
       ReadValueFromString( RobotPointer , ENEMY_GOT_HIT_SOUND_STRING , "%d" , 
@@ -1082,9 +1082,9 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].AdvancedBehaviour , EndOfDataPointer );
 
-      // Now we read in the IsHumand flag of this droid type
+      // Now we read in the is_human flag of this droid type
       ReadValueFromString( RobotPointer , IS_HUMAN_SPECIFICATION_STRING , "%d" , 
-			   &Druidmap[RobotIndex].IsHuman , EndOfDataPointer );
+			   &Druidmap[RobotIndex].is_human , EndOfDataPointer );
 
       // Now we read in if the droid tends to go to call for reinforcements
       ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 

@@ -70,7 +70,6 @@ EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
-EXTERN FCU AllFCUs[];
 EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
 EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 // EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */

@@ -1038,11 +1038,12 @@ Sorry...\n\
     SDL_ShowCursor (SDL_DISABLE);
 
   vid_info = SDL_GetVideoInfo (); /* info about current video mode */
-  /* RGB of transparent color in our pics */
+
+  // RGB of transparent color in our pics 
   transp_rgb.rot   = 199; 
   transp_rgb.gruen =  43; 
   transp_rgb.blau  =  43; 
-  /* and corresponding key: */
+  // and corresponding key: 
   transp_key = SDL_MapRGB(Screen->format, transp_rgb.rot,
 			     transp_rgb.gruen, transp_rgb.blau);
 
