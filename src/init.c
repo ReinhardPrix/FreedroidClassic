@@ -1992,7 +1992,6 @@ Reset_GameConfig_To_Default_Values ( void )
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
-  // GameConfig.Theme_SubPath="lanzz_theme/";
   strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
   GameConfig.Draw_Framerate=TRUE;
   GameConfig.Draw_Energy=FALSE;

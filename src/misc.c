@@ -1166,7 +1166,7 @@ mystrnlen ( char* MyString , int MyMaxlen )
 int
 LoadGameConfig (void)
 {
-  char fname[255];
+  char fname[5000];
   FILE *config;
   
   struct stat statbuf;

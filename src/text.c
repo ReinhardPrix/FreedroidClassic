@@ -68,6 +68,191 @@ float BigScreenMessageDuration=10000;
 
 static SDL_Surface* Background;
 
+#define MAX_DIALOGUE_OPTIONS_IN_ROSTER 100
+#define MAX_SUBTITLES_N_SAMPLES_PER_DIALOGUE_OPTION 20
+typedef struct
+{
+  char* option_text;
+  char* option_sample_file_name;
+
+  int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
+  int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
+}
+dialogue_option, *Dialogue_option;
+
+dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
+
+void
+InitChatRosterForNewDialogue( void )
+{
+  int i;
+  int j;
+
+  for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+    {
+      ChatRoster[i].option_text="";
+      ChatRoster[i].option_sample_file_name="";
+
+      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
+	{
+	  ChatRoster [ i ] . change_option_nr [ j ] = (-1); 
+	  ChatRoster [ i ] . change_option_to_value [ j ] = (-1); 
+	}
+    }
+  
+}; // void InitChatRosterForNewDialogue( void )
+
+void
+LoadChatRosterWithChatSequence ( char* SequenceCode )
+{
+  char *ChatData;
+  char *SectionPointer;
+  char *EndOfSectionPointer;
+  char *NextChatSectionCode;
+  char *endpt;				/* Pointer to end-strings */
+  char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
+  int level_anz;
+  int i;
+  char* fpath;
+  int OptionIndex;
+  int NumberOfOptionsInSection;
+  
+
+  fpath = find_file ( "Freedroid.dialogues" , MAP_DIR, FALSE);
+
+#define END_OF_DIALOGUE_FILE_STRING "*** End of Dialogue File Information ***"
+#define CHAT_CHARACTER_BEGIN_STRING "Beginning of new chat dialog for character=\""
+#define CHAT_CHARACTER_END_STRING "End of chat dialog for character=\""
+#define NEW_OPTION_BEGIN_STRING "New Option Nr="
+
+  //--------------------
+  // At first we read the whole chat file information into memory
+  //
+  ChatData = ReadAndMallocAndTerminateFile( fpath , END_OF_DIALOGUE_FILE_STRING ) ;
+  SectionPointer = ChatData ;
+
+  //--------------------
+  // Now we search for the desired chat section, cause most likely
+  // there will be more than one person to chat in this chat file soon
+  //
+  NextChatSectionCode = "NOPERSONATALL";
+  SectionPointer = ChatData;
+
+  while ( strcmp ( NextChatSectionCode , SequenceCode ) )
+    {
+      SectionPointer = LocateStringInData ( SectionPointer, CHAT_CHARACTER_BEGIN_STRING );
+      NextChatSectionCode = ReadAndMallocStringFromData ( SectionPointer , CHAT_CHARACTER_BEGIN_STRING , "\"" ) ;
+      DebugPrintf( 0 , "\nChat section beginning found.  Chat code given: %s." , NextChatSectionCode );
+    }
+  DebugPrintf( 0 , "\nThat seems to be the chat section we're looking for.  Great!" ) ;
+
+  //--------------------
+  // Now we locate the end of this chat section and put a 
+  // termination character there, so we can use string functions
+  // conveniently on the given section.
+  //
+  EndOfSectionPointer = LocateStringInData ( SectionPointer , CHAT_CHARACTER_END_STRING );
+  *EndOfSectionPointer = 0;
+
+  //--------------------
+  // At first we go take a look on how many options we have
+  // to decode from this section.
+  //
+  NumberOfOptionsInSection = CountStringOccurences ( SectionPointer , NEW_OPTION_BEGIN_STRING ) ;
+  DebugPrintf( 0 , "\nWe have counted %d Option entries in this section." , NumberOfOptionsInSection ) ;
+
+  //--------------------
+  // Now we decode each small chat option section
+  //
+  for ( i = 0 ; i < NumberOfOptionsInSection; i ++ )
+    {
+      SectionPointer = LocateStringInData ( SectionPointer, NEW_OPTION_BEGIN_STRING );
+      ReadValueFromString( SectionPointer , NEW_OPTION_BEGIN_STRING, "%d" , 
+			   &OptionIndex , EndOfSectionPointer );
+      DebugPrintf( 0 , "\nFound New Option entry.  Index found is: %d. " , OptionIndex ) ;
+      SectionPointer++;
+
+    }
+
+
+  //--------------------
+  // Now we look for the next dialoge section, it there is any
+  //
+
+
+  /*  
+  //--------------------
+  // Now we count the number of levels and remember their start-addresses.
+  // This is done by searching for the LEVEL_END_STRING again and again
+  // until it is no longer found in the ship file.  good.
+  //
+
+  level_anz = 0;
+  endpt = ShipData;
+  LevelStart[level_anz] = ShipData;
+
+  while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
+    {
+      endpt += strlen (LEVEL_END_STRING);
+      level_anz++;
+      LevelStart[level_anz] = endpt + 1;
+    }
+
+  // init the level-structs 
+  curShip.num_levels = level_anz;
+
+  for (i = 0; i < curShip.num_levels; i++)
+    {
+      
+      curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
+
+      TranslateMap ( curShip . AllLevels [ i ] ) ;
+
+    }
+
+  return OK;
+
+  
+
+
+
+
+        // Now we read in the Name of this droid.  We consider as a name the rest of the
+      // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
+      Druidmap[RobotIndex].druidname =
+	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
+
+      // Now we read in the file name of the portrait file for this droid.  
+      // Is should be enclosed in double-quotes.
+      Druidmap[RobotIndex].portrait_filename_without_ext =
+	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
+
+      // #define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
+
+      // Now we read in the maximal speed this droid can go. 
+      // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
+      // &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
+
+      // Now we read in the class of this droid.
+      ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].class , EndOfDataPointer );
+
+      // Now we read in the maximal acceleration this droid can go. 
+      // ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
+      // &Druidmap[RobotIndex].accel , EndOfDataPointer );
+
+      // Now we read in the maximal energy this droid can store. 
+      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxenergy , EndOfDataPointer );
+
+      // Now we read in the maximal mana this droid can store. 
+      ReadValueFromString( RobotPointer , MAXMANA_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxmana , EndOfDataPointer );
+
+  */
+
+};
+
 /* ----------------------------------------------------------------------
  * This function does all the (text) interaction with a friendly droid
  * and maybe also does special interacions like Chandra and Stone.
@@ -346,6 +531,19 @@ ChatWithFriendlyDroid( int Enum )
   
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
+
+      //--------------------
+      // We clean out the chat roster from any previous use
+      //
+      InitChatRosterForNewDialogue(  );
+
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "CHA" );
+
+      
+
       //--------------------
       // Now we do the dialog with Dr. Chandra...
       //
