@@ -323,7 +323,7 @@ enum _directions
 
 // #define MAXWAYPOINTS 		100
 #define MAXWAYPOINTS 		100
-#define MAX_DOORS_ON_LEVEL 	20
+#define MAX_DOORS_ON_LEVEL 	30
 #define MAX_REFRESHES_ON_LEVEL	10
 
 /* Macros */

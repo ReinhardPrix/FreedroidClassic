@@ -316,10 +316,11 @@ LoadShip (char *filename)
 
   for (i = 0; i < curShip.num_levels; i++)
     {
-      if ((curShip.AllLevels[i] = LevelToStruct (LevelStart[i])) == NULL)
-	return ERR;
-      else
-	TranslateMap (curShip.AllLevels[i]);
+      curShip.AllLevels[i] = LevelToStruct (LevelStart[i]);
+
+      TranslateMap (curShip.AllLevels[i]);
+
+
     }
 
   /* eventually this should be read in with the ship data as well, */
@@ -422,7 +423,7 @@ char *StructToMem(Level Lev)
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
   char linebuf[81];		/* Buffer */
-  char HumanReadableMapLine[1000]="Hallo, dies soll lesbarer Map-string werden.";
+  char HumanReadableMapLine[10000]="Hallo, dies soll lesbarer Map-string werden.";
   
   /* Get the number of waypoints */
   anz_wp = 0;
@@ -452,12 +453,12 @@ char *StructToMem(Level Lev)
   strcat(LevelMem, "\n");
 
   // Now in the loop each line of map data should be saved as a whole
-  for(i=0; i<ylen; i++) {
+  for( i = 0 ; i < ylen ; i++ ) {
 
     // But before we can write this line of the map to the disk, we need to
     // convert is back to human readable format.
     TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
-    strncat(LevelMem, HumanReadableMapLine , xlen);
+    strncat(LevelMem, HumanReadableMapLine , xlen * 4 ); // We need FOUR chars per map tile
     strcat(LevelMem, "\n");
   }
   
@@ -666,11 +667,11 @@ LevelToStruct (char *data)
     if ((loadlevel->map[i] = strtok (NULL, "\n")) == NULL)
       return NULL;
 
-  /* Get Doors Array */
-  GetDoors (loadlevel);
-
   /* Get Waypoints */
   WaypointPointer = wp_begin;
+
+  printf("\nReached Waypoint-read-routine.");
+  fflush(stdout);
 
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
@@ -699,36 +700,18 @@ LevelToStruct (char *data)
 
   
 
-  // NumWaypoints = GetWaypoints (loadlevel);
-  /* Get Refreshes */
-  GetRefreshes (loadlevel);
-
   /* Scan the waypoint- connections */
   pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
 
-  /* Read Waypoint-data */
-  /*
-  for (i = 0; i < NumWaypoints; i++)
-    {
-      for (j = 0; j < MAX_WP_CONNECTIONS; j++)
-	{
-	  if ((pos = strtok (NULL, " \n\t")) == NULL)
-	    return NULL;
-	  if (sscanf (pos, "%d", &zahl) == EOF)
-	      return NULL;
-
-	  loadlevel->AllWaypoints[i].connections[j] = zahl;
-	}
-    }
-  */
   return loadlevel;
+
 } /* LevelToStruct */
 
 
 
 /*@Function============================================================
 @Desc: GetDoors: initialisiert Doors Array der uebergebenen Level-struct
-				ACHTUNG: 	Map-Daten mussen schon in struct sein !!
+ACHTUNG: 	Map-Daten mussen schon in struct sein !!
 
 @Ret: Anz. der Tueren || ERR
 @Int:
@@ -754,13 +737,17 @@ GetDoors (Level Lev)
       for (col = 0; col < xlen; col++)
 	{
 	  brick = Lev->map[line][col];
-	  if (brick == '=' || brick == '"')
+	  // if (brick == '=' || brick == '"')
+	  if ( brick == V_ZUTUERE || brick == H_ZUTUERE )
 	    {
 	      Lev->doors[curdoor].x = col;
 	      Lev->doors[curdoor++].y = line;
 
 	      if (curdoor > MAX_DOORS_ON_LEVEL)
 		{
+		  printf("\n Fatal error in GetDoors!");
+		  fflush(stdout);
+		  Terminate(ERR);
 		  return ERR;
 		}
 
@@ -795,14 +782,17 @@ GetRefreshes (Level Lev)
   for (row = 0; row < ylen; row++)
     for (col = 0; col < xlen; col++)
       {
-	if (Lev->map[row][col] == '@')
+	if (Lev->map[row][col] == REFRESH1 )
 	  {
 	    Lev->refreshes[curref].x = col;
 	    Lev->refreshes[curref++].y = row;
 
 	    if (curref > MAX_REFRESHES_ON_LEVEL)
-	      return ERR;
-
+	      {
+		printf("\nTo many refreshes on level!!! Terminating...");
+		Terminate(ERR);
+		return ERR;
+	      }
 	  }			/* if */
       }				/* for */
   return curref;
@@ -847,12 +837,14 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 {
   int col;
   int i;
+  char Buffer[10];
 
   DebugPrintf (1,"\n\nTranslating mapline into human readable format...");
   
   // Now in the game and in the level editor, it might have happend that some open
   // doors occur.  The make life easier for the saving routine, these doors should
   // be closed first.
+
   for (col=0; col < LineLength; col++)
     {
       for(i=0; i< Lev->ylen; i++)
@@ -885,9 +877,16 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	}
     }
 
+
+
   /* transpose the game-engine mapdata line to human readable format */
+
+  HumanReadable[0]=0;  // Add a terminator at the beginning
+
   for (col = 0; col < LineLength; col++)
     {
+
+      /*
       for (i = 0; (i < INVISIBLE_BRICK) && (Translator[i].intern != MapInfo[col] ); i++);
       
       if ( i == INVISIBLE_BRICK )
@@ -902,42 +901,14 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	  printf("\nSuccessfully interpreting: %d\n", MapInfo[col] );
 	  HumanReadable[col] = Translator[i].ascii;
 	}
+      */
+      sprintf( Buffer , "%3d " , MapInfo[col] );
+      strcat ( HumanReadable , Buffer );
+
     }
 
-  // At this point, the map is basically translated into human readable format
-  // and ready for output.  Only one more thing must be done before that can
-  // happen:  The WAYPOINT information must be stored in the map as well and
-  // this must happen via 'x' entries in the map for every waypoint.  So
-  // we just add the nescessary x's and we are done
-
-  /*
-  for (i=0; i<MAXWAYPOINTS; i++)
-    {
-      if ( Lev->AllWaypoints[i].y != CurrentLine ) continue;
-      if ( Lev->AllWaypoints[i].y == 0 ) continue;  // this means an unused waypoint field
-      HumanReadable[ Lev->AllWaypoints[i].x ] = 'x';
-    }
-  */
 
 
-  /*
-  // Scan the waypoint- connections
-  pos = strtok (wp_begin, "\n");	// Get Pointer to data-begin 
-
-  // Read Waypoint-data 
-  for (i = 0; i < NumWaypoints; i++)
-    {
-      for (j = 0; j < MAX_WP_CONNECTIONS; j++)
-	{
-	  if ((pos = strtok (NULL, " \n\t")) == NULL)
-	    return NULL;
-	  if (sscanf (pos, "%d", &zahl) == EOF)
-	      return NULL;
-
-	  loadlevel->AllWaypoints[i].connections[j] = zahl;
-	}
-    }
-  */
 } // void TranslateToHumanReadable( ... )
 
 /*-----------------------------------------------------------------
@@ -958,112 +929,33 @@ TranslateMap (Level Lev)
   int xdim = Lev->xlen;
   int ydim = Lev->ylen;
   int row, col;
-  int i;
-  int WAbove, WBelow, WLeft, WRight;	// Walls around CROSS? yes=1,no=0
-  int environs;			// encodes the "Wall-environment" of a "+"
-  int NewBlock = KREUZ;		// Neuen "Eck-Block" in den wir KREUZ verwandeln
+  char *Buffer;
 
   DebugPrintf (2, "\n\nStarting to translate the map from human readable disk format into game-engine format.");
 
-  /* first round: transpose all ascii-mapdata to internal numbers for map */
-  for (row = 0; row < ydim; row++)
+  // first round: transpose all ascii-mapdata to internal numbers for map 
+  for (row = 0; row < ydim  ; row++)
     {
-      for (col = 0; col < xdim; col++)
-	{
-	  for (i = 0;
-	       Translator[i].ascii
-	       && (Translator[i].ascii != Lev->map[row][col]); i++);
 
-	  if (!Translator[i].ascii)
-	    {
-	      printf ("In TranslateMap: Unknown map-char: %c\n",
-			 Lev->map[row][col]);
-	      Terminate (ERR);
-	    }
-	  else
-	    Lev->map[row][col] = Translator[i].intern;
+      Buffer=MyMalloc( xdim + 10 );
+
+      for (col = 0; col < xdim  ; col++)
+	{
+
+	  sscanf( Lev->map[row]+4*col , "%d " , &(Buffer[col]) );
+
 	}
+
+      Lev->map[row]=Buffer;
     }				/* for (row=0..) */
 
-  // Zweiter Durchlauf: Kreuze "abschleifen", 
-  //     i.e. in entsprechende Ecken umwandeln wo noetig
-  for (row = 0; row < ydim; row++)
-    {
-      for (col = 0; col < xdim; col++)
-	{
-	  if (Lev->map[row][col] != KREUZ)
-	    continue;
-	  // KREUZ: mal die Nachbarn ansehen: "Wall" or not?
-	  WAbove = (row > 0) ? IsWallBlock (Lev->map[row - 1][col]) : 0;
-	  WBelow =
-	    (row < ydim - 1) ? IsWallBlock (Lev->map[row + 1][col]) : 0;
-	  WLeft = (col > 0) ? IsWallBlock (Lev->map[row][col - 1]) : 0;
-	  WRight =
-	    (col < xdim - 1) ? IsWallBlock (Lev->map[row][col + 1]) : 0;
 
-	  // encode this environment into one single number:
-	  environs = 0x1000 * WAbove + 0x100 * WRight + 0x10 * WBelow + WLeft;
+  /* Get Doors Array */
+  GetDoors ( Lev );
 
-	  // ... und unnoetige Enden entfernen:
-	  switch (environs)
-	    {
-	    case 0x0000:	// no walls around
-	    case 0x1000:	// just one connecting wall, bit lonely?
-	    case 0x0100:
-	    case 0x0010:
-	    case 0x0001:
-	      printf ("\nUnconnected '+' found on Level %i.\n",
-		      Lev->levelnum);
-	      break;
-
-	    case 0x1010:	// just part of a straight wall, a bit redundant?
-	    case 0x0101:
-	      printf ("\nUnconnected '+' found on Level %i.\n",
-		      Lev->levelnum);
-	      // don't do anything
-	      break;
-
-	      // pure corners
-	    case 0x1100:
-	      NewBlock = ECK_LU;
-	      break;
-	    case 0x0110:
-	      NewBlock = ECK_LO;
-	      break;
-	    case 0x0011:
-	      NewBlock = ECK_RO;
-	      break;
-	    case 0x1001:
-	      NewBlock = ECK_RU;
-	      break;
-
-	      // T - connectors
-	    case 0x1110:
-	      NewBlock = T_L;
-	      break;
-	    case 0x1101:
-	      NewBlock = T_U;
-	      break;
-	    case 0x1011:
-	      NewBlock = T_R;
-	      break;
-	    case 0x0111:
-	      NewBlock = T_O;
-	      break;
-
-	      // full cross
-	    case 0x1111:
-	      NewBlock = KREUZ;
-	      break;
-	    default:
-	      DebugPrintf (2, "\nMap-panic. TranslateMap() is messed up!\n");
-	      DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
-	      return (ERR);
-	      break;
-	    }			// switch(environs)
-	  Lev->map[row][col] = NewBlock;	// ok, hope we got it right ;)
-	}			/* for(col) */
-    }				/* for(row) */
+  // NumWaypoints = GetWaypoints (loadlevel);
+  /* Get Refreshes */
+  GetRefreshes ( Lev );
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;

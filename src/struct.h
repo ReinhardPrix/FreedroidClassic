@@ -66,6 +66,9 @@ typedef struct
   float Current_BG_Music_Volume;
   float Current_Sound_FX_Volume;
   float Current_Gamma_Correction;
+  int StandardEnemyMessages_On_Off;
+  int StandardInfluencerMessages_On_Off;
+  int Mouse_Input_Permitted;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
