@@ -350,6 +350,10 @@ EnterKonsole (void)
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Bannerwei"s FG: FONT_RED */
 
+  ClearGraphMem ( );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  SDL_Flip( ne_screen );
+
   while (SpacePressed ());
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
@@ -455,6 +459,8 @@ GreatDruidShow (void)
 
 	  SDL_SetClipRect ( ne_screen , NULL );
 	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
 
 
 	  strcpy (InfoText, "Unit type ");
@@ -525,6 +531,8 @@ GreatDruidShow (void)
 
       SDL_SetClipRect ( ne_screen , NULL );
       DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
 
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
@@ -584,6 +592,8 @@ GreatDruidShow (void)
 
       SDL_SetClipRect ( ne_screen , NULL );
       DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
@@ -637,6 +647,8 @@ GreatDruidShow (void)
 
       SDL_SetClipRect ( ne_screen , NULL );
       DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 

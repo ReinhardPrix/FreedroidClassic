@@ -267,7 +267,14 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{
-	  break;  /* Text has been scrolled outside User_Rect */
+	  // JP: I've disabled this, since with this enabled we won't even
+	  // see a single line of the first section of the briefing.
+	  // But this leads to that we currently NEVER can see the second 
+	  // or third part of the briefing text, cause it will not start
+	  // the new text part when the lower end of the first text part
+	  // is reached.  I don't consider this bug release-critical.
+	  //
+	  // break;  /* Text has been scrolled outside User_Rect */
 	}
 
       InsertLine -= speed;
