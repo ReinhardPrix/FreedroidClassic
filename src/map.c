@@ -3371,9 +3371,9 @@ game data file with all droid type specifications.",
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
 
-    }  // while (enemy-limit of this level not reached) 
+      strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
 
-  strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
+    }  // while (enemy-limit of this level not reached) 
 
   SearchPointer=SectionPointer;
 
