@@ -131,6 +131,15 @@ Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 };
 #endif
 
+enum 
+  {
+    NOTHING_PLAYING_AT_ALL = 3 ,
+    FADING_IN = 4 ,
+    FADING_OUT = 5 
+  };
+
+char NewMusicTargetFileName[5000];
+int BackgroundMusicStateMachineState = NOTHING_PLAYING_AT_ALL ;
 
 //----------------------------------------------------------------------
 // We want to know in certain cases if a channel has finished playback
@@ -870,29 +879,25 @@ CantCarrySound (void)
     }
 }; // void CantCarrySound (void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 TransferSound (void)
 {
   PlaySound ( TRANSFER_SOUND );
-}
+}; // void TransferSound (void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 Mission_Status_Change_Sound (void)
 {
   PlaySound ( MISSION_STATUS_CHANGE_SOUND );
-}
+}; // void Mission_Status_Change_Sound (void)
 
 /* ----------------------------------------------------------------------
  * This function is intended to provide a convenient way of switching
@@ -904,7 +909,7 @@ Mission_Status_Change_Sound (void)
  *
  * ---------------------------------------------------------------------- */
 void
-SwitchBackgroundMusicTo ( char* filename_raw_parameter )
+LoadAndFadeInBackgroundMusic ( void )
 {
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -913,26 +918,8 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
   static int MOD_Music_Channel = -1;
   char* fpath;
   char filename_raw[5000];
-  static char PreviousFileParameter[5000]="NONE_AT_ALL";
 
   if ( !sound_on ) return;
-
-  //--------------------
-  // Maybe the background music switch command given instructs us to initiate
-  // the same background music that has been playing all the while anyway in 
-  // an endless loop.  So in this case, we need not touch anything at all and
-  // just return.
-  //
-  if ( !strcmp ( PreviousFileParameter , filename_raw_parameter ) )
-    {
-      DebugPrintf ( 0 , "\nSwitch BG music instruction just repeats running music... nothing done.\n");
-      return;
-    }
-  else
-    {
-      strcpy ( PreviousFileParameter , filename_raw_parameter );
-    }
-
 
   if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
     {
@@ -962,7 +949,7 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
     }
 
   strcpy ( filename_raw , "music/" );
-  strcat ( filename_raw , filename_raw_parameter );
+  strcat ( filename_raw , NewMusicTargetFileName );
   fpath = find_file ( filename_raw , SOUND_DIR, FALSE);
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
@@ -984,24 +971,93 @@ not complain any more.",
     {
       DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
     }
-  
 
   // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
-  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
+  // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
+  MOD_Music_Channel = Mix_FadeInMusic ( Loaded_MOD_Files[ 0 ] , -1 , 5000 );
 
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
 
-}; // void SwitchBackgroundMusicTo(int Tune)
+}; // void LoadAndFadeInBackgroundMusic ( void )
+
+/* ----------------------------------------------------------------------
+ * This function will be invoked by the callback of the SDL mixer when
+ * the fading out effect with the background music is completed.
+ * ---------------------------------------------------------------------- */
+void OldMusicHasFinishedFadingOut ( void )
+{
+
+  DebugPrintf( 1 , "\nOld music has now completely faded out and stopped... Can proceed to fade in new music... \n");
+  LoadAndFadeInBackgroundMusic (  );
+
+}; // void OldMusicHasFinishedFadingOut ( void )
 
 
-/*@Function============================================================
-@Desc: 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+SwitchBackgroundMusicTo ( char* filename_raw_parameter )
+{
 
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+  static char PreviousFileParameter[5000]="NONE_AT_ALL";
+
+  if ( !sound_on ) return;
+
+  //--------------------
+  // Maybe the background music switch command given instructs us to initiate
+  // the same background music that has been playing all the while anyway in 
+  // an endless loop.  So in this case, we need not touch anything at all and
+  // just return.
+  //
+  if ( !strcmp ( PreviousFileParameter , filename_raw_parameter ) )
+    {
+      DebugPrintf ( 0 , "\nSwitch BG music instruction just repeats running music... nothing done.\n");
+      return;
+    }
+  else
+    {
+      strcpy ( PreviousFileParameter , filename_raw_parameter );
+    }
+
+  strcpy ( NewMusicTargetFileName , filename_raw_parameter );
+
+
+  //--------------------
+  // Now we can start to get some new music going, either directly or
+  // by issuing a fade out instruction, that will then launch a callback
+  // to get the new music going...
+  //
+
+  if ( BackgroundMusicStateMachineState == NOTHING_PLAYING_AT_ALL )
+    {
+      LoadAndFadeInBackgroundMusic (    );
+      BackgroundMusicStateMachineState = FADING_IN ;
+    }
+  else
+    {
+      Mix_FadeOutMusic( 5000 );
+      BackgroundMusicStateMachineState = FADING_OUT ;
+      
+      //--------------------
+      // We set up a function to be invoked by the SDL automatically as
+      // soon as the fading out effect is completed (and the new music
+      // can start to get going that is...)
+      //
+      Mix_HookMusicFinished( OldMusicHasFinishedFadingOut );
+
+    }
+
+}; // void SwitchBackgroundMusicTo ( char* filename_raw_parameter )
+
+
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 PlaySound (int Tune)
 {
