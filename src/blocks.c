@@ -163,6 +163,8 @@ number of inventory screen tiles with the item!  Fatal!",
     RescaleFactor = 2.0 ;
   else if ( ItemMap [ item_type ] . inv_image . inv_size . y == 3 ) 
     RescaleFactor = 2.0 / 3.0 ;
+  else if ( ItemMap [ item_type ] . inv_image . inv_size . y == 4 ) 
+    RescaleFactor = 1.0 / 2.0 ;
   else RescaleFactor = 1.0;
 
   tmp_surf = zoomSurface ( ItemMap [ item_type ] . inv_image . Surface , RescaleFactor , RescaleFactor , FALSE );

@@ -209,6 +209,9 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
   ListPointer = ListToBeFilled;
   if ( ShopCharacterCode == PERSON_STONE )
     {
+      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
       ListPointer->type = ITEM_SHORT_BOW; ListPointer++;
       ListPointer->type = ITEM_HUNTERS_BOW; ListPointer++;
       ListPointer->type = ITEM_EXTERMINATOR_AMMUNITION; ListPointer++;
