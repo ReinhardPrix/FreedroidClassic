@@ -96,7 +96,220 @@
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
-Level Decode_Loaded_Leveldata ( char *data );
+Level DecodeLoadedLeveldata ( char *data );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+DecodeInterfaceDataForThisLevel ( Level loadlevel , char* DataPointer )
+{
+  char* TempSectionPointer;
+  char PreservedLetter;
+
+  //--------------------
+  // Now we read in the jump points associated with this map
+  //
+
+  // We look for the beginning and end of the map statement section
+  TempSectionPointer = LocateStringInData( DataPointer , MAP_BEGIN_STRING );
+
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  PreservedLetter=TempSectionPointer[0];
+  TempSectionPointer[0]=0;
+
+#define DEBUG_LEVEL_INTERFACES 1
+
+  ReadValueFromString( DataPointer , "jump threshold north: " , "%d" , 
+		       &(loadlevel->jump_threshold_north) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold north : %d ", loadlevel->jump_threshold_north );
+  ReadValueFromString( DataPointer , "jump threshold south: " , "%d" , 
+		       &(loadlevel->jump_threshold_south) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold south : %d ", loadlevel->jump_threshold_south );
+  ReadValueFromString( DataPointer , "jump threshold east: " , "%d" , 
+		       &(loadlevel->jump_threshold_east) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold east : %d ", loadlevel->jump_threshold_east );
+  ReadValueFromString( DataPointer , "jump threshold west: " , "%d" , 
+		       &(loadlevel->jump_threshold_west) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold west : %d ", loadlevel->jump_threshold_west );
+
+  ReadValueFromString( DataPointer , "jump target north: " , "%d" , 
+		       &(loadlevel->jump_target_north) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target north : %d ", loadlevel->jump_target_north );
+  ReadValueFromString( DataPointer , "jump target south: " , "%d" , 
+		       &(loadlevel->jump_target_south) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target south : %d ", loadlevel->jump_target_south );
+  ReadValueFromString( DataPointer , "jump target east: " , "%d" , 
+		       &(loadlevel->jump_target_east) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target east : %d ", loadlevel->jump_target_east );
+  ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
+		       &(loadlevel->jump_target_west) , TempSectionPointer );
+  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
+
+
+  TempSectionPointer [ 0 ] = PreservedLetter ;
+
+}; // void DecodeInterfaceDataForThisLevel ( Level loadlevel , char* data )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
+{
+  sscanf ( DataPointer , "Levelnumber: %u \n\
+ xlen of this level: %u \n\
+ ylen of this level: %u \n\
+ color of this level: %u \n" , 
+	  &(loadlevel->levelnum), &(loadlevel->xlen),
+	  &(loadlevel->ylen), &(loadlevel->color));
+
+  DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
+  DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
+  DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
+  DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
+
+  if ( loadlevel->ylen >= MAX_MAP_LINES ) 
+    {
+	  fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A maplevel Freedroid was supposed to load has more map lines than allowed\n\
+for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
+\n\
+Sorry, but unless this constant is raised, I'll refuse to load this map.\n\
+\n\
+If you receive this error message, either raise the constant yourself and recompile or\n\
+contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the map loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+    }
+}; // void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer );
+
+/* ----------------------------------------------------------------------
+ * Next we extract the statments of the influencer on this level WITHOUT 
+ * destroying or damaging the data in the process!
+ * ---------------------------------------------------------------------- */
+void 
+DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer )
+{
+  char PreservedLetter;
+  int i , NumberOfStatementsInThisLevel;
+  char* StatementSectionBegin;
+  char* StatementSectionEnd;
+  char* StatementPointer;
+  
+  //--------------------
+  // First we initialize the statement array with 'empty' values
+  //
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->StatementList[ i ].x = ( -1 ) ;
+      loadlevel->StatementList[ i ].y = ( -1 ) ;
+      loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
+    }
+
+  // We look for the beginning and end of the map statement section
+  StatementSectionBegin = LocateStringInData( DataPointer , STATEMENT_BEGIN_STRING );
+  StatementSectionEnd = LocateStringInData( DataPointer , STATEMENT_END_STRING );
+
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  PreservedLetter=StatementSectionEnd[0];
+  StatementSectionEnd[0]=0;
+  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
+
+  StatementPointer=StatementSectionBegin;
+  for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
+    {
+      StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
+      ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
+			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
+      ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
+			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
+      loadlevel->StatementList[ i ].Statement_Text = 
+	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
+		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
+    }
+
+  // Now we repair the damage done to the loaded level data
+  StatementSectionEnd[0]=PreservedLetter;
+
+}; // void DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer );
+
+/* ----------------------------------------------------------------------
+ * Next we extract the codepanels of this level WITHOUT destroying
+ * or damaging the data in the process!
+ * ---------------------------------------------------------------------- */
+void 
+DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer )
+{
+  int i;
+  char PreservedLetter;
+  char* CodepanelPointer;
+  char* CodepanelSectionBegin;
+  char* CodepanelSectionEnd;
+  int NumberOfCodepanelsInThisLevel;
+
+  //--------------------
+  // First we initialize the codepanel arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
+      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
+      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
+    }
+
+  //--------------------
+  // We look for the beginning and end of the codepanel section
+  //
+  CodepanelSectionBegin = LocateStringInData( DataPointer , CODEPANEL_SECTION_BEGIN_STRING );
+  CodepanelSectionEnd = LocateStringInData( DataPointer , CODEPANEL_SECTION_END_STRING );
+
+  //--------------------
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  //
+  PreservedLetter=CodepanelSectionEnd[0];
+  CodepanelSectionEnd[0]=0;
+  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
+
+
+  //--------------------
+  // Now we decode all the codepanel information
+  //
+  CodepanelPointer=CodepanelSectionBegin;
+  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
+    {
+      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
+      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
+			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
+      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
+			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
+      loadlevel->CodepanelList[ i ].Secret_Code = 
+	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
+		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
+    }
+
+  //--------------------
+  // Now we repair the damage done to the loaded level data
+  //
+  CodepanelSectionEnd[0]=PreservedLetter;
+
+}; // void DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
  * This function returns TRUE for blocks classified as "Walls" and false
@@ -624,7 +837,7 @@ LoadShip (char *filename)
   for (i = 0; i < curShip.num_levels; i++)
     {
       
-      curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
+      curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
       TranslateMap ( curShip . AllLevels [ i ] ) ;
 
@@ -1230,7 +1443,7 @@ freedroid-discussion@lists.sourceforge.net\n\
  * @Ret:  Level or NULL
  * ---------------------------------------------------------------------- */
 Level
-Decode_Loaded_Leveldata ( char *data )
+DecodeLoadedLeveldata ( char *data )
 {
   Level loadlevel;
   char *pos;
@@ -1243,21 +1456,12 @@ Decode_Loaded_Leveldata ( char *data )
   char ThisLine[1000];
   char* ThisLinePointer;
   char* DataPointer;
-  char* StatementSectionBegin;
-  char* StatementSectionEnd;
-  char* StatementPointer;
-  char* CodepanelPointer;
-  char* CodepanelSectionBegin;
-  char* CodepanelSectionEnd;
   char* MapInsertPointer;
   char* MapInsertSectionBegin;
   char* MapInsertSectionEnd;
   char* ItemPointer;
   char* ItemsSectionBegin;
   char* ItemsSectionEnd;
-  char* TempSectionPointer;
-  int NumberOfStatementsInThisLevel;
-  int NumberOfCodepanelsInThisLevel;
   int NumberOfMapInsertsInThisLevel;
   int NumberOfItemsInThisLevel;
   char Preserved_Letter;
@@ -1282,107 +1486,9 @@ Decode_Loaded_Leveldata ( char *data )
       Terminate(ERR);
     }
 
-  //--------------------
-  // Now we read in the jump points associated with this map
-  //
+  DecodeInterfaceDataForThisLevel ( loadlevel , DataPointer );
 
-  // We look for the beginning and end of the map statement section
-  TempSectionPointer = LocateStringInData( DataPointer , MAP_BEGIN_STRING );
-
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  Preserved_Letter=TempSectionPointer[0];
-  TempSectionPointer[0]=0;
-
-  ReadValueFromString( DataPointer , "jump threshold north: " , "%d" , 
-		       &(loadlevel->jump_threshold_north) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump theshold north : %d ", loadlevel->jump_threshold_north );
-  ReadValueFromString( DataPointer , "jump threshold south: " , "%d" , 
-		       &(loadlevel->jump_threshold_south) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump theshold south : %d ", loadlevel->jump_threshold_south );
-  ReadValueFromString( DataPointer , "jump threshold east: " , "%d" , 
-		       &(loadlevel->jump_threshold_east) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump theshold east : %d ", loadlevel->jump_threshold_east );
-  ReadValueFromString( DataPointer , "jump threshold west: " , "%d" , 
-		       &(loadlevel->jump_threshold_west) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump theshold west : %d ", loadlevel->jump_threshold_west );
-
-  ReadValueFromString( DataPointer , "jump target north: " , "%d" , 
-		       &(loadlevel->jump_target_north) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump target north : %d ", loadlevel->jump_target_north );
-  ReadValueFromString( DataPointer , "jump target south: " , "%d" , 
-		       &(loadlevel->jump_target_south) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump target south : %d ", loadlevel->jump_target_south );
-  ReadValueFromString( DataPointer , "jump target east: " , "%d" , 
-		       &(loadlevel->jump_target_east) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump target east : %d ", loadlevel->jump_target_east );
-  ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
-		       &(loadlevel->jump_target_west) , TempSectionPointer );
-  DebugPrintf( 0 , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
-
-
-  TempSectionPointer [ 0 ] = Preserved_Letter ;
-
-  /*
-  sscanf ( DataPointer , "Levelnumber: %u \n\
- xlen of this level: %u \n\
- ylen of this level: %u \n\
- color of this level: %u \n\
-jump threshold north: %u\n\
-jump threshold south: %u\n\
-jump threshold east: %u\n\
-jump threshold west: %u\n\
-jump target north: %u\n\
-jump target south: %u\n\
-jump target east: %u\n\
-jump target west: %u\n",
-	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color , 
-	  Lev->jump_threshold_north, 
-	  Lev->jump_threshold_south, 
-	  Lev->jump_threshold_east, 
-	  Lev->jump_threshold_west, 
-	  Lev->jump_target_north, 
-	  Lev->jump_target_south, 
-	  Lev->jump_target_east, 
-	  Lev->jump_target_west
-
-	  &(loadlevel->levelnum), &(loadlevel->xlen),
-	  &(loadlevel->ylen), &(loadlevel->color));
-  */
-
-  sscanf ( DataPointer , "Levelnumber: %u \n\
- xlen of this level: %u \n\
- ylen of this level: %u \n\
- color of this level: %u \n" , 
-	  &(loadlevel->levelnum), &(loadlevel->xlen),
-	  &(loadlevel->ylen), &(loadlevel->color));
-
-  DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
-  DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
-  DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
-  DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
-
-  if ( loadlevel->ylen >= MAX_MAP_LINES ) 
-    {
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A maplevel Freedroid was supposed to load has more map lines than allowed\n\
-for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
-\n\
-Sorry, but unless this constant is raised, I'll refuse to load this map.\n\
-\n\
-If you receive this error message, either raise the constant yourself and recompile or\n\
-contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the map loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
-    }
+  DecodeDimensionsOfThisLevel ( loadlevel , DataPointer );
 
   loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
@@ -1392,102 +1498,13 @@ Sorry...\n\
   // Next we extract the statments of the influencer on this level WITHOUT destroying
   // or damaging the data in the process!
   //
-  
-  // First we initialize the statement array with 'empty' values
-  //
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->StatementList[ i ].x = ( -1 ) ;
-      loadlevel->StatementList[ i ].y = ( -1 ) ;
-      loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
-    }
-
-  // We look for the beginning and end of the map statement section
-  StatementSectionBegin = LocateStringInData( data , STATEMENT_BEGIN_STRING );
-  StatementSectionEnd = LocateStringInData( data , STATEMENT_END_STRING );
-
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  Preserved_Letter=StatementSectionEnd[0];
-  StatementSectionEnd[0]=0;
-  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
-
-  
-
-  StatementPointer=StatementSectionBegin;
-  for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
-    {
-      StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
-      ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
-      ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
-      loadlevel->StatementList[ i ].Statement_Text = 
-	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
-		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
-    }
-
-  // Now we repair the damage done to the loaded level data
-  StatementSectionEnd[0]=Preserved_Letter;
-
-
-  //----------------------------------------------------------------------
-  // From here on we take apart the codepanel section of the loaded level...
-  //----------------------------------------------------------------------
+  DecodeStatementsOfThisLevel ( loadlevel , DataPointer );
 
   //--------------------
-  // First we initialize the codepanel arrays with 'empty' information
+  // Next we extract the codepanels of this level WITHOUT destroying
+  // or damaging the data in the process!
   //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  CodepanelSectionBegin = LocateStringInData( data , CODEPANEL_SECTION_BEGIN_STRING );
-  CodepanelSectionEnd = LocateStringInData( data , CODEPANEL_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  Preserved_Letter=CodepanelSectionEnd[0];
-  CodepanelSectionEnd[0]=0;
-  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  CodepanelPointer=CodepanelSectionBegin;
-  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
-    {
-      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
-      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
-      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
-      loadlevel->CodepanelList[ i ].Secret_Code = 
-	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
-		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  CodepanelSectionEnd[0]=Preserved_Letter;
-
-
-
-
+  DecodeCodepanelsOfThisLevel ( loadlevel , DataPointer );
 
 
   //----------------------------------------------------------------------
@@ -1700,7 +1717,7 @@ Sorry...\n\
 
   return loadlevel;
 
-}; // Level Decode_Loaded_Leveldata (char *data)
+}; // Level DecodeLoadedLeveldata (char *data)
 
 /* ----------------------------------------------------------------------
  * This function initializes the Doors array of the given level structure

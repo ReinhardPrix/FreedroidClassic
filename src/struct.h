@@ -167,6 +167,12 @@ typedef struct
 }
 map_insert, *Map_Insert;
 
+typedef struct
+{
+  char* LabelName;
+  grob_point pos; // how many blocks does this big map insert cover?
+}
+map_label, *Map_Label;
 
 typedef struct
 {
@@ -810,6 +816,7 @@ typedef struct
   grob_point consumers[MAX_CONSUMERS_ON_LEVEL];
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
+  map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
