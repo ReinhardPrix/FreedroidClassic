@@ -838,24 +838,15 @@ Load_MapBlock_Surfaces( void )
   int i;
   int color;
   char *fpath;
-  /*  char *ColoredBlockFiles[] = {
-    "ne_block_red.gif",
-    "ne_block_yellow.gif",
-    "ne_block_green.gif",
-    "ne_block_gray.gif",
-    "ne_block_blue.gif",
-    "ne_block_turquoise.gif",
-    "ne_block_dark.gif",
-    NULL
-    }; */
+
   char *ColoredBlockFiles[] = {
-    "ne_block_red.png",
-    "ne_block_yellow.png",
-    "ne_block_green.png",
-    "ne_block_gray.png",
-    "ne_block_blue.png",
-    "ne_block_turquoise.png",
-    "ne_block_dark.png",
+    "block_red.png",
+    "block_yellow.png",
+    "block_green.png",
+    "block_gray.png",
+    "block_blue.png",
+    "block_turquoise.png",
+    "block_dark.png",
     NULL
   }; 
 
