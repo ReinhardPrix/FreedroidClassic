@@ -74,6 +74,11 @@ int Number_Of_Item_Types = 0 ;
 // int max_object_phases = 35 ;
 int all_object_directions = -1 ;
 int max_object_phases = -1 ;
+int walk_object_phases = -1 ;
+int attack_object_phases = -1 ;
+int gethit_object_phases = -1 ;
+int death_object_phases = -1 ;
+int stand_object_phases = -1 ;
 int tux_direction_numbering = FALSE ;
 int open_gl_sized_images = FALSE ;
 
@@ -482,19 +487,16 @@ Terminate (int ExitCode)
 }; // void Terminate ( int ExitCode )
 
 /* ----------------------------------------------------------------------
- * Maybe the user did not bother with specifying the right amount of 
- * phases to use for this animation.  Then the gluem tool is supposed to
- * find out the correct number completely on it's own.
+ *
+ *
  * ---------------------------------------------------------------------- */
-void
-auto_probe_max_object_phases ( void )
+int
+probe_filename ( char* current_file_series_prefix )
 {
     char temp_filename[10000];
     FILE* temp_file;
     int i = 0 ;
-    
-    DebugPrintf ( -4 , "\nNow auto-probing max_object_phases..." );
-    
+
     while ( 1 ) 
     {
 	sprintf ( temp_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , 0 , i + 1 );
@@ -504,9 +506,11 @@ auto_probe_max_object_phases ( void )
 	//
 	if ( ( temp_file = fopen ( temp_filename , "rb") ) == NULL )
 	{
-	    max_object_phases = i ;
+	    // max_object_phases = i ;
 	    DebugPrintf ( -4 , "\nThis file seems not to be there any more: %s." , temp_filename );
-	    DebugPrintf ( -4 , "\nThat means the final max_object_phases=%d." , max_object_phases );
+	    DebugPrintf ( -4 , "\nReturning phase amount: %d." , i );
+	    // DebugPrintf ( -4 , "\nThat means the final max_object_phases=%d." , max_object_phases );
+	    return ( i ) ;
 	    break; 
 	}
 	else
@@ -524,9 +528,41 @@ auto_probe_max_object_phases ( void )
 	}
 	i++ ;
     }
+}; // int probe_filename ( char* current_file_series_prefix )
+
+/* ----------------------------------------------------------------------
+ * Maybe the user did not bother with specifying the right amount of 
+ * phases to use for this animation.  Then the gluem tool is supposed to
+ * find out the correct number completely on it's own.
+ * ---------------------------------------------------------------------- */
+void
+auto_probe_max_object_phases ( void )
+{
+    
+    DebugPrintf ( -4 , "\nNow auto-probing max_object_phases..." );
+    
+    if ( strcmp ( current_file_series_prefix , "AUTO" ) )
+    {
+	max_object_phases = probe_filename ( current_file_series_prefix ) ;
+    }
+    else
+    {
+	walk_object_phases = probe_filename ( "walk" ) ;
+	attack_object_phases = probe_filename ( "attack" ) ;
+	gethit_object_phases = probe_filename ( "gethit" ) ;
+	death_object_phases = probe_filename ( "death" ) ;
+	stand_object_phases = probe_filename ( "stand" ) ;
+
+	max_object_phases = walk_object_phases + attack_object_phases + gethit_object_phases + death_object_phases + stand_object_phases ;
+	if ( walk_object_phases == 0 ) max_object_phases ++ ;
+	if ( attack_object_phases == 0 ) max_object_phases ++ ;
+	if ( gethit_object_phases == 0 ) max_object_phases ++ ;
+	if ( death_object_phases == 0 ) max_object_phases ++ ;
+	if ( stand_object_phases == 0 ) max_object_phases ++ ;
+    }
 
 }; // void auto_probe_max_object_phases ( void )
-
+    
 /* -----------------------------------------------------------------
  * parse command line arguments and set global switches 
  * exit on error, so we don't need to return success status
@@ -753,7 +789,7 @@ get_offset_for_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_i
   if ( ( OffsetFile = fopen ( offset_file_name , "rb") ) == NULL )
     {
       fprintf (stderr, "\nObtaining offset failed with file name '%s'." , offset_file_name );
-      GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__ , "\
 Freedroid was unable to open a given offset file for an isometric image.\n\
 Since the offset could not be obtained from the offset file, some default\n\
 values will be used instead.  This can lead to minor positioning pertubations\n\
@@ -770,7 +806,7 @@ in graphics displayed, but FreedroidRPG will continue to work.",
       if ( fclose ( OffsetFile ) == EOF)
 	{
 	  fprintf( stderr, "\n\noffset_file_name: '%s'\n" , offset_file_name );
-	  GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__ , "\
 Freedroid was unable to close an offset file.\nThis is a very strange occasion!",
 				     PLEASE_INFORM, IS_FATAL );
 	}
@@ -895,6 +931,14 @@ main (int argc, char *const argv[])
     char current_filename[10000];
     int i, j;
     char output_file_filename[10000]="/home/johannes/FreeDroid/gluem/test.tux_image_archive" ;
+    char* local_prefix;
+    int cooked_walk_object_phases;
+    int cooked_attack_object_phases;
+    int cooked_gethit_object_phases;
+    int cooked_death_object_phases;
+    int cooked_stand_object_phases;
+    int local_index;
+
 #define MAIN_DEBUG 1 
 
     DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Gluem' Tool, starting to read command line....\n" );
@@ -954,6 +998,99 @@ main (int argc, char *const argv[])
     {
 	for ( i = 0 ; i < max_object_phases ; i ++ )
 	{
+
+	    if ( strcmp ( current_file_series_prefix , "AUTO" ) )
+	    {
+		local_prefix = current_file_series_prefix ;
+		local_index = i + 1 ;
+	    }
+	    else 
+	    {
+		cooked_walk_object_phases   = walk_object_phases   ;
+		cooked_attack_object_phases = attack_object_phases ; 
+		cooked_gethit_object_phases = gethit_object_phases ; 
+		cooked_death_object_phases  = death_object_phases  ; 
+		cooked_stand_object_phases  = stand_object_phases  ; 
+
+		if ( ! cooked_walk_object_phases ) cooked_walk_object_phases = 1 ;
+		if ( ! cooked_attack_object_phases ) cooked_attack_object_phases = 1 ;
+		if ( ! cooked_gethit_object_phases ) cooked_gethit_object_phases = 1 ;
+		if ( ! cooked_death_object_phases ) cooked_death_object_phases = 1 ;
+		if ( ! cooked_stand_object_phases ) cooked_stand_object_phases = 1 ;
+
+		if ( i < cooked_walk_object_phases )
+		{
+		    //--------------------
+		    // Walk cycle must always be there and have at least 1 image!
+		    // That's an assumption, because this is the fallback image to
+		    // use if other cycles don't yet exist.
+		    //
+		    local_prefix = "walk" ;
+		    local_index = i + 1 ;
+		}
+		else if ( i < cooked_walk_object_phases + cooked_attack_object_phases )
+		{
+		    if ( attack_object_phases == 0 )
+		    {
+			local_prefix = "walk" ;
+			local_index = 1 ;
+		    }
+		    else
+		    {
+			local_prefix = "attack" ;
+			local_index = i - cooked_walk_object_phases + 1 ;
+		    }
+		}
+		else if ( i < cooked_walk_object_phases + cooked_attack_object_phases + cooked_gethit_object_phases)
+		{
+		    if ( gethit_object_phases == 0 )
+		    {
+			local_prefix = "walk" ;
+			local_index = 1 ;
+		    }
+		    else
+		    {
+			local_prefix = "gethit" ;
+			local_index = i - cooked_walk_object_phases - cooked_attack_object_phases + 1 ;
+		    }
+		}
+		else if ( i < cooked_walk_object_phases + cooked_attack_object_phases + cooked_gethit_object_phases + cooked_death_object_phases )
+		{
+		    if ( death_object_phases == 0 )
+		    {
+			local_prefix = "../default_dead_body" ;
+			local_index = 1 ;
+		    }
+		    else
+		    {
+			local_prefix = "death" ;
+			local_index = i - cooked_walk_object_phases - cooked_attack_object_phases - cooked_death_object_phases + 1 ;
+		    }
+		}
+		else if ( i < cooked_walk_object_phases + cooked_attack_object_phases + cooked_gethit_object_phases + cooked_death_object_phases + cooked_stand_object_phases )
+		{
+		    if ( stand_object_phases == 0 )
+		    {
+			local_prefix = "walk" ;
+			local_index = 1 ;
+		    }
+		    else
+		    {
+			local_prefix = "stand" ;
+			local_index = i - cooked_walk_object_phases - cooked_attack_object_phases - cooked_death_object_phases - cooked_gethit_object_phases + 1 ;
+		    }
+		}
+		else
+		{
+		    local_prefix = "UNHANDLED_CASE" ;
+		    local_index = 999 ;
+		    GiveStandardErrorMessage ( __FUNCTION__ , "\
+Unhandled case in the AUTO image prefix code encountered!",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
+	    }
+
 	    //--------------------
 	    // Maybe this is a bot using the tux direction numbering convention
 	    // for the files and file names on disk.  Then we need to take care
@@ -961,10 +1098,10 @@ main (int argc, char *const argv[])
 	    //
 	    if ( tux_direction_numbering && ( all_object_directions < 16 ) )
 	    {
-		sprintf ( current_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , j * ( 16 / all_object_directions ) , i + 1 );
+		sprintf ( current_filename , "./%s_%02d_%04d.png" , local_prefix , j * ( 16 / all_object_directions ) , local_index );
 	    }
 	    else
-		sprintf ( current_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , j , i + 1 );
+		sprintf ( current_filename , "./%s_%02d_%04d.png" , local_prefix , j , local_index );
 
 	    input_surface = IMG_Load ( current_filename ) ;
 	    if ( input_surface == NULL )
