@@ -221,7 +221,7 @@ ShowHighscores (void)
   y0 = 80;  
   height = FontHeight (GetCurrentFont());
 
-  CenteredPrintString (ne_screen, y0, "Top %d  freedom fighters\n", num_highscores);
+  CenteredPrintString (ne_screen, y0, "Top %d  scores\n", num_highscores);
   
   for (i=0; i<num_highscores; i++)
     {

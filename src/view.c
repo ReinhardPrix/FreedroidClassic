@@ -105,7 +105,7 @@ Assemble_Combat_Picture (int mask)
     }
   else
     {
-      upleft.x = Me.pos.x - 5; upleft.y = Me.pos.y - 5;
+      upleft.x = Me.pos.x - 6; upleft.y = Me.pos.y - 5;
       downright.x = Me.pos.x + 7; downright.y = Me.pos.y + 5;
     }
     
@@ -197,7 +197,7 @@ Assemble_Combat_Picture (int mask)
 
       // make sure Ashes are displayed _before_ droids, so that they are _under_ them!
       for (i = 0; i < NumEnemys ; i++)
-	if (AllEnemys[i].status == TERMINATED)
+	if ( (AllEnemys[i].status == TERMINATED) && (AllEnemys[i].levelnum == CurLevel->levelnum) )
 	  {
 	    if (IsVisible (&(AllEnemys[i].pos) ) )
 	      PutAshes (AllEnemys[i].pos.x, AllEnemys[i].pos.y);

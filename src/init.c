@@ -1155,7 +1155,7 @@ CheckIfMissionIsComplete (void)
   int i;
 
   for ( i=0 ; i < NumEnemys ; i++ )
-    if ( AllEnemys[i].energy > 0 )
+    if ( (AllEnemys[i].status != OUT) && (AllEnemys[i].status != TERMINATED) )
       return;
 
   // mission complete: all droids have been killed

@@ -1699,15 +1699,15 @@ Cheatmenu (void)
 	      if ( !(i % 13) )
 		{
 		  ClearGraphMem ();
-		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
+		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Status.\n");
 		  printf_SDL (ne_screen, -1, -1, "------------------------------\n");
 		}
 	      
-	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %g\n",
+	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %s\n",
 			  i, AllEnemys[i].levelnum,
 			  Druidmap[AllEnemys[i].type].druidname,
 			  (int)AllEnemys[i].energy,
-			  AllEnemys[i].speed.x);
+			  InfluenceModeNames[AllEnemys[i].status]);
 	    } /* for (i<NumEnemys) */
 
 	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
