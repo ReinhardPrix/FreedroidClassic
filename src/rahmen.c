@@ -157,6 +157,17 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
       strcat( ItemDescText , linebuf );
     }
 
+  // --------------------
+  // If it's a usable item, then we say, that it can be used via right-clicking on it
+  //
+  if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat )
+    {
+      sprintf( linebuf , "Right click to use" );
+      strcat( ItemDescText , linebuf );
+
+
+    }
+
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem )
 
 /* ----------------------------------------------------------------------
