@@ -2527,6 +2527,26 @@ init_obstacle_data( void )
   obstacle_map [ ISO_EXIT_2 ] . filename = "iso_exits_0002.png" ;
   obstacle_map [ ISO_EXIT_2 ] . needs_pre_put = FALSE ;
 
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . filename = "iso_rocks_n_plants_0000.png" ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_parm_1 = 1.5 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_parm_2 = 1.5 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . filename = "iso_rocks_n_plants_0001.png" ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . filename = "iso_rocks_n_plants_0002.png" ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . needs_pre_put = TRUE ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . filename = "iso_rocks_n_plants_0003.png" ;
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some

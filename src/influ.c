@@ -820,10 +820,10 @@ MoveTuxAccordingToHisSpeed ( int player_num )
 	  //
 	  DebugPrintf ( -3 , "\nTux looks stuck...ENABLING FALLBACK just for this frame..." );
 
-	  start_x = (int) Me [ player_num ] . pos . x - 1 ;
-	  start_y = (int) Me [ player_num ] . pos . y - 1 ;
-	  end_x = start_x + 2 ;
-	  end_y = start_y + 2 ;
+	  start_x = (int) Me [ player_num ] . pos . x - 2 ;
+	  start_y = (int) Me [ player_num ] . pos . y - 2 ;
+	  end_x = start_x + 4 ;
+	  end_y = start_y + 4 ;
 
 	  ThisLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
