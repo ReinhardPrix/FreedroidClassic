@@ -307,7 +307,6 @@ InitNewGame (void)
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
 
   SetTextColor (FONT_WHITE, FONT_RED);
-  //    InitPalette();
   InitBars = TRUE;
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
@@ -324,10 +323,6 @@ InitNewGame (void)
   Me.status = MOBILE;
   Me.phase = 0;
   
-
-  // ShowDeckMap( CurLevel );
-
-
   return;
 
 } /* InitNewGame */
@@ -431,9 +426,6 @@ InitFreedroid (void)
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();
 
-  /* richtige Paletten-Werte einstellen */
-  //  InitPalette ();
-
   return;
 } /* InitFreedroid() */
 
@@ -520,8 +512,6 @@ Title (void)
 
   while (!SpacePressed ());
   while (SpacePressed());
-
-  InitPalette (); 
 
   ClearGraphMem ();
 

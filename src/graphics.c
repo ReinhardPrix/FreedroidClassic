@@ -407,24 +407,6 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 }				// void SetColors(...)
 
 /*@Function============================================================
-@Desc: InitPalette(): 
-This should load the right palette that is used troughout Freedroid.
-But now we dont use a palette any more and the function is now
-rather obsolete.
-
-@Ret: OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
-int
-InitPalette (void)
-{
-
-  return (OK);
-
-}				// int InitPalette(void)
-
-
-/*@Function============================================================
 @Desc: 
 
 @Ret: 

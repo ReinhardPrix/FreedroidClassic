@@ -19,7 +19,7 @@ IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringe
     * Level Editor: NOT DONE YET
     * Highscore list: NOT DONE YET
 
-1.  Get console up and running again with the new engine
+(DONE) Get console up and running again with the new engine
     * Make ShowElevators run again
     * Make Druidshow run again
     * Make ShowDeckMap run again
@@ -27,6 +27,10 @@ IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringe
 (DONE) read more about libraries that can scale and zoom surfaces
 
 (DONE) Code fuer Zoom schreiben
+
+(?)  delete that old InternWindow crap from all our code!!
+
+(?)  delete that old RealScreen crap from all the code!!
 
 (?)  add scaling and zooming of freedroid screen (via the options menu at first)
 

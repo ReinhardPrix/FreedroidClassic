@@ -197,7 +197,6 @@ EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
 EXTERN int InitLevelColorTable (void);
-EXTERN int InitPalette (void);
 EXTERN void SetLevelColor (int);
 EXTERN void Load_PCX_Image (char *, unsigned char *, int);
 EXTERN void LadeLBMBild (char *LBMDateiname, unsigned char *Screen,
