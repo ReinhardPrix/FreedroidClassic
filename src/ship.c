@@ -1481,7 +1481,7 @@ ShowDeckMap (Level deck)
 		  else 
 		    {
 		      SelectedFunction = GUNON_FUNCTION;
-		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE );
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_Type_0.wav" , FALSE );
 		    }
 		}
 	      else
@@ -1707,28 +1707,37 @@ ShowDeckMap (Level deck)
 			  MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
 			  DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
 			  
-			  if ( ( MapValue == BLOCK1 ) || ( GunTypeSelected > 0 ) )
+			  // if ( ( MapValue == BLOCK1 ) || ( GunTypeSelected > 0 ) )
+			  if ( MapValue == BLOCK1 ) 
 			    {
-			      switch ( GunTypeSelected )
+			      if ( GunTypeSelected > 0 ) 
 				{
-				case 1:
-				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_R ;
-				  break;
-				case 2:
-				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_D ;
-				  break;
-				case 3:
-				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_L ;
-				  break;
-				case 4:
-				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_U ;
-				  break;
-				default:
-				  break;
+				  switch ( GunTypeSelected )
+				    {
+				    case 1:
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_R ;
+				      break;
+				    case 2:
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_D ;
+				      break;
+				    case 3:
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_L ;
+				      break;
+				    case 4:
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_U ;
+				      break;
+				    default:
+				      break;
+				    }
+				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Installed_0.wav" , FALSE );			      
+				  SelectedFunction = NO_FUNCTION;
+				}
+			      else
+				{
+				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Please_Specify_Gun_0.wav" , FALSE );
 				}
 
-			      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
-			      SelectedFunction = NO_FUNCTION;
+
 			      GetAutoguns( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			    }
 			}
