@@ -686,7 +686,7 @@ InitPictures (void)
   fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   
-  DebugPrintf( 0 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
   // getchar();
   // for (i=0; i < ALLBULLETTYPES; i++)
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )

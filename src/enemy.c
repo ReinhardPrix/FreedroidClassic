@@ -63,7 +63,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
   finepoint step;
   finepoint CheckPosition;
 
-  DebugPrintf( 0, "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+  DebugPrintf( 1 , "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   fflush(stdout);
 
   if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
@@ -87,7 +87,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
 
       if ( IsPassable ( CheckPosition.x , CheckPosition.y , CENTER ) != CENTER ) 
 	{
-	  DebugPrintf( 0 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
+	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
 	}
 
@@ -95,7 +95,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
       CheckPosition.y += step.y;
     }
 
-  DebugPrintf( 0 , "\n DirectLineWalkable (...) : Connection analysis revealed : FREE!");
+  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : FREE!");
 
   return TRUE;
 
@@ -113,9 +113,13 @@ int
 SetDirectCourseToConsole( int EnemyNum )
 {
   int i, j;
+  long TicksBefore;
 
-  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
-  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Trying to find direct line to console...");
+  TicksBefore = SDL_GetTicks();
+
+
+  DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): real function call confirmed.");
+  DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Trying to find direct line to console...");
 
   for ( i = 0 ; i < CurLevel->xlen ; i ++ )
     {
@@ -127,11 +131,10 @@ SetDirectCourseToConsole( int EnemyNum )
 	    case KONSOLE_O:
 	    case KONSOLE_R:
 	    case KONSOLE_L:
-	      DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Console found: %d-%d.",
-			   i , j );
+	      DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Console found: %d-%d.", i , j );
 	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j ) )
 		{
-		  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Walkable is: %d-%d.",
+		  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Walkable is: %d-%d.",
 			       i , j );
 
 		  AllEnemys[ EnemyNum ].PrivatePathway[0].x = i;
@@ -144,11 +147,13 @@ SetDirectCourseToConsole( int EnemyNum )
 		  // break;
 		}
 	      break;
-	    default:
-	      break;
+	      // default:
+	      // break;
 	    }
 	}
     }
+
+  DebugPrintf( 1 , "\nSetDirectCourseToConsole: Ticks used: %d." , SDL_GetTicks() - TicksBefore );
 
   return FALSE;
 }; // int SetDirectCourseToConsole ( int Enemynum )
@@ -158,7 +163,7 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
 {
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
-  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
+  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
 
   // Since the enemy just got hit, it might as well say so :)
   EnemyHitByBulletText( EnemyNum );
@@ -170,14 +175,14 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
 
   if ( Druidmap[ ThisRobot->type ].CallForHelpAfterSufferingHit ) 
     {
-      DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
+      DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
       
       ThisRobot->persuing_given_course = TRUE;
 
       if ( SetDirectCourseToConsole( EnemyNum ) == TRUE ) return;
       else 
 	{
-	  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): giving up way for console....");
+	  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): giving up way for console....");
 	  ThisRobot->persuing_given_course = FALSE;
 	}
 

@@ -238,7 +238,7 @@ typedef struct
   double Parameter2;            // This contains special information for AdvancedCommand
   int Friendly;                 // is this a friendly droid or is it a MS controlled one?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
-  point PrivatePathway[1000];
+  point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;

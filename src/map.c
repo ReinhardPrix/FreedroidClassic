@@ -1275,7 +1275,7 @@ GetLiftConnections (char *filename)
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  DebugPrintf( 0 , "\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+  DebugPrintf( 1 , "\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
 
   if ( (EntryPointer = strstr( Data , START_OF_LIFT_DATA_STRING ) ) == NULL )
     {
