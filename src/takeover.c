@@ -303,11 +303,16 @@ Takeover (int enemynum)
 		}
 	    }
 	  
-	  Me[0].type = AllEnemys[enemynum].type;
-	  Me[0].marker = AllEnemys [ enemynum ] . marker;
+	  Me [ 0 ] . type = AllEnemys [enemynum ] . type;
+	  Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
+	  Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
+	  if ( AllEnemys [ enemynum ] . on_death_drop_item_code != (-1) )
+	  {
+	      DropItemAt( AllEnemys [ enemynum ] . on_death_drop_item_code , AllEnemys [ enemynum ] . pos . x , 
+			  AllEnemys [ enemynum ] . pos . y , -1 , -1 , 2 , 1 );
+	  }  
 
-	  Me[0].Experience += Druidmap[OpponentType].experience_reward;
-	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
+	  if ( LeaderColor != YourColor )	/* only won because of InvincibleMode */
 	    message = "You cheat";
 	  else				/* won the proper way */
 	    message = "Complete";
