@@ -63,6 +63,11 @@ influence_t Me[ MAX_PLAYERS ] = {
 
 network_influence_t NetworkMe[ MAX_PLAYERS ];
 
+map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] = {
+  { "BigSquare" , "BigSquare.png" , { 4 , 4 } , NULL } , 
+  { "LongLine" , "LongLine.png" , { 4 , 1 } , NULL } 
+};
+
 /*
 enum _status
 {

@@ -131,6 +131,7 @@ EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
 EXTERN void Update_Tux_Working_Copy ( int PlayerNum );
 EXTERN void Load_Tux_Surfaces( void );
+EXTERN void Load_Big_Map_Insert_Surfaces( void );
 EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
