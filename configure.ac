@@ -123,10 +123,8 @@ AC_CONFIG_FILES([Makefile
 		sound/music/Makefile
 		graphics/Makefile
 		graphics/lanzz_theme/Makefile 
-		graphics/lanzz_theme/single_map_tiles/Makefile 
                 graphics/backgrounds/Makefile
 		graphics/font/Makefile 
-                graphics/map_inserts/Makefile 
 		graphics/mouse_buttons/Makefile
 		graphics/skill_icons/Makefile
 		graphics/droids/Makefile 
