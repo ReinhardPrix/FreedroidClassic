@@ -309,6 +309,24 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 
+//--------------------
+// Now we do the connection from camp to north maintainance and back
+// in the following two events...
+//
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=29 Y=22 Lev=0
+Event Action to be triggered by this trigger="teleport_from_camp_to_north_maintainance"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=10 Y=3 Lev=6
+Event Action to be triggered by this trigger="teleport_from_north_maintainance_to_camp"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
 
 
 
@@ -459,6 +477,38 @@ Action label for this action="teleport_from_quarters_to_telemetry"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Teleport to TelX=52 TelY=28 TelLev=13
 Action is Influencer say="Back to level one...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
+
+
+* Start of an Event Action Subsection *
+Action label for this action="unlock_northern_maintainance_door"
+Mapchange at X=29 Y=24 Lev=0 to new value=18
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Action is Influencer say="The northern maintainance acces is no unlocked...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+//--------------------
+// Now we enter the connection actions (teleporting) from
+// the north maintainance area back to the camp and vice versa
+//
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_camp_to_north_maintainance"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=10 TelY=2 TelLev=6
+Action is Influencer say="Arrived at north maintainance...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_north_maintainance_to_camp"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=29 TelY=23 TelLev=0
+Action is Influencer say="Arrived back at camp from north maintainance...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 

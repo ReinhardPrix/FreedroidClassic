@@ -650,8 +650,44 @@ ChatWithFriendlyDroid( int Enum )
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
 	      GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_Well_Im_Still_0.wav" );
-	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could Well, I'm still working on it, but I'm not making much progress." , "DIX_Well_Im_Still_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
+	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Well_Im_Still_0.wav" );
+	      GiveSubtitleNSample( "But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots." , "DIX_It_All_Happend_0.wav" );
+	      GiveSubtitleNSample( "I must have lost it down there and we had to seal the doors to be safe from those rogue bots." , "DIX_I_Must_Have_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 1 ; // now you can offer help...
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_DIX_Maybe_I_Can_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Well, maybe you really could do help.  But it would be dangerous to even try." , "DIX_Well_Maybe_You_0.wav" );
+	      GiveSubtitleNSample( "You would have to go down the maintainance teleporter way and fetch me the toolkit." , "DIX_Well_Maybe_You_0.wav" );
+	      GiveSubtitleNSample( "I'm pretty sure it is still lying around somewhere down there. But it's dangerous." , "DIX_Im_Pretty_Sure_0.wav" );
+	      GiveSubtitleNSample( "Are you sure you really want to try on that?  You better be well prepared." , "DIX_Are_You_Sure_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 1 ; // allow for yes or no answer to this.
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 1 ; // allow for yes or no answer to this.
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 0 ; // end not allowed right now...
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_DIX_Ill_Go_Give_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Great!  I appreciate that.  I'll unlock the northern maintainance access door.  Good Luck." , "DIX_Hello_And_Welcome_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
+	      
+	      //--------------------
+	      // Here we have to start an event, namely to unlock the door mentioned
+	      // above in the comment.  We need to call the right event for this.
+	      //
+	      ExecuteActionWithLabel ( "unlock_northern_maintainance_door" , 0 );
+	      break;
+	    case 5:
+	      PlayOnceNeededSoundSample( "Tux_DIX_Hi_Im_New_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Maybe it's better this way.  No use to have you torn apart by those rogue bots." , "DIX_Hello_And_Welcome_0.wav" );
+	      GiveSubtitleNSample( "Perhaps later, when you feel more like it, you might want to still give it a try." , "DIX_Hello_And_Welcome_0.wav" );
+	      GiveSubtitleNSample( "You know, just tell me in case you change your mind some time." , "DIX_Hello_And_Welcome_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):

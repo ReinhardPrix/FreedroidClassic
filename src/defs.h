@@ -551,8 +551,8 @@ enum _directions
 					/* don't change this easily */
 					/* corresponds to a reserved palette range !*/
 #define MAX_LEVEL_RECTS         20   // how many rects compose a level
-#define MAX_EVENT_TRIGGERS      20   // how many event triggers at most to allow
-#define MAX_TRIGGERED_ACTIONS_IN_GAME   20   // how many triggerable actions to allow at most
+#define MAX_EVENT_TRIGGERS      100   // how many event triggers at most to allow
+#define MAX_TRIGGERED_ACTIONS_IN_GAME   100   // how many triggerable actions to allow at most
 
 
 #define MAXWAYPOINTS 		100
