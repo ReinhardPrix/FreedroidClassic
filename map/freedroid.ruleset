@@ -3003,7 +3003,7 @@ This is Mr. Stone, a sales representative of the United Machines Corporation.
 
 ** Start of new Robot: ** 
 Droidname: SOR
-Droid portrait file name (without extension) to use="999"
+Droid portrait file name (without extension) to use="SOR"
 Maximum speed of this droid: 6.1
 Class of this droid: 15
 Maximum acceleration of this droid: 2.1

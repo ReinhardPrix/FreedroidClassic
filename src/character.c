@@ -100,6 +100,15 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
 
+#define MELEE_SKILL_X 130
+#define MELEE_SKILL_Y 346
+#define RANGED_SKILL_X 130
+#define RANGED_SKILL_Y 373
+#define SPELLCASTING_SKILL_X 130
+#define SPELLCASTING_SKILL_Y 398
+#define HACKING_SKILL_X 130
+#define HACKING_SKILL_Y 421
+
 SDL_Rect CharacterRect;
 
 
@@ -168,7 +177,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
   Me [ PlayerNum ] .weapon_swing_time = (-1);  // currently not swinging this means...
   Me [ PlayerNum ] .got_hit_time = (-1);  // currently not stunned and needing time to recover...
 
-  Me [ PlayerNum ] .PointsToDistribute = 0;
+  Me [ PlayerNum ] .points_to_distribute = 0;
   Me [ PlayerNum ] .ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me [ PlayerNum ] .KillRecord[ i ] = 0;
   for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me [ PlayerNum ] .HaveBeenToLevel [ i ] = FALSE ;
@@ -376,7 +385,7 @@ DisplayButtons( void )
   // Now we can draw either the plus button or the 'cha' button, depending
   // on whether there are points to distribute or not
   //
-  if ( Me[0].PointsToDistribute > 0 )
+  if ( Me[0].points_to_distribute > 0 )
     {
       SDL_BlitSurface( PlusButtonImage , NULL , Screen , &CHA_Button_Rect );
     }
@@ -560,7 +569,7 @@ UpdateAllCharacterStats ( int PlayerNum )
   if ( Me [ PlayerNum ] .Experience > Me [ PlayerNum ] .ExpRequired ) 
     {
       Me [ PlayerNum ] .exp_level ++ ;
-      Me [ PlayerNum ] .PointsToDistribute += 5;
+      Me [ PlayerNum ] .points_to_distribute += 5;
 
       //--------------------
       // When a droid reaches a new experience level, all health and 
@@ -693,7 +702,7 @@ UpdateAllCharacterStats ( int PlayerNum )
 void 
 ShowCharacterScreen ( void )
 {
-  static SDL_Rect ButtonRect;
+  // static SDL_Rect ButtonRect;
   static SDL_Surface *CharacterScreenImage = NULL;
   static SDL_Surface *PlusButtonImage = NULL;
   SDL_Surface *tmp = NULL;
@@ -819,7 +828,7 @@ ShowCharacterScreen ( void )
   DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
 
   SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].PointsToDistribute );
+  sprintf( CharText , "%d", Me[0].points_to_distribute );
   DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", (int) Me[0].maxenergy );
@@ -845,12 +854,23 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me[0].AC );
   DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
 
+  DisplayText( AllSkillTexts [ Me [ 0 ] . melee_weapon_skill ] , 
+	       MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect );
+  DisplayText( AllSkillTexts [ Me [ 0 ] . ranged_weapon_skill ] , 
+	       RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect );
+  DisplayText( AllSkillTexts [ Me [ 0 ] . spellcasting_skill ] , 
+	       SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect );
+  DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
+	       HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect );
+
+  /*
+
   //--------------------
   // It might be the case, that the character has some points to distribute upon the character
   // stats.  Then of course, we must display the plus button instead of all character 'now' values
   //
-  // Me[0].PointsToDistribute = 5;
-  if ( Me[0].PointsToDistribute > 0 )
+  // Me[0].points_to_distribute = 5;
+  if ( Me[0].points_to_distribute > 0 )
     {
       ButtonRect.x = STR_NOW_X + BUTTON_MOD_X + CharacterRect.x;
       ButtonRect.y = STR_Y + BUTTON_MOD_Y + CharacterRect.y;
@@ -868,23 +888,23 @@ ShowCharacterScreen ( void )
       if ( CursorIsOnStrButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_strength++;
-	  Me[0].PointsToDistribute--;
+	  Me[0].points_to_distribute--;
 	}
       if ( CursorIsOnDexButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_dexterity++;
-	  Me[0].PointsToDistribute--;
+	  Me[0].points_to_distribute--;
 	}
       if ( CursorIsOnMagButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_magic++;
-	  Me[0].PointsToDistribute--;
+	  Me[0].points_to_distribute--;
 	  Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	}
       if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	  Me[0].base_vitality++;
-	  Me[0].PointsToDistribute--;
+	  Me[0].points_to_distribute--;
 	  // Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
 	  // Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
 	  Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
@@ -895,8 +915,10 @@ ShowCharacterScreen ( void )
       // It might happen that the last str point was just spent.  Then we can
       // automatically close the character window for convenience of the player.
       //
-      if ( Me[0].PointsToDistribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
+      if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
+
+  */
 
   //--------------------
   // Finally, we want the part of the screen we have been editing to become

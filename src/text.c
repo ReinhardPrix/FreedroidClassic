@@ -135,6 +135,7 @@ RestoreChatVariableToInitialValue( int PlayerNum )
 {
   int j;
 
+  /*
   if ( Me [ PlayerNum ] . has_agreed_at_chandra )
     {
       //--------------------
@@ -142,13 +143,14 @@ RestoreChatVariableToInitialValue( int PlayerNum )
       // talk to him.  Otherwise they will only say very little
       // and redirect him to chandra.
       //
-      Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ;
+      // Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ;
       // Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ;
     }
   else
     {
       Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ;
     }
+  */
 
   //--------------------
   // You can always ask the moron 614 bots the same things and they
@@ -414,8 +416,9 @@ ChatWithFriendlyDroid( int Enum )
 	      //--------------------
 	      // This should enable some dialog options for some other characters...
 	      //
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
+	      // Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
+	      //
 
 	      break;
 	    case 10:
@@ -448,23 +451,16 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
       
-      DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
+      DialogMenuTexts [ 1 ] = "  " ;
+      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
       DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
       DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
       DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
-      DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
+      DialogMenuTexts [ 5 ] = " Improve spellcasting ability\n (cost 5 ability points, 100 cash) ";
       DialogMenuTexts [ 6 ] = " BACK ";
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
       GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
-
-      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
-	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
-	}
 
       while (1)
 	{
@@ -475,20 +471,20 @@ ChatWithFriendlyDroid( int Enum )
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
-	      break;
-	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
 	      GiveSubtitleNSample( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , "SOR_Welcome_Then_To_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 0 ; // this should disallow to be new again...
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // this should disallow to be new again...
+	      break;
+	    case 2:
+	      // PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
 	      GiveSubtitleNSample( "That depends.  What would you like to learn?" , "SOR_That_Depends_What_0.wav" );
-	      GiveSubtitleNSample( "I could help to to enhance your magical abilities and the power of your mind." , "SOR_I_could_help_0.wav" );
-	      GiveSubtitleNSample( "I could also teach you how to properly cast the so called 'Remote strike' spell." , "SOR_I_could_also_0.wav" );
+	      GiveSubtitleNSample( "I could help to enhance the force-capacity of your mind." , "SOR_I_could_help_0.wav" );
+	      GiveSubtitleNSample( "I could also teach you how to become more adapt at spellcasting." , "SOR_I_could_also_0.wav" );
 	      GiveSubtitleNSample( "Now, what will it be?" , "SOR_Now_What_Will_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
@@ -497,21 +493,69 @@ ChatWithFriendlyDroid( int Enum )
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 0 ; // but disable to ask about learning options now again
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
 	      break;
-	    case 4:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
+
+	    case 4: // " Mind +1 (costs 1 ability point)" ;
+	      if ( Me [ 0 ] . points_to_distribute >= 1 )
+		{
+		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably now." , 
+				       "SOR_The_ForceCapacity_Of_0.wav" );
+		  Me [ 0 ] . points_to_distribute -= 1;
+		  Me [ 0 ] . base_magic += 1;
+		}
+	      else
+		{
+		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
+				       "SOR_You_Dont_Have_0.wav" );
+		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
+				       "SOR_First_Collect_More_0.wav" );
+		}
 	      break;
-	    case 5:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // don't say this twice in one dialog
+	    case 5: // " Mind +5 (costs 5 ability point)" ;
+	      if ( Me [ 0 ] . points_to_distribute >= 5 )
+		{
+		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably now." , 
+				       "SOR_The_ForceCapacity_Of_0.wav" );
+		  Me [ 0 ] . points_to_distribute -= 5;
+		  Me [ 0 ] . base_magic += 5;
+		}
+	      else 
+		{
+		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
+				       "SOR_You_Dont_Have_0.wav" );
+		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
+				       "SOR_First_Collect_More_0.wav" );
+		}
 	      break;
-	    case 6:
+	    case 6: // " Spellcasting ability ++ "
 	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
-	      GiveSubtitleNSample( "The Remote Strike spell is one of the easiest spells to learn, simply perfect for a novice." , "SOR_I_could_also_0.wav" );
-	      GiveSubtitleNSample( "Concentrate on the power of the force.  Think of how you would strike your opponent if he were close." , "SOR_Concentrate_On_The_0.wav" );
-	      GiveSubtitleNSample( "Now use your hold of the force to transfer the energy of the thought to make a bullet out of it." , "SOR_Now_Use_Your_0.wav" );
-	      GiveSubtitleNSample( "When you fling this bullet at your opponent, you will do the same damage as with your real weapon." , "SOR_When_You_Fling_0.wav" );
-	      GiveSubtitleNSample( "That's it.  Now you have learned the remote strike spell." , "SOR_Thats_It_Now_0.wav" );
-	      Me [ 0 ] . base_skill_level [ SPELL_REMOTE_STRIKE ] ++ ;
+	      if ( Me [ 0 ] . Gold < 100 )
+		{
+		  Me [ 0 ] . points_to_distribute -= 5;
+		  Me [ 0 ] . spellcasting_skill ++;
+		  GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
+				       "SOR_You_Dont_Money_0.wav" );
+		}
+	      else if ( Me [ 0 ] . points_to_distribute >= 5 )
+		{
+		  Me [ 0 ] . points_to_distribute -= 5;
+		  Me [ 0 ] . spellcasting_skill ++;
+		  Me [ 0 ] . Gold -= 100;
+		  GiveSubtitleNSample( "The ability to cast spells is very complicated, and best transfered directly to your mind, using magic of course." , 
+				       "SOR_The_Ability_To_0.wav" );
+		  GiveSubtitleNSample( "Just a moment... and voila, it's done." , 
+				       "SOR_Just_A_Moment_0.wav" );
+		  GiveSubtitleNSample( "Your spellcasting ability has improved a lot.  Come back when you want to learn more." , 
+				       "SOR_Your_Spellcasting_Ability_0.wav" );
+		}
+	      else
+		{
+		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
+				       "SOR_You_Dont_Have_0.wav" );
+		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
+				       "SOR_First_Collect_More_0.wav" );
+		}
+
+	      // Me [ 0 ] . base_skill_level [ SPELL_REMOTE_STRIKE ] ++ ;
 	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
@@ -651,6 +695,7 @@ ChatWithFriendlyDroid( int Enum )
 	      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
 	      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . melee_weapon_skill ++ ; // you should have learned something here.
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_Master_0.wav" , TRUE ); // ... to become a master of melee weapon
@@ -699,6 +744,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 3 ] = " I'll go give it a try." ; 
       DialogMenuTexts [ 4 ] = " Sorry, this does not really sound like something I could do." ; 
       DialogMenuTexts [ 5 ] = " I have found your toolset. Here you are. " ; 
+      DialogMenuTexts [ 6 ] = " Where do all these teleporters lead to?" ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
 
       if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
@@ -720,6 +766,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp." , "DIX_Hello_And_Welcome_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 1 ; // don't say this twice...
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
@@ -807,17 +854,16 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
       
-      DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      DialogMenuTexts [ 1 ] = " So? " ;
+      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
+      DialogMenuTexts [ 1 ] = " Why did the MS erase your code? " ;
       DialogMenuTexts [ 2 ] = " How can I get to your former place? " ;
       DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
-
       DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
-      
       DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
       DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
-      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+      DialogMenuTexts [ 7 ] = " Maybe I can help somehow? " ;
       DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
+      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
       GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
@@ -830,39 +876,43 @@ ChatWithFriendlyDroid( int Enum )
 
       while (1)
 	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
 	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_RMS ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_RMS_Chandra_Said_You_0.wav" , TRUE );
-	      GiveSubtitleNSample( " Oh Yes! " , "RMS_Oh_Yes_0.wav" );
-	      GiveSubtitleNSample( " You are the one who wants to get in contact with the resistance then. " , "RMS_You_Are_The_0.wav" );
-	      GiveSubtitleNSample( " Chandra told me about you and indeed I do have a test for you. " , "RMS_Chandra_Told_Me_0.wav" );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Welcome them!  I called RMS.  I used to be a well-known programmer." , 
+				   "RMS_Oh_Yes_0.wav" );
+	      GiveSubtitleNSample( "Alas, that time is long gone now.  The MS have recursively erased all my code throughout the universe." , 
+				   "RMS_You_Are_The_0.wav" );
+	      GiveSubtitleNSample( "Some local copies I still have, but they are incomplete and outdated." , 
+				   "RMS_Chandra_Told_Me_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ; // don't say this twice...
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_RMS_So_0.wav" , TRUE );
-	      GiveSubtitleNSample( " After the revolution, I was forced to flee to this place. " , "RMS_After_The_Revolution_0.wav" );
-	      GiveSubtitleNSample( " Most of my belongings stayed behind. " , "RMS_Most_Of_My_0.wav" );
-	      GiveSubtitleNSample( " Among them is an old coffee machine, an inheritance from my father. " , "RMS_Among_Them_Is_0.wav" );
-	      GiveSubtitleNSample( " Now here is what I want you to do: Go to the private quarters level of my former place." , "RMS_Now_Here_Is_0.wav" );
-	      GiveSubtitleNSample( " Find the coffee machine and bring it back to me. " , "RMS_Find_The_Coffee_0.wav" );
-	      GiveSubtitleNSample( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , "RMS_If_You_Do_0.wav" );
+	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Did_The_0.wav" , TRUE );
+	      GiveSubtitleNSample( "One of the main pillars of the power of the MS is their software monopoly." , 
+				   "RMS_After_The_Revolution_0.wav" );
+	      GiveSubtitleNSample( "This monopoly they started to enforce after they had taken over the government." , 
+				   "RMS_Most_Of_My_0.wav" );
+	      GiveSubtitleNSample( "And to enforce it, they installed bots in every corner of the universe to erase all non-MS code." , 
+				   "RMS_Among_Them_Is_0.wav" );
+	      GiveSubtitleNSample( "And particularly free code they like to erase the most." , 
+				   "RMS_Now_Here_Is_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 0 ; // don't say this twice in one dialog
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 1 ; // this should allow to ask how-can-i.. 
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 5 ] = 1 ; // this should allow to ask why-didnt-you...
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 8 ] = 1 ; // this should allow to agree on the task...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_RMS_How_Can_I_0.wav" , TRUE );
-	      GiveSubtitleNSample( " As you might know, a great magnetic storm has shaken the universe. " , "RMS_As_You_Might_0.wav" );
-	      GiveSubtitleNSample( " Almost all of the existing teleporter connections were disrupted or redirected. " , "RMS_Almost_All_Of_0.wav" );
-	      GiveSubtitleNSample( " It was during this storm that you arrived at our teleporter terminal." , "RMS_It_Was_During_0.wav" );
-	      GiveSubtitleNSample( " But anyway, the teleporter now points back to my former home. " , "RMS_But_Anyway_The_0.wav" );
+	      GiveSubtitleNSample( "As you might know, a great magnetic storm has shaken the universe." , 
+				   "RMS_As_You_Might_0.wav" );
+	      GiveSubtitleNSample( "Almost all of the existing teleporter connections were disrupted or redirected." , 
+				   "RMS_Almost_All_Of_0.wav" );
+	      GiveSubtitleNSample( "It was during this storm that you arrived at our teleporter terminal." , 
+				   "RMS_It_Was_During_0.wav" );
+	      GiveSubtitleNSample( "But anyway, the teleporter now points back to my former home. " , 
+				   "RMS_But_Anyway_The_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 0 ; // don't say this twice in one dialgo
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 1 ; // this should allow to ask about the mag-storm...
 	      break;

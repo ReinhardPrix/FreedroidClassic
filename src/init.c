@@ -1766,7 +1766,7 @@ InitNewMissionList ( char *MissionName )
   Me[0].weapon_swing_time = (-1);  // currently not swinging this means...
   Me[0].got_hit_time = (-1);  // currently not stunned and needing time to recover...
 
-  Me[0].PointsToDistribute = 0;
+  Me[0].points_to_distribute = 0;
   Me[0].ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me[0].KillRecord[ i ] = 0;
   for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[0].HaveBeenToLevel [ i ] = FALSE ;
@@ -1788,6 +1788,11 @@ InitNewMissionList ( char *MissionName )
   Me[0].base_skill_level [ 0 ] = 1;
   GameConfig.spell_level_visible = 0;
 
+  Me [ 0 ] . melee_weapon_skill = 0 ;
+  Me [ 0 ] . ranged_weapon_skill = 0 ;
+  Me [ 0 ] . spellcasting_skill = 0 ;
+  Me [ 0 ] . hacking_skill = 0 ;
+
   UpdateAllCharacterStats( 0 );
 
   //--------------------
@@ -1802,11 +1807,7 @@ InitNewMissionList ( char *MissionName )
 	  Me[0]. Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
 	}
     }
-
-  Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ;
   Me [ 0 ] . has_agreed_at_chandra = FALSE ;
-  // RestoreChatVariableToInitialValue( 0 );
-
 
   Me[0].energy = Me[0].maxenergy;
   Me[0].mana = Me[0].maxmana;

@@ -61,6 +61,7 @@ EXTERN char *Weight[];
 EXTERN char *Entry[];
 EXTERN char *Weaponnames[];
 EXTERN char *Sensornames[];
+EXTERN char *AllSkillTexts[];
 EXTERN char *SkillName[];
 EXTERN int Sensor1[];
 EXTERN int Sensor2[];

@@ -455,7 +455,7 @@ typedef struct
   int base_dexterity; // character Dexterity value = 'power redistribution speed'
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
-  int PointsToDistribute; // these are the points that are available to distribute upon the character stats
+  int points_to_distribute; // these are the points that are available to distribute upon the character stats
   float base_damage; // the current damage the influencer does
   float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
@@ -488,6 +488,11 @@ typedef struct
   int readied_skill; // which skill does the influencer currently have readied?
   int SkillLevel[ NUMBER_OF_SKILLS ];
   int base_skill_level [ NUMBER_OF_SKILLS ];
+
+  int melee_weapon_skill;
+  int ranged_weapon_skill;
+  int spellcasting_skill;
+  int hacking_skill;
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
@@ -547,7 +552,7 @@ typedef struct
   int base_dexterity; // character Dexterity value = 'power redistribution speed'
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
-  int PointsToDistribute; // these are the points that are available to distribute upon the character stats
+  int points_to_distribute; // these are the points that are available to distribute upon the character stats
   float base_damage; // the current damage the influencer does
   float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer

@@ -301,6 +301,16 @@ char *Weaponnames[] = {
   "error"
 };
 
+char* AllSkillTexts [ ] =
+  {
+    "novice",
+    "average",
+    "experienced",
+    "skilled",
+    "adept",
+    "masterful"
+  };
+
 char* SkillName[ NUMBER_OF_SKILLS ] = {
 
   "Takeover/Talk Skill",
