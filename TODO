@@ -49,16 +49,21 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
+  
 
 - (rp) should have maximally one 999 on commando-bridge
+  (jp: I think I've encountered 0 often, later 2 on other ships,
+       so I think thats not really so serious)
 
 - hide mouse pointer
 
 - Blitz-schuesse flimmern jetzt zu stark/lang	
+  (nicht mehr, seit die Framerate durch weniger debug-messages generell hoch ist)
 
 - level 11: console rechts unten ist verkehrt
 
 - proper Highscore list 
+  (DONE):  Highscore list is accessible via the ESCAPE menu (single player submenu)
 
 - Endscreen after being killed ("Flimmern4") is too slow
   (rp: now speeded up a bit, but should write a new one)
@@ -80,26 +85,26 @@ Wishlist
 - !! We should have a common bug/patch mailing address somewhere !!
   freedroid@....
 
-- (jp) add more sounds:  Deadlock-Sound-Sequenz, Complete-Sound-Sequenz, 
-  verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
+- (jp) add more sounds:  
+  (DONE) Deadlock-Sound-Sequenz, 
+  (DONE) Complete-Sound-Sequenz, 
   Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
   eine eigene Hintergrundmusik  zu verwenden.
-  Different sounds for different bullettypes.
-  Win-Takeover-Sound
-  Lose-Takeover-Sound
-  Deadlock-Sound
+  (DONE) Different sounds for different bullettypes.
+  (DONE) Win-Takeover-Sound
+  (DONE) Lose-Takeover-Sound
 
 - save highscores to disk
 
-- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
-  bequem einstellen kann  
-  (Under construction:  Menu exists at least, accessible via ESCAPE key)
+- (DONE) Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
+         bequem einstellen kann: Use ESCAPE key to access menu
 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
 
 - (rp?) joystick/gamepad support waere toll!
 
 - (rp): PORT the map-editor 'maped' ?
+  (PARTLY DONE: jp: A maped clone has partly been integrated into the game)
 
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
 

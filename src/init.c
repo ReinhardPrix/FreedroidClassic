@@ -395,8 +395,8 @@ InitParaplus (void)
   LowestName = MyMalloc (200);
   HighestName = MyMalloc (200);
   GreatScoreName = MyMalloc (200);
-  strcpy (LowestName, " Bill Gates");
-  strcpy (HighestName, "Linus");
+  strcpy (LowestName, "Brian Mill Waits");
+  strcpy (HighestName, "Linus Gunar");
   strcpy (GreatScoreName, "Mister X");
   Hallptr = MyMalloc (sizeof (HallElement) + 1);
   Hallptr->PlayerScore = 0;

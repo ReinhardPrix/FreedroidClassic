@@ -184,19 +184,17 @@ wird
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SetTextColor (unsigned bg, unsigned fg)
+SetTextColor (unsigned char bg, unsigned char fg)
 {
-  register unsigned int i;
+  unsigned int i;
   static unsigned LastBg = FIRST_FONT_BG;
   static unsigned LastFg = FIRST_FONT_FG;
-  register unsigned char *source;
+  unsigned char *source;
 
   /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
   if ((bg == LastFg) || (bg == fg))
     {
-      DebugPrintf
-	("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
-      getchar ();
+      printf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
       Terminate (ERR);
     }
   CurrentFontFG = fg;

@@ -513,8 +513,6 @@ Debriefing (void)
 	  strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
-	  // free (GreatScoreName);
-	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
 
 	  GreatScoreName = GetString (10, 2);
@@ -527,9 +525,7 @@ Debriefing (void)
 	  strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
-	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
-	  // free (LowestName);
 	  LowestName = GetString (10, 2);
 	  LowestScoreOfDay = RealScore;
 	}
@@ -541,8 +537,6 @@ Debriefing (void)
 		  "\n   Highest Score of Day! \n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
-	  // free (HighestName);
-	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
 	  HighestName = GetString (10, 2);
 	  HighestScoreOfDay = RealScore;

@@ -148,7 +148,8 @@ SayLeftInfo (char *text, unsigned char *Parameter_Screen)
   if (!PlusExtentionsOn)
     {
       /* Hintergrund Textfarbe setzen */
-      SetTextColor (FONT_WHITE, FONT_RED);	// FONT_RED, 0
+      // SetTextColor (FONT_WHITE, FONT_RED);	// FONT_RED, 0
+      SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
 
       strncpy (textbox, text, LEFT_TEXT_LEN);
       if (strlen (text) < LEFT_TEXT_LEN)
@@ -175,7 +176,8 @@ SayRightInfo (char *text, unsigned char *Parameter_Screen)
   if (!PlusExtentionsOn)
     {
       /* Hintergrund Textfarbe richtig setzen */
-      SetTextColor (FONT_WHITE, FONT_RED);
+      // SetTextColor (FONT_WHITE, FONT_RED);
+      SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
 
       strncpy (textbox, text, RIGHT_TEXT_LEN);
       if (strlen (text) < RIGHT_TEXT_LEN)
@@ -199,7 +201,7 @@ SayRightInfo (char *text, unsigned char *Parameter_Screen)
 void
 DisplayRahmen (unsigned char *Parameter_Screen)
 {
-  DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
+  DisplayMergeBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
 
   SayRightInfo (RightInfo, Parameter_Screen );
   SayLeftInfo (LeftInfo, Parameter_Screen );

@@ -669,3 +669,37 @@ BounceInfluencer (void)
     }				/* switch */
 }				/* BounceInfluencer */
 
+/*@Function============================================================
+@Desc: l"oscht das Userfenster
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+ClearUserFenster (void)
+{
+  SDL_Rect ThisRectangle;
+
+  DebugPrintf ("\nvoid ClearUserFenster(void): Real function called.");
+
+  ThisRectangle.x=USERFENSTERPOSX;
+  ThisRectangle.y=USERFENSTERPOSY;
+  ThisRectangle.w=USERFENSTERBREITE;
+  ThisRectangle.h=USERFENSTERHOEHE;
+
+
+  SDL_FillRect( screen , & ThisRectangle , 0 );
+
+  /*
+  for (i = USERFENSTERPOSY; i < (USERFENSTERPOSY + USERFENSTERHOEHE); i++)
+    {
+      gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
+		KON_BG_COLOR);
+      // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
+    }
+  */
+
+  DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
+
+} // void ClearUserFenster(void)
+

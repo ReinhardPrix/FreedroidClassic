@@ -555,7 +555,9 @@ GreatDruidShow (void)
 
   SetUserfenster (KON_BG_COLOR, InternalScreen);
 
-  SetTextColor (KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
+
+  // SetTextColor (KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
+  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 
   /*
    * Beginn der gro"sen "Ubersicht "uber alle Roboter
@@ -565,8 +567,9 @@ GreatDruidShow (void)
   for (Infodroid = Me.type; Infodroid > -1;)
     {
 
-      ClearUserFenster ();
-
+      // ClearUserFenster ();
+      ClearGraphMem( Outline320x200 );
+      DisplayRahmen( Outline320x200 );
       /*
        * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
        *
@@ -578,14 +581,17 @@ GreatDruidShow (void)
 	{
 
 	  // Am Bildschirm anzeigen
-	  ClearUserFenster ();
+	  // ClearUserFenster ();
+	  ClearGraphMem( Outline320x200 );
+	  DisplayRahmen( Outline320x200 );
+	  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
 	  strcat (InfoText, " - ");
 	  strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
 	  SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
-			 USERFENSTERBREITE,
+			 USERFENSTERBREITE-2*FONTBREITE,
 			 USERFENSTERPOSY + USERFENSTERHOEHE, 36);
 	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
 		       FALSE);
@@ -653,7 +659,10 @@ GreatDruidShow (void)
        *
        */
 
-      ClearUserFenster ();
+      ClearGraphMem( Outline320x200 );
+      DisplayRahmen( Outline320x200 );
+      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
       strcat (InfoText, " - ");
@@ -720,7 +729,10 @@ GreatDruidShow (void)
        *
        */
 
-      ClearUserFenster ();
+      // ClearUserFenster ();
+      ClearGraphMem( Outline320x200 );
+      DisplayRahmen( Outline320x200 );
+      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
       strcat (InfoText, " - ");
@@ -783,7 +795,10 @@ GreatDruidShow (void)
        *
        */
 
-      ClearUserFenster ();
+      ClearGraphMem( Outline320x200 );
+      DisplayRahmen( Outline320x200 );
+      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
       strcat (InfoText, " - ");
@@ -856,6 +871,7 @@ ShowDeckMap (Level deck)
   LY = USERFENSTERPOSY;
 
   ClearUserFenster ();
+
   for (i = 0; i < deck->ylen; i++)
     {
       for (j = 0; j < deck->xlen; j++)
@@ -1034,26 +1050,19 @@ NoKeyPressed (void)
 void
 ClearUserFenster (void)
 {
-  SDL_Rect ThisRectangle;
+  int i;
 
   DebugPrintf ("\nvoid ClearUserFenster(void): Real function called.");
 
-  ThisRectangle.x=USERFENSTERPOSX;
-  ThisRectangle.y=USERFENSTERPOSY;
-  ThisRectangle.w=USERFENSTERBREITE;
-  ThisRectangle.h=USERFENSTERHOEHE;
-
-
-  SDL_FillRect( screen , & ThisRectangle , 0 );
-
-  /*
   for (i = USERFENSTERPOSY; i < (USERFENSTERPOSY + USERFENSTERHOEHE); i++)
     {
-      gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
-		KON_BG_COLOR);
+      // gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
+      // KON_BG_COLOR);
       // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
+      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , KON_BG_COLOR , USERFENSTERBREITE );
+      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , FONT_BLACK , USERFENSTERBREITE );
+      memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , 0 , USERFENSTERBREITE );
     }
-  */
 
   DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
 

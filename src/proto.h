@@ -408,7 +408,7 @@ EXTERN void RestoreTextEnvironment (void);
 
 EXTERN int InitParaplusFont (void);
 
-EXTERN void SetTextColor (unsigned bg, unsigned fg);
+EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
 EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 
 EXTERN void SetTextBorder (int left, int upper, int right, int lower,

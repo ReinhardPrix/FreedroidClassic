@@ -65,6 +65,8 @@
 #define FONT_FG 251
 #define FONT_HG 252
 
+#define RAHMEN_WHITE 32
+#define RAHMEN_VIOLETT 190
 /*
 #define FONT_YELLOW 63,61,0
 #define FONT_GREEN 0,50,0
