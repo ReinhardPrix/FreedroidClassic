@@ -2568,26 +2568,12 @@ void
 check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 {
   Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+  int i;
+  moderately_finepoint step_vector;
+  float vec_len;
 
   if ( barrel_index != (-1) )
     {
-      /*      
-      if ( Me [ 0 ] . weapon_item . type >= 0 )
-	{
-	  if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
-	       ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-					our_level -> obstacle_list [ barrel_index ] . pos . x ,
-					our_level -> obstacle_list [ barrel_index ] . pos . y ) 
-		 > BEST_MELEE_DISTANCE+0.1 ) )
-	    return;
-	}
-      else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-				       our_level -> obstacle_list [ barrel_index ] . pos . x ,
-				       our_level -> obstacle_list [ barrel_index ] . pos . y ) 
-		> BEST_MELEE_DISTANCE+0.1 )
-	return;
-      */
-
       //--------------------
       // If the smash distance for a barrel is not yet reached, then we must set up
       // a course that will lead us to the barrel and also a combo_action specification,
@@ -2602,18 +2588,46 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 	  // We set up a course, that will lead us directly to the barrel, that we are
 	  // supposed to smash (upon arrival, later).
 	  //
-	  Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ barrel_index ] . pos . x ;
-	  Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ barrel_index ] . pos . y ;
-	  Me [ player_num ] . mouse_move_target . x += 0.8 ;
-	  set_up_intermediate_course_for_tux ( player_num ) ;
-
-	  //--------------------
-	  // We set up the combo_action, so that the barrel can be smashed later...
+	  // For this purpose, we take a vector and rotate it around the barrel center to
+	  // find the 'best' location to go to for the smashing motion...
 	  //
-	  Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-	  Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
-	  Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
-	      
+	  step_vector . x = Me [ player_num ] . pos . x - our_level -> obstacle_list [ barrel_index ] . pos . x ;
+	  step_vector . y = Me [ player_num ] . pos . y - our_level -> obstacle_list [ barrel_index ] . pos . y ;
+	  vec_len = vect_len ( step_vector );
+	  step_vector . x *= 1.0 / vec_len ; // we normalize the distance to 1.  That should be good.  A
+	  step_vector . y *= 1.0 / vec_len ; // distance of a bit more than barrel blocking distance will be best.
+
+	  for ( i = 0 ; i < 8 ; i ++ )
+	    {
+	      if ( IsPassable ( our_level -> obstacle_list [ barrel_index ] . pos . x + step_vector . x ,
+				our_level -> obstacle_list [ barrel_index ] . pos . y + step_vector . y ,
+				Me [ player_num ] . pos . z ) )
+		{
+		  //--------------------
+		  // The obstacle plus the step vector give us the position to move the
+		  // Tux to for the optimal strike...
+		  //
+		  Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ barrel_index ] . pos . x + 
+		    step_vector . x ;
+		  Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ barrel_index ] . pos . y + 
+		    step_vector . y ;
+		  set_up_intermediate_course_for_tux ( player_num ) ;
+
+		  //--------------------
+		  // We set up the combo_action, so that the barrel can be smashed later...
+		  //
+		  Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		  Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
+		  Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
+		  break;
+		}
+
+	      //--------------------
+	      // If this vector didn't bring us any luck, we rotate by 45 degrees and try anew...
+	      //
+	      RotateVectorByAngle ( & ( step_vector ) , 45.0 ) ;
+	    }
+
 	  //--------------------
 	  // since we cannot smash immediately, we must return now.  Later, on the 
 	  // second call once we've reached the barrel, this will be different.
