@@ -75,8 +75,8 @@ Get_Bullet_Data ( char* DataPointer )
     }
   else
     {
-      printf("\n\nBegin of Bullet Data Section found. Good.");  
-      fflush(stdout);
+      DebugPrintf("\n\nBegin of Bullet Data Section found. Good.");  
+      // fflush(stdout);
     }
   
   if ( ( strstr ( DataPointer , BULLET_SECTION_END_STRING ) ) == NULL)
@@ -86,11 +86,11 @@ Get_Bullet_Data ( char* DataPointer )
     }
   else
     {
-      printf("\n\nEnd of Bullet Data Section found. Good.");  
+      DebugPrintf("\n\nEnd of Bullet Data Section found. Good.");  
       fflush(stdout);
     }
   
-  printf("\n\nStarting to read bullet calibration section\n\n");
+  DebugPrintf("\n\nStarting to read bullet calibration section\n\n");
 
   // Now we read in the speed calibration factor for all bullets
   if ( (ValuePointer = strstr ( BulletPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
@@ -102,7 +102,7 @@ Get_Bullet_Data ( char* DataPointer )
     {
       ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &bullet_speed_calibrator );
-      printf("\nBullet speed calibrator found!  It reads: %f" , bullet_speed_calibrator );
+      // printf("\nBullet speed calibrator found!  It reads: %f" , bullet_speed_calibrator );
     }
 
   // Now we read in the damage calibration factor for all bullets
@@ -115,7 +115,7 @@ Get_Bullet_Data ( char* DataPointer )
     {
       ValuePointer += strlen ( BULLET_SPEED_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &bullet_damage_calibrator );
-      printf("\nBullet damage calibrator found!  It reads: %f" , bullet_damage_calibrator );
+      // printf("\nBullet damage calibrator found!  It reads: %f" , bullet_damage_calibrator );
     }
 
   //--------------------
@@ -193,11 +193,11 @@ Get_Robot_Data ( void* DataPointer )
     }
   else
     {
-      printf("\n\nBegin of Robot Data Section found. Good.");  
+      DebugPrintf("\n\nBegin of Robot Data Section found. Good.");  
       // fflush(stdout);
     }
   
-  printf("\n\nStarting to read robot calibration section\n\n");
+  DebugPrintf("\n\nStarting to read robot calibration section\n\n");
 
   // Now we read in the speed calibration factor for all droids
   if ( (ValuePointer = strstr ( RobotPointer, MAXSPEED_CALIBRATOR_STRING )) == NULL )
@@ -209,7 +209,7 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( MAXSPEED_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &maxspeed_calibrator );
-      printf("\nDroid maximum speed calibrator found!  It reads: %f" , maxspeed_calibrator );
+      // printf("\nDroid maximum speed calibrator found!  It reads: %f" , maxspeed_calibrator );
     }
 
   // Now we read in the acceleration calibration factor for all droids
@@ -222,7 +222,7 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( ACCELERATION_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &acceleration_calibrator );
-      printf("\nDroid acceleration calibrator found!  It reads: %f" , acceleration_calibrator );
+      // printf("\nDroid acceleration calibrator found!  It reads: %f" , acceleration_calibrator );
     }
 
   // Now we read in the maxenergy calibration factor for all droids
@@ -235,7 +235,7 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( MAXENERGY_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &maxenergy_calibrator );
-      printf("\nDroid maximum energy calibrator found!  It reads: %f" , maxenergy_calibrator );
+      // printf("\nDroid maximum energy calibrator found!  It reads: %f" , maxenergy_calibrator );
     }
 
   // Now we read in the energy_loss calibration factor for all droids
@@ -248,7 +248,7 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( ENERGYLOSS_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &energyloss_calibrator );
-      printf("\nDroid energy loss calibrator found!  It reads: %f" , energyloss_calibrator );
+      // printf("\nDroid energy loss calibrator found!  It reads: %f" , energyloss_calibrator );
     }
 
   // Now we read in the aggression calibration factor for all droids
@@ -261,7 +261,7 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( AGGRESSION_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &aggression_calibrator );
-      printf("\nDroid aggression calibrator found!  It reads: %f" , aggression_calibrator );
+      // printf("\nDroid aggression calibrator found!  It reads: %f" , aggression_calibrator );
     }
 
   // Now we read in the score calibration factor for all droids
@@ -274,11 +274,11 @@ Get_Robot_Data ( void* DataPointer )
     {
       ValuePointer += strlen ( SCORE_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &score_calibrator );
-      printf("\nDroid score calibrator found!  It reads: %f" , score_calibrator );
+      // printf("\nDroid score calibrator found!  It reads: %f" , score_calibrator );
     }
 
 
-  printf("\n\nStarting to read Robot data...\n\n");
+  DebugPrintf("\n\nStarting to read Robot data...\n\n");
   //--------------------
   // At first, we must allocate memory for the droid specifications.
   // How much?  That depends on the number of droids defined in game.dat.
@@ -295,14 +295,15 @@ Get_Robot_Data ( void* DataPointer )
   // a fitting amount of memory.
   i=sizeof(druidspec);
   Druidmap = malloc ( i * (Number_Of_Droid_Types + 1) + 1 );
-  printf("\n\nWE HAVE COUNTED %d DIFFERENT DRUID TYPES IN game.dat.\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" , Number_Of_Droid_Types );
+  printf("\nWe have counted %d different druid types in the game data file." , Number_Of_Droid_Types );
+  DebugPrintf("\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
 
   //--------------------
   //Now we start to read the values for each robot:
   //Of which parts is it composed, which stats does it have?
   while ( (RobotPointer = strstr ( RobotPointer, NEW_ROBOT_BEGIN_STRING )) != NULL)
     {
-      printf("\n\nFound another Robot specification entry!  Lets add that to the others!");
+      DebugPrintf("\n\nFound another Robot specification entry!  Lets add that to the others!");
       RobotPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the Name of this droid.  We consider as a name the rest of the
@@ -319,7 +320,7 @@ Get_Robot_Data ( void* DataPointer )
 	  Druidmap[RobotIndex].druidname = malloc ( StringLength + 1 );
 	  strncpy ( (char*) Druidmap[RobotIndex].druidname , ValuePointer , StringLength );
 	  Druidmap[RobotIndex].druidname[StringLength]=0;
-	  printf("\nDroidname found!  It reads: %s" , Druidmap[RobotIndex].druidname );
+	  // printf("\nDroidname found!  It reads: %s" , Druidmap[RobotIndex].druidname );
 	}
 
       // Now we read in the maximal speed this droid can go. 
@@ -332,7 +333,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( MAXSPEED_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxspeed );
-	  printf("\nDroid maximum speed found!  It reads: %f" , Druidmap[RobotIndex].maxspeed );
+	  // printf("\nDroid maximum speed found!  It reads: %f" , Druidmap[RobotIndex].maxspeed );
 	}
 
       // Now we read in the class of this droid.
@@ -345,7 +346,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( CLASS_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].class );
-	  printf("\nDroid class entry found!  It reads: %d" , Druidmap[RobotIndex].class );
+	  // printf("\nDroid class entry found!  It reads: %d" , Druidmap[RobotIndex].class );
 	}
 
       // Now we read in the maximal acceleration this droid can go. 
@@ -358,7 +359,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( ACCELERATION_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].accel );
-	  printf("\nDroid maximum acceleration found!  It reads: %f" , Druidmap[RobotIndex].accel );
+	  // printf("\nDroid maximum acceleration found!  It reads: %f" , Druidmap[RobotIndex].accel );
 	}
 
       // Now we read in the maximal energy this droid can store. 
@@ -371,7 +372,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( MAXENERGY_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxenergy );
-	  printf("\nDroid maximum energy found!  It reads: %f" , Druidmap[RobotIndex].maxenergy );
+	  // printf("\nDroid maximum energy found!  It reads: %f" , Druidmap[RobotIndex].maxenergy );
 	}
 
       // Now we read in the lose_health rate.
@@ -384,7 +385,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( LOSEHEALTH_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].lose_health );
-	  printf("\nDroid lose_health entry found!  It reads: %f" , Druidmap[RobotIndex].lose_health );
+	  // printf("\nDroid lose_health entry found!  It reads: %f" , Druidmap[RobotIndex].lose_health );
 	}
 
       // Now we read in the class of this droid.
@@ -397,7 +398,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( GUN_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].gun );
-	  printf("\nDroid gun entry found!  It reads: %d" , Druidmap[RobotIndex].gun );
+	  // printf("\nDroid gun entry found!  It reads: %d" , Druidmap[RobotIndex].gun );
 	}
 
       // Now we read in the aggression rate of this droid.
@@ -410,7 +411,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( AGGRESSION_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].aggression );
-	  printf("\nDroid aggression rate entry found!  It reads: %d" , Druidmap[RobotIndex].aggression );
+	  // printf("\nDroid aggression rate entry found!  It reads: %d" , Druidmap[RobotIndex].aggression );
 	}
 
       // Now we read in the flash immunity of this droid.
@@ -423,7 +424,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( FLASHIMMUNE_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].flashimmune );
-	  printf("\nDroid flashimmune entry found!  It reads: %d" , Druidmap[RobotIndex].flashimmune );
+	  // printf("\nDroid flashimmune entry found!  It reads: %d" , Druidmap[RobotIndex].flashimmune );
 	}
 
       // Now we score to be had for destroying one droid of this type
@@ -436,7 +437,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( SCORE_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].score );
-	  printf("\nDroid score entry found!  It reads: %d" , Druidmap[RobotIndex].score );
+	  // printf("\nDroid score entry found!  It reads: %d" , Druidmap[RobotIndex].score );
 	}
 
       // Now we read in the height of this droid of this type
@@ -449,7 +450,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( HEIGHT_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].height );
-	  printf("\nDroid height entry found!  It reads: %f" , Druidmap[RobotIndex].height );
+	  // printf("\nDroid height entry found!  It reads: %f" , Druidmap[RobotIndex].height );
 	}
 
       // Now we read in the weight of this droid type
@@ -462,7 +463,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( WEIGHT_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].weight );
-	  printf( "\nDroid weight entry found!  It reads: %f" , Druidmap[RobotIndex].weight );
+	  // printf( "\nDroid weight entry found!  It reads: %f" , Druidmap[RobotIndex].weight );
 	}
 
       // Now we read in the drive of this droid of this type
@@ -475,7 +476,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( DRIVE_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].drive );
-	  printf("\nDroid drive entry found!  It reads: %d" , Druidmap[RobotIndex].drive );
+	  // printf("\nDroid drive entry found!  It reads: %d" , Druidmap[RobotIndex].drive );
 	}
 
       // Now we read in the brain of this droid of this type
@@ -488,7 +489,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( BRAIN_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].brain );
-	  printf("\nDroid brain entry found!  It reads: %d" , Druidmap[RobotIndex].brain );
+	  // printf("\nDroid brain entry found!  It reads: %d" , Druidmap[RobotIndex].brain );
 	}
 
       // Now we read in the sensor 1 of this droid type
@@ -501,7 +502,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor1 );
-	  printf("\nDroid sensor 1 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor1 );
+	  // printf("\nDroid sensor 1 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor1 );
 	}
 
       // Now we read in the sensor 2 of this droid type
@@ -514,7 +515,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor2 );
-	  printf("\nDroid sensor 2 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor2 );
+	  // printf("\nDroid sensor 2 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor2 );
 	}
 
       // Now we read in the sensor 3 of this droid type
@@ -527,7 +528,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( SENSOR3_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor3 );
-	  printf("\nDroid sensor 3 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor3 );
+	  // printf("\nDroid sensor 3 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor3 );
 	}
 
       // Now we read in the armament of this droid type
@@ -540,7 +541,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( ARMAMENT_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].armament );
-	  printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
+	  // printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
 	}
 
       // Now we read in the AdvancedFighing flag of this droid type
@@ -553,7 +554,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen ( ADVANCED_FIGHTING_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].AdvancedFighting );
-	  printf("\nDroid AdvancedFighting entry found!  It reads: %d" , Druidmap[RobotIndex].AdvancedFighting );
+	  // printf("\nDroid AdvancedFighting entry found!  It reads: %d" , Druidmap[RobotIndex].AdvancedFighting );
 	}
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
@@ -570,7 +571,7 @@ Get_Robot_Data ( void* DataPointer )
 	  Druidmap[RobotIndex].notes = malloc ( StringLength + 1 );
 	  strncpy ( (char*) Druidmap[RobotIndex].notes , ValuePointer , StringLength );
 	  Druidmap[RobotIndex].notes[StringLength]=0;
-	  printf("\nNotes concerning the droid found!  They read: %s" , Druidmap[RobotIndex].notes );
+	  // printf("\nNotes concerning the droid found!  They read: %s" , Druidmap[RobotIndex].notes );
 	}
 
 
@@ -581,8 +582,8 @@ Get_Robot_Data ( void* DataPointer )
     }
   
 
-  printf("\n\nThat must have been the last robot.  We're done reading the robot data.");
-  printf("\n\nApplying the calibration factors to all droids...");
+  DebugPrintf("\n\nThat must have been the last robot.  We're done reading the robot data.");
+  DebugPrintf("\n\nApplying the calibration factors to all droids...");
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
@@ -616,18 +617,18 @@ Init_Game_Data ( char * Datafilename )
   // strcpy ( filename , MAP_DIR );
   // strcat ( filename , Datafilename );
 
-  printf("\nint Init_Game_Data ( char* Datafilename ) called.");
-  printf("\nint Init_Game_Data ( char* Datafilename ): The filename is: %s" , Datafilename );
+  DebugPrintf("\nint Init_Game_Data ( char* Datafilename ) called.");
+  // printf("\nint Init_Game_Data ( char* Datafilename ): The filename is: %s" , Datafilename );
 
   /* Read the whole game data to memory */
   if ((DataFile = fopen (Datafilename, "r")) == NULL)
     {
-      DebugPrintf ("\nint Init_Game_Data( void ): Error opening file.... ");
+      printf ("\nint Init_Game_Data( void ): Error opening file.... ");
       Terminate(ERR);
     }
   else
     {
-      printf("\nOpening game data file succeeded...");
+      DebugPrintf("\nOpening game data file succeeded...");
     }
 
   if (fstat (fileno (DataFile), &stbuf) == EOF)
@@ -638,18 +639,18 @@ Init_Game_Data ( char * Datafilename )
     }
   else
     {
-      printf("\nfstating game data file succeeded...");
+      DebugPrintf("\nfstating game data file succeeded...");
     }
 
   if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
     {
-      DebugPrintf ("\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
+      printf ("\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
     }
 
   fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
 
-  printf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+  DebugPrintf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
 
   if ( (EndPointer = strstr( Data , END_OF_GAME_DAT_STRING ) ) == NULL )
     {
@@ -662,7 +663,7 @@ Init_Game_Data ( char * Datafilename )
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+  // printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
 
   Get_Robot_Data ( Data );
 
@@ -878,7 +879,7 @@ InitNewMission ( char *MissionName )
 
 
   DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
-  printf("\nA new mission is being initialized from file %s." , MissionName );
+  printf("\nA new mission is being initialized from file %s.\n" , MissionName );
 
   //--------------------
   //At first we do the things that must be done for all
@@ -923,7 +924,7 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      printf("\nOpening %s file succeeded..." , MissionName );
+      // printf("\nOpening %s file succeeded..." , MissionName );
     }
 
   if (fstat (fileno (MissionFile), &stbuf) == EOF)
@@ -934,7 +935,7 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      printf("\nfstating %s file succeeded..." , MissionName );
+      // printf("\nfstating %s file succeeded..." , MissionName );
     }
 
   if (( MainMissionPointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
@@ -945,7 +946,7 @@ InitNewMission ( char *MissionName )
 
   fread ( MainMissionPointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), MissionFile);
 
-  printf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+  DebugPrintf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
 
   if ( (EndPointer = strstr( MainMissionPointer , END_OF_MISSION_DATA_STRING ) ) == NULL )
     {
@@ -958,7 +959,7 @@ InitNewMission ( char *MissionName )
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  printf("\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
+  // printf("\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
 
   //--------------------
   //Now the mission file is read into memory
@@ -975,7 +976,7 @@ InitNewMission ( char *MissionName )
   else
     {
       BriefingSectionPointer += strlen ( MISSION_BRIEFING_BEGIN_STRING ) +1;
-      printf("\nMission Briefing begin BIG section found!");
+      DebugPrintf("\nMission Briefing begin BIG section found!");
     }
 
   /* Title and Explanation of controls and such... */
@@ -1153,7 +1154,7 @@ InitNewMission ( char *MissionName )
       strncpy( DebriefingText , EndTitlePointer , EndTitleLength +1 );
       DebriefingText[EndTitleLength] = 0;
       
-      printf("\nEnd title string found!  It reads: %s" , DebriefingText );
+      // printf("\nEnd title string found!  It reads: %s" , DebriefingText );
     }
   
   //--------------------
@@ -1165,12 +1166,12 @@ InitNewMission ( char *MissionName )
     {
       NumberOfStartPoints++;
       StartPointPointer+=strlen( MISSION_START_POINT_STRING );
-      printf("\nFound another starting point entry!");
+      DebugPrintf("\nFound another starting point entry!");
     }
   printf("\nFound %d different starting points for the mission in the mission file.", NumberOfStartPoints );
 
   RealStartPoint = MyRandom ( NumberOfStartPoints -1 ) + 1;
-  printf("\nRealStartPoint: %d." , RealStartPoint);
+  // printf("\nRealStartPoint: %d." , RealStartPoint);
 
   StartPointPointer=MainMissionPointer;
   for ( i=0 ; i<RealStartPoint; i++ )
@@ -1187,7 +1188,7 @@ InitNewMission ( char *MissionName )
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me.pos.y=StartingYPos;
-  printf("\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
+  // printf("\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   
   if ( NumberOfStartPoints == 0 )
     {
@@ -1207,7 +1208,7 @@ InitNewMission ( char *MissionName )
   else
     {
       StartPointPointer += strlen ( MISSION_START_POINT_STRING ) +1;
-      printf("\nMission Start Point string found!");
+      DebugPrintf("\nMission Start Point string found!");
     }
 
   //--------------------
@@ -1223,7 +1224,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ALL_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillAll );
-      printf("\nMission target killall entry found!  It reads: %d" , Me.mission.KillAll );
+      // printf("\nMission target killall entry found!  It reads: %d" , Me.mission.KillAll );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_CLASS_STRING )) == NULL )
@@ -1235,7 +1236,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_KILL_CLASS_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillClass );
-      printf("\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
+      // printf("\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_ONE_STRING )) == NULL )
@@ -1247,7 +1248,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ONE_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillOne );
-      printf("\nMission target killone entry found!  It reads: %d" , Me.mission.KillOne );
+      // printf("\nMission target killone entry found!  It reads: %d" , Me.mission.KillOne );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_CLASS_STRING )) == NULL )
@@ -1259,7 +1260,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_CLASS_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeClass );
-      printf("\nMission target MustBeClass entry found!  It reads: %d" , Me.mission.MustBeClass );
+      // printf("\nMission target MustBeClass entry found!  It reads: %d" , Me.mission.MustBeClass );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_TYPE_STRING )) == NULL )
@@ -1271,7 +1272,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_TYPE_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeType );
-      printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
+      // printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_ONE_STRING )) == NULL )
@@ -1283,7 +1284,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_ONE_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeOne );
-      printf("\nMission target MustBeOne entry found!  It reads: %d" , Me.mission.MustBeOne );
+      // printf("\nMission target MustBeOne entry found!  It reads: %d" , Me.mission.MustBeOne );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_LEVEL_STRING )) == NULL )
@@ -1295,7 +1296,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_LEVEL_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachLevel );
-      printf("\nMission target MustReachLevel entry found!  It reads: %d" , Me.mission.MustReachLevel );
+      // printf("\nMission target MustReachLevel entry found!  It reads: %d" , Me.mission.MustReachLevel );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_X_STRING )) == NULL )
@@ -1307,7 +1308,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_X_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.x );
-      printf("\nMission target MustReachPoint.x entry found!  It reads: %d" , Me.mission.MustReachPoint.x );
+      // printf("\nMission target MustReachPoint.x entry found!  It reads: %d" , Me.mission.MustReachPoint.x );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_Y_STRING )) == NULL )
@@ -1319,7 +1320,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_Y_STRING );
       sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.y );
-      printf("\nMission target MustReachPoint.y entry found!  It reads: %d" , Me.mission.MustReachPoint.y );
+      // printf("\nMission target MustReachPoint.y entry found!  It reads: %d" , Me.mission.MustReachPoint.y );
     }
 
   if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_LIVE_TIME_STRING )) == NULL )
@@ -1331,7 +1332,7 @@ InitNewMission ( char *MissionName )
     {
       MissionTargetPointer += strlen ( MISSION_TARGET_MUST_LIVE_TIME_STRING );
       sscanf ( MissionTargetPointer , "%lf" , &Me.mission.MustLiveTime );
-      printf("\nMission target MustLiveTime entry found!  It reads: %f" , Me.mission.MustLiveTime );
+      // printf("\nMission target MustLiveTime entry found!  It reads: %f" , Me.mission.MustLiveTime );
     }
 
   //--------------------
@@ -1351,7 +1352,7 @@ InitNewMission ( char *MissionName )
       NextMissionName = malloc ( NextMissionNameLength +10 );
       strncpy( NextMissionName , NextMissionNamePointer , NextMissionNameLength +1 );
       NextMissionName[NextMissionNameLength] = 0;
-      printf("\nNext mission name found!  It reads: %s" , NextMissionName );
+      // printf("\nNext mission name found!  It reads: %s" , NextMissionName );
     }
   
   /* Reactivate the light on alle Levels, that might have been dark */
@@ -1515,7 +1516,8 @@ Title ( char *MissionBriefingPointer )
 
   // SetTextColor (FONT_BLACK, FONT_RED);
 
-  SetCurrentFont( FPS_Display_BFont );
+  // SetCurrentFont( FPS_Display_BFont );
+  SetCurrentFont( Para_BFont );
 
 
   // Next we display all the subsections of the briefing section
@@ -1534,7 +1536,7 @@ Title ( char *MissionBriefingPointer )
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
       
-      printf("\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
+      // printf("\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
       fflush(stdout);
       ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
       free ( PreparedBriefingText );
@@ -1723,7 +1725,9 @@ CheckIfMissionIsComplete (void)
     {
       for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
+	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
+	       ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
 	    {
 	      printf("\nOne of the marked droids is still alive...");
 	      fflush(stdout);
@@ -1738,8 +1742,8 @@ CheckIfMissionIsComplete (void)
 	{
 	  if ( AllEnemys[Robot_Counter].energy > 0 ) 
 	    {
-	      printf("\nThere are some robots still alive, and you should kill them all...");
-	      fflush(stdout);
+	      // printf("\nThere are some robots still alive, and you should kill them all...");
+	      // fflush(stdout);
 	      return;
 	    }
 	}
@@ -1821,8 +1825,8 @@ CheckIfMissionIsComplete (void)
     {
       if ( Me.Marker != Me.mission.MustBeOne ) 
 	{
-	  printf("\nYou're not yet one of the marked ones...");
-	  fflush(stdout);
+	  // printf("\nYou're not yet one of the marked ones...");
+	  // fflush(stdout);
 	  return;
 	}
     }

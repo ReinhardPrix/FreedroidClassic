@@ -69,22 +69,20 @@ P**ossible Start Point : Level=5 XPos=5 YPos=5
 P**ossible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=3 YPos=7
 Mission target is to kill all droids : -1
-Mission target is to kill class of droids : 9
-Mission target is to kill droids with marker : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : 1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
 Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : 80
+Mission target is to live for how many seconds : -1
 After completing this mission, load mission : new_mission_2.mission
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
 It's the the year 2400.  
-
 All of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.
-
 This came to be as follows:  
 
 Since 2200 military and police forces were mostly automatized.  Also interstellar traffic is mainly relying on droid control units.

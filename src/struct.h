@@ -145,7 +145,7 @@ influence_t, *Influence_t;
 
 typedef struct
 {
-  byte type;			/* gibt die Nummer in Druidmap an */
+  int type;			/* gibt die Nummer in Druidmap an */
   int levelnum;			/* Level in dem sich enemy befindet */
   finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;		/* current speed  */

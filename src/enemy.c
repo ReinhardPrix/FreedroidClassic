@@ -88,7 +88,7 @@ InitEnemys (void)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       type = AllEnemys[i].type;
-      if (type == OUT) continue;
+      if ( type == (-1) ) continue;
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = !OUT;
     }
@@ -116,9 +116,11 @@ ClearEnemys (void)
       AllEnemys[i].firewait = 0;
       AllEnemys[i].energy = 0;
       AllEnemys[i].SpecialForce = 0;
+      AllEnemys[i].AdvancedCommand = 0;
       AllEnemys[i].CompletelyFixed = 0;
       AllEnemys[i].Parameter1 = 0;
       AllEnemys[i].Parameter2 = 0;
+      AllEnemys[i].Marker = 0;
     }
 
   return;

@@ -605,8 +605,10 @@ InsertNewMessage (void)
 void
 Terminate (int ExitCode)
 {
-  DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....");
-  printf("\n----------------------------------------------------------------------\nTermination of Freedroid initiated... \nUnallocation all resouces...");
+  DebugPrintf ("\nvoid Terminate(int ExitStatus) was called....");
+  printf("\n----------------------------------------------------------------------");
+  printf("\nTermination of Freedroid initiated...");
+  // printf("\nUnallocation all resouces...");
 
   // free the allocated surfaces...
   // SDL_FreeSurface( ne_blocks );
@@ -615,7 +617,8 @@ Terminate (int ExitCode)
   // free the mixer channels...
   // Mix_CloseAudio();
 
-  printf("\nAnd now the final step...\n\n");
+  // printf("\nAnd now the final step...\n\n");
+  printf("Thank you for playing Freedroid.\n\n");
   SDL_Quit();
   exit (ExitCode);
   return;

@@ -90,7 +90,7 @@ Init_Audio(void)
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
 
-  printf("\nInitializing SDL Audio Systems....");
+  printf("\nInitializing SDL Audio Systems....\n");
 
   // At first we set audio volume to maximum value.
   // This might be replaced later with values from a 

@@ -176,8 +176,10 @@ Cheatmenu (void)
 	  break;
 
 	case 'g': /* complete robot list of this ship */
-	  for (i = 0; i < NumEnemys; i++)
+	  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	    {
+	      if ( AllEnemys[i].type == (-1) ) continue;
+
 	      if (i && !(i%13)) 
 		{
 		  printf_SDL (ne_screen, -1, -1, " --- MORE --- ('q' to quit)\n");
@@ -993,11 +995,11 @@ Credits_Menu (void)
 
       CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
       LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");
-      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix and Reinhard Prix");
-      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "");
-      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "ARTWORK:");
-      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Bastian Salmela");
-      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "");
+      RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix");
+      RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix");
+      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "ARTWORK:");
+      RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela");
+      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "");
 
       SDL_Flip( ne_screen );
 
@@ -1033,16 +1035,55 @@ Show_Mission_Instructions_Menu (void)
       InitiateMenu();
 
       CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
-      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
-      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
-      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
-      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
-      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
-      LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
+      
+      printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
+      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NO" );
+      printf_SDL ( ne_screen , -1 , -1 , "   Kill Class : "  );
+      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.KillClass ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+
+      printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
+      if ( Me.mission.KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NO" );
+      printf_SDL ( ne_screen , -1 , -1 , "   ReachLevel : "  );
+      if ( Me.mission.MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachLevel ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+
+      printf_SDL ( ne_screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
+      if ( Me.mission.MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustReachPoint.x ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , -1 , -1 , "   Reach Y= : "  );
+      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachPoint.y );
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+
+      printf_SDL ( ne_screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
+      if ( Me.mission.MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.mission.MustLiveTime ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
+      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+
+      printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
+      if ( Me.mission.MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustBeType ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
+      if ( Me.mission.MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
+      else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
+
+
+      
+      //      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
+      //LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
+      //LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
+      //LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
+      //LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
+      //LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
+      //LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
       SDL_Flip( ne_screen );
 
+      while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
       // Wait until the user does SOMETHING
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )

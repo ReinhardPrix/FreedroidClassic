@@ -188,7 +188,7 @@ UpdateCountersForThisFrame (void)
   if (RealScore < ShowScore)
     ShowScore--;
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
       if (AllEnemys[i].warten > 0) 
 	{

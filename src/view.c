@@ -209,7 +209,7 @@ Assemble_Combat_Picture (int mask)
   // At this point we know that now only the map is to be drawn.
   // so we start drawing the rest of the INTERIOR of the combat window:
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     PutEnemy (i , -1 , -1 );
 
   if (Me.energy > 0)
