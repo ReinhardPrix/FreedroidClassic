@@ -58,8 +58,8 @@ void
 FillInItemProperties( item* ThisItem )
 {
 
-  ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage +
-    MyRandom( ItemMap[ ThisItem->type ].item_gun_damage_modifier );
+  ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
+  ThisItem->damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
   ThisItem->ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
     MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
 

@@ -66,44 +66,44 @@ Start of pure codepanel information for this level
 PanelposX=4 PanelposY=10 Secret Code="gnu"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=15  CurDur=12.000000  Gold=0 
-New item: type=3  X=15.000000  Y=3.000000  AC=0  DoDamage=35  MaxDur=12  CurDur=8.000000  Gold=0 
-New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=18  CurDur=9.000000  Gold=0 
-New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=16  CurDur=10.000000  Gold=0 
-New item: type=1  X=12.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=2  X=13.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=3  X=14.000000  Y=1.000000  AC=0  DoDamage=34  MaxDur=13  CurDur=10.000000  Gold=0 
-New item: type=4  X=15.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=5  X=16.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=15  CurDur=13.000000  Gold=0 
-New item: type=6  X=17.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=19 
-New item: type=7  X=18.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=13  CurDur=8.000000  Gold=0 
-New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=16  CurDur=8.000000  Gold=0 
-New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=20  CurDur=12.000000  Gold=0 
-New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=12  CurDur=9.000000  Gold=0 
-New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=18  CurDur=17.000000  Gold=0 
-New item: type=12  X=23.000000  Y=1.000000  AC=0  DoDamage=41  MaxDur=15  CurDur=12.000000  Gold=0 
-New item: type=13  X=24.000000  Y=1.000000  AC=0  DoDamage=86  MaxDur=10  CurDur=8.000000  Gold=0 
-New item: type=14  X=24.000000  Y=2.000000  AC=0  DoDamage=51  MaxDur=13  CurDur=10.000000  Gold=0 
-New item: type=15  X=24.000000  Y=3.000000  AC=0  DoDamage=65  MaxDur=10  CurDur=8.000000  Gold=0 
-New item: type=16  X=24.000000  Y=4.000000  AC=0  DoDamage=48  MaxDur=16  CurDur=14.000000  Gold=0 
-New item: type=17  X=24.000000  Y=5.000000  AC=0  DoDamage=91  MaxDur=19  CurDur=11.000000  Gold=0 
-New item: type=18  X=24.000000  Y=6.000000  AC=25  DoDamage=0  MaxDur=41  CurDur=38.000000  Gold=0 
-New item: type=19  X=24.000000  Y=7.000000  AC=23  DoDamage=0  MaxDur=33  CurDur=24.000000  Gold=0 
-New item: type=20  X=24.000000  Y=8.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=21  X=25.000000  Y=8.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
-New item: type=22  X=26.000000  Y=8.000000  AC=0  DoDamage=13  MaxDur=14  CurDur=12.000000  Gold=0 
-New item: type=23  X=27.000000  Y=8.000000  AC=0  DoDamage=11  MaxDur=13  CurDur=11.000000  Gold=0 
-New item: type=24  X=28.000000  Y=8.000000  AC=0  DoDamage=113  MaxDur=13  CurDur=12.000000  Gold=0 
-New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  MaxDur=16  CurDur=13.000000  Gold=0 
-New item: type=27  X=9.000000  Y=3.000000  AC=0  DoDamage=115  MaxDur=17  CurDur=6.000000  Gold=0 
-New item: type=28  X=30.000000  Y=8.000000  AC=0  DoDamage=9  MaxDur=22  CurDur=12.000000  Gold=0 
-New item: type=27  X=31.000000  Y=8.000000  AC=0  DoDamage=3  MaxDur=12  CurDur=2.000000  Gold=0 
-New item: type=29  X=32.000000  Y=8.000000  AC=4  DoDamage=0  MaxDur=25  CurDur=2.000000  Gold=0 
-New item: type=30  X=33.000000  Y=8.000000  AC=11  DoDamage=0  MaxDur=39  CurDur=30.000000  Gold=0 
-New item: type=31  X=34.000000  Y=8.000000  AC=11  DoDamage=0  MaxDur=35  CurDur=8.000000  Gold=0 
-New item: type=32  X=34.000000  Y=9.000000  AC=0  DoDamage=4  MaxDur=31  CurDur=20.000000  Gold=0 
-New item: type=33  X=34.000000  Y=10.000000  AC=27  DoDamage=0  MaxDur=29  CurDur=21.000000  Gold=0 
+New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0 
+New item: type=3  X=15.000000  Y=3.000000  AC=0  DoDamage=35  ModifyDamage=0  MaxDur=12  CurDur=8.000000  Gold=0 
+New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0 
+New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0 
+New item: type=1  X=12.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=2  X=13.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=3  X=14.000000  Y=1.000000  AC=0  DoDamage=34  ModifyDamage=0  MaxDur=13  CurDur=10.000000  Gold=0 
+New item: type=4  X=15.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=5  X=16.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0 
+New item: type=6  X=17.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=19 
+New item: type=7  X=18.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0 
+New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0 
+New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0 
+New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0 
+New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0 
+New item: type=12  X=23.000000  Y=1.000000  AC=0  DoDamage=41  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0 
+New item: type=13  X=24.000000  Y=1.000000  AC=0  DoDamage=86  ModifyDamage=0  MaxDur=10  CurDur=8.000000  Gold=0 
+New item: type=14  X=24.000000  Y=2.000000  AC=0  DoDamage=51  ModifyDamage=0  MaxDur=13  CurDur=10.000000  Gold=0 
+New item: type=15  X=24.000000  Y=3.000000  AC=0  DoDamage=65  ModifyDamage=0  MaxDur=10  CurDur=8.000000  Gold=0 
+New item: type=16  X=24.000000  Y=4.000000  AC=0  DoDamage=48  ModifyDamage=0  MaxDur=16  CurDur=14.000000  Gold=0 
+New item: type=17  X=24.000000  Y=5.000000  AC=0  DoDamage=91  ModifyDamage=0  MaxDur=19  CurDur=11.000000  Gold=0 
+New item: type=18  X=24.000000  Y=6.000000  AC=25  DoDamage=0  ModifyDamage=0  MaxDur=41  CurDur=38.000000  Gold=0 
+New item: type=19  X=24.000000  Y=7.000000  AC=23  DoDamage=0  ModifyDamage=0  MaxDur=33  CurDur=24.000000  Gold=0 
+New item: type=20  X=24.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=21  X=25.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0 
+New item: type=22  X=26.000000  Y=8.000000  AC=0  DoDamage=13  ModifyDamage=0  MaxDur=14  CurDur=12.000000  Gold=0 
+New item: type=23  X=27.000000  Y=8.000000  AC=0  DoDamage=11  ModifyDamage=0  MaxDur=13  CurDur=11.000000  Gold=0 
+New item: type=24  X=28.000000  Y=8.000000  AC=0  DoDamage=113  ModifyDamage=0  MaxDur=13  CurDur=12.000000  Gold=0 
+New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=13.000000  Gold=0 
+New item: type=27  X=9.000000  Y=3.000000  AC=0  DoDamage=115  ModifyDamage=0  MaxDur=17  CurDur=6.000000  Gold=0 
+New item: type=28  X=30.000000  Y=8.000000  AC=0  DoDamage=9  ModifyDamage=0  MaxDur=22  CurDur=12.000000  Gold=0 
+New item: type=27  X=31.000000  Y=8.000000  AC=0  DoDamage=3  ModifyDamage=0  MaxDur=12  CurDur=2.000000  Gold=0 
+New item: type=29  X=32.000000  Y=8.000000  AC=4  DoDamage=0  ModifyDamage=0  MaxDur=25  CurDur=2.000000  Gold=0 
+New item: type=30  X=33.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=39  CurDur=30.000000  Gold=0 
+New item: type=31  X=34.000000  Y=8.000000  AC=11  DoDamage=0  ModifyDamage=0  MaxDur=35  CurDur=8.000000  Gold=0 
+New item: type=32  X=34.000000  Y=9.000000  AC=0  DoDamage=4  ModifyDamage=0  MaxDur=31  CurDur=20.000000  Gold=0 
+New item: type=33  X=34.000000  Y=10.000000  AC=27  DoDamage=0  ModifyDamage=0  MaxDur=29  CurDur=21.000000  Gold=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
@@ -400,23 +400,23 @@ PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
-New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
+New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -578,11 +578,11 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=6  X=16.000000  Y=4.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=13 
-New item: type=6  X=13.112000  Y=6.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=21 
-New item: type=10  X=14.000000  Y=6.000000  AC=0  DoDamage=0  MaxDur=15  CurDur=7.000000  Gold=0 
-New item: type=6  X=38.000000  Y=9.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=4 
-New item: type=6  X=14.808000  Y=5.068000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000  Gold=5 
+New item: type=6  X=16.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=13 
+New item: type=6  X=13.112000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=21 
+New item: type=10  X=14.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=7.000000  Gold=0 
+New item: type=6  X=38.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=4 
+New item: type=6  X=14.808000  Y=5.068000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=5 
 End of pure items information for this level
 wp
 Nr.=  0 x=   7 y=   5	 connections:   18   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
