@@ -280,15 +280,18 @@ DisplayButtons( void )
   //
   if ( Me[0].points_to_distribute > 0 )
     {
-      ShowGenericButtonFromList ( PLUS_BUTTON );
+      // ShowGenericButtonFromList ( PLUS_BUTTON );
+      blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
     }
   else
     {
-      ShowGenericButtonFromList ( CHA_BUTTON );
+      // ShowGenericButtonFromList ( CHA_BUTTON );
+      blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
     }
-  ShowGenericButtonFromList ( INV_BUTTON );
-  ShowGenericButtonFromList ( SKI_BUTTON );
-
+  // ShowGenericButtonFromList ( INV_BUTTON );
+  // ShowGenericButtonFromList ( SKI_BUTTON );
+  blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
+  blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
 
 
   if ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )

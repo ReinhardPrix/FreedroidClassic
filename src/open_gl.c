@@ -1328,8 +1328,12 @@ blit_special_background ( int background_code )
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
 #define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
 #define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
+#define MOUSE_BUTTON_CHA_BACKGROUND_PICTURE "mouse_buttons/CHAButton.png"           
+#define MOUSE_BUTTON_INV_BACKGROUND_PICTURE "mouse_buttons/INVButton.png"           
+#define MOUSE_BUTTON_SKI_BACKGROUND_PICTURE "mouse_buttons/SKIButton.png"           
+#define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
 
-#define ALL_KNOWN_BACKGROUNDS 16
+#define ALL_KNOWN_BACKGROUNDS 20
 
   static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
   static int first_call = TRUE;
@@ -1348,7 +1352,12 @@ blit_special_background ( int background_code )
 								  NE_CONSOLE_FG_4_FILE ,              // 12
 								  NE_CONSOLE_BG_PIC1_FILE ,           // 13
                                                                   LEVEL_EDITOR_BANNER_FILE ,          // 14
-								  FREEDROID_LOADING_PICTURE_NAME } ;  // 15
+								  FREEDROID_LOADING_PICTURE_NAME ,    // 15
+								  MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 16
+								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 17
+								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 18 
+								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE } ; // 19
+
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1366,7 +1375,11 @@ blit_special_background ( int background_code )
 							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 12
 							      { 0 , 0 , 0 , 0 } ,               // 13
 							      { 0 , 0 , 0 , 0 } ,               // 14
-							      { 0 , 0 , 0 , 0 } };              // 15
+							      { 0 , 0 , 0 , 0 } ,               // 15
+							      { 560 , 434 ,  38 ,  45 } ,       // 16
+							      { 600 , 420 ,  38 ,  40 } ,       // 17 
+							      { 590 , 376 ,  38 ,  47 } ,       // 18
+							      { 560 , 434 ,  38 ,  45 } } ;     // 19
   int i;
   char *fpath;
   

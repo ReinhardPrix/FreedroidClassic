@@ -706,7 +706,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 11 ) )
+      switch ( MyRandom ( 12 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_TRACKS ;
