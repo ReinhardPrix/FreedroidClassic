@@ -59,16 +59,17 @@ void Level_Editor(void);
 void 
 InitiateMenu( void )
 {
-      //--------------------
-      //Here comes the standard initializer for all the menus and submenus
-      //of the big escape menu.  This prepares the screen, so that we can
-      //write on it further down.
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+  //--------------------
+  // Here comes the standard initializer for all the menus and submenus
+  // of the big escape menu.  This prepares the screen, so that we can
+  // write on it further down.
+  //
+  SDL_SetClipRect( ne_screen, NULL );
+  ClearGraphMem();
+  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+  Assemble_Combat_Picture ( 0 );
+  SDL_SetClipRect( ne_screen, NULL );
+  MakeGridOnScreen();
 } // void InitiateMenu(void)
 
 /*@Function============================================================

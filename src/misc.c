@@ -77,8 +77,10 @@ int framenr = 0;
 
 /*
 ----------------------------------------------------------------------
-This function counts the number of occurences of a string in a given
-other string.
+This function looks for a sting begin indicator and takes the string
+from after there up to a sting end indicator and mallocs memory for
+it, copys it there and returns it.
+The original source string specified should in no way be modified.
 ----------------------------------------------------------------------
 */
 char*
@@ -415,19 +417,6 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
   // Now that we are done, we restore the given SearchArea to former glory
   EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
-};
-
-/*
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-char* 
-ReadAndMallocAndTerminateString( char* SearchBeginPointer, char* StringBeginText, char* StringEndText , char* EndOfSearchSectionPointer )
-{
-  
-
-  return NULL;
-
 };
 
 /*-----------------------------------------------------------------

@@ -1200,10 +1200,12 @@ Title ( char *MissionBriefingPointer )
   char* NextSubsectionStartPointer;
   char* PreparedBriefingText;
   char* TerminationPointer;
-  char* TitlePictureNamePointer;
-  char TitlePictureName[5000];
+  char* TitlePictureName;
+  char* TitleSongName;
+
   int ThisTextLength;
 #define BRIEFING_TITLE_PICTURE_STRING "The title picture in the graphics subdirectory for this mission is : "
+#define BRIEFING_TITLE_SONG_STRING "The title song in the sound subdirectory for this mission is : "
 #define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
 #define END_OF_BRIEFING_SUBSECTION_STRING "* End of Mission Briefing Text Subsection *"
 
@@ -1211,22 +1213,13 @@ Title ( char *MissionBriefingPointer )
   // WHY?? DONT KNOW!!!
   // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-  Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
-  if ( ( TitlePictureNamePointer = strstr ( MissionBriefingPointer , BRIEFING_TITLE_PICTURE_STRING)) != NULL)
-    {
-      TitlePictureNamePointer += strlen ( BRIEFING_TITLE_PICTURE_STRING );
-      ThisTextLength = strstr(TitlePictureNamePointer , "\n" ) - TitlePictureNamePointer ;
-      strncpy ( TitlePictureName , TitlePictureNamePointer , ThisTextLength);
-      TitlePictureName[ ThisTextLength ] = 0;
-      DebugPrintf( 1 , "\nvoid Title(...): The briefing picture name found is : %s." , TitlePictureName );
-    }
-  else
-    {
-      DebugPrintf ( 0 , "\n\nvoid Title(...): Title picture specification string not found....Terminating..." );
-      Terminate( ERR );
-    }
+  TitleSongName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_SONG_STRING , "\n" ) ;
+
+  Switch_Background_Music_To ( TitleSongName );
+
+  TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
   SDL_SetClipRect ( ne_screen, NULL );
   DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
