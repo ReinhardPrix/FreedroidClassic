@@ -2780,7 +2780,7 @@ Item as gun: required ammunition type="none"
 
 // Item No. 70
 ** Start of new item specification subsection **
-Item name="EMP Shock Granade"
+Item name="EMP Shock Grenade"
 Position_X=37
 Position_Y=325
 Item can be applied in combat="yes"
