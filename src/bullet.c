@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all Bullet AND Blast - related functions.
- *	 
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -27,8 +20,18 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
  */
+
+/* ----------------------------------------------------------------------
+ * Desc: all Bullet AND Blast - related functions.
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file has now been checked for remains of german (in the comments
+ * at least.  Please eliminate anything else mercilessly if you find something
+ * german in this file still.
+ */
+
 #define _bullet_c
 
 #include "system.h"
@@ -39,17 +42,11 @@
 #include "proto.h"
 
 /* Distances for hitting a druid */
-//NORMALISATION #define MORE		4
 #define MORE		(4/64.0)
-//NORMALISATION #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
-// #define DRUIDHITDIST2		0
-// #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
 #define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
-// #define DRUIDHITDIST2		0
 
 /* ----------------------------------------------------------------------
  * This function does the rotation of a given vector by a given angle
- *
  * ---------------------------------------------------------------------- */
 void
 RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
@@ -108,22 +105,10 @@ MoveBullets (void)
 	  // Now we must rotate the bullet around the influence device or other
 	  // owner as specified in the bullets owner pointer
 	  //
-	  /*
-	  dist_vector.x = CurBullet->pos.x - CurBullet->owner_pos->x;
-	  dist_vector.y = CurBullet->pos.y - CurBullet->owner_pos->y;
-	  dist_vec_len = sqrt( dist_vector.x * dist_vector.x + dist_vector.y * dist_vector.y );
-
-	  dist_vector.x *= CurBullet->fixed_offset / dist_vec_len ;
-	  dist_vector.y *= CurBullet->fixed_offset / dist_vec_len ;
-	  */
 	  dist_vector.x = 0;
 	  dist_vector.y = - CurBullet->fixed_offset;
 
 	  DebugPrintf( 1 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
-
-	  /*
-	    RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
-	  */
 
 	  RotateVectorByAngle ( &dist_vector , CurBullet->angle );
 
@@ -202,24 +187,14 @@ from the function MoveBullets().  Sorry for destroying your game...\n\
 	default:
 	  break;
 	}
-      /*
-         UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
-         DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
-         DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
-
-      /* Kollisionen mit Mauern und Druids checken UND behandeln */
-      //          CheckBulletCollisions(i);
-
     }				/* for */
 }; // void MoveBullets(void)
 
-
-/*@Function============================================================
-@Desc: Diese Funktion loescht das Bullet mit der uebergebenen Nummer
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function eliminates the bullet with the given number.  As an 
+ * additional parameter you can specify if there should be a blast 
+ * generated at the location where the bullet died (=TRUE) or not (=FALSE).
+ * ---------------------------------------------------------------------- */
 void 
 DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
 {
@@ -230,13 +205,13 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   // At first we generate the blast at the collision spot of the bullet,
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
+  //
   if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
   // free the SDL_Surfaces again as well...
   //
-  // if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
   if ( CurBullet->Surfaces_were_generated ) 
     {
       DebugPrintf( 1 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
@@ -263,12 +238,16 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
 
 }; // void DeleteBullet( int Bulletnumber , int StartBlast )
 
-/*@Function============================================================
-@Desc: StartBlast(): erzeugt einen Blast type an x/y
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function starts a blast (i.e. an explosion) at the given location
+ * in the usual map coordinates of course.  The type of blast must also
+ * be specified, where possible values are defined in defs.h as follows:
+ *
+ * BULLETBLAST = 0 , (explosion of a small bullet hitting the wall)
+ * DRUIDBLAST,       (explosion of a dying droid)
+ * OWNBLAST          (not implemented)
+ *
+ * ---------------------------------------------------------------------- */
 void
 StartBlast (float x, float y, int type)
 {
@@ -276,7 +255,6 @@ StartBlast (float x, float y, int type)
   Blast NewBlast;
   int map_x, map_y;
 
-  // DebugPrintf( 1 , "\nvoid StartBlast( ... ) called with x=%f y=%f" , x , y );
   //--------------------
   // first we see if there are any destructible map tiles, that need to
   // be destructed this way...
@@ -284,13 +262,13 @@ StartBlast (float x, float y, int type)
   map_x=(int)rintf(x);
   map_y=(int)rintf(y);
 
-  // DebugPrintf( 1 , "\nmap value at blast destination : %d . " , CurLevel->map[ map_y ][ map_x ] );
   if ( CurLevel->map[ map_y ][ map_x ] == BOX_4 ) 
     {
       CurLevel->map[ map_y ][ map_x ] = FLOOR;
       StartBlast( map_x , map_y , DRUIDBLAST );
       DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
     }
+
   if ( ( CurLevel->map[ map_y ][ map_x ] == BOX_1 ) ||
        ( CurLevel->map[ map_y ][ map_x ] == BOX_2 ) ||
        ( CurLevel->map[ map_y ][ map_x ] == BOX_3 ) )
@@ -326,11 +304,10 @@ StartBlast (float x, float y, int type)
 
 }; // void StartBlast( ... )
 
-/*@Function============================================================
-@Desc: Diese Funktion zaehlt die Phasen aller Explosionen weiter
-@Ret: keiner
-@Int: keiner
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function advances the different phases of an explosion according
+ * to the current lifetime of each explosion (=blast).
+ * ---------------------------------------------------------------------- */
 void
 ExplodeBlasts (void)
 {
@@ -369,24 +346,32 @@ from the function MoveBullets().  Sorry for destroying your game...\n\
 	    Terminate(ERR);
 	  }
 
-	// Druid blasts are dangerous...
-	if (CurBlast->type == DRUIDBLAST)
-	  CheckBlastCollisions (i);
+	//--------------------
+	// Druid blasts are dangerous, so we check if someone gets
+	// hurt by this particular droid explosion
+	//
+	if (CurBlast->type == DRUIDBLAST) CheckBlastCollisions (i);
 
-	// CurBlast->phase++;
+	//--------------------
+	// And now we advance the phase of the blast according to the
+	// time that has passed since the last frame (approximately)
+	//
 	CurBlast->phase += Frame_Time () * Blastmap[ CurBlast->type ].phases / Blastmap[ CurBlast->type ].total_animation_time;
+
+	//--------------------
+	// Maybe the blast has lived over his normal lifetime already.
+	// Then of course it's time to delete the blast, which is done
+	// here.
+	//
 	if (((int) floorf (CurBlast->phase)) >=
 	    Blastmap[CurBlast->type].phases)
 	  DeleteBlast (i);
       }				/* if */
-}				/* ExplodeBlasts */
+}; // void ExplodeBlasts( ... )
 
-/*@Function============================================================
-@Desc: Einen eizelnen Blast ausloeschen
-
-@Ret: keiner
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function deletes a single blast entry from the list of all blasts
+ * ---------------------------------------------------------------------- */
 void
 DeleteBlast (int BlastNum)
 {
@@ -394,12 +379,11 @@ DeleteBlast (int BlastNum)
   AllBlasts[ BlastNum ].type = OUT;
 }; // void DeleteBlast( int BlastNum )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * THIS FUNCTION IS CURRENTLY NOWHERE USED!!!
+ * Is shall obviously tell from which direction a given robot was hit.
+ * (I guess this function may fail utterly when framerate is low!)
+ * ---------------------------------------------------------------------- */
 int
 GetDirection (point robo, point bul)
 {
@@ -418,15 +402,13 @@ GetDirection (point robo, point bul)
       getchar ();
     }
   return 0;
-}
+}; // int GetDirection (point robo, point bul)
 
-/*@Function============================================================
-@Desc: CheckBulletCollisions(int num)
-checkt Collisions des Bullets Num mit Hintergrund && Druids
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if there are some collisions of the one bullet
+ * with number num with anything else in the game, like blasts, walls,
+ * droids, the tux and other bullets.
+ * ---------------------------------------------------------------------- */
 void
 CheckBulletCollisions (int num)
 {
@@ -609,9 +591,6 @@ CheckBulletCollisions (int num)
 			{
 			  FBTZaehler++;
 			}
-		      // CurBullet->type = OUT;
-		      // CurBullet->mine = FALSE;
-		      // break;		/* Schleife beenden */
 		      return;
 		    }
 		  else
@@ -673,29 +652,26 @@ CheckBulletCollisions (int num)
 	}
       break;
     } // switch ( Bullet-Type )
-} /* CheckBulletCollisions */
+}; // CheckBulletCollisions( ... )
   
-/*@Function============================================================
-  @Desc: CheckBlastCollsions(int num)
-  checkt Collisionen des Blasts num mit Bullets und Druids
-  UND reagiert darauf
-  
-  LastBlastHit: Diese Variable dient dazu, doppelte Messages zu unter-
-  dr"ucken. Blasts schaden mehrere Phasen lang. Der Z"ahler LastBlastHit
-  gibt den Zeitabstand zur letzten Verletzung durch Blasts an.
-  Er wird in der Hauptschleife erh"oht.
-  @Ret: void 
-  @Int:
-  * $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks for collisions of blasts with bullets and druids
+ * and delivers damage to the hit objects according to how long they have
+ * been in the blast.
+ * 
+ * Maybe even some text like 'Ouch, this was hot' might be generated.
+ *
+ * ---------------------------------------------------------------------- */
 void
 CheckBlastCollisions (int num)
 {
   int i;
   int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
-  // static int RHBZaehler = 0;
 
-  /* check Blast-Bullet Collisions and kill hit Bullets */
+  //--------------------
+  // At first, we check for collisions of this blast with all bullets 
+  //
   for (i = 0; i < MAXBULLETS; i++)
     {
       if (AllBullets[i].type == OUT)
@@ -712,29 +688,30 @@ CheckBlastCollisions (int num)
 	      }
 	  }
 
-    }				/* for */
+    }	
 
-  /* Check Blast-Enemy Collisions and smash energy of hit enemy */
+  //--------------------
+  // Now we check for enemys, that might have stepped into this
+  // one blasts area of effect...
+  //
   for (i = 0; i < NumEnemys; i++)
     {
       if ((AllEnemys[i].Status == OUT)
 	  || (AllEnemys[i].levelnum != level))
 	continue;
 
-      //      if ( ( abs (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius + Druid_Radius_X ) &&
-      //         ( abs (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius + Druid_Radius_Y ) )
       if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius ) &&
 	   ( fabsf (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius ) )
 	  {
 	    /* drag energy of enemy */
 	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
 	  }
-
-      // if (AllEnemys[i].energy < 0) AllEnemys[i].energy = 0;
-
     }				/* for */
 
-  /* Check influence-Blast collisions */
+  //--------------------
+  // Now we check, if perhaps the influencer has stepped into the area
+  // of effect of this one blast.  Then he'll get burnt ;)
+  // 
   if ( (Me.status != OUT) && 
        ( fabsf (Me.pos.x - CurBlast->PX) < Blast_Radius ) &&
        ( fabsf (Me.pos.y - CurBlast->PY) < Blast_Radius ) )
@@ -742,9 +719,6 @@ CheckBlastCollisions (int num)
       if (!InvincibleMode)
 	{
 	  Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
-	  if ((PlusExtentionsOn) && (LastBlastHit > 5))
-	    InsertMessage ("Blast hit me! OUCH!");
-	  LastBlastHit = 0;
 	  
 	  // So the influencer got some damage from the hot blast
 	  // Now most likely, he then will also say so :)
@@ -764,6 +738,6 @@ CheckBlastCollisions (int num)
 	}
     }
 
-}				/* CheckBlastCollisions */
+}; // CheckBlastCollisions( ... )
 
 #undef _bullet_c
