@@ -28,6 +28,13 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please let me know.
+ * 
+ */
+
 #define _main_c
 
 #include "system.h"
@@ -122,7 +129,7 @@ main (int argc, char *const argv[])
 	  MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
 
-	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
+	  CheckInfluenceWallCollisions ();	// test if influs way is blocked by walls...
 
 	  CheckInfluenceEnemyCollision ();
 
@@ -142,37 +149,17 @@ main (int argc, char *const argv[])
   return (0);
 }				// void main(void)
 
-/*-----------------------------------------------------------------
-@Desc: This function updates counters and is called ONCE every frame.
-The counters include timers, but framerate-independence of game speed
-is preserved because everything is weighted with the Frame_Time()
-function.
-
-@Ret: none
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function updates counters and is called ONCE every frame.
+ * The counters include timers, but framerate-independence of game speed
+ * is preserved because everything is weighted with the Frame_Time()
+ * function.
+ * ----------------------------------------------------------------- */
 void
 UpdateCountersForThisFrame (void)
 {
   static long Overall_Frames_Displayed=0;
   int i;
-
-
-  /*
-  int MissNum;
-  for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME ; MissNum ++ )
-    {
-
-      if ( Me.AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
-
-      if ( Me.AllMissions[ MissNum ].MissionIsComplete ) 
-	Me.AllMissions[ MissNum ].MissionLastStatusChangeTime += Frame_Time();
-
-      if ( Me.AllMissions[ MissNum ].MissionWasFailed ) 
-	Me.AllMissions[ MissNum ].MissionLastStatusChangeTime += Frame_Time();
-
-    }
-  */
-
 
   GameConfig.Mission_Log_Visible_Time += Frame_Time();
 
