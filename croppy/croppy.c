@@ -495,8 +495,8 @@ write_offset_file ( )
 {
   char filename[10000];
   char linebuf[10000];
-  int default_center_x = 359;
-  int default_center_y = 301;
+  int default_center_x = 355;
+  int default_center_y = 413;
   FILE *OffsetFile;  // to this file we will save all the ship data...
 
 #define OFFSET_EXPLANATION_STRING "\n\nFreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.\n\n"

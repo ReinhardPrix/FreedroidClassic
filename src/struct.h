@@ -262,6 +262,7 @@ typedef struct
 {
   point inv_size;
   SDL_Surface* Surface;
+  SDL_Surface* ingame_surface;
 } item_image_spec , *Item_image_spec;
 
 typedef struct

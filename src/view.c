@@ -2321,7 +2321,10 @@ PutItem( int ItemNumber )
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
   SDL_Rect TargetRectangle;
   gps ItemGPS;
-  
+
+  //--------------------
+  // The unwanted cases MUST be handled first...
+  //
   if ( CurItem->type == ( -1 ) ) 
     {
       return;
@@ -2330,7 +2333,6 @@ PutItem( int ItemNumber )
 There was -1 item type given to blit.  This must be a mistake! ",
 				 PLEASE_INFORM, IS_FATAL );
     }
-
   if ( ItemMap[ CurItem->type ].picture_number >= NUMBER_OF_ITEM_PICTURES ) 
     {
       fprintf( stderr, "\n\nItemMap[ CurItem->type ].picture_number '%d'\n" , ItemMap[ CurItem->type ].picture_number );
@@ -2338,7 +2340,6 @@ There was -1 item type given to blit.  This must be a mistake! ",
 There was an item type given, that exceeds the range of item images loaded.",
 				 PLEASE_INFORM, IS_FATAL );
     }
-
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
 
@@ -2354,6 +2355,15 @@ There was an item type given, that exceeds the range of item images loaded.",
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
   */
 
+  //--------------------
+  // Now we can go take a look if maybe there is an ingame surface 
+  // for this item available.  If not, the function will automatically
+  // load the inventory surface instead, so we really can assume that
+  // we have something to use afterwards.
+  //
+  if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_surface == NULL )
+    try_to_load_ingame_item_surface ( CurItem -> type );
+
   TargetRectangle . x = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE ) -
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
   TargetRectangle . y = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , FALSE ) -
@@ -2361,7 +2371,7 @@ There was an item type given, that exceeds the range of item images loaded.",
 
   // translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE );
 
-  SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
+  SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_surface , NULL , Screen , &TargetRectangle);
 
 }; // void PutItem( int ItemNumber );
 

@@ -114,29 +114,109 @@ Load_Item_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
-  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
+  for ( j = 0 ; j < NUMBER_OF_ITEM_PICTURES ; j ++ )
     {
       Source.x = j * ( Block_Height + 2 );
       Source.y = i * ( Block_Width  + 2 );
-      Source.w = (Block_Width/2) * ItemImageList[ j ].inv_size.x ;
-      Source.h = (Block_Height/2) * ItemImageList[ j ].inv_size.y ;
-      Target.x = 0;
-      Target.y = 0;
-      Target.w = Source.w;
-      Target.h = Source.h;
+      Source.w = (Block_Width/2) * ItemImageList [ j ] . inv_size . x ;
+      Source.h = (Block_Height/2) * ItemImageList [ j ] . inv_size . y ;
+      Target.x = 0 ;
+      Target.y = 0 ;
+      Target.w = Source . w ;
+      Target.h = Source . h ;
 
-      tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
+      tmp_surf = SDL_CreateRGBSurface( 0 , Source . w , Source . h , vid_bpp , 0 , 0 , 0 , 0 );
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 
-      ItemImageList[ j ].Surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      ItemImageList [ j ] . Surface = SDL_DisplayFormatAlpha ( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
       SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
       SDL_FreeSurface( tmp_surf );
+
+      //--------------------
+      // We must mark the in_game item surface as not yet loaded, so it
+      // will be loaded later as soon as there is some demand...
+      //
+      ItemImageList [ j ] . ingame_surface = NULL ;
+
     }
+
   SDL_FreeSurface( Whole_Image );
+
 }; // void Load_Item_Surfaces( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+try_to_load_ingame_item_surface ( int item_type )
+{
+  SDL_Rect target;
+  char ConstructedFileName[5000];
+  char* fpath;
+  SDL_Surface *Whole_Image;
+
+  //--------------------
+  // First we handle a case, that shouldn't really be happening due to
+  // calling function checking already.  But it can't hurt to always double-check
+  //
+  if ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface != NULL )
+    {
+      DebugPrintf ( 0 , "\ntry_to_load_ingame_item_surface (...): ERROR.  Surface appears to be loaded already..." );
+      return;
+    }
+
+  //--------------------
+  // Now we should try to load the real in-game item surface...
+  // That will be added later...
+  //
+  //--------------------
+  // At first we will try to find some item rotation models in the
+  // new directory structure.
+  //
+  sprintf ( ConstructedFileName , "items/%s/ingame.png" , ItemMap[ item_type ] . item_rotation_series_prefix );
+  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  
+  //--------------------
+  // If that didn't work, then it's time to try out the 'classic' rotation models directory.
+  // Maybe there's still some rotation image there.
+  //
+  if ( Whole_Image == NULL )
+    {
+      DebugPrintf ( 1 , "\nNo luck trying to load .png item ingame image..." );
+      //--------------------
+      // No ingame item surface found? -- give error message and then use
+      // the inventory item_surface for the job.
+      //
+      fprintf ( stderr , "\nitem_type=%d." , item_type );
+      GiveStandardErrorMessage ( "try_to_load_ingame_item_surface (...)" , "\
+Unable to load an item ingame surface on demand.\n\
+Since there seems to be no ingame item surface yet, the inventory\n\
+item surface will be used as a substitute for now.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface = ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface ;
+    }
+  else
+    {
+      //--------------------
+      // So if an image of the required type can be found there, we 
+      // can start to load it.  But for this we will use standard iso
+      // object loading function, so that offset gets respected too...
+      // But not yet.
+      //
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface = 
+	SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface , 0 , 0 ); // this should clear any color key in the dest surface
+      SDL_FreeSurface( Whole_Image );
+    }
+
+
+}; // void try_to_load_ingame_item_surface ( int item_number )
 
 /* ----------------------------------------------------------------------
  * This function loads the items image and decodes it into the multiple
