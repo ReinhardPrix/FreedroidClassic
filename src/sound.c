@@ -253,13 +253,31 @@ int SampleLaenge;
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
+
+#ifdef USE_SDL_AUDIO
+  // Set the volume IN the loaded files, if SDL is used...
+  for ( i=1 ; i<5 ; i++ )
+    {
+      Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
+    }
+#endif
+
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void 
 Set_Sound_FX_Volume(float NewVolume)
 {
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+
+#ifdef USE_SDL_AUDIO
+  // Set the volume IN the loaded files, if SDL is used...
+  for ( i=5 ; i<ALL_SOUNDS ; i++ )
+    {
+      Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
+    }
+#endif
+
 } // void Set_BG_Music_Volume(float NewVolume)
 
 /*@Function============================================================
