@@ -177,20 +177,20 @@ Get_Bullet_Data ( char* DataPointer )
       BulletPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the recharging time for this bullettype(=weapontype)
-      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%lf" , 
-			   &Bulletmap[BulletIndex].recharging_time , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%lf" , 
+      // &Bulletmap[BulletIndex].recharging_time , EndOfBulletData );
 
       // Now we read in the maximal speed this type of bullet can go.
-      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%lf" , 
-			   &Bulletmap[BulletIndex].speed , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%lf" , 
+      // &Bulletmap[BulletIndex].speed , EndOfBulletData );
 
       // Now we read in the damage this bullet can do
       // ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
       // &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
       // Now we read in if you can fire before the previous bullet has expired
-      ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
-			   &Bulletmap[BulletIndex].oneshotonly , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
+      // &Bulletmap[BulletIndex].oneshotonly , EndOfBulletData );
 
       // Now we read in the number of phases that are designed for this bullet type
       // THIS IS NOW SPECIFIED IN THE THEME CONFIG FILE
@@ -198,8 +198,8 @@ Get_Bullet_Data ( char* DataPointer )
       // &Bulletmap[BulletIndex].phases , EndOfBulletData );
 
       // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
-      ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
-			   &Bulletmap[BulletIndex].blast , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
+      // &Bulletmap[BulletIndex].blast , EndOfBulletData );
  
       BulletIndex++;
     }
@@ -225,7 +225,7 @@ Get_Bullet_Data ( char* DataPointer )
   //
   for ( i = 0 ; i < Number_Of_Bullet_Types ; i++ )
     {
-      Bulletmap[i].speed *= bullet_speed_calibrator;
+      // Bulletmap[i].speed *= bullet_speed_calibrator;
       // Bulletmap[i].damage *= bullet_damage_calibrator;
     }
 
@@ -243,12 +243,12 @@ Get_Item_Data ( char* DataPointer )
 {
   char *ItemPointer;
   char *EndOfItemData;
-  int i;
+  // int i;
   int ItemIndex=0;
   char *YesNoString;
 
-  double bullet_speed_calibrator;
-  double bullet_damage_calibrator;
+  // double bullet_speed_calibrator;
+  // double bullet_damage_calibrator;
 
 #define ITEM_SECTION_BEGIN_STRING "*** Start of item data section: ***"
 #define ITEM_SECTION_END_STRING "*** End of item data section: ***"
@@ -446,6 +446,14 @@ Sorry...\n\
       // Now we read in the damage bullets from this gun will do
       ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
 			   &ItemMap[ItemIndex].item_gun_damage , EndOfItemData );
+
+      // Now we read in the speed this bullet will go
+      ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_speed , EndOfItemData );
+
+      // Now we read in the recharging time this weapon will need
+      ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );
 
 
 

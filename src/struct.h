@@ -237,8 +237,6 @@ typedef struct
 typedef struct
 {
   char *druidname;
-  // double maxspeed;		/* the maximum of speed it can go */
-  // double accel;			/* its acceleration */
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
@@ -248,7 +246,6 @@ typedef struct
   int score;			/* score for the elimination of one droid of this type */
   double height;                // the height of this droid  
   double weight;                // the weight of this droid
-  // int drive;
   int brain;
   int sensor1;
   int sensor2;
@@ -345,15 +342,11 @@ enemy, *Enemy;
 
 typedef struct
 {
-  double recharging_time;       // time until the next shot can be made, measures in seconds
-  double speed;			/* speed of the bullet */
+  // double recharging_time;       // time until the next shot can be made, measures in seconds
   int phases;			/* how many phases in motion to show */
   double phase_changes_per_second; // how many different phases to display every second
-  int blast;			/* which blast does this bullet create */
-  int oneshotonly;	        /* if this is set, there is only 1 shot */
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                            // the bullet images of this bullet
-  // SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
 } 
 bulletspec, *Bulletspec;
 

@@ -153,13 +153,14 @@ AutoFireBullet (void)
   int guntype;
   int xdist, ydist;
   signed long LDist, LXDist, LYDist;
+  float bullet_speed;
 
   if (CurLevel->empty)
     return;
 
   if (Me.firewait)
     return;
-  Me.firewait = Bulletmap[Druidmap[Me.type].gun].recharging_time;
+  Me.firewait = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_recharging_time;
 
   // find out the number of the shots target
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
@@ -222,10 +223,11 @@ AutoFireBullet (void)
 	break;
     }
 
+  bullet_speed = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_speed;
   // determine the direction of the shot
   if (abs (xdist) > abs (ydist))
     {
-      AllBullets[j].speed.x = Bulletmap[guntype].speed;
+      AllBullets[j].speed.x = bullet_speed;
       AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
       if (xdist < 0)
 	{
@@ -236,7 +238,7 @@ AutoFireBullet (void)
 
   if (abs (xdist) < abs (ydist))
     {
-      AllBullets[j].speed.x = Bulletmap[guntype].speed;
+      AllBullets[j].speed.x = bullet_speed;
       AllBullets[j].speed.y = xdist * AllBullets[j].speed.y / ydist;
       if (ydist < 0)
 	{
@@ -260,6 +262,10 @@ AutoFireBullet (void)
 
   // set the type of bullet according to the gun used by the shooter
   AllBullets[j].type = guntype;
+
+  // set the type of bullet according to the gun used by the shooter
+  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item ].item_gun_damage;
+
 } // void AutoFireBullet(void)
 
 
@@ -454,7 +460,7 @@ NoInfluBulletOnWay (void)
   if (PlusExtentionsOn)
     return TRUE;
 
-  if (!Bulletmap[Druidmap[Me.type].gun].oneshotonly)
+  if ( ! ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_oneshotonly )
     return TRUE;
 
   for (i = 0; i < MAXBULLETS; i++)
@@ -1010,7 +1016,7 @@ FireBullet (void)
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
   int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
-  double BulletSpeed = Bulletmap[guntype].speed;
+  double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_speed;
   double speed_norm;
   finepoint speed;
   int max_val;
@@ -1018,7 +1024,7 @@ FireBullet (void)
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
-  Me.firewait = Bulletmap[guntype].recharging_time;
+  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_recharging_time;
 
   /* Geraeusch eines geloesten Schusses fabrizieren */
   Fire_Bullet_Sound ( guntype );
