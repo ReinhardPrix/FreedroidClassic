@@ -202,6 +202,9 @@ ForceToEnergyConversion ( void )
     {
       Me[0].mana   -= SpellCost;
       Me[0].energy += 10 ; // * SpellLevel
+
+      Play_Spell_ForceToEnergy_Sound( );
+
     }
   else
     {

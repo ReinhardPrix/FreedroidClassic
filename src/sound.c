@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 56
+#define ALL_SOUNDS 57
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -102,7 +102,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Influencer_Scream_Sound_1.wav",
    "Influencer_Scream_Sound_2.wav",
    "Influencer_Scream_Sound_3.wav",
-   "Influencer_Scream_Sound_4.wav"
+   "Influencer_Scream_Sound_4.wav",
+   "Spell_ForceToEnergy_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -365,6 +366,16 @@ CrySound (void)
 {
   Play_Sound ( CRY_SOUND );
 }
+
+/* ----------------------------------------------------------------------
+ * When a Force-To-Energy Spell is invoked successfully, then this sound
+ * should be played...
+ * ---------------------------------------------------------------------- */
+void
+Play_Spell_ForceToEnergy_Sound( )
+{
+  Play_Sound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+};  // void Play_Spell_ForceToEnergy_Sound( )
 
 /*@Function============================================================
 @Desc: 
