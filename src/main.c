@@ -51,24 +51,24 @@ void UpdateCountersForThisFrame ( int PlayerNum ) ;
 void
 DoAllMovementAndAnimations ( void )
 {
-  int PlayerNum;
+    int PlayerNum;
 
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-    MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
-  
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-    WorkLevelGuns( PlayerNum ); // this should fire all autocannons on this level
-  
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
-  
-  AnimateCyclingMapTiles (); // this is a pure client issue.  Not dependent upon the players.
-  
-  animate_blasts ();	// move blasts to the right current "phase" of the blast
-  
-  MoveActiveSpells (); // move moving spells currently active...
-  
-  if ( !ClientMode ) MoveBullets ();   
+    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
+    
+    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	WorkLevelGuns( PlayerNum ); // this should fire all autocannons on this level
+    
+    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
+    
+    AnimateCyclingMapTiles (); // this is a pure client issue.  Not dependent upon the players.
+    
+    animate_blasts ();	// move blasts to the right current "phase" of the blast
+    
+    MoveActiveSpells (); // move moving spells currently active...
+    
+    if ( !ClientMode ) MoveBullets ();   
   
 }; // void DoAllMovementAndAnimations ( void )
 

@@ -798,7 +798,7 @@ ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch
  * 
  * ----------------------------------------------------------------- */
 char *
-GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead_promt )
+GetString ( int MaxLen, int echo , int background_code , const char* text_for_overhead_promt )
 {
     char *input;		// pointer to the string entered by the user
     int key;          // last 'character' entered 
@@ -1107,7 +1107,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
  *
  * ----------------------------------------------------------------- */
 void
-printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
+printf_SDL (SDL_Surface *screen, int x, int y, const char *fmt, ...)
 {
     va_list args;
     int i;

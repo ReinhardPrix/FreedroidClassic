@@ -3165,69 +3165,67 @@ Thank you,\n\
 void
 Show_Mission_Details ( int MissionNumber )
 {
-  int can_continue = 0;
+    int can_continue = 0;
 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
-
-  while (!can_continue)
+    while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+    
+    while (!can_continue)
     {
-
-      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
-      MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
-      DisplayBanner( );
-      //InitiateMenu();
-
-      CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
-
-      printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
-      else printf_SDL( Screen , -1 , -1 , "NO" );
-
-      printf_SDL ( Screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
-      else printf_SDL( Screen , -1 , -1 , "NO" );
-      printf_SDL ( Screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachLevel ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( Screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.x ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.y );
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( Screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me[0].AllMissions[ MissionNumber ].MustLiveTime ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustBeClass );
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
-
-      printf_SDL ( Screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustBeType ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
-      else printf_SDL( Screen , -1 , -1 , "NO\n" );
-
-      printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
-
-      our_SDL_flip_wrapper( Screen );
-
-      while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	
+	DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+	MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
+	DisplayBanner( );
+	//InitiateMenu();
+	
+	CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
+	
+	printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+	else printf_SDL( Screen , -1 , -1 , "NO" );
+	
+	printf_SDL ( Screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+	else printf_SDL( Screen , -1 , -1 , "NO" );
+	printf_SDL ( Screen , -1 , -1 , "   ReachLevel : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachLevel ); 
+	else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+	
+	printf_SDL ( Screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.x ); 
+	else printf_SDL( Screen , -1 , -1 , "NONE" );
+	printf_SDL ( Screen , -1 , -1 , "   Reach Y= : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.y );
+	else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+	
+	printf_SDL ( Screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me[0].AllMissions[ MissionNumber ].MustLiveTime ); 
+	else printf_SDL( Screen , -1 , -1 , "NONE" );
+	printf_SDL ( Screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustBeClass );
+	else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+	
+	printf_SDL ( Screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustBeType ); 
+	else printf_SDL( Screen , -1 , -1 , "NONE" );
+	printf_SDL ( Screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
+	else printf_SDL( Screen , -1 , -1 , "NO\n" );
+	
+	printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
+	if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
+	else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+	
+	our_SDL_flip_wrapper( Screen );
+	
+	while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
+	// Wait until the user does SOMETHING
+	
+	if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{
-	  can_continue=!can_continue;
+	    can_continue=!can_continue;
 	}
     }
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-  
+    while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
 }; // void Show_Mission_Details (void)
 

@@ -80,7 +80,7 @@ MyMalloc ( long Mamount )
  * nothing according to currently set debug level.
  * ---------------------------------------------------------------------- */
 void
-DebugPrintf ( int db_level, char *fmt, ...)
+DebugPrintf ( int db_level, const char *fmt, ...)
 {
     va_list args;
     static char buffer[5000+1];
@@ -101,7 +101,7 @@ DebugPrintf ( int db_level, char *fmt, ...)
  * messages possible in Freedroid RPG.
  * ---------------------------------------------------------------------- */
 void
-GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal )
+GiveStandardErrorMessage ( const char* FunctionName , const char* ProblemDescription, int InformDevelopers , int IsFatal )
 {
     
     // rp: suppress all non-essential warnings if debug_level > 0
@@ -213,7 +213,7 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
  * The original source string specified should in no way be modified.
  * ---------------------------------------------------------------------- */
 char*
-ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString ) 
+ReadAndMallocStringFromData ( char* SearchString , const char* StartIndicationString , const char* EndIndicationString ) 
 {
   char* SearchPointer;
   char* EndOfStringPointer;
@@ -262,7 +262,7 @@ This indicates some corruption in the data file in question.",
  * other string.
  * ---------------------------------------------------------------------- */
 int
-CountStringOccurences ( char* SearchString , char* TargetString ) 
+CountStringOccurences ( char* SearchString , const char* TargetString ) 
 {
   int Counter=0;
   char* CountPointer;
@@ -284,7 +284,7 @@ CountStringOccurences ( char* SearchString , char* TargetString )
  * can easily be treated like a common string.
  * ---------------------------------------------------------------------- */
 char* 
-ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
+ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String ) 
 {
     FILE *DataFile;
     char *Data;
@@ -370,7 +370,7 @@ This indicates a corrupt or outdated data or saved game file.", PLEASE_INFORM, I
  * we are searching is found in the main text.
  * ---------------------------------------------------------------------- */
 char* 
-LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
+LocateStringInData ( char* SearchBeginPointer, const char* SearchTextPointer )
 {
   char* temp;
 
@@ -392,7 +392,7 @@ This indicates a corrupted or seriously outdated game data or saved game file.",
  * indicator for a value, and read in the value.
  * ---------------------------------------------------------------------- */
 void
-ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
+ReadValueFromString( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
 {
     char OldTerminaterCharValue;
     char* SourceLocation;

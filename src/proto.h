@@ -591,17 +591,17 @@ EXTERN int GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle
 EXTERN void print_trace ( int signum );
 EXTERN void implant_backtrace_into_signal_handlers ( void ) ;
 EXTERN void adapt_button_positions_to_screen_resolution( void );
-EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
+EXTERN void GiveStandardErrorMessage ( const char* FunctionName , const char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
 EXTERN int MouseCursorIsInRect ( SDL_Rect* our_rect , int x , int y );
 EXTERN int MouseCursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
-EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
-EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
-EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );
-EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
-EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
+EXTERN char* ReadAndMallocStringFromData ( char* SearchString , const char* StartIndicationString , const char* EndIndicationString );
+EXTERN int CountStringOccurences ( char* SearchString , const char* TargetString ) ;
+EXTERN void ReadValueFromString( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );
+EXTERN char* ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String ) ;
+EXTERN char* LocateStringInData ( char* SearchBeginPointer, const char* SearchTextPointer ) ;
 EXTERN char * find_file (char *fname, char *datadir, int use_theme);
 EXTERN char * find_file_silent (char *fname, char *datadir, int use_theme);
 EXTERN char * find_file_for_callbacks (char *fname, char *datadir, int use_theme);
@@ -705,8 +705,8 @@ EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int bac
 EXTERN void ImprovedCheckLineBreak(char *text, const SDL_Rect *clip , float text_stretch );
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
-EXTERN char *GetString ( int max_len , int echo , int background_code , char* text_for_overhead_promt ) ;
-EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
+EXTERN char *GetString ( int max_len , int echo , int background_code , const char* text_for_overhead_promt ) ;
+EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, const char *fmt, ...);
 EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 
 // text.c 
@@ -721,7 +721,7 @@ EXTERN void LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename );
 EXTERN void delete_one_dialog_option ( int i , int FirstInitialisation );
 EXTERN void InitChatRosterForNewDialogue( void );
 EXTERN void Get_Item_Data ( char* DataPointer );
-EXTERN void DebugPrintf (int db_level, char *fmt, ...);
+EXTERN void DebugPrintf (int db_level, const char *fmt, ...);
 EXTERN void *MyMalloc (long);
 EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip );
 EXTERN int FS_filelength (FILE *f);

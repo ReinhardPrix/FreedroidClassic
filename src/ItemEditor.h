@@ -21,7 +21,7 @@ void LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename );
 void delete_one_item_index ( int i , int FirstInitialisation );
 extern char authors_notes[100000];
 
-extern void DebugPrintf (int db_level, char *fmt, ...);
+extern void DebugPrintf (int db_level, const char *fmt, ...);
 
 #else
 

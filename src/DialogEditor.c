@@ -2514,9 +2514,33 @@ file_load_event_callback_function ( GtkWidget *widget, GdkEvent  *event, gpointe
 			(GtkSignalFunc) delete_event, &filew);
 
     /* Connect the ok_button to load_dialog_file_selector function */
+    //--------------------
+    // The old (original code is this):
+    //
     gtk_signal_connect ( GTK_OBJECT ( GTK_FILE_SELECTION (filew) -> ok_button ),
 			 "clicked", (GtkSignalFunc) load_dialog_file_selector , filew );
+
+
+    // gtk_signal_connect_object ( GTK_OBJECT ( GTK_FILE_SELECTION (filew) -> ok_button ),
+    // "clicked", (GtkSignalFunc) load_dialog_file_selector , GTK_OBJECT(filew) );
     
+    //--------------------
+    // Some alternate code we could try (for win32 cross-compilation especially)
+    // is this:
+    //
+    // gtk_signal_connect ( GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (file_load_event_callback_function), "OPEN FILE?" );
+    // gtk_signal_connect ( GTK_OBJECT ( menuitem ) , "activate" , GTK_SIGNAL_FUNC (file_load_event_callback_function), "OPEN FILE?" );
+
+    // gtk_signal_connect ( GTK_OBJECT ( GTK_FILE_SELECTION (filew) -> ok_button ),
+    // "clicked", (GtkSignalFunc) load_dialog_file_selector , filew );
+
+    // gtk_signal_connect ( GTK_OBJECT ( GTK_FILE_SELECTION (filew) -> ok_button ),
+    // "clicked", GTK_SIGNAL_FUNC ( load_dialog_file_selector ) , filew );
+
+    // gtk_signal_connect ( GTK_OBJECT ( GTK_FILE_SELECTION ( filew ) -> ok_button ),
+    // "activate", GTK_SIGNAL_FUNC ( load_dialog_file_selector ) , filew );
+
+
     /* Connect the cancel_button to destroy the widget */
     gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION
 					   (filew)->cancel_button),
@@ -2548,20 +2572,20 @@ gint
 file_save_event_callback_function ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
 
-  DebugPrintf ( 1 , "\nfile_save_event_callback_function(...): function call confirmed." );
+    DebugPrintf ( 1 , "\nfile_save_event_callback_function(...): function call confirmed." );
 
-  //--------------------
-  // Now we only need to save the file to the current file name,
-  // which must be the same as used to load the file...
-  //
-  DebugPrintf ( 1 ,"\n ...now attempting to save dialog file..." );
-
-  enforce_authors_notes (  );
-  save_dialog_roster_to_file ( LastUsedFileName );
-
-  DebugPrintf ( 1 ,"\n ...Dialog file should be saved by now." );
-
-  return(FALSE);
+    //--------------------
+    // Now we only need to save the file to the current file name,
+    // which must be the same as used to load the file...
+    //
+    DebugPrintf ( 1 ,"\n ...now attempting to save dialog file..." );
+    
+    enforce_authors_notes (  );
+    save_dialog_roster_to_file ( LastUsedFileName );
+    
+    DebugPrintf ( 1 ,"\n ...Dialog file should be saved by now." );
+    
+    return ( FALSE );
 
 }; // gint file_save_event_callback_function ( GtkWidget *widget, GdkEvent *event, gpointer data )
 
@@ -2578,33 +2602,33 @@ gint
 file_save_as_event_callback_function ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
 
-  DebugPrintf ( 1 , "\nfile_save_as_event_callback_function(...): function call confirmed." );
+    DebugPrintf ( 1 , "\nfile_save_as_event_callback_function(...): function call confirmed." );
     
-  /* Create a new file selection widget */
-  filew = gtk_file_selection_new ("File selection");
-  
-  gtk_signal_connect (GTK_OBJECT (filew), "destroy",
-		      (GtkSignalFunc) delete_event, &filew);
-  /* Connect the ok_button to load_dialog_file_selector function */
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filew)->ok_button),
-		      "clicked", (GtkSignalFunc) save_as_dialog_file_selector , filew );
-  
-  /* Connect the cancel_button to destroy the widget */
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION
-					 (filew)->cancel_button),
-			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (filew));
-  
-  /* Lets set the filename, as if this were a save dialog, and we are giving
-     a default filename */
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION(filew), 
-				   "../dialogs/penguin.png");
-  
-  gtk_widget_show(filew);
-  gtk_main ();
-  
-  return(FALSE);
-
+    /* Create a new file selection widget */
+    filew = gtk_file_selection_new ("File selection");
+    
+    gtk_signal_connect (GTK_OBJECT (filew), "destroy",
+			(GtkSignalFunc) delete_event, &filew);
+    /* Connect the ok_button to load_dialog_file_selector function */
+    gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filew)->ok_button),
+			"clicked", (GtkSignalFunc) save_as_dialog_file_selector , filew );
+    
+    /* Connect the cancel_button to destroy the widget */
+    gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION
+					   (filew)->cancel_button),
+			       "clicked", (GtkSignalFunc) gtk_widget_destroy,
+			       GTK_OBJECT (filew));
+    
+    /* Lets set the filename, as if this were a save dialog, and we are giving
+       a default filename */
+    gtk_file_selection_set_filename (GTK_FILE_SELECTION(filew), 
+				     "../dialogs/penguin.png");
+    
+    gtk_widget_show(filew);
+    gtk_main ();
+    
+    return ( FALSE );
+    
 }; // gint file_save_as_event_callback_function ( GtkWidget *widget, GdkEvent *event, gpointer data )
 
 /* ----------------------------------------------------------------------
@@ -2613,12 +2637,12 @@ file_save_as_event_callback_function ( GtkWidget *widget, GdkEvent  *event, gpoi
 gint 
 help_about_freedroidRPG_dialog_editor ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\nhelp_about_freedroidRPG_dialog_editor (...): real function call confirmed...");
-
-  gui_start_pure_text_popup_window ( "\n\
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\nhelp_about_freedroidRPG_dialog_editor (...): real function call confirmed...");
+    
+    gui_start_pure_text_popup_window ( "\n\
 \n\
    FreedroidRPG Dialog Editor Version 1.0\n\
 \n\
@@ -2922,12 +2946,12 @@ POSSIBILITY OF SUCH DAMAGES.\n\
 gint 
 help_about_freedroid ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\nhelp_about_freedroid (...): real function call confirmed...");
-
-  gui_start_pure_text_popup_window ( "\n\
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\nhelp_about_freedroid (...): real function call confirmed...");
+    
+    gui_start_pure_text_popup_window ( "\n\
 \n\
     FreedroidRPG is a graphical single player role playing game.\n\
 \n\
@@ -2949,7 +2973,7 @@ Thank you and see ya, the FreedroidRPG dev team,\n\
 \n\
 \n" , "About FreedroidRPG"  );
 
-  return ( FALSE );
+    return ( FALSE );
 
 }; // gint help_about_freedroid ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
@@ -2959,12 +2983,12 @@ Thank you and see ya, the FreedroidRPG dev team,\n\
 gint 
 help_reporting_bugs ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\nhelp_reporting_bugs (...): real function call confirmed...");
-
-  gui_start_pure_text_popup_window ( "\n\
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\nhelp_reporting_bugs (...): real function call confirmed...");
+    
+    gui_start_pure_text_popup_window ( "\n\
 \n\
 This dialog editor has been tested, but that does by no means\n\
 mean that it is completely bug-free.\n\
@@ -2981,8 +3005,8 @@ include in FreedroidRPG.\n\
 Have fun and see ya, the FreedroidRPG dev team.\n\
 \n\
 \n" , "Reporting Bugs" );
-
-  return ( FALSE );
+    
+    return ( FALSE );
 
 }; // gint help_reporting_bugs ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
@@ -2992,12 +3016,12 @@ Have fun and see ya, the FreedroidRPG dev team.\n\
 gint 
 help_dialog_editor_usage ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\nhelp_dialog_editor_usage (...): real function call confirmed...");
-
-  gui_start_pure_text_popup_window ( "\n\
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\nhelp_dialog_editor_usage (...): real function call confirmed...");
+    
+    gui_start_pure_text_popup_window ( "\n\
 \n\
 FILES AND DIALOG FILE NAMING CONVENTIONS\n\
 \n\
@@ -3064,7 +3088,7 @@ reply entries blank.\n\
 \n\
 \n" , "FreedroidRPG Dialog Editor Usage" );
 
-  return ( FALSE );
+    return ( FALSE );
 
 }; // gint help_dialog_editor_usage ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
@@ -3074,40 +3098,40 @@ reply entries blank.\n\
 gint 
 dialog_option_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  int i;
-
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\ndialog_option_insert_new (...): real function call confirmed...");
-
-  //--------------------
-  // We must find an unused option entry, so we can plant our
-  // new option there.
-  //
-  for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+    int i;
+    
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\ndialog_option_insert_new (...): real function call confirmed...");
+    
+    //--------------------
+    // We must find an unused option entry, so we can plant our
+    // new option there.
+    //
+    for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
     {
-      if ( strlen ( ChatRoster [ i ] . option_text ) == 0 ) break;
+	if ( strlen ( ChatRoster [ i ] . option_text ) == 0 ) break;
     }
-
-  //--------------------
-  // If there was no more free entry within all of the roster, we do nothing
-  // and just return...
-  //
-  if ( i >= MAX_DIALOGUE_OPTIONS_IN_ROSTER ) return ( FALSE );
-
-  ChatRoster [ i ] . option_text = "NEWLY INSERTED DIALOG OPTION" ;
-  ChatRoster [ i ] . option_sample_file_name = "Sorry_No_Voice_Sample_Yet_0.wav" ;
-  ChatRoster [ i ] . position_x = 550 ;
-  ChatRoster [ i ] . position_y = 35 ;
-
-  //--------------------
-  // So an option was inserted.  This means we have to redraw the screen, so that
-  // the change made can become visible as well...
-  //
-  gui_redraw_graph_completely ( ); 
-
-  return ( FALSE );
+    
+    //--------------------
+    // If there was no more free entry within all of the roster, we do nothing
+    // and just return...
+    //
+    if ( i >= MAX_DIALOGUE_OPTIONS_IN_ROSTER ) return ( FALSE );
+    
+    ChatRoster [ i ] . option_text = "NEWLY INSERTED DIALOG OPTION" ;
+    ChatRoster [ i ] . option_sample_file_name = "Sorry_No_Voice_Sample_Yet_0.wav" ;
+    ChatRoster [ i ] . position_x = 550 ;
+    ChatRoster [ i ] . position_y = 35 ;
+    
+    //--------------------
+    // So an option was inserted.  This means we have to redraw the screen, so that
+    // the change made can become visible as well...
+    //
+    gui_redraw_graph_completely ( ); 
+    
+    return ( FALSE );
 }; // gint dialog_option_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
 /* ----------------------------------------------------------------------
@@ -3116,56 +3140,56 @@ dialog_option_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data 
 gint 
 dialog_option_delete_marked ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  int i;
-  int j;
-
-  //--------------------
-  // We say, that we're here...
-  //
-  DebugPrintf ( 1 , "\ndialog_option_delete_marked (...): real function call confirmed...");
-
-  //--------------------
-  // Now if there is no dialog option marked, we don't have to
-  // do a thing and can return immediately...
-  //
-  if ( currently_marked_dialog_option == (-1) )
-    return ( FALSE );
-
-  //--------------------
-  // We clear out this dialog option, not taking into account the 
-  // neglectable memory leak here...
-  //
-  delete_one_dialog_option ( currently_marked_dialog_option , TRUE ); 
-
-  //--------------------
-  // But all other connections, that connected into this dialog option
-  // now don't make any sense any more and must be removed as well...
-  //
-  for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+    int i;
+    int j;
+    
+    //--------------------
+    // We say, that we're here...
+    //
+    DebugPrintf ( 1 , "\ndialog_option_delete_marked (...): real function call confirmed...");
+    
+    //--------------------
+    // Now if there is no dialog option marked, we don't have to
+    // do a thing and can return immediately...
+    //
+    if ( currently_marked_dialog_option == (-1) )
+	return ( FALSE );
+    
+    //--------------------
+    // We clear out this dialog option, not taking into account the 
+    // neglectable memory leak here...
+    //
+    delete_one_dialog_option ( currently_marked_dialog_option , TRUE ); 
+    
+    //--------------------
+    // But all other connections, that connected into this dialog option
+    // now don't make any sense any more and must be removed as well...
+    //
+    for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
     {
-      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
 	{
-	  if ( ChatRoster [ i ] . change_option_nr [ j ] == currently_marked_dialog_option )
+	    if ( ChatRoster [ i ] . change_option_nr [ j ] == currently_marked_dialog_option )
 	    {
-	      ChatRoster [ i ] . change_option_nr [ j ] = (-1) ;
-	      ChatRoster [ i ] . change_option_to_value [ j ] = (-1) ;
+		ChatRoster [ i ] . change_option_nr [ j ] = (-1) ;
+		ChatRoster [ i ] . change_option_to_value [ j ] = (-1) ;
 	    }
 	}
     }
-
-  //--------------------
-  // And since the marked dialog option doesn't exist any more now,
-  // we must of course also remove the mark that is still on it.
-  //
-  currently_marked_dialog_option = (-1) ;
-
-  //--------------------
-  // So an option was removed, i.e. we have to redraw the screen, so that
-  // the change made can become visible as well...
-  //
-  gui_redraw_graph_completely ( ); 
-
-  return ( FALSE );
+    
+    //--------------------
+    // And since the marked dialog option doesn't exist any more now,
+    // we must of course also remove the mark that is still on it.
+    //
+    currently_marked_dialog_option = (-1) ;
+    
+    //--------------------
+    // So an option was removed, i.e. we have to redraw the screen, so that
+    // the change made can become visible as well...
+    //
+    gui_redraw_graph_completely ( ); 
+    
+    return ( FALSE );
 }; // gint dialog_option_delete_marked ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
 /* ----------------------------------------------------------------------
@@ -3175,17 +3199,17 @@ dialog_option_delete_marked ( GtkWidget *widget, GdkEvent  *event, gpointer   da
 void
 gui_create_main_window ( void )
 {
-  //--------------------
-  // Now we create the main window
-  wnd = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_widget_set_usize (GTK_WIDGET (wnd), 980, 740);
-  gtk_signal_connect (GTK_OBJECT (wnd), "delete_event", GTK_SIGNAL_FUNC ( delete_event ), NULL);
-
-  //--------------------
-  // This window should also have a proper window title...
-  //
-  gtk_window_set_title (GTK_WINDOW ( wnd ), "Freedroid Dialog Editor: No file loaded!");
-
+    //--------------------
+    // Now we create the main window
+    wnd = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_widget_set_usize (GTK_WIDGET (wnd), 980, 740);
+    gtk_signal_connect (GTK_OBJECT (wnd), "delete_event", GTK_SIGNAL_FUNC ( delete_event ), NULL);
+    
+    //--------------------
+    // This window should also have a proper window title...
+    //
+    gtk_window_set_title (GTK_WINDOW ( wnd ), "Freedroid Dialog Editor: No file loaded!");
+    
 }; // void gui_create_main_window ( void )
 
 /* ----------------------------------------------------------------------
@@ -3195,32 +3219,32 @@ gui_create_main_window ( void )
 void
 gui_create_bottom_line( void )
 {
-  // Statusbar for displaying help and error messages
-  status_help = gtk_statusbar_new ();
-
-  // Status bars
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_ref (hbox);
-  gtk_object_set_data_full (GTK_OBJECT (wnd), "hbox", hbox, (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
-  gtk_widget_set_usize (hbox, -2, 20);
-  
-  // help message
-  gtk_widget_ref (status_help);
-  gtk_object_set_data_full (GTK_OBJECT (wnd), "status_help", status_help, (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (status_help);
-  gtk_box_pack_start (GTK_BOX (hbox), status_help, TRUE, TRUE, 0);
-  gtk_widget_set_usize (status_help, -2, 20);
-  
-  // program mode
-  status_mode = gtk_statusbar_new ();
-  gtk_widget_ref (status_mode);
-  gtk_object_set_data_full (GTK_OBJECT (wnd), "status_mode", status_mode, (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (status_mode);
-  gtk_box_pack_start (GTK_BOX (hbox), status_mode, FALSE, TRUE, 0);
-  gtk_widget_set_usize (status_mode, 150, -2);
-  
+    // Statusbar for displaying help and error messages
+    status_help = gtk_statusbar_new ();
+    
+    // Status bars
+    hbox = gtk_hbox_new (FALSE, 0);
+    gtk_widget_ref (hbox);
+    gtk_object_set_data_full (GTK_OBJECT (wnd), "hbox", hbox, (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hbox);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+    gtk_widget_set_usize (hbox, -2, 20);
+    
+    // help message
+    gtk_widget_ref (status_help);
+    gtk_object_set_data_full (GTK_OBJECT (wnd), "status_help", status_help, (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (status_help);
+    gtk_box_pack_start (GTK_BOX (hbox), status_help, TRUE, TRUE, 0);
+    gtk_widget_set_usize (status_help, -2, 20);
+    
+    // program mode
+    status_mode = gtk_statusbar_new ();
+    gtk_widget_ref (status_mode);
+    gtk_object_set_data_full (GTK_OBJECT (wnd), "status_mode", status_mode, (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (status_mode);
+    gtk_box_pack_start (GTK_BOX (hbox), status_mode, FALSE, TRUE, 0);
+    gtk_widget_set_usize (status_mode, 150, -2);
+    
 }; // 
 
 /* ----------------------------------------------------------------------
@@ -3233,176 +3257,176 @@ gui_create_bottom_line( void )
 void
 gui_create_top_menu_line ( void )
 {
-  // Menu Accelerators
-  // accel_group = gtk_accel_group_get_default ();
-  
-  // Main Windows Menu
-  menu = gtk_menu_bar_new ();
-  
-  // Attach Menubar
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (wnd), vbox);
-  gtk_widget_show (vbox);
-  
-  gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 2);
-  
-  // File Menu
-  submenu = gtk_menu_new ();
-  
-  // New
-  menuitem = gtk_menu_item_new_with_label ("New");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 1" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 2" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_new_activate), "NEW FILE??SURE??" );
-  gtk_widget_show (menuitem);
-  
-  // Open
-  menuitem = gtk_menu_item_new_with_label ("Open ...");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 3" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 4" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (file_load_event_callback_function), "OPEN FILE?" );
-  gtk_widget_show (menuitem);
-  
-  // Save
-  menuitem = gtk_menu_item_new_with_label ("Save");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 5" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 6" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( file_save_event_callback_function ), "SAVE FILE?" );
-  gtk_widget_show (menuitem);
-  
-  // Save as...
-  menuitem = gtk_menu_item_new_with_label ("Save as...");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 7" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 8" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( file_save_as_event_callback_function), "SAVE AS ... FILE?" );
-  gtk_widget_show (menuitem);
-  
-  
-  // Quit
-  menuitem = gtk_menu_item_new_with_label ("Quit");
-  gtk_menu_append (GTK_MENU (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (6));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "QUIT??" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "QUIT!!" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( delete_event ), (gpointer) NULL);
-  gtk_widget_show (menuitem);
-  
-  // Attach File Menu
-  menuitem = gtk_menu_item_new_with_label ("File");
-  gtk_widget_show (menuitem);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-  gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
+    // Menu Accelerators
+    // accel_group = gtk_accel_group_get_default ();
+    
+    // Main Windows Menu
+    menu = gtk_menu_bar_new ();
+    
+    // Attach Menubar
+    vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (wnd), vbox);
+    gtk_widget_show (vbox);
+    
+    gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 2);
+    
+    // File Menu
+    submenu = gtk_menu_new ();
+    
+    // New
+    menuitem = gtk_menu_item_new_with_label ("New");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 1" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 2" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_new_activate), "NEW FILE??SURE??" );
+    gtk_widget_show (menuitem);
+    
+    // Open
+    menuitem = gtk_menu_item_new_with_label ("Open ...");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 3" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 4" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (file_load_event_callback_function), "OPEN FILE?" );
+    gtk_widget_show (menuitem);
+    
+    // Save
+    menuitem = gtk_menu_item_new_with_label ("Save");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 5" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 6" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( file_save_event_callback_function ), "SAVE FILE?" );
+    gtk_widget_show (menuitem);
+    
+    // Save as...
+    menuitem = gtk_menu_item_new_with_label ("Save as...");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 7" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 8" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( file_save_as_event_callback_function), "SAVE AS ... FILE?" );
+    gtk_widget_show (menuitem);
+    
+    
+    // Quit
+    menuitem = gtk_menu_item_new_with_label ("Quit");
+    gtk_menu_append (GTK_MENU (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (6));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "QUIT??" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "QUIT!!" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( delete_event ), (gpointer) NULL);
+    gtk_widget_show (menuitem);
+    
+    // Attach File Menu
+    menuitem = gtk_menu_item_new_with_label ("File");
+    gtk_widget_show (menuitem);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+    gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
+    
+    //--------------------
+    // Now that the file menu is done, we can start to attach another
+    // line of menu options....  This time it will not be about 'File'
+    // but rather about 'Dialog Option'
+    //
 
-  //--------------------
-  // Now that the file menu is done, we can start to attach another
-  // line of menu options....  This time it will not be about 'File'
-  // but rather about 'Dialog Option'
-  //
-
-  // File Menu
-  submenu = gtk_menu_new ();
-  
-  // New
-  menuitem = gtk_menu_item_new_with_label ("Insert New...");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 9" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 10" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( dialog_option_insert_new ), "NEW DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Open
-  menuitem = gtk_menu_item_new_with_label ("Delete Marked...");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( dialog_option_delete_marked ), "DELETE MARKED DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Attach 'Dialog Option' Menu
-  menuitem = gtk_menu_item_new_with_label ("Dialog Option");
-  gtk_widget_show (menuitem);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-  gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
-  
-  //--------------------
-  // Now that the dialog option menu is done, we can start to attach another
-  // line of menu options....  This time it will not be about 'Dialog option'
-  // but rather about 'Help'
-  //
-
-  // File Menu
-  submenu = gtk_menu_new ();
-  
-  // New
-  menuitem = gtk_menu_item_new_with_label ("About FreedroidRPG Dialog Editor");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 9" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 10" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_about_freedroidRPG_dialog_editor ), "NEW DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Open
-  menuitem = gtk_menu_item_new_with_label ("About FreedroidRPG");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_about_freedroid ), "DELETE MARKED DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Reporting bugs...
-  menuitem = gtk_menu_item_new_with_label ("Reporting bugs...");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_reporting_bugs ), "DELETE MARKED DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Using dialog editor...
-  menuitem = gtk_menu_item_new_with_label ("Dialog Editor Usage");
-  gtk_container_add (GTK_CONTAINER (submenu), menuitem);
-  // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-  gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
-  // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_dialog_editor_usage ), "DELETE MARKED DIALOG OPTION?" );
-  gtk_widget_show (menuitem);
-  
-  // Attach 'Dialog Option' Menu
-  menuitem = gtk_menu_item_new_with_label ("Help");
-  gtk_widget_show (menuitem);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-  gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
-  
+    // File Menu
+    submenu = gtk_menu_new ();
+    
+    // New
+    menuitem = gtk_menu_item_new_with_label ("Insert New...");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 9" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 10" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( dialog_option_insert_new ), "NEW DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Open
+    menuitem = gtk_menu_item_new_with_label ("Delete Marked...");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( dialog_option_delete_marked ), "DELETE MARKED DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Attach 'Dialog Option' Menu
+    menuitem = gtk_menu_item_new_with_label ("Dialog Option");
+    gtk_widget_show (menuitem);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+    gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
+    
+    //--------------------
+    // Now that the dialog option menu is done, we can start to attach another
+    // line of menu options....  This time it will not be about 'Dialog option'
+    // but rather about 'Help'
+    //
+    
+    // File Menu
+    submenu = gtk_menu_new ();
+    
+    // New
+    menuitem = gtk_menu_item_new_with_label ("About FreedroidRPG Dialog Editor");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_n, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (1));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 9" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 10" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_about_freedroidRPG_dialog_editor ), "NEW DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Open
+    menuitem = gtk_menu_item_new_with_label ("About FreedroidRPG");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_about_freedroid ), "DELETE MARKED DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Reporting bugs...
+    menuitem = gtk_menu_item_new_with_label ("Reporting bugs...");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_reporting_bugs ), "DELETE MARKED DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Using dialog editor...
+    menuitem = gtk_menu_item_new_with_label ("Dialog Editor Usage");
+    gtk_container_add (GTK_CONTAINER (submenu), menuitem);
+    // gtk_widget_add_accelerator (menuitem, "activate", accel_group, GDK_o, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_object_set_data (GTK_OBJECT (menuitem), "help-id", GINT_TO_POINTER (2));
+    gtk_signal_connect (GTK_OBJECT (menuitem), "enter-notify-event", GTK_SIGNAL_FUNC (on_display_help), "NOTIFY 11" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "leave-notify-event", GTK_SIGNAL_FUNC (on_clear_help), "NOTIFY 12" );
+    // gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC (on_file_load_activate), "OPEN FILE?" );
+    gtk_signal_connect (GTK_OBJECT (menuitem), "activate", GTK_SIGNAL_FUNC ( help_dialog_editor_usage ), "DELETE MARKED DIALOG OPTION?" );
+    gtk_widget_show (menuitem);
+    
+    // Attach 'Dialog Option' Menu
+    menuitem = gtk_menu_item_new_with_label ("Help");
+    gtk_widget_show (menuitem);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+    gtk_menu_bar_append (GTK_MENU_BAR (menu), menuitem);
+    
 }; // void gui_create_top_menu_line ( void )
 
 /* ----------------------------------------------------------------------
