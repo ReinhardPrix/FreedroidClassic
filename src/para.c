@@ -287,7 +287,7 @@ main (int argc, char *const argv[])
 	  if ( CPressed() ) 
 	      Cheatmenu ();
 	  if ( EscapePressed() )
-	    OptionsMenu ();
+	    EscapeMenu ();
 	  if ( PPressed () )
 	    Pause ();
 

@@ -67,6 +67,8 @@ void CreateMessageBar (char *MText);
 void CleanMessageLine (void);
 void AdvanceQueue (void);
 void SinglePlayerMenu (void);
+void OptionsMenu (void);
+void ShowMissionInstructionsMenu (void);
 
 int VectsHaveBeenTurned = 0;
 unsigned char *MessageBar;
@@ -565,19 +567,14 @@ Cheatmenu (void)
 /* -----------------------------------------------------------------
  *-----------------------------------------------------------------*/
 void
-OptionsMenu (void)
+EscapeMenu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
 
 #define FIRST_MENU_ITEM_POS_X 3*(BLOCKBREITE - 7)
-  // #define FIRST_MENU_ITEM_POS_Y (BLOCKHOEHE + 12)
-  // #define MENU_ITEM_DISTANCE 21
-#define SINGLE_PLAYER_POSITION 1
-#define MULTI_PLAYER_POSITION 2
-#define OPTIONS_POSITION 3
-#define HELP_POSITION 4
-#define QUIT_POSITION 5
+enum
+  { SINGLE_PLAYER_POSITION=1, MULTI_PLAYER_POSITION=2, OPTIONS_POSITION=3, HELP_POSITION=4, QUIT_POSITION=5 };
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -632,7 +629,110 @@ OptionsMenu (void)
 	      SinglePlayerMenu();
 	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
+	    case OPTIONS_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      OptionsMenu();
+	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
 	    case QUIT_POSITION:
+	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
+	      Terminate(0);
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if (MenuPosition < 5) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+  ClearGraphMem (InternalScreen);
+  ClearGraphMem (RealScreen);
+  Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
+  InitBars = TRUE;
+
+  return;
+} // EscapeMenu
+
+/* -----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
+void
+OptionsMenu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+
+#define OPTIONS_MENU_ITEM_POS_X (BLOCKBREITE/2)
+enum
+  { SET_BG_MUSIC_VOLUME=1, SET_SOUND_FX_VOLUME=2, SET_GAMMA_CORRECTION=3, SET_FULLSCREEN_FLAG=4, LEAVE_OPTIONS_MENU=5 };
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      PutInternFenster( FALSE );
+
+      MakeGridOnScreen( Outline320x200 );
+
+      // Highlight currently selected option with an influencer before it
+      DisplayMergeBlock( OPTIONS_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+
+
+      PrepareScaledSurface(FALSE);
+
+      // PrintStringFont          (screen, Font2,0, 4*h2+100,"%2.0f %s",10.0," funny lib!" ); 
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    "Background Music Volume:");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),    "Sound Effects Volume:");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),    "Gamma Correction:");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 7*FontHeight(Font1),    "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    "Show Framerates: ");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    "Back");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+
+	    case SET_BG_MUSIC_VOLUME:
+	      while (EnterPressed() || SpacePressed() );
+	      SinglePlayerMenu();
+	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case LEAVE_OPTIONS_MENU:
 	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
 	      Terminate(0);
 	      break;
@@ -671,6 +771,7 @@ SinglePlayerMenu (void)
   int Weiter = 0;
   int MenuPosition=1;
 
+#define SINGLE_PLAYER_MENU_POINTER_POS_X (BLOCKBREITE/2)
 enum
   { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
@@ -682,9 +783,8 @@ enum
       MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
-
 
       PrepareScaledSurface(FALSE);
 
@@ -697,16 +797,14 @@ enum
 
       // Wait until the user does SOMETHING
 
-      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() ) 
-	{
-	  keyboard_update();
-	}
+      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() )  keyboard_update();
 
-      // 
       if ( EscapePressed() )
 	{
+	  while (EscapePressed());
 	  Weiter=!Weiter;
 	}
+
       if (EnterPressed() || SpacePressed() ) 
 	{
 	  MenuItemSelectedSound();
@@ -719,6 +817,9 @@ enum
 	      break;
 	    case SHOW_HISCORE_POSITION: 
 	    case SHOW_MISSION_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      ShowMissionInstructionsMenu();
+	      break;
 	    case BACK_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
 	      break;
@@ -752,6 +853,59 @@ enum
 
   return;
 } // SinglePlayerMenu
+
+
+/* -----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
+void
+ShowMissionInstructionsMenu (void)
+{
+  int Weiter = 0;
+
+  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+
+  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+
+  while (!Weiter)
+    {
+
+      PutInternFenster( FALSE );
+
+      MakeGridOnScreen( Outline320x200 );
+
+      PrepareScaledSurface(FALSE);
+
+      CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "MISSION INSTRUCTIONS");
+      LeftPutString (ScaledSurface , 3*FontHeight(Font1), "This is the first mission.  It is");
+      LeftPutString (ScaledSurface , 4*FontHeight(Font1), "identical to the original Paradroid");
+      LeftPutString (ScaledSurface , 5*FontHeight(Font1), "mission from the Commodore C64.");
+      LeftPutString (ScaledSurface , 6*FontHeight(Font1), "So the mission is:");
+      LeftPutString (ScaledSurface , 7*FontHeight(Font1), "Destroy all robots on the ship.");
+      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
+      LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
+      // Wait until the user does SOMETHING
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	{
+	  Weiter=!Weiter;
+	}
+    }
+  ClearGraphMem (InternalScreen);
+  ClearGraphMem (RealScreen);
+  // Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
+  InitBars = TRUE;
+
+  vga_clear ();
+  
+  // keyboard_init (); /* return to raw keyboard mode */
+
+  return;
+} // ShowMissionInstructionsMenu
 
 
 /*@Function============================================================

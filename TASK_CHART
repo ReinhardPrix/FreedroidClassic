@@ -9,16 +9,17 @@ jp
 - Web-page admin
 - public relations ;)
 
-The list of things I´m going to work on next:
+The list of things I'm going to work on next:
 DONE Take a look at the possibilities of the SDL Library BFont
 IN PROGRESS.. Use these possibilities to write a better Options menu
 DONE Include a LEVELEDITOR option in the options menu
-2. Test if the time-distortion with space happens also in other window managers
-3. Add an SDL-Font based Framerate-Display-Option, that can also be
+DONE Include GAMMA correction option in the options menu
+DONE Include Sound Volume correction in the options menu
+DONE Add an SDL-Font based Framerate-Display-Option, that can also be
    toggled from the options menu
-4. Include GAMMA correction option in the options menu
-5. Include Sound Volume correction in the options menu
-6. Make a new attempt on dumping the yiff.  This time i´ll 
+1. write the Frame
+2. Test if the time-distortion with space happens also in other window managers
+6. Make a new attempt on dumping the yiff.  This time i'll 
    try to be more clever ;-)
 7. Make an attempt on highlighting fields to pioneer for the
    leveleditor I would like to see conveniently integrated into the game

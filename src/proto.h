@@ -331,7 +331,7 @@ EXTERN char *ltoa (long, char *, int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void Cheatmenu (void);
-EXTERN void OptionsMenu (void);
+EXTERN void EscapeMenu (void);
 EXTERN void InsertNewMessage (void);
 EXTERN void Terminate (int);
 EXTERN void KillQueue (void);
