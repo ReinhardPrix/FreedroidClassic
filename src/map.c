@@ -1037,8 +1037,9 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/07/29 17:29:28  prix
- * Initial revision
+ * Revision 1.2  1993/07/31 16:05:36  prix
+ * Thu Jul 29 16:23:49 1993: probably found the crashing error: wrong cast ?? in malloc
+ * Thu Jul 29 16:46:18 1993: probably found reason for crash: string not alloc'ed !
  *
  * Revision 1.5  1993/10/02  16:23:07  prix
  * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
