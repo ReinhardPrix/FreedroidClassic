@@ -713,7 +713,7 @@ Level_Editor(void)
       while (!Weiter)
 	{
 
-	  InitiateMenu();
+	  InitiateMenu( NULL );
 
 	  // Highlight currently selected option with an influencer before it
 	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );

@@ -340,6 +340,7 @@ druidspec, *Druidspec;
 typedef struct
 {
   int type;			/* what kind of druid is this ? */
+  int character_class; // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
   int status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   finepoint pos;		/* current position in level levelnum */

@@ -39,6 +39,8 @@
 
 #include "items.h"
 
+#define CLASS_X 175
+
 #define EXPERIENCE_Y 55
 #define NEXT_LEVEL_Y 82
 
@@ -396,9 +398,25 @@ ShowCharacterScreen ( void )
 
   //--------------------
   // Now we can start to fill in the character values:
-  // Name, Level, Exp, Strength, Dex, ...
+  // Name, Class, Level, Exp, Strength, Dex, ...
   //
   DisplayText( Me.character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+  switch ( Me.character_class )
+    {
+    case WAR_BOT:
+      DisplayText( "War Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+      break;
+    case SNIPER_BOT:
+      DisplayText( "Sniper Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+      break;
+    case MIND_BOT:
+      DisplayText( "Mind Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+      break;
+    default:
+      DebugPrintf( 0 , "\n\nILLEGAL CHARACTER CLASS FOUND!!! ERROR!!! TERMINATING....." );
+      Terminate( ERR );
+      break;
+    }
 
   sprintf( CharText , "%4d", Me.exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );

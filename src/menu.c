@@ -41,12 +41,12 @@
 
 int New_Game_Requested=FALSE;
 
-void Single_Player_Menu (void);
+int Single_Player_Menu (void);
 void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
-int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem );
+int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse );
 EXTERN void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
@@ -86,13 +86,13 @@ TryToRepairItem( item* RepairItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 );
+      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 , NULL );
       return;
     }
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 );
+      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -142,7 +142,7 @@ TryToSellItem( item* SellItem )
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 );
+      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -198,7 +198,7 @@ TryToBuyItem( item* BuyItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 );
+      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 , NULL );
       return;
     }
 
@@ -212,7 +212,7 @@ TryToBuyItem( item* BuyItem )
 		{
 		  GiveItemDescription( linebuf , BuyItem , TRUE );
 		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 );
+		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL );
 		  switch (MenuPosition) 
 		    {
 		    case (-1):
@@ -267,7 +267,7 @@ Buy_Basic_Items( void )
 
   while ( !SpacePressed() && !EscapePressed() )
     {
-      InitiateMenu();
+      InitiateMenu ( NULL );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -400,14 +400,14 @@ Repair_Items( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , NULL );
       return;
     }
 
 
   while ( !SpacePressed() && !EscapePressed() )
     {
-      InitiateMenu();
+      InitiateMenu ( NULL );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -526,14 +526,15 @@ Sell_Items( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , MenuTexts, 1);
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , 
+			MenuTexts, 1 , NULL );
       return;
     }
 
 
   while ( !SpacePressed() && !EscapePressed() )
     {
-      InitiateMenu();
+      InitiateMenu( NULL );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -596,11 +597,11 @@ Sell_Items( void )
 
 
 /* ----------------------------------------------------------------------
- * 
- *
+ * This function performs a menu for the player to select from, using the
+ * keyboard only, currently, sorry.
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
+DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
@@ -632,7 +633,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
   while ( 1 )
     {
 
-      InitiateMenu();
+      InitiateMenu( BackgroundToUse );
 
       //--------------------
       // we highlight the currently selected option with an 
@@ -683,7 +684,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
     }
 
   return ( -1 );
-}; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] )
+}; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
 
 /* ----------------------------------------------------------------------
  * This function does all the buying/selling interaction with the 
@@ -736,7 +737,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -785,7 +786,7 @@ enum
 @Ret: none
 * $Function----------------------------------------------------------*/
 void 
-InitiateMenu( void )
+InitiateMenu( char* BackgroundToUse )
 {
   //--------------------
   // Here comes the standard initializer for all the menus and submenus
@@ -794,8 +795,17 @@ InitiateMenu( void )
   //
   SDL_SetClipRect( Screen, NULL );
   ClearGraphMem();
-  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-  Assemble_Combat_Picture ( 0 );
+
+  if ( BackgroundToUse == NULL )
+    {
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+    }
+  else
+    {
+      DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
+    }
+
   SDL_SetClipRect( Screen, NULL );
   MakeGridOnScreen( NULL );
 } // void InitiateMenu(void)
@@ -1278,8 +1288,8 @@ enum
 	    {
 
 	    case SINGLE_PLAYER_POSITION:
-	      InitNewMissionList ( NEW_MISSION );
-	      Weiter = TRUE;   
+	      // InitNewMissionList ( NEW_MISSION );
+	      Weiter = Single_Player_Menu ( );
 	      break;
 	    case MULTI_PLAYER_POSITION:
 	      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
@@ -1323,25 +1333,21 @@ enum
 
 }; // void StartupMenu( void );
 
-/*@Function============================================================
-@Desc: This function provides a the big escape menu from where you can
-       get into different submenus.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides a the big escape menu from where you can get 
+ * into different submenus.
+ * ---------------------------------------------------------------------- */
 void
 EscapeMenu (void)
 {
 enum
   { 
-    SINGLE_PLAYER_POSITION=1, 
-    MULTI_PLAYER_POSITION, 
+    SAVE_GAME_POSITION=1,
+    SINGLE_PLAYER_POSITION, 
     OPTIONS_POSITION, 
     SET_THEME,
     LEVEL_EDITOR_POSITION, 
-    CREDITS_POSITION,
     LOAD_GAME_POSITION,
-    SAVE_GAME_POSITION,
     QUIT_POSITION
   };
 
@@ -1370,18 +1376,18 @@ enum
       else
 	strcat (theme_string, "unknown");
 
-      MenuTexts[0]="Single Player";
-      MenuTexts[1]="Multi Player";
+      MenuTexts[1]="Single Player";
+      MenuTexts[0]="Save Game";
       MenuTexts[2]="Options";
       MenuTexts[3]=theme_string;
       MenuTexts[4]="Level Editor";
-      MenuTexts[5]="Credits";
-      MenuTexts[8]="Quit Game";
-      MenuTexts[6]="Load Game";
-      MenuTexts[7]="Save Game";
+      MenuTexts[8]="";
+      MenuTexts[6]="Quit Game";
+      MenuTexts[5]="Load Game";
+      MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
 
       switch (MenuPosition) 
 	{
@@ -1393,11 +1399,6 @@ enum
 	  New_Game_Requested=FALSE;
 	  Single_Player_Menu();
 	  if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
-	  break;
-	case MULTI_PLAYER_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  Multi_Player_Menu();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
 	  break;
 	case OPTIONS_POSITION:
 	  while (EnterPressed() || SpacePressed() );
@@ -1433,11 +1434,6 @@ enum
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  Level_Editor();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
-	  break;
-	case CREDITS_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  Credits_Menu();
 	  // Weiter = TRUE;   /* jp forgot this... ;) */
 	  break;
 	case LOAD_GAME_POSITION:
@@ -1703,7 +1699,7 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[2]=Options2;
       MenuTexts[3]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1788,7 +1784,7 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1874,7 +1870,7 @@ enum
 
   while ( !Weiter )
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1913,6 +1909,177 @@ enum
 
 } // Options_Menu
 
+/* ----------------------------------------------------------------------
+ * This reads in the new name for the character...
+ * ---------------------------------------------------------------------- */
+void
+Get_New_Character_Name ( void )
+{
+  char* Temp;
+  InitiateMenu( NE_TITLE_PIC_FILE );
+
+  DisplayText ( "\n     Enter the name for the new hero:\n\n\n      " , 
+		50 , 50 , NULL );
+
+  Temp = GetString( 20 , FALSE );
+  strcpy ( Me.character_name , Temp );
+  free( Temp );
+}; // void Get_New_Character_Name ( void )
+
+/* ----------------------------------------------------------------------
+ * This function does the selection of the hero class...
+ * ---------------------------------------------------------------------- */
+int
+Select_Hero_Class_Menu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+  char* MenuTexts[10];
+
+enum
+  { 
+    WAR_BOT_POSITION=1, 
+    SNIPER_BOT_POSITION, 
+    MIND_BOT_POSITION,
+    BACK_POSITION
+  };
+
+  MenuTexts[0]="War Bot";
+  MenuTexts[1]="Sniper Bot";
+  MenuTexts[2]="Mind Bot";
+  MenuTexts[3]="Back";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[8]="";
+  MenuTexts[9]="";
+
+  while (!Weiter)
+    {
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+	case WAR_BOT_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+
+	  Me.character_class = WAR_BOT;
+	  Me.Vitality = 25;
+	  Me.Strength = 30;
+	  Me.Dexterity = 25;
+	  Me.Magic = 10;
+
+	  Get_New_Character_Name( );
+	  return ( TRUE );
+	  break;
+	case SNIPER_BOT_POSITION: 
+	  while (EnterPressed() || SpacePressed() ) ;
+
+	  Me.character_class = SNIPER_BOT;
+	  Me.Vitality = 20;
+	  Me.Strength = 25;
+	  Me.Dexterity = 35;
+	  Me.Magic = 20;
+
+	  Get_New_Character_Name( );
+	  return ( TRUE );
+	  break;
+	case MIND_BOT_POSITION: 
+	  while (EnterPressed() || SpacePressed() ) ;
+
+	  Me.character_class = MIND_BOT;
+	  Me.Vitality = 15;
+	  Me.Strength = 15;
+	  Me.Dexterity = 20;
+	  Me.Magic = 35;
+
+	  Get_New_Character_Name( );
+	  return ( TRUE );
+	  break;
+	case BACK_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  Weiter=!Weiter;
+	  return ( FALSE );
+	  break;
+	default: 
+	  break;
+	}
+    }
+  return ( FALSE );
+}; // int Select_Hero_Class_Menu ( void );
+
+
+/* ----------------------------------------------------------------------
+ * This function provides the single player menu.  It offers to start a
+ * new hero, to load an old one and to go back.
+ * ---------------------------------------------------------------------- */
+int
+Single_Player_Menu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+  char* MenuTexts[10];
+
+enum
+  { 
+    NEW_HERO_POSITION=1, 
+    LOAD_EXISTING_HERO_POSITION, 
+    BACK_POSITION
+  };
+
+  MenuTexts[0]="New Hero";
+  MenuTexts[1]="Load existing Hero";
+  MenuTexts[2]="Back";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[8]="";
+  MenuTexts[9]="";
+
+  while (!Weiter)
+    {
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+	case NEW_HERO_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+
+	  if ( Select_Hero_Class_Menu ( ) )
+	    {
+	      InitNewMissionList ( NEW_MISSION );
+	      Weiter=TRUE;
+	      return ( TRUE );
+	    }
+
+	  break;
+	case LOAD_EXISTING_HERO_POSITION: 
+	  while (EnterPressed() || SpacePressed() ) ;
+	  
+	  return ( FALSE );
+	  break;
+	case BACK_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  Weiter=!Weiter;
+	  return ( FALSE );
+	  break;
+	default: 
+	  break;
+	}
+    }
+  return ( TRUE );
+}; // void Single_Player_Menu ( void );
+
+
 /*@Function============================================================
 @Desc: This function provides the single player menu.  This menu is a 
        submenu of the big EscapeMenu.  Here you can restart a new game,
@@ -1922,7 +2089,7 @@ enum
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Single_Player_Menu (void)
+Old_Single_Player_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
@@ -1941,7 +2108,7 @@ Single_Player_Menu (void)
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
 
       switch (MenuPosition) 
 	{
@@ -1970,7 +2137,7 @@ Single_Player_Menu (void)
 	  break;
 	}
     }
-}; // void Single_Player_Menu ( void );
+}; // void Old_Single_Player_Menu ( void );
 
 
 /*@Function============================================================

@@ -50,6 +50,9 @@
 #define ITEM_MONEY 6
 #define ITEM_HEALTH_POTION 1
 
+#define WAR_BOT 1
+#define SNIPER_BOT 2
+#define MIND_BOT 3
 
 //--------------------
 // This is old and should go out, but that must be done from at home, 

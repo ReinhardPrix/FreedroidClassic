@@ -1089,8 +1089,8 @@ AttackInfluence (int enemynum)
       // do this WITHOUT consulting the waypoints, so that the robots become more
       // 'intelligent' in their movement.
       //
-      ThisRobot->TextVisibleTime = 0 ;
-      ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
+      // ThisRobot->TextVisibleTime = 0 ;
+      // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
       
       ThisRobot->persuing_given_course = TRUE;
       ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x ;

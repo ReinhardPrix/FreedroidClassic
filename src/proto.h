@@ -388,7 +388,7 @@ EXTERN int NoDirectionPressed (void);
 #define EXTERN extern
 #endif
 EXTERN void BuySellMenu ( void );
-EXTERN void InitiateMenu( void );
+EXTERN void InitiateMenu( char* BackgroundToUse );
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
