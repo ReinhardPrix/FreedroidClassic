@@ -71,6 +71,7 @@ char recursion_grid[ MAX_MAP_LINES ][ MAX_MAP_LINES ] ;
 moderately_finepoint last_sight_contact;
 int next_index_to_set_up = 30000 ;
 int bad_luck_in_4_directions_counter = 0;
+int no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
 
 #define TILE_IS_UNPROCESSED 3
 #define TILE_IS_PROCESSED 4
@@ -1585,6 +1586,11 @@ MoveInfluence ( int player_num )
        ( Me [ player_num ] . status == WEAPON ) )
     AnalyzePlayersMouseClick ( player_num );
 
+  if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
+    no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
+  else
+    no_left_button_press_in_previous_analyze_mouse_click = TRUE ;
+
   //--------------------
   // During inventory operations, there should not be any (new) movement
   //
@@ -1614,25 +1620,6 @@ MoveInfluence ( int player_num )
   ActSpecialField ( player_num ) ;
 
   AnimateInfluence ( player_num ) ;	// move the "phase" of influencers rotation
-
-  if ( ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) ) &&
-       ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z -
-	   Me [ player_num ] . pos . z ) == 0 ) &&
-       ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) )
-    {
-      if ( Me [ player_num ] . readied_skill == SPELL_TRANSFERMODE )
-	{
-	  //--------------------
-	  // We chat with the friendly droid
-	  ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] ) ) ;
-	  
-	  //--------------------
-	  // and then we deactivate this mouse_move_target_is_enemy to prevent
-	  // immediate recurrence of the very same chat.
-	  //
-	  Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
-	}
-    }
 
   //--------------------
   // Now we check if perhaps the influencer is close to some targeted enemy droid
@@ -2580,7 +2567,7 @@ check_for_barrels_to_smash ( player_num )
  *
  * ---------------------------------------------------------------------- */
 void
-check_for_droids_to_attack ( int player_num ) 
+check_for_droids_to_attack_or_talk_with ( int player_num ) 
 {
   int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
 
@@ -2621,7 +2608,31 @@ check_for_droids_to_attack ( int player_num )
       //
       Me [ player_num ] . mouse_move_target_is_enemy = index_of_droid_below_mouse_cursor ;
 
-      if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) return ;
+      //--------------------
+      // If the click was onto a friendly droid, we initiate talk, no matter if the
+      // TAKEOVER skill was actiavted or if the TRANSFERMODE state of the tux was 
+      // present.  Left click should do this, other methods for talking are depreciated.
+      //
+      // However, we do not want an accidential mouse move while button is held down
+      // to always initiate talk.  This should require a true click.  Therefore we
+      // check if the button has been released just before it came to this check.
+      //
+      if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) 
+	{
+
+	  if ( no_left_button_press_in_previous_analyze_mouse_click )
+	    {
+	      ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] ) ) ;
+	  
+	      //--------------------
+	      // and then we deactivate this mouse_move_target_is_enemy to prevent
+	      // immediate recurrence of the very same chat.
+	      //
+	      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	    }
+
+	  return ;
+	}
 
       if ( Me [ 0 ] . weapon_item . type >= 0 )
 	{
@@ -2662,7 +2673,7 @@ AnalyzePlayersMouseClick ( int player_num )
 
   check_for_barrels_to_smash ( player_num ) ;
 
-  check_for_droids_to_attack ( player_num ) ;
+  check_for_droids_to_attack_or_talk_with ( player_num ) ;
 
 }; // void AnalyzePlayersMouseClick ( int player_num )
 
