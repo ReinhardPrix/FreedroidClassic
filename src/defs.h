@@ -427,7 +427,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 65
+#define MAX_MOUSE_PRESS_BUTTONS 67
 enum
   { 
     CHA_BUTTON, 
@@ -498,7 +498,10 @@ enum
     GO_LEVEL_NORTH_BUTTON,
     GO_LEVEL_SOUTH_BUTTON,
     GO_LEVEL_EAST_BUTTON,
-    GO_LEVEL_WEST_BUTTON
+    GO_LEVEL_WEST_BUTTON,
+
+    SAVE_GAME_BANNER,
+    LOAD_GAME_BANNER
   };
 
 

@@ -1713,6 +1713,8 @@ int SaveShip(char *filename)
 
   DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
   
+  ShowSaveGameProgressMeter( 0 ) ;
+
   /* count the levels */
   level_anz = 0;
   while(curShip.AllLevels[level_anz++]);
@@ -1816,6 +1818,8 @@ freedroid-discussion@lists.sourceforge.net\n\
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
     
       free(LevelMem);
+
+      ShowSaveGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) ); 
     }
 
   //--------------------

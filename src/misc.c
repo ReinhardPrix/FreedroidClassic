@@ -124,7 +124,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 233 , 90 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } 
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
+
+    { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
+    { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -208,6 +211,21 @@ button index given exceeds the number of buttons defined in freedroid.",
   return ( TRUE );
 
 }; // int CursorIsOnButton( int ButtonIndex , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function blits a button to the screen.  The button must have been
+ * defined prior to this in the above button list.
+ * ---------------------------------------------------------------------- */
+void 
+UpdateScreenOverButtonFromList ( int ButtonIndex )
+{ 
+  SDL_UpdateRect ( Screen , 
+		   AllMousePressButtons[ ButtonIndex ] . button_rect . x ,
+		   AllMousePressButtons[ ButtonIndex ] . button_rect . y ,
+		   AllMousePressButtons[ ButtonIndex ] . button_rect . w ,
+		   AllMousePressButtons[ ButtonIndex ] . button_rect . h 
+		   );
+}; // void UpdateScreenOverButtonFromList ( int ButtonIndex )
 
 /* ----------------------------------------------------------------------
  * This function blits a button to the screen.  The button must have been

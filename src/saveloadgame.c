@@ -59,6 +59,26 @@
  *
  * ---------------------------------------------------------------------- */
 void
+ShowSaveGameProgressMeter( int Percentage ) 
+{
+  SDL_Rect TargetRect;
+
+  TargetRect.x = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . x + ( AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . w - 100 ) / 2 + 2 ;
+  TargetRect.y = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . y + 20 ;
+  TargetRect.w = Percentage ;
+  TargetRect.h = 20 ;
+
+  ShowGenericButtonFromList ( SAVE_GAME_BANNER );
+  SDL_FillRect ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
+  UpdateScreenOverButtonFromList ( SAVE_GAME_BANNER );
+
+}; // void ShowSaveGameProgressMeter( int Percentage ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 LoadAndShowThumbnail ( char* CoreFilename )
 {
   char Saved_Games_Dir[1000];
@@ -269,6 +289,11 @@ SaveGame( void )
       return ( OK );
     }
 
+  //--------------------
+  // Now that we really start to save the game, it's time to display the save
+  // game progress meter...
+  //
+  ShowSaveGameProgressMeter( 0 ) ;
 
   //--------------------
   // get home-directory to save in
@@ -298,6 +323,8 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     {
       DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
     }
+
+  // ShowSaveGameProgressMeter( 30 ) ;
 
   //--------------------
   // First, we must determine the save game file name
@@ -361,6 +388,8 @@ freedroid-discussion@lists.sourceforge.net\n\
   sprintf( linebuf , "%d\n", CurLevel->levelnum );
   fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);  
 
+  // ShowSaveGameProgressMeter( 40 ) ;
+
   // --------------------
   // Now we write the influencer raw data start string out to the file and of course
   // then the real raw influencer data follow suit afterwards.
@@ -372,6 +401,8 @@ freedroid-discussion@lists.sourceforge.net\n\
   // sizeof(char), SaveGameFile );  
   // fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
 
+  // ShowSaveGameProgressMeter( 50 ) ;
+
   // --------------------
   // Now we write the enemy raw data start string out to the file and of course
   // then the real raw enemy data follow suit afterwards.
@@ -379,6 +410,8 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ), 
 	   sizeof(char), SaveGameFile );  
   fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );  
+
+  // ShowSaveGameProgressMeter( 60 ) ;
 
   // --------------------
   // Now we write the bullet raw data start string out to the file and of course
@@ -388,6 +421,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 	   sizeof(char), SaveGameFile );  
   fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );  
 
+  // ShowSaveGameProgressMeter( 70 ) ;
 
   //--------------------
   // Now that all the nescessary information has been written to the save game file
@@ -405,7 +439,12 @@ freedroid-discussion@lists.sourceforge.net\n\
       // return ERR;
     }
   
+  // ShowSaveGameProgressMeter( 80 ) ;
+  ShowSaveGameProgressMeter( 99 ); 
+
   SaveThumbnailOfGame ( );
+
+  ShowSaveGameProgressMeter( 100 ) ;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
   

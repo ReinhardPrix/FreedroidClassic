@@ -176,6 +176,7 @@ EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 #else
 #define EXTERN extern
 #endif
+EXTERN void ShowSaveGameProgressMeter( int Percentage ) ;
 EXTERN void LoadAndShowThumbnail ( char* CoreFilename );
 EXTERN int SaveGame( void );
 EXTERN int LoadGame( void );
@@ -432,6 +433,7 @@ EXTERN void Credits_Menu (void);
 #define EXTERN extern
 #endif
 EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
+EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
 EXTERN int CursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
