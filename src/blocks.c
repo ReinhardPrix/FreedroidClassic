@@ -1491,65 +1491,6 @@ Load_Digit_Surfaces( void )
 
 }; // void Load_Digit_Surfaces( void )
 
-/* ----------------------------------------------------------------------
- * In a more sophisticated approach to map block loading, not everything
- * will be loaded right at game startup but rather if and only if the
- * map block is required somewhere and no sooner than that.  (Except 
- * perhaps for level editor purposes maybe...)
- * So this function should do exactly, that:  Load the desired map block
- * from the disk and into memory for immediate usage, but only that.  No
- * separate copy for the level editor will be created here.  This has to
- * be done somewhere else at the appropriate time...
- * ---------------------------------------------------------------------- */
-void
-LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
-{
-  SDL_Surface* Whole_Image;
-  char *fpath;
-  char ConstructedFileName[2000];
-  char NumberBuffer[1000];
-
-  //--------------------
-  // At first we construct the file name of the single tile file we are about to load...
-  //
-  strcpy ( ConstructedFileName , "single_map_tiles/map_tile_" );
-  strcat ( ConstructedFileName , "red_" );
-  sprintf ( NumberBuffer , "%04d" , BlockNr );
-  strcat ( ConstructedFileName , NumberBuffer );
-  strcat ( ConstructedFileName , ".png" );
-  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , TRUE );
-
-  //--------------------
-  // Now we load the single tile image file and check for errors while loading...
-  //
-  Whole_Image = IMG_Load( fpath );
-  if ( Whole_Image == NULL )
-    {
-      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "LoadOneMapTileIfNotYetLoaded(...)" , "\
-Freedroid was unable to load a certain single map tile from the hard disk\n\
-into memory.\n\
-This error indicates some installation problem with freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-
-  //--------------------
-  // Now we convert this to display format and set alpha and colorkey
-  // properties right...
-  //
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-  MapBlockSurfacePointer [ Color ] [ BlockNr ] = SDL_DisplayFormat( Whole_Image );
-  SDL_SetColorKey( MapBlockSurfacePointer [ Color ] [ BlockNr ] , 0 , 0 );
-  SDL_SetAlpha( MapBlockSurfacePointer [ Color ] [ BlockNr ] , 0 , 0 );
-
-  //--------------------
-  // Now that this is all done, we can mark the map tile as loaded (later)
-  // and free the small image we have loaded from the disk.
-  //
-  SDL_FreeSurface( Whole_Image );
-  
-}; // void LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
-
 /* ---------------------------------------------------------------------- 
  * This function should initialize all obstacle types that are known in
  * FreedroidRPG, such as walls and doors and pillars and teleporters and
@@ -1747,7 +1688,6 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_1 = 0.80 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.0 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . is_smashable = FALSE ;
-
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.0 ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 0.80 ;
@@ -1911,6 +1851,47 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_W_FULL_PARK_BENCH ] . block_area_parm_1 = 1.3 ;
   obstacle_map [ ISO_W_FULL_PARK_BENCH ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_W_FULL_PARK_BENCH ] . is_smashable = TRUE ;
+
+  obstacle_map [ ISO_H_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_BATHTUB ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_H_BATHTUB ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_H_BATHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_V_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_V_BATHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_H_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_2 = 0.3 ;
+  obstacle_map [ ISO_H_WASHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_V_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_WASHTUB ] . block_area_parm_1 = 0.3 ;
+  obstacle_map [ ISO_V_WASHTUB ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_V_WASHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_V_CURTAIN ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_V_CURTAIN ] . block_area_parm_1 = -1 ;
+  obstacle_map [ ISO_V_CURTAIN ] . block_area_parm_2 = -1 ;
+  obstacle_map [ ISO_V_CURTAIN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_CURTAIN ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_H_CURTAIN ] . block_area_parm_1 = -1 ;
+  obstacle_map [ ISO_H_CURTAIN ] . block_area_parm_2 = -1 ;
+  obstacle_map [ ISO_H_CURTAIN ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_N_SOFA ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_N_SOFA ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_N_SOFA ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_N_SOFA ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_S_SOFA ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_S_SOFA ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_S_SOFA ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_S_SOFA ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_E_SOFA ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_E_SOFA ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_E_SOFA ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_E_SOFA ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_W_SOFA ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_W_SOFA ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_W_SOFA ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_W_SOFA ] . is_smashable = TRUE ;
 
 }; // void load_all_obstacles ( void )
 

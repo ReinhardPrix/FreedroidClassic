@@ -49,7 +49,7 @@ void duplicate_all_obstacles_in_area ( Level source_level ,
 				       float target_start_x , float target_start_y );
 void add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
 
-EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
+// EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
 char VanishingMessage[10000]="Hello";
 float VanishingMessageDisplayTime = 0;
@@ -222,31 +222,6 @@ ItemDropFromLevelEditor( void )
   while ( SpacePressed() );
 
 }; // void ItemDropFromLevelEditor( void )
-
-/* ----------------------------------------------------------------------
- * This function zooms into the level.  It is available only from the 
- * level editor.  Using it in the real game is depreciated.
- * ---------------------------------------------------------------------- */
-void
-ZoomIn( void )
-{
-  CurrentCombatScaleFactor += 0.125;
-  SetCombatScaleTo (CurrentCombatScaleFactor);
-  while (IPressed());
-}; // void ZoomIn( void )
-
-/* ----------------------------------------------------------------------
- * This function zooms out of the level.  It is available only from the 
- * level editor.  Using it in the real game is depreciated.
- * ---------------------------------------------------------------------- */
-void
-ZoomOut( void )
-{
-  if (CurrentCombatScaleFactor > 0.125 )
-    CurrentCombatScaleFactor -= 0.125;
-  SetCombatScaleTo (CurrentCombatScaleFactor);
-  while (OPressed());
-}; // void ZoomOut( void )
 
 /* ----------------------------------------------------------------------
  * This function shall determine, whether a given left mouse click was in 
@@ -1125,7 +1100,6 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 	  Weiter=!Weiter;
 	  Done=TRUE;
-	  SetCombatScaleTo( 1 );
 	  break;
 	default: 
 	  break;
@@ -1153,7 +1127,6 @@ enum
 		    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE , FALSE );
 		  while (RightPressed());
 		}
-	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
 	      break;
 	      
 	    case CHANGE_TILE_SET_POSITION:
@@ -1680,7 +1653,6 @@ SetLevelInterfaces ( void )
 	case (-1):
 	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
 	  break;
 	case EXPORT_THIS_LEVEL:
 	  while (EnterPressed() || SpacePressed() ) ;
@@ -3032,8 +3004,6 @@ LevelEditor(void)
   int Done = FALSE;
   int Weiter = FALSE;
   int i ;
-  int SpecialMapValue;
-  char* NumericInputString;
   char linebuf[10000];
   long OldTicks;
   Level EditLevel;
@@ -3238,6 +3208,7 @@ LevelEditor(void)
 	  // specify the value of a map piece just numerically.  This will be
 	  // done upon pressing the 'e' key.
 	  //
+	  /*
 	  if ( EPressed () )
 	    {
 	      while (EPressed());
@@ -3256,6 +3227,7 @@ LevelEditor(void)
 		  EditLevel->map[BlockY][BlockX] . floor_value =SpecialMapValue;
 		}
 	    }
+	  */
 
 	  //--------------------
 	  // From the level editor, it should also be possible to drop new goods
@@ -3498,7 +3470,6 @@ LevelEditor(void)
 		{
 		  Weiter=!Weiter;
 		  Done=TRUE;
-		  SetCombatScaleTo( 1 );
 		  Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
 		  Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
 		  Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;

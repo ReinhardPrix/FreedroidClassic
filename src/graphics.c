@@ -85,7 +85,7 @@ static const char *arrow[] = {
   "0,0"
 };
 
-SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
+// SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
 
 /* ----------------------------------------------------------------------
  * This function was taken directly from the example in the SDL docu.
@@ -955,129 +955,6 @@ void DisplayImage( char *datafile )
   SDL_FreeSurface(image);
 
 }; // void DisplayImage( char *datafile )
-
-/* ----------------------------------------------------------------------
- * This function initializes ALL the graphics again, propably after 
- * they have been destroyed by resizing operations.
- * This is done via freeing the old structures and starting the classical
- * allocations routine again.
- * ---------------------------------------------------------------------- */
-int
-ReInitPictures (void)
-{
-  int i;
-  int j;
-
-  for ( j=0 ; j < NUM_COLORS ; j++ )
-    {
-      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] );
-	}
-    }
-
-  for ( j=0 ; j < DROID_PHASES ; j++ )
-    {
-      SDL_FreeSurface( InfluencerSurfacePointer[j] ); 
-      SDL_FreeSurface( EnemySurfacePointer[j] ); 
-    }
-
-  for ( j=0 ; j < DIGITNUMBER ; j++ )
-    {
-      SDL_FreeSurface( InfluDigitSurfacePointer[j] ); 
-      SDL_FreeSurface( EnemyDigitSurfacePointer[j] ); 
-    }
-
-  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
-    {
-      SDL_FreeSurface( ItemImageList[j].Surface ); 
-    }
-
-  for ( j=0 ; j < ALLBLASTTYPES ; j++ )
-    {
-      for ( i = 0 ; i < Blastmap[j].phases ; i++ )
-	{
-	  SDL_FreeSurface( Blastmap[j].SurfacePointer[i] );
-	}
-    }
-
-  for ( j=0 ; j < Number_Of_Bullet_Types ; j++ )
-    {
-      for ( i = 0 ; i < Bulletmap[j].phases ; i++ )
-	{
-	  SDL_FreeSurface( Bulletmap [ j ] . image [ 0 ] [ i ] . surface );
-	}
-    }
-
-  SDL_FreeSurface ( banner_pic );
-  // SDL_FreeSurface ( console_pic );
-  SDL_FreeSurface ( static_blocks );
-
-  return (InitPictures());
-}; // int ReInitPictures(void)
-
-
-/* ----------------------------------------------------------------------
- * This function resizes all blocks and structures involved in assembling
- * the combat picture to a new scale.  The new scale is relative to the
- * standard scale with means 64x64 tile size.
- * ---------------------------------------------------------------------- */
-void 
-SetCombatScaleTo(float ResizeFactor)
-{
-  int i, j;
-  SDL_Surface *tmp;
-  // static SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
-
-  // just to be sure, reset the size of the graphics
-  // ReInitPictures();
-
-  return;
-
-  //--------------------
-  // If a backup does not yet exist, we'll make one of each map block
-  //
-  if ( BackupMapBlockSurfacePointer [ 0 ] [ 0 ] == NULL )
-    {
-      for ( j=0 ; j < NUM_COLORS ; j++ )
-	{
-	  for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
-	    {
-	      BackupMapBlockSurfacePointer [ j ] [ i ] = SDL_DisplayFormat( MapBlockSurfacePointer [ j ] [ i ] );
-	    }
-	}
-    }
-
-  //--------------------
-  // Now that we are sure we have a backup available, we can start
-  // to resize everything.
-  //
-  for ( j=0 ; j < NUM_COLORS ; j++ )
-    {
-      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  //--------------------
-	  // Now we resize the map blocks to fullfill the requirements of the
-	  // currently set ResizeFactor.
-	  //
-	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] ); // free the old surface
-	  MapBlockSurfacePointer [ j ] [ i ] = 
-	    zoomSurface ( BackupMapBlockSurfacePointer [ j ] [ i ] , ResizeFactor , ResizeFactor , 0 );
-
-	  //--------------------
-	  // Now we convert all the new map blocks to the current display format,
-	  // so that blitting and game performance is normal afterwards.
-	  //
-	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
-	  MapBlockSurfacePointer[j][i]=SDL_DisplayFormat( MapBlockSurfacePointer[j][i] );
-	  SDL_FreeSurface( tmp ); // free the old surface
-	}
-    }
-
-  Block_Width  = INITIAL_BLOCK_WIDTH * ResizeFactor ;
-  Block_Height = INITIAL_BLOCK_HEIGHT * ResizeFactor ;
-
-} // void SetCombatScaleTo(float new_scale);
 
 /* ----------------------------------------------------------------------
  * This function loads the configuration file for a theme, containing 

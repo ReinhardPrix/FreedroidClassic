@@ -1572,24 +1572,27 @@ iso_put_tux ( int x , int y , int PlayerNum )
 
   //--------------------
   // If we make the angle dependent upon direction of movement we use
-  // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
+  //
+  angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI - 45 -180 );
+  angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+  while ( angle < 0 ) angle += 360;
   //
   // But currently, we use as the angle the current location of the mouse on the local
   // client for the first player,
   // but for other players, we use the last known mouse possision as reported by the server
   //
-  if ( PlayerNum == 0 ) 
-    {
-      // angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-      angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
-      while ( angle < 0 ) angle += 360;
-      // DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
-    }
-  else
-    {
-      angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
-    }
+  // if ( PlayerNum == 0 ) 
+  //  {
+  //     // angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+  //    angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+  //     angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+  //    while ( angle < 0 ) angle += 360;
+  //     // DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
+  //  }
+  // else
+  //  {
+  //     angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
+  //  }
 
   //--------------------
   // From the angle we can compute the index to use...

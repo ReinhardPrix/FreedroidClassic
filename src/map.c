@@ -118,7 +118,7 @@ TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLe
 // void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
-int IsWallBlock ( int block );
+// int IsWallBlock ( int block );
 
 
 /* -----------------------------------------------------------------
@@ -571,6 +571,7 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
  *
  *
  * ---------------------------------------------------------------------- */
+/*
 void
 generate_wallobstacles_from_level_map ( int level_num )
 {
@@ -908,24 +909,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
 	      obstacle_counter ++ ;
 	      break;
-	      /*
-		//--------------------
-		// These two are intended to be stepped on.  That means they will not be
-		// blitted as obstacles, but must rather be blitted as floor tiles, sorry
-		//
-	    case BLOCK4:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_4 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BLOCK5:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	      */
+
 
 	    case BOX_1:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_1 ;
@@ -972,6 +956,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 
   
 }; // void generate_wallobstacles_from_level_map ( int level_num )
+*/
 
 /* ----------------------------------------------------------------------
  *
@@ -1066,6 +1051,7 @@ This bug can be resolved by simply raising a contant by one, but it needs to be 
  * This function returns TRUE for blocks classified as "Walls" and false
  * otherwise.
  * ---------------------------------------------------------------------- */
+/*
 int
 IsWallBlock (int block)
 {
@@ -1109,89 +1095,12 @@ IsWallBlock (int block)
     case CAVE_CORNER_LD:
     case CAVE_CORNER_RD:
 
-
-    case ( BLUE_BLOCKS_OFFSET + KREUZ ) :
-    case ( GREEN_BLOCKS_OFFSET + KREUZ ) :
-    case ( BLUE_BLOCKS_OFFSET + H_WALL ) :
-    case ( GREEN_BLOCKS_OFFSET + H_WALL ) :
-    case ( BLUE_BLOCKS_OFFSET + V_WALL ) :
-    case ( GREEN_BLOCKS_OFFSET + V_WALL ) :
-    case ( BLUE_BLOCKS_OFFSET + H_SHUT_DOOR ) :
-    case ( GREEN_BLOCKS_OFFSET + H_SHUT_DOOR ) :
-    case ( BLUE_BLOCKS_OFFSET + V_SHUT_DOOR ) :
-    case ( GREEN_BLOCKS_OFFSET + V_SHUT_DOOR ) :
-    case ( BLUE_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
-    case ( GREEN_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
-    case ( BLUE_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
-    case ( GREEN_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
-    case ( BLUE_BLOCKS_OFFSET + CORNER_LD ) :
-    case ( GREEN_BLOCKS_OFFSET + CORNER_LD ) :
-    case ( BLUE_BLOCKS_OFFSET + T_D ) :
-    case ( GREEN_BLOCKS_OFFSET + T_D ) :
-    case ( BLUE_BLOCKS_OFFSET + CORNER_RD ) :
-    case ( GREEN_BLOCKS_OFFSET + CORNER_RD ) :
-    case ( BLUE_BLOCKS_OFFSET + T_L ) :
-    case ( GREEN_BLOCKS_OFFSET + T_L ) :
-    case ( BLUE_BLOCKS_OFFSET + T_R ) :
-    case ( GREEN_BLOCKS_OFFSET + T_R ) :
-    case ( BLUE_BLOCKS_OFFSET + CORNER_LU ) :
-    case ( GREEN_BLOCKS_OFFSET + CORNER_LU ) :
-    case ( BLUE_BLOCKS_OFFSET + T_U ) :
-    case ( GREEN_BLOCKS_OFFSET + T_U ) :
-    case ( BLUE_BLOCKS_OFFSET + CORNER_RU ) :
-    case ( GREEN_BLOCKS_OFFSET + CORNER_RU ) :
-    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LD ) :
-    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LD ) :
-    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RD ) :
-    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RD ) :
-    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LU ) :
-    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LU ) :
-    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RU ) :
-    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RU ) :
-    case ( BLUE_BLOCKS_OFFSET + BLOCK1 ) :
-    case ( GREEN_BLOCKS_OFFSET + BLOCK1 ) :
-    case ( BLUE_BLOCKS_OFFSET + BLOCK2 ) :
-    case ( GREEN_BLOCKS_OFFSET + BLOCK2 ) :
-    case ( BLUE_BLOCKS_OFFSET + BLOCK3 ) :
-    case ( GREEN_BLOCKS_OFFSET + BLOCK3 ) :
-    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_L ) :
-    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_L ) :
-    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_R ) :
-    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_R ) :
-    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_U ) :
-    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_U ) :
-    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_D ) :
-    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_D ) :
-    case ( BLUE_BLOCKS_OFFSET + ALERT ) :
-    case ( GREEN_BLOCKS_OFFSET + ALERT ) :
-    case ( BLUE_BLOCKS_OFFSET + CONSUMER_1 ) :
-    case ( GREEN_BLOCKS_OFFSET + CONSUMER_1 ) :
-    case ( BLUE_BLOCKS_OFFSET + CONSUMER_2 ) :
-    case ( GREEN_BLOCKS_OFFSET + CONSUMER_2 ) :
-    case ( BLUE_BLOCKS_OFFSET + CONSUMER_3 ) :
-    case ( GREEN_BLOCKS_OFFSET + CONSUMER_3 ) :
-    case ( BLUE_BLOCKS_OFFSET + CONSUMER_4 ) :
-    case ( GREEN_BLOCKS_OFFSET + CONSUMER_4 ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_V_WALL ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_V_WALL ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_H_WALL ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_H_WALL ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
-    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
-    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
-
-
-
       return (TRUE);
     default:
       return (FALSE);
     }				// switch
 }; // int IsWallBlock( .. )
+*/
 
 /* ----------------------------------------------------------------------
  * This function collects the automap data and stores it in the Me data
@@ -1248,6 +1157,7 @@ CollectAutomapData ( void )
     {
       for ( x = start_x ; x < end_x ; x ++ )
 	{
+	  /*
 	  if ( IsWallBlock( AutomapLevel->map[y][x]  . floor_value ) ) 
 	    {
 	      //--------------------
@@ -1287,6 +1197,7 @@ CollectAutomapData ( void )
 		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | UP_WALL_BIT ;
 		}
 	    }
+	  */
 	}
     }
 
@@ -1679,11 +1590,6 @@ LoadShip (char *filename)
       curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
       decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
-
-      //--------------------
-      // We generate obstacles out of the current map info...
-      //
-      generate_wallobstacles_from_level_map ( i );
 
       //--------------------
       // The level structure contains an array with the locations of all

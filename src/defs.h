@@ -878,8 +878,8 @@ enum
   FLOOR_CAVE_L=87,  FLOOR_CAVE_R, FLOOR_CAVE_U, FLOOR_CAVE_D,
   CAVE_WITH_WAY_TILE=91,
   CAVE_WITH_GRASS_1=92,   CAVE_WITH_GRASS_2,   CAVE_WITH_GRASS_3,   CAVE_WITH_GRASS_4,
-  IDENTIFY_L,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D, 
-  LAST_BLOCK_IN_LIST_DUMMY_ENTRY
+  IDENTIFY_L,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D // , 
+  // LAST_BLOCK_IN_LIST_DUMMY_ENTRY
 
 };
 
@@ -1004,7 +1004,18 @@ enum
   ISO_N_FULL_PARK_BENCH ,
   ISO_E_FULL_PARK_BENCH ,
   ISO_S_FULL_PARK_BENCH ,
-  ISO_W_FULL_PARK_BENCH 
+  ISO_W_FULL_PARK_BENCH ,
+
+  ISO_H_BATHTUB , 
+  ISO_V_BATHTUB ,
+  ISO_H_WASHTUB , 
+  ISO_V_WASHTUB ,
+  ISO_V_CURTAIN ,
+  ISO_H_CURTAIN ,
+  ISO_E_SOFA , 
+  ISO_S_SOFA , 
+  ISO_W_SOFA , 
+  ISO_N_SOFA 
 
 };
 
@@ -1024,13 +1035,5 @@ enum
   ISO_FLOOR_PARQUET = 11 ,
   ALL_ISOMETRIC_FLOOR_TILES = 12 // this is always the last entry.  It's used to count the number of floor tiles.
 };
-
-#define BLUE_BLOCKS_OFFSET 100
-#define GREEN_BLOCKS_OFFSET 200
-
-// #define NUM_MAP_BLOCKS		80  // total number of map-blocks 
-// #define NUM_MAP_BLOCKS (3*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
-#define NUM_MAP_BLOCKS (1*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
-
 
 #endif

@@ -231,7 +231,6 @@ EnterConsole (void)
 	    case 2:
 	      ClearGraphMem();
 	      ShowDeckMap (CurLevel);
-	      SetCombatScaleTo( 1 );
 	      break;
 	    case 3:
 	      ClearGraphMem();
@@ -1177,8 +1176,6 @@ ShowDeckMap (Level deck)
   tmp.y=Me[0].pos.y;
 
   ClearUserFenster ();
-
-  SetCombatScaleTo( 0.25 );
 
   ExitNow = FALSE ;
 
