@@ -196,7 +196,8 @@ int GetDirection(point robo,point bul){
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void CheckBulletCollisions(int num)
+void 
+CheckBulletCollisions(int num)
 {
   int i;
   int level = CurLevel->levelnum;
@@ -218,11 +219,8 @@ void CheckBulletCollisions(int num)
   ydist = Me.pos.y - CurBullet->pos.y;
   if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
     GotHitSound();
-    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
 
-    // printf("Verlorene Energie: %d.", Bulletmap[CurBullet->type].damage );
-    // printf("Bullettyp: %d.", CurBullet->type );
-    //    Terminate(0);
+    if ( !InvincibleMode ) Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
 
     // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
     // ATTENTION!  These instructions belong here and must not be moved up.
@@ -255,13 +253,13 @@ void CheckBulletCollisions(int num)
 
 /*@Function============================================================
 @Desc: CheckBlastCollsions(int num)
-			checkt Collisionen des Blasts num mit Bullets und Druids
-			UND reagiert darauf
+checkt Collisionen des Blasts num mit Bullets und Druids
+UND reagiert darauf
 
-			LastBlastHit: Diese Variable dient dazu, doppelte Messages zu unter-
-			dr"ucken. Blasts schaden mehrere Phasen lang. Der Z"ahler LastBlastHit
-			gibt den Zeitabstand zur letzten Verletzung durch Blasts an.
-			Er wird in der Hauptschleife erh"oht.
+LastBlastHit: Diese Variable dient dazu, doppelte Messages zu unter-
+dr"ucken. Blasts schaden mehrere Phasen lang. Der Z"ahler LastBlastHit
+gibt den Zeitabstand zur letzten Verletzung durch Blasts an.
+Er wird in der Hauptschleife erh"oht.
 @Ret: void 
 @Int:
 * $Function----------------------------------------------------------*/
@@ -295,7 +293,7 @@ void CheckBlastCollisions(int num)
     if( abs(Feindesliste[i].pos.x - CurBlast->PX) < BLASTRADIUS+DRUIDRADIUSX )
       if( abs(Feindesliste[i].pos.y - CurBlast->PY) < BLASTRADIUS+DRUIDRADIUSY) {
 	/* drag energy of enemy */
-	Feindesliste[i].energy -= BLASTDAMAGE;
+	Feindesliste[i].energy -= BLASTDAMAGE * Frame_Time();
 	gotoxy(1,2);
 	printf(" Robot hit by Blast %d.\n",RHBZaehler++);
       }

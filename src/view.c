@@ -287,7 +287,7 @@ void GetInternFenster(void)
     } // for(col=0...
     target-=(INTERNBREITE-1)*BLOCKBREITE;
   } // for (line=0...
-  printf("\nvoid GetInternFenster(void): Doppelfor-Schleife scheint abgearbeitet zu sein...\n");
+  DebugPrintf("\nvoid GetInternFenster(void): Doppelfor-Schleife scheint abgearbeitet zu sein...\n");
 
 
 #if ENEMYOFF == 0
@@ -493,17 +493,30 @@ void PutEnemy(int Enum){
   const char *druidname;		/* the number-name of the Enemy */
   int phase;
 	
+  DebugPrintf("\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+
   /* if enemy is on other level, return */
-  if (Feindesliste[Enum].levelnum != CurLevel->levelnum) return;
+  if (Feindesliste[Enum].levelnum != CurLevel->levelnum) 
+    {
+      DebugPrintf("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+      return;
+    }
 
   /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
-  if (Feindesliste[Enum].Status == OUT ) return;
+  if (Feindesliste[Enum].Status == OUT ) 
+    {
+      DebugPrintf("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+      return;
+    }
 
   /* Wenn Feind nicht sichtbar: weiter */
-  if( ! IsVisible(&Feindesliste[Enum].pos) ) {
-    Feindesliste[Enum].onscreen=FALSE;
-    return;
-  } else Feindesliste[Enum].onscreen=TRUE;
+  if( ! IsVisible(&Feindesliste[Enum].pos) ) 
+    {
+      Feindesliste[Enum].onscreen=FALSE;
+      DebugPrintf("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+      return;
+
+    } else Feindesliste[Enum].onscreen=TRUE;
 
   /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
   druidname = Druidmap[Feindesliste[Enum].type].druidname;
@@ -516,6 +529,8 @@ void PutEnemy(int Enum){
 	
   PutObject(enemyX, enemyY, Enemypic, FALSE);
 
+  DebugPrintf("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+
 } // void PutEnemy(int Enum) 
 
 
@@ -527,76 +542,80 @@ void PutEnemy(int Enum){
 * $Function----------------------------------------------------------*/
 void PutBullet(int BulletNummer)
 {
-	int i;
-	Bullet CurBullet = &AllBullets[BulletNummer];
-	unsigned char *bulletpic;
+  int i;
+  Bullet CurBullet = &AllBullets[BulletNummer];
+  unsigned char *bulletpic;
+
+  DebugPrintf("\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
 #if BULLETOFF == 1
-	return;
+  return;
 #endif
 	
-	bulletpic = Bulletmap[CurBullet->type].picpointer +
+  bulletpic = Bulletmap[CurBullet->type].picpointer +
 						CurBullet->phase*BLOCKMEM;
 
-	/*
-	 * Wenn ein FLASH gestartet ist, wird einfach der ganze Screen
-	 * zuerst schwarz, dann weiss geschaltet
-	 */
-	if (CurBullet->type == FLASH) {
+  /*
+   * Wenn ein FLASH gestartet ist, wird einfach der ganze Screen
+   * zuerst schwarz, dann weiss geschaltet
+   */
+  if (CurBullet->type == FLASH) {
 
-		/*
-		 * Wenn der FLASH vorbei ist, l"oschen und fertig
-		 */
-		 
-		if (CurBullet->time > 2) {
-			CurBullet->time=0;
-			CurBullet->type=OUT;
-			CurBullet->mine=FALSE;
-			return;
-		}
+    /*
+     * Wenn der FLASH vorbei ist, l"oschen und fertig
+     */
+    
+    if (CurBullet->time > 2) {
+      CurBullet->time=0;
+      CurBullet->type=OUT;
+      CurBullet->mine=FALSE;
+      return;
+    }
 
-		/*
-		 * Alle sichtbaren enemys, die nicht immun sind besch"adigen
-		 * Auch den Influencer wenn er nicht immun ist besch"adigen
-		 */
-		 
-		for (i=0;i<MAX_ENEMYS_ON_SHIP;i++) {
-			if ( (Feindesliste[i].onscreen) &
-				  (!Druidmap[Feindesliste[i].type].flashimmune) ) {
-						Feindesliste[i].energy-=Bulletmap[FLASH].damage/2;
-			}
-		}
-
-		if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
-			Me.energy-=Bulletmap[FLASH].damage/2;
-
-		
-		/*
-		 * Das ganze Fenster entweder schwarz oder weiss f"arben
-		 */
-		 
-		if (CurBullet->time == 1) {
-			FlashWindow(0);
-			return;
-		}
-		if (CurBullet->time == 2) {
-			FlashWindow(15);
-			return;
-		}
-		
+    /*
+     * Alle sichtbaren enemys, die nicht immun sind besch"adigen
+     * Auch den Influencer wenn er nicht immun ist besch"adigen
+     */
+    
+    for (i=0;i<MAX_ENEMYS_ON_SHIP;i++) {
+      if ( (Feindesliste[i].onscreen) &
+	   (!Druidmap[Feindesliste[i].type].flashimmune) ) {
+	Feindesliste[i].energy-=Bulletmap[FLASH].damage/2;
+      }
+    }
+    
+    if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
+      Me.energy-=Bulletmap[FLASH].damage/2;
+    
+    
+    /*
+     * Das ganze Fenster entweder schwarz oder weiss f"arben
+     */
+    
+    if (CurBullet->time == 1) {
+      FlashWindow(0);
+      return;
+    }
+    if (CurBullet->time == 2) {
+      FlashWindow(15);
+      return;
+    }
+    
 				  
-	}
+  }
 
 						
-	if( PutObject(CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE) {
-		/* Bullet-Bullet Collision: Bullet loeschen */
-		CurBullet->type = OUT;
-		CurBullet->mine = FALSE;
+  if( PutObject(CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE) {
+    /* Bullet-Bullet Collision: Bullet loeschen */
+    CurBullet->type = OUT;
+    CurBullet->mine = FALSE;
+    
+    /* Druid-Blast dort erzeugen: killt zweites Bullet */
+    StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
+  } /* if */
+  
+  DebugPrintf("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
-		/* Druid-Blast dort erzeugen: killt zweites Bullet */
-		StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	} /* if */
-	
 } /* PutBullet */
 
 /*@Function============================================================
