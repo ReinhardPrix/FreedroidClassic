@@ -881,7 +881,7 @@ AttackInfluence (int enemynum)
 	}
 
       /* Schussrichtung festlegen */
-      if (fabsf (xdist) > fabsf (ydist))
+      if (fabsf (xdist) >= fabsf (ydist))
 	{
 	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
 	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;

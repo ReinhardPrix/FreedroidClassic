@@ -296,6 +296,7 @@ EXTERN int NoDirectionPressed (void);
 #define EXTERN extern
 #endif
 
+EXTERN void InitiateMenu( void );
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
@@ -374,6 +375,7 @@ void PaintConsoleMenu (void);
 #define EXTERN extern
 #endif
 
+EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );
 EXTERN void AddInfluBurntText( void );

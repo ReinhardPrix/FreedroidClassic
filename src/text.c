@@ -62,6 +62,45 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
+/* ----------------------------------------------------------------------
+ * This function does the communication routine when the influencer in
+ * transfer mode touched a friendly droid.
+ *
+ * ---------------------------------------------------------------------- */
+void 
+ChatWithFriendlyDroid( int Enum )
+{
+  char* RequestString;
+
+  Activate_Conservative_Frame_Computation( );
+  MakeGridOnScreen();
+
+
+  DisplayText( "Transfer channel protocol set up for text transfer...\n\n" , User_Rect.x , User_Rect.y , NULL );
+  printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
+
+  while (1)
+    {
+      printf_SDL( ne_screen, -1 , -1 , "What is your request? [type quit to cancel communication]\n" );
+      printf_SDL( ne_screen, -1 , -1 , ">" );
+      SDL_Flip ( ne_screen );
+      RequestString = GetString( 20 , FALSE );
+      printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
+
+      if ( !strcmp ( RequestString , "quit" ) ) return;
+      if ( !strcmp ( RequestString , "help" ) ) 
+	{
+	  DisplayText( 
+"You have opend a communication channel to a friendly droid by touching it while in transfer mode.\n\
+You can enter command phrases to make the droid perform some action.\n\
+Or you can ask the droid for valuable information by entering the keywords you request information about.\n\
+Most useful command phrases are: follow stay\n\
+Often useful information requests are: job name status MS\n\
+Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL );
+	}
+      
+    }
+}; // void ChatWithFriendlyDroid( int Enum );
 
 void 
 EnemyHitByBulletText( int Enum )
@@ -327,6 +366,7 @@ int
 DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
 
   SDL_Rect store_clip;
 
@@ -337,6 +377,15 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
   SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
   if (clip)
     SDL_SetClipRect (ne_screen, clip);
+  else
+    {
+      clip = & Temp_Clipping_Rect;
+      Temp_Clipping_Rect.x=0;
+      Temp_Clipping_Rect.y=0;
+      Temp_Clipping_Rect.w=SCREENLEN;
+      Temp_Clipping_Rect.h=SCREENHEIGHT;
+    }
+
 
   tmp = Text;			/* running text-pointer */
 
@@ -345,7 +394,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       if ( *tmp == '\n' )
 	{
 	  MyCursorX = clip->x;
-	  MyCursorY += FontHeight (Menu_BFont) * TEXT_STRETCH;
+	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
 	}
       else
 	DisplayChar (*tmp);
@@ -581,7 +630,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   if (y == -1) y = MyCursorY;
   else MyCursorY = y;
 
-  tmp = (char *) MyMalloc (1000 + 1);
+  tmp = (char *) MyMalloc (10000 + 1);
   vsprintf (tmp, fmt, args);
   PutString (screen, x, y, tmp);
 
