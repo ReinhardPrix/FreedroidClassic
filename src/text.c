@@ -43,24 +43,11 @@
 #include "text.h"
 #include "SDL_rotozoom.h"
 
-char *Wordpointer;
-unsigned char *Fontpointer;
-unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
-unsigned int CurrentFontFG = FIRST_FONT_FG;	/* Momentane Schrift-Farben */
-unsigned int CurrentFontBG = FIRST_FONT_BG;
-
-int CharsPerLine;		/* Zeilenlaenge: veraltet */
-
-/* Aktuelle Text-Einfuege-Position: */
+/* Current text (virtual) "cursor" position */
 int MyCursorX;
 int MyCursorY;
 
-/* Buffer fuer Text-Environment */
-int StoreCursorX;
-int StoreCursorY;
-
-unsigned int StoreTextBG;
-unsigned int StoreTextFG;
+char TextBuffer[10000];
 
 void 
 EnemyHitByBulletText( int Enum )
@@ -570,9 +557,9 @@ void
 printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 {
   va_list args;
-  int i, h;
+  int i, h, textlen;
 
-  char *tmp;
+  
   va_start (args, fmt);
 
   if (x == -1) x = MyCursorX;
@@ -581,25 +568,27 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   if (y == -1) y = MyCursorY;
   else MyCursorY = y;
 
-  tmp = (char *) MyMalloc (10000 + 1);
-  vsprintf (tmp, fmt, args);
-  PutString (screen, x, y, tmp);
-  h = FontHeight (GetCurrentFont()) + 2;
-  SDL_UpdateRect (screen, x, y, SCREENLEN - x, h);  // update the relevant line
+  vsprintf (TextBuffer, fmt, args);
+  textlen = 0;
+  for (i=0; i < strlen(TextBuffer); i++)
+    textlen += CharWidth (GetCurrentFont(), TextBuffer[i]);
 
-  if (tmp[strlen(tmp)-1] == '\n')
+  PutString (screen, x, y, TextBuffer);
+  h = FontHeight (GetCurrentFont()) + 2;
+
+  SDL_UpdateRect (screen, x, y, textlen, h);  // update the relevant line
+
+  if (TextBuffer[strlen(TextBuffer)-1] == '\n')
     {
       MyCursorX = x;
       MyCursorY = y+ 1.1*h;
     }
   else
     {
-      for (i=0; i < strlen(tmp); i++)
-	MyCursorX += CharWidth (GetCurrentFont(), tmp[i]);
+      MyCursorX += textlen;
       MyCursorY = y;
     }
 
-  free (tmp);
   va_end (args);
 }
 

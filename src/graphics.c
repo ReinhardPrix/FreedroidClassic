@@ -567,6 +567,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 int
 InitPictures (void)
 {
+  static bool first_call= TRUE;
   char *fpath;
   int line, col;
   BFont_Info *oldfont;
@@ -595,9 +596,6 @@ InitPictures (void)
   LoadThemeConfigurationFile();
 
   printf_SDL (ne_screen, -1, -1, " ok\n");
-
-  arrow_cursor = init_system_cursor (arrow_xpm);
-  crosshair_cursor = init_system_cursor (crosshair_xpm);
 
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
   //---------- get Map blocks
@@ -665,34 +663,41 @@ InitPictures (void)
   //---------- get Takeover pics
   GetTakeoverGraphics ();
   printf_SDL (ne_screen, -1, -1, ".");
-  //---------- get Banner
-  fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
-  FreeIfUsed (banner_pic);
-  banner_pic = Load_Block (fpath, 0, 0, NULL);
-  printf_SDL (ne_screen, -1, -1, ".");
-  //---------- get Console pictures
-  fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
-  FreeIfUsed (console_pic);
-  console_pic = Load_Block (fpath, 0, 0, NULL);
-  fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE);
-  FreeIfUsed (console_bg_pic1);
-  console_bg_pic1 = Load_Block (fpath, 0, 0, NULL);
-  fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, FALSE);
-  FreeIfUsed (console_bg_pic2);
-  console_bg_pic2 = Load_Block (fpath, 0, 0, NULL);
 
-
+  FreeIfUsed(ship_on_pic);
   ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, TRUE));
+  FreeIfUsed(ship_off_pic);
   ship_off_pic= IMG_Load (find_file (SHIP_OFF_PIC_FILE, GRAPHICS_DIR, TRUE));
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, FALSE) );
-  arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, FALSE) );
-  arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, FALSE) );
-  arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, FALSE) );
   printf_SDL (ne_screen, -1, -1, " ok\n");
+
+  // the following are not theme-specific and are therefore only loaded once!
+  if (first_call)
+    {
+      // cursor shapes
+      arrow_cursor = init_system_cursor (arrow_xpm);
+      crosshair_cursor = init_system_cursor (crosshair_xpm);
+      //---------- get Console pictures
+      fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
+      console_pic = Load_Block (fpath, 0, 0, NULL);
+      fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE);
+      console_bg_pic1 = Load_Block (fpath, 0, 0, NULL);
+      fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, FALSE);
+      console_bg_pic2 = Load_Block (fpath, 0, 0, NULL);
+      printf_SDL (ne_screen, -1, -1, ".");
+      arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, FALSE) );
+      arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, FALSE) );
+      arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, FALSE) );
+      arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, FALSE) );
+      //---------- get Banner
+      fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
+      banner_pic = Load_Block (fpath, 0, 0, NULL);
+
+      printf_SDL (ne_screen, -1, -1, ".");
+    }
   
   SetCurrentFont (oldfont);
+
+  first_call = FALSE;
 
   return (TRUE);
 }				// InitPictures
