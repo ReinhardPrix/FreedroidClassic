@@ -42,13 +42,10 @@
 //--------------------
 // Now we give some definitions for the computation of the
 // character stats
-//
-float Energy_Gain_Per_Vit_Point[]={ -1 , 2 , 1.5 , 1 };
-float Mana_Gain_Per_Magic_Point[]={ -1 , 1 , 1.5 , 2 };
-float AC_Gain_Per_Dex_Point[]={ -1, 1, 1, 1 };
-// #define ENERGY_GAIN_PER_VIT_POINT 2
-// #define MANA_GAIN_PER_MAGIC_POINT 2
-// #define AC_GAIN_PER_DEX_POINT 1
+//                                      For Warrior  For Sniper  For Hacker
+float Energy_Gain_Per_Vit_Point[]={ -1 ,     2 ,        1.5 ,        1 };
+float Mana_Gain_Per_Magic_Point[]={ -1 ,     1 ,        1.5 ,        2 };
+float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 
 #define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
 #define TOHIT_PERCENT_PER_DEX_POINT (0.5)
