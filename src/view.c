@@ -704,8 +704,8 @@ isometric_show_blocks_around_tux ( int mask )
 		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_HEIGHT / 2 ) +
    		  ( -Me[0].pos.y+line-0.5 ) * ( + ISO_HEIGHT / 2 ) ;
 	      */
-	      TargetRectangle.x = translate_map_point_to_screen_pixel ( +col , +line , TRUE ) - ( ISO_WIDTH / 2 ) ;
-	      TargetRectangle.y = translate_map_point_to_screen_pixel ( +col , +line , FALSE ) - ( ISO_HEIGHT / 2 ) ;
+	      // TargetRectangle.x = translate_map_point_to_screen_pixel ( +col , +line , TRUE ) - ( ISO_WIDTH / 2 ) ;
+	      // TargetRectangle.y = translate_map_point_to_screen_pixel ( +col , +line , FALSE ) - ( ISO_HEIGHT / 2 ) ;
 
 	      // TargetRectangle.y = UserCenter_y
 	      // + ( -Me[0].pos.y+line-0.5 )*Block_Height;

@@ -1287,6 +1287,31 @@ is a severe bug in the reading function.",
 
 }; // void LoadThemeConfigurationFile ( void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+get_standard_iso_floor_tile_size ( void )
+{
+  SDL_Surface *standard_floor_tile;
+
+  standard_floor_tile = IMG_Load( find_file ( "iso_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
+  if ( standard_floor_tile == NULL )
+    {
+      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+      GiveStandardErrorMessage ( "get_standard_iso_floor_tile_size(...)" , "\
+UNABLE TO LOAD STANDARD TILE!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  iso_floor_tile_width  = standard_floor_tile -> w ;
+  iso_floor_tile_height = standard_floor_tile -> h ;
+
+  SDL_FreeSurface ( standard_floor_tile );
+
+}; // void get_standard_iso_floor_tile_size ( void )
+
 /* -----------------------------------------------------------------
  * This function does all the bitmap initialisation, so that you
  * later have the bitmaps in perfect form in memory, ready for blitting
@@ -1299,6 +1324,14 @@ InitPictures (void)
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
+
+  //--------------------
+  // First thing to do is get the size of a typical isometric
+  // floor tile, i.e. height and width of the corresponding graphics
+  // bitmap
+  //
+  get_standard_iso_floor_tile_size ();
+
   
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which

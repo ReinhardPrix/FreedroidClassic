@@ -245,6 +245,8 @@ EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
 
+EXTERN int iso_floor_tile_width;
+EXTERN int iso_floor_tile_height;
 EXTERN int Block_Width;
 EXTERN int Block_Height;
 EXTERN int Digit_Length;

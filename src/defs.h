@@ -270,8 +270,8 @@ enum
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
-#define ISO_WIDTH               128.0
-#define ISO_HEIGHT              94.0
+// #define ISO_WIDTH               128.0
+// #define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
 
 /* Scroll- Fenster */

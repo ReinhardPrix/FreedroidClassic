@@ -1606,12 +1606,12 @@ translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , 
 {
   if ( give_x )
     {
-      return ( Me [ PlayerNum ] . pos . x + ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+      return ( Me [ PlayerNum ] . pos . x + ( axis_x / ((float)iso_floor_tile_width) ) + ( axis_y / ((float)iso_floor_tile_height) ) ) ;
       // return ( ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
   else
     {
-      return ( Me [ PlayerNum ] . pos . y - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+      return ( Me [ PlayerNum ] . pos . y - ( axis_x / ((float)iso_floor_tile_width) ) + ( axis_y / ((float)iso_floor_tile_height) ) ) ;
       // return ( - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
 	      
@@ -1626,11 +1626,11 @@ translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int gi
 {
   if ( give_x )
     {
-      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * ISO_WIDTH / 2 ) ; 
+      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / 2 ) ; 
     }
   else
     {
-      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ISO_HEIGHT / 2 ) ) ;
+      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ;
     }
 }; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
