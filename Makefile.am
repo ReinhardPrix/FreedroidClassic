@@ -7,12 +7,16 @@ dist-hook:
 	rm -f  `find $(distdir) -name "*.blend"`
 
 install-data-local:
-	mkdir -p $(pkgdatadir)
 	echo "Installing the data-files ..."
-	cp -r $(srcdir)/$(EXTRA_DIST) $(pkgdatadir)/
-	echo "... and cleaning CVS and blender-sources:"
-	rm -rf `find $(pkgdatadir) -name CVS`
-	rm -f  `find $(pkgdatadir) -name "*.blend"`
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
+	cp -pr $(srcdir)/$(EXTRA_DIST) $(DESTDIR)$(pkgdatadir)/
+	echo "... and cleaning CVS and blender-sources etc:"
+	rm -rf `find $(DESTDIR)$(pkgdatadir) -name CVS`
+	rm -f  `find $(DESTDIR)$(pkgdatadir) -name "*.blend"`
+	rm -f  `find $(DESTDIR)$(pkgdatadir) -name "Makefile*"`
 	echo "..done."
 
-
+uninstall-local:
+	echo "Removing data-files ..."
+	rm -rf $(DESTDIR)$(pkgdatadir)
+	echo "...done."
