@@ -94,17 +94,19 @@ MoveBullets (void)
 
 
 /*@Function============================================================
-@Desc: Diese Funktion loescht das Bullet mit der uebergebenen Nummer
-
+@Desc: delete bullet of given number, set it type=OUT, put it at x/y=-1/-1 
+       and create a Bullet-blast if with_blast==TRUE
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DeleteBullet (int Bulletnumber)
+DeleteBullet (int Bulletnumber)//, bool with_blast)
 {
   Bullet CurBullet = &AllBullets[Bulletnumber];
   int i;
 
+  if (CurBullet->type == OUT) // ignore dead bullets
+    return;
   //--------------------
   // At first we generate the blast at the collision spot of the bullet,
   // cause later, after the bullet is deleted, it will be hard to know
@@ -136,8 +138,8 @@ DeleteBullet (int Bulletnumber)
   CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
   CurBullet->phase = 0;
-  CurBullet->pos.x = 0;
-  CurBullet->pos.y = 0;
+  CurBullet->pos.x = -1;
+  CurBullet->pos.y = -1;
   CurBullet->angle = 0;
 
 }; // void DeleteBullet(int Bulletnumber)
