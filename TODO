@@ -9,8 +9,19 @@ Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 - (rp) sometimes droids get created in "piles", i.e. on top of each other...
 
+- after using flash-bullet: there seems to be a "hanging flash"
+  whenever entering a new level...
+
+- !!: when played for longer periods, game seems to develops some
+  weird anomalies:
+     * creation of enemys in piles  , sometimes higher numbers
+       killable in one shot (which shouldnt)
+     * once after being killed: reappeared in nowhere ??
+
 -  Collision with robo can still kick you out of level.. ??
    --> (rp) check on slow machine if this is still an issue...
+
+- missing 711 ...
            
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
