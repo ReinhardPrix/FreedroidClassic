@@ -199,6 +199,15 @@ enum _sounds
 #define RAHMENBREITE		SCREENBREITE
 #define RAHMENHOEHE		32
 
+/* Startpos + lens of Rahmen-Texts */
+#define LEFTINFO_X 	12
+#define LEFTINFO_Y	8
+#define RIGHTINFO_X	242
+#define RIGHTINFO_Y	8
+#define LEFT_TEXT_LEN 10
+#define RIGHT_TEXT_LEN 6
+
+
 /* Menu in Konsole */
 #define MENUITEMHEIGHT 		77
 #define MENUITEMLENGTH 		50
