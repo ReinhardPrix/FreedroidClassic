@@ -686,6 +686,7 @@ PutBullet (int BulletNummer)
   // SDL_Surface *tmp;
   int PhaseOfBullet;
   int i;
+  int diag;
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
@@ -711,16 +712,6 @@ PutBullet (int BulletNummer)
 	}
     } // if type == FLASH
 
-  // In the old code, collision checking of bullets with bullets was
-  // done graphically and in here.  This is no longer the case:  Now
-  // we do the collision check "mathematically" and in a more appropriate
-  // place than the a graphics output function.
-
-  TargetRectangle.x = USER_FENSTER_CENTER_X
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
-
 
 
   PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
@@ -728,6 +719,11 @@ PutBullet (int BulletNummer)
   PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
 
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
+
+  TargetRectangle.x = USER_FENSTER_CENTER_X
+    - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
+  TargetRectangle.y = USER_FENSTER_CENTER_Y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
 
 #define ONE_ROTATION_ONLY
 #ifdef ONE_ROTATION_ONLY
@@ -747,9 +743,31 @@ PutBullet (int BulletNummer)
       DebugPrintf( 1 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
       CurBullet->Surfaces_were_generated=TRUE;
     }
+
+  // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
+  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
+  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
+  // This has to be taken into account when calculating the target position for the 
+  // blit of these surfaces!!!!
+  TargetRectangle.x = USER_FENSTER_CENTER_X
+    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+  TargetRectangle.y = USER_FENSTER_CENTER_Y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
 #else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
+
+  // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
+  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
+  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
+  // This has to be taken into account when calculating the target position for the 
+  // blit of these surfaces!!!!
+  TargetRectangle.x = USER_FENSTER_CENTER_X
+    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+  TargetRectangle.y = USER_FENSTER_CENTER_Y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+
   SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
 #endif

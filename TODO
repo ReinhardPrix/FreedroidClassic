@@ -12,6 +12,9 @@ Outstanding release-critical bugs (priority: high)
 - bullet to top-right seems to be "offset" to top with respect to
   displayed bullet-pic (which is positioned correctly), i.e. 
   collisions with wall or robots take place as if it was higher in y...
+  jp: --> Problem fixed.  The rotated Block is no longer of size Block_Width x Block_Height
+          but of the size of the smalled rectrangle containing the uncroped rotated 
+	  square of this size.
 
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
