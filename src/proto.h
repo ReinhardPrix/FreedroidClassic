@@ -202,6 +202,7 @@ EXTERN void blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buff
 						       iso_image our_iso_image , float pos_x , float pos_y );
 EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos_x , float pos_y , 
 							float shift_x , float shift_y );
+EXTERN void blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y );
 
 // graphics.c 
 #undef EXTERN
@@ -210,6 +211,7 @@ EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image 
 #else
 #define EXTERN extern
 #endif
+EXTERN SDL_Surface* rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect ) ;
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
 EXTERN void TakeScreenshot( void );

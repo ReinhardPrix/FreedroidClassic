@@ -1862,8 +1862,16 @@ Empty part string received!",
   //
   if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
     {
-      blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
-				       Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
+      if ( x == (-1) )
+	{
+	  blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+					   Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
+	}
+      else
+	{
+	  blit_iso_image_to_screen_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+					      x , y );
+	}
     }
   else
     {
@@ -2316,10 +2324,10 @@ blit_tux ( int x , int y , int player_num )
   int alpha_value;
   point UpperLeftBlitCorner;
 
-  Text_Rect.x=UserCenter_x + Block_Width/3;
-  Text_Rect.y=UserCenter_y  - Block_Height/2;
-  Text_Rect.w=User_Rect.w/2 - Block_Width/3;
-  Text_Rect.h=User_Rect.h/2;
+  Text_Rect . x = UserCenter_x + Block_Width/3;
+  Text_Rect . y = UserCenter_y  - Block_Height/2;
+  Text_Rect . w = User_Rect.w/2 - Block_Width/3;
+  Text_Rect . h = User_Rect.h/2;
 
   DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
 
