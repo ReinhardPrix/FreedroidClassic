@@ -110,6 +110,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   int first_menu_item_pos_y;
   SDL_Rect HighlightRect;
   int MenuWithFileInformation = FALSE;
+  char open_gl_string[2000];
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -148,8 +149,23 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   InitiateMenu( BackgroundToUse );
   if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
-      RightPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , VERSION );
+      SetCurrentFont ( FPS_Display_BFont );
+      RightPutString( Screen , SCREEN_HEIGHT - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
       // printf ("\n%s %s  \n", PACKAGE, VERSION);
+      sprintf ( open_gl_string , "OpenGL support compiled: " );
+#ifdef HAVE_LIBGL
+      strcat ( open_gl_string , " YES " ) ;
+#else
+      strcat ( open_gl_string , " NO " ) ;
+#endif
+      LeftPutString( Screen , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
+      sprintf ( open_gl_string , "OpenGL output active: " );
+      if ( use_open_gl )
+	strcat ( open_gl_string , " YES " ) ;
+      else
+	strcat ( open_gl_string , " NO " ) ;
+      LeftPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , open_gl_string );
+      SetCurrentFont ( MenuFont );
     }
   else if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
 	    ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )

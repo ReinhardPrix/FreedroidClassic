@@ -95,7 +95,12 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 
 	      target_y = dstrect -> y + src -> h ;
 
-	      if ( target_y >= 480 ) target_y = 478 ; 
+	      //--------------------
+	      // Here we add some extra security against raster positions (e.g. for
+	      // character screen and the like) SLIGHTLY out of bounds, which would
+	      // cause the entire blit to be canceled due to OpenGL internal policy.
+	      //
+	      if ( ( target_y >= 480 ) && ( target_y <= 482 ) ) target_y = 478 ; 
 
 	      glRasterPos2f( target_x , target_y ) ;
 	    }
@@ -789,6 +794,103 @@ StoreMenuBackground ( void )
     }
 
 }; // void StoreMenuBackground ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_cheap_light_radius ( void )
+{
+#ifdef HAVE_LIBGL
+  int our_height, our_width;
+  int light_strength;
+  static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  int window_offset_x;
+  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
+  Uint8 r , g , b , a ;
+  moderately_finepoint target_pos;
+
+  //--------------------
+  // At first we need to enable texture mapping for all of the following.
+  // Without that, we'd just get (faster, but plain white) rectangles.
+  //
+  glDisable( GL_TEXTURE_2D );
+  //--------------------
+  // We disable depth test for all purposes.
+  //
+  glDisable(GL_DEPTH_TEST);
+
+  //--------------------
+  // We will use the 'GL_REPLACE' texturing environment or get 
+  // unusable (and slow) results.
+  //
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+  //--------------------
+  // Blending can be used, if there is no suitable alpha checking so that
+  // I could get it to work right....
+  //
+  // But alpha check functions ARE a bit faster, even on my hardware, so
+  // let's stick with that possibility for now, especially with the floor.
+  //
+  glDisable( GL_ALPHA_TEST );  
+  glEnable(GL_BLEND);
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+
+  for ( our_height = 0 ; our_height < 20 ; our_height ++ )
+    {
+      for ( our_width = 0 ; our_width < 20 ; our_width ++ )
+	{
+	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+
+	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 32 - UserCenter_x + 32 ,
+							   ( 0 + our_height ) * 24 - UserCenter_y + 32 , TRUE );
+	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 32 - UserCenter_x + 32 ,
+							   ( 0 + our_height ) * 24 - UserCenter_y + 32 , FALSE );
+
+	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
+
+	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
+	  if ( light_strength <= 0 ) continue ;
+
+	  r = 0 ; b = 0 ; g = 0 ; a = ( 255 / 20 ) * light_strength ; 
+
+	  glDisable ( GL_ALPHA_TEST );
+	  glColor4ub( r , g , b , a );
+	  
+	  glBegin(GL_QUADS);
+	  glVertex2i( ( 0 + our_width ) * 32 , ( 1 + our_height ) * 24 ) ;
+	  glVertex2i( ( 0 + our_width ) * 32 , ( 0 + our_height ) * 24 ) ;
+	  glVertex2i( ( 1 + our_width ) * 32 , ( 0 + our_height ) * 24 ) ;
+	  glVertex2i( ( 1 + our_width ) * 32 , ( 1 + our_height ) * 24 ) ;
+	  glEnd( );
+
+	}
+    }
+
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+#endif
+
+}; // void blit_open_gl_cheap_light_radius ( void )
 
 /* ----------------------------------------------------------------------
  *

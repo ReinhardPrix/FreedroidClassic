@@ -1363,7 +1363,8 @@ blit_light_radius ( void )
 
   if ( use_open_gl )
     {
-      blit_open_gl_light_radius ();
+      // blit_open_gl_light_radius ();
+      blit_open_gl_cheap_light_radius ();
     }
   else
     {
