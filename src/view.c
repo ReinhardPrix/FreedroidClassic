@@ -1086,7 +1086,8 @@ blit_all_objects_according_to_blitting_list ( int mask )
 	  PutBullet ( blitting_list [ i ] . code_number ); 
 	  break;
 	case BLITTING_TYPE_BLAST:
-	  PutBlast ( blitting_list [ i ] . code_number ); 
+	  if ( ! ( mask & OMIT_BLASTS ) )
+	    PutBlast ( blitting_list [ i ] . code_number ); 
 	  break;
 	default:
 	  GiveStandardErrorMessage ( "blit_all_objects_according_to_blitting_list (...)" , "\

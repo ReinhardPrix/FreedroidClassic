@@ -1169,21 +1169,9 @@ ShowDeckMap (Level deck)
   int GunOffAllowed = FALSE ;
   int ReadEmailAllowed = FALSE ;
   int EnergyRate;
-  char EnergyRationString[100];
-  char* MenuTexts[ 10 ];
+  char EnergyRationString [ 100 ] ;
+  char* MenuTexts [ 10 ] ;
   int MenuPosition;
-
-  MenuTexts[0]="";
-  MenuTexts[1]="";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -1345,6 +1333,7 @@ ShowDeckMap (Level deck)
 		      MenuTexts[ 0 ] = "Welcome Tux!" ;
 		      MenuTexts[ 1 ] = "Hi guys!" ;
 		      MenuTexts[ 2 ] = "BACK" ;
+		      MenuTexts[ 3 ] = "" ;
 		      while ( SpacePressed() );
 		      MenuPosition = DoMenuSelection ( "\n    Select message to read " , MenuTexts , 1 , NULL , NULL );
 		      switch ( MenuPosition )
@@ -1420,8 +1409,13 @@ ShowDeckMap (Level deck)
 	      //--------------------
 	      // First we find out which map square the player wishes us to operate on
 	      // 
-	      TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
-	      TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+	      // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
+	      // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      
 
 	      //--------------------
 	      // If no function was selected, then a plain move on the map is
@@ -1429,12 +1423,16 @@ ShowDeckMap (Level deck)
 	      //
 	      if ( SelectedFunction == NO_FUNCTION )
 		{
-		  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+		  Me [ 0 ] . pos . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
+		  // ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
 		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
 		  
-		  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+		  Me [ 0 ] . pos . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+		  // ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
 		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
@@ -1577,7 +1575,7 @@ ShowDeckMap (Level deck)
 
       ClearUserFenster();
       RespectVisibilityOnMap = FALSE;
-      AssembleCombatPicture( ONLY_SHOW_MAP );
+      AssembleCombatPicture( ONLY_SHOW_MAP | ZOOM_OUT | OMIT_ENEMIES | OMIT_TUX  );
       RespectVisibilityOnMap = TRUE;
 
       ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
