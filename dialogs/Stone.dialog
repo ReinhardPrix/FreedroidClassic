@@ -31,8 +31,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 END OF AUTORS NOTES
 
@@ -78,6 +80,19 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The guards have some supperior stuff, but still real weapons are beyond them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText="Where did the guards get their supperior stuff from?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=254  PositionY=420  
+Subtitle="They try to keep this a secret, but I think they broke into the museum of the firebrigade."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="In the museum they must have found some stuff that humans used in the ancient time before the fire bigade was fully automatized."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
