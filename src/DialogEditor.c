@@ -1841,18 +1841,22 @@ gui_show_tooltip ( int x , int y )
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
       // label with the text
-      sprintf( popup_meta_tool_tip_text , "Option Nr: %d\n" , DialogOptionCovered );
-      strcat( popup_meta_tool_tip_text , ChatRoster [ DialogOptionCovered ] . option_text );
+      sprintf( popup_meta_tool_tip_text , "#Option Nr: %d\n" , DialogOptionCovered );
+      if ( strcmp ( ChatRoster [ DialogOptionCovered ] . option_text , "THIS WILL NOT EVER BE VISIBLE" ) )
+	{
+	  strcat( popup_meta_tool_tip_text , ChatRoster [ DialogOptionCovered ] . option_text );
+	  strcat( popup_meta_tool_tip_text , "\n" );
+	}
       if (strcmp(ChatRoster [ DialogOptionCovered ] . on_goto_condition, "")) {
-	strcat (popup_meta_tool_tip_text, "\nBranch(");
+	strcat (popup_meta_tool_tip_text, "#Branch(");
 	strcat (popup_meta_tool_tip_text, ChatRoster [ DialogOptionCovered ] . on_goto_condition );
-	strcat (popup_meta_tool_tip_text, ")");
+	strcat (popup_meta_tool_tip_text, ")\n");
       }
       for (i = 0; i < MAX_EXTRAS_PER_OPTION; i++) {
 	if (strcmp(ChatRoster [ DialogOptionCovered ] . extra_list [ i ], "")) {
-	  strcat (popup_meta_tool_tip_text, "\nExtra(");
+	  strcat (popup_meta_tool_tip_text, "#Extra(");
 	  strcat (popup_meta_tool_tip_text, ChatRoster [ DialogOptionCovered ] . extra_list [ i ]);
-	  strcat (popup_meta_tool_tip_text, ")");
+	  strcat (popup_meta_tool_tip_text, ")\n");
 	}
       }
       tip = gtk_label_new ( popup_meta_tool_tip_text );
