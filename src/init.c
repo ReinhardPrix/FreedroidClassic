@@ -939,6 +939,7 @@ Get_Robot_Data ( void* DataPointer )
 #define GETTING_HIT_MODIFIER_STRING "Chance modifier, that this robot gets hit="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
+#define INDIVIDUAL_SHAPE_SPECIFICATION_STRING "Individual shape of this droid or just -1 for classic ball shaped : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
@@ -1135,6 +1136,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the is_human flag of this droid type
       ReadValueFromString( RobotPointer , IS_HUMAN_SPECIFICATION_STRING , "%d" , 
 			   &Druidmap[RobotIndex].is_human , EndOfDataPointer );
+
+      // Now we read in the is_human flag of this droid type
+      ReadValueFromString( RobotPointer , INDIVIDUAL_SHAPE_SPECIFICATION_STRING , "%d" , 
+			   &Druidmap[RobotIndex].individual_shape_nr , EndOfDataPointer );
 
       // Now we read in if the droid tends to go to call for reinforcements
       ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 

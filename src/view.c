@@ -923,23 +923,43 @@ PutInfluence ( int x , int y , int PlayerNum )
 
 }; // void PutInfluence( int x , int y )
 
-
 /* ----------------------------------------------------------------------
- * This function draws an enemy into the combat window.
- * The only parameter given is the number of the enemy within the
- * AllEnemys array. Everything else is computed in here.
+ * If the corresponding configuration flag is enabled, enemies might 'say'
+ * some text comment on the screen, like 'ouch' or 'i'll getch' or 
+ * something else more sensible.  This function is here to blit these
+ * comments, that must have been set before, to the screen.
  * ---------------------------------------------------------------------- */
 void
-PutEnemy (int Enum , int x , int y)
+PrintCommentOfThisEnemy ( int Enum , int x , int y )
 {
-  char *druidname;	/* the number-name of the Enemy */
-  int phase;
-  int alpha_value;
-  int i;
-  SDL_Rect TargetRectangle;
-  point UpperLeftBlitCorner;
+  //--------------------
+  // At this point we can assume, that the enemys has been blittet to the
+  // screen, whether it's a friendly enemy or not.
+  // 
+  // So now we can add some text the enemys says.  That might be fun.
+  //
+  if ( (x == -1)
+       && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
+       && GameConfig.All_Texts_Switch )
+    {
+      PutStringFont ( Screen , FPS_Display_BFont , 
+		      UserCenter_x + Block_Width/3
+		      + (AllEnemys[Enum].pos.x - Me[0].pos.x) * Block_Width ,  
+		      UserCenter_y - Block_Height/2
+		      + (AllEnemys[Enum].pos.y - Me[0].pos.y) * Block_Height ,  
+		      AllEnemys[Enum].TextToBeDisplayed );
+    }
 
-  DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+}; // void PrintCommentOfThisEnemy ( int Enum, int x, int y )
+
+/* ----------------------------------------------------------------------
+ * Not every enemy has to be blitted onto the combat screen every time.
+ * This function is here to find out whether this enemy has to be blitted
+ * or whether we can skip it.
+ * ---------------------------------------------------------------------- */
+int
+ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
+{
 
   /*
   // if enemy is on other level, return 
@@ -954,14 +974,14 @@ PutEnemy (int Enum , int x , int y)
   if ( AllEnemys[Enum].pos.z != Me [ 0 ] . pos . z )
     {
       // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return;
+      return FALSE;
     }
 
   // if enemy is of type (-1), return 
   if ( AllEnemys[Enum].type == ( -1 ) )
     {
       // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return;
+      return FALSE ;
     }
 
   // if the enemy is outside of the current map, that's an error and needs to be correted.
@@ -989,12 +1009,179 @@ somehow gotten outside of the map.\n\
       // Terminate(ERR);
     }
 
-  // if the enemy is out of signt, we need not do anything more here
+  // if the enemy is out of sight, we need not do anything more here
   if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . pos , 0 ) ) )
     {
       DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
-      return;
+      return FALSE ;
     }
+
+  return TRUE;
+}; // int ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function is here to blit the 'body' of a droid to the screen, 
+ * but the 'body' in the classical paradroid-like form, i.e. some ball-
+ * shaped form where the digits can later be filled in.
+ * ---------------------------------------------------------------------- */
+void
+PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
+{
+  int phase = AllEnemys[Enum].phase;
+  int alpha_value;
+  int i;
+
+  if ( ! AllEnemys[Enum].is_friendly ) 
+    {
+      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+	{
+	  SDL_BlitSurface( RedEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+	{
+	  SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+      else if ( AllEnemys[Enum].frozen != 0 ) 
+	{
+	  SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+      else
+	{
+	  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+
+    }
+  else
+    {
+      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+
+      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
+	{
+	  // In case of low energy, do the fading effect...
+	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
+				fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
+				( alpha_offset ) );
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+	}
+      else
+	{
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
+    }
+
+}; // void PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
+
+/* ----------------------------------------------------------------------
+ * This function is here to blit the 'body' of a droid to the screen, 
+ * but the 'body' in the new and more modern sense with the 3d models
+ * in various rotated forms as they are provided by Bastian.
+ * This shape now depends upon the behaviour of the droid, which makes
+ * everthing a little bit more complicated.
+ * ---------------------------------------------------------------------- */
+void
+PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
+{
+  int phase = AllEnemys[Enum].phase;
+  float angle;
+  int alpha_value;
+  int i;
+  int RotationModel;
+  int RotationIndex;
+
+  if ( ! AllEnemys[Enum].is_friendly ) 
+    {
+      //--------------------
+      // First we check if the robot is still alive.  If it isn't, 
+      // then we can use the explosion dust from the classic ball-shaped
+      // version.
+      //
+      if ( phase != DROID_PHASES )
+	{
+	  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+	    {
+	      SDL_BlitSurface( RedEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	    }
+	  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+	    {
+	      SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	    }
+	  else if ( AllEnemys[Enum].frozen != 0 ) 
+	    {
+	      SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	    }
+	  else
+	    {
+	      //--------------------
+	      // The phase now depends upon the direction this robot
+	      // is heading.
+	      //
+	      // 1. We protect ourselves against division by zero.
+	      //
+	      // if ( fabsf ( AllEnemys[Enum].speed.y ) < 0.1 ) AllEnemys[Enum].speed.y = 0.1 ;
+	      //
+	      // 2. We calsulate the angle of the vector
+	      //
+	      angle = ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
+	      //
+	      // 3. We make a phase out of the current angle
+	      //
+	      RotationIndex = ( angle * 40 / 360 ) ;
+	      if ( RotationIndex < 0 ) RotationIndex += 40; // just to make sure... a modulo 40 operation can't hurt
+	      DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
+	      RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
+	      SDL_BlitSurface( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	    }
+
+	}
+      else
+	{
+	  SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	  
+	  if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
+	    {
+	      // In case of low energy, do the fading effect...
+	      alpha_value = (int) ( ( 256 - alpha_offset ) * 
+				    fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
+				    ( alpha_offset ) );
+	      for ( i = 0 ; i < DIGITNUMBER ; i++ )
+		SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+	}
+	  else
+	    {
+	      for ( i = 0 ; i < DIGITNUMBER ; i++ )
+		SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	    }
+	}
+      
+    }
+  else
+    {
+      //--------------------
+      // Only if the robot is dead already, we can print
+      // out the explosion dust like in the classic ball shaped version.
+      //
+      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+    }
+
+}; // void PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
+
+/* ----------------------------------------------------------------------
+ * This function draws an enemy into the combat window.
+ * The only parameter given is the number of the enemy within the
+ * AllEnemys array. Everything else is computed in here.
+ * ---------------------------------------------------------------------- */
+void
+PutEnemy (int Enum , int x , int y)
+{
+  char *druidname;	/* the number-name of the Enemy */
+  SDL_Rect TargetRectangle;
+  point UpperLeftBlitCorner;
+
+  DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+
+  if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
 
   DebugPrintf ( 3 , "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n" );
 
@@ -1043,51 +1230,14 @@ Sorry...\n\
   // The number will be blittet later
   //
   druidname = Druidmap[AllEnemys[Enum].type].druidname;
-  phase = AllEnemys[Enum].phase;
 
   TargetRectangle.x = UpperLeftBlitCorner.x ;
   TargetRectangle.y = UpperLeftBlitCorner.y ;
   // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
-  if ( ! AllEnemys[Enum].is_friendly ) 
-    {
-      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
-	{
-	  SDL_BlitSurface( RedEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
-	{
-	  SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else if ( AllEnemys[Enum].frozen != 0 ) 
-	{
-	  SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
-      else
-	{
-	  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	}
+  // PutBallShapedDroidBody ( Enum , TargetRectangle );
+  PutIndividuallyShapedDroidBody ( Enum , TargetRectangle );
 
-    }
-  else
-    {
-      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-
-      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
-	{
-	  // In case of low energy, do the fading effect...
-	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
-				fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
-				( alpha_offset ) );
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
-	}
-      else
-	{
-	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
-    }
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
@@ -1101,24 +1251,7 @@ Sorry...\n\
   //
   BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
 
-
-  //--------------------
-  // At this point we can assume, that the enemys has been blittet to the
-  // screen, whether it's a friendly enemy or not.
-  // 
-  // So now we can add some text the enemys says.  That might be fun.
-  //
-  if ( (x == -1)
-       && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
-       && GameConfig.All_Texts_Switch )
-    {
-      PutStringFont ( Screen , FPS_Display_BFont , 
-		      UserCenter_x + Block_Width/3
-		      + (AllEnemys[Enum].pos.x - Me[0].pos.x) * Block_Width ,  
-		      UserCenter_y - Block_Height/2
-		      + (AllEnemys[Enum].pos.y - Me[0].pos.y) * Block_Height ,  
-		      AllEnemys[Enum].TextToBeDisplayed );
-    }
+  PrintCommentOfThisEnemy ( Enum , x , y );
 
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 }; // void PutEnemy(int Enum , int x , int y) 

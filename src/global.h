@@ -217,6 +217,8 @@ EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILLS ]; // A pointer all skill icon surfaces
 EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
+EXTERN SDL_Surface *EnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ 40 ];   // A pointer to the surfaces containing the pictures of the
+                                               // enemys in different anles of rotation
 EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *GreenEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *RedEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the

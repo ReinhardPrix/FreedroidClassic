@@ -357,9 +357,11 @@ Load_Enemy_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
+  char ConstructedFileName[500];
   SDL_Rect Source;
   SDL_Rect Target;
   int i;
+  int j;
   char *fpath;
 
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
@@ -399,6 +401,54 @@ Load_Enemy_Surfaces( void )
       BlueEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_BLUE );
       GreenEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_GREEN );
       RedEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_RED );
+    }
+
+  for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
+    {
+      //--------------------
+      // Now that we have the classic ball-shaped design completely done,
+      // we can start doing something new:  Let's try to use some pre-rotated
+      // enemy surfaces for a change.  That might work out to be cool.
+      //
+      for ( i=0 ; i < 40 ; i++ )
+	{
+	  sprintf ( ConstructedFileName , "rotation_models/anim_%02d_%04d.png" , j , i + 1 );
+	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	  // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
+	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	  
+	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  if ( Whole_Image == NULL )
+	    {
+	      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a rotated image of a droid into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	      Terminate(ERR);
+	    }
+	  
+	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+	  
+	  EnemyRotationSurfacePointer[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( EnemyRotationSurfacePointer[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  
+	  SDL_FreeSurface( Whole_Image );
+	  
+	}
     }
 
 }; // void LoadEnemySurfaces( void )

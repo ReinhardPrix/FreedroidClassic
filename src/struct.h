@@ -433,6 +433,7 @@ typedef struct
                                      // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
   int is_human;
+  int individual_shape_nr;
 }
 druidspec, *Druidspec;
 
@@ -656,7 +657,7 @@ typedef struct
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
-  int has_greeted_influencer;
+  int has_greeted_influencer;   // has this robot issued his first-time-see-the-Tux message?
 
   //--------------------
   // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE

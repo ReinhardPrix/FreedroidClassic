@@ -1826,6 +1826,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : Robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted.
 
@@ -1865,6 +1866,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
 
@@ -1904,6 +1906,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
 
@@ -1943,6 +1946,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
@@ -1982,6 +1986,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : cheaper version of the anti-grav servant robot. 
 
@@ -2021,6 +2026,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
 
@@ -2060,6 +2066,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
 
@@ -2099,6 +2106,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early type messenger robot. Large wheels impede motion on small craft.an
 
@@ -2138,6 +2146,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : slow maintenance robot. Confined to drive maintenance during flight. 
 
@@ -2177,6 +2186,7 @@ Chance of this robot scoring a hit=70
 Chance modifier, that this robot gets hit=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. 
 
@@ -2216,6 +2226,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : slave maintenance droid. Standard version will carry its own toolbox. 
 
@@ -2255,6 +2266,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early crew droid. Able to carry out simple flight checks only. No longer supplied. 
 
@@ -2294,6 +2306,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : standard crew droid. Supplied with the ship. 
 
@@ -2333,6 +2346,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : a highly sophisticated device. Able to control the Robo-Freighter on its own. 
 
@@ -2372,6 +2386,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. 
 
@@ -2411,6 +2426,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.
 
@@ -2450,6 +2466,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. 
 
@@ -2489,6 +2506,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. 
 
@@ -2528,6 +2546,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this version is the one mainly used by the Military. 
 
@@ -2567,6 +2586,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. 
 
@@ -2606,6 +2626,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. 
 
@@ -2645,6 +2666,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. 
 
@@ -2684,6 +2706,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
 
@@ -2723,6 +2746,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -2763,6 +2787,7 @@ Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 1
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
 
@@ -2802,6 +2827,7 @@ Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
 
@@ -2841,6 +2867,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
@@ -2880,6 +2907,7 @@ Chance of this robot scoring a hit=82
 Chance modifier, that this robot gets hit=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : cheaper version of the anti-grav servant robot. 
 
@@ -2919,6 +2947,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
@@ -2958,6 +2987,7 @@ Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
 
@@ -2997,6 +3027,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is a dark Apprentice of the evil MS Super-Corporation.
 
@@ -3036,6 +3067,7 @@ Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=-25
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
 
@@ -3075,6 +3107,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
 
@@ -3115,6 +3148,7 @@ Chance modifier, that this robot gets hit=-50
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is a dark Apprentice of the evil MS Super-Corporation.
 
@@ -3154,6 +3188,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is Dr. Chanra, a leading scientist in the field of artificial intelligence and droid construction optimization theory.
 
@@ -3193,6 +3228,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is Begolas, a trainer of ranged weapons
 
@@ -3232,6 +3268,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is Begolas, a trainer of ranged weapons
 
@@ -3271,6 +3308,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Friendly Mrs. Stone, who runs a small equipment shop.
 
@@ -3310,6 +3348,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Sorenson, teacher of magical abilities.
 
@@ -3349,6 +3388,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is the healer within the small startup town.
 
@@ -3388,6 +3428,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is the RMS, who lost most of his code due to MS deletion initiative
 
@@ -3427,6 +3468,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is Dixon, who maintains the teleporters.
 
@@ -3466,6 +3508,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 This is Pendragon, who can train you in the fighting arts.
 
@@ -3505,6 +3548,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3544,6 +3588,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3583,6 +3628,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3622,6 +3668,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3661,6 +3708,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3700,6 +3748,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3739,6 +3788,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3778,6 +3828,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
@@ -3817,6 +3868,7 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
