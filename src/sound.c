@@ -123,7 +123,11 @@ char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
   "A_City_at_Night.mod"
 };
 
+#define MAX_SOUND_CHANNELS 5000
+
+char SoundChannelList[ MAX_SOUND_CHANNELS ];
 #ifdef HAVE_LIBSDL_MIXER
+Mix_Chunk* List_Of_Sustained_Release_WAV_Files[ MAX_SOUND_CHANNELS ];
 Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 {
   NULL,
@@ -131,8 +135,6 @@ Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 };
 #endif
 
-char SoundChannelList[5000];
-Mix_Chunk* List_Of_Sustained_Release_WAV_Files[5000];
 
 //----------------------------------------------------------------------
 // We want to know in certain cases if a channel has finished playback
@@ -161,8 +163,12 @@ void channelDone(int channel) {
   //
   if ( SoundChannelList[ channel ] == 2 ) 
     {
+
+#ifdef HAVE_LIBSDL_MIXER
       DebugPrintf( 0 , "\nCALLBACK FUNCTION:  Detected soundchannel for sustained release.... freeing chunk..." );
       Mix_FreeChunk ( List_Of_Sustained_Release_WAV_Files[ channel ] );
+#endif
+
     }
 
   //--------------------
@@ -181,20 +187,38 @@ void channelDone(int channel) {
 void
 PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
 {
+  //--------------------
+  // These variables will always be needed!
+  //
+  int simulated_playback_starting_time;
 
   //--------------------
-  // In case there are no sound capabilities on this machine, we 
-  // terminate immediately.
+  // These variables will only be needed when compiling with sound!
   //
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
-
+#ifdef HAVE_LIBSDL_MIXER
   int Newest_Sound_Channel=0;
   Mix_Chunk *One_Shot_WAV_File;
   char Temp_Filename[5000];
   char* fpath;
-  int simulated_playback_starting_time;
+#endif
+
+  //--------------------
+  // In case there are no sound capabilities on this machine, we 
+  // wait if that is appropriate or otherwise terminate immediately.
+  //
+#ifndef HAVE_LIBSDL_MIXER
+  if ( With_Waiting )
+    {
+      simulated_playback_starting_time = SDL_GetTicks() ;
+      
+      while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+	      !EscapePressed() && !SpacePressed() );
+      
+      while ( EscapePressed() || SpacePressed() );
+    }
+
+  return;
+#else
 
   //--------------------
   // In case sound has been disabled, we don't do anything here...

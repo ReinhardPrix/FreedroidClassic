@@ -837,7 +837,12 @@ Level_Editor(void)
 		}
 	    }
 	  if (SpacePressed())
-	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	    {
+	      if ( Shift_Was_Pressed() )
+		CurLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
+	      else
+		CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	    }
 	  if (QPressed())
 	    {
 	      Terminate(0);

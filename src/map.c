@@ -2736,6 +2736,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
   switch (MapBrick)
     {
     case FLOOR:
+    case FINE_GRID:
     case LIFT:
     case VOID:
     case BLOCK4:
