@@ -1,3 +1,4 @@
+-*- auto-fill -*-
 
  *  --------------------------------------------------
  *
@@ -49,6 +50,9 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
+Mission diary entry="Bender told me he was sick and needed special medications to heal from the brain enlargement pills.  Hmmm, maybe that doctor could give me some."
+Mission diary entry="I've tricked the doctor into giving me some brain enlargement pills.  That was rather easy."
+Mission diary entry="Bender was delighted about the antidote for the brain enlargement pills.  He gave me some strength pills instead.  Those should be working well."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -67,6 +71,11 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
+Mission diary entry="description text 1 here (for Dixon mission)"
+Mission diary entry="description text 2 here (for Dixon mission)"
+Mission diary entry="description text 3 here (for Dixon mission)"
+Mission diary entry="description text 4 here (for Dixon mission)"
+Mission diary entry="description text 5 here (for Dixon mission)"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -85,6 +94,11 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
+Mission diary entry="description text 1 here (for Mich. mission)"
+Mission diary entry="description text 2 here (for Mich. mission)"
+Mission diary entry="description text 3 here (for Mich. mission)"
+Mission diary entry="description text 4 here (for Mich. mission)"
+Mission diary entry="description text 5 here (for Mich. mission)"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -104,6 +118,11 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_novice_arena_exit_door"
+Mission diary entry="description text 1 here (for nov. Arena mission)"
+Mission diary entry="description text 2 here (for nov. Arena mission)"
+Mission diary entry="description text 3 here (for nov. Arena mission)"
+Mission diary entry="description text 4 here (for nov. Arena mission)"
+Mission diary entry="description text 5 here (for nov. Arena mission)"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -123,6 +142,11 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_master_arena_exit_door"
+Mission diary entry="description text 1 here (for master Arena mission)"
+Mission diary entry="description text 2 here (for master Arena mission)"
+Mission diary entry="description text 3 here (for master Arena mission)"
+Mission diary entry="description text 4 here (for master Arena mission)"
+Mission diary entry="description text 5 here (for master Arena mission)"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -142,6 +166,11 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 O***n mission completition immediately trigger action labeled="open_master_arena_exit_door"
+Mission diary entry="description text 1 here (for warehouse mission)"
+Mission diary entry="description text 2 here (for warehouse mission)"
+Mission diary entry="description text 3 here (for warehouse mission)"
+Mission diary entry="description text 4 here (for warehouse mission)"
+Mission diary entry="description text 5 here (for warehouse mission)"
 ** End of this mission target subsection **
 
 ** S---tart of this mission target subsection **
@@ -160,6 +189,11 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
+Mission diary entry="description text 1 here"
+Mission diary entry="description text 2 here"
+Mission diary entry="description text 3 here"
+Mission diary entry="description text 4 here"
+Mission diary entry="description text 5 here"
 ** E---nd of this mission target subsection **
 
 *--* Start of this mission target subsection **
@@ -181,6 +215,11 @@ Mission target is to live for how many seconds : -1
 On mission assignment immediately trigger action Nr. : 0
 On mission completition immediately trigger action labeled="open_barrier"
 On mission completition immediately trigger action labeled="wow_done_mission_zero"
+Mission diary entry="description text 1 here"
+Mission diary entry="description text 2 here"
+Mission diary entry="description text 3 here"
+Mission diary entry="description text 4 here"
+Mission diary entry="description text 5 here"
 ** En---d of this mission target subsection **
 
 ** St---art of this mission target subsection **
@@ -199,6 +238,11 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
+Mission diary entry="description text 1 here"
+Mission diary entry="description text 2 here"
+Mission diary entry="description text 3 here"
+Mission diary entry="description text 4 here"
+Mission diary entry="description text 5 here"
 ** E---nd of this mission target subsection **
 
 *** END OF QUEST LIST *** LEAVE THIS TERMINATOR IN HERE ***
