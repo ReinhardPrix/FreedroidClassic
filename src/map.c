@@ -604,38 +604,42 @@ unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
   int BrickWanted;
+  int RoundX, RoundY;
 
+  
   /* 
    * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
    * not an exact foating point division!  Beware of "improvements" here!!!
    */
+  RoundX = (int) rintf (x) ;
+  RoundY = (int) rintf (y) ;
 
-  if (((int) rintf (y))  >= deck->ylen)
+  if ( RoundY >= deck->ylen)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x))  >= deck->xlen)
+  if ( RoundX >= deck->xlen)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (y))  < 0)
+  if ( RoundY < 0)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x))  < 0)
+  if ( RoundX < 0)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
 
-  BrickWanted = deck->map[((int) rintf (y)) ][((int) rintf (x)) ] ;
+  BrickWanted = deck->map[ RoundY ][ RoundX ] ;
   if ( BrickWanted >= NUM_MAP_BLOCKS )
     {
       GiveStandardErrorMessage ( "GetMapBrick(...)" , "\
@@ -1237,13 +1241,13 @@ EncodeLevelForSaving(Level Lev)
   anz_wp --;		/* we counted one too much */
 		
   /* estimate the amount of memory needed */
-  MemAmount = (xlen+1) * ylen; 	/* Map-memory */
+  MemAmount = (xlen+1) * (ylen+1); 	/* Map-memory */
   MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
-  MemAmount += 500000;		/* Puffer fuer Dimensionen, mark-strings .. */
+  MemAmount += 500000;		// add some safety buffer for dimension-strings and marker strings...
   
   /* allocate some memory */
   if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
-    DebugPrintf(1, "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
+    DebugPrintf( 0 , "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
     Terminate(ERR);
     return NULL;
   }

@@ -512,9 +512,9 @@ AssembleCombatPicture (int mask)
   else
     {
       LineStart = -5 ;
-      LineEnd = DisplayLevel->xlen + 5 ;
+      LineEnd = DisplayLevel->ylen + 5 ;
       ColStart = -5 ;
-      ColEnd = DisplayLevel->ylen + 5 ;
+      ColEnd = DisplayLevel->xlen + 5 ;
     }
                          
   SDL_SetClipRect (Screen , &User_Rect);

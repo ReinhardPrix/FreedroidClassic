@@ -852,7 +852,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	  while (EnterPressed() || SpacePressed() ) ;
 	  curShip.AllLevels[ curShip.num_levels ] = CreateNewMapLevel();
 	  curShip.num_levels ++ ;
-	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "New level has been added!");
+	  CenteredPutString ( Screen ,  12*FontHeight(FPS_Display_BFont), "New level has been added!");
 	  SDL_Flip( Screen );
 	  while (!SpacePressed() && !EnterPressed() );
 	  while (EnterPressed() || SpacePressed() ) ;
@@ -1572,6 +1572,16 @@ CreateNewMapLevel( void )
       NewLevel->ItemList[ i ].pos.y = ( -1 ) ;
       NewLevel->ItemList[ i ].type = ( -1 ) ;
       NewLevel->ItemList[ i ].currently_held_in_hand = FALSE;
+    }
+
+  //--------------------
+  // Now we initialize the map labels array with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      NewLevel -> labels [ i ] . pos . x = ( -1 ) ;
+      NewLevel -> labels [ i ] . pos . y = ( -1 ) ;
+      NewLevel -> labels [ i ] . label_name = "no_label_defined" ;
     }
 
   //--------------------
