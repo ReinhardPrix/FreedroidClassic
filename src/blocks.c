@@ -63,100 +63,7 @@
  *-----------------------------------------------------------------*/
 
 SDL_Rect *
-ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
-	       int source_line, int target_line)
-{
-  int i;
-  SDL_Surface *tmp;
-  SDL_Rect rect, *ret;
-
-  /* Load the map-block BMP file into the appropriate surface */
-  if( !(tmp = IMG_Load(picfile) ))
-    {
-      fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
-      Terminate (ERR);
-    }
-
-  SDL_SetAlpha( tmp , 0 ,  0 ); // this command is used to TAKE THE ALPHA */
-				// CHANNEL WITH US IN THE BLIT AND 
-                                // NOT APPLY IT HERE
-
-  if (!blocks_per_line) /* only one line here */
-    blocks_per_line = num_blocks;
-
-  ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
-
-
-  /* now copy the individual map-blocks into ne_blocks */
-  for (i=0; i < num_blocks; i++)
-    {
-      rect.x = (i%blocks_per_line)*(Block_Width+2);
-      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
-      rect.w = Block_Width;
-      rect.h = Block_Height;
-      
-      ret[i].x = i*Block_Width;
-      ret[i].y = target_line*Block_Height;
-      ret[i].w = Block_Width;
-      ret[i].h = Block_Height;
-      // SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
-    }
-  SDL_FreeSurface (tmp);
-
-  return (ret);
-
-} /* ne_get_blocks() */
-
-SDL_Rect *
-ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
-	       int source_line, int target_line)
-{
-  int i;
-  SDL_Surface *tmp;
-  SDL_Rect rect, *ret;
-
-  /* Load the map-block BMP file into the appropriate surface */
-  if( !(tmp = IMG_Load(picfile) ))
-    {
-      fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
-      Terminate (ERR);
-    }
-
-  if (!blocks_per_line) /* only one line here */
-    blocks_per_line = num_blocks;
-
-  ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
-
-  /* now copy the individual map-blocks into ne_blocks */
-  for (i=0; i < num_blocks; i++)
-    {
-      rect.x = (i%blocks_per_line)*(INITIAL_DIGIT_LENGTH+2);
-      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
-      rect.w = INITIAL_DIGIT_LENGTH-1;
-      rect.h = INITIAL_DIGIT_HEIGHT;
-      
-      ret[i].x = i*INITIAL_DIGIT_LENGTH;
-      ret[i].y = target_line*Block_Height;
-      ret[i].w = INITIAL_DIGIT_LENGTH;
-      ret[i].h = INITIAL_DIGIT_HEIGHT;
-      // SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
-    }
-
-  SDL_FreeSurface (tmp);
-
-  Digit_Length=INITIAL_DIGIT_LENGTH;
-  Digit_Height=INITIAL_DIGIT_HEIGHT;
-
-  // Digit_Pos_X=INITIAL_DIGIT_POS_X;
-  // Digit_Pos_Y = INITIAL_DIGIT_POS_Y;
-
-
-  return (ret);
-
-} /* ne_get_digit_blocks() */
-
-SDL_Rect *
-ne_get_rahmen_block (char *picfile)
+get_rahmen_block (char *picfile)
 {
   SDL_Surface *tmp;
   SDL_Rect rect, *ret;
@@ -187,10 +94,364 @@ ne_get_rahmen_block (char *picfile)
 
   return (ret);
 
-} /* ne_get_rahmen_block() */
+} /* get_rahmen_block() */
 
 
 
+/*
+----------------------------------------------------------------------
+This function loads the Blast image and decodes it into the multiple
+small Blast surfaces.
+----------------------------------------------------------------------
+*/
+void 
+Load_Blast_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int j;
+  char *fpath;
 
+  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
+    {
+      for ( j=0 ; j < Blastmap[i].phases ; j++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( Blastmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=j*(Block_Height+2);
+	  Source.y=i*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
+	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Blast_Surfaces( void )
+
+
+/* ----------------------------------------------------------------------
+ * This function loads the items image and decodes it into the multiple
+ * small item surfaces.
+ * ---------------------------------------------------------------------- */
+void 
+Load_Item_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i=0;
+  int j;
+  char *fpath;
+
+  fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      ItemSurfaceList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( ItemSurfaceList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=j*(Block_Height+2);
+      Source.y=i*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , ItemSurfaceList[ j ] , &Target );
+      SDL_SetAlpha( ItemSurfaceList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Item_Surfaces( void )
+
+/* ----------------------------------------------------------------------
+ * This function loads the Bullet image and decodes it into the multiple
+ * small Blast surfaces.
+ * ---------------------------------------------------------------------- */
+void 
+Load_Bullet_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int j;
+  char *fpath;
+
+  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
+    {
+      for ( j=0 ; j < Bulletmap[i].phases ; j++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=j*(Block_Height+2);
+	  Source.y=i*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
+	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Bullet_Surfaces( void )
+
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Enemy_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DROID_PHASES ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      EnemySurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( EnemySurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*(Block_Height+2);
+      Source.y=1*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , EnemySurfacePointer[i] , &Target );
+      SDL_SetAlpha( EnemySurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void LoadEnemySurfaces( void )
+
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Influencer_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DROID_PHASES ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( InfluencerSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*(Block_Height+2);
+      Source.y=0*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
+      SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Influencer_Surfaces( void )
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Digit_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DIGIT_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DIGITNUMBER ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      InfluDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+      // SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.w=INITIAL_DIGIT_LENGTH;
+      Source.h=INITIAL_DIGIT_HEIGHT;
+      Target.x=0;
+      Target.y=0;
+      Target.w=INITIAL_DIGIT_LENGTH;
+      Target.h=INITIAL_DIGIT_HEIGHT;
+      SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
+      SDL_SetAlpha( InfluDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
+      if ( SDL_SetColorKey( InfluDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+		   SDL_GetError());
+	  Terminate( ERR );
+	}
+    }
+  SDL_FreeSurface( tmp_surf );
+
+  for ( i=0 ; i < DIGITNUMBER ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      EnemyDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+      // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.w=INITIAL_DIGIT_LENGTH;
+      Source.h=INITIAL_DIGIT_HEIGHT;
+      Target.x=0;
+      Target.y=0;
+      Target.w=INITIAL_DIGIT_LENGTH;
+      Target.h=INITIAL_DIGIT_HEIGHT;
+      SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
+      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
+      if ( SDL_SetColorKey( EnemyDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+		   SDL_GetError());
+	  Terminate( ERR );
+	}
+    }
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Digit_Surfaces( void )
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_MapBlock_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int color;
+  char *fpath;
+
+  char *ColoredBlockFiles[] = {
+    "block_red.png",
+    "block_yellow.png",
+    "block_green.png",
+    "block_gray.png",
+    "block_blue.png",
+    "block_turquoise.png",
+    "block_dark.png",
+    NULL
+  }; 
+
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
+  
+  for ( color = 0 ; color < NUM_COLORS ; color ++ )
+    {
+
+      fpath = find_file ( ColoredBlockFiles[ color ] , GRAPHICS_DIR, TRUE);
+
+      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      
+      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=(i%9)*(Block_Height+2);
+	  Source.y=(i/9)*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
+	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
+	}
+      SDL_FreeSurface( tmp_surf );
+    }
+}; // void Load_MapBlock_Surfaces( void )
 
 #undef _blocks_c
