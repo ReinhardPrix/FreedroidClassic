@@ -328,7 +328,6 @@ Assemble_Combat_Picture (int mask)
 
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
-  // SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE ); 
 
                          
   SDL_SetClipRect (Screen , &User_Rect);
@@ -343,7 +342,6 @@ Assemble_Combat_Picture (int mask)
 		+ ( -Me.pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = User_Rect_Center_y
 		+ ( -Me.pos.y+line-0.5 )*Block_Height;
-	      // SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick,
 	      // Screen, &TargetRectangle);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
  			       Screen, &TargetRectangle);
@@ -483,7 +481,7 @@ PutInfluence ( int x , int y )
   //--------------------
   // Maybe the influencer is fading due to low energy?
   // to achive this, is might be nescessary to add some 
-  // alpha to the ne_blocks surface, that will later be
+  // alpha to the surface, that will later be
   // removed again.  We do this here:
   //
   
@@ -528,7 +526,6 @@ PutInfluence ( int x , int y )
 
 
   // Now we draw the hat and shoes of the influencer
-  // SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), Screen, &TargetRectangle );
   SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
 
 
@@ -545,7 +542,6 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + First_Digit_Pos_X ;
       TargetRectangle.y=y + First_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , Screen, &TargetRectangle );
   SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   // Now we draw the second digit of the influencers current number.
@@ -563,7 +559,6 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + Second_Digit_Pos_X ;
       TargetRectangle.y=y + Second_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , Screen, &TargetRectangle );
   SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   // Now we draw the third digit of the influencers current number.
@@ -579,15 +574,12 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + Third_Digit_Pos_X ;
       TargetRectangle.y=y + Third_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , Screen, &TargetRectangle );
   SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
   // which is the oposite of TRANSPARENT :)
   //
-
-  // SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 
   //--------------------
   // Maybe the influencer has something to say :)
@@ -695,12 +687,10 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
-      // SDL_BlitSurface(ne_blocks , ne_droid_block+phase, Screen, &TargetRectangle);
       SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
     }
   else
     {
-      // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, Screen, &TargetRectangle);
       SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
 
       if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
@@ -754,8 +744,6 @@ Sorry...\n\
     {
       
       SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1+HumanModifier ] , NULL, Screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
-      //       Screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -778,8 +766,6 @@ Sorry...\n\
   else
     {
       SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
-      // Screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -800,8 +786,6 @@ Sorry...\n\
   else
     {
       SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
-      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
-      //       Screen, &TargetRectangle );
     }
 
 
@@ -960,7 +944,6 @@ PutBlast (int BlastNummer)
   
   TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
   TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
-  // SDL_BlitSurface( ne_blocks, 
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
 

@@ -656,7 +656,7 @@ PaintConsoleMenu (void)
   SourceRectangle.h=USERFENSTERHOEHE;
   TargetRectangle.x=MENUITEMPOSX;
   TargetRectangle.y=MENUITEMPOSY;
-  SDL_BlitSurface( ne_console_surface , &SourceRectangle , Screen , &TargetRectangle );
+  SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
   return;
 }	// PaintConsoleMenu ()
@@ -949,7 +949,6 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  // ne_blocks=zwisch;
 } /* ShowDeckMap() */
 
 /*@Function============================================================

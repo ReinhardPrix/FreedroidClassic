@@ -207,21 +207,18 @@ EXTERN int Second_Digit_Pos_X;
 EXTERN int Second_Digit_Pos_Y;
 EXTERN int Third_Digit_Pos_X;
 EXTERN int Third_Digit_Pos_Y;
-EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
-EXTERN color ne_transp_rgb;             /* RGB of transparent color */
-EXTERN int ne_bpp; 			/* bits per pixel */
-EXTERN Uint32 ne_transp_key;            /* key of transparent color */
-EXTERN SDL_Surface *ne_static;          /* here we collect all non-resizable blocks */
-EXTERN SDL_Surface *ne_console_surface;
+EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
+EXTERN color transp_rgb;             /* RGB of transparent color */
+EXTERN int vid_bpp; 			/* bits per pixel */
+EXTERN Uint32 transp_key;            /* key of transparent color */
+EXTERN SDL_Surface *static_blocks;          /* here we collect all non-resizable blocks */
+EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 EXTERN SDL_Surface *banner_pic;
 
 EXTERN SDL_Rect level_rect[MAX_LEVELS]; /* rect's of levels in side-view */
 EXTERN SDL_Rect liftrow_rect[MAX_LIFT_ROWS]; /* the lift-row rect's in side-view*/
-EXTERN SDL_Rect *ne_rahmen_block;
-EXTERN SDL_Surface *ne_console_surface;
-
 
 #undef EXTERN
 #ifdef _blocks_c

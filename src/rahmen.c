@@ -140,7 +140,6 @@ BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
 void
 DisplayBanner (const char* left, const char* right,  int flags )
 {
-  SDL_Rect TargetRectangle;
   char dummy[80];
   char left_box [LEFT_TEXT_LEN + 10];
   char right_box[RIGHT_TEXT_LEN + 10];

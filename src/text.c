@@ -982,7 +982,7 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREENLEN, height, ne_bpp, 0, 0, 0, 0);
+  store = SDL_CreateRGBSurface(0, SCREENLEN, height, vid_bpp, 0, 0, 0, 0);
   Set_Rect (store_rect, x0, y0, SCREENLEN, height);
   SDL_BlitSurface (Screen, &store_rect, store, NULL);
 
