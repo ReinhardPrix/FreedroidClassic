@@ -322,3 +322,114 @@ else
 
 }				/* DisplayMergeBlock */
 
+/*@Function============================================================
+@Desc: 	Diese Prozedur schreibt das im Speicher zusammengebaute Bild
+			in den Bildschirmspeicher.
+
+		   Parameter: keine
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+PutInternFenster (void)
+{
+  int StartX, StartY;
+  int i;
+#ifdef DRAW_TO_SCREEN_VARIABLE
+  int j;
+#endif
+#ifdef SLOW_VIDEO_CALLS
+  int j;
+#endif
+  unsigned char *source;
+  unsigned char *target;
+
+  DebugPrintf ("void PutInternFenster(void) wurde ECHT aufgerufen...");
+
+  if (Conceptview)
+    {
+      for (i = 0; i < USERFENSTERHOEHE; i++)
+	{
+	  memcpy (RealScreen + (USERFENSTERPOSY + i) * SCREENBREITE +
+		  USERFENSTERPOSX,
+		  InternWindow + i * INTERNBREITE * BLOCKBREITE,
+		  USERFENSTERBREITE);
+	}
+      return;
+    }
+
+  StartX = (((int) Me.pos.x) % BLOCKBREITE) - BLOCKBREITE / 2;
+  StartY =
+    ((((int) Me.pos.y) % BLOCKHOEHE) -
+     BLOCKHOEHE / 2) * BLOCKBREITE * INTERNBREITE;
+
+  WaitVRetrace ();		//
+
+  DisplayRahmen ( RealScreen );
+
+  Lock_SDL_Screen();
+
+  for (i = 0; i < USERFENSTERHOEHE; i++)
+    {
+      source = InternWindow +
+	BLOCKBREITE * (INTERNBREITE - VIEWBREITE) / 2 +
+	INTERNBREITE * BLOCKBREITE * (BLOCKHOEHE *
+				      (INTERNHOEHE - VIEWHOEHE)) / 2 +
+	// USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
+	//       USERFENSTERLINKS +
+	StartY + StartX + i * INTERNBREITE * BLOCKBREITE;
+      target = Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+i) * SCREENBREITE;
+
+#define SLOW_VIDEO_CALLS
+#ifdef SLOW_VIDEO_CALLS
+
+#undef DRAW_TO_SCREEN_VARIABLE
+#ifdef DRAW_TO_SCREEN_VARIABLE
+      for (j = 0; j < USERFENSTERBREITE; j++)
+	{
+	  // SDL vga_setcolor (*source);
+	  source++;
+	  putpixel (screen, USERFENSTERPOSX + j, USERFENSTERPOSY + i, *source );
+	}			// for(j=0; ...
+#else
+      memcpy(target, source, USERFENSTERBREITE);
+#endif
+
+#else
+      vga_drawscansegment (source, USERFENSTERPOSX, USERFENSTERPOSY + i,
+			   USERFENSTERBREITE);
+      // source+=USERFENSTERBREITE;
+#endif
+    }				// for(i=0; ...
+
+
+  Unlock_SDL_Screen();
+
+  // Update_SDL_Screen();
+
+  PrepareScaledSurface();
+
+
+};				// void PutInternFenster(void)
+
+void 
+MakeGridOnScreen(unsigned char* Parameter_Screen){
+  int x,y;
+
+  Lock_SDL_Screen();
+
+  for (y=0; y<SCREENHOEHE; y++) 
+    {
+      for (x=0; x<SCREENBREITE; x++) 
+	{
+	  if ((x+y)%2 == 0) 
+	    {
+	      putpixel(screen, x, y, 0);
+	    }
+	}
+    }
+
+  Unlock_SDL_Screen();
+
+} // void MakeGridOnSchreen(void)
+

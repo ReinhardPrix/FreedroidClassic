@@ -838,9 +838,9 @@ PutObject (int x, int y, unsigned char *pic, int check)
 
 /*@Function============================================================
 @Desc: 	Diese Prozedur schreibt das im Speicher zusammengebaute Bild
-			in den Bildschirmspeicher.
+in den Bildschirmspeicher.
 
-		   Parameter: keine
+Parameter: keine
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
@@ -849,17 +849,15 @@ PutInternFenster (void)
 {
   int StartX, StartY;
   int i;
-#ifdef DRAW_TO_SCREEN_VARIABLE
-  int j;
-#endif
-#ifdef SLOW_VIDEO_CALLS
-  int j;
-#endif
   unsigned char *source;
   unsigned char *target;
 
-  DebugPrintf ("void PutInternFenster(void) wurde ECHT aufgerufen...");
+  DebugPrintf ("\nvoid PutInternFenster(void): real function call confirmed.");
 
+  /*
+    In case the Conceptview switch is set, only a small map is drawn, like in 
+    the console when you request the map of the entire deck.
+  */
   if (Conceptview)
     {
       for (i = 0; i < USERFENSTERHOEHE; i++)
@@ -872,6 +870,7 @@ PutInternFenster (void)
       return;
     }
 
+
   StartX = (((int) Me.pos.x) % BLOCKBREITE) - BLOCKBREITE / 2;
   StartY =
     ((((int) Me.pos.y) % BLOCKHOEHE) -
@@ -879,9 +878,8 @@ PutInternFenster (void)
 
   WaitVRetrace ();		//
 
-  DisplayRahmen ( RealScreen );
-
-  Lock_SDL_Screen();
+  //DisplayRahmen ( RealScreen );
+  DisplayRahmen ( Outline320x200 );
 
   for (i = 0; i < USERFENSTERHOEHE; i++)
     {
@@ -894,37 +892,16 @@ PutInternFenster (void)
 	StartY + StartX + i * INTERNBREITE * BLOCKBREITE;
       target = Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+i) * SCREENBREITE;
 
-#define SLOW_VIDEO_CALLS
-#ifdef SLOW_VIDEO_CALLS
-
-#undef DRAW_TO_SCREEN_VARIABLE
-#ifdef DRAW_TO_SCREEN_VARIABLE
-      for (j = 0; j < USERFENSTERBREITE; j++)
-	{
-	  // SDL vga_setcolor (*source);
-	  source++;
-	  putpixel (screen, USERFENSTERPOSX + j, USERFENSTERPOSY + i, *source );
-	}			// for(j=0; ...
-#else
       memcpy(target, source, USERFENSTERBREITE);
-#endif
 
-#else
-      vga_drawscansegment (source, USERFENSTERPOSX, USERFENSTERPOSY + i,
-			   USERFENSTERBREITE);
-      // source+=USERFENSTERBREITE;
-#endif
     }				// for(i=0; ...
 
 
-  Unlock_SDL_Screen();
-
-  // Update_SDL_Screen();
-
   PrepareScaledSurface();
 
+  DebugPrintf ("\nvoid PutInternFenster(void): end of function reached.");
 
-};				// void PutInternFenster(void)
+}; // void PutInternFenster(void)
 
 /*@Function============================================================
 @Desc: 

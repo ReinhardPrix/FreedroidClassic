@@ -60,12 +60,8 @@ extern int TimerFlag;
 
 
 void 
-MakeGridOnScreen(void){
+MakeGridOnScreen(unsigned char* Parameter_Screen){
   int x,y;
-
-  // vga_setcolor(0);
-
-  Lock_SDL_Screen();
 
   for (y=0; y<SCREENHOEHE; y++) 
     {
@@ -73,13 +69,11 @@ MakeGridOnScreen(void){
 	{
 	  if ((x+y)%2 == 0) 
 	    {
-	      putpixel(screen, x, y, 0);
+	      Parameter_Screen[x+y*SCREENBREITE]=0;
 	    }
 	}
     }
-
-  Unlock_SDL_Screen();
-
+  
 } // void MakeGridOnSchreen(void)
 
 unsigned char *MemSearch (unsigned char *, unsigned char *, unsigned char *);
@@ -998,15 +992,14 @@ SetPalCol2 (unsigned int palpos, color Farbwert)
 void
 Flimmern (void)
 {
-  int i;
+  int i, j;
   unsigned char *Screenptr;
   SDL_Rect LocalRectangle;
 
-  //  unsigned char* Junkptr;
-
   DebugPrintf ("\nvoid Flimmern(void): Real function call confirmed.");
 
-  Screenptr = RealScreen;
+  //Screenptr = RealScreen;
+  Screenptr = Outline320x200;
 
 #ifdef FLIMMERN1
   Screenptr += USERFENSTERPOSY * SCREENBREITE + USERFENSTERPOSX;
@@ -1088,30 +1081,23 @@ Flimmern (void)
   /* vertical close Userfenster */
   for (i = 0; i < (USERFENSTERHOEHE / 2); i++)
     {
-      LocalRectangle.x=USERFENSTERPOSX;
-      LocalRectangle.w=USERFENSTERBREITE;
-      LocalRectangle.h=1;
-      LocalRectangle.y=USERFENSTERPOSY+i;
-      SDL_FillRect( screen , &LocalRectangle, 0);
-      LocalRectangle.x=USERFENSTERPOSX;
-      LocalRectangle.w=USERFENSTERBREITE;
-      LocalRectangle.h=1;
-      LocalRectangle.y=USERFENSTERPOSY+USERFENSTERHOEHE-i;
-      SDL_FillRect( screen , &LocalRectangle, 0);
-      // usleep (200);
+      memset( Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+i) * SCREENBREITE , 
+	      0 , USERFENSTERBREITE );
+      memset( Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE-i) * SCREENBREITE , 
+	      0 , USERFENSTERBREITE );
       PrepareScaledSurface();
     }
 
-  /* make the central line white */
-  Lock_SDL_Screen();
+  /* now also close the last line in the middle */
+
   for (i = 0; i < USERFENSTERBREITE / 2 + 1; i++)
     {
-      putpixel (screen, USERFENSTERPOSX + i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
-      putpixel (screen, USERFENSTERPOSX + USERFENSTERBREITE - i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
-      // usleep (20);
+
+      Outline320x200[ USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE/2) * SCREENBREITE + i ]=0;
+      Outline320x200[ USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE/2) * SCREENBREITE + USERFENSTERBREITE - i ]=0;
+
       PrepareScaledSurface();
     }
-  Unlock_SDL_Screen();
 
   return;
 #endif

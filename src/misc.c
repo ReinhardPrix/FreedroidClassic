@@ -543,13 +543,14 @@ OptionsMenu (void)
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
 
-  CopyScreenToInternalScreen();
+  // CopyScreenToInternalScreen();
 
   while (!Weiter)
     {
 
-      SwapScreen();
-      MakeGridOnScreen();
+      // SwapScreen();
+
+      MakeGridOnScreen( Outline320x200 );
 
       // vga_clear ();
 

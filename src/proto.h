@@ -179,7 +179,7 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 // EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 // EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void display_bmp(char *file_name);
-EXTERN void MakeGridOnScreen(void);
+EXTERN void MakeGridOnScreen(unsigned char*);
 EXTERN int InitPictures (void);
 EXTERN void SwapScreen (void);
 EXTERN void CopyScreenToInternalScreen(void);

@@ -204,23 +204,12 @@ SayRightInfo (char *text, unsigned char *Parameter_Screen)
 void
 DisplayRahmen (unsigned char *Parameter_Screen)
 {
-  // unsigned int bg;
-  // unsigned int fg;
+  DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
 
-  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
-  DisplayMergeBlock (0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, InternalScreen);
+  SayRightInfo (RightInfo, Parameter_Screen );
+  SayLeftInfo (LeftInfo, Parameter_Screen );
 
-  /*    GetTextColor(&bg,&fg);
-   SetTextColor(FONT_WHITE,FONT_RED);    *//* BG: Rahmenwei"s FG: FONT_RED */
-  SayRightInfo (RightInfo, InternalScreen);
-  SayLeftInfo (LeftInfo, InternalScreen);
-
-  if ( Parameter_Screen == RealScreen )
-    DisplayMergeBlock (0, 0, InternalScreen, RAHMENBREITE, RAHMENHOEHE, RealScreen);
-
-  /*    SetTextColor(bg,fg); */
-  return;
-}				/* DisplayRahmen */
+} /* DisplayRahmen */
 
 
 /*@Function============================================================
