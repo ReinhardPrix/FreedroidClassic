@@ -627,17 +627,24 @@ ShowLevelEditorTopMenu( int Highlight )
 	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
 	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
 	  
-	  //--------------------
-	  // We create a scaled version of the floor tile in question
-	  //
-	  tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
-	  
-	  //--------------------
-	  // Now we can show and free the scaled verion of the floor tile again.
-	  //
-	  our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-	  SDL_FreeSurface ( tmp );
-	  
+	  if ( use_open_gl )
+	    {
+	      blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
+	    }
+	  else
+	    {
+	      //--------------------
+	      // We create a scaled version of the floor tile in question
+	      //
+	      tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
+	      
+	      //--------------------
+	      // Now we can show and free the scaled verion of the floor tile again.
+	      //
+	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+	      SDL_FreeSurface ( tmp );
+	    }
+
 	  if ( selected_index == Highlight ) 
 	    HighlightRectangle ( Screen , TargetRectangle );
 	  
