@@ -1093,8 +1093,14 @@ init_progress (char *text)
     {
       fpath = find_file (PROGRESS_METER_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       progress_meter_pic = Load_Block (fpath, 0, 0, NULL, 0);
+      ScalePic (&progress_meter_pic, GameConfig.scale);
       fpath = find_file (PROGRESS_FILLER_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       progress_filler_pic = Load_Block (fpath, 0, 0, NULL, 0);
+      ScalePic (&progress_filler_pic, GameConfig.scale);
+
+      ScaleRect (ProgressMeter_Rect, GameConfig.scale);
+      ScaleRect (ProgressBar_Rect, GameConfig.scale);
+      ScaleRect (ProgressText_Rect, GameConfig.scale);
     }
 
   oldfont = GetCurrentFont ();

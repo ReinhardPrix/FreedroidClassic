@@ -881,6 +881,7 @@ InitNewMission ( char *MissionName )
  *  
  *-----------------------------------------------------------------*/
 void
+
 InitFreedroid (int argc, char *const argv[])
 {
   int i;

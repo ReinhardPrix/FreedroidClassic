@@ -1211,7 +1211,7 @@ ScaleGraphics (float scale)
   if (first_call)
     ScaleStatRects (scale);
 
-  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Rescaling graphics ...");
+  //  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Rescaling graphics ...");
 
   //---------- rescale Map blocks
   for (line = 0; line < NUM_COLORS; line ++)
@@ -1220,7 +1220,7 @@ ScaleGraphics (float scale)
 	ScalePic( &OrigMapBlockSurfacePointer[line][col], scale);
 	MapBlockSurfacePointer[line][col] = OrigMapBlockSurfacePointer[line][col];
       }
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //---------- rescale Droid-model  blocks
   for (col = 0; col < DROID_PHASES; col ++) 
     {
@@ -1231,20 +1231,20 @@ ScaleGraphics (float scale)
       SDL_SetAlpha (EnemySurfacePointer[col], 0, 0); 
     }
 
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //---------- rescale Bullet blocks
   for (line = 0; line < Number_Of_Bullet_Types; line ++)
     for (col = 0; col < Bulletmap[line].phases; col ++)
       ScalePic( &Bulletmap[line].SurfacePointer[col], scale);
 
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
 
   //---------- rescale Blast blocks
   for (line = 0; line <  ALLBLASTTYPES; line ++)
     for (col = 0; col < Blastmap[line].phases; col ++)
       ScalePic (&Blastmap[line].SurfacePointer[col], scale);
 
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //---------- rescale Digit blocks
   for (col = 0; col < 10; col++)
     {
@@ -1254,11 +1254,11 @@ ScaleGraphics (float scale)
       SDL_SetAlpha (InfluDigitSurfacePointer[col], 0, 0); 
       SDL_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0); 
     }
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
 
   //---------- rescale Takeover pics
   ScalePic (&to_blocks, scale);
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
 
   ScalePic (&ship_on_pic, scale);
   ScalePic (&ship_off_pic, scale);
@@ -1311,7 +1311,7 @@ ScaleGraphics (float scale)
 } // ScaleGraphics()
 
 /*----------------------------------------------------------------------
- * 
+ * scales pic by scale: frees old pic and replaces it by new one!
  *----------------------------------------------------------------------*/
 void
 ScalePic (SDL_Surface **pic, float scale)
@@ -1330,7 +1330,7 @@ ScalePic (SDL_Surface **pic, float scale)
 } // ScalePic ()
 
 /*----------------------------------------------------------------------
- * scale all "static" rectangle
+ * scale all "static" rectangles, which are theme-independent
  *----------------------------------------------------------------------*/
 void
 ScaleStatRects (float scale)
@@ -1361,10 +1361,6 @@ ScaleStatRects (float scale)
   ScaleRect (LeftInfo_Rect, scale);
   ScaleRect (RightInfo_Rect, scale);
 
-  ScaleRect (ProgressMeter_Rect, scale);
-  ScaleRect (ProgressBar_Rect, scale);
-  ScaleRect (ProgressText_Rect, scale);
-  
   for (i=0; i<NUM_FILL_BLOCKS; i++)
     ScaleRect (FillBlocks[i], scale);
   
