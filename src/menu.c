@@ -1402,8 +1402,8 @@ New_Sound_Options_Menu (void)
 	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
       MenuTexts [ 0 ] = Options0;
       MenuTexts [ 1 ] = Options1;
-      MenuTexts [ 2 ] = Options0;
-      MenuTexts [ 3 ] = Options1;
+      MenuTexts [ 2 ] = Options2;
+      MenuTexts [ 3 ] = Options3;
       MenuTexts [ 4 ] = "Back";
       MenuTexts [ 5 ] = "";
 
