@@ -1,7 +1,7 @@
 #-*- mode: text -*-
 Bugs
 ----
-- (rp): Invincible mode sollte auch Burn-out ueberleben
+- (rp): Invincible mode sollte auch Burn-out ueberleben, und ueberhaupt:Schuesse!!
 
 - funktioniert Energy-charger? (rp)?   JA, aber regeneriert wird nur
   Schuss- und Kollisionsschaden. (jp)
@@ -9,9 +9,6 @@ Bugs
 - Druidmap.notes sollten besser von file eingelesen werden oder
   zumindest in paravars.h (statt direkt in InitParaplus())
 - PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
-
-- (rp) small errors in maps (wrong corners etc..): UNIX-Bug with
-  map-files! lousy workaroung now! please correct! 
 
 DONE RECENTLY- (jp) Sound support: Sound effects and background music and
   simultaneously please!

@@ -613,7 +613,7 @@ int TranslateMap(Level Lev)
       case 0x0111:  NewBlock = T_O; break;
 
 	// full cross
-      case 0x1111: break;
+      case 0x1111: NewBlock = KREUZ; break;
       default: 
 	printf("\nMap-panic. TranslateMap() is messed up!\n"); 
 	return(ERR);
