@@ -267,6 +267,8 @@ CheckBulletCollisions (int num)
 	       (!Druidmap[AllEnemys[i].type].flashimmune) )
 	    {
 	      AllEnemys[i].energy -= Bulletmap[FLASH].damage / 2;
+	      // Since the enemy just got hit, it might as well say so :)
+	      EnemyHitByBulletText( i );
 	    }
 	}
       
@@ -322,6 +324,9 @@ CheckBulletCollisions (int num)
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
 	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+	      // Since the enemy just got hit, it might as well say so :)
+	      EnemyHitByBulletText( i );
+
 	      if (!CurBullet->mine)
 		{
 		  FBTZaehler++;

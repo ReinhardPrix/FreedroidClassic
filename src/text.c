@@ -77,6 +77,26 @@ unsigned int StoreTextFG;
 
 
 void 
+EnemyHitByBulletText( int Enum )
+{
+  Enemy ThisRobot=&AllEnemys[ Enum ];
+  
+  ThisRobot->TextVisibleTime=0;
+  if ( !ThisRobot->Friendly )
+    switch (MyRandom(1))
+    {
+    case 0:
+      ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
+      break;
+    case 1:
+      ThisRobot->TextToBeDisplayed="System fault. Please buy a new version.";
+      break;
+    }
+  else
+    ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
+}; // void EnemyHitByBullet( int Enum );
+
+void 
 EnemyInfluCollisionText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
