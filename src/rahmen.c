@@ -1250,7 +1250,14 @@ ShowCurrentTextWindow ( void )
     // During the title display phase, we need not have this window visible...
     //
     if ( Me[0].status == BRIEFING ) return;
+
+    //--------------------
+    // We prepare the string, that is to be displayed inside the text 
+    // rectangle...
+    //
+    prepare_text_window_content ( ItemDescText ) ;
     
+    /*
     //--------------------
     // For testing purposes is bluntly insert the new banner element here:
     //
@@ -1268,8 +1275,14 @@ ShowCurrentTextWindow ( void )
 	Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
 	Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
     }
+    */
 
-    prepare_text_window_content ( ItemDescText ) ;
+    Banner_Text_Rect . x = GetMousePos_x () ;
+    Banner_Text_Rect . y = GetMousePos_y () ;
+    Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
+    Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
+
+
 
 
     SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
@@ -1280,7 +1293,11 @@ ShowCurrentTextWindow ( void )
 	else
 	    our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
-    
+    else
+    {
+	return;
+    }
+
     if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )
     {
 	SetCurrentFont( Red_BFont );
@@ -1310,12 +1327,20 @@ ShowCurrentTextWindow ( void )
 	TextLine [ i ] [ StringLength ] = 0;
 	
 	LongTextPointer += StringLength + 1;
-	CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-			    i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
+	// CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+	// i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
+	PutString ( Screen , 
+		    Banner_Text_Rect . x + ( Banner_Text_Rect . w - TextWidth ( TextLine [ i ] ) ) / 2 ,
+		    Banner_Text_Rect . y + InterLineDistance + 
+		    i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
-    CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-			i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
-    
+    // CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+    // i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
+    PutString ( Screen , 
+		Banner_Text_Rect . x + ( Banner_Text_Rect . w - TextWidth ( LongTextPointer ) ) / 2 ,
+		Banner_Text_Rect.y + InterLineDistance + 
+		i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
+
 }; // void ShowCurrentTextWindow ( void )
 
 
