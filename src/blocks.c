@@ -1866,6 +1866,7 @@ init_obstacle_data( void )
 {
   int i;
   float standard_wall_thickness = 0.5 ;
+  iso_image empty_iso_image = UNLOADED_ISO_IMAGE ;
 
   //--------------------
   // First we enter some default values.  The exceptions from the default values
@@ -1877,15 +1878,17 @@ init_obstacle_data( void )
       // In adition to the pure image information, we'll also need some
       // collision information for obstacles...
       //
+      memcpy ( & ( obstacle_map [ i ] . image ) , & ( empty_iso_image ) , sizeof ( iso_image ) );
+
       obstacle_map [ i ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
       obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
       obstacle_map [ i ] . block_area_parm_2 = 1.2 ; // standard_wall_thickness ;
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
-      // obstacle_map [ i ] . filename = "ERROR_FILENAME_UNDEFINED" ;
+      obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
+      sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
     }
-
 
   obstacle_map [ ISO_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_ANOTHER_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;

@@ -264,7 +264,7 @@ EXTERN unsigned char *MapBlocks;
 EXTERN unsigned char *Digitpointer;
 EXTERN unsigned char *MenuItemPointer;
 EXTERN unsigned char *Robotptr;
-
+EXTERN obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ];
 
 #undef EXTERN
 #ifdef _text_c
