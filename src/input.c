@@ -205,6 +205,13 @@ GetMousePos_y(void)
   return( CurrentMouseAbsPos.y );
 };
 
+// 
+int 
+GetMouseRightButton( void )
+{
+  return( CurrentlyMouseRightPressed );
+};
+
 
 
 int sgn (int x)
@@ -267,34 +274,34 @@ ReactToSpecialKeys(void)
     Me.energy = 0;
 
   if ( Number0Pressed() )
-    ApplyItemFromInventory( 0 );
+    ApplyItem ( & ( Me.Inventory[ 0 ] ) );
 
   if ( Number1Pressed() )
-    ApplyItemFromInventory( 1 );
+    ApplyItem ( & ( Me.Inventory[ 1 ] ) );
 
   if ( Number2Pressed() )
-    ApplyItemFromInventory( 2 );
+    ApplyItem ( & ( Me.Inventory[ 2 ] ) );
 
   if ( Number3Pressed() )
-    ApplyItemFromInventory( 3 );
+    ApplyItem ( & ( Me.Inventory[ 3 ] ) );
 
   if ( Number4Pressed() )
-    ApplyItemFromInventory( 4 );
+    ApplyItem ( & ( Me.Inventory[ 4 ] ) );
 
   if ( Number5Pressed() )
-    ApplyItemFromInventory( 5 );
+    ApplyItem ( & ( Me.Inventory[ 5 ] ) );
 
   if ( Number6Pressed() )
-    ApplyItemFromInventory( 6 );
+    ApplyItem ( & ( Me.Inventory[ 6 ] ) );
 
   if ( Number7Pressed() )
-    ApplyItemFromInventory( 7 );
+    ApplyItem ( & ( Me.Inventory[ 7 ] ) );
 
   if ( Number8Pressed() )
-    ApplyItemFromInventory( 8 );
+    ApplyItem ( & ( Me.Inventory[ 8 ] ) );
 
   if ( Number9Pressed() )
-    ApplyItemFromInventory( 9 );
+    ApplyItem ( & ( Me.Inventory[ 9 ] ) );
 
   //--------------------
   // For debugging purposes, we introduce a key, that causes several 
@@ -1046,13 +1053,13 @@ keyboard_update(void)
 	  
 	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
-	  if (event.button.button == SDL_BUTTON_LEFT)
+	  if ( event.button.button == SDL_BUTTON_LEFT )
 	    {
 	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
 	    }
 
-	  if (event.button.button == SDL_BUTTON_RIGHT)
+	  if ( event.button.button == SDL_BUTTON_RIGHT )
 	    CurrentlyMouseRightPressed = TRUE;
 	  
 	  break;

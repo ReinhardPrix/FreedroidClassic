@@ -217,14 +217,14 @@ MoveItem( item* SourceItem , item* DestItem )
 }; // void MoveItem( item* SourceItem , item* DestItem )
 
 void
-ApplyItemFromInventory( int ItemNum )
+ApplyItem( item* CurItem )
 {
   DebugPrintf( 0 , "\nvoid ApplyItemFromInventory( int ItemNum ): function call confirmed.");
 
   // If the inventory slot is not at all filled, we need not do anything more...
-  if ( Me.Inventory[ ItemNum ].type == (-1) ) return;
+  if ( CurItem->type == (-1) ) return;
 
-  if ( ItemMap[ Me.Inventory[ ItemNum ].type ].item_can_be_applied_in_combat == FALSE ) 
+  if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat == FALSE ) 
     {
       Me.TextVisibleTime = 0;
       Me.TextToBeDisplayed = "I can't use this item here.";
@@ -236,14 +236,16 @@ ApplyItemFromInventory( int ItemNum )
   // and therefore all we need to do from here on is execute the item effect
   // upon the influencer or his environment.
   //
-  Me.health += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
-  Me.energy += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
+  Me.health += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
+  Me.energy += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
+
+  PlayItemSound( ItemMap[ CurItem->type ].sound_number );
 
   //--------------------
   // In some cases the item concerned is a one-shot-device like a health potion, which should
   // evaporize after the first application.  Therefore we delete the item from the inventory list.
   //
-  Me.Inventory[ ItemNum ].type = (-1);
+  CurItem->type = (-1);
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
@@ -1121,6 +1123,7 @@ ManageInventoryScreen ( void )
 {
   SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
+  static int RightPressedPreviousFrame = FALSE;
   point CurPos;
   point Inv_GrabLoc;
   int Grabbed_InvPos;
@@ -1166,12 +1169,17 @@ ManageInventoryScreen ( void )
 		  Item_Held_In_Hand = ( -1 ); // ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
 		  // CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
 		  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
+	
+		  MouseButtonPressedPreviousFrame = axis_is_active;
+		  RightPressedPreviousFrame = MouseRightPressed ( ) ;
 		  return;
 		}
 	    }
 	}
 
       // In case of no inventory visible, we need not do anything more...
+      MouseButtonPressedPreviousFrame = axis_is_active;
+      RightPressedPreviousFrame = MouseRightPressed ( ) ;
       return;
     }
 
@@ -1183,7 +1191,7 @@ ManageInventoryScreen ( void )
   ShowInventoryScreen();
 
   //--------------------
-  // If the user now presses the mouse button and it was not pressed before,
+  // If the user now presses the left mouse button and it was not pressed before,
   // the the user has 'grabbed' the item directly under the mouse button
   //
   if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
@@ -1546,6 +1554,38 @@ ManageInventoryScreen ( void )
       // printf("\n Mouse button should cause no image now.");
     }
 
+  //--------------------
+  // Maybe the user is just pressing the RIGHT mouse button inside the inventory recatangle
+  // which would mean for us that he is applying the item under the mouse button
+  //
+  if ( MouseRightPressed ( ) && ( !RightPressedPreviousFrame ) )
+    {
+      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	{
+	  Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	  Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+
+	  DebugPrintf( 0 , "\nApplying item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	  Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	  DebugPrintf( 0 , "\nApplying inventory entry no.: %d." , Grabbed_InvPos );
+
+	  if ( Grabbed_InvPos == (-1) )
+	    {
+	      // Nothing grabbed, so we need not do anything more here..
+	      Item_Held_In_Hand = ( -1 );
+	      DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+	    }
+	  else
+	    {
+	      //--------------------
+	      // At this point we know, that we have just applied something from the inventory
+	      //
+	      ApplyItem( & ( Me.Inventory[ Grabbed_InvPos ] ) );
+	    }
+	}
+    }
+
 
   //--------------------
   // Finally, we want the part of the screen we have been editing to become
@@ -1556,6 +1596,7 @@ ManageInventoryScreen ( void )
 
 
   MouseButtonPressedPreviousFrame = axis_is_active;
+  RightPressedPreviousFrame = MouseRightPressed ( ) ;
 }; // void ManageInventoryScreen ( void );
 
 void 
