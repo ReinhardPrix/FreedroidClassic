@@ -264,7 +264,7 @@ AutoFireBullet (void)
   AllBullets[j].type = guntype;
 
   // set the type of bullet according to the gun used by the shooter
-  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
+  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].base_item_gun_damage;
 
 } // void AutoFireBullet(void)
 

@@ -1023,7 +1023,7 @@ AttackInfluence (int enemynum)
       AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
 
       // Now we set the damage of this bullet to the correct value
-      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
 
       return;
     }
@@ -1133,7 +1133,7 @@ AttackInfluence (int enemynum)
       AllBullets[j].type = guntype;
 
       // Now we set the damage of this bullet to the correct value
-      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
 
       AllBullets[j].time_in_seconds = 0;
       AllBullets[j].time_in_frames = 0;

@@ -579,7 +579,9 @@ Sorry...\n\
 
       // Now we read in the damage bullets from this gun will do
       ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
-			   &ItemMap[ItemIndex].item_gun_damage , EndOfItemData );
+			   &ItemMap[ItemIndex].base_item_gun_damage , EndOfItemData );
+      ReadValueFromString( ItemPointer ,  "Item as gun: modifier for damage of bullets=" , "%d" , 
+			   &ItemMap[ItemIndex].item_gun_damage_modifier , EndOfItemData );
 
       // Now we read in the speed this bullet will go
       ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
