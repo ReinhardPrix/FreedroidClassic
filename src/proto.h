@@ -170,7 +170,6 @@ EXTERN void ActSpecialField (float, float);
 
 EXTERN int LoadShip (char *shipname);
 EXTERN int SaveShip(char *shipname);
-EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
 EXTERN int GetLiftConnections (char *shipname);
@@ -381,6 +380,7 @@ EXTERN int ClassOfDruid (int druidtype);
 #endif
 EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
+EXTERN void EnterCodepanel (void);
 EXTERN void EnterKonsole (void);
 EXTERN void AlleLevelsGleichFaerben (void);
 EXTERN int LevelEmpty (void);
@@ -398,6 +398,7 @@ void PaintConsoleMenu (void);
 #define EXTERN extern
 #endif
 
+EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
 EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );
@@ -409,6 +410,7 @@ EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 EXTERN void SetTextCursor (int x, int y);
 EXTERN void SetLineLength (int);
 
+EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
 
 EXTERN void DisplayChar (unsigned char c);
