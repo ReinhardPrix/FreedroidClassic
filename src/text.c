@@ -81,7 +81,8 @@ ChatWithFriendlyDroid( int Enum )
   // in its current pure form for later use as background for scrolling
   //
   Background = SDL_DisplayFormat( ne_screen );
-  
+
+  SetCurrentFont( Para_BFont );
 
   DisplayTextWithScrolling ( 
 			    "Transfer channel protocol set up for text transfer...\n\n" , 
@@ -487,27 +488,27 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	  MyCursorX = clip->x;
 	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
 
-	  //--------------------
-	  // Here we plant in the question for ---more--- and a key to be pressed,
-	  // before we clean the screen and restart displaying text from the top
-	  // of the given Clipping rectangle
-	  //
-	  if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
-	    {
-	      DisplayText( "--- more --- more --- more --- more ---\n" , MyCursorX , MyCursorY , clip );
-	      SDL_Flip( ne_screen );
-	      while ( !SpacePressed() );
-	      while (  SpacePressed() );
-	      SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-	      MyCursorY = clip->y;
-	      SDL_Flip( ne_screen );
-	    };
 	}
       else
 	DisplayChar (*tmp);
-
       tmp++;
 
+      //--------------------
+      // Here we plant in the question for ---more--- and a key to be pressed,
+      // before we clean the screen and restart displaying text from the top
+      // of the given Clipping rectangle
+      //
+      if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
+	{
+	  DisplayText( "--- more --- more --- more --- more ---\n" , MyCursorX , MyCursorY , clip );
+	  SDL_Flip( ne_screen );
+	  while ( !SpacePressed() );
+	  while (  SpacePressed() );
+	  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+	  MyCursorY = clip->y;
+	  SDL_Flip( ne_screen );
+	};
+      
       if (clip)
 	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
 

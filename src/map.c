@@ -1363,6 +1363,12 @@ GetCrew (char *filename)
 } /* GetCrew () */
 
 
+/*-----------------------------------------------------------------
+ * Friendly droids have a list of keywords they understand and they
+ * can answer in a predefined way.  This list must be decoded from
+ * the format style of the droids file to the AllEnemys arrays
+ * fields and this is exactly what this function does.
+ *-----------------------------------------------------------------*/
 void 
 GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
 {
@@ -1422,9 +1428,9 @@ Sorry...\n\
       AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 +1 ] = 
 	ReadAndMallocStringFromData ( NextQuestionEntry , ANSWER_START_STRING , "\"" );
 
-      DebugPrintf( 0 , "Question Entry found : %s \n\n" , 
+      DebugPrintf( 1 , "Question Entry found : %s \n\n" , 
 		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 ] );
-      DebugPrintf( 0 , "Anser Entry to this question : %s \n\n" , 
+      DebugPrintf( 1 , "Anser Entry to this question : %s \n\n" , 
 		   AllEnemys[ RobotNum ].QuestionResponseList[ QuestionNr*2 + 1 ] );
 
       // Not that this entry has been read, we move all indexes up by one
