@@ -1196,7 +1196,7 @@ Level_Editor(void)
   int OriginWaypoint = (-1);
 
   enum
-    { SAVE_LEVEL_POSITION=1, SET_LEVEL_NAME_POSITION=2, BACK_TO_LEVEL_EDITING=3, QUIT_LEVEL_EDITOR_POSITION=4 };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, BACK_TO_LEVEL_EDITING, QUIT_LEVEL_EDITOR_POSITION };
 
   while ( !Done )
     {
@@ -1467,8 +1467,10 @@ Level_Editor(void)
 	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
 				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
 	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
-				"Back to Level editing");
+				"Change tile set");
 	  CenteredPutString   ( ne_screen ,  7*FontHeight(Menu_BFont),    
+				"Back to Level editing");
+	  CenteredPutString   ( ne_screen ,  8*FontHeight(Menu_BFont),    
 				"Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
@@ -1500,7 +1502,15 @@ Level_Editor(void)
 		  while (EnterPressed() || SpacePressed() ) ;
 		  // Weiter=!Weiter;
 		  break;
-		case SET_LEVEL_NAME_POSITION: 
+		case CHANGE_LEVEL_POSITION: 
+		  while (EnterPressed() || SpacePressed() ) ;
+		  break;
+		case CHANGE_TILE_SET_POSITION: 
+		  if ( CurLevel->color  < 6 )
+		    CurLevel->color++;
+		  else 
+		    CurLevel->color=0;
+		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case BACK_TO_LEVEL_EDITING:
@@ -1542,7 +1552,7 @@ Level_Editor(void)
 	    }
 	  if (DownPressed()) 
 	    {
-	      if (MenuPosition < 4) MenuPosition++;
+	      if ( MenuPosition < QUIT_LEVEL_EDITOR_POSITION ) MenuPosition++;
 	      MoveMenuPositionSound();
 	      while (DownPressed());
 	    }

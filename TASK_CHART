@@ -36,6 +36,8 @@ DONE Introduce a flag for new and advanced combat behaviour
 DONE Read in the flag for new and advanced combat behaviour
 
 3.   Implement the new and advanced combat behaviour:
+     * Introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
+       That should give the player a chance to compete.  Otherywise they might become too powerful.
      * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
      * Fireing state machine && Movement state machine: both independent decision processes
      * Changing of waypoints not randomly but decision as demanded
