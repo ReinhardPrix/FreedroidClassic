@@ -53,17 +53,189 @@
 // SDL_Surface *screen;
 // SDL_Surface *ScaledSurface;
 
+/*
+ * Set the pixel at (x, y) to the given value
+ * NOTE: The surface must be locked before calling this!
+ */
 void 
-PrepareScaledSurface()
+PrepareScaledSurface(void)
+{
+  int bpp;
+  int i,j;
+  unsigned char *s;
+  unsigned char *p;
+  unsigned char *pSecond;
+  unsigned char pix;
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  New function call confirmed...");
+
+  Lock_SDL_Screen();
+  SDL_LockSurface( ScaledSurface );
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens are locked...");
+
+  bpp  = screen->format->BytesPerPixel;
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  bpp have been determined...");
+
+  /* Here s is the address to the pixel source */
+  s = (Uint8 *)screen->pixels;
+  /* Here p is the address to the pixel we want to set */
+  p = (Uint8 *)ScaledSurface->pixels;
+  pSecond=p+SCREENBREITE*SCALE_FACTOR*bpp;
+  
+  switch(bpp) 
+    {
+    case 1:
+      switch ( SCALE_FACTOR ) 
+	{
+	case 1:
+
+	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  Terminate(ERR);
+
+	  /* 
+	     putpixel ( ScaledSurface , x     , y     , SourcePixel );
+	  */
+	  break;
+
+	case 2:
+
+	  for (j=0; j<SCREENHOEHE; j++)
+	    {
+	      for (i=0; i<SCREENBREITE; i++)
+		{
+		  pix=*s;
+		  
+		  *p=pix;
+		  *pSecond=pix;
+		  p++;
+		  pSecond++;
+		  
+		  *p=pix;
+		  *pSecond=pix;
+		  p++;
+		  pSecond++;
+		  
+		  s++;
+		}
+	      p+=SCREENBREITE*SCALE_FACTOR*bpp;
+	      pSecond+=SCREENBREITE*SCALE_FACTOR*bpp;
+	    }
+
+	  /*
+	    putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
+	    putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
+	    putpixel ( ScaledSurface , x*2   , y*2+1 , SourcePixel );
+	    putpixel ( ScaledSurface , x*2+1 , y*2+1 , SourcePixel );
+	  */
+	  break;
+
+	case 3:
+
+	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  Terminate(ERR);
+
+	  /*
+	    putpixel ( ScaledSurface , x*3     , y*3   , SourcePixel );
+	    putpixel ( ScaledSurface , x*3+1   , y*3   , SourcePixel );
+	    putpixel ( ScaledSurface , x*3     , y*3+1 , SourcePixel );
+	    putpixel ( ScaledSurface , x*3+1   , y*3+1 , SourcePixel );
+	    putpixel ( ScaledSurface , x*3  +2 , y*3   , SourcePixel );
+	    putpixel ( ScaledSurface , x*3  +2 , y*3+1 , SourcePixel );
+	    putpixel ( ScaledSurface , x*3  +1 , y*3+2 , SourcePixel );
+	    putpixel ( ScaledSurface , x*3     , y*3+2 , SourcePixel );
+	    putpixel ( ScaledSurface , x*3  +2 , y*3+2 , SourcePixel );
+	  */
+	  break;
+
+	default:
+
+	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  Terminate(ERR);
+
+	  break;
+	}
+
+      /*
+
+       *p = pixel;
+
+       */
+      break;
+      
+    case 2:
+      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      Terminate(ERR);
+      /*
+
+       *(Uint16 *)p = pixel;
+
+      */
+      break;
+      
+    case 3:
+      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      Terminate(ERR);
+
+      /*
+	if(SDL_BYTEORDER == SDL_BIG_ENDIAN) 
+	{
+	p[0] = (pixel >> 16) & 0xff;
+	p[1] = (pixel >> 8) & 0xff;
+	p[2] = pixel & 0xff;
+	} 
+	else 
+	{
+	p[0] = pixel & 0xff;
+	p[1] = (pixel >> 8) & 0xff;
+	p[2] = (pixel >> 16) & 0xff;
+	}
+      */
+
+      break;
+      
+    case 4:
+      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      Terminate(ERR);
+
+      /*
+
+        *(Uint32 *)p = pixel;
+
+      */
+      break;
+    }
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Memory has been copied...");
+
+  Unlock_SDL_Screen();
+  SDL_UnlockSurface( ScaledSurface );
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens have been unlocked again...");
+
+  Update_SDL_Screen();
+
+  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  End of function has been reached...");
+
+} // void PrepareScaledSurface(void)
+
+
+void 
+PrepareScaledSurfaceNo(void)
 {
   int x;
   int y;
   byte SourcePixel;
 
+#define BYTES_PER_PIXEL
+
   Lock_SDL_Screen();
   SDL_LockSurface( ScaledSurface );
 
-  
+
+
+
 
   for ( y = 0; y < SCREENHOEHE; y++ )
     {
@@ -73,6 +245,9 @@ PrepareScaledSurface()
 	  
 	  switch ( SCALE_FACTOR ) 
 	    {
+	    case 1:
+	      putpixel ( ScaledSurface , x     , y     , SourcePixel );
+	      break;
 	    case 2:
 	      putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
 	      putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
