@@ -35,6 +35,8 @@
 #include "global.h"
 #include "proto.h"
 
+#include "SDL_rotozoom.h"
+
 void ShowWaypoints( int PrintConnectionList );
 void LevelEditor(void);
 Level CreateNewMapLevel( void );
@@ -243,8 +245,9 @@ HandleBannerMouseClick( void )
 }; // void HandleBannerMouseClick( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * On the very top of the screen during level editor work, there is a 
+ * scrollbar with the various tiles that may be placed on the floor of the
+ * map.  This scrollbar is drawn here.
  * ---------------------------------------------------------------------- */
 void
 ShowLevelEditorTopMenu( int Highlight )
@@ -277,6 +280,7 @@ ShowLevelEditorTopMenu( int Highlight )
       TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
       TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
 
+      /*
       if ( INITIAL_BLOCK_WIDTH == Block_Width )
 	{
 	  SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
@@ -287,16 +291,26 @@ ShowLevelEditorTopMenu( int Highlight )
 	  SDL_BlitSurface( BackupMapBlockSurfacePointer[ DisplayLevel->color ][ MapBrick ] , NULL ,
 			   Screen, &TargetRectangle);
 	}
+      */
+      //--------------------
+      // We create a scaled version of the floor tile in question
+      //
+      tmp = zoomSurface ( floor_iso_images [ MapBrick ] . surface , 0.5 , 0.5, FALSE );
+      
+      //--------------------
+      // Now we can show and free the scaled verion of the floor tile again.
+      //
+      SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
+      SDL_FreeSurface ( tmp );
 
       if ( MapBrick == Highlight ) 
 	HighlightRectangle ( Screen , TargetRectangle );
 
-      if ( MapBrick < NUM_MAP_BLOCKS -1 ) MapBrick ++ ;
+      if ( MapBrick < ALL_ISOMETRIC_FLOOR_TILES -1 ) MapBrick ++ ;
     }
 
   ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
   ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
-  
 
 }; // void ShowLevelEditorTopMenu( void )
 
@@ -3007,6 +3021,8 @@ LevelEditor(void)
       OldTicks = SDL_GetTicks ( ) ;
       while ( ( ! EscapePressed() ) && ( !Done ) )
 	{
+
+
 	  //--------------------
 	  // Also in the Level-Editor, there is no need to go at full framerate...
 	  // We can do with less, cause there are no objects supposed to be 
@@ -3036,7 +3052,6 @@ LevelEditor(void)
 	  //--------------------
 	  // Now we print out the current status directly onto the window:
 	  //
-
 	  if ( OriginWaypoint == ( -1 ) )
 	    {
 	      sprintf ( linebuf , " Source Waypoint selected : NONE" );
@@ -3084,6 +3099,8 @@ LevelEditor(void)
 	  // Now that everything is blitted and printed, we may update the screen again...
 	  //
 	  SDL_Flip( Screen );
+
+	  
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
@@ -3219,8 +3236,6 @@ LevelEditor(void)
 	  // First we find out which map square the player MIGHT wish us to operate on
 	  // via a POTENTIAL mouse click
 	  //
-	  // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
-	  // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
 	  TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
 							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
 	  TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
@@ -3353,7 +3368,7 @@ LevelEditor(void)
 		   ( TargetSquare . x <= EditLevel->xlen-1 ) &&
 		   ( TargetSquare . y >= 0 ) &&
 		   ( TargetSquare . y <= EditLevel->ylen-1 ) )
-		EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ]  . floor_value = Highlight ;	      
+		EditLevel -> map [ TargetSquare . y ] [ TargetSquare . x ] . floor_value = Highlight ;	      
 	    }
 
 	  if (QPressed())
