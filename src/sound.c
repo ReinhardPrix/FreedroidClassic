@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 64
+#define ALL_SOUNDS 59
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -55,7 +55,6 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Refresh_Sound_0.wav",
    "LeaveElevator_Sound_0.wav",
    "EnterElevator_Sound_0.wav",
-   "ThouArtDefeated_Sound_0.wav",
    "Got_Hit_Sound_0.wav",
    "Enemy_Got_Hit_Sound_0.wav",
    "TakeoverSetCapsule_Sound_0.wav",
@@ -107,10 +106,6 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Influencer_Scream_Sound_4.wav",
    "Spell_ForceToEnergy_Sound_0.wav",
    "Spell_DetectItems_Sound_0.wav",
-   "Shop_ItemSoldSound_0.wav",
-   "Shop_ItemBoughtSound_0.wav",
-   "Shop_ItemRepairedSound_0.wav",
-   "Shop_ItemIdentifiedSound_0.wav",
    "No_Ammo_Sound_0.wav"
 };
 
@@ -614,42 +609,6 @@ CrySound (void)
 {
   PlaySound ( CRY_SOUND );
 }
-
-/* ----------------------------------------------------------------------
- * When an Item is sold, this voice sample will be played...
- * ---------------------------------------------------------------------- */
-void
-Play_Shop_ItemSoldSound( )
-{
-  PlaySound ( SHOP_ITEM_SOLD_SOUND_0 ) ;
-};  // void Play_Shop_ItemSoldSound( )
-
-/* ----------------------------------------------------------------------
- * When an Item is bought, this voice sample will be played...
- * ---------------------------------------------------------------------- */
-void
-Play_Shop_ItemBoughtSound( )
-{
-  PlaySound ( SHOP_ITEM_BOUGHT_SOUND_0 ) ;
-};  // void Play_Shop_ItemBoughtSound( )
-
-/* ----------------------------------------------------------------------
- * When an Item is repaired, this voice sample will be played...
- * ---------------------------------------------------------------------- */
-void
-Play_Shop_ItemRepairedSound( )
-{
-  PlaySound ( SHOP_ITEM_REPAIRED_SOUND_0 ) ;
-};  // void Play_Shop_ItemRepairedSound( )
-
-/* ----------------------------------------------------------------------
- * When an Item is identified, this voice sample will be played...
- * ---------------------------------------------------------------------- */
-void
-Play_Shop_ItemIdentifiedSound( )
-{
-  PlaySound ( SHOP_ITEM_IDENTIFIED_SOUND_0 ) ;
-};  // void Play_Shop_ItemIdentifiedSound( )
 
 /* ----------------------------------------------------------------------
  * When a Force-To-Energy Spell is invoked successfully, then this sound
@@ -1182,9 +1141,8 @@ void
 MoveMenuPositionSound (void)
 {
   if (!sound_on) return;
-
   PlaySound ( MOVE_MENU_POSITION_SOUND );
-}				// void MoveLiftSound(void)
+}; // void MoveMenuPositionSound (void)
 
 
 /*@Function============================================================
@@ -1197,8 +1155,8 @@ void
 ThouArtDefeatedSound (void)
 {
   if (!sound_on) return;
-  PlaySound (THOU_ART_DEFEATED_SOUND);
-}				// void MoveLiftSound(void)
+  PlayOnceNeededSoundSample ( "../effects/ThouArtDefeated_Sound_0.wav" , FALSE );
+}; // void ThouArtDefeatedSound (void)
 
 
 /*@Function============================================================

@@ -1124,7 +1124,7 @@ TryToRepairItem( item* RepairItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
 	  RepairItem->current_duration = RepairItem->max_duration;
-	  Play_Shop_ItemRepairedSound( );
+	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE );
 	  return;
 	  break;
 	case ANSWER_NO:
@@ -1178,7 +1178,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= 100 ;
 	  IdentifyItem -> is_identified = TRUE ;
-	  Play_Shop_ItemIdentifiedSound( );
+	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE );
 
 	  MenuTexts[0]=" BACK ";
 	  MenuTexts[1]="";
@@ -1237,7 +1237,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 
 	      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
 	      DeleteItem( SellItem );
-	      Play_Shop_ItemSoldSound( );
+	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE );
 
 	      return;
 	      break;
@@ -1254,7 +1254,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
       if ( AmountToSellAtMost < SellItem->multiplicity )
 	SellItem->multiplicity -= AmountToSellAtMost;
       else DeleteItem( SellItem );
-      Play_Shop_ItemSoldSound( );
+      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1328,11 +1328,9 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
 		  Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
 		  Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
 
-		  // Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-		  // Play_Shop_ItemBoughtSound( );
-
 		  //--------------------
 		  // This is new.  I hope it's not dangerous.
+		  //
 		  if ( BuyItem -> multiplicity <= AmountToBuyAtMost ) DeleteItem ( BuyItem );
 		  else BuyItem -> multiplicity -= AmountToBuyAtMost ;
 
@@ -1434,7 +1432,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
   if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
       Me[0].Gold -= PotentialPrice ;
-      Play_Shop_ItemBoughtSound( );
+      PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE );
     }
   else
     {
