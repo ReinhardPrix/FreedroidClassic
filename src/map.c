@@ -926,25 +926,25 @@ GetMapBrick (Level deck, float x, float y)
   if ( RoundY >= deck->ylen)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
-      return VOID;
+      return ISO_COMPLETELY_DARK;
       Terminate (-1);
     }
   if ( RoundX >= deck->xlen)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
-      return VOID;
+      return ISO_COMPLETELY_DARK;
       Terminate (-1);
     }
   if ( RoundY < 0)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
-      return VOID;
+      return ISO_COMPLETELY_DARK;
       Terminate (-1);
     }
   if ( RoundX < 0)
     {
       // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
-      return VOID;
+      return ISO_COMPLETELY_DARK;
       Terminate (-1);
     }
 

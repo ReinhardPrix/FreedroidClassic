@@ -1427,9 +1427,6 @@ Resolving part string to index failed!",
 	motion_class = 1 ;
     }
 
-
-
-
   //--------------------
   // Now we determine the phase to use.  This is not all the same
   // phase any more for all tux parts now that we've introduced a walk cycle.
