@@ -138,7 +138,7 @@ DetectItemsSpell ( void )
 }; // void DetectItemsSpell ( void )
 
 /* ----------------------------------------------------------------------
- * This function creates a teleporter portal to the home location.
+ * This function creates a paralyzing bolt (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
 ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
@@ -164,7 +164,7 @@ ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 }; // void ParalyzeBoltSpell ( gps PortalTarget )
 
 /* ----------------------------------------------------------------------
- * This function creates a teleporter portal to the home location.
+ * This function creates a firey bolt (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
 FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
@@ -190,7 +190,7 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 }; // void FireyBoltSpell ( gps PortalTarget )
 
 /* ----------------------------------------------------------------------
- * This function creates a teleporter portal to the home location.
+ * This function creates a cold bolt. (spell, but really a bullet).
  * ---------------------------------------------------------------------- */
 void
 ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
@@ -216,7 +216,7 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 }; // void ColdBoltSpell ( ... )
 
 /* ----------------------------------------------------------------------
- * This function creates a teleporter portal to the home location.
+ * This function creates a poison bolt.  (spell, but really a bullet)
  * ---------------------------------------------------------------------- */
 void
 PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )

@@ -1429,7 +1429,7 @@ Resolving part string to index failed!",
       //--------------------
       // Some security against missing images...
       //
-      if ( ( part_index == 8 ) || ( part_index == 2 ) ) motion_class = 0 ;
+      if ( ( part_index == 8 ) ) motion_class = 0 ;
     }
 
 

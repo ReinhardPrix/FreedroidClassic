@@ -189,8 +189,8 @@ ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelN
       
       if ( !strcmp ( ResolveLevel->labels [ i ] . label_name , MapLabel ) )
 	{
-	  PositionPointer->x = ResolveLevel->labels [ i ] . pos . x ;
-	  PositionPointer->y = ResolveLevel->labels [ i ] . pos . y ;
+	  PositionPointer->x = ResolveLevel->labels [ i ] . pos . x + 0.5 ;
+	  PositionPointer->y = ResolveLevel->labels [ i ] . pos . y + 0.5 ;
 	  PositionPointer->level = LevelNum ;
 	  DebugPrintf ( 1 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
 			MapLabel , PositionPointer->x , PositionPointer->y , PositionPointer->level );
