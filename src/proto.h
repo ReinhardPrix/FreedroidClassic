@@ -205,6 +205,7 @@ EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
 EXTERN void MoveLevelDoors ( int PlayerNum ) ;
+EXTERN void WorkLevelGuns ( int PlayerNum ) ;
 EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
 EXTERN int DruidPassable ( float x , float y , int z );
 EXTERN int IsVisible ( GPS objpos , int PlayerNum ) ;

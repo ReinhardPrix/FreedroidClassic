@@ -172,6 +172,7 @@ EXTERN double Blast_Radius;
 EXTERN double Druid_Radius_X;
 EXTERN double Druid_Radius_Y;
 EXTERN float LevelDoorsNotMovedTime;
+EXTERN float LevelGunsNotFiredTime;
 EXTERN double collision_lose_energy_calibrator;
 EXTERN configuration_for_freedroid GameConfig;
 EXTERN float CurrentCombatScaleFactor;

@@ -111,6 +111,9 @@ main (int argc, char *const argv[])
 	      MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
 
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	    WorkLevelGuns( PlayerNum ); // this should fire all autocannons on this level
+
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
 	    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
 
 	  AnimateRefresh (); // this is a pure client issue.  Not dependent upon the players.
@@ -212,6 +215,7 @@ UpdateCountersForThisFrame ( int PlayerNum )
       LastRefreshSound += Frame_Time ();
 
       LevelDoorsNotMovedTime += Frame_Time();
+      LevelGunsNotFiredTime += Frame_Time();
       if ( SkipAFewFrames ) SkipAFewFrames--;
 
       if (ShipEmptyCounter > 1)

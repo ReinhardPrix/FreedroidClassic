@@ -543,7 +543,7 @@ LoadShip (char *filename)
       LevelStart[level_anz] = endpt + 1;
     }
 
-  /* init the level-structs */
+  // init the level-structs 
   curShip.num_levels = level_anz;
 
   for (i = 0; i < curShip.num_levels; i++)
@@ -1596,6 +1596,72 @@ Sorry...\n\
 }; // int GetDoors (...)
 
 /* ----------------------------------------------------------------------
+ * This function initializes the Autogun array of the given level structure
+ * Of course the level data must be in the structure already!!
+ *
+ * Return value: the number of guns found or ERR
+ * ---------------------------------------------------------------------- */
+int
+GetAutoguns (Level Lev)
+{
+  int i, line, col;
+  int xlen, ylen;
+  int curautogun = 0;
+  char brick;
+
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
+
+  // init autoguns array to 0 */
+  for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
+    Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
+
+  /* now find the autoguns */
+  for (line = 0; line < ylen; line++)
+    {
+      for (col = 0; col < xlen; col++)
+	{
+	  brick = Lev->map[line][col];
+	  // if (brick == '=' || brick == '"')
+	  if ( brick == AUTOGUN_L || brick == AUTOGUN_R || brick == AUTOGUN_U || brick == AUTOGUN_D )
+	    {
+	      Lev->autoguns[curautogun].x = col;
+	      Lev->autoguns[curautogun++].y = line;
+
+	      if (curautogun > MAX_AUTOGUNS_ON_LEVEL)
+		{
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The number of autoguns found in level %d seems to be greater than the number\n\
+of autoguns currently allowed in a freedroid map.\n\
+\n\
+The constant for the maximum number of autoguns currently is set to %d in the\n\
+freedroid defs.h file.  You can enlarge the constant there, then start make\n\
+and make install again, and the map will be loaded without complaint.\n\
+\n\
+The constant in defs.h is names 'MAX_AUTOGUNS_ON_LEVEL'.  If you received this \n\
+message, please also tell the developers of the freedroid project, that they\n\
+should enlarge the constant in all future versions as well.\n\
+\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention to this small map problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , Lev->levelnum , MAX_AUTOGUNS_ON_LEVEL );
+		  Terminate(ERR);
+		}
+
+	    }			/* if */
+	}			/* for */
+    }				/* for */
+
+  return curautogun;
+}; // int GetAutoguns (...)
+
+/* ----------------------------------------------------------------------
  * This function initialized the array of Refreshes for animation
  * within the level
  * 
@@ -1633,7 +1699,7 @@ Freedroid has encountered a problem:\n\
 The number of refreshes found in level %d seems to be greater than the number\n\
 of refreshes currently allowed in a freedroid map.\n\
 \n\
-The constant for the maximum number of doors currently is set to %d in the\n\
+The constant for the maximum number of refreshes currently is set to %d in the\n\
 freedroid defs.h file.  You can enlarge the constant there, then start make\n\
 and make install again, and the map will be loaded without complaint.\n\
 \n\
@@ -1693,7 +1759,7 @@ Freedroid has encountered a problem:\n\
 The number of teleporters found in level %d seems to be greater than the number\n\
 of teleporters currently allowed in a freedroid map.\n\
 \n\
-The constant for the maximum number of doors currently is set to %d in the\n\
+The constant for the maximum number of refreshes currently is set to %d in the\n\
 freedroid defs.h file.  You can enlarge the constant there, then start make\n\
 and make install again, and the map will be loaded without complaint.\n\
 \n\
@@ -1822,8 +1888,18 @@ TranslateMap (Level Lev)
       Lev->map[row]=Buffer;
     }				/* for (row=0..) */
 
-  /* Get Doors Array */
+  //--------------------
+  // The level structure contains an array with the locations of all
+  // doors that might have to be opened or closed during the game.  This
+  // list is prepared in advance, so that we don't have to search for doors
+  // on all of the map during program runtime.
+  //
   GetDoors ( Lev );
+
+  //--------------------
+  // Same as for the doors also holds for the autocannons
+  //
+  GetAutoguns ( Lev );
 
   // NumWaypoints = GetWaypoints (loadlevel);
 
@@ -2645,6 +2721,192 @@ MoveLevelDoors ( int PlayerNum )
 	}			/* else */
     }				/* for */
 }; // void MoveLevelDoors ( void )
+
+
+/* ----------------------------------------------------------------------
+ * This function does all the firing for the autocannons installed in
+ * the map of this level.
+ * ---------------------------------------------------------------------- */
+void
+WorkLevelGuns ( int PlayerNum )
+{
+  int i, autogunx, autoguny;
+  char *Pos;
+  Level GunLevel;
+
+  //--------------------
+  // The variables for the gun.
+  //
+  int j = 0;
+  int weapon_item_type = ITEM_SHORT_BOW ;
+  Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
+  int bullet_image_type = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  double BulletSpeed = ItemMap[ weapon_item_type ].item_gun_speed;
+  double speed_norm;
+  moderately_finepoint speed;
+
+  GunLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+
+  //--------------------
+  // This prevents animation going too quick.
+  // The constant should be replaced by a variable, that can be
+  // set from within the theme, but that may be done later...
+  //
+  if ( LevelGunsNotFiredTime < 0.25 ) return;
+
+  //--------------------
+  // But only the last of these function calls for each player may 
+  // reset the time counter, or the players after the first will
+  // NEVER EVER BE CHECKED!!!!
+  //
+  if ( PlayerNum == MAX_PLAYERS -1 ) LevelGunsNotFiredTime = 0 ;
+
+  if ( Me [ PlayerNum ] . status == OUT ) return;
+
+  // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , GunLevel -> levelnum , Me [ PlayerNum ] . pos . z );
+
+  //--------------------
+  // Now we go through the whole prepared list of autoguns for this
+  // level.  This list has been prepared in advance, when the level
+  // was read in.
+  //
+  for ( i = 0 ; i < MAX_AUTOGUNS_ON_LEVEL ; i ++ )
+    {
+      autogunx = ( GunLevel -> autoguns [ i ] . x );
+      autoguny = ( GunLevel -> autoguns [ i ] . y );
+
+      // no more autoguns?
+      if ( ( autogunx == 0 ) && ( autoguny == 0 ) )
+	break;
+
+      Pos = & ( GunLevel -> map [autoguny] [autogunx] ) ;
+
+      //--------------------
+      // From here on goes the bullet code, that originally came from
+      // the FireTuxRangesWeaponRaw function.
+      //
+
+      //--------------------
+      // search for the next free bullet list entry
+      //
+      for (j = 0; j < (MAXBULLETS); j++)
+	{
+	  if (AllBullets[j].type == OUT)
+	    {
+	      CurBullet = &AllBullets[j];
+	      break;
+	    }
+	}
+
+      // didn't find any free bullet entry? --> take the first
+      if (CurBullet == NULL)
+	CurBullet = &AllBullets[0];
+
+      CurBullet->type = bullet_image_type;
+
+      //--------------------
+      // Previously, we had the damage done only dependant upon the weapon used.  Now
+      // the damage value is taken directly from the character stats, and the UpdateAll...stats
+      // has to do the right computation and updating of this value.  hehe. very conventient.
+      CurBullet->damage = 20 ;
+      CurBullet->mine = FALSE;
+      CurBullet->owner = -1;
+      CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
+      CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
+      CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
+      CurBullet->ignore_wall_collisions = ItemMap[ weapon_item_type ].item_gun_bullet_ignore_wall_collisions;
+      // CurBullet->owner_pos = & ( Me [ PlayerNum ] .pos );
+      CurBullet->owner_pos = NULL ;
+      CurBullet->time_in_frames = 0;
+      CurBullet->time_in_seconds = 0;
+      CurBullet->was_reflected = FALSE;
+      CurBullet->reflect_other_bullets   = ItemMap[ weapon_item_type ].item_gun_bullet_reflect_other_bullets;
+      CurBullet->pass_through_explosions = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_explosions;
+      CurBullet->pass_through_hit_bodies = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_hit_bodies;
+      CurBullet->miss_hit_influencer = UNCHECKED ;
+      memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+      
+      //--------------------
+      // Depending on whether this is a real bullet (-1 given as parameter)
+      // or not, we assign this bullet the appropriate to-hit propability
+      //
+      CurBullet->to_hit = 150 ;
+      
+      //--------------------
+      // Maybe the bullet has some magic properties.  This is handled here.
+      //
+      CurBullet->freezing_level = 0; 
+      CurBullet->poison_duration = 0;
+      CurBullet->poison_damage_per_sec = 0;
+      CurBullet->paralysation_duration = 0;
+      
+      speed.x = 0.0;
+      speed.y = 0.0;
+      
+      switch ( *Pos )
+	{
+	case AUTOGUN_L:
+	  speed.x = -1.0;
+	  break;
+	case AUTOGUN_R:
+	  speed.x =  1.0;
+	  break;
+	case AUTOGUN_U:
+	  speed.y = -1.0;
+	  break;
+	case AUTOGUN_D:
+	  speed.y = +1.0;
+	  break;
+	default:
+	  fprintf( stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There seems to be an autogun in the autogun list of this level, but it\n\
+is not really an autogun.  Instead it's a: %d \n\
+\n\
+For now Freedroid will terminate to draw attention \n\
+to the autogun handling problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , *Pos );
+	  Terminate ( ERR ) ;
+	  break;
+	}
+
+      CurBullet->pos.x = autogunx + speed.x * 0.75 ;
+      CurBullet->pos.y = autoguny + speed.y * 0.75 ;
+      CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
+      
+      
+      //--------------------
+      // It might happen, that this is not a normal shot, but rather the
+      // swing of a melee weapon.  Then of course, we should make a swing
+      // and not start in this direction, but rather somewhat 'before' it,
+      // so that the rotation will hit the target later.
+      //
+      // RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ].item_gun_start_angle_modifier );
+      
+      speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
+      CurBullet->speed.x = (speed.x/speed_norm);
+      CurBullet->speed.y = (speed.y/speed_norm);
+      
+      //--------------------
+      // Now we determine the angle of rotation to be used for
+      // the picture of the bullet itself
+      //
+      
+      CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
+      
+      DebugPrintf( 1 , "\nWorkLevelGuns(...) : Phase of bullet=%d." , CurBullet->phase );
+      DebugPrintf( 1 , "\nWorkLevelGuns(...) : angle of bullet=%f." , CurBullet->angle );
+      
+      CurBullet->speed.x *= BulletSpeed;
+      CurBullet->speed.y *= BulletSpeed;
+      
+
+    } // for
+
+}; // void WorkLevelGuns ( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if the given position is passable for a droid,
