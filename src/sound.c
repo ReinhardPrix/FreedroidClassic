@@ -771,6 +771,18 @@ PlayGreetingSound ( int SoundCode )
     case 3:
       PlaySound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
       break;
+    case 4:
+      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_4.wav" , FALSE );
+      break;
+    case 5:
+      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_5.wav" , FALSE );
+      break;
+    case 6:
+      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_6.wav" , FALSE );
+      break;
+    case 7:
+      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_7.wav" , FALSE );
+      break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
       Terminate( ERR );

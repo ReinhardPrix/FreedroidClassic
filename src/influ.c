@@ -1514,6 +1514,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
 	  AllEnemys[ i ] . is_friendly = 0 ;
+	  AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
 	  
 	  //--------------------
 	  // War tux freezes enemys with the appropriate plugin...

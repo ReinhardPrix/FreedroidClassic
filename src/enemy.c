@@ -1394,6 +1394,21 @@ ClosestOtherEnemyDroid ( Enemy ThisRobot )
 }; // int ClosestOtherEnemyDroid ( Enemy ThisRobot ) 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+float
+DistanceToTux ( Enemy ThisRobot )
+{
+
+  return ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * 
+		  ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) + 
+		  ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * 
+		  ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) );
+
+}; // float DistanceToTux ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
  * determine the distance vector to the target of this shot.  The target
  * depends of course on wheter it's a friendly device or a hostile device.
  * ---------------------------------------------------------------------- */
@@ -1423,6 +1438,7 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  break;
 	}
 
+      /*
       //--------------------
       // Maybe we havn't found a single target.  Then we don't attack anything of course.
       // But the target will be set to the Tux.
@@ -1435,6 +1451,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
 	  return; 
 	}
+      */
+
     }
   else
     {
@@ -1751,7 +1769,8 @@ ProcessAttackStateMachine (int enemynum)
   // vect_to_target.x = 1;
   // vect_to_target.y = 1;
 
-  dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
+  // dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
+  dist2 = DistanceToTux ( ThisRobot );
 
   //====================
   //
