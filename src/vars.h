@@ -53,6 +53,21 @@ int Shieldcolors[INITIAL_BLOCK_WIDTH];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
+item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
+  { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 3 } , NULL } ,  { { 2 , 3 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 3 } , NULL } ,  { { 2 , 3 } , NULL } ,  { { 1 , 1 } , NULL } ,
+  { { 1 , 2 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 2 , 3 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 3 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,
+  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } 
+} ;
+
 int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
   {  0   ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , 
   {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  

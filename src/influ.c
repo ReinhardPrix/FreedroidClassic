@@ -1166,6 +1166,128 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 
 }; // int GetLivingDroidBelowMouseCursor ( int PlayerNum )
 
+
+/* ----------------------------------------------------------------------
+ * This function fires a bullet from the influencer in some direction, 
+ * no matter whether this is 'allowed' or not, not questioning anything
+ * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
+ * ---------------------------------------------------------------------- */
+void
+FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int ForceMouseUse ) 
+{
+  int i = 0;
+  Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
+  int guntype = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  double BulletSpeed = ItemMap[ weapon_item_type ].item_gun_speed;
+  double speed_norm;
+  moderately_finepoint speed;
+  int max_val;
+  float OffsetFactor;
+
+  //--------------------
+  // search for the next free bullet list entry
+  //
+  for (i = 0; i < (MAXBULLETS); i++)
+    {
+      if (AllBullets[i].type == OUT)
+	{
+	  CurBullet = &AllBullets[i];
+	  break;
+	}
+    }
+
+  // didn't find any free bullet entry? --> take the first
+  if (CurBullet == NULL)
+    CurBullet = &AllBullets[0];
+
+  CurBullet->pos.x = Me [ PlayerNum ] .pos.x;
+  CurBullet->pos.y = Me [ PlayerNum ] .pos.y;
+  CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
+  CurBullet->type = guntype;
+
+  //--------------------
+  // Previously, we had the damage done only dependant upon the weapon used.  Now
+  // the damage value is taken directly from the character stats, and the UpdateAll...stats
+  // has to do the right computation and updating of this value.  hehe. very conventient.
+  CurBullet->damage = Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
+  CurBullet->mine = TRUE;
+  CurBullet->owner = -1;
+  CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
+  CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
+  CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
+  CurBullet->ignore_wall_collisions = ItemMap[ weapon_item_type ].item_gun_bullet_ignore_wall_collisions;
+  CurBullet->owner_pos = & ( Me [ PlayerNum ] .pos );
+  CurBullet->time_in_frames = 0;
+  CurBullet->time_in_seconds = 0;
+  CurBullet->was_reflected = FALSE;
+  CurBullet->reflect_other_bullets   = ItemMap[ weapon_item_type ].item_gun_bullet_reflect_other_bullets;
+  CurBullet->pass_through_explosions = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_explosions;
+  CurBullet->pass_through_hit_bodies = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_hit_bodies;
+  CurBullet->miss_hit_influencer = UNCHECKED ;
+  memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+  CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
+
+  Me [ PlayerNum ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
+
+  speed.x = 0.0;
+  speed.y = 0.0;
+
+  if ( ServerThinksDownPressed ( PlayerNum ) )
+    speed.y = 1.0;
+  if ( ServerThinksUpPressed ( PlayerNum ) )
+    speed.y = -1.0;
+  if ( ServerThinksLeftPressed ( PlayerNum ) )
+    speed.x = -1.0;
+  if ( ServerThinksRightPressed ( PlayerNum ) )
+    speed.x = 1.0;
+
+  /* if using a joystick/mouse, allow exact directional shots! */
+  if ( ServerThinksAxisIsActive ( PlayerNum ) || ForceMouseUse )
+    {
+      max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
+		      abs( ServerThinksInputAxisY ( PlayerNum ) ) );
+      speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
+      speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
+    }
+
+  //--------------------
+  // It might happen, that this is not a normal shot, but rather the
+  // swing of a melee weapon.  Then of course, we should make a swing
+  // and not start in this direction, but rather somewhat 'before' it,
+  // so that the rotation will hit the target later.
+  //
+  RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ].item_gun_start_angle_modifier );
+
+  speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
+  CurBullet->speed.x = (speed.x/speed_norm);
+  CurBullet->speed.y = (speed.y/speed_norm);
+
+  //--------------------
+  // Now we determine the angle of rotation to be used for
+  // the picture of the bullet itself
+  //
+  
+  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
+
+  DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
+  DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
+  
+  CurBullet->speed.x *= BulletSpeed;
+  CurBullet->speed.y *= BulletSpeed;
+
+  //--------------------
+  // To prevent influ from hitting himself with his own bullets,
+  // move them a bit..
+  //
+  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+  CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
+  CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
+  // CurBullet->pos.x += 0.5 ;
+  // CurBullet->pos.y += 0.5 ;
+
+}; // void FireTuxRangedWeaponRaw ( PlayerNum ) 
+
+
 /* ----------------------------------------------------------------------
  * This function fires a bullet from the influencer in some direction, or
  * at least it TRIES to fire a bullet from the influencer, cause maybe
@@ -1175,13 +1297,7 @@ void
 FireBullet ( int PlayerNum )
 {
   int i = 0;
-  Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
   int guntype = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  double BulletSpeed = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_speed;
-  double speed_norm;
-  moderately_finepoint speed;
-  int max_val;
-  float OffsetFactor;
   moderately_finepoint Weapon_Target_Vector;
   float angle;
 
@@ -1231,15 +1347,6 @@ FireBullet ( int PlayerNum )
 	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
 	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) &&
 	( Me [ PlayerNum ] . mouse_move_target_is_enemy == (-1) ) )
-
-      /*
-	||
-      ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
-	//	( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  * FORCE_FIRE_DISTANCE  ) || 
-	// ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * FORCE_FIRE_DISTANCE  ) ) &&
-	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
-      */
-
       )
     {
       //--------------------
@@ -1257,7 +1364,9 @@ FireBullet ( int PlayerNum )
 
     }
 
-  if ( ( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+  if ( ( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
+       ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
+       ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
     {
       //--------------------
       // Later, we will add the new mouse move intention at this point
@@ -1270,8 +1379,6 @@ FireBullet ( int PlayerNum )
 
       Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
 
-      // return;
-
     }
 
   if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
@@ -1280,10 +1387,11 @@ FireBullet ( int PlayerNum )
       // Perhaps the player is just targeting a crushable box now.
       // Then of course we must not return, but execute the stroke!!
       //
-      if ( ( fabsf ( Me [ PlayerNum ] . mouse_move_target . x - 
+      if ( ( ( fabsf ( Me [ PlayerNum ] . mouse_move_target . x - 
 		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
-	   ( fabsf ( Me [ PlayerNum ] . mouse_move_target . y - 
-		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) )
+	     ( fabsf ( Me [ PlayerNum ] . mouse_move_target . y - 
+		       Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) ) ||
+	   ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change == 0 ) )
 	{
 	  // don't return, but do the attack...
 	  //
@@ -1292,7 +1400,6 @@ FireBullet ( int PlayerNum )
 	{
 	  return;
 	}
-      
     }
 
 
@@ -1327,6 +1434,7 @@ FireBullet ( int PlayerNum )
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if ( Me [ PlayerNum ] .firewait > 0 )
     return;
+
 
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)
@@ -1409,105 +1517,8 @@ FireBullet ( int PlayerNum )
       return;
     }
 
-  // search for the next free bullet list entry
-  for (i = 0; i < (MAXBULLETS); i++)
-    {
-      if (AllBullets[i].type == OUT)
-	{
-	  CurBullet = &AllBullets[i];
-	  break;
-	}
-    }
+  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , FALSE ) ;
 
-  // didn't find any free bullet entry? --> take the first
-  if (CurBullet == NULL)
-    CurBullet = &AllBullets[0];
-
-  CurBullet->pos.x = Me [ PlayerNum ] .pos.x;
-  CurBullet->pos.y = Me [ PlayerNum ] .pos.y;
-  CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
-  CurBullet->type = guntype;
-
-  //--------------------
-  // Previously, we had the damage done only dependant upon the weapon used.  Now
-  // the damage value is taken directly from the character stats, and the UpdateAll...stats
-  // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
-  CurBullet->mine = TRUE;
-  CurBullet->owner = -1;
-  CurBullet->bullet_lifetime = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_lifetime;
-  CurBullet->angle_change_rate = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_angle_change;
-  CurBullet->fixed_offset = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_fixed_offset;
-  CurBullet->ignore_wall_collisions = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  CurBullet->owner_pos = & ( Me [ PlayerNum ] .pos );
-  CurBullet->time_in_frames = 0;
-  CurBullet->time_in_seconds = 0;
-  CurBullet->was_reflected = FALSE;
-  CurBullet->reflect_other_bullets = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_reflect_other_bullets;
-  CurBullet->pass_through_explosions = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_pass_through_explosions;
-  CurBullet->pass_through_hit_bodies = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
-  CurBullet->miss_hit_influencer = UNCHECKED ;
-  memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
-  Me [ PlayerNum ] .firewait = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_recharging_time;
-
-  speed.x = 0.0;
-  speed.y = 0.0;
-
-  if ( ServerThinksDownPressed ( PlayerNum ) )
-    speed.y = 1.0;
-  if ( ServerThinksUpPressed ( PlayerNum ) )
-    speed.y = -1.0;
-  if ( ServerThinksLeftPressed ( PlayerNum ) )
-    speed.x = -1.0;
-  if ( ServerThinksRightPressed ( PlayerNum ) )
-    speed.x = 1.0;
-
-  /* if using a joystick/mouse, allow exact directional shots! */
-  if ( ServerThinksAxisIsActive ( PlayerNum ) )
-    {
-      max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
-		      abs( ServerThinksInputAxisY ( PlayerNum ) ) );
-      speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
-      speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
-    }
-
-  //--------------------
-  // It might happen, that this is not a normal shot, but rather the
-  // swing of a melee weapon.  Then of course, we should make a swing
-  // and not start in this direction, but rather somewhat 'before' it,
-  // so that the rotation will hit the target later.
-  //
-  RotateVectorByAngle ( & speed , ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_start_angle_modifier );
-
-  speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
-  CurBullet->speed.x = (speed.x/speed_norm);
-  CurBullet->speed.y = (speed.y/speed_norm);
-
-  //--------------------
-  // Now we determine the angle of rotation to be used for
-  // the picture of the bullet itself
-  //
-  
-  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
-
-  DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
-  DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
-  
-  //  printf_SDL(Screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
-  //	     CurBullet->speed.x, CurBullet->speed.y);
-  //  getchar_raw();
-
-  CurBullet->speed.x *= BulletSpeed;
-  CurBullet->speed.y *= BulletSpeed;
-
-  // To prevent influ from hitting himself with his own bullets,
-  // move them a bit..
-  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
-  CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
-  CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
-  // CurBullet->pos.x += 0.5 ;
-  // CurBullet->pos.y += 0.5 ;
 
   return;
 }; // void FireBullet ( int PlayerNum )

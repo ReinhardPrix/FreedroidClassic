@@ -100,7 +100,8 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
     {
       Me[0].mana -= SpellCost;
 
-
+      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , TRUE ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -265,6 +266,7 @@ HandleCurrentlyActivatedSkill( void )
 {
   static int RightPressedPreviousFrame = 0;
   // gps TargetLocation;
+  moderately_finepoint TargetPoint;
 
   if ( Me[0].readied_skill == 0 )
     {
@@ -307,6 +309,18 @@ HandleCurrentlyActivatedSkill( void )
 	    {
 	      // TeleportHome ( TargetLocation ) ;
 	      TeleportHome (  ) ;
+	    }
+	}
+    }
+  else if ( Me[0].readied_skill == 5 )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      FireyBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
     }
@@ -418,7 +432,11 @@ ShowSkillsScreen ( void )
   SkillName[ 2 ] = "Force Explosion Ray";
   SkillName[ 3 ] = "Force -> Energy ";
   SkillName[ 4 ] = "Create Teleportal Home";
-  SkillName[ 5 ] = "Unknown yet";
+  SkillName[ 5 ] = "Firey Bolt";
+  SkillName[ 6 ] = "Holy Bolt";
+  SkillName[ 7 ] = "Mana Shield";
+  SkillName[ 8 ] = "Cold Bolt";
+  SkillName[ 9 ] = "Unknown yet";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 

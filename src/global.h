@@ -36,6 +36,7 @@
 #else
 #define EXTERN extern
 
+EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
 EXTERN item_bonus PrefixList[];
 EXTERN item_bonus SuffixList[];
 EXTERN char EndTitleText1[];
@@ -151,7 +152,7 @@ EXTERN grob_point InventorySize;
 EXTERN itemspec ItemMap[ ALL_ITEMS ];
 
 // EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
-EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
+// EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
 EXTERN SDL_Surface* MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
 EXTERN SDL_Surface* SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
 
