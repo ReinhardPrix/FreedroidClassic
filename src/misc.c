@@ -1281,6 +1281,16 @@ settings file will be generated.",
   //
   DebugPrintf ( 0 , "\nSuccessfully loaded and enforced your personal configuration file %s.\n\n" , fname );
 
+  //--------------------
+  // Now we will turn off the skills and inventory screen and that, cause
+  // this should be off when the game starts...
+  //
+  GameConfig . CharacterScreen_Visible = FALSE ;
+  GameConfig . Inventory_Visible = FALSE ;
+  GameConfig . Mission_Log_Visible = FALSE ;
+  GameConfig . SkillScreen_Visible = FALSE ;
+  GameConfig . Automap_Visible = FALSE ;
+
   return (OK);
 
 }; // int LoadGameConfig ( void )
