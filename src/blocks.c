@@ -2828,6 +2828,19 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . filename = "iso_rocks_n_plants_0003.png" ;
 
+  obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_ROOM_WALL_V_RED ]  . filename = "iso_walls_0016.png" ;
+  obstacle_map [ ISO_ROOM_WALL_H_RED ]  . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_ROOM_WALL_H_RED ]  . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_ROOM_WALL_H_RED ]  . filename = "iso_walls_0017.png" ;
+  obstacle_map [ ISO_ROOM_WALL_V_GREEN ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_ROOM_WALL_V_GREEN ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_ROOM_WALL_V_GREEN ] . filename = "iso_walls_0018.png" ;
+  obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . filename = "iso_walls_0019.png" ;
+
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets
