@@ -437,7 +437,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 
   if( fclose( SaveGameFile ) == EOF) 
     {
-      printf("\n\nClosing of ship file failed in SaveGame...\n\nTerminating\n\n");
+      printf("\n\nClosing of save game file failed in SaveGame...\n\nTerminating\n\n");
       Terminate(ERR);
       // return ERR;
     }
