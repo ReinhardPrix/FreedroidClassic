@@ -129,6 +129,7 @@ playground_t CapsuleCountdown;
 
 void EvaluatePlayground ( void );
 float EvaluatePosition ( int color , int row , int layer );
+void AdvancedEnemyTakeoverMovements (void);
 
 /*-----------------------------------------------------------------
  * @Desc: play takeover-game against a druid 
@@ -448,7 +449,8 @@ PlayGame (void)
       if ( cur_time > prev_move_tick + move_tick_len )  
 	{
 	  prev_move_tick += move_tick_len; /* set for next motion tick */
-	  EnemyMovements ();
+	  // EnemyMovements ();
+	  AdvancedEnemyTakeoverMovements ();
 
 	  if (up)
 	    {
@@ -612,6 +614,115 @@ EnemyMovements (void)
 
   return;
 }	/* EnemyMovements */
+
+/*-----------------------------------------------------------------
+ * This function performs the enemy movements in the takeover game,
+ * but it does this in an advaned way, that has not been there in
+ * the classic freedroid game.
+ *-----------------------------------------------------------------*/
+void
+AdvancedEnemyTakeoverMovements (void)
+{
+  // static int Actions = 3;
+  static int MoveProbability = 100;
+  static int TurnProbability = 10;
+  static int SetProbability = 80;
+
+  int action;
+  static int direction = 1;	/* start with this direction */
+  int row = CapsuleCurRow[OpponentColor] - 1;
+  int test_row;
+
+  int BestTarget = -1 ; 
+  float BestValue = (-10000);  // less than any capsule can have
+
+  if (NumCapsules[ENEMY] == 0)
+    return;
+
+  //--------------------
+  // First we're going to find out which target place is
+  // best choice for the next capsule setting.
+  //
+  for ( test_row = 0 ; test_row < NUM_LINES ; test_row ++ )
+    {
+      if ( EvaluatePosition ( OpponentColor , test_row , 1 ) > BestValue )
+	{
+	  BestTarget = test_row ;
+	  BestValue = EvaluatePosition ( OpponentColor , test_row , 1 ) ;
+	}
+    }
+  DebugPrintf( 0 , "\nBest target row found : %d." , BestTarget );
+
+  //--------------------
+  // Now we can start to move into the right direction.
+  // Previously this was a pure random choice like
+  //
+  // action = MyRandom (Actions);
+  //
+  // but now we do it differently :)
+  //
+  if ( row < BestTarget )
+    {
+      direction = 1 ;
+      action = 0 ;
+    }
+  else if ( row > BestTarget )
+    {
+      direction = -1;
+      action = 0;
+    }
+  else
+    {
+      action = 2 ;
+    }
+
+  switch (action)
+    {
+    case 0:			/* Move along */
+      if (MyRandom (100) <= MoveProbability)
+	{
+	  row += direction;
+	  if (row > NUM_LINES - 1)
+	    row = 0;
+	  if (row < 0)
+	    row = NUM_LINES - 1;
+	}
+      break;
+
+    case 1:			/* Turn around */
+      if (MyRandom (100) <= TurnProbability)
+	{
+	  direction *= -1;
+	}
+      break;
+
+    case 2:			/* Try to set  capsule */
+      if (MyRandom (100) <= SetProbability)
+	{
+	  if ((row >= 0) &&
+	      (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
+	      (ActivationMap[OpponentColor][0][row] == INACTIVE))
+	    {
+	      NumCapsules[ENEMY]--;
+	      Takeover_Set_Capsule_Sound ();
+	      ToPlayground[OpponentColor][0][row] = VERSTAERKER;
+	      ActivationMap[OpponentColor][0][row] = ACTIVE1;
+	      CapsuleCountdown[OpponentColor][0][row] = CAPSULE_COUNTDOWN;
+	      row = -1;		/* For the next capsule: startpos */
+	    }
+	} /* if MyRandom */
+
+      break;
+
+    default:
+      break;
+
+    }	/* switch action */
+
+  CapsuleCurRow[OpponentColor] = row + 1;
+
+  return;
+}; // AdvancedEnemyTakeoverMovements 
 
 /* ----------------------------------------------------------------------
  * This function reads in the takeover game elements for later blitting. 
