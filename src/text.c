@@ -63,6 +63,9 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
+char BigScreenMessage[5000];
+float BigScreenMessageDuration=10000;
+
 /* ----------------------------------------------------------------------
  * This function does all the (text) interaction with a friendly droid
  * and maybe also does special interacions like Chandra and Stone.
@@ -1286,6 +1289,38 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
      return TRUE; 
 
 };
+
+/* ----------------------------------------------------------------------
+ * This function sets a new text, that will be displayed in huge font 
+ * directly over the combat window for a fixed duration of time, where
+ * only the time in midst of combat and with no other windows opened
+ * is counted.
+ * ---------------------------------------------------------------------- */
+void
+SetNewBigScreenMessage( char* ScreenMessageText )
+{
+  strcpy ( BigScreenMessage , ScreenMessageText );
+  BigScreenMessageDuration = 0 ;
+}; // void SetNewBigScreenMessage( char* ScreenMessageText )
+
+/* ----------------------------------------------------------------------
+ * This function displays the currently defined Bigscreenmessage on the
+ * screen.  It will be called by AssembleCombatWindow.
+ * ---------------------------------------------------------------------- */
+void
+DisplayBigScreenMessage( void )
+{
+  if ( BigScreenMessageDuration < 6.5 )
+    {
+      SDL_SetClipRect ( Screen , NULL );
+      CenteredPutStringFont ( Screen , Menu_Filled_BFont , 120 , BigScreenMessage );
+      if ( !GameConfig.Inventory_Visible &&
+           !GameConfig.SkillScreen_Visible &&
+	   !GameConfig.CharacterScreen_Visible )
+	BigScreenMessageDuration += Frame_Time();
+
+    }
+}; // void DisplayBigScreenMessage( void )
 
 /*-----------------------------------------------------------------
  * @Desc: prints *Text beginning at positions startx/starty, 

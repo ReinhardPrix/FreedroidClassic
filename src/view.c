@@ -519,6 +519,8 @@ Assemble_Combat_Picture (int mask)
 
       PutMouseMoveCursor ( );
 
+      DisplayBigScreenMessage();
+
     } // ! ONLY_SHOW_MAP_AND_TEXT
       
 

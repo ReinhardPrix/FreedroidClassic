@@ -528,6 +528,8 @@ void PaintConsoleMenu (int menu_pos);
 #define EXTERN extern
 #endif
 
+EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );
+EXTERN void DisplayBigScreenMessage( void );
 // EXTERN void RestoreChatVariableToInitialValue( int PlayerNum );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
 EXTERN void ChatWithFriendlyDroid( int Enum );

@@ -568,6 +568,12 @@ UpdateAllCharacterStats ( int PlayerNum )
       //
       Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
       Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
+
+      //--------------------
+      // Also when a new level is reached, we will display a big message
+      // right over the combat window.
+      //
+      SetNewBigScreenMessage( "Level Gained!" );
     }
 
   //--------------------
