@@ -1269,20 +1269,21 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	//
 	if ( ChatDroid -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
 	{
-	    MenuSelection = 1 ;
+	    MenuSelection = 0 ;
 	    ChatDroid -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	    ChatDroid -> persuing_given_course = FALSE ;
 	    ChatDroid -> has_greeted_influencer = TRUE ;
 	}
 	else
+	{
 	    MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
-	
-	//--------------------
-	// We do some correction of the menu selection variable:
-	// The first entry of the menu will give a 1 and so on and therefore
-	// we need to correct this to more C style.
-	//
-	MenuSelection --;
+	    //--------------------
+	    // We do some correction of the menu selection variable:
+	    // The first entry of the menu will give a 1 and so on and therefore
+	    // we need to correct this to more C style.
+	    //
+	    MenuSelection --;
+	}
 	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 ) || ( MenuSelection < 0 ) )
 	{
 	    MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
