@@ -1345,6 +1345,10 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
   if ( ThisRobot -> animation_phase > 0 ) return ;
 
+  //--------------------
+  // Only in case of a conventional sword strike, i.e. no real animation
+  // yet will we start the sound for that 'bullet'.
+  //
   Fire_Bullet_Sound ( guntype );
   
   // find a bullet entry, that isn't currently used... 

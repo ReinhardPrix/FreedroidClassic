@@ -66,6 +66,8 @@ ShowStartupPercentage ( int Percentage )
   Bar_Rect . h = 30 ;
   our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , 0 ) ;
 
+  SDL_SetClipRect( Screen , NULL );
+
   PrintString ( Screen , 200 + 80 , 200 + 4 , "%d%%", Percentage ) ;
 
   our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;

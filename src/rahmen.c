@@ -572,11 +572,6 @@ blit_energy_o_meter( void )
 
   if ( use_open_gl ) 
     {
-      /*      
-      blit_open_gl_texture_to_map_position ( speed_meter_iso_image , 
-					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , TRUE ) , 
-					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , FALSE ) ) ;
-      */
 
       prepare_open_gl_for_blending_textures ( );
 
@@ -648,7 +643,6 @@ blit_energy_o_meter( void )
 	  //
 	  // DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
 	}
-
 
       //--------------------
       // Finally, we blit the fully assembled speed-o-meter

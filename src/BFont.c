@@ -309,11 +309,13 @@ int
 PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 {
   SDL_Rect dest;
-
+  SDL_Rect clipping_rect;
   dest.w = CharWidth (Font, ' ');
   dest.h = FontHeight (Font) ;
   dest.x = x;
   dest.y = y;
+
+  
 
   if ( ( c != ' ' ) && ( c != '\n' ) )
     {
@@ -325,28 +327,38 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
       if ( use_open_gl )
 	{
 	  //--------------------
-	  // Blitting the characters of the font with plain pixel operations in OpenGL is
-	  // known to fail on some systems.  So why not just use the faster textured quads
-	  // anyway?  Yes, why not.  But to safe some texture memory, we won't create *every*
-	  // texture for every font loaded at starting time but we'll create the surfaces
-	  // on the fly and ONLY FOR THOSE CHARACTERS NEEDED.  That should save us some time...
+	  // Printing the character should only be done, if the character would also
+	  // be blitted with SDL output, i.e. if the character lies within the so called
+	  // SDL clipping rectangle.  We make sure this is the case, or otherwise just 
+	  // leave this character unblitted.
 	  //
-	  // our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
-	  //
-	  if ( ! Font -> char_iso_image [ c ] . texture_has_been_created )
+	  SDL_GetClipRect ( Surface , & clipping_rect );
+
+	  if ( ( dest . x < clipping_rect . x + clipping_rect . w ) &&
+	       ( dest . y < clipping_rect . y + clipping_rect . h ) &&
+	       ( dest . y >= clipping_rect . y ) &&
+	       ( dest . x >= clipping_rect . x ) )
 	    {
-	      if ( Font -> char_iso_image [ c ] . surface == NULL )
+	      //--------------------
+	      // Blitting the characters of the font with plain pixel operations in OpenGL is
+	      // known to fail on some systems.  So why not just use the faster textured quads
+	      // anyway?  Yes, why not.  But to safe some texture memory, we won't create *every*
+	      // texture for every font loaded at starting time but we'll create the surfaces
+	      // on the fly and ONLY FOR THOSE CHARACTERS NEEDED.  That should save us some time...
+	      //
+	      if ( ! Font -> char_iso_image [ c ] . texture_has_been_created )
 		{
-		  GiveStandardErrorMessage ( "PutCharFont(...)" , "\
+		  if ( Font -> char_iso_image [ c ] . surface == NULL )
+		    {
+		      GiveStandardErrorMessage ( "PutCharFont(...)" , "\
 Surface was NULL pointer!",
-				 PLEASE_INFORM, IS_FATAL );
+						 PLEASE_INFORM, IS_FATAL );
+		    }
+		  make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
 		}
-	      make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
+	      
+	      blit_open_gl_texture_to_screen_position ( Font -> char_iso_image [ c ] , dest . x , dest . y , TRUE ) ;
 	    }
-
-	  blit_open_gl_texture_to_screen_position ( Font -> char_iso_image [ c ] , dest . x , dest . y , TRUE ) ;
-
-	  // our_SDL_blit_surface_wrapper ( Font -> char_iso_image [ c ] . surface , NULL , Surface, &dest);
 	}
       else
 	{

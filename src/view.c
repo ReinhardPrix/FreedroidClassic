@@ -1169,7 +1169,7 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 	{
 	  if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
-	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); // this blits player 0 
+	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); 
 	    }
 	}
     }
@@ -1213,7 +1213,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	    {
 	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 )
 		continue;
-	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); // this blits player 0 
+	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); 
 	    }
 	  break;
 	case BLITTING_TYPE_BULLET:

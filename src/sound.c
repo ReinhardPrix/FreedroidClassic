@@ -1418,6 +1418,8 @@ Fire_Bullet_Sound (int BulletType)
 {
   if (!sound_on) return;
 
+  DebugPrintf ( -10, "\nFireBulletSound called..." );
+
   switch (BulletType)
     {
     case PULSE:
