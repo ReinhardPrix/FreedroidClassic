@@ -771,7 +771,6 @@ ItemDropFromLevelEditor( void )
     int our_multiplicity = 1 ;
     int item_group = 0 ; 
     static int previous_mouse_position_index = (-1) ;
-    int mouse_position_index = (-1) ;
     
     while ( GPressed() );
     

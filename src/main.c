@@ -141,7 +141,6 @@ main (int argc, char * argv[])
   GameOver = FALSE;
   QuitProgram = FALSE;
 
-
   /*
    *  Parse command line and set global switches 
    *  this function exits program when error, so we don't need to 

@@ -38,7 +38,7 @@
 
 #include "scandir.h"
 
-int New_Game_Requested=FALSE;
+int New_Game_Requested = FALSE ;
 
 int Single_Player_Menu (void);
 int Multi_Player_Menu (void);
@@ -46,6 +46,7 @@ void Credits_Menu (void);
 void Contribute_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
+
 EXTERN void LevelEditor(void);
 extern int MyCursorX;
 extern int MyCursorY;
@@ -1354,7 +1355,10 @@ enum
       MenuTexts[4]="Exit Freedroid";
       MenuTexts[5]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+      if ( ! skip_initial_menus )
+	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+      else
+	  MenuPosition = SINGLE_PLAYER_POSITION ;
 
       switch (MenuPosition) 
 	{
@@ -2237,13 +2241,16 @@ Get_Server_Name ( void )
 void
 Get_New_Character_Name ( void )
 {
-  char* Temp;
-  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
+    char* Temp;
+    InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
-  Temp = GetString ( 20 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
+    if ( ! skip_initial_menus )
+	Temp = GetString ( 20 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
      Please enter a name\n\
      for the new hero: \n\
      > " );
+    else
+	Temp = "MapEd" ;
 
   //--------------------
   // In case 'Escape has been pressed inside GetString, then a NULL pointer
@@ -2694,12 +2701,16 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
+
+      if ( ! skip_initial_menus )
+	  MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
+      else
+	  MenuPosition = NEW_HERO_POSITION ;
 
       switch (MenuPosition) 
 	{
 	case NEW_HERO_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
+	  while ( EnterPressed() || SpacePressed() ) ;
 
 	  if ( PrepareNewHero ( ) == TRUE )
 	    {
@@ -2715,7 +2726,7 @@ enum
 	  break;
 
 	case LOAD_EXISTING_HERO_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
+	  while ( EnterPressed() || SpacePressed() ) ;
 
 	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
 	    {

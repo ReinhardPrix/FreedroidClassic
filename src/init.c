@@ -1050,6 +1050,7 @@ Usage: freedroid [-v|--version] \n\
                  [-s|--sound] [-q|--nosound] \n\
                  [-o|--open_gl] [-n|--no_open_gl]\n\
                  [-f|--fullscreen] [-w|--window]\n\
+                 [-m|--mapcheck] \n\
                  [-j|--sensitivity]\n\
                  [-d|--debug=LEVEL]\n\
 \n\
@@ -1067,89 +1068,95 @@ Thanks a lot in advance, the Freedroid dev team.\n\n";
 void
 ParseCommandLine (int argc, char *const argv[])
 {
-  int c;
+    int c;
 
-  static struct option long_options[] = {
-    {"version",     0, 0,  'v'},
-    {"help", 	    0, 0,  'h'},
-    {"open_gl",     0, 0,  'o'},
-    {"no_open_gl",  0, 0,  'n'},
-    {"nosound",     0, 0,  'q'},
-    {"sound", 	    0, 0,  's'},
-    {"debug", 	    2, 0,  'd'},
-    {"window",      0, 0,  'w'},
-    {"fullscreen",  0, 0,  'f'},
-    {"sensitivity", 1, 0,  'j'},
-    { 0, 	    0, 0,    0}
-  };
+    static struct option long_options[] = {
+	{"version",     0, 0,  'v'},
+	{"help",        0, 0,  'h'},
+	{"open_gl",     0, 0,  'o'},
+	{"no_open_gl",  0, 0,  'n'},
+	{"nosound",     0, 0,  'q'},
+	{"sound",       0, 0,  's'},
+	{"debug",       2, 0,  'd'},
+	{"window",      0, 0,  'w'},
+	{"fullscreen",  0, 0,  'f'},
+	{"mapcheck",    0, 0,  'm'},
+	{"sensitivity", 1, 0,  'j'},
+	{ 0,            0, 0,    0}
+    };
 
-  while (1)
+    while ( 1 )
     {
-      c = getopt_long (argc, argv, "vonqst:h?d::wfj:", long_options, NULL);
-      if (c == -1)
-	break;
+	c = getopt_long ( argc , argv , "vonqst:h?d::wfmj:" , long_options , NULL );
+	if ( c == -1 )
+	    break;
 
-      switch (c)
+	switch ( c )
 	{
-	  /* version statement -v or --version
-	   * following gnu-coding standards for command line interfaces */
-	case 'v':
-	  printf ("\n%s %s  \n", PACKAGE, VERSION);
-	  printf (copyright);
-	  exit (0);
-	  break;
-
-	case 'h':
-	case '?':
-	  printf ( usage_string );
-	  exit ( 0 );
-	  break;
-
-	case 'o':
-	  use_open_gl = TRUE;
-	  break;
-
-	case 'n':
-	  use_open_gl = FALSE;
-	  break;
-
-	case 'q':
-	  sound_on = FALSE;
-	  break;
-
-	case 's':
-	  sound_on = TRUE;
-	  break;
-
-	case 'j':
-	  joy_sensitivity = atoi (optarg);
-	  if (joy_sensitivity < 0 || joy_sensitivity > 32)
-	    {
-	      printf ("\nJoystick sensitivity must lie in the range [0;32]\n");
-	      Terminate(ERR);
-	    }
-	  break;
-
-	case 'd':
-	  if (!optarg) 
-	    debug_level = 1;
-	  else
-	    debug_level = atoi (optarg);
-	  break;
-
-	case 'f':
-	  fullscreen_on = TRUE;
-	  break;
-	case 'w':
-	  fullscreen_on = FALSE;
-	  break;
-
-	default:
-	  printf ("\nOption %c not implemented yet! Ignored.", c);
-	  break;
+	    /* version statement -v or --version
+	     * following gnu-coding standards for command line interfaces */
+	    case 'v':
+		printf ("\n%s %s  \n", PACKAGE, VERSION);
+		printf (copyright);
+		exit (0);
+		break;
+		
+	    case 'h':
+	    case '?':
+		printf ( usage_string );
+		exit ( 0 );
+		break;
+		
+	    case 'o':
+		use_open_gl = TRUE;
+		break;
+		
+	    case 'n':
+		use_open_gl = FALSE;
+		break;
+		
+	    case 'q':
+		sound_on = FALSE;
+		break;
+		
+	    case 's':
+		sound_on = TRUE;
+		break;
+		
+	    case 'j':
+		joy_sensitivity = atoi (optarg);
+		if (joy_sensitivity < 0 || joy_sensitivity > 32)
+		{
+		    printf ("\nJoystick sensitivity must lie in the range [0;32]\n");
+		    Terminate(ERR);
+		}
+		break;
+		
+	    case 'd':
+		if (!optarg) 
+		    debug_level = 1;
+		else
+		    debug_level = atoi (optarg);
+		break;
+		
+	    case 'f':
+		fullscreen_on = TRUE;
+		break;
+		
+	    case 'w':
+		fullscreen_on = FALSE;
+		break;
+		
+	    case 'm':
+		skip_initial_menus = TRUE;
+		break;
+		
+	    default:
+		printf ("\nOption %c not implemented yet! Ignored.", c);
+		break;
 	}			/* switch(c) */
     }				/* while(1) */
-}				/* ParseCommandLine */
+}; // ParseCommandLine (int argc, char *const argv[])
 
 
 /* ----------------------------------------------------------------------
@@ -1593,7 +1600,8 @@ PrepareStartOfNewCharacter ( void )
   //
   GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
 
-  PlayATitleFile ( "StartOfGame.title" );
+  if ( !skip_initial_menus )
+      PlayATitleFile ( "StartOfGame.title" );
 
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission

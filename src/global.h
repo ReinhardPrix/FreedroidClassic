@@ -80,6 +80,7 @@ EXTERN network_tux_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 EXTERN Druidspec Druidmap;     
 EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
+EXTERN int skip_initial_menus;
 #endif
 
 EXTERN SDL_Rect User_Rect;
