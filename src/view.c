@@ -868,6 +868,9 @@ PutItem( int ItemNumber )
   
   if ( CurItem->type == ( -1 ) ) return;
 
+  // We don't blit any item, that we're currently holding in our hand, do we?
+  if ( CurItem->currently_held_in_hand == TRUE ) return;
+
   TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.x ) ;
   TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.y ) ;
 
