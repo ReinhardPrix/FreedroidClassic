@@ -740,7 +740,7 @@ Load_Digit_Surfaces( void )
       SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=1*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2); // first line
       Source.w=INITIAL_DIGIT_LENGTH;
       Source.h=INITIAL_DIGIT_HEIGHT;
       Target.x=0;
@@ -760,7 +760,7 @@ Load_Digit_Surfaces( void )
       // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=1*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);  // first line
       Source.w=INITIAL_DIGIT_LENGTH;
       Source.h=INITIAL_DIGIT_HEIGHT;
       Target.x=0;
@@ -774,67 +774,6 @@ Load_Digit_Surfaces( void )
   SDL_FreeSurface( tmp_surf );
 
 }; // void Load_Digit_Surfaces( void )
-
-
-void 
-old_Load_MapBlock_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int color;
-  char *fpath;
-  char *ColoredBlockFiles[] = {
-    "ne_block_red.png",
-    "ne_block_yellow.png",
-    "ne_block_green.png",
-    "ne_block_gray.png",
-    "ne_block_blue.png",
-    "ne_block_turquoise.png",
-    "ne_block_dark.png",
-    NULL
-  }; 
-
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-  
-  for ( color = 0 ; color < NUM_COLORS ; color ++ )
-    {
-      DisplayText (".", -1, -1, NULL);
-      SDL_Flip (ne_screen);
-
-      fpath = find_file ( ColoredBlockFiles[ color ] , GRAPHICS_DIR, TRUE);
-
-      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-      
-      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=(i%9)*(Block_Height+2);
-	  Source.y=(i/9)*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
-	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
-	  OrigMapBlockSurfacePointer[color][i] = MapBlockSurfacePointer[ color ][i];
-	  // unzoomed original map-blocks
-
-	}
-      SDL_FreeSurface( tmp_surf );
-    }
-}; // void Load_MapBlock_Surfaces( void )
-
 
 /* 
 ----------------------------------------------------------------------
