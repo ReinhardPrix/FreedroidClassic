@@ -248,6 +248,7 @@ Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
 Allowed Type of Random Droid for this level: 303
 S**pecialForce: Type=DAP X=29 Y=21 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
+SpecialForce: Type=GOT X=10 Y=37 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
 ** End of this levels droid data **
 
 ** Beginning of new Level **

@@ -2072,6 +2072,8 @@ Credits_Menu (void)
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\
                                       Lanzz\n\n\n\
+   LEVEL DESIGN:\n\n\
+                                      Johannes Prix\n\n\n\
    MOD COMPOSERS:\n\n\
                                       speedball (Ace-II)\n\n\
                                       knert&cosmos (Your World)\n\n\
