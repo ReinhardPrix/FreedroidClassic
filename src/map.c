@@ -580,23 +580,21 @@ char *Encode_Level_For_Saving(Level Lev)
   //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
+      if ( Lev->ItemList[ i ].type == (-1) ) continue;
 
       strcat( LevelMem , ITEM_CODE_STRING );
       sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
       strcat( LevelMem , linebuf );
 
-      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
+      strcat( LevelMem , ITEM_POS_X_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.x );
       strcat( LevelMem , linebuf );
 
-      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
+      strcat( LevelMem , ITEM_POS_Y_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
       strcat( LevelMem , linebuf );
 
-      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
-      strcat( LevelMem , "\"\n" );
+      strcat( LevelMem , "\n" );
     }
   //--------------------
   // Now we write out a marker to announce the end of the codepanel data
@@ -849,8 +847,12 @@ Decode_Loaded_Leveldata (char *data)
   char* CodepanelPointer;
   char* CodepanelSectionBegin;
   char* CodepanelSectionEnd;
+  char* ItemPointer;
+  char* ItemsSectionBegin;
+  char* ItemsSectionEnd;
   int NumberOfStatementsInThisLevel;
   int NumberOfCodepanelsInThisLevel;
+  int NumberOfItemsInThisLevel;
   char Preserved_Letter;
 
   /* Get the memory for one level */
@@ -981,6 +983,38 @@ Decode_Loaded_Leveldata (char *data)
       loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
       loadlevel->ItemList[ i ].type = ( -1 ) ;
     }
+
+  // We look for the beginning and end of the items section
+  ItemsSectionBegin = LocateStringInData( data , ITEMS_SECTION_BEGIN_STRING );
+  ItemsSectionEnd = LocateStringInData( data , ITEMS_SECTION_END_STRING );
+
+  // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
+  // The damage will be restored later!
+  Preserved_Letter=ItemsSectionEnd[0];
+  ItemsSectionEnd[0]=0;
+  NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
+  DebugPrintf( 0 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
+
+  // Now we decode all the codepanel information
+  ItemPointer=ItemsSectionBegin;
+  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
+    {
+      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
+			   &(loadlevel->ItemList[ i ].type) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
+			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
+			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
+
+      DebugPrintf( 0 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
+		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
+    }
+  
+  // Now we repair the damage done to the loaded level data
+  ItemsSectionEnd[0]=Preserved_Letter;
+
+  fflush(stdout);
 
   //--------------------
   // find the map data

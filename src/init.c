@@ -1454,7 +1454,7 @@ InitNewMissionList ( char *MissionName )
 	}
     }
 
-
+  /*
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
       CurLevel->ItemList[ i ].pos.x = 0;
@@ -1489,7 +1489,7 @@ InitNewMissionList ( char *MissionName )
   CurLevel->ItemList[ 6 ].pos.x = 5;
   CurLevel->ItemList[ 6 ].pos.y = 8;
   CurLevel->ItemList[ 6 ].type = 6 ;
-
+*/
 
 }; // void InitNewMissionList ( char* MissionName )
 
