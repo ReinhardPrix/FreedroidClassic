@@ -89,12 +89,12 @@ GetHeldItemInventoryIndex( void )
     }
   if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
     {
-      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
       InvPos = ( -1 ) ;
     }
   else
     {
-      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
     }
   return ( InvPos );
 }; // int GetHeldItemInventoryIndex( void )
@@ -130,6 +130,9 @@ Inv_Pos_Is_Free( int x , int y )
  * This function returns the index in the invenotry list of the object
  * at the inventory position x y.  If no object is found to occupy that
  * square, an index of (-1) is returned.
+ * 
+ * NOTE: The mentioned coordinates refer to the squares of the inventory grid!!
+ *
  * ---------------------------------------------------------------------- */
 int 
 GetInventoryItemAt ( int x , int y )
@@ -237,23 +240,31 @@ CursorIsInInventoryGrid( int x , int y )
 
   if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + INVENTORY_GRID_WIDTH * 32 ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
+      // DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * INVENTORY_GRID_HEIGHT ) && 
 	   ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
+	  // DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
   return( FALSE );
 }; // int CursorIsInInventoryGrid( int x , int y )
 
+/* ----------------------------------------------------------------------
+ * This function gives the x coordinate of the inventory square that 
+ * corresponds to the mouse cursor location given to the function.
+ * ---------------------------------------------------------------------- */
 int
 GetInventorySquare_x( int x )
 {
   return ( ( x - 16 ) / 32 );
 }; // int GetInventorySquare_x( x )
 
+/* ----------------------------------------------------------------------
+ * This function gives the y coordinate of the inventory square that 
+ * corresponds to the mouse cursor location given to the function.
+ * ---------------------------------------------------------------------- */
 int
 GetInventorySquare_y( int y )
 {
@@ -278,16 +289,16 @@ GetHeldItemCode ( void )
     }
   if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
     {
-      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
       return ( -1 );
     }
   else
     {
-      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
     }
   
   return ( Me.Inventory[ InvPos ].type );
-}; // int GetInventorySquare_y( y )
+}; // int GetHeldItemCode ( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given item type could be dropped into the 
@@ -324,8 +335,6 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
 }; // int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
-
-  
 void 
 DropHeldItemToTheFloor ( void )
 {
@@ -404,6 +413,12 @@ DropHeldItemToDriveSlot ( void )
 
 }; // void DropHeldItemToDriveSlot ( void )
 
+/* ----------------------------------------------------------------------
+ * If an item is held and then clicked again in the inventory field, this
+ * item should be dropped into the inventory field, provided there is room
+ * enough in it at that location.  If that is the case, then the item is
+ * dropped onto this inventory location, else nothing is done.
+ * ---------------------------------------------------------------------- */
 void 
 DropHeldItemToInventory( void )
 {

@@ -121,22 +121,20 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
 } // void DrawBar(...)
 
-/*
------------------------------------------------------------------
-@Desc: This function updates the top status bar.
-To save framerate on slow machines however it will only work
-if it thinks that work needs to be done. 
-You can however force update if you say so with a flag.
-
-BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
-
-BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
-text.
-
-BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
-
------------------------------------------------------------------
-*/
+/* -----------------------------------------------------------------
+ * This function updates the top status bar. 
+ * To save framerate on slow machines however it will only work
+ * if it thinks that work needs to be done. 
+ * You can however force update if you say so with a flag.
+ * 
+ * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
+ * 
+ * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching 
+ * the text.
+ * 
+ * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+ * 
+ ----------------------------------------------------------------- */
 void
 DisplayBanner (const char* left, const char* right,  int flags )
 {
@@ -146,6 +144,75 @@ DisplayBanner (const char* left, const char* right,  int flags )
   static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
   static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
   int left_len, right_len;   /* the actualy string-lens */
+  SDL_Rect Banner_Text_Rect;
+  point CurPos;
+  char ItemDescText[5000]="=== Nothing ===";
+  grob_point inv_square;
+  int InvIndex;
+
+  Banner_Text_Rect.x = 170;
+  Banner_Text_Rect.y = 10;
+  Banner_Text_Rect.w = 300;
+  Banner_Text_Rect.h = 50;
+
+  //--------------------
+  // For testing purposes is bluntly insert the new banner element here:
+  //
+  CurPos.x = GetMousePos_x();
+  CurPos.y = GetMousePos_y();
+  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+  SDL_FillRect( Screen , &Banner_Text_Rect , 0 );
+
+  //--------------------
+  // In case some item is held in hand by the player, the situation is simple:
+  // we merele need to draw this items description into the description field and
+  // that's it.
+  //
+  if ( GetHeldItemCode() != (-1) )
+    {
+      strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
+      // DisplayText ( ItemMap[ GetHeldItemCode() ].ItemName ,
+      // Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
+    }
+  //--------------------
+  // in the other case however, that no item is currently held in hand, we need to
+  // work a little more:  we need to find out if the cursor is currently over some
+  // inventory or other item and in case that's true, we need to give the 
+  // description of this item.
+  //
+  else 
+    {
+      //--------------------
+      // Perhaps the cursor is over some item of the inventory?
+      // let's check this case first.
+      //
+      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	{
+	  inv_square.x = GetInventorySquare_x( CurPos.x );
+	  inv_square.y = GetInventorySquare_y( CurPos.y );
+	  // DebugPrintf( 0 , "\nInv target x: %d." , inv_square.x );
+	  // DebugPrintf( 0 , "\nInv target y: %d." , inv_square.y );
+	  InvIndex = GetInventoryItemAt ( inv_square.x , inv_square.y );
+	  // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
+	  if ( InvIndex != (-1) )
+	    {
+	      strcpy( ItemDescText , ItemMap[ Me.Inventory[ InvIndex ].type ].ItemName );
+	      // DisplayText ( ItemMap[ Me.Inventory[ InvIndex ].type ].ItemName ,
+	      // Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
+	    }
+	}
+
+    }
+
+
+  DisplayText ( ItemDescText , 
+		Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
+
+  SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , 
+		  Banner_Text_Rect.w , Banner_Text_Rect.h );
+  //--------------------
+
+
 
   // --------------------
   // At first the text is prepared.  This can't hurt.

@@ -15,7 +15,22 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-1. Add in-game help upon pressing F1
+* Add in-game help upon pressing F1
+* Drop a note at the FreeDiablo and FreeDiabloII sourceforge project,
+  that they can use our code, if they want to
+* Add X-tra items of two types ( minor accessory , major accessory )
+  instead of 
+* Change project description on the sourceforge, mentioning the new
+  project style in the extended mission
+* Talk to the colleagues about project future:  diablo-style?? of the
+  extensions
+* Add shield item
+* Add item descriptions: take a look at diablo for this again--> They
+  have a 3-line at least black rectangle in their bottom status banner,
+  where they can denote item properties
+* Add 'liquid containers' displaying current health
+* Add 'character screen'
+
 
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------
@@ -38,8 +53,6 @@ THESE ITEMS ARE OF SECOND PRIORITY:
    f. movement to new waypoint immediately if threatened by enemy fire
 
 10. Remove all german from the code
-
-DONE Enable mod files as well for the background music
 
 *  Add code to animate the autoshooting gun
 
@@ -66,13 +79,8 @@ DONE Enable mod files as well for the background music
    but only a dummy and leave the details to the creative people
 
 2. Extend the game/graphics engine
-   DONE dimensions of combat window should be enlarged vertically
    b. Takeover graphics effect (alpha-blending?) should be added
    ??. use fixed pictures for each droid.  when no image found-->generate generic ones
-   DONE add new tiles: barred door horizontally/vertically (of about wall size)
-
-DONE Put combat background music to play into the ship file
-     for every deck.
 
 (?). Restore the rest of the animation of Refreshes
 
