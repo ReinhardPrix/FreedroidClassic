@@ -264,10 +264,9 @@ ShowSkillsScreen ( void )
 {
   static SDL_Rect ButtonRect;
   static SDL_Surface *SkillScreenImage = NULL;
-  static SDL_Surface *PlusButtonImage = NULL;
+  SDL_Surface *tmp;
   char *fpath;
   char CharText[1000];
-  // SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
   int i;
@@ -304,9 +303,9 @@ ShowSkillsScreen ( void )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( "SkillScreen.png" , GRAPHICS_DIR, FALSE);
-      SkillScreenImage = IMG_Load( fpath );
-      fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
-      PlusButtonImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      SkillScreenImage = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
 
       //--------------------
       // We define the right side of the user screen as the rectangle

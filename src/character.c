@@ -133,6 +133,7 @@ DisplayButtons( void )
   static SDL_Surface *CHA_ButtonImage = NULL;
   static SDL_Surface *INV_ButtonImage = NULL;
   static SDL_Surface *PlusButtonImage = NULL;
+  SDL_Surface *tmp;
   static SDL_Rect CHA_Button_Rect;
   static SDL_Rect INV_Button_Rect;
   static int WasPressed;
@@ -149,11 +150,19 @@ DisplayButtons( void )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( "CHAButton.png" , GRAPHICS_DIR, FALSE);
-      CHA_ButtonImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      CHA_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
       fpath = find_file ( "INVButton.png" , GRAPHICS_DIR, FALSE);
-      INV_ButtonImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      INV_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
       fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
-      PlusButtonImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      PlusButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
     }
 
   CHA_Button_Rect.x = CHA_BUTTON_X;
@@ -425,6 +434,7 @@ ShowCharacterScreen ( void )
   static SDL_Rect ButtonRect;
   static SDL_Surface *CharacterScreenImage = NULL;
   static SDL_Surface *PlusButtonImage = NULL;
+  SDL_Surface *tmp = NULL;
   char *fpath;
   char CharText[1000];
   // SDL_Rect TargetRect;
@@ -455,9 +465,14 @@ ShowCharacterScreen ( void )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( "character.png" , GRAPHICS_DIR, FALSE);
-      CharacterScreenImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      CharacterScreenImage = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
+
       fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
-      PlusButtonImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      PlusButtonImage = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
 
       //--------------------
       // We define the right side of the user screen as the rectangle
