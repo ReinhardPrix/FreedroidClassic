@@ -53,8 +53,16 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
   float PrefixMultiplier = 1;
   float SuffixMultiplier = 1;
 
+  //--------------------
+  // Maybe the item is magical in one way or the other.  Then we have to
+  // multiply a factor to the price, no matter whether repairing or buying
+  // or selling the item.
+  //
+  if ( BuyItem -> prefix_code != (-1) )
+    PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
   if ( BuyItem -> suffix_code != (-1) )
     SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
+
 
   if ( !ForRepair )
     {
@@ -130,35 +138,78 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   // the basic ranges for the modifiers given in the prefix and suffix lists
   // and just need to create random values in the given ranges for the item.
   //
+  ThisItem->bonus_to_str = 0;
+  ThisItem->bonus_to_dex = 0;
+  ThisItem->bonus_to_mag = 0;
+  ThisItem->bonus_to_vit = 0;
+
+  ThisItem->bonus_to_life = 0;
+  ThisItem->bonus_to_force = 0;
+  ThisItem->bonus_to_tohit = 0;
+  ThisItem->bonus_to_ac_or_damage = 0;
+
+  ThisItem->bonus_to_resist_fire = 0;
+  ThisItem->bonus_to_resist_electricity = 0;
+  ThisItem->bonus_to_resist_force = 0;
+
   if ( ThisItem -> suffix_code != (-1) )
     {
-      ThisItem->bonus_to_str = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
+      ThisItem->bonus_to_str += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_str +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_str ) ;
-      ThisItem->bonus_to_dex = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_dex +
+      ThisItem->bonus_to_dex += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_dex +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_dex ) ;
-      ThisItem->bonus_to_mag = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mag +
+      ThisItem->bonus_to_mag += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mag +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mag ) ;
-      ThisItem->bonus_to_vit = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
+      ThisItem->bonus_to_vit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_vit ) ;
 
-      ThisItem->bonus_to_life = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
+      ThisItem->bonus_to_life += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
-      ThisItem->bonus_to_force = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
+      ThisItem->bonus_to_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
 
-      ThisItem->bonus_to_tohit = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
+      ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
-      ThisItem->bonus_to_ac_or_damage = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
+      ThisItem->bonus_to_ac_or_damage += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
 
-      ThisItem->bonus_to_resist_fire = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
+      ThisItem->bonus_to_resist_fire += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
-      ThisItem->bonus_to_resist_electricity = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
+      ThisItem->bonus_to_resist_electricity += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
-      ThisItem->bonus_to_resist_force = SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_force +
+      ThisItem->bonus_to_resist_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_force +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_force ) ;
+    }
+  if ( ThisItem -> prefix_code != (-1) )
+    {
+      ThisItem->bonus_to_str += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_str +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_str ) ;
+      ThisItem->bonus_to_dex += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_dex +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_dex ) ;
+      ThisItem->bonus_to_mag += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mag +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mag ) ;
+      ThisItem->bonus_to_vit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_vit +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_vit ) ;
+
+      ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
+      ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
+
+      ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
+      ThisItem->bonus_to_ac_or_damage += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_ac_or_damage +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+
+      ThisItem->bonus_to_resist_fire += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_fire +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_fire ) ;
+      ThisItem->bonus_to_resist_electricity += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_electricity +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_electricity ) ;
+      ThisItem->bonus_to_resist_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_force +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_force ) ;
 
     }
+
 }; // void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
@@ -272,14 +323,15 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   // Since there are no prefixes set up yet, we just need to consider
   // the suffixes.  In case 
   //
-  Pre = ( -1 ) ;
   if ( ForceMagical )
     {
       Suf = MyRandom( 4 * TreasureChestRange );
+      Pre = MyRandom( 4 * TreasureChestRange );
     }
   else
     {
       Suf = ( -1 );
+      Pre = ( -1 ) ;
     }
 
 
