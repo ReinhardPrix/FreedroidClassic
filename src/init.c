@@ -901,15 +901,15 @@ InitFreedroid (int argc, char *const argv[])
 
   GameConfig.Draw_Framerate = TRUE;
   GameConfig.Draw_Energy = TRUE;
-  GameConfig.Draw_DeathCount = TRUE;
+  GameConfig.Draw_DeathCount = FALSE;
   GameConfig.Draw_Position = FALSE;
   // this is the "classic" version, so defaults are set on "classic"
   sprintf (GameConfig.Theme_Name, "classic");
   GameConfig.FullUserRect = FALSE;
   GameConfig.UseFullscreen = FALSE;
-  GameConfig.TakeoverActivates = FALSE;  // not the purist's choice but more practical ;)
+  GameConfig.TakeoverActivates = TRUE;  
   GameConfig.ShowDecals = FALSE;
-  GameConfig.AllMapVisible = FALSE;    // classic setting: map always visible
+  GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -1179,6 +1179,7 @@ FindAllThemes (void)
   int i, location;
   char dname[500], tname[100], fpath[500];
   DIR *dir;
+  struct stat buf;
   struct dirent *entry;
   char *pos;
   int len;
@@ -1209,8 +1210,18 @@ FindAllThemes (void)
 
       while ( (entry = readdir (dir)) != NULL )
 	{
-	  if (entry->d_type != DT_DIR)                             // is it a directory?
+	  strcpy (fpath, dname);
+	  strcat (fpath, "/");
+	  strcat (fpath, entry->d_name);
+
+	  if ( stat(fpath, &buf) != 0 ) // error stat'ing the file
+	    {
+	      DebugPrintf (1, "WARNING: could non stat %s!\n", fpath);
+	      continue;
+	    }
+	  if ( ! S_ISDIR( buf.st_mode ) )  // is it a directory
 	    continue;
+
 	  if ( (pos = strstr (entry->d_name, "_theme")) == NULL)   // does its name contain "_theme"
 	    continue;
 	  if ( *(pos+strlen("_theme")) != 0 )           // is it *_theme ?
