@@ -78,6 +78,9 @@ After completing this mission, load mission : Invading_Asteroid_Command_Central.
 +++
 Possible Start Point : Level=2 XPos=8 YPos=7
 
+
+*** Begin of Mission Target ***
+
 +++
 +++ Now we define the mission target
 +++ For the Outbreak mission, this target is defined as
@@ -94,6 +97,8 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
+
+*** End of Mission Target ***
 
 ----------------------------------------------------------------------
 
