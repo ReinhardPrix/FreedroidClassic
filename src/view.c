@@ -186,6 +186,37 @@ ShowMissionCompletitionMessages( void )
 };
 
 /* ----------------------------------------------------------------------
+ * This function displays an item at the current mouse cursor position.
+ * The typical crosshair cursor is assumed.  The item is centered around
+ * this crosshair cursor, depending on item size.
+ * ---------------------------------------------------------------------- */
+void
+DisplayItemImageAtMouseCursor( int ItemImageCode )
+{
+  SDL_Rect TargetRect;
+
+  if ( ItemImageCode == (-1) )
+    {
+      DebugPrintf( 2 , "\nCurrently no (-1 code) item held in hand.");
+      return;
+    }
+
+  //--------------------
+  // We define the target location for the item.  This will be the current
+  // mouse cursor position of course, but -16 for the crosshair center, 
+  // which is somewhat (16) to the lower right of the cursor top left 
+  // corner.
+  //
+  // And then of course we also have to take into account the size of the
+  // item, wich is also not always the same.
+  //
+  TargetRect.x = GetMousePos_x() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
+  TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
+
+  SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+};
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -198,7 +229,11 @@ ShowInventoryMessages( void )
   static SDL_Surface *InventoryImage = NULL;
   char *fpath;
   char fname[]="inventory.png";
-
+  static int Item_Held_In_Hand = -1 ;
+  static int MouseButtonPressedPreviousFrame = FALSE;
+  point CurPos;
+  point Inv_GrabLoc;
+  int Grabbed_InvPos;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -287,6 +322,70 @@ ShowInventoryMessages( void )
       SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
+
+  //--------------------
+  // If the user now presses the mouse button and it was not pressed before,
+  // the the user has 'grabbed' the item directly under the mouse button
+  //
+  if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) )
+    {
+      DebugPrintf( 0 , "\nTrying to 'grab' the item below the mouse cursor.");
+      CurPos.x = GetMousePos_x() + 16;
+      CurPos.y = GetMousePos_y() + 16;
+      
+      if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + 9 * 32 ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
+	  if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * 6 ) && ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
+	    {
+	      DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
+	      
+	      Inv_GrabLoc.x = ( CurPos.x - 16 ) / 32 ;
+	      Inv_GrabLoc.y = ( CurPos.y - (User_Rect.y + 480 -16 - 64 - 32 * 6 ) ) / 32 ;
+
+	      DebugPrintf( 0 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      DebugPrintf( 0 , "\nGrabbing relealed inventory entry no.: %d." , Grabbed_InvPos );
+
+	      if ( Grabbed_InvPos == (-1) )
+		{
+		  // Nothing grabbed, so we need not do anything more here..
+		  Item_Held_In_Hand = ( -1 );
+		  goto NoMoreGrabbing;
+		}
+
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the inventory
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
+
+
+	    }
+	}
+    }
+
+ NoMoreGrabbing:
+  
+  //--------------------
+  // Now that we have filled all the positions, we can start to draw the
+  // items the player currently has 'in his hand' via the mouse drag-and-drop
+  // grip feature
+  //
+
+  if ( axis_is_active ) 
+    {
+      DisplayItemImageAtMouseCursor( Item_Held_In_Hand );
+      // printf("\n Mouse button should cause image now.");
+    }
+  else
+    {
+      // printf("\n Mouse button should cause no image now.");
+    }
+
+
   //--------------------
   // Finally, we want the part of the screen we have been editing to become
   // visible and therefore we must updated it here, since it is currently not
@@ -294,6 +393,8 @@ ShowInventoryMessages( void )
   //
   SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
+
+  MouseButtonPressedPreviousFrame = axis_is_active;
 }; // void ShowInventoryMessages();
 
 /* -----------------------------------------------------------------

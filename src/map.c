@@ -570,13 +570,13 @@ char *Encode_Level_For_Saving(Level Lev)
   
 
   //--------------------
-  // Now we write out a marker to announce the beginning of the codepanel data
+  // Now we write out a marker to announce the beginning of the items data
   //
   strcat(LevelMem, ITEMS_SECTION_BEGIN_STRING);
   strcat(LevelMem, "\n");
 
   //--------------------
-  // Now we write out the bulk of codepanel infos
+  // Now we write out the bulk of items infos
   //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
@@ -597,7 +597,7 @@ char *Encode_Level_For_Saving(Level Lev)
       strcat( LevelMem , "\n" );
     }
   //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
+  // Now we write out a marker to announce the end of the items data
   //
   strcat(LevelMem, ITEMS_SECTION_END_STRING);
   strcat(LevelMem, "\n");
@@ -982,6 +982,7 @@ Decode_Loaded_Leveldata (char *data)
       loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
       loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
       loadlevel->ItemList[ i ].type = ( -1 ) ;
+      loadlevel->ItemList[ i ].currently_held_in_hand = FALSE;
     }
 
   // We look for the beginning and end of the items section

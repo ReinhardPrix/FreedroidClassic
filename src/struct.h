@@ -241,6 +241,7 @@ typedef struct
 {
   finepoint pos;
   int type;
+  int currently_held_in_hand;
   grob_point inventory_position;
 } item, *Item;
 
