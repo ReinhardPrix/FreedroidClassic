@@ -37,7 +37,6 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
-#include "ship.h"
 #include "SDL_rotozoom.h"
 
 

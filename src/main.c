@@ -38,7 +38,6 @@
 #include "proto.h"
 #include "text.h"
 #include "vars.h"
-#include "ship.h"
 #include "map.h"
 
 #define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input

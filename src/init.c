@@ -37,7 +37,6 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
-#include "ship.h"
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );

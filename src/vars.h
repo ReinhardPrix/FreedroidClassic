@@ -30,7 +30,6 @@
  *
  */
 
-#include "ship.h"
 
 // this defines our "Userfenster"
 SDL_Rect User_Rect = {0, 0, 0, 0};
