@@ -851,22 +851,27 @@ FireBullet ( int PlayerNum )
   // And for the character screen, do a similar thing
   //
 
-  /*
-  if ( axis_is_active && GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
-  if ( axis_is_active && GameConfig.CharacterScreen_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
-  */
-
+  //--------------------
+  // Maybe the player just pressed the mouse button but INSIDE one of the character/skills/inventory
+  // screens.  Then of course we will not interpret the intention to fire the weapon but rather 
+  // return from here immediately.
+  //
   if ( ServerThinksAxisIsActive ( PlayerNum ) && 
-       GameConfig.Inventory_Visible && 
-       ! CursorIsInUserRect( ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) ) ) 
-    return;
+       ( GameConfig.Inventory_Visible || GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && 
+       ! CursorIsInUserRect( User_Rect.x + User_Rect.w/2 + ServerThinksInputAxisX ( PlayerNum ) , User_Rect.y + User_Rect.h/2 + ServerThinksInputAxisY ( PlayerNum ) ) )
+    { 
+      DebugPrintf( 0 , "\nCursor outside user-rect:\n  User_Rect.x=%d, User_Rect.w=%d, User_Rect.y=%d, User_Rect.h=%d." ,
+		   User_Rect.x , User_Rect.w , User_Rect.y , User_Rect.h );
+      DebugPrintf( 0 , "\nCursor position: X=%d, Y=%d." ,
+		   ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) );
+      return;
+    }
 
-  if ( ServerThinksAxisIsActive ( PlayerNum ) && 
-       GameConfig.CharacterScreen_Visible && 
-       ! CursorIsInUserRect( ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) ) ) 
-    return;
-
-  if ( GameConfig.CharacterScreen_Visible && GameConfig.Inventory_Visible ) return;
+  //--------------------
+  // And also if the whole screen is filled with inventory or other screens, then we will
+  // of course not fire any weapon or something but rather return immediately.
+  //
+  if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return;
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if ( Me [ PlayerNum ] .firewait > 0 )
