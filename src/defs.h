@@ -258,7 +258,7 @@ enum _directions
 
 /* Maximal number of ... */
 
-#define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
+#define NUM_MAP_BLOCKS		51  // total number of map-blocks 
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
@@ -390,7 +390,7 @@ enum
   KONSOLE_L=23,  KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
   V_ZUTUERE=27,  V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
   LIFT=32,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
-  TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK
+  TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,     FINE_GRID
 };
 
 

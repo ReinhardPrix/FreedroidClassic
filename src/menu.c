@@ -1456,6 +1456,10 @@ Level_Editor(void)
 
 	  // If the person using the level editor pressed some editing keys, insert the
 	  // corresponding map tile.  This is done here:
+	  if (FPressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=FINE_GRID;
+	    }
 	  if (Number1Pressed()) 
 	    {
 	      CurLevel->map[BlockY][BlockX]=BLOCK1;

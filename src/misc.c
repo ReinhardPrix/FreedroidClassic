@@ -148,7 +148,6 @@ Cannot Load or Save settings.\n");
 
 } // LoadGameConfig
     
-
 /*----------------------------------------------------------------------
  * SaveGameConfig: do just that
  *

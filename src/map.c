@@ -1640,6 +1640,7 @@ IsPassable (float x, float y, int Checkpos)
     case TELE_2:
     case TELE_3:
     case TELE_4:
+    case FINE_GRID:
       ret = CENTER;		/* these are passable */
       break;
 
