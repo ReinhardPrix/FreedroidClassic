@@ -10,8 +10,10 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/08/07 19:14:45  prix
- * Initial revision
+ * Revision 1.2  1994/06/19 16:40:20  prix
+ * Sat May 21 12:41:50 1994: FadeLevel bei Elevatoreintritt
+ * Sat May 21 16:11:52 1994: neue Aufrufparameter an DisplayText()
+ * Tue Jun 14 10:34:17 1994: ClearUserFenster made global
  *
  * Revision 1.1  1993/08/07  19:14:45  prix
  * Initial revision
