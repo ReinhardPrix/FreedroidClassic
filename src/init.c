@@ -685,12 +685,12 @@ char usage_string[] =
   "Usage: freedroid [-v|--version] \n\
                     [-q|--nosound] \n\
                     [-s|--sound] \n\
-                    [-t|--timeout=SECONDS] \n\
                     [-f|--fullscreen] [-w|--window]\n\
                     [-j|--sensitivity]\n\
                     [-d|--debug=LEVEL]\n\
 \n\
-Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
+Please report bugs on our sourceforge-website:\n\
+http://sourceforge.net/projects/freedroid/\n\n";
 
 /* -----------------------------------------------------------------
  *  parse command line arguments and set global switches 
