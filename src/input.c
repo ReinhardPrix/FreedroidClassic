@@ -322,7 +322,9 @@ ReactToSpecialKeys(void)
     Me[0].readied_skill = 4;
 
   if ( F6Pressed() )
-    Me[0].readied_skill = 5;
+    {
+      // Me[0].readied_skill = 5;
+    }
 
   if ( F7Pressed() )
     Me[0].readied_skill = 6;
@@ -1487,7 +1489,7 @@ keyboard_update(void)
 	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
 	      CurrentlyMouseLeftPressed = TRUE;
-	      DebugPrintf ( 0 , "\nLeft button press registered..." );
+	      // DebugPrintf ( 0 , "\nLeft button press registered..." );
 	    }
 
 	  if ( event.button.button == SDL_BUTTON_RIGHT )

@@ -1091,6 +1091,8 @@ void
 SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 {
 
+#ifdef HAVE_LIBSDL_MIXER
+
   static char PreviousFileParameter[5000]="NONE_AT_ALL";
 
   if ( !sound_on ) return;
@@ -1138,6 +1140,8 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
       Mix_HookMusicFinished( OldMusicHasFinishedFadingOut );
 
     }
+
+#endif
 
 }; // void SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 

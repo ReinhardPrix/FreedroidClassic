@@ -1913,12 +1913,12 @@ PrepareNewHero (void)
   Me[0].base_vitality = 10;
   Me[0].base_strength = 10;
   Me[0].base_dexterity = 10;
-  Me[0].base_magic = 10;
+  Me[0].base_magic = 40;
 
   Get_New_Character_Name( );
   return ( TRUE );
 
-}; // int SelectHeroClassMenu ( void );
+}; // int PrepareNewHero (void)
 
 /* ----------------------------------------------------------------------
  * This function does the selection of the hero class...
