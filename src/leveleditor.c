@@ -2101,7 +2101,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	  else EditLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
 	}
     }
-  if (SpacePressed())
+  if (SpacePressed() && !axis_is_active )
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
@@ -2506,6 +2506,8 @@ LevelEditor(void)
   SDL_Rect Editor_Window;
   Level EditLevel;
   char* NewCommentOnThisSquare;
+  int LeftMousePressedPreviousFrame = FALSE;
+  point TargetSquare;
 
   GameConfig.Inventory_Visible = FALSE;
   GameConfig.CharacterScreen_Visible = FALSE;
@@ -2731,10 +2733,36 @@ LevelEditor(void)
 	  //
 	  HandleMapTileEditingKeys ( EditLevel , BlockX , BlockY );
 
+	  //--------------------
+	  // Maybe a mouse click has occured.  Then it might be best to interpret this
+	  // simply as bigger move command, which might indeed be much handier than 
+	  // using only keyboard cursor keys to move around on the map.
+	  //
+	  if ( axis_is_active && !LeftMousePressedPreviousFrame )
+	    {
+	      //--------------------
+	      // First we find out which map square the player wishes us to operate on
+	      // 
+	      TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
+	      TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
+
+	      Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+	      if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
+		Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
+	      if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
+	      
+	      Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+	      if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
+		Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
+	      if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+	    }
+
 	  if (QPressed())
 	    {
 	      Terminate(0);
 	    }
+
+	  LeftMousePressedPreviousFrame = axis_is_active; 
 
 	} // while (!EscapePressed())
       while( EscapePressed() );

@@ -1016,8 +1016,6 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
       //
       CurLevel = curShip.AllLevels[array_num];
 
-      // if ( Shuffling ) ShuffleEnemys ( array_num );
-
       ClearDetectedItemList( PlayerNum );
 
       Me [ PlayerNum ] . pos . x = X;
@@ -1084,8 +1082,11 @@ This indicates an error in the map system of Freedroid.",
       PlayLevelCommentSound ( CurLevel->levelnum );
       Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
       // if ( array_num != 0 ) ShuffleEnemys ( array_num );
-      if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
+      // if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
+      ShuffleEnemys ( array_num );
     }
+
+  if ( Shuffling ) ShuffleEnemys ( array_num );
 
   // UnfadeLevel ();
 
