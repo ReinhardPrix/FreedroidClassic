@@ -75,6 +75,109 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+/*
+----------------------------------------------------------------------
+This function counts the number of occurences of a string in a given
+other string.
+----------------------------------------------------------------------
+*/
+char*
+ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString ) 
+{
+  char* SearchPointer;
+  char* EndOfStringPointer;
+  char* ReturnString;
+  int StringLength;
+
+  if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* ReadAndMalocStringFromData ( ... ):\n\
+A starter string that was supposed to be in some data, most likely from an external\n\
+data file could not be found, which indicates a corrupted data file or \n\
+a serious bug in the reading functions.\n\
+\n\
+The string that couldn't be located was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , StartIndicationString );
+      Terminate(ERR);
+    }
+  else
+    {
+      // Now we move to the beginning
+      SearchPointer += strlen ( StartIndicationString );
+
+      // Now we move to the end with the end pointer
+      if ( (EndOfStringPointer = strstr( SearchPointer , EndIndicationString ) ) == NULL )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* ReadAndMalocStringFromData ( ... ):\n\
+A terminating string that was supposed to be in some data, most likely from an external\n\
+data file could not be found, which indicates a corrupted data file or \n\
+a serious bug in the reading functions.\n\
+\n\
+The string that couldn't be located was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , EndIndicationString );
+	  Terminate(ERR);
+	}
+
+      // Now we allocate memory and copy the string...
+      StringLength = EndOfStringPointer - SearchPointer ;
+      
+      ReturnString = MyMalloc ( StringLength + 1 );
+      strncpy ( ReturnString , SearchPointer , StringLength );
+      ReturnString[ StringLength ] = 0;
+
+      DebugPrintf( 2 , "\nchar* ReadAndMalocStringFromData (...): Successfully identified string : %s." , ReturnString );
+    }
+  return ( ReturnString );
+};
+
+
+/*
+----------------------------------------------------------------------
+This function counts the number of occurences of a string in a given
+other string.
+----------------------------------------------------------------------
+*/
+int
+CountStringOccurences ( char* SearchString , char* TargetString ) 
+{
+  int Counter=0;
+  char* CountPointer;
+
+  CountPointer = SearchString;
+
+  while ( ( CountPointer = strstr ( CountPointer, TargetString ) ) != NULL)
+    {
+      CountPointer += strlen ( TargetString );
+      Counter++;
+    }
+  return ( Counter );
+}; // CountStringOccurences ( char* SearchString , char* TargetString ) 
 
 /*
 ----------------------------------------------------------------------

@@ -362,6 +362,9 @@ LoadThemeConfigurationFile(void)
   char *Data;
   char *ReadPointer;
   char *fpath;
+  char *EndOfThemesBulletData;
+  int BulletIndex;
+  
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
@@ -442,6 +445,19 @@ LoadThemeConfigurationFile(void)
       sscanf ( ReadPointer , "%lf" , &Blastmap[1].total_animation_time );
       DebugPrintf( 1 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
       // getchar();
+    }
+
+  //--------------------
+  // Next we read in the number of phases that are to be used for each bullet type
+  EndOfThemesBulletData = LocateStringInData ( Data , "*** End of themes bullet data section ***" );
+  ReadPointer = Data ;
+  while ( ( ReadPointer = strstr ( ReadPointer , "For Bullettype Nr.=" ) ) != NULL )
+    {
+      ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
+      
+      ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
+			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
+      ReadPointer++;
     }
   
   // --------------------

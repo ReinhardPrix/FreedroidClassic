@@ -114,7 +114,6 @@ void
 Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
-  char *CountBulletsPointer;
   char *EndOfBulletData;
   int i;
   int BulletIndex=0;
@@ -144,13 +143,7 @@ Get_Bullet_Data ( char* DataPointer )
   // How much?  That depends on the number of droids defined in freedroid.ruleset.
   // So we have to count those first.  ok.  lets do it.
 
-  CountBulletsPointer=DataPointer;
-  Number_Of_Bullet_Types=0;
-  while ( ( CountBulletsPointer = strstr ( CountBulletsPointer, NEW_BULLET_TYPE_BEGIN_STRING)) != NULL)
-    {
-      CountBulletsPointer += strlen ( NEW_BULLET_TYPE_BEGIN_STRING );
-      Number_Of_Bullet_Types++;
-    }
+  Number_Of_Bullet_Types = CountStringOccurences ( DataPointer , NEW_BULLET_TYPE_BEGIN_STRING ) ;
 
   // Not that we know how many bullets are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory, but of course only if the memory hasn't been allocated
@@ -191,8 +184,8 @@ Get_Bullet_Data ( char* DataPointer )
 			   &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
       // Now we read in the number of phases that are designed for this bullet type
-      ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
-			   &Bulletmap[BulletIndex].phases , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
+      // &Bulletmap[BulletIndex].phases , EndOfBulletData );
 
       // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
       ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
@@ -239,10 +232,7 @@ Get_Bullet_Data ( char* DataPointer )
 void 
 Get_Mission_Events ( char* EventSectionPointer )
 {
-  char *SayString;
   char *EventPointer;
-  char *ValuePointer;  // we use ValuePointer while EventPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the freedroid.ruleset file
   char *EndOfEvent;
   int i;
   int EventActionNumber;
@@ -339,27 +329,8 @@ Get_Mission_Events ( char* EventSectionPointer )
 			   &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething , EndOfEvent );
 
       // Now we read in if the text for the influencer to say
-      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_TEXT )) == NULL )
-	{
-	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INFLUENCER SAY TEXT ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( EVENT_ACTION_INFLUENCER_SAY_TEXT );
-	  SayString = strstr( ValuePointer , "\"" );
-	  if (SayString == NULL )
-	    {
-	      DebugPrintf( 0 , "\nERROR! INFLUENCER SAY TEXT STRING NOT TERMINATED!!!! TERMINATING!");
-	      Terminate(ERR);
-	    }
-	  // Now we allocate memory and copy the string...
-	  AllTriggeredActions[ EventActionNumber ].InfluencerSayText=MyMalloc( SayString - ValuePointer + 10 );
-	  strncpy ( AllTriggeredActions[ EventActionNumber ].InfluencerSayText , ValuePointer, SayString - ValuePointer );
-	  AllTriggeredActions[ EventActionNumber ].InfluencerSayText[SayString - ValuePointer ] = 0;
-
-	  DebugPrintf( 1 , "\nInfluencer say text is:%s" , AllTriggeredActions[ EventActionNumber].InfluencerSayText );
-	}
+      AllTriggeredActions[ EventActionNumber].InfluencerSayText =
+	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_INFLUENCER_SAY_TEXT , "\"" ) ;
 
     } // While Event action begin string found...
 
@@ -425,11 +396,7 @@ Get_Robot_Data ( void* DataPointer )
 {
   int RobotIndex = 0;
   char *RobotPointer;
-  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the freedroid.ruleset file
-  char *CountRobotsPointer;
   char *EndOfDataPointer;
-  int StringLength;
   int i;
 
   double maxspeed_calibrator;
@@ -509,13 +476,7 @@ Get_Robot_Data ( void* DataPointer )
   // How much?  That depends on the number of droids defined in freedroid.ruleset.
   // So we have to count those first.  ok.  lets do it.
 
-  CountRobotsPointer=RobotPointer;
-  Number_Of_Droid_Types=0;
-  while ( ( CountRobotsPointer = strstr ( CountRobotsPointer, NEW_ROBOT_BEGIN_STRING)) != NULL)
-    {
-      CountRobotsPointer += strlen ( NEW_ROBOT_BEGIN_STRING );
-      Number_Of_Droid_Types++;
-    }
+  Number_Of_Droid_Types = CountStringOccurences ( DataPointer , NEW_ROBOT_BEGIN_STRING ) ;
 
   // Not that we know how many robots are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory.
@@ -534,19 +495,8 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the Name of this droid.  We consider as a name the rest of the
       // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
-      if ( (ValuePointer = strstr ( RobotPointer, DROIDNAME_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO DROIDNAME FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen (DROIDNAME_BEGIN_STRING);
-	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
-	  Druidmap[RobotIndex].druidname = MyMalloc ( StringLength + 1 );
-	  strncpy ( (char*) Druidmap[RobotIndex].druidname , ValuePointer , StringLength );
-	  Druidmap[RobotIndex].druidname[StringLength]=0;
-	}
+      Druidmap[RobotIndex].druidname =
+	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
 
       // Now we read in the maximal speed this droid can go. 
       ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
@@ -622,28 +572,13 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.
-      if ( (ValuePointer = strstr ( RobotPointer, NOTES_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf (1, "\nERROR! NO NOTES ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen (NOTES_BEGIN_STRING);
-	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
-	  Druidmap[RobotIndex].notes = MyMalloc ( StringLength + 1 );
-	  strncpy ( (char*) Druidmap[RobotIndex].notes , ValuePointer , StringLength );
-	  Druidmap[RobotIndex].notes[StringLength]=0;
-	  // printf("\nNotes concerning the droid found!  They read: %s" , Druidmap[RobotIndex].notes );
-	}
-
-
+      Druidmap[RobotIndex].notes = 
+	ReadAndMallocStringFromData ( RobotPointer , NOTES_BEGIN_STRING , "\n" ) ;
 
       // Now we're potentially ready to process the next droid.  Therefore we proceed to
       // the next number in the Droidmap array.
       RobotIndex++;
     }
-  
 
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
   DebugPrintf ( 1 , "\n\nApplying the calibration factors to all droids...");
@@ -841,29 +776,13 @@ InitNewMission ( char *MissionName )
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EventSectionPointer;
-  char *ShipnamePointer;
-  char *ShipOnPointer;
-  char *ShipOffPointer;
-  char *LiftnamePointer;
-  char *CrewnamePointer;
-  char *GameDataNamePointer;
-  char *EndTitlePointer;
   char *StartPointPointer;
   char *MissionTargetPointer;
-  char *NextMissionNamePointer;
   char *EndOfMissionTargetPointer;
-  char Shipname[2000];
-  char Liftname[2000];
-  char Crewname[2000];
-  char GameDataName[2000];
-  int ShipnameLength;
-  int ShipOnLength;
-  int ShipOffLength;
-  int CrewnameLength;
-  int LiftnameLength;
-  int GameDataNameLength;
-  int EndTitleLength;
-  int NextMissionNameLength;
+  char* Liftname;
+  char* Crewname;
+  char* GameDataName;
+  char* Shipname;
   int NumberOfStartPoints=0;
   int RealStartPoint=0;
   int StartingLevel=0;
@@ -977,44 +896,18 @@ InitNewMission ( char *MissionName )
   // First we extract the game physics file name from the
   // mission file and load the game data.
   //
-  if ( (GameDataNamePointer = strstr ( MainMissionPointer, GAMEDATANAME_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO GAME DATA FILENAME FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      GameDataNamePointer += strlen ( GAMEDATANAME_INDICATION_STRING );
-      
-      GameDataNameLength = strstr ( GameDataNamePointer , "\n") - GameDataNamePointer;
-      strncpy( GameDataName , GameDataNamePointer , GameDataNameLength );
-      GameDataName[ GameDataNameLength ] = 0;
-      DebugPrintf (1, "\nGame data filename found!  It reads: %s" , GameDataName );
-    }
-  
+  GameDataName = 
+    ReadAndMallocStringFromData ( MainMissionPointer , GAMEDATANAME_INDICATION_STRING , "\n" ) ;
+
   Init_Game_Data ( GameDataName );
 
   //--------------------
   // Now its time to get the shipname from the mission file and
   // read the ship file into the right memory structures
   //
-  if ( (ShipnamePointer = strstr ( MainMissionPointer, SHIPNAME_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO SHIPNAME FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ShipnamePointer += strlen ( SHIPNAME_INDICATION_STRING );
-      
-      ShipnameLength = strstr (ShipnamePointer , "\n") - ShipnamePointer;
-      strncpy( Shipname , ShipnamePointer , ShipnameLength );
-      Shipname[ ShipnameLength ] = 0;
-      
-      
-      DebugPrintf (1, "\nShipname found!  It reads: %s" , Shipname );
-    }
-  
+  Shipname = 
+    ReadAndMallocStringFromData ( MainMissionPointer , SHIPNAME_INDICATION_STRING , "\n" ) ;
+
   if ( LoadShip ( Shipname ) == ERR )
     {
       DebugPrintf (1, "Error in LoadShip\n");
@@ -1025,24 +918,8 @@ InitNewMission ( char *MissionName )
   // Now its time to get the elevator file name from the mission file and
   // read the elevator file into the right memory structures
   //
-  if ( (LiftnamePointer = strstr ( MainMissionPointer, ELEVATORNAME_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO ELEVATORNAME FOUND! TERMINATING!");
-      DebugPrintf (1, "Lift indication string was: %s." , ELEVATORNAME_INDICATION_STRING );
-      Terminate(ERR);
-    }
-  else
-    {
-      LiftnamePointer += strlen ( ELEVATORNAME_INDICATION_STRING );
-      
-      LiftnameLength = strstr (LiftnamePointer , "\n") - LiftnamePointer;
-      strncpy( Liftname , LiftnamePointer , LiftnameLength );
-      Liftname[ LiftnameLength ] = 0;
-      
-      DebugPrintf (1, "\nLift file name found!  It reads: %s" , Liftname );
-    }
-  
-  /* Get the elevator connections */
+  Liftname = 
+    ReadAndMallocStringFromData ( MainMissionPointer , ELEVATORNAME_INDICATION_STRING , "\n" ) ;
   if (GetLiftConnections ( Liftname ) == ERR)
     {
       DebugPrintf (1, "\nError in GetLiftConnections ");
@@ -1053,66 +930,20 @@ InitNewMission ( char *MissionName )
   // Now its time to get the lifts on/off picturec file name from the mission file and
   // assemble an appropriate crew out of it
   //
-  if ( ( ShipOnPointer = strstr ( MainMissionPointer, LIFTS_ON_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO LIFTS ON FILENAME FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ship_on_filename = MyMalloc(2000);
-      ShipOnPointer += strlen ( LIFTS_ON_INDICATION_STRING );
-      
-      ShipOnLength = strstr ( ShipOnPointer , "\n") - ShipOnPointer;
-      strncpy (ship_on_filename , ShipOnPointer , ShipOnLength );
-      ship_on_filename[ ShipOnLength ] = 0;
-      
-      DebugPrintf (1, "\nShipOn file name found!  It reads: %s" , ship_on_filename );
-    }
-  if ( ( ShipOffPointer = strstr ( MainMissionPointer, LIFTS_OFF_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO LIFTS OFF FILENAME FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ship_off_filename = MyMalloc(2000);
-      ShipOffPointer += strlen ( LIFTS_OFF_INDICATION_STRING );
-      
-      ShipOffLength = strstr ( ShipOffPointer , "\n") - ShipOffPointer;
-      strncpy( ship_off_filename , ShipOffPointer , ShipOffLength );
-      ship_off_filename[ ShipOffLength ] = 0;
-      
-      DebugPrintf (1, "\nShipOff file name found!  It reads: %s" , ship_off_filename );
-    }
-
-  // getchar();
+  ship_on_filename = 
+    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_ON_INDICATION_STRING , "\n" ) ;
+  ship_off_filename = 
+    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_OFF_INDICATION_STRING , "\n" ) ;
 
   //--------------------
   // Now its time to get the crew file name from the mission file and
   // assemble an appropriate crew out of it
   //
-  if ( (CrewnamePointer = strstr ( MainMissionPointer, CREWNAME_INDICATION_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO CREWNAME FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      CrewnamePointer += strlen ( CREWNAME_INDICATION_STRING );
-      
-      CrewnameLength = strstr (CrewnamePointer , "\n") - CrewnamePointer;
-      strncpy( Crewname , CrewnamePointer , CrewnameLength );
-      Crewname[ CrewnameLength ] = 0;
-      
-      DebugPrintf (1, "\nCrew file name found!  It reads: %s" , Crewname );
-    }
-  
+  Crewname =
+    ReadAndMallocStringFromData ( MainMissionPointer , CREWNAME_INDICATION_STRING , "\n" ) ;
   /* initialize enemys according to crew file */
   // WARNING!! THIS REQUIRES THE freedroid.ruleset FILE TO BE READ ALREADY, BECAUSE
   // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
-  //
-
   if (GetCrew ( Crewname ) == ERR)
     {
       DebugPrintf (1, "\nInitNewGame(): ERROR: Initialization of enemys failed...");
@@ -1123,38 +954,27 @@ InitNewMission ( char *MissionName )
   // Now its time to get the shipname from the mission file and
   // read the ship file into the right memory structures
   //
-  if ( (EndTitlePointer = strstr ( MainMissionPointer, MISSION_ENDTITLE_BEGIN_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO END TITLE SECTION BEGIN STRING FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      EndTitlePointer += strlen ( MISSION_ENDTITLE_BEGIN_STRING ) + 1;
-      EndTitleLength = strstr ( EndTitlePointer , MISSION_ENDTITLE_END_STRING ) - EndTitlePointer;
-      DebriefingText = MyMalloc ( EndTitleLength +10 );
-      strncpy( DebriefingText , EndTitlePointer , EndTitleLength +1 );
-      DebriefingText[EndTitleLength] = 0;
-      
-      // DebugPrintf (1, "\nEnd title string found!  It reads: %s" , DebriefingText );
-    }
-  
+  DebriefingText =
+    ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_BEGIN_STRING , MISSION_ENDTITLE_END_STRING ) ;
+
   //--------------------
   // Now we read all the possible starting points for the
   // current mission file, so that we know where to place the
   // influencer at the beginning of the mission.
-  StartPointPointer=MainMissionPointer;
-  while ( ( StartPointPointer = strstr ( StartPointPointer, MISSION_START_POINT_STRING )) != NULL )
+
+  NumberOfStartPoints = CountStringOccurences ( MainMissionPointer , MISSION_START_POINT_STRING );
+
+  if ( NumberOfStartPoints == 0 )
     {
-      NumberOfStartPoints++;
-      StartPointPointer+=strlen( MISSION_START_POINT_STRING );
-      DebugPrintf (2, "\nFound another starting point entry!");
+      DebugPrintf ( 0 , "\n\nERROR! NOT EVEN ONE SINGLE STARTING POINT ENTRY FOUND!  TERMINATING!");
+      Terminate( ERR );
     }
   DebugPrintf (1, "\nFound %d different starting points for the mission in the mission file.", NumberOfStartPoints );
 
-  RealStartPoint = MyRandom ( NumberOfStartPoints -1 ) + 1;
-  // DebugPrintf (1, "\nRealStartPoint: %d." , RealStartPoint);
 
+  // Now that we know how many different starting points there are, we can randomly select
+  // one of them and read then in this one starting point into the right structures...
+  RealStartPoint = MyRandom ( NumberOfStartPoints -1 ) + 1;
   StartPointPointer=MainMissionPointer;
   for ( i=0 ; i<RealStartPoint; i++ )
     {
@@ -1171,19 +991,6 @@ InitNewMission ( char *MissionName )
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me.pos.y=StartingYPos;
   // DebugPrintf (1, "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
-  
-  if ( NumberOfStartPoints == 0 )
-    {
-      DebugPrintf (1, "\n\nERROR! NOT EVEN ONE SINGLE STARTING POINT ENTRY FOUND!  TERMINATING!");
-      Terminate(ERR);
-    }
-
-  // Now that we know how many different starting points there are, we can randomly select
-  // one of them
-
-
-  StartPointPointer = LocateStringInData ( MainMissionPointer , MISSION_START_POINT_STRING );
-  StartPointPointer += strlen ( MISSION_START_POINT_STRING ) +1;
   
   //--------------------
   // Now we read in the mission targets for this mission
@@ -1220,6 +1027,9 @@ InitNewMission ( char *MissionName )
   ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_Y_STRING , "%d" , 
 		       &Me.mission.MustReachPoint.y , EndOfMissionTargetPointer );
 
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_LEVEL_STRING , "%d" , 
+		       &Me.mission.MustReachLevel , EndOfMissionTargetPointer );
+
   ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
 		       &Me.mission.MustLiveTime , EndOfMissionTargetPointer );
 
@@ -1228,21 +1038,9 @@ InitNewMission ( char *MissionName )
   // we need to add a pointer to the next mission, so that we will later
   // now which mission to load after this mission has been completed.
   //
-  if ( ( NextMissionNamePointer = strstr ( MainMissionPointer, NEXT_MISSION_NAME_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION NEXT MISSION NAME ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      NextMissionNamePointer += strlen ( NEXT_MISSION_NAME_STRING ) ;
-      NextMissionNameLength = strstr ( NextMissionNamePointer , "\n" ) - NextMissionNamePointer;
-      NextMissionName = MyMalloc ( NextMissionNameLength +10 );
-      strncpy( NextMissionName , NextMissionNamePointer , NextMissionNameLength +1 );
-      NextMissionName[NextMissionNameLength] = 0;
-      // DebugPrintf (1, "\nNext mission name found!  It reads: %s" , NextMissionName );
-    }
-  
+  NextMissionName =
+    ReadAndMallocStringFromData ( MainMissionPointer , NEXT_MISSION_NAME_STRING , "\n" ) ;
+
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
@@ -1634,6 +1432,8 @@ CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
 
+  #define MIS_COMPLETE_DEBUG 3
+
   if ( Me.mission.KillOne != (-1) )
     {
       for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
@@ -1642,7 +1442,7 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
 	    {
-	      DebugPrintf ( 2, "\nOne of the marked droids is still alive...");
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
 	      // fflush(stdout);
 	      return;
 	    }
@@ -1655,8 +1455,8 @@ CheckIfMissionIsComplete (void)
 	{
 	  if ( AllEnemys[Robot_Counter].energy > 0 ) 
 	    {
-	      DebugPrintf (2, "\nThere are some robots still alive, and you should kill them all...");
-	      // fflush(stdout);
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
+	      fflush(stdout);
 	      return;
 	    }
 	}
@@ -1670,7 +1470,7 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
 	    {
-	      DebugPrintf (2, "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
 			   Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
 			   AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
 	      return;
@@ -1680,20 +1480,20 @@ CheckIfMissionIsComplete (void)
 
   if ( Me.mission.MustBeClass != (-1) )
     {
-      // DebugPrintf (1, "\nMe.type is now: %d.", Me.type );
+      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
       if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) 
 	{
-	  // DebugPrintf (2, "\nMe.class does not match...");
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.class does not match...");
 	  return;
 	}
     }
 
   if ( Me.mission.MustBeType != (-1) )
     {
-      // DebugPrintf (1, "\nMe.type is now: %d.", Me.type );
+      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
       if ( Me.type != Me.mission.MustBeType ) 
 	{
-	  // DebugPrintf (1, "\nMe.type does not match...");
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type does not match...");
 	  return;
 	}
     }
@@ -1702,7 +1502,7 @@ CheckIfMissionIsComplete (void)
     {
       if ( CurLevel->levelnum != Me.mission.MustReachLevel ) 
 	{
-	  // DebugPrintf (1, "\nLevel number does not match...");
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nLevel number does not match...");
 	  return;
 	}
     }
@@ -1711,7 +1511,7 @@ CheckIfMissionIsComplete (void)
     {
       if ( Me.pos.x != Me.mission.MustReachPoint.x ) 
 	{
-	  // DebugPrintf (1, "\nX coordinate does not match...");
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nX coordinate does not match...");
 	  return;
 	}
     }
@@ -1720,7 +1520,7 @@ CheckIfMissionIsComplete (void)
     {
       if ( Me.pos.y != Me.mission.MustReachPoint.y ) 
 	{
-	  // DebugPrintf (1, "\nY coordinate does not match..."); 
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nY coordinate does not match..."); 
 	  return;
 	}
     }
@@ -1729,7 +1529,7 @@ CheckIfMissionIsComplete (void)
     {
       if ( Me.MissionTimeElapsed < Me.mission.MustLiveTime ) 
 	{
-	  // DebugPrintf (1, "\nTime Limit not yet reached...");
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nTime Limit not yet reached...");
 	  return;
 	}
     }
@@ -1738,8 +1538,7 @@ CheckIfMissionIsComplete (void)
     {
       if ( Me.Marker != Me.mission.MustBeOne ) 
 	{
-	  // DebugPrintf (1, "\nYou're not yet one of the marked ones...");
-	  // fflush(stdout);
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nYou're not yet one of the marked ones...");
 	  return;
 	}
     }
