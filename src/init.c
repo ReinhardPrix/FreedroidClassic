@@ -428,6 +428,7 @@ Get_Robot_Data ( void* DataPointer )
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
   char *CountRobotsPointer;
+  char *EndOfDataPointer;
   int StringLength;
   int i;
 
@@ -447,6 +448,7 @@ Get_Robot_Data ( void* DataPointer )
 
 
 #define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
+#define ROBOT_SECTION_END_STRING "*** End of Robot Data Section: ***" 
 #define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
 #define DROIDNAME_BEGIN_STRING "Droidname: "
 #define MAXSPEED_BEGIN_STRING "Maximum speed of this droid: "
@@ -469,93 +471,38 @@ Get_Robot_Data ( void* DataPointer )
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
-  if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
-    {
-      DebugPrintf(1, "\n\nBegin of Robot Data Section not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\n\nBegin of Robot Data Section found. Good.");  
-      // fflush(stdout);
-    }
+  
+  RobotPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_BEGIN_STRING );
+  EndOfDataPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_END_STRING );
+
   
   DebugPrintf (2, "\n\nStarting to read robot calibration section\n\n");
 
   // Now we read in the speed calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, MAXSPEED_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO MAXSPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( MAXSPEED_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &maxspeed_calibrator );
-    }
+  ReadValueFromString( RobotPointer , MAXSPEED_CALIBRATOR_STRING , "%lf" , 
+		       &maxspeed_calibrator , EndOfDataPointer );
 
   // Now we read in the acceleration calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, ACCELERATION_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO ACCELERATION CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( ACCELERATION_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &acceleration_calibrator );
-    }
+  ReadValueFromString( RobotPointer , ACCELERATION_CALIBRATOR_STRING , "%lf" , 
+		       &acceleration_calibrator , EndOfDataPointer );
 
   // Now we read in the maxenergy calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, MAXENERGY_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO MAXENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( MAXENERGY_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &maxenergy_calibrator );
-    }
+  ReadValueFromString( RobotPointer , MAXENERGY_CALIBRATOR_STRING , "%lf" , 
+		       &maxenergy_calibrator , EndOfDataPointer );
 
   // Now we read in the energy_loss calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, ENERGYLOSS_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO ENERGYLOSS CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( ENERGYLOSS_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &energyloss_calibrator );
-    }
+  ReadValueFromString( RobotPointer , ENERGYLOSS_CALIBRATOR_STRING , "%lf" , 
+		       &energyloss_calibrator , EndOfDataPointer );
 
   // Now we read in the aggression calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, AGGRESSION_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO AGGRESSION CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( AGGRESSION_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &aggression_calibrator );
-    }
+  ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%lf" , 
+		       &aggression_calibrator , EndOfDataPointer );
 
   // Now we read in the score calibration factor for all droids
-  if ( (ValuePointer = strstr ( RobotPointer, SCORE_CALIBRATOR_STRING )) == NULL )
-    {
-      DebugPrintf(1, "\nERROR! NO SCORE CALIBRATOR ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      ValuePointer += strlen ( SCORE_CALIBRATOR_STRING );
-      sscanf ( ValuePointer , "%lf" , &score_calibrator );
-    }
+  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%lf" , 
+		       &score_calibrator , EndOfDataPointer );
 
-
-  DebugPrintf (2, "\n\nStarting to read Robot data...\n\n");
+  DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
   //--------------------
   // At first, we must allocate memory for the droid specifications.
   // How much?  That depends on the number of droids defined in game.dat.
@@ -568,6 +515,7 @@ Get_Robot_Data ( void* DataPointer )
       CountRobotsPointer += strlen ( NEW_ROBOT_BEGIN_STRING );
       Number_Of_Droid_Types++;
     }
+
   // Not that we know how many robots are defined in game.dat, we can allocate
   // a fitting amount of memory.
   i=sizeof(druidspec);
@@ -600,204 +548,64 @@ Get_Robot_Data ( void* DataPointer )
 	}
 
       // Now we read in the maximal speed this droid can go. 
-      if ( (ValuePointer = strstr ( RobotPointer, MAXSPEED_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO MAXSPEED ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( MAXSPEED_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxspeed );
-	}
+      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
 
       // Now we read in the class of this droid.
-      if ( (ValuePointer = strstr ( RobotPointer, CLASS_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO CLASS ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( CLASS_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].class );
-	}
+      ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].class , EndOfDataPointer );
 
       // Now we read in the maximal acceleration this droid can go. 
-      if ( (ValuePointer = strstr ( RobotPointer, ACCELERATION_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO ACCELERATION ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( ACCELERATION_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].accel );
-	}
+      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].accel , EndOfDataPointer );
 
       // Now we read in the maximal energy this droid can store. 
-      if ( (ValuePointer = strstr ( RobotPointer, MAXENERGY_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO MAXENERGY ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( MAXENERGY_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxenergy );
-	}
+      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxenergy , EndOfDataPointer );
 
       // Now we read in the lose_health rate.
-      if ( (ValuePointer = strstr ( RobotPointer, LOSEHEALTH_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO LOSE_HEALTH ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( LOSEHEALTH_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].lose_health );
-	}
+      ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].lose_health , EndOfDataPointer );
 
       // Now we read in the class of this droid.
-      if ( (ValuePointer = strstr ( RobotPointer, GUN_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO GUN ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( GUN_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].gun );
-	}
+      ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].gun , EndOfDataPointer );
 
       // Now we read in the aggression rate of this droid.
-      if ( (ValuePointer = strstr ( RobotPointer, AGGRESSION_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO AGGRESSION ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( AGGRESSION_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].aggression );
-	}
+      ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].aggression , EndOfDataPointer );
 
       // Now we read in the flash immunity of this droid.
-      if ( (ValuePointer = strstr ( RobotPointer, FLASHIMMUNE_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO FLASHIMMUNE ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( FLASHIMMUNE_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].flashimmune );
-	}
+      ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].flashimmune , EndOfDataPointer );
 
       // Now we score to be had for destroying one droid of this type
-      if ( (ValuePointer = strstr ( RobotPointer, SCORE_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO SCORE ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( SCORE_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].score );
-	  // printf("\nDroid score entry found!  It reads: %d" , Druidmap[RobotIndex].score );
-	}
+      ReadValueFromString( RobotPointer , SCORE_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].score, EndOfDataPointer );
 
       // Now we read in the height of this droid of this type
-      if ( (ValuePointer = strstr ( RobotPointer, HEIGHT_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO HEIGHT ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( HEIGHT_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].height );
-	  // printf("\nDroid height entry found!  It reads: %f" , Druidmap[RobotIndex].height );
-	}
+      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].height, EndOfDataPointer );
 
       // Now we read in the weight of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, WEIGHT_BEGIN_STRING )) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO WEIGHT ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( WEIGHT_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].weight );
-	  // printf( "\nDroid weight entry found!  It reads: %f" , Druidmap[RobotIndex].weight );
-	}
+      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].weight, EndOfDataPointer );
 
       // Now we read in the drive of this droid of this type
-      if ( (ValuePointer = strstr ( RobotPointer, DRIVE_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO DRIVE ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( DRIVE_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].drive );
-	  // printf("\nDroid drive entry found!  It reads: %d" , Druidmap[RobotIndex].drive );
-	}
+      ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].drive, EndOfDataPointer );
 
       // Now we read in the brain of this droid of this type
-      if ( (ValuePointer = strstr ( RobotPointer, BRAIN_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO BRAIN ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( BRAIN_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].brain );
-	  // printf("\nDroid brain entry found!  It reads: %d" , Druidmap[RobotIndex].brain );
-	}
+      ReadValueFromString( RobotPointer , BRAIN_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].brain, EndOfDataPointer );
 
-      // Now we read in the sensor 1 of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, SENSOR1_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO SENSOR1 ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor1 );
-	  // printf("\nDroid sensor 1 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor1 );
-	}
-
-      // Now we read in the sensor 2 of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, SENSOR2_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf(1, "\nERROR! NO SENSOR2 ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor2 );
-	  // printf("\nDroid sensor 2 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor2 );
-	}
-
-      // Now we read in the sensor 3 of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, SENSOR3_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf (1,"\nERROR! NO SENSOR3 ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( SENSOR3_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor3 );
-	  // printf("\nDroid sensor 3 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor3 );
-	}
+      // Now we read in the sensor 1, 2 and 3 of this droid type
+      ReadValueFromString( RobotPointer , SENSOR1_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].sensor1, EndOfDataPointer );
+      ReadValueFromString( RobotPointer , SENSOR2_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].sensor2, EndOfDataPointer );
+      ReadValueFromString( RobotPointer , SENSOR3_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].sensor3, EndOfDataPointer );
 
       // Now we read in the armament of this droid type
       if ( (ValuePointer = strstr ( RobotPointer, ARMAMENT_BEGIN_STRING ) ) == NULL )
