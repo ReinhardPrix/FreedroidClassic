@@ -2704,7 +2704,7 @@ Empty part string received!",
 	else
 	{
 	    blit_iso_image_to_screen_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
-						x , y );
+						x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y );
 	}
     }
     else
