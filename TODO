@@ -8,29 +8,63 @@ Bugs
   and back again like ghosts.  Perhaps someone could look the maps over?
   Also there are 516 in the yellow level, which shouldn't be the case.
 
-- Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
-  NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
+- (DONE)   Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
+           NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
 
-- Laufschrift gehoert zu Paradroid-'extensions'
+- (DONE)   Schuss nach Rechts-Unten geht nicht: ? 
+	   --> (jp): kann ich nicht nachvollziehen.  Der rp sollte eventuell sein keyboard reinigen... ;-)  )
 
-- (rp) Invincible mode: versagt manchmal (collisions)
+- Spiel "holpert" oefters: koennte von Scroll-schrift kommen
+  (sollte vielleicht in einem Parallel-prozess laufen, statt in
+  der Hauptschleife?) (jp: Kommt wahrscheinlich vom yiff sound server, wenn zu viele
+  sounds gleichzeitig angefordert werden, etwa, wenn man zwischen zwei robots eingeklemmt
+  und hin und her gebeppelt wird.  Andere Ursachen nicht ausgeschlossen.)
+  (liegt sicher auch daran, dass im Lift die Framerate verzerrt wird.  Naja.)
+  Ein weiterer Ausl\"oser ist wenn man etwa ganz am rechts unteren Rand einer rechteckigen
+  Kartenform steht:  Die Framerate wird nachweislich bei mir HALBIERT!  Das liegt an den
+  vielen IsVisible-Abfragen, die scheinbar irgendwo aus der Karte hinaus im Speicher die
+  Sichtbarkeit uberpruefen.  Sehr fragwuerdig.
+
+- (DONE)  gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
+	  --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
+
+- (DONE)  Laufschrift gehoert zu Paradroid-'extensions'
+	  --> habe sie als solche vermerkt.
+
+- (DONE)  (rp) Invincible mode: versagt manchmal (collisions)
+	  --> inzwischen ueberlebt man die absurdesten Kaempfe und Situationen damit
 
 - (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
 
-- (jp) Calculate all movement (where movement is to be understood in an abstract
-  sense including movement of energy and such) framerate-dependant
+- (DONE?)  (jp) Calculate all movement (where movement is to be understood in an abstract
+	   sense including movement of energy and such) framerate-dependant
+	   --> sollte weitestgehend erledigt sein.  Was fehlt noch?  Anmerkungen bitte.
 
-- (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
-  Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
+- (DONE)   (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
+	   Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
+	   --> Konsole ist jetzt relativ ansehnlich.  Weitere Verbesserungsvorschaege erwuenscht.
+	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen durch die GreatDruidShow!!)
 
-- (?) find more open and free sounds be can use legally
+- (jp) add more sounds:  Deadlock-Sound-Sequenz, Complete-Sound-Sequenz, 
+  verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
+  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe) eine eigene Hintergrundmusik
+  zu verwenden.
 
-- correct the too fast explosion (blast) damage effect
+- (DONE)   correct the too fast refresh movement and effect
+	   Refreshes sollten jetzt ordentlich arbeiten.  Etwas kalibrieren koennte man
+	   sie vielleicht noch.
 
-- (jp) add more sounds
+- (DONE)   correct the too fast explosion (blast) damage effect
+	   --> sowohl fuer Feinde als auch fuer den Influ sollte das jetzt angemessen wirken
 
-- (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
-  sind nur ein paar "Brumm-brumm" Geraeusche
+- (DONE)   (rp) Takeover game still looks 'unfinished'
+	   --> der Reinhard hat da scheinbar weitgehend aufger\"aumt...
+
+- (DONE)   (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
+	   sind nur ein paar "Brumm-brumm" Geraeusche
+	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
+	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
+
 
 Missing features
 -----------------
@@ -38,7 +72,7 @@ Missing features
   freedroid@....
 
 - save highscores to disk
-- Options menu? 
+- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik bequem einstellen kann 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
 - (rp?) joystick/gamepad support waere toll!
 - (rp): PORT the map-editor 'maped' ?

@@ -239,7 +239,9 @@ void Teleport(int LNum,int X,int Y)
 		* Belibige Typenauswahl
 		* Ausgabe einer Gesamtrobotliste
    **********************************************************************/
-void Cheatmenu(void){
+void 
+Cheatmenu(void)
+{
   char CTaste=' ';
   // int vgamode;
   char NewRoboType[80]; // name of new influencer robot-type, i.e. "123"
@@ -275,6 +277,7 @@ void Cheatmenu(void){
     gl_printf(-1,-1, " b. Blinkenergie\n");
     gl_printf(-1,-1, " c. Conceptview: %s\n",Conceptview?"ON":"OFF");
     gl_printf(-1,-1, " m. Map von Deck xy\n");
+    gl_printf(-1,-1, " s. Sound: %s\n" , sound_on?"ON":"OFF");
     gl_printf(-1,-1, "\n q. RESUME game\n");
 
     CTaste=getchar();
@@ -361,6 +364,10 @@ void Cheatmenu(void){
       getchar();
       break; 
     case 'c': Conceptview=!Conceptview; break;
+    case 's': 
+      Weiter=1; 
+      sound_on=!sound_on; 
+      break;
     case 'm':
       gl_printf(-1,-1,"\nLevelnum:");
       scanf("%d", &LNum); getchar();
