@@ -174,7 +174,10 @@ ReplySample="614_This_Has_Top_0.wav"
 ChangeOption=3 ChangeToValue=0
 
 New Option Nr=99 OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+
+Subtitle="See you later!"
+ReplySample="Tux_See_You_Later_0.wav"
       
 End of chat dialog for character="614"
 
