@@ -1317,6 +1317,7 @@ void
 EndTitle (void)
 {
   SDL_Rect rect;
+  Uint32 now;
 
   Switch_Background_Music_To ( DebriefingSong );
 
@@ -1327,6 +1328,16 @@ EndTitle (void)
   SetCurrentFont( Para_BFont);
 
   while (SpacePressed());
+
+  now=SDL_GetTicks();
+
+  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )
+    {
+      DisplayBanner (NULL, NULL,  0 );
+      ExplodeBlasts ();
+      MoveBullets ();
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+    }
 
   Copy_Rect(Full_User_Rect, rect);
   MakeGridOnScreen (&rect);

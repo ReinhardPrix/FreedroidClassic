@@ -785,20 +785,13 @@ MyRandom (int UpperBound)
 void
 Armageddon (void)
 {
-  char key =' ';
   int i;
 
-  printf ("\nKill all droids on ship (y/n) ? \n");
-  while ((key != 'y') && (key != 'n'))
-    key = getchar_raw ();
-  if (key == 'n')
-    return;
-  else
-    for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-      {
-	AllEnemys[i].energy = 0;
-	AllEnemys[i].Status = OUT;
-      }
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    {
+      AllEnemys[i].energy = 0;
+      AllEnemys[i].Status = OUT;
+    }
 } // void Armageddon(void)
 
 /*@Function============================================================

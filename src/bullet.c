@@ -257,14 +257,13 @@ GetDirection (point robo, point bul)
 void
 CheckBulletCollisions (int num)
 {
-  int i;
   int level = CurLevel->levelnum;
   double xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
   static int FBTZaehler = 0;
   finepoint step;
-  finepoint checkpos;
-  int num_check_steps;
+  int num_check_steps, stepnum;
+  int i;
   
 
   switch (CurBullet->type)
@@ -334,92 +333,95 @@ CheckBulletCollisions (int num)
       step.x /= 1.0* num_check_steps;
       step.y /= 1.0* num_check_steps;
       
-      for (i=0; i <= num_check_steps; i++)
+      CurBullet->pos.x = CurBullet->prev_pos.x;
+      CurBullet->pos.y = CurBullet->prev_pos.y;
+      
+      for (stepnum=0; stepnum < num_check_steps; stepnum++)
 	{
-	  checkpos.x = CurBullet->prev_pos.x + i*step.x;
-	  checkpos.y = CurBullet->prev_pos.y + i*step.y;
-	  if (IsPassable (checkpos.x, checkpos.y, CENTER) != CENTER)
+	  CurBullet->pos.x += step.x;
+	  CurBullet->pos.y += step.y;
+
+	  if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
 	    {
-	      CurBullet->pos.x = checkpos.x;
-	      CurBullet->pos.y = checkpos.y;
 	      DeleteBullet (num);
 	      return;			
 	    }
-	}
       
-      // check for collision with influencer
-      xdist = Me.pos.x - CurBullet->pos.x;
-      ydist = Me.pos.y - CurBullet->pos.y;
-      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
-	{
-	  GotHitSound ();
-	  
-	  if (!InvincibleMode)
-	    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
-	  
-	  // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
-	  // ATTENTION!  These instructions belong here and must not be moved up.
-	  // CurBullet->type = OUT;
-	  // CurBullet->mine = FALSE;
-	  DeleteBullet( num );
-	  return;			/* Bullet ist hin */
-	}
-      
-      // check for collision with enemys
-      // for (i = 0; i < NumEnemys; i++)
-      for (i = 0; i < Number_Of_Droids_On_Ship; i++)
-	{
-	  if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
-	    continue;
-	  
-	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
-	  ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
-	  
-	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	  // check for collision with influencer
+	  if (!CurBullet->mine)
 	    {
-	      // The enemy who was hit, loses some energy, depending on the bullet
-	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
-
-	      // Maybe he will also stop doing his fixed routine and return to normal
-	      // operation as well
-	      AllEnemys[i].AdvancedCommand = 0;
-
-	      // We might also start a little bullet-blast even after the
-	      // collision of the bullet with an enemy (not in Paradroid)
-	      DeleteBullet( num );
-
-	      Enemy_Post_Bullethit_Behaviour( i );
-
-	      if (!CurBullet->mine)
+	      xdist = Me.pos.x - CurBullet->pos.x;
+	      ydist = Me.pos.y - CurBullet->pos.y;
+	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 		{
-		  FBTZaehler++;
-		}
-	      CurBullet->type = OUT;
-	      CurBullet->mine = FALSE;
-	      // break;		/* Schleife beenden */
-	      return;
-	    }			/* if getroffen */
-	}  /* for AllEnemys */
-
-      // check for collisions with other bullets
-      for (i = 0; i < MAXBULLETS; i++)
-	{
-	  if (i == num) continue;  // never check for collision with youself.. ;)
-	  if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
-	  if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
-
-	  if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
-	  if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
-	  // it seems like we have a collision of two bullets!
-	  // both will be deleted and replaced by blasts..
-	  DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
+		  GotHitSound ();
 	  
-	  //CurBullet->type=OUT;
-	  //AllBullets[num].type=OUT;
-	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	  StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
-	  DeleteBullet( num );
-	}
+		  if (!InvincibleMode)
+		    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
+	  
+		  DeleteBullet( num );
+		  return;			/* Bullet ist hin */
+		}
+	    } // if Bullet!=mine
+
+	      // check for collision with enemys
+	  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+	    {
+	      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
+		continue;
+	  
+	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
+	      ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
+	  
+	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+		{
+		  // The enemy who was hit, loses some energy, depending on the bullet
+		  AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+
+		  // Maybe he will also stop doing his fixed routine and return to normal
+		  // operation as well
+		  AllEnemys[i].AdvancedCommand = 0;
+
+		  // We might also start a little bullet-blast even after the
+		  // collision of the bullet with an enemy (not in Paradroid)
+		  DeleteBullet( num );
+
+		  Enemy_Post_Bullethit_Behaviour( i );
+
+		  if (!CurBullet->mine)
+		    {
+		      FBTZaehler++;
+		    }
+		  CurBullet->type = OUT;
+		  CurBullet->mine = FALSE;
+		  // break;		/* Schleife beenden */
+		  return;
+		}			/* if getroffen */
+	    }  /* for AllEnemys */
+
+
+	  // check for collisions with other bullets
+	  for (i = 0; i < MAXBULLETS; i++)
+	    {
+	      if (i == num) continue;  // never check for collision with youself.. ;)
+	      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
+	      if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
+	      
+	      if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
+	      if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
+	      // it seems like we have a collision of two bullets!
+	      // both will be deleted and replaced by blasts..
+	      DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
+	  
+	      //CurBullet->type=OUT;
+	      //AllBullets[num].type=OUT;
+	      StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
+	      StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
+	      DeleteBullet( num );
+	    }
+	  
+	} // for numsteps < num_check_steps
+
       break;
     } // switch ( Bullet-Type )
 } /* CheckBulletCollisions */
