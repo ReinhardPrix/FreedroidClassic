@@ -410,6 +410,69 @@ LoadShip (char *filename)
 } /* LoadShip () */
 
 /*@Function============================================================
+@Desc: This function is intended to eliminate leading -1 entries before
+       real entries in the waypoint connection structure.
+
+       Such leading -1 entries might cause problems later, because some
+       Enemy-Movement routines expect that the "real" entries are the
+       first entries in the connection list.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void CheckWaypointIntegrity(Level Lev)
+{
+  int i, j , k , l ;
+  int MemAmount=0;		/* the size of the level-data */
+  int xlen = Lev->xlen, ylen = Lev->ylen;
+
+  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    {
+      // Search for the first -1 entry:  j contains this number
+      for ( j = 0 ; j < MAX_WP_CONNECTIONS ; j++ )
+	{
+	  if (Lev->AllWaypoints[i].connections[j] == -1 ) break;
+	}
+
+      // have only non-(-1)-entries?  then we needn't do anything.
+      if ( j == MAX_WP_CONNECTIONS ) continue;
+      // have only one (-1) entry in the last position?  then we needn't do anything.
+      if ( j == MAX_WP_CONNECTIONS - 1 ) continue;
+      
+      // search for the next non-(-1)-entry AFTER the -1 entry fount first
+      for ( k = j + 1 ; k < MAX_WP_CONNECTIONS ; k ++ )
+	{
+	  if (Lev->AllWaypoints[i].connections[k] != -1 ) break;
+	}
+      
+      // none found? -- that would be good.  no corrections nescessary.  we can go.
+      if ( k == MAX_WP_CONNECTIONS ) continue;
+
+      // At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
+
+      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUNT ON LEVEL %d!! " , Lev->levelnum );
+      DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
+      DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
+
+      // So we move the later waypoints just right over the existing leading -1 entries
+
+      for ( l = j ; l < MAX_WP_CONNECTIONS-(k-j) ; l++ )
+	{
+	  Lev->AllWaypoints[i].connections[l]=Lev->AllWaypoints[i].connections[l+(k-j)];
+	}
+
+      // So the block of leading -1 entries has been eliminated
+      // BUT:  This may have introduced double entries of waypoints, e.g. if there was a -1
+      // at the start and all other entries filled!  WE DO NOT HANDLE THIS CASE.  SORRY.
+      // Also there might be a second sequence of -1 entries followed by another non-(-1)-entry
+      // sequence.  SORRY, THAT CASE WILL ALSO NOT BE HANDLES SEPARATELY.  Maybe later.
+      // For now this function will do perfectly well as it is now.
+
+    }
+
+}; // void CheckWaypointIntegrity(Level Lev)
+
+		
+/*@Function============================================================
 @Desc: char *StructToMem(Level Lev):
 
 @Ret: 	char *: pointer to Map in a memory field
@@ -423,7 +486,7 @@ char *StructToMem(Level Lev)
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
   char linebuf[81];		/* Buffer */
-  char HumanReadableMapLine[10000]="Hallo, dies soll lesbarer Map-string werden.";
+  char HumanReadableMapLine[10000]="Hello, this is gonna be a made into a readable map-string.";
   
   /* Get the number of waypoints */
   anz_wp = 0;
@@ -461,9 +524,14 @@ char *StructToMem(Level Lev)
     strncat(LevelMem, HumanReadableMapLine , xlen * 4 ); // We need FOUR chars per map tile
     strcat(LevelMem, "\n");
   }
-  
+
+  // --------------------  
   // The next thing we must do is write the waypoints of this level also
   // to disk.
+
+  // There might be LEADING -1 entries in front of other connection entries.
+  // This is unwanted and shall be corrected here.
+  CheckWaypointIntegrity( Lev );
 
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
