@@ -1132,6 +1132,8 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
 
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
@@ -1783,8 +1785,13 @@ DisplayChar (unsigned char c)
     }
   else if ( !isprint(c) ) // don't accept non-printable characters
     {
-      printf ("Illegal char passed to DisplayChar(): %d \n", c);
-      Terminate(ERR);
+      fprintf ( stderr , "\nIllegal char passed to DisplayChar(): %d \n", c);
+      GiveStandardErrorMessage ( "DisplayChar(...)" , "\
+There was an illegal character passed to DisplayChar for printing.\n\
+This indicates some error within Freedroid or within one of the dialog\n\
+files of Freedroid.",
+				 PLEASE_INFORM, IS_WARNING_ONLY );
+      return;
     }
 
   PutChar ( Screen, MyCursorX, MyCursorY, c );

@@ -647,6 +647,8 @@ MoveInfluence ( int PlayerNum )
 	   Me [ PlayerNum ] . pos . z ) == 0 ) &&
        ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) )
     {
+      if ( Me [ PlayerNum ] . readied_skill == SPELL_TRANSFERMODE )
+	{
 	  //--------------------
 	  // We chat with the friendly droid
 	  ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] ) ) ;
@@ -655,6 +657,7 @@ MoveInfluence ( int PlayerNum )
 	  // and then we deactivate this mouse_move_target_is_enemy to prevent
 	  // immediate recurrence of the very same chat.
 	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+	}
     }
 
   //--------------------
@@ -669,7 +672,7 @@ MoveInfluence ( int PlayerNum )
 		Me [ PlayerNum ] . pos . y ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
        ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
 	   Me [ PlayerNum ] . pos . z ) == 0 ) &&
-       ( Me [ PlayerNum ] . readied_skill == SKILL_TAKEOVER ) &&
+       ( Me [ PlayerNum ] . readied_skill == SPELL_TRANSFERMODE ) &&
        ( MouseRightPressed() )
        )
     {

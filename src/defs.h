@@ -87,8 +87,6 @@ enum
 #include "itemdefs.h"
 #endif
 
-#define SKILL_TAKEOVER 0
-
 #define WAR_BOT 1
 #define SNIPER_BOT 2
 #define MIND_BOT 3
@@ -405,6 +403,8 @@ enum _non_player_characters
     PERSON_ERNIE,
     PERSON_BENJAMIN,
     PERSON_SPENCER,
+    PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
+    PERSON_OLD_TOWN_GATE_GUARD_LEADER,
     PERSON_HEA,
     PERSON_BRUCE,
     LAST_PERSON
