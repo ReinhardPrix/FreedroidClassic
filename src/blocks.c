@@ -1452,6 +1452,9 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_2 = 1.2 ;
 
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
 

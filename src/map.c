@@ -720,6 +720,19 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	    case LOCKED_H_SHUT_DOOR:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_DOOR_LOCKED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case LOCKED_V_SHUT_DOOR:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_DOOR_LOCKED ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
 	    default:
 	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{
