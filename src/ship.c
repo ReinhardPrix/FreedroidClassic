@@ -46,8 +46,6 @@ void GreatDruidShow (void);
 
 void ShowElevators (void);
 
-void AlleElevatorsGleichFaerben (void);
-
 void PaintConsoleMenu (void);
 
 int WaitElevatorCounter = 0;
@@ -93,6 +91,7 @@ EnterElevator (void)
 
   ShowElevators ();
   HilightElevator (row);
+  SDL_Flip ( ne_screen );
 
   PrepareScaledSurface(TRUE);
 
@@ -116,8 +115,9 @@ EnterElevator (void)
 		curLevel = curShip.AllElevators[curElev].level;
 		upElev = curShip.AllElevators[curElev].up;
 
-		AlleLevelsGleichFaerben ();
 		HilightLevel (curLevel);	/* highlight new level */
+		HilightElevator (row);
+		SDL_Flip ( ne_screen );
 
 		/* Warten, bis user Taste auslaesst */
 		WaitElevatorCounter = WAIT_ELEVATOR;
@@ -142,8 +142,9 @@ EnterElevator (void)
 		curLevel = curShip.AllElevators[curElev].level;
 		downElev = curShip.AllElevators[curElev].down;
 
-		AlleLevelsGleichFaerben ();
 		HilightLevel (curLevel);
+		HilightElevator (row);
+		SDL_Flip ( ne_screen );
 
 		/* Warten, bis User Taste auslaesst */
 		WaitElevatorCounter = WAIT_ELEVATOR;
@@ -242,10 +243,6 @@ ShowElevators (void)
   TargetRectangle.y=USERFENSTERPOSY;
   SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
   
-
-  // AlleLevelsGleichFaerben ();
-  // AlleElevatorsGleichFaerben ();
-
   HilightLevel (curLevel);
 
   PrepareScaledSurface( TRUE );
@@ -695,39 +692,6 @@ ShowDeckMap (Level deck)
 
 
 /*@Function============================================================
-@Desc: Diese Funktion dient dazu, wenn die Seitenansicht des Schiffes
-	gezeigt wird, alle Levels gleich zu faerben
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-AlleLevelsGleichFaerben (void)
-{
-  ShowElevators();
-} /* void AlleLevelsGleichFaerben() */
-
-
-/*-----------------------------------------------------------------
- * @Desc: Alle Farben der Elevators in der Seitenansicht gleich setzen 
- *
- *
- *-----------------------------------------------------------------*/
-void
-AlleElevatorsGleichFaerben (void)
-{
-  int i;
-  curShip.num_lift_rows = 8;
-  for (i=0; i<curShip.num_lift_rows; i++)
-    SetPalCol (EL_FIRST_ROW_COLOR + i, 0, 0, 40);
-
-  return;
-
-} /* AlleElevatorsGleichFaerben() */
-
-
-
-/*@Function============================================================
 @Desc: Diese Funktion dient dazu, wenn die Seitenansicht des aktuellen
 	Schiffes gezeigt ist, den momentanen Level als solchen zu kennzeichnen
 
@@ -758,8 +722,6 @@ HilightLevel (int Levelnumber)
 
   free( Levelname );
 
-  SDL_Flip( ne_screen );
-
 } // void HilightLevel (int Levelnumber)
 
 /*@Function============================================================
@@ -771,12 +733,37 @@ HilightLevel (int Levelnumber)
 void
 HilightElevator (int ElevatorRow)
 {
-  int rot = 63;
-  int gruen = 63;
-  int blau = 63;
+  SDL_Rect SourceRectangle;
+  SDL_Rect TargetRectangle;
+  SDL_Surface *tmp;
+  char* Elevatorname;
 
-  SetPalCol (ElevatorRow + EL_FIRST_ROW_COLOR, rot, gruen, blau);
-}
+  Elevatorname=malloc(100);
+  sprintf( Elevatorname , GRAPHICS_DIR "ne_lift_%d.gif", ElevatorRow );
+  printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Elevatorname );
+
+  SourceRectangle.x=0;
+  SourceRectangle.y=0;
+  SourceRectangle.w=USERFENSTERBREITE;
+  SourceRectangle.h=USERFENSTERHOEHE;
+  TargetRectangle.x=USERFENSTERPOSX;
+  TargetRectangle.y=USERFENSTERPOSY;
+
+  tmp= IMG_Load ( Elevatorname );
+
+  // Since we only want the elevators to be blitted now, we must
+  // set a color key accordingly.  This is the pink color you can
+  // see in all the ne_lift pictures.
+  //
+  SDL_SetColorKey( tmp , SDL_SRCCOLORKEY , SDL_MapRGB( tmp->format, 0x0FF, 0x000, 0x0FF ) );
+
+
+  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+
+  free( Elevatorname );
+
+  printf("\n\nHighlightElevator (int ElevatorRow): ElevatorRow=%d.", ElevatorRow );
+}  // void HilightElevator (int ElevatorRow)
 
 /*@Function============================================================
 @Desc: 
