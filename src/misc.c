@@ -1372,11 +1372,9 @@ InsertNewMessage (void)
 void
 Terminate (int ExitCode)
 {
-
   DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
-  printf ("GameOver : %i\n", GameOver);
-
-
+  printf("\n\n\nTermination of Freedroid initiated... \nUnallocation all resouces...\n\n");
+  
   SDL_Quit();
   exit (ExitCode);
   return;

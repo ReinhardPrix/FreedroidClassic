@@ -581,7 +581,6 @@ highscore list will be updated.
 void
 Debriefing (void)
 {
-  char *Scoretext;
   int DebriefColor;
 
   DebriefColor = FONT_WHITE;
@@ -599,7 +598,7 @@ Debriefing (void)
 			"    Enter your name: ");
       PrepareScaledSurface(TRUE);
 
-      // GreatScoreName = GetString (10, 2);
+      GreatScoreName = GetString (10, 2);
       GreatScore = RealScore;
     }
   else if (RealScore < LowestScoreOfDay)
@@ -610,22 +609,21 @@ Debriefing (void)
       PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
 			    "    Enter your name: ");
       PrepareScaledSurface(TRUE);
-      // LowestName = GetString (10, 2);
+      LowestName = GetString (10, 2);
       LowestScoreOfDay = RealScore;
     }
   else if (RealScore > HighestScoreOfDay)
     {
-      strcpy (Scoretext,
-	      "\n   Highest Score of Day! \n Enter your name:");
+      // strcpy (Scoretext, "\n   Highest Score of Day! \n Enter your name:");
       PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
 			"\n   Highest Score of Day!" );
       PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
 			    "    Enter your name: ");
       PrepareScaledSurface(TRUE);
-      // HighestName = GetString (10, 2);
+      HighestName = GetString (10, 2);
       HighestScoreOfDay = RealScore;
     }
-  free (Scoretext);
+  // free (Scoretext);
 
   printf ("\nSurvived Debriefing! \n");
 

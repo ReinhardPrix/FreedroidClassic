@@ -789,7 +789,7 @@ ExplodeInfluencer (void)
     ("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
   /* ein paar versetze Explosionen */
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 10; i++)
     {
       /* freien Blast finden */
       counter = 0;
@@ -797,9 +797,9 @@ ExplodeInfluencer (void)
       counter -= 1;
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].PX =
-	Me.pos.x - DRUIDRADIUSX / 2 + MyRandom (DRUIDRADIUSX);
+	Me.pos.x - DRUIDRADIUSX / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].PY =
-	Me.pos.y - DRUIDRADIUSY / 2 + MyRandom (DRUIDRADIUSY);
+	Me.pos.y - DRUIDRADIUSY / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }
 
