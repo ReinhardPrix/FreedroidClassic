@@ -86,23 +86,10 @@
 #define SPECIAL_POS_X 240
 #define SPECIAL_POS_Y 16
 
-/*
-#define AUX1_RECT_WIDTH 32
-#define AUX1_RECT_HEIGHT 32
-#define AUX1_POS_X 99
-#define AUX1_POS_Y 104
-*/
 #define AUX1_RECT_WIDTH 64
 #define AUX1_RECT_HEIGHT 64
 #define AUX1_POS_X 16
 #define AUX1_POS_Y 16
-
-/*
-#define AUX2_RECT_WIDTH 32
-#define AUX2_RECT_HEIGHT 32
-#define AUX2_POS_X 191
-#define AUX2_POS_Y 108
-*/
 
 #define AUX2_RECT_WIDTH 64
 #define AUX2_RECT_HEIGHT 64
