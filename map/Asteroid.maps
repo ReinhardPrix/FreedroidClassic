@@ -2339,7 +2339,6 @@ New item: type=19  X=15.455776  Y=62.609241  AC=2  DoDamage=0  ModifyDamage=0  M
 New item: type=99  X=29.000000  Y=26.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=90  X=15.403164  Y=68.989304  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=99  X=29.000000  Y=26.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=98  X=13.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=39  X=30.500000  Y=78.750000  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
@@ -8591,7 +8590,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=20 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -8607,8 +8606,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=20 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=20 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
@@ -9026,7 +9025,7 @@ jump target north: 17
 jump target south: 31
 jump target east: 27
 jump target west: 0
-Name of this level=Crystal Caverns
+Name of this level=Crystal Fields
 Comment of the Influencer on entering this level="MS Facility Gate
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -10120,7 +10119,7 @@ jump target north: 16
 jump target south: 12
 jump target east: 0
 jump target west: 19
-Name of this level=airlock
+Name of this level=Desert of Red Tears
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -10684,6 +10683,7 @@ Start of pure statement information for this level
 End of pure statement information for this level
 
 Start of pure items information for this level
+New item: type=98  X=90.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -10758,7 +10758,7 @@ jump target north: 0
 jump target south: 23
 jump target east: 31
 jump target west: 12
-Name of this level=reactor
+Name of this level=Slasher Mountains
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -15397,7 +15397,7 @@ jump target north: -1
 jump target south: 9
 jump target east: 28
 jump target west: 8
-Name of this level=Empty Plains
+Name of this level=Ethereal Meadows
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -23237,7 +23237,7 @@ end_of_level
 Levelnumber: 27
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 11
+light radius bonus of this level: 13
 minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
@@ -23248,7 +23248,7 @@ jump target north: 28
 jump target south: 26
 jump target east: -1
 jump target west: 9
-Name of this level=New Level just created...
+Name of this level=Broken Glass Path
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
