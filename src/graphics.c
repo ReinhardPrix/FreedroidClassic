@@ -1350,6 +1350,10 @@ InitPictures (void)
 
   ShowStartupPercentage ( 24 ) ; 
 
+  load_all_isometric_floor_tiles (  );
+
+  ShowStartupPercentage ( 25 ) ; 
+
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
 
   Load_Influencer_Surfaces();

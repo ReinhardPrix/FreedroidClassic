@@ -78,6 +78,7 @@ EXTERN void AnimateInfluence ( int PlayerNum ) ;
 EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
+EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 
 // bullet.c 
 #undef EXTERN
@@ -143,6 +144,7 @@ EXTERN void LoadOneMapInsertSurfaceIfNotYetLoaded ( int i );
 EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
+EXTERN void load_all_isometric_floor_tiles ( void );
 
 // graphics.c 
 #undef EXTERN

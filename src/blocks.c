@@ -1344,7 +1344,75 @@ Load_MapBlock_Surfaces( void )
 
   LoadAllMapTilesThatAreNotYetLoaded( );
 
-
 }; // void Load_MapBlock_Surfaces( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+load_one_isometric_floor_tile ( int tile_type ) 
+{
+
+  SDL_Surface* Whole_Image;
+  char *fpath;
+  char ConstructedFileName[2000];
+  char NumberBuffer[1000];
+
+  //--------------------
+  // At first we construct the file name of the single tile file we are about to load...
+  //
+  strcpy ( ConstructedFileName , "iso_floor_" );
+  sprintf ( NumberBuffer , "%04d" , tile_type );
+  strcat ( ConstructedFileName , NumberBuffer );
+  strcat ( ConstructedFileName , ".png" );
+  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+
+  //--------------------
+  // Now we load the single tile image file and check for errors while loading...
+  //
+  Whole_Image = IMG_Load( fpath );
+  if ( Whole_Image == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "load_one_isometric_floor_tile ( int tile_type )" , "\
+Freedroid was unable to load a certain single map tile from the hard disk\n\
+into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now we convert this to display format and set alpha and colorkey
+  // properties right...
+  //
+  // SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  iso_floor_surface_pointer [ tile_type ] = SDL_DisplayFormatAlpha( Whole_Image );
+  SDL_SetColorKey( iso_floor_surface_pointer [ tile_type ] , 0 , 0 );
+  // SDL_SetAlpha( iso_floor_surface_pointer [ tile_type ] , 0 , 0 );
+
+  //--------------------
+  // Now that this is all done, we can mark the map tile as loaded (later)
+  // and free the small image we have loaded from the disk.
+  //
+  SDL_FreeSurface( Whole_Image );
+  
+  
+}; // void load_one_isometric_floor_tile ( int tile_type ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+load_all_isometric_floor_tiles ( void )
+{
+  int i;
+
+  for ( i = 0 ; i < ALL_ISOMETRIC_FLOOR_TILES ; i ++ )
+    {
+      load_one_isometric_floor_tile ( i ) ;
+    }
+}; // void load_all_isometric_floor_tiles ( void )
 
 #undef _blocks_c

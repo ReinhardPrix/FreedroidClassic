@@ -323,7 +323,7 @@ ReactToSpecialKeys(void)
 
   if ( F6Pressed() )
     {
-      // Me[0].readied_skill = 5;
+      Me[0].readied_skill = 5;
     }
 
   if ( F7Pressed() )

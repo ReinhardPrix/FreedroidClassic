@@ -1585,6 +1585,41 @@ PerformTuxAttackRaw ( int PlayerNum )
 }; // void PerformTuxAttackRaw ( int PlayerNum ) ;
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+float
+translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) 
+{
+  if ( give_x )
+    {
+      return ( Me [ PlayerNum ] . pos . x + ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+    }
+  else
+    {
+      return ( Me [ PlayerNum ] . pos . y - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+    }
+	      
+}; // int translate_pixel_to_map_location ( int PlayerNum , int axis_x , int axis_y , int give_x ) 
+
+/* ----------------------------------------------------------------------
+ *
+ * 
+ * ---------------------------------------------------------------------- */
+int
+translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+{
+  if ( give_x )
+    {
+      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * ISO_WIDTH / 2 ) ; 
+    }
+  else
+    {
+      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ISO_HEIGHT / 2 ) ) ;
+    }
+}; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+
+/* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
  * might happen to open some windows, pick up some stuff, smash a box,
  * move somewhere or fire a shot or make a weapon swing.
@@ -1615,9 +1650,11 @@ AnalyzePlayersMouseClick ( int PlayerNum )
 	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) )
     {
       Me [ PlayerNum ] . mouse_move_target . x = 
-	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+	translate_pixel_to_map_location ( PlayerNum , ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) , TRUE ) ;
+      // Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
       Me [ PlayerNum ] . mouse_move_target . y = 
-	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+	translate_pixel_to_map_location ( PlayerNum , ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) , FALSE ) ;
+	// Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
       Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
 
       Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;

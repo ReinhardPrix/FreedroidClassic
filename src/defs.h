@@ -264,6 +264,8 @@ enum
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
+#define ISO_WIDTH               128.0
+#define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
 
 /* Scroll- Fenster */
@@ -619,6 +621,9 @@ enum _directions
 // Maximal number of ...
 //
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
+
+
+#define ALL_ISOMETRIC_FLOOR_TILES 5 // A pointer to the surfaces containing the pictures of the
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */

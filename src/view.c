@@ -654,6 +654,110 @@ ShowPureMapBlocksAroundTux ( int mask )
 }; // void ShowPureMapBlocksAroundTux ( int mask )
 
 /* ----------------------------------------------------------------------
+ * This function should assemble the pure floor tiles that will be visible
+ * around the Tux or in the console map view.  Big map inserts and all that
+ * will be handled later...
+ * ---------------------------------------------------------------------- */
+void
+isometric_show_blocks_around_tux ( int mask )
+{
+  int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect TargetRectangle;
+  //  int north_iso_tile_length=sqrt( 64*64 + 47*47 );
+
+  //--------------------
+  // We select the following area to be the map excerpt, that can be
+  // visible at most.  This is nescessare now that the Freedroid RPG is
+  // going to have larger levels and we don't want to do 100x100 cyles
+  // for nothing each frame.
+  //
+  if ( Block_Width == INITIAL_BLOCK_WIDTH )
+    {
+      LineStart = Me [ 0 ] . pos . y - 7 ;
+      LineEnd = Me [ 0 ] . pos . y + 7 ;
+      ColStart = Me [ 0 ] . pos . x - 7 ;
+      ColEnd = Me [ 0 ] . pos . x + 7 ;
+    }
+  else
+    {
+      LineStart = -5 ;
+      LineEnd = DisplayLevel->ylen + 5 ;
+      ColStart = -5 ;
+      ColEnd = DisplayLevel->xlen + 5 ;
+    }
+                         
+  SDL_SetClipRect (Screen , &User_Rect);
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for (col = ColStart; col < ColEnd; col++)
+	{
+	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+	    {
+
+	      /*
+	      TargetRectangle.x = UserCenter_x
+		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_WIDTH / 2 ) +
+   		  ( -Me[0].pos.y+line-0.5 ) * ( - ISO_WIDTH / 2 ) ;
+
+	      TargetRectangle.y = UserCenter_y
+		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_HEIGHT / 2 ) +
+   		  ( -Me[0].pos.y+line-0.5 ) * ( + ISO_HEIGHT / 2 ) ;
+	      */
+	      TargetRectangle.x = translate_map_point_to_screen_pixel ( +col , +line , TRUE ) - ( ISO_WIDTH / 2 ) ;
+	      TargetRectangle.y = translate_map_point_to_screen_pixel ( +col , +line , FALSE ) - ( ISO_HEIGHT / 2 ) ;
+
+	      // TargetRectangle.y = UserCenter_y
+	      // + ( -Me[0].pos.y+line-0.5 )*Block_Height;
+
+	      SDL_BlitSurface( iso_floor_surface_pointer [ MapBrick % 5 ] , NULL ,
+			       Screen, &TargetRectangle);
+	      
+	      /*
+	      if ( ( !RespectVisibilityOnMap ) || MapBlockIsVisible ( col , line ) )
+		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
+				 Screen, &TargetRectangle);
+	      else
+		{
+		  TargetRectangle.w = Block_Width;
+		  TargetRectangle.h = Block_Height;
+		  SDL_FillRect ( Screen , & TargetRectangle , 0 );
+		}
+	      */
+
+
+
+	      //--------------------
+	      // Maybe this was called from the level editor or from some
+	      // other context requireing to add a grid to all map tiles
+	      // that are in the interface area connecting two levels together
+	      //
+	      if ( mask & SHOW_GRID )
+		{
+		  if ( ( ( line ) < curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_north ) ||
+		       ( ( col ) <  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_west ) ||
+		       ( ( line ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen - 1 -
+			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_south ) ||
+		       ( ( col ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen - 1 -
+			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_east ) )
+		    {
+		      TargetRectangle.x = UserCenter_x 
+			+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
+		      TargetRectangle.y = UserCenter_y
+			+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
+		      TargetRectangle.w = Block_Width;
+		      TargetRectangle.h = Block_Height;
+		      MakeGridOnScreen ( &TargetRectangle );
+		    }
+		}
+      
+	    }			// if !INVISIBLE_BRICK 
+	}			// for(col) 
+    }				// for(line) 
+}; // void isometric_show_blocks_around_tux ( int mask )
+
+/* ----------------------------------------------------------------------
  * This function should blit all the map inserts that are currently visible
  * around the Tux.
  * ---------------------------------------------------------------------- */
@@ -679,7 +783,7 @@ ShowBigMapInsertsAroundTux ( int mask )
 	{
 	  fprintf ( stderr , "\n\nDisplayLevel->MapInsertList [ MapInsertNr ] . type: %d.\n" ,
 		    DisplayLevel->MapInsertList [ MapInsertNr ] . type );
-	  GiveStandardErrorMessage ( "AssembleCombatPicture(...)" , "\
+	  GiveStandardErrorMessage ( "ShowBigMapInsertsAroundTux(...)" , "\
 There is a map insert on this level, that is of an illegal type.\n\
 This indicates a severe error in the map insert handling of Freedroid.",
 				     PLEASE_INFORM , IS_FATAL );
@@ -761,7 +865,9 @@ AssembleCombatPicture (int mask)
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
-  ShowPureMapBlocksAroundTux ( mask );
+  isometric_show_blocks_around_tux ( mask );
+
+    // ShowPureMapBlocksAroundTux ( mask );
 
   ShowBigMapInsertsAroundTux ( mask );
 
@@ -1386,13 +1492,13 @@ There was a rotation model type given, that exceeds the number of rotation model
       // bit, cause this rectangle assumes exactly the same size as a map 
       // block and has the origin shifted accordingly.
       //
-      if ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
-	{
-	  TargetRectangle.x += Block_Width / 2 - ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w ) / 2 ;
-	  TargetRectangle.y += Block_Height / 2 - ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h ) / 2 ;
+      //      if ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
+      // {
+	  TargetRectangle.x -= ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w ) / 2 ;
+	  TargetRectangle.y -= ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h ) / 2 ;
 	  TargetRectangle.w = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w;
 	  TargetRectangle.h = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h;
-	}
+	  // }
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
@@ -1462,10 +1568,16 @@ There was a droid type on this level, that does not really exist.",
   //
   if ( x == (-1) ) 
     {
+
+      UpperLeftBlitCorner.x = translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+      UpperLeftBlitCorner.y = translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
+
+      /*
       UpperLeftBlitCorner.x = UserCenter_x + 
 	( ( - Me[0].pos.x + AllEnemys[Enum].pos.x ) ) * Block_Width  - Block_Width / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y + 
 	( ( - Me[0].pos.y + AllEnemys[Enum].pos.y ) ) * Block_Height - Block_Height / 2 ;
+      */
     }
   else
     {
