@@ -533,6 +533,8 @@ HandleCurrentlyActivatedSkill( void )
 
   switch ( Me [ 0 ] . readied_skill )
     {
+    case SPELL_LOOT_CHEST_OR_DEAD_BODY:
+      break;
     case SPELL_TRANSFERMODE:
       if (MouseRightPressed() == 1)
 	Me[0].status = TRANSFERMODE;

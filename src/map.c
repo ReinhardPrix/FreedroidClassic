@@ -618,6 +618,16 @@ IsWallBlock (int block)
     case CODEPANEL_R:
     case CODEPANEL_U:
     case CODEPANEL_D:
+    case CONSUMER_1:
+    case CONSUMER_2:
+    case CONSUMER_3:
+    case CONSUMER_4:
+    case CAVE_V_WALL:
+    case CAVE_H_WALL:
+    case CAVE_CORNER_LU:
+    case CAVE_CORNER_RU:
+    case CAVE_CORNER_LD:
+    case CAVE_CORNER_RD:
       return (TRUE);
     default:
       return (FALSE);

@@ -47,6 +47,47 @@
                           // within a range of eight metres"
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+TeleportToClosestWaypoint ( Enemy ThisRobot )
+{
+  int i;
+  float BestDistance = 10000;
+  float NewDistance;
+  Level ThisLevel = curShip . AllLevels [ ThisRobot->pos.z ] ;
+  int BestWaypoint = ( -1 );
+
+  DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
+  ThisRobot->AdvancedCommand = 0 ;
+  
+  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+    {
+      if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
+      
+      NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
+			   ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
+			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
+			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
+
+      if ( NewDistance <= BestDistance )
+	{
+	  BestDistance = NewDistance;
+	  BestWaypoint = i ;
+	}
+    }
+
+  //--------------------
+  // Now we have found a global minimum.  So we 'teleport' there.
+  //
+  ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
+  ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
+  ThisRobot -> nextwaypoint = BestWaypoint ;
+  ThisRobot -> lastwaypoint = BestWaypoint ;
+
+}; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
  * This function tests, if a Robot can go a direct straigt line from
  * x1 y1 to x2 y2 without hitting a wall or another obstacle.
  * 
@@ -272,7 +313,6 @@ ClearEnemys ( void )
 void
 ShuffleEnemys ( int LevelNum )
 {
-  // int curlevel = CurLevel->levelnum;
   int i, j;
   int nth_enemy;
   int wp_num;
@@ -304,13 +344,21 @@ ShuffleEnemys ( int LevelNum )
       // A special force, that is not completely fixed, needs to be integrated
       // into the waypoint system:  We find the closest waypoint for it and put
       // it simply there.  For simplicity we use sum norm as distance.
-      if ( AllEnemys[i].SpecialForce )
+      //
+      if ( AllEnemys [ i ] . AdvancedCommand == 2 ) TeleportToClosestWaypoint ( &(AllEnemys[i]) );
+      if ( AllEnemys [ i ] . SpecialForce )
 	{
 	  BestWaypoint = 0;
 	  for ( j=0 ; j<MAXWAYPOINTS ; j ++ )
 	    {
-	      if ( abs ( ( ShuffleLevel -> AllWaypoints[j].x) - AllEnemys[i].pos.x ) < 
-		   abs ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) )
+	      if ( fabsf ( ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) *
+			   ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) +
+		           ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) *
+			   ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) ) < 
+		   fabsf ( ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) *
+			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) +
+			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) *
+			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) ) )
 		BestWaypoint = j;
 	    }
 	  AllEnemys[i].nextwaypoint = BestWaypoint;
@@ -399,15 +447,17 @@ SelectNextWaypointClassical( int EnemyNum )
 		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
       else
 	{
-	  DebugPrintf ( 0, "\nvoid MoveThisRobotClassical ( int Enemynum ) : Weird waypoint %d has no connections!\n", nextwp);
-	  Terminate(ERR);
+	  GiveStandardErrorMessage ( "MoveThisRobotClassical(...)" , "\
+There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
+This is an error in the waypoint structure of this level.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
 	}
       
-      /* setze neuen Waypoint */
+      // set new waypoint
       ThisRobot->nextwaypoint = trywp;
-    }			/* if */
+    } // if
 
-}; // void MoveThisRobotClassical ( int Enemynum );
+}; // void SelectNextWaypointClassical( int EnemyNum )
 
 /* ----------------------------------------------------------------------
  * This function checks if the connection between two points is free of
@@ -722,7 +772,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 						   
       
       // search for possible connections from here...
-      DebugPrintf (2, "\nMoveRobotAdvanced: searching for possible connections...");
+      DebugPrintf (2, "\nSelectNextWaypointAdvanced: searching for possible connections...");
 
       // search for the first connection, that doesn't exist any more, so
       // that we know, which connections surely do exist
@@ -730,20 +780,26 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	if ( WpList[nextwp].connections[j] == -1 )
 	  break;
 
+      DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  Found %d possible targets." , j );
+
       // Of course, only if such connections exist at all, we do the
       // following change of target waypoint procedure
       if ( j < MAX_WP_CONNECTIONS )
 	{
 
+	  //--------------------
 	  // At this point, we should check, if there is another waypoint 
 	  // and also if the way there is free of other droids
+	  //
 	  for ( i = 0; i < j ; i++ )
 	    {
 	      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->pos.z , EnemyNum );
 	    }
 
+	  //--------------------
 	  // Now see whether any way point at all is free in that sense
 	  // otherwise we set this robot to waiting and return;
+	  //
 	  for ( i = 0 ; i < j ; i++ )
 	    {
 	      if ( FreeWays[i] ) break;
@@ -751,13 +807,19 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 
 	  if ( i == j )
 	    {
-	      DebugPrintf( 2 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
+	      DebugPrintf( 0 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
 	      ThisRobot->warten = 1;
 	      return;
 	    }
 
+	  //--------------------
 	  // Now that we know, there is some way out of this, we can test around
 	  // and around randomly until we finally find some solution.
+	  //
+	  ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
+	  DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
+ 
+	  /*
 	  SolutionFound=FALSE;
 	  while ( !SolutionFound )
 	    {
@@ -769,17 +831,21 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	      trywp = WpList[nextwp].connections[ TestConnection ];
 	      SolutionFound = TRUE;
 	    }
+	  */
+
 	}
       else
 	{
-	  DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
-	  // Terminate(ERR);
+	  GiveStandardErrorMessage ( "SelectNextWaypointAdvanced(...)" , "\
+There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
+This is an error in the waypoint structure of this level.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
 	}
       
       // set new waypoint...
-      ThisRobot->nextwaypoint = trywp;
-    }			/* if */
-}; // void MoveThisRobotAdvanced ( int EnemyNum )
+      // ThisRobot->nextwaypoint = tryw;p
+    } // if
+}; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
  * This function swaps two enemys in the AllEnemys array.
@@ -1054,47 +1120,6 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
   if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
 
 }; // void InitiateDeathOfEnemy ( Enemy ThisRobot )
-
-/* ----------------------------------------------------------------------
- *
- * ---------------------------------------------------------------------- */
-void
-TeleportToClosestWaypoint ( Enemy ThisRobot )
-{
-  int i;
-  float BestDistance = 10000;
-  float NewDistance;
-  Level ThisLevel = curShip . AllLevels [ ThisRobot->pos.z ] ;
-  int BestWaypoint = ( -1 );
-
-  DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
-  ThisRobot->AdvancedCommand = 0 ;
-  
-  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
-    {
-      if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
-      
-      NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
-			   ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
-			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
-			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
-
-      if ( NewDistance <= BestDistance )
-	{
-	  BestDistance = NewDistance;
-	  BestWaypoint = i ;
-	}
-    }
-
-  //--------------------
-  // Now we have found a global minimum.  So we 'teleport' there.
-  //
-  ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
-  ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
-  ThisRobot -> nextwaypoint = BestWaypoint ;
-  ThisRobot -> lastwaypoint = BestWaypoint ;
-
-}; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
  *

@@ -1991,7 +1991,12 @@ InitNewMissionList ( char *MissionName )
 
   Item_Held_In_Hand = ( -1 );
 
-  ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+  DebugPrintf ( 0 , "\nInitNewMissionList:  Shuffling droids on all %d levels!" , curShip.num_levels );
+  for ( i = 0 ; i < curShip.num_levels ; i ++ )
+    {
+      // ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+      ShuffleEnemys( i ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+    }
 
   //--------------------
   // Now we start those missions, that are to be assigned automatically to the
