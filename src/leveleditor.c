@@ -1796,7 +1796,7 @@ PrintCodepanelInformationOfThisSquare ( Level EditLevel )
 		   EditLevel->CodepanelList[ CodepanelIndex ].Secret_Code );
 	}
 
-      DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
+      DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect );
       break;
     default:
       break;
@@ -1825,7 +1825,7 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
   sprintf( PanelText , "\n Map Label Information: \n label_name=\"%s\"." , 
 	   EditLevel -> labels [ MapLabelIndex ] . label_name );
   
-  DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
+  DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect );
 
 }; // void PrintMapLabelInformationOfThisSquare ( Level EditLevel )
 
@@ -2765,8 +2765,8 @@ LevelEditor(void)
 	  //--------------------
 	  // Now we print out the current status directly onto the window:
 	  //
-	  CenteredPutString ( Screen ,  0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
-	  RightPutString   ( Screen ,  (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
+	  CenteredPutString ( Screen ,  91 + 0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
+	  RightPutString   ( Screen ,  91 + (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
 
 	  if ( OriginWaypoint == ( -1 ) )
 	    {
@@ -2778,14 +2778,14 @@ LevelEditor(void)
 			EditLevel -> AllWaypoints [ OriginWaypoint ] . x , 
 			EditLevel -> AllWaypoints [ OriginWaypoint ] . y );
 	    }
-	  LeftPutString ( Screen , 4 * FontHeight( GetCurrentFont() ), linebuf );
+	  LeftPutString ( Screen , 91 + 4 * FontHeight( GetCurrentFont() ), linebuf );
 
 	  //--------------------
 	  // Now we print out the latest connection operation success or failure...
 	  //
 	  if ( VanishingMessageDisplayTime < 7 )
 	    {
-	      DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
+	      DisplayText ( VanishingMessage ,  1 , 91 + 5 * FontHeight ( GetCurrentFont () ) , NULL );
 	    }
 
 	  ShowLevelEditorTopMenu( Highlight );
@@ -2812,7 +2812,7 @@ LevelEditor(void)
 	    {
 	      while (SPressed());
 	      SetCurrentFont( FPS_Display_BFont );
-	      // CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      // CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
 	      DisplayText ( "\n Please enter comment below: \n" , -1 , -1 , &User_Rect );
 	      SDL_Flip( Screen );
 	      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
@@ -2857,7 +2857,7 @@ LevelEditor(void)
 	  if ( EPressed () )
 	    {
 	      while (EPressed());
-	      CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
 	      SDL_Flip( Screen );
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
@@ -2880,7 +2880,7 @@ LevelEditor(void)
 	  if ( GPressed () )
 	    {
 	      while ( GPressed() );
-	      CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter code of new item:");
+	      CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter code of new item:");
 	      SDL_Flip( Screen );
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &NewItemCode );

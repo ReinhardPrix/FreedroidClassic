@@ -404,6 +404,7 @@ enum _non_player_characters
     PERSON_FRANCIS,
     PERSON_ERNIE,
     PERSON_BENJAMIN,
+    PERSON_SPENCER,
     PERSON_HEA,
     PERSON_BRUCE,
     LAST_PERSON

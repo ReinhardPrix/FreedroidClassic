@@ -1131,6 +1131,7 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERNIE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
 
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
@@ -1165,7 +1166,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
   Activate_Conservative_Frame_Computation();
   TurningStartTime = SDL_GetTicks();
   
-  RightAngle = 180 - ( atan2 ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ,  Me [ 0 ] . pos . x - ChatDroid -> pos . x ) * 180 / M_PI + 90 );
+  RightAngle = 180.0 - ( atan2 ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ,  Me [ 0 ] . pos . x - ChatDroid -> pos . x ) * 180.0 / M_PI + 90 );
 
   //--------------------
   // Now we turn and show the image until both chat partners are
@@ -1188,7 +1189,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
       SDL_Flip ( Screen );
 
       if ( ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MaximumTurningTime ) ||
-	   ( fabsf ( RightAngle - ChatDroid -> current_angle ) < 10 ) )
+	   ( fabsf ( RightAngle - ChatDroid -> current_angle ) < 10.0 ) )
 	{
 	  if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MinimalTurningTime )
 	    TurningDone = TRUE;
