@@ -82,7 +82,6 @@ typedef struct
   int StandardEnemyMessages_On_Off;
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
-  // char* Theme_SubPath;
   char Theme_SubPath[2000];
   int Mission_Log_Visible;
   float Mission_Log_Visible_Time;
@@ -101,9 +100,7 @@ typedef struct
   int terminate_on_missing_speech_sample;
   int show_subtitles_in_dialogs;
   char freedroid_version_string[500];
-
-  int UNUSED_ENTRY_HERE ;
-
+  int skip_light_radius;
   int skill_explanation_screen_visible;
   int enemy_energy_bars_visible;
   int hog_CPU;

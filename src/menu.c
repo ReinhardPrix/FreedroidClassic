@@ -1456,12 +1456,14 @@ PerformanceTweaksOptionsMenu (void)
   char Options0[1000];
   char Options1[1000];
   char Options2[1000];
+  char Options3[1000];
   char* MenuTexts[10];
   enum
     { 
       SET_HOG_CPU_FLAG = 1,
       SET_HIGHLIGHTING_MODE,
       SET_MENU_HANDLING_MODE,
+      SKIP_LIGHT_RADIUS_MODE,
       LEAVE_PERFORMANCE_TWEAKS_MENU 
     };
 
@@ -1477,6 +1479,7 @@ PerformanceTweaksOptionsMenu (void)
       sprintf ( Options0 , "Hog CPU for max. performance: %s", 
 	        GameConfig.hog_CPU ? "YES" : "NO" );
       sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
+      sprintf ( Options3 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
       strcpy ( Options2 , "Menu handling: " );
 
       switch ( GameConfig . menu_mode )
@@ -1498,8 +1501,9 @@ PerformanceTweaksOptionsMenu (void)
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
-      MenuTexts[3]="Back";
-      MenuTexts[4]="";
+      MenuTexts[3]=Options3;
+      MenuTexts[4]="Back";
+      MenuTexts[5]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1527,6 +1531,11 @@ PerformanceTweaksOptionsMenu (void)
 	    GameConfig . menu_mode = MENU_MODE_DOUBLE;
 	  else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
 	    GameConfig . menu_mode = MENU_MODE_FAST;
+	  break;
+
+	case SKIP_LIGHT_RADIUS_MODE:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . skip_light_radius = ! GameConfig . skip_light_radius ;
 	  break;
 
 	case LEAVE_PERFORMANCE_TWEAKS_MENU:

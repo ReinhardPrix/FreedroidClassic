@@ -1312,7 +1312,7 @@ AssembleCombatPicture (int mask)
 	}
     }
 
-  blit_light_radius();
+  if ( ! GameConfig . skip_light_radius ) blit_light_radius();
 
   PutMiscellaneousSpellEffects ( );
       
