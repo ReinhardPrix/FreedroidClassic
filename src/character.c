@@ -415,198 +415,301 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 }; // void AddInfluencerItemSecondaryBonus( item* BonusItem )
 
 /* ----------------------------------------------------------------------
+ * Maybe the influencer has reached a new experience level?
+ * Let's check this...
+ * ---------------------------------------------------------------------- */
+void
+check_for_new_experience_level_reached ( int PlayerNum )
+{
+    int BaseExpRequired = 400;
+
+    Me [ PlayerNum ] . ExpRequired = 
+	BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
+    
+    //--------------------
+    // For display reasons in the experience graph, we also state the experience 
+    // needed for the previous level inside the tux struct.  Therefore all exp/level
+    // calculations are found in this function.
+    //
+    if ( Me [ PlayerNum ] . exp_level > 1 )
+    {
+	Me [ PlayerNum ] . ExpRequired_previously = 
+	    BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 2 ) * log ( 2 ) ) ) ;
+    }
+    else
+	Me [ PlayerNum ] . ExpRequired_previously = 0 ;
+
+    if ( Me [ PlayerNum ] . Experience > Me [ PlayerNum ] . ExpRequired ) 
+    {
+	Me [ PlayerNum ] . exp_level ++ ;
+	Me [ PlayerNum ] . points_to_distribute += 5;
+
+	//--------------------
+	// Like in the Gothic 1 game, maximum life force will now automatically
+	// be increased upon reaching a new character level.
+	//
+	Me [ PlayerNum ] . base_vitality += 3;
+
+	//--------------------
+	// When a droid reaches a new experience level, all health and 
+	// force are restored to full this one time no longer.  Gothic
+	// rulez more than Diablo rulez.
+	//
+	// Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
+	// Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
+
+	//--------------------
+	// Also when a new level is reached, we will display a big message
+	// right over the combat window.
+	//
+	SetNewBigScreenMessage( "Level Gained!" );
+	Takeover_Game_Won_Sound();
+    }
+}; // void check_for_new_experience_level_reached ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+update_all_primary_stats ( int PlayerNum )
+{
+    int i;
+
+    //--------------------
+    // Now we base PRIMARY stats
+    //
+    Me [ PlayerNum ] . Strength = Me [ PlayerNum ] . base_strength;
+    Me [ PlayerNum ] . Dexterity = Me [ PlayerNum ] . base_dexterity;
+    Me [ PlayerNum ] . Magic = Me [ PlayerNum ] . base_magic;
+    Me [ PlayerNum ] . Vitality = Me [ PlayerNum ] . base_vitality;
+    
+    Me [ PlayerNum ] . freezing_melee_targets = 0;
+    Me [ PlayerNum ] . double_ranged_damage = FALSE;
+
+    //--------------------
+    // Now we re-initialize the SKILL LEVELS
+    //
+    for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+    {
+	Me [ PlayerNum ] . SkillLevel [ i ] = Me [ PlayerNum ] . base_skill_level [ i ] ;
+    }
+
+    //--------------------
+    // Now we add all bonuses to the influencers PRIMARY stats
+    //
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . armour_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . weapon_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . drive_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . shield_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . special_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux1_item );
+    AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux2_item );
+}; // void update_all_primary_stats ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * This function computes secondary stats (i.e. chances for success or
+ * getting hit and the like) using ONLY THE PRIMARY STATS.  Bonuses from
+ * current 'magic' modifiers from equipped items will be applied somewhere
+ * else.
+ * ---------------------------------------------------------------------- */
+void
+update_secondary_stats_from_primary_stats ( int PlayerNum )
+{
+    //--------------------
+    // The chance that this player character will score a hit on an enemy
+    //
+    Me [ PlayerNum ] . to_hit = 
+	60 + ( Me [ PlayerNum ] . Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+
+    //--------------------
+    // How many life points can this character aquire currently
+    //
+    Me [ PlayerNum ] . maxenergy = 
+	( Me [ PlayerNum ] . Vitality ) * Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];
+    
+    //--------------------
+    // The maximum mana value computed from the primary stats
+    //
+    Me [ PlayerNum ] . maxmana = 
+	( Me [ PlayerNum ] . Magic )    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
+
+    //--------------------
+    // How long can this character run until he must take a break and
+    // walk a bit
+    //
+    Me [ PlayerNum ] . max_running_power = 
+	( Me [ PlayerNum ] . Strength ) + ( Me [ PlayerNum ] . Dexterity ) + ( Me [ PlayerNum ] . Vitality ) ;
+
+}; // void update_secondary_stats_from_primary_stats ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * Now we compute the possible damage the player character can do.
+ * The damage value of course depends on the weapon type that the
+ * character is using.  And depending on the weapon type (melee or
+ * ranged weapon) some additional attributes will also play a role.
+ * ---------------------------------------------------------------------- */
+void
+update_damage_tux_can_do ( int PlayerNum )
+{
+    if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
+    {
+	if ( ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	{
+	    //--------------------
+	    // Damage modifier in case of MELEE WEAPON is computed:  
+	    // weapon's modifier * (100+Strenth)%
+	    //
+	    Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item.damage * 
+		( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
+	    
+	    Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
+		( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
+	    
+	    //--------------------
+	    // Damage AND damage modifier a modified by additional melee weapon
+	    // skill:  A multiplier is applied!
+	    //
+	    Me [ PlayerNum ] . damage_modifier *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+	    Me [ PlayerNum ] . base_damage     *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+	}
+	else
+	{
+	    //--------------------
+	    // Damage modifier in case of RANGED WEAPON is computed:  
+	    // weapon's modifier * (100+Dexterity)%
+	    //
+	    Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item . damage * 
+		( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
+	    Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
+		( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
+	    
+	    //--------------------
+	    // Damage AND damage modifier a modified by additional ranged weapon
+	    // skill:  A multiplier is applied!
+	    //
+	    Me [ PlayerNum ] . damage_modifier *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+	    Me [ PlayerNum ] . base_damage     *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+	    
+	    //--------------------
+	    // Maybe there is a plugin for double damage with ranged
+	    // weapons present?
+	    //
+	    if ( Me [ PlayerNum ] . double_ranged_damage != 0 )
+	    {
+		Me [ PlayerNum ] . base_damage *= 2;
+		Me [ PlayerNum ] . damage_modifier *= 2;
+	    }
+	}
+    }
+    else
+    {
+	//--------------------
+	// In case of no weapon equipped at all, we initialize
+	// the damage values with some simple numbers.  Currently
+	// strength and dexterity play NO ROLE in weaponless combat.
+	// Maybe that should be changed for something more suitable
+	// at some point...
+	//
+	Me [ PlayerNum ] . base_damage = 1;
+	Me [ PlayerNum ] . damage_modifier = 1;
+    }
+}; // void update_damage_tux_can_do ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+update_tux_armour_class ( int PlayerNum )
+{
+    //--------------------
+    // We initialize the armour class value from the primary stat, 
+    // using the dexterity value (and the 'character class')
+    //
+    Me [ PlayerNum ] . AC = 
+	( Me [ PlayerNum ] . Dexterity - 15 ) * 
+	AC_Gain_Per_Dex_Point [ Me [ PlayerNum ] . character_class ];
+
+    //--------------------
+    // Now we apply the armour bonuses from the currently equipped
+    // items to the total defence value
+    //
+    if ( Me [ PlayerNum ] . armour_item . type != (-1) )
+    {
+	Me [ PlayerNum ] . AC += Me [ PlayerNum ] . armour_item . ac_bonus;
+    }
+    if ( Me [ PlayerNum ] . shield_item.type != (-1) )
+    {
+	Me [ PlayerNum ] . AC += Me [ PlayerNum ] . shield_item . ac_bonus;
+    }
+    if ( Me [ PlayerNum ] . special_item.type != (-1) )
+    {
+	Me [ PlayerNum ] . AC += Me [ PlayerNum ] . special_item . ac_bonus;
+    }
+}; // void update_tux_armour_class ( int PlayerNum )
+
+
+/* ----------------------------------------------------------------------
  * This function should re-compute all character stats according to the
  * currently equipped items and currenly distributed stats points.
  * ---------------------------------------------------------------------- */
 void 
 UpdateAllCharacterStats ( int PlayerNum )
 {
-  // int BaseExpRequired = 2000;
-  int BaseExpRequired = 500;
-  int i;
+    //--------------------
+    // Maybe the influencer has reached a new experience level?
+    // Let's check this...
+    // 
+    check_for_new_experience_level_reached ( PlayerNum );
 
-  //--------------------
-  // Maybe the influencer has reached a new experience level?
-  // Let's check this.
-  // 
-  Me [ PlayerNum ] . ExpRequired = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
+    //--------------------
+    // The primary status must be computed/updated first, because
+    // the secondary status (chances and the like) will depend on
+    // them...
+    //
+    update_all_primary_stats ( PlayerNum );
 
-  //--------------------
-  // For display reasons in the experience graph, we also state the experience 
-  // needed for the previous level inside the tux struct.  Therefore all exp/level
-  // calculations are found in this function.
-  //
-  if ( Me [ PlayerNum ] . exp_level > 1 )
-    Me [ PlayerNum ] . ExpRequired_previously = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 2 ) * log ( 2 ) ) ) ;
-  else
-    Me [ PlayerNum ] . ExpRequired_previously = 0 ;
+    //--------------------
+    // At this point we know, that the primary stats of the influencer
+    // have been fully computed.  So that means, that finally we can compute
+    // all base SECONDARY stats, that are dependent upon the influencer primary
+    // stats.  Once we are done with that, the modifiers to the secondary
+    // stats can be applied as well.
+    //
+    update_secondary_stats_from_primary_stats ( PlayerNum );
 
-  if ( Me [ PlayerNum ] . Experience > Me [ PlayerNum ] . ExpRequired ) 
-    {
-      Me [ PlayerNum ] . exp_level ++ ;
-      Me [ PlayerNum ] . points_to_distribute += 5;
+    //--------------------
+    // Now we compute the possible damage the player character can do.
+    // The damage value of course depends on the weapon type that the
+    // character is using.  And depending on the weapon type (melee or
+    // ranged weapon) some additional attributes will also play a role.
+    //
+    update_damage_tux_can_do ( PlayerNum );
 
-      //--------------------
-      // Like in the Gothic 1 game, maximum life force will now automatically
-      // be increased upon reaching a new character level.
-      //
-      Me [ PlayerNum ] .base_vitality += 3;
+    //--------------------
+    // Update tux armour class
+    //
+    update_tux_armour_class ( PlayerNum );
 
-      //--------------------
-      // When a droid reaches a new experience level, all health and 
-      // force are restored to full this one time no longer.  Gothic
-      // rulez more than Diablo rulez.
-      //
-      // Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
-      // Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
+    //--------------------
+    // So at this point we can finally apply all the modifiers to the influencers
+    // SECONDARY stats due to 'magical' items and spells and the like
+    //
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . armour_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . weapon_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . drive_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . shield_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . special_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . aux1_item );
+    AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . aux2_item );
 
-      //--------------------
-      // Also when a new level is reached, we will display a big message
-      // right over the combat window.
-      //
-      SetNewBigScreenMessage( "Level Gained!" );
-      Takeover_Game_Won_Sound();
-    }
-
-  //--------------------
-  // Now we base PRIMARY stats
-  //
-  Me [ PlayerNum ] . Strength = Me [ PlayerNum ] . base_strength;
-  Me [ PlayerNum ] . Dexterity = Me [ PlayerNum ] . base_dexterity;
-  Me [ PlayerNum ] . Magic = Me [ PlayerNum ] . base_magic;
-  Me [ PlayerNum ] . Vitality = Me [ PlayerNum ] . base_vitality;
-
-  Me [ PlayerNum ] . freezing_melee_targets = 0;
-  Me [ PlayerNum ] . double_ranged_damage = FALSE;
-  // Me [ PlayerNum ] . spell_level_bonus = 0 ;
-
-  //--------------------
-  // Now we re-initialize the SKILL LEVELS
-  //
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
-    {
-      Me [ PlayerNum ] . SkillLevel [ i ] = Me [ PlayerNum ] . base_skill_level [ i ] ;
-    }
-
-  //--------------------
-  // Now we add all bonuses to the influencers PRIMARY stats
-  //
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .armour_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .weapon_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .drive_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .shield_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .special_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .aux1_item );
-  AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] .aux2_item );
-
-  //--------------------
-  // At this point we know, that the primary stats of the influencer
-  // have been fully computed.  So that means, that finally we can compute
-  // all base SECONDARY stats, that are dependent upon the influencer primary
-  // stats.  Once we are done with that, the modifiers to the secondary
-  // stats can be applied as well.
-  //
-  Me [ PlayerNum ] . to_hit = 60 + ( Me [ PlayerNum ] . Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
-
-  //  Me [ PlayerNum ] . maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
-  Me [ PlayerNum ] . maxenergy = (Me [ PlayerNum ] . Vitality) * Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];
-
-  // Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * MANA_GAIN_PER_MAGIC_POINT;
-  Me [ PlayerNum ] . maxmana   = (Me [ PlayerNum ] . Magic)    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
-
-  Me [ PlayerNum ] . max_running_power = ( Me [ PlayerNum ] . Strength ) + ( Me [ PlayerNum ] . Dexterity ) + ( Me [ PlayerNum ] . Vitality ) ;
-
-  // This includes damage done as well...
-  if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
-    {
-      if ( ItemMap[ Me [ PlayerNum ] . weapon_item.type ] . item_gun_angle_change != 0 )
-	{
-	  Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item.damage * 
-	    ( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
-
-	  //--------------------
-	  // Damage modifier is computed:  
-	  // WEAPON's modifier * (100+Strenth)%
-	  //
-	  Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
-	    ( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
-
-	  //--------------------
-	  // Damage AND damage modifier a modified by additional melee weapon
-	  // skill:  A multiplier is applied!
-	  //
-	  Me [ PlayerNum ] . damage_modifier *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
-	  Me [ PlayerNum ] . base_damage     *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
-
-	}
-      else
-	{
-
-	  //--------------------
-	  // Damage modifier is computed:  
-	  // WEAPON's modifier * (100+Dexterity)%
-	  //
-	  Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item . damage * 
-	    ( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
-	  Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
-	    ( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
-
-	  //--------------------
-	  // Damage AND damage modifier a modified by additional ranged weapon
-	  // skill:  A multiplier is applied!
-	  //
-	  Me [ PlayerNum ] . damage_modifier *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
-	  Me [ PlayerNum ] . base_damage     *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
-
-	  //--------------------
-	  // Maybe there is a plugin for double damage present ?
-	  //
-	  if ( Me [ PlayerNum ] . double_ranged_damage != 0 )
-	    {
-	      Me [ PlayerNum ] . base_damage *= 2;
-	      Me [ PlayerNum ] . damage_modifier *= 2;
-	    }
-
-	}
-    }
-  else
-    {
-      Me [ PlayerNum ] . base_damage = 1;
-      Me [ PlayerNum ] . damage_modifier = 1;
-    }
-  // ... and also armour class
-  Me [ PlayerNum ] . AC = ( Me [ PlayerNum ] . Dexterity - 15 ) * AC_Gain_Per_Dex_Point [ Me [ PlayerNum ] . character_class ];
-  if ( Me [ PlayerNum ] . armour_item . type != (-1) )
-    {
-      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . armour_item.ac_bonus;
-    }
-  if ( Me [ PlayerNum ] . shield_item.type != (-1) )
-    {
-      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . shield_item.ac_bonus;
-    }
-  if ( Me [ PlayerNum ] . special_item.type != (-1) )
-    {
-      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . special_item.ac_bonus;
-    }
-
-  //--------------------
-  // So at this point we can finally apply all the modifiers to the influencers
-  // SECONDARY stats due to 'magical' items and spells and the like
-  //
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .armour_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .weapon_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .drive_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .shield_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .special_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux1_item );
-  AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux2_item );
-
-  //--------------------
-  // Now that the defence stat is computed, we can compute the chance, that
-  // a randomly chosen lv. 1 bot will hit the Tux in any given strike...
-  //
-  Me [ PlayerNum ] . lv_1_bot_will_hit_percentage =
-    ( int ) ( exp ( - 0.03 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 );
+    //--------------------
+    // Now that the defence stat is computed, we can compute the chance, that
+    // a randomly chosen lv. 1 bot will hit the Tux in any given strike...
+    //
+    Me [ PlayerNum ] . lv_1_bot_will_hit_percentage =
+	( int ) ( exp ( - 0.03 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 ) - 37 ;
 
 }; // void UpdateAllCharacterStats ( void )
 
