@@ -80,8 +80,6 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define HACKING_SKILL_X 130
 #define HACKING_SKILL_Y 421
 
-SDL_Rect CharacterRect;
-
 /* ----------------------------------------------------------------------
  *
  *
@@ -89,183 +87,182 @@ SDL_Rect CharacterRect;
 void 
 InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 {
-  int i;
-  int MissionTargetIndex;
-
-  //--------------------
-  // We set the coordinates to the generic starting point for all players....
-  //
-  Me [ PlayerNum ] . pos. x = 2 ;
-  Me [ PlayerNum ] . pos. y = 3 ;
-  Me [ PlayerNum ] . pos. z = 0 ;
-
-  //--------------------
-  // At first, we clear out any inventory items, that may still be equipped
-  // for this one character.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    int i;
+    int MissionTargetIndex;
+    
+    //--------------------
+    // We set the coordinates to the generic starting point for all players....
+    //
+    Me [ PlayerNum ] . pos. x = 2 ;
+    Me [ PlayerNum ] . pos. y = 3 ;
+    Me [ PlayerNum ] . pos. z = 0 ;
+    
+    //--------------------
+    // At first, we clear out any inventory items, that may still be equipped
+    // for this one character.
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Me [ PlayerNum ] . Inventory [ i ] . type = -1 ;
-      Me [ PlayerNum ] . Inventory [ i ] . inventory_position.x = -1 ;
-      Me [ PlayerNum ] . Inventory [ i ] . inventory_position.y = -1 ; 
-      Me [ PlayerNum ] . Inventory [ i ] . currently_held_in_hand = FALSE ; 
+	Me [ PlayerNum ] . Inventory [ i ] . type = -1 ;
+	Me [ PlayerNum ] . Inventory [ i ] . inventory_position.x = -1 ;
+	Me [ PlayerNum ] . Inventory [ i ] . inventory_position.y = -1 ; 
+	Me [ PlayerNum ] . Inventory [ i ] . currently_held_in_hand = FALSE ; 
     }
-
-  Me [ PlayerNum ] .weapon_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .drive_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .armour_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .shield_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .aux1_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .aux2_item.type = ( -1 ) ;
-  Me [ PlayerNum ] .special_item.type = ( -1 ) ;
-
-  Me [ PlayerNum ] .weapon_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .drive_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .armour_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .shield_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .aux1_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .aux2_item.prefix_code = ( -1 ) ;
-  Me [ PlayerNum ] .special_item.prefix_code = ( -1 ) ;
-
-  Me [ PlayerNum ] .weapon_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .drive_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .armour_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .shield_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .aux1_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .aux2_item.suffix_code = ( -1 ) ;
-  Me [ PlayerNum ] .special_item.suffix_code = ( -1 ) ;
-
-  Me [ PlayerNum ] .type = DRUID001;
-  Me [ PlayerNum ] .speed.x = 0;
-  Me [ PlayerNum ] .speed.y = 0;
-  Me [ PlayerNum ] .status = MOBILE;
-  Me [ PlayerNum ] .phase = 0;
-  Me [ PlayerNum ] .MissionTimeElapsed=0;
-  Me [ PlayerNum ] .Current_Victim_Resistance_Factor=1;
-  Me [ PlayerNum ] .FramesOnThisLevel=0;
-  Me [ PlayerNum ] .weapon_swing_time = (-1);  // currently not swinging this means...
-  Me [ PlayerNum ] .got_hit_time = (-1);  // currently not stunned and needing time to recover...
-
-  Me [ PlayerNum ] .points_to_distribute = 0;
-  Me [ PlayerNum ] .ExpRequired = 1500;
-  for ( i = 0 ; i < 1000 ; i ++ ) Me [ PlayerNum ] .KillRecord[ i ] = 0;
-  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me [ PlayerNum ] .HaveBeenToLevel [ i ] = FALSE ;
-  Me [ PlayerNum ] .exp_level = 1;
-  Me [ PlayerNum ] .Gold = 100;
-
-  switch ( CharacterClass ) 
+    
+    Me [ PlayerNum ] .weapon_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .drive_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .armour_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .shield_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .aux1_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .aux2_item.type = ( -1 ) ;
+    Me [ PlayerNum ] .special_item.type = ( -1 ) ;
+    
+    Me [ PlayerNum ] .weapon_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .drive_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .armour_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .shield_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .aux1_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .aux2_item.prefix_code = ( -1 ) ;
+    Me [ PlayerNum ] .special_item.prefix_code = ( -1 ) ;
+    
+    Me [ PlayerNum ] .weapon_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .drive_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .armour_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .shield_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .aux1_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .aux2_item.suffix_code = ( -1 ) ;
+    Me [ PlayerNum ] .special_item.suffix_code = ( -1 ) ;
+    
+    Me [ PlayerNum ] .type = DRUID001;
+    Me [ PlayerNum ] .speed.x = 0;
+    Me [ PlayerNum ] .speed.y = 0;
+    Me [ PlayerNum ] .status = MOBILE;
+    Me [ PlayerNum ] .phase = 0;
+    Me [ PlayerNum ] .MissionTimeElapsed=0;
+    Me [ PlayerNum ] .Current_Victim_Resistance_Factor=1;
+    Me [ PlayerNum ] .FramesOnThisLevel=0;
+    Me [ PlayerNum ] .weapon_swing_time = (-1);  // currently not swinging this means...
+    Me [ PlayerNum ] .got_hit_time = (-1);  // currently not stunned and needing time to recover...
+    
+    Me [ PlayerNum ] .points_to_distribute = 0;
+    Me [ PlayerNum ] .ExpRequired = 1500;
+    for ( i = 0 ; i < 1000 ; i ++ ) Me [ PlayerNum ] .KillRecord[ i ] = 0;
+    for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me [ PlayerNum ] .HaveBeenToLevel [ i ] = FALSE ;
+    Me [ PlayerNum ] .exp_level = 1;
+    Me [ PlayerNum ] .Gold = 100;
+    
+    switch ( CharacterClass ) 
     {
-    case WAR_BOT:
-      Me [ PlayerNum ] .character_class = WAR_BOT;
-      Me [ PlayerNum ] .base_vitality = 25;
-      Me [ PlayerNum ] .base_strength = 30;
-      Me [ PlayerNum ] .base_dexterity = 25;
-      Me [ PlayerNum ] .base_magic = 10;
-      
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD ;
-      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
-      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_BUCKLER;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 2;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = 0;
-      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      Me [ PlayerNum ] .Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-      Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.x = 1;
-      Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 3 ] , TRUE , 0 );
-      break;
-
-    case SNIPER_BOT: 
-      Me [ PlayerNum ] .character_class = SNIPER_BOT;
-      Me [ PlayerNum ] .base_vitality = 20;
-      Me [ PlayerNum ] .base_strength = 25;
-      Me [ PlayerNum ] .base_dexterity = 35;
-      Me [ PlayerNum ] .base_magic = 20;
-	  
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
-      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_BOW;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
-      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
-      break;
-
-    case MIND_BOT: 
-      Me [ PlayerNum ] .character_class = MIND_BOT;
-      Me [ PlayerNum ] .base_vitality = 15;
-      Me [ PlayerNum ] .base_strength = 15;
-      Me [ PlayerNum ] .base_dexterity = 20;
-      Me [ PlayerNum ] .base_magic = 35;
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
-      
-      Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_STAFF;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
-      Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
-      Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
-      Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-      FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
-      break;
-    default: 
-      DebugPrintf ( 0 , "\nERROR!! UNKNOWN CHARACTER CLASS REQUESTED!!! Terminating... " );
-      Terminate ( ERR );
-      break;
+	case WAR_BOT:
+	    Me [ PlayerNum ] .character_class = WAR_BOT;
+	    Me [ PlayerNum ] .base_vitality = 25;
+	    Me [ PlayerNum ] .base_strength = 30;
+	    Me [ PlayerNum ] .base_dexterity = 25;
+	    Me [ PlayerNum ] .base_magic = 10;
+	    
+	    Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD ;
+	    Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+	    Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_BUCKLER;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 2;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = 0;
+	    Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    Me [ PlayerNum ] .Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+	    Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.x = 1;
+	    Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 3 ] , TRUE , 0 );
+	    break;
+	    
+	case SNIPER_BOT: 
+	    Me [ PlayerNum ] .character_class = SNIPER_BOT;
+	    Me [ PlayerNum ] .base_vitality = 20;
+	    Me [ PlayerNum ] .base_strength = 25;
+	    Me [ PlayerNum ] .base_dexterity = 35;
+	    Me [ PlayerNum ] .base_magic = 20;
+	    
+	    Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
+	    Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_BOW;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+	    Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+	    break;
+	    
+	case MIND_BOT: 
+	    Me [ PlayerNum ] .character_class = MIND_BOT;
+	    Me [ PlayerNum ] .base_vitality = 15;
+	    Me [ PlayerNum ] .base_strength = 15;
+	    Me [ PlayerNum ] .base_dexterity = 20;
+	    Me [ PlayerNum ] .base_magic = 35;
+	    Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
+	    
+	    Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_STAFF;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
+	    Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.x = 0;
+	    Me [ PlayerNum ] .Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
+	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+	    break;
+	default: 
+	    DebugPrintf ( 0 , "\nERROR!! UNKNOWN CHARACTER CLASS REQUESTED!!! Terminating... " );
+	    Terminate ( ERR );
+	    break;
     }
-
-  UpdateAllCharacterStats( PlayerNum );
-
-  Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy;
-  Me [ PlayerNum ] .mana = Me [ PlayerNum ] .maxmana;
-  DebugPrintf( 1 , "\n Me [ PlayerNum ] .energy : %f . " , Me [ PlayerNum ] .energy );
-  Me [ PlayerNum ] .health = Me [ PlayerNum ] .energy;	/* start with max. health */
-
-  Me [ PlayerNum ] .weapon_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .armour_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .shield_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .special_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .drive_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .aux1_item.currently_held_in_hand = FALSE;
-  Me [ PlayerNum ] .aux2_item.currently_held_in_hand = FALSE;
-
-  FillInItemProperties ( & ( Me [ PlayerNum ] .weapon_item ) , TRUE , 0 );
-  FillInItemProperties ( & ( Me [ PlayerNum ] .drive_item ) , TRUE , 0 );
-
-
-  Item_Held_In_Hand = ( -1 );
-
-  ShuffleEnemys( Me [ PlayerNum ] .pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
-
-  //--------------------
-  // Now we start those missions, that are to be assigned automatically to the
-  // player at game start
-  //
-  for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    
+    UpdateAllCharacterStats( PlayerNum );
+    
+    Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy;
+    Me [ PlayerNum ] .mana = Me [ PlayerNum ] .maxmana;
+    DebugPrintf( 1 , "\n Me [ PlayerNum ] .energy : %f . " , Me [ PlayerNum ] .energy );
+    Me [ PlayerNum ] .health = Me [ PlayerNum ] .energy;	/* start with max. health */
+    
+    Me [ PlayerNum ] .weapon_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .armour_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .shield_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .special_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .drive_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .aux1_item.currently_held_in_hand = FALSE;
+    Me [ PlayerNum ] .aux2_item.currently_held_in_hand = FALSE;
+    
+    FillInItemProperties ( & ( Me [ PlayerNum ] .weapon_item ) , TRUE , 0 );
+    FillInItemProperties ( & ( Me [ PlayerNum ] .drive_item ) , TRUE , 0 );
+    
+    
+    Item_Held_In_Hand = ( -1 );
+    
+    ShuffleEnemys( Me [ PlayerNum ] .pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+    
+    //--------------------
+    // Now we start those missions, that are to be assigned automatically to the
+    // player at game start
+    //
+    for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
     {
-      if ( Me [ PlayerNum ] .AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
+	if ( Me [ PlayerNum ] .AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
 	{
-	  AssignMission( MissionTargetIndex );
+	    AssignMission( MissionTargetIndex );
 	}
     }
-
-  
+    
 }; // void InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 
 /* ----------------------------------------------------------------------
@@ -323,11 +320,11 @@ DisplayButtons( void )
 int
 CursorIsOnStrButton( int x , int y )
 {
-  if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
-  if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CharacterRect.y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
-  return ( TRUE );
+    if ( x > CharacterRect.x + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
+    if ( x < CharacterRect.x + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
+    if ( y > CharacterRect.y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
+    if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
+    return ( TRUE );
 }; // int CursorIsOnStrButton( int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -782,10 +779,10 @@ ShowCharacterScreen ( void )
     // We define the right side of the user screen as the rectangle
     // for our inventory screen.
     //
-    CharacterRect.x = CHARACTERRECT_X;
-    CharacterRect.y = 0; 
-    CharacterRect.w = CHARACTERRECT_W;
-    CharacterRect.h = CHARACTERRECT_H;
+    CharacterRect . x = GameConfig . screen_width - CHARACTERRECT_W;
+    CharacterRect . y = 0; 
+    CharacterRect . w = CHARACTERRECT_W;
+    CharacterRect . h = CHARACTERRECT_H;
     
     blit_special_background ( CHARACTER_SCREEN_BACKGROUND_CODE );
     
@@ -937,17 +934,29 @@ ShowCharacterScreen ( void )
 	{
 	    Me[0].base_strength++;
 	    Me[0].points_to_distribute--;
+	    if ( Me[0].points_to_distribute <= 0 )
+	    {
+		while ( SpacePressed() );
+	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	    Me[0].base_dexterity++;
 	    Me[0].points_to_distribute--;
+	    if ( Me[0].points_to_distribute <= 0 )
+	    {
+		while ( SpacePressed() );
+	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	    Me[0].base_magic++;
 	    Me[0].points_to_distribute--;
 	    Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
+	    if ( Me[0].points_to_distribute <= 0 )
+	    {
+		while ( SpacePressed() );
+	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
@@ -957,6 +966,10 @@ ShowCharacterScreen ( void )
 	    // Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
 	    Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
 	    Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
+	    if ( Me[0].points_to_distribute <= 0 )
+	    {
+		while ( SpacePressed() );
+	    }
 	}
 	
 	//--------------------

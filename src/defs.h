@@ -641,8 +641,8 @@ enum
 #define BUTTON_WIDTH 35
 #define BUTTON_HEIGHT 19
 
-#define CHARACTERRECT_X (GameConfig . screen_width/2)
-#define CHARACTERRECT_W (GameConfig . screen_width/2)
+#define CHARACTERRECT_X (GameConfig . screen_width-640/2)
+#define CHARACTERRECT_W (640/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define EL_BLOCK_LEN		8

@@ -63,11 +63,6 @@
 #define AC_X 260
 #define AC_Y 171
 
-#define CHARACTERRECT_X (GameConfig . screen_width/2)
-// #define CHARACTERRECT_Y (User_Rect.y)
-#define CHARACTERRECT_W (GameConfig . screen_width/2)
-#define CHARACTERRECT_H (User_Rect.h)
-
 #define INV_BUTTON_X 600
 #define INV_BUTTON_Y 400
 #define CHA_BUTTON_X 600
@@ -905,37 +900,37 @@ Usually this error is not severe.",
 int
 CursorIsOnWhichSkillButton( int x , int y )
 {
-  //--------------------
-  // First we check if the cursor is in at least horizontally
-  // in the row of the skill items
-  //
-  if ( x > SkillScreenRect.x + 16 + 64 ) return ( -1 );
-  if ( x < SkillScreenRect.x + 16      ) return ( -1 );
-
-  //--------------------
-  // Now we can check on which skill rectangle exactly the cursor
-  // is hovering, since we know that it is hitting, horizontally
-  // at least, the row of skill icons.
-  //
-  if ( y < SkillScreenRect.y + 16 + 0 * 64      ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 1 * 64      ) return (  0 );
-
-  if ( y < SkillScreenRect.y + 16 + 1 * 64 + 16 ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 2 * 64 + 16 ) return (  1 );
-
-  if ( y < SkillScreenRect.y + 16 + 2 * 64 + 2 * 16 ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 3 * 64 + 2 * 16 ) return (  2 );
-
-  if ( y < SkillScreenRect.y + 16 + 3 * 64 + 3 * 16 ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 4 * 64 + 3 * 16 ) return (  3 );
-
-  if ( y < SkillScreenRect.y + 16 + 4 * 64 + 4 * 16 ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 5 * 64 + 4 * 16 ) return (  4 );
-
-  // if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
-  // if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
-
-  return ( -1 );
+    //--------------------
+    // First we check if the cursor is in at least horizontally
+    // in the row of the skill items
+    //
+    if ( x > SkillScreenRect.x + 16 + 64 ) return ( -1 );
+    if ( x < SkillScreenRect.x + 16      ) return ( -1 );
+    
+    //--------------------
+    // Now we can check on which skill rectangle exactly the cursor
+    // is hovering, since we know that it is hitting, horizontally
+    // at least, the row of skill icons.
+    //
+    if ( y < SkillScreenRect.y + 16 + 0 * 64      ) return ( -1 );
+    if ( y < SkillScreenRect.y + 16 + 1 * 64      ) return (  0 );
+    
+    if ( y < SkillScreenRect.y + 16 + 1 * 64 + 16 ) return ( -1 );
+    if ( y < SkillScreenRect.y + 16 + 2 * 64 + 16 ) return (  1 );
+    
+    if ( y < SkillScreenRect.y + 16 + 2 * 64 + 2 * 16 ) return ( -1 );
+    if ( y < SkillScreenRect.y + 16 + 3 * 64 + 2 * 16 ) return (  2 );
+    
+    if ( y < SkillScreenRect.y + 16 + 3 * 64 + 3 * 16 ) return ( -1 );
+    if ( y < SkillScreenRect.y + 16 + 4 * 64 + 3 * 16 ) return (  3 );
+    
+    if ( y < SkillScreenRect.y + 16 + 4 * 64 + 4 * 16 ) return ( -1 );
+    if ( y < SkillScreenRect.y + 16 + 5 * 64 + 4 * 16 ) return (  4 );
+    
+    // if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
+    // if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
+    
+    return ( -1 );
 }; // int CursorIsOnWhichSkillButton( int x , int y )
 
 
@@ -947,29 +942,29 @@ CursorIsOnWhichSkillButton( int x , int y )
 int
 CursorIsOnWhichSpellPageButton( int x , int y )
 {
-  int i;
-
-  //--------------------
-  // First we check if the cursor is in at least horizontally
-  // and vertically in the line with the spell level buttons.
-  //
-  if ( x > SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 300 ) return ( -1 );
-  if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X       ) return ( -1 );
-  if ( y > SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y + 16  ) return ( -1 );
-  if ( y < SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y       ) return ( -1 );
-
-  //--------------------
-  // Now we can check on which skill rectangle exactly the cursor
-  // is hovering, since we know that it is hitting, horizontally
-  // at least, the row of skill icons.
-  //
-  for ( i = 0 ; i < NUMBER_OF_SKILL_PAGES ; i ++ )
+    int i;
+    
+    //--------------------
+    // First we check if the cursor is in at least horizontally
+    // and vertically in the line with the spell level buttons.
+    //
+    if ( x > SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 300 ) return ( -1 );
+    if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X       ) return ( -1 );
+    if ( y > SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y + 16  ) return ( -1 );
+    if ( y < SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y       ) return ( -1 );
+    
+    //--------------------
+    // Now we can check on which skill rectangle exactly the cursor
+    // is hovering, since we know that it is hitting, horizontally
+    // at least, the row of skill icons.
+    //
+    for ( i = 0 ; i < NUMBER_OF_SKILL_PAGES ; i ++ )
     {
-      if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + ( i + 1 ) * SPELL_LEVEL_BUTTON_WIDTH ) 
-	return i;
+	if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + ( i + 1 ) * SPELL_LEVEL_BUTTON_WIDTH ) 
+	    return i;
     }
-
-  return ( -1 );
+    
+    return ( -1 );
 }; // int CursorIsOnWhichSpellLevelButton( int x , int y )
 
 /* ---------------------------------------------------------------------- 
@@ -1098,15 +1093,29 @@ ShowSkillsScreen ( void )
     SDL_Rect SpellLevelRect;
     int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
     int SkillOfThisSlot;
+    point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] ;
+/*
     point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] =
 	{ { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
 	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
 	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
 	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 3 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } , 
 	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 4 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } };
-    
+*/
+  
     DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
     
+    SkillScreenRect . x = CHARACTERRECT_X;
+    SkillScreenRect . y = 0; 
+    SkillScreenRect . w = CHARACTERRECT_W;
+    SkillScreenRect . h = CHARACTERRECT_H;
+    
+    for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_PAGE ; i ++ )
+    {
+	SkillRectLocations [ i ] . x = SkillScreenRect . x + 17 ;
+	SkillRectLocations [ i ] . y = SkillScreenRect.y + FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + 3 ;
+    }
+
     //--------------------
     // If the log is not set to visible right now, we do not need to 
     // do anything more, but to restore the usual user rectangle size
@@ -1126,11 +1135,6 @@ ShowSkillsScreen ( void )
     //
     CurPos.x = GetMousePos_x()  ;
     CurPos.y = GetMousePos_y()  ;
-    
-    SkillScreenRect.x = CHARACTERRECT_X;
-    SkillScreenRect.y = 0; 
-    SkillScreenRect.w = CHARACTERRECT_W;
-    SkillScreenRect.h = CHARACTERRECT_H;
     
     //--------------------
     // We will draw only those skills to the skills inventory, that are
