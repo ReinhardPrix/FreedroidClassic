@@ -46,9 +46,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <time.h>
-#include <vga.h>
-#include <vgagl.h>
-#include <vgakeyboard.h>
+// #include <vga.h>
+// #include <vgagl.h>
+// #include <vgakeyboard.h>
 #include <sys/stat.h>
 #include <getopt.h>
 

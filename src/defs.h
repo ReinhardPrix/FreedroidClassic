@@ -123,6 +123,7 @@ enum _sounds
 #define ELEMENTS_FILE	"./graphics/to_elem.lbm"
 */
 
+/*
 #define PALBILD_PCX                "../graphics/palbild.pcx"
 #define BLOCKBILD1_PCX             "../graphics/block.pcx"
 #define BLOCKBILD2_PCX             ""
@@ -141,8 +142,33 @@ enum _sounds
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.pcx"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.pcx"
 #define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.pcx"
-/* Takeover-game graphics elements: */
+//
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
+*/
+
+#define PALBILD_PCX                "../graphics/palbild.bmp"
+#define BLOCKBILD1_PCX             "../graphics/block.bmp"
+#define BLOCKBILD2_PCX             ""
+#define TITELBILD1_PCX             "../graphics/newtitle.bmp"
+#define RAHMENBILD1_PCX            "../graphics/rahmen.bmp"
+#define PARAPLUSRAHMENBILD_PCX     "../graphics/plusrah1.bmp"
+#define BLASTBILD_PCX              "../graphics/blast.bmp"
+#define BULLETBILD_PCX             "../graphics/bullet.bmp"
+#define INFLUENCEBILD_PCX          "../graphics/influ.bmp"
+#define DIGITBILD_PCX              "../graphics/digits.bmp"
+#define ENEMYBILD_PCX              "../graphics/enemy.bmp"
+#define SEITENANSICHTBILD_PCX      "../graphics/ship.bmp"
+#define EL_BLOCKS_FILE_PCX         "../graphics/ship2.bmp"
+#define FONTBILD_PCX               "../graphics/parafont.bmp"
+#define CONSOLENBILD_PCX           "../graphics/console.bmp"
+#define ROBOTPICTUREBILD_PCX       "../graphics/robots.bmp"
+#define SHIELDPICTUREBILD_PCX      "../graphics/shield.bmp"
+#define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.bmp"
+//
+#define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
+
+
+
 
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
 #define SHIPNAME                   "../map/ship1"

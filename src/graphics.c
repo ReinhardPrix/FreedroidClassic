@@ -40,8 +40,12 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <vga.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 #include <vgakeyboard.h>
+
+#include "SDL.h"
+// #include "SDL_mixer.h"
+#include "SDL_image.h"
 
 
 #include "defs.h"
@@ -59,17 +63,23 @@ void
 MakeGridOnScreen(void){
   int x,y;
 
-  vga_setcolor(0);
+  // vga_setcolor(0);
+
+  Lock_SDL_Screen();
+
   for (y=0; y<SCREENHOEHE; y++) 
     {
       for (x=0; x<SCREENBREITE; x++) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {
-	      vga_drawpixel(x,y);
+	      putpixel(screen, x, y, 0);
 	    }
 	}
     }
+
+  Unlock_SDL_Screen();
+
 } // void MakeGridOnSchreen(void)
 
 unsigned char *MemSearch (unsigned char *, unsigned char *, unsigned char *);
@@ -146,21 +156,105 @@ readpcx (FILE * file, char *palette, unsigned short int *length,
 
   DebugPrintf
     ("\nvoid* readpcx(...):  UNREACHABLE: end of function reached....");
-}				// void *readpcx(...)
+
+} // void *readpcx(...)
+
+
+SDL_Surface *LoadImage(char *datafile, int transparent)
+{
+  SDL_Surface *image, *surface;
+  
+  image = IMG_Load(datafile);
+  if ( image == NULL ) {
+    fprintf(stderr, "Couldn't load image %s: %s\n",
+	    datafile, IMG_GetError());
+    return(NULL);
+  }
+  if ( transparent ) {
+    /* Assuming 8-bit BMP image */
+    SDL_SetColorKey(image, (SDL_SRCCOLORKEY|SDL_RLEACCEL),
+		    *(Uint8 *)image->pixels);
+  }
+  surface = SDL_DisplayFormat(image);
+  SDL_FreeSurface(image);
+  return(surface);
+}
+
+void display_bmp(char *file_name)
+{
+    SDL_Surface *image;
+
+    /* Load the BMP file into a surface */
+    image = SDL_LoadBMP(file_name);
+    if (image == NULL) {
+        fprintf(stderr, "Couldn't load %s: %s\n", file_name, SDL_GetError());
+        return;
+    }
+
+    /*
+     * Palettized screen modes will have a default palette (a standard
+     * 8*8*4 colour cube), but if the image is palettized as well we can
+     * use that palette for a nicer colour matching
+     */
+    if (image->format->palette && screen->format->palette) {
+    SDL_SetColors( screen , image->format->palette->colors, 0,
+                  image->format->palette->ncolors);
+    }
+
+    if ( SDL_SetColorKey(image, SDL_SRCCOLORKEY, 252) == (-1) )
+      {
+	printf("\n\nvoid display_bmp(char* file_name): ERROR in SDL_SetColorKey.\n\nTerminating...\n\n");
+	Terminate(ERR);
+      }
+
+    /* Blit onto the screen surface */
+    if(SDL_BlitSurface(image, NULL, screen, NULL) < 0)
+        fprintf(stderr, "BlitSurface error: %s\n", SDL_GetError());
+
+    SDL_UpdateRect(screen, 0, 0, image->w, image->h);
+
+    /* Free the allocated BMP surface */
+    SDL_FreeSurface(image);
+}
 
 
 void
-Load_PCX_Image (char *PCX_Filename, unsigned char *Screen, int LoadPal)
+Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal)
 {
   FILE *file;
   void *image;
   int i;
+  int j;
   unsigned short int length, height;
   unsigned char palette[768];
+  SDL_Surface *LocalImage;
 
   DebugPrintf
     ("\nvoid Load_PCX_Image(...):  Real function call confirmed...");
 
+  display_bmp(PCX_Filename);
+
+  /*
+  LocalImage = LoadImage( PCX_Filename , 1);
+  if ( LocalImage == NULL ) {
+    printf("\n\nvoid Load_PCX_Image: ERROR Loading image...\n\nTerminating...\n\n");
+    Terminate(ERR);
+  } 
+  */
+
+  SDL_UpdateRect(screen, 0, 0, SCREENBREITE, SCREENHOEHE);
+
+  Lock_SDL_Screen();
+
+  for (i=0;i<SCREENHOEHE;i++)
+    for (j=0;j<SCREENBREITE;j++)
+      {
+	*(Parameter_Screen+i*SCREENBREITE+j)=getpixel(screen, j, i);
+      }
+
+  Unlock_SDL_Screen();
+
+  /*
   if ((file = fopen (PCX_Filename, "r")) == NULL)
     {
       DebugPrintf ("\nLoad_PCX_Image(...): Can't open file!\n");
@@ -207,10 +301,11 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Screen, int LoadPal)
     {
       memcpy (Screen, image, length * height);
     }
+  */
 
   DebugPrintf ("\nvoid Load_PCX_Image(...):  end of function reached.");
 
-}				// void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
+} // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
@@ -289,7 +384,7 @@ InitPictures (void)
       DruidFilename[0] = 0;
       DruidFilename = strcat (DruidFilename, "../graphics/");
       DruidFilename = strcat (DruidFilename, Druidmap[i].druidname);
-      DruidFilename = strcat (DruidFilename, ".pcx");
+      DruidFilename = strcat (DruidFilename, ".bmp");
       DebugPrintf ("\nint InitPictures(void): Loading Druidpicture: ");
       DebugPrintf (DruidFilename);
       Load_PCX_Image (DruidFilename, InternalScreen, FALSE);
@@ -299,7 +394,7 @@ InitPictures (void)
     }
   free (DruidFilename);
   return TRUE;
-}				// int InitPictures(void)
+} // int InitPictures(void)
 
 /*-----------------------------------------------------------------
  * @Desc: doesnt really _swap_ anything, but copies InternalScreen
@@ -309,12 +404,23 @@ InitPictures (void)
 void
 SwapScreen (void)
 {
+  int x;
   int y;
+
+  Lock_SDL_Screen();
 
   for (y = 0; y < SCREENHOEHE; y++)
     {
-      vga_drawscanline (y, InternalScreen + SCREENBREITE * y);
+      for (x = 0; x< SCREENBREITE; x++)
+	{
+	  putpixel ( screen, x, y, *(InternalScreen + SCREENBREITE * y + x) );
+	}
     }
+
+  Unlock_SDL_Screen();
+
+  Update_SDL_Screen();
+
 } /* SwapScreen() */
 
 /*@Function============================================================
@@ -328,11 +434,16 @@ CopyScreenToInternalScreen(void)
 {
   int y, x;
 
+  Lock_SDL_Screen();
+
   for (y = 0; y < SCREENHOEHE; y++)
     {
       for (x=0; x<SCREENBREITE; x++) 
-	InternalScreen[y*SCREENBREITE+x]=vga_getpixel(x,y);
+	InternalScreen[y*SCREENBREITE+x]=getpixel(screen, x,y);
     }
+
+  Unlock_SDL_Screen();
+
 } // void CopyScreenToInternalScreen(void)
 
 /*-----------------------------------------------------------------
@@ -345,14 +456,22 @@ ClearVGAScreen (void)
 {
   char *LocalBlackLinePointer;
   int y;
+  int x;
 
   LocalBlackLinePointer = malloc (SCREENBREITE + 10);
   memset (LocalBlackLinePointer, 0, SCREENBREITE);
 
+  Lock_SDL_Screen();
+
   for (y = 0; y < SCREENHOEHE; y++)
     {
-      vga_drawscanline (y, LocalBlackLinePointer);
+      for (x=0; x<SCREENBREITE; x++) 
+	{
+	  putpixel ( screen , x , y , 0 );
+	}
     }
+
+  Unlock_SDL_Screen();
 
   free (LocalBlackLinePointer);
 }				// void ClearVGAScreen(void)
@@ -429,7 +548,7 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 
   for (i = FirstCol; i < FirstCol + PalAnz; i++)
     {
-      vga_setpalette (i, MyPalPtr[0], MyPalPtr[1], MyPalPtr[2]);
+      SetPalCol(i, MyPalPtr[0], MyPalPtr[1], MyPalPtr[2]);
       MyPalPtr += 3;
     }
 }				// void SetColors(...)
@@ -508,130 +627,6 @@ SetLevelColor (int ColorEntry)
 
 }				// void SetLevelColor(int ColorEntry)
 
-/*@Function============================================================
-@Desc: LadeLBMBild(char*,unsigned char*,int):
-
-Diese Prozedur ist fuer das laden ganzer IFF/ILBM-Bilder zustaendig. Zuerst
-wird ausreichend Speicher reserviert, dann die Bilddatei in den Speicher
-geladen. Das decodiieren der eigentlichen Bilddaten uebernimmt dann eine
-Assemblerroutine. Erst wenn das Bild fertig im Bildschirmspeicher steht
-werden die Farbinformationen eingetragen.
-	
-@Ret: none
-@Int:
-* $Function----------------------------------------------------------*/
-void
-LadeLBMBild (char *LBMDateiname, unsigned char *Screen, int LoadPal)
-{
-  // MODIFIED FOR THE PORT!!!!
-  // Variables used by the function
-  char *BodyPtr;
-  long BytesWritten = 0;
-  FILE *BildDateihandle;
-  char *BildDateiPointer;
-  struct stat stbuf;
-  int i;
-  int y;
-
-  unsigned char *BeginningOfScreen;
-
-  BeginningOfScreen = Screen;
-
-  /* *******************  ILBM-Bild laden und anzeigen  ******************** */
-
-  /* Speicher fuer die Bildbearbeitung reservieren */
-
-  if ((BildDateihandle = fopen (LBMDateiname, "rb")) == NULL)
-    {
-      printf ("\nLadeLBM: Konnte die Datei %s nicht oeffnen !", LBMDateiname);
-      getchar ();
-      Terminate (-1);
-    }
-
-  if (fstat (fileno (BildDateihandle), &stbuf) == EOF)
-    Terminate (-1);
-
-  if ((BildDateiPointer =
-       (char *) MyMalloc ((size_t) stbuf.st_size + 10)) == NULL)
-    {
-      DebugPrintf ("\nOut of Memory in LadeLBMBild()");
-      getchar ();
-      Terminate (-1);
-    }
-
-
-  /* File von Diskette in den reservierten Speicher laden */
-
-  fread (BildDateiPointer, 1, (size_t) stbuf.st_size, BildDateihandle);
-  if (fclose (BildDateihandle) == EOF)
-    {
-      printf ("\nLadeLBM: Konnte die Datei %s nicht schlieáen !",
-	      LBMDateiname);
-      getchar ();
-      Terminate (-1);
-    }
-
-
-  // First Part: Decode the Body of the LBM-File
-  BodyPtr = (char *) MemSearch ((unsigned char *) BildDateiPointer,
-				(unsigned char *) (BildDateiPointer +
-						   (int) stbuf.st_size),
-				(unsigned char *) "BODY");
-  BodyPtr += strlen ("BODY") + 4;
-
-
-  while (BytesWritten < 63999)
-    {
-      if (*BodyPtr < 0)
-	{
-	  memset (Screen, BodyPtr[1], abs (BodyPtr[0]) + 1);
-	  BytesWritten += abs (BodyPtr[0]) + 1;
-	  Screen += abs (BodyPtr[0]) + 1;
-	  BodyPtr += 2;
-	}
-      else
-	{
-	  memcpy (Screen, BodyPtr + 1, BodyPtr[0] + 1);
-	  BytesWritten += BodyPtr[0] + 1;
-	  Screen += BodyPtr[0] + 1;
-	  BodyPtr += BodyPtr[0] + 2;
-	}
-    }
-
-
-  if (LoadPal)
-    {
-      // Second Part: Decode the Color-Information                
-      BodyPtr = (char *) MemSearch ((unsigned char *) BildDateiPointer,
-				    (unsigned char *) (BildDateiPointer +
-						       (int) stbuf.st_size),
-				    (unsigned char *) "CMAP");
-      BodyPtr += strlen ("CMAP") + 4;
-      for (i = 0; i < (256 * 3); i++)
-	{
-	  BodyPtr[i] = BodyPtr[i] >> 2;
-	}
-      SetColors (0, 255, BodyPtr);
-    }				/* if LoadPal */
-
-  free (BildDateiPointer);
-  printf
-    ("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",
-     LBMDateiname);
-
-  for (y = 0; y < 199; y++)
-    {
-      vga_drawscanline (y, BeginningOfScreen);
-      BeginningOfScreen += 320;
-    }
-
-  printf
-    ("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",
-     LBMDateiname);
-}				// LadeLBMBild 
-
-
-
 /* *********************************************************************** */
 
 void
@@ -644,8 +639,8 @@ Set_SVGALIB_Video_ON (void)
   //  getchar();
   vga_init ();
   vgamode = vga_getdefaultmode ();
-  if ((vgamode == -1) || (vga_getmodeinfo (vgamode)->bytesperpixel != 1))
-    vgamode = G320x200x256;
+  // SDL if ((vgamode == -1) || (vga_getmodeinfo (vgamode)->bytesperpixel != 1))
+  // SDL vgamode = G320x200x256;
 
   if (!vga_hasmode (vgamode))
     {
@@ -657,18 +652,23 @@ Set_SVGALIB_Video_ON (void)
   gl_setcontextvga (vgamode);
   gl_enableclipping ();
   // Initiate fonts of the svgalib (gl-part)!
-  gl_setfont (8, 8, gl_font8x8);
-  gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
+  // SDL gl_setfont (8, 8, gl_font8x8);
+  // SDL gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
   gl_setfontcolors (0, vga_white ());
   // Initiate raw keyboard access...
   DebugPrintf
     ("\n\n    Die Tastatur wird nun fuer die svgalib initialisiert.... gleich gehts los!\n");
+
+  Init_SDL_Keyboard();
+  /*
   if (keyboard_init ())
     {
       DebugPrintf
 	("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
       Terminate (ERR);
     }
+  */
+
   // Translate to 4 keypad cursor keys, and unify enter key. 
   keyboard_translatekeys (TRANSLATE_CURSORKEYS | TRANSLATE_KEYPADENTER |
 			  TRANSLATE_DIAGONAL);
@@ -1102,8 +1102,17 @@ void
 SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 	   unsigned char blau)
 {
+  SDL_Color ThisOneColor;
+
+  ThisOneColor.r=rot;
+  ThisOneColor.g=gruen;
+  ThisOneColor.b=blau;
+  ThisOneColor.unused=0;
+
   // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
-  vga_setpalette (palpos, rot, gruen, blau);
+  // vga_setpalette (palpos, rot, gruen, blau);
+  // SDL_SetColors( ScaledSurface , &ThisOneColor, palpos, 1 );
+  SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
 }				// void SetPalCol(...)
 
@@ -1223,14 +1232,14 @@ Flimmern (void)
     }
 
   /* make the central line white */
+  Lock_SDL_Screen();
   for (i = 0; i < USERFENSTERBREITE / 2 + 1; i++)
     {
-      vga_drawpixel (USERFENSTERPOSX + i,
-		     USERFENSTERPOSY + USERFENSTERHOEHE / 2);
-      vga_drawpixel (USERFENSTERPOSX + USERFENSTERBREITE - i,
-		     USERFENSTERPOSY + USERFENSTERHOEHE / 2);
+      putpixel (screen, USERFENSTERPOSX + i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
+      putpixel (screen, USERFENSTERPOSX + USERFENSTERBREITE - i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
       usleep (20);
     }
+  Unlock_SDL_Screen();
 
   return;
 #endif

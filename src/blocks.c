@@ -41,7 +41,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <vga.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -64,6 +64,9 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
   //DebugPrintf("\nvoid SmallBlock(...): Function call confirmed.");
   if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
     return;
+
+  Lock_SDL_Screen();
+
   for (i = 0; i < 8; i++)
     {
       for (j = 0; j < 8; j++)
@@ -72,8 +75,8 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
 	  target++;
 	  if (Screen == RealScreen)
 	    {
-	      vga_setcolor (*source);
-	      vga_drawpixel (LX + i, LY + j);
+	      // SDL vga_setcolor (*source);
+	      putpixel (screen, LX + i, LY + j, *source );
 	    }
 	  source += 4;
 	  //Screen[LX+j+(LY+i)*SBreite]=
@@ -82,6 +85,8 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
       target += SBreite - 8;
       source += 4 * BLOCKBREITE - 4 * 8;
     }
+
+  Unlock_SDL_Screen();
 
   //DebugPrintf("\nvoid SmallBlock(...): Usual end of function reached.");
 }				// void SmallBlock(...)
@@ -384,7 +389,7 @@ GetBlocks (char *picfile, int line, int num)
 void
 DisplayBlock (int x, int y,
 	      unsigned char *block,
-	      int len, int height, unsigned char *screen)
+	      int len, int height, unsigned char *Parameter_screen)
 {
   int row, i, j;
   unsigned char *screenpos;
@@ -395,17 +400,28 @@ DisplayBlock (int x, int y,
    * THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER
    * DIRECTLY ACCESSIBLE 
    */
-  if (screen == RealScreen)
-    for (i = 0; i < height; i++)
-      for (j = 0; j < len; j++)
-	{
-	  vga_setcolor (*source);
-	  source++;
-	  vga_drawpixel (j + x, i + y);
-	}			/* for j */
+
+  
+
+  if (Parameter_screen == RealScreen) 
+    {
+
+      Lock_SDL_Screen();
+      
+      for (i = 0; i < height; i++)
+	for (j = 0; j < len; j++)
+	  {
+	    // SDL vga_setcolor (*source);
+	    source++;
+	    putpixel ( screen, j + x, i + y, *source );
+	  }			/* for j */
+
+      Unlock_SDL_Screen();
+
+    }
   else
     {
-      screenpos = screen + y * SCREENLEN + x;
+      screenpos = Parameter_screen + y * SCREENLEN + x;
 
       for (row = 0; row < height; row++)
 	{
@@ -429,29 +445,38 @@ DisplayBlock (int x, int y,
  *-----------------------------------------------------------------*/
 void
 DisplayMergeBlock (int x, int y, unsigned char *block,
-		   int len, int height, unsigned char *screen)
+		   int len, int height, unsigned char *Parameter_screen)
 {
   int row, col;
   unsigned char *Screenpos;
   unsigned char *source = block;
 
-  Screenpos = screen + x + y * SCREENBREITE;
+  Screenpos = Parameter_screen + x + y * SCREENBREITE;
 
-  if (screen == NULL)
+  if (Parameter_screen == NULL)
     return;
 
   /* PORT: we do as Johannes did in DisplayBlock(): */
-  if (screen == RealScreen)
-    for (col = 0; col < height; col++)
-      {
-	for (row = 0; row < len; row++)
-	  {
-	    vga_setcolor (*source);
-	    if (*source != TRANSPARENTCOLOR)
-	      vga_drawpixel (x + row, y + col);
-	    source++;
-	  }			/* for row */
-      }				/* for col */
+  if (Parameter_screen == RealScreen)
+    {
+
+      Lock_SDL_Screen();
+
+      for (col = 0; col < height; col++)
+	{
+	  for (row = 0; row < len; row++)
+	    {
+	      // SDL vga_setcolor (*source);
+	      if (*source != TRANSPARENTCOLOR)
+		putpixel (screen, x + row, y + col, *source );
+	      source++;
+	    }			/* for row */
+	}			/* for col */
+
+      Unlock_SDL_Screen();
+
+      SDL_UpdateRect(screen, x, y, len, height);
+    }
   else
     for (row = 0; row < height; row++)
       {

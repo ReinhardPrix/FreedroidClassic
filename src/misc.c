@@ -47,10 +47,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <vga.h>
-#include <vgagl.h>
-#include <vgakeyboard.h>
+// #include <vga.h>
+// #include <vgagl.h>
+// #include <vgakeyboard.h>
 #include <math.h>
+
+#include "SDL.h"
+// #include "SDL_mixer.h"
+#include "SDL_image.h"
 
 #include "defs.h"
 #include "struct.h"
@@ -97,15 +101,44 @@ DebugPrintf (char *Print_String)
 
   if (first_time)		/* make sure the first call deletes previous log-file */
     {
-      debugfile = fopen ("debug.out", "w");
+      debugfile = fopen ("DEBUG.OUT", "w");
       first_time = FALSE;
     }
   else
-    debugfile = fopen ("debug.out", "a");
+    debugfile = fopen ("DEBUG.OUT", "a");
 
   fprintf (debugfile, Print_String);
   fclose (debugfile);
 };
+
+void
+DebugPrintfFloat (float Print_Float)
+{
+  FILE *debugfile;
+
+  if (debug_level == 0) return;
+
+  debugfile = fopen ("DEBUG.OUT", "a");
+
+  fprintf (debugfile, "%f", Print_Float);
+  fclose (debugfile);
+};
+
+void
+DebugPrintfInt (int Print_Int)
+{
+  FILE *debugfile;
+
+  if (debug_level == 0) return;
+
+  debugfile = fopen ("DEBUG.OUT", "a");
+
+  fprintf (debugfile, "%d", Print_Int);
+  fclose (debugfile);
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
 
 /*-----------------------------------------------------------------
  * Desc: return an integer-random number in the range [0,Obergrenze]
@@ -119,7 +152,6 @@ MyRandom (int Obergrenze)
   int dice_val;    /* the result in [0, Obergrenze] */
 
   ReinerZufall = rand ();
-
   Zwisch = 1.0*ReinerZufall/RAND_MAX; /* random number in [0;1] */
 
   /* 
@@ -130,6 +162,7 @@ MyRandom (int Obergrenze)
   dice_val = (int)( Zwisch * (1.0 * Obergrenze + 0.99999) );
   return (dice_val);
 } /* MyRandom () */
+
 
 void
 reverse (char s[])
@@ -298,8 +331,8 @@ Cheatmenu (void)
   while (!Weiter)
     {
       vga_clear ();
-      gl_setfont (8, 8, gl_font8x8);
-      gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
+      // SDL gl_setfont (8, 8, gl_font8x8);
+      // SDL gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
       gl_setfontcolors (0, vga_white ());
 
       gl_printf (X0, Y0, "Current position: Level=%d, X=%d, Y=%d\n\n",
@@ -624,8 +657,9 @@ Terminate (int ExitCode)
 
   DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf ("GameOver : %i\n", GameOver);
-  keyboard_close ();
-  vga_setmode (TEXT);
+  // keyboard_close ();
+  // vga_setmode (TEXT);
+  SDL_Quit();
   exit (ExitCode);
   return;
 

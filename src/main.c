@@ -62,7 +62,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <vga.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 #include <vgakeyboard.h>
 #include <sys/stat.h>
 
@@ -276,7 +276,7 @@ main (int argc, char *const argv[])
 	    ("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
 	  keyboard_update ();
 
-	  if (keyboard_keypressed (SCANCODE_Q))
+	  if ( QPressed() )
 	    {
 	      DebugPrintf
 		("\n*****************************************************");
@@ -286,19 +286,19 @@ main (int argc, char *const argv[])
 		("\n*****************************************************\n\n");
 	      Terminate (0);
 	    }
-	  if (keyboard_keypressed (SCANCODE_D))
+	  if ( DPressed() )
 	    Me.energy = 0;
-	  if (keyboard_keypressed (SCANCODE_L))
+	  if ( LPressed() )
 	    ShowHighscoreList ();
-	  if (keyboard_keypressed (SCANCODE_I))
+	  if ( IPressed() )
 	    ShowDebugInfos ();
-	  if (keyboard_keypressed (SCANCODE_V))
+	  if ( VPressed() )
 	    HideInvisibleMap = !HideInvisibleMap;
-	  if (keyboard_keypressed (SCANCODE_C))
+	  if ( CPressed() )
 	    Cheatmenu ();
-	  if (keyboard_keypressed (SCANCODE_ESCAPE))
+	  if ( EscapePressed() )
 	    OptionsMenu ();
-	  if (PPressed ())
+	  if ( PPressed () )
 	    Pause ();
 
 	  if (ShipEmptyCounter == 1)
@@ -331,6 +331,8 @@ main (int argc, char *const argv[])
 	  GetInternFenster (SHOW_ALL);
 
 	  PutInternFenster ();
+	  
+	  PrepareScaledSurface();
 
 	  YIFF_Server_Check_Events ();
 
@@ -346,11 +348,16 @@ main (int argc, char *const argv[])
 	  AnimateEnemys ();	// Bei den Feinden auch Phasen weiterzaehlen 
 
 	  /* Raeder bremsen die Fahrt des Influencers erheblich */
-	  printf ("\nvoid main: Me.speed.x ist jetzt: %f!", Me.speed.x);
-	  printf ("\nvoid main: Me.speed.y ist jetzt: %f!", Me.speed.y);
+	  DebugPrintf ("\nvoid main: Me.speed.x ist jetzt: ");
+	  DebugPrintfFloat (Me.speed.x);
+	  DebugPrintf ("\nvoid main: Me.speed.y ist jetzt: ");
+	  DebugPrintfFloat (Me.speed.y);
+
 	  Reibung ();
 
-	  printf ("\nvoid main: Me.speed.x: %f!", Me.speed.x);
+	  DebugPrintf ("\nvoid main: Me.speed.x nach REIBUNG ist jetzt: ");
+	  DebugPrintfFloat (Me.speed.x);
+
 	  // gl_printf( -1 , -1 , "\nmain: Me.energy:%f!" , Me.energy );
 	  // gl_printf(-1,-1,"\nmain: speed:%f/%f!", Me.speed.x, Me.speed.y);
 	  // gl_printf(-1,-1,"\nmain: phase:%f!", Me.phase );

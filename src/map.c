@@ -41,7 +41,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <vgagl.h>
+// #include <vgagl.h>
 #include <vgakeyboard.h>
 
 #include "defs.h"

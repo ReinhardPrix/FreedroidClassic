@@ -27,6 +27,10 @@
 #ifndef _global_h
 #define _global_h
 
+#include "SDL.h"
+// #include "SDL_mixer.h"
+#include "SDL_image.h"
+
 #include "colodefs.h"
 
 #undef EXTERN
@@ -181,5 +185,16 @@ EXTERN unsigned char *ShieldBlocks;
 #else
 #define EXTERN extern
 #endif
+
+#undef EXTERN
+#ifdef _svgaemu_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+
+EXTERN SDL_Surface *screen;
+EXTERN SDL_Surface *ScaledSurface;
 
 #endif

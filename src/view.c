@@ -54,7 +54,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <vga.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -164,8 +164,6 @@ FeindZusammenstellen (const char *FZahl, int FPhase)
 
   for (i = 0; i < 3; i++)
     {
-      printf("\n Variable i ist jetzt: %d.",i);
-
       Verschiebung = (*(FZahl + i) - '1' + 11 ) * 9 * 9;
 
       if (Verschiebung < 0) 
@@ -232,8 +230,10 @@ GetView (void)
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
 
   DebugPrintf ("\nvoid GetView(void): Funktion echt aufgerufen.");
-  printf ("\nvoid GetView(void): CurLevel->xlen: %d. CurLevel->ylen: %d.",
-	  CurLevel->xlen, CurLevel->ylen);
+  DebugPrintf ("\nvoid GetView(void): CurLevel->xlen: ");
+  DebugPrintfInt (CurLevel->xlen);
+  DebugPrintf ("\nvoid GetView(void): CurLevel->ylen: ");
+  DebugPrintfInt (CurLevel->ylen);
 
   me_gx = Me.pos.x / BLOCKBREITE;
   me_gy = Me.pos.y / BLOCKHOEHE;
@@ -849,6 +849,7 @@ PutInternFenster (void)
 {
   int StartX, StartY;
   int i;
+  int j;
 #ifdef SLOW_VIDEO_CALLS
   int j;
 #endif
@@ -887,19 +888,30 @@ PutInternFenster (void)
 	// USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
 	//       USERFENSTERLINKS +
 	StartY + StartX + i * INTERNBREITE * BLOCKBREITE;
+
+#define SLOW_VIDEO_CALLS
 #ifdef SLOW_VIDEO_CALLS
+
+      Lock_SDL_Screen();
+
       for (j = 0; j < USERFENSTERBREITE; j++)
 	{
-	  vga_setcolor (*source);
+	  // SDL vga_setcolor (*source);
 	  source++;
-	  vga_drawpixel (USERFENSTERPOSX + j, USERFENSTERPOSY + i);
+	  putpixel (screen, USERFENSTERPOSX + j, USERFENSTERPOSY + i, *source );
 	}			// for(j=0; ...
+
+      Unlock_SDL_Screen();
+
 #else
       vga_drawscansegment (source, USERFENSTERPOSX, USERFENSTERPOSY + i,
 			   USERFENSTERBREITE);
       // source+=USERFENSTERBREITE;
 #endif
     }				// for(i=0; ...
+
+  Update_SDL_Screen();
+
 };				// void PutInternFenster(void)
 
 /*@Function============================================================
@@ -1010,9 +1022,14 @@ SetUserfenster (int color, unsigned char *screen)
 {
   int row;
 
-  if (screen == RealScreen)
-    gl_fillbox (USERFENSTERPOSX, USERFENSTERPOSY, 
-		USERFENSTERBREITE, USERFENSTERHOEHE, color);
+  DebugPrintf ("\nvoid SetUserfenster(...): real function call confirmed.");
+
+  if (screen == RealScreen) 
+    {
+
+    }
+    //gl_fillbox (USERFENSTERPOSX, USERFENSTERPOSY, 
+    //USERFENSTERBREITE, USERFENSTERHOEHE, color);
   else
     {
       for (row = 0; row < USERFENSTERHOEHE; row++)
@@ -1020,6 +1037,9 @@ SetUserfenster (int color, unsigned char *screen)
 		(USERFENSTERPOSY + row) * SCREENBREITE,
 		color, USERFENSTERBREITE);
     }
+
+  DebugPrintf ("\nvoid SetUserfenster(...): end of real function reached.");
+
   return;
 }				/* SetUserFenster */
 

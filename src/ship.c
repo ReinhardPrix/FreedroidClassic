@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <vgakeyboard.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 #include <string.h>
 
 #include "defs.h"
@@ -313,6 +313,8 @@ ShowElevators (void)
   int x, y;
   int curLevel = CurLevel->levelnum;
 
+  DebugPrintf ("\nvoid ShowElevators(void): real function call confirmed.");
+
   if (!PlusExtentionsOn)
     {
       StartX = USERFENSTERPOSX;
@@ -358,15 +360,19 @@ ShowElevators (void)
 
       HilightLevel (curLevel);
       SwapScreen ();		/* und anzeigen */
+      DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
       return;
     }
 
+  printf("\n\nUnreachable area reached in ShowElevators...\n\n Terminating...\n\n");
+  Terminate(ERR);
   Load_PCX_Image (SEITENANSICHTBILD_PCX, RealScreen, FALSE);
   AlleLevelsGleichFaerben ();
   AlleElevatorsGleichFaerben ();
 
   HilightLevel (curLevel);
 
+  DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
   return;
 }				/* ShowElevators() */
 
@@ -690,6 +696,8 @@ GreatDruidShow (void)
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			    Infodroid, RealScreen);
 
+	  Update_SDL_Screen();
+
 	  KillTastaturPuffer ();
 	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
 		 && !RightPressed () && !SpacePressed ())
@@ -781,6 +789,7 @@ GreatDruidShow (void)
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
 		   FALSE);
 
+      Update_SDL_Screen();
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -842,6 +851,8 @@ GreatDruidShow (void)
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
 		   FALSE);
 
+      Update_SDL_Screen();
+
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -896,6 +907,8 @@ GreatDruidShow (void)
 		     USERFENSTERHOEHE + USERFENSTERPOSY, 30);
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
 		   FALSE);
+
+      Update_SDL_Screen();
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -1217,16 +1230,26 @@ NoKeyPressed (void)
 void
 ClearUserFenster (void)
 {
-  int i;
+  SDL_Rect ThisRectangle;
 
   DebugPrintf ("\nvoid ClearUserFenster(void): Real function called.");
 
+  ThisRectangle.x=USERFENSTERPOSX;
+  ThisRectangle.y=USERFENSTERPOSY;
+  ThisRectangle.w=USERFENSTERBREITE;
+  ThisRectangle.h=USERFENSTERHOEHE;
+
+
+  SDL_FillRect( screen , & ThisRectangle , 0 );
+
+  /*
   for (i = USERFENSTERPOSY; i < (USERFENSTERPOSY + USERFENSTERHOEHE); i++)
     {
       gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
 		KON_BG_COLOR);
       // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
     }
+  */
 
   DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
 

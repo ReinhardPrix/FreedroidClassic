@@ -41,7 +41,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <vga.h>
-#include <vgagl.h>
+// #include <vgagl.h>
 #include <vgakeyboard.h>
 
 #include "defs.h"
@@ -420,6 +420,7 @@ DisplayText (char *Text,
 
       if ((unsigned char) *tmp == WAITCHAR)
 	{
+	  Update_SDL_Screen();
 	  tmp++;
 	  while (UpPressed () || DownPressed () || LeftPressed ()
 		 || RightPressed ())
