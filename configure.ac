@@ -13,14 +13,17 @@ AC_PROG_CC
 AC_MSG_NOTICE([[Checking for standard maths library]])
 AC_MSG_NOTICE([[-----------------------------------]])
 AC_CHECK_LIB([m], [sin])
-AC_MSG_NOTICE([[Checking for Yiff sound server]])
-AC_MSG_NOTICE([[-----------------------------------]])
-AC_CHECK_LIB([Y2], [YOpenConnection])
+
+# I think we don't need yiff any more...
+#AC_MSG_NOTICE([[Checking for Yiff sound server]])
+#AC_MSG_NOTICE([[-----------------------------------]])
+#AC_CHECK_LIB([Y2], [YOpenConnection])
+
 AC_MSG_NOTICE([[Checking for SDL libraries]])
 AC_MSG_NOTICE([[-----------------------------------]])
 AC_CHECK_LIB([SDL], [SDL_Init])
-AC_CHECK_LIB([SDL_image], [IMG_Load])
 AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio])
+AC_CHECK_LIB([SDL_image], [IMG_Load])
 
 # Checks for header files.
 AC_HEADER_STDC
