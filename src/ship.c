@@ -832,9 +832,12 @@ ShowItemPicture (int PosX, int PosY, int Number )
   SDL_Rect target;
   char ConstructedFileName[5000];
   char* fpath;
-  static int LastImageSeriesLoaded = ( -1 );
-  int CurrentImageSeries;
-#define NUMBER_OF_IMAGES_IN_ITEM_ROTATION 40
+  // static int LastImageSeriesLoaded = ( -1 );
+  // int CurrentImageSeries;
+
+  static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
+
+#define NUMBER_OF_IMAGES_IN_ITEM_ROTATION 16
   static SDL_Surface *ItemRotationSurfaces[ NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
   SDL_Surface *Whole_Image;
   int i;
@@ -842,14 +845,18 @@ ShowItemPicture (int PosX, int PosY, int Number )
 
   DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
 
-  CurrentImageSeries = ItemMap[ Number ] . rotation_model_number ;
+  // CurrentImageSeries = ItemMap[ Number ] . rotation_model_number ;
 
-  if ( CurrentImageSeries == (-1) ) return;
+  // if ( CurrentImageSeries == (-1) ) return;
+
+  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+    return; // later this should be a default-correction instead
 
   //--------------------
   // Maybe we have to reload the whole image series
   //
-  if ( LastImageSeriesLoaded != CurrentImageSeries )
+  // if ( LastImageSeriesLoaded != CurrentImageSeries )
+  if ( strcmp ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix ) )
     {
       //--------------------
       // Maybe we have to free the series from an old item display first
@@ -867,9 +874,21 @@ ShowItemPicture (int PosX, int PosY, int Number )
       //
       for ( i=0 ; i < NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
 	{
-	  sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , CurrentImageSeries , i+1 );
-	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-	  // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
+	  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+	    {
+	      // sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , 1 , i+1 );
+	      // DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	      Terminate ( ERR );
+	    }
+	  else
+	    {
+	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	    }
+
+	  // We must remember, that his is already loaded of course
+	  strcpy ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix );
+
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	  
 	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -974,7 +993,8 @@ show_item_info ( item* ShowItem , int page , char ShowArrows )
 
   // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
-  ShowItemPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
+  // ShowItemPicture ( Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
+  ShowItemPicture ( 45 , 190 , ShowItem->type );
 
   switch (page)
     {

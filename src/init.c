@@ -262,6 +262,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT "Item can be installed in aux slot=\""
 
 #define ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME "Item can be installed in slot with name=\""
+#define ITEM_ROTATION_SERIES_NAME_PREFIX "Item uses rotation series with prefix=\""
 #define ITEM_CAN_BE_BOUGHT_IN_SHOP "Item can be bought in shop=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
@@ -435,6 +436,13 @@ Sorry...\n\
 \n" , ItemIndex );
 	  Terminate( ERR );
 	}
+
+      //--------------------
+      // Next we read in the prefix for the image series in the items browser
+      // that this item is going to use.
+      //
+      ItemMap [ ItemIndex ] . item_rotation_series_prefix = ReadAndMallocStringFromData ( ItemPointer , ITEM_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
+
 
       // Now we read in if this item can bought in shops
       YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_BOUGHT_IN_SHOP , "\"" ) ;

@@ -321,6 +321,8 @@ typedef struct
 
   int item_can_be_bought_in_shop;
 
+  char* item_rotation_series_prefix;
+
   // double energy_gain_uppon_application_in_combat;
   // double item_weight;
 
