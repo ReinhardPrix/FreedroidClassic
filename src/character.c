@@ -578,7 +578,7 @@ update_damage_tux_can_do ( int PlayerNum )
 	{
 	    //--------------------
 	    // Damage modifier in case of MELEE WEAPON is computed:  
-	    // weapon's modifier * (100+Strenth)%
+	    // weapon's modifier * (100+Strength)%
 	    //
 	    Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item.damage * 
 		( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;

@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="You took too many strenth pills and now you're sick?"
+New Option Nr=2  OptionText="You took too many strength pills and now you're sick?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=207  PositionY=231  
 Subtitle="No.  The strength pills were fine.  They made me so strong.  The doc confirmed that."
