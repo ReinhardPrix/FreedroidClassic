@@ -833,8 +833,8 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:53:36  rp
- * Initial revision
+ * Revision 1.2  1993/05/23 12:28:33  prix
+ * Die Richtung in die der Lauf zeigt wird angezeigt !
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
