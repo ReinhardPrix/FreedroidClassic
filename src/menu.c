@@ -300,7 +300,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
       // At this the while (1) overloop ends.  But for the menu, we really do not
       // need to hog the CPU.  Therefore some waiting should be introduced here.
       //
-      SDL_Delay (1);
+      // SDL_Delay (1);
+      usleep ( 1 ) ;
     }
 
   SDL_ShowCursor( SDL_ENABLE );
@@ -473,6 +474,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int LastOptionVisible = 0 ;
   int MenuLineOfMouseCursor;
   int ThisOptionEnd;
+  int mouse_wheel_has_turned = FALSE ;
+  int mouse_now_over_different_item = FALSE ;
 
   DebugPrintf ( -100, "\nINSIDE:  First Item now: %d." , FirstItem );
 
@@ -626,7 +629,81 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
 
       our_SDL_flip_wrapper( Screen );
-  
+
+
+      //--------------------
+      // In order to reduce processor load during chat menus and also in order to
+      // make menus lag less, we introduce a new loop here, so that the drawing thing
+      // doesn't have to be executed so often...
+      //
+      mouse_wheel_has_turned = FALSE ;
+      mouse_now_over_different_item = FALSE ;
+
+      while ( !mouse_now_over_different_item && !mouse_wheel_has_turned && !EscapePressed() && !EnterPressed() && !axis_is_active && !RightPressed() && !LeftPressed() && !UpPressed() && !DownPressed() )
+	{
+	  //--------------------
+	  // The MOUSE WHEEL cannot be queried like anything else, since querying it
+	  // DOES CHANGE THE STATUS ITSELF, so we can only ask for this once and we
+	  // handle it here...  (while the rest can be queried again and handled
+	  // correctly then later...)
+	  //
+	  if ( MouseWheelUpPressed() ) 
+	    {
+	      if ( menu_position_to_remember > OptionOffset + 1 ) 
+		{
+		  SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember - 2 ] ) ;
+		  MoveMenuPositionSound();	    
+		}
+	      else if ( OptionOffset > 0 ) 
+		{
+		  OptionOffset -- ; 
+		  MoveMenuPositionSound();	    
+		}
+	      mouse_wheel_has_turned = TRUE ;
+	      while (UpPressed());
+	    }
+	  if ( MouseWheelDownPressed() ) 
+	    {
+	      if ( menu_position_to_remember < LastOptionVisible ) 
+		{ 
+		  SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember ] );
+		}
+	      else
+		{
+		  if ( BreakOffCauseNoRoom ) 
+		    {
+		      OptionOffset++;
+		      MoveMenuPositionSound();
+		    }
+		  SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember - 1 ] );
+		}
+	      mouse_wheel_has_turned = TRUE ;
+	      while (DownPressed());
+	    }
+
+	  //--------------------
+	  // Maybe the mouse is now hovering over a different menu item, that it
+	  // was over (and than was therefore selected) before.  Then of course
+	  // me must let the main cycle have another go...
+	  //
+	  MenuLineOfMouseCursor = 
+	    MouseCursorIsOverMenuItem ( MenuPosY [ OptionOffset ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+	  if ( ( MenuLineOfMouseCursor >= 1 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
+	    {
+	      if ( MenuLineOfMouseCursor != menu_position_to_remember )
+		{
+		  mouse_now_over_different_item = TRUE ;
+		  DebugPrintf ( 1 , "\nChatDoMenuSelection:  mouse now over different item, therefore new main cycle..." );
+		}
+	    }
+
+	  usleep ( 1 ) ;
+	}
+
+
+      //--------------------
+      // 
+      //
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );

@@ -83,6 +83,15 @@ main (int argc, char * argv[])
   int PlayerNum;
   float test_float_1, test_float_2, test_float_3;
 
+  //--------------------
+  // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
+  //           means the following 'feenableexcept' might not be completely
+  //           portable (and also cause a warning about missing prototype at
+  //           compile time).  However, this is not severe.  The feenableexcept
+  //           just helps for debugging the code.  Feel free to slimply cut away
+  //           these instructions in case they give you any porting problems...
+  //--------------------
+  // 
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_INEXACT ) ;
   feenableexcept ( FE_DIVBYZERO ) ;
