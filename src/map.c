@@ -548,12 +548,12 @@ int IsWallBlock(int block) {
 } // IsWallBlock()
 
 
-/*@Function============================================================
- * @Desc: int TranslateMap(Level Lev): uebersetzt die geladene Karte
- *	in die internen Werte
+/*-----------------------------------------------------------------
+ * @Desc: uebersetzt die geladene Karte in die internen Werte
+ *
  * @Ret: OK | ERR
- * @Int:
- * $Function----------------------------------------------------------*/
+ *
+ *-----------------------------------------------------------------*/
 int TranslateMap(Level Lev)
 {
   int xdim = Lev->xlen;
@@ -562,7 +562,7 @@ int TranslateMap(Level Lev)
   int i;
   int WAbove, WBelow, WLeft, WRight; // Walls around CROSS? yes=1,no=0
   int environs; // encodes the "Wall-environment" of a "+"
-  int NewBlock;  // Neuen "Eck-Block" in den wir KREUZ verwandeln
+  int NewBlock=KREUZ;  // Neuen "Eck-Block" in den wir KREUZ verwandeln
 
   DebugPrintf("\nint TranslateMap(Level Lev): real function call confirmed.");
 
