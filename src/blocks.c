@@ -628,12 +628,20 @@ Load_Big_Map_Insert_Surfaces( void )
 {
   int i ;
   char *fpath;
+  SDL_Surface* TempSurface;
 
   for ( i = 0 ; i < MAX_MAP_INSERTS ; i ++ )
     {
 
+      //--------------------
+      // Now we try to load the surface and then we also convert it
+      // immediately to display format, so it can be blittet later and
+      // at maximum speed!!!
+      //
       fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
-      AllMapInserts [ i ] . insert_surface = IMG_Load( fpath );
+      TempSurface = IMG_Load( fpath ) ;
+      AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
+      SDL_FreeSurface ( TempSurface ) ;
 
       //--------------------
       // Now we check if the file has been loaded successfully, or otherwise

@@ -527,6 +527,7 @@ LoadShip (char *filename)
 
   for (i = 0; i < curShip.num_levels; i++)
     {
+      
       curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
 
       TranslateMap ( curShip . AllLevels [ i ] ) ;
@@ -1097,7 +1098,9 @@ Decode_Loaded_Leveldata ( char *data )
   int NumberOfItemsInThisLevel;
   char Preserved_Letter;
 
-  /* Get the memory for one level */
+  //--------------------
+  // Get the memory for one level 
+  //
   loadlevel = (Level) MyMalloc (sizeof (level));
 
   loadlevel->empty = FALSE;
@@ -1105,7 +1108,9 @@ Decode_Loaded_Leveldata ( char *data )
   DebugPrintf (2, "\n-----------------------------------------------------------------");
   DebugPrintf (2, "\nStarting to process information for another level:\n");
 
-  /* Read Header Data: levelnum and x/ylen */
+  //--------------------
+  // Read Header Data: levelnum and x/ylen 
+  //
   DataPointer = strstr( data , "Levelnumber:" );
   if ( DataPointer == NULL )
     {
@@ -1191,7 +1196,8 @@ Decode_Loaded_Leveldata ( char *data )
   NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
   DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
 
-  
+
+  //--------------------
   // Now we decode all the codepanel information
   CodepanelPointer=CodepanelSectionBegin;
   for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
@@ -1208,17 +1214,38 @@ Decode_Loaded_Leveldata ( char *data )
 		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
     }
 
-  
+  //--------------------
+  // Now we load all the big-map-insert information for this level into
+  // the appropriate level structs...  (at some point in the future this
+  // must really be coded... currently only some dummy values set... )
+  //
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->MapInsertList [ i ] . type = ( -1 ) ;
+      loadlevel->MapInsertList [ i ] . pos . x = ( -1 ) ;
+      loadlevel->MapInsertList [ i ] . pos . y = ( -1 ) ;
+    }
 
+  loadlevel->MapInsertList [ 0 ] . type = ( 0 ) ;
+  loadlevel->MapInsertList [ 0 ] . pos . x = ( 1 ) ;
+  loadlevel->MapInsertList [ 0 ] . pos . y = ( 1 ) ;
+
+  loadlevel->MapInsertList [ 1 ] . type = ( 1 ) ;
+  loadlevel->MapInsertList [ 1 ] . pos . x = ( 6 ) ;
+  loadlevel->MapInsertList [ 1 ] . pos . y = ( 2 ) ;
+  
+  //--------------------
   // Now we repair the damage done to the loaded level data
+  //
   CodepanelSectionEnd[0]=Preserved_Letter;
 
-
-  //--------------------
+  //----------------------------------------------------------------------
   // From here on we take apart the items section of the loaded level...
-  //
+  //----------------------------------------------------------------------
   
+  //--------------------
   // First we initialize the items arrays with 'empty' information
+  //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
       loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
