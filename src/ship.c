@@ -327,10 +327,11 @@ EnterKonsole (void)
 	  while ( SpacePressed() );  /* wait for space-release */
 	  while (!SpacePressed () ); /* and wait for another space before leaving */
 	  // Now that we leave, we restore the combat screen scaling factor..
-	  if ( CurrentCombatScaleFactor == 1 ) ReInitPictures();
-	  else {
-	    if ( CurrentCombatScaleFactor != 0.5 ) SetCombatScaleTo( CurrentCombatScaleFactor );
-	  }
+	  // if ( CurrentCombatScaleFactor == 1 ) ReInitPictures();
+	  // else {
+	  // if ( CurrentCombatScaleFactor != 0.5 ) SetCombatScaleTo( CurrentCombatScaleFactor );
+	  // }
+	  SetCombatScaleTo( 1 );
 	  while ( SpacePressed() ); /* but also wait for the release before going on..*/
 	}
       if ((ConsoleMenuPos == 3) & (SpacePressed ()))
