@@ -249,6 +249,25 @@ ShowInventoryMessages( void )
   SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
   //--------------------
+  // Now we display the item in the influencer drive slot
+  //
+  TargetRect.x = InventoryRect.x + 240;
+  TargetRect.y = InventoryRect.y + 93;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer weapon slot
+  //
+  TargetRect.x = InventoryRect.x + 20;
+  TargetRect.y = InventoryRect.y + 10;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+
+  //--------------------
   // Now we display all the items the influencer is carrying with him
   //
   for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
@@ -266,7 +285,6 @@ ShowInventoryMessages( void )
       TargetRect.h = 50;
 
       SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-      
     }
 
   //--------------------
