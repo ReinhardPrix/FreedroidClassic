@@ -1383,7 +1383,7 @@ void
 smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 {
   Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i;
+  int i , j ;
   Obstacle target_obstacle;
 
   //--------------------
@@ -1415,9 +1415,27 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
       if ( fabsf ( x - target_obstacle -> pos . x ) > 0.4 ) continue ;
       if ( fabsf ( y - target_obstacle -> pos . y ) > 0.4 ) continue ;
 
-      BoxLevel -> obstacle_list [ BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] ] . type = ( -1 ) ;
+      DebugPrintf ( 1 , "\nObject smashed at: (%f/%f) by hit/explosion at (%f/%f)." ,
+		    target_obstacle -> pos . x , target_obstacle -> pos . y ,
+		    x , y );
+
+      target_obstacle -> type = ( -1 ) ;
       BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] = (-1) ;
-      StartBlast( x , y , BoxLevel->levelnum , DRUIDBLAST );
+      //--------------------
+      // Maybe there are other obstacles glued to here.  Then we need to fill the
+      // gap in the glue array that we have just created.
+      //
+      for ( j = i ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE - 1 ; j ++ )
+	{
+	  if ( BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] != (-1) )
+	    {
+	      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j ] = 
+		BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] ;
+	      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] = (-1) ;
+	    }
+	}
+
+      StartBlast( target_obstacle -> pos . x , target_obstacle -> pos . y , BoxLevel->levelnum , DRUIDBLAST );
       // DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
 
     }
@@ -1448,29 +1466,7 @@ smash_obstacle ( float x , float y )
 	}
     }
 
-  //--------------------
-  // first we see if there are any destructible map tiles, that need to
-  // be destructed this way...
-  //
-      /*
-  switch ( BoxLevel->map[ map_y ][ map_x ]  . floor_value )
-    { 
-    case BOX_4:
-    case BOX_3:
-    case BOX_2:
-    case BOX_1:
-      BoxLevel->map[ map_y ][ map_x ]  . floor_value = FLOOR;
-      StartBlast( map_x , map_y , BoxLevel->levelnum , DRUIDBLAST );
-      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
-      break;
-    default:
-      break;
-    }
-      */
-
 }; // void smash_obstacle ( float x , float y );
-
-
 
 /* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the

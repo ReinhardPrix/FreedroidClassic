@@ -172,6 +172,7 @@ MoveBullets (void)
       if ( ( map_x < 0 ) || ( map_x >= BulletLevel->xlen ) ||
 	   ( map_y < 0 ) || ( map_y >= BulletLevel->ylen ) )
 	{
+	  /*
 	  GiveStandardErrorMessage ( "MoveBullets(...)" , "\
 A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 This is an idication for an error of some form, but might also be due\n\
@@ -181,6 +182,7 @@ swapped him outside and the bullet thereby also outside.\n\
 \n\
 This problem is not severe, so this is a warning message only.",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	  */
 	  DeleteBullet ( i , FALSE );
 	  return;
 	  
