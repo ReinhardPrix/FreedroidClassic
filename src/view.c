@@ -290,6 +290,7 @@ void
 PutInfluence ( int x, int y)
 {
   SDL_Rect TargetRectangle;
+  int alpha_value;
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
@@ -303,6 +304,34 @@ PutInfluence ( int x, int y)
       TargetRectangle.x=x ;
       TargetRectangle.y=y ;
     }
+
+  /*
+   * Farbe des Influencers (15) richtig setzen
+   */
+
+#define SET_INFLU_COLOR_EVERY_FRAME
+#ifdef SET_INFLU_COLOR_EVERY_FRAME
+  if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
+    SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
+	       Transfercolor.blau);
+
+  if (((Me.status == MOBILE) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
+    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+	       Mobilecolor.blau);
+
+  if (((Me.status == WEAPON) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
+    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+	       Mobilecolor.blau);
+#endif
+
+  
+#define alpha_offset 80
+  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == (-1) ) ) 
+    {
+      alpha_value = (int) ( ( 256 - alpha_offset ) * fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + ( alpha_offset ) );
+      SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , alpha_value );
+    }
+
 
   // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
@@ -352,6 +381,13 @@ PutInfluence ( int x, int y)
       TargetRectangle.y=y + Digit_Pos_Y                  ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
+
+  //--------------------
+  // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
+  // which is the oposite of TRANSPARENT :)
+  //
+  SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
 

@@ -59,9 +59,9 @@ directly form the following example.
 *** Start of Mission File ***
 Mission Name: Corporate takeover
 Physics ('game.dat') file to use for this mission: game.dat
-Ship file to use for this mission: new_ship_1.maps
-Lift file to use for this mission: new_ship_1.elevators
-Crew file to use for this mission: new_ship_1.droids
+Ship file to use for this mission: new_ship_2.maps
+Lift file to use for this mission: new_ship_2.elevators
+Crew file to use for this mission: new_ship_2.droids
 Lifts On file to use for this mission: asteroid_on.bmp
 Lifts Off file to use for this mission: asteroid_off.bmp
 P**ossible Start Point : Level=4 XPos=1 YPos=1
@@ -81,8 +81,9 @@ Mission target is to live for how many seconds : -1
 After completing this mission, load mission : classical_paradroid_mission.mission
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
-Since you've successfully removed the droids assaulting the scientists retreat, they could shortly leave the bunker and get new parts required to intercept the communication of the battle cruiser with the new MS headquater.  Once that is done, the local command cyborgs will be in charge.  Several of them have automatically beamed down to organize the destruction of the facility.  
-They must all be destroyed in order to make the chief command cybord beam down.  But first things first.
+Now that you've successfully removed the droids assaulting the scientists retreat, they could shortly leave the bunker and get new parts required to shortly suspend the communication of the battle cruiser with the new MS headquater.  Once that is done, the local command cyborgs will be in charge.  Several of them have automatically beamed down to organize the destruction of the facility.  
+They must all be destroyed in order to make the chief command cyborg also beam down.  
+Go to the turquoise level and eliminate them.  Do this before the cruisers communication is up again, or the head quarter might suspect something and might order the last remaining robot commander never to leave the cruiser and send reinforcements.
 
 Press Fire to Play
 

@@ -678,11 +678,6 @@ AnimateEnemys (void)
 
       if (AllEnemys[i].feindphase >= ENEMYPHASES)
 	{
-	  if (AllEnemys[i].type == DRUID598)
-	    {
-	      DebugPrintf (0, " Broke at: %d ", AllEnemys[i].feindphase);
-	      //	      getchar ();
-	    }
 	  AllEnemys[i].feindphase = 0;
 	}
     }

@@ -1546,6 +1546,9 @@ EndTitle (void)
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
+  // SetCurrentFont( FPS_Display_BFont );
+  SetCurrentFont( Para_BFont );
+
   ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   while ( SpacePressed() );

@@ -388,64 +388,6 @@ AnimateInfluence (void)
     }
 
 
-  /*
-   * Farbe des Influencers (15) richtig setzen
-   */
-
-#define SET_INFLU_COLOR_EVERY_FRAME
-#ifdef SET_INFLU_COLOR_EVERY_FRAME
-  if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
-	       Transfercolor.blau);
-
-  if (((Me.status == MOBILE) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	       Mobilecolor.blau);
-
-  if (((Me.status == WEAPON) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	       Mobilecolor.blau);
-#endif
-
-  /*
-   * Wenn die Energie den kritischen Stand erreicht hat,
-   * beginnt der Robot zu blinken
-   */
-
-#define CRYWAITTIME 14
-
-  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && (blinkwaiter == 0))
-    {
-      //          Palwert+=15;
-      //          if(Palwert>63) Palwert=0;
-      Palwert = MyRandom (64);
-      if (Me.status == TRANSFERMODE)
-	SetPalCol (INFLUENCEFARBWERT, 63, Palwert, Palwert);
-      else
-	SetPalCol (INFLUENCEFARBWERT, Palwert, Palwert, Palwert);
-    }
-  if (Me.energy <= BLINKENERGY)
-    {
-      if (Crywait > 0)
-	Crywait--;
-      else
-	{
-	  Crywait = CRYWAITTIME + Me.energy;
-	  CrySound ();
-	}
-    }
-  if (Me.status == TRANSFERMODE)
-    {
-      if (Overtaketunewait > 0)
-	Overtaketunewait--;
-      else
-	{
-	  Overtaketunewait = 12;
-	  StartSound (6);
-	}
-    }
-  blinkwaiter++;
-  blinkwaiter %= 3;
 }				// void AnimateInfluence(void)
 
 /*@Function============================================================
