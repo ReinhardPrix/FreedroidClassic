@@ -219,11 +219,15 @@ Takeover (int enemynum)
 	      PreTakeEnergy = Me.energy;
 	    }
 
-	  if (Me.energy > Druidmap[DRUID001].maxenergy) 
-	    Me.energy = Druidmap[DRUID001].maxenergy;
-	  // Me.energy = AllEnemys[enemynum].energy;
+	  // We provide some security agains too high energy/health values gained
+	  // by very rapid successions of successful takeover attempts
+	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
+	  if (Me.health > Druidmap[DRUID001].maxenergy) Me.health = Druidmap[DRUID001].maxenergy;
+
+	  // We allow to gain the current energy/full health that was still in the 
+	  // other droid, since all previous damage must be due to fighting damage,
+	  // and this is exactly the sort of damage can usually be cured in refreshes.
 	  Me.energy += AllEnemys[enemynum].energy;
-	  // Me.health = Druidmap[OpponentType].maxenergy;
 	  Me.health += Druidmap[OpponentType].maxenergy;
 
 	  Me.type = AllEnemys[enemynum].type;
