@@ -38,6 +38,24 @@
 
 #include "SDL_rotozoom.h" // that's for rotating the speed-o-meter arrows
 
+//--------------------
+// Here we define the dimensions of the banner rectangle.  Note,
+// that some items have a lot of modifiers and magic boni, therefore
+// they need a lot of lines, so 120 really seems reasonable.  If you
+// want less, take care that the uppermost line is not omitted, a 
+// bug that only occurs when very little space is given for those
+// rectangles...
+//
+#define UPPER_BANNER_TEXT_RECT_X 160
+#define UPPER_BANNER_TEXT_RECT_Y 1
+#define UPPER_BANNER_TEXT_RECT_W 320
+#define UPPER_BANNER_TEXT_RECT_H 120
+#define LOWER_BANNER_TEXT_RECT_X UPPER_BANNER_TEXT_RECT_X
+#define LOWER_BANNER_TEXT_RECT_Y ( SCREEN_HEIGHT - UPPER_BANNER_TEXT_RECT_Y - UPPER_BANNER_TEXT_RECT_H )
+#define LOWER_BANNER_TEXT_RECT_W UPPER_BANNER_TEXT_RECT_W
+#define LOWER_BANNER_TEXT_RECT_H UPPER_BANNER_TEXT_RECT_H
+#define BANNER_TEXT_REC_BACKGROUNDCOLOR 0x00
+
 extern char *InfluenceModeNames[];
 
 /* ----------------------------------------------------------------------
@@ -376,12 +394,14 @@ exist really (i.e. has a type = (-1) ).",
 	    //
 	    if ( CurItem -> prefix_code != (-1) )
 	    {
-		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( PrefixList [ CurItem -> prefix_code ] . light_bonus_value ) 
+		{
+		    if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		    strcat( ItemDescText , "+" );
-		AppendToLine = TRUE;
-		sprintf( linebuf , "%d to light radius" , PrefixList [ CurItem -> prefix_code ] . light_bonus_value );
-		strcat( ItemDescText , linebuf );
+		    AppendToLine = TRUE;
+		    sprintf( linebuf , "%d to light radius" , PrefixList [ CurItem -> prefix_code ] . light_bonus_value );
+		    strcat( ItemDescText , linebuf );
+		}
 	    }
 	    
 	}
@@ -982,252 +1002,256 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 }; // void teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * At various points in the game, especially when the mouse in over an
+ * interesting object inside the game, a popup window will appear, e.g.
+ * to describe the object in question.
+ * This function is responsible for bringing up these text windows.
  * ---------------------------------------------------------------------- */
 void
 ShowCurrentTextWindow ( void )
 {
-  SDL_Rect Banner_Text_Rect;
-  point CurPos;
-  char ItemDescText[5000]=" ";
-  char TextLine[10][1000];
-  point inv_square;
-  int InvIndex;
-  int i;
-  int NumberOfLinesInText = 1;
-  finepoint MapPositionOfMouse;
-  char* LongTextPointer;
-  int InterLineDistance;
-  int StringLength;
-  int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
-  int index_of_floor_item_below_mouse_cursor = ( -1 );
+    SDL_Rect Banner_Text_Rect;
+    point CurPos;
+    char ItemDescText[5000]=" ";
+    char TextLine[10][1000];
+    point inv_square;
+    int InvIndex;
+    int i;
+    int NumberOfLinesInText = 1;
+    finepoint MapPositionOfMouse;
+    char* LongTextPointer;
+    int InterLineDistance;
+    int StringLength;
+    int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
+    int index_of_floor_item_below_mouse_cursor = ( -1 );
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
-  //--------------------
-  // During the title display phase, we need not have this window visible...
-  //
-  if ( Me[0].status == BRIEFING ) return;
-
-  //--------------------
-  // For testing purposes is bluntly insert the new banner element here:
-  //
-  // if ( GetMousePos_y( ) >= ( SCREEN_HEIGHT / 2 ) )
-  if ( GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
+    //--------------------
+    // During the title display phase, we need not have this window visible...
+    //
+    if ( Me[0].status == BRIEFING ) return;
+    
+    //--------------------
+    // For testing purposes is bluntly insert the new banner element here:
+    //
+    if ( GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
     {
-      Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
-      Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
-      Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
-      Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
+	Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
+	Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
+	Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
+	Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
     }
-  else
+    else
     {
-      Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
-      Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
-      Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
-      Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
+	Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
+	Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
+	Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
+	Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
     }
 
-  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
-  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
+    CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
+    CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
 
-  //--------------------
-  // In case some item is held in hand by the player, the situation is simple:
-  // we merely need to draw this items description into the description field and
-  // that's it OR WE MUST SAY THAT THE requirements for this item are not met
-  //
-  if ( GetHeldItemPointer( ) != NULL )
+    //--------------------
+    // In case some item is held in hand by the player, the situation is simple:
+    // we merely need to draw this items description into the description field and
+    // that's it OR WE MUST SAY THAT THE requirements for this item are not met
+    //
+    if ( GetHeldItemPointer( ) != NULL )
     {
-      if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
-	strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].item_name );
-      else 
+	if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
+	    strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].item_name );
+	else 
 	{
-	  strcpy( ItemDescText , REQUIREMENTS_NOT_MET_TEXT  );
+	    strcpy( ItemDescText , REQUIREMENTS_NOT_MET_TEXT  );
 	}
     }
-
-  //--------------------
-  // in the other case however, that no item is currently held in hand, we need to
-  // work a little more:  we need to find out if the cursor is currently over some
-  // inventory or other item and in case that's true, we need to give the 
-  // description of this item.
-  //
-  else if ( GameConfig.Inventory_Visible )
+    
+    //--------------------
+    // in the other case however, that no item is currently held in hand, we need to
+    // work a little more:  we need to find out if the cursor is currently over some
+    // inventory or other item and in case that's true, we need to give the 
+    // description of this item.
+    //
+    else if ( GameConfig.Inventory_Visible )
     {
-      //--------------------
-      // Perhaps the cursor is over some item of the inventory?
-      // let's check this case first.
-      //
-      if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	//--------------------
+	// Perhaps the cursor is over some item of the inventory?
+	// let's check this case first.
+	//
+	if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
-	  inv_square.x = GetInventorySquare_x( CurPos.x );
-	  inv_square.y = GetInventorySquare_y( CurPos.y );
-	  // DebugPrintf( 0 , "\nInv target x: %d." , inv_square.x );
-	  // DebugPrintf( 0 , "\nInv target y: %d." , inv_square.y );
-	  InvIndex = GetInventoryItemAt ( inv_square.x , inv_square.y );
-	  // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
-	  if ( InvIndex != (-1) )
+	    inv_square.x = GetInventorySquare_x( CurPos.x );
+	    inv_square.y = GetInventorySquare_y( CurPos.y );
+	    // DebugPrintf( 0 , "\nInv target x: %d." , inv_square.x );
+	    // DebugPrintf( 0 , "\nInv target y: %d." , inv_square.y );
+	    InvIndex = GetInventoryItemAt ( inv_square.x , inv_square.y );
+	    // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
+	    if ( InvIndex != (-1) )
 	    {
-	      GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
+		GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
 	    }
 	} 
-      else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  if ( Me[0].weapon_item.type > 0 )
-	    GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
+	    if ( Me[0].weapon_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
 	}
-      else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  if ( Me[0].drive_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
+	    if ( Me[0].drive_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
 	}
-      else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me [ 0 ] . shield_item . type > 0 )
-	       GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . shield_item ) , FALSE );
-	   else if ( Me [ 0 ] . weapon_item . type > 0 )
-	   {
+	    if ( Me [ 0 ] . shield_item . type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . shield_item ) , FALSE );
+	    else if ( Me [ 0 ] . weapon_item . type > 0 )
+	    {
 		if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 		{
 		    GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . weapon_item ) , FALSE );
 		}
-	   }
+	    }
 	}
-      else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me[0].armour_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
+	    if ( Me[0].armour_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
 	}
-      else if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me[0].special_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
+	    if ( Me[0].special_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
 	}
-      else if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me[0].aux1_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
+	    if ( Me[0].aux1_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
 	}
-      else if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	else if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me[0].aux2_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
+	    if ( Me[0].aux2_item.type > 0 )
+		GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
 	}
-
+	
     } // if nothing is 'held in hand' && inventory-screen visible
-
-  //--------------------
-  // If the mouse cursor is within the user rectangle, then we check if
-  // either the cursor is over an inventory item or over some other droid
-  // and in both cases, we give a description of the object in the small
-  // black rectangle in the top status banner.
-  //
-
-  if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
+    
+    //--------------------
+    // If the mouse cursor is within the user rectangle, then we check if
+    // either the cursor is over an inventory item or over some other droid
+    // and in both cases, we give a description of the object in the small
+    // black rectangle in the top status banner.
+    //
+    
+    if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
     {
-      // DebugPrintf( 2  , "\nCursor is in userfenster... --> see if hovering over an item...");
-
-      MapPositionOfMouse.x = translate_pixel_to_map_location ( 0 , 
-							       (float) ServerThinksInputAxisX ( 0 ) , 
-							       (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-      MapPositionOfMouse.y = translate_pixel_to_map_location ( 0 , 
-							       (float) ServerThinksInputAxisX ( 0 ) , 
-							       (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-      index_of_floor_item_below_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
-
-      if ( index_of_floor_item_below_mouse_cursor != (-1) )
-	GiveItemDescription ( ItemDescText , & ( CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] ) , 
-			      FALSE );
-
-      //--------------------
-      // Maybe the cursor in the user rect is hovering right over a closed chest.
-      // In this case we say so in the top status banner.
-      //
-      if ( closed_chest_below_mouse_cursor ( 0 ) != (-1) )
+	// DebugPrintf( 2  , "\nCursor is in userfenster... --> see if hovering over an item...");
+	
+	MapPositionOfMouse.x = translate_pixel_to_map_location ( 0 , 
+								 (float) ServerThinksInputAxisX ( 0 ) , 
+								 (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+	MapPositionOfMouse.y = translate_pixel_to_map_location ( 0 , 
+								 (float) ServerThinksInputAxisX ( 0 ) , 
+								 (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+	
+	index_of_floor_item_below_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+	
+	if ( index_of_floor_item_below_mouse_cursor != (-1) )
 	{
-	  strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ); 
+	    GiveItemDescription ( 
+		ItemDescText , & ( CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] ) , 
+		FALSE );
 	}
-
-      //--------------------
-      // Maybe the cursor in the user rect is hovering right over a closed chest.
-      // In this case we say so in the top status banner.
-      //
-      if ( smashable_barred_below_mouse_cursor ( 0 ) != (-1) )
+	
+	//--------------------
+	// Maybe the cursor in the user rect is hovering right over a closed chest.
+	// In this case we say so in the top status banner.
+	//
+	if ( closed_chest_below_mouse_cursor ( 0 ) != (-1) )
 	{
-	  strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+	    strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ); 
 	}
-
-      //--------------------
-      // Maybe there is a teleporter event connected to the square where the mouse
-      // cursor is currently hovering.  In this case we should create a message about
-      // where the teleporter connection would bring the Tux...
-      //
-      if ( teleporter_square_below_mouse_cursor ( 0 , ItemDescText ) )
+	
+	//--------------------
+	// Maybe the cursor in the user rect is hovering right over a closed chest.
+	// In this case we say so in the top status banner.
+	//
+	if ( smashable_barred_below_mouse_cursor ( 0 ) != (-1) )
 	{
-	  //--------------------
-	  // Do nothing here, 'cause the function above has filled in the proper
-	  // text already...
-	  //
+	    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
 	}
-
-      //--------------------
-      // Maybe there is a living droid below the current mouse cursor.  In this
-      // case, we'll give the decription of the corresponding bot.  (Also this serves
-      // as a good way to check whether the 'droid below mouse cursor' functions are
-      // doing a good job or not.
-      //
-      if ( index_of_droid_below_mouse_cursor != (-1) )
+	
+	//--------------------
+	// Maybe there is a teleporter event connected to the square where the mouse
+	// cursor is currently hovering.  In this case we should create a message about
+	// where the teleporter connection would bring the Tux...
+	//
+	if ( teleporter_square_below_mouse_cursor ( 0 , ItemDescText ) )
 	{
-	  create_and_blit_droid_description ( index_of_droid_below_mouse_cursor ) ;
-	  return;
+	    //--------------------
+	    // Do nothing here, 'cause the function above has filled in the proper
+	    // text already...
+	    //
+	}
+	
+	//--------------------
+	// Maybe there is a living droid below the current mouse cursor.  In this
+	// case, we'll give the decription of the corresponding bot.  (Also this serves
+	// as a good way to check whether the 'droid below mouse cursor' functions are
+	// doing a good job or not.
+	//
+	if ( index_of_droid_below_mouse_cursor != (-1) )
+	{
+	    create_and_blit_droid_description ( index_of_droid_below_mouse_cursor ) ;
+	    return;
 	}
     }
-
-  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  if ( strlen( ItemDescText ) > 1 )
+    
+    SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+    if ( strlen( ItemDescText ) > 1 )
     {
-      if ( use_open_gl ) 
-	GL_HighlightRectangle ( Screen , Banner_Text_Rect , 0 , 0 , 0 , 160 );
-      else
-	our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
+	if ( use_open_gl ) 
+	    GL_HighlightRectangle ( Screen , Banner_Text_Rect , 0 , 0 , 0 , 160 );
+	else
+	    our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
-
-  if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )
+    
+    if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )
     {
-      SetCurrentFont( Red_BFont );
+	SetCurrentFont( Red_BFont );
     }
-  else
+    else
     {
-      SetCurrentFont( FPS_Display_BFont );
+	SetCurrentFont( FPS_Display_BFont );
     }
-
-  //--------------------
-  // Now we count how many lines are to be printed
-  //
-  NumberOfLinesInText = 1 + CountStringOccurences ( ItemDescText , "\n" ) ;
-
-  //--------------------
-  // Now we separate the lines and fill them into the line-array
-  //
-  InterLineDistance = ( UPPER_BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
-    ( NumberOfLinesInText + 1 );
-
-  LongTextPointer = ItemDescText;
-  for ( i = 0 ; i < NumberOfLinesInText-1 ; i ++ )
+    
+    //--------------------
+    // Now we count how many lines are to be printed
+    //
+    NumberOfLinesInText = 1 + CountStringOccurences ( ItemDescText , "\n" ) ;
+    
+    //--------------------
+    // Now we separate the lines and fill them into the line-array
+    //
+    InterLineDistance = ( UPPER_BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
+	( NumberOfLinesInText + 1 );
+    
+    LongTextPointer = ItemDescText;
+    for ( i = 0 ; i < NumberOfLinesInText-1 ; i ++ )
     {
-      StringLength = strstr( LongTextPointer , "\n" ) - LongTextPointer ;
-
-      strncpy ( TextLine[ i ] , LongTextPointer , StringLength );
-      TextLine [ i ] [ StringLength ] = 0;
-
-      LongTextPointer += StringLength + 1;
-      CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-			  i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
+	StringLength = strstr( LongTextPointer , "\n" ) - LongTextPointer ;
+	
+	strncpy ( TextLine[ i ] , LongTextPointer , StringLength );
+	TextLine [ i ] [ StringLength ] = 0;
+	
+	LongTextPointer += StringLength + 1;
+	CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+			    i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
-  CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-		      i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
-
+    CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
+			i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
+    
 }; // void ShowCurrentTextWindow ( void )
 
 
