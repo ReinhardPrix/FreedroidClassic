@@ -772,7 +772,6 @@ I ... Open/Close Inventory Screen
 C ... Open/Close Character Screen
 S ... Open/Close Spells&Skills Screen
 L ... Show Quest Status Log
-S ... Take a Screenshot and save it to disk
 P ... Turn on/off Pause Mode
 Tab ... Turn on/off automap display
 Escape ... Pops up the main menu
@@ -781,6 +780,7 @@ F1-F9 Quick-Switch to skill/ability/spells 1-9
 placed on the very bottom of the inventory.)
 
 Space ... Closes all opened screens.
+F12 ... Take a screenshot
 
 Spells&Skills:
 Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on 

@@ -356,21 +356,19 @@ void
 ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
   int PictureIndex;
-  SDL_Surface* RescaledSurface;
+  // SDL_Surface* RescaledSurface;
   float RescaleFactor;
   SDL_Rect TargetRectangle;
+  static int IsFirstFunctionCall = TRUE;
+  static SDL_Surface* ScaledItemImageBackups[ NUMBER_OF_ITEM_PICTURES ];
+  int i;
 
-  /*
-  ShopItemRowRect . x = 55 ;
-  ShopItemRowRect . y = 410;
-  ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
-  ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
-
-  TuxItemRowRect . x = 55 ;
-  TuxItemRowRect . y = 10;
-  TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
-  TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
-  */
+  if ( IsFirstFunctionCall )
+    {
+      for ( i = 0 ; i < NUMBER_OF_ITEM_PICTURES ; i ++ )
+	ScaledItemImageBackups [ i ] = NULL ;
+      IsFirstFunctionCall = FALSE ;
+    }
 
   TuxItemRowRect . x = 55 ;
   TuxItemRowRect . y = 410;
@@ -402,11 +400,12 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
     RescaleFactor = 2.0 / 3.0 ;
   else RescaleFactor = 1.0;
 
-  RescaledSurface = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+  if ( ScaledItemImageBackups [ PictureIndex ] == NULL )
+    ScaledItemImageBackups [ PictureIndex ] = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
   
-  SDL_BlitSurface( RescaledSurface , NULL , Screen , &TargetRectangle );
+  SDL_BlitSurface( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
 
-  SDL_FreeSurface ( RescaledSurface );
+  // SDL_FreeSurface ( RescaledSurface );
     
 }; // void ShowRescaledItem ( int position , item* ShowItem )
 
