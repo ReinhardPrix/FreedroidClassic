@@ -260,9 +260,26 @@ typedef struct
 
 typedef struct
 {
+  SDL_Surface* surface;
+  int offset_x;
+  int offset_y;
+}
+iso_image, *Iso_image;
+
+typedef struct
+{
+  iso_image image;
+  int block_area_type;
+  float block_area_parm_1;
+  float block_area_parm_2;
+}
+obstacle_spec, *Obstacle_spec;
+
+typedef struct
+{
   point inv_size;
   SDL_Surface* Surface;
-  SDL_Surface* ingame_surface;
+  iso_image ingame_iso_image;
 } item_image_spec , *Item_image_spec;
 
 typedef struct
@@ -917,22 +934,5 @@ typedef struct
   int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
 }
 dialogue_option, *Dialogue_option;
-
-typedef struct
-{
-  SDL_Surface* surface;
-  int offset_x;
-  int offset_y;
-}
-iso_image, *Iso_image;
-
-typedef struct
-{
-  iso_image image;
-  int block_area_type;
-  float block_area_parm_1;
-  float block_area_parm_2;
-}
-obstacle_spec, *Obstacle_spec;
 
 #endif

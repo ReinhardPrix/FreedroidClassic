@@ -42,6 +42,8 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
+void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image );
+
 char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
@@ -139,7 +141,7 @@ Load_Item_Surfaces( void )
       // We must mark the in_game item surface as not yet loaded, so it
       // will be loaded later as soon as there is some demand...
       //
-      ItemImageList [ j ] . ingame_surface = NULL ;
+      ItemImageList [ j ] . ingame_iso_image . surface = NULL ;
 
     }
 
@@ -163,7 +165,7 @@ try_to_load_ingame_item_surface ( int item_type )
   // First we handle a case, that shouldn't really be happening due to
   // calling function checking already.  But it can't hurt to always double-check
   //
-  if ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface != NULL )
+  if ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . surface != NULL )
     {
       DebugPrintf ( 0 , "\ntry_to_load_ingame_item_surface (...): ERROR.  Surface appears to be loaded already..." );
       return;
@@ -198,7 +200,9 @@ Unable to load an item ingame surface on demand.\n\
 Since there seems to be no ingame item surface yet, the inventory\n\
 item surface will be used as a substitute for now.",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface = ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface ;
+      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . surface = ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface ;
+      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . offset_x = - ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface -> w / 2 ;
+      ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image . offset_y = - ItemImageList [ ItemMap [ item_type ] . picture_number ] . Surface -> h / 2 ;
     }
   else
     {
@@ -206,13 +210,18 @@ item surface will be used as a substitute for now.",
       // So if an image of the required type can be found there, we 
       // can start to load it.  But for this we will use standard iso
       // object loading function, so that offset gets respected too...
-      // But not yet.
       //
+      /*
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
       ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface = 
 	SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface , 0 , 0 ); // this should clear any color key in the dest surface
+      */
+      get_iso_image_from_file_and_path ( fpath , & ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image ) );
+
       SDL_FreeSurface( Whole_Image );
+
+
     }
 
 

@@ -2365,17 +2365,20 @@ There was an item type given, that exceeds the range of item images loaded.",
   // load the inventory surface instead, so we really can assume that
   // we have something to use afterwards.
   //
-  if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_surface == NULL )
+  if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image . surface == NULL )
     try_to_load_ingame_item_surface ( CurItem -> type );
 
+  /*
   TargetRectangle . x = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE ) -
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
   TargetRectangle . y = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , FALSE ) -
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
-
   // translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE );
-
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_surface , NULL , Screen , &TargetRectangle);
+  */
+
+  blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
+				   CurItem -> pos . x , CurItem -> pos . y );
 
 }; // void PutItem( int ItemNumber );
 
