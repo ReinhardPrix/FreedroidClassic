@@ -716,7 +716,7 @@ HilightLevel (int Levelnumber)
 
   Levelname=malloc(100);
   sprintf( Levelname , GRAPHICS_DIR "ne_level_%d.gif", Levelnumber );
-  printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Levelname );
+  // printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Levelname );
 
   SourceRectangle.x=0;
   SourceRectangle.y=0;
@@ -748,7 +748,7 @@ HilightElevator (int ElevatorRow)
 
   Elevatorname=malloc(100);
   sprintf( Elevatorname , GRAPHICS_DIR "ne_lift_%d.gif", ElevatorRow );
-  printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Elevatorname );
+  // printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Elevatorname );
 
   SourceRectangle.x=0;
   SourceRectangle.y=0;
@@ -770,7 +770,7 @@ HilightElevator (int ElevatorRow)
 
   free( Elevatorname );
 
-  printf("\n\nHighlightElevator (int ElevatorRow): ElevatorRow=%d.", ElevatorRow );
+  // printf("\n\nHighlightElevator (int ElevatorRow): ElevatorRow=%d.", ElevatorRow );
 }  // void HilightElevator (int ElevatorRow)
 
 /*@Function============================================================

@@ -327,6 +327,17 @@ EXTERN int NoDirectionPressed (void);
 
 /* misc.c */
 #undef EXTERN
+#ifdef _menu_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+EXTERN void Cheatmenu (void);
+EXTERN void EscapeMenu (void);
+
+/* misc.c */
+#undef EXTERN
 #ifdef _misc_c
 #define EXTERN
 #else
@@ -348,8 +359,6 @@ EXTERN char *itoa (int, char *, int);
 EXTERN char *ltoa (long, char *, int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
-EXTERN void Cheatmenu (void);
-EXTERN void EscapeMenu (void);
 EXTERN void InsertNewMessage (void);
 EXTERN void Terminate (int);
 EXTERN void KillQueue (void);

@@ -11,10 +11,15 @@ jp
 
 The list of things I'm going to work on next:
 
+(?) Correct the stiffness of the keyboard handling in the Level Editor
+(?) Add instructions for using the Level editor in Freedroid perhaps on the home page
+
 1. Extend the Level Editor to show waypoint connections
 2. Extend the Level Editor to allow for resizing of decks
 3. Extend the Level Editor to allow for changing of color
 4. Extend the Level Editor to allow for changing of deck map
+5. Extend the Level Editor to automatically connect new waypoints to
+   visible other waypoints.
 
 5. Write a new ship/area for testing purposes: "The mining community"
    2.a One deck at least.

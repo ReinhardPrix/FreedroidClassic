@@ -21,10 +21,6 @@ Outstanding release-critical bugs (priority: high)
 
 - (rp) adapt Takeover game to the new engine
 
-- (rp?) Lift: show level-change in lift: probably just some
-  SDL_rectangle-filling needed, as it's a simple color scheme anyway
-  maybe even use alpha-channel??
-  
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
@@ -34,9 +30,6 @@ Outstanding release-critical bugs (priority: high)
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-- (rp!) Saving of Ships does NOT work correctly in the LevelEditor
-        integrated in the game 
-
 - We really should have a "dat" file, where the constants involving
   only the game physics are stored, so that people can write their
   own "mods" and also transfer their mods to new versions of freed.
@@ -86,14 +79,19 @@ Wishlist
 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
 
-- (rp): PORT the map-editor 'maped' ?
-  (PARTLY DONE: jp: A maped clone has partly been integrated into the game)
 
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
 
 
 Resolved bugs
 -------------
+- DONE  Saving of Ships does NOT work correctly in the LevelEditor
+        integrated in the game 
+        (rp): PORT the map-editor 'maped' ?
+        -->A maped clone has been integrated into the game
+- DONE  Lift: show level-change in lift: probably just some
+        SDL_rectangle-filling needed, as it's a simple color scheme anyway
+        maybe even use alpha-channel??
 - DONE  Incredible file sizes of ne_....bmp files should be reduced, e.g. by using gif file
         format instead, to reduce package size.
 - DONE  Robots now "jitter" until they reach their waypoint: adapt to new
