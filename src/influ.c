@@ -399,28 +399,14 @@ MoveInfluence ( int PlayerNum )
   HandleCurrentlyActivatedSkill();
 
   // --------------------
-  // What is this code good for??
-  // stop_influencer = FALSE ;
+  // Maybe we need to fire a bullet or set a new mouse move target
+  // for the new move-to location
   //
-  if ( stop_influencer )
-    {
-      Me [ PlayerNum ] . speed.x = 0.0;
-      Me [ PlayerNum ] . speed.y = 0.0;
-      if ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) )
-	{
-	  Me [ PlayerNum ] . firewait = 0;
-	  FireBullet ( PlayerNum );
-	}
-    }
-  else
-    {
-      if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
-	   ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) && 
-	   ( Me [ PlayerNum ] . status == WEAPON ) && 
-	   ( Me [ PlayerNum ] . firewait == 0 ) && 
-	   ( NoInfluBulletOnWay ( ) ) )
-	FireBullet ( PlayerNum );
-    }
+  if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+       ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) && 
+       ( Me [ PlayerNum ] . status == WEAPON ) && 
+       ( NoInfluBulletOnWay ( ) ) )
+    FireBullet ( PlayerNum );
 
   //--------------------
   // The influ should lose some of his speed when no key is pressed and
