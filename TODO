@@ -2,7 +2,7 @@
 Bugs
 =======
 
-next release: 0.7.1  (bug-fix release)
+next release: 0.7.2  (bug-fix release) 
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
@@ -18,9 +18,6 @@ Outstanding release-critical bugs (priority: high)
 - game should be able to check if yiff is actually _running_ and
   complain if not and/or continue 
 
-- (rp) Timing in takeover game 
-	- need to get machine-independent timing as in main-game
-
 - "hide" cheat menu from normal users (e.g. non-documented
   command-line switch), otherwise it's too easy ;)
 
@@ -32,6 +29,7 @@ Outstanding normal bugs (priority: normal)
   Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
   fragwuerdig. 
 
+- Rahmen missing in Takeover game !
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
@@ -55,8 +53,6 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 - hide mouse pointer
 
 - Blitz-schuesse flimmern jetzt zu stark/lang	
-
-- Concept view is ugly
 
 - level 11: console rechts unten ist verkehrt
 
@@ -115,43 +111,35 @@ Resolved bugs
   hoffe dass niemand sie doch gebraucht haette...
 - Schussfrequenz des 001 zu hoch
 - (rp) "Ghosts" (i.e. Enemeys go throught walls...)
-
 - (DONE)  gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
  --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
-
 - (DONE)  Laufschrift gehoert zu Paradroid-'extensions'
 	  --> habe sie als solche vermerkt.
-
 - (DONE)  (rp) Invincible mode: versagt manchmal (collisions)
 	  --> inzwischen ueberlebt man die absurdesten Kaempfe und Situationen damit
-
 - (DONE?)  (jp) Calculate all movement (where movement is to be understood in an abstract
 	   sense including movement of energy and such) framerate-dependant
 	   --> sollte weitestgehend erledigt sein.  Was fehlt noch?  Anmerkungen bitte.
-
 - (DONE)   (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
 	   Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
 	   --> Konsole ist jetzt relativ ansehnlich.  Weitere
 	   Verbesserungsvorschaege erwuenscht. 
 	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen
-
 - (DONE)   correct the too fast refresh movement and effect
 	   Refreshes sollten jetzt ordentlich arbeiten.  Etwas kalibrieren koennte man
 	   sie vielleicht noch.
-
 - (DONE)   correct the too fast explosion (blast) damage effect
 	   --> sowohl fuer Feinde als auch fuer den Influ sollte das
 	   jetzt angemessen wirken 
-
 - (DONE)   (rp) Takeover game still looks 'unfinished'
 	   --> der Reinhard hat da scheinbar weitgehend aufger\"aumt...
-
 - (DONE)   (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
 	   sind nur ein paar "Brumm-brumm" Geraeusche
 	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
 	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
-
 - (DONE) Also there are 516 in the yellow level, which shouldn't be the  case.
    I also encounter OTHER 001 druids of black color! Especially after having died at
   least once before!  Very strange!
   (rp: this should now work ok)
+- (rp) Timing in takeover game 
+- Concept view is ugly

@@ -6,7 +6,7 @@ The files of the Freedroid Project
 Directory structure:
 --------------------
 ./
-./daten/
+./src/
 ./map/
 ./sound/
 ./graphics/
@@ -16,14 +16,13 @@ Text Files containing descriptions:
 
 FILES		: This file.
 TASK_CHART	: Who does what?
-TODO		: What is left to do?
+TODO		: What is left to do? mainly for BUGS
 
-The Makefile:
--------------
-Makefile	: The Makefile contains all instructions needed by
-		  'make' to make an executable out of the C  
-		  code of our project.  This file btw can also do some
-		  other tricks ;-) 
+The configure-script
+--------------------
+configure	: a shell script that analyses some of the host's
+		parameters and settings, and produces the appropriate
+		Makefiles and the include-file config.h
 
 Various header files:
 ---------------------
@@ -35,7 +34,8 @@ defs.h		: This is a most important header file.  All
 		  contained in here. 
 global.h	: This is also a most important header file.  All
 		  global variabled, that are needed in several 
-                  different .c files need to have an extern/not extern line here.
+                  different .c files need to have an extern/not extern
+		  line here. 
 proto.h		: This is a most important header file.  All
 		  functions, that are of imortance (i.e. are called) from 
 		  various different .c files must have an external/not
@@ -47,10 +47,10 @@ struct.h	: This is a most important header file.  All data
 
 takeover.h	: Header file for the Takeover-Game
 map.h		: Header file for the map functions
-paratext.h	: Header file for the text functions
+text.h		: Header file for the text functions
 ship.h		: Header file for the ship functions
 
-paravars.h	: 'Header' file, containing initialized variables of
+vars.h		: 'Header' file, containing initialized variables of
 		  importance to the whole game, that are declared 
 		  als external in global.h
 
@@ -92,13 +92,13 @@ map.c		: All map-related functions, which also includes
 misc.c		: This file shall contain miscellaneous helpful
 		  functions for paraplus, that do not belong elsewhere 
 
-para.c		: This is the main program file.  Is should preferably
+main.c		: This is the main program file.  Is should preferably
 		  only contain main and some definitions 
 
-parainit.c	: This file contains functions to initialize the game
+init.c		  : This file contains functions to initialize the game
 		  procedure, e.g. Title, InitNewGame, InitParaplus. 
 
-paratext.c	: contains all functions dealing with the HUGE, BIG
+text.c		  : contains all functions dealing with the HUGE, BIG
 		  font used for the top status line, the score and
 		  the text displayed during briefing and highscore
 		  inverview.  This has NOTHING to do with the fonts 
