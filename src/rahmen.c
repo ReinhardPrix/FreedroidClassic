@@ -46,12 +46,12 @@
 // bug that only occurs when very little space is given for those
 // rectangles...
 //
-#define UPPER_BANNER_TEXT_RECT_X (SCREEN_WIDTH/4)
+#define UPPER_BANNER_TEXT_RECT_X (GameConfig . screen_width/4)
 #define UPPER_BANNER_TEXT_RECT_Y 1
-#define UPPER_BANNER_TEXT_RECT_W (SCREEN_WIDTH/2)
+#define UPPER_BANNER_TEXT_RECT_W (GameConfig . screen_width/2)
 #define UPPER_BANNER_TEXT_RECT_H 130
 #define LOWER_BANNER_TEXT_RECT_X UPPER_BANNER_TEXT_RECT_X
-#define LOWER_BANNER_TEXT_RECT_Y ( SCREEN_HEIGHT - UPPER_BANNER_TEXT_RECT_Y - UPPER_BANNER_TEXT_RECT_H )
+#define LOWER_BANNER_TEXT_RECT_Y ( GameConfig . screen_height - UPPER_BANNER_TEXT_RECT_Y - UPPER_BANNER_TEXT_RECT_H )
 #define LOWER_BANNER_TEXT_RECT_W UPPER_BANNER_TEXT_RECT_W
 #define LOWER_BANNER_TEXT_RECT_H UPPER_BANNER_TEXT_RECT_H
 #define BANNER_TEXT_REC_BACKGROUNDCOLOR 0x00
@@ -622,7 +622,7 @@ blit_energy_o_meter( void )
       // We define the right side of the user screen as the rectangle
       // for our speed-o-meter
       //
-      SpeedMeterRect.x = SCREEN_WIDTH - speed_meter_iso_image . surface ->w;
+      SpeedMeterRect.x = GameConfig . screen_width - speed_meter_iso_image . surface ->w;
       SpeedMeterRect.y = 0; 
       SpeedMeterRect.w = speed_meter_iso_image . surface -> w;
       SpeedMeterRect.h = speed_meter_iso_image . surface -> h;
@@ -648,15 +648,15 @@ blit_energy_o_meter( void )
       prepare_open_gl_for_blending_textures ( );
 
       blit_open_gl_texture_to_screen_position ( speed_meter_iso_image , 
-						SCREEN_WIDTH - speed_meter_iso_image . original_image_width , 0 , FALSE );
+						GameConfig . screen_width - speed_meter_iso_image . original_image_width , 0 , FALSE );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
-						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 
+						 GameConfig . screen_width - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						 0 + PivotPosition . y  , 
 						 - 360 * 3 / 4 * Me [ 0 ] . energy / Me [ 0 ] . maxenergy );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
-						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 
+						 GameConfig . screen_width - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						 0 + PivotPosition . y  , 
 						 - 360 * 3 / 4 * Me [ 0 ] . mana / Me [ 0 ] . maxmana );
 

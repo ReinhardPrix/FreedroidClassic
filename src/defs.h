@@ -308,7 +308,7 @@ enum
 #define SKILL_LEVEL_BUTTON_WIDTH 30
 
 #define FIRST_MENU_ITEM_POS_X (64)
-#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
+#define FIRST_MENU_ITEM_POS_XX ( GameConfig . screen_width - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
 
 #define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
@@ -321,17 +321,17 @@ enum
 #define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 4000
 
 #define SCROLLSTARTX		User_Rect.x
-#define SCROLLSTARTY		SCREEN_HEIGHT
+#define SCROLLSTARTY		GameConfig . screen_height
 
 #define INITIAL_DIGIT_LENGTH (8*2)
 #define INITIAL_DIGIT_HEIGHT (9*2)
 #define INITIAL_DIGIT_POS_X 5*2
 #define INITIAL_DIGIT_POS_Y 12*2
 
-// #define SCREEN_WIDTH		640
-// #define SCREEN_HEIGHT		480
-#define SCREEN_WIDTH		800
-#define SCREEN_HEIGHT		600
+// #define GameConfig . screen_width		640
+// #define GameConfig . screen_height		480
+// #define GameConfig . screen_width		800
+// #define GameConfig . screen_height		600
 
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
@@ -583,10 +583,10 @@ enum
     MAX_MOUSE_PRESS_BUTTONS
   };
 
-#define CHAT_SUBDIALOG_WINDOW_X ((260)*SCREEN_WIDTH/640)
-#define CHAT_SUBDIALOG_WINDOW_Y ((42)*SCREEN_HEIGHT/480)
-#define CHAT_SUBDIALOG_WINDOW_W ((337)*SCREEN_WIDTH/640)
-#define CHAT_SUBDIALOG_WINDOW_H ((216)*SCREEN_HEIGHT/480)
+#define CHAT_SUBDIALOG_WINDOW_X ((260)*GameConfig . screen_width/640)
+#define CHAT_SUBDIALOG_WINDOW_Y ((42)*GameConfig . screen_height/480)
+#define CHAT_SUBDIALOG_WINDOW_W ((337)*GameConfig . screen_width/640)
+#define CHAT_SUBDIALOG_WINDOW_H ((216)*GameConfig . screen_height/480)
 
 #define STR_BASE_X 100
 #define STR_NOW_X 148
@@ -601,8 +601,8 @@ enum
 #define BUTTON_WIDTH 35
 #define BUTTON_HEIGHT 19
 
-#define CHARACTERRECT_X (SCREEN_WIDTH/2)
-#define CHARACTERRECT_W (SCREEN_WIDTH/2)
+#define CHARACTERRECT_X (GameConfig . screen_width/2)
+#define CHARACTERRECT_W (GameConfig . screen_width/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define EL_BLOCK_LEN		8

@@ -111,7 +111,7 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
   if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
       SetCurrentFont ( FPS_Display_BFont );
-      RightPutString( Screen , SCREEN_HEIGHT - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
+      RightPutString( Screen , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
       // printf ("\n%s %s  \n", PACKAGE, VERSION);
       sprintf ( open_gl_string , "OpenGL support compiled: " );
 #ifdef HAVE_LIBGL
@@ -119,13 +119,13 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 #else
       strcat ( open_gl_string , " NO " ) ;
 #endif
-      LeftPutString( Screen , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
+      LeftPutString( Screen , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
       sprintf ( open_gl_string , "OpenGL output active: " );
       if ( use_open_gl )
 	strcat ( open_gl_string , " YES " ) ;
       else
 	strcat ( open_gl_string , " NO " ) ;
-      LeftPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , open_gl_string );
+      LeftPutString( Screen , GameConfig . screen_height - FontHeight ( GetCurrentFont() ) , open_gl_string );
     }
 
   //--------------------
@@ -205,7 +205,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
   //
   if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
 
-  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+  first_menu_item_pos_y = ( GameConfig . screen_height - NumberOfOptionsGiven * h ) / 2 ;
 
   print_menu_text ( InitialText , MenuTexts , first_menu_item_pos_y , background_code , MenuFont ) ;
 
@@ -241,7 +241,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
       // Depending on what highlight method has been used, we so some highlighting
       // of the currently selected menu options location on the screen...
       //
-      HighlightRect.x = ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
+      HighlightRect.x = ( GameConfig . screen_width - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
       HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
       HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
       HighlightRect.h = h;		    
@@ -563,7 +563,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     // Now we set some viable choice window and we compute the maximum number of lines
     // that will still fit well into the choice window.
     //
-    Choice_Window . x = 35*SCREEN_WIDTH/640; Choice_Window . y = 340*SCREEN_HEIGHT/480; Choice_Window . w = ( 640 - 70 ) * SCREEN_WIDTH / 640 ; Choice_Window . h = 110 * SCREEN_HEIGHT / 480 ;
+    Choice_Window . x = 35*GameConfig . screen_width/640; Choice_Window . y = 340*GameConfig . screen_height/480; Choice_Window . w = ( 640 - 70 ) * GameConfig . screen_width / 640 ; Choice_Window . h = 110 * GameConfig . screen_height / 480 ;
     MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
     MaxLinesInMenuRectangle = 5;
     DebugPrintf ( 1 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
@@ -681,7 +681,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
 	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
 	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
-	  if ( HighlightRect.w > 550*SCREEN_WIDTH/640 ) HighlightRect.w = 550*SCREEN_WIDTH/640 ;
+	  if ( HighlightRect.w > 550*GameConfig . screen_width/640 ) HighlightRect.w = 550*GameConfig . screen_width/640 ;
 	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
 	  HighlightRectangle ( Screen , HighlightRect );

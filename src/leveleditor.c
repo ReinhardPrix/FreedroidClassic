@@ -4884,17 +4884,17 @@ LevelEditor(void)
 	  //
 	  if ( GameConfig . zoom_is_on )
 	    {
-	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ) , 
+								   (float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ), 
+								   (float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), FALSE );
 	    }
 	  else
 	    {
-	      TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ) , 
+								   (float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ), 
+								   (float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), FALSE );
 	    }
 
  
@@ -5067,12 +5067,12 @@ LevelEditor(void)
 		  //
 		  if ( GameConfig . zoom_is_on )
 		    Me [ 0 ] . pos . x = 
-		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ) , 
-							(float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ) , 
+							(float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), TRUE ); 
 		  else
 		    Me [ 0 ] . pos . x = 
-		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ) , 
-							(float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ) , 
+							(float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), TRUE ); 
 
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-1 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-1 ;
@@ -5080,12 +5080,12 @@ LevelEditor(void)
 
 		  if ( GameConfig . zoom_is_on )
 		    Me [ 0 ] . pos . y = 
-		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ), 
-							       (float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), FALSE );
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ), 
+							       (float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), FALSE );
 		  else
 		    Me [ 0 ] . pos . y = 
-		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( SCREEN_WIDTH / 2 ), 
-							(float) GetMousePos_y()  - ( SCREEN_HEIGHT / 2 ), FALSE );
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x()  - ( GameConfig . screen_width / 2 ), 
+							(float) GetMousePos_y()  - ( GameConfig . screen_height / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-1 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-1 ;
 		  if ( Me [ 0 ] . pos . y <= 0 ) Me [ 0 ] . pos . y = 0;

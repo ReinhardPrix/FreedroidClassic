@@ -230,7 +230,7 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     ItemImageCode = AlarmItem -> type ;
     
     TargetRect . x = 60 * Position ;
-    TargetRect . y = SCREEN_HEIGHT - 80 ;
+    TargetRect . y = GameConfig . screen_height - 80 ;
     
     if ( AlarmItem->current_duration < 5 )
     {
@@ -1607,7 +1607,7 @@ blit_classic_SDL_light_radius( void )
   our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
   our_max_height = our_max_width;
 
-  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+  window_offset_x = - ( GameConfig . screen_width / 2 ) + UserCenter_x ;
 
   for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
     {
@@ -1976,22 +1976,22 @@ AssembleCombatPicture (int mask)
     }
     
     if ( ServerMode )
-	CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );
+	CenteredPrintStringFont ( Screen , Menu_BFont , GameConfig . screen_height/2 , " S E R V E R ! ! ! " );
     
     if ( GameConfig.Inventory_Visible ) 
     {
-	User_Rect.x = SCREEN_WIDTH/2;
-	User_Rect.w = SCREEN_WIDTH/2;
+	User_Rect.x = GameConfig . screen_width/2;
+	User_Rect.w = GameConfig . screen_width/2;
     }
     else if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ) 
     {
-	User_Rect.x = 0; // SCREEN_WIDTH/2;
-	User_Rect.w = SCREEN_WIDTH/2;
+	User_Rect.x = 0; // GameConfig . screen_width/2;
+	User_Rect.w = GameConfig . screen_width/2;
     }
     else
     {
 	User_Rect.x = 0;
-	User_Rect.w = SCREEN_WIDTH;
+	User_Rect.w = GameConfig . screen_width;
     }
     
     //--------------------
@@ -4433,7 +4433,7 @@ A droid portrait failed to load.",
     }
 
   SDL_SetClipRect( Screen , NULL );
-  Set_Rect (target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+  Set_Rect (target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
   our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
 
   SDL_FreeSurface(tmp);
@@ -4533,7 +4533,7 @@ ShowInventoryScreen( void )
   //
   InventoryRect.x = 0;
   InventoryRect.y = User_Rect.y;
-  InventoryRect.w = SCREEN_WIDTH/2;
+  InventoryRect.w = GameConfig . screen_width/2;
   InventoryRect.h = User_Rect.h;
 
   //--------------------

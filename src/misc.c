@@ -125,7 +125,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , TRUE } ,
     { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , TRUE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { CHARACTERRECT_X + 11 , 449 , 271 , 25 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0 + 11 , 449 , 271 , 25 } , FALSE } ,
 
     { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { -50-6 , -50-8 , 25 ,  25 } , FALSE } ,
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { -50-6 , -4-25 , 25 ,  25 } , FALSE } ,
@@ -164,8 +164,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } , FALSE } ,
 
-    { NULL , "backgrounds/SaveGameBanner.png"                 , { (-200)/2 , (-50)/2 , 200 , 50 } , FALSE } ,
-    { NULL , "backgrounds/LoadGameBanner.png"                 , { (-200)/2 , (-50)/2 , 200 , 50 } , FALSE } ,
+    { NULL , "backgrounds/SaveGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE } ,
+    { NULL , "backgrounds/LoadGameBanner.png"                 , { 0 , 0 , 200 , 50 } , FALSE } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } , FALSE } ,
@@ -177,10 +177,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE } ,
-    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } , FALSE } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE } ,
+    { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } , FALSE } ,
 
     //--------------------
     // These two buttons are for the scrolling text during the
@@ -376,10 +376,54 @@ adapt_button_positions_to_screen_resolution( void )
     for ( i = 0 ; i < MAX_MOUSE_PRESS_BUTTONS ; i ++ )
     {
 	if ( AllMousePressButtons[ i ] . button_rect . x < 0 )
-	    AllMousePressButtons[ i ] . button_rect . x += SCREEN_WIDTH ;
+	    AllMousePressButtons[ i ] . button_rect . x += GameConfig . screen_width ;
 	if ( AllMousePressButtons[ i ] . button_rect . y < 0 )
-	    AllMousePressButtons[ i ] . button_rect . y += SCREEN_HEIGHT ;
+	    AllMousePressButtons[ i ] . button_rect . y += GameConfig . screen_height ;
     }
+
+    AllMousePressButtons [ OPEN_CLOSE_SKILL_EXPLANATION_BUTTON ] . button_rect . x += CHARACTERRECT_X ;    
+
+    AllMousePressButtons [ MORE_STR_BUTTON ] . button_rect . x += CHARACTERRECT_X ;    
+    AllMousePressButtons [ MORE_MAG_BUTTON ] . button_rect . x += CHARACTERRECT_X ;    
+    AllMousePressButtons [ MORE_DEX_BUTTON ] . button_rect . x += CHARACTERRECT_X ;    
+    AllMousePressButtons [ MORE_VIT_BUTTON ] . button_rect . x += CHARACTERRECT_X ;    
+
+    AllMousePressButtons [ LOAD_GAME_BANNER ] . button_rect . x = (GameConfig . screen_width-200)/2 ;
+    AllMousePressButtons [ LOAD_GAME_BANNER ] . button_rect . y = (GameConfig . screen_height-50)/2 ;
+    AllMousePressButtons [ SAVE_GAME_BANNER ] . button_rect . x = (GameConfig . screen_width-200)/2 ;
+    AllMousePressButtons [ SAVE_GAME_BANNER ] . button_rect . y = (GameConfig . screen_height-50)/2 ;
+
+    Droid_Image_Window . x = 48*GameConfig . screen_width/640 ;
+    Droid_Image_Window . y = 44*GameConfig . screen_height/480 ;
+    Droid_Image_Window . w = 130*GameConfig . screen_width/640 ;
+    Droid_Image_Window . h = 172*GameConfig . screen_height/480 ;
+
+    Full_Screen_Rect . x = 0 ;
+    Full_Screen_Rect . y = 0 ; 
+    Full_Screen_Rect . w = GameConfig . screen_width ;
+    Full_Screen_Rect . h = GameConfig . screen_height ;
+
+    Classic_User_Rect . x = (GameConfig . screen_width-9*INITIAL_BLOCK_WIDTH) / 2 ;
+    Classic_User_Rect . y = 2*(GameConfig . screen_height-4*INITIAL_BLOCK_HEIGHT)/3 ;
+    Classic_User_Rect . w = 9*INITIAL_BLOCK_WIDTH ;
+    Classic_User_Rect . h = 4*INITIAL_BLOCK_HEIGHT ;
+
+    Full_User_Rect . x = 0 ;
+    Full_User_Rect . y = 0 ;
+    Full_User_Rect . w = GameConfig . screen_width ;
+    Full_User_Rect . h = GameConfig . screen_height ;
+
+    Cons_Rect . x =  16 ;
+    Cons_Rect . y = 162 ;
+    Cons_Rect . w = 595 ;
+    Cons_Rect . h = 315 ;
+
+    Cons_Text_Rect . x = 175 ;
+    Cons_Text_Rect . y = 180 ;
+    Cons_Text_Rect . w = GameConfig . screen_width-175 ;
+    Cons_Text_Rect . h = 305 ;
+
+
 }; // void adapt_button_positions_to_screen_resolution( void )
 
 /* ----------------------------------------------------------------------
@@ -430,10 +474,10 @@ button index given exceeds the number of buttons defined in freedroid.",
     //
     if ( AllMousePressButtons [ ButtonIndex ] . scale_this_button )
     {
-	AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)SCREEN_WIDTH)/640.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)SCREEN_WIDTH)/640.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)SCREEN_HEIGHT)/480.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)SCREEN_HEIGHT)/480.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)GameConfig . screen_width)/640.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)GameConfig . screen_width)/640.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)GameConfig . screen_height)/480.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)GameConfig . screen_height)/480.0 ;
 	AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
     }
 
@@ -518,15 +562,15 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	
 	if ( AllMousePressButtons [ ButtonIndex ] . scale_this_button )
 	{
-	    tmp = zoomSurface( AllMousePressButtons[ ButtonIndex ] . button_surface , ((float)SCREEN_WIDTH)/640.0 , ((float)SCREEN_HEIGHT)/480.0 , 0 );
+	    tmp = zoomSurface( AllMousePressButtons[ ButtonIndex ] . button_surface , ((float)GameConfig . screen_width)/640.0 , ((float)GameConfig . screen_height)/480.0 , 0 );
 	    SDL_FreeSurface ( AllMousePressButtons[ ButtonIndex ] . button_surface );
 	    AllMousePressButtons[ ButtonIndex ] . button_surface = our_SDL_display_format_wrapperAlpha ( tmp );
 	    SDL_FreeSurface ( tmp );
 
-	    AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)SCREEN_WIDTH)/640.0 ;
-	    AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)SCREEN_WIDTH)/640.0 ;
-	    AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)SCREEN_HEIGHT)/480.0 ;
-	    AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)SCREEN_HEIGHT)/480.0 ;
+	    AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)GameConfig . screen_width)/640.0 ;
+	    AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)GameConfig . screen_width)/640.0 ;
+	    AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)GameConfig . screen_height)/480.0 ;
+	    AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)GameConfig . screen_height)/480.0 ;
 	    AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
 	}
     }
@@ -1469,42 +1513,44 @@ mystrnlen ( char* MyString , int MyMaxlen )
 int
 LoadGameConfig (void)
 {
-  char fname[5000];
-  FILE *config;
-
-  if (!ConfigDir)
+    char fname[5000];
+    FILE *config;
+    int original_width_of_screen = GameConfig . screen_width ;
+    int original_height_of_screen = GameConfig . screen_height ;
+    
+    if (!ConfigDir)
     {
-      DebugPrintf (1, "No useable config-dir. No config-loading possible\n");
-      return (OK);
+	DebugPrintf (1, "No useable config-dir. No config-loading possible\n");
+	return (OK);
     }
-
-  sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "rb")) == NULL)
+    
+    sprintf (fname, "%s/config", ConfigDir);
+    if( (config = fopen (fname, "rb")) == NULL)
     {
-      DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
-      return (ERR);
+	DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
+	return (ERR);
     }
-  
-  //--------------------
-  // Now read the actual data
-  // ok, this is neither very portable nor very flexible, we just want that working...
-  fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
-  fclose (config);
-
-  //--------------------
-  // Now we do some extra security check:  Maybe the old settings file
-  // was generated by a different version of freedroid.  Then extra care
-  // must be taken:  The misinterpretation of values could case segmentation
-  // faults and things like that.
-  //
-  // For this purpose I'd like to use the function 'strnlen' but this would be 
-  // a gnu extension and not standard C, so I have to use the 'mystrlen' function
-  // taken from the gnu c manual.
-  //
-  if ( ( mystrnlen ( GameConfig.freedroid_version_string , 100 ) != strlen ( VERSION ) ) ||
-       ( memcmp ( GameConfig.freedroid_version_string , VERSION , strlen ( VERSION ) ) ) )
+    
+    //--------------------
+    // Now read the actual data
+    // ok, this is neither very portable nor very flexible, we just want that working...
+    fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+    fclose (config);
+    
+    //--------------------
+    // Now we do some extra security check:  Maybe the old settings file
+    // was generated by a different version of freedroid.  Then extra care
+    // must be taken:  The misinterpretation of values could case segmentation
+    // faults and things like that.
+    //
+    // For this purpose I'd like to use the function 'strnlen' but this would be 
+    // a gnu extension and not standard C, so I have to use the 'mystrlen' function
+    // taken from the gnu c manual.
+    //
+    if ( ( mystrnlen ( GameConfig.freedroid_version_string , 100 ) != strlen ( VERSION ) ) ||
+	 ( memcmp ( GameConfig.freedroid_version_string , VERSION , strlen ( VERSION ) ) ) )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Settings file found in your ~/.freedroid_rpg dir does not\n\
 seem to be from the same version a this installation of freedroid.\n\
 This is perfectly normal if you have just upgraded your version of\n\
@@ -1512,29 +1558,35 @@ freedroid.  But the loading of your settings will be cancelled now,\n\
 cause the format of the settings file is no longer supported.  \n\
 No need to panic.  The default settings will be used instead and a new\n\
 settings file will be generated.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      ResetGameConfigToDefaultValues (  );
-      return (ERR);
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	ResetGameConfigToDefaultValues (  );
+	return (ERR);
     };
+    
+    //--------------------
+    // We may print out that config was loaded successfully...
+    // This might stay in here.
+    //
+    DebugPrintf ( 0 , "\nSuccessfully loaded and enforced your personal configuration file %s.\n\n" , fname );
+    
+    //--------------------
+    // Now we will turn off the skills and inventory screen and that, cause
+    // this should be off when the game starts...
+    //
+    GameConfig . CharacterScreen_Visible = FALSE ;
+    GameConfig . Inventory_Visible = FALSE ;
+    GameConfig . Mission_Log_Visible = FALSE ;
+    GameConfig . SkillScreen_Visible = FALSE ;
+    GameConfig . Automap_Visible = FALSE ;
+    
+    if ( command_line_override_for_screen_resolution )
+    {
+	GameConfig . screen_width = original_width_of_screen ;
+	GameConfig . screen_height = original_height_of_screen ;
+    }
 
-  //--------------------
-  // We may print out that config was loaded successfully...
-  // This might stay in here.
-  //
-  DebugPrintf ( 0 , "\nSuccessfully loaded and enforced your personal configuration file %s.\n\n" , fname );
-
-  //--------------------
-  // Now we will turn off the skills and inventory screen and that, cause
-  // this should be off when the game starts...
-  //
-  GameConfig . CharacterScreen_Visible = FALSE ;
-  GameConfig . Inventory_Visible = FALSE ;
-  GameConfig . Mission_Log_Visible = FALSE ;
-  GameConfig . SkillScreen_Visible = FALSE ;
-  GameConfig . Automap_Visible = FALSE ;
-
-  return (OK);
-
+    return (OK);
+    
 }; // int LoadGameConfig ( void )
     
 /*----------------------------------------------------------------------

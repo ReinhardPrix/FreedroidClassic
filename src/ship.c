@@ -545,16 +545,16 @@ ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
     //--------------------
     // We initialize the text rectangle
     //
-    Cons_Text_Rect . x = 258 * SCREEN_WIDTH / 640 ; 
-    Cons_Text_Rect . y = 89 * SCREEN_HEIGHT / 480 ; 
-    Cons_Text_Rect . w = 346 * SCREEN_WIDTH / 640 ; 
-    Cons_Text_Rect . h = 282 * SCREEN_HEIGHT / 480 ;
+    Cons_Text_Rect . x = 258 * GameConfig . screen_width / 640 ; 
+    Cons_Text_Rect . y = 89 * GameConfig . screen_height / 480 ; 
+    Cons_Text_Rect . w = 346 * GameConfig . screen_width / 640 ; 
+    Cons_Text_Rect . h = 282 * GameConfig . screen_height / 480 ;
     
     SDL_SetClipRect ( Screen , NULL );
     
     blit_special_background ( ITEM_BROWSER_BG_PIC_BACKGROUND_CODE ) ;
     
-    ShowDroidPicture ( 45 * SCREEN_WIDTH / 640 , 190 * SCREEN_HEIGHT / 480 , droidtype );
+    ShowDroidPicture ( 45 * GameConfig . screen_width / 640 , 190 * GameConfig . screen_height / 480 , droidtype );
     
     //--------------------
     // We fill out the header area of the items browser.
@@ -562,7 +562,7 @@ ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
     SetCurrentFont ( Menu_BFont );
     strcpy ( TextChunk , Druidmap [ droidtype ] . druidname );
     CutDownStringToMaximalSize ( TextChunk , 225 );
-    PutString ( Screen , 330 * SCREEN_WIDTH / 640 , 38 * SCREEN_HEIGHT / 480 , TextChunk );
+    PutString ( Screen , 330 * GameConfig . screen_width / 640 , 38 * GameConfig . screen_height / 480 , TextChunk );
     
     sprintf( InfoText, "\
 Unit type %s - %s\n\
@@ -753,7 +753,7 @@ trying to make the ultra-fine item rotation series.  Strange.",
   tmp = ItemRotationSurfaces[ RotationIndex ] ;
 
   SDL_SetClipRect( Screen , NULL );
-  Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+  Set_Rect ( target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
   our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
 
   DebugPrintf (2, "\nvoid ShowItemPicture(...): Usual end of function reached.");
@@ -847,7 +847,7 @@ This error indicates some installation problem with freedroid.",
     tmp = DroidRotationSurfaces[ RotationIndex ] ;
     
     SDL_SetClipRect( Screen , NULL );
-    Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+    Set_Rect ( target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
     our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
     
     DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Usual end of function reached.");
@@ -1359,12 +1359,12 @@ ShowDeckMap (Level deck)
 	      //--------------------
 	      // First we find out which map square the player wishes us to operate on
 	      // 
-	      // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
-	      // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
-	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( )  - ( GameConfig . screen_width / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
+	      // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( )  - ( GameConfig . screen_height / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( GameConfig . screen_width / 2 ) , 
+								   (float) GetMousePos_y ( )  - ( GameConfig . screen_height / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( GameConfig . screen_width / 2 ), 
+								   (float) GetMousePos_y ( )  - ( GameConfig . screen_height / 2 ), FALSE );
 	      
 
 	      //--------------------
@@ -1373,14 +1373,14 @@ ShowDeckMap (Level deck)
 	      //
 	      if ( SelectedFunction == NO_FUNCTION )
 		{
-		  Me [ 0 ] . pos . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), TRUE );
+		  Me [ 0 ] . pos . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( GameConfig . screen_width / 2 ) , 
+								   (float) GetMousePos_y ( )  - ( GameConfig . screen_height / 2 ), TRUE );
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
 		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
 		  
-		  Me [ 0 ] . pos . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( )  - ( SCREEN_HEIGHT / 2 ), FALSE );
+		  Me [ 0 ] . pos . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( )  - ( GameConfig . screen_width / 2 ), 
+								   (float) GetMousePos_y ( )  - ( GameConfig . screen_height / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
 		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;

@@ -87,22 +87,22 @@ ShowStartupPercentage ( int Percentage )
 	blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
 #endif
     
-    Bar_Rect . x = 200 * SCREEN_WIDTH / 640 ;
-    Bar_Rect . y = 200 * SCREEN_HEIGHT / 480 ;
-    Bar_Rect . w = 2 * Percentage * SCREEN_WIDTH / 640 ;
-    Bar_Rect . h = 30 * SCREEN_HEIGHT / 480 ;
+    Bar_Rect . x = 200 * GameConfig . screen_width / 640 ;
+    Bar_Rect . y = 200 * GameConfig . screen_height / 480 ;
+    Bar_Rect . w = 2 * Percentage * GameConfig . screen_width / 640 ;
+    Bar_Rect . h = 30 * GameConfig . screen_height / 480 ;
     our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , FillColor ) ;
     
-    Bar_Rect . x = ( 200 + 2 * Percentage ) * SCREEN_WIDTH / 640 ;
-    Bar_Rect . y = 200 * SCREEN_HEIGHT / 480 ;
-    Bar_Rect . w = ( 200 - 2 * Percentage ) * SCREEN_WIDTH / 640 ;
-    Bar_Rect . h = 30 * SCREEN_HEIGHT / 480 ;
+    Bar_Rect . x = ( 200 + 2 * Percentage ) * GameConfig . screen_width / 640 ;
+    Bar_Rect . y = 200 * GameConfig . screen_height / 480 ;
+    Bar_Rect . w = ( 200 - 2 * Percentage ) * GameConfig . screen_width / 640 ;
+    Bar_Rect . h = 30 * GameConfig . screen_height / 480 ;
     our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , 0 ) ;
     
     SDL_SetClipRect( Screen , NULL );
     
-    PrintString ( Screen , ( 200 + 80 ) * SCREEN_WIDTH / 640 , 
-		  ( 200 + 4 ) * SCREEN_HEIGHT / 480 , "%d%%", Percentage ) ;
+    PrintString ( Screen , ( 200 + 80 ) * GameConfig . screen_width / 640 , 
+		  ( 200 + 4 ) * GameConfig . screen_height / 480 , "%d%%", Percentage ) ;
     
     our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
     
@@ -1070,6 +1070,7 @@ void
 ParseCommandLine (int argc, char *const argv[])
 {
     int c;
+    int resolution_code = 0 ;
 
     static struct option long_options[] = {
 	{"version",     0, 0,  'v'},
@@ -1078,17 +1079,25 @@ ParseCommandLine (int argc, char *const argv[])
 	{"no_open_gl",  0, 0,  'n'},
 	{"nosound",     0, 0,  'q'},
 	{"sound",       0, 0,  's'},
-	{"debug",       2, 0,  'd'},
+	{"debug",       1, 0,  'd'},
 	{"window",      0, 0,  'w'},
 	{"fullscreen",  0, 0,  'f'},
 	{"mapcheck",    0, 0,  'm'},
 	{"sensitivity", 1, 0,  'j'},
+	{"resolution",  1, 0,  'r'},	
 	{ 0,            0, 0,    0}
     };
 
+    //--------------------
+    // We set the screen resolution to some default values.
+    //
+    GameConfig . screen_width = 640 ;
+    GameConfig . screen_height = 480 ;
+    command_line_override_for_screen_resolution = FALSE ;
+
     while ( 1 )
     {
-	c = getopt_long ( argc , argv , "vonqst:h?d::wfmj:" , long_options , NULL );
+	c = getopt_long ( argc , argv , "vonqst:h?d::r:wfmj:" , long_options , NULL );
 	if ( c == -1 )
 	    break;
 
@@ -1138,6 +1147,52 @@ ParseCommandLine (int argc, char *const argv[])
 		    debug_level = 1;
 		else
 		    debug_level = atoi (optarg);
+		break;
+		
+	    case 'r':
+		if (!optarg) 
+		{
+		    GameConfig . screen_width = 640; 
+		    GameConfig . screen_height = 480 ;
+		}
+		else
+		{
+		    resolution_code = atoi (optarg);
+		    switch ( resolution_code )
+		    {
+			case 0:
+			    command_line_override_for_screen_resolution = TRUE ;
+			    GameConfig . screen_width = 640 ; 
+			    GameConfig . screen_height = 480 ;
+			    DebugPrintf ( 1 , "\n%s(): Command line argument -r 0 recognized." , __FUNCTION__ );
+			    break;
+			case 1:
+			    command_line_override_for_screen_resolution = TRUE ;
+			    GameConfig . screen_width = 800 ; 
+			    GameConfig . screen_height = 600 ;
+			    DebugPrintf ( 1 , "\n%s(): Command line argument -r 1 recognized." , __FUNCTION__ );
+			    break;
+			case 2:
+			    command_line_override_for_screen_resolution = TRUE ;
+			    GameConfig . screen_width = 1024 ; 
+			    GameConfig . screen_height = 768 ;
+			    DebugPrintf ( 1 , "\n%s(): Command line argument -r 2 recognized." , __FUNCTION__ );
+			    break;
+			default:
+			    fprintf( stderr, "\nresolution code received: %d" , resolution_code );
+			    GiveStandardErrorMessage ( __FUNCTION__  , "\
+The resolution identifier given is not a valid resolution code.\n\
+Please enter one of the options 0, 1 or 2 as the resolution code.\n\
+These codes correspond to the following resolutions available:\n\
+     0 = 640 x 480 (default)\n\
+     1 = 800 x 600 \n\
+     2 = 1024 x 748 \n\
+Anything else will not be accepted right now, but you can send in\n\
+your suggestion to the FreedroidRPG dev team to enable new resolutions.",
+						       NO_NEED_TO_INFORM , IS_FATAL );
+			    break;
+		    }
+		}
 		break;
 		
 	    case 'f':
@@ -1832,7 +1887,7 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . transparency = FALSE ;
     GameConfig . automap_manual_shift_x = 0 ;
     GameConfig . automap_manual_shift_y = - ( AUTOMAP_TEXTURE_HEIGHT / 2 ) ;
-    
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------
@@ -1956,8 +2011,12 @@ InitFreedroid ( void )
     InventorySize.x = INVENTORY_GRID_WIDTH ;
     InventorySize.y = INVENTORY_GRID_HEIGHT ;
     
+    //--------------------
+    // Load some default configuration values and override them with
+    // the loaded config file, if one exists...
+    //
     ResetGameConfigToDefaultValues ();
-    
+
 #if __WIN32__
     homedir = ".";
 #else
@@ -2000,9 +2059,14 @@ I will not be able to load or save games or configurations\n\
 #endif
     }
 
-    //Load user config file if it exists...
     LoadGameConfig ();
+
+    //--------------------
+    // We parse the command line AGAIN here.  Maybe there were
+    // some overrides over the game config...
+    //
     
+
     Copy_Rect (Full_User_Rect, User_Rect);
     
     InitTimer ();

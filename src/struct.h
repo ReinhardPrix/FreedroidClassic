@@ -117,6 +117,8 @@ typedef struct
     int transparency ;
     int automap_manual_shift_x ;
     int automap_manual_shift_y ;
+    int screen_width;
+    int screen_height;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

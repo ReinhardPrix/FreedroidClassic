@@ -456,7 +456,7 @@ ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 	// overview row.  Therefore we just need to find out the index and
 	// can return;
 	//
-	return ( ( x - TuxItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) );
+	return ( ( x - TuxItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ) );
     }
     else
     {
@@ -470,7 +470,7 @@ ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 	// overview row.  Therefore we just need to find out the index and
 	// can return;
 	//
-	return ( ( x - ShopItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) );
+	return ( ( x - ShopItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ) );
     }
 }; // int ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 
@@ -487,29 +487,29 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
     SDL_Rect TargetRectangle;
     
-    TuxItemRowRect . x = 55 * SCREEN_WIDTH / 640;
-    TuxItemRowRect . y = 410 * SCREEN_HEIGHT / 480 ;
-    TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
-    TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * SCREEN_WIDTH / 640  ;
+    TuxItemRowRect . x = 55 * GameConfig . screen_width / 640;
+    TuxItemRowRect . y = 410 * GameConfig . screen_height / 480 ;
+    TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
+    TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640  ;
     
-    ShopItemRowRect . x = 55 * SCREEN_WIDTH / 640 ;
-    ShopItemRowRect . y = 10 * SCREEN_HEIGHT / 480 ;
-    ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
-    ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * SCREEN_WIDTH / 640 ;
+    ShopItemRowRect . x = 55 * GameConfig . screen_width / 640 ;
+    ShopItemRowRect . y = 10 * GameConfig . screen_height / 480 ;
+    ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
+    ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640 ;
     
     if ( TuxItemRow == 1 )
     {
-	TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
 	TargetRectangle . y = TuxItemRowRect . y ;
     }
     else if ( TuxItemRow == 0 )
     {
-	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
 	TargetRectangle . y = ShopItemRowRect . y ;
     }
     else
     {
-	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
 	TargetRectangle . y = TuxItemRow ;
     }
     
@@ -565,10 +565,10 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
     //--------------------
     // We initialize the text rectangle
     //
-    Cons_Text_Rect . x = 258 * SCREEN_WIDTH / 640 ;
-    Cons_Text_Rect . y = 108 * SCREEN_HEIGHT / 480 ;
-    Cons_Text_Rect . w = 346 * SCREEN_WIDTH / 640 ;
-    Cons_Text_Rect . h = 255 * SCREEN_HEIGHT / 480 ;
+    Cons_Text_Rect . x = 258 * GameConfig . screen_width / 640 ;
+    Cons_Text_Rect . y = 108 * GameConfig . screen_height / 480 ;
+    Cons_Text_Rect . w = 346 * GameConfig . screen_width / 640 ;
+    Cons_Text_Rect . h = 255 * GameConfig . screen_height / 480 ;
     
     Displacement = 0;
 
@@ -608,18 +608,18 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	
 	if ( ItemIndex >= 0 ) 
 	{
-	    HighlightRect . x = ( ShopItemRowRect . x + ( ItemIndex - RowStart ) * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) ;
+	    HighlightRect . x = ( ShopItemRowRect . x + ( ItemIndex - RowStart ) * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ) ;
 	    HighlightRect . y = ShopItemRowRect . y ;
-	    HighlightRect . w = INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
-	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+	    HighlightRect . w = INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
+	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
 	    HighlightRectangle ( Screen , HighlightRect );
 	}
 	if ( TuxItemIndex >= 0 )
 	{
-	    HighlightRect . x = ( TuxItemRowRect . x + ( TuxItemIndex - TuxRowStart ) * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) ;
+	    HighlightRect . x = ( TuxItemRowRect . x + ( TuxItemIndex - TuxRowStart ) * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ) ;
 	    HighlightRect . y = TuxItemRowRect . y ;
-	    HighlightRect . w = INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
-	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+	    HighlightRect . w = INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
+	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
 	    HighlightRectangle ( Screen , HighlightRect );
 	}
 	

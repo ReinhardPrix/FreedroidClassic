@@ -61,19 +61,19 @@ int load_game_command_came_from_inside_running_game = FALSE ;
 void
 ShowSaveLoadGameProgressMeter( int Percentage , int IsSavegame ) 
 {
-  SDL_Rect TargetRect;
+    SDL_Rect TargetRect;
 
-  TargetRect.x = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . x + ( AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . w - 100 ) / 2 + 2 ;
-  TargetRect.y = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . y + 20 ;
-  TargetRect.w = Percentage ;
-  TargetRect.h = 20 ;
-
-  if ( IsSavegame) 
-    ShowGenericButtonFromList ( SAVE_GAME_BANNER );
-  else
-    ShowGenericButtonFromList ( LOAD_GAME_BANNER );
-  our_SDL_fill_rect_wrapper ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
-  UpdateScreenOverButtonFromList ( SAVE_GAME_BANNER );
+    TargetRect.x = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . x + ( AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . w - 100 ) / 2 + 2 ;
+    TargetRect.y = AllMousePressButtons[ SAVE_GAME_BANNER ] . button_rect . y + 20 ;
+    TargetRect.w = Percentage ;
+    TargetRect.h = 20 ;
+    
+    if ( IsSavegame) 
+	ShowGenericButtonFromList ( SAVE_GAME_BANNER );
+    else
+	ShowGenericButtonFromList ( LOAD_GAME_BANNER );
+    our_SDL_fill_rect_wrapper ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
+    UpdateScreenOverButtonFromList ( SAVE_GAME_BANNER );
 
 }; // void ShowSaveGameProgressMeter( int Percentage ) 
 
@@ -102,9 +102,9 @@ LoadAndShowThumbnail ( char* CoreFilename )
   NewThumbnail = our_IMG_load_wrapper ( filename );
   if ( NewThumbnail == NULL ) return;
 
-  // TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
+  // TargetRectangle.x = GameConfig . screen_width - NewThumbnail ->w ;
   TargetRectangle.x = 10 ;
-  TargetRectangle.y = SCREEN_HEIGHT - NewThumbnail ->h - 10 ;
+  TargetRectangle.y = GameConfig . screen_height - NewThumbnail ->h - 10 ;
 
   if ( use_open_gl ) swap_red_and_blue_for_open_gl ( NewThumbnail );  
   our_SDL_blit_surface_wrapper ( NewThumbnail , NULL , Screen , &TargetRectangle );
@@ -157,8 +157,8 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
 	   LocalTimeSplitup->tm_hour ,
 	   LocalTimeSplitup->tm_min );
 
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 3 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , InfoString );
+  PutString ( Screen , 240 , GameConfig . screen_height - 3 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
+  PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , InfoString );
 
   //--------------------
   // Now that the modification time has been set up, we can start to compute
@@ -194,8 +194,8 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   sprintf( InfoString , "File Size: %2.3f MB" , 
 	   ((float)FileSize) / ( 1024.0 * 1024.0 ) );
 
-  // PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
+  // PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
+  PutString ( Screen , 240 , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
 
 }; // void LoadAndShowStats ( char* filename );
 
@@ -232,9 +232,9 @@ SaveThumbnailOfGame ( void )
 	// Now we need to make a real SDL surface from the raw image data we
 	// have just extracted.
 	//
-	FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , SCREEN_WIDTH , SCREEN_HEIGHT, 24, 3 * SCREEN_WIDTH, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
+	FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , GameConfig . screen_width , GameConfig . screen_height, 24, 3 * GameConfig . screen_width, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
 	
-	NewThumbnail = zoomSurface( FullView , 0.32 * 640.0f / SCREEN_WIDTH , 0.32 * 640.0f / SCREEN_WIDTH , 0 );
+	NewThumbnail = zoomSurface( FullView , 0.32 * 640.0f / GameConfig . screen_width , 0.32 * 640.0f / GameConfig . screen_width , 0 );
 	
 	//--------------------
 	// Of course, since we used OpenGL for generating the raw image data, the data is

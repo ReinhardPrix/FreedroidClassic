@@ -179,7 +179,7 @@ number of inventory screen tiles with the item!  Fatal!",
     RescaleFactor = 1.0 / 2.0 ;
   else RescaleFactor = 1.0;
 
-  RescaleFactor *= ((float)SCREEN_WIDTH) / 640.0 ;
+  RescaleFactor *= ((float)GameConfig . screen_width) / 640.0 ;
 
   tmp_surf = zoomSurface ( ItemMap [ item_type ] . inv_image . Surface , RescaleFactor , RescaleFactor , FALSE );
   ItemMap [ item_type ] . inv_image . scaled_surface_for_shop = our_SDL_display_format_wrapperAlpha ( tmp_surf ) ;
@@ -771,8 +771,8 @@ iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos
     our_iso_image . offset_y ;
 
   if ( ( target_rectangle . x > shift_pixels_x ) && ( target_rectangle . y > shift_pixels_y ) &&
-       ( target_rectangle . x + our_iso_image . surface -> w < SCREEN_WIDTH - shift_pixels_x ) &&
-       ( target_rectangle . y + our_iso_image . surface -> h < SCREEN_HEIGHT - shift_pixels_y ) )
+       ( target_rectangle . x + our_iso_image . surface -> w < GameConfig . screen_width - shift_pixels_x ) &&
+       ( target_rectangle . y + our_iso_image . surface -> h < GameConfig . screen_height - shift_pixels_y ) )
     return ( TRUE );
 
   return ( FALSE );

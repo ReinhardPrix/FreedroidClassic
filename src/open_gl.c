@@ -208,10 +208,10 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 	  if ( dstrect == NULL )
 	    {
 	      glBegin(GL_QUADS);
-	      glVertex2i( 0                , SCREEN_HEIGHT );
+	      glVertex2i( 0                , GameConfig . screen_height );
 	      glVertex2i( 0                ,   0 );
-	      glVertex2i( 0 + SCREEN_WIDTH ,   0 );
-	      glVertex2i( 0 + SCREEN_WIDTH , SCREEN_HEIGHT );
+	      glVertex2i( 0 + GameConfig . screen_width ,   0 );
+	      glVertex2i( 0 + GameConfig . screen_width , GameConfig . screen_height );
 	      glEnd( );
 	    }
 	  else
@@ -770,10 +770,10 @@ initialzize_our_default_open_gl_parameters ( void )
     //--------------------
     // Set up the screne, viewport matrix, coordinate system and all that...
     //
-    glViewport( 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT );
+    glViewport( 0 , 0 , GameConfig . screen_width , GameConfig . screen_height );
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho( 0.0f , SCREEN_WIDTH , SCREEN_HEIGHT , 0.0f , -1.0f , 1.0f );
+    glOrtho( 0.0f , GameConfig . screen_width , GameConfig . screen_height , 0.0f , -1.0f , 1.0f );
     glMatrixMode(GL_MODELVIEW);
     
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -1198,9 +1198,9 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
     image_start_y = target_rectangle . y ;
     image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
     
-    if ( image_start_x > SCREEN_WIDTH ) return ;
+    if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
-    if ( image_start_y > SCREEN_HEIGHT ) return;
+    if ( image_start_y > GameConfig . screen_height ) return;
     if ( image_end_y < 0 ) return;
 
     // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1274,13 +1274,13 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , in
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * SCREEN_WIDTH / 640 ;
+    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 640 ;
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * SCREEN_HEIGHT / 480 ;
+    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 480 ;
     
-    if ( image_start_x > SCREEN_WIDTH ) return ;
+    if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
-    if ( image_start_y > SCREEN_HEIGHT ) return;
+    if ( image_start_y > GameConfig . screen_height ) return;
     if ( image_end_y < 0 ) return;
 
     texture_start_y = 1.0 ;
@@ -1337,13 +1337,13 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl
     //
     target_rectangle . x = 0 ;
     target_rectangle . y = 0 ;
-    target_rectangle . w = SCREEN_WIDTH ;
-    target_rectangle . h = SCREEN_HEIGHT ;
+    target_rectangle . w = GameConfig . screen_width ;
+    target_rectangle . h = GameConfig . screen_height ;
 
     image_start_x = target_rectangle . x ;
     image_start_y = target_rectangle . y ;
-    image_end_x = SCREEN_WIDTH  * our_floor_iso_image . texture_width / 640 ; 
-    image_end_y = SCREEN_HEIGHT * our_floor_iso_image . texture_height / 480 ; 
+    image_end_x = GameConfig . screen_width  * our_floor_iso_image . texture_width / 640 ; 
+    image_end_y = GameConfig . screen_height * our_floor_iso_image . texture_height / 480 ; 
 
     glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
     glBegin(GL_QUADS);
@@ -1414,9 +1414,9 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
     image_start_y = target_rectangle . y ;
     image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
     
-    if ( image_start_x > SCREEN_WIDTH ) return ;
+    if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
-    if ( image_start_y > SCREEN_HEIGHT ) return;
+    if ( image_start_y > GameConfig . screen_height ) return;
     if ( image_end_y < 0 ) return;
 
     // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1496,9 +1496,9 @@ blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image 
   image_start_y = target_rectangle . y ;
   image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * zoom_factor ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
   
-  if ( image_start_x > SCREEN_WIDTH ) return ;
+  if ( image_start_x > GameConfig . screen_width ) return ;
   if ( image_end_x < 0 ) return ;
-  if ( image_start_y > SCREEN_HEIGHT ) return;
+  if ( image_start_y > GameConfig . screen_height ) return;
   if ( image_end_y < 0 ) return;
 
   // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1616,9 +1616,9 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   corner4 . x += x ;
   corner4 . y += y ;
 
-  if ( image_start_x > SCREEN_WIDTH ) return ;
+  if ( image_start_x > GameConfig . screen_width ) return ;
   if ( image_end_x < 0 ) return ;
-  if ( image_start_y > SCREEN_HEIGHT ) return;
+  if ( image_start_y > GameConfig . screen_height ) return;
   if ( image_end_y < 0 ) return;
 
   texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . original_image_height)) / 127.0 ; // 1.0 
@@ -1652,8 +1652,8 @@ RestoreMenuBackground ( int backup_slot )
 	return;
 	
 #ifdef HAVE_LIBGL
-	glRasterPos2i ( 0 , SCREEN_HEIGHT - 1 ) ; 
-	glDrawPixels ( SCREEN_WIDTH , SCREEN_HEIGHT - 2 , GL_RGB, GL_UNSIGNED_BYTE, 
+	glRasterPos2i ( 0 , GameConfig . screen_height - 1 ) ; 
+	glDrawPixels ( GameConfig . screen_width , GameConfig . screen_height - 2 , GL_RGB, GL_UNSIGNED_BYTE, 
 		       (GLvoid*) StoredMenuBackground [ backup_slot ] );
 	return ;
 #endif
@@ -1694,10 +1694,10 @@ StoreMenuBackground ( int backup_slot )
 	//
 	if ( StoredMenuBackground [ backup_slot ] == NULL )
 	{
-	    StoredMenuBackground [ backup_slot ] = malloc ( ( SCREEN_WIDTH + 2 ) * ( SCREEN_HEIGHT + 2 ) * 4 ) ;
+	    StoredMenuBackground [ backup_slot ] = malloc ( ( GameConfig . screen_width + 2 ) * ( GameConfig . screen_height + 2 ) * 4 ) ;
 	}
 	
-	glReadPixels( 0 , 1, SCREEN_WIDTH , SCREEN_HEIGHT-1 , GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
+	glReadPixels( 0 , 1, GameConfig . screen_width , GameConfig . screen_height-1 , GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
 #endif
     }
     else
@@ -1811,14 +1811,14 @@ blit_open_gl_cheap_light_radius ( void )
     
     prepare_open_gl_for_light_radius ();
     
-    window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+    window_offset_x = - ( GameConfig . screen_width / 2 ) + UserCenter_x ;
     
 #define SHADOW_SQUARE_HEIGHT 12
 #define SHADOW_SQUARE_WIDTH 16
     
-    for ( our_height = 0 ; our_height < SCREEN_HEIGHT/SHADOW_SQUARE_HEIGHT ; our_height ++ )
+    for ( our_height = 0 ; our_height < GameConfig . screen_height/SHADOW_SQUARE_HEIGHT ; our_height ++ )
     {
-	for ( our_width = 0 ; our_width < SCREEN_WIDTH/SHADOW_SQUARE_WIDTH ; our_width ++ )
+	for ( our_width = 0 ; our_width < GameConfig . screen_width/SHADOW_SQUARE_WIDTH ; our_width ++ )
 	{
 	    if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 	    if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
@@ -1949,7 +1949,7 @@ blit_open_gl_light_radius ( void )
   our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
   our_max_height = our_max_width;
 
-  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+  window_offset_x = - ( GameConfig . screen_width / 2 ) + UserCenter_x ;
 
   for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
     {
@@ -2024,10 +2024,10 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
     if ( dstrect == NULL )
     {
 	glBegin(GL_QUADS);
-	glVertex2i( 0       , SCREEN_HEIGHT );
+	glVertex2i( 0       , GameConfig . screen_height );
 	glVertex2i( 0       ,   0 );
-	glVertex2i( 0 + SCREEN_WIDTH ,   0 );
-	glVertex2i( 0 + SCREEN_WIDTH , SCREEN_HEIGHT );
+	glVertex2i( 0 + GameConfig . screen_width ,   0 );
+	glVertex2i( 0 + GameConfig . screen_width , GameConfig . screen_height );
 	glEnd( );
     }
     else
@@ -2152,10 +2152,10 @@ blit_special_background ( int background_code )
 	    { 0 , 0 , 0 , 0 } ,               // 19
 	    { 0 , 0 , 0 , 0 } ,               // 20
 	    { 0 , 0 , 0 , 0 } ,               // 21
-	    { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , // 22
-	    { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } , // 23 
-	    { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } , // 24
-	    { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , // 25
+	    { GameConfig . screen_width - 80 , GameConfig . screen_height - 46 ,  38 ,  45 } , // 22
+	    { GameConfig . screen_width - 40 , GameConfig . screen_height - 60 ,  38 ,  40 } , // 23 
+	    { GameConfig . screen_width - 50 , GameConfig . screen_height - 104 ,  38 ,  47 } , // 24
+	    { GameConfig . screen_width - 80 , GameConfig . screen_height - 46 ,  38 ,  45 } , // 25
 	    { 0 , 0 , 0 , 0 } ,               // 26
 	    { CHAT_SUBDIALOG_WINDOW_X , 
 	      CHAT_SUBDIALOG_WINDOW_Y , 

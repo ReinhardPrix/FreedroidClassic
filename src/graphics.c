@@ -1024,7 +1024,7 @@ TakeScreenshot( void )
       // Now we need to make a real SDL surface from the raw image data we
       // have just extracted.
       //
-      FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , SCREEN_WIDTH , SCREEN_HEIGHT, 24, 3 * SCREEN_WIDTH, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
+      FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , GameConfig . screen_width , GameConfig . screen_height, 24, 3 * GameConfig . screen_width, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
 
       flip_image_horizontally ( FullView );
       
@@ -1109,19 +1109,19 @@ MakeGridOnScreen( SDL_Rect* GridRectangle )
     }
   if ( ( GridRectangle->h <= 0 ) || 
        ( GridRectangle->w <= 0 ) || 
-       ( GridRectangle->x >= SCREEN_WIDTH ) ||
-       ( GridRectangle->y >= SCREEN_HEIGHT ) )
+       ( GridRectangle->x >= GameConfig . screen_width ) ||
+       ( GridRectangle->y >= GameConfig . screen_height ) )
     {
       Copy_Rect ( TempRect , *GridRectangle );
       return;
     }
-  if ( ( GridRectangle->x + GridRectangle->w ) > SCREEN_WIDTH )
+  if ( ( GridRectangle->x + GridRectangle->w ) > GameConfig . screen_width )
     {
-      GridRectangle->w = SCREEN_WIDTH - GridRectangle->x ;
+      GridRectangle->w = GameConfig . screen_width - GridRectangle->x ;
     }
-  if ( ( GridRectangle->y + GridRectangle->h ) > SCREEN_HEIGHT )
+  if ( ( GridRectangle->y + GridRectangle->h ) > GameConfig . screen_height )
     {
-      GridRectangle->h = SCREEN_HEIGHT - GridRectangle->y ;
+      GridRectangle->h = GameConfig . screen_height - GridRectangle->y ;
     }
 
   //--------------------
@@ -1585,7 +1585,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
     // First we check to see if the mode we wish to set is really supported.  If it
     // isn't supported, then we cancel the whole operation...
     //
-    video_mode_ok_check_result = SDL_VideoModeOK( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+    video_mode_ok_check_result = SDL_VideoModeOK( GameConfig . screen_width, GameConfig . screen_height, vid_bpp , video_flags );
     switch ( video_mode_ok_check_result )
     {
 	case 0:
@@ -1617,7 +1617,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
     // output surface we want.  Of course, some extra checking will be done, so
     // that we know that the surface we're expecting is really there...
     //
-    Screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+    Screen = SDL_SetVideoMode( GameConfig . screen_width, GameConfig . screen_height, vid_bpp , video_flags );
     if ( !Screen )
     {
 	fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
@@ -1660,7 +1660,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
     //--------------------
     // Maybe resize the window to standard size?
     //
-    // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+    // resizeWindow( GameConfig . screen_width, GameConfig . screen_height );
     //
     
     //--------------------
@@ -1733,12 +1733,15 @@ InitVideo (void)
     //
     check_open_gl_libraries_present();
     
+    //--------------------
+    // We note the screen resolution used.
+    //
+    DebugPrintf ( -4 , "\nUsing screen resolution %d x %d." ,
+		  GameConfig . screen_width , GameConfig . screen_height );
     
     if ( use_open_gl )
     {
-	
 	set_video_mode_for_open_gl();
-	
     }
     else
     {
@@ -1752,7 +1755,7 @@ InitVideo (void)
 	 * once this is up and running, we'll provide others modes
 	 * as well.
 	 */
-	if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , video_flags )) )
+	if( !(Screen = SDL_SetVideoMode ( GameConfig . screen_width, GameConfig . screen_height , 0 , video_flags )) )
 	{
 	    fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
 		    SDL_GetError()); 

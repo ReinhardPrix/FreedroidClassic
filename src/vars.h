@@ -34,18 +34,6 @@
 #include "colodefs.h"
 #include "ship.h"
 
-SDL_Rect Full_Screen_Rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-SDL_Rect Classic_User_Rect = {
-  (SCREEN_WIDTH-9*INITIAL_BLOCK_WIDTH) / 2, 2*(SCREEN_HEIGHT-4*INITIAL_BLOCK_HEIGHT)/3,
-  9*INITIAL_BLOCK_WIDTH,  4*INITIAL_BLOCK_HEIGHT
-};
-
-SDL_Rect Full_User_Rect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-
-SDL_Rect Cons_Rect = {16, 162, 595, 315};
-
-SDL_Rect Cons_Text_Rect = {175, 180, SCREEN_WIDTH-175, 305}; 
-
 char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   {
     "iso_miscellaneous_floor_0000.png" , 

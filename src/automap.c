@@ -575,10 +575,10 @@ show_automap_data_ogl ( void )
     local_iso_image . original_image_height = AUTOMAP_TEXTURE_HEIGHT ;
     blit_semitransparent_open_gl_texture_to_screen_position ( 
 	local_iso_image , 
-	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) + SCREEN_WIDTH / 2 -
+	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) + GameConfig . screen_width / 2 -
 	GameConfig . automap_manual_shift_x -
 	( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
-	- ( AUTOMAP_TEXTURE_HEIGHT / 2 ) + SCREEN_HEIGHT / 2 -
+	- ( AUTOMAP_TEXTURE_HEIGHT / 2 ) + GameConfig . screen_height / 2 -
 	GameConfig . automap_manual_shift_y -
 	( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) );
 
@@ -600,9 +600,9 @@ show_automap_data_ogl ( void )
     // Now we can blit the icon on the automap too
     //
     blit_semitransparent_open_gl_texture_to_screen_position ( tux_on_the_map_iso_image , 
-							      SCREEN_WIDTH / 2 -
+							      GameConfig . screen_width / 2 -
 							      GameConfig . automap_manual_shift_x ,
-							      - SCREEN_HEIGHT / 2 -
+							      - GameConfig . screen_height / 2 -
 							      GameConfig . automap_manual_shift_y ) ;
 
 }; // void show_automap_data_ogl ( void )

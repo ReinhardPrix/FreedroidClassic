@@ -63,9 +63,9 @@
 #define AC_X 260
 #define AC_Y 171
 
-#define CHARACTERRECT_X (SCREEN_WIDTH/2)
+#define CHARACTERRECT_X (GameConfig . screen_width/2)
 // #define CHARACTERRECT_Y (User_Rect.y)
-#define CHARACTERRECT_W (SCREEN_WIDTH/2)
+#define CHARACTERRECT_W (GameConfig . screen_width/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define INV_BUTTON_X 600

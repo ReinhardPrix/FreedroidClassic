@@ -171,8 +171,8 @@ Takeover ( int enemynum )
     //
     User_Rect . x = 0 ;
     User_Rect . y = 0 ;
-    User_Rect . w = SCREEN_WIDTH ;
-    User_Rect . h = SCREEN_HEIGHT ;
+    User_Rect . w = GameConfig . screen_width ;
+    User_Rect . h = GameConfig . screen_height ;
     
     //--------------------
     // Maybe takeover graphics haven't been loaded yet.  Then we do this

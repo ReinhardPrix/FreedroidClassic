@@ -62,12 +62,6 @@ EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
 char* chat_protocol = NULL ;
 
-//--------------------
-// This is the droid window we used before Bastian reshaped
-// the chat interface:
-//
-static SDL_Rect Droid_Image_Window = { 48*SCREEN_WIDTH/640 , 44*SCREEN_HEIGHT/480 , 130*SCREEN_WIDTH/640 , 172*SCREEN_HEIGHT/480 } ;
-
 #define PUSH_ROSTER 2
 #define POP_ROSTER 3 
 
@@ -462,7 +456,7 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
     int lines_needed ;
     int protocol_offset ;
     
-#define AVERAGE_LINES_IN_PROTOCOL_WINDOW 9*SCREEN_HEIGHT/480
+#define AVERAGE_LINES_IN_PROTOCOL_WINDOW 9*GameConfig . screen_height/480
 
     if ( ! GameConfig . show_subtitles_in_dialogs ) return;
     
@@ -1853,9 +1847,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
       //--------------------
       // impose some limit on the amount to scroll away downwards
       //
-      if (InsertLine > SCREEN_HEIGHT - 10 && (speed < 0))
+      if (InsertLine > GameConfig . screen_height - 10 && (speed < 0))
 	{
-	  InsertLine = SCREEN_HEIGHT - 10;
+	  InsertLine = GameConfig . screen_height - 10;
 	  speed = 0;
 	}
 
@@ -2063,8 +2057,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       clip = & Temp_Clipping_Rect;
       Temp_Clipping_Rect.x=0;
       Temp_Clipping_Rect.y=0;
-      Temp_Clipping_Rect.w=SCREEN_WIDTH;
-      Temp_Clipping_Rect.h=SCREEN_HEIGHT;
+      Temp_Clipping_Rect.w=GameConfig . screen_width;
+      Temp_Clipping_Rect.h=GameConfig . screen_height;
     }
 
   //--------------------
@@ -2246,8 +2240,8 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
     StoreMenuBackground ( 0 );
   else
     {
-      store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
-      Set_Rect ( store_rect , x0 , y0 , SCREEN_WIDTH , height );
+      store = SDL_CreateRGBSurface(0, GameConfig . screen_width, height, vid_bpp, 0, 0, 0, 0);
+      Set_Rect ( store_rect , x0 , y0 , GameConfig . screen_width , height );
       our_SDL_blit_surface_wrapper (Screen, &store_rect, store, NULL);
     }
 
