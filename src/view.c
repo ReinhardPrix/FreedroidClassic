@@ -1785,10 +1785,19 @@ There was an item type given, that exceeds the range of item images loaded.",
   ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
   if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap ) return;
 
+  /*
   TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - CurItem -> pos . x ) * Block_Width  - 
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
   TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - CurItem -> pos . y ) * Block_Height - 
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
+  */
+
+  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE ) -
+    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
+  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , FALSE ) -
+    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
+
+  // translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE );
 
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
 

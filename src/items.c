@@ -1589,8 +1589,17 @@ DropHeldItemToTheFloor ( void )
       return;
     } 
 
-  x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - UserCenter_x ) / ( float ) Block_Width;
-  y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - UserCenter_y ) / ( float ) Block_Height; 
+  x = 
+    translate_pixel_to_map_location ( 0 , 
+				      ServerThinksInputAxisX ( 0 ) , 
+				      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  y = 
+    translate_pixel_to_map_location ( 0 , 
+				      ServerThinksInputAxisX ( 0 ) , 
+				      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+
+  // x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - UserCenter_x ) / ( float ) Block_Width;
+  // y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - UserCenter_y ) / ( float ) Block_Height; 
 
   DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
 
@@ -2191,9 +2200,19 @@ ManageInventoryScreen ( void )
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in user rect!" );
-	  MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-	  MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  // MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+	  // MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  MapPositionOfMouse . x = 
+	    translate_pixel_to_map_location ( 0 , 
+					      ServerThinksInputAxisX ( 0 ) , 
+					      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+	  MapPositionOfMouse . y = 
+	    translate_pixel_to_map_location ( 0 , 
+					      ServerThinksInputAxisX ( 0 ) , 
+					      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+
 	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	    {
 	      if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
