@@ -201,8 +201,8 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:56:16  rp
- * Initial revision
+ * Revision 1.2  1993/05/22 21:58:42  rp
+ * added level struct
  *
  * Revision 1.6  1993/09/30  17:57:20  prix
  * Fri Aug 06 14:56:25 1993: added first version of ship-struct
