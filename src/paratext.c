@@ -391,6 +391,8 @@ DisplayText (char *Text,
   char *tmp;			/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
   DebugPrintf ("\nvoid DisplayText(...): Funktion echt aufgerufen.");
+  DebugPrintf ("\nvoid DisplayText(...): Der Text lautet:\n");
+  DebugPrintf (Text);
 
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
@@ -441,7 +443,7 @@ DisplayText (char *Text,
       tmp++;
 
       CheckUmbruch ();		/* dont write over RightBorder */
-    }				/* while Fenster nicht voll */
+    } // while !FensterVoll()
   DebugPrintf
     ("\nvoid DisplayText(...): Funktionsende ordnungsgemaess erreicht.");
 }				// void DisplayText(...)
@@ -474,12 +476,12 @@ DisplayWord (char *Worttext)
 
 /*@Function============================================================
 @Desc: Stellt ein Zeichen an der Pos MyCursorX/Y INNERHALB des
-		 Text-Borders dar. Hinausragende Teile des Zeichens werden
-		 "abgeschnitten".
-		 Der Einfuegepunkt MyCursorX/Y wird nach der Ausgabe um die
-		 Zeichenbreite nach rechts verschoben.
+Text-Borders dar. Hinausragende Teile des Zeichens werden
+"abgeschnitten".
+Der Einfuegepunkt MyCursorX/Y wird nach der Ausgabe um die
+Zeichenbreite nach rechts verschoben.
 
-		 Einfuegepunkt: LINKS OBEN
+Einfuegepunkt: LINKS OBEN
 
 @Ret: void
 @Int:
@@ -493,7 +495,7 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
 
   unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
 
-  // DebugPrintf("\nvoid DisplayChar(...): Real function call confirmed.");
+  DebugPrintf("\nvoid DisplayChar(...): Real function call confirmed.");
 
   if (Zeichen == '\n')
     {
@@ -501,11 +503,10 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
       return;
     }
 
-  if ((Zeichen < ' ') || (Zeichen > 131))
+  if ( (Zeichen < ' ') || (Zeichen > 131) )
     {
       DebugPrintf ("Illegal Char an DisplayChar() uebergeben!");
-      getchar ();
-      return;
+      Terminate(ERR);
     }
 
   //PORT: SINCE REALSCREEN NO LONGER OF MUCH INPORTANCE FIND SOME WORKAROUND:
@@ -537,7 +538,7 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
 
   MyCursorX += FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
 
-  // DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
+  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
 
   return;
 }				// void DisplayChar(...)
@@ -553,7 +554,7 @@ CheckUmbruch (void)
 {
   if (MyCursorX > LeftTextBorder + CharsPerLine * FONTBREITE)
     MakeUmbruch ();
-}
+} // void CheckUmbruch(void)
 
 
 /*@Function============================================================
@@ -565,9 +566,11 @@ CheckUmbruch (void)
 void
 MakeUmbruch (void)
 {
+  DebugPrintf("\nvoid MakeUmbruch(void): real function call confirmed.");
   MyCursorX = LeftTextBorder;
   MyCursorY += FONTHOEHE + ZEILENABSTAND;
-}
+  DebugPrintf("\nvoid MakeUmbruch(void): end of function reached.");
+} // void MakeUmbruch(void)
 
 
 /*@Function============================================================

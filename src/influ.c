@@ -311,7 +311,8 @@ MoveInfluence (void)
   ActSpecialField (Me.pos.x, Me.pos.y);
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Usual end of function reached.");
-}				/* MoveInfluence */
+
+} /* MoveInfluence */
 
 
 /*@Function============================================================

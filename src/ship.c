@@ -520,13 +520,15 @@ EnterKonsole (void)
       JoystickControl ();
     }
 
-  Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
+  Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+
   DebugPrintf
-	("\nvoid EnterKonsole(void):  Console background music stopped.");
+	("\nvoid EnterKonsole(void):  Console background replaced by combat background music.");
   
   DebugPrintf
     ("\nvoid EnterKonsole(void): Normal end of function reached.\n\n");
-}				// void EnterKonsole(void)
+
+} // void EnterKonsole(void)
 
 /*@Function============================================================
 @Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
@@ -636,7 +638,7 @@ PaintConsoleMenu (void)
 void
 GreatDruidShow (void)
 {
-  char InfoText[200];
+  char InfoText[10000];
   int Infodroid;
   char PassOn = 0;
 
@@ -650,6 +652,7 @@ GreatDruidShow (void)
     }
 
   SetUserfenster (KON_BG_COLOR, InternalScreen);
+
   SetTextColor (KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
 
   /*
@@ -1227,6 +1230,6 @@ ClearUserFenster (void)
 
   DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
 
-}				// void ClearUserFenster(void)
+} // void ClearUserFenster(void)
 
 #undef _ship_c

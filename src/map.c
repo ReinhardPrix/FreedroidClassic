@@ -215,7 +215,7 @@ ActSpecialField (float x, float y)
   DebugPrintf
     ("\nvoid ActSpecialField(int x, int y):  end of function reached.");
 
-}				/* ActSpecialField */
+} /* ActSpecialField */
 
 /*@Function============================================================
 @Desc: 	AnimateRefresh():
