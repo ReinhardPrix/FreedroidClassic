@@ -36,6 +36,10 @@
 #include "global.h"
 #include "proto.h"
 
+#define ARMOUR_RECT_WIDTH 64
+#define ARMOUR_RECT_HEIGHT 64
+#define ARMOUR_POS_X 22
+#define ARMOUR_POS_Y 81
 
 
 void
@@ -216,16 +220,40 @@ CursorIsInDriveRect( int x , int y )
 
   if ( ( CurPos.x >= 240 ) && ( CurPos.x <= 240 + DRIVE_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
+      DebugPrintf( 0 , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 93 ) && 
 	   ( CurPos.y <= User_Rect.y + 93 + DRIVE_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
+	  DebugPrintf( 0 , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
   return( FALSE );
 }; // int CursorIsInDriveRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the drive slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInArmourRect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= ARMOUR_POS_X ) && ( CurPos.x <= ARMOUR_POS_X + ARMOUR_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + ARMOUR_POS_Y ) && 
+	   ( CurPos.y <= User_Rect.y + ARMOUR_POS_Y + ARMOUR_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInArmourRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
@@ -413,6 +441,22 @@ DropHeldItemToDriveSlot ( void )
 
 }; // void DropHeldItemToDriveSlot ( void )
 
+void
+DropHeldItemToArmourSlot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToDriveSlot ( void )
+
 /* ----------------------------------------------------------------------
  * If an item is held and then clicked again in the inventory field, this
  * item should be dropped into the inventory field, provided there is room
@@ -555,6 +599,15 @@ ShowInventoryScreen ( void )
   TargetRect.h = 50;
   SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
   
+  //--------------------
+  // Now we display the item in the influencer armour slot
+  //
+  TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
+  TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
 
   //--------------------
   // Now we display all the items the influencer is carrying with him
@@ -688,6 +741,25 @@ ShowInventoryScreen ( void )
 	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot )
 	    {
 	      DropHeldItemToDriveSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
+      //--------------------
+      // If the cursor is in the drive rect, i.e. the small box to the right, then
+      // the item should be dropped onto the players current weapon slot
+      //
+      if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the armour rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot )
+	    {
+	      DropHeldItemToArmourSlot ( );
 	      Item_Held_In_Hand = ( -1 );
 	    }
 	  else
@@ -840,7 +912,7 @@ ShowCharacterScreen ( void )
 
 
 
-}; // 
+}; // ShowCharacterScreen ( void )
 
 
 
