@@ -250,10 +250,10 @@ ShowItemAlarm( void )
 
   if ( ( ( int ) ( Me.MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
 
-  ShowOneItemAlarm( & Druidmap [ Me.type ] . weapon_item , 1 );
-  ShowOneItemAlarm( & Druidmap [ Me.type ] . drive_item , 2 );
-  ShowOneItemAlarm( & Druidmap [ Me.type ] . shield_item , 3 );
-  ShowOneItemAlarm( & Druidmap [ Me.type ] . armour_item , 4 );
+  ShowOneItemAlarm( & Me.weapon_item , 1 );
+  ShowOneItemAlarm( & Me.drive_item , 2 );
+  ShowOneItemAlarm( & Me.shield_item , 3 );
+  ShowOneItemAlarm( & Me.armour_item , 4 );
 
 }; // void ShowItemAlarm( void )
 
@@ -1104,9 +1104,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + 240;
   TargetRect.y = InventoryRect.y + 93;
-  if ( ( ! Druidmap[ Me.type ].drive_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].drive_item.type != (-1) ) )
+  if ( ( ! Me.drive_item.currently_held_in_hand ) && ( Me.drive_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1114,9 +1114,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + 20;
   TargetRect.y = InventoryRect.y + 10;
-  if ( ( ! Druidmap[ Me.type ].weapon_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].weapon_item.type != (-1) ) )
+  if ( ( ! Me.weapon_item.currently_held_in_hand ) && ( Me.weapon_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1124,9 +1124,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
   TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
-  if ( ( ! Druidmap[ Me.type ].armour_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].armour_item.type != (-1) ) )
+  if ( ( ! Me.armour_item.currently_held_in_hand ) && ( Me.armour_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1134,9 +1134,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
-  if ( ( ! Druidmap[ Me.type ].shield_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].shield_item.type != (-1) ) )
+  if ( ( ! Me.shield_item.currently_held_in_hand ) && ( Me.shield_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
   
   //--------------------
@@ -1144,9 +1144,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
   TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
-  if ( ( ! Druidmap[ Me.type ].special_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].special_item.type != (-1) ) )
+  if ( ( ! Me.special_item.currently_held_in_hand ) && ( Me.special_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1154,9 +1154,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + AUX1_POS_X ;
   TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
-  if ( ( ! Druidmap[ Me.type ].aux1_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].aux1_item.type != (-1) ) )
+  if ( ( ! Me.aux1_item.currently_held_in_hand ) && ( Me.aux1_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -1164,9 +1164,9 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + AUX2_POS_X ;
   TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
-  if ( ( ! Druidmap[ Me.type ].aux2_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].aux2_item.type != (-1) ) )
+  if ( ( ! Me.aux2_item.currently_held_in_hand ) && ( Me.aux2_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------

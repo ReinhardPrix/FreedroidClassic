@@ -511,7 +511,7 @@ CheckBulletCollisions (int num)
 		      // As the new rule, the influencer after getting hit, must completely
 		      // start anew to recover his weapon from the previous shot
 		      //
-		      Me.firewait = ItemMap[ Druidmap [ Me.type ].weapon_item.type ].item_gun_recharging_time;
+		      Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
 
 		      // GotHitSound ();
 		      Influencer_Scream_Sound ( );

@@ -208,13 +208,13 @@ DamageItem( item* CurItem )
 void 
 DamageAllEquipment( void )
 {
-  DamageItem( & ( Druidmap[ DRUID001 ].weapon_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].armour_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].shield_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].drive_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].special_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].aux1_item ) );
-  DamageItem( & ( Druidmap[ DRUID001 ].aux2_item ) );
+  DamageItem( & ( Me.weapon_item ) );
+  DamageItem( & ( Me.armour_item ) );
+  DamageItem( & ( Me.shield_item ) );
+  DamageItem( & ( Me.drive_item ) );
+  DamageItem( & ( Me.special_item ) );
+  DamageItem( & ( Me.aux1_item ) );
+  DamageItem( & ( Me.aux2_item ) );
 }; // void DamageAllEquipment( void )
 
 void
@@ -296,40 +296,40 @@ item* GetHeldItemPointer( void )
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
       return ( & ( Me.Inventory[ InvIndex ] ) );
     } 
-  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand > 0 )
+  else if ( Me.weapon_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].weapon_item ) );
+      return ( & ( Me.weapon_item ) );
     }
-  else if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand > 0 )
+  else if ( Me.drive_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].drive_item ) );
+      return ( & ( Me.drive_item ) );
     }
-  else if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand > 0 )
+  else if ( Me.shield_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].shield_item ) );
+      return ( & ( Me.shield_item ) );
     }
-  else if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand > 0 )
+  else if ( Me.armour_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].armour_item ) );
+      return ( & ( Me.armour_item ) );
     }
-  else if ( Druidmap[ Me.type ].special_item.currently_held_in_hand > 0 )
+  else if ( Me.special_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].special_item ) );
+      return ( & ( Me.special_item ) );
     }
-  else if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand > 0 )
+  else if ( Me.aux1_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].aux1_item ) );
+      return ( & ( Me.aux1_item ) );
     }
-  else if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand > 0 )
+  else if ( Me.aux2_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].aux2_item ) );
+      return ( & ( Me.aux2_item ) );
     }
   else
     {
@@ -944,7 +944,6 @@ DropHeldItemToSlot ( item* SlotItem )
   //--------------------
   // Now the item is installed into the weapon slot of the influencer
   
-  // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
   CopyItem( DropItemPointer , SlotItem , TRUE );
   SlotItem->currently_held_in_hand = FALSE;
 
@@ -1255,43 +1254,43 @@ ManageInventoryScreen ( void )
       else if ( CursorIsInWeaponRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in weapons rect!" );
-	  if ( Druidmap[ Me.type ].weapon_item.type > 0 )
+	  if ( Me.weapon_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].weapon_item.type ].picture_number ;
-	      Druidmap[ Me.type ].weapon_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.weapon_item.type ].picture_number ;
+	      Me.weapon_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInDriveRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in drive rect!" );
-	  if ( Druidmap[ Me.type ].drive_item.type > 0 )
+	  if ( Me.drive_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].drive_item.type ].picture_number ;
-	      Druidmap[ Me.type ].drive_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.drive_item.type ].picture_number ;
+	      Me.drive_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInShieldRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in shield rect!" );
-	  if ( Druidmap[ Me.type ].shield_item.type > 0 )
+	  if ( Me.shield_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].shield_item.type ].picture_number ;
-	      Druidmap[ Me.type ].shield_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.shield_item.type ].picture_number ;
+	      Me.shield_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInArmourRect( CurPos.x , CurPos.y ) )
@@ -1311,43 +1310,43 @@ ManageInventoryScreen ( void )
       else if ( CursorIsInSpecialRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in special rect!" );
-	  if ( Druidmap[ Me.type ].special_item.type > 0 )
+	  if ( Me.special_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].special_item.type ].picture_number ;
-	      Druidmap[ Me.type ].special_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.special_item.type ].picture_number ;
+	      Me.special_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInAux1Rect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
-	  if ( Druidmap[ Me.type ].aux1_item.type > 0 )
+	  if ( Me.aux1_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].aux1_item.type ].picture_number ;
-	      Druidmap[ Me.type ].aux1_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.aux1_item.type ].picture_number ;
+	      Me.aux1_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInAux2Rect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
-	  if ( Druidmap[ Me.type ].aux2_item.type > 0 )
+	  if ( Me.aux2_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].aux2_item.type ].picture_number ;
-	      Druidmap[ Me.type ].aux2_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.aux2_item.type ].picture_number ;
+	      Me.aux2_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
@@ -1431,7 +1430,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToWeaponSlot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].weapon_item ) );
+		  DropHeldItemToSlot ( & ( Me.weapon_item ) );
 		}
 	    }
 	  else
@@ -1455,7 +1454,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToDriveSlot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].drive_item ) );
+		  DropHeldItemToSlot ( & ( Me.drive_item ) );
 		}
 	    }
 	  else
@@ -1503,7 +1502,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToShieldSlot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].shield_item ) );
+		  DropHeldItemToSlot ( & ( Me.shield_item ) );
 		}
 	    }
 	  else
@@ -1527,7 +1526,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToSpecialSlot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].special_item ) );
+		  DropHeldItemToSlot ( & ( Me.special_item ) );
 		}
 	    }
 	  else
@@ -1551,7 +1550,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToAux1Slot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].aux1_item ) );
+		  DropHeldItemToSlot ( & ( Me.aux1_item ) );
 		}
 	    }
 	  else
@@ -1575,7 +1574,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToAux2Slot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].aux2_item ) );
+		  DropHeldItemToSlot ( & ( Me.aux2_item ) );
 		}
 	    }
 	  else

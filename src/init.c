@@ -1686,22 +1686,22 @@ InitNewMissionList ( char *MissionName )
   DebugPrintf( 1 , "\n Me.energy : %f . " , Me.energy );
   Me.health = Me.energy;	/* start with max. health */
 
-  Druidmap[ Me.type ].weapon_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].armour_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].shield_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].special_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].drive_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].aux1_item.currently_held_in_hand = FALSE;
-  Druidmap[ Me.type ].aux2_item.currently_held_in_hand = FALSE;
+  Me.weapon_item.currently_held_in_hand = FALSE;
+  Me.armour_item.currently_held_in_hand = FALSE;
+  Me.shield_item.currently_held_in_hand = FALSE;
+  Me.special_item.currently_held_in_hand = FALSE;
+  Me.drive_item.currently_held_in_hand = FALSE;
+  Me.aux1_item.currently_held_in_hand = FALSE;
+  Me.aux2_item.currently_held_in_hand = FALSE;
 
-  FillInItemProperties ( & ( Druidmap[ Me.type ].weapon_item ) , TRUE );
-  FillInItemProperties ( & ( Druidmap[ Me.type ].drive_item ) , TRUE );
+  FillInItemProperties ( & ( Me.weapon_item ) , TRUE );
+  FillInItemProperties ( & ( Me.drive_item ) , TRUE );
 
   /*
-  Druidmap[ Me.type ].drive_item.current_duration = 20;
-  Druidmap[ Me.type ].drive_item.max_duration = 20;
-  Druidmap[ Me.type ].drive_item.ac_bonus = 0;
-  Druidmap[ Me.type ].drive_item.damage = 0;
+  Me.drive_item.current_duration = 20;
+  Me.drive_item.max_duration = 20;
+  Me.drive_item.ac_bonus = 0;
+  Me.drive_item.damage = 0;
   */
 
 
@@ -1963,13 +1963,13 @@ ThouArtDefeated (void)
   // Now that the influencer is dead, all this precious items
   // spring off of him...
   //
-  DropItemAt ( Druidmap [ Me.type ].weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 );
-  DropItemAt ( Druidmap [ Me.type ].drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 );
-  DropItemAt ( Druidmap [ Me.type ].shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 );
-  DropItemAt ( Druidmap [ Me.type ].armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 );
-  DropItemAt ( Druidmap [ Me.type ].special_item.type , Me.pos.x - 0.5 , Me.pos.y );
-  DropItemAt ( Druidmap [ Me.type ].aux1_item.type , Me.pos.x + 0.5 , Me.pos.y );
-  DropItemAt ( Druidmap [ Me.type ].aux2_item.type , Me.pos.x , Me.pos.y - 0.5 );
+  DropItemAt ( Me.weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 );
+  DropItemAt ( Me.drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 );
+  DropItemAt ( Me.shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 );
+  DropItemAt ( Me.armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 );
+  DropItemAt ( Me.special_item.type , Me.pos.x - 0.5 , Me.pos.y );
+  DropItemAt ( Me.aux1_item.type , Me.pos.x + 0.5 , Me.pos.y );
+  DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 );
 
   while ( SDL_GetTicks()-now < 3000 * WAIT_AFTER_KILLED )
     {

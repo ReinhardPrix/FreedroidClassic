@@ -254,7 +254,6 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 {
   char linebuf[1000];
   
-
   // --------------------
   // First we print out the droid name.  That's simple.
   //
@@ -263,26 +262,11 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
   strcat( DroidDescText , Classname [ Druidmap[ CurEnemy->type ].class ] );
   strcat( DroidDescText , "\n" );
 
-  // --------------------
-  // 
-  /*
-  if ( Druidmap[ CurEnemy->type ].weapon_item.type != (-1) )
-    {
-      strcat( DroidDescText , " WARNING!  ARMED!" );
-    }
-  else
-    {
-      strcat( DroidDescText , " Unarmed!" );
-    }
-  */
   if ( CurEnemy->Friendly == FALSE )
     {
       sprintf( linebuf , " Total Kills : %d " , Me.KillRecord[ CurEnemy->type ] );
       strcat ( DroidDescText , linebuf );
     }
-
-  // strcat( DroidDescText , ItemMap [ Druidmap[ CurEnemy->type ].weapon_item.type ].ItemName );
-  // strcat( DroidDescText , "\n" );
 
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
@@ -432,38 +416,38 @@ ShowCurrentTextWindow ( void )
 	} 
       else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].weapon_item.type > 0 )
-	    GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].weapon_item) , FALSE );
+	  if ( Me.weapon_item.type > 0 )
+	    GiveItemDescription ( ItemDescText , & ( Me.weapon_item ) , FALSE );
 	}
       else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].drive_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].drive_item) , FALSE );
+	  if ( Me.drive_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.drive_item) , FALSE );
 	}
       else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].shield_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].shield_item) , FALSE );
+	   if ( Me.shield_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.shield_item) , FALSE );
 	}
       else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].armour_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].armour_item) , FALSE );
+	   if ( Me.armour_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.armour_item) , FALSE );
 	}
       else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].aux1_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux1_item) , FALSE );
+	   if ( Me.aux1_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.aux1_item) , FALSE );
 	}
       else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].aux2_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux2_item) , FALSE );
+	   if ( Me.aux2_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.aux2_item) , FALSE );
 	}
       else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].special_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].special_item) , FALSE );
+	   if ( Me.special_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me.special_item) , FALSE );
 	}
 
     } // if nothing is 'held in hand' && inventory-screen visible

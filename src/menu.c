@@ -365,24 +365,24 @@ Repair_Items( void )
   //--------------------
   // Now we start to fill the Repair_Pointer_List
   //
-  if ( Druidmap [ Me.type ] . weapon_item.current_duration < Druidmap [ Me.type ] . weapon_item.max_duration ) 
+  if ( Me.weapon_item.current_duration < Me.weapon_item.max_duration ) 
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. weapon_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me.weapon_item );
       Pointer_Index ++;
     }
-  if ( Druidmap [ Me.type ] . drive_item.current_duration < Druidmap [ Me.type ] . drive_item.max_duration ) 
+  if ( Me.drive_item.current_duration < Me.drive_item.max_duration ) 
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. drive_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me.drive_item );
       Pointer_Index ++;
     }
-  if ( Druidmap [ Me.type ] . armour_item.current_duration < Druidmap [ Me.type ] . armour_item.max_duration ) 
+  if ( Me.armour_item.current_duration < Me.armour_item.max_duration ) 
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. armour_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me.armour_item );
       Pointer_Index ++;
     }
-  if ( Druidmap [ Me.type ] . shield_item.current_duration < Druidmap [ Me.type ] . shield_item.max_duration ) 
+  if ( Me.shield_item.current_duration < Me.shield_item.max_duration ) 
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. shield_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me.shield_item );
       Pointer_Index ++;
     }
 
@@ -1972,7 +1972,8 @@ enum
 	  Me.Strength = 30;
 	  Me.Dexterity = 25;
 	  Me.Magic = 10;
-	  Druidmap [ Me.type ].weapon_item.type = ITEM_SHORT_SWORD;
+	  Me.weapon_item.type = ITEM_SHORT_SWORD;
+	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -1985,7 +1986,8 @@ enum
 	  Me.Strength = 25;
 	  Me.Dexterity = 35;
 	  Me.Magic = 20;
-	  Druidmap [ Me.type ].weapon_item.type = ITEM_SHORT_BOW;
+	  Me.weapon_item.type = ITEM_SHORT_BOW;
+	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -1999,6 +2001,7 @@ enum
 	  Me.Dexterity = 20;
 	  Me.Magic = 35;
 	  Me.weapon_item.type = ITEM_SHORT_BOW;
+	  Me.drive_item.type = ITEM_ANTIGRAV_ALPHA;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
