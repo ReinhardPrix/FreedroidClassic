@@ -294,6 +294,7 @@ typedef struct
   item aux1_item;
   // int aux2_item;
   item aux2_item;
+  int Greeting_Sound_Type; // which sample to play in order to 'greet' the influencer?
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
@@ -383,6 +384,7 @@ typedef struct
   point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
   float TextVisibleTime;
   char* TextToBeDisplayed;
+  int has_greeted_influencer;
   int NumberOfPeriodicSpecialStatements;
   char **PeriodicSpecialStatements;
   char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 

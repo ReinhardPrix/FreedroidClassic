@@ -1625,6 +1625,7 @@ GetCrew (char *filename)
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = !OUT;
+      AllEnemys[i].has_greeted_influencer = FALSE ;
       Number_Of_Droids_On_Ship++;
     }
 

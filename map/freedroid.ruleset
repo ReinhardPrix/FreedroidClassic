@@ -215,7 +215,7 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as armour: ac_bonus=0
 Picture number=0
-Sound number=1
+Sound number=5
 ** End of new item specification subsection **
 
 // Item No. 2
@@ -244,7 +244,7 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as armour: ac_bonus=0
 Picture number=0
-Sound number=2 
+Sound number=5 
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -850,7 +850,7 @@ Item as gun: damage of bullets=8
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=7
-Item as gun: bullet_lifetime=0.3
+Item as gun: bullet_lifetime=-1
 Item as armour: ac_bonus=0
 Picture number=18
 Sound number=0 
@@ -934,6 +934,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -966,6 +967,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -998,6 +1000,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1030,6 +1033,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1062,6 +1066,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1094,6 +1099,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1126,6 +1132,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1158,6 +1165,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1190,6 +1198,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1222,6 +1231,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1254,6 +1264,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1286,6 +1297,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1318,6 +1330,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1350,6 +1363,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1382,6 +1396,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1414,6 +1429,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1446,6 +1462,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1478,6 +1495,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1510,6 +1528,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1542,6 +1561,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1574,6 +1594,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1606,6 +1627,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1638,6 +1660,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1670,6 +1693,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1702,6 +1726,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1734,6 +1759,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1765,6 +1791,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1797,6 +1824,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1830,6 +1858,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1862,6 +1891,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1894,6 +1924,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1926,6 +1957,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1958,6 +1990,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1990,6 +2023,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2022,6 +2056,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2054,6 +2089,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2086,6 +2122,7 @@ Armour item=-1
 Aux1 item=-1
 Aux2 item=-1
 Special item=-1
+Greeting Sound number=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
