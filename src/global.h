@@ -69,7 +69,6 @@ EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 
 EXTERN int InitBars;
-EXTERN int BeamLine;
 EXTERN int PreTakeEnergy;
 EXTERN int Conceptview;
 EXTERN int QuitProgram;
