@@ -862,6 +862,8 @@ Teleport (int LNum, int X, int Y)
 
   // UnfadeLevel ();
 
+  Switch_Background_Music_To( CurLevel->Background_Song_Name );
+
 } /* Teleport() */
 
 
