@@ -84,15 +84,13 @@ Possible Start Point : Level=6 XPos=2 YPos=1
 Possible Start Point : Level=7 XPos=2 YPos=1
 
 
-** Start of this mission target subsection **
+*** Begin of Mission Target ***
 
 +++
 +++ Now we define the mission target
 +++ For the classical paradroid mission, this target is defined as
 +++ to eliminate all other droids.  Thats rather simple.
 +++
-Mission Name="Classic Paradroid Mission"
-Assign this mission to influencer automatically at start : 1
 Mission target is to kill all droids : 1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
@@ -104,7 +102,7 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 
-** End of this mission target subsection **
+*** End of Mission Target ***
 
 ----------------------------------------------------------------------
 
@@ -123,36 +121,15 @@ but the section itself must be present.
 
 ** Start of Mission Briefing Text Section **
 
-The title picture in the graphics subdirectory for this mission is : title.jpg
+The title picture in the graphics subdirectory for this mission is : ne_title.jpg
 The title song in the sound subdirectory for this mission is : BETHOW.MOD
 Song name to play in the end title if the mission is completed: Beachhead_2.mod
 
+
 * New Mission Briefing Text Subsection *
-A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device.
+Clear the freighter of robots by destroying them with twin lasers or by transferring control to them. 
 
-
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.
-
-       Press space bar to skip instructions
-
-
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-An Influence Device can transmitt data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. 
-
-
-
-Press space bar to skip instructions
-
-
-
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-Controls
-
-The game is controlled via keyboard input, keyboard and mouse or via joystick input.
+Control is via keyboard, mouse or joystick.
 
 Keyboard control:
 
@@ -161,7 +138,7 @@ Use cursor keys to move around.  The speed you can go depends on the druid you c
 If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
 
 
-If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red color.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
+If you press space bar while NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red colour.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical circuits within the given time.
 If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
 If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
 
@@ -176,7 +153,7 @@ This is somewhat more convenient than using keyboard only since it allows
 you to fire at any angle, an advantage otherwise only had with joystick
 input.
 
-Joystick conrol:
+Joystick control:
 
 Rather self explanatory.  Use fire keys to fire or switch to transfer mode 
 similar with keyboard or mouse control.
@@ -185,9 +162,29 @@ Watch out for energy refreshing fields and elevators.
 
 Lifts are also entered via transfer mode if you stand still on the lift
 
-    Press Fire to Play
+    Press Space to Play
+
+* End of Mission Briefing Text Subsection *
 
 
+* New Mission Briefing Text Subsection *
+A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device.
+
+
+* End of Mission Briefing Text Subsection *
+* New Mission Briefing Text Subsection *
+The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focused on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take  over. Failure to achieve transfer results in the device being a free agent once more.
+
+       Press space bar to skip instructions
+
+
+* End of Mission Briefing Text Subsection *
+* New Mission Briefing Text Subsection *
+An Influence Device can transmit data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to access the console. 
+
+
+
+Press fire to start 
 
 
 
@@ -199,7 +196,7 @@ You have made it!
 
 The thread of action is continued, but the next mission takes place several years after the asteroid field incident....  However this incident is not forgotten.  Some scientists remembering the story and the first construction of the influence device, a project, that has been abandoned after this.  The scientists reconstruct the device from archive data... It's their last hope to survive.  But read all the details in the next mission's briefing...
 
-Press Fire to move on to the next mission
+Press Space to move on to the next mission
 
 ** End of End Title Text Section **
 
