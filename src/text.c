@@ -461,12 +461,19 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   int InsertLine = starty;
   int speed = +4;
   int maxspeed = 8;
+  SDL_Surface* Background;
+
+  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+  MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  Background = SDL_DisplayFormat( ne_screen );
+
 
   // printf("\nScrollTest should be starting to scroll now...");
 
   // getchar();
 
-   /* Zeilen zaehlen */
+  // count the number of lines in the text
   textpt = Text;
   while (*textpt++)
     if (*textpt == '\n')
@@ -489,10 +496,12 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       usleep (30000);
 
-      DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-      MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+      // DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+      // MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
+      // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
       // ClearUserFenster(); 
+
+      SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{
@@ -518,6 +527,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 	}
 
     } /* while !Space_Pressed */
+
+  SDL_FreeSurface( Background );
 
   return OK;
 }				// void ScrollText(void)
