@@ -1364,23 +1364,53 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . filename = "iso_doors_0005.png" ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
 
-
+  //--------------------
+  // These files originate from iso_machinery.blend
+  //
+  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_W ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_W ] . filename = "iso_machinery_0001.png" ;
+  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_N ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_N ] . filename = "iso_machinery_0002.png" ;
+  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_E ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_E ] . filename = "iso_machinery_0003.png" ;
+  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_S ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_TV_PILLAR_S ] . filename = "iso_machinery_0004.png" ;
+  obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_LD ] . filename = "iso_machinery_0005.png" ;
+  obstacle_map [ ISO_ENHANCER_LU ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_LU ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_LU ] . filename = "iso_machinery_0006.png" ;
+  obstacle_map [ ISO_ENHANCER_RU ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_RU ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_RU ] . filename = "iso_machinery_0007.png" ;
+  obstacle_map [ ISO_ENHANCER_RD ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_RD ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_ENHANCER_RD ] . filename = "iso_machinery_0008.png" ;
   obstacle_map [ ISO_REFRESH_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_1 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_1 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_REFRESH_1 ] . filename = "iso_machinery_0009.png" ;
   obstacle_map [ ISO_REFRESH_2 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_2 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_2 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_REFRESH_2 ] . filename = "iso_machinery_0010.png" ;
   obstacle_map [ ISO_REFRESH_3 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_3 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_3 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_REFRESH_3 ] . filename = "iso_machinery_0011.png" ;
   obstacle_map [ ISO_REFRESH_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_4 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_4 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_REFRESH_4 ] . filename = "iso_machinery_0012.png" ;
   obstacle_map [ ISO_REFRESH_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_5 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_5 ] . needs_pre_put = TRUE ;
-
+  obstacle_map [ ISO_REFRESH_5 ] . filename = "iso_machinery_0013.png" ;
 
   obstacle_map [ ISO_TELEPORTER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . is_smashable = FALSE ;
