@@ -933,6 +933,7 @@ Therefore we need not add an additional termination character now." );
       if ( NumberOfReplySamples != NumberOfReplySubtitles )
 	{
 	  fprintf( stderr, "\n\nNumberOfReplySamples: %d NumberOfReplySubtitles: %d \n" , NumberOfReplySamples , NumberOfReplySubtitles );
+	  fprintf( stderr, "The section in question looks like this: \n%s\n\n" , SectionPointer );
 	  GiveStandardErrorMessage ( "LoadChatRosterWithChatSequence(...)" , "\
 There were an unequal number of reply samples and subtitles specified\n\
 within a section of the Freedroid.dialogues file.\n\
