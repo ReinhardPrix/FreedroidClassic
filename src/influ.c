@@ -1534,6 +1534,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
 	  AllEnemys[ i ] . is_friendly = 0 ;
 	  AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
+	  SetRestOfGroupToState ( & ( AllEnemys[i] ) , MAKE_ATTACK_RUN );
 	  
 	  //--------------------
 	  // War tux freezes enemys with the appropriate plugin...

@@ -658,6 +658,8 @@ AdvancedEnemyTakeoverMovements (void)
   int BestTarget = -1 ; 
   float BestValue = (-10000);  // less than any capsule can have
 
+#define TAKEOVER_MOVEMENT_DEBUG 1
+
   if (NumCapsules[ENEMY] == 0)
     return;
 
@@ -673,7 +675,7 @@ AdvancedEnemyTakeoverMovements (void)
 	  BestValue = EvaluatePosition ( OpponentColor , test_row , 1 ) ;
 	}
     }
-  DebugPrintf( 0 , "\nBest target row found : %d." , BestTarget );
+  DebugPrintf( TAKEOVER_MOVEMENT_DEBUG , "\nBest target row found : %d." , BestTarget );
 
   //--------------------
   // Now we can start to move into the right direction.
@@ -779,7 +781,7 @@ GetTakeoverGraphics (void)
   
   to_background = IMG_Load (find_file (TO_BG_FILE, GRAPHICS_DIR, TRUE));
   if (to_background == NULL)
-    DebugPrintf (0, "\nWARNING: Takeover Background file %s missing for theme %s\n", 
+    DebugPrintf ( 0, "\nWARNING: Takeover Background file %s missing for theme %s\n", 
 		 TO_BG_FILE, GameConfig.Theme_SubPath);
 
   TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
@@ -1195,10 +1197,12 @@ EvaluatePlayground (void)
   int color = GELB;
   float ScoreFound [ TO_COLORS ];
 
+#define EVALUATE_PLAYGROUND_DEBUG 1
+
   for (color = GELB; color < TO_COLORS; color++)
     {
       
-      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+      DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "\n----------------------------------------------------------------------\n\
 Starting to evaluate side nr. %d.  Results displayed below:\n" , color );
       ScoreFound [ color ] = 0;
 
@@ -1217,36 +1221,36 @@ Starting to evaluate side nr. %d.  Results displayed below:\n" , color );
 		  break;
 
 		case KABELENDE:
-		  DebugPrintf ( 0 , "KABELENDE found --> score -= 1.0\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "KABELENDE found --> score -= 1.0\n" );
 		  ScoreFound [ color ] -= 1.0 ;
 		  break;
 
 		case VERSTAERKER:
-		  DebugPrintf ( 0 , "VERSTAERKER found --> score += 0.5\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "VERSTAERKER found --> score += 0.5\n" );
 		  ScoreFound [ color ] += 0.5 ;
 		  break;
 
 		case FARBTAUSCHER:
-		  DebugPrintf ( 0 , "FARBTAUSCHER found --> score -= 1.5\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "FARBTAUSCHER found --> score -= 1.5\n" );
 		  ScoreFound [ color ] -= 1.5 ;
 		  break;
 
 		case VERZWEIGUNG_O:
 		case VERZWEIGUNG_U:
 		case VERZWEIGUNG_M:
-		  DebugPrintf ( 0 , "VERZWEIGUNG found --> score += 1.0\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "VERZWEIGUNG found --> score += 1.0\n" );
 		  ScoreFound [ color ] += 1.0 ;
 		  break;
 
 		case GATTER_M:
 		case GATTER_U:
 		case GATTER_O:
-		  DebugPrintf ( 0 , "GATTER found --> score -= 1.0\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "GATTER found --> score -= 1.0\n" );
 		  ScoreFound [ color ] -= 1.0 ;
 		  break;
 
 		default:
-		  DebugPrintf ( 0 , "UNHANDLED TILE FOUND!!\n" );
+		  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "UNHANDLED TILE FOUND!!\n" );
 		  break;
 
 		}		/* switch NewElement */
@@ -1255,11 +1259,11 @@ Starting to evaluate side nr. %d.  Results displayed below:\n" , color );
 
 	}			/* for layer */
 
-      DebugPrintf ( 0 , "\nResult for this side:  %f.\n" , ScoreFound [ color ] );
+      DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "\nResult for this side:  %f.\n" , ScoreFound [ color ] );
 
     }				/* for color */
 
-  DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n" );
+  DebugPrintf ( EVALUATE_PLAYGROUND_DEBUG , "\n----------------------------------------------------------------------\n" );
 
 }; // EvaluatePlayground 
 
@@ -1319,15 +1323,15 @@ EvaluatePosition ( int color , int row , int layer )
       break;
       
     case VERZWEIGUNG_O:
-      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_O !!!\n" );
+      DebugPrintf ( EVAL_DEBUG , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_O !!!\n" );
       return ( 0 );
       break;
     case VERZWEIGUNG_U:
-      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_U !!!\n" );
+      DebugPrintf ( EVAL_DEBUG , "\nERROR:  REACHED UNREACHABLE SPOT: VERZWEIGUNG_U !!!\n" );
       return ( 0 );
       break;
     case GATTER_M:
-      DebugPrintf ( 0 , "\nERROR:  REACHED UNREACHABLE SPOT: GATTER_M !!!\n" );
+      DebugPrintf ( EVAL_DEBUG , "\nERROR:  REACHED UNREACHABLE SPOT: GATTER_M !!!\n" );
       return ( 0 );
       break;
 
@@ -1348,7 +1352,7 @@ EvaluatePosition ( int color , int row , int layer )
       break;
       
     default:
-      DebugPrintf ( 0 , "\nUNHANDLED TILE reached\n" );
+      DebugPrintf ( EVAL_DEBUG , "\nUNHANDLED TILE reached\n" );
       break;
       
     }	// switch NewElement 
@@ -1610,6 +1614,10 @@ AnimateCurrents (void)
   return;
 }; // void AnimateCurrents (void)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 to_show_banner (const char* left, const char* right)
 {
@@ -1669,12 +1677,7 @@ to_show_banner (const char* left, const char* right)
   DisplayText (left_box, LEFT_INFO_X, LEFT_INFO_Y, NULL);
   DisplayText (right_box, RIGHT_INFO_X, RIGHT_INFO_Y, NULL);
 
-  //  PrintString ( Screen, LEFT_INFO_X , LEFT_INFO_Y , left_box );
-  //  PrintString ( Screen, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-
-  return;
-
-} // void to_show_banner
+}; // void to_show_banner (const char* left, const char* right)
 
 
 #undef _takeover_c

@@ -456,6 +456,7 @@ EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
 #else
 #define EXTERN extern
 #endif
+EXTERN void SetRestOfGroupToState ( Enemy ThisRobot , int NewState );
 EXTERN int MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot );
 EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );
 EXTERN void ShuffleEnemys ( int LevelNum );
