@@ -177,6 +177,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE } ,
+
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE } ,
@@ -204,6 +205,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     //
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 6   , 160 ,  20 } , TRUE } ,
 
     //--------------------
     // These 7 buttons are for the level editor and will not need

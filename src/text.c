@@ -517,6 +517,8 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
     DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
     if ( protocol_offset > 0 ) 
 	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
+    else
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF_BUTTON );
     ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
     if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
