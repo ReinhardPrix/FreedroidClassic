@@ -2407,6 +2407,19 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . transparent = TRANSPARENCY_FOR_WALLS ;
 
+  obstacle_map [ ISO_GLASS_WALL_1 ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_GLASS_WALL_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_GLASS_WALL_1 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_GLASS_WALL_1 ] . filename = "iso_walls_0020.png" ;
+  obstacle_map [ ISO_GLASS_WALL_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
+  
+  obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_GLASS_WALL_2 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_GLASS_WALL_2 ] . filename = "iso_walls_0021.png" ;
+  obstacle_map [ ISO_GLASS_WALL_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
+  
+  
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_vision_too = FALSE ;
