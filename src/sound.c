@@ -967,6 +967,16 @@ healing_spell_sound ( void )
     play_sample_using_WAV_cache ( "../effects/new_healing_sound.wav", FALSE , FALSE );
 }; // void healing_spell_sound ( void )
 
+/* ----------------------------------------------------------------------
+ * Some items, that can be applied inside the running game, like e.g. 
+ * spellbooks, do have a certain character stat requirement.  If that stat
+ * requirement isn't met, a sound will be played, which uses this function.
+ * ---------------------------------------------------------------------- */
+void
+application_requirements_not_met_sound ( void )
+{
+    play_sample_using_WAV_cache ( "../effects/cannot_use_this_yet.wav", FALSE , FALSE );
+}; // void application_requirements_not_met_sound ( void )
 
 /* ----------------------------------------------------------------------
  * This function is intended to provide a convenient way of switching

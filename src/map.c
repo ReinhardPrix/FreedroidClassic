@@ -1003,56 +1003,61 @@ map tiles.",
 void
 ActSpecialField ( int PlayerNum )
 {
-  unsigned char MapBrick;
-  // float cx, cy;			
-  float x = Me [ PlayerNum ] . pos . x ;
-  float y = Me [ PlayerNum ] . pos . y ;
-  Level SpecialFieldLevel;
+    // unsigned char MapBrick;
+    // float cx, cy;			
+    // float x = Me [ PlayerNum ] . pos . x ;
+    // float y = Me [ PlayerNum ] . pos . y ;
+    // Level SpecialFieldLevel;
+    
+    // DebugPrintf (2, "\nvoid ActSpecialField ( int PlayerNum  ) :  Real function call confirmed." ) ;
+    
+    //--------------------
+    // We don't do anything for this player, if it's an
+    // inactive player.
+    //
+    if ( Me [ PlayerNum ] . status == OUT ) return;
+    
+    //--------------------
+    // If the player is on the one special teleporter square, that gets
+    // the player teleported back to where he came from, we will teleport
+    // him back there...
+    //
 
-  // DebugPrintf (2, "\nvoid ActSpecialField ( int PlayerNum  ) :  Real function call confirmed." ) ;
-
-  //--------------------
-  // We don't do anything for this player, if it's an
-  // inactive player.
-  //
-  if ( Me [ PlayerNum ] . status == OUT ) return;
-
-  //--------------------
-  // If the player is on the one special teleporter square, that gets
-  // the player teleported back to where he came from, we will teleport
-  // him back there...
-  //
-  if ( ( ((int) rintf(Me[0].pos.x) ) == 3 ) &&
-       ( ((int) rintf(Me[0].pos.y) ) == 7 ) &&
-       ( ((int) rintf(Me[0].pos.z) ) == 0 ) )
+    /*
+    if ( ( ((int) rintf(Me[0].pos.x) ) == 3 ) &&
+	 ( ((int) rintf(Me[0].pos.y) ) == 7 ) &&
+	 ( ((int) rintf(Me[0].pos.z) ) == 0 ) )
     {
-      Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 , FALSE , TRUE );
+	Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 , FALSE , TRUE );
     }
+    
+    SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+    */
 
-  SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
-
-  MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
-
-  switch (MapBrick)
+    /*
+    MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
+    
+    switch ( MapBrick )
     {
-    case CONSUMER_1:
-    case CONSUMER_2:
-    case CONSUMER_3:
-    case CONSUMER_4:
-      GameConfig.Inventory_Visible=FALSE;
-      GameConfig.CharacterScreen_Visible=FALSE;
-      GameConfig.Mission_Log_Visible=FALSE;
-      GameOver=TRUE;
-      PlayATitleFile ( "EndOfGame.title" );
-      Credits_Menu();
-      break;
-
-    default:
-      break;
+	case CONSUMER_1:
+	case CONSUMER_2:
+	case CONSUMER_3:
+	case CONSUMER_4:
+	    GameConfig.Inventory_Visible=FALSE;
+	    GameConfig.CharacterScreen_Visible=FALSE;
+	    GameConfig.Mission_Log_Visible=FALSE;
+	    GameOver=TRUE;
+	    PlayATitleFile ( "EndOfGame.title" );
+	    Credits_Menu();
+	    break;
+	    
+	default:
+	    break;
     }	// switch 
+    */
 
-  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
-
+    DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
+    
 }; // void ActSpecialField ( ... )
 
 /* ----------------------------------------------------------------------

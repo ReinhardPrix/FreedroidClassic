@@ -1615,6 +1615,17 @@ Quick_ApplyItem( int ItemKey )
 }; // void Quick_ApplyItem( item* CurItem )
 
 /* ----------------------------------------------------------------------
+ * Some items, that can be applied directly (like spellbooks) do have a
+ * certain stat requirement.  This function checks, if the corresponding
+ * requirements are met or not.
+ * ---------------------------------------------------------------------- */
+int
+requirements_for_item_application_met ( item* CurItem ) 
+{
+    return ( FALSE );
+}; // int requirements_for_item_application_met ( item* CurItem ) 
+
+/* ----------------------------------------------------------------------
  * This function applies a given item (to the influencer) and maybe 
  * eliminates the item after that, if it's an item that gets used up.
  * ---------------------------------------------------------------------- */
@@ -1630,6 +1641,12 @@ ApplyItem( item* CurItem )
     {
 	Me [ 0 ] . TextVisibleTime = 0;
 	Me [ 0 ] . TextToBeDisplayed = "I can't use this item here.";
+	return;
+    }
+
+    if ( ! requirements_for_item_application_met ( CurItem ) )
+    {
+	application_requirements_not_met_sound ();
 	return;
     }
 
