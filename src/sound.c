@@ -452,7 +452,8 @@ InitAudio(void)
     if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
 	fprintf( stderr, "\n\nSDL just reported a problem.\n\
-The error string from SDL_GetError\nwas: %s \n" , SDL_GetError() );
+The error string from SDL_GetError\nwas: %s \n\
+The error string from the SDL mixer subsystem was: %s \n" , SDL_GetError() , Mix_GetError() );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
 \n\
@@ -471,11 +472,15 @@ not complain any more.",
 	DebugPrintf ( 1 , "\nSDL Audio initialisation successful.\n");
     }
     
+    //--------------------
     // Now that we have initialized the audio SubSystem, we must open
     // an audio channel.  This will be done here (see code from Mixer-Tutorial):
-    
-    if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
+    //
+    if ( Mix_OpenAudio ( audio_rate, audio_format, audio_channels, audio_buffers ) ) 
     {
+	fprintf( stderr, "\n\nSDL just reported a problem.\n\
+The error string from SDL_GetError\nwas: %s \n\
+The error string from the SDL mixer subsystem was: %s \n" , SDL_GetError() , Mix_GetError() );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
 \n\
