@@ -369,15 +369,16 @@ Technical details:
 @Int:
 * $Function----------------------------------------------------------*/
 void
-Switch_Background_Music_To (int Tune)
+Switch_Background_Music_To ( char* filename_raw )
 {
   static int MOD_Music_Channel = -1;
+  char* fpath;
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
 
-  if ( Tune == SILENCE ) // SILENCE is defined as -1 I think
+  if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
     {
       //printf("\nOld Background music channel has been halted.");
       // fflush(stdout);
@@ -386,7 +387,7 @@ Switch_Background_Music_To (int Tune)
       return;
     }
 
-
+  /*
   if ( Tune >= ALL_MOD_MUSICS )
     {
       fprintf (stderr,
@@ -412,14 +413,56 @@ not complain any more. \n\
 \n" , Tune );
       Terminate (ERR);
     }
+  */
 
-  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
+
+  //--------------------
+  // Now we LOAD the music file from disk into memory!!
+  // This is something that was previously done in the initialisatzion funtion
+  // of the audio thing.  But now we want to allow for dynamic specification of
+  // music files via the mission files and that.  So we load the music now.
+
+  fpath = find_file ( filename_raw , SOUND_DIR, FALSE);
+  Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
+  if ( Loaded_MOD_Files[ 0 ] == NULL )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+If the problem persists and you do not find this sound file in the\n\
+Freedroid archive, please inform the developers about the problem.\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+      Terminate (ERR);
+    } // if ( !Loaded_WAV...
+  else
+    {
+      DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
+    }
+  
+
+  // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
+  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
 
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
 
-} // void Switch_Background_Music_To(int Tune)
+}; // void Switch_Background_Music_To(int Tune)
 
 
 /*@Function============================================================

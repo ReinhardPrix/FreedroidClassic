@@ -165,7 +165,8 @@ Takeover (int enemynum)
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
-  Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
+  // Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
+  Switch_Background_Music_To ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
   /* Get a new Internfenster without any robots, blasts bullets etc
      for use as background in transparent version of Takeover-game */
