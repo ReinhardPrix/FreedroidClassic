@@ -70,6 +70,12 @@
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
 
+char EndTitleText1[] =
+"Congratulations!!\n\nIt seems that you have made it!\n  The Ship is clear.\n\n At the moment, this is the end of you classical Paradroid Clone FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to See the new story line.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n";
+
+char EndTitleText2[] =
+"In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n";
+
 char TitleText1[] =
   "A fleet of Robo-freighters on\nits way to the Beta Ceti system\nreported entering an uncharted field\nof asteroids. Each ship carries a\ncargo of battle droids to reinforce\nthe outworld defences.\nTwo distress beacons have been\ndiscovered. Similar Messages were\nstored on each. The ships had been\nbombarded by a powerful radionic\nbeam from one of the asteroids.\nAll of the robots on the ships,\nincluding those in storage, became\nhyper-active. The crews report an\nattack by droids, isolating them on\nthe bridge. They cannot reach the\nshuttle and can hold out for only a\ncouple more hours.\n Since these beacons were located\ntwo days ago, we can only fear the\nworst.\n Some of the fleet was last seen\nheading for enemy space. In enemy\nhands the droids can be used against\nour forces.\nDocking would be impossible but\nwe can beam aboard a prototype\nInfluence Device.";
 
@@ -619,5 +625,65 @@ Title (void)
   DebugPrintf ("\nvoid Title(void): end of function reached...:");
 
 }				// void Title(void)
+
+/*@Function============================================================
+@Desc: Diese Prozedur ist fuer die Introduction in das Spiel verantwortlich. Im
+   Moment beschr„nkt sich ihre Funktion auf das Laden und anzeigen eines
+   Titelbildes, das dann ausgeblendet wird.
+
+@Ret: keiner
+@Int: keiner
+* $Function----------------------------------------------------------*/
+void
+EndTitle (void)
+{
+  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
+  int OldUpdateStatus = InterruptInfolineUpdate;
+
+  DebugPrintf ("\nvoid EndTitle(void): real function call confirmed...:");
+
+  Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
+
+  InterruptInfolineUpdate = FALSE;
+#ifdef NOJUNKWHILEINIT
+  Monitorsignalunterbrechung (0);
+#endif
+
+  // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
+  // Load_PCX_Image (TITELBILD1_PCX, RealScreen, TRUE);	/* Titelbild laden */
+
+  // while (!SpacePressed ())
+  //JoystickControl ();
+
+  // FadeColors1 ();		/* Titelbild langsam ausblenden */
+
+  // InitPalette ();		/* This function writes into InternalScreen ! */
+
+  // ClearGraphMem(RealScreen);
+  // DisplayRahmen(RealScreen);
+
+  Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
+
+  SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
+		 USERFENSTERPOSX + USERFENSTERBREITE,
+		 USERFENSTERPOSY + USERFENSTERHOEHE, CHARSPERLINE);
+
+  SetTextColor (FONT_BLACK, FONT_RED);
+
+  // *          Auskommentiert zu Testzwecken
+  // *
+
+  ScrollText (EndTitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText (EndTitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  // ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+
+  SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
+
+  SetTypematicRate (TYPEMATIC_SLOW);
+  InterruptInfolineUpdate = OldUpdateStatus;
+
+  DebugPrintf ("\nvoid EndTitle(void): end of function reached...:");
+
+} // void EndTitle(void)
 
 #undef _parainit_c

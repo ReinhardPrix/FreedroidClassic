@@ -215,6 +215,8 @@ int
 main (int argc, char *const argv[])
 {
   int i;
+  int Robot_Counter;
+  int AllRobotsDead;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -365,6 +367,16 @@ main (int argc, char *const argv[])
 	    {
 	      LevelGrauFaerben ();
 	      CurLevel->empty = TRUE;
+	      AllRobotsDead=TRUE;
+	      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+		{
+		  if (Feindesliste[Robot_Counter].energy) AllRobotsDead=FALSE;
+		}
+	      if (AllRobotsDead) 
+		{
+		  EndTitle();
+		  GameOver=TRUE;
+		}
 	    }			/* if */
 
 	  // calculate the framerate:
@@ -405,8 +417,8 @@ main (int argc, char *const argv[])
 
 	  // gl_printf(-1,-1,"%f\n",oneframetimestamp);
 	  //      gl_printf(-1,-1,ltoa((long)onehundredframedelay,Dummystring,10));
-	}			/* while !GameOver */
-    }				/* while !QuitProgram */
+	} /* while !GameOver */
+    } /* while !QuitProgram */
   Terminate (0);
   return (0);
 }				// void main(void)

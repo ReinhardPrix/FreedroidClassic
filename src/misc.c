@@ -214,7 +214,7 @@ Armageddon (void)
       {
 	Feindesliste[i].energy = 0;
       }
-}
+} // void Armageddon(void)
 
 /* **********************************************************************
 	Diese Funktion teleportiert an einen beliebigen Ort im Schiff.
