@@ -111,13 +111,6 @@ Init_Audio(void)
 
   DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
-  // At first we set audio volume to maximum value.
-  // This might be replaced later with values from a 
-  // private user Freedroid config file.  But for now
-  // this code is good enough...
-  GameConfig.Current_BG_Music_Volume=1.0;
-  GameConfig.Current_Sound_FX_Volume=1.0;
-
   if ( !sound_on ) return;
 
 
@@ -259,6 +252,13 @@ Sorry...\n\
 
     } // for (i=1, ... MOD_FILES...
 
+  //--------------------
+  // Now that the music files have been loaded successfully, it's time to set
+  // the music and sound volumes accoridingly, i.e. as specifies by the users
+  // configuration.
+  //
+  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+
   // DebugPrintf (1, "done.");
   // fflush(stdout);
 #endif // HAVE_SDL_MIXER
@@ -274,21 +274,23 @@ void
 Set_BG_Music_Volume(float NewVolume)
 {
 
-  // FOR NOW 
-  return;
-
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
   if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
+  /*
+    That is old and way used, when music was technically still a sound
   for ( i=1 ; i<5 ; i++ )
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
+  */
 
-  Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  Mix_VolumeMusic( (int) rintf( NewVolume * MIX_MAX_VOLUME ) );
+
+  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 #endif // HAVE_LIBSDL_MIXER
 } // void Set_BG_Music_Volume(float NewVolume)
 
@@ -414,31 +416,7 @@ not complain any more. \n\
 
   MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
 
-  /*
-  if ( !sound_on ) return;
-
-  DebugPrintf (1, "\n\nBACKGROUND_MUSIC_CHANNEL IS NOW: %d ", Background_Music_Channel );
-  DebugPrintf (1, "\nSoundfile to be played: %s ", SoundSampleFilenames[Tune] );
-
-  if ( Background_Music_Channel >= 0 )
-    {
-      //printf("\nOld Background music channel has been halted.");
-      // fflush(stdout);
-      Mix_HaltChannel( Background_Music_Channel );
-      Background_Music_Channel = -1;
-    }
-
-
-  if (Background_Music_Channel < 0)
-    {
-      DebugPrintf (1, "\nNew Background music ist being initiated....");
-      fflush(stdout);
-      Background_Music_Channel = Mix_PlayChannel( -1, Loaded_WAV_Files[ Tune ], -1 );
-    }
-
-  */
-
-  // Play_Sound ( Tune );
+  Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
 

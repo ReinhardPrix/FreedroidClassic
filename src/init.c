@@ -1120,6 +1120,13 @@ InitFreedroid (void)
   // Me.TextToBeDisplayed = "Hello, I'm 001.";
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
+  // At first we set audio volume to maximum value.
+  // This might be replaced later with values from a 
+  // private user Freedroid config file.  But for now
+  // this code is good enough...
+  GameConfig.Current_BG_Music_Volume=1.0;
+  GameConfig.Current_Sound_FX_Volume=0.5;
+
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
   GameConfig.All_Texts_Switch=TRUE;
