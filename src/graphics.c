@@ -1305,8 +1305,8 @@ UNABLE TO LOAD STANDARD TILE!",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  iso_floor_tile_width  = standard_floor_tile -> w ;
-  iso_floor_tile_height = standard_floor_tile -> h ;
+  iso_floor_tile_width  = standard_floor_tile -> w - 2;
+  iso_floor_tile_height = standard_floor_tile -> h - 2;
 
   SDL_FreeSurface ( standard_floor_tile );
 

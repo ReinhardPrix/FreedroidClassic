@@ -863,16 +863,21 @@ typedef struct
 
   obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
 
+  //--------------------
+  // Now the list of indices that need to be known every
+  // frame...
+  //
   int refresh_obstacle_indices [ MAX_REFRESHES_ON_LEVEL ] ;
   point consumers[MAX_CONSUMERS_ON_LEVEL];
   int teleporter_obstacle_indices [ MAX_TELEPORTERS_ON_LEVEL ] ;
   int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
+  int autogun_obstacle_indices [ MAX_AUTOGUNS_ON_LEVEL ] ;
+
   map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item ChestItemList [ MAX_ITEMS_PER_LEVEL ] ;
-  point autoguns[MAX_AUTOGUNS_ON_LEVEL];
 }
 level, *Level;
 

@@ -705,7 +705,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    case REFRESH3:
 	    case REFRESH4:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_REFRESH_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
 	      break;
@@ -715,7 +715,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    case TELE_3:
 	    case TELE_4:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_TELEPORTER_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
 	      break;
@@ -2739,6 +2739,8 @@ GetAllAnimatedMapTiles ( Level Lev )
     Lev -> teleporter_obstacle_indices [ i ] = ( -1 ) ;
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     Lev -> refresh_obstacle_indices [ i ] = ( -1 ) ;
+  for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
+    Lev -> autogun_obstacle_indices [ i ] = ( -1 ) ;
 
   // DebugPrintf ( 0 , "\nPretest for level %d." , Lev -> levelnum );
   // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
@@ -2746,8 +2748,6 @@ GetAllAnimatedMapTiles ( Level Lev )
   // DebugPrintf ( 0 , " %d " , Lev -> door_obstacle_indices [ i ] ) ;
   // }
 
-  for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
-    Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
   for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
     Lev -> consumers[i].x = Lev->consumers[i].y = 0;
 
@@ -2806,7 +2806,7 @@ of doors currently allowed in a Freedroid map.",
 
 	  //--------------------
 	  // We've found another refresh obstacle, so we add it's index
-	  // into the door obstacle index list of this level...
+	  // into the refresh obstacle index list of this level...
 	  //
 	  Lev -> refresh_obstacle_indices [ curref ] = obstacle_index ;
 	  curref++;
@@ -2826,10 +2826,9 @@ of refreshes currently allowed in a Freedroid map.",
 	case ISO_TELEPORTER_3:
 	case ISO_TELEPORTER_4:
 	case ISO_TELEPORTER_5:
-
 	  //--------------------
 	  // We've found another teleporter obstacle, so we add it's index
-	  // into the door obstacle index list of this level...
+	  // into the teleporter obstacle index list of this level...
 	  //
 	  Lev -> teleporter_obstacle_indices [ curtele ] = obstacle_index ;
 	  curtele++;
@@ -2840,6 +2839,27 @@ of refreshes currently allowed in a Freedroid map.",
 	      GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
 The number of teleporters found in a level seems to be greater than the number\n\
 of teleporters currently allowed in a Freedroid map.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  break;
+
+	case ISO_AUTOGUN_N:
+	case ISO_AUTOGUN_S:
+	case ISO_AUTOGUN_E:
+	case ISO_AUTOGUN_W:
+	  //--------------------
+	  // We've found another autogun obstacle, so we add it's index
+	  // into the autogun obstacle index list of this level...
+	  //
+	  Lev -> autogun_obstacle_indices [ curautogun ] = obstacle_index ;
+	  curautogun++;
+	  if ( curautogun > MAX_TELEPORTERS_ON_LEVEL)
+	    {
+	      fprintf( stderr , "\n\nLev->levelnum : %d MAX_AUTOGUNS_ON_LEVEL: %d \n" , 
+		       Lev -> levelnum , MAX_AUTOGUNS_ON_LEVEL );
+	      GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of autoguns found in a level seems to be greater than the number\n\
+of autoguns currently allowed in a Freedroid map.",
 					 PLEASE_INFORM, IS_FATAL );
 	    }
 	  break;
@@ -2899,6 +2919,7 @@ of doors currently allowed in a Freedroid map.",
 	    break;
 	      */
 
+	      /*
 	    case AUTOGUN_L:
 	    case AUTOGUN_R:
 	    case AUTOGUN_U:
@@ -2916,6 +2937,7 @@ of doors currently allowed in a Freedroid map.",
 					     PLEASE_INFORM, IS_FATAL );
 		}
 	      break;
+	      */
 
 	      /*
 	    case REFRESH1:
@@ -3653,8 +3675,9 @@ Error:  Doors pointing not to door obstacles found.",
 void
 WorkLevelGuns ( int PlayerNum )
 {
-  int i, autogunx, autoguny;
-  Uint16 *Pos;
+  int i;
+  float autogunx, autoguny;
+  int *AutogunType;
   Level GunLevel;
 
   //--------------------
@@ -3695,14 +3718,18 @@ WorkLevelGuns ( int PlayerNum )
   //
   for ( i = 0 ; i < MAX_AUTOGUNS_ON_LEVEL ; i ++ )
     {
-      autogunx = ( GunLevel -> autoguns [ i ] . x );
-      autoguny = ( GunLevel -> autoguns [ i ] . y );
+
+      autogunx = ( GunLevel -> obstacle_list [ GunLevel -> autogun_obstacle_indices [ i ] ] . pos . x );
+      autoguny = ( GunLevel -> obstacle_list [ GunLevel -> autogun_obstacle_indices [ i ] ] . pos . y );
+      // autoguny = ( GunLevel -> autoguns [ i ] . y );
 
       // no more autoguns?
-      if ( ( autogunx == 0 ) && ( autoguny == 0 ) )
-	break;
+      // if ( ( autogunx == 0 ) && ( autoguny == 0 ) )
+      // break;
+      if ( GunLevel -> autogun_obstacle_indices [ i ] == ( -1 ) ) break;
 
-      Pos = & ( GunLevel -> map [autoguny] [autogunx]  . floor_value ) ;
+      // Pos = & ( GunLevel -> map [autoguny] [autogunx]  . floor_value ) ;
+      AutogunType = & ( GunLevel -> obstacle_list [ GunLevel -> autogun_obstacle_indices [ i ] ] . type );
 
       //--------------------
       // From here on goes the bullet code, that originally came from
@@ -3766,22 +3793,22 @@ WorkLevelGuns ( int PlayerNum )
       speed.x = 0.0;
       speed.y = 0.0;
       
-      switch ( *Pos )
+      switch ( *AutogunType )
 	{
-	case AUTOGUN_L:
+	case ISO_AUTOGUN_W:
 	  speed.x = -1.0;
 	  break;
-	case AUTOGUN_R:
+	case ISO_AUTOGUN_E:
 	  speed.x =  1.0;
 	  break;
-	case AUTOGUN_U:
+	case ISO_AUTOGUN_N:
 	  speed.y = -1.0;
 	  break;
-	case AUTOGUN_D:
+	case ISO_AUTOGUN_S:
 	  speed.y = +1.0;
 	  break;
 	default:
-	  fprintf ( stderr, "\n\n*Pos: '%d'.\n" , *Pos );
+	  fprintf ( stderr, "\n*AutogunType: '%d'.\n" , *AutogunType );
 	  GiveStandardErrorMessage ( "WorkLevelGuns(...)" , "\
 There seems to be an autogun in the autogun list of this level, but it\n\
 is not really an autogun.  Instead it's something else.",
@@ -3789,9 +3816,9 @@ is not really an autogun.  Instead it's something else.",
 	  break;
 	}
 
-      CurBullet->pos.x = autogunx + speed.x * 0.75 ;
-      CurBullet->pos.y = autoguny + speed.y * 0.75 ;
-      CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
+      CurBullet -> pos.x = autogunx + speed.x * 0.75 ;
+      CurBullet -> pos.y = autoguny + speed.y * 0.75 ;
+      CurBullet -> pos.z = Me [ PlayerNum ] . pos . z ;
       
       
       //--------------------

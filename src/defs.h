@@ -909,6 +909,7 @@ enum
   ISO_CAVE_CORNER_SE = 39,
   ISO_CAVE_CORNER_NW = 40,
   ISO_CAVE_CORNER_SW = 41
+
 };
 
 
