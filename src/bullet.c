@@ -534,32 +534,45 @@ CheckBulletCollisions (int num)
 	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
 	  ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
 	  
-	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	  if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
 	    {
-	      // The enemy who was hit, loses some energy, depending on the bullet
-	      // ITEMS AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
-	      AllEnemys[i].energy -= CurBullet->damage;
-	      GotHitSound ();
-
-	      // Maybe he will also stop doing his fixed routine and return to normal
-	      // operation as well
-	      AllEnemys[i].AdvancedCommand = 0;
-
-	      // We might also start a little bullet-blast even after the
-	      // collision of the bullet with an enemy (not in Paradroid)
-	      DeleteBullet( num , TRUE ); // we want a bullet-explosion
-
-	      Enemy_Post_Bullethit_Behaviour( i );
-
-	      if (!CurBullet->mine)
+	      if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
 		{
-		  FBTZaehler++;
+		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
+		    {
+		      CurBullet->total_miss_hit[ i ] = HIT;
+		      // The enemy who was hit, loses some energy, depending on the bullet
+		      // ITEMS AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+		      AllEnemys[i].energy -= CurBullet->damage;
+		      GotHitSound ();
+		      
+		      // Maybe he will also stop doing his fixed routine and return to normal
+		      // operation as well
+		      AllEnemys[i].AdvancedCommand = 0;
+		      
+		      // We might also start a little bullet-blast even after the
+		      // collision of the bullet with an enemy (not in Paradroid)
+		      DeleteBullet( num , TRUE ); // we want a bullet-explosion
+		      
+		      Enemy_Post_Bullethit_Behaviour( i );
+		      
+		      if (!CurBullet->mine)
+			{
+			  FBTZaehler++;
+			}
+		      CurBullet->type = OUT;
+		      CurBullet->mine = FALSE;
+		      // break;		/* Schleife beenden */
+		      return;
+		    }
+		  else
+		    {
+		      CurBullet->total_miss_hit[ i ] = MISS;
+		      AllEnemys[ i ].TextVisibleTime = 0;
+		      AllEnemys[ i ].TextToBeDisplayed = "Haha, you missed me!";
+		    }
 		}
-	      CurBullet->type = OUT;
-	      CurBullet->mine = FALSE;
-	      // break;		/* Schleife beenden */
-	      return;
-	    }			/* if getroffen */
+	    } // if distance low enough to possibly be at hit
 	}  /* for AllEnemys */
 
       // check for collisions with other bullets
