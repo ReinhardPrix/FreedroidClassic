@@ -304,7 +304,8 @@ SetCombatScaleTo(float ResizeFactor)
       ne_droid_block[i].h *= ResizeFactor;
     }
 
-  for (i=0; i < ALLBULLETTYPES; i++)
+  /*
+  for (i=0; i < Number_Of_Bullet_Types ; i++)
     for (j=0; j < Bulletmap[i].phases; j++)
       {
 	// Bulletmap[i].block[j].x *= ResizeFactor;
@@ -312,6 +313,7 @@ SetCombatScaleTo(float ResizeFactor)
 	// Bulletmap[i].block[j].w *= ResizeFactor; 
 	// Bulletmap[i].block[j].h *= ResizeFactor;
       }
+  */
 
   for (i=0; i < ALLBLASTTYPES; i++)
     for (j=0; j < Blastmap[i].phases; j++)
@@ -614,7 +616,7 @@ InitPictures (void)
      create the internal storage for all our blocks 
   */
   tmp = SDL_CreateRGBSurface( SDL_SRCALPHA , NUM_MAP_BLOCKS*Block_Width,
-			     15*Block_Height, ne_bpp, 0, 0, 0, 0);
+			      18*Block_Height, ne_bpp, 0, 0, 0, 0);
   tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
     {
@@ -683,7 +685,11 @@ InitPictures (void)
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
   fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
-  for (i=0; i < ALLBULLETTYPES; i++)
+  
+  DebugPrintf( 0 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+  // getchar();
+  // for (i=0; i < ALLBULLETTYPES; i++)
+  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       // This is the old command to read in all the rotated pictures of this bullet
       // It should soon be no longer nescessary to read more than one type in, but

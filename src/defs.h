@@ -276,7 +276,7 @@ enum _directions
 
 #define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
 
-#define ALLBULLETTYPES		4	/* number of bullet-types */
+// #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */

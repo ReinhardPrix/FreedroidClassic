@@ -189,7 +189,6 @@ Get_Bullet_Data ( char* DataPointer )
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
   int i;
-  int Number_Of_Bullet_Types;
   int BulletIndex=0;
 
   double bullet_speed_calibrator;
@@ -371,7 +370,7 @@ Get_Bullet_Data ( char* DataPointer )
   // Now that all the calibrations factors have been read in, we can start to
   // apply them to all the bullet types
   //
-  for ( i = 0 ; i < ALLBULLETTYPES ; i++ )
+  for ( i = 0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       Bulletmap[i].speed *= bullet_speed_calibrator;
       Bulletmap[i].damage *= bullet_damage_calibrator;

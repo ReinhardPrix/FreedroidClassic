@@ -167,6 +167,7 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
+EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */
 EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
 EXTERN char *ship_on_filename;
