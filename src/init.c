@@ -82,6 +82,11 @@ ShowStartupPercentage ( int Percentage )
   SDL_Rect Bar_Rect;
   Uint32 FillColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
 
+#if __WIN32__
+  if ( use_open_gl)
+      blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
+#endif
+
   Bar_Rect . x = 200 ;
   Bar_Rect . y = 200 ;
   Bar_Rect . w = 2 * Percentage ;
