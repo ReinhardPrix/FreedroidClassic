@@ -250,7 +250,8 @@ Level_Editor(void)
   char linebuf[10000];
 
   char VanishingMessage[10000]="Hello";
-  float VanishingMessageDisplayTime = 100;
+  float VanishingMessageDisplayTime = 0;
+  long OldTicks;
 
   SDL_Rect Editor_Window;
   enum
@@ -264,11 +265,15 @@ Level_Editor(void)
   while ( !Done )
     {
       Weiter=FALSE;
+      OldTicks = SDL_GetTicks ( ) ;
       while (!EscapePressed())
 	{
 	  BlockX=rintf(Me[0].pos.x);
 	  BlockY=rintf(Me[0].pos.y);
 	  
+	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
+	  OldTicks = SDL_GetTicks ( ) ;
+
 	  ClearUserFenster();
 	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT );
 	  Highlight_Current_Block();
@@ -293,8 +298,13 @@ Level_Editor(void)
 	    }
 	  LeftPutString ( Screen , 4 * FontHeight( GetCurrentFont() ), linebuf );
 
-	  // LeftPutString ( Screen , 5 * FontHeight( GetCurrentFont() ), VanishingMessage );
-	  DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
+	  //--------------------
+	  // Now we print out the latest connection operation success or failure...
+	  //
+	  if ( VanishingMessageDisplayTime < 7 )
+	    {
+	      DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
+	    }
 
 
 	  //--------------------
@@ -556,10 +566,12 @@ Level_Editor(void)
 	      if ( i == MAXWAYPOINTS )
 		{
 		  sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
+		  VanishingMessageDisplayTime = 0;
 		}
 	      else
 		{
 		  sprintf( VanishingMessage , "\n\nYou specified waypoint nr. %d." , i );
+		  VanishingMessageDisplayTime = 0;
 		  if ( OriginWaypoint== (-1) )
 		    {
 		      strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
