@@ -3060,6 +3060,54 @@ init_obstacle_data( void )
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . filename = "iso_thick_wall_0010.png" ;
 
+  // restaurant stuff
+  
+  obstacle_map [ ISO_RESTAURANT_SHELVES_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_1 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_1 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_1 ] . filename = "iso_restaurant_furniture_0001.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_2 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_2 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_2 ] . filename = "iso_restaurant_furniture_0002.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_3 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_3 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_3 ] . filename = "iso_restaurant_furniture_0003.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_4 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_4 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_4 ] . filename = "iso_restaurant_furniture_0004.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_5 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_5 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_5 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_5 ] . filename = "iso_restaurant_furniture_0005.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_6 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_6 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_6 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_6 ] . filename = "iso_restaurant_furniture_0006.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_7 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_7 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_7 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_7 ] . filename = "iso_restaurant_furniture_0007.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_8 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_8 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_8 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_8 ] . filename = "iso_restaurant_furniture_0008.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_9 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_9 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_9 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_9 ] . filename = "iso_restaurant_furniture_0009.png" ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . filename = "iso_restaurant_furniture_0010.png" ;
+  
+  
+
+  
+  
+  
   obstacle_map [ ISO_CAVE_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_END_W ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_END_W ] . block_area_parm_2 = 1.0 ;
