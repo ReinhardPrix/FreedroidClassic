@@ -733,7 +733,7 @@ This indicates a serious bug in this installation of Freedroid.",
 
   if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
     {
-      show_button_tooltip ( "\n\nERROR!  This game is from a different version of FreedroidRPG.\n\nI refuse to load it!" );
+      show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\n\nSorry, but I refuse to load it for safety/stability reasons..." );
       our_SDL_flip_wrapper( Screen );
       while ( SpacePressed() ) usleep ( 3 );
       while ( !SpacePressed() ) usleep ( 3 );

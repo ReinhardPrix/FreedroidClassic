@@ -36,6 +36,8 @@
 
 #include "DialogEditor.h"
 
+void load_item_surfaces_for_item_type ( int item_type );
+
 extern int Number_Of_Item_Types;
 extern itemspec* ItemMap;
 
