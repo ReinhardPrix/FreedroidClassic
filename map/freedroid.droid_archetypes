@@ -158,7 +158,7 @@ Notes concerning this droid : simpe rubbish diposal robot. Common device in most
 ** Start of new Robot: ** 
 Droidname: 139
 Droid portrait file name (without extension) to use="139"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -200,7 +200,7 @@ Notes concerning this droid : created by Dr. Masternak to clean up large heaps o
 ** Start of new Robot: ** 
 Droidname: 247
 Droid portrait file name (without extension) to use="247"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -242,7 +242,7 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 ** Start of new Robot: ** 
 Droidname: 249
 Droid portrait file name (without extension) to use="249"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="249"
 Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -284,7 +284,7 @@ Notes concerning this droid : cheaper version of the anti-grav servant robot.
 ** Start of new Robot: ** 
 Droidname: 296
 Droid portrait file name (without extension) to use="296"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
