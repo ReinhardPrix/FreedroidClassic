@@ -30,6 +30,7 @@
 #include "SDL.h"
 // #include "SDL_mixer.h"
 #include "SDL_image.h"
+#include "BFont.h"
 
 #include "colodefs.h"
 
@@ -137,6 +138,9 @@ EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
 #endif
 EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;
+// EXTERN BFont_Info *Font1=NULL;
+EXTERN BFont_Info *Font1;
+
 
 #undef EXTERN
 #ifdef _view_c

@@ -467,7 +467,7 @@ EXTERN void InitTakeover (void);
 #define EXTERN extern
 #endif
 
-EXTERN void PrepareScaledSurface(void);
+EXTERN void PrepareScaledSurface(int);
 EXTERN void Lock_SDL_Screen(void);
 EXTERN void Unlock_SDL_Screen(void);
 EXTERN void Update_SDL_Screen(void);

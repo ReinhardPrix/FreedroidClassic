@@ -534,7 +534,7 @@ Debriefing (void)
 		       RealScreen, FALSE);
 	  // free (GreatScoreName);
 	  // SwapScreen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 
 	  GreatScoreName = GetString (18, 2);
 	  GreatScore = RealScore;
@@ -547,7 +547,7 @@ Debriefing (void)
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
 	  // SwapScreen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 	  // free (LowestName);
 	  LowestName = GetString (18, 2);
 	  LowestScoreOfDay = RealScore;
@@ -562,7 +562,7 @@ Debriefing (void)
 		       RealScreen, FALSE);
 	  // free (HighestName);
 	  // SwapScreen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 	  HighestName = GetString (18, 2);
 	  HighestScoreOfDay = RealScore;
 	}
@@ -584,7 +584,7 @@ Debriefing (void)
 	 USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
 
       // SwapScreen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 
       /* Den neuen Eintrag in die Liste integrieren */
       if (Hallptr->PlayerScore < RealScore)
@@ -617,7 +617,7 @@ Debriefing (void)
 		   USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
       Hallptr = SaveHallptr;
       // SwapScreen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
       getchar ();
     } /* if (ParaPlusExtensions) */
 
@@ -715,7 +715,7 @@ ShowHighscoreList (void)
 		 GreatScore);
       gl_printf (-1, -1, " Lowest Score:  %10s : %4d\n", LowestName,
 		 LowestScoreOfDay);
-      PrepareScaledSurface ();
+      PrepareScaledSurface (TRUE);
       getchar_raw ();
     }
   else

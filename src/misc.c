@@ -575,9 +575,9 @@ OptionsMenu (void)
   int Weiter = 0;
   int MenuPosition=1;
 
-#define FIRST_MENU_ITEM_POS_X (BLOCKBREITE - 5)
-#define FIRST_MENU_ITEM_POS_Y (BLOCKHOEHE + 12)
-#define MENU_ITEM_DISTANCE 21
+#define FIRST_MENU_ITEM_POS_X 3*(BLOCKBREITE - 7)
+  // #define FIRST_MENU_ITEM_POS_Y (BLOCKHOEHE + 12)
+  // #define MENU_ITEM_DISTANCE 21
 #define SINGLE_PLAYER_POSITION 1
 #define MULTI_PLAYER_POSITION 1
 #define OPTIONS_POSITION 1
@@ -619,13 +619,23 @@ OptionsMenu (void)
       // Help
       // Quit
       //
-      DisplayMergeBlock(0,0, OptionsMenuPointer, SCREENBREITE, SCREENHOEHE, RealScreen );
+      // DisplayMergeBlock(0,0, OptionsMenuPointer, SCREENBREITE, SCREENHOEHE, RealScreen );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * MENU_ITEM_DISTANCE , 
+      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
-      PrepareScaledSurface();
+
+      PrepareScaledSurface(FALSE);
+
+      CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "Single Player");
+      CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Multi Player");
+      CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Options");
+      CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Level Editor");
+      CenteredPutString (ScaledSurface ,  8*FontHeight(Font1),    "Quit");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
 
       // Wait until the user does SOMETHING
 

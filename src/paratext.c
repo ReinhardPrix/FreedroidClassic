@@ -352,7 +352,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
 
       ClearTextBorder (InternalScreen, CurrentFontBG);
       DisplayText (Text, startx, InsertLine, InternalScreen, FALSE);
@@ -418,7 +418,7 @@ DisplayText (char *Text,
       if ((unsigned char) *tmp == WAITCHAR)
 	{
 	  Update_SDL_Screen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 
 	  tmp++;
 	  while (UpPressed () || DownPressed () || LeftPressed ()
@@ -678,7 +678,7 @@ GetString (int MaxLen, int echo)
       else if (echo == 2)   	/* or use graphics-text */
 	{
 	  DisplayText (input, TextOutX, TextOutY, RealScreen, TRUE);
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 	} /* if echo */
 
       input[curpos] = (char) getchar_raw (); 	/* read char from raw kbd */

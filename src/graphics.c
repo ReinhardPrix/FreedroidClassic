@@ -1090,7 +1090,7 @@ case 4:
 	      0 , USERFENSTERBREITE );
       memset( Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE-i) * SCREENBREITE , 
 	      0 , USERFENSTERBREITE );
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
     }
 
   /* now also close the last line in the middle */
@@ -1101,7 +1101,7 @@ case 4:
       Outline320x200[ USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE/2) * SCREENBREITE + i ]=0;
       Outline320x200[ USERFENSTERPOSX + (USERFENSTERPOSY+USERFENSTERHOEHE/2) * SCREENBREITE + USERFENSTERBREITE - i ]=0;
 
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
     }
 
 

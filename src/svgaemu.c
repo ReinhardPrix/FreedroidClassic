@@ -37,9 +37,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// #include "BFont.h"
 #include "SDL.h"
 // #include "SDL_mixer.h"
 #include "SDL_image.h"
+
 
 
 #include "defs.h"
@@ -55,7 +57,7 @@
  * NOTE: The surface must be locked before calling this!
  */
 void 
-PrepareScaledSurface(void)
+PrepareScaledSurface(int With_Screen_Update)
 {
   int bpp;
   int i,j;
@@ -162,7 +164,7 @@ PrepareScaledSurface(void)
 
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens have been unlocked again...");
 
-  Update_SDL_Screen();
+  if (With_Screen_Update) Update_SDL_Screen();
 
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  End of function has been reached...");
 
@@ -598,11 +600,20 @@ int
 vga_init(void)
 {
   /* Initialize the SDL library */
-  if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-    fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-    Terminate(ERR);
-  }
+  if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Video initialisation successful.");
+      
 
+  if ( ( Font1 = LoadFont("../graphics/font01.png") ) == NULL )
+    {
+      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      Terminate(ERR);
+    } else
+      printf("\nSDL Font initialisation successful.");
   return 0;
 }
 

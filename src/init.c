@@ -632,7 +632,7 @@ Title (void)
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
   Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 
   while (!SpacePressed ());
   while (SpacePressed());

@@ -957,7 +957,7 @@ ShowPlayground (void)
   DebugPrintf
     ("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 }				/* ShowPlayground */
 
 

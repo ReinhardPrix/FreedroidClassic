@@ -98,7 +98,7 @@ EnterElevator (void)
   ShowElevators ();
   HilightElevator (row);
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 
   /* Warten, bis User Feuer auslaesst */
   while (SpacePressed ())
@@ -265,7 +265,7 @@ ShowElevators (void)
 
   HilightLevel (curLevel);
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 
   DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
   return;
@@ -337,7 +337,7 @@ EnterKonsole (void)
     {
 
       PaintConsoleMenu ();
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
 
       /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
       TasteOK = 0;
@@ -599,7 +599,7 @@ GreatDruidShow (void)
 			    Infodroid, RealScreen);
 
 	  Update_SDL_Screen();
-	  PrepareScaledSurface();
+	  PrepareScaledSurface(TRUE);
 
 	  KillTastaturPuffer ();
 	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
@@ -693,7 +693,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -756,7 +756,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -813,7 +813,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
-      PrepareScaledSurface();
+      PrepareScaledSurface(TRUE);
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -876,7 +876,7 @@ ShowDeckMap (Level deck)
       LY += 8;
     } /* for (i<xlen) */
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 
 } /* ShowDeckMap() */
 

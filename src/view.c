@@ -896,7 +896,7 @@ PutInternFenster (void)
     }				// for(i=0; ...
 
 
-  PrepareScaledSurface();
+  PrepareScaledSurface(TRUE);
 
   DebugPrintf ("\nvoid PutInternFenster(void): end of function reached.");
 
