@@ -232,7 +232,7 @@ Takeover (int enemynum)
 	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
-	  Switch_Background_Music_To (SILENCE);
+	  // Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Lost_Sound ();
 	  if (Me[0].type != DRUID001)
 	    {
