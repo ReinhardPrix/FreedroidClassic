@@ -833,10 +833,18 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.13  1994/05/21 16:27:15  prix
- * Fri May 20 14:11:58 1994: Plusmodusunterscheidung: PlusRahmen funktioniert
- * Sat May 21 09:18:57 1994: Cheatteleporter funktioniert
- * Sat May 21 09:32:55 1994: Cheatmenu erweitert
+ * Revision 1.14  1994/06/19 16:36:43  prix
+ * Sat May 21 14:26:01 1994: PutMessages hinzugef"ugt
+ * Sat May 21 17:04:53 1994: GetName durch GetString() ersetzt.
+ * Sun May 22 09:56:51 1994: calibrating Message-Timing
+ * Sun May 22 19:41:01 1994: Rahmen-functions moved to rahmen.c
+ * Sun May 22 19:45:57 1994: PlusRahmen() moved to rahmen
+ * Fri May 27 17:08:46 1994: Gesamtrobotliste geschrieben
+ * Tue Jun 14 10:16:47 1994: Terminate() cut out of this module
+ * Tue Jun 14 10:36:41 1994: killed InitRobotPictures(void)
+ * Tue Jun 14 10:39:23 1994: IntertNewMessage transfered to misc.c
+ * Wed Jun 15 13:27:22 1994: CheatMenu transported to misc.c
+ * Wed Jun 15 13:29:28 1994: Armageddon and Teleport moved to misc.c
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
