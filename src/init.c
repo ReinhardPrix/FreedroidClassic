@@ -1706,6 +1706,11 @@ InitNewMissionList ( char *MissionName )
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me[0].pos.y=StartingYPos;
+
+  Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
+  Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
+  Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
+
   
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   

@@ -94,6 +94,52 @@
 SDL_Rect SkillScreenRect;
 
 /* ----------------------------------------------------------------------
+ * This function creates a teleporter portal to the home location.
+ * ---------------------------------------------------------------------- */
+void
+CreateTeleportal ( gps PortalTarget )
+{
+  if ( Me [ 0 ] . mana >= 3 )
+    {
+      Me[0].mana -= 3;
+
+      if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] == FLOOR )
+	{
+	  curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] = TELE_1 ;
+	}
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+    }
+}; // void CreateTeleportal ( gps PortalTarget )
+
+/* ----------------------------------------------------------------------
+ * This function creates a teleporter portal to the home location.
+ * ---------------------------------------------------------------------- */
+void
+TeleportHome ( void )
+{
+  if ( Me [ 0 ] . mana >= 3 )
+    {
+      Me[0].mana -= 3;
+
+      Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
+      Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
+      Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
+
+      Teleport ( 0 , 3 , 3 , 0 ) ;
+
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+    }
+}; // void CreateTeleportal ( gps PortalTarget )
+
+/* ----------------------------------------------------------------------
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
@@ -173,7 +219,8 @@ ForceToEnergyConversion ( void )
 void
 HandleCurrentlyActivatedSkill( void )
 {
-  static int RightPressedPreviousFrame=0;
+  static int RightPressedPreviousFrame = 0;
+  // gps TargetLocation;
 
   if ( Me[0].readied_skill == 0 )
     {
@@ -204,7 +251,18 @@ HandleCurrentlyActivatedSkill( void )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
-	      ForceToEnergyConversion (  );
+	      ForceToEnergyConversion ( );
+	    }
+	}
+    }
+  else if ( Me[0].readied_skill == 4 )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      // TeleportHome ( TargetLocation ) ;
+	      TeleportHome (  ) ;
 	    }
 	}
     }
@@ -276,7 +334,7 @@ ShowSkillsScreen ( void )
   SkillName[ 1 ] = "Force Explosion Circle";
   SkillName[ 2 ] = "Force Explosion Ray";
   SkillName[ 3 ] = "Force -> Energy ";
-  SkillName[ 4 ] = "Unknown yet";
+  SkillName[ 4 ] = "Create Teleportal Home";
   SkillName[ 5 ] = "Unknown yet";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
