@@ -330,8 +330,7 @@ CheckBulletCollisions (int num)
 	      // collision of the bullet with an enemy (not in Paradroid)
 	      DeleteBullet( num );
 
-	      // Since the enemy just got hit, it might as well say so :)
-	      EnemyHitByBulletText( i );
+	      Enemy_Post_Bullethit_Behaviour( i );
 
 	      if (!CurBullet->mine)
 		{

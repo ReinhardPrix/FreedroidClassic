@@ -14,9 +14,28 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-4. Think of a way new tiles can be incorporated into the game
+2. Extend the game/graphics engine
+   b. Takeover graphics effect (alpha-blending?) should be added
+   d. dimensions of combat window should be enlarged vertically
+   e. use fixed pictures for each droid.  when no image found-->generate generic ones
+   h. add new tiles: barred door horizontally/vertically (of about wall size)
 
-5. Add documentation about how to incorporate new map tiles into the game
+3. Extend the freedroid world/missions
+   * (Outline for later:  other settings: )
+   * Command cyborg experiment facility (999, 998, 997, ... 990),
+   * Mining community
+   * Police station, where a rebel is held
+             
+4. New combat behaviour
+   a. introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
+      (that should give the player a chance to compete.  Otherywise they might become too powerful.)
+   b. analyze current state and set flags: WILL_BE_HIT_BY_BULLET
+   c.                                      HAVE_DIRECT_LINE_OF_FIRE_AT_INFLU
+   d.                                      HAVE_BETTER_WAYPOINT
+   e. split up state machines for fireing and movement
+   f. movement to new waypoint immediately if threatened by enemy fire
+
+DONE Add additional map tiles:  teleporters with multiple phases of animation
 
 7. Add additional map tiles:  destroyed console left/right/up/down 
    but only a dummy and leave the details to the creative people
@@ -55,27 +74,6 @@ DONE Allow for more than one 'phase' of the bullet, especially now that there
 
 *  Add surface lift to the asteroid map, that should not be accessible from the start.
 
-
-2. Extend the game/graphics engine
-   b. Takeover graphics effect (alpha-blending?) should be added
-   d. dimensions of combat window should be enlarged vertically
-   e. use fixed pictures for each droid.  when no image found-->generate generic ones
-   h. add new tiles: barred door horizontally/vertically (of about wall size)
-
-3. Extend the freedroid world/missions
-   * (Outline for later:  other settings: )
-   * Command cyborg experiment facility (999, 998, 997, ... 990),
-   * Mining community
-   * Police station, where a rebel is held
-             
-4. New combat behaviour
-   a. introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
-      (that should give the player a chance to compete.  Otherywise they might become too powerful.)
-   b. analyze current state and set flags: WILL_BE_HIT_BY_BULLET
-   c.                                      HAVE_DIRECT_LINE_OF_FIRE_AT_INFLU
-   d.                                      HAVE_BETTER_WAYPOINT
-   e. split up state machines for fireing and movement
-   f. movement to new waypoint immediately if threatened by enemy fire
 
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------

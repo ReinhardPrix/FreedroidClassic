@@ -367,6 +367,7 @@ EXTERN void ShowDebugInfos (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );
 EXTERN void ShuffleEnemys (void);
 EXTERN int CheckEnemyEnemyCollision (int enemynum);
 EXTERN void MoveEnemys (void);

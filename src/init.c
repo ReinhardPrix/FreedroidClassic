@@ -1134,6 +1134,9 @@ Get_Robot_Data ( void* DataPointer )
     }
 
 
+  Druidmap[ DRUID302 ].CallForHelpAfterSufferingHit = TRUE;
+
+
 } // int Get_Robot_Data ( void )
 
 /*@Function============================================================

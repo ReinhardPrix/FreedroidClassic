@@ -47,6 +47,50 @@
 
 // void PermanentHealRobots (void);
 
+/* ----------------------------------------------------------------------
+ * This function tests, if the given Robot can go a direct straigt line 
+ * to the next console.  If so, that way is set as his next 'parawaypoint'
+ * and TRUE is returned.
+ * Else nothing is done and FALSE is returned.
+ * ----------------------------------------------------------------------*/
+
+int 
+SetDirectCourseToConsole( int EnemyNum )
+{
+  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
+  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Trying to find direct line to console...");
+
+  return TRUE;
+}; // int SetDirectCourseToConsole ( int Enemynum )
+
+void 
+Enemy_Post_Bullethit_Behaviour( int EnemyNum )
+{
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+
+  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
+
+  // Since the enemy just got hit, it might as well say so :)
+  EnemyHitByBulletText( EnemyNum );
+
+  //--------------------
+  // It that is an enemy, who can go and tell his mommy MS at the next console,
+  // we will establish a route to the next best console and set the droid to
+  // persue this route and make his report.
+
+  if ( Druidmap[ ThisRobot->type ].CallForHelpAfterSufferingHit ) 
+    {
+      DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
+      
+      ThisRobot->persuing_given_course = TRUE;
+
+      if ( SetDirectCourseToConsole( EnemyNum ) == TRUE ) return;
+
+    }
+
+}; // void Enemy_Post_Bullethit_Behaviour( int Enemynum )
+
+
 /*@Function============================================================
 @Desc: 
 
@@ -97,6 +141,7 @@ ClearEnemys (void)
       AllEnemys[i].Friendly = 0;
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
+      AllEnemys[i].persuing_given_course = FALSE;
     }
 
   return;
@@ -192,22 +237,28 @@ ShuffleEnemys (void)
 
 }	/* ShuffleEnemys() */
 
+/* ----------------------------------------------------------------------
+ * This function checks if the connection between two points is free of
+ * droids.  
+ *
+ * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
+ *
+ ----------------------------------------------------------------------*/
 void 
-MoveThisRobotClassical( int EnemyNum )
+SelectNextWaypointClassical( int EnemyNum )
 {
-  int i,j;
+  int j;
   finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
   int trywp;
-  float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 
@@ -215,40 +266,6 @@ MoveThisRobotClassical( int EnemyNum )
   // determine the remaining way until the target point is reached
   Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
   Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
-
-  // --------------------
-  // As long a the distance from the current position of the enemy
-  // to its next wp is large, movement is rather sinple:
-
-  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
-    {
-      ThisRobot->speed.x =
-	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
-      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
-    } 	 
-  else
-    {
-      // --------------------
-      // Once this enemy is close to his final destination waypoint, we have
-      // to do some fine tuning, and then of course set the next waypoint.
-      ThisRobot->pos.x = nextwp_pos.x;
-      ThisRobot->speed.x = 0;
-    }
-
-
-  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
-    {
-      ThisRobot->speed.y =
-	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
-      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
-    }
-  else
-    {
-      // ThisRobot->pos.y += (nextwp_pos.y-ThisRobot->pos.y)*Frame_Time();
-      ThisRobot->pos.y = nextwp_pos.y;
-      ThisRobot->speed.y = 0;
-    }
-
 
   //--------------------
   // Now we can see if we are perhaps already there?
@@ -270,7 +287,7 @@ MoveThisRobotClassical( int EnemyNum )
 		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
       else
 	{
-	  DebugPrintf ( 2, "\nWeird waypoint %d has no connections!\n", nextwp);
+	  DebugPrintf ( 0, "\nvoid MoveThisRobotClassical ( int Enemynum ) : Weird waypoint %d has no connections!\n", nextwp);
 	  Terminate(ERR);
 	}
       
@@ -350,27 +367,23 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 
 
+
 /* ----------------------------------------------------------------------
- * This function moves one robot in an advanced way, that hasn't been
- * present within the classical paradroid game.
+ * This function moves one robot thowards his next waypoint.  If already
+ * there, the function does nothing more.
  *
  ----------------------------------------------------------------------*/
 void 
-MoveThisRobotAdvanced ( int EnemyNum )
+MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 {
-  int i,j;
   finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  int trywp;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  int FreeWays[ MAX_WP_CONNECTIONS ];
-  int SolutionFound;
-  int TestConnection;
 
-  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
+  DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisWaypoint ( int EnemyNum ) : real function call confirmed. ");
 
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
@@ -416,7 +429,94 @@ MoveThisRobotAdvanced ( int EnemyNum )
       ThisRobot->pos.y = nextwp_pos.y;
       ThisRobot->speed.y = 0;
     }
+};
 
+
+/* ----------------------------------------------------------------------
+ * This function selects the next waypoints or 'parawaypoints' for the
+ * droid along some predefined course.
+ * 
+ ----------------------------------------------------------------------*/
+void 
+Persue_Given_Course ( int EnemyNum )
+{
+  int i,j;
+  finepoint Restweg;
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  float maxspeed;
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  int FreeWays[ MAX_WP_CONNECTIONS ];
+  int SolutionFound;
+  int TestConnection;
+
+  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
+
+  if ( ThisRobot->persuing_given_course == FALSE ) return;
+
+  DebugPrintf( 2 , "\nvoid MoveThisRobotAdvanced ( int EnemyNum ) : Robot now on given course!!!. ");
+
+  // We do some definitions to save us some more typing later...
+  WpList = CurLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+
+  // determine the remaining way until the target point is reached
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+
+  //--------------------
+  // Now we can see if we are perhaps already there?
+  // then it might be time to set a new waypoint.
+  //
+
+  ThisRobot->TextVisibleTime = 0;
+  ThisRobot->TextToBeDisplayed = "Persuing given course!!";
+
+
+}; // Persue_Given_Waypoint_Course
+
+
+/* ----------------------------------------------------------------------
+ * This function moves one robot in an advanced way, that hasn't been
+ * present within the classical paradroid game.
+ *
+ ----------------------------------------------------------------------*/
+void 
+SelectNextWaypointAdvanced ( int EnemyNum )
+{
+  int i,j;
+  finepoint Restweg;
+  Waypoint WpList;		/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  float maxspeed;
+  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  int FreeWays[ MAX_WP_CONNECTIONS ];
+  int SolutionFound;
+  int TestConnection;
+
+  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
+
+  if ( ThisRobot->persuing_given_course == TRUE ) return;
+
+  // We do some definitions to save us some more typing later...
+  WpList = CurLevel->AllWaypoints;
+  nextwp = ThisRobot->nextwaypoint;
+  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  nextwp_pos.x = WpList[nextwp].x;
+  nextwp_pos.y = WpList[nextwp].y;
+
+
+  // determine the remaining way until the target point is reached
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
 
   //--------------------
   // Now we can see if we are perhaps already there?
@@ -433,8 +533,8 @@ MoveThisRobotAdvanced ( int EnemyNum )
       // that, until the influencer vanishes out of sight, which should cause them
       // to go into a hunting mode. (to be implemented later).
       //
-      if ( IsVisible ( &(ThisRobot->pos) ) &&
-	   Druidmap[ThisRobot->type].aggression &&
+      if ( Druidmap[ThisRobot->type].aggression &&
+	   IsVisible ( &(ThisRobot->pos) ) &&
 	   ! ThisRobot->Friendly )
 	{
 	  // But now that the enemy is are almost ready to fire, it just
@@ -558,11 +658,15 @@ MoveThisEnemy( int EnemyNum )
 
   //--------------------
   // Now comes the real movement part
+  MoveThisRobotThowardsHisWaypoint( EnemyNum );
+
 
   if ( Druidmap[ThisRobot->type].AdvancedBehaviour )
-    MoveThisRobotAdvanced( EnemyNum );
+    SelectNextWaypointAdvanced( EnemyNum );
   else
-    MoveThisRobotClassical( EnemyNum );
+    SelectNextWaypointClassical( EnemyNum );
+
+  Persue_Given_Course( EnemyNum );
 
 } // void MoveThisEnemy ( int EnemyNum )
 
@@ -900,17 +1004,16 @@ AnimateEnemys (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
-      if (AllEnemys[i].type == DRUID598)
-	{
+      //      if (AllEnemys[i].type == DRUID598)
+      //	{
 	  //   AllEnemys[i].feindrehcode,
 	  //   Druidmap[AllEnemys[i].type].maxenergy,
 	  //   AllEnemys[i].energy,
 	  //  AllEnemys[i].feindphase);
-	}
+      //}
 
       /* ignore enemys that are dead or on other levels or dummys */
-      if (AllEnemys[i].type == DEBUG_ENEMY)
-	continue;
+      // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
       if (AllEnemys[i].Status == OUT)

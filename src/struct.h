@@ -182,6 +182,8 @@ typedef struct
   int sensor3;
   int armament;
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
+  int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
+                                     // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
 }
 druidspec, *Druidspec;
@@ -209,6 +211,7 @@ typedef struct
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
+  point PrivatePathway[1000];
 }
 influence_t, *Influence_t;
 
@@ -234,6 +237,7 @@ typedef struct
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
   int Friendly;                 // is this a friendly droid or is it a MS controlled one?
+  int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
