@@ -162,7 +162,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
       Me [ PlayerNum ] .base_dexterity = 25;
       Me [ PlayerNum ] .base_magic = 10;
       
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_BETA;
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD ;
       Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_SWORD;
       Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
       Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
@@ -188,7 +188,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
       Me [ PlayerNum ] .base_dexterity = 35;
       Me [ PlayerNum ] .base_magic = 20;
 	  
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_BETA;
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
       Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_BOW;
       Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
       Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
@@ -209,7 +209,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
       Me [ PlayerNum ] .base_strength = 15;
       Me [ PlayerNum ] .base_dexterity = 20;
       Me [ PlayerNum ] .base_magic = 35;
-      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_ALPHA;
+      Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
       
       Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_STAFF;
       Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;

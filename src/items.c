@@ -999,7 +999,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_multiplicity =  1 ;
 	  break;
 	case 1:
-	  drop_item_type = ITEM_ANTIGRAV_BETA ;
+	  drop_item_type = ITEM_ANTIGRAV_POD ;
 	  drop_item_multiplicity =  1 ;
 	  break;
 	case 2:

@@ -2152,7 +2152,7 @@ Connect_To_Existing_Server_Menu (void)
   Me[0].base_magic = 10;
 
   // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
-  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
+  Me[0].drive_item.type = ( -1 ) ;
 
   Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
   Me[0].Inventory[ 0 ].inventory_position.x = 0;
