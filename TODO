@@ -9,6 +9,10 @@ Outstanding release-critical bugs (priority: high)
 - (rp) fix small mouse-shooting inconsistencies
 - (rp/jp) put a crosshair mouse-cursor
 
+- bullet to top-right seems to be "offset" to top with respect to
+  displayed bullet-pic (which is positioned correctly), i.e. 
+  collisions with wall or robots take place as if it was higher in y...
+
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
        rp: might be related to framerate, I have ~40 fps ?!
