@@ -74,6 +74,16 @@ TryToPutItem( item* SellItem , int AmountToSellAtMost )
 
   while ( SpacePressed() || EnterPressed() );
 
+  //--------------------
+  // We catch the case, that not even one item was selected
+  // for putting into a chest in the number selector...
+  //
+  if ( AmountToSellAtMost <= 0 ) 
+    {
+      DebugPrintf ( 0 , "\nTried to put 0 items of a kind into a chest or container... doing nothing... " );
+      return;
+    }
+
   if ( AmountToSellAtMost > SellItem -> multiplicity )
     AmountToSellAtMost = SellItem -> multiplicity ;
 
@@ -1244,6 +1254,16 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
   MenuTexts[1]="No";
   MenuTexts[2]="";
 
+  //--------------------
+  // We catch the case, that not even one item was selected
+  // for buying in the number selector...
+  //
+  if ( AmountToSellAtMost <= 0 ) 
+    {
+      DebugPrintf ( 0 , "\nTried to sell 0 items of a kind... doing nothing... " );
+      return;
+    }
+
   if ( AmountToSellAtMost > SellItem -> multiplicity )
     AmountToSellAtMost = SellItem -> multiplicity ;
 
@@ -1397,6 +1417,16 @@ TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
   StoredItemType = BuyItem -> type ;
 
   //--------------------
+  // We catch the case, that not even one item was selected
+  // for taking out from the chest in the number selector...
+  //
+  if ( AmountToBuyAtMost <= 0 ) 
+    {
+      DebugPrintf ( 0 , "\nTried to take 0 items of a kind from chest or cointainer... doing nothing... " );
+      return;
+    }
+
+  //--------------------
   // We prevent some take-put-cheating here.  For buying items this must
   // NOT be done.
   //
@@ -1429,6 +1459,16 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
   MenuTexts[2]="";
 
   DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
+
+  //--------------------
+  // We catch the case, that not even one item was selected
+  // for buying in the number selector...
+  //
+  if ( AmountToBuyAtMost <= 0 ) 
+    {
+      DebugPrintf ( 0 , "\nTried to buy 0 items of a kind... doing nothing... " );
+      return;
+    }
 
   BuyItem -> multiplicity = AmountToBuyAtMost ;
 
