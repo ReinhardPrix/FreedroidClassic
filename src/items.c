@@ -2738,7 +2738,7 @@ ManageInventoryScreen ( void )
 			      // Since a sword and a shield are both equipped, we must refuse to
 			      // equip this 2-handed weapon here and now...
 			      //
-			      PlayOnceNeededSoundSample ( "../effects/ThisItemRequiresBothHands.wav" , FALSE , FALSE );
+			      PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/ThisItemRequiresBothHands.wav" , FALSE , FALSE );
 			    }
 			}
 		    }
