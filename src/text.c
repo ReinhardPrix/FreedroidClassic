@@ -213,7 +213,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
 
   if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
-  DebugPrintf ( 0 , "\n--------------------\nSectionName: %s." , SectionName );
+  DebugPrintf ( -1000 , "\n--------------------\nSectionName: %s." , SectionName );
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
 There was a dialogue section to be used with a droid, that does not have a \n\
 corresponding chat flags array index." ,

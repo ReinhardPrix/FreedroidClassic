@@ -1478,7 +1478,7 @@ This should not happen for samples that are supposed to be cached...",
       //
       sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] = MyMalloc ( strlen ( SoundSampleFileName ) + 1 );
       strcpy ( sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] , SoundSampleFileName );
-      DebugPrintf ( -3 , "\nSuccessfully added sample '%s' to sound cache at new position %d." ,
+      DebugPrintf ( 1 , "\nSuccessfully added sample '%s' to sound cache at new position %d." ,
 		   sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] , next_free_position_in_cache );
 
       //--------------------
@@ -1555,7 +1555,7 @@ remove_all_samples_from_WAV_cache( void )
   //
   next_free_position_in_cache = 0 ;
 
-  DebugPrintf ( -3 , "\nremove_all_samples_from_WAV_cache(...): Successfully cleared the whole WAV cache." );
+  DebugPrintf ( 1 , "\nremove_all_samples_from_WAV_cache(...): Successfully cleared the whole WAV cache." );
 
 #endif // HAVE_LIBSDL_MIXER
 

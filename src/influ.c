@@ -58,7 +58,7 @@
 
 #define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
 
-#define DEBUG_TUX_PATHFINDING 0  // debug level for tux pathfinding...
+#define DEBUG_TUX_PATHFINDING 1  // debug level for tux pathfinding...
 
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
@@ -1013,7 +1013,7 @@ streamline_tux_intermediate_course ( int player_num )
   int scan_index;
   int cut_away;
 
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nOPTIMISATION --> streamline_tux_intermediate_course: Course optimisation has been done." );
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nOPTIMISATION --> streamline_tux_intermediate_course: starting..." );
 
   //--------------------
   // We process each index position of the course, starting with the point
@@ -1026,7 +1026,7 @@ streamline_tux_intermediate_course ( int player_num )
       // with the streamlining process and therefore can go home now...
       //
       if ( Me [ player_num ] . next_intermediate_point [ start_index ] . x == (-1) )
-	return;
+	break;
 
       //--------------------
       // Start of inner streamlining loop:
@@ -1072,13 +1072,57 @@ streamline_tux_intermediate_course ( int player_num )
       //--------------------
       // Now we know how much to cut away.  So we'll do it.
       //
-      for ( cut_away = 0 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX - last_index ; cut_away ++ )
+      for ( cut_away = 0 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; cut_away ++ )
 	{
-	  Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . x =
-	    Me [ player_num ] . next_intermediate_point [ last_index + cut_away ] . x ;
-	  Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . y =
-	    Me [ player_num ] . next_intermediate_point [ last_index + cut_away ] . y ;
+
+	  if ( last_index + cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
+	    {
+	      Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . x =
+		Me [ player_num ] . next_intermediate_point [ last_index + 0 + cut_away ] . x ;
+	      Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . y =
+		Me [ player_num ] . next_intermediate_point [ last_index + 0 + cut_away ] . y ;
+	    }
+	  else
+	    {
+	      Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . x = (-1) ;
+	      Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . y = (-1) ;
+	    }
 	}
+    }
+
+  //--------------------
+  // At this point the waypoint history is fairly good.  However, it might
+  // be, that the very first waypoint entry (index 0) is not nescessary and
+  // did not get overwritten in the process above, because the original course
+  // setup function does not usually include the current position of the Tux
+  // as the very first entry.
+  //
+  // Therefore we do some extra optimisation check here for this special case...
+  //
+  if ( tux_can_walk_this_line ( player_num , 
+				Me [ player_num ] . pos . x ,
+				Me [ player_num ] . pos . y ,
+				Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
+				Me [ player_num ] . next_intermediate_point [ 1 ] . y ) &&
+       CheckIfWayIsFreeOfDroids ( Me [ player_num ] . pos . x ,
+				  Me [ player_num ] . pos . y ,
+				  Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
+				  Me [ player_num ] . next_intermediate_point [ 1 ] . y , 
+				  Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) )
+    {
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nVERY FIRST INTERMEDIATE POINT CUT MANUALLY!!!!" );
+      for ( cut_away = 1 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; cut_away ++ )
+	{
+	  Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . x =
+	    Me [ player_num ] . next_intermediate_point [ cut_away ] . x ;
+	  Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . y =
+	    Me [ player_num ] . next_intermediate_point [ cut_away ] . y ;
+	}
+    }
+  else
+    {
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nOPTIMISATION --> streamline_tux_intermediate_course: no final shortcut." );
+
     }
 
 }; // void streamline_tux_intermediate_course ( player_num )
@@ -1290,6 +1334,7 @@ clear_out_intermediate_points ( int player_num )
     }
   Me [ player_num ] . next_intermediate_point [ 0 ] . x = Me [ 0 ] . pos . x ;
   Me [ player_num ] . next_intermediate_point [ 0 ] . y = Me [ 0 ] . pos . y ;
+
 }; // void clear_out_intermediate_points ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -1371,9 +1416,10 @@ set_up_intermediate_course_for_tux ( int player_num )
   // point, which will be the result of the recursion.
   //
   memset ( & ( recursion_grid [ 0 ] ) , TILE_IS_UNPROCESSED , sizeof ( char ) * MAX_MAP_LINES * MAX_MAP_LINES );
-  next_index_to_set_up = 0 ;
   
   clear_out_intermediate_points ( player_num );
+
+  next_index_to_set_up = 0 ;
 
   recursive_find_walkable_point ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , 0 ) ;
 
@@ -1402,6 +1448,10 @@ set_up_intermediate_course_for_tux ( int player_num )
 	}
     }
 
+  //--------------------
+  // We invert the intermediate waypoint list, because the Tux is coming from the
+  // other side of course...
+  //
   for ( i = 0 ; i < next_index_to_set_up / 2 ; i ++ )
     {
       tmp . x = Me [ player_num ] . next_intermediate_point [ i ] . x ;
@@ -1434,6 +1484,21 @@ set_up_intermediate_course_for_tux ( int player_num )
     }
 
   streamline_tux_intermediate_course ( player_num ) ;
+
+  //--------------------
+  // We print out the final result for debug purposes
+  //
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER STREAMLINING THE LIST, THIS LOOKS LIKE THIS:" );
+  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    {
+      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	{
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	}
+    }
+
 
   //--------------------
   // Finally, we set the reminder what the last given target was, so that

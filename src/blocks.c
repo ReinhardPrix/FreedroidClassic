@@ -191,7 +191,7 @@ try_to_load_ingame_item_surface ( int item_type )
       // No ingame item surface found? -- give error message and then use
       // the inventory item_surface for the job.
       //
-      DebugPrintf ( 1 , "\nitem_type=%d." , item_type );
+      DebugPrintf ( -1000 , "\nitem_type=%d. path tried=%s" , item_type , fpath );
       GiveStandardErrorMessage ( "try_to_load_ingame_item_surface (...)" , "\
 Unable to load an item ingame surface on demand.\n\
 Since there seems to be no ingame item surface yet, the inventory\n\

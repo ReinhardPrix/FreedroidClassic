@@ -1247,9 +1247,9 @@ find_free_bullet_index ( void )
 {
   int j;
 
-  for (j = 0; j < MAXBULLETS; j++)
+  for ( j = 0 ; j < MAXBULLETS ; j ++ )
     {
-      if (AllBullets[ j ].type == OUT)
+      if ( AllBullets [ j ] . type == OUT )
 	{
 	  return ( j ) ;
 	  break;
@@ -1259,7 +1259,7 @@ find_free_bullet_index ( void )
   //--------------------
   // If this point is ever reached, there's a severe bug in here...
   //
-  GiveStandardErrorMessage ( "find_free_bullet_entry_pointer ( ... )" , "\
+  GiveStandardErrorMessage ( "find_free_bullet_index ( ... )" , "\
 I seem to have run out of free bullet entries.  This can't normally happen.  --> some bug in here, oh no..." ,
 			     PLEASE_INFORM, IS_FATAL );
   
