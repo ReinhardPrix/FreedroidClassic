@@ -57,6 +57,30 @@ EXTERN int MyCursorY;
 SDL_Color flashcolor1 = {100, 100, 100};
 SDL_Color flashcolor2 = {0, 0, 0};
 
+#define MAX_ELEMENTS_IN_BLITTING_LIST 300
+
+typedef struct
+{
+  int element_type;
+  void *element_pointer;
+  float norm_of_elements_position;
+  int code_number;
+}
+blitting_list_element, *Blitting_list_element;
+
+blitting_list_element blitting_list [ MAX_ELEMENTS_IN_BLITTING_LIST ] ;
+int number_of_objects_currently_in_blitting_list ;
+
+enum
+  {
+    BLITTING_TYPE_NONE = 0 ,
+    BLITTING_TYPE_OBSTACLE = 1 ,
+    BLITTING_TYPE_ENEMY = 2 ,
+    BLITTING_TYPE_TUX = 3 ,
+    BLITTING_TYPE_BULLET = 4 ,
+    BLITTING_TYPE_BLAST = 5 
+  };
+
 //
 // POSSIBLY OUTDATED AND UNUSED FUNCTION
 // PLEASE CHECK FOR REMOVAL POSSIBLE
@@ -659,7 +683,7 @@ ShowPureMapBlocksAroundTux ( int mask )
  * will be handled later...
  * ---------------------------------------------------------------------- */
 void
-isometric_show_blocks_around_tux ( int mask )
+isometric_show_all_floor_tiles_around_tux ( int mask )
 {
   int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -768,7 +792,7 @@ isometric_show_blocks_around_tux ( int mask )
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
-}; // void isometric_show_blocks_around_tux ( int mask )
+}; // void isometric_show_all_floor_tiles_around_tux ( int mask )
 
 /* ----------------------------------------------------------------------
  * This function should blit all the map inserts that are currently visible
@@ -874,6 +898,255 @@ There was an obstacle type given, that exceeds the number of\n\
 }; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
+ * In order for the obstacles to be blitted, they must first be inserted
+ * into the correctly ordered list of objects to be blitted this frame.
+ * ---------------------------------------------------------------------- */
+void
+insert_obstacles_into_blitting_list ( void )
+{
+  int i;
+  level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
+  int LineStart, LineEnd, ColStart, ColEnd , line, col;
+  obstacle* OurObstacle;
+
+  //--------------------
+  // There are literally THOUSANDS of obstacles on some levels.
+  // Therefore we will not blit each and every one of them, but only those
+  // that are glued to one of the map tiles in the local area...
+  // That should give us some better performance...
+  //
+
+  //--------------------
+  // We select the following area to be the map excerpt, that can be
+  // visible at most.  This is nescessare now that the Freedroid RPG is
+  // going to have larger levels and we don't want to do 100x100 cyles
+  // for nothing each frame.
+  //
+  LineStart = Me [ 0 ] . pos . y - 7 ;
+  LineEnd = Me [ 0 ] . pos . y + 7 ;
+  ColStart = Me [ 0 ] . pos . x - 7 ;
+  ColEnd = Me [ 0 ] . pos . x + 7 ;
+  if ( LineStart < 0 ) LineStart = 0 ;
+  if ( ColStart < 0 ) ColStart = 0 ;
+  if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
+  if ( ColEnd >= obstacle_level -> xlen ) ColEnd = obstacle_level -> xlen - 1 ;
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for (col = ColStart; col < ColEnd; col++)
+	{
+	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    {
+	      if ( obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] != (-1) )
+		{
+		  if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST )
+		    {
+		      GiveStandardErrorMessage ( "insert_obstacles_into_blitting_list (...)" , "\
+The blitting list size was exceeded!",
+						 PLEASE_INFORM, IS_FATAL );
+		    }
+
+		  OurObstacle = & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ;
+
+		  blitting_list [ number_of_objects_currently_in_blitting_list ] . norm_of_elements_position =
+		    OurObstacle -> pos . x + OurObstacle -> pos . y ;
+		  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_type = BLITTING_TYPE_OBSTACLE ;
+		  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_pointer = 
+		    OurObstacle ;
+		  number_of_objects_currently_in_blitting_list ++ ;
+		}
+	      else
+		break;
+	    }
+	}
+    }
+
+}; // void show_obstacles_around_tux ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , void* new_element_pointer , int code_number )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    {
+
+      //--------------------
+      // Maybe the new element is the last entry that will be added.  This case
+      // must be handled specially.
+      //
+      if ( i == number_of_objects_currently_in_blitting_list )
+	{
+	  blitting_list [ number_of_objects_currently_in_blitting_list ] . norm_of_elements_position =
+	    new_element_norm ;
+	  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_type = new_element_type ;
+	  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_pointer = new_element_pointer ;
+	  blitting_list [ number_of_objects_currently_in_blitting_list ] . code_number = code_number ;
+	  number_of_objects_currently_in_blitting_list ++ ;
+	  return;
+	}
+
+      //--------------------
+      // In this case we know, that the New_Element insertion position is not the last
+      // one and that therefore the other elements behind this position must be
+      // moved along by one.
+      //
+      if ( new_element_norm < blitting_list [ i ] . norm_of_elements_position )
+	{
+	  //--------------------
+	  // Before we can move the memory here, we must make sure that there
+	  // is room for our shift.  So we'll check that now...
+	  //
+	  if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST - 1 )
+	    {
+	      GiveStandardErrorMessage ( "insert_new_element_into_blitting_list (...)" , "\
+The blitting list size was exceeded!",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+
+	  //--------------------
+	  // Note that we MUST NOT USE MEMCPY HERE BUT RATHER MUST USE MEM-MOVE!!
+	  // See the GNU C Manual for details!
+	  //
+	  memmove ( & ( blitting_list [ i + 1 ] ) , & ( blitting_list [ i ] ) , 
+		    sizeof ( blitting_list_element ) * ( number_of_objects_currently_in_blitting_list - i ) );
+
+	  //--------------------
+	  // Now we can insert the New_Element in the new free position that we have 
+	  // created.
+	  //
+	  blitting_list [ i ] . norm_of_elements_position =
+	    new_element_norm ;
+	  blitting_list [ i ] . element_type = new_element_type ;
+	  blitting_list [ i ] . element_pointer = new_element_pointer ;
+	  blitting_list [ i ] . code_number = code_number ;
+	  number_of_objects_currently_in_blitting_list ++ ;	  
+	  return;
+	}
+    }
+}; // void insert_new_element_into_blitting_list ( ... )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_tux_into_blitting_list ( void )
+{
+  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+
+  insert_new_element_into_blitting_list ( tux_norm , BLITTING_TYPE_TUX , NULL , -1 );
+
+}; // void insert_tux_into_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_one_enemy_into_blitting_list ( int enemy_num )
+{
+  float enemy_norm = AllEnemys [ enemy_num ] . pos . x + AllEnemys [ enemy_num ] . pos . y ;
+
+  insert_new_element_into_blitting_list ( enemy_norm , BLITTING_TYPE_ENEMY , & ( AllEnemys [ enemy_num ] ) , enemy_num );
+
+}; // void insert_one_enemy_into_blitting_list ( int enemy_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_one_bullet_into_blitting_list ( int bullet_num )
+{
+  float bullet_norm = AllBullets [ bullet_num ] . pos . x + AllBullets [ bullet_num ] . pos . y ;
+
+  insert_new_element_into_blitting_list ( bullet_norm , BLITTING_TYPE_BULLET , 
+					  & ( AllBullets [ bullet_num ] ) , bullet_num );
+
+}; // void insert_one_bullet_into_blitting_list ( int enemy_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_one_blast_into_blitting_list ( int blast_num )
+{
+  float blast_norm = AllBlasts [ blast_num ] . pos . x + AllBlasts [ blast_num ] . pos . y ;
+
+  insert_new_element_into_blitting_list ( blast_norm , BLITTING_TYPE_BLAST , 
+					  & ( AllBlasts [ blast_num ] ) , blast_num );
+
+}; // void insert_one_blast_into_blitting_list ( int enemy_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_enemies_into_blitting_list ( void )
+{
+  int i;
+  float enemy_norm;
+  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+
+  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    {
+      if ( AllEnemys [ i ] . Status == OUT ) continue;
+      if ( AllEnemys [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
+      enemy_norm = AllEnemys [ i ] . pos . x + AllEnemys [ i ] . pos . y ;
+      
+      if ( abs ( enemy_norm - tux_norm ) > 7 + 7 ) continue;
+
+      insert_one_enemy_into_blitting_list ( i );
+    }
+      
+}; // void insert_enemies_into_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_bullets_into_blitting_list ( void )
+{
+  int i;
+  float enemy_norm;
+  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+
+  for ( i = 0 ; i < MAXBULLETS ; i ++ )
+    {
+      if (AllBullets[i].type != OUT)
+	insert_one_bullet_into_blitting_list ( i );
+    }
+      
+}; // void insert_enemies_into_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_blasts_into_blitting_list ( void )
+{
+  int i;
+  float enemy_norm;
+  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+
+  for ( i = 0 ; i < MAXBLASTS ; i ++ )
+    {
+      if (AllBlasts[i].type != OUT)
+	insert_one_blast_into_blitting_list ( i );
+    }
+      
+}; // void insert_enemies_into_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
  * This function should display all obstacles around the Tux.  It might
  * leave the code soon again, cause order of blitting has to be taken
  * into account...
@@ -923,20 +1196,80 @@ show_obstacles_around_tux ( void )
 	}
     }
 
-		/*
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-    {
-      if ( obstacle_level -> obstacle_list [ i ] . type >= 0 )
-	{
-	  blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
-	}
-      else 
-	  break;
-    }
-	      */
-  // DebugPrintf ( 0 , "\nNumber of obstacles on this map: %d." , i );
-
 }; // void show_obstacles_around_tux ( void )
+
+/* ----------------------------------------------------------------------
+ * In isometric viewpoint setting, we need to respect visibility when
+ * considering the order of things to blit.  Therefore we will first set
+ * up a list of the things to be blitted for this frame.  Then we can
+ * later use this list to fill in objects into the picture, automatically
+ * having the right order.
+ * ---------------------------------------------------------------------- */
+void
+set_up_ordered_blitting_list ( void )
+{
+  //--------------------
+  // First we need to clear out the blitting list.  We do this using
+  // memset for optimal performance...
+  //
+  memset ( & ( blitting_list [ 0 ] ) , 0 , sizeof ( blitting_list_element ) * MAX_ELEMENTS_IN_BLITTING_LIST );
+  number_of_objects_currently_in_blitting_list = 0 ;
+
+  //--------------------
+  // Now we can start to fill in the obstacles around the
+  // tux...
+  //
+  insert_obstacles_into_blitting_list ();
+
+  insert_tux_into_blitting_list ();
+
+  insert_enemies_into_blitting_list ( );
+
+  insert_bullets_into_blitting_list ( ); 
+
+  insert_blasts_into_blitting_list ( ); 
+
+}; // void set_up_ordered_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
+ * Now that the blitting list has finally been assembled, we can start to
+ * blit all the objects according to the blitting list set up.
+ * ---------------------------------------------------------------------- */
+void
+blit_all_objects_according_to_blitting_list ( void )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    {
+      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
+      switch ( blitting_list [ i ] . element_type )
+	{
+	case BLITTING_TYPE_OBSTACLE:
+	  blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	  break;
+	case BLITTING_TYPE_TUX:
+	  if ( Me [ 0 ] . energy > 0 )
+	    PutInfluence ( -1 , -1 , 0 ); // this blits player 0 
+	  break;
+	case BLITTING_TYPE_ENEMY:
+	  PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 ); // this blits player 0 
+	  break;
+	case BLITTING_TYPE_BULLET:
+	  PutBullet ( blitting_list [ i ] . code_number ); 
+	  break;
+	case BLITTING_TYPE_BLAST:
+	  PutBlast ( blitting_list [ i ] . code_number ); 
+	  break;
+	default:
+	  GiveStandardErrorMessage ( "blit_all_objects_according_to_blitting_list (...)" , "\
+The blitting list contained an illegal blitting object type.",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
+    }
+
+}; // void blit_all_objects_according_to_blitting_list ( void )
 
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
@@ -966,11 +1299,21 @@ AssembleCombatPicture (int mask)
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
-  isometric_show_blocks_around_tux ( mask );
+  isometric_show_all_floor_tiles_around_tux ( mask );
 
-  // ShowPureMapBlocksAroundTux ( mask );
+  if ( mask & SHOW_ITEMS )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  PutItem( i );
+	}
+    }
 
-  // ShowBigMapInsertsAroundTux ( mask );
+  PutMouseMoveCursor ( );
+
+  set_up_ordered_blitting_list ();
+
+  blit_all_objects_according_to_blitting_list ();
 
   if (mask & ONLY_SHOW_MAP) 
     {
@@ -981,14 +1324,62 @@ AssembleCombatPicture (int mask)
       return;
     }
 
+  PutMiscellaneousSpellEffects ( );
+      
+  ShowAutomapData();
 
-  if ( mask & SHOW_ITEMS )
+  ShowCombatScreenTexts( mask );
+
+  //--------------------
+  // Here are some more things, that are not needed in the level editor
+  // view...
+  //
+  if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-	{
-	  PutItem( i );
-	}
+      ShowItemAlarm();
+      ShowCharacterScreen ( );
+      ShowSkillsScreen ( );
+      ManageInventoryScreen ( );
+      ShowQuickInventory ();
+      DisplayButtons( );
     }
+
+  if ( ServerMode )
+    CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );
+
+  if ( GameConfig.Inventory_Visible ) 
+    {
+      User_Rect.x = SCREEN_WIDTH/2;
+      User_Rect.w = SCREEN_WIDTH/2;
+    }
+  else if ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) 
+    {
+      User_Rect.x = 0; // SCREEN_WIDTH/2;
+      User_Rect.w = SCREEN_WIDTH/2;
+    }
+  else
+    {
+      User_Rect.x = 0;
+      User_Rect.w = SCREEN_WIDTH;
+    }
+
+
+  //--------------------
+  // At this point we are done with the drawing procedure
+  // and all that remains to be done is updating the screen.
+  // Depending on where we did our modifications, we update
+  // an according portion of the screen.
+  if ( mask & DO_SCREEN_UPDATE )
+    {
+      SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+    }
+
+  return;
+
+  // ShowPureMapBlocksAroundTux ( mask );
+
+  // ShowBigMapInsertsAroundTux ( mask );
+
 
   show_obstacles_around_tux (  );
 
@@ -1661,6 +2052,7 @@ There was a rotation model type given, that exceeds the number of rotation model
  * ---------------------------------------------------------------------- */
 void
 PutEnemy (int Enum , int x , int y)
+// PutEnemy ( enemy* our_enemy Enum , int x , int y)
 {
   char *druidname;	// the number-name of the Enemy 
   SDL_Rect TargetRectangle;
