@@ -177,48 +177,51 @@ shieldspec AllShields[]={
 };
 
 
+#define ROBOT_SPEED_CALIBRATOR 20
+#define ROBOT_ACCEL_CALIBRATOR 30
 druidspec Druidmap[ALLDRUIDTYPES]={
 /*
-                 accel.  lose_health          aggr.  fl.imm.
-name maxspeed cl.      energy     gun      vneut.  firewait score notes
----------------------------------------------------------------------- */
-{"001", 30*5,  0, 1*30, 165, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
-{"123", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
-{"139", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
-{"247", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"249", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"296", 30*2,  2, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"302", 30*7,  3, 2*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
-{"329", 30*1,  3, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
-{"420",	30*2,  4, 1*30,  60, 2,  PULSE,       1, 00,  0,  1, 100, NULL },
-{"476", 30*4,  4, 1*30,  70, 2, SINGLE_PULSE, 2, 65,  6,  0, 100, NULL },
-{"493", 30*4,  4, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 100, NULL },
-{"516",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"571",	30*4,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"598",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"614",	30*3,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
-{"615",	30*4,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
-{"629",	30*2,  6, 1*30, 100, 3, MILITARY,     2, 60,  6,  0, 150, NULL },
-{"711",	30*5,  7, 1*30, 110, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
-{"742",	30*4,  7, 1*30, 130, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
-{"751",	30*5,  7, 1*30, 150, 3, SINGLE_PULSE, 2, 60,  5,  0, 175, NULL },
-{"821", 30*6,  8, 2*30, 160, 3,  MILITARY,    2, 70,  3,  1, 200, NULL },
-{"834", 30*7,  8, 1*30, 140, 3, SINGLE_PULSE, 2, 70,  5,  0, 200, NULL },
-{"883", 30*2,  8, 1*30, 180, 3, SINGLE_PULSE, 2, 80,  3,  0, 200, NULL },
-{"999", 30*6,  9, 2*30, 300, 5,  MILITARY,    2, 60,  3,  1, 225, NULL }
+                                     accel.    lose_health          aggr.  fl.imm.
+name            maxspeed          cl.      energy     gun      vneut.  firewait score notes
+------------------------------------------------------------------------------------------- */
+{"001", ROBOT_SPEED_CALIBRATOR*5,  0, 1*ROBOT_ACCEL_CALIBRATOR,  65, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
+{"123", ROBOT_SPEED_CALIBRATOR*2,  1, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
+{"139", ROBOT_SPEED_CALIBRATOR*2,  1, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
+{"247", ROBOT_SPEED_CALIBRATOR*4,  2, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"249", ROBOT_SPEED_CALIBRATOR*4,  2, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"296", ROBOT_SPEED_CALIBRATOR*2,  2, 1*ROBOT_ACCEL_CALIBRATOR,  40, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"302", ROBOT_SPEED_CALIBRATOR*7,  3, 2*ROBOT_ACCEL_CALIBRATOR,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
+{"329", ROBOT_SPEED_CALIBRATOR*1,  3, 1*ROBOT_ACCEL_CALIBRATOR,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
+{"420",	ROBOT_SPEED_CALIBRATOR*2,  4, 1*ROBOT_ACCEL_CALIBRATOR,  60, 2,  PULSE,       1, 00,  0,  1, 100, NULL },
+{"476", ROBOT_SPEED_CALIBRATOR*4,  4, 1*ROBOT_ACCEL_CALIBRATOR,  70, 2, SINGLE_PULSE, 2, 65,  6,  0, 100, NULL },
+{"493", ROBOT_SPEED_CALIBRATOR*4,  4, 1*ROBOT_ACCEL_CALIBRATOR,  80, 3,  PULSE,       2, 00,  0,  0, 100, NULL },
+{"516",	ROBOT_SPEED_CALIBRATOR*3,  5, 1*ROBOT_ACCEL_CALIBRATOR,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"571",	ROBOT_SPEED_CALIBRATOR*4,  5, 1*ROBOT_ACCEL_CALIBRATOR,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"598",	ROBOT_SPEED_CALIBRATOR*3,  5, 1*ROBOT_ACCEL_CALIBRATOR,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"614",	ROBOT_SPEED_CALIBRATOR*3,  6, 1*ROBOT_ACCEL_CALIBRATOR, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
+{"615",	ROBOT_SPEED_CALIBRATOR*4,  6, 1*ROBOT_ACCEL_CALIBRATOR, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
+{"629",	ROBOT_SPEED_CALIBRATOR*2,  6, 1*ROBOT_ACCEL_CALIBRATOR, 100, 3, MILITARY,     2, 60,  6,  0, 150, NULL },
+{"711",	ROBOT_SPEED_CALIBRATOR*5,  7, 1*ROBOT_ACCEL_CALIBRATOR, 110, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
+{"742",	ROBOT_SPEED_CALIBRATOR*4,  7, 1*ROBOT_ACCEL_CALIBRATOR, 130, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
+{"751",	ROBOT_SPEED_CALIBRATOR*5,  7, 1*ROBOT_ACCEL_CALIBRATOR, 150, 3, SINGLE_PULSE, 2, 60,  5,  0, 175, NULL },
+{"821", ROBOT_SPEED_CALIBRATOR*6,  8, 2*ROBOT_ACCEL_CALIBRATOR, 160, 3,  MILITARY,    2, 70,  3,  1, 200, NULL },
+{"834", ROBOT_SPEED_CALIBRATOR*7,  8, 1*ROBOT_ACCEL_CALIBRATOR, 140, 3, SINGLE_PULSE, 2, 70,  5,  0, 200, NULL },
+{"883", ROBOT_SPEED_CALIBRATOR*2,  8, 1*ROBOT_ACCEL_CALIBRATOR, 180, 3, SINGLE_PULSE, 2, 80,  3,  0, 200, NULL },
+{"999", ROBOT_SPEED_CALIBRATOR*6,  9, 2*ROBOT_ACCEL_CALIBRATOR, 300, 5,  MILITARY,    2, 60,  3,  1, 225, NULL }
 };
 
 
+
+#define BULLET_SPEED_CALIBRATOR (ROBOT_SPEED_CALIBRATOR)
 bulletspec Bulletmap[ALLBULLETTYPES]={
-	
 /*  
-speed     salve         blast                 oneshotonly
+  speed     salve         blast                 oneshotonly
      damage 	phases	                pic.	
 ------------------------------------------------------------*/
-{ 10*35,  25,    1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
-{ 10*35,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
-{ 10*35,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
-{ 10*35,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
+{ 10*BULLET_SPEED_CALIBRATOR,  25,    1,  4,    BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
+{ 10*BULLET_SPEED_CALIBRATOR,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
+{ 10*BULLET_SPEED_CALIBRATOR,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
+{ 10*BULLET_SPEED_CALIBRATOR,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
 };
 
 blastspec Blastmap[ALLBLASTTYPES]={

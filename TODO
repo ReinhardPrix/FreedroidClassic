@@ -8,6 +8,10 @@ Bugs
 - (rp) IMPORTANT:  The automake/autoconf procedure needs to be looked over again.
   Compiler warnings SHOULD REALLY BE ENABLED AND STRICT if not pedantic!!!!
 
+- (rp) The waypoints seem to have gone awry!  On the command bridge (red level) and
+  on the gray level especially robots like to pass through walls and out of the map
+  and back again like ghosts.  Perhaps someone could look the maps over?
+
 - Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
   NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
 
@@ -15,9 +19,12 @@ Bugs
 
 - Spiel "holpert" oefters: koennte von Scroll-schrift kommen
   (sollte vielleicht in einem Parallel-prozess laufen, statt in
-  der Hauptschleife?)
+  der Hauptschleife?) (jp: Kommt wahrscheinlich vom yiff sound server, wenn zu viele
+  sounds gleichzeitig angefordert werden, etwa, wenn man zwischen zwei robots eingeklemmt
+  und hin und her gebeppelt wird.  Andere Ursachen nicht ausgeschlossen.)
 
 - gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
+  jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
 
 - Laufschrift gehoert zu Paradroid-'extensions'
 

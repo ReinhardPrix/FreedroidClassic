@@ -375,12 +375,15 @@ void AttackInfluence(int enemynum)
       AllBullets[j].pos.y=Feindesliste[enemynum].pos.y;
       
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-      AllBullets[j].pos.x+=isignf(AllBullets[j].speed.x)*BLOCKBREITE/2;
-      AllBullets[j].pos.y+=isignf(AllBullets[j].speed.y)*BLOCKHOEHE/2;
+      // AllBullets[j].pos.x+=isignf(AllBullets[j].speed.x)*BLOCKBREITE/2;
+      // AllBullets[j].pos.y+=isignf(AllBullets[j].speed.y)*BLOCKHOEHE/2;
+      AllBullets[j].pos.x+=(AllBullets[j].speed.x)/abs(Bulletmap[guntype].speed)*BLOCKBREITE/2;
+      AllBullets[j].pos.y+=(AllBullets[j].speed.y)/abs(Bulletmap[guntype].speed)*BLOCKHOEHE/2;
 
       // The following lines could be improved: Use not the sign, but only the fraction of the maxspeed times constant!
-      AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
-      AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
+      // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one frame, the robot cant move into its own bullet.
+      // AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
+      // AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
       
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
       
