@@ -43,7 +43,8 @@
 #define MEMDEBUG
 #define SOUND
 
-enum { SHOW_ALL=0, SHOW_MAP=1 };
+enum
+{ SHOW_ALL = 0, SHOW_MAP = 1 };
 
 
 // For development purposes, the sound will not be activated unless the following definition is made
@@ -56,8 +57,9 @@ enum { SHOW_ALL=0, SHOW_MAP=1 };
 // in the SoundSampleFilenames definition located in sound.c!
 
 #define SILENCE (-1)
-enum _sounds {
-  ERRORSOUND=0,
+enum _sounds
+{
+  ERRORSOUND = 0,
   COMBAT_BACKGROUND_MUSIC_SOUND,
   TAKEOVER_BACKGROUND_MUSIC_SOUND,
   CONSOLE_BACKGROUND_MUSIC_SOUND,
@@ -134,7 +136,7 @@ enum _sounds {
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
 
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
-#define SHIPNAME                   "../map/ship1" 
+#define SHIPNAME                   "../map/ship1"
 #define COLORFILE                  "../map/levels.col"
 
 /* Konstanten die unmittelbar die Hardware betreffen */
@@ -196,8 +198,8 @@ enum _sounds {
 #define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
 #define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
 
-//#define USERFENSTEROBEN 	BLOCKHOEHE+BLOCKHOEHE/2
-//#define USERFENSTERLINKS 	1*BLOCKBREITE
+//#define USERFENSTEROBEN       BLOCKHOEHE+BLOCKHOEHE/2
+//#define USERFENSTERLINKS      1*BLOCKBREITE
 
 #define BULLETSPEEDINFLUENCE 	2
 
@@ -209,41 +211,43 @@ enum _sounds {
 #define NUMBEROFS 		5+12*BLOCKBREITE
 #define ENEMYPHASES 		8
 
-#define WAIT_LEVELEMPTY		18		/* warte bevor Graufaerben */
-#define WAIT_AFTER_KILLED	45		/* warte, bevor Spiel aus */
+#define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
+#define WAIT_AFTER_KILLED	45	/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	5		/* warte, bevor in Transfermode schalten */
+#define WAIT_TRANSFERMODE	5	/* warte, bevor in Transfermode schalten */
 
 /* Soundblasterkonstanten */
 #define SBCHANNELS 		7
 
 /* Nummern der Schilder */
-enum _shields {
-	SHIELD0=0,
-	SHIELD1,
-	SHIELD2,
-	SHIELD3
+enum _shields
+{
+  SHIELD0 = 0,
+  SHIELD1,
+  SHIELD2,
+  SHIELD3
 };
 
 /* Richtungsdefinitionen (fuer die Einstellung der Schussrichtung) */
-enum _directions {
-	OBEN=0,
-	RECHTSOBEN,
-	RECHTS,
-	RECHTSUNTEN,
-	UNTEN,
-	LINKSUNTEN,
-	LINKS,
-	LINKSOBEN,
-	CENTER,
-	LIGHT	/* special: checking passability for light, not for a checkpos */
+enum _directions
+{
+  OBEN = 0,
+  RECHTSOBEN,
+  RECHTS,
+  RECHTSUNTEN,
+  UNTEN,
+  LINKSUNTEN,
+  LINKS,
+  LINKSOBEN,
+  CENTER,
+  LIGHT				/* special: checking passability for light, not for a checkpos */
 };
 
 /* Koordinaten der Bloecke die isoliert werden sollen */
 #define INFLUENCEBLOCKPOSITIONX 0
-#define INFLUENCEBLOCKPOSITIONY 0 /* BLOCKHOEHE */
-#define BULLETBLOCKPOSITIONY 0 /* (BLOCKHOEHE*4) */
-#define BLASTBLOCKPOSITIONY 0 /* (BLOCKHOEHE*3) */
+#define INFLUENCEBLOCKPOSITIONY 0	/* BLOCKHOEHE */
+#define BULLETBLOCKPOSITIONY 0	/* (BLOCKHOEHE*4) */
+#define BLASTBLOCKPOSITIONY 0	/* (BLOCKHOEHE*3) */
 
 // #define STARTENERGIE 100
 #define ENERGIEBALKENBREITE 15
@@ -261,12 +265,12 @@ enum _directions {
 
 #define BLOCKANZAHL 43
 
-#define ALLDRUIDTYPES		24		/* number of druid-models that exist */
-#define ALLBULLETTYPES		4		/* number of bullet-types */
-#define ALLBLASTTYPES		2     /* number of different exposions */
+#define ALLDRUIDTYPES		24	/* number of druid-models that exist */
+#define ALLBULLETTYPES		4	/* number of bullet-types */
+#define ALLBLASTTYPES		2	/* number of different exposions */
 
-#define MAXBULLETS		10		/* maximum possible Bullets in the air */
-#define MAXBLASTS			5		/* max. possible Blasts visible */
+#define MAXBULLETS		10	/* maximum possible Bullets in the air */
+#define MAXBLASTS			5	/* max. possible Blasts visible */
 #define AGGRESSIONMAX  100
 
 /* Map-related defines:
@@ -284,7 +288,7 @@ enum _directions {
 #define MAX_DOORS_ON_LEVEL 20
 #define MAX_REFRESHES_ON_LEVEL	10
 
-#define WAIT_COLLISION		9		/* enemy bleibt nach coll. stehen */
+#define WAIT_COLLISION		9	/* enemy bleibt nach coll. stehen */
 
 /* Macros */
 #define GrobX (Me.pos.x / BLOCKBREITE)
@@ -297,71 +301,75 @@ enum _directions {
 #define CLFeinX ((Me.pos.x+BLOCKBREITE/2) % BLOCKHOEHE)
 #define CLGrobX ((Me.pos.x+BLOCKBREITE/2) / BLOCKHOEHE)
 
-#define BREMSDREHUNG 3 		/* warte 3*, bevor Influencer weitergedreht wird */
+#define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
 
 /* Wegstossgeschw. von Tueren u.ae. */
 #define PUSHSPEED 2
 
 /* Schusstypen */
-enum _bullets {
-	PULSE,
-	SINGLE_PULSE,
-	MILITARY,
-	FLASH
+enum _bullets
+{
+  PULSE,
+  SINGLE_PULSE,
+  MILITARY,
+  FLASH
 };
 
 
 /* Explosionstypen */
-enum _explosions {
-	BULLETBLAST,
-	DRUIDBLAST,
-	OWNBLAST
+enum _explosions
+{
+  BULLETBLAST,
+  DRUIDBLAST,
+  OWNBLAST
 };
 
-#define BLINKENERGY 25 
+#define BLINKENERGY 25
 
 /* Druidtypen */
-enum _druids {
-	DRUID001 = 0,		/* You will know why are the numbers there, when you */
-	DRUID123 = 1,		/* enter the crew of a level !! */
-	DRUID139 = 2,
-	DRUID247 = 3,
-	DRUID249 = 4,
-	DRUID296 = 5,
-	DRUID302 = 6,
-	DRUID329 = 7,
-	DRUID420 = 8,
-	DRUID476 = 9,
-	DRUID493 =10,
-	DRUID516 =11,
-	DRUID571 =12,
-	DRUID598 =13,
-	DRUID614 =14,
-	DRUID615 =15,
-	DRUID629 =16,
-	DRUID711 =17,
-	DRUID742 =18,
-	DRUID751 =19,
-	DRUID821 =20,
-	DRUID834 =21,
-	DRUID883 =22,
-	DRUID999 =23,
-	DEBUG_ENEMY = 24
+enum _druids
+{
+  DRUID001 = 0,			/* You will know why are the numbers there, when you */
+  DRUID123 = 1,			/* enter the crew of a level !! */
+  DRUID139 = 2,
+  DRUID247 = 3,
+  DRUID249 = 4,
+  DRUID296 = 5,
+  DRUID302 = 6,
+  DRUID329 = 7,
+  DRUID420 = 8,
+  DRUID476 = 9,
+  DRUID493 = 10,
+  DRUID516 = 11,
+  DRUID571 = 12,
+  DRUID598 = 13,
+  DRUID614 = 14,
+  DRUID615 = 15,
+  DRUID629 = 16,
+  DRUID711 = 17,
+  DRUID742 = 18,
+  DRUID751 = 19,
+  DRUID821 = 20,
+  DRUID834 = 21,
+  DRUID883 = 22,
+  DRUID999 = 23,
+  DEBUG_ENEMY = 24
 };
 
 /* Status- Werte der Druids */
-enum _status {
-	MOBILE,
-	TRANSFERMODE,
-	WEAPON,
-	CAPTURED,
-	COMPLETE,
-	REJECTED,
-	CONSOLE,
-	DEBRIEFING,
-	TERMINATED,
-	PAUSE,
-	CHEESE
+enum _status
+{
+  MOBILE,
+  TRANSFERMODE,
+  WEAPON,
+  CAPTURED,
+  COMPLETE,
+  REJECTED,
+  CONSOLE,
+  DEBRIEFING,
+  TERMINATED,
+  PAUSE,
+  CHEESE
 };
 
 
@@ -380,8 +388,8 @@ enum _status {
 /* Tastaturgeschwindigkeiten */
 #define TYPEMATIC_SLOW 127
 #define TYPEMATIC_FAST 0
-#define TYPEMATIC_TAKEOVER 92             /* For the takeover-game */
+#define TYPEMATIC_TAKEOVER 92	/* For the takeover-game */
 
-#define OUT TERMINATED	/* Type fuer inaktive Dinge */
+#define OUT TERMINATED		/* Type fuer inaktive Dinge */
 
 #endif

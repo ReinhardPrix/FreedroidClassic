@@ -44,27 +44,27 @@ EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
 EXTERN char *Decknames[];
 EXTERN char *Classname[ALLCLASSNAMES];
-EXTERN char* Classes[];
-EXTERN char* Height[];
-EXTERN char* Weight[];
-EXTERN char* Entry[];
-EXTERN char* Weaponnames[];
-EXTERN char* Sensornames[];
+EXTERN char *Classes[];
+EXTERN char *Height[];
+EXTERN char *Weight[];
+EXTERN char *Entry[];
+EXTERN char *Weaponnames[];
+EXTERN char *Sensornames[];
 EXTERN int Sensor1[];
 EXTERN int Sensor2[];
 EXTERN int Sensor3[];
 EXTERN int Armament[];
 EXTERN int Drive[];
 EXTERN int Brain[];
-EXTERN char* Brainnames[];
-EXTERN char* Drivenames[];
+EXTERN char *Brainnames[];
+EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
 EXTERN shieldspec AllShields[];
 EXTERN FCU AllFCUs[];
-EXTERN influence_t Me;								/* the influence data */
+EXTERN influence_t Me;		/* the influence data */
 EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
-EXTERN bulletspec Bulletmap[ALLBULLETTYPES];        /* map of gun specs */
+EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 
@@ -86,19 +86,19 @@ EXTERN long ShowScore;
 EXTERN long HighestScoreOfDay;
 EXTERN long LowestScoreOfDay;
 EXTERN long GreatScore;
-EXTERN char* GreatScoreName;
-EXTERN char* LowestName;
-EXTERN char* HighestName;
-EXTERN HallElement* Hallptr;
-EXTERN char* IntroMSG1;
+EXTERN char *GreatScoreName;
+EXTERN char *LowestName;
+EXTERN char *HighestName;
+EXTERN HallElement *Hallptr;
+EXTERN char *IntroMSG1;
 EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
 
 EXTERN int NumEnemys;
 EXTERN int GameAdapterPresent;
 EXTERN int ModPlayerOn;
 
-EXTERN Level CurLevel;				/* the current level data */
-EXTERN ship curShip;				/* the current ship-data */
+EXTERN Level CurLevel;		/* the current level data */
+EXTERN ship curShip;		/* the current ship-data */
 
 EXTERN color Transfercolor;
 EXTERN color Mobilecolor;
@@ -106,8 +106,8 @@ EXTERN color Mobilecolor;
 EXTERN unsigned char *RealScreen;
 EXTERN unsigned char *InternalScreen;
 
-EXTERN bullet AllBullets[MAXBULLETS+10];
-EXTERN blast AllBlasts[MAXBLASTS+10];
+EXTERN bullet AllBullets[MAXBULLETS + 10];
+EXTERN blast AllBlasts[MAXBLASTS + 10];
 EXTERN int KeyCode;
 
 EXTERN unsigned int MapBlockIndex;
@@ -119,7 +119,7 @@ EXTERN char RightInfo[50];
 
 EXTERN int taste;
 
-EXTERN int sound_on; 	/* Toggle TRUE/FALSE for turning sounds on/off */
+EXTERN int sound_on;		/* Toggle TRUE/FALSE for turning sounds on/off */
 
 // PORT EXTERN int UpPressed;
 // PORT EXTERN int DownPressed;
@@ -144,7 +144,7 @@ EXTERN int MinMessageTime;
 #else
 #define EXTERN extern
 #endif
-EXTERN int View[INTERNHOEHE+1][INTERNBREITE];
+EXTERN int View[INTERNHOEHE + 1][INTERNBREITE];
 
 
 #undef EXTERN
@@ -161,9 +161,9 @@ EXTERN int View[INTERNHOEHE+1][INTERNBREITE];
 #else
 #define EXTERN extern
 #endif
-EXTERN unsigned char* LevelColorArray;
-EXTERN int* CRTC;
-EXTERN unsigned char* Data70Pointer;
+EXTERN unsigned char *LevelColorArray;
+EXTERN int *CRTC;
+EXTERN unsigned char *Data70Pointer;
 
 #undef EXTERN
 #ifdef _blocks_c

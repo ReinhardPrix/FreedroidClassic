@@ -84,7 +84,7 @@
 #define VIOLETT_PLAYGROUND_Y	26  + USERFENSTERPOSY
 
 /* Dimensions of the fill-blocks (in led-column */
-#define FILLBLOCKLEN		16		
+#define FILLBLOCKLEN		16
 #define FILLBLOCKHEIGHT  	7
 #define FILLBLOCKMEM		FILLBLOCKLEN*FILLBLOCKHEIGHT
 
@@ -108,19 +108,20 @@
 #define RIGHT_OFFS_X		255	/* -- rechten --- */
 #define RIGHT_OFFS_Y		15
 
-enum _groundblocks {
-	GELB_OBEN,
-	GELB_MITTE,
-	GELB_UNTEN,
-	VIOLETT_OBEN,
-	VIOLETT_MITTE,
-	VIOLETT_UNTEN
+enum _groundblocks
+{
+  GELB_OBEN,
+  GELB_MITTE,
+  GELB_UNTEN,
+  VIOLETT_OBEN,
+  VIOLETT_MITTE,
+  VIOLETT_UNTEN
 };
 
 /* Dimensions of the game-blocks */
-#define TO_BLOCKS		11		/* anzahl versch. Game- blocks */
+#define TO_BLOCKS		11	/* anzahl versch. Game- blocks */
 #define TO_ELEMENTS		 6
-#define TO_BLOCKLEN		32		/* dimension of a Game- block */
+#define TO_BLOCKLEN		32	/* dimension of a Game- block */
 #define TO_BLOCKHEIGHT	 	8
 #define TO_BLOCKMEM 		TO_BLOCKLEN*TO_BLOCKHEIGHT
 
@@ -128,48 +129,53 @@ enum _groundblocks {
 #define ACTIVE_OFFSET		2*TO_BLOCKS
 
 /* Konditions in Connection-layer */
-enum condition {
-	INAKTIV = 0,
-	AKTIV
+enum condition
+{
+  INAKTIV = 0,
+  AKTIV
 };
 
 /* Names for you and "him" */
-enum to_opponents {
-	YOU,
-	ENEMY
+enum to_opponents
+{
+  YOU,
+  ENEMY
 };
 
 /* Color-names */
 #define TO_COLORS		2
-enum to_colors {
-	GELB = 0,
-	VIOLETT,
-	REMIS
+enum to_colors
+{
+  GELB = 0,
+  VIOLETT,
+  REMIS
 };
 
 /* Element - Names */
-enum to_elements {
-	EL_KABEL,
-	EL_KABELENDE,
-	EL_VERSTAERKER,
-	EL_FARBTAUSCHER,
-	EL_VERZWEIGUNG,
-	EL_GATTER
+enum to_elements
+{
+  EL_KABEL,
+  EL_KABELENDE,
+  EL_VERSTAERKER,
+  EL_FARBTAUSCHER,
+  EL_VERZWEIGUNG,
+  EL_GATTER
 };
 
 /* Block-Names */
-enum to_blocks {
-	KABEL,
-	KABELENDE,
-	VERSTAERKER,
-	FARBTAUSCHER,
-	VERZWEIGUNG_O,
-	VERZWEIGUNG_M,
-	VERZWEIGUNG_U,
-	GATTER_O,
-	GATTER_M,
-	GATTER_U,
-	LEER
+enum to_blocks
+{
+  KABEL,
+  KABELENDE,
+  VERSTAERKER,
+  FARBTAUSCHER,
+  VERZWEIGUNG_O,
+  VERZWEIGUNG_M,
+  VERZWEIGUNG_U,
+  GATTER_O,
+  GATTER_M,
+  GATTER_U,
+  LEER
 };
 
 
@@ -178,11 +184,11 @@ enum to_blocks {
 #define NON_CONNECTOR  		1
 
 
-#define NUM_LAYERS		4		/* dimension of the playground */
+#define NUM_LAYERS		4	/* dimension of the playground */
 #define NUM_LINES		12
 
 /* the playground type */
-typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES]; 
+typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES];
 
 
 #endif

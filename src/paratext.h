@@ -38,9 +38,10 @@
 #define FONTMEM FONTBREITE*FONTHOEHE
 #define ZEILENABSTAND 5
 
-enum _CharLen{
-	SINGLE,
-	DOUBLE
+enum _CharLen
+{
+  SINGLE,
+  DOUBLE
 };
 
 /* ASCII-CODE of RETURN */
@@ -50,14 +51,15 @@ enum _CharLen{
 /* Cursor-Zeichen: */
 #define CURSOR_ICON 130
 
-enum _font_colors {
-	FONT_YELLOW = 6,
-	FONT_GREEN,
-	FONT_BLUE,
-	FONT_WHITE,
-	FONT_RED,
-	FONT_BLUEGREEN,
-	FONT_BLACK
+enum _font_colors
+{
+  FONT_YELLOW = 6,
+  FONT_GREEN,
+  FONT_BLUE,
+  FONT_WHITE,
+  FONT_RED,
+  FONT_BLUEGREEN,
+  FONT_BLACK
 };
 
 /* Startfarben */

@@ -27,19 +27,20 @@
 #define _struct_h
 
 #ifndef _BYTE
-  typedef unsigned char byte;
+typedef unsigned char byte;
 #define _BYTE
 #endif
 #ifndef _WORD
-  typedef unsigned word;
+typedef unsigned word;
 #define _WORD
 #endif
 #ifndef _BOOL
-  typedef char bool;
+typedef char bool;
 #define _BOOL
 #endif
 
-typedef struct {
+typedef struct
+{
   char signature;
   char version;
   char encoding;
@@ -56,102 +57,122 @@ typedef struct {
   unsigned short int bytes_per_line;
   unsigned short int palette_type;
   char unused[58];
-} PCX_Header;
+}
+PCX_Header;
 
-typedef struct {
+typedef struct
+{
   long PlayerScore;
-  void* NextPlayer;
-  char* PlayerName;
-} HallElement;
+  void *NextPlayer;
+  char *PlayerName;
+}
+HallElement;
 
-typedef struct {
+typedef struct
+{
   unsigned char rot;
   unsigned char gruen;
   unsigned char blau;
-} color, *Color;
+}
+color, *Color;
 
-typedef struct {
+typedef struct
+{
   signed short x;
   signed short y;
-} point, *Point;
+}
+point, *Point;
 
-typedef struct {
+typedef struct
+{
   float x;
   float y;
-} finepoint, *Finepoint;
+}
+finepoint, *Finepoint;
 
-typedef struct {
-   signed char x;
-   signed char y;
-} grob_point, *grob_Point;
+typedef struct
+{
+  signed char x;
+  signed char y;
+}
+grob_point, *grob_Point;
 
 
 typedef grob_point vect;
 typedef grob_Point Vect;
 
 
-typedef struct {
+typedef struct
+{
   const char *druidname;
-  float maxspeed;    /* the maximum of speed it can go */
+  float maxspeed;		/* the maximum of speed it can go */
   int class;
-  byte accel;       /* its acceleration */
-  float maxenergy;    /* the maximum energy the batteries can carry */
-  byte lose_health; /* the energy/time the duid loses under influence-control */
-  byte gun;         /* Which gun does this druid use */
+  byte accel;			/* its acceleration */
+  float maxenergy;		/* the maximum energy the batteries can carry */
+  byte lose_health;		/* the energy/time the duid loses under influence-control */
+  byte gun;			/* Which gun does this druid use */
   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
-  byte aggression;	/* The aggressiveness of this druidtype */
+  byte aggression;		/* The aggressiveness of this druidtype */
   byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
-  byte flashimmune;	/* is the droid immune to FLASH-bullets */
+  byte flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* Punkte f"ur die Vernichtung dieses Modells */
-  char *notes;		/* notes on the druid of this type */
+  char *notes;			/* notes on the druid of this type */
   char *image;
-} druidspec, *Druidspec;
+}
+druidspec, *Druidspec;
 
-typedef struct {
-  int type;         /* what kind of druid is this ? */
-  byte status;       /* attacking, defense, dead, ... */
-  finepoint speed;       /* the current speed of the druid */
-  finepoint pos;        /* current position in level levelnum */
-  float health;		/* the max. possible energy in the moment */
-  float energy;       /* current energy */
-  byte firewait;	/* counter after fire */
-  float phase;        /* the current phase of animation */
-  int autofire;		/* Status of the Firecontrolautomatics */
-  int vneut;		/* Status of Velocityneutralizer for the gun */
-  int MyFCU;		/* FCU (Fire Control Unit) installed */
-  int MyShield;		/* Shield device installed */
-  int Shield[4];	/* Status of Partial Shields */
-} influence_t, *Influence_t;
+typedef struct
+{
+  int type;			/* what kind of druid is this ? */
+  byte status;			/* attacking, defense, dead, ... */
+  finepoint speed;		/* the current speed of the druid */
+  finepoint pos;		/* current position in level levelnum */
+  float health;			/* the max. possible energy in the moment */
+  float energy;			/* current energy */
+  byte firewait;		/* counter after fire */
+  float phase;			/* the current phase of animation */
+  int autofire;			/* Status of the Firecontrolautomatics */
+  int vneut;			/* Status of Velocityneutralizer for the gun */
+  int MyFCU;			/* FCU (Fire Control Unit) installed */
+  int MyShield;			/* Shield device installed */
+  int Shield[4];		/* Status of Partial Shields */
+}
+influence_t, *Influence_t;
 
-typedef struct {
-  byte type;		/* gibt die Nummer in Druidmap an */
-  int levelnum;		/* Level in dem sich enemy befindet */
-  finepoint pos;	/* gibt die Koordinaten der Momentanposition an */
-  finepoint speed;	/* current speed  */
-  float energy;		/* gibt die Energie dieses Robots an */
-  float feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
-  byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
-  byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
-  byte Status;		/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  byte warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
-  byte passable;	/* Zeit (counter), in der druid passable ist */
-  byte firewait;	/* gibt die Zeit bis zum naechsten Schuss an */
-  byte onscreen;	/* gibt an ob der Robot im moment sichtbar ist */
-  int Shield[4];	// Status of Partial shields
-} enemy, *Enemy;
+typedef struct
+{
+  byte type;			/* gibt die Nummer in Druidmap an */
+  int levelnum;			/* Level in dem sich enemy befindet */
+  finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
+  finepoint speed;		/* current speed  */
+  float energy;			/* gibt die Energie dieses Robots an */
+  float feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
+  byte nextwaypoint;		/* gibt den naechsten Zielpunkt an */
+  byte lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
+  byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  byte passable;		/* Zeit (counter), in der druid passable ist */
+  byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+  byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+  int Shield[4];		// Status of Partial shields
+}
+enemy, *Enemy;
 
-typedef struct {
-   int  speed;        /* speed of the bullet */
-   int  damage;					/* damage done by this bullettype */
-   int  time;              /* how long does bullet exist */
-   byte phases;             /* how many phases in motion to show */
-   byte blast;              /* which blast does this bullet create */
-   unsigned char *picpointer; /* pointer to picture of bullet */
-   signed char oneshotonly;	/* if this is set, there is never more than 1 shot from this Influweapon */
-   int WaitNextTime;
-} bulletspec, *Bulletspec;
+typedef struct
+{
+  int speed;			/* speed of the bullet */
+  int damage;			/* damage done by this bullettype */
+  int time;			/* how long does bullet exist */
+  byte phases;			/* how many phases in motion to show */
+  byte blast;			/* which blast does this bullet create */
+  unsigned char *picpointer;	/* pointer to picture of bullet */
+  signed char oneshotonly;	/* if this is set, there is never more than 1 shot from this Influweapon */
+  int WaitNextTime;
+}
+bulletspec, *Bulletspec;
 
-typedef struct {
+typedef struct
+{
   finepoint pos;
   finepoint speed;
   byte type;
@@ -159,80 +180,101 @@ typedef struct {
   byte time;
   signed char mine;
   int owner;
-} bullet, *Bullet;
+}
+bullet, *Bullet;
 
-typedef struct {
-   byte phases;
-   unsigned char *picpointer;
-} blastspec, *Blastspec;
+typedef struct
+{
+  byte phases;
+  unsigned char *picpointer;
+}
+blastspec, *Blastspec;
 
-typedef struct {
-   int PX;  /* PosX */
-   int PY;  /* PosY */
-   byte type;
-   float phase;
-} blast, *Blast;
+typedef struct
+{
+  int PX;			/* PosX */
+  int PY;			/* PosY */
+  byte type;
+  float phase;
+}
+blast, *Blast;
 
-typedef struct {
-  byte level;	/* Level - 'Koordinate' */
-  int x;	/* x,y Koordinaten */
+typedef struct
+{
+  byte level;			/* Level - 'Koordinate' */
+  int x;			/* x,y Koordinaten */
   int y;
-} location, *Location;
+}
+location, *Location;
 
-typedef struct {
+typedef struct
+{
   /* current location */
   byte level;
-  byte x;		/* Grob */
+  byte x;			/* Grob */
   byte y;
-	
+
   /* connections: Numbers in Elevator-Array */
   signed char up;
   signed char down;
-  
-  /* row */
-  byte elevator_row; /* number of elev. column */
-} elevator, *Elevator;
 
-typedef struct {
-  byte x;		/* Grob */
+  /* row */
+  byte elevator_row;		/* number of elev. column */
+}
+elevator, *Elevator;
+
+typedef struct
+{
+  byte x;			/* Grob */
   byte y;
   signed char connections[MAX_WP_CONNECTIONS];
-} waypoint, *Waypoint;
+}
+waypoint, *Waypoint;
 
-typedef struct {
+typedef struct
+{
   byte empty;
-  unsigned int levelnum;  /* Number of this level */
-  char *Levelname;	  /* Name of this level */
-  unsigned int xlen;      /* X dimension */
+  unsigned int levelnum;	/* Number of this level */
+  char *Levelname;		/* Name of this level */
+  unsigned int xlen;		/* X dimension */
   unsigned int ylen;
   unsigned int color;
-  char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
+  char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
   waypoint AllWaypoints[MAXWAYPOINTS];
-} level, *Level; 
+}
+level, *Level;
 
-typedef struct {
+typedef struct
+{
   int LevelsOnShip;
   Level AllLevels[MAX_LEVELS_ON_SHIP];
   elevator AllElevators[ALLELEVATORS];
-} ship, *Ship;
+}
+ship, *Ship;
 
 
-typedef struct {
-  char* FCUName;
-} FCU;
+typedef struct
+{
+  char *FCUName;
+}
+FCU;
 
-typedef struct {
-  char* shieldname;
-} shieldspec, *Shieldspec;
+typedef struct
+{
+  char *shieldname;
+}
+shieldspec, *Shieldspec;
 
-typedef struct {
+typedef struct
+{
   point pos;
   int len;
   int hgt;
   int oldval;
   int col;
-} bar, *Bar;
+}
+bar, *Bar;
 
 #endif

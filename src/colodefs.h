@@ -52,16 +52,16 @@
 //#define BULLETCOLOR3 {63,61,0} /* gelb */
 //#define BULLETCOLOR4 {50,11,11} /* rot */
 //#define BULLETCOLOR5 {63,32,32} /* rosa */
-#define BULLETCOLOR1 {63,62,0} // {63,53,21} // {63,62,0} /* gelb */
-#define BULLETCOLOR2 {35,0,0} // {46,0,0} /* dunkelrot/feuerrot = Kaminrot */
-#define BULLETCOLOR3 {63,63,63} /* weiss */
-#define BULLETCOLOR4 {63,24,24} /* hellrot */
-#define BULLETCOLOR5 {50,24,0} // {45,21,0} /* Konsolenbraun */
+#define BULLETCOLOR1 {63,62,0}	// {63,53,21} // {63,62,0} /* gelb */
+#define BULLETCOLOR2 {35,0,0}	// {46,0,0} /* dunkelrot/feuerrot = Kaminrot */
+#define BULLETCOLOR3 {63,63,63}	/* weiss */
+#define BULLETCOLOR4 {63,24,24}	/* hellrot */
+#define BULLETCOLOR5 {50,24,0}	// {45,21,0} /* Konsolenbraun */
 
-#define BULLETCOLOR6 {50,30,11} /* braun */
-#define BULLETCOLOR9 {63,35,8} /* rotbraun */
-#define BULLETCOLOR7 {63,62,23} /* hellgelb */
-#define BULLETCOLOR8 {63,63,63} /* wei"s */
+#define BULLETCOLOR6 {50,30,11}	/* braun */
+#define BULLETCOLOR9 {63,35,8}	/* rotbraun */
+#define BULLETCOLOR7 {63,62,23}	/* hellgelb */
+#define BULLETCOLOR8 {63,63,63}	/* wei"s */
 
 #define FONT_FG 251
 #define FONT_HG 252

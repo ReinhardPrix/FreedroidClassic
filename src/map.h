@@ -62,15 +62,16 @@
 #define H_RANDBREITE		5
 
 /* Konstanten die die Kartenwerte anschaulich machen */
-enum {
-FLOOR=0,
-ECK_LU, T_U, ECK_RU, T_L, KREUZ, T_R, ECK_LO, T_O, ECK_RO,
-H_WALL, V_WALL, ALERT, BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5, 
-H_ZUTUERE, H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
-KONSOLE_L, KONSOLE_R, KONSOLE_O, KONSOLE_U,
-V_ZUTUERE, V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
-LIFT, VOID, REFRESH1, REFRESH2, REFRESH3, REFRESH4,
-I_REFRESH1, I_REFRESH2, I_REFRESH3, I_REFRESH4, INVISIBLE_BRICK
+enum
+{
+  FLOOR = 0,
+  ECK_LU, T_U, ECK_RU, T_L, KREUZ, T_R, ECK_LO, T_O, ECK_RO,
+  H_WALL, V_WALL, ALERT, BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5,
+  H_ZUTUERE, H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
+  KONSOLE_L, KONSOLE_R, KONSOLE_O, KONSOLE_U,
+  V_ZUTUERE, V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
+  LIFT, VOID, REFRESH1, REFRESH2, REFRESH3, REFRESH4,
+  I_REFRESH1, I_REFRESH2, I_REFRESH3, I_REFRESH4, INVISIBLE_BRICK
 };
 
 
@@ -90,37 +91,40 @@ I_REFRESH1, I_REFRESH2, I_REFRESH3, I_REFRESH4, INVISIBLE_BRICK
 #define LEVEL_END_STRING	"end"
 
 
-typedef struct {
-	char ascii;			/* the map-symbols in ascii notation */
-	int intern;			/* the map-symbols in internal notation */
-} symtrans;
+typedef struct
+{
+  char ascii;			/* the map-symbols in ascii notation */
+  int intern;			/* the map-symbols in internal notation */
+}
+symtrans;
 
 
-enum _colornames {
-	PD_RED,
-	PD_YELLOW,
-	PD_GREEN,
-	PD_GRAY,
-	PD_BLUE,
-	PD_GREENBLUE,
-	PD_DARK
+enum _colornames
+{
+  PD_RED,
+  PD_YELLOW,
+  PD_GREEN,
+  PD_GRAY,
+  PD_BLUE,
+  PD_GREENBLUE,
+  PD_DARK
 };
 
 #if  (defined _gen_c) || (defined _map_c)
 
 /* Color - names */
 char *ColorNames[] = {
-	"Red",
-	"Yellow",
-	"Green",
-	"Gray",
-	"Blue",
-	"GreenBlue",
-	"Dark",
-	NULL
+  "Red",
+  "Yellow",
+  "Green",
+  "Gray",
+  "Blue",
+  "GreenBlue",
+  "Dark",
+  NULL
 };
 #else
-	extern char* ColorNames[];
+extern char *ColorNames[];
 #endif
 
 
