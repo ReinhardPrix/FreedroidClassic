@@ -2370,7 +2370,15 @@ PerformTuxAttackRaw ( int player_num )
 	  AllEnemys[ i ] . firewait = 
 	    1 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	    // 2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
-	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
+
+	  //--------------------
+	  // Only if the Tux didn't kill the poor bot, we'll play the 'got-hit-sound' of
+	  // that enemy, otherwise the InitaiteDeathOfThisEnemy function will play the 
+	  // death sound for this enemy anyway.
+	  //
+	  if ( AllEnemys[ i ] . energy > 0 )
+	    PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
+
 	  DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet hit something.... melee ... " ) ;
 	}
 
