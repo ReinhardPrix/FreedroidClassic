@@ -177,7 +177,7 @@ enum
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
 #define PARA_FONT_FILE 		"parafont.png"
-#define MENU_FONT_FILE 		"ArialGold.png"
+#define MENU_FONT_FILE 		"ArialGold_Depleted.png"
 // #define RED_FONT_FILE 		"redfont.png"
 #define RED_FONT_FILE 		"font05_red.png"
 #define BLUE_FONT_FILE 		"font05_white.png"

@@ -1449,6 +1449,33 @@ DropHeldItemToInventory( void )
 
 }; // void DropHeldItemToInventory( void )
 
+/* ----------------------------------------------------------------------
+ * This function shows the quick inventory items on the right side of
+ * the screen.
+ * ---------------------------------------------------------------------- */
+void
+ShowQuickInventory ( void )
+{
+  int i;
+  SDL_Rect TargetRect;
+  int Index;
+
+  for ( i = 0 ; i < 9 ; i ++ )
+    {
+      PutCharFont ( Screen , FPS_Display_BFont , SCREENLEN - 32 , 100 + i * 32 , '1' + i );
+      if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
+	   ( Me.Inventory[ Index ].inventory_position.x == i ) &&
+	   ( Me.Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
+	{
+	  TargetRect.x = SCREENLEN - 32 ;
+	  TargetRect.y = 100 + i * 32 ;
+      
+	  SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ Index ].type ].picture_number ].Surface , 
+			   NULL , Screen , &TargetRect );
+	  
+	}
+    }
+}; // void ShowQuickInventory ( void )
 
 /* ----------------------------------------------------------------------
  * This function display the inventory screen and also checks for mouse

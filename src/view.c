@@ -404,6 +404,7 @@ Assemble_Combat_Picture (int mask)
   ShowCharacterScreen ( );
   ShowSkillsScreen ( );
   ManageInventoryScreen ( );
+  ShowQuickInventory ();
   DisplayButtons( );
 
   if ( GameConfig.Inventory_Visible ) 
