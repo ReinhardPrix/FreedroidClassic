@@ -2656,7 +2656,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
       if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
 				  our_level -> obstacle_list [ barrel_index ] . pos . x ,
 				  our_level -> obstacle_list [ barrel_index ] . pos . y ) 
-	   > ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.3 )
+	   > ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.5 )
 	{
 	  //--------------------
 	  // We set up a course, that will lead us directly to the barrel, that we are
