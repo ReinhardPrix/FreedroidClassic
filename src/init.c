@@ -587,6 +587,14 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_gun_speed , EndOfItemData );
 
+      // Now we read in speed of melee application and melee offset from influ
+      ReadValueFromString( ItemPointer ,  "Item as gun: angle change of bullets=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_angle_change , EndOfItemData );
+      ReadValueFromString( ItemPointer ,  "Item as gun: offset for melee weapon=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_fixed_offset , EndOfItemData );
+      ReadValueFromString( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_start_angle_modifier , EndOfItemData );
+
       // Now we read in the recharging time this weapon will need
       ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );

@@ -450,6 +450,17 @@ ReactToSpecialKeys(void)
       RealScore *= 2;
     }
 
+  if ( KP3Pressed() )
+    {
+      while (KP3Pressed());
+      SaveGame();
+    }
+  if ( KP4Pressed() )
+    {
+      while ( KP4Pressed() );
+      LoadGame();
+    }
+
   /*
   if ( KP8Pressed() )
     {

@@ -47,6 +47,24 @@
 #define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
 // #define DRUIDHITDIST2		0
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+RotateVectorByAngle ( finepoint* vector , float rot_angle )
+{
+  finepoint new_vect;
+  float rad_angle;
+
+  rad_angle = rot_angle * ( M_PI / 180.0 ) ; // / 180 );
+  
+  DebugPrintf( 0 , "\n RAD_ANGLE : %f " , rad_angle );
+  new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
+  new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
+  vector->x = new_vect.x;
+  vector->y = new_vect.y;
+}; // void RotateVectorByAngle ( ... )
 
 /* ----------------------------------------------------------------------
  * This function moves all the bullets according to their speeds and the
@@ -59,15 +77,60 @@ MoveBullets (void)
   int map_x;
   int map_y;
   Bullet CurBullet;
+  finepoint dist_vector;
+  float dist_vec_len;
 
   // movement of hte bullets
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
+      //--------------------
+      // We need not move any bullets, that are OUT already...
+      //
       if (CurBullet->type == OUT)
 	continue;
 
+      //--------------------
+      // In case of a bullet, which is not a melee weapon, we just move
+      // the bullets as specified in it's speed vector
+      //
       CurBullet->pos.x += CurBullet->speed.x * Frame_Time ();
       CurBullet->pos.y += CurBullet->speed.y * Frame_Time ();
+      if ( CurBullet->angle_change_rate > 0 )
+	{
+	  //--------------------
+	  // We change the angle of the bullet itself.  That's the easier part.
+	  // Rotation by selecting angle.  Very easy indead.
+	  //
+	  DebugPrintf( 0 , "\n Angle change rate : %f " , CurBullet->angle_change_rate );
+	  CurBullet->angle += CurBullet->angle_change_rate * Frame_Time();
+
+	  //--------------------
+	  // Now we must rotate the bullet around the influence device or other
+	  // owner as specified in the bullets owner pointer
+	  //
+	  dist_vector.x = CurBullet->pos.x - CurBullet->owner_pos->x;
+	  dist_vector.y = CurBullet->pos.y - CurBullet->owner_pos->y;
+
+	  dist_vec_len = sqrt( dist_vector.x * dist_vector.x + dist_vector.y * dist_vector.y );
+
+	  dist_vector.x *= CurBullet->fixed_offset / dist_vec_len ;
+	  dist_vector.y *= CurBullet->fixed_offset / dist_vec_len ;
+	  
+	  DebugPrintf( 0 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
+	  
+	  // RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
+	  RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
+
+	  CurBullet->pos.x = CurBullet->owner_pos->x + dist_vector.x;
+	  CurBullet->pos.y = CurBullet->owner_pos->y + dist_vector.y;
+
+	  // We tell the graphics functions, that they shall generate new pictures...
+	  if ( CurBullet->Surfaces_were_generated )
+	    {
+	      SDL_FreeSurface( CurBullet->SurfacePointer[0] );
+	      CurBullet->Surfaces_were_generated = FALSE ;
+	    }
+	}
 
       //--------------------
       // Maybe the bullet has a limited lifetime.  In that case we check if the
@@ -82,8 +145,10 @@ MoveBullets (void)
       CurBullet->time_in_frames++;
       CurBullet->time_in_seconds += Frame_Time();
 
-
-
+      //--------------------
+      // Maybe the bullet is currently on a converyor belt.
+      // In this case, be must move on the bullet accordinly
+      //
       map_x= (int) rintf( CurBullet->pos.x );
       map_y= (int) rintf( CurBullet->pos.y );
 
