@@ -355,7 +355,8 @@ the rest of the speech samples from our web page (hopefully soon).\n\
     } // if ( !Loaded_WAV...
   else
     {
-      DebugPrintf ( 0 , "\nSuccessfully loaded file %s into memory for playing once." , SoundSampleFileName );
+      DebugPrintf ( 0 , "\nSuccessfully loaded file %s into memory for playing once, filename is %s ." , 
+		    SoundSampleFileName , fpath );
     }
 
   //--------------------

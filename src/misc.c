@@ -213,8 +213,6 @@ Now Freedroid will terminate to draw attention to the problem...\n\
 }; // void ShowGenericButtonFromList ( int ButtonIndex )
 
 
-
-
 #define SETTINGS_STRUCTURE_RAW_DATA_STRING "\nSettings Raw Data:\n"
 #define END_OF_SETTINGS_DATA_STRING "\nEnd of Settings File.\n"
 

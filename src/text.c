@@ -69,11 +69,15 @@ float BigScreenMessageDuration=10000;
 static SDL_Surface* Background;
 
 #define MAX_DIALOGUE_OPTIONS_IN_ROSTER 100
+#define MAX_REPLIES_PER_OPTION 100
 #define MAX_SUBTITLES_N_SAMPLES_PER_DIALOGUE_OPTION 20
 typedef struct
 {
   char* option_text;
   char* option_sample_file_name;
+
+  char* reply_sample_list[ MAX_REPLIES_PER_OPTION ] ;
+  char* reply_subtitle_list[ MAX_REPLIES_PER_OPTION ];
 
   int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
   int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
@@ -93,6 +97,13 @@ InitChatRosterForNewDialogue( void )
       ChatRoster[i].option_text="";
       ChatRoster[i].option_sample_file_name="";
 
+      for ( j = 0 ; j < MAX_REPLIES_PER_OPTION ; j++ )
+	{
+	  ChatRoster [ i ] . reply_sample_list [ j ] = "";
+	  ChatRoster [ i ] . reply_subtitle_list [ j ] = "";
+	}
+
+
       for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
 	{
 	  ChatRoster [ i ] . change_option_nr [ j ] = (-1); 
@@ -109,14 +120,20 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
   char *SectionPointer;
   char *EndOfSectionPointer;
   char *NextChatSectionCode;
-  char *endpt;				/* Pointer to end-strings */
-  char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
-  int level_anz;
-  int i;
+  int i , j ;
+  int OptionSectionsLeft;
   char* fpath;
   int OptionIndex;
   int NumberOfOptionsInSection;
-  
+  char TempSavedCharacter;
+  char *TempEndPointer;
+  int NumberOfReplySubtitles;
+  int NumberOfReplySamples;
+  int NumberOfOptionChanges;
+  int NumberOfNewOptionValues;
+  int RestoreTempDamage;
+  char* ReplyPointer;
+  char* OptionChangePointer;
 
   fpath = find_file ( "Freedroid.dialogues" , MAP_DIR, FALSE);
 
@@ -162,7 +179,10 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
   DebugPrintf( 0 , "\nWe have counted %d Option entries in this section." , NumberOfOptionsInSection ) ;
 
   //--------------------
-  // Now we decode each small chat option section
+  // Now we see which option index is assigned to this option.
+  // It may happen, that some numbers are OMITTED here!  This
+  // should be perfectly ok and allowed as far as the code is
+  // concerned in order to give the content writers more freedom.
   //
   for ( i = 0 ; i < NumberOfOptionsInSection; i ++ )
     {
@@ -172,86 +192,161 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       DebugPrintf( 0 , "\nFound New Option entry.  Index found is: %d. " , OptionIndex ) ;
       SectionPointer++;
 
+      //--------------------
+      // Now that we have the actual option index, we can start to
+      // fill the roster with real information.  At first, this will be only
+      // the Option string and sample
+      //
+      ChatRoster[ OptionIndex ] . option_text = 
+	ReadAndMallocStringFromData ( SectionPointer , "OptionText=\"" , "\"" ) ;
+      DebugPrintf( 0 , "\nOptionText found : \"%s\"." , ChatRoster[ OptionIndex ] . option_text );
+      ChatRoster[ OptionIndex ] . option_sample_file_name = 
+	ReadAndMallocStringFromData ( SectionPointer , "OptionSample=\"" , "\"" ) ;
+      DebugPrintf( 0 , "\nOptionSample found : \"%s\"." , ChatRoster[ OptionIndex ] . option_sample_file_name );
+
+      //--------------------
+      // Now we can start to add all given Sample and Subtitle combinations
+      // But first we must add a termination character in order to not use
+      // the combinations of the next option section.
+      // 
+      if ( ( OptionSectionsLeft = CountStringOccurences ( SectionPointer , NEW_OPTION_BEGIN_STRING ) ) )
+	{
+	  DebugPrintf ( 0 , "\nThere are still %d option sections in the file.  \n\
+Therefore we must add a new temporary termination character in between." , OptionSectionsLeft );
+	  TempEndPointer = LocateStringInData ( SectionPointer, NEW_OPTION_BEGIN_STRING );
+	  TempSavedCharacter = *TempEndPointer;
+	  *TempEndPointer = 0 ;
+	  RestoreTempDamage = TRUE;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nThere is no more option section left in the file.  \n\
+Therefore we need not add an additional termination character now." );
+	  RestoreTempDamage = FALSE;
+	}
+
+#define NEW_REPLY_SAMPLE_STRING "ReplySample=\""
+#define NEW_REPLY_SUBTITLE_STRING "Subtitle=\""
+
+      //--------------------
+      // We count the number of Subtitle and Sample combinations and then
+      // we will read them out
+      //
+      NumberOfReplySamples = CountStringOccurences ( SectionPointer , NEW_REPLY_SAMPLE_STRING ) ;
+      NumberOfReplySubtitles = CountStringOccurences ( SectionPointer , NEW_REPLY_SUBTITLE_STRING ) ;
+      if ( NumberOfReplySamples != NumberOfReplySubtitles )
+	{
+	  fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There were %d reply samples but %d subtitles specified in a section of\n\
+the Freedroid.dialogues file.  This is currently not allowed in Freedroid\n\
+and therefore indicates an error.  Please correct the problem or inform\n\
+the Freedroid dev team about the problem, best by sending e-mail to\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot for reporting the issue.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+		   NumberOfReplySamples , NumberOfReplySubtitles );
+	  Terminate ( ERR );
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nThere were %d reply samples and an equal number of subtitles\n\
+found in this option of the dialogue, which is fine.", NumberOfReplySamples );
+	}
+
+      //--------------------
+      // Now that we know exactly how many Sample and Subtitle sections 
+      // to read out, we can well start reading exactly that many of them.
+      // 
+      ReplyPointer = SectionPointer;
+      for ( j = 0 ; j < NumberOfReplySamples ; j ++ )
+	{
+	  ChatRoster[ OptionIndex ] . reply_subtitle_list [ j ] =
+	    ReadAndMallocStringFromData ( ReplyPointer , "Subtitle=\"" , "\"" ) ;
+	  DebugPrintf( 0 , "\nReplySubtitle found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_subtitle_list [ j ] );
+	  ChatRoster[ OptionIndex ] . reply_sample_list [ j ] =
+	    ReadAndMallocStringFromData ( ReplyPointer , "ReplySample=\"" , "\"" ) ;
+	  DebugPrintf( 0 , "\nReplySample found : \"%s\"." , ChatRoster[ OptionIndex ] . reply_sample_list [ j ] );
+
+	  //--------------------
+	  // Now we must move the reply pointer to after the previous combination.
+	  //
+	  ReplyPointer = LocateStringInData ( ReplyPointer, "ReplySample" );
+	  ReplyPointer ++;
+
+	}
+
+      //--------------------
+      // We count the number of Option changes and new values and then
+      // we will read them out
+      //
+      NumberOfOptionChanges = CountStringOccurences ( SectionPointer , "ChangeOption" ) ;
+      NumberOfNewOptionValues = CountStringOccurences ( SectionPointer , "ChangeToValue" ) ;
+      if ( NumberOfOptionChanges != NumberOfNewOptionValues )
+	{
+	  fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There were %d option changes but %d new option values specified in a section of\n\
+the Freedroid.dialogues file.  This is currently not allowed in Freedroid\n\
+and therefore indicates an error.  Please correct the problem or inform\n\
+the Freedroid dev team about the problem, best by sending e-mail to\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot for reporting the issue.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+		   NumberOfOptionChanges , NumberOfNewOptionValues );
+	  Terminate ( ERR );
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nThere were %d option changes and an equal number of new option values\n\
+found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
+	}
+
+      //--------------------
+      // Now that we know exactly how many option changes and new option values 
+      // to read out, we can well start reading exactly that many of them.
+      // 
+      OptionChangePointer = SectionPointer;
+      for ( j = 0 ; j < NumberOfOptionChanges ; j ++ )
+	{
+	  ReadValueFromString( OptionChangePointer , "ChangeOption=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . change_option_nr [ j ] ) , TempEndPointer );
+	  ReadValueFromString( OptionChangePointer , "ChangeToValue=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . change_option_to_value [ j ] ) , TempEndPointer );
+	  DebugPrintf( 0 , "\nOption Nr. %d will change to value %d. " , 
+		       ChatRoster[ OptionIndex ] . change_option_nr [ j ] ,
+		       ChatRoster[ OptionIndex ] . change_option_to_value [ j ] );
+
+	  //--------------------
+	  // Now we must move the option change pointer to after the previous combination.
+	  //
+	  OptionChangePointer = LocateStringInData ( OptionChangePointer, "ChangeToValue" );
+	  OptionChangePointer ++;
+	}
+
+      //--------------------
+      // Now that the whole section has been read out into the ChatRoster, we can
+      // restore the original form of the Text again and the next option section
+      // can be read out in the next run of this loop 
+      //
+      if ( RestoreTempDamage )
+	{
+	  DebugPrintf ( 0 , "\nWe have now restored the damage from the temporary termination character." );
+	  *TempEndPointer = TempSavedCharacter ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nSince we didn't add any temp termination character, there's nothing to restore now." );
+	}
     }
 
-
-  //--------------------
-  // Now we look for the next dialoge section, it there is any
-  //
-
-
-  /*  
-  //--------------------
-  // Now we count the number of levels and remember their start-addresses.
-  // This is done by searching for the LEVEL_END_STRING again and again
-  // until it is no longer found in the ship file.  good.
-  //
-
-  level_anz = 0;
-  endpt = ShipData;
-  LevelStart[level_anz] = ShipData;
-
-  while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
-    {
-      endpt += strlen (LEVEL_END_STRING);
-      level_anz++;
-      LevelStart[level_anz] = endpt + 1;
-    }
-
-  // init the level-structs 
-  curShip.num_levels = level_anz;
-
-  for (i = 0; i < curShip.num_levels; i++)
-    {
-      
-      curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
-
-      TranslateMap ( curShip . AllLevels [ i ] ) ;
-
-    }
-
-  return OK;
-
-  
-
-
-
-
-        // Now we read in the Name of this droid.  We consider as a name the rest of the
-      // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
-      Druidmap[RobotIndex].druidname =
-	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
-
-      // Now we read in the file name of the portrait file for this droid.  
-      // Is should be enclosed in double-quotes.
-      Druidmap[RobotIndex].portrait_filename_without_ext =
-	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
-
-      // #define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
-
-      // Now we read in the maximal speed this droid can go. 
-      // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
-      // &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
-
-      // Now we read in the class of this droid.
-      ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].class , EndOfDataPointer );
-
-      // Now we read in the maximal acceleration this droid can go. 
-      // ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
-      // &Druidmap[RobotIndex].accel , EndOfDataPointer );
-
-      // Now we read in the maximal energy this droid can store. 
-      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].maxenergy , EndOfDataPointer );
-
-      // Now we read in the maximal mana this droid can store. 
-      ReadValueFromString( RobotPointer , MAXMANA_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].maxmana , EndOfDataPointer );
-
-  */
-
-};
+}; // void LoadChatRosterWithChatSequence ( char* SequenceCode )
 
 /* ----------------------------------------------------------------------
  * This function does all the (text) interaction with a friendly droid
@@ -491,6 +586,91 @@ problem it could not resolve.  Sorry.\n\
 
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
+void
+DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode )
+{
+  int i ;
+  SDL_Rect Chat_Window;
+  int MenuSelection = (-1) ;
+  char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+
+  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+
+  //--------------------
+  // We load the option texts into the dialog options variable..
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      if ( strlen ( ChatRoster [ i ] . option_text ) )
+	{
+	  DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
+	}
+    }
+  DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+
+  while (1)
+    {
+      MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
+
+      MenuSelection --;
+
+      //--------------------
+      // Now a menu section has been made.  We do the reaction:
+      // say the samples and the replies, later we'll set the new option values
+      //
+      // PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+      //
+      PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+      
+      for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
+	{
+	  //--------------------
+	  // Once we encounter an empty string here, we're done with the reply...
+	  //
+	  if ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 )
+	    {
+	      MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
+	    }
+	  else if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
+	    break;
+
+	  GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
+			        ChatRoster [ MenuSelection ] . reply_sample_list [ i ]    ) ;
+	}
+
+      //--------------------
+      // Now that all the replies have been made, we can start on changing
+      // the option flags to their new values
+      //
+      for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+	{
+	  //--------------------
+	  // Maybe all nescessary changes were made by now.  Then it's time
+	  // to quit...
+	  //
+	  if ( ChatRoster [ MenuSelection ] . change_option_nr [ i ] == (-1) ) 
+	    break;
+
+	  Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
+	    ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
+	  DebugPrintf ( 0 , "\nChanged chat flag nr. %d to new value %d." ,
+			ChatRoster [ MenuSelection ] . change_option_nr[i] ,
+			ChatRoster [ MenuSelection ] . change_option_to_value[i] );
+	}
+
+
+
+      if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
+	{
+	  return;
+	}
+
+
+
+    }
+  
+}; // void DoChatFromChatRosterData( void )
+
 /* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
@@ -542,12 +722,18 @@ ChatWithFriendlyDroid( int Enum )
       //
       LoadChatRosterWithChatSequence ( "CHA" );
 
-      
+      PrepareMultipleChoiceDialog( Enum );
 
+      DoChatFromChatRosterData( 0 , PERSON_CHA );
+
+      return;
+
+      /*
       //--------------------
       // Now we do the dialog with Dr. Chandra...
       //
       PrepareMultipleChoiceDialog( Enum );
+
 
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
       DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
@@ -656,6 +842,8 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    }
 	}
+      */
+
     } // end of conversation with Chandra.
 
   //**********************************************************************
