@@ -734,6 +734,7 @@ int
 getchar_raw (void)
 {
   SDL_Event event;
+  int Returnkey;
 
   //  keyboard_update ();   /* treat all pending keyboard-events */
 
@@ -742,12 +743,16 @@ getchar_raw (void)
       SDL_WaitEvent (&event);    /* wait for next event */
       
       if (event.type == SDL_KEYDOWN)
-	/* 
-	 * here we use the fact that, I cite from SDL_keyboard.h:
-	 * "The keyboard syms have been cleverly chosen to map to ASCII"
-	 * ... I hope that this design feature is portable, and durable ;)  
-	 */
-	return ((int) event.key.keysym.sym);
+	{
+	  /* 
+	   * here we use the fact that, I cite from SDL_keyboard.h:
+	   * "The keyboard syms have been cleverly chosen to map to ASCII"
+	   * ... I hope that this design feature is portable, and durable ;)  
+	   */
+	  Returnkey = (int) event.key.keysym.sym;
+	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
+	  return ( Returnkey );
+	}
       else
 	{
 	  SDL_PushEvent (&event);  /* put this event back into the queue */
