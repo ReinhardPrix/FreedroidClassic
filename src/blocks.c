@@ -407,6 +407,20 @@ Sorry...\n\
   
     }    
 
+  //--------------------
+  // Now that we have our enemy surfaces ready, we can create some modified
+  // copies of those surfaces but this a color filter applied to them...
+  //
+  for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+    {
+      BlueEnemyRotationSurfacePointer [ j ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_BLUE );
+      GreenEnemyRotationSurfacePointer [ j ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_GREEN );
+      RedEnemyRotationSurfacePointer [ j ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_RED );
+    }
+
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
   
 /* ----------------------------------------------------------------------
@@ -535,19 +549,6 @@ Load_Enemy_Surfaces( void )
   for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
     {
       LoadAndPrepareEnemyRotationModelNr ( j );
-
-      //}
-
-      //--------------------
-      // Now that we have our enemy surfaces ready, we can create some modified
-      // copies of those surfaces but this a color filter applied to them...
-      //
-      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
-	{
-	  BlueEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_BLUE );
-	  GreenEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_GREEN );
-	  RedEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_RED );
-	}
 
     }
 

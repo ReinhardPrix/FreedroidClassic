@@ -3296,7 +3296,7 @@ This is Begolas, a trainer of ranged weapons
 
 ** Start of new Robot: ** 
 Droidname: MER
-Droid portrait file name (without extension) to use="MER"
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
 Maximum acceleration of this droid: 2.1

@@ -233,9 +233,14 @@ ReplySample="STO_Sure_But_This_0.wav"
 
 DoSomethingExtra="Buy_Magical_Items" 
 
+----------------------------------------------------------------------
+
 New Option Nr=99 OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
-Subtitle="NO SUBTITLE AND DONT WAIT HERE"	      
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+
+Subtitle="See you later."	      
+ReplySample="Tux_See_You_Later_0.wav"
+Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="STO_Goodbye_Love_0.wav"
 
 End of chat dialog for character="STO"
@@ -739,6 +744,64 @@ New Option Nr=8 OptionText=" I'll get the coffee machine for you." ;
 OptionSample="Tux_RMS_Ill_Get_Your_0.wav"
 ChangeOption=8 ChangeToValue=0 ; // don't say this twice in one dialog
 DoSomethingExtra="AssignMission:1" // this should assign the coffee machine mission...
+
+----------------------------------------------------------------------
+
+New Option Nr=99 OptionText=" END ";
+OptionSample="Tux_Ill_Be_Back_0.wav"
+ChangeOption=1 ChangeToValue=1 ; // reallow to ask why the ms erased his code
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="RMS"
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+Beginning of new chat dialog for character="MER"
+
+----------------------------------------------------------------------
+
+New Option Nr=0 OptionText=" Hi!  I'm new here. " ;
+OptionSample="Tux_Hi_Im_New_0.wav"
+Subtitle="Welcome them!  I'm called RMS.  I used to be a well-known programmer."
+ReplySample="RMS_Welcome_Then_Im_0.wav"
+Subtitle="Alas, that time is long gone now.  The MS have recursively erased all my code throughout the universe."
+ReplySample="RMS_Alas_That_Time_0.wav"
+Subtitle="Some local copies I still have, but they are incomplete and outdated."
+ReplySample="RMS_Some_Local_Copies_0.wav"
+ChangeOption=0 ChangeToValue=0 ; // don't say this twice...
+ChangeOption=1 ChangeToValue=1 ; // this should allow to ask 'so?'
+
+----------------------------------------------------------------------
+
+New Option Nr=1 OptionText=" Why did the MS erase your code? " ;
+OptionSample="Tux_RMS_Why_Did_The_0.wav"
+Subtitle="One of the main pillars of the power of the MS is their software monopoly."
+ReplySample="RMS_One_Of_The_0.wav"
+Subtitle="This monopoly they started to enforce by law after they had taken over the government."
+ReplySample="RMS_This_Monopoly_They_0.wav"
+Subtitle="And now they have installed bots in every corner of the universe to erase all non-MS code."
+ReplySample="RMS_And_Now_They_0.wav"
+Subtitle="And particularly free code they like to erase the most."
+ReplySample="RMS_And_Particularly_Free_0.wav"
+ChangeOption=1 ChangeToValue=0 ; // don't say this twice in one dialog
+
+----------------------------------------------------------------------
+
+New Option Nr=2 OptionText=" How can I get to your former place? " ;
+OptionSample="Tux_RMS_How_Can_I_0.wav"
+Subtitle="As you might know, a great magnetic storm has shaken the universe."
+ReplySample="RMS_As_You_Might_0.wav"
+Subtitle="Almost all of the existing teleporter connections were disrupted or redirected."
+ReplySample="RMS_Almost_All_Of_0.wav"
+Subtitle="It was during this storm that you arrived at our teleporter terminal."
+ReplySample="RMS_It_Was_During_0.wav"
+Subtitle="But anyway, the teleporter now points back to my former home. "
+ReplySample="RMS_But_Anyway_The_0.wav"
+ChangeOption=2 ChangeToValue=0 ; // don't say this twice in one dialgo
+ChangeOption=4 ChangeToValue=1 ; // this should allow to ask about the mag-storm...
 
 ----------------------------------------------------------------------
 

@@ -3017,6 +3017,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case ENHANCER_RD:
     case ENHANCER_LU:
     case ENHANCER_RU:
+    case AUTOGUN_R:
+    case AUTOGUN_D:
+    case AUTOGUN_L:
+    case AUTOGUN_U:
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS) || (fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else

@@ -66,7 +66,7 @@ unsigned int StoreTextFG;
 char BigScreenMessage[5000];
 float BigScreenMessageDuration=10000;
 
-static SDL_Surface* Background;
+SDL_Surface* Background;
 
 #define MAX_DIALOGUE_OPTIONS_IN_ROSTER 100
 #define MAX_REPLIES_PER_OPTION 100
@@ -827,6 +827,7 @@ Freedroid will terminate now to draw attention to the problem...\n\
       Terminate ( ERR );
     }
   // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+
   Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
   SDL_BlitSurface( Background , NULL , Screen , NULL );
@@ -933,6 +934,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
   PrepareMultipleChoiceDialog ( Enum );
+
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
@@ -1180,6 +1182,12 @@ ChatWithFriendlyDroid( int Enum )
 
       LoadChatRosterWithChatSequence ( "RMS" );
       DoChatFromChatRosterData( 0 , PERSON_RMS , Enum );
+    }
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "MER" ) == 0 )
+    {
+
+      LoadChatRosterWithChatSequence ( "MER" );
+      DoChatFromChatRosterData( 0 , PERSON_MER , Enum );
     }
   else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
     {
