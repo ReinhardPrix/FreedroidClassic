@@ -512,7 +512,7 @@ typedef struct
   int ranged_weapon_skill;
   int spellcasting_skill;
   int hacking_skill;
-  int repair_skill;
+  // int repair_skill;
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;

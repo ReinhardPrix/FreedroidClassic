@@ -1870,13 +1870,19 @@ InitNewMissionList ( char *MissionName )
     }
   Me[0].SkillLevel [ 0 ] = 1 ;
   Me[0].base_skill_level [ 0 ] = 1;
+  Me[0].base_skill_level [ 1 ] = 1;
+  Me[0].base_skill_level [ 2 ] = 1;
+  Me[0].base_skill_level [ 5 ] = 1;
+  Me[0].base_skill_level [ 6 ] = 1;
+  Me[0].base_skill_level [ 8 ] = 1;
+  Me[0].base_skill_level [ 12 ] = 1;
+  Me[0].base_skill_level [ 13 ] = 1;
   GameConfig.spell_level_visible = 0;
 
   Me [ 0 ] . melee_weapon_skill = 0 ;
   Me [ 0 ] . ranged_weapon_skill = 0 ;
   Me [ 0 ] . spellcasting_skill = 0 ;
   Me [ 0 ] . hacking_skill = 0 ;
-  Me [ 0 ] . repair_skill = 0 ;
 
   UpdateAllCharacterStats( 0 );
 
