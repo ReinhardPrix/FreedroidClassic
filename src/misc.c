@@ -125,7 +125,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , FALSE } ,
     { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { CHARACTERRECT_X + 11 , 449 , 271 , 25 } , FALSE } ,
 
     { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-50-8 , 25 ,  25 } , FALSE } ,
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-4-25 , 25 ,  25 } , FALSE } ,

@@ -1051,52 +1051,21 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 }; // void teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 
 /* ----------------------------------------------------------------------
- * At various points in the game, especially when the mouse in over an
- * interesting object inside the game, a popup window will appear, e.g.
- * to describe the object in question.
- * This function is responsible for bringing up these text windows.
+ * This function sets up the text, that is to appear in a bigger text
+ * rectangle, possibly next to the mouse cursor, e.g. when the mouse is
+ * hovering over an item or barrel or crate or teleporter.
  * ---------------------------------------------------------------------- */
 void
-ShowCurrentTextWindow ( void )
+prepare_text_window_content ( char* ItemDescText ) 
 {
-    SDL_Rect Banner_Text_Rect;
     point CurPos;
-    char ItemDescText[5000]=" ";
-    char TextLine[10][1000];
     point inv_square;
     int InvIndex;
-    int i;
-    int NumberOfLinesInText = 1;
-    finepoint MapPositionOfMouse;
-    char* LongTextPointer;
-    int InterLineDistance;
-    int StringLength;
     int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
     int index_of_floor_item_below_mouse_cursor = ( -1 );
-#define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
+    finepoint MapPositionOfMouse;
 
-    //--------------------
-    // During the title display phase, we need not have this window visible...
-    //
-    if ( Me[0].status == BRIEFING ) return;
-    
-    //--------------------
-    // For testing purposes is bluntly insert the new banner element here:
-    //
-    if ( GetMousePos_y( )  >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
-    {
-	Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
-	Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
-	Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
-	Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
-    }
-    else
-    {
-	Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
-	Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
-	Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
-	Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
-    }
+#define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
     CurPos.x = GetMousePos_x()  ;
     CurPos.y = GetMousePos_y()  ;
@@ -1202,7 +1171,7 @@ ShowCurrentTextWindow ( void )
 								 (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
 	MapPositionOfMouse.y = translate_pixel_to_map_location ( 0 , 
 								 (float) ServerThinksInputAxisX ( 0 ) , 
-								 (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+								 (float) ServerThinksInputAxisY ( 0 ) , FALSE );
 	
 	index_of_floor_item_below_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 	
@@ -1257,6 +1226,52 @@ ShowCurrentTextWindow ( void )
 	}
     }
     
+}; // void prepare_text_window_content ( ItemDescText ) 
+
+/* ----------------------------------------------------------------------
+ * At various points in the game, especially when the mouse in over an
+ * interesting object inside the game, a popup window will appear, e.g.
+ * to describe the object in question.
+ * This function is responsible for bringing up these text windows.
+ * ---------------------------------------------------------------------- */
+void
+ShowCurrentTextWindow ( void )
+{
+    SDL_Rect Banner_Text_Rect;
+    char ItemDescText[5000]=" ";
+    char TextLine[10][1000];
+    int i;
+    int NumberOfLinesInText = 1;
+    char* LongTextPointer;
+    int InterLineDistance;
+    int StringLength;
+
+    //--------------------
+    // During the title display phase, we need not have this window visible...
+    //
+    if ( Me[0].status == BRIEFING ) return;
+    
+    //--------------------
+    // For testing purposes is bluntly insert the new banner element here:
+    //
+    if ( GetMousePos_y( )  >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
+    {
+	Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
+	Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
+	Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
+	Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
+    }
+    else
+    {
+	Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
+	Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
+	Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
+	Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
+    }
+
+    prepare_text_window_content ( ItemDescText ) ;
+
+
     SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
     if ( strlen( ItemDescText ) > 1 )
     {

@@ -88,12 +88,12 @@ SDL_Rect SkillScreenRect;
 void
 ClearDetectedItemList( int PlayerNum )
 {
-  int i;
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    int i;
+    
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      Me [ PlayerNum ] . DetectedItemList [ i ] . x = 0;
-      Me [ PlayerNum ] . DetectedItemList [ i ] . y = 0;
+	Me [ PlayerNum ] . DetectedItemList [ i ] . x = 0;
+	Me [ PlayerNum ] . DetectedItemList [ i ] . y = 0;
     }
 }; // void ClearDetectedItemList( int PlayerNum )
 
@@ -885,12 +885,8 @@ CursorIsOnWhichSpellPageButton( int x , int y )
   //
   if ( x > SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 300 ) return ( -1 );
   if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X       ) return ( -1 );
-  if ( y > SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y + 32  ) return ( -1 );
+  if ( y > SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y + 16  ) return ( -1 );
   if ( y < SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y       ) return ( -1 );
-
-#define SPELL_LEVEL_BUTTONS_X 10
-#define SPELL_LEVEL_BUTTONS_Y 413
-#define SPELL_LEVEL_BUTTON_WIDTH 30
 
   //--------------------
   // Now we can check on which skill rectangle exactly the cursor
@@ -913,34 +909,34 @@ CursorIsOnWhichSpellPageButton( int x , int y )
 void
 ShowSkillsExplanationScreen( void )
 {
-  SDL_Rect TargetSkillRect;
-
-  //--------------------
-  // This should draw the background...
-  //
-  blit_special_background ( SKILL_SCREEN_EXPLANATION_BACKGROUND_CODE ) ;
-
-  TargetSkillRect.x = 15;
-  TargetSkillRect.y = 15;
-
-  LoadOneSkillSurfaceIfNotYetLoaded ( Me [ 0 ] . readied_skill );
-
-  if ( use_open_gl )
+    SDL_Rect TargetSkillRect;
+    
+    //--------------------
+    // This should draw the background...
+    //
+    blit_special_background ( SKILL_SCREEN_EXPLANATION_BACKGROUND_CODE ) ;
+    
+    TargetSkillRect.x = 15;
+    TargetSkillRect.y = 15;
+    
+    LoadOneSkillSurfaceIfNotYetLoaded ( Me [ 0 ] . readied_skill );
+    
+    if ( use_open_gl )
     {
-      blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
-						TargetSkillRect . x , TargetSkillRect . y , TRUE );
+	blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
+						  TargetSkillRect . x , TargetSkillRect . y , TRUE );
     }
-  else
+    else
     {
-      our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , 
-				     NULL , Screen , &TargetSkillRect );
+	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , 
+				       NULL , Screen , &TargetSkillRect );
     }
-
-
-  TargetSkillRect.w = 320 - 15 - 15;
-  TargetSkillRect.h = 480 - 15 ;
-  DisplayText( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_description , 16 , 16+64+16, 
-	       &TargetSkillRect );
+    
+    
+    TargetSkillRect.w = 320 - 15 - 15;
+    TargetSkillRect.h = 480 - 15 ;
+    DisplayText( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_description , 16 , 16+64+16, 
+		 &TargetSkillRect );
 
 
 }; // void ShowSkillsExplanationScreen( void )
@@ -1024,166 +1020,167 @@ ShowSkillsScreen ( void )
 #define INTER_SKILLRECT_DIST 17
 #define FIRST_SKILLRECT_Y 16
 
-  static SDL_Rect ButtonRect;
-  char CharText[1000];
-  static int MouseButtonPressedPreviousFrame = FALSE;
-  point CurPos;
-  int i;
-  SDL_Rect SpellLevelRect;
-  int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
-  int SkillOfThisSlot;
-  point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] =
-    { { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
-      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
-      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
-      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 3 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } , 
-      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 4 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } };
-
-  DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
-
-  //--------------------
-  // If the log is not set to visible right now, we do not need to 
-  // do anything more, but to restore the usual user rectangle size
-  // back to normal and to return...
-  //
-  if ( GameConfig.SkillScreen_Visible == FALSE ) return;
-
-  //--------------------
-  // Maybe the skill circle images for clicking between different spell circles
-  // have not been loaded yet.  Then it is time to do so.  If this was already
-  // done before, then the function will know it and don't do anything anyway.
-  //
-  Load_Skill_Level_Button_Surfaces( );
-
-  // --------------------
-  // We will need the current mouse position on several spots...
-  //
-  CurPos.x = GetMousePos_x()  ;
-  CurPos.y = GetMousePos_y()  ;
-
-  SkillScreenRect.x = CHARACTERRECT_X;
-  SkillScreenRect.y = 0; 
-  SkillScreenRect.w = CHARACTERRECT_W;
-  SkillScreenRect.h = CHARACTERRECT_H;
-
-  //--------------------
-  // We will draw only those skills to the skills inventory, that are
-  // already present in the Tux.  That way the game remains open for new
-  // skills to the player and he doesn't now in advance which skills there
-  // are, which is more interesting than complete control and overview.
-  //
-  establish_skill_subset_map ( & ( SkillSubsetMap [ 0 ] ) );
-
-  //--------------------
-  // At this point we know, that the skill screen is desired and must be
-  // displayed in-game:
-  //
-  // SDL_SetClipRect( Screen, NULL );
-  // our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
-  //
-  blit_special_background ( SKILL_SCREEN_BACKGROUND_CODE );
-
-  if ( GameConfig.skill_explanation_screen_visible )
-    ShowSkillsExplanationScreen( );
-
-  //--------------------
-  // According to the page in the spell book currently opened,
-  // we draw a 'button' or activation mark over the appropriate spot
-  //
-  SpellLevelRect.x = SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 
-    SPELL_LEVEL_BUTTON_WIDTH * GameConfig.spell_level_visible ;
-  SpellLevelRect.y = SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y ;
-  our_SDL_blit_surface_wrapper ( SpellLevelButtonImageList [ GameConfig.spell_level_visible ] . surface , NULL , Screen , &SpellLevelRect );
-
-  //--------------------
-  // Now we fill in the skills available to this bot.  ( For now, these skills 
-  // are not class-specific, like in diablo or something, but this is our first
-  // approach to the topic after all.... :)
-  //
-  for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_PAGE ; i ++ )
+    static SDL_Rect ButtonRect;
+    char CharText[1000];
+    static int MouseButtonPressedPreviousFrame = FALSE;
+    point CurPos;
+    int i;
+    SDL_Rect SpellLevelRect;
+    int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
+    int SkillOfThisSlot;
+    point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] =
+	{ { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
+	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
+	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
+	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 3 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } , 
+	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 4 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } };
+    
+    DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
+    
+    //--------------------
+    // If the log is not set to visible right now, we do not need to 
+    // do anything more, but to restore the usual user rectangle size
+    // back to normal and to return...
+    //
+    if ( GameConfig . SkillScreen_Visible == FALSE ) return;
+    
+    //--------------------
+    // Maybe the skill circle images for clicking between different spell circles
+    // have not been loaded yet.  Then it is time to do so.  If this was already
+    // done before, then the function will know it and don't do anything anyway.
+    //
+    Load_Skill_Level_Button_Surfaces( );
+    
+    // --------------------
+    // We will need the current mouse position on several spots...
+    //
+    CurPos.x = GetMousePos_x()  ;
+    CurPos.y = GetMousePos_y()  ;
+    
+    SkillScreenRect.x = CHARACTERRECT_X;
+    SkillScreenRect.y = 0; 
+    SkillScreenRect.w = CHARACTERRECT_W;
+    SkillScreenRect.h = CHARACTERRECT_H;
+    
+    //--------------------
+    // We will draw only those skills to the skills inventory, that are
+    // already present in the Tux.  That way the game remains open for new
+    // skills to the player and he doesn't now in advance which skills there
+    // are, which is more interesting than complete control and overview.
+    //
+    establish_skill_subset_map ( & ( SkillSubsetMap [ 0 ] ) );
+    
+    //--------------------
+    // At this point we know, that the skill screen is desired and must be
+    // displayed in-game:
+    //
+    // SDL_SetClipRect( Screen, NULL );
+    // our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
+    //
+    blit_special_background ( SKILL_SCREEN_BACKGROUND_CODE );
+    
+    if ( GameConfig . skill_explanation_screen_visible )
+	ShowSkillsExplanationScreen( );
+    
+    //--------------------
+    // According to the page in the spell book currently opened,
+    // we draw a 'button' or activation mark over the appropriate spot
+    //
+    SpellLevelRect.x = SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 
+	SPELL_LEVEL_BUTTON_WIDTH * GameConfig.spell_level_visible ;
+    SpellLevelRect.y = SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y ;
+    our_SDL_blit_surface_wrapper ( 
+	SpellLevelButtonImageList [ GameConfig.spell_level_visible ] . surface , 
+	NULL , Screen , &SpellLevelRect );
+    
+    //--------------------
+    // Now we fill in the skills available to this bot.  ( For now, these skills 
+    // are not class-specific, like in diablo or something, but this is our first
+    // approach to the topic after all.... :)
+    //
+    for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_PAGE ; i ++ )
     {
-      ButtonRect.x = SkillRectLocations [ i ] . x ;
-      ButtonRect.y = SkillRectLocations [ i ] . y ; 
-      ButtonRect.w = 64;
-      ButtonRect.h = 64;
-
-      SkillOfThisSlot = SkillSubsetMap [ i + NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
-      if ( SkillOfThisSlot < 0 ) continue;
-
-      LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
-
-      if ( use_open_gl )
+	ButtonRect.x = SkillRectLocations [ i ] . x ;
+	ButtonRect.y = SkillRectLocations [ i ] . y ; 
+	ButtonRect.w = 64;
+	ButtonRect.h = 64;
+	
+	SkillOfThisSlot = SkillSubsetMap [ i + NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
+	if ( SkillOfThisSlot < 0 ) continue;
+	
+	LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
+	
+	if ( use_open_gl )
 	{
-	  blit_open_gl_texture_to_screen_position ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
-						    ButtonRect . x , ButtonRect . y , TRUE );
+	    blit_open_gl_texture_to_screen_position ( 
+		SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
+		ButtonRect . x , ButtonRect . y , TRUE );
 	}
-      else
+	else
 	{
-	  our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , 
-					 NULL , Screen , &ButtonRect );
+	    our_SDL_blit_surface_wrapper ( 
+		SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , 
+		NULL , Screen , &ButtonRect );
 	}
-
-      //--------------------
-      // First we write the name of the skill to the screen
-      //
-      DisplayText( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_name , 
-		   16 + 64 + 16 + SkillScreenRect.x , 
-		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , &SkillScreenRect );
+	
+	//--------------------
+	// First we write the name of the skill to the screen
+	//
+	DisplayText( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_name , 
+		     16 + 64 + 16 + SkillScreenRect.x , 
+		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , 
+		     &SkillScreenRect );
       
-      //--------------------
-      // Now we write the competence of the players character in that skill to the screen
-      //
-      sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
-      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      sprintf( CharText , "Mana cost: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
-      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      
+	//--------------------
+	// Now we write the competence of the players character in that skill to the screen
+	//
+	sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
+	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+	sprintf( CharText , "Mana cost: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
+	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+	
     }
 
-  //--------------------
-  // Now we see if perhaps the player has just clicked on one of the skills
-  // available to this class.  In this case of course we must set a different
-  // skill/spell as the currently activated skill/spell.
-  //
-  if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
-       axis_is_active &&
-       ! MouseButtonPressedPreviousFrame )
+    //--------------------
+    // Now we see if perhaps the player has just clicked on one of the skills
+    // available to this class.  In this case of course we must set a different
+    // skill/spell as the currently activated skill/spell.
+    //
+    if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
+	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
     {
-      if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
-			    NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] >= 0 ) 
-	Me[0].readied_skill = SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
-					       NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
+	if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
+			      NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] >= 0 ) 
+	    Me[0].readied_skill = SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
+						   NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
     }
-  
-  if ( MouseCursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
-       axis_is_active &&
-       ! MouseButtonPressedPreviousFrame )
+    
+    if ( MouseCursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
+	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
     {
-      GameConfig.skill_explanation_screen_visible = !GameConfig.skill_explanation_screen_visible;
+	GameConfig.skill_explanation_screen_visible = !GameConfig.skill_explanation_screen_visible;
     }
-
-  //--------------------
-  // Now we see if perhaps the player has just clicked on another skill level
-  // button.  In this case of course we must set a different skill/spell level
-  // as the currently visible spell level.
-  //
-  if ( ( CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
-       axis_is_active &&
-       ! MouseButtonPressedPreviousFrame )
+    
+    //--------------------
+    // Now we see if perhaps the player has just clicked on another skill level
+    // button.  In this case of course we must set a different skill/spell level
+    // as the currently visible spell level.
+    //
+    if ( ( CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
+	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
     {
-      GameConfig.spell_level_visible = CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y );
+	GameConfig.spell_level_visible = CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y );
     }
-
-
-  //--------------------
-  // We want to know, if the button was pressed the previous frame when we
-  // are in the next frame and back in this function.  Therefore we store
-  // the current button situation, so that we can conclude on button just
-  // pressed later.
-  //
-  MouseButtonPressedPreviousFrame = axis_is_active;
+    
+    //--------------------
+    // We want to know, if the button was pressed the previous frame when we
+    // are in the next frame and back in this function.  Therefore we store
+    // the current button situation, so that we can conclude on button just
+    // pressed later.
+    //
+    MouseButtonPressedPreviousFrame = axis_is_active;
 
 }; // ShowSkillsScreen ( void )
 
