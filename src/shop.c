@@ -291,7 +291,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 
 	    }
 	  sprintf( DescriptionText , "%6.0f" , PriceFound );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	  DisplayText( DescriptionText , 560 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
 
       //--------------------

@@ -57,6 +57,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   char font_switchto_red [ 2 ] = { 1 , 0 };
   char font_switchto_blue [ 2 ] = { 2 , 0 };
   char font_switchto_neon [ 2 ] = { 3 , 0 };
+  char AppendToLine = 0 ; // if we should write the next bonus with a comma as separator or with a newline
 
   //--------------------
   // We initialize the description text, so that at least something,
@@ -104,11 +105,15 @@ Sorry...\n\
 
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
 
+  //--------------------
+  // If the item is is magical, we give the prefix name of course.
+  // In any case we'll give the suffix name and then, if the item
+  // is identified we'll also append any suffix to the description
+  // string.
+  //
   if ( ( CurItem->prefix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , PrefixList[ CurItem->prefix_code ].bonus_name );
-
   strcat( ItemDescText , ItemMap[ CurItem->type ].item_name );
-
   if ( ( CurItem->suffix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
 
@@ -268,68 +273,80 @@ Sorry...\n\
 	{
 	  strcat ( ItemDescText , "\n" );
 	  strcat ( ItemDescText , font_switchto_red );
+	  AppendToLine = 0 ;
 	  
+	  if ( ForShop ) strcat( ItemDescText , "             " );
+
 	  if ( CurItem->bonus_to_str )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
 	      if ( CurItem->bonus_to_str > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d to Power\n" , CurItem->bonus_to_str );
+	      // sprintf( linebuf , "%d to Power\n" , CurItem->bonus_to_str );
+	      sprintf( linebuf , "%d to Power" , CurItem->bonus_to_str );
+	      // if ( ForShop ) strcat ( linebuf , ", " ); else strcat ( linebuf , "\n" );
+	      AppendToLine = TRUE;
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_dex )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+	      AppendToLine = TRUE;
 	      if ( CurItem->bonus_to_dex > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d to Power Distribution\n" , CurItem->bonus_to_dex );
+	      sprintf( linebuf , "%d to Power Distribution" , CurItem->bonus_to_dex );
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_mag )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+	      AppendToLine = TRUE;
 	      if ( CurItem->bonus_to_mag > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d to Mind\n" , CurItem->bonus_to_mag );
+	      sprintf( linebuf , "%d to Mind" , CurItem->bonus_to_mag );
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_vit )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
 	      if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d to Vitality\n" , CurItem->bonus_to_vit );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+	      AppendToLine = TRUE;
+	      sprintf( linebuf , "%d to Vitality" , CurItem->bonus_to_vit );
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_life )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+	      AppendToLine = TRUE;
 	      if ( CurItem->bonus_to_life > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d Energy\n" , CurItem->bonus_to_life );
+	      sprintf( linebuf , "%d Energy" , CurItem->bonus_to_life );
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_force )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+	      AppendToLine = TRUE;
 	      if ( CurItem->bonus_to_force > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d Force\n" , CurItem->bonus_to_force );
+	      sprintf( linebuf , "%d Force" , CurItem->bonus_to_force );
 	      strcat( ItemDescText , linebuf );
 	    }
 	  
 	  if ( CurItem->bonus_to_tohit )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 	      if ( CurItem->bonus_to_tohit > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d%% to hit\n" , CurItem->bonus_to_tohit );
+	      AppendToLine = TRUE;
+	      sprintf( linebuf , "%d%% to hit" , CurItem->bonus_to_tohit );
 	      strcat( ItemDescText , linebuf );
 	    }
 
 	  if ( CurItem->bonus_to_all_attributes )
 	    {
-	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 	      if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
-	      sprintf( linebuf , "%d to all attributes \n" , CurItem->bonus_to_all_attributes );
+	      AppendToLine = TRUE;
+	      sprintf( linebuf , "%d to all attributes" , CurItem->bonus_to_all_attributes );
 	      strcat( ItemDescText , linebuf );
 	    }
 
@@ -338,16 +355,28 @@ Sorry...\n\
 	    {
 	      if ( ItemMap [ CurItem->type ].base_ac_bonus )
 		{
-		  if ( ForShop ) strcat( ItemDescText , "             " );
+		  // if ( ForShop ) strcat( ItemDescText , "             " );
+		  if ( AppendToLine ) 
+		    { 
+		      if ( ForShop ) strcat ( ItemDescText , ", " ); 
+		      else strcat ( ItemDescText , "\n" ); 
+		    }
+		  AppendToLine = TRUE;
 		  if ( CurItem->bonus_to_ac_or_damage > 0 ) strcat( ItemDescText , "+" );
-		  sprintf( linebuf , "%d%% to armour \n" , CurItem->bonus_to_ac_or_damage );
+		  sprintf( linebuf , "%d%% to armour" , CurItem->bonus_to_ac_or_damage );
 		  strcat( ItemDescText , linebuf );
 		}
 	      if ( ItemMap [ CurItem->type ].base_item_gun_damage )
 		{
-		  if ( ForShop ) strcat( ItemDescText , "             " );
+		  // if ( ForShop ) strcat( ItemDescText , "             " );
+		  if ( AppendToLine ) 
+		    { 
+		      if ( ForShop ) strcat ( ItemDescText , ", " ); 
+		      else strcat ( ItemDescText , "\n" ); 
+		    }
+		  AppendToLine = TRUE;
 		  if ( CurItem->bonus_to_ac_or_damage > 0 ) strcat( ItemDescText , "+" );
-		  sprintf( linebuf , "%d%% to damage \n" , CurItem->bonus_to_ac_or_damage );
+		  sprintf( linebuf , "%d%% to damage" , CurItem->bonus_to_ac_or_damage );
 		  strcat( ItemDescText , linebuf );
 		}
 	    }
