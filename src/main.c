@@ -223,6 +223,8 @@ main (int argc, char *const argv[])
   int Robot_Counter;
   int AllRobotsDead;
 
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
   GameOver = FALSE;
   QuitProgram = FALSE;
   Conceptview = FALSE;

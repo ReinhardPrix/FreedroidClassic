@@ -278,15 +278,15 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
-      rect.x = (i%blocks_per_line)*(BLOCK_WIDTH+2);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
-      rect.w = BLOCK_WIDTH;
-      rect.h = BLOCK_HEIGHT;
+      rect.x = (i%blocks_per_line)*(Block_Width+2);
+      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
+      rect.w = Block_Width;
+      rect.h = Block_Height;
       
-      ret[i].x = i*BLOCK_WIDTH;
-      ret[i].y = target_line*BLOCK_HEIGHT;
-      ret[i].w = BLOCK_WIDTH;
-      ret[i].h = BLOCK_HEIGHT;
+      ret[i].x = i*Block_Width;
+      ret[i].y = target_line*Block_Height;
+      ret[i].w = Block_Width;
+      ret[i].h = Block_Height;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
   SDL_FreeSurface (tmp);
@@ -320,12 +320,12 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
   for (i=0; i < num_blocks; i++)
     {
       rect.x = (i%blocks_per_line)*(DIGITLENGTH+2);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
+      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
       rect.w = DIGITLENGTH-1;
       rect.h = DIGITHEIGHT;
       
       ret[i].x = i*DIGITLENGTH;
-      ret[i].y = target_line*BLOCK_HEIGHT;
+      ret[i].y = target_line*Block_Height;
       ret[i].w = DIGITLENGTH;
       ret[i].h = DIGITHEIGHT;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
@@ -361,12 +361,12 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
   for (i=0; i < num_blocks; i++)
     {
       rect.x = (i%blocks_per_line)*(DIGITLENGTH);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
+      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
       rect.w = RAHMENBREITE;
       rect.h = RAHMENHOEHE;
       
       ret[i].x = i*DIGITLENGTH;
-      ret[i].y = target_line*BLOCK_HEIGHT;
+      ret[i].y = target_line*Block_Height;
       ret[i].w = DIGITLENGTH;
       ret[i].h = DIGITHEIGHT;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);

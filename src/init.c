@@ -327,6 +327,10 @@ InitNewGame (void)
   Me.status = MOBILE;
   Me.phase = 0;
   
+
+  ShowDeckMap( CurLevel );
+
+
   return;
 
 } /* InitNewGame */

@@ -162,8 +162,8 @@ InitPictures (void)
   /* 
      create the internal storage for all our blocks 
   */
-  tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*BLOCK_WIDTH,
-			     12*BLOCK_HEIGHT, ne_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*Block_Width,
+			     12*Block_Height, ne_bpp, 0, 0, 0, 0);
   if (tmp == NULL)
     {
       printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());

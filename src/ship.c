@@ -736,6 +736,11 @@ ShowDeckMap (Level deck)
       ne_map_block[i].h *= ResizeFactor;
     }
 
+  Block_Width *= ResizeFactor;
+  Block_Height *= ResizeFactor;
+
+  Assemble_Combat_Picture( 0 );
+
   PrepareScaledSurface(TRUE);
 
   // ne_blocks=zwisch;

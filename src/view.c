@@ -190,8 +190,8 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+col*Block_Width;
-	      TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+line*Block_Height;
+	      TargetRectangle.x=USER_FENSTER_CENTER_X + ( -(Me.pos.x/INITIAL_BLOCK_WIDTH)+col )   *Block_Width;
+	      TargetRectangle.y=USER_FENSTER_CENTER_Y + ( -(Me.pos.y/INITIAL_BLOCK_HEIGHT)+line ) *Block_Height;
 	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
@@ -540,8 +540,10 @@ PutEnemy (int Enum)
   druidname = Druidmap[Feindesliste[Enum].type].druidname;
   phase = Feindesliste[Enum].feindphase;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2;
+  TargetRectangle.x=USER_FENSTER_CENTER_X+ 
+    ( (-Me.pos.x+Feindesliste[Enum].pos.x )/INITIAL_BLOCK_WIDTH ) * Block_Width  -Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
+    ( (-Me.pos.y+Feindesliste[Enum].pos.y )/INITIAL_BLOCK_WIDTH ) * Block_Height -Block_Height/2;
   // TargetRectangle.w=Block_Width;
   // TargetRectangle.h=Block_Height;
 

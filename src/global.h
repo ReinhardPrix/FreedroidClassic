@@ -168,6 +168,8 @@ EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
 
 #ifdef NEW_ENGINE
+EXTERN int Block_Width;
+EXTERN int Block_Height;
 EXTERN const SDL_VideoInfo *ne_vid_info;    /* info about current video mode */
 EXTERN color ne_transp_rgb;                /* RGB of transparent color */
 EXTERN int ne_bpp; 			   /* bits per pixel */
