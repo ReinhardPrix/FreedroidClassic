@@ -1208,7 +1208,256 @@ Base list price=0
 
 // Item No. 25
 ** Start of new item specification subsection **
-Item name="Graphite deflective coating"
+Item name="Cloak"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
+Item can be installed in armour slot="yes"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.15
+Item as gun: speed of bullets=8.0
+Item as gun: angle change of bullets=0
+Item as gun: damage of bullets=0
+Item as gun: modifier for damage of bullets=0
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
+Item as gun: bullet_lifetime=-1
+Item as gun: offset for melee weapon=0
+Item as gun: modifier for starting angle=0
+Item as gun: ignore collisions with wall="no"
+Item as defensive item: base_ac_bonus=3
+Item as defensive item: ac_bonus_modifier=4
+Base item duration=18
+Item duration modifier=1
+Picture number=15
+Sound number=0 
+Base list price=40
+** End of new item specification subsection **
+
+// Item No. 26
+** Start of new item specification subsection **
+Item name="Claymore"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+S**trength minimum required to wear/wield this item=45
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.95
+Item as gun: speed of bullets=8.1
+Item as gun: angle change of bullets=360
+Item as gun: damage of bullets=1
+Item as gun: modifier for damage of bullets=11
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=1
+Item as gun: bullet_lifetime=1.50
+Item as gun: offset for melee weapon=1.5
+Item as gun: modifier for starting angle=-40
+Item as gun: ignore collisions with wall="no"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=30
+Item duration modifier=10
+Picture number=18
+Sound number=0 
+Base list price=450
+** End of new item specification subsection **
+
+// Item No. 27
+** Start of new item specification subsection **
+Item name="Short Sword"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+S**trength minimum required to wear/wield this item=45
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.95
+Item as gun: speed of bullets=0.1
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=2
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10
+Item duration modifier=10
+Picture number=18
+Sound number=0 
+Base list price=0
+** End of new item specification subsection **
+
+// Item No. 28
+** Start of new item specification subsection **
+Item name="Small Axe"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+S**trength minimum required to wear/wield this item=45
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.95
+Item as gun: speed of bullets=0.1
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=2
+Item as gun: modifier for damage of bullets=8
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=9
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=20
+Item duration modifier=10
+Picture number=18
+Sound number=0 
+Base list price=120
+** End of new item specification subsection **
+
+// Item No. 29
+** Start of new item specification subsection **
+Item name="Robe"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
+Item can be installed in armour slot="yes"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.15
+Item as gun: speed of bullets=8.0
+Item as gun: angle change of bullets=0
+Item as gun: damage of bullets=0
+Item as gun: modifier for damage of bullets=0
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
+Item as gun: bullet_lifetime=-1
+Item as gun: offset for melee weapon=0
+Item as gun: modifier for starting angle=0
+Item as gun: ignore collisions with wall="no"
+Item as defensive item: base_ac_bonus=2
+Item as defensive item: ac_bonus_modifier=4
+Base item duration=20
+Item duration modifier=10
+Picture number=15
+Sound number=0 
+Base list price=75
+** End of new item specification subsection **
+
+// Item No. 30
+** Start of new item specification subsection **
+Item name="Quilted Armour"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
+Item can be installed in armour slot="yes"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.15
+Item as gun: speed of bullets=8.0
+Item as gun: angle change of bullets=0
+Item as gun: damage of bullets=0
+Item as gun: modifier for damage of bullets=0
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
+Item as gun: bullet_lifetime=-1
+Item as gun: offset for melee weapon=0
+Item as gun: modifier for starting angle=0
+Item as gun: ignore collisions with wall="no"
+Item as defensive item: base_ac_bonus=8
+Item as defensive item: ac_bonus_modifier=4
+Base item duration=30
+Item duration modifier=10
+Picture number=15
+Sound number=0 
+Base list price=200
+** End of new item specification subsection **
+
+// Item No. 31
+** Start of new item specification subsection **
+Item name="Leather Armour"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in drive slot="no"
@@ -1239,138 +1488,12 @@ Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
 Item as defensive item: base_ac_bonus=10
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=10
+Item as defensive item: ac_bonus_modifier=6
+Base item duration=30
 Item duration modifier=10
 Picture number=15
 Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 26
-** Start of new item specification subsection **
-Item name="Thrown Laser Sword"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in drive slot="no"
-Item can be installed in weapon slot="yes"
-Item can be installed in armour slot="no"
-Item can be installed in shield slot="no"
-Item can be installed in special slot="no"
-Item can be installed in aux slot="no"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item installation changes weapon into new value=2
-Item installation changes drive into new value=-1
-Energy gain on application in combat=60
-Item weight=0.8
-Item drive maxspeed=0
-Item drive acceleration=0
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=8.1
-Item as gun: angle change of bullets=360
-Item as gun: damage of bullets=100
-Item as gun: modifier for damage of bullets=30
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=1
-Item as gun: bullet_lifetime=1.50
-Item as gun: offset for melee weapon=1.5
-Item as gun: modifier for starting angle=-40
-Item as gun: ignore collisions with wall="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10
-Item duration modifier=10
-Picture number=18
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 27
-** Start of new item specification subsection **
-Item name="Laser Sword"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in drive slot="no"
-Item can be installed in weapon slot="yes"
-Item can be installed in armour slot="no"
-Item can be installed in shield slot="no"
-Item can be installed in special slot="no"
-Item can be installed in aux slot="no"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item installation changes weapon into new value=2
-Item installation changes drive into new value=-1
-Energy gain on application in combat=60
-Item weight=0.8
-Item drive maxspeed=0
-Item drive acceleration=0
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=100
-Item as gun: modifier for damage of bullets=30
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10
-Item duration modifier=10
-Picture number=18
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 28
-** Start of new item specification subsection **
-Item name="Laser Axe"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in drive slot="no"
-Item can be installed in weapon slot="yes"
-Item can be installed in armour slot="no"
-Item can be installed in shield slot="no"
-Item can be installed in special slot="no"
-Item can be installed in aux slot="no"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item installation changes weapon into new value=2
-Item installation changes drive into new value=-1
-Energy gain on application in combat=60
-Item weight=0.8
-Item drive maxspeed=0
-Item drive acceleration=0
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=100
-Item as gun: modifier for damage of bullets=30
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=9
-Item as gun: bullet_lifetime=0.20
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10
-Item duration modifier=10
-Picture number=18
-Sound number=0 
-Base list price=0
+Base list price=300
 ** End of new item specification subsection **
 
 *** End of item data section: ***
@@ -1424,6 +1547,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1458,6 +1583,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1492,6 +1619,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1526,6 +1655,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1560,6 +1691,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1594,6 +1727,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1628,6 +1763,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1662,6 +1799,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1696,6 +1835,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1730,6 +1871,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1764,6 +1907,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1798,6 +1943,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1832,6 +1979,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1866,6 +2015,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1900,6 +2051,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1934,6 +2087,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1968,6 +2123,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2002,6 +2159,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2036,6 +2195,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2070,6 +2231,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2104,6 +2267,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2138,6 +2303,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2172,6 +2339,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2206,6 +2375,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2217,7 +2388,7 @@ Droid portrait file name (without extension) to use="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 10.1
+Maximum energy of this droid: 2
 Maximum mana of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
@@ -2241,6 +2412,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=0
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2275,6 +2448,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2309,6 +2484,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2342,6 +2519,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -2376,6 +2555,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -2411,6 +2592,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2445,6 +2628,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2479,6 +2664,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2513,6 +2700,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2547,6 +2736,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2581,6 +2772,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2615,6 +2808,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2649,6 +2844,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -2683,6 +2880,8 @@ Aux1 item=-1
 Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0

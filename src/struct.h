@@ -321,6 +321,8 @@ typedef struct
   // int aux2_item;
   item aux2_item;
   int Greeting_Sound_Type; // which sample to play in order to 'greet' the influencer?
+  int to_hit; // chance that this droid hits an unarmoured target
+  int getting_hit_modifier; // modifier for this droid to receive a hit from the player
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?

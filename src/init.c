@@ -917,6 +917,8 @@ Get_Robot_Data ( void* DataPointer )
 #define AUX2_ITEM_BEGIN_STRING "Aux2 item="
 #define SPECIAL_ITEM_BEGIN_STRING "Special item="
 #define GREETING_SOUND_STRING "Greeting Sound number="
+#define TO_HIT_STRING "Chance of this robot scoring a hit="
+#define GETTING_HIT_MODIFIER_STRING "Chance modifier, that this robot gets hit="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
@@ -1084,9 +1086,17 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].special_item.type , EndOfDataPointer );
 
-      // Now we read in the special item of this droid type
+      // Now we read in the greeting sound type of this droid type
       ReadValueFromString( RobotPointer , GREETING_SOUND_STRING , "%d" , 
 			   &Druidmap[RobotIndex].Greeting_Sound_Type , EndOfDataPointer );
+
+      // Now we read in the to-hit chance this robot has in combat against an unarmoured target
+      ReadValueFromString( RobotPointer , TO_HIT_STRING , "%d" , 
+			   &Druidmap[RobotIndex].to_hit , EndOfDataPointer );
+
+      // Now we read in the greeting sound type of this droid type
+      ReadValueFromString( RobotPointer , GETTING_HIT_MODIFIER_STRING , "%d" , 
+			   &Druidmap[RobotIndex].getting_hit_modifier , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
