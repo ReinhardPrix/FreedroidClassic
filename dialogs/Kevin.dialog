@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -33,7 +32,13 @@ BEGIN OF AUTORS NOTES
 
 
 
+
+
+
 This is Kevin, a most formidable hacker and teacher of hacking skills.
+
+
+
 
 
 
@@ -44,7 +49,7 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="Hi, I'm new here"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=382  PositionY=357  
+PositionX=80  PositionY=219  
 Subtitle="Hi, I'm Kevin, a hacker"
 ReplySample=""
 ChangeOption=0 ChangeToValue=0
@@ -55,76 +60,99 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=612  PositionY=256  
-Subtitle="You don't have enough cash cheapskate. Come back when you can afford to pay me."
-ReplySample=""
+PositionX=250  PositionY=303  
 ChangeOption=1 ChangeToValue=0
+OnCondition="MissionAssigned:6" JumpToOption=2 ElseGoto=5
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=722  PositionY=288  
+PositionX=360  PositionY=299  
+Subtitle="As I've told you, I cannot teach you anything right now.  This is not because I don't want to.  I don't have the time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I must see to that the flaky energy stream is distributed such that my research project can continue. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you could find a way to get rid of the maintainance bots on the second underground level of this station, it would surely help a lot."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
-OnCondition="PointsToDistributeAtLeast:10" JumpToOption=5 ElseGoto=6
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="What can you teach me about hacking ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=517  PositionY=388  
-Subtitle="I can increase your hacking skill, but that knowledge comes for a fee."
-ReplySample=""
-Subtitle="Now what will it be?"
-ReplySample=""
+PositionX=180  PositionY=218  
 ChangeOption=3 ChangeToValue=0
-ChangeOption=4 ChangeToValue=1
+OnCondition="MissionComplete:6" JumpToOption=4 ElseGoto=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Improve Hacking Ability (cost 300 cash, 10 ability points)"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=648  PositionY=382  
-ChangeOption=4 ChangeToValue=1
-DoSomethingExtra="ExecuteActionWithLabel:unlock_kevins_door"
-OnCondition="GoldIsLessThan:300" JumpToOption=1 ElseGoto=2
+New Option Nr=4  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=314  PositionY=175  
+Subtitle="I can increase your hacking skill, but that knowledge comes for a fee."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now what will it be?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Kevin"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=774  PositionY=185  
-Subtitle="Good.  The most important thing about hacking is to understand the nature of the machine you want to hack."
+PositionX=346  PositionY=380  
+Subtitle="I've got some important research project going on.  In fact this project might be cruical to the survival of the whole colony."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Once you have figured out what the creators of the system were doing when setting it up, you'll also know how to best hack it."
+Subtitle="So you see the tremendous importance of it.  But the project is currently in danger.  There are some maintainance bots down at the energy source."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now I see your hacking skill has already improved a lot."
+Subtitle="They are trying to 'maintain' machines by rebooting them all the while.  This must stop, but I can't leave here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I must see that the remaining power is distributed such that the project can continue uninterrupted."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now if you could go down there and see that the power flow gets stabilized, then I'll find the time again to teach you something."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
-DoSomethingExtra="IncreaseHackingSkill"
-DoSomethingExtra="SubtractPointsToDistribute:10"
-DoSomethingExtra="SubtractGold:300"
+ChangeOption=6 ChangeToValue=1
+ChangeOption=7 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=690  PositionY=190  
-Subtitle="You don't have enough experience.  I can't teach you anything more this way."
+New Option Nr=6  OptionText="I'll see after the energy supply now."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=454  PositionY=304  
+Subtitle="That's great.  You can't miss it.  It's not hard to find.  Enter my garden and find the lower station entrance there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Best don't bother with the resistance on the first level.  You only need to take care of the energy supply.  And that's on the SECOND level."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Best make it quick.  I'm getting sick of stabilizing the energy distribution already."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+ChangeOption=6 ChangeToValue=0
+DoSomethingExtra="AssignMission:6"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="I'm sorry, but I don't think there's anything I could do about that energy supply."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=450  PositionY=391  
+Subtitle="That's too bad.  Because I can't leave here to fix it myself.  It's important that my research project can continue uninterrupted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
+ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="I'll be off then"
 OptionSample="Tux_Goodbye_0.wav"
-PositionX=462  PositionY=221  
+PositionX=181  PositionY=54  
 ChangeOption=99 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
