@@ -250,8 +250,6 @@ ShowInventoryMessages( void )
 	  continue;
 	}
 
-      // sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
-      // DisplayText( InventoryText , -1 , -1 , &InventoryRect );
       TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
       TargetRect.y = 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
       TargetRect.w = 50;
