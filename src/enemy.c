@@ -356,6 +356,12 @@ ShuffleEnemys ( int LevelNum )
       if ( AllEnemys [ i ] . AdvancedCommand == 2 ) TeleportToClosestWaypoint ( &(AllEnemys[i]) );
       if ( AllEnemys [ i ] . SpecialForce )
 	{
+
+	  //--------------------
+	  // For every special force, that is exactly positioned in the map anyway,
+	  // we find the waypoint he's standing on.  That will be his current target
+	  // and source waypoint.  That's it for special forces.
+	  //
 	  BestWaypoint = 0;
 	  for ( j=0 ; j<MAXWAYPOINTS ; j ++ )
 	    {
@@ -369,8 +375,13 @@ ShuffleEnemys ( int LevelNum )
 			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) ) )
 		BestWaypoint = j;
 	    }
+
 	  AllEnemys[i].nextwaypoint = BestWaypoint;
 	  AllEnemys[i].lastwaypoint = BestWaypoint;
+	  
+	  AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[ BestWaypoint ].x;
+	  AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[ BestWaypoint ].y;
+
 	  continue;
 	}
 
@@ -390,7 +401,7 @@ ShuffleEnemys ( int LevelNum )
       AllEnemys[i].lastwaypoint = wp;
       AllEnemys[i].nextwaypoint = wp;
 
-    }/* for (MAX_ENEMYS_ON_SHIP) */
+    } // for (MAX_ENEMYS_ON_SHIP) 
 
   /* leave the enemys alone for some time.... */
 
@@ -453,6 +464,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 
 	  // if ( j == ExceptedDroid ) continue;
 	  if ( & ( AllEnemys [ j ] ) == ExceptedRobot ) continue;
+
+	  if ( AllEnemys[j].warten > 0 ) continue;
 
 	  // so it seems that we need to test this one!!
 	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
@@ -681,7 +694,10 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
       if ( i == j )
 	{
 	  DebugPrintf( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
-	  ThisRobot->warten = 1;
+	  ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
+	  if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
+	       ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
+	    ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
 	  return;
 	}
       
@@ -1857,6 +1873,9 @@ ProcessAttackStateMachine (int enemynum)
     case RELENTLESS_FIRE_TO_GIVEN_POSITION:
       ThisRobot->TextToBeDisplayed = "state:  RELENTLESS FIRE!" ;
       break;
+    case WAIT_AND_TURN_AROUND_AIMLESSLY:
+      ThisRobot->TextToBeDisplayed = "state:  Waiting, Turning aimlessly..." ;
+      break;
     default:
       ThisRobot->TextToBeDisplayed = "state:  UNHANDLED!!" ;
       break;
@@ -1918,23 +1937,11 @@ ProcessAttackStateMachine (int enemynum)
 	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	    }
 	}
-
       MoveThisRobotThowardsHisCurrentTarget( enemynum );
-
-      /*
-      if ( RemainingDistanceToNextWaypoint ( ThisRobot ) < 0.1 ) 
-	{
-	  SelectNextWaypointAdvanced( enemynum );
-	  ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-	  return;
-	}
-      */
-
       DetermineAngleOfFacing ( enemynum );
-      
       return;
-
     }
+
   else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
     {
       MoveThisRobotThowardsHisCurrentTarget( enemynum );
@@ -1945,6 +1952,8 @@ ProcessAttackStateMachine (int enemynum)
 	  return;
 	}
       DetermineAngleOfFacing ( enemynum );
+
+      CheckEnemyEnemyCollision ( enemynum );
 
       //--------------------
       // In case that the enemy droid isn't even aware of Tux and
@@ -1993,6 +2002,22 @@ ProcessAttackStateMachine (int enemynum)
 	{
 	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	}
+      return;
+
+    }
+  else if ( ThisRobot -> combat_state == WAIT_AND_TURN_AROUND_AIMLESSLY )
+    {
+      //--------------------
+      // We allow arbitrary turning speed in this case... so we disable
+      // the turning control in display function...
+      //
+      ThisRobot -> last_phase_change = 100 ; 
+
+      TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 30 );
+
+      if ( ! ThisRobot -> warten ) 
+	ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+
       return;
 
     }
@@ -2158,6 +2183,8 @@ CheckEnemyEnemyCollision (int enemynum)
   enemy* ListEnemy;
   enemy* OurBot= & ( AllEnemys[ enemynum ] );
 
+  // return ( FALSE );
+
   //--------------------
   // Enemys persuing a specific course may pass through other enerys
   // and are therefore exempted from the collision check
@@ -2207,9 +2234,19 @@ CheckEnemyEnemyCollision (int enemynum)
 
 	  // otherwise: stop this one enemy and go back youself
 	  ListEnemy->warten = WAIT_COLLISION;
+
 	  swap = OurBot->nextwaypoint;
 	  OurBot->nextwaypoint = OurBot->lastwaypoint;
 	  OurBot->lastwaypoint = swap;
+
+	  /*
+	  if ( ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
+	       ( ListEnemy -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
+	    ListEnemy -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
+	  */
+
+	  if ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+	    ListEnemy -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 
 	  // push the stopped colleague a little bit backwards...
 	  if (xdist)

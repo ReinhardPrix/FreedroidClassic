@@ -570,9 +570,9 @@ enum
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
 					   stand still with space pressed, before switching into transfermode 
 					   This variable describes the amount in SECONDS */
-#define WAIT_COLLISION		1 // after a little collision with influ, enemys hold position for a while
-                                  // this variable describes the amount of time in SECONDS 
-#define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
+#define WAIT_COLLISION		2.5 // after a little collision with Tux or another enemy, hold position for a while
+                                    // this variable describes the amount of time in SECONDS 
+// #define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_SECONDS 0.1
@@ -746,7 +746,8 @@ enum _enemy_combat_state_machine_states
   FIGHT_ON_TUX_SIDE,
   RELENTLESS_FIRE_TO_GIVEN_POSITION,
   TURN_THOWARDS_NEXT_WAYPOINT,
-  RUSH_TUX_ON_SIGHT_AND_OPEN_TALK
+  RUSH_TUX_ON_SIGHT_AND_OPEN_TALK,
+  WAIT_AND_TURN_AROUND_AIMLESSLY
 };
 
 //--------------------

@@ -797,6 +797,24 @@ PlayGreetingSound ( int SoundCode )
     case 8:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE );
       break;
+    case 9:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE );
+      break;
+    case 10:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE );
+      break;
+    case 11:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE );
+      break;
+    case 12:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE );
+      break;
+    case 13:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE );
+      break;
+    case 14:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE );
+      break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
       Terminate( ERR );
@@ -821,6 +839,24 @@ PlayStartAttackSound ( int SoundCode )
       break;
     case 1:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE );
+      break;
+    case 9:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE );
+      break;
+    case 10:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_10.wav" , FALSE );
+      break;
+    case 11:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_11.wav" , FALSE );
+      break;
+    case 12:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_12.wav" , FALSE );
+      break;
+    case 13:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_13.wav" , FALSE );
+      break;
+    case 14:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");
