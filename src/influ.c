@@ -59,7 +59,6 @@
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
-void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 
 int CurrentZeroRingIndex=0;
@@ -293,6 +292,170 @@ CheckIfCharacterIsStillOk ( int PlayerNum )
 
 }; // void CheckIfCharacterIsStillOk ( int PlayerNum ) 
 
+/* ----------------------------------------------------------------------
+ * Even the Tux must not leave the map!  A sanity check is done here...
+ * ---------------------------------------------------------------------- */
+void
+CheckForTuxOutOfMap ( PlayerNum )
+{
+  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
+
+  //--------------------
+  // Now perhaps the influencer is out of bounds, i.e. outside of the map.
+  // This would cause a segfault immediately afterwards, when checking
+  // for the current map tile to be conveyor or not.  Therefore we add some
+  // extra security against segfaults and increased diagnosis functionality
+  // here.
+  //
+  if ( ( (int) rintf( Me [ PlayerNum ] . pos.y ) >= MoveLevel->ylen ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.x ) >= MoveLevel->xlen ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.y ) <  0              ) ||
+       ( (int) rintf( Me [ PlayerNum ] . pos.x ) <  0              ) )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A Player (influencer/tux) was found outside the map in MoveInfluence.\n\
+\n\
+This indicates a bug or unimplemented functionality in Freedroid.\n\
+The PlayerNum of the offending player on this machine was: %d.\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the internal problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , PlayerNum );
+      Terminate(ERR);
+    }
+}; // void CheckForTuxOutOfMap ( PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * If an enemy was specified as the mouse move target, this enemy will
+ * maybe move here and there.  But this means that also the mouse move
+ * target of the influencer must adapt, which is done in this function.
+ * ---------------------------------------------------------------------- */
+void
+UpdateMouseMoveTargetAccoringToEnemy ( int PlayerNum )
+{
+  moderately_finepoint RemainingWay;
+  float RemainingWayLength;
+
+  //--------------------
+  // If the mouse move target got destroyed, there's no reason
+  // to move toward it any more.  The use can request a new move
+  // if that should be done.
+  //
+  if ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
+       ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z != 
+	 Me [ PlayerNum ] . pos . z ) )
+    {
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
+      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
+    }
+  else
+    {
+      //--------------------
+      // But now that there is a an enemy selected as mouse move target, the Tux 
+      // use the coordiantes of this enemy (or a position directly in front of it)
+      // as the new mouse move target coordinates.
+      //
+      Me [ PlayerNum ] . mouse_move_target . x = 
+	AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x ;
+      Me [ PlayerNum ] . mouse_move_target . y = 
+	AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y ;
+      
+      RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+      RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+      
+      RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
+				   ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
+      
+      RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
+	( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
+      RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
+	( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
+      
+      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - RemainingWay . x ;
+      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - RemainingWay . y ;
+      
+    }
+}; // void UpdateMouseMoveTargetAccoringToEnemy ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * This function also takes into account any conveyor belts the Tux might
+ * be standing on.
+ * ---------------------------------------------------------------------- */
+void
+MoveTuxAccordingToHisSpeed ( PlayerNum )
+{
+  float planned_step_x;
+  float planned_step_y;
+  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
+
+  //--------------------
+  // Now we move influence according to current speed.  But there has been a problem
+  // reported from people, that the influencer would (*very* rarely) jump throught walls
+  // and even out of the ship.  This has *never* occured on my fast machine.  Therefore
+  // I assume that the problem is related to sometimes very low framerates on these machines.
+  // So, we do a sanity check not to make steps too big.
+  //
+  // So what do we do?  We allow a maximum step of exactly that, what the 302 (with a speed
+  // of 7) could get when the framerate is as low as 20 FPS.  This should be sufficient to
+  // prevent the influencer from *ever* leaving the ship.  I hope this really does work.
+  // The definition of that speed is made in MAXIMAL_STEP_SIZE at the top of this file.
+  //
+  // And on machines with FPS << 20, it will certainly alter the game behaviour, so people
+  // should really start using a pentium or better machine.
+  //
+  // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
+  //
+  planned_step_x = Me [ PlayerNum ] .speed.x * Frame_Time ();
+  planned_step_y = Me [ PlayerNum ] .speed.y * Frame_Time ();
+  if ( fabsf(planned_step_x) >= MAXIMAL_STEP_SIZE )
+    {
+      planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
+    }
+  if ( fabsf(planned_step_y) >= MAXIMAL_STEP_SIZE )
+    {
+      planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
+    }
+
+  //--------------------
+  // Now if the influencer is on some form of conveyor belt, we adjust the planned step
+  // accoringly
+  //
+  switch ( MoveLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ] )
+    {
+    case CONVEY_L:
+      planned_step_x += Conveyor_Belt_Speed*Frame_Time();
+      break;
+    case CONVEY_D:
+      planned_step_y += Conveyor_Belt_Speed*Frame_Time();
+      break;
+    case CONVEY_R:
+      planned_step_x -= Conveyor_Belt_Speed*Frame_Time();
+      break;
+    case CONVEY_U:
+      planned_step_y -= Conveyor_Belt_Speed*Frame_Time();
+      break;
+    default:
+      break;
+    }
+
+  Me [ PlayerNum ] .pos.x += planned_step_x;
+  Me [ PlayerNum ] .pos.y += planned_step_y;
+
+  //--------------------
+  // Even the Tux must not leave the map!  A sanity check is done
+  // here...
+  //
+  CheckForTuxOutOfMap ( PlayerNum );
+
+}; // void MoveTuxAccordingToHisSpeed ( PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function moves the influencer, adjusts his speed according to
@@ -303,11 +466,9 @@ void
 MoveInfluence ( int PlayerNum )
 {
   float accel;
-  float planned_step_x;
-  float planned_step_y;
   moderately_finepoint RemainingWay;
   moderately_finepoint MinimalWayAtThisSpeed;
-  float RemainingWayLength;
+  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -332,176 +493,77 @@ MoveInfluence ( int PlayerNum )
   CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
   Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me [ PlayerNum ] .pos.x;
   Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].y = Me [ PlayerNum ] .pos.y;
-  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].z = CurLevel->levelnum ;
-
-  PermanentLoseEnergy ();	/* influ permanently loses energy */
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].z = MoveLevel->levelnum ;
 
   // check, if the influencer is still ok
   CheckIfCharacterIsStillOk ( PlayerNum ) ;
   
   //--------------------
-  // Acceleration occurs, but only if there is at least some
-  // drive unit present!!!  Otherwise only a comment will be
-  // printed out!!
+  // As a preparation for the later operations, we see if there is
+  // a living droid set as a target, and if yes, we correct the move
+  // target to something suiting that new droids position.
   //
-  // if ( Me [ PlayerNum ] . drive_item . type != (-1) )
-  // {
+  if ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) )
+    UpdateMouseMoveTargetAccoringToEnemy ( PlayerNum );
 
+  //--------------------
+  // But in case of some mouse move target present, we proceed to move
+  // thowards this mouse move target.
+  //
+  if ( Me [ PlayerNum ] . mouse_move_target . x != ( -1 ) )
+    {
       //--------------------
-      // As a preparation for the later operations, we see if there is
-      // a living droid set as a target, and if yes, we correct the move
-      // target to something suiting that new droids position.
+      // Let's do some mathematics:  We compute how far we have to go still
+      // and we also compute how far we will inevitably go even if we pull the breakes
+      // or even better use the usual friction with air to stop our motion immediately.
+      // Once we know that, we can simply decide if we still have to build up speed or
+      // if it's time to slow down again and so finally we will slide to a stop exactly
+      // at the place where we intend to be.  So:  Mathematics is always helpful. :)
       //
-      if ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) )
+      RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+      RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+      
+      MinimalWayAtThisSpeed . x = Me [ PlayerNum ] . speed . x / log ( FRICTION_CONSTANT ) ;
+      MinimalWayAtThisSpeed . y = Me [ PlayerNum ] . speed . y / log ( FRICTION_CONSTANT ) ;
+      
+      if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
 	{
-	  //--------------------
-	  // If the position is close already, we hold the position.
-	  // Otherwise we select some position suitably close.
-	  //
-	  if ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
-	       ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z != 
-		 Me [ PlayerNum ] . pos . z ) )
-	    {
-	      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
-	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
-	    }
-	  else
-	    {
-	      Me [ PlayerNum ] . mouse_move_target . x = 
-		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x ;
-	      Me [ PlayerNum ] . mouse_move_target . y = 
-		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y ;
-	      // }
-
-	      RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
-	      RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
-
-	      RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
-					   ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
-
-	      RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
-		( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
-	      RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
-		( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
-
-
-	      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - RemainingWay . x ;
-	      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - RemainingWay . y ;
-
-
-	  //--------------------
-	  // Now we stop one square before crashing into our target...
-	  //
-	  // if ( fabsf( RemainingWay . x ) > BEST_MELEE_DISTANCE_IN_SQUARES )
-	  // {
-	      // Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - copysignf ( fabsf ( RemainingWay . x ) - BEST_MELEE_DISTANCE_IN_SQUARES + 0.0 , RemainingWay . x ) ;
-	      // }
-
-	      // if ( fabsf( RemainingWay . y ) > BEST_MELEE_DISTANCE_IN_SQUARES )
-	      // {
-	      // Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - copysignf ( fabsf ( RemainingWay . y ) - BEST_MELEE_DISTANCE_IN_SQUARES + 0.0 , RemainingWay . y ) ;
-	      // }
-
-	    }
-
+	  if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
+	  else Me [ PlayerNum ] .speed.x += accel;
+	}
+      else
+	{
+	  Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
+	}
+      if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
+	{
+	  if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
+	  else Me [ PlayerNum ] .speed.y += accel;
+	}
+      else
+	{
+	  Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
 	}
       
       //--------------------
-      // Now maybe there isn't any mouse move target present or mouse move
-      // is somehow disabled.  Then we can just adapt the current speed 
-      // according to the acceleration possible with the current drive unit.
+      // In case we have reached our target, we can remove this mouse_move_target again,
+      // but also if we have been thrown onto a different level, we cancel our current
+      // mouse move target...
       //
-      if ( Me [ PlayerNum ] . mouse_move_target . x == ( -1 ) )
+      if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
+	     ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
+	   ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
 	{
+	  Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+	  Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+	  Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 	  
-	  /*
-
-	  Now we disable all cursor-key based movement.  This is the RPG branch,
-	  and a mouse will be required here...
-
-	  if ( ServerThinksUpPressed ( PlayerNum ) )
-	    Me [ PlayerNum ] .speed.y -= accel;
-	  if ( ServerThinksDownPressed ( PlayerNum ) )
-	    Me [ PlayerNum ] .speed.y += accel;
-	  if ( ServerThinksLeftPressed ( PlayerNum ) )
-	    Me [ PlayerNum ] .speed.x -= accel;
-	  if ( ServerThinksRightPressed ( PlayerNum ) )
-	    Me [ PlayerNum ] .speed.x += accel;
-
-	  */
-
+	  // Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
 	}
-      else
-      //--------------------
-      // But in case of some mouse move target present, we proceed to move
-      // thowards this mouse move target.
-      //
-	{
-	  //--------------------
-	  // Let's do some mathematics:  We compute how far we have to go still
-	  // and we also compute how far we will inevitably go even if we pull the breakes
-	  // or even better use the usual friction with air to stop our motion immediately.
-	  // Once we know that, we can simply decide if we still have to build up speed or
-	  // if it's time to slow down again and so finally we will slide to a stop exactly
-	  // at the place where we intend to be.  So:  Mathematics is always helpful. :)
-	  //
-	  RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
-	  RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
-
-	  MinimalWayAtThisSpeed . x = Me [ PlayerNum ] . speed . x / log ( FRICTION_CONSTANT ) ;
-	  MinimalWayAtThisSpeed . y = Me [ PlayerNum ] . speed . y / log ( FRICTION_CONSTANT ) ;
-
-	  if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
-	    {
-	      if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
-	      else Me [ PlayerNum ] .speed.x += accel;
-	    }
-	  else
-	    {
-	      Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-	    }
-	  if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
-	    {
-	      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
-	      else Me [ PlayerNum ] .speed.y += accel;
-	    }
-	  else
-	    {
-	      Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-	    }
-	    
-	  //--------------------
-	  // In case we have reached our target, we can remove this mouse_move_target again,
-	  // but also if we have been thrown onto a different level, we cancel our current
-	  // mouse move target...
-	  //
-	  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
-		 ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
-	       ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
-	    {
-	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
-
-	      // Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
-	    }
-
-	}
-      // }
-     
-      /*
-     else
-    {
-      Me [ PlayerNum ] .TextVisibleTime = 0;
-      Me [ PlayerNum ] .TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
     }
-      */
-
-
+  
   //--------------------
-  // As long as the tux is still alive, his status will be either
+  // As long as the Tux is still alive, his status will be either
   // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
   //
   if ( Me [ PlayerNum ] . energy >= 0 )
@@ -546,87 +608,7 @@ MoveInfluence ( int PlayerNum )
 
   AdjustTuxSpeed ( PlayerNum ) ;  // If the influ is faster than allowed for his type, slow him
 
-  //--------------------
-  // Now we move influence according to current speed.  But there has been a problem
-  // reported from people, that the influencer would (*very* rarely) jump throught walls
-  // and even out of the ship.  This has *never* occured on my fast machine.  Therefore
-  // I assume that the problem is related to sometimes very low framerates on these machines.
-  // So, we do a sanity check not to make steps too big.
-  //
-  // So what do we do?  We allow a maximum step of exactly that, what the 302 (with a speed
-  // of 7) could get when the framerate is as low as 20 FPS.  This should be sufficient to
-  // prevent the influencer from *ever* leaving the ship.  I hope this really does work.
-  // The definition of that speed is made in MAXIMAL_STEP_SIZE at the top of this file.
-  //
-  // And on machines with FPS << 20, it will certainly alter the game behaviour, so people
-  // should really start using a pentium or better machine.
-  //
-  // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
-  //
-  planned_step_x = Me [ PlayerNum ] .speed.x * Frame_Time ();
-  planned_step_y = Me [ PlayerNum ] .speed.y * Frame_Time ();
-  if ( fabsf(planned_step_x) >= MAXIMAL_STEP_SIZE )
-    {
-      planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
-    }
-  if ( fabsf(planned_step_y) >= MAXIMAL_STEP_SIZE )
-    {
-      planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
-    }
-
-  //--------------------
-  // Now perhaps the influencer is out of bounds, i.e. outside of the map.
-  // This would cause a segfault immediately afterwards, when checking
-  // for the current map tile to be conveyor or not.  Therefore we add some
-  // extra security against segfaults and increased diagnosis functionality
-  // here.
-  //
-  if ( ( (int) rintf( Me [ PlayerNum ] . pos.y ) >= CurLevel->ylen ) ||
-       ( (int) rintf( Me [ PlayerNum ] . pos.x ) >= CurLevel->xlen ) ||
-       ( (int) rintf( Me [ PlayerNum ] . pos.y ) <  0              ) ||
-       ( (int) rintf( Me [ PlayerNum ] . pos.x ) <  0              ) )
-    {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A Player (influencer/tux) was found outside the map in MoveInfluence.\n\
-\n\
-This indicates a bug or unimplemented functionality in Freedroid.\n\
-The PlayerNum of the offending player on this machine was: %d.\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the internal problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , PlayerNum );
-      Terminate(ERR);
-    }
-
-  //--------------------
-  // Now if the influencer is on some form of conveyor belt, we adjust the planned step
-  // accoringly
-  //
-  switch ( CurLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ] )
-    {
-    case CONVEY_L:
-      planned_step_x+=Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_D:
-      planned_step_y+=Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_R:
-      planned_step_x-=Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_U:
-      planned_step_y-=Conveyor_Belt_Speed*Frame_Time();
-      break;
-    default:
-      break;
-    }
-
-  Me [ PlayerNum ] .pos.x += planned_step_x;
-  Me [ PlayerNum ] .pos.y += planned_step_y;
+  MoveTuxAccordingToHisSpeed ( PlayerNum );
 
   //--------------------
   // Check it the influ is on a special field like a lift, a console or a refresh or a conveyor belt
@@ -1788,28 +1770,5 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
 
   return;
 }; // void InfluEnemyCollisionLoseEnergy(int enemynum)
-
-/* ----------------------------------------------------------------------
- *
- * In the classic paradroid game, the influencer
- * continuously lost energy.  This loss was, in contrast to damage from fighting
- * and collisions, NOT regainable by using refresh fields.
- * 
- * NEW: this function now takes into account the framerate.
- *
- * ---------------------------------------------------------------------- */
-void
-PermanentLoseEnergy (void)
-{
-  // Of course if in invincible mode, no energy will ever be lost...
-  if (InvincibleMode) return;
-
-  /* health decreases with time */
-  // Me[0].health -= Druidmap[Me[0].type].lose_health * Frame_Time () * Me[0].Current_Victim_Resistance_Factor;
-
-  /* you cant have more energy than health */
-  // if (Me[0].energy > Me[0].health) Me[0].energy = Me[0].health;
-
-} // void PermanentLoseEnergy(void)
 
 #undef _influ_c
