@@ -225,8 +225,8 @@ Question="no" Answer="A pitty."
 End of Question-Response List for this friendly droid
 
 //**********************************************************************
-// This is the friendly 123 'Gert' unit inside the bunker
-SpecialForce: Type=123 X=28 Y=12 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
+// This is the friendly 123 'Gert' unit hiding behind some boxes
+SpecialForce: Type=123 X=34 Y=2 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
 
 Start of Decision-Request List for this friendly droid
 End of Decision-Request List for this friendly droid

@@ -1159,13 +1159,12 @@ MyMalloc (long Mamount)
   return Mptr;
 }				// void* MyMalloc(long Mamount)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-* $Function----------------------------------------------------------*/
-void 
-ExecuteActionWithLabel ( char* ActionLabel )
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+GiveNumberToThisActionLabel ( char* ActionLabel )
 {
   int i;
 
@@ -1173,7 +1172,7 @@ ExecuteActionWithLabel ( char* ActionLabel )
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event labeld : %s" , ActionLabel );
 
   // In case of 'none' as action label, we don't do anything and return;
-  if ( strcmp ( ActionLabel , "none" ) == 0 ) return;
+  if ( strcmp ( ActionLabel , "none" ) == 0 ) return ( -1 );
 
   //--------------------
   // Now we find out which index the desired action has
@@ -1208,8 +1207,20 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       Terminate(ERR);
     }
 
-  ExecuteEvent( i );
+  return ( i );
+}; // int GiveNumberToThisActionLabel ( char* ActionLabel )
 
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void 
+ExecuteActionWithLabel ( char* ActionLabel )
+{
+  ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) );
 }; // void ExecuteActionWithLabel ( char* ActionLabel )
 
 /*@Function============================================================

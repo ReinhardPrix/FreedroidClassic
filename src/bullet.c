@@ -213,10 +213,11 @@ ExplodeBlasts (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DeleteBlast (int Blastnummer)
+DeleteBlast (int BlastNum)
 {
-  AllBlasts[Blastnummer].type = OUT;
-}
+  AllBlasts[ BlastNum ].phase = OUT;
+  AllBlasts[ BlastNum ].type = OUT;
+}; // void DeleteBlast( int BlastNum )
 
 /*@Function============================================================
 @Desc: 
