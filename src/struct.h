@@ -321,12 +321,12 @@ waypoint, *Waypoint;
 
 typedef struct
 {
-  byte empty;
-  unsigned int levelnum;	/* Number of this level */
+  int empty;
+  int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
   int xlen;		/* X dimension */
   int ylen;
-  unsigned int color;
+  int color;
   char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
@@ -339,6 +339,7 @@ typedef struct
   int num_levels;
   int num_lifts;
   int num_lift_rows;
+  char* AreaName;
   Level AllLevels[MAX_LEVELS];
   lift  AllLifts[MAX_LIFTS];
   SDL_Rect LiftRow_Rect[MAX_LIFT_ROWS];   /* the lift-row rectangles */

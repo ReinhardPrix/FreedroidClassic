@@ -588,6 +588,7 @@ char *StructToMem(Level Lev)
 int SaveShip(char *shipname)
 {
   char *LevelMem;		/* linear memory for one Level */
+  char *MapHeaderString;
   FILE *ShipFile;
   char filename[FILENAME_LEN+1];
   int level_anz;
@@ -614,12 +615,59 @@ int SaveShip(char *shipname)
     return ERR;
   }
   
+  //--------------------
+  // Now that the file is opend for writing, we can start writing.  And the first thing
+  // we will write to the file will be a fine header, indicating what this file is about
+  // and things like that...
+  //
+  MapHeaderString="\n\
+----------------------------------------------------------------------\n\
+ *\n\
+ *   Copyright (c) 1994, 2002 Johannes Prix\n\
+ *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *\n\
+ *\n\
+ *  This file is part of Freedroid\n\
+ *\n\
+ *  Freedroid is free software; you can redistribute it and/or modify\n\
+ *  it under the terms of the GNU General Public License as published by\n\
+ *  the Free Software Foundation; either version 2 of the License, or\n\
+ *  (at your option) any later version.\n\
+ *\n\
+ *  Freedroid is distributed in the hope that it will be useful,\n\
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *  GNU General Public License for more details.\n\
+ *\n\
+ *  You should have received a copy of the GNU General Public License\n\
+ *  along with Freedroid; see the file COPYING. If not, write to the \n\
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
+ *  MA  02111-1307  USA\n\
+ *\n\
+----------------------------------------------------------------------\n\
+\n\
+This file was generated using the Freedroid level editor.\n\
+Please feel free to make any modifications you like, but in order for you\n\
+to have an easier time, it is recommended that you use the Freedroid level\n\
+editor for this purpose.  If you have created some good new maps, please \n\
+send a short notice (not too large files attached) to the freedroid project.\n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n";
+  fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
+  
+
   /* Save all Levels */
   
   DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
 
   for( i=0; i<level_anz; i++) 
     {
+
+      //--------------------
+      // What the heck does this do?
+      // Do we really need this?  Why?
+      //
       array_i =-1;
       array_num = -1;
       while( curShip.AllLevels[++array_i] != NULL) 
@@ -635,7 +683,6 @@ int SaveShip(char *shipname)
 	      else array_num = array_i;
 	    }
 	} // while 
-    
       if ( array_num == -1 ) {
 
 	printf("\n\nMissing Levelnumber error in SaveShip...\n\nTerminating\n\n");
@@ -645,6 +692,10 @@ int SaveShip(char *shipname)
 	continue;
       }
     
+      //--------------------
+      // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
+      // then this string is wirtten to the file.  easy. simple.
+      //
       LevelMem = StructToMem(curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
     

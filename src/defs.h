@@ -213,6 +213,9 @@ enum _sounds
   TRANSFER_SOUND
 };
 
+// The sounds when the influencers energy is low or when he is in transfer mode
+// occur periodically.  These constants specify which intervals are to be used
+// for these periodic happenings...
 #define CRY_SOUND_INTERVAL 2
 #define TRANSFER_SOUND_INTERVAL 1.1
 
