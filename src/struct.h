@@ -599,6 +599,7 @@ typedef struct
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
   int Status;			// current status like OUT=TERMINATED or not OUT
+  float frozen;                 // is this droid currently frozen and for how long will it stay this way?
   double warten;		// time till the droid will start to move again
   double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
@@ -695,6 +696,7 @@ typedef struct
   int ignore_wall_collisions; // does this bullet go through walls (e.g. a laser sword strike)
   int was_reflected; // has this bullet been reflected once in it's lifetime?
   int reflect_other_bullets; // does this bullet reflect other bullets in case of a collision?
+  int freezing_level;        // does this bullet freeze the target?
 
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;
