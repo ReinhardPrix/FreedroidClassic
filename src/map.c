@@ -272,7 +272,7 @@ LoadShip (char *filename)
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
-  int i;
+  int i, j;
 
   /* Read the whole ship-data to memory */
   if ((ShipFile = fopen (filename, "r")) == NULL)
@@ -324,6 +324,105 @@ LoadShip (char *filename)
       else
 	TranslateMap (curShip.AllLevels[i]);
     }
+
+  /* eventually this should be read in with the ship data as well, */
+  /* but for the moment we put it here, to get it going... */
+  Set_Rect (curShip.LiftRow_Rect[0],  68,  18, 16, 160 );
+  Set_Rect (curShip.LiftRow_Rect[1], 132,  66, 16, 208 );
+  Set_Rect (curShip.LiftRow_Rect[2], 228,  34, 16,  30 );
+  Set_Rect (curShip.LiftRow_Rect[3], 308,  18, 16,  78 );
+  Set_Rect (curShip.LiftRow_Rect[4], 324,  82, 16, 110 );
+  Set_Rect (curShip.LiftRow_Rect[5], 356, 130, 16,  46 );
+  Set_Rect (curShip.LiftRow_Rect[6], 404,  50, 16,  94 );
+  Set_Rect (curShip.LiftRow_Rect[7], 436,  34, 16,  30 );
+
+  /* level 0 */
+  Set_Rect (curShip.Level_Rects[0][0],  0, 162,  68, 16 );
+  Set_Rect (curShip.Level_Rects[0][1], 84, 162,  48, 16 );
+  Set_Rect (curShip.Level_Rects[0][2],340, 162,  16, 16 );
+  curShip.num_level_rects[0] = 3;
+  /* level 1 */
+  Set_Rect (curShip.Level_Rects[1][0],  0, 146,  68, 16 );
+  Set_Rect (curShip.Level_Rects[1][1], 84, 146,  48, 16 );
+  Set_Rect (curShip.Level_Rects[1][2],340, 146,  16, 16 );
+  Set_Rect (curShip.Level_Rects[1][3],372, 146,  32, 16 );
+  curShip.num_level_rects[1] = 4;
+  /* level 2 */
+  Set_Rect (curShip.Level_Rects[2][0],340, 130,  16, 16 );
+  Set_Rect (curShip.Level_Rects[2][1],372, 130,  32, 16 );
+  Set_Rect (curShip.Level_Rects[2][2],420, 130,  48, 16 );
+  curShip.num_level_rects[2] = 3;
+  /* level 3 */
+  Set_Rect (curShip.Level_Rects[3][0],340, 114,  64, 16 );
+  Set_Rect (curShip.Level_Rects[3][1],420, 114,  96, 16 );
+  curShip.num_level_rects[3] = 2;
+  /* level 4 */
+  Set_Rect (curShip.Level_Rects[4][0],340, 98,  64, 16 );
+  Set_Rect (curShip.Level_Rects[4][1],420, 98, 128, 16 );
+  curShip.num_level_rects[4] = 2;
+  /* level 5 */
+  Set_Rect (curShip.Level_Rects[5][0],340, 82,  64, 16 );
+  Set_Rect (curShip.Level_Rects[5][1],420, 82, 156, 16 );
+  curShip.num_level_rects[5] = 2;
+  /* level 6 */
+  Set_Rect (curShip.Level_Rects[6][0],276, 66,  32, 16 );
+  Set_Rect (curShip.Level_Rects[6][1],324, 66,  80, 16 );
+  Set_Rect (curShip.Level_Rects[6][2],420, 66, 128, 16 );
+  curShip.num_level_rects[6] = 3;
+  /* level 7 */
+  Set_Rect (curShip.Level_Rects[7][0],244, 50,  64, 16 );
+  Set_Rect (curShip.Level_Rects[7][1],324, 50,  80, 16 );
+  Set_Rect (curShip.Level_Rects[7][2],420, 50,  16, 16 );
+  Set_Rect (curShip.Level_Rects[7][3],452, 50,  64, 16 );
+  curShip.num_level_rects[7] = 4;
+  /* level 8 */
+  Set_Rect (curShip.Level_Rects[8][0],244, 34,  64, 16 );
+  Set_Rect (curShip.Level_Rects[8][1],324, 34,  80, 16 );
+  Set_Rect (curShip.Level_Rects[8][2],452, 34,  16, 16 );
+  curShip.num_level_rects[8] = 3;
+  /* level 9 */
+  Set_Rect (curShip.Level_Rects[9][0], 84, 18,  32, 16 );
+  Set_Rect (curShip.Level_Rects[9][1],292, 18,  16, 16 );
+  Set_Rect (curShip.Level_Rects[9][2],324, 18,  18, 16 );
+  curShip.num_level_rects[9] = 3;
+  /* level 10 */
+  Set_Rect (curShip.Level_Rects[10][0], 84, 34, 112, 16 );
+  curShip.num_level_rects[10] = 1;
+  /* level 11 */
+  Set_Rect (curShip.Level_Rects[11][0], 36, 50,  32, 16 );
+  Set_Rect (curShip.Level_Rects[11][1], 84, 50, 144, 16 );
+  curShip.num_level_rects[11] = 2;
+  /* level 12 */
+  Set_Rect (curShip.Level_Rects[12][0],148, 66, 128, 16 );
+  Set_Rect (curShip.Level_Rects[12][1],148, 82, 160, 16 );
+  Set_Rect (curShip.Level_Rects[12][2],148, 98, 176, 16 );
+  curShip.num_level_rects[12] = 3;
+  /* level 13 */
+  Set_Rect (curShip.Level_Rects[13][0],148,114, 176, 3*16 );
+  curShip.num_level_rects[13] = 1;
+  /* level 14 */
+  Set_Rect (curShip.Level_Rects[14][0],148,162, 124, 3*16 );
+  curShip.num_level_rects[14] = 1;
+  /* level 15 */
+  Set_Rect (curShip.Level_Rects[15][0],276,162,  48, 2*16 );
+  curShip.num_level_rects[15] = 1;
+  
+  /* 
+   * these rectangles are relative to the ship-picture 
+   * therefore offset them with the User-Rectangle 
+   */	   
+  for (i=0; i<MAX_LIFT_ROWS; i++)
+    {
+      curShip.LiftRow_Rect[i].x += User_Rect.x;
+      curShip.LiftRow_Rect[i].y += User_Rect.y;
+    }
+  for (i=0; i<MAX_LEVELS; i++)
+    for (j=0; j<MAX_LEVEL_RECTS; j++)
+      {
+	curShip.Level_Rects[i][j].x += User_Rect.x;
+	curShip.Level_Rects[i][j].y += User_Rect.y;
+      }
+
 
   return OK;
 

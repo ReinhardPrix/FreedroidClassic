@@ -651,11 +651,8 @@ GetTakeoverGraphics (void)
 void
 ShowPlayground ()
 {
-#ifdef NEW_ENGINE
   int i, j;
   int color, player;
-  unsigned char *LeftDruid, *RightDruid;
-  unsigned char *Enemypic;
   int block;
   SDL_Rect Target_Rect;
 
@@ -783,48 +780,7 @@ ShowPlayground ()
   SDL_Flip (ne_screen);
 
   return;
-#else
 
-
-  /* Display the two players */
-  if (PlayerType == -1)
-    Enemypic = NULL;
-
-  if (YourColor == GELB)
-    {
-      LeftDruid = Influencepointer;
-      RightDruid = Enemypic;
-    }
-  else
-    {
-      LeftDruid = Enemypic;
-      RightDruid = Influencepointer;
-    }
-
-  /* Show Druid - pictures */
-  memset (WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
-
-  if (LeftDruid != NULL)
-    CopyMergeBlock (WorkBlock, LeftDruid, BLOCKMEM);
-
-  DisplayMergeBlock (DruidStart[GELB].x, DruidStart[GELB].y,
-		     WorkBlock, Block_Width, Block_Height - 5, Outline320x200);
-
-  memset (WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
-
-  if (RightDruid != NULL)
-    CopyMergeBlock (WorkBlock, RightDruid, BLOCKMEM);
-
-
-  DisplayMergeBlock (DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
-		     WorkBlock, Block_Width, Block_Height - 5, Outline320x200);
-
-
-  PrepareScaledSurface(TRUE);  /* this updates the actually displayed screen */
-
-  return;
-
-#endif
 }				/* ShowPlayground */
 
 

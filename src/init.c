@@ -1069,7 +1069,6 @@ InitFreedroid (void)
   Mobilecolor.blau = 63;
   Mobilecolor.rot = 63;
 
-  GameAdapterPresent = FALSE;	/* start with this */
 
   CurLevel = NULL; // please leave this here BEFORE InitPictures
 

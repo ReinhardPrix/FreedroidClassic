@@ -95,6 +95,7 @@ IsolateBlock (unsigned char *Parameter_screen,
  * 		int target_line: block-line in ne_blocks where blocks are put
  * 
  * @Ret: SDL_Rect *  : array holding the block-coordinates 
+ *                    !! allocated here !!
  *
  *-----------------------------------------------------------------*/
 

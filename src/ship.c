@@ -42,12 +42,6 @@
 
 int NoKeyPressed (void);
 
-void GreatDruidShow (void);
-
-void ShowElevators (void);
-
-void PaintConsoleMenu (void);
-
 int WaitElevatorCounter = 0;
 int ConsoleMenuPos=0;
 
@@ -88,11 +82,11 @@ EnterElevator (void)
 
   row = curShip.AllElevators[curElev].elevator_row;
 
-  ShowElevators ();
-  HilightElevator (row);
-  SDL_Flip ( ne_screen );
+  ShowElevators (curLevel, row);
 
-  PrepareScaledSurface(TRUE);
+  //  HilightElevator (row);
+  //  SDL_Flip ( ne_screen );
+  //  PrepareScaledSurface(TRUE);
 
   /* Warten, bis User Feuer auslaesst */
   while (SpacePressed ()) ;
@@ -114,9 +108,10 @@ EnterElevator (void)
 		curLevel = curShip.AllElevators[curElev].level;
 		upElev = curShip.AllElevators[curElev].up;
 
-		HilightLevel (curLevel);	/* highlight new level */
-		HilightElevator (row);
-		SDL_Flip ( ne_screen );
+		ShowElevators (curLevel, row);
+		//	HilightLevel (curLevel);	/* highlight new level */
+		//		HilightElevator (row);
+		//		SDL_Flip ( ne_screen );
 
 		/* Warten, bis user Taste auslaesst */
 		WaitElevatorCounter = WAIT_ELEVATOR;
@@ -141,9 +136,10 @@ EnterElevator (void)
 		curLevel = curShip.AllElevators[curElev].level;
 		downElev = curShip.AllElevators[curElev].down;
 
-		HilightLevel (curLevel);
-		HilightElevator (row);
-		SDL_Flip ( ne_screen );
+		ShowElevators (curLevel, row);
+		//		HilightLevel (curLevel);
+		//		HilightElevator (row);
+		//		SDL_Flip ( ne_screen );
 
 		/* Warten, bis User Taste auslaesst */
 		WaitElevatorCounter = WAIT_ELEVATOR;
@@ -214,17 +210,14 @@ EnterElevator (void)
  * @Desc: show elevator view of the ship, and hightlight the current 
  *        level + lift
  *
+ *  if level==-1: don't highlight any level
+ *  if liftrow==-1: dont' highlight any liftrows
  *
  *-----------------------------------------------------------------*/
 void
-ShowElevators (void)
+ShowElevators (int level, int liftrow)
 {
-  int curLevel = CurLevel->levelnum;
-  SDL_Surface *tmp;
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
-
-  DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
+  SDL_Rect dst;
 
   // clear the whole screen
   ClearGraphMem();
@@ -232,22 +225,26 @@ ShowElevators (void)
   SetUserfenster ( EL_BG_COLOR );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
-  tmp= IMG_Load ( NE_ELEVATOR_PIC_FILE );
-  SourceRectangle.x=0;
-  SourceRectangle.y=0;
-  SourceRectangle.w=USERFENSTERBREITE;
-  SourceRectangle.h=USERFENSTERHOEHE;
-  TargetRectangle.x=USERFENSTERPOSX;
-  TargetRectangle.y=USERFENSTERPOSY;
-  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+  /* First show ship "lights off" */
+  Copy_Rect (User_Rect, dst);
+  SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
+  SDL_Flip (ne_screen);
   
-  HilightLevel (curLevel);
+  /* Now superpose ship "lights on" and update selectively */
+  SDL_BlitSurface (ship_on_pic, NULL, ne_screen, &dst);
 
-  PrepareScaledSurface( TRUE );
+  if (level >= 0)
+    SDL_UpdateRects
+      (ne_screen, curShip.num_level_rects[level],curShip.Level_Rects[level]);
 
-  SDL_FreeSurface(tmp);
+  if (liftrow >=0)
+    SDL_UpdateRects (ne_screen, 1, &curShip.LiftRow_Rect[liftrow]);
 
-  DebugPrintf("\nvoid ShowElevators(void): end of function reached.");
+  //  HilightLevel (curLevel);
+  //  PrepareScaledSurface( TRUE );
+
+  printf ("\nShowElevators() complete...\n");
+  getchar_raw();
 
   return;
 
@@ -334,7 +331,7 @@ EnterKonsole (void)
       if ((ConsoleMenuPos == 3) & (SpacePressed ()))
 	{
 	  while (SpacePressed ());
-	  ShowElevators ();
+	  ShowElevators (CurLevel->levelnum, -1);
 	  while (!SpacePressed ());
 	  while (SpacePressed ());
 	}

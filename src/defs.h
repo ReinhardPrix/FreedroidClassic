@@ -41,6 +41,10 @@
 #define Set_Rect(rect, xx, yy, ww, hh) {\
 (rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); }
 
+#define Copy_Rect(src, dst) {\
+(dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; }
+
+
 // **********************************************************************
 // Constants influencing code generation and
 // constants defining flags for some functions:
@@ -80,11 +84,13 @@ enum
 #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
 #define NE_BULLET_BLOCK_FILE 	GRAPHICS_DIR "ne_bullet.gif"
 #define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.gif"
-#define NE_ELEVATOR_PIC_FILE    GRAPHICS_DIR "ne_ship.gif"
+#define NE_LIFT_PIC_FILE	GRAPHICS_DIR "ne_ship.gif"
 #define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.gif" 
 #define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.gif"
 #define NE_BANNER_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.gif"
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
+#define SHIP_OFF_PIC		GRAPHICS_DIR "ship_off.bmp"
+#define SHIP_ON_PIC		GRAPHICS_DIR "ship_on.bmp"
 
 #define STANDARD_MISSION        MAP_DIR "classical_paradroid_mission.mission"
 #define NEW_MISSION             MAP_DIR "new_mission_1.mission"
@@ -296,9 +302,11 @@ enum _directions
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */
 				     	/* corresponds to a reserved palette range ! */
-#define MAX_LIFTROWS		15   	/* the different lift "rows" */
+#define MAX_LIFT_ROWS		15   	/* the different lift "rows" */
 					/* don't change this easily */
 					/* corresponds to a reserved palette range !*/
+#define MAX_LEVEL_RECTS         20   // how many rects compose a level
+
 
 // #define MAXWAYPOINTS 		100
 #define MAXWAYPOINTS 		100

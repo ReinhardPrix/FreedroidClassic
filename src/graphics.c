@@ -427,11 +427,10 @@ InitPictures (void)
   // elements apart (they dont have typical block format either)
   ne_console_surface= IMG_Load ( NE_CONSOLEN_PIC_FILE );
 
+  /* load the 3 ship side-view: lights off, level-lights on and lift-lights on */
+  ship_off_pic = IMG_Load (SHIP_OFF_PIC);
+  ship_on_pic = IMG_Load (SHIP_ON_PIC);
 
-  // For debuggin purposes of the image loading procedure an
-  // image of the filled ne_blocks surface is saved to a file...
-
-  //  SDL_SaveBMP (ne_blocks, "debug.bmp");
 
   return (TRUE);
 }

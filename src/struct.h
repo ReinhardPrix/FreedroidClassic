@@ -263,6 +263,9 @@ typedef struct
   int num_lift_rows;
   Level AllLevels[MAX_LEVELS];
   elevator AllElevators[MAX_LIFTS];
+  SDL_Rect LiftRow_Rect[MAX_LIFT_ROWS];   /* the lift-row rectangles */
+  SDL_Rect Level_Rects[MAX_LEVELS][MAX_LEVEL_RECTS];  /* level rectangles */
+  int num_level_rects[MAX_LEVELS];  /* how many rects has a level */
 }
 ship, *Ship;
 

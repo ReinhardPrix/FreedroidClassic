@@ -399,6 +399,9 @@ EXTERN void HilightElevator (int);
 EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
+void GreatDruidShow (void);
+void ShowElevators (int level, int liftrow);
+void PaintConsoleMenu (void);
 
 /* text.c */
 #undef EXTERN
