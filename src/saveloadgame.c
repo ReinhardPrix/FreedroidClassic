@@ -81,7 +81,7 @@ SaveGame( void )
   if ( Me[0].energy <= 0 )
     {
       DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
-		       MenuTexts , 1 , NULL );
+		       MenuTexts , 1 , NULL , NULL );
       return ( OK );
     }
 

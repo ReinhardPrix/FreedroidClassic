@@ -487,10 +487,10 @@ Assemble_Combat_Picture (int mask)
 	if (AllBlasts[i].type != OUT)
 	  PutBlast (i);
 
-      ShowAutomapData();
-
     } // ! ONLY_SHOW_MAP_AND_TEXT
       
+
+  ShowAutomapData();
 
   if ( GameConfig.Draw_Framerate )
     {
