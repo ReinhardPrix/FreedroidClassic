@@ -1568,6 +1568,15 @@ PrepareStartOfNewCharacter ( void )
   RespectVisibilityOnMap = TRUE ;
 
   //--------------------
+  // We mark all the big screen messages for this character
+  // as out of date, so they can be overwritten with new 
+  // messages...
+  //
+  Me [ 0 ] . BigScreenMessageIndex = 0 ;
+  for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
+    Me [ 0 ] . BigScreenMessageDuration [ i ] = 10000 ;
+
+  //--------------------
   // We make sure we don't have garbage in our arrays from a 
   // previous game or failed load-game attempt...
   //
@@ -1787,6 +1796,9 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . show_tooltips = TRUE;
 
   GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+
+  GameConfig . number_of_big_screen_messages = 4 ;
+  GameConfig . delay_for_big_screen_messages = 6.5 ;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 

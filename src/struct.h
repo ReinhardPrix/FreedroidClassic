@@ -110,6 +110,8 @@ typedef struct
   int show_blood; // this can be used to make the game more friendly for children...
   int show_tooltips;
   int tux_image_update_policy ;
+  int number_of_big_screen_messages ;
+  float delay_for_big_screen_messages ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -632,6 +634,10 @@ typedef struct
   moderately_finepoint DetectedItemList[ MAX_ITEMS_PER_LEVEL ];
   int current_zero_ring_index;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+
+  int BigScreenMessageIndex;
+  char BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
+  float BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES ];
 }
 tux_t, *Tux_t;
 

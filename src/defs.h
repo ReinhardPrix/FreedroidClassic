@@ -149,6 +149,7 @@ enum
 #define MAX_EXTRAS_PER_OPTION 10
 #define CHAT_DEBUG_LEVEL 1
 
+#define MAX_BIG_SCREEN_MESSAGES 10
 
 
 #ifndef _itemdefs_h

@@ -1299,7 +1299,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	    }
 	  break;
 	case BLITTING_TYPE_BULLET:
-	  DebugPrintf ( -1000 , "Bullet code_number: %d. " , blitting_list [ i ] . code_number );
+	  // DebugPrintf ( -1000 , "Bullet code_number: %d. " , blitting_list [ i ] . code_number );
 	  PutBullet ( blitting_list [ i ] . code_number , mask ); 
 	  break;
 	case BLITTING_TYPE_BLAST:

@@ -56,12 +56,6 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
-#define MAX_BIG_SCREEN_MESSAGES 5
-
-int BigScreenMessageIndex = 0 ;
-char BigScreenMessage[ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
-float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 10000, 10000, 10000 } ;
-
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
@@ -465,7 +459,7 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
   // First we need to know where to begin with our little display.
   //
   lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
-  DebugPrintf ( -1000 , "\nLines needed: %d. " , lines_needed );
+  DebugPrintf ( 1 , "\nLines needed: %d. " , lines_needed );
 
   if ( lines_needed <= 9 ) protocol_offset = 0 ;
   else
@@ -1951,11 +1945,11 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 void
 SetNewBigScreenMessage( char* ScreenMessageText )
 {
-  strcpy ( BigScreenMessage[ BigScreenMessageIndex] , ScreenMessageText );
-  BigScreenMessageDuration[ BigScreenMessageIndex] = 0 ;
-  BigScreenMessageIndex ++ ;
-  if ( BigScreenMessageIndex >= MAX_BIG_SCREEN_MESSAGES )
-    BigScreenMessageIndex = 0 ;
+  strcpy ( Me [ 0 ] . BigScreenMessage [ Me [ 0 ] . BigScreenMessageIndex ] , ScreenMessageText );
+  Me [ 0 ] . BigScreenMessageDuration [ Me [ 0 ] . BigScreenMessageIndex ] = 0 ;
+  Me [ 0 ] . BigScreenMessageIndex ++ ;
+  if ( Me [ 0 ] . BigScreenMessageIndex >= GameConfig . number_of_big_screen_messages )
+    Me [ 0 ] . BigScreenMessageIndex = 0 ;
 }; // void SetNewBigScreenMessage( char* ScreenMessageText )
 
 /* ----------------------------------------------------------------------
@@ -1969,15 +1963,15 @@ DisplayBigScreenMessage( void )
 
   for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
     {
-      if ( BigScreenMessageDuration [ i ] < 6.5 )
+      if ( Me [ 0 ] . BigScreenMessageDuration [ i ] < GameConfig . delay_for_big_screen_messages )
 	{
 	  SDL_SetClipRect ( Screen , NULL );
-	  CenteredPutStringFont ( Screen , Menu_Filled_BFont , 100 + i * FontHeight ( Menu_Filled_BFont ) , BigScreenMessage [ i ]  );
+	  CenteredPutStringFont ( Screen , Menu_Filled_BFont , 100 + i * FontHeight ( Menu_Filled_BFont ) , 
+				  Me [ 0 ] . BigScreenMessage [ i ]  );
 	  if ( !GameConfig.Inventory_Visible &&
 	       !GameConfig.SkillScreen_Visible &&
 	       !GameConfig.CharacterScreen_Visible )
-	    BigScreenMessageDuration [ i ]  += Frame_Time();
-	  
+	    Me [ 0 ] . BigScreenMessageDuration [ i ]  += Frame_Time();
 	}
     }
 

@@ -1884,6 +1884,8 @@ On_Screen_Display_Options_Menu (void)
   char Options1[1000];
   char Options2[1000];
   char Options3[1000];
+  char Options4[1000];
+  char Options5[1000];
   char* MenuTexts[10];
   enum
     { 
@@ -1891,7 +1893,8 @@ On_Screen_Display_Options_Menu (void)
       SHOW_FRAMERATE, 
       SHOW_TUX_ENERGY,
       SHOW_ENEMY_ENERGY_BARS,
-      SHOW_DROID_DIGITS,
+      PARALLEL_BIG_SCREEN_MESSAGES_AT_MOST_POSITION,
+      BIG_SCREEN_MESSAGES_DURATION_POSITION,
       LEAVE_OPTIONS_MENU 
     };
 
@@ -1908,13 +1911,16 @@ On_Screen_Display_Options_Menu (void)
       sprintf( Options1 , "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF" );
       sprintf( Options2 , "Show Tux Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
       sprintf( Options3 , "Show Enemy Energy Bars: %s", GameConfig.enemy_energy_bars_visible? "ON" : "OFF" );
+      sprintf( Options4 , "Screen Messages at most: %d", GameConfig.number_of_big_screen_messages );
+      sprintf( Options5 , "Screen Message time: %3.1f", GameConfig.delay_for_big_screen_messages );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
-      MenuTexts[4]="UNUSED ENTRY";
-      MenuTexts[5]="Back";
-      MenuTexts[6]="";
+      MenuTexts[4]=Options4;
+      MenuTexts[5]=Options5;
+      MenuTexts[6]="Back";
+      MenuTexts[7]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
@@ -1939,6 +1945,42 @@ On_Screen_Display_Options_Menu (void)
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig . enemy_energy_bars_visible = ! GameConfig . enemy_energy_bars_visible ;
 	  break;
+
+	case PARALLEL_BIG_SCREEN_MESSAGES_AT_MOST_POSITION:
+	  if ( LeftPressed() )
+	    {
+	      while ( LeftPressed() );
+	      if ( GameConfig . number_of_big_screen_messages > 0 )
+		{
+		  GameConfig . number_of_big_screen_messages -- ;
+		}
+	    }
+	  else if ( RightPressed() )
+	    {
+	      while ( RightPressed() );
+	      if ( GameConfig . number_of_big_screen_messages < MAX_BIG_SCREEN_MESSAGES )
+		{
+		  GameConfig . number_of_big_screen_messages ++ ;
+		}
+	    }
+	  break;
+
+	case BIG_SCREEN_MESSAGES_DURATION_POSITION:
+	  if ( LeftPressed() )
+	    {
+	      while ( LeftPressed() );
+	      if ( GameConfig . delay_for_big_screen_messages >= 0.5 )
+		{
+		  GameConfig . delay_for_big_screen_messages -= 0.5 ;
+		}
+	    }
+	  else if ( RightPressed() )
+	    {
+	      while ( RightPressed() );
+	      GameConfig . delay_for_big_screen_messages += 0.5 ;
+	    }
+	  break;
+
 	case LEAVE_OPTIONS_MENU:
 	  while (EnterPressed() || SpacePressed() );
 	  Weiter=TRUE;
