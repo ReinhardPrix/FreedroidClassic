@@ -12,9 +12,6 @@ Outstanding release-critical bugs (priority: high)
 - (rp?) The game gets stuck in the very left elevator on the deck above the
         very lowest deck.  Might have something to do with map topics?
 
-- game should be able to check if yiff is actually _running_ and
-  complain if not and/or continue 
-
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
@@ -22,6 +19,16 @@ Outstanding normal bugs (priority: normal)
   an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
   Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
   fragwuerdig. 
+
+- NEW!  There is a very strange bug:  When the influ switches to weapon
+        mode or just is in WEAPON mode, the framerate GOES UP AND ALMOST
+	DOUBLES!!!  This double framerate and the sudden change in framerate
+	causes some ugly jumps in the position vectorys destroying the
+	otherwise so smooth movement of the game.  Very strange bug.  At
+	first I thought it had to do with keyboard handling, but that IS
+	WRONG FOR SURE: tests have shown that WEAPON mode is sufficient for
+	this strange change in framerate.  The bug also persists, no matter
+	wether SDL or ansi C framerate computation is used.
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
@@ -103,6 +110,13 @@ Resolved bugs
   (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
   hoffe dass niemand sie doch gebraucht haette...
 - (rp) "Ghosts" (i.e. Enemeys go throught walls...)
+- DONE     (rp:) game should be able to check if yiff is actually _running_ and
+                 complain if not and/or continue  
+           (jp:) I do not see this problem.  If yiff is not started, it will be
+	         started.  If yiff is already started, thats it and yiff will be used.
+   	         So why check if yiff is already running?
+	         Also I have added extensive error handling and error documentation 
+	         for the user, so I consider the problem now fixed.
 - (DONE)   Schussfrequenz des 001 zu hoch
 - (DONE)   gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
            --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.

@@ -149,14 +149,42 @@ YIFF_Server_Check_Events(void)
       else if (event.type == YDisconnect)
 	{
 	  // Got disconnected.
-	  printf ("Y server disconnected us, reason %i.\n" , event.disconnect.reason );
+	  printf (
+		  "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:  The YIFF sound server has DISCONNECTED\n\
+our connection.  The reason reported by the server is: %i.\n\
+Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
+to this problem.  Please contact the developers and report this strange problem,\n\
+which we have never ever encountered in all the test phases.\n\
+If the problem persists, you might also prefer to use command line options to turn\n\
+off sound such that you can play uninteruptedly.\n\
+For now however Freedroid will terminate due to unresolvable sound problems.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , event.disconnect.reason );
 	  Terminate (ERR);
 	}
       // Server shutdown? 
       else if (event.type == YShutdown)
 	{
 	  // Server shutdown. 
-	  printf ("Y server shutdown, reason %i.\n", event.shutdown.reason);
+	  printf (
+		  "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:  The YIFF sound server has SHUT DOWN\n\
+our connection.  The reason reported by the server is: %i.\n\
+Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
+to this problem.  Please contact the developers and report this strange problem,\n\
+which we have never ever encountered in all the test phases.\n\
+If the problem persists, you might also prefer to use command line options to turn\n\
+off sound such that you can play uninteruptedly.\n\
+For now however Freedroid will terminate due to unresolvable sound problems.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n", event.shutdown.reason);
 	  Terminate (ERR);
 	}
       else
@@ -322,12 +350,24 @@ Switch_Background_Music_To (int Tune)
       (BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune],
        &BackgroundMusic_sndobj_attrib))
     {
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
-      // Can't get sound object attributes.
-      fprintf (stderr,
-	       "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n",
-	       ExpandedSoundSampleFilenames[Tune]);
+
+      fprintf(stderr,"\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:  The YIFF sound server has reported,\n\
+that a certain file it wanted to playback was MISSING OR CORRUPT.\n\
+The file name of this missing or corrupt file was determined as:\n\
+%s\n\
+Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
+to this problem.  Please contact the developers and report this strange problem,\n\
+which we have never ever encountered in all the test phases.\n\
+If the problem persists, you might also prefer to use command line options to turn\n\
+off sound such that you can play uninteruptedly.\n\
+For now however Freedroid will terminate due to unresolvable sound problems.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n", ExpandedSoundSampleFilenames[Tune]);
+
       printf (" CWD: %s \n\n", getcwd (NULL, 0));
       Terminate (ERR);
     }
@@ -459,8 +499,23 @@ Init_YIFF_Sound_Server (void)
     {
       // Failed to connect to the Y server. 
       fprintf (stderr,
-	       "%s: Cannot connect to YIFF server for background music.\n",
-	       CON_ARG);
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:  The a CONNECTION TO THE YIFF SOUND \n\
+SERVER COULD NOT BE ESTABLISHED.  Maybe the problem is that the YIFF sound\n\
+server could not be started at all.  The connection argument was : \n\
+%s\n\
+Please see if you really have installed (and configured) the YIFF.\n\
+If you do not have installed the YIFF, you can obtain if from: \n\
+http://wolfpack.twu.net/YIFF/\n\
+If you for some reason cannot install the yiff, you can choose to play \n\
+without sound.\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve. Sorry...\n\
+----------------------------------------------------------------------\n\
+\n", CON_ARG);
       Terminate (ERR);
     }
 
