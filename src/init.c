@@ -251,6 +251,7 @@ Get_Item_Data ( char* DataPointer )
 #define NEW_ITEM_TYPE_BEGIN_STRING "** Start of new item specification subsection **"
 
 #define ITEM_NAME_INDICATION_STRING "Item name=\""
+#define ITEM_DESCRIPTION_INDICATION_STRING "Item description text=\""
 #define ITEM_CAN_BE_APPLIED_IN_COMBAT "Item can be applied in combat=\""
 #define ITEM_CAN_BE_INSTALLED_IN_INFLU "Item can be installed in influ=\""
 #define ITEM_CAN_BE_INSTALLED_IN_WEAPON_SLOT "Item can be installed in weapon slot=\""
@@ -683,9 +684,12 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Base list price=" , "%d" , 
 			   &ItemMap[ItemIndex].base_list_price , EndOfItemData );
 
-      ItemIndex++;
-    }
+      // Now we read in the description string of this item
+      ItemMap[ItemIndex].item_description = ReadAndMallocStringFromData ( ItemPointer , ITEM_DESCRIPTION_INDICATION_STRING , "\"" ) ;
 
+      ItemIndex++;
+
+    }
 
 }; // void Get_Item_Data ( char* DataPointer );
 

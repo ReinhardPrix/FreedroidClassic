@@ -302,6 +302,7 @@ typedef struct
 {
   char* item_name;
   char* item_class;  // class of the item, e.g. weapon, drive, shield, other
+  char* item_description;
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
   int item_can_be_installed_in_weapon_slot;

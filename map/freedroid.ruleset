@@ -257,6 +257,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 Sound number=0 
 Base list price=0
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 1
@@ -275,6 +276,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=27
 Sound number=5
 Base list price=50
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 2
@@ -293,6 +295,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=0
 Sound number=5 
 Base list price=150
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -326,6 +329,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
 Base list price=350
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 4
@@ -344,6 +348,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=3
 Sound number=4
 Base list price=900
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 5
@@ -364,6 +369,7 @@ Base item duration=10 plus duration modifier=30
 Picture number=4
 Sound number=1 
 Base list price=200
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 6
@@ -382,6 +388,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=1
 Sound number=2 
 Base list price=1
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 7
@@ -402,6 +409,7 @@ Base item duration=30 plus duration modifier=20
 Picture number=5
 Sound number=6
 Base list price=100
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 8
@@ -422,6 +430,7 @@ Base item duration=70 plus duration modifier=20
 Picture number=8
 Sound number=4 
 Base list price=250
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 9
@@ -442,6 +451,7 @@ Base item duration=50 plus duration modifier=20
 Picture number=10
 Sound number=4 
 Base list price=300
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 10
@@ -462,6 +472,7 @@ Base item duration=90 plus duration modifier=30
 Picture number=11
 Sound number=0 
 Base list price=65
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 11
@@ -482,6 +493,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=4
 Sound number=0 
 Base list price=450
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 12
@@ -515,6 +527,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
 Base list price=600
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 13
@@ -548,6 +561,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
 Base list price=1200
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 14
@@ -581,6 +595,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=13
 Sound number=0 
 Base list price=2500
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 15
@@ -614,6 +629,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
 Base list price=800
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 16
@@ -647,6 +663,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=2
 Sound number=7
 Base list price=250
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 17
@@ -680,6 +697,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=12
 Sound number=7
 Base list price=5000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 18
@@ -698,6 +716,7 @@ Base item duration=30 plus duration modifier=15
 Picture number=23
 Sound number=5
 Base list price=12500
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 19
@@ -716,6 +735,7 @@ Base item duration=10 plus duration modifier=8
 Picture number=24
 Sound number=0 
 Base list price=30
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 20
@@ -734,6 +754,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=16
 Sound number=0 
 Base list price=25
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 21
@@ -752,6 +773,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=17
 Sound number=0 
 Base list price=0
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 22
@@ -785,6 +807,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=18
 Sound number=7
 Base list price=100
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 23
@@ -818,6 +841,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=18
 Sound number=7
 Base list price=40
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 24
@@ -853,6 +877,7 @@ Base item duration=35 plus duration modifier=10
 Picture number=20
 Sound number=0 
 Base list price=350
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 25
@@ -871,6 +896,7 @@ Base item duration=18 plus duration modifier=1
 Picture number=15
 Sound number=5
 Base list price=40
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 26
@@ -904,6 +930,7 @@ Base item duration=30 plus duration modifier=10
 Picture number=20
 Sound number=0 
 Base list price=450
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 27
@@ -937,6 +964,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=19
 Sound number=0 
 Base list price=120
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 28
@@ -971,6 +999,7 @@ Base item duration=20 plus duration modifier=10
 Picture number=25
 Sound number=0 
 Base list price=120
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 29
@@ -989,6 +1018,7 @@ Base item duration=20 plus duration modifier=10
 Picture number=39
 Sound number=5
 Base list price=75
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 30
@@ -1007,6 +1037,7 @@ Base item duration=30 plus duration modifier=10
 Picture number=40
 Sound number=5
 Base list price=200
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 31
@@ -1025,6 +1056,7 @@ Base item duration=30 plus duration modifier=10
 Picture number=26
 Sound number=5
 Base list price=300
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 32
@@ -1058,6 +1090,7 @@ Base item duration=30 plus duration modifier=10
 Picture number=14
 Sound number=0 
 Base list price=450
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 33
@@ -1076,6 +1109,7 @@ Base item duration=25 plus duration modifier=10
 Picture number=43
 Sound number=7
 Base list price=250
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 34
@@ -1110,6 +1144,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=21
 Sound number=0 
 Base list price=120
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 35
@@ -1144,6 +1179,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=20
 Sound number=0 
 Base list price=240
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 36
@@ -1178,6 +1214,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=21
 Sound number=0 
 Base list price=310
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 37
@@ -1211,6 +1248,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=28
 Sound number=0 
 Base list price=60
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 38
@@ -1244,6 +1282,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=19
 Sound number=0 
 Base list price=50
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 39
@@ -1277,6 +1316,7 @@ Base item duration=40 plus duration modifier=40
 Picture number=31
 Sound number=0 
 Base list price=50
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 40
@@ -1310,6 +1350,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=19
 Sound number=0 
 Base list price=80
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 41
@@ -1328,6 +1369,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=30
 Sound number=5
 Base list price=50
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 42
@@ -1346,6 +1388,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=29
 Sound number=5 
 Base list price=150
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 43
@@ -1364,6 +1407,7 @@ Base item duration=10 plus duration modifier=8
 Picture number=6
 Sound number=0 
 Base list price=90
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 44
@@ -1382,6 +1426,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=32
 Sound number=5 
 Base list price=1000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 45
@@ -1400,6 +1445,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=33
 Sound number=5 
 Base list price=1000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 46
@@ -1418,6 +1464,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=33
 Sound number=5 
 Base list price=1000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 47
@@ -1436,6 +1483,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=33
 Sound number=5 
 Base list price=1000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 48
@@ -1454,6 +1502,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=34
 Sound number=5
 Base list price=100
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 49
@@ -1472,6 +1521,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=35
 Sound number=5
 Base list price=100
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 50
@@ -1490,6 +1540,7 @@ Base item duration=18 plus duration modifier=10
 Picture number=36
 Sound number=0 
 Base list price=75
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 51
@@ -1508,6 +1559,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=41
 Sound number=0 
 Base list price=0
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 52
@@ -1526,6 +1578,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=42
 Sound number=0 
 Base list price=0
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 53
@@ -1544,6 +1597,7 @@ Base item duration=18 plus duration modifier=10
 Picture number=36
 Sound number=0 
 Base list price=175
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 54
@@ -1562,6 +1616,7 @@ Base item duration=28 plus duration modifier=15
 Picture number=38
 Sound number=0 
 Base list price=275
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 55
@@ -1580,6 +1635,7 @@ Base item duration=38 plus duration modifier=20
 Picture number=37
 Sound number=0 
 Base list price=375
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 56
@@ -1598,6 +1654,7 @@ Base item duration=35 plus duration modifier=20
 Picture number=44
 Sound number=7
 Base list price=450
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 57
@@ -1616,6 +1673,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=45
 Sound number=4
 Base list price=9000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 58
@@ -1634,6 +1692,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=46
 Sound number=4
 Base list price=9000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 59
@@ -1652,6 +1711,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=47
 Sound number=4
 Base list price=9000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 60
@@ -1685,6 +1745,7 @@ Base item duration=10 plus duration modifier=10
 Picture number=12
 Sound number=7
 Base list price=5000
+Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
@@ -1703,6 +1764,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=33
 Sound number=5 
 Base list price=1000
+Item description text="This isn't really any item of the game.  It's just a dummy/error value!"
 ** End of new item specification subsection **
 
 

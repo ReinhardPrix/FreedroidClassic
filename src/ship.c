@@ -1282,14 +1282,14 @@ Speed / Acceleration: %d / %d \n",
 
       break;
     case 2:
-      /*
-      sprintf (InfoText, "Unit type %s - %s\n\
-Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
-	       Druidmap[droidtype].notes);
+      sprintf (InfoText, "Item: %s \nClass: %s\n\
+Notes: %s", 
+	       ItemMap [ ShowItem->type ] . item_name, 
+	       ItemMap [ ShowItem->type ] . item_class,
+	       ItemMap [ ShowItem->type ] . item_description );
       break;
     default:
-      */
-      sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
+      // sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
       break;
     } // switch (page) 
 
