@@ -371,7 +371,6 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
-  static int Background_Music_Channel = -1;
   static int MOD_Music_Channel = -1;
 
 #ifndef HAVE_LIBSDL_MIXER

@@ -36,7 +36,7 @@
 #else
 #define EXTERN extern
 
-EXTERN const SDL_Rect User_Rect;
+EXTERN SDL_Rect User_Rect;
 EXTERN const SDL_Rect Menu_Rect;
 
 
