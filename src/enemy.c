@@ -1234,10 +1234,15 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  // At this point we have found our target
 	  vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
 	  vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
+	  DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
 	  break;
 	}
       // Maybe we havn't found a single target.  Then we don't attack anything of course.
-      if ( j >= Number_Of_Droids_On_Ship ) return; 
+      if ( j >= Number_Of_Droids_On_Ship ) 
+	{
+	  ThisRobot->firewait = 1.0 ;
+	  return; 
+	}
     }
   else
     {

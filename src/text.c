@@ -42,7 +42,7 @@
 #include "text.h"
 #include "SDL_rotozoom.h"
 
-int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
+int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground );
 
 char *Wordpointer;
 unsigned char *Fontpointer;
@@ -66,12 +66,14 @@ unsigned int StoreTextFG;
 char BigScreenMessage[5000];
 float BigScreenMessageDuration=10000;
 
+SDL_Surface* Background;
+
 /* ----------------------------------------------------------------------
  * This function does all the (text) interaction with a friendly droid
  * and maybe also does special interacions like Chandra and Stone.
  * ---------------------------------------------------------------------- */
 char* 
-GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
+GetChatWindowInput( SDL_Surface* ChatBackground , SDL_Rect* Chat_Window_Pointer )
 {
   int OldTextCursorX, OldTextCursorY;
   int j;
@@ -87,17 +89,17 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
   OldTextCursorY=MyCursorY;
   
   // Now we clear the text window, since the old text is still there
-  SDL_BlitSurface( Background, &Input_Window , Screen , &Input_Window );
+  SDL_BlitSurface( ChatBackground, &Input_Window , Screen , &Input_Window );
   DisplayText ( "What do you say? >" ,
 		Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
-		&Input_Window ); // , Background );
-  // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
+		&Input_Window ); // , ChatBackground );
+  // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , ChatBackground );
   SDL_Flip ( Screen );
   RequestString = GetString( 20 , FALSE );
   MyCursorX=OldTextCursorX;
   MyCursorY=OldTextCursorY;
   
-  DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , Chat_Window_Pointer , Background );
+  DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , Chat_Window_Pointer , ChatBackground );
   
   //--------------------
   // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
@@ -144,6 +146,8 @@ RestoreChatVariableToInitialValue( int PlayerNum )
   Me [ PlayerNum ] . RMS_Chat_Flags[ END_ANSWER ] = 1 ;
 
   Me [ PlayerNum ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
+
+  // Me [ PlayerNum ] . Generic_614_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
   
 }; // void RestoreChatVariableToInitialValue( int PlayerNum )
 
@@ -152,7 +156,7 @@ RestoreChatVariableToInitialValue( int PlayerNum )
  * so that you can also understand everything with sound disabled.
  * ---------------------------------------------------------------------- */
 void
-DisplaySubtitle( char* SubtitleText , void* Background )
+DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 {
   SDL_Rect Subtitle_Window;
 
@@ -171,16 +175,60 @@ DisplaySubtitle( char* SubtitleText , void* Background )
   // Now we need to clear this window, cause there might still be some
   // garbage from the previous subtitle in there...
   //
-  SDL_BlitSurface ( Background , &Subtitle_Window , Screen , &Subtitle_Window );
+  SDL_BlitSurface ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
 
   //--------------------
   // Now we can display the text and update the screen...
   //
-  // DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , Background );
+  // DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , SubtitleBackground );
   DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window );
   SDL_UpdateRect ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
-}; // void DisplaySubtitle( char* SubtitleText , void* Background )
+}; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
+
+/* ----------------------------------------------------------------------
+ * This function prepares the chat background window and displays the
+ * image of the dialog partner and also sets the right font.
+ * ---------------------------------------------------------------------- */
+void
+PrepareMultipleChoiceDialog ( int Enum )
+{
+  SDL_Rect Droid_Image_Window;
+  SDL_Surface* Small_Droid;
+  SDL_Surface* Large_Droid;
+  // SDL_Surface* Background;
+  char *fpath;
+  char fname[500];
+
+  Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+  Activate_Conservative_Frame_Computation( );
+
+  //--------------------
+  // Next we prepare the whole background for all later text operations
+  //
+  Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    {
+      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      Terminate(ERR);
+    }
+  strcpy( fname, "droids/" );
+  strcat( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+  strcat( fname , ".png" );
+  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+  Small_Droid = IMG_Load (fpath) ;
+  Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+  SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
+  SDL_BlitSurface( Background , NULL , Screen , NULL );
+  SDL_Flip( Screen );
+
+  SDL_FreeSurface( Small_Droid );
+
+  // All droid chat should be done in the paradroid font I would say...
+  // SetCurrentFont( Para_BFont );
+  SetCurrentFont( FPS_Display_BFont );
+
+}; // void PrepareMultipleChoiceDialog ( int Enum )
 
 /* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
@@ -192,18 +240,14 @@ ChatWithFriendlyDroid( int Enum )
   char* RequestString;
   char* DecisionString;
   int i;
-  char *fpath;
-  char fname[500];
   char ReplyString[10000];
-  SDL_Surface* Small_Droid;
-  SDL_Surface* Large_Droid;
-  SDL_Surface* Background;
   SDL_Rect Chat_Window;
-  SDL_Rect Droid_Image_Window;
   int MenuSelection = (-1) ;
   char* Chandra_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
   char* RMS_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
   char* SOR_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+
+  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
   //--------------------
   // First we empty the array of possible answers in the
@@ -233,38 +277,7 @@ ChatWithFriendlyDroid( int Enum )
       //--------------------
       // Now we do the dialog with Dr. Chandra...
       //
-      // We define our input and image windows...
-      //
-      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-      Activate_Conservative_Frame_Computation( );
-
-      //--------------------
-      // Next we prepare the whole background for all later text operations
-      //
-      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
-      if ( Background == NULL )
-	{
-	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
-	  Terminate(ERR);
-	}
-      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
-      strcat( fname , ".png" );
-      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-      Small_Droid = IMG_Load (fpath) ;
-      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-      SDL_BlitSurface( Background , NULL , Screen , NULL );
-      SDL_Flip( Screen );
-      
-      // All droid chat should be done in the paradroid font I would say...
-      // SetCurrentFont( Para_BFont );
-      SetCurrentFont( FPS_Display_BFont );
-      
-      // We print out a little greeting message...
-      // DisplayTextWithScrolling ( 
-      // "Transfer channel protocol set up for text transfer...\n\n" , 
-      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+      PrepareMultipleChoiceDialog( Enum );
 
       Chandra_DialogMenuTexts [ 0 ] = " Who are you? " ;
       Chandra_DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
@@ -414,39 +427,113 @@ ChatWithFriendlyDroid( int Enum )
       //--------------------
       // Now we do the dialog with SOR...
       //
-      // We define our input and image windows...
-      //
-      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-      Activate_Conservative_Frame_Computation( );
+      PrepareMultipleChoiceDialog( Enum );
+      
+      SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
+      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
+      SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
+      SOR_DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
+      SOR_DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
+      SOR_DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
+      SOR_DialogMenuTexts [ 6 ] = " BACK ";
+      SOR_DialogMenuTexts [ END_ANSWER ] = " END ";
+      
+      DisplaySubtitle( " Welcome Traveller! " , Background );
+      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+
+      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
+	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
+	{
+	  Me [ 0 ] . SOR_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . SOR_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	}
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].SOR_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
+	      /*
+	      DisplaySubtitle( " Oh Yes! " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Oh_Yes_0.wav" , TRUE );
+	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_You_Are_The_0.wav" , TRUE );
+	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
+	      */
+	      Me [ 0 ] . SOR_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
+	      // Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
+	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask about the magic abilities...
+	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // this should disallow to be new again...
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 1 ; // this enables to go back from learning
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // but disable to ask about learning options now again
+	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
+	      break;
+	    case 4:
+	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
+	      break;
+	    case 5:
+	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
+	      // Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 6:
+	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
+	      // Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 7:
+	      // PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // now disallow also the BACK from lerning button
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // but reallow to ask about learning
+	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // but reallow to quit the dialog
+	      break;
+	    case 9:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      AssignMission ( 1 ); // this should assign the coffee machine mission...
+	      break;
+	    case ( MAX_ANSWERS_PER_PERSON ):
+	    case (-1):
+	    default:
+	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      return;
+	      break;
+	    }
+	}
 
       //--------------------
-      // Next we prepare the whole background for all later text operations
+      // Since there won't be anyone else to talk to when already having
+      // talked to the SOR, we can safely return here.
       //
-      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
-      if ( Background == NULL )
-	{
-	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
-	  Terminate(ERR);
-	}
-      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
-      strcat( fname , ".png" );
-      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-      Small_Droid = IMG_Load (fpath) ;
-      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-      SDL_BlitSurface( Background , NULL , Screen , NULL );
-      SDL_Flip( Screen );
+      return; 
       
-      // All droid chat should be done in the paradroid font I would say...
-      // SetCurrentFont( Para_BFont );
-      SetCurrentFont( FPS_Display_BFont );
-      
-      // We print out a little greeting message...
-      // DisplayTextWithScrolling ( 
-      // "Transfer channel protocol set up for text transfer...\n\n" , 
-      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
-      
+    }
+
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
+    {
+      //--------------------
+      // Now we do the dialog with SOR...
+      //
+      PrepareMultipleChoiceDialog( Enum );
+
       SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
       SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
       SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
@@ -554,38 +641,7 @@ ChatWithFriendlyDroid( int Enum )
       //--------------------
       // Now we do the dialog with RMS...
       //
-      // We define our input and image windows...
-      //
-      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-      Activate_Conservative_Frame_Computation( );
-
-      //--------------------
-      // Next we prepare the whole background for all later text operations
-      //
-      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
-      if ( Background == NULL )
-	{
-	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
-	  Terminate(ERR);
-	}
-      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
-      strcat( fname , ".png" );
-      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-      Small_Droid = IMG_Load (fpath) ;
-      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-      SDL_BlitSurface( Background , NULL , Screen , NULL );
-      SDL_Flip( Screen );
-      
-      // All droid chat should be done in the paradroid font I would say...
-      // SetCurrentFont( Para_BFont );
-      SetCurrentFont( FPS_Display_BFont );
-      
-      // We print out a little greeting message...
-      // DisplayTextWithScrolling ( 
-      // "Transfer channel protocol set up for text transfer...\n\n" , 
-      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+      PrepareMultipleChoiceDialog( Enum );
       
       RMS_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
       RMS_DialogMenuTexts [ 1 ] = " So? " ;
@@ -709,35 +765,7 @@ ChatWithFriendlyDroid( int Enum )
       return;
     }
 
-
-
-  // We define our input and image windows...
-  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-  Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-
-
-  Activate_Conservative_Frame_Computation( );
-
-  //--------------------
-  // Next we prepare the whole background for all later text operations
-  //
-  Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
-  if ( Background == NULL )
-    {
-      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
-      Terminate(ERR);
-    }
-  strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
-  strcat( fname , ".png" );
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  Small_Droid = IMG_Load (fpath) ;
-  Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-  SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-  SDL_BlitSurface( Background , NULL , Screen , NULL );
-  SDL_Flip( Screen );
-
-  // All droid chat should be done in the paradroid font I would say...
-  SetCurrentFont( Para_BFont );
+  PrepareMultipleChoiceDialog( Enum );
 
   // We print out a little greeting message...
   DisplayTextWithScrolling ( 
