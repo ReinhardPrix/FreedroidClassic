@@ -57,6 +57,47 @@ enum
  */
 
 /* ----------------------------------------------------------------------
+ * When the player closes the inventory screen, items currently held in 
+ * hand should not be held in hand any more.  This is what this function
+ * should do:  It should make all items unheld by the player.
+ * ---------------------------------------------------------------------- */
+void
+silently_unhold_all_items ( void )
+{
+  int i;
+  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+  //--------------------
+  // At first we disable the picture at the mouse cursor location.  This
+  // really is the picture only, nothing else so far.
+  //
+  Item_Held_In_Hand = ( -1 ); // ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
+
+  //--------------------
+  // Now we remove all 'currently held' markers from all
+  // items in inventory and in slots and also from all items on the floor.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      ItemLevel -> ItemList [ i ] . currently_held_in_hand = FALSE ;
+    }
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Me [ 0 ] . Inventory [ i ] . currently_held_in_hand = FALSE ;
+    }
+
+  Me [ 0 ] . weapon_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . drive_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . armour_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . shield_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . special_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . aux1_item . currently_held_in_hand = FALSE ;
+  Me [ 0 ] . aux2_item . currently_held_in_hand = FALSE ;
+
+}; // void silently_unhold_all_items ( void )
+
+/* ----------------------------------------------------------------------
  * For communication with the server, we can not use pointers to items.
  * That's a pity, cause it would be most convenient.  Instead we must 
  * think of something new and devise some unique item position codes.
@@ -2014,6 +2055,9 @@ ManageInventoryScreen ( void )
   //
   if ( GameConfig.Inventory_Visible == FALSE ) 
     {
+      
+      silently_unhold_all_items ( );
+
       // DebugPrintf( 2 , "\nINVENTORY NOT VISIBLE!!" );
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
