@@ -1047,7 +1047,8 @@ Sorry...\n\
 void
 PutItem( int ItemNumber )
 {
-  Item CurItem = &CurLevel->ItemList[ ItemNumber ];
+  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
   SDL_Rect TargetRectangle;
   
   if ( CurItem->type == ( -1 ) ) return;
@@ -1055,10 +1056,13 @@ PutItem( int ItemNumber )
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
 
-  TargetRectangle.x=UserCenter_x - (Me[0].pos.x - CurItem->pos.x)*Block_Width  - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.x ) ;
-  TargetRectangle.y=UserCenter_y - (Me[0].pos.y - CurItem->pos.y)*Block_Height - ( 16 * ItemImageList[ ItemMap[ CurItem->type ].picture_number ].inv_size.y ) ;
+  TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - CurItem -> pos . x ) * Block_Width  - 
+    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
+  TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - CurItem -> pos . y ) * Block_Height - 
+    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
 
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
+
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------
