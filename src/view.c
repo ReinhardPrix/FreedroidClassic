@@ -698,10 +698,26 @@ PutInfluence ( int x , int y , int PlayerNum )
   //
   if ( use_tux )
     {
+      //--------------------
       // If we make the angle dependent upon direction of movement we use
       // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
-      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+      //
+      // But currently, we use as the angle the current location of the mouse on the local
+      // client for the first player,
+      // but for other players, we use the last known mouse possision as reported by the server
+      //
+      if ( PlayerNum == 0 ) 
+	{
+	  angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+	}
+      else
+	{
+	  angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
+	}
 
+      //--------------------
+      // Now we see if we must re-rotate the tux for this player...
+      //
       if ( ( angle != Previous_angle [ PlayerNum ] ) || ( tmp_influencer [ PlayerNum ] == NULL ) || ( ( (int) Me [ PlayerNum ].phase) != Previous_phase [ PlayerNum ] ) )
 	{
 	  if ( tmp_influencer [ PlayerNum ] != NULL ) SDL_FreeSurface( tmp_influencer[ PlayerNum ] );

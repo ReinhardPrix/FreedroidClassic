@@ -1843,7 +1843,7 @@ ClearAutomapData( void )
  *  
  *-----------------------------------------------------------------*/
 void
-InitFreedroid (void)
+InitFreedroid ( void )
 {
   struct timeval timestamp;
   int i;
@@ -1915,7 +1915,6 @@ InitFreedroid (void)
   LoadSettings ();
 
   Copy_Rect (Full_User_Rect, User_Rect);
-      
 
   Init_Video ();
 
@@ -1952,7 +1951,6 @@ InitFreedroid (void)
   // initialize the highscore list 
   Init_Highscores ();
  
-
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
   MinMessageTime = 55;
@@ -1969,12 +1967,7 @@ InitFreedroid (void)
 
   ShowStartupPercentage ( 99 ) ; 
 
-
-  // Initialisieren der Schildbilder
-  //  GetShieldBlocks ();
-
-  return;
-} /* InitFreedroid() */
+}; // void InitFreedroid ( void ) 
 
 /* -----------------------------------------------------------------
  * This function does the mission briefing.  It assumes, 

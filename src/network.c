@@ -112,6 +112,8 @@ typedef struct
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
+  int16_t LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
+  int16_t LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
 }
 player_engram, *Player_Engram;
 
@@ -2657,6 +2659,10 @@ ExecutePlayerCommand ( int PlayerNum )
 	  AllPlayers [ PlayerNum ] . server_mouse_button = TRUE ;
 	  AllPlayers [ PlayerNum ] . server_mouse_x = KeyEventPointer -> button.x - UserCenter_x + 16 ;
 	  AllPlayers [ PlayerNum ] . server_mouse_y = KeyEventPointer -> button.y - UserCenter_y + 16 ;
+
+	  Me [ PlayerNum ] . LastMouse_X = AllPlayers [ PlayerNum ] . server_mouse_x ;
+	  Me [ PlayerNum ] . LastMouse_Y = AllPlayers [ PlayerNum ] . server_mouse_y ;
+
 	  break;
 	case SDL_MOUSEBUTTONUP:
 	  //--------------------
