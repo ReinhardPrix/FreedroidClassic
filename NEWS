@@ -1,20 +1,6 @@
 -*- mode: text -*-
-...
-* We have moved to sourceforge now!
-Visit our project page on:
-http://sourceforge.net/projects/freedroid/
 
-* added joystick support, works ok.
-* SDL now used for graphics _and_ sound, yiff is no longer used.
+* 0.8.4 now branches off the main cvs-tree, in order to allow for
+ patches relating to this (currently) last "classic" version of Freedroid.
 
-***
-*** This file is hopelessly outdated and unmaintained.  For
-*** the very latest news about the project, please see the
-*** news section of the freedroid project page at the sourceforge.
-***
-*** Maybe a section on the home page with news items will be
-*** added as well.
-***
-*** New releases will be announced on the Linux Game Tome
-*** web site, www.happypenguin.org.
-***
+
