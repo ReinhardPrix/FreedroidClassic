@@ -76,7 +76,8 @@ Common factor for all bullet's damage values: 1.0
 Time is takes to recharge this bullet/weapon in seconds : 0.8
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 25
-N***umber of different phases that were designed for this bullet type : 4
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
@@ -85,7 +86,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Time is takes to recharge this bullet/weapon in seconds : 1.0
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 40
-N***umber of different phases that were designed for this bullet type : 1
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
@@ -94,7 +96,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Time is takes to recharge this bullet/weapon in seconds : 1.2
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 55
-N***umber of different phases that were designed for this bullet type : 1
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
@@ -103,7 +106,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Time is takes to recharge this bullet/weapon in seconds : 1.0
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 40
-N***umber of different phases that were designed for this bullet type : 1
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
@@ -112,7 +116,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Time is takes to recharge this bullet/weapon in seconds : 3.0
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 80
-N***umber of different phases that were designed for this bullet type : 1
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
@@ -121,7 +126,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Time is takes to recharge this bullet/weapon in seconds : 0.5
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 40
-N***umber of different phases that were designed for this bullet type : 1
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 

@@ -128,7 +128,8 @@ Get_Bullet_Data ( char* DataPointer )
 #define BULLET_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define BULLET_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
 #define BULLET_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
-#define BULLET_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
+  // #define BULLET_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
+#define BULLET_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
 #define BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
 
 #define BULLET_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
@@ -183,7 +184,12 @@ Get_Bullet_Data ( char* DataPointer )
       ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
 			   &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
+      // Now we read in if you can fire before the previous bullet has expired
+      ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
+			   &Bulletmap[BulletIndex].oneshotonly , EndOfBulletData );
+
       // Now we read in the number of phases that are designed for this bullet type
+      // THIS IS NOW SPECIFIED IN THE THEME CONFIG FILE
       // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
       // &Bulletmap[BulletIndex].phases , EndOfBulletData );
 
