@@ -1609,13 +1609,14 @@ PrepareStartOfNewCharacter ( void )
     }
 
   //--------------------
-  // When the Tux arrives, he also should be at perfect health
-  // and also full with all the mana he can have on him.
+  // Now that the prime character stats have been initialized, we can
+  // set these much-varying variables too...
   //
-  Me[0].energy = Me[0].maxenergy;
-  Me[0].mana = Me[0].maxmana;
-  DebugPrintf( 1 , "\n Me[0].energy : %f . " , Me[0].energy );
-  Me[0].health = Me[0].energy;	/* start with max. health */
+  Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
+  Me [ 0 ] . mana = Me [ 0 ] . maxmana;
+  Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
+  Me [ 0 ] . health = Me [ 0 ] . energy;
+  Me [ 0 ] . firewait = 0 ;
 
   //--------------------
   // None of the inventory slots like currently equipped weapons

@@ -1300,9 +1300,8 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
   // We make sure the one droid in question is in the standing and not
   // in the middle of the walking motion when turning to the chat partner...
   //
-  // Calling AnimatEnemies() once for this task seems justified...
+  // Calling AnimatEnemies() ONCE for this task seems justified...
   //
-  // ChatDroid -> animation_type = STAND_ANIMATION ;
   ChatDroid -> speed . x = 0 ;
   ChatDroid -> speed . y = 0 ;
   AnimateEnemys ( ) ; 

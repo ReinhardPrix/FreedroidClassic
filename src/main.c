@@ -281,7 +281,7 @@ UpdateCountersForThisFrame ( int PlayerNum )
 	    item_level -> ItemList [ i ] . throw_time = 0 ;
 	}
 
-      for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+      for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
 	{
 	  
 	  if (AllEnemys[i].Status == OUT ) continue;
@@ -327,21 +327,22 @@ UpdateCountersForThisFrame ( int PlayerNum )
   // Now we do all the things, that need to be updated for each connected
   // player separatedly.
   //
-  Me [ PlayerNum ] .FramesOnThisLevel++;
+  Me [ PlayerNum ] . FramesOnThisLevel++;
 
-  Me [ PlayerNum ] .LastCrysoundTime += Frame_Time ();
-  Me [ PlayerNum ] .MissionTimeElapsed += Frame_Time();
-  Me [ PlayerNum ] .LastTransferSoundTime += Frame_Time();
-  Me [ PlayerNum ] .TextVisibleTime += Frame_Time();
+  Me [ PlayerNum ] . LastCrysoundTime += Frame_Time ();
+  Me [ PlayerNum ] . MissionTimeElapsed += Frame_Time();
+  Me [ PlayerNum ] . LastTransferSoundTime += Frame_Time();
+  Me [ PlayerNum ] . TextVisibleTime += Frame_Time();
 
-  if ( Me [ PlayerNum ] .weapon_swing_time != (-1) ) Me [ PlayerNum ] .weapon_swing_time += Frame_Time();
-  if ( Me [ PlayerNum ] .got_hit_time != (-1) ) Me [ PlayerNum ] .got_hit_time += Frame_Time();
+  if ( Me [ PlayerNum ] . weapon_swing_time != (-1) ) Me [ PlayerNum ] . weapon_swing_time += Frame_Time();
+  if ( Me [ PlayerNum ] . got_hit_time != (-1) ) Me [ PlayerNum ] . got_hit_time += Frame_Time();
 
-  if ( Me [ PlayerNum ] .firewait > 0 )
+  if ( Me [ PlayerNum ] . firewait > 0 )
     {
-      Me [ PlayerNum ] .firewait -= Frame_Time();
-      if ( Me [ PlayerNum ] . firewait < 0) Me [ PlayerNum ] .firewait=0;
+      Me [ PlayerNum ] . firewait -= Frame_Time ( ) ;
+      if ( Me [ PlayerNum ] . firewait < 0 ) Me [ PlayerNum ] . firewait = 0 ;
     }
+  // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
 
   //--------------------
   // In order to know when a level can finally be respawned with

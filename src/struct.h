@@ -516,9 +516,15 @@ typedef struct
   int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
   int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
   int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
+
   double health;		  // the max. possible energy in the moment 
+  float maxenergy; // current top limit for the influencers energy
   double energy;		  // current energy level 
+  float maxmana;   // current top limit for the influencers magic power
   double mana;                    // current mana level 
+  float max_running_power;
+  float running_power;
+
   Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
   Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
 
@@ -554,8 +560,6 @@ typedef struct
   int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
   int double_ranged_damage;   // does this Tux do double ranged weapon damage?
 
-  float maxenergy; // current top limit for the influencers energy
-  float maxmana;   // current top limit for the influencers magic power
   int exp_level;       // which 'experience level' is the influencer currenly at?
   long ExpRequired;    // how much experience required for the next level?
   long Gold;

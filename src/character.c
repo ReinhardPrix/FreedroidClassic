@@ -431,7 +431,7 @@ UpdateAllCharacterStats ( int PlayerNum )
   // 
   Me [ PlayerNum ] .ExpRequired = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
 
-  if ( Me [ PlayerNum ] .Experience > Me [ PlayerNum ] .ExpRequired ) 
+  if ( Me [ PlayerNum ] . Experience > Me [ PlayerNum ] . ExpRequired ) 
     {
       Me [ PlayerNum ] .exp_level ++ ;
       Me [ PlayerNum ] .points_to_distribute += 5;
@@ -461,10 +461,10 @@ UpdateAllCharacterStats ( int PlayerNum )
   //--------------------
   // Now we base PRIMARY stats
   //
-  Me [ PlayerNum ] . Strength = Me [ PlayerNum ] .base_strength;
-  Me [ PlayerNum ] . Dexterity = Me [ PlayerNum ] .base_dexterity;
-  Me [ PlayerNum ] . Magic = Me [ PlayerNum ] .base_magic;
-  Me [ PlayerNum ] . Vitality = Me [ PlayerNum ] .base_vitality;
+  Me [ PlayerNum ] . Strength = Me [ PlayerNum ] . base_strength;
+  Me [ PlayerNum ] . Dexterity = Me [ PlayerNum ] . base_dexterity;
+  Me [ PlayerNum ] . Magic = Me [ PlayerNum ] . base_magic;
+  Me [ PlayerNum ] . Vitality = Me [ PlayerNum ] . base_vitality;
 
   Me [ PlayerNum ] . freezing_melee_targets = 0;
   Me [ PlayerNum ] . double_ranged_damage = FALSE;
@@ -496,34 +496,37 @@ UpdateAllCharacterStats ( int PlayerNum )
   // stats.  Once we are done with that, the modifiers to the secondary
   // stats can be applied as well.
   //
-  Me [ PlayerNum ] .to_hit = 60 + ( Me [ PlayerNum ] .Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+  Me [ PlayerNum ] . to_hit = 60 + ( Me [ PlayerNum ] . Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
 
-  //  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
-  Me [ PlayerNum ] .maxenergy = (Me [ PlayerNum ] .Vitality) * Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];
+  //  Me [ PlayerNum ] . maxenergy = (Me [ PlayerNum ] .Vitality) * ENERGY_GAIN_PER_VIT_POINT;
+  Me [ PlayerNum ] . maxenergy = (Me [ PlayerNum ] . Vitality) * Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];
 
   // Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * MANA_GAIN_PER_MAGIC_POINT;
-  Me [ PlayerNum ] .maxmana   = (Me [ PlayerNum ] .Magic)    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
+  Me [ PlayerNum ] . maxmana   = (Me [ PlayerNum ] . Magic)    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
+
+  Me [ PlayerNum ] . max_running_power = ( Me [ PlayerNum ] . Strength ) + ( Me [ PlayerNum ] . Dexterity ) + ( Me [ PlayerNum ] . Vitality ) ;
+
   // This includes damage done as well...
-  if ( Me [ PlayerNum ] .weapon_item.type != (-1) )
+  if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
     {
-      if ( ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_angle_change != 0 )
+      if ( ItemMap[ Me [ PlayerNum ] . weapon_item.type ] . item_gun_angle_change != 0 )
 	{
-	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
-	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item.damage * 
+	    ( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
 
 	  //--------------------
 	  // Damage modifier is computed:  
 	  // WEAPON's modifier * (100+Strenth)%
 	  //
-	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
-	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
+	    ( Me [ PlayerNum ] . Strength + 100.0) / 100.0 ;
 
 	  //--------------------
 	  // Damage AND damage modifier a modified by additional melee weapon
 	  // skill:  A multiplier is applied!
 	  //
-	  Me [ PlayerNum ] .damage_modifier *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
-	  Me [ PlayerNum ] .base_damage     *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+	  Me [ PlayerNum ] . damage_modifier *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+	  Me [ PlayerNum ] . base_damage     *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
 
 	}
       else
@@ -533,47 +536,47 @@ UpdateAllCharacterStats ( int PlayerNum )
 	  // Damage modifier is computed:  
 	  // WEAPON's modifier * (100+Dexterity)%
 	  //
-	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
-	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
-	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
-	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
+	  Me [ PlayerNum ] . base_damage = Me [ PlayerNum ] . weapon_item . damage * 
+	    ( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
+	  Me [ PlayerNum ] . damage_modifier = Me [ PlayerNum ] . weapon_item . damage_modifier * 
+	    ( Me [ PlayerNum ] . Dexterity + 100.0 ) / 100.0 ;
 
 	  //--------------------
 	  // Damage AND damage modifier a modified by additional ranged weapon
 	  // skill:  A multiplier is applied!
 	  //
-	  Me [ PlayerNum ] .damage_modifier *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
-	  Me [ PlayerNum ] .base_damage     *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+	  Me [ PlayerNum ] . damage_modifier *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+	  Me [ PlayerNum ] . base_damage     *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
 
 	  //--------------------
 	  // Maybe there is a plugin for double damage present ?
 	  //
 	  if ( Me [ PlayerNum ] . double_ranged_damage != 0 )
 	    {
-	      Me [ PlayerNum ] .base_damage *= 2;
-	      Me [ PlayerNum ] .damage_modifier *= 2;
+	      Me [ PlayerNum ] . base_damage *= 2;
+	      Me [ PlayerNum ] . damage_modifier *= 2;
 	    }
 
 	}
     }
   else
     {
-      Me [ PlayerNum ] .base_damage = 1;
-      Me [ PlayerNum ] .damage_modifier = 1;
+      Me [ PlayerNum ] . base_damage = 1;
+      Me [ PlayerNum ] . damage_modifier = 1;
     }
   // ... and also armour class
-  Me [ PlayerNum ] .AC = ( Me [ PlayerNum ] .Dexterity - 15 ) * AC_Gain_Per_Dex_Point [ Me [ PlayerNum ] . character_class ];
-  if ( Me [ PlayerNum ] .armour_item.type != (-1) )
+  Me [ PlayerNum ] . AC = ( Me [ PlayerNum ] . Dexterity - 15 ) * AC_Gain_Per_Dex_Point [ Me [ PlayerNum ] . character_class ];
+  if ( Me [ PlayerNum ] . armour_item . type != (-1) )
     {
-      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .armour_item.ac_bonus;
+      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . armour_item.ac_bonus;
     }
-  if ( Me [ PlayerNum ] .shield_item.type != (-1) )
+  if ( Me [ PlayerNum ] . shield_item.type != (-1) )
     {
-      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .shield_item.ac_bonus;
+      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . shield_item.ac_bonus;
     }
-  if ( Me [ PlayerNum ] .special_item.type != (-1) )
+  if ( Me [ PlayerNum ] . special_item.type != (-1) )
     {
-      Me [ PlayerNum ] .AC += Me [ PlayerNum ] .special_item.ac_bonus;
+      Me [ PlayerNum ] . AC += Me [ PlayerNum ] . special_item.ac_bonus;
     }
 
   //--------------------
@@ -734,6 +737,12 @@ ShowCharacterScreen ( void )
 
   sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
   DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%3d", (int) Me [ 0 ] . max_running_power );
+  DisplayText( CharText , 223 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%3d", (int) Me [ 0 ] . running_power );
+  DisplayText( CharText , 269 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
 
   //--------------------
   // Now we print out the current skill levels in hacking skill, 

@@ -340,6 +340,7 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 void
 tux_wants_to_attack_now ( int player_num ) 
 {
+
   if ( Me [ 0 ] . firewait > 0 ) return; 
   
   //--------------------
@@ -350,10 +351,11 @@ tux_wants_to_attack_now ( int player_num )
     {
       if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
 	{
-	  if ( !CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
+	  if ( ! CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
 					   0 ) )
 	    {
-	      No_Ammo_Sound();
+	      No_Ammo_Sound( );
+
 	      //--------------------
 	      // So no ammunition... We should say so and return...
 	      //
