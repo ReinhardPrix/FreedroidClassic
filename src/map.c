@@ -49,30 +49,6 @@
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 
-symtrans Translator[ NUM_MAP_BLOCKS ] = {
-  {'.', FLOOR},
-  {'\'', VOID},
-  {'x', FLOOR},			/* A waypoint is invisible */
-  {'+', KREUZ},
-  {'-', H_WALL},
-  {'|', V_WALL},
-  {'"', H_ZUTUERE},
-  {'=', V_ZUTUERE},
-  {'[', KONSOLE_L},
-  {']', KONSOLE_R},
-  {'(', KONSOLE_O},
-  {')', KONSOLE_U},
-  {'o', LIFT},
-  {'@', REFRESH1},
-  {'a', ALERT},
-  {'1', BLOCK1},
-  {'2', BLOCK2},
-  {'3', BLOCK3},
-  {'4', BLOCK4},
-  {'5', BLOCK5},
-  {0, -1}			// marks the end
-};
-
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 
@@ -1023,6 +999,8 @@ IsWallBlock (int block)
     case V_WALL:
     case H_ZUTUERE:
     case V_ZUTUERE:
+    case LOCKED_H_ZUTUERE:
+    case LOCKED_V_ZUTUERE:
     case ECK_LU:
     case T_U:
     case ECK_RU:
@@ -1894,7 +1872,7 @@ MoveLevelDoors (void)
 
 	}			/* else */
     }				/* for */
-}				/* MoveLevelDoors */
+}; // void MoveLevelDoors ( void )
 
 
 /*@Function============================================================
@@ -2165,6 +2143,7 @@ IsPassable (float x, float y, int Checkpos)
 	}
     case H_HALBTUERE1:
     case H_ZUTUERE:
+    case LOCKED_H_ZUTUERE:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
@@ -2230,6 +2209,7 @@ IsPassable (float x, float y, int Checkpos)
 	}
     case V_HALBTUERE1:
     case V_ZUTUERE:
+    case LOCKED_V_ZUTUERE:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;

@@ -283,23 +283,12 @@ Delete the event trigger after it has been triggered=-1
 
 * Start of an Event Action Subsection *
 Action label for this action="open_barrier"
-Mapchange at X=4 Y=7 Lev=2 to new value=0
-Action is Influencer say="Thanks for removing the barrier!"
+Mapchange at X=4 Y=7 Lev=2 to new value=27
+Action is Influencer say="Thanks for unlocking the door!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
-// This is a pure text statement.  You can copy it and just adapt the 
-// the text to fill in remarks. Then set up triggers at any location you want.
-* Start of an Event Action Subsection *
-Action label for this action="remind"
-Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Action is Influencer say="Don't forget to close the barrier behind me again!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
-// This action closes the barrier behind the influencer again. There are several
-// event triggers set to cause this action.
 * Start of an Event Action Subsection *
 Action label for this action="close_barrier"
 Mapchange at X=4 Y=7 Lev=2 to new value=23
@@ -307,8 +296,17 @@ Action is Influencer say=""
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
-// This is a pure text statement.  You can copy it and just adapt the 
-// the text to fill in remarks. Then set up triggers at any location you want.
+//--------------------
+// Now the influencer makes simple comments without any other implication
+
+* Start of an Event Action Subsection *
+Action label for this action="remind"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Don't forget to close the barrier behind me again!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
 * Start of an Event Action Subsection *
 Action label for this action="barrier_bullet_comment"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
@@ -316,8 +314,7 @@ Action is Influencer say="This barrier is scarred from lots of bullet holes!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
-// This is a pure text statement.  You can copy it and just adapt the 
-// the text to fill in remarks. Then set up triggers at any location you want.
+
 * Start of an Event Action Subsection *
 Action label for this action="teleport_not_working_comment"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
@@ -325,8 +322,7 @@ Action is Influencer say="This teleportation device is not yet functional!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
-// This is a pure text statement.  You can copy it and just adapt the 
-// the text to fill in remarks. Then set up triggers at any location you want.
+
 * Start of an Event Action Subsection *
 Action label for this action="stay_with_first_mission_comment"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
@@ -335,7 +331,17 @@ Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
-// This is a pure mission assignment
+* Start of an Event Action Subsection *
+Action label for this action="wow_done_mission_zero"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
+//--------------------
+// Now we assign the missions to the influencer through these actions:
+
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_zero"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
@@ -343,7 +349,7 @@ Action is Influencer say="Hey, I think I've been assigned a mission!  Cool!"
 Action is mission assignment=0
 * End of this Event Action Subsection *
 
-// This is a pure mission assignment
+
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_one"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
@@ -351,13 +357,6 @@ Action is Influencer say="Hey, I think I've been assigned another mission!  Supe
 Action is mission assignment=1
 * End of this Event Action Subsection *
 
-// This is a pure mission assignment
-* Start of an Event Action Subsection *
-Action label for this action="wow_done_mission_zero"
-Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
 
 ** End of Mission Event Section **
 
