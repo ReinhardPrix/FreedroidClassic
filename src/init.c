@@ -1240,10 +1240,12 @@ InitNewMission ( char *MissionName )
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
+  LevelDoorsNotMovedTime = 0.0;
   GameConfig.Draw_Framerate=TRUE;
   // GameConfig.Draw_Energy=FALSE;
   GameConfig.Draw_Energy=TRUE;
   GameConfig.Draw_Position=TRUE;
+
   RealScore = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...

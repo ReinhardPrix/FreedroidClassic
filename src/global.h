@@ -129,6 +129,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+EXTERN float LevelDoorsNotMovedTime;
 EXTERN double collision_lose_energy_calibrator;
 EXTERN configuration_for_freedroid GameConfig;
 EXTERN float CurrentCombatScaleFactor;

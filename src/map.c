@@ -1516,10 +1516,15 @@ Sorry...\n\
 
 
 /*@Function============================================================
-@Desc: 
+@Desc: This funtion moves the level doors in the sense that they are opened
+       or closed depending on whether there is a robot close to the door or
+       not.  Initially this function did not take into account the framerate
+       and just worked every frame.  But this WASTES COMPUTATION time and it
+       DOES THE ANIMATION TOO QUICKLY.  So, the most reasonable way out seems
+       to be to operate this function only from time to time, e.g. after a
+       specified delay has passed.
 
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
 void
 MoveLevelDoors (void)
@@ -1529,6 +1534,13 @@ MoveLevelDoors (void)
   float xdist, ydist;
   float dist2;
   char *Pos;
+
+  // This prevents animation going too quick.
+  // The constant should be replaced by a variable, that can be
+  // set from within the theme, but that may be done later...
+  if ( LevelDoorsNotMovedTime < 0.15 ) return;
+  LevelDoorsNotMovedTime=0;
+
 
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
     {

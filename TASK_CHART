@@ -45,8 +45,8 @@ THESE ITEMS HAVE FIRST PRIORITY:
    f. Allow to change the level name
    DONE Write doku for the usage of the level editor
    DONE Do segfault protection from planting tiles outside map structure
-   DINE Allow for more things to be set directly: Elevators & Boxes
-   h. Add safety/correction check against leading -1 waypoint connections
+   DONE Allow for more things to be set directly: Elevators & Boxes
+   DONE Add safety/correction check against leading -1 waypoint connections
    i. Add a function to specify map tiles to be planted using their number
       instead of a fixed key.  That should provide a fallback for freshly
       self-implemented tiles, that do not have their own key sequence in
