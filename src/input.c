@@ -690,7 +690,9 @@ ReactToSpecialKeys(void)
       if ( Shift_Was_Pressed() )
 	Me [ 0 ] . base_strength += 5 ;
       else
-	Me[0].melee_weapon_skill ++ ;
+	{
+	  if ( Me [ 0 ] . melee_weapon_skill < 8 )  Me [ 0 ] . melee_weapon_skill ++ ;
+	}
     }
   if ( KP8Pressed() )
     {
@@ -698,7 +700,9 @@ ReactToSpecialKeys(void)
       if ( Shift_Was_Pressed() )
 	Me [ 0 ] . base_magic += 5 ;
       else
-	Me[0].ranged_weapon_skill ++ ;
+	{
+	  if ( Me [ 0 ] . ranged_weapon_skill < 8 ) Me [ 0 ] . ranged_weapon_skill ++ ;
+	}
     }
   if ( KP7Pressed() )
     {
@@ -706,12 +710,14 @@ ReactToSpecialKeys(void)
       if ( Shift_Was_Pressed() )
 	Me [ 0 ] . base_dexterity += 5 ;
       else
-	Me[0].spellcasting_skill ++ ;
+	{
+	  if ( Me [ 0 ] . spellcasting_skill < 8 ) Me [ 0 ] . spellcasting_skill ++ ;
+	}
     }
   if ( KP6Pressed() )
     {
       while ( KP6Pressed() );
-      Me[0].hacking_skill ++ ;
+      if ( Me [ 0 ] . hacking_skill < 8 ) Me [ 0 ] . hacking_skill ++ ;
     }
   if ( KP0Pressed() )
     {
