@@ -1704,7 +1704,7 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   static Uint32 FullColor ;
   static Uint32 EmptyColor ;
 #define ENEMY_ENERGY_BAR_OFFSET_X 0
-#define ENEMY_ENERGY_BAR_OFFSET_Y -20
+#define ENEMY_ENERGY_BAR_OFFSET_Y (-20)
 #define ENEMY_ENERGY_BAR_LENGTH 65
 
   //--------------------
@@ -1834,12 +1834,14 @@ There was a rotation model type given, that exceeds the number of rotation model
       //
       //      if ( enemy_iso_images[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
       // {
-
+      if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+	{
 	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
 	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 2 ;
 	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
 	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
 	  // }
+	}
 
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
@@ -1859,8 +1861,34 @@ There was a rotation model type given, that exceeds the number of rotation model
 	}
       else
 	{
-	  blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
-	  // SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
+	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+	    {
+	      SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
+	      if ( GameConfig . enemy_energy_bars_visible )
+		PutEnemyEnergyBar ( Enum , TargetRectangle );
+	      return;
+	    }
+	  else
+	    {
+	      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+
+
+	      TargetRectangle . x = 
+		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+	      TargetRectangle . y = 
+		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE )
+		- ENEMY_ENERGY_BAR_OFFSET_Y ;
+
+	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 1 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
+
+
+	      if ( GameConfig . enemy_energy_bars_visible )
+		PutEnemyEnergyBar ( Enum , TargetRectangle );
+	      return;
+	    }
 	}
     }
   else
@@ -1871,6 +1899,8 @@ There was a rotation model type given, that exceeds the number of rotation model
       //
       SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
     }
+
+
   
 }; // void PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
 
@@ -1881,17 +1911,12 @@ There was a rotation model type given, that exceeds the number of rotation model
  * ---------------------------------------------------------------------- */
 void
 PutEnemy (int Enum , int x , int y)
-// PutEnemy ( enemy* our_enemy Enum , int x , int y)
 {
   char *druidname;	// the number-name of the Enemy 
   SDL_Rect TargetRectangle;
   point UpperLeftBlitCorner;
 
-  // DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
-
   if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
-
-  // DebugPrintf ( 3 , "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n" );
 
   //--------------------
   // We check for incorrect droid types, which sometimes might occor, especially after
@@ -1912,10 +1937,12 @@ There was a droid type on this level, that does not really exist.",
   //
   if ( x == (-1) ) 
     {
-      UpperLeftBlitCorner.x = 
-	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
-      UpperLeftBlitCorner.y = 
-	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
+      UpperLeftBlitCorner.x = 0 ;
+      UpperLeftBlitCorner.y = 0 ;
+      // UpperLeftBlitCorner.x = 
+      // translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+      // UpperLeftBlitCorner.y = 
+      // translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
     }
   else
     {
@@ -1935,13 +1962,6 @@ There was a droid type on this level, that does not really exist.",
 
   PutIndividuallyShapedDroidBody ( Enum , TargetRectangle );
 
-  if ( GameConfig . enemy_energy_bars_visible )
-    {
-      TargetRectangle.x = UpperLeftBlitCorner.x ;
-      TargetRectangle.y = UpperLeftBlitCorner.y ;
-      PutEnemyEnergyBar ( Enum , TargetRectangle );
-    }
-
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
     {
@@ -1957,7 +1977,6 @@ There was a droid type on this level, that does not really exist.",
 
   PrintCommentOfThisEnemy ( Enum , x , y );
 
-  DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 }; // void PutEnemy(int Enum , int x , int y) 
 
 /* ----------------------------------------------------------------------
@@ -1973,8 +1992,6 @@ PutBullet (int BulletNummer)
   int PhaseOfBullet;
   // int i;
   SDL_Surface* tmp;
-
-  DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
   //--------------------
   // in case our bullet is of the type "FLASH", we only
@@ -2081,8 +2098,6 @@ There was a bullet to be blitted of a type that does not really exist.",
   CurBullet->Surfaces_were_generated = FALSE ;
 
 #endif
-
-  DebugPrintf ( 1 , "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
 }; // void PutBullet (int Bulletnumber )
 
