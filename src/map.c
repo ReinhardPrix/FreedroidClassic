@@ -69,6 +69,7 @@ symtrans Translator[BLOCKANZAHL] = {
 };
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void GetThisLevelsDroids( char* SectionPointer );
 
 
 
@@ -1138,33 +1139,117 @@ int
 GetCrew (char *filename)
 {
   // char filename[FILENAME_LEN + 1];
-  FILE *CrewFile;
-  int level_num;
-  int enemy_nr;
-  int type_anz;
-  int types[MAX_TYPES_ON_LEVEL];
-  int upper_limit, lower_limit;
-  int this_limit;
-  int linelen = CREW_LINE_LEN;
-  char line[CREW_LINE_LEN];
-  char *pos;
+  FILE *DroidsFile;
+  char *MainDroidsFilePointer;
+  char *EndOfDroidsFilePointer;
+  char *DroidSectionPointer;
+  char *EndOfThisDroidSectionPointer;
+  struct stat stbuf;
+
+#define START_OF_DROID_DATA_STRING "*** Beginning of Droid Data ***"
+#define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
+#define DROIDS_LEVEL_DESCRIPTION_START_STRING "** Beginning of new Level **"
+#define DROIDS_LEVEL_DESCRIPTION_END_STRING "** End of this levels droid data **"
+
+  // int level_num;
+  // int enemy_nr;
+  // int type_anz;
+  // int types[MAX_TYPES_ON_LEVEL];
+  // int upper_limit, lower_limit;
+  // int this_limit;
+  // int linelen = CREW_LINE_LEN;
+  // char line[CREW_LINE_LEN];
+  // char *pos;
 
   /* Clear Enemy - Array */
   ClearEnemys ();
 
-  if ((CrewFile = fopen (filename, "r")) == NULL)
+  //--------------------
+  //Now its time to start decoding the droids file.
+  //For that, we must get it into memory first.
+  //The procedure is the same as with LoadShip
+  //
+  if (( DroidsFile = fopen ( filename , "r")) == NULL)
     {
-      printf ("\nCouldn't open crew-file: %s .... Terminating.... \n", filename);
+      DebugPrintf ("\nint GetCrew( ... ): Error opening file.... ");
       Terminate(ERR);
     }
   else
     {
-      printf("\nSuccessfully opened crew file %s." , filename );
+      printf("\nOpening %s file succeeded..." , filename );
+    }
+
+  if ( fstat (fileno ( DroidsFile ), &stbuf) == EOF )
+    {
+      printf
+	("\nint GetCrew ( void ): Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nfstating %s file succeeded..." , filename );
+    }
+
+  if (( MainDroidsFilePointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+    {
+      DebugPrintf ("\nint GetCrew ( char * constantsname ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( MainDroidsFilePointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DroidsFile);
+
+  printf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+
+  if ( ( EndOfDroidsFilePointer = strstr( MainDroidsFilePointer , END_OF_DROID_DATA_STRING ) ) == NULL )
+    {
+      printf("\nERROR!  END OF DROID DATA STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      EndOfDroidsFilePointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  printf("\n\nvoid GetCrew: The content of the read file: \n%s" , MainDroidsFilePointer );
+
+  if( fclose(DroidsFile) == EOF) 
+    {
+      printf("\n\nClosing of droids file failed in GetCrew...\n\nTerminating\n\n");
+      fflush(stdout);
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\n\nDroids file closed successfully.");
       fflush(stdout);
     }
 
+  //--------------------
+  // The Droid crew file for this map is now completely read into memory
+  // It's now time to decode the file and to fill the array of enemys with
+  // new droids of the given types.
+  //
+  DroidSectionPointer=MainDroidsFilePointer;
+  while ( ( DroidSectionPointer = strstr ( DroidSectionPointer, DROIDS_LEVEL_DESCRIPTION_START_STRING )) != NULL )
+    {
+      DroidSectionPointer+=strlen( DROIDS_LEVEL_DESCRIPTION_START_STRING );
+      printf("\nFound another levels droids description starting point entry!");
+      EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
+      if ( EndOfThisDroidSectionPointer == NULL )
+	{
+	  printf("\nGetCrew:  Unterminated deroid section encountered!!\n\nTerminating....");
+	  Terminate(ERR);
+	}
+      EndOfThisDroidSectionPointer[0]=0;
+      GetThisLevelsDroids( DroidSectionPointer );
+      DroidSectionPointer = EndOfThisDroidSectionPointer+2; // Move past the inserted String terminator
+    }
+
+
+  /*
   enemy_nr = 0;
-  while (fgets (line, linelen, CrewFile))  /* one line per level */
+  while (fgets (line, linelen, CrewFile))  //
     {
       if (sscanf (line, "%d %d %d ",
 		  &level_num, &upper_limit, &lower_limit) == EOF)
@@ -1191,7 +1276,7 @@ GetCrew (char *filename)
 	  AllEnemys[enemy_nr].levelnum = level_num;
 	  AllEnemys[enemy_nr].Status = 0;
 	  enemy_nr++;
-	} /* while (enemy-limit of this level not reached) */
+	}  // while (enemy-limit of this level not reached) 
 
       if (enemy_nr >= MAX_ENEMYS_ON_SHIP)
 	{
@@ -1199,27 +1284,159 @@ GetCrew (char *filename)
 	  Terminate(ERR);
 	}
 
-    }	/* while (lines in crew-file to read) */
+}	// while (lines in crew-file to read) 
 
   NumEnemys = enemy_nr;
 
-  if( fclose(CrewFile) == EOF) 
-    {
-      printf("\n\nClosing of crew file failed in SaveShip...\n\nTerminating\n\n");
-      fflush(stdout);
-      Terminate(ERR);
-    }
-  else
-    {
-      printf("\n\nCrew file closed successfully.");
-      fflush(stdout);
-    }
+*/
+
+
   
-  InitEnemys ();		/* Energiewerte richtig setzen */
+  InitEnemys ();  // set energy to the correct values
 
   return (OK);
 
 } /* GetCrew () */
+
+
+void
+GetThisLevelsDroids( char* SectionPointer )
+{
+  int OurLevelNumber;
+  char* SearchPointer;
+  int MaxRand;
+  int MinRand;
+  int RealNumberOfRandomDroids;
+  int DifferentRandomTypes;
+  int ListIndex;
+  char TypeIndicationString[1000];
+  int ListOfTypesAllowed[1000];
+  int FreeAllEnemysPosition;
+
+#define DROIDS_LEVEL_INDICATION_STRING "Level="
+#define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
+#define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
+#define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
+
+  printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
+
+  // Now we read in the level number for this level
+  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_LEVEL_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR in GetThisLevelsDroids: NO DROIDS LEVEL INDICATION STRING FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      SearchPointer += strlen ( DROIDS_LEVEL_INDICATION_STRING );
+      sscanf ( SearchPointer , "%d" , &OurLevelNumber );
+      printf("\nLevel number for the droids of this level found!  It reads: %d" , OurLevelNumber );
+    }
+
+  // Now we read in the maximal number of random droids for this level
+  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR in GetThisLevelsDroids: NO DROIDS MAXIMUM RANDOM NUMBER FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      SearchPointer += strlen ( DROIDS_MAXRAND_INDICATION_STRING );
+      sscanf ( SearchPointer , "%d" , &MaxRand );
+      printf("\nMaximum number of random droids for this level found!  It reads: %d" , MaxRand );
+    }
+
+  // Now we read in the minimal number of random droids for this level
+  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_MINRAND_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR in GetThisLevelsDroids: NO DROIDS MINIMUM RANDOM NUMBER FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      SearchPointer += strlen ( DROIDS_MINRAND_INDICATION_STRING );
+      sscanf ( SearchPointer , "%d" , &MinRand );
+      printf("\nMaximum number of random droids for this level found!  It reads: %d" , MinRand );
+    }
+
+  DifferentRandomTypes=0;
+  SearchPointer = SectionPointer;
+  while ( ( SearchPointer = strstr ( SearchPointer , ALLOWED_TYPE_INDICATION_STRING)) != NULL)
+    {
+      SearchPointer += strlen ( ALLOWED_TYPE_INDICATION_STRING );
+      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
+      TypeIndicationString[3]=0;
+      printf("\nType indication found!  It reads: %s." , TypeIndicationString );
+
+      // Now that we have got a type indication string, we only need to translate it
+      // into a number corresponding to that droid in the droid list
+      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
+	{
+	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
+	}
+      if ( ListIndex == Number_Of_Droid_Types )
+	{
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+The function reading and interpreting the crew file stunbled into something:\n\
+\n\
+It was unable to assign the droid type identification string '%s' found \n\
+in the entry of the droid types allowed for level %d to an entry in\n\
+the List of droids obtained from the gama data specification\n\
+file you use.  \n\
+\n\
+Please check that this type really is spelled correctly, that it consists of\n\
+only three characters and that it really has a corresponding entry in the\n\
+game data file with all droid type specifications.\n\
+\n\
+But for now Freedroid will terminate to draw attention to the sound problem\n\
+it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , TypeIndicationString , OurLevelNumber );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  printf("\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
+	}
+      ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
+      DifferentRandomTypes++;
+
+    }
+  printf("\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
+
+  //--------------------
+  // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
+  // the allowed types.  The number of different allowed types found is also available.
+  // That means that now we can add the apropriate droid types into the list of existing
+  // droids in that mission.
+
+  RealNumberOfRandomDroids = MyRandom ( MaxRand - MinRand) + MinRand;
+
+  while ( RealNumberOfRandomDroids-- )
+    {
+      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
+	{
+	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	}
+      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
+	{
+	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
+	  Terminate(ERR);
+	}
+
+      AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
+      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].Status = 0;
+
+    }  // while (enemy-limit of this level not reached) 
+
+  NumEnemys=FreeAllEnemysPosition; // we silently assume monotonely increasing FreePosition index. seems ok.
+  // getchar();
+}
 
 
 /*@Function============================================================

@@ -761,6 +761,7 @@ InitNewMission ( char *MissionName )
   int StartingYPos=0;
   // char filename[]=MAP_DIR "game.dat";
   // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
+
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
@@ -1564,7 +1565,9 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
 	    {
-	      // printf("\nOne is still alive: Nr=%d Lev=%d X=%f Y=%f." , Robot_Counter , AllEnemys[Robot_Counter].levelnum , AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+	      // printf("\nOne is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+	      // Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
+	      // AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
 	      return;
 	    }
 	}

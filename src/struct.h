@@ -149,9 +149,10 @@ typedef struct
   finepoint speed;		/* current speed  */
   double energy;		/* gibt die Energie dieses Robots an */
   double feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
-  byte nextwaypoint;		/* gibt den naechsten Zielpunkt an */
-  byte lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
-  byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
+  int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
+  int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  int marker;                   // Is this droid somehow specially marked for this mission?
   double warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
