@@ -626,7 +626,7 @@ enum
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Options_Menu (void)
+GraphicsSound_Options_Menu (void)
 {
 
   int Weiter = 0;
@@ -638,8 +638,6 @@ enum
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    TOGGLE_FRAMERATE, 
-    SHOW_ENERGY,
     LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
@@ -675,11 +673,11 @@ enum
 		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
+      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
+      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
 		       "Back");
 
       SDL_Flip( ne_screen );
@@ -758,13 +756,400 @@ enum
 	      SDL_WM_ToggleFullScreen (ne_screen);
 	      fullscreen_on = !fullscreen_on;
 	      break;
-	    case TOGGLE_FRAMERATE:
+	    case LEAVE_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // GraphicsSound_Options_Menu
+
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
+On_Screen_Display_Options_Menu (void)
+{
+
+  int Weiter = 0;
+  int MenuPosition=1;
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { //SET_BG_MUSIC_VOLUME=1, 
+    //SET_SOUND_FX_VOLUME, 
+    //SET_GAMMA_CORRECTION, 
+    SHOW_POSITION=1, 
+    SHOW_FRAMERATE, 
+    SHOW_ENERGY,
+    LEAVE_OPTIONS_MENU };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont)
+      //"Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont),
+      //"Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont),
+      //"Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
+		       "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case SHOW_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Draw_Position=!GameConfig.Draw_Position;
+	      break;
+	    case SHOW_FRAMERATE:
 	      while (EnterPressed() || SpacePressed() );
 	      GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
 	      break;
 	    case SHOW_ENERGY:
 	      while (EnterPressed() || SpacePressed() );
 	      GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+	      break;
+	    case LEAVE_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // On_Screen_Display_Options_Menu
+
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
+Droid_Talk_Options_Menu (void)
+{
+
+  int Weiter = 0;
+  int MenuPosition=1;
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { 
+    INFLU_REFRESH_TEXT=1,
+    INFLU_BLAST_TEXT,
+    ENEMY_HIT_TEXT,
+    ENEMY_BUMP_TEXT,
+    ENEMY_AIM_TEXT,
+    ALL_TEXTS,
+    // SHOW_ENERGY,
+    LEAVE_DROID_TALK_OPTIONS_MENU };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
+		       "Influencer Refresh Texts: %s", GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
+		       "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case INFLU_REFRESH_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
+	      break;
+	    case INFLU_BLAST_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
+	      break;
+	    case ENEMY_HIT_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
+	      break;
+	    case ENEMY_BUMP_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
+	      break;
+	    case ENEMY_AIM_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
+	      break;
+	    case ALL_TEXTS:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
+	      break;
+	    case LEAVE_DROID_TALK_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_DROID_TALK_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // Droid_Talk_Options_Menu
+
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
+Options_Menu (void)
+{
+
+  int Weiter = 0;
+  int MenuPosition=1;
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { GRAPHICS_SOUND_OPTIONS=1, 
+    DROID_TALK_OPTIONS,
+    ON_SCREEN_DISPLAYS,
+    SAVE_OPTIONS, 
+    //    TOGGLE_FRAMERATE, 
+    // SHOW_ENERGY,
+    LEAVE_OPTIONS_MENU };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
+		       "Graphics & Sound" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Droid Talk" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "On-Screen Displays" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Save Options");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
+      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
+      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case GRAPHICS_SOUND_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      GraphicsSound_Options_Menu();
+	      break;
+	    case DROID_TALK_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      Droid_Talk_Options_Menu();
+	      break;
+	    case ON_SCREEN_DISPLAYS:
+	      while (EnterPressed() || SpacePressed() );
+	      On_Screen_Display_Options_Menu();
+	      break;
+	    case SAVE_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
 	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );

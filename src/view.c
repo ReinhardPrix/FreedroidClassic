@@ -411,7 +411,7 @@ PutInfluence ( int x, int y)
   // Maybe the influencer has something to say :)
   // so let him say it..
   //
-  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) )
+  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
       PutStringFont ( ne_screen , FPS_Display_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
@@ -595,7 +595,7 @@ Sorry...\n\
   // 
   // So now we can add some text the enemys says.  That might be fun.
   //
-  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime ) )
+  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
       PutStringFont ( ne_screen , FPS_Display_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 

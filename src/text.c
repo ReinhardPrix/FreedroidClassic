@@ -67,6 +67,8 @@ void
 EnemyHitByBulletText( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
+
+  if ( !GameConfig.Enemy_Hit_Text ) return;
   
   ThisRobot->TextVisibleTime=0;
   if ( !ThisRobot->Friendly )
@@ -97,6 +99,8 @@ EnemyInfluCollisionText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
+  if ( !GameConfig.Enemy_Bump_Text ) return;
+  
   ThisRobot->TextVisibleTime=0;
 	      
   if ( ThisRobot->Friendly )
@@ -124,6 +128,8 @@ AddStandingAndAimingText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
+  if ( !GameConfig.Enemy_Aim_Text ) return;
+  
   ThisRobot->TextVisibleTime=0;
 	      
   if ( ( fabsf (Me.speed.x) < 1 ) && ( fabsf (Me.speed.y) < 1 ) )
@@ -144,6 +150,8 @@ AddInfluBurntText( void )
   int FinalTextNr;
 
   Me.TextVisibleTime=0;
+  
+  if ( !GameConfig.Influencer_Blast_Text ) return;
   
   FinalTextNr=MyRandom(2);
   switch ( FinalTextNr )

@@ -63,6 +63,12 @@ typedef struct
   int Draw_Framerate;
   int Draw_Energy;
   int Draw_Position;
+  int Influencer_Refresh_Text;
+  int Influencer_Blast_Text;
+  int Enemy_Hit_Text;
+  int Enemy_Bump_Text;
+  int Enemy_Aim_Text;
+  int All_Texts_Switch;
   float Current_BG_Music_Volume;
   float Current_Sound_FX_Volume;
   float Current_Gamma_Correction;

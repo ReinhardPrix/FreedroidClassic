@@ -1789,6 +1789,12 @@ InitFreedroid (void)
 
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
+  GameConfig.All_Texts_Switch=FALSE;
+  GameConfig.Enemy_Hit_Text=TRUE;
+  GameConfig.Enemy_Bump_Text=TRUE;
+  GameConfig.Enemy_Aim_Text=TRUE;
+  GameConfig.Influencer_Refresh_Text=TRUE;
+  GameConfig.Influencer_Blast_Text=TRUE;
 
   Init_Video ();
 
