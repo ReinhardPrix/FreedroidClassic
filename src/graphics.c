@@ -85,17 +85,25 @@ void readpcximage(FILE * file,void * target,int size)
     }
 }  // void readpcximage(...)
 
-void *readpcx(FILE *file, char *palette,unsigned short int *length,
+void*
+readpcx(FILE *file, char *palette,unsigned short int *length,
 	      unsigned short int *height)
      /* Returns NULL if failed, otherwise a pointer to the loaded image */
 {
   PCX_Header header;
   void *target;
+
+  DebugPrintf("\nvoid* readpcx(...):  Real function call confirmed....");
+
   fseek(file,0,SEEK_SET);
   fread(&header,sizeof(PCX_Header),1,file);   /* read the header */
   /* Check if this file is in pcx format */
-  if((header.signature!=0x0a)||(header.version!=5))
-    return(NULL);
+  if((header.signature!=0x0a)||(header.version!=5)) 
+    {
+      printf("\nvoid* readpcx(...): ERROR in header-signature!\n");
+      DebugPrintf("\nvoid* readpcx(...):  ERROR: end of function reached....");
+      return(NULL);
+    }
   else
     {/* it is! */
       /* Return height and length */
@@ -109,8 +117,12 @@ void *readpcx(FILE *file, char *palette,unsigned short int *length,
       /* Get the palette */
       fread(palette,1,768,file);
       /* PCX succesfully read! */
+
+      DebugPrintf("\nvoid* readpcx(...):  SUCCESS: end of function reached....");
       return(target);
     }
+
+  DebugPrintf("\nvoid* readpcx(...):  UNREACHABLE: end of function reached....");
 } // void *readpcx(...)
 
 
@@ -118,9 +130,11 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 {
   FILE *file;
   void *image;
-  int i;
+  int i, j;
   unsigned short int length, height;
   unsigned char palette[768];
+
+  DebugPrintf("\nvoid Load_PCX_Image(...):  Real function call confirmed...");
 
   if ((file=fopen(PCX_Filename , "r")) == NULL) {
     printf("\nLoad_PCX_Image(...): Can't open file!\n");
@@ -132,9 +146,16 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
       printf("\nLoad_PCX_Image(...): Error loading file!\n");
       Terminate(ERR);
     }
+
+  DebugPrintf("\nvoid Load_PCX_Image(...):  Loading done... closing file.....");
+
   fclose(file);
 
+  DebugPrintf("\nvoid Load_PCX_Image(...):  image file has been loaded successfully....");
+  DebugPrintf("\nvoid Load_PCX_Image(...): The Filename is:"); DebugPrintf(PCX_Filename);
+
   printf("\nLoad_PCX_Image(...): Image is %dx%d sized.\n",length,height);
+
   if ( (length>320) || (height>200) ) {
     printf("Image is too big!\n");
     Terminate(ERR);
@@ -148,9 +169,21 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
   if (Screen == RealScreen) {
     gl_clearscreen(0);
     gl_putbox(0,0,length,height,image);
+    /*
+    for (i=0; i<height; i++)
+      {
+	for(j=0; j<length; j++)
+	  {
+	    vga_setcolor(((char*)image)[i*height+j]);
+	    vga_drawpixel(j,i);
+	  }
+      }
+    */
   } else {
     memcpy( Screen, image , length*height );
   } 
+
+  DebugPrintf("\nvoid Load_PCX_Image(...):  end of function reached.");
 
 } // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
@@ -166,6 +199,7 @@ the various structs
 * $Function----------------------------------------------------------*/
 int InitPictures(void) {
   int i;
+  char* DruidFilename;
 
   /* First read the map blocks */
   GetMapBlocks();
@@ -211,6 +245,21 @@ int InitPictures(void) {
   MenuItemPointer=MyMalloc(MENUITEMMEM);
   IsolateBlock(InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH, MENUITEMHEIGHT);	
 
+  /* get robotpictures */
+  DruidFilename=malloc(1000);
+  for (i=0; i<ALLDRUIDTYPES ; i++) 
+    {
+      DruidFilename[0]=0;
+      DruidFilename=strcat(DruidFilename,"../graphics/");
+      DruidFilename=strcat(DruidFilename,Druidmap[i].druidname);
+      DruidFilename=strcat(DruidFilename,".pcx");
+      DebugPrintf("\nint InitPictures(void): Loading Druidpicture: ");
+      DebugPrintf(DruidFilename);
+      Load_PCX_Image( DruidFilename , InternalScreen , FALSE );
+      Druidmap[i].image=malloc(DRUIDIMAGE_LENGTH*DRUIDIMAGE_HEIGHT + 1);
+      IsolateBlock( InternalScreen, Druidmap[i].image, 0, 0, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT );
+    }
+  free(DruidFilename);
   return TRUE;
 }  // int InitPictures(void)
 

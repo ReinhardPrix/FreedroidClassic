@@ -117,6 +117,9 @@
 #define SCREENLEN		320
 #define SCREENHEIGHT		200
 
+#define DRUIDIMAGE_LENGTH       66
+#define DRUIDIMAGE_HEIGHT       90
+
 /* Dimensionen von Bloecken und Bildern */
 
 /* Rahmen */
