@@ -1,0 +1,4 @@
+./freedroid
+killall yiff
+echo "yiff should have been killed now..."
+

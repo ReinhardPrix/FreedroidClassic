@@ -297,6 +297,7 @@ void ThouArtDefeated(void){
 
   printf("\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status=TERMINATED;
+  ThouArtDefeatedSound();
   ExplodeInfluencer();
   
   for (i=0;i<WAIT_AFTER_KILLED; i++) {

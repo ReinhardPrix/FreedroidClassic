@@ -83,6 +83,7 @@ char MoveElevatorSoundSampleFilename[]="/../sound/MoveElevatorSound.wav";
 char RefreshSoundSampleFilename[]="/../sound/RefreshSound.wav";
 char LeaveElevatorSoundSampleFilename[]="/../sound/LeaveElevatorSound3.wav";
 char EnterElevatorSoundSampleFilename[]="/../sound/EnterElevatorSound2.wav";
+char ThouArtDefeatedSoundSampleFilename[]="/../sound/ThouArtDefeatedSound2.wav";
 // char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
@@ -93,6 +94,7 @@ char* ExpandedMoveElevatorSoundSampleFilename;
 char* ExpandedRefreshSoundSampleFilename;
 char* ExpandedLeaveElevatorSoundSampleFilename;
 char* ExpandedEnterElevatorSoundSampleFilename;
+char* ExpandedThouArtDefeatedSoundSampleFilename;
 
 long BlastSoundSampleLength=0;
 long CollisionSoundSampleLength=0;
@@ -189,82 +191,6 @@ void YIFF_Server_Check_Events(void){
 	}
     }
  
-
-  // FIRST CHECK EVENTS FOR THE FIRST CHANNEL
-
-  // Get the next event (if any) in the first Channel 
-
-  /* TEST
-     if(YGetNextEvent( con, &event, False ) > 0)
-     {
-     // Sound object stopped playing? 
-     if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
-     {
-     // Our play has stopped. 
-     printf("Done playing.\n");
-     }
-     // Server disconnected us? 
-     else if(event.type == YDisconnect)
-     {
-     // Got disconnected.
-     printf(
-     "Y server disconnected us, reason %i.\n",
-     event.disconnect.reason
-     );
-     Terminate(ERR);
-     }
-     // Server shutdown? 
-     else if(event.type == YShutdown)
-     {
-     // Server shutdown. 
-     printf( "Y server shutdown, reason %i.\n", event.shutdown.reason );
-     Terminate(ERR);
-     }
-     else
-     {
-     // Some other Y event, ignore. 
-     }
-     }
-     TEST */ 
-
-  // NOW CHECK FOR EVENTS OF THE SECOND CHANNEL
-  
-  // Get the next event (if any) in the second channel 
-
-  /* TEST
-
-     if(YGetNextEvent( con2, &event2, False ) > 0)
-     {
-     // Sound object stopped playing? 
-     if((event2.type == YSoundObjectKill) &&
-     (event2.kill.yid == play_id2)
-     )
-     {
-     // Our play has stopped. 
-     printf("Done playing in the second channel.\n");
-     }
-     // Server disconnected us? 
-     else if(event2.type == YDisconnect)
-     {
-     // Got disconnected. 
-     printf( "Y server disconnected us, channel 2, reason %i.\n", event2.disconnect.reason );
-     Terminate(ERR);
-     }
-     // Server shutdown? 
-     else if(event2.type == YShutdown)
-     {
-     // Server shutdown. 
-     printf("Y server shutdown, reason %i.\n", event2.shutdown.reason );
-     Terminate(ERR);
-     }
-     else
-     {
-     // Some other Y event, ignore. 
-     }
-     }
-    
-  */
-
 #endif /* HAVE_LIBY2 */
 } // void YIFF_Server_Check_Events(void)
 
@@ -305,14 +231,6 @@ void YIFF_Server_Close_Connections(void){
 
   YCloseConnection(BackgroundMusic_con, False);
   BackgroundMusic_con = NULL;
-
-  /* TEST
-  YCloseConnection(con, False);
-  con = NULL;
-
-  YCloseConnection(con2, False);
-  con2 = NULL;
-  */
 
 #endif /* HAVE_LIBY2 */
 
@@ -446,6 +364,11 @@ void Play_YIFF_Server_Sound(int Tune){
     play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedRefreshSoundSampleFilename );
   }
 
+  if (Tune == THOU_ART_DEFEATED_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedThouArtDefeatedSoundSampleFilename );
+  }
+
 #endif /* HAVE_LIBY2 */
 
 } // void Play_YIFF_Server_Sound(int Tune)
@@ -481,6 +404,7 @@ int Init_YIFF_Sound_Server(void){
   ExpandedRefreshSoundSampleFilename=ExpandFilename( RefreshSoundSampleFilename );
   ExpandedLeaveElevatorSoundSampleFilename=ExpandFilename( LeaveElevatorSoundSampleFilename );
   ExpandedEnterElevatorSoundSampleFilename=ExpandFilename( EnterElevatorSoundSampleFilename );
+  ExpandedThouArtDefeatedSoundSampleFilename=ExpandFilename( ThouArtDefeatedSoundSampleFilename );
 
 
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
@@ -676,10 +600,18 @@ void RefreshSound(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void MoveElevatorSound(void){
-
   Play_YIFF_Server_Sound(MOVE_ELEVATOR_SOUND);
+} // void MoveElevatorSound(void)
 
-  return;
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void ThouArtDefeatedSound(void){
+  Play_YIFF_Server_Sound( THOU_ART_DEFEATED_SOUND);
 } // void MoveElevatorSound(void)
 
 

@@ -7,13 +7,14 @@ Bugs
 
 - Druidmap.notes sollten besser von file eingelesen werden oder
   zumindest in paravars.h (statt direkt in InitParaplus())
+
 - PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
 
 - (jp) Calculate all movement (where movement is to be understood in an abstract
   sense including movement of energy and such) framerate-dependant
 
 - (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
-  Robo-graphics noetig
+  Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
 
 - (?) find more open and free sounds be can use legally
 
