@@ -221,6 +221,10 @@ GetView (void)
   signed int mapX0, mapY0;
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
 
+#ifdef NEW_ENGINE
+  return;
+#endif
+
   DebugPrintf ("\nvoid GetView(void): CurLevel->xlen: ");
   DebugPrintfInt (CurLevel->xlen);
   DebugPrintf ("\nvoid GetView(void): CurLevel->ylen: ");
@@ -337,9 +341,6 @@ Assemble_Combat_Picture (int mask)
       return;
     }
 
-#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
-#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
-
   SDL_SetClipRect( ne_screen , &CombatRectangle );
 
   // Why not clip the WHOLE map?  Lets try it!
@@ -362,16 +363,16 @@ Assemble_Combat_Picture (int mask)
 	}			// for(col) 
     }				// for(line) 
 
-  SDL_Flip ( ne_screen );
-
-  return;  // for now
-
   if (mask == SHOW_MAP)		// we want only the map, nothing else 
     return;
 
 
   for (i = 0; i < NumEnemys; i++)
     PutEnemy (i);
+
+  SDL_Flip ( ne_screen );
+
+  return;  // for now
 
   if (Me.energy > 0)
     PutInfluence ();
@@ -668,6 +669,70 @@ PutInfluence (void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
+#ifdef NEW_ENGINE
+void
+PutEnemy (int Enum)
+{
+  unsigned char *Enemypic;
+  int enemyX, enemyY;
+  const char *druidname;	/* the number-name of the Enemy */
+  int phase;
+  SDL_Rect TargetRectangle;
+
+  DebugPrintf
+    ("\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+
+  /* if enemy is on other level, return */
+  if (Feindesliste[Enum].levelnum != CurLevel->levelnum)
+    {
+      DebugPrintf
+	("\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      return;
+    }
+
+  /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
+  if (Feindesliste[Enum].Status == OUT)
+    {
+      DebugPrintf
+	("\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
+      return;
+    }
+
+  /* Wenn Feind nicht sichtbar: weiter */
+  if (!IsVisible (&Feindesliste[Enum].pos))
+    {
+      DebugPrintf
+	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
+      return;
+    }
+
+  DebugPrintf
+    ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
+
+  // Den Druidtyp nochmals mit einer Sicherheitsabfrage ueberpruefen:
+  if ( Feindesliste[Enum].type >= ALLDRUIDTYPES )
+    {
+      DebugPrintf("\nvoid PutEnemy(int Enum): ERROR!  IMPOSSIBLE DRUIDTYPE ENCOUNTERED!  EMERGENCY WORKAROUND DONE!!");
+      DebugPrintf("\nvoid PutEnemy(int Enum): NOTE THAT THIS PROBLEM REMAINS!  PLEASE FOLLOW THIS BUG AND CORRECT IT!!");
+      Feindesliste[Enum].type = 0;
+      Terminate(ERR);
+    }
+
+  // First blit just the enemy hat and shoes.
+  // The number will be blittet later
+
+  druidname = Druidmap[Feindesliste[Enum].type].druidname;
+  phase = Feindesliste[Enum].feindphase;
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2;
+
+  SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+
+  DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
+
+}	// void PutEnemy(int Enum) 
+#else
 void
 PutEnemy (int Enum)
 {
@@ -728,7 +793,7 @@ PutEnemy (int Enum)
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }				// void PutEnemy(int Enum) 
-
+#endif
 
 /*@Function============================================================
 @Desc: PutBullet: setzt das Bullet BulletNummer ins InternWindow
