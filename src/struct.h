@@ -249,6 +249,8 @@ typedef struct
   double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
   int    item_gun_bullet_can_be_reflected; // can bullets of this type be reflected by other bullets?
   int    item_gun_bullet_reflect_other_bullets; // can this 'bullet' reflect other bullets
+  int    item_gun_bullet_pass_through_explosions; // can this 'bullet' reflect other bullets
+  int    item_gun_bullet_pass_through_hit_bodies; // does this bullet go through hit bodies (e.g. like a laser sword)
   int    item_gun_bullet_ignore_wall_collisions; // can this bullet pass through walls and map barriers?
 
   // the following values have only relevance in case of a melee weapon
@@ -465,8 +467,13 @@ typedef struct
   byte total_miss_hit [ MAX_ENEMYS_ON_SHIP ] ;
   byte miss_hit_influencer;
   int to_hit;
-  int ignore_wall_collisions;
-  int was_reflected;
+
+  // collision behaviour of bullets
+  int pass_through_hit_bodies; // does this bullet go through hit bodies (e.g. like a laser sword stike)
+  int pass_through_explosions; // does this bullet go through explosions (e.g. laser sword stike though dead droid)
+  int ignore_wall_collisions; // does this bullet go through walls (e.g. a laser sword strike)
+  int was_reflected; // has this bullet been reflected once in it's lifetime?
+  int reflect_other_bullets; // does this bullet reflect other bullets in case of a collision?
 
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;

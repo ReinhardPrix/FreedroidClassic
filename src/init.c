@@ -173,31 +173,6 @@ Get_Bullet_Data ( char* DataPointer )
       DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
       BulletPointer ++; // to avoid doubly taking this entry
 
-      // Now we read in the recharging time for this bullettype(=weapontype)
-      // ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%lf" , 
-      // &Bulletmap[BulletIndex].recharging_time , EndOfBulletData );
-
-      // Now we read in the maximal speed this type of bullet can go.
-      // ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%lf" , 
-      // &Bulletmap[BulletIndex].speed , EndOfBulletData );
-
-      // Now we read in the damage this bullet can do
-      // ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
-      // &Bulletmap[BulletIndex].damage , EndOfBulletData );
-
-      // Now we read in if you can fire before the previous bullet has expired
-      // ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
-      // &Bulletmap[BulletIndex].oneshotonly , EndOfBulletData );
-
-      // Now we read in the number of phases that are designed for this bullet type
-      // THIS IS NOW SPECIFIED IN THE THEME CONFIG FILE
-      // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
-      // &Bulletmap[BulletIndex].phases , EndOfBulletData );
-
-      // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
-      // ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
-      // &Bulletmap[BulletIndex].blast , EndOfBulletData );
- 
       BulletIndex++;
     }
 
@@ -483,6 +458,99 @@ Sorry...\n\
 	  else if ( strcmp( YesNoString , "no" ) == 0 )
 	    {
 	      ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = FALSE;
+	    }
+	  else
+	    {
+	      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	      Terminate( ERR );
+	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+	  
+	  // Now we read in if this weapons bullets will reflect other bullets or not
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: reflect other bullets=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_reflect_other_bullets = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_reflect_other_bullets = FALSE;
+	    }
+	  else
+	    {
+	      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	      Terminate( ERR );
+	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+	  
+	  // Now we read in if this weapons bullets will reflect other bullets or not
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: pass through explosions=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_pass_through_explosions = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_pass_through_explosions = FALSE;
+	    }
+	  else
+	    {
+	      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	      Terminate( ERR );
+	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+	  
+	  // Now we read in if this weapons bullets will reflect other bullets or not
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: pass through hit bodies=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_pass_through_hit_bodies = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_pass_through_hit_bodies = FALSE;
 	    }
 	  else
 	    {
