@@ -170,8 +170,16 @@ ShowAutomapData( void )
 	{
 	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	    {
-	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
-			 AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
+	      if ( AllEnemys [ i ] . is_friendly )
+		{
+		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
+			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , FriendColor );
+		}
+	      else
+		{
+		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + x , 
+			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
+		}
 	    }
 	}
     }

@@ -686,6 +686,40 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       Me [ 0 ] . spellcasting_skill ++; 
       SetNewBigScreenMessage( "Spellcasting ability improved!" );
     }
+
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractPlasmaTransistorSkill" ) )
+    {
+      Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] ++; 
+      SetNewBigScreenMessage( "Extraction of plasma" );
+      SetNewBigScreenMessage( "transistors learned!" );
+    }
+
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractSuperconductorSkill" ) )
+    {
+      Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] ++; 
+      SetNewBigScreenMessage( "Extraction of superconductors learned!" );
+    }
+
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractConverterSkill" ) )
+    {
+      Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] ++; 
+      SetNewBigScreenMessage( "Extraction of antimatter-matter" );
+      SetNewBigScreenMessage( "converters learned!" );
+    }
+
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractInverterSkill" ) )
+    {
+      Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] ++; 
+      SetNewBigScreenMessage( "Extraction of entropy inverters learned!" );
+    }
+
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractCondensatorSkill" ) )
+    {
+      Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ++; 
+      SetNewBigScreenMessage( "Extraction of tachyon " );
+      SetNewBigScreenMessage( "condensators learned!" );
+    }
+
   else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked execution of action with label: %s. Doing it... " ,
@@ -1132,6 +1166,8 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Darwin" ) == 0 ) return PERSON_DARWIN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Melfis" ) == 0 ) return PERSON_MELFIS;
   if ( strcmp ( ChatDroid -> dialog_section_name , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
   if ( strcmp ( ChatDroid -> dialog_section_name , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;

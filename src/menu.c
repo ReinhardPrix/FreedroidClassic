@@ -1778,10 +1778,10 @@ Freedroid will continue execution now, since this problem\n\
       while ( SpacePressed() || EnterPressed() );
       DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
       
-      DebugPrintf ( 0 , " NOW WE GOT TO RETURN THE PROBEM!!! " );
-
+      //--------------------
+      // Now we got to return the problem to the calling function...
+      //
       return ( FALSE );
-      // Terminate( ERR );
     }
 
 
@@ -1911,12 +1911,11 @@ Freedroid will continue execution now, since this problem\n\
       while ( SpacePressed() || EnterPressed() );
       DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
       
-      DebugPrintf ( 0 , " NOW WE GOT TO RETURN THE PROBEM!!! " );
-
+      //--------------------
+      // Now we got to return the problem to the calling function...
+      //
       return ( FALSE );
-      // Terminate( ERR );
     }
-
 
   SDL_Flip( Screen );
 

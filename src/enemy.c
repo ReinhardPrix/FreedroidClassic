@@ -983,17 +983,39 @@ IsActiveLevel ( int levelnum )
 void
 DropEnemyTreasure ( Enemy ThisRobot )
 {
+  /*
+  SPELL_EXTRACT_PLASMA_TRANSISTORS,
+  SPELL_EXTRACT_SUPERCONDUCTORS,
+  SPELL_EXTRACT_ANTIMATTER_CONVERTERS,
+  SPELL_EXTRACT_ENTROPY_INVERTERS,
+  SPELL_EXTRACT_TACHYON_CONDENSATORS
+  */
 
-  if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
-    DropChestItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
-  if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
-    DropChestItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
-  if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
-    DropChestItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
-  if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
-    DropChestItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
-  if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
-    DropChestItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
+    {
+      if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
+	DropChestItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+    }
+  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
+    {
+      if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
+	DropChestItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+    }
+  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
+    {
+      if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
+	DropChestItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+    }
+  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
+    {
+      if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
+	DropChestItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+    }
+  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] )
+    {
+      if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
+	DropChestItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+    }
 
   /*
   int i;
