@@ -38,6 +38,17 @@
 #endif
 
 //--------------------
+// Some technical definitions...
+//
+#define TRUE (1==1)
+#define FALSE (1==0)
+
+#define ERR 	-1
+#define OK		0
+
+#define USE_SDL_FRAMERATE
+
+//--------------------
 // Here you can control the debug level for the various modules, or at least
 // that's the way it is planned to be.  Turn on and off debugging as you like.
 //
@@ -71,75 +82,10 @@ enum
 #define ITEM_DROP_PERCENTAGE 20
 #define GOLD_DROP_PERCENTAGE 20
 
-#define ITEM_MONEY 6
 
-#define ITEM_SMALL_HEALTH_POTION 1
-#define ITEM_SMALL_MANA_POTION 41
-#define ITEM_MEDIUM_HEALTH_POTION 48
-#define ITEM_MEDIUM_MANA_POTION 49
-#define ITEM_FULL_HEALTH_POTION 2
-#define ITEM_FULL_MANA_POTION 42
-
-#define ITEM_SHORT_BOW 22
-#define ITEM_HUNTERS_BOW 03
-#define ITEM_LONG_BOW 16
-#define ITEM_COMPOSITE_BOW 12
-
-#define ITEM_ANTIGRAV_ALPHA 5
-#define ITEM_ANTIGRAV_BETA 11
-#define ITEM_TRACKS 10
-#define ITEM_TRIPEDAL 8
-#define ITEM_WHEELS 07
-
-#define ITEM_BUCKLER 19
-#define ITEM_SMALL_SHIELD 43
-#define ITEM_STANDARD_SHIELD 33
-#define ITEM_MEDIUM_SHIELD 56
-#define ITEM_ROUND_SHIELD 0
-#define ITEM_KITE_SHIELD 0
-#define ITEM_DOOR_SHIELD 0
-#define ITEM_TOWER_SHIELD 0
-
-#define ITEM_CLOAK 25
-#define ITEM_ROBE 29
-#define ITEM_QUILTED_ARMOUR 30
-#define ITEM_LEATHER_ARMOUR 31
-#define ITEM_DROID_PLATING 18
-
-#define ITEM_DAGGER 37       // very low sword
-#define ITEM_SHORT_SWORD 27  // lowest sword
-#define ITEM_SCIMITAR 34     // low sword
-#define ITEM_SABER 35        // medium sword
-#define ITEM_FALCHION 36     // good sword
-
-#define ITEM_CAP 20
-#define ITEM_SMALL_HELM 50
-#define ITEM_IRON_HAT 53
-#define ITEM_IRON_HELM 54
-#define ITEM_POTHELM 55
-
-#define ITEM_STAFF 39
-
-#define ITEM_SPELLBOOK_OF_HEALING 44
-#define ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE 46
-#define ITEM_SPELLBOOK_OF_EXPLOSION_RAY 47
-#define ITEM_SPELLBOOK_OF_TELEPORT_HOME 45
-
-#define ITEM_START_PLUGIN_WARRIOR 21
-#define ITEM_START_PLUGIN_SNIPER 51
-#define ITEM_START_PLUGIN_HACKER 52
-
-// This is a special item for a mission....
-#define ITEM_ENERGETIC_HEART 4
-#define ITEM_ULTIMATE_COFFEE_MACHINE 57
-#define ITEM_ULTIMATE_BOOK_OF_FREE_CODE 57
-#define ITEM_DIXONS_TOOLBOX 59
-
-#define ITEM_DROID_PART_1 61
-#define ITEM_DROID_PART_2 62
-#define ITEM_DROID_PART_3 63
-#define ITEM_DROID_PART_4 64
-#define ITEM_DROID_PART_5 65
+#ifndef _itemdefs_h
+#include "itemdefs.h"
+#endif
 
 #define SKILL_TAKEOVER 0
 
@@ -211,12 +157,6 @@ enum _spell_names
 #define CLGrobY ((Me[0].pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
 #define CLFeinX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
 #define CLGrobX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
-
-//--------------------
-// Constants influencing code generation and
-// constants defining flags for some functions:
-//
-#define USE_SDL_FRAMERATE
 
 #define MAX_CHARACTER_NAME_LENGTH (25)
 
@@ -321,9 +261,9 @@ enum
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
 
-
-
-/* Startpos + dimesnions of Banner-Texts */
+//--------------------
+// Startpos + dimesnions of Banner-Texts 
+//
 #define LEFT_INFO_X 	(13*2)
 #define LEFT_INFO_Y	(10*2)
 #define RIGHT_INFO_X	(242*2)
@@ -332,11 +272,7 @@ enum
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
 #define BANNER_WIDTH		SCREEN_WIDTH
-// #define BANNER_HEIGHT		( INITIAL_BLOCK_HEIGHT+15 )
-// #define BANNER_HEIGHT		( 115 )
 #define BANNER_HEIGHT		( 2 )
-
-
 
 //--------------------
 // Definitions for the menu inside the in-game console
@@ -364,17 +300,10 @@ enum
 // The order of appearance here should match the order of appearance 
 // in the SoundSampleFilenames definition located in sound.c!
 //
-
-#define COMBAT_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-// #define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
 #define TAKEOVER_BACKGROUND_MUSIC_SOUND "Intro-Music.mod"
 #define CONSOLE_BACKGROUND_MUSIC_SOUND "ARDA.MOD"
-#define CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC "A_City_at_Night.mod"
 #define CREDITS_BACKGROUND_MUSIC_SOUND "NOWHERE.MOD"
-
-// #define SILENCE (-1)
 #define SILENCE (NULL)
-
 enum _sounds
 {
   ERRORSOUND = 0,
@@ -453,15 +382,6 @@ enum _sounds
 #define CRY_SOUND_INTERVAL 2
 #define TRANSFER_SOUND_INTERVAL 1.1
 
-
-//--------------------
-//
-
-#define TRUE (1==1)
-#define FALSE (1==0)
-
-#define ERR 	-1
-#define OK		0
 
 //--------------------
 // Ship-Elevator pictures
