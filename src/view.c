@@ -951,7 +951,8 @@ ShowRobotPicture (int PosX, int PosY, int Number )
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
 
-  strcpy( fname, Druidmap[Number].druidname );
+  // strcpy( fname, Druidmap[Number].druidname );
+  strcpy( fname, Druidmap[Number].portrait_filename_without_ext );
   strcat( fname , ".png" );
 
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);

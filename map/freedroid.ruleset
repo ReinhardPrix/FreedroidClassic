@@ -856,6 +856,7 @@ Now we come to the description of all the droids:
 
 ** Start of new Robot: ** 
 Droidname: 001
+Droid portrait file name (without extension) to us use="001"
 Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
@@ -887,6 +888,7 @@ Notes concerning this droid : robot activity influence device. This helmet is se
 
 ** Start of new Robot: ** 
 Droidname: 123
+Droid portrait file name (without extension) to use="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -918,6 +920,7 @@ Notes concerning this droid : simpe rubbish diposal robot. Common device in most
 
 ** Start of new Robot: ** 
 Droidname: 139
+Droid portrait file name (without extension) to use="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -949,6 +952,7 @@ Notes concerning this droid : created by Dr. Masternak to clean up large heaps o
 
 ** Start of new Robot: ** 
 Droidname: 247
+Droid portrait file name (without extension) to use="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -980,6 +984,7 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 
 ** Start of new Robot: ** 
 Droidname: 249
+Droid portrait file name (without extension) to use="249"
 Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1011,6 +1016,7 @@ Notes concerning this droid : cheaper version of the anti-grav servant robot.
 
 ** Start of new Robot: ** 
 Droidname: 296
+Droid portrait file name (without extension) to use="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1042,6 +1048,7 @@ Notes concerning this droid : this robot is used mainly for serving drinks. A tr
 
 ** Start of new Robot: ** 
 Droidname: 302
+Droid portrait file name (without extension) to use="302"
 Maximum speed of this droid: 7.1
 Class of this droid: 3
 Maximum acceleration of this droid: 2.1
@@ -1073,6 +1080,7 @@ Notes concerning this droid : common device for moving small packages. Clamp is 
 
 ** Start of new Robot: ** 
 Droidname: 329
+Droid portrait file name (without extension) to use="329"
 Maximum speed of this droid: 1.1
 Class of this droid: 3
 Maximum acceleration of this droid: 1.1
@@ -1104,6 +1112,7 @@ Notes concerning this droid : early type messenger robot. Large wheels impede mo
 
 ** Start of new Robot: ** 
 Droidname: 420
+Droid portrait file name (without extension) to use="420"
 Maximum speed of this droid: 2.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -1135,6 +1144,7 @@ Notes concerning this droid : slow maintenance robot. Confined to drive maintena
 
 ** Start of new Robot: ** 
 Droidname: 476
+Droid portrait file name (without extension) to use="476"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -1166,6 +1176,7 @@ Notes concerning this droid : ship maintenance robot. Fitted with multiple arms 
 
 ** Start of new Robot: ** 
 Droidname: 493
+Droid portrait file name (without extension) to use="493"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -1197,6 +1208,7 @@ Notes concerning this droid : slave maintenance droid. Standard version will car
 
 ** Start of new Robot: ** 
 Droidname: 516
+Droid portrait file name (without extension) to use="516"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -1228,6 +1240,7 @@ Notes concerning this droid : early crew droid. Able to carry out simple flight 
 
 ** Start of new Robot: ** 
 Droidname: 571
+Droid portrait file name (without extension) to use="571"
 Maximum speed of this droid: 4.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -1259,6 +1272,7 @@ Notes concerning this droid : standard crew droid. Supplied with the ship.
 
 ** Start of new Robot: ** 
 Droidname: 598
+Droid portrait file name (without extension) to use="598"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -1290,6 +1304,7 @@ Notes concerning this droid : a highly sophisticated device. Able to control the
 
 ** Start of new Robot: ** 
 Droidname: 614
+Droid portrait file name (without extension) to use="614"
 Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -1321,6 +1336,7 @@ Notes concerning this droid : low security sentinel droid. Used to protect areas
 
 ** Start of new Robot: ** 
 Droidname: 615
+Droid portrait file name (without extension) to use="615"
 Maximum speed of this droid: 4.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -1352,6 +1368,7 @@ Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by t
 
 ** Start of new Robot: ** 
 Droidname: 629
+Droid portrait file name (without extension) to use="629"
 Maximum speed of this droid: 2.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -1383,6 +1400,7 @@ Notes concerning this droid : low sentinel droid. Lasers are built into the turr
 
 ** Start of new Robot: ** 
 Droidname: 711
+Droid portrait file name (without extension) to use="711"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -1414,6 +1432,7 @@ Notes concerning this droid : heavy duty battle droid. Disruptor is built into t
 
 ** Start of new Robot: ** 
 Droidname: 742
+Droid portrait file name (without extension) to use="742"
 Maximum speed of this droid: 4.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -1445,6 +1464,7 @@ Notes concerning this droid : this version is the one mainly used by the Militar
 
 ** Start of new Robot: ** 
 Droidname: 751
+Droid portrait file name (without extension) to use="751"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -1476,6 +1496,7 @@ Notes concerning this droid : very heavy duty battle droid. Only a few have so f
 
 ** Start of new Robot: ** 
 Droidname: 821
+Droid portrait file name (without extension) to use="821"
 Maximum speed of this droid: 6.1
 Class of this droid: 8
 Maximum acceleration of this droid: 2.1
@@ -1507,6 +1528,7 @@ Notes concerning this droid : a very reliable anti-grav unit is fitted into this
 
 ** Start of new Robot: ** 
 Droidname: 834
+Droid portrait file name (without extension) to use="834"
 Maximum speed of this droid: 7.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
@@ -1538,6 +1560,7 @@ Notes concerning this droid : early type anti-grav security droid. Fitted with a
 
 ** Start of new Robot: ** 
 Droidname: 883
+Droid portrait file name (without extension) to use="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
@@ -1569,6 +1592,7 @@ Notes concerning this droid : this droid was designed from archive data. For som
 
 ** Start of new Robot: ** 
 Droidname: 999
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1600,6 +1624,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 124
+Droid portrait file name (without extension) to use="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -1631,6 +1656,7 @@ Notes concerning this droid : simpe rubbish diposal robot. Common device in most
 
 ** Start of new Robot: ** 
 Droidname: 140
+Droid portrait file name (without extension) to use="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -1662,6 +1688,7 @@ Notes concerning this droid : created by Dr. Masternak to clean up large heaps o
 
 ** Start of new Robot: ** 
 Droidname: CHA
+Droid portrait file name (without extension) to use="CHA"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1693,6 +1720,7 @@ This is Dr. Chanra, a leading scientist in the field of artificial intelligence 
 
 ** Start of new Robot: ** 
 Droidname: STO
+Droid portrait file name (without extension) to use="STO"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1724,6 +1752,7 @@ This is Mr. Stone, a sales representative of the United Machines Corporation.
 
 ** Start of new Robot: ** 
 Droidname: 998
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1755,6 +1784,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 997
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1786,6 +1816,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 996
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1817,6 +1848,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 995
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1848,6 +1880,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 994
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1879,6 +1912,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 993
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1910,6 +1944,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 992
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1941,6 +1976,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 991
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
@@ -1972,6 +2008,7 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: 990
+Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
