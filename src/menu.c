@@ -2448,6 +2448,11 @@ Credits_Menu (void)
                                       Pete Spicer\n\n\n\
    LEVEL DESIGN:\n\n\
                                       Johannes Prix\n\n\n\
+   OGG COMPOSERS:\n\n\
+                                      \"The Beginning\"\n\
+                                        by 4t thieves\n\
+                                        of kahvi collective\n\
+                                      (www.kahvi.org)\n\n\n\
    MOD COMPOSERS:\n\n\
                                       speedball (Ace-II)\n\n\
                                       knert&cosmos (Your World)\n\n\
@@ -2462,7 +2467,7 @@ Credits_Menu (void)
                                       4-mat/anarchy (The Last V8 ,\n\
                                       Hardcore Theme,\n\
                                       Psychospugs, Starworx)\n\n\
-                                      ???   (alfa , bladerunner,\n\
+                                      ???   (bladerunner,\n\
                                       delta2, slow)\n\n\n\
    VOICES:\n\n\
                                       Tiina Heinonen\n\n\

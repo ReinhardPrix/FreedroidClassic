@@ -648,7 +648,7 @@ SetSoundFXVolume(float NewVolume)
   // Set the volume IN the loaded files, if SDL is used...
   // This is done here for the Files 1,2,3 and 4, since these
   // are background music files.
-  for ( i=5 ; i<ALL_SOUNDS ; i++ )
+  for ( i=1 ; i<ALL_SOUNDS ; i++ )
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
@@ -1544,7 +1544,7 @@ DruidBlastSound (void)
 {
   if (!sound_on) return;
 
-  PlaySound (BLASTSOUND);
+  PlaySound ( BLASTSOUND );
 
 }; // void DruidBlastSound (void)
 
