@@ -580,14 +580,13 @@ HandleCurrentlyActivatedSkill( void )
 	    {
 	    case ISO_V_CHEST_OPEN:
 	    case ISO_H_CHEST_OPEN:
-	      if ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-		   ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-		   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-		   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) )
+	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
 		{
 		  EnterChest();
 		  return;
-		  // i = MAX_OBSTACLES_ON_MAP ;
 		}
 	      break;
 	    case ISO_V_CHEST_CLOSED:
@@ -597,9 +596,17 @@ HandleCurrentlyActivatedSkill( void )
 		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
 		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
 		{
+		  //--------------------
+		  // Later we might introduce some takeover game here for the Tux, so that
+		  // the chest also has to be hacked or it will not open for the Tux without
+		  // the proper key.
+		  //
+		  if ( ChestLevel -> obstacle_list [ i ] . type == ISO_V_CHEST_CLOSED )
+		    ChestLevel -> obstacle_list [ i ] . type = ISO_V_CHEST_OPEN;
+		  if ( ChestLevel -> obstacle_list [ i ] . type == ISO_H_CHEST_CLOSED )
+		    ChestLevel -> obstacle_list [ i ] . type = ISO_H_CHEST_OPEN;
 		  EnterChest();
 		  return;
-		  // i = MAX_OBSTACLES_ON_MAP ;
 		}
 	      break;
 	    default:
