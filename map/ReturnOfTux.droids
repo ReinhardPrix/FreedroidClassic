@@ -54,80 +54,80 @@ SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0
 //--------------------
 // This is Bender, who suffers from brain enlargement pills...
 //
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- Strongest man in town"
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- Strongest man in town"
 
 //--------------------
 // This is Dr. Chandra.
 //
-SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ChandraStartGameSquare" RushTux="no" DialogSectionToUse="Chandra" ShortLabel="Chandra -- Town Sage"
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ChandraStartGameSquare" RushTux="no" DialogSectionToUse="Chandra" ShortLabel="Chandra -- Town Sage"
 
 //--------------------
 // This is Doc Moore, the only medic in the old town
 //
-SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="DocMoore" ShortLabel="Doc Moore -- Old Town Medic"
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="DocMoore" ShortLabel="Doc Moore -- Old Town Medic"
 
 //--------------------
 // This is Mr. Stone, running the main shop of the old town
 //
-SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="Stone" ShortLabel="Stone -- Shopowern"
+SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="Stone" ShortLabel="Stone -- Shopowern"
 
 //--------------------
 // This is Sorenson, a former preferred person of the MS
 //
-SpecialForce: Type=PRO X=7 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Magics Teacher"
+SpecialForce: Type=PRO X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Magics Teacher"
 
 //--------------------
 // This is a security bot.
 //
-SpecialForce: Type=614 X=17 Y=10 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare1" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
-SpecialForce: Type=614 X=18 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare2" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
-SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare3" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
+SpecialForce: Type=614 X=17 Y=10 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare1" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
+SpecialForce: Type=614 X=18 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare2" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
+SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="614StartGameSquare3" RushTux="no" DialogSectionToUse="614" ShortLabel="614 -- Town Guard Bot"
 
 //--------------------
 // This is Richard 'RMS', who lost most of his code
 //
-SpecialForce: Type=PRO X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RichardStartGameSquare" RushTux="no" DialogSectionToUse="RMS" ShortLabel="Richard -- Programmer"
+SpecialForce: Type=PRO X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RichardStartGameSquare" RushTux="no" DialogSectionToUse="RMS" ShortLabel="Richard -- Programmer"
 
 //--------------------
 // This is Dixon 'DIX', who maintains the teleporter system of the colony
 //
-SpecialForce: Type=GUA X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="Dixon" ShortLabel="Dixon -- Teleport Administrator"
+SpecialForce: Type=GUA X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="Dixon" ShortLabel="Dixon -- Teleport Administrator"
 
 //--------------------
 // This is Michelangelo, who cooks for half the community
 //
-SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MichelangeloStartGameSquare" RushTux="no" DialogSectionToUse="Michelangelo" ShortLabel="Michelangelo -- Colony Cook"
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MichelangeloStartGameSquare" RushTux="no" DialogSectionToUse="Michelangelo" ShortLabel="Michelangelo -- Colony Cook"
 
 //--------------------
 // This is Skippy.  He makes map-maker devices.
 //
-SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SkippyStartGameSquare" RushTux="no" DialogSectionToUse="Skippy" ShortLabel="Skippy -- Map-Maker Maker"
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SkippyStartGameSquare" RushTux="no" DialogSectionToUse="Skippy" ShortLabel="Skippy -- Map-Maker Maker"
 
 //--------------------
 // This is Duncan.  He makes grenades.
 //
-SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DuncanStartGameSquare" RushTux="no" DialogSectionToUse="Duncan" ShortLabel="Duncan -- Grenade Maker"
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DuncanStartGameSquare" RushTux="no" DialogSectionToUse="Duncan" ShortLabel="Duncan -- Grenade Maker"
 
 //--------------------
 // This is Pendragon, who can train you in the fighting arts.
 //
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="Pendragon" ShortLabel="Pendragon -- Melee Combat Teacher"
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="Pendragon" ShortLabel="Pendragon -- Melee Combat Teacher"
 
 //--------------------
 // This is Bruce 'BRU', who is recovering from work in the mines
 //
-SpecialForce: Type=WOR X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BruceStartGameSquare" RushTux="no" DialogSectionToUse="Bruce" ShortLabel="Bruce -- Mine Worker"
+SpecialForce: Type=WOR X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BruceStartGameSquare" RushTux="no" DialogSectionToUse="Bruce" ShortLabel="Bruce -- Mine Worker"
 
 //--------------------
 // This is Butch, the arena master
 //
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ButchStartGameSquare" RushTux="no" DialogSectionToUse="Butch" ShortLabel="Butch -- Arena Master"
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ButchStartGameSquare" RushTux="no" DialogSectionToUse="Butch" ShortLabel="Butch -- Arena Master"
 
 //--------------------
 // This is Spencer 'SPE', the chief of the guard, who won't let Tux into the citadel
 //
-S**pecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
+S**pecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
 
 ** End of this levels droid data **
 
@@ -232,7 +232,7 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 139
 
-SpecialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator"
+SpecialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator"
 
 ** End of this levels droid data **
 
@@ -246,8 +246,8 @@ Maximum number of Random Droids=4
 Minimum number of Random Droids=4
 Allowed Type of Random Droid for this level: 821
 
-SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis -- Researcher "
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard"
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis -- Researcher "
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard"
 SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DarwinStartGameSquare" RushTux="no" DialogSectionToUse="Darwin" ShortLabel="Darwin -- Hunter"
 SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MelfisStartGameSquare" RushTux="no" DialogSectionToUse="Melfis" ShortLabel="Melfis -- Hunting Apprentice"
 
@@ -443,7 +443,7 @@ Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 420
 
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Ernie -- Ranged Weapons Teacher"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Ernie -- Ranged Weapons Teacher"
 
 ** End of this levels droid data **
 
