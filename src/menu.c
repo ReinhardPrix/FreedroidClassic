@@ -878,12 +878,13 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       InitiateMenu( BackgroundToUse );
 
       //--------------------
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // We highlight the currently selected option with an 
+      // influencer to the left and right of it.
+      //
+      PutInfluence( ( SCREENLEN - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
-      PutInfluence( FIRST_MENU_ITEM_POS_XX , 
+      PutInfluence( ( SCREENLEN + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
 
