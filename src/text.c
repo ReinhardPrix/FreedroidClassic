@@ -2270,7 +2270,6 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
     {
       if ( use_open_gl )
 	{
-	  // RestoreMenuBackground ( 0 );
 	  blit_special_background ( background_code );
 	  DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
 	}
@@ -2289,8 +2288,23 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
       
       key = getchar_raw ();  
       
-      if (key == SDLK_RETURN) 
-	{
+      if ( key == SDLK_RETURN ) 
+      {
+#ifdef __WIN32__
+	  //--------------------
+	  // On win32 machines, we need to perform an extra screen update,
+	  // so that both buffers are in sync for future OpenGL operations
+	  //
+	  if ( use_open_gl )
+	  {
+	      blit_special_background ( background_code );
+	      DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
+	      x0 = MyCursorX;
+	      y0 = MyCursorY;
+	      PutString ( Screen, x0, y0, input);
+	      our_SDL_flip_wrapper (Screen);
+	  }
+#endif
 	  input[curpos] = 0;
 	  finished = TRUE;
 	}

@@ -730,61 +730,78 @@ to blit the 'experience countdown' bar.  Graphics will be suppressed for now..."
 void
 blit_running_power_bars ( void )
 {
-  SDL_Rect running_power_rect;
-  SDL_Rect un_running_power_rect;
-  static Uint32 running_power_rect_color = 0 ;
-  static Uint32 un_running_power_rect_color = 0 ;
-  static Uint32 rest_running_power_rect_color = 0 ;
+    SDL_Rect running_power_rect;
+    SDL_Rect un_running_power_rect;
+    static Uint32 running_power_rect_color = 0 ;
+    static Uint32 un_running_power_rect_color = 0 ;
+    static Uint32 rest_running_power_rect_color = 0 ;
+    static Uint32 infinite_running_power_rect_color = 0 ;
 
-  //--------------------
-  // At game startup, it might be that an uninitialized Tux (with 0 in the
-  // max running power entry) is still in the data structure and when the
-  // title displayes, this causes division by zero... 
-  //
-  if ( Me [ 0 ] . max_running_power <= 1 ) return ;
-
-  //--------------------
-  // Upon the very first function call, the health and force colors are not yet
-  // set.  Therefore we set these colors once and for the rest of the game.
-  //
-  if ( running_power_rect_color == 0 )
+    //--------------------
+    // On some maps, the Tux will have no enemies.  Therefore it would
+    // make sense that (for better gameplay) the running bar does not
+    // run out.
+    //
+    if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> infinite_running_on_this_level )
     {
-      un_running_power_rect_color = SDL_MapRGBA( Screen->format , 20 , 20 , 20 , 80 );
-      running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 0 , 80 );
-      rest_running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 20 , 20 , 80 );
+	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
     }
 
-  if ( GameConfig . Inventory_Visible ) 
+    //--------------------
+    // At game startup, it might be that an uninitialized Tux (with 0 in the
+    // max running power entry) is still in the data structure and when the
+    // title displayes, this causes division by zero... 
+    //
+    if ( Me [ 0 ] . max_running_power <= 1 ) return ;
+
+    //--------------------
+    // Upon the very first function call, the health and force colors are not yet
+    // set.  Therefore we set these colors once and for the rest of the game.
+    //
+    if ( running_power_rect_color == 0 )
     {
-      return ;
+	un_running_power_rect_color = SDL_MapRGBA( Screen->format , 20 , 20 , 20 , 80 );
+	running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 0 , 80 );
+	rest_running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 20 , 20 , 80 );
+	infinite_running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 255 , 80 );
     }
-
-  running_power_rect.x = WHOLE_RUNNING_POWER_RECT_X;
-  running_power_rect.y = WHOLE_RUNNING_POWER_RECT_Y 
-    +  ( ( WHOLE_RUNNING_POWER_RECT_H * ( Me [ 0 ] . max_running_power - Me [ 0 ] . running_power ) ) / Me [ 0 ] . max_running_power ) ;
-  running_power_rect.w = WHOLE_RUNNING_POWER_RECT_W;
-  running_power_rect.h = ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ;
-  if ( Me [ 0 ] . running_power < 0 ) running_power_rect . h = 0;
-
-  un_running_power_rect . x = running_power_rect . x ;
-  un_running_power_rect . y = WHOLE_RUNNING_POWER_RECT_Y ;
-  // +  ( ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ) ;
-  un_running_power_rect . w = WHOLE_RUNNING_POWER_RECT_W;
-  un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H - 
-    ( ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ) ;
-  if ( Me [ 0 ] . running_power < 0 ) un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H ;
-
-  //--------------------
-  // Now wthat all our rects are set up, we can start to display the current
-  // running power status on screen...
-  //
-  SDL_SetClipRect( Screen , NULL );
-  if ( Me [ 0 ] . running_must_rest )
-    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , rest_running_power_rect_color );
-  else
-    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , running_power_rect_color );
-  our_SDL_fill_rect_wrapper( Screen , & ( un_running_power_rect ) , un_running_power_rect_color );
-
+    
+    if ( GameConfig . Inventory_Visible ) 
+    {
+	return ;
+    }
+    
+    running_power_rect.x = WHOLE_RUNNING_POWER_RECT_X;
+    running_power_rect.y = WHOLE_RUNNING_POWER_RECT_Y 
+	+  ( ( WHOLE_RUNNING_POWER_RECT_H * ( Me [ 0 ] . max_running_power - Me [ 0 ] . running_power ) ) / Me [ 0 ] . max_running_power ) ;
+    running_power_rect.w = WHOLE_RUNNING_POWER_RECT_W;
+    running_power_rect.h = ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ;
+    if ( Me [ 0 ] . running_power < 0 ) running_power_rect . h = 0;
+    
+    un_running_power_rect . x = running_power_rect . x ;
+    un_running_power_rect . y = WHOLE_RUNNING_POWER_RECT_Y ;
+    un_running_power_rect . w = WHOLE_RUNNING_POWER_RECT_W;
+    un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H - 
+	( ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ) ;
+    if ( Me [ 0 ] . running_power < 0 ) un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H ;
+    
+    //--------------------
+    // Now wthat all our rects are set up, we can start to display the current
+    // running power status on screen...
+    //
+    SDL_SetClipRect( Screen , NULL );
+    if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> infinite_running_on_this_level )
+    {
+	our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , infinite_running_power_rect_color );
+    }
+    else
+    {
+	if ( Me [ 0 ] . running_must_rest )
+	    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , rest_running_power_rect_color );
+	else
+	    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , running_power_rect_color );
+	our_SDL_fill_rect_wrapper( Screen , & ( un_running_power_rect ) , un_running_power_rect_color );
+    }
 }; // void blit_running_power_bars ( void )
 
 /* ----------------------------------------------------------------------

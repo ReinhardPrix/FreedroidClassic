@@ -318,31 +318,34 @@ DecodeInterfaceDataForThisLevel ( Level loadlevel , char* DataPointer )
  *
  *
  * ---------------------------------------------------------------------- */
-void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
+void 
+DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
 {
-  sscanf ( DataPointer , "Levelnumber: %u \n\
+    sscanf ( DataPointer , "Levelnumber: %u \n\
  xlen of this level: %u \n\
  ylen of this level: %u \n\
  light radius bonus of this level: %u \n\
- minimal light on this level: %u\n" , 
-	   &( loadlevel -> levelnum ), 
-	   &( loadlevel -> xlen ),
-	   &( loadlevel -> ylen ), 
-	   &( loadlevel -> light_radius_bonus ),
-	   &( loadlevel -> minimum_light_value) );
-
-  DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
-  DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
-  DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
-  DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
-
-  if ( loadlevel->ylen >= MAX_MAP_LINES ) 
+ minimal light on this level: %u \n\
+ infinite_running_on_this_level: %u \n" , 
+	     &( loadlevel -> levelnum ), 
+	     &( loadlevel -> xlen ),
+	     &( loadlevel -> ylen ), 
+	     &( loadlevel -> light_radius_bonus ),
+	     &( loadlevel -> minimum_light_value),
+	     &( loadlevel -> infinite_running_on_this_level ) );
+    
+    DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
+    DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
+    DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
+    DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
+    
+    if ( loadlevel->ylen >= MAX_MAP_LINES ) 
     {
-      GiveStandardErrorMessage ( "DecodeDimensionsOfThisLevel(...)" , "\
+	GiveStandardErrorMessage ( "DecodeDimensionsOfThisLevel(...)" , "\
 A maplevel Freedroid was supposed to load has more map lines than allowed\n\
 for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
 Sorry, but unless this constant is raised, Freedroid will refuse to load this map.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
 }; // void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer );
 
@@ -1682,6 +1685,7 @@ xlen of this level: %d\n\
 ylen of this level: %d\n\
 light radius bonus of this level: %d\n\
 minimal light on this level: %d\n\
+infinite_running_on_this_level: %d\n\
 jump threshold north: %d\n\
 jump threshold south: %d\n\
 jump threshold east: %d\n\
@@ -1692,6 +1696,7 @@ jump target east: %d\n\
 jump target west: %d\n",
 	  Lev -> levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
 	  Lev -> minimum_light_value, 
+	  Lev -> infinite_running_on_this_level,
 	  Lev -> jump_threshold_north, 
 	  Lev -> jump_threshold_south, 
 	  Lev -> jump_threshold_east, 

@@ -2225,218 +2225,221 @@ EditLevelDimensions ( void )
 int
 DoLevelEditorMainMenu ( Level EditLevel )
 {
-  char* MenuTexts[ 100 ];
-  char Options [ 20 ] [1000];
-  int Weiter = FALSE ;
-  int MenuPosition=1;
-  int Done=FALSE;
-  int i;
+    char* MenuTexts[ 100 ];
+    char Options [ 20 ] [1000];
+    int Weiter = FALSE ;
+    int MenuPosition=1;
+    int Done=FALSE;
+    int i;
 
-enum
-  { 
-    SAVE_LEVEL_POSITION=1, 
-    CHANGE_LEVEL_POSITION, 
-    CHANGE_LIGHT_RADIUS_BONUS, 
-    CHANGE_MINIMAL_LIGHT_ON_LEVEL, 
-    CHANGE_SIZE_X, 
-    SET_LEVEL_NAME , 
-    SET_BACKGROUND_SONG_NAME , 
-    SET_LEVEL_COMMENT, 
-    ADD_NEW_LEVEL , 
-    SET_LEVEL_INTERFACE_POSITION , 
-    EDIT_LEVEL_DIMENSIONS,
-    QUIT_LEVEL_EDITOR_POSITION 
-};
-
-  while (!Weiter)
+    enum
+	{ 
+	    SAVE_LEVEL_POSITION=1, 
+	    CHANGE_LEVEL_POSITION, 
+	    CHANGE_LIGHT_RADIUS_BONUS, 
+	    CHANGE_MINIMAL_LIGHT_ON_LEVEL, 
+	    CHANGE_INFINITE_RUNNING, 
+	    SET_LEVEL_NAME , 
+	    SET_BACKGROUND_SONG_NAME , 
+	    SET_LEVEL_COMMENT, 
+	    ADD_NEW_LEVEL , 
+	    SET_LEVEL_INTERFACE_POSITION , 
+	    EDIT_LEVEL_DIMENSIONS,
+	    QUIT_LEVEL_EDITOR_POSITION 
+	};
+    
+    while (!Weiter)
     {
-      
-      EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
-      InitiateMenu( -1 );
-      
-      i = 0 ;
-      MenuTexts[ i ] = "Save whole ship to 'Asteroids.map'" ; i++;
-      sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
-      MenuTexts[ i ] = Options [ 0 ]; i++;
-      sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
-      MenuTexts[ i ] = Options [ 1 ]; i++;
-      sprintf( Options [ 6 ] , "Minimal light value: %d" , EditLevel -> minimum_light_value );
-      MenuTexts[ i ] = Options [ 6 ]; i++;
-      sprintf( Options [ 2 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
-      MenuTexts[ i ] = Options [ 2 ]; i++;
-      sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
-      MenuTexts[ i ] = Options [ 3 ] ; i++;
-      sprintf( Options [ 4 ] , "Background music file name: %s" , EditLevel->Background_Song_Name );
-      MenuTexts[ i ] = Options [ 4 ] ; i++;
-      sprintf( Options [ 5 ] , "Set Level Comment: %s" , EditLevel->Level_Enter_Comment );
-      MenuTexts[ i ] = Options [ 5 ] ; i++;
-      MenuTexts[ i ] = "Add completely new level" ; i++;
-      MenuTexts[ i ] = "Set Level Interfaces" ; i++;
-      MenuTexts[ i ] = "Edit Level Dimensions" ; i++;
-      MenuTexts[ i ] = "Quit Level Editor" ; i++;
-      MenuTexts[ i ] = "" ; i++;
-	  
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
-
-      
-      while (EnterPressed() || SpacePressed() );
-      
-      switch (MenuPosition) 
+	
+	EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+	
+	InitiateMenu( -1 );
+	
+	i = 0 ;
+	MenuTexts[ i ] = "Save whole ship to 'Asteroids.map'" ; i++;
+	sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
+	MenuTexts[ i ] = Options [ 0 ]; i++;
+	sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
+	MenuTexts[ i ] = Options [ 1 ]; i++;
+	sprintf( Options [ 6 ] , "Minimal light value: %d" , EditLevel -> minimum_light_value );
+	MenuTexts[ i ] = Options [ 6 ]; i++;
+	sprintf( Options [ 2 ] , "Infinite running on this level: " );
+	if ( EditLevel -> infinite_running_on_this_level ) strcat ( Options [ 2 ] , "YES" ) ;
+	else ( strcat ( Options [ 2 ] , "NO" ) ) ;
+	MenuTexts[ i ] = Options [ 2 ]; i++;
+	sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
+	MenuTexts[ i ] = Options [ 3 ] ; i++;
+	sprintf( Options [ 4 ] , "Background music file name: %s" , EditLevel->Background_Song_Name );
+	MenuTexts[ i ] = Options [ 4 ] ; i++;
+	sprintf( Options [ 5 ] , "Set Level Comment: %s" , EditLevel->Level_Enter_Comment );
+	MenuTexts[ i ] = Options [ 5 ] ; i++;
+	MenuTexts[ i ] = "Add completely new level" ; i++;
+	MenuTexts[ i ] = "Set Level Interfaces" ; i++;
+	MenuTexts[ i ] = "Edit Level Dimensions" ; i++;
+	MenuTexts[ i ] = "Quit Level Editor" ; i++;
+	MenuTexts[ i ] = "" ; i++;
+	
+	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
+	
+	
+	while ( EnterPressed ( ) || SpacePressed ( ) );
+	
+	switch ( MenuPosition ) 
 	{
-	  
-	case (-1):
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	  // if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
-	  break;
-	case SAVE_LEVEL_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-	  SaveShip("../map/Asteroid.maps");
-	  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-	  our_SDL_flip_wrapper ( Screen );
-	  while (!EnterPressed() && !SpacePressed() ) ;
-	  while (EnterPressed() || SpacePressed() ) ;
-	  // Weiter=!Weiter;
-	  break;
-	case CHANGE_LEVEL_POSITION: 
-	  // if ( EditLevel->levelnum ) Teleport ( EditLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
-	  while (EnterPressed() || SpacePressed() ) ;
-	  break;
-	case CHANGE_LIGHT_RADIUS_BONUS: 
-	  while (EnterPressed() || SpacePressed() ) ;
-	  break;
-	case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  break;
-	case SET_LEVEL_NAME:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  EditLevel->Levelname = 
-	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level name: \n\n" ,
-					     EditLevel->Levelname );
-	  Weiter=!Weiter;
-	  break;
-	case SET_BACKGROUND_SONG_NAME:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  EditLevel->Background_Song_Name = 
-	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new music file name: \n\n" ,
-					     EditLevel->Background_Song_Name );
-	  Weiter=!Weiter;
-	  break;
-	case SET_LEVEL_COMMENT:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  EditLevel->Level_Enter_Comment = 
-	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level comment: \n\n" ,
-					     EditLevel->Level_Enter_Comment );
-	  Weiter=!Weiter;
-	  break;
-	case ADD_NEW_LEVEL:
-	  while ( EnterPressed ( ) || SpacePressed ( ) ) ;
-	  if ( curShip . num_levels < MAX_LEVELS )
-	    {
-	      CreateNewMapLevel ( ) ;
-	      CenteredPutString ( Screen ,  12*FontHeight( FPS_Display_BFont ), "New level has been added!");
-	      our_SDL_flip_wrapper( Screen );
-	      while ( ! SpacePressed ( ) && ! EnterPressed ( ) );
-	      while ( EnterPressed ( ) || SpacePressed ( ) ) ;
-	      SetTextCursor( 15 , 440 );
-	    }
-	  Weiter=!Weiter;
-	  break;
-	case SET_LEVEL_INTERFACE_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  // Weiter=!Weiter;
-	  SetLevelInterfaces ( );
-	  break;
-	case EDIT_LEVEL_DIMENSIONS:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  // Weiter=!Weiter;
-	  EditLevelDimensions ( );
-	  break;
-	case QUIT_LEVEL_EDITOR_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  Done=TRUE;
-	  break;
-	default: 
-	  break;
-	  
-	} // switch
-      
-	  // If the user of the level editor pressed left or right, that should have
-	  // an effect IF he/she is a the change level menu point
-
-      if (LeftPressed() || RightPressed() ) 
-	{
-	  switch (MenuPosition)
-	    {
-	      
-	    case CHANGE_LEVEL_POSITION:
-	      if ( LeftPressed() )
-		{
-		  if ( EditLevel->levelnum > 0 )
-		    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE , FALSE );
-		  while (LeftPressed());
-		}
-	      if ( RightPressed() )
-		{
-		  if ( EditLevel->levelnum < curShip.num_levels -1 )
-		    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE , FALSE );
-		  while (RightPressed());
-		}
-	      break;
-	      
-	    case CHANGE_LIGHT_RADIUS_BONUS:
-	      if ( RightPressed() )
-		{
-		  EditLevel -> light_radius_bonus ++;
-		  while (RightPressed());
-		}
-	      if ( LeftPressed() )
-		{
-		  EditLevel -> light_radius_bonus --;
-		  while (LeftPressed());
-		}
-	      Teleport ( EditLevel -> levelnum , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
-	      break;
-
+	    
+	    case (-1):
+		while ( EscapePressed() );
+		Weiter=!Weiter;
+		// if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+		break;
+	    case SAVE_LEVEL_POSITION:
+		while (EnterPressed() || SpacePressed() ) ;
+		close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
+		SaveShip("../map/Asteroid.maps");
+		CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		our_SDL_flip_wrapper ( Screen );
+		while (!EnterPressed() && !SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() ) ;
+		// Weiter=!Weiter;
+		break;
+	    case CHANGE_LEVEL_POSITION: 
+		// if ( EditLevel->levelnum ) Teleport ( EditLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
+		while (EnterPressed() || SpacePressed() ) ;
+		break;
+	    case CHANGE_LIGHT_RADIUS_BONUS: 
+		while (EnterPressed() || SpacePressed() ) ;
+		break;
 	    case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
-	      if ( RightPressed() )
+		while (EnterPressed() || SpacePressed() ) ;
+		break;
+	    case SET_LEVEL_NAME:
+		while (EnterPressed() || SpacePressed() ) ;
+		EditLevel->Levelname = 
+		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level name: \n\n" ,
+						     EditLevel->Levelname );
+		Weiter=!Weiter;
+		break;
+	    case SET_BACKGROUND_SONG_NAME:
+		while (EnterPressed() || SpacePressed() ) ;
+		EditLevel->Background_Song_Name = 
+		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new music file name: \n\n" ,
+						     EditLevel->Background_Song_Name );
+		Weiter=!Weiter;
+		break;
+	    case SET_LEVEL_COMMENT:
+		while (EnterPressed() || SpacePressed() ) ;
+		EditLevel->Level_Enter_Comment = 
+		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level comment: \n\n" ,
+						     EditLevel->Level_Enter_Comment );
+		Weiter=!Weiter;
+		break;
+	    case ADD_NEW_LEVEL:
+		while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		if ( curShip . num_levels < MAX_LEVELS )
 		{
-		  EditLevel -> minimum_light_value ++;
-		  while (RightPressed());
+		    CreateNewMapLevel ( ) ;
+		    CenteredPutString ( Screen ,  12*FontHeight( FPS_Display_BFont ), "New level has been added!");
+		    our_SDL_flip_wrapper( Screen );
+		    while ( ! SpacePressed ( ) && ! EnterPressed ( ) );
+		    while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		    SetTextCursor( 15 , 440 );
 		}
-	      if ( LeftPressed() )
-		{
-		  EditLevel -> minimum_light_value --;
-		  while (LeftPressed());
-		}
-	      Teleport ( EditLevel -> levelnum , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
-	      break;
-
-	    case CHANGE_SIZE_X:
-	      break;
-	      
+		Weiter=!Weiter;
+		break;
+	    case SET_LEVEL_INTERFACE_POSITION:
+		while (EnterPressed() || SpacePressed() ) ;
+		// Weiter=!Weiter;
+		SetLevelInterfaces ( );
+		break;
+	    case EDIT_LEVEL_DIMENSIONS:
+		while (EnterPressed() || SpacePressed() ) ;
+		// Weiter=!Weiter;
+		EditLevelDimensions ( );
+		break;
+	    case QUIT_LEVEL_EDITOR_POSITION:
+		while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		Weiter=!Weiter;
+		Done=TRUE;
+		break;
+	    case CHANGE_INFINITE_RUNNING:
+		while ( EnterPressed ( ) || SpacePressed ( ) || LeftPressed ( ) || RightPressed ( ) ) ;
+		EditLevel -> infinite_running_on_this_level =
+		    ! EditLevel -> infinite_running_on_this_level ;
+		break;
+	    default: 
+		break;
+		
+	} // switch
+	
+	// If the user of the level editor pressed left or right, that should have
+	// an effect IF he/she is a the change level menu point
+	
+	if ( LeftPressed ( ) || RightPressed ( ) ) 
+	{
+	    switch (MenuPosition)
+	    {
+		
+		case CHANGE_LEVEL_POSITION:
+		    if ( LeftPressed() )
+		    {
+			if ( EditLevel->levelnum > 0 )
+			    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE , FALSE );
+			while (LeftPressed());
+		    }
+		    if ( RightPressed() )
+		    {
+			if ( EditLevel->levelnum < curShip.num_levels -1 )
+			    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE , FALSE );
+			while (RightPressed());
+		    }
+		    break;
+		    
+		case CHANGE_LIGHT_RADIUS_BONUS:
+		    if ( RightPressed() )
+		    {
+			EditLevel -> light_radius_bonus ++;
+			while (RightPressed());
+		    }
+		    if ( LeftPressed() )
+		    {
+			EditLevel -> light_radius_bonus --;
+			while (LeftPressed());
+		    }
+		    Teleport ( EditLevel -> levelnum , 
+			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
+		    break;
+		    
+		case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
+		    if ( RightPressed() )
+		    {
+			EditLevel -> minimum_light_value ++;
+			while (RightPressed());
+		    }
+		    if ( LeftPressed() )
+		    {
+			EditLevel -> minimum_light_value --;
+			while (LeftPressed());
+		    }
+		    Teleport ( EditLevel -> levelnum , 
+			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
+		    break;
 	    }
 	} // if LeftPressed || RightPressed
-      
     }
-
-  return ( Done );
-
+    return ( Done );
 }; // void DoLevelEditorMainMenu ( Level EditLevel );
 
 /* ----------------------------------------------------------------------
- *
- *
+ * There is a 'help' screen for the level editor too.  This help screen
+ * is presented as a scrolling text, giving a short introduction and also
+ * explaining the keymap to the level editor.  The info for this scrolling
+ * text is all in a title file in the maps dir, much like the initial
+ * scrolling text at any new game startup.
  * ---------------------------------------------------------------------- */
 void 
 ShowLevelEditorKeymap ( void )
 {
-
-  PlayATitleFile ( "level_editor_help.title" );
-
+    PlayATitleFile ( "level_editor_help.title" );
 }; // void ShowLevelEditorKeymap ( void )
 
 /* ----------------------------------------------------------------------

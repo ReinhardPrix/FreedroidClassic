@@ -963,6 +963,7 @@ typedef struct
     int ylen;
     int light_radius_bonus;
     int minimum_light_value;
+    int infinite_running_on_this_level;
     char *Levelname;
     char *Background_Song_Name;
     char *Level_Enter_Comment;
