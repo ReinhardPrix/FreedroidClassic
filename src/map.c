@@ -223,10 +223,6 @@ AnimateRefresh (void)
 
   DebugPrintf ("\nvoid AnimateRefresh(void):  real function call confirmed.");
 
-  // #ifdef NEW_ENGINE
-  // return;
-  // #endif
-
   InnerWaitCounter += Frame_Time () * 10;
 
   // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {

@@ -15,21 +15,41 @@ Outstanding release-critical bugs (priority: high)
 - (jp) Before any release the levelcolor changing procedure must be rearranged to work
        well together with the combat screen resizing code
 
-- (rp) Takeover game an new engine anpassen
+- Incredible file sizes of ne_....bmp files should be reduced, e.g. by using gif file
+  format instead, to reduce package size.
+
+- The console picture, i.e. the picture for the menu at the console is a terrible mess.
+  Someone must sooner or later set up something more proper for the ne_cons.bmp file
+  containing the different phases of the console before any new release can be shipped.
+
+- (rp) adapt Takeover game to the new engine
 
 - (rp?) Lift: show level-change in lift: probably just some
   SDL_rectangle-filling needed, as it's a simple color scheme anyway
   maybe even use alpha-channel??
   
-- Robots now "jitter" until they reach their waypoint: adapt to new
-  coordinate-treatment 
+- (rp:) Robots now "jitter" until they reach their waypoint: adapt to new
+        coordinate-treatment: 
+  (jp:) This does only happen with "slow" machines.  I had that too at
+        first and then adapted the constant.  Will be more cautios and
+        work over the constant again.
 
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
+
+- (jp) The game SHOULD be playtested on a *SLOW* machine before any release
+       to make sure all the constants are in the right range for slow machines
+       too.  I don't experience many bugs, because the constants are well suited
+       for my 1400 Mhz machine.  I could use the 166 Mhz Pentium of irene.
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - (rp!) Saving of Ships does NOT work correctly in the LevelEditor
-  integrated in the game 
+        integrated in the game 
+
+- We really should have a "dat" file, where the constants involving
+  only the game physics are stored, so that people can write their
+  own "mods" and also transfer their mods to new versions of freed.
+  Theis "dat" file should be well documented and ascii editable.
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
@@ -39,6 +59,8 @@ Outstanding tuning/design bugs and general TODO (priority: low)
   (is BETTER NOW)
 
 - Walls are too "sticky", would be better playable if one could "slide"
+  (jp:)  That has been completely resolved, at least for my machine!!
+         Please tell me if you still experience trouble.
 
 - Colors sind allgemein ein wenig verdreht seit SDL Port
   (wird automatisch behoben mit dem Umstieg auf TrueColor mode,

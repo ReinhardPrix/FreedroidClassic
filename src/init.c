@@ -413,9 +413,6 @@ InitFreedroid (void)
   /* Init the Takeover- Game */
   InitTakeover ();
 
-  /* InternWindow */
-  InternWindow = MyMalloc (INTERNBREITE * INTERNHOEHE * BLOCKMEM + 100);
-
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();
 

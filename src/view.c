@@ -161,8 +161,6 @@ Assemble_Combat_Picture (int mask)
   
   // Why not blit the WHOLE map?  Lets try it!
   // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
-  // * INTERNBREITE IS NO LONGER NEEDED IN HERE
-  // * INTERNHOEHE IS NO LONGER NEEDED IN HERE
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
   // 
   // Recently there were complaints about garbage outside the ship.  This was because
@@ -459,7 +457,6 @@ void
 PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
-  unsigned char *bulletpic;
   SDL_Rect TargetRectangle;
 
   DebugPrintf
@@ -468,9 +465,6 @@ PutBullet (int BulletNummer)
 #if BULLETOFF == 1
   return;
 #endif
-
-  bulletpic = Bulletmap[CurBullet->type].picpointer +
-    CurBullet->phase * BLOCKMEM;
 
   //--------------------
   // in case our bullet is of the type "FLASH", we only
@@ -542,72 +536,15 @@ PutBlast (int BlastNummer)
 
 WARNING!! OBSOLETE FUNCTION ONLY USED IN TAKEOVER GAME ANY MORE!!
 
- * @Desc: PutObject: Puts object with center-coordinates x/y and the
- *	imagepointer to the InternWindow
- *
- * check: ON: Bullet-Collsion wird gecheckt
- *	can be used for Influencer, Enemys, Bullets and Blasts 
- *
- * @Ret: int: TRUE/FALSE: BulletCollision 
- *
  *-----------------------------------------------------------------*/
 int
 PutObject (int x, int y, unsigned char *pic, int check)
 {
-  int DifX, DifY;		/* Verschiebung zum Influencer */
-  unsigned int InternWindowOffset;
-  unsigned char *source, *target;
-  int ret = FALSE;
   int Return_Value;
 
-  DebugPrintf
-    ("\nint PutObject(...): real function call confirmed.\n");
+  printf("\nint PutObject(...): real function call confirmed.\n");
 
-  /* Verschiebung zum Influencer (which is the center of screen */
-  DifX = x - Me.pos.x;
-  DifY = y - Me.pos.y;
-
-  /* Nur Objekte innerhalb des USERFENSTERS anzeigen */
-  if ((DifX >= USERFENSTERBREITE / 2) || (DifY >= USERFENSTERHOEHE / 2) ||
-      (DifX <= -USERFENSTERBREITE / 2) || (DifY <= -USERFENSTERHOEHE / 2))
-    return ret;
-
-  /* Offset des Exakten Bildmittelpunktes abzueglich der Eckenverschiebung */
-  InternWindowOffset =
-    (INTERNHOEHE) * Block_Height / 2 * Block_Width * INTERNBREITE +
-    INTERNBREITE * Block_Width / 2 - Block_Width / 2 -
-    Block_Width * INTERNBREITE * Block_Height / 2;
-
-  /* Verschiebung zum Influencer  (linkes oberes Eck !!) */
-  InternWindowOffset += ((((int) Me.pos.y) % Block_Height) - Block_Height / 2) *
-    Block_Width * INTERNBREITE +
-    (((int) Me.pos.x) % Block_Width) - Block_Width / 2;
-
-  /* relative Verschiebung des Objekts zum Influencer */
-  InternWindowOffset += DifY * Block_Width * INTERNBREITE + DifX;
-
-  /* center of screen */
-  target = InternWindow + InternWindowOffset;
-
-  /* check memory violations */
-  if ((target < InternWindow) ||
-      (target >
-       InternWindow + INTERNBREITE * INTERNHOEHE * BLOCKMEM - BLOCKMEM))
-    {
-      DebugPrintf ("Memory violation by PutObject !!!");
-      Terminate(-1);
-    }
-
-  source = pic;
-
-  DebugPrintf
-    ("\nint PutObject(...): usual end of function reached.\n");
-
-  Return_Value=(MergeBlockToWindow
-	  (source, target, INTERNBREITE * Block_Width, check));
-
-  DebugPrintf
-    ("\nint PutObject(...): usual end of function reached.\n");
+  DebugPrintf("\nint PutObject(...): usual end of function reached.\n");
 
   return (Return_Value);
 } /* PutObject() */

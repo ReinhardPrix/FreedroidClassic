@@ -11,9 +11,6 @@ jp
 
 The list of things I'm going to work on next:
 
-1.  delete old INTERNBREITE and INTERNHOEHE crap, since this structure really
-    is an artifact from good old MS-DOS time.
-
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
 

@@ -197,6 +197,7 @@ MoveEnemys (void)
   int nextwp;
   finepoint nextwp_pos;
   int trywp;
+  float maxspeed;
 
   PermanentHealRobots ();
 
@@ -204,6 +205,7 @@ MoveEnemys (void)
 
   for (i = 0; i < NumEnemys; i++)
      {
+       maxspeed = Druidmap[Me.type].maxspeed;
 
        /* 
 	* what the heck is this ?? (rp) 
@@ -263,41 +265,42 @@ MoveEnemys (void)
        // As long a the distance from the current position of the enemy
        // to its next wp is large, movement is rather sinple:
 
-       if (( fabsf (Restweg.x * Block_Width) >= 1) )
+       if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
 	 {
 	   AllEnemys[i].speed.x =
-	     (Restweg.x / fabsf (Restweg.x)) *
-	     Druidmap[AllEnemys[i].type].maxspeed;
+	     (Restweg.x / fabsf (Restweg.x)) * maxspeed;
 	   AllEnemys[i].pos.x += AllEnemys[i].speed.x * Frame_Time ();
-	 }
-
-       if (( fabsf (Restweg.y * Block_Height ) >= 1) )
+	 } 	 
+       else
 	 {
-	   AllEnemys[i].speed.y =
-	     (Restweg.y / fabsf (Restweg.y)) *
-	     Druidmap[AllEnemys[i].type].maxspeed;
-	   AllEnemys[i].pos.y += AllEnemys[i].speed.y * Frame_Time ();
-	 }
-
-       // --------------------
-       // Once this enemy is close to his final destination waypoint, we have
-       // to do some fine tuning, and then of course set the next waypoint.
-
-       if ( fabsf(Restweg.x * Block_Width ) < 1 )
-	 {
+	   // --------------------
+	   // Once this enemy is close to his final destination waypoint, we have
+	   // to do some fine tuning, and then of course set the next waypoint.
 	   AllEnemys[i].pos.x = nextwp_pos.x;
 	   AllEnemys[i].speed.x = 0;
 	   // printf("\n Final Destination in x reached.");
 	 }
 
-       if ( fabsf(Restweg.y * Block_Height ) < 1 )
+
+       if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
 	 {
+	   AllEnemys[i].speed.y =
+	     (Restweg.y / fabsf (Restweg.y)) * maxspeed;
+	   AllEnemys[i].pos.y += AllEnemys[i].speed.y * Frame_Time ();
+	 }
+       else
+	 {
+	   // AllEnemys[i].pos.y += (nextwp_pos.y-AllEnemys[i].pos.y)*Frame_Time();
 	   AllEnemys[i].pos.y = nextwp_pos.y;
 	   AllEnemys[i].speed.y = 0;
 	   // printf("\n Final Destination in y reached.");
 	 }
 
 
+       //--------------------
+       // Now we can see if we are perhaps already there?
+       // then it might be time to set a new waypoint.
+       //
        if ((Restweg.x == 0) && (Restweg.y == 0))
 	 {
 	   AllEnemys[i].lastwaypoint = AllEnemys[i].nextwaypoint;
