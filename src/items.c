@@ -1229,6 +1229,37 @@ DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
 }; // void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
 
 /* ----------------------------------------------------------------------
+ * This deletes ONE item of the given type, like one bullet that has 
+ * just been expended.
+ * ---------------------------------------------------------------------- */
+void
+DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum )
+{
+  int i;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    {
+      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
+	{
+	  if ( Me [ PlayerNum ] . Inventory [ i ] . multiplicity > 1 )  
+	    Me [ PlayerNum ] . Inventory [ i ] . multiplicity--;
+	  else DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+	  return;
+	}
+    }
+
+  //--------------------
+  // This point must never be reached or a severe error has occured...
+  //
+  fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
+  GiveStandardErrorMessage ( "DeleteOneInventoryItemsOfType(...)" , "\
+One single item of all the items of a given type in the Tux inventory\n\
+should be removed, but there was not even one such item ever found in\n\
+Tux invenrtory.  Something must have gone awry...",
+			     PLEASE_INFORM, IS_FATAL );
+
+}; // void DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the user
  * i.e. combat rectangle or not.
  * ---------------------------------------------------------------------- */

@@ -272,6 +272,7 @@ EXTERN void Play_Shop_ItemIdentifiedSound( void );
 #endif
 EXTERN int CountItemtypeInInventory( int Itemtype , int PlayerNum );
 EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum );
+EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum );
 EXTERN void DamageItem( item* CurItem );
 EXTERN int GetFreeInventoryIndex( void );
 EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );

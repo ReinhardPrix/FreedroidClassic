@@ -1621,23 +1621,22 @@ enum
 	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
 	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+
 	  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
 	  Me[0].Inventory[ 1 ].inventory_position.x = 2;
 	  Me[0].Inventory[ 1 ].inventory_position.y = 0;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+
+	  Me[0].Inventory[ 2 ].type = ITEM_MEDIUM_HEALTH_POTION;
 	  Me[0].Inventory[ 2 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 3 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  Me[0].Inventory[ 2 ].multiplicity = 4 ;
+
 	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_WARRIOR;
 	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
 	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
@@ -1657,20 +1656,25 @@ enum
 	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_BOW;
 	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+
 	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
 	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+	  Me[0].Inventory[ 1 ].multiplicity = 3 ;
+	  
+	  Me[0].Inventory[ 2 ].type = ITEM_LASER_AMMUNITION;
 	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
 	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  Me[0].Inventory[ 2 ].multiplicity = 100 ;
+
 	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_SNIPER;
 	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
 	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
+
 	  
 
 	  Get_New_Character_Name( );
@@ -1689,18 +1693,23 @@ enum
 	  Me[0].Inventory[ 0 ].type = ITEM_STAFF;
 	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+
 	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
 	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
 	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+	  Me[0].Inventory[ 1 ].multiplicity = 5 ;
+
+	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
 	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
 	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  Me[0].Inventory[ 2 ].multiplicity = 2 ;
+
 	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_HACKER;
 	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
 	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );

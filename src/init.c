@@ -564,6 +564,38 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	  // Now we read in the image type that should be generated for this bullet
 	  ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
 			       &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
+
+	  //--------------------
+	  // Some guns require some ammunition.  This will be read in and
+	  // examined next...
+	  //
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: required ammunition type=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "none" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_use_ammunition = 0;
+	    }
+	  else if ( strcmp( YesNoString , "plasma_ammunition" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_use_ammunition = ITEM_PLASMA_AMMUNITION;
+	    }
+	  else if ( strcmp( YesNoString , "laser_ammunition" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_use_ammunition = ITEM_LASER_AMMUNITION;
+	    }
+	  else if ( strcmp( YesNoString , "exterminator_ammunition" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_use_ammunition = ITEM_EXTERMINATOR_AMMUNITION;
+	    }
+	  else
+	    {
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  
+
+
 	}
 
 

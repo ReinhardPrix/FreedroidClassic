@@ -99,5 +99,10 @@
 #define ITEM_DROID_PART_4 64
 #define ITEM_DROID_PART_5 65
 
+#define ITEM_PLASMA_AMMUNITION 66
+#define ITEM_LASER_AMMUNITION 67
+#define ITEM_EXTERMINATOR_AMMUNITION 68
+
+
 #endif
 // Nothing more from here on 

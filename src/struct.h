@@ -340,6 +340,7 @@ typedef struct
   double item_gun_angle_change;	// how fast to do a melee weapon swing
   double item_gun_start_angle_modifier;	// where to start with a melee weapon swing
   double item_gun_fixed_offset;         // how far away from the swinger should a melee weapon swing occur?
+  int    item_gun_use_ammunition; // which ammunition does this gun use?
 
   // how good is the item as armour or shield or other protection???
   int base_ac_bonus;

@@ -1591,7 +1591,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 void
 AnalyzePlayersMouseClick ( int PlayerNum )
 {
-  DebugPrintf ( 2 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
+  DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int PlayerNum ) : real function call confirmed. " ) ;
 
   if ( ButtonPressWasNotMeantAsFire( PlayerNum ) ) return;
 
@@ -1672,6 +1672,28 @@ AnalyzePlayersMouseClick ( int PlayerNum )
       if ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) return;
     }
   
+  //--------------------
+  // If the Tux has a weapon and this weapon requires some ammunition, then
+  // we have to check for enough ammunition first...
+  //
+  if ( Me [ PlayerNum ] . weapon_item . type >= 0 )
+    {
+      if ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_use_ammunition )
+	{
+	  if ( !CountItemtypeInInventory ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_use_ammunition , 
+					  PlayerNum ) )
+	    {
+	      //--------------------
+	      // So no ammunition... We should say so and return...
+	      //
+	      return;
+	    }
+	  else
+	    DeleteOneInventoryItemsOfType( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_use_ammunition , 
+					   PlayerNum );
+	}
+    }
+
   PerformTuxAttackRaw ( PlayerNum ) ;
 
 }; // void AnalyzePlayersMouseClick ( int PlayerNum )

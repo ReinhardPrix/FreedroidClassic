@@ -832,8 +832,6 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	{
 	  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
 	    {
-	      // sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , 1 , i+1 );
-	      // DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      Terminate ( ERR );
 	    }
 	  else
@@ -930,14 +928,12 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	{
 	  if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
 	    {
-	      // sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , 1 , i+1 );
-	      // DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      Terminate ( ERR );
 	    }
 	  else
 	    {
 	      sprintf ( ConstructedFileName , "rotation_models/portraits/portrait_%s_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
-	      DebugPrintf ( 0 , "\nConstructedFileName = %s " , ConstructedFileName );
+	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	    }
 
 	  // We must remember, that his is already loaded of course
