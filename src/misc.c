@@ -1008,6 +1008,7 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
   int array_num = 0;
   Level tmp;
   int i;
+  static char entering_message[1000];
 
   if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
@@ -1019,6 +1020,7 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
       //
       Activate_Conservative_Frame_Computation();
 
+      //--------------------
       // I think this is for the unlikely case of misordered levels in 
       // the ship file used for this game?!
       //
@@ -1063,19 +1065,30 @@ This indicates an error in the map system of Freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
 	}
 
-      // turn off all blasts and bullets from the old level
+      //--------------------
+      // Turn off all blasts and bullets from the old level
+      //
       for (i = 0; i < MAXBLASTS; i++)
-	AllBlasts[i].type = OUT;
+	{
+	  AllBlasts[i].type = OUT;
+	}
       for (i = 0; i < MAXBULLETS; i++)
 	{
-	  DeleteBullet ( i , FALSE ); // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
-	                              // in this case, we need no bullet-explosions
-	  //AllBullets[i].type = OUT;
-	  //AllBullets[i].mine = FALSE;
+	  //--------------------
+	  // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
+	  // in this case, we need no bullet-explosions
+	  //
+	  DeleteBullet ( i , FALSE ); 
 	}
-      
-      // clear the automapping information
-      // ClearAutomapData();
+
+      //--------------------
+      // Since we've moved to a new level, we might also say so, a message like
+      // "Entering ThisAndThat..." should appear in bold font on the screen.
+      //
+      strcpy ( entering_message , "Entering " );
+      strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
+      SetNewBigScreenMessage ( entering_message );
+
     }
   else
     {

@@ -582,6 +582,8 @@ ShowCombatScreenTexts ( int mask )
 
   ShowMissionCompletitionMessages();
 
+  DisplayBigScreenMessage( );
+
 }; // void ShowCombatScreenTexts ( int mask )
 
 /* ----------------------------------------------------------------------

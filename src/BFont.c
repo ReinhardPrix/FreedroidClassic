@@ -32,8 +32,8 @@ InitFont (BFont_Info * Font)
   Font->h = Font->Surface->h;
 
   i = '!';
-  sentry = GetPixel (Font->Surface, 0, 0);
-  /* sentry = SDL_MapRGB(Font->Surface->format, 255, 0, 255); */
+  // sentry = GetPixel ( Font -> Surface, 0, 0);
+  sentry = SDL_MapRGB(Font->Surface->format, 255, 0, 255); 
 
   if (Font->Surface == NULL)
     {
