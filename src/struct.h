@@ -651,9 +651,9 @@ bulletspec, *Bulletspec;
 typedef struct
 {
   // finepoint pos;
+  int type;
   gps pos;
   moderately_finepoint speed;
-  int type;
   byte phase;
   int damage; // damage done by this particular bullet 
   int time_in_frames;    // how long does the bullet exist, measured in number of frames

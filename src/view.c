@@ -932,7 +932,8 @@ PutBullet (int BulletNummer)
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
   int PhaseOfBullet;
-  int i;
+  // int i;
+  SDL_Surface* tmp;
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
@@ -984,7 +985,8 @@ Sorry...\n\
 
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
 
-#define ONE_ROTATION_ONLY
+  // #define ONE_ROTATION_ONLY
+#undef ONE_ROTATION_ONLY
 #ifdef ONE_ROTATION_ONLY
   //--------------------
   // Maybe it's the first time this bullet is displayed.  But then, the images
@@ -1023,12 +1025,14 @@ Sorry...\n\
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
   TargetRectangle.x = UserCenter_x
-    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width - tmp -> w / 2 ;
   TargetRectangle.y = UserCenter_y
-    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width - tmp -> h / 2 ;
 
   SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
+  CurBullet->Surfaces_were_generated = FALSE ;
+
 #endif
 
   DebugPrintf ( 1 , "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
