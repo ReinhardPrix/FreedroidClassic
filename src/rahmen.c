@@ -459,31 +459,45 @@ exist really (i.e. has a type = (-1) ).",
 void 
 create_and_blit_droid_description ( int enemy_num )
 {
-  int text_length;
-  SDL_Rect temp_fill_rect;
-  Enemy cur_enemy = & AllEnemys [ enemy_num ] ;
-  BFont_Info* BFont_to_use = Blue_BFont ;
-
-  text_length = TextWidthFont ( BFont_to_use , AllEnemys [ enemy_num ] . short_description_text );
-  // strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
-  temp_fill_rect . y = 50 ;
-  temp_fill_rect . h = FontHeight ( BFont_to_use ) ;
-  temp_fill_rect . w = ( text_length * cur_enemy -> energy ) / Druidmap [ cur_enemy -> type ] . maxenergy ;
-  if ( cur_enemy -> energy <= 0 ) temp_fill_rect . w = 0 ;
-  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
-
-  //--------------------
-  // If the 'enemy' is hostile, then we use red underlying color.  If
-  // it's a friendly entity, then we use green underlying color for the
-  // enemy's name.
-  //
-  if ( ! cur_enemy -> is_friendly ) 
+    int text_length;
+    SDL_Rect temp_fill_rect;
+    Enemy cur_enemy = & AllEnemys [ enemy_num ] ;
+    BFont_Info* BFont_to_use = Blue_BFont ;
+    
+    text_length = TextWidthFont ( BFont_to_use , AllEnemys [ enemy_num ] . short_description_text );
+    // strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
+    temp_fill_rect . y = 50 ;
+    temp_fill_rect . h = FontHeight ( BFont_to_use ) ;
+    temp_fill_rect . w = ( text_length * cur_enemy -> energy ) / Druidmap [ cur_enemy -> type ] . maxenergy ;
+    if ( cur_enemy -> energy <= 0 ) temp_fill_rect . w = 0 ;
+    temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+    
+    //--------------------
+    // If the 'enemy' is hostile, then we use red underlying color.  If
+    // it's a friendly entity, then we use green underlying color for the
+    // enemy's name.
+    //
+    if ( ! cur_enemy -> is_friendly ) 
     {
-      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
+	if ( use_open_gl )
+	{
+	    GL_HighlightRectangle ( Screen , temp_fill_rect , 0x99 , 0x00 , 0 , 160 );
+	}
+	else
+	{
+	    our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
+	}
     }
-  else
+    else
     {
-      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x099 , 0x000 ) );
+	if ( use_open_gl )
+	{
+	    GL_HighlightRectangle ( Screen , temp_fill_rect , 0 , 0x55 , 0 , 160 );
+	}
+	else
+	{
+	    our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x055 , 0x000 ) );
+	}
     }
 
   //--------------------
