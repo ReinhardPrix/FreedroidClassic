@@ -78,6 +78,9 @@ typedef struct
   int Mission_Log_Visible;
   float Mission_Log_Visible_Time;
   float Mission_Log_Visible_Max_Time;
+  int Inventory_Visible;
+  float Inventory_Visible_Time;
+  float Inventory_Visible_Max_Time;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -199,6 +202,8 @@ typedef struct
 typedef struct
 {
   char* ItemName;
+  char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
+  char* MaximumSpeed; 
   SDL_Surface* SurfacePointer;
 } itemspec , *Itemspec;
 
@@ -262,6 +267,7 @@ typedef struct
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+  item Inventory[ MAX_ITEMS_IN_INVENTORY ];
 }
 influence_t, *Influence_t;
 

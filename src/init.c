@@ -791,6 +791,10 @@ parse_command_line (int argc, char *const argv[])
 }				/* parse_command_line */
 
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 AssignMission( int MissNum )
 {
@@ -1355,12 +1359,40 @@ InitFreedroid (void)
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Mission_Log_Visible_Max_Time = 5;
+  GameConfig.Inventory_Visible_Max_Time = 5;
   // GameConfig.Theme_SubPath="default_theme/";
   GameConfig.Theme_SubPath="lanzz_theme/";
   User_Rect.x=0;
   User_Rect.w=640;
   User_Rect.y = BANNER_HEIGHT;
   User_Rect.h = 480 - BANNER_HEIGHT;
+
+  ItemMap[ 0 ].ItemName = "Item one";
+  ItemMap[ 0 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
+  ItemMap[ 0 ].MaximumSpeed = 0; 
+  ItemMap[ 0 ].SurfacePointer = NULL;
+
+  ItemMap[ 1 ].ItemName = "Item two";
+  ItemMap[ 1 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
+  ItemMap[ 1 ].MaximumSpeed = 0; 
+  ItemMap[ 1 ].SurfacePointer = NULL;
+
+  ItemMap[ 2 ].ItemName = "Item three";
+  ItemMap[ 2 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
+  ItemMap[ 2 ].MaximumSpeed = 0; 
+  ItemMap[ 2 ].SurfacePointer = NULL;
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      AllItems[ i ].pos.x = 7;
+      AllItems[ i ].pos.y = 7;
+      AllItems[ i ].type = ( -1 ) ;
+    }
+
+  AllItems[ 0 ].pos.x = 7;
+  AllItems[ 0 ].pos.y = 7;
+  AllItems[ 0 ].type = 0 ;
+
 
   Init_Video ();
 

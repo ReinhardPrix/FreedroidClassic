@@ -314,6 +314,7 @@ enum _directions
 #define MAX_STATEMENTS_PER_LEVEL 30
 #define MAX_CODEPANELS_PER_LEVEL 30
 #define MAX_ITEMS_PER_LEVEL 30
+#define MAX_ITEMS_IN_INVENTORY 10
 #define ALL_ITEMS 4
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */

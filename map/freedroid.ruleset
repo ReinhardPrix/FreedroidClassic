@@ -138,6 +138,30 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 ----------------------------------------------------------------------
 
+*** Start of item data Section: ***
+
+** Start of new item specification subsection **
+Item name="Single Energy Capsule"
+Item weight=0.4
+Picture number=0
+** End of new item specification subsection **
+
+** Start of new item specification subsection **
+Item name="Double Energy Capsule"
+Item weight=0.6
+Picture number=1
+** End of new item specification subsection **
+
+** Start of new item specification subsection **
+Item name="Triple Energy Capsule"
+Item weight=0.8
+Picture number=2
+** End of new item specification subsection **
+
+*** End of Bullet Data Section: ***
+
+----------------------------------------------------------------------
+
 *** Start of Robot Data Section: *** 
 
 This is the header part of the robot data section:
