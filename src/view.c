@@ -935,8 +935,15 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
-      // SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-      SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+      if ( AllEnemys[Enum].frozen != 0 ) 
+	{
+	  SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+      else
+	{
+	  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+
     }
   else
     {

@@ -47,9 +47,10 @@
 
 #define FRICTION_CONSTANT (0.02)
 
-#define BEST_MELEE_DISTANCE_IN_SQUARES (0.8)
+#define BEST_MELEE_DISTANCE_IN_SQUARES (1.0)
 #define DISTANCE_TOLERANCE (0.2)
-#define FORCE_FIRE_DISTANCE (0.7)
+#define FORCE_FIRE_DISTANCE (1.5)
+#define DROID_SELECTION_TOLERANCE (0.9)
 
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
@@ -959,9 +960,9 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.8 )
+      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.8 )
+      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
       
 
@@ -1003,9 +1004,9 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.5 )
+      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.5 )
+      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
 
 
@@ -1101,8 +1102,8 @@ FireBullet ( int PlayerNum )
       ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
 
       ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
-	( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  * FORCE_FIRE_DISTANCE  ) || 
-	  ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * FORCE_FIRE_DISTANCE  ) ) &&
+	//	( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  * FORCE_FIRE_DISTANCE  ) || 
+	// ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * FORCE_FIRE_DISTANCE  ) ) &&
 	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
 
       )
@@ -1128,9 +1129,9 @@ FireBullet ( int PlayerNum )
       //
       if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
 	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x - 
-		     Me [ PlayerNum ] . pos . x ) < BEST_MELEE_DISTANCE_IN_SQUARES ) &&
+		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
 	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y - 
-		     Me [ PlayerNum ] . pos . y ) < BEST_MELEE_DISTANCE_IN_SQUARES ) )
+		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) )
 	{
 	  // don't return, but do the attack...
 	  //
@@ -1158,11 +1159,13 @@ FireBullet ( int PlayerNum )
   // We always start the weapon application cycle, i.e. change of tux
   // motion phases
   //
-  // But it the currently used weapon is a melee weapon, the tux no longer
+  Me [ PlayerNum ] . weapon_swing_time = 0;
+
+  //--------------------
+  // But if the currently used weapon is a melee weapon, the tux no longer
   // generates a bullet, but rather does his weapon swinging motion and
   // only the damage is done to the robots in the area of effect
   //
-  Me [ PlayerNum ] . weapon_swing_time = 0;
   if ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) ||
        ( Me [ PlayerNum ] . weapon_item . type == (-1) ) )
     {
@@ -1192,6 +1195,7 @@ FireBullet ( int PlayerNum )
 	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
+	  AllEnemys[ i ] . frozen = 5 ;
 	  AllEnemys[ i ] . firewait = 
 	    2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
