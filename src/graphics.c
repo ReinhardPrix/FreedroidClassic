@@ -212,16 +212,15 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Screen, int LoadPal)
 
 }				// void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
-/*@Function============================================================
-@Desc: 	int InitPictures(void):
-get the pics for: druids, bullets, blasts
-				
-reads all blocks and puts the right pointers into
-the various structs
-
-@Ret: FALSE: ERROR  	TRUE: OK
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: get the pics for: druids, bullets, blasts
+ * 				
+ * 	reads all blocks and puts the right pointers into
+ * 	the various structs
+ *
+ * @Ret: FALSE: ERROR  	TRUE: OK
+ *
+ *-----------------------------------------------------------------*/
 int
 InitPictures (void)
 {
@@ -302,12 +301,11 @@ InitPictures (void)
   return TRUE;
 }				// int InitPictures(void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: doesnt really _swap_ anything, but copies InternalScreen
+ *        onto the Real vga screen
+ *
+ *-----------------------------------------------------------------*/
 void
 SwapScreen (void)
 {
@@ -317,7 +315,7 @@ SwapScreen (void)
     {
       vga_drawscanline (y, InternalScreen + SCREENBREITE * y);
     }
-} // void SwapScreen(void)
+} /* SwapScreen() */
 
 /*@Function============================================================
 @Desc: 
