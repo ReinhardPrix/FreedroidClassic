@@ -66,7 +66,7 @@ unsigned int StoreTextFG;
 char BigScreenMessage[5000];
 float BigScreenMessageDuration=10000;
 
-SDL_Surface* Background;
+static SDL_Surface* Background;
 
 /* ----------------------------------------------------------------------
  * This function does all the (text) interaction with a friendly droid
@@ -127,11 +127,14 @@ GetChatWindowInput( SDL_Surface* ChatBackground , SDL_Rect* Chat_Window_Pointer 
 
 /* ----------------------------------------------------------------------
  * This function restores all chat-with-friendly-droid variables to their
- * initial values.
+ * initial values.  This means, that NOT ALL FLAGS CAN BE SET HERE!!  Some
+ * of them must remain at their current values!!! TAKE CARE!!
  * ---------------------------------------------------------------------- */
 void
 RestoreChatVariableToInitialValue( int PlayerNum )
 {
+  int j;
+
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 1 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 1 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 1 ;
@@ -140,15 +143,22 @@ RestoreChatVariableToInitialValue( int PlayerNum )
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 0 ;
   Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 0 ;
-  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ END_ANSWER ] = 1 ;
-      
   Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ;
-  Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ END_ANSWER ] = 1 ;
 
-  Me [ PlayerNum ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 0 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 1 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 1 ;
 
-  // Me [ PlayerNum ] . Generic_614_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
-  
+  //--------------------
+  // The 'END' options should always be availabe for all dialogs
+  // at the beginning.  THIS we know.
+  //
+  for ( j = 0 ; j < MAX_PERSONS ; j++ )
+    {
+      Me [ PlayerNum ] . Chat_Flags [ j ] [ END_ANSWER ] = 1 ;
+    }
+
 }; // void RestoreChatVariableToInitialValue( int PlayerNum )
 
 /* ----------------------------------------------------------------------
@@ -206,12 +216,14 @@ PrepareMultipleChoiceDialog ( int Enum )
   //--------------------
   // Next we prepare the whole background for all later text operations
   //
-  Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
       printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
       Terminate(ERR);
     }
+
   strcpy( fname, "droids/" );
   strcat( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
   strcat( fname , ".png" );
@@ -223,6 +235,7 @@ PrepareMultipleChoiceDialog ( int Enum )
   SDL_Flip( Screen );
 
   SDL_FreeSurface( Small_Droid );
+  SDL_FreeSurface( Large_Droid );
 
   // All droid chat should be done in the paradroid font I would say...
   // SetCurrentFont( Para_BFont );
@@ -239,13 +252,11 @@ ChatWithFriendlyDroid( int Enum )
 {
   char* RequestString;
   char* DecisionString;
-  int i;
+  int i ;
   char ReplyString[10000];
   SDL_Rect Chat_Window;
   int MenuSelection = (-1) ;
-  char* Chandra_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
-  char* RMS_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
-  char* SOR_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+  char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
@@ -255,9 +266,7 @@ ChatWithFriendlyDroid( int Enum )
   //
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      Chandra_DialogMenuTexts [ i ] = "" ;
-      RMS_DialogMenuTexts [ i ] = "" ;
-      SOR_DialogMenuTexts [ i ] = "" ;
+      DialogMenuTexts [ i ] = "" ;
     }
 
   //--------------------
@@ -279,18 +288,18 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
 
-      Chandra_DialogMenuTexts [ 0 ] = " Who are you? " ;
-      Chandra_DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
-      Chandra_DialogMenuTexts [ 2 ] = " Where can I get better equipment? " ;
-      Chandra_DialogMenuTexts [ 3 ] = " I have problems with my controls. " ;
+      DialogMenuTexts [ 0 ] = " Who are you? " ;
+      DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
+      DialogMenuTexts [ 2 ] = " Where can I get better equipment? " ;
+      DialogMenuTexts [ 3 ] = " I have problems with my controls. " ;
 
-      Chandra_DialogMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
-      Chandra_DialogMenuTexts [ 5 ] = " Wouldn't that just mean replacing one evil with another?" ;
-      Chandra_DialogMenuTexts [ 6 ] = " I want to get in contact with the MS." ;
-      Chandra_DialogMenuTexts [ 7 ] = " I would like to get in contact with the Rebellion." ;
-      Chandra_DialogMenuTexts [ 8 ] = " How can I gain their trust?" ;
-      Chandra_DialogMenuTexts [ 9 ] = " Have I done enough quest yet for my meeting with the Resistance?" ;
-      Chandra_DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+      DialogMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
+      DialogMenuTexts [ 5 ] = " Wouldn't that just mean replacing one evil with another?" ;
+      DialogMenuTexts [ 6 ] = " I want to get in contact with the MS." ;
+      DialogMenuTexts [ 7 ] = " I would like to get in contact with the Rebellion." ;
+      DialogMenuTexts [ 8 ] = " How can I gain their trust?" ;
+      DialogMenuTexts [ 9 ] = " Have I done enough quest yet for my meeting with the Resistance?" ;
+      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
@@ -300,7 +309,7 @@ ChatWithFriendlyDroid( int Enum )
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , Chandra_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_CHA ]  , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_CHA ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -429,14 +438,14 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
       
-      SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
-      SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
-      SOR_DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
-      SOR_DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
-      SOR_DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
-      SOR_DialogMenuTexts [ 6 ] = " BACK ";
-      SOR_DialogMenuTexts [ END_ANSWER ] = " END ";
+      DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
+      DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
+      DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
+      DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
+      DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
+      DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
+      DialogMenuTexts [ 6 ] = " BACK ";
+      DialogMenuTexts [ END_ANSWER ] = " END ";
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
@@ -452,7 +461,7 @@ ChatWithFriendlyDroid( int Enum )
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -530,90 +539,56 @@ ChatWithFriendlyDroid( int Enum )
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
     {
       //--------------------
-      // Now we do the dialog with SOR...
+      // Now we do the dialog with 614...
       //
       PrepareMultipleChoiceDialog( Enum );
 
-      SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
-      SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
-      SOR_DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
-      SOR_DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
-      SOR_DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
-      SOR_DialogMenuTexts [ 6 ] = " BACK ";
-      SOR_DialogMenuTexts [ END_ANSWER ] = " END ";
+      DialogMenuTexts [ 0 ] = " Who are you? " ;
+      DialogMenuTexts [ 1 ] = " Have you detected any MS activity?" ; 
+      DialogMenuTexts [ 2 ] = " What can you tell me about the 614 type? " ;
+      DialogMenuTexts [ 3 ] = " What are your orders?" ;
+      DialogMenuTexts [ END_ANSWER ] = " END ";
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
-
-      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
-	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
-	}
 
       while (1)
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_614 ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
-	      /*
-	      DisplaySubtitle( " Oh Yes! " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Oh_Yes_0.wav" , TRUE );
-	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_You_Are_The_0.wav" , TRUE );
-	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
-	      */
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ; // this should allow to ask 'so?'
+	      PlayOnceNeededSoundSample( "Tux_614_Who_Are_You_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 0 ] = 0 ; // don't say this twice...
 	      break;
 	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
-	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 0 ; // this should disallow to be new again...
+	      PlayOnceNeededSoundSample( "Tux_614_Have_You_Detected_0.wav" , TRUE );
+	      DisplaySubtitle( "No.  The MS Bots have not shown any activity within the last 24 hours. " , Background );
+	      PlayOnceNeededSoundSample( "614_No_The_MS_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 1 ] = 0 ; // don't say this twice...
 	      break;
 	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 1 ; // this enables to go back from learning
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 0 ; // but disable to ask about learning options now again
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
+	      PlayOnceNeededSoundSample( "Tux_614_What_Can_You_0.wav" , TRUE );
+	      DisplaySubtitle( "The official manual classifies the 614 as a low security droid." , Background );
+	      PlayOnceNeededSoundSample( "614_The_Official_Manual_0.wav" , TRUE );
+	      DisplaySubtitle( "It is mainly used within ships to protect certain areas of the ship from intruders." , Background );
+	      PlayOnceNeededSoundSample( "614_It_Is_Mainly_0.wav" , TRUE );
+	      DisplaySubtitle( "It is considered a slow but sure device." , Background );
+	      PlayOnceNeededSoundSample( "614_It_Is_Considered_0.wav" , TRUE );
+	      DisplaySubtitle( "Today it is used only by rebellion and it's supporters, not by the MS any more." , Background );
+	      PlayOnceNeededSoundSample( "614_Today_It_Is_0.wav" , TRUE );
+	      DisplaySubtitle( "This is because the 614 is by now a discontinued product." , Background );
+	      PlayOnceNeededSoundSample( "614_This_Is_Because_0.wav" , TRUE );
+	      DisplaySubtitle( "But don't worry.  I'm still in pretty good shape." , Background );
+	      PlayOnceNeededSoundSample( "614_But_Dont_Worry_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 0 ; // don't say this twice...
 	      break;
 	    case 4:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
-	      break;
-	    case 5:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 6:
-	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 7:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 0 ; // now disallow also the BACK from lerning button
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // but reallow to ask about learning
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // but reallow to quit the dialog
-	      break;
-	    case 9:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 8 ] = 0 ; // don't say this twice in one dialog
-	      AssignMission ( 1 ); // this should assign the coffee machine mission...
+	      PlayOnceNeededSoundSample( "Tux_614_What_Are_Your_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 0 ; // don't say this twice...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):
@@ -626,7 +601,7 @@ ChatWithFriendlyDroid( int Enum )
 
       //--------------------
       // Since there won't be anyone else to talk to when already having
-      // talked to the SOR, we can safely return here.
+      // talked to the 614, we can safely return here.
       //
       return; 
       
@@ -643,17 +618,17 @@ ChatWithFriendlyDroid( int Enum )
       //
       PrepareMultipleChoiceDialog( Enum );
       
-      RMS_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      RMS_DialogMenuTexts [ 1 ] = " So? " ;
-      RMS_DialogMenuTexts [ 2 ] = " How can I get to your former place? " ;
-      RMS_DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
+      DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
+      DialogMenuTexts [ 1 ] = " So? " ;
+      DialogMenuTexts [ 2 ] = " How can I get to your former place? " ;
+      DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
 
-      RMS_DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
+      DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
       
-      RMS_DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
-      RMS_DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
-      RMS_DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
-      RMS_DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
+      DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
+      DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
+      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+      DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
@@ -669,7 +644,7 @@ ChatWithFriendlyDroid( int Enum )
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , RMS_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_RMS ]  , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_RMS ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
