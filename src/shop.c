@@ -639,7 +639,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
 
 #define FIXED_SHOP_INVENTORY TRUE
-#define NUMBER_OF_ITEMS_IN_SHOP 16
+#define NUMBER_OF_ITEMS_IN_SHOP 17
 
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
@@ -656,6 +656,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 
       ITEM_SHORT_BOW,
       ITEM_HUNTERS_BOW,
+      ITEM_LASER_AMMUNITION,
+
       ITEM_BUCKLER,
       ITEM_SMALL_SHIELD,
 
@@ -670,6 +672,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       ITEM_CAP,
       ITEM_SMALL_HELM,
 
+      
     };
 
   //--------------------
@@ -711,6 +714,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       else SalesList[ i ].suffix_code = ( -1 );
 
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
+      if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
       SalesList[ i ].is_identified = TRUE;
 
       Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
@@ -748,6 +752,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	      SalesList[ i ].prefix_code = ( -1 );
 	      SalesList[ i ].suffix_code = ( -1 );
 	      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
+	      if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
 	      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
 	    }
 	  Buy_Pointer_List [ i ] = NULL ; 

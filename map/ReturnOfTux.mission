@@ -709,21 +709,33 @@ T**he title song in the sound subdirectory for this mission is : Agony-Highlands
 Song name to play in the end title if the mission is completed: Beachhead_2.mod
 
 * New Mission Briefing Text Subsection *
-It's the the year 2400.  
-All of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.
-This came to be as follows:  
+It's the the year 2323, and nothing's left that's free (Apologies to Zagar 
+and Evans).
+Anyway, all of human civilisation has been enslaved throughout the galaxy by 
+an all-mighty Software Corporation named 'MegaSoft'.
+It all began back in 2207, when the military and police forces were 
+automated, because it was cheaper to maintain. The technology extended to 
+interstellar traffic monitoring... even in space, they were there in their 
+nasty uniforms and clipboards.
+By 2313, almost all the droids were running a MegaSoft operating system.
+By the dawn of 2320, it turned out that this proprietary OS was a trojan 
+horse and from then on only responded to MS instruction signals.
+It soon became realised that military and police forces were under MS 
+control.  Interstellar traffic now depends upon MS allowance.
+Droids are roaming the streets and announcing the new rule.
+Any resistance is met with utter violence.
 
-Since 2200 military and police forces were mostly automatized.  Also interstellar traffic is mainly relying on droid control units.
-By 2310 almost all the droids were running a MegaSoft Operating System.  
-By new year 2400 it turned out that this proprietary OS was a trojan horse and from then on only responded to MS instruction signals.
-So, military and police forces are suddenly under MS control.  Interstellar traffic, also mainly controlled by droids, now depends upon MS allowance.
-Droids are roaming the streets and announcing the new rule.  
-Any resistance is met with utter violence.  
+But that was in the past... and we are at the present.
 
 THE RETURN:
-
-According to a strange and ancient prophecy (actually it was a very arcane Theorem of stochastic calculus) Tux the mystic creature from a dimension of cold would return with probability one in times of utter need and danger for the free world.  
-Somehow noone trusted in the proof, but yet, suddenly there's some anomaly in the local teleporter system and gosh:  A strange penguin drops out, holding some disks in his flaps!
+There was a crackling sound, followed by a slight electronic hiss.
+"TUX droid online." No-one else heard the voice, it was almost a dream-voice 
+in yoour mind.
+Your eyes blinked a few times as you tried to focus on... anything. The 
+world around you looked a little blurred, but gradually sharpened.
+The dream-voice came again. "Mobility circuits functioning. Physical status: 
+89% functional. Memory status: 47% functional. Efficiency: 77% and holding. 
+Welcome back, Tux."
 
 Press Fire to play
 
@@ -731,7 +743,11 @@ Press Fire to play
 * New Mission Briefing Text Subsection *
 Controls
 
-The game is best controlled via mouse input:  Left click onto the locations where you want to move to.  Holding left button down will keep moving in that direction.  Right click to use special powers, spells and skills.  Left click an enemy to launch an attack or left click a friend to initiate friendly communication.
+The game is best controlled via mouse input:  Left click onto the locations 
+where you want to move to.  Holding left button down will keep moving in 
+that direction.  Right click to use special powers, spells and skills.  Left 
+click an enemy to launch an attack or left click a friend to initiate 
+friendly communication.
 
 Additional Keys:
 
@@ -744,23 +760,39 @@ P ... Turn on/off Pause Mode
 Tab ... Turn on/off automap display
 Escape ... Pops up the main menu
 F1-F9 Quick-Switch to spells 1-9
-1-9 ... Quick-Use items from the quick-inventory.  (That's those small items placed on the very bottom of the inventory.)
+1-9 ... Quick-Use items from the quick-inventory.  (That's those small items 
+placed on the very bottom of the inventory.)
 
 Space ... Closes all opened screens.
 
 Spells&Skills:
-Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on that one.  To take over a hostile bot, select the takeover/chat skill from the skills screen (level 1), then left click on the bot to mark it as target and then press the right mouse button to initiate takeover once you are close engough.  But be warned:  Other bots getting too close to you while takeover is initiated might accidentially become your takeover target.
-For the takeover game, you can use the mouse wheel if you have one, otherwise you must use the cursor keys, sorry :(
+Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on 
+that one.  To take over a hostile bot, select the takeover/chat skill from 
+the skills screen (level 1), then left click on the bot to mark it as target 
+and then press the right mouse button to initiate takeover once you are 
+close engough.  But be warned:  Other bots getting too close to you while 
+takeover is initiated might accidentially become your takeover target.
+For the takeover game, you can use the mouse wheel if you have one, 
+otherwise you must use the cursor keys, sorry :(
 
-Home teleport spell:  Select the skill and right click somewhere to teleport home.  Once home, the northernmost teleporter will take you back to exactly the location where you came from.
+Home teleport spell:  Select the skill and right click somewhere to teleport 
+home.  Once home, the northernmost teleporter will take you back to exactly 
+the location where you came from.
 
-Healing spell:  Select the healing spell from the skills screen and right click somewhere.
+Healing spell:  Select the healing spell from the skills screen and right 
+click somewhere.
 
-Remote strike spell:  Fires bullets that do exactly the same damage and have exactly the same chance to hit like your character with his currently equipped weapon.
+Remote strike spell:  Fires bullets that do exactly the same damage and have 
+exactly the same chance to hit like your character with his currently 
+equipped weapon.
 
-Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, so that they can move only at a fraction of their normal speed for some time.  They can however still attack at their normal speed.
+Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, 
+so that they can move only at a fraction of their normal speed for some 
+time.  They can however still attack at their normal speed.
 
-Poison bolt:  Poisons an enemy (turning green then), delivering some damage over time.  Note that damage duration AND damage effect are cumulative, (i.e. damage done will raise with the square of the poison bolt hits taken).
+Poison bolt:  Poisons an enemy (turning green then), delivering some damage 
+over time.  Note that damage duration AND damage effect are cumulative, 
+(i.e. damage done will raise with the square of the poison bolt hits taken).
 
     Press Fire to Play
 
