@@ -68,12 +68,12 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
-Influencer must be at X=30 Y=20 Lev=2
-Use map location from map label="NO_LABEL_DEFINED_YET"
-Event Action to be triggered by this trigger="teleport_to_third_combat_lv"
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
+* StXXXXart of an Event Trigger Subsection *
+InflXXXXuencer must be at X=30 Y=20 Lev=2
+Use XXXXmap location from map label="NO_LABEL_DEFINED_YET"
+EvenXXXXt Action to be triggered by this trigger="teleport_to_third_combat_lv"
+DeleXXXXte the event trigger after it has been triggered=-1
+* EnXXXXd of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
@@ -118,12 +118,12 @@ Delete the event trigger after it has been triggered=-1
 
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
-Influencer must be at X=36 Y=10 Lev=2
-Use map location from map label="NO_LABEL_DEFINED_YET"
-Event Action to be triggered by this trigger="teleport_to_telemetry_one"
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
+* StarXXXXt of an Event Trigger Subsection *
+InflueXXXXncer must be at X=36 Y=10 Lev=2
+Use maXXXXp location from map label="NO_LABEL_DEFINED_YET"
+Event XXXXAction to be triggered by this trigger="teleport_to_telemetry_one"
+DeleteXXXX the event trigger after it has been triggered=-1
+* End XXXXof this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
