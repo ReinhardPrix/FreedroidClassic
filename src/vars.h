@@ -41,6 +41,12 @@ SDL_Rect Classic_User_Rect = {
 
 SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT+10, SCREENLEN, SCREENHEIGHT-BANNER_HEIGHT-11};
 
+SDL_Rect Cons_Rect = {16, 162, 595, 315};
+
+SDL_Rect Cons_Menu_Rect = {32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT};
+SDL_Rect Cons_Text_Rect = {175, 180, SCREENLEN-175, 305}; 
+
+
 int Shieldcolors[INITIAL_BLOCK_WIDTH];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */

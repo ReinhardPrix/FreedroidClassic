@@ -503,7 +503,6 @@ EnterKonsole (void)
 {
   int ReenterGame = 0;
   int TasteOK;
-  int text_offs;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
@@ -517,10 +516,6 @@ EnterKonsole (void)
   while (SpacePressed ());  /* wait for user to release Space */
 
   ConsoleMenuPos=0;
-
-  text_offs = 137;
-  Set_Rect (Console_Rect, User_Rect.x + text_offs,  User_Rect.y,
-	    User_Rect.w-text_offs, User_Rect.h);
 
   /* Gesamtkonsolenschleife */
 
@@ -619,7 +614,7 @@ EnterKonsole (void)
 void
 PaintConsoleMenu (void)
 {
-  char MenuText[200];
+  char MenuText[1000];
 
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
@@ -635,28 +630,25 @@ PaintConsoleMenu (void)
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, Console_Rect.x, Console_Rect.y, &Console_Rect);
-
-  strcpy (MenuText, "\nAccess granted.\nArea : ");
+  strcat (MenuText, "\nAccess granted.\nArea : ");
   strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
   strcat (MenuText, "\nDeck : ");
   strcat (MenuText, CurLevel->Levelname );
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayText (MenuText, Console_Rect.x, User_Rect.y + 15, &Console_Rect);
+  DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
   /*
    * Hier werden die Icons des Menus ausgegeben
    *
    */
 
-  SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
+  SourceRectangle.x=(CONS_MENU_LENGTH+2)*ConsoleMenuPos;
   SourceRectangle.y=0;
-  SourceRectangle.w=MENUITEMLENGTH;
-  SourceRectangle.h=Console_Rect.h;
-  TargetRectangle.x=Console_Rect.x;
-  TargetRectangle.y=Console_Rect.y;
+  SourceRectangle.w=CONS_MENU_LENGTH;
+  SourceRectangle.h=CONS_MENU_HEIGHT;
+  Copy_Rect (Cons_Menu_Rect, TargetRectangle);
   SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
   return;
@@ -671,7 +663,7 @@ PaintConsoleMenu (void)
 void
 GreatDruidShow (void)
 {
-  char InfoText[10000];
+  char InfoText[1000];
   int Infodroid;
   int LeaveThisInformationPart;
   char PassOn = 0;
@@ -696,25 +688,21 @@ GreatDruidShow (void)
 	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
 	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , 
-		   Classname[Druidmap[Infodroid].class] );
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
+	  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  Infodroid );
 
-	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid );
+	  sprintf( InfoText, 
+		   "Unit type %s - %s\n\
+Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s",  
+		   Druidmap[Me.type].druidname,
+		   Classname[Druidmap[Me.type].class],
+		   Infodroid+1, 
+		   Classes[Druidmap[Infodroid].class],
+		   Druidmap[Infodroid].height,
+		   Druidmap[Infodroid].weight,
+		   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName,
+		   Brainnames[ Druidmap[Infodroid].brain ]);
 
-	  sprintf( InfoText, "Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s " , 
-		   Infodroid+1 , 
-		   Classes[Druidmap[Infodroid].class] ,
-		   Druidmap[Infodroid].height ,
-		   Druidmap[Infodroid].weight ,
-		   // Drivenames[ Druidmap[Infodroid].drive ] ,
-		   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName ,
-		   Brainnames[ Druidmap[Infodroid].brain ] );
-
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
-		       &Console_Rect);
-
-
+	  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 	  SDL_Flip (Screen);
 
 	  PassOn = 0;
@@ -780,9 +768,9 @@ GreatDruidShow (void)
 	  
 	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 	  
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
+	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y, &Cons_Rect);
 	  
-	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid);
+	  ShowRobotPicture (Cons_Rect.x, Cons_Rect.y + 2 * FONTHOEHE, Infodroid);
 	  
 	  strcpy (InfoText, "Armamant : ");
 	  // strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
@@ -794,8 +782,8 @@ GreatDruidShow (void)
 	  strcat (InfoText, "\n          3: ");
 	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor3 ]);
 	  
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
-		       &Console_Rect);
+	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y + FontHeight (Menu_BFont),
+		       &Cons_Rect);
 	  
 	  SDL_Flip (Screen);
 	  
@@ -861,15 +849,15 @@ GreatDruidShow (void)
 
 	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
+	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y, &Cons_Rect);
 
-	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid );
+	  ShowRobotPicture (Cons_Rect.x, Cons_Rect.y + 2 * FONTHOEHE, Infodroid );
 
 	  strcpy (InfoText, "Notes: ");
 	  strcat (InfoText, Druidmap[Infodroid].notes);
 
-	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
-		       &Console_Rect);
+	  DisplayText (InfoText, Cons_Rect.x, Cons_Rect.y + FontHeight (Menu_BFont),
+		       &Cons_Rect);
 	  
 	  SDL_Flip (Screen);
       

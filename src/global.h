@@ -80,7 +80,10 @@ EXTERN SDL_Rect User_Rect;
 EXTERN SDL_Rect Full_Screen_Rect;
 EXTERN SDL_Rect Classic_User_Rect;
 EXTERN SDL_Rect Full_User_Rect;
-EXTERN SDL_Rect Console_Rect;
+EXTERN SDL_Rect Cons_Rect;
+EXTERN SDL_Rect Cons_Menu_Rect;
+EXTERN SDL_Rect Cons_Text_Rect;
+
 
 EXTERN const SDL_Rect Menu_Rect;
 
