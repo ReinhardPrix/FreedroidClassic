@@ -133,8 +133,8 @@ main (int argc, char *const argv[])
 	      Homemade_Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
 	    }
 
-	  // Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
-	  Assemble_Combat_Picture ( 0 ); 
+	  // AssembleCombatPicture ( DO_SCREEN_UPDATE ); 
+	  AssembleCombatPicture ( 0 ); 
 
 	  if ( !ClientMode ) MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 

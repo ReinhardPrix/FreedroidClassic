@@ -1513,7 +1513,7 @@ ShowDeckMap (Level deck)
       //
 
       ClearUserFenster();
-      Assemble_Combat_Picture( ONLY_SHOW_MAP );
+      AssembleCombatPicture( ONLY_SHOW_MAP );
       
       ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
 

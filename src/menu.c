@@ -531,7 +531,7 @@ InitiateMenu( char* BackgroundToUse )
   if ( BackgroundToUse == NULL )
     {
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
+      AssembleCombatPicture ( 0 );
       MakeGridOnScreen( NULL );
     }
   else

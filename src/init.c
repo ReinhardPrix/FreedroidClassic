@@ -2265,7 +2265,7 @@ ThouArtDefeated (void)
     {
       StartTakingTimeForFPSCalculation(); 
 
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+      AssembleCombatPicture ( DO_SCREEN_UPDATE );
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();

@@ -107,7 +107,7 @@ EXTERN void CheckBlastCollisions (int num);
 EXTERN void FillRect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
-EXTERN void Assemble_Combat_Picture (int );
+EXTERN void AssembleCombatPicture (int );
 EXTERN void PutInfluence (int , int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutItem (int);

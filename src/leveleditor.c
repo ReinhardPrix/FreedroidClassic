@@ -51,6 +51,7 @@ enum
     JUMP_TARGET_SOUTH ,
     JUMP_TARGET_EAST ,
     JUMP_TARGET_WEST ,
+    EXPORT_THIS_LEVEL , 
     QUIT_THRESHOLD_EDITOR_POSITION
   };
 
@@ -250,8 +251,9 @@ SetLevelInterfaces ( void )
       MenuTexts [ 6 ] = Options [ 6 ] ;
       sprintf( Options [ 7 ] , "Jump target west: %d.  Up/Down" , CurLevel->jump_target_west );
       MenuTexts [ 7 ] = Options [ 7 ] ;
-      MenuTexts [ 8 ] = "Quit Threshold Editor" ;
-      MenuTexts [ 9 ] = "" ;
+      MenuTexts [ 8 ] = "Export this level to other target levels" ;
+      MenuTexts [ 9 ] = "Quit Threshold Editor" ;
+      MenuTexts [ 10 ] = "" ;
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
       
@@ -264,6 +266,11 @@ SetLevelInterfaces ( void )
 	  while ( EscapePressed() );
 	  Weiter=!Weiter;
 	  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+	  break;
+	case EXPORT_THIS_LEVEL:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  ExportLevelInterface ( Me [ 0 ] . pos . z );
+	  // Weiter=!Weiter;
 	  break;
 	case QUIT_THRESHOLD_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
@@ -773,7 +780,7 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
+	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
 	  Highlight_Current_Block();
 	  Show_Waypoints( FALSE );
 	  

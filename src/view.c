@@ -415,7 +415,7 @@ ShowItemAlarm( void )
  *
  * ----------------------------------------------------------------- */
 void
-Assemble_Combat_Picture (int mask)
+AssembleCombatPicture (int mask)
 {
   int MapBrick;
   int line, col;
@@ -433,7 +433,7 @@ Assemble_Combat_Picture (int mask)
 
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
-  DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
+  DebugPrintf (2, "\nvoid AssembleCombatPicture(...): Real function call confirmed.");
   
   // Why not blit the WHOLE map?  Lets try it!
   // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
@@ -664,8 +664,8 @@ Assemble_Combat_Picture (int mask)
     }
 
 
-  DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
-}; // void Assemble_Combat_Picture(...)
+  DebugPrintf (2, "\nvoid AssembleCombatPicture(...): end of function reached.");
+}; // void AssembleCombatPicture(...)
 
 /* ----------------------------------------------------------------------
  * This function blits robot digits into the robot.  It can do so for 

@@ -244,7 +244,7 @@ I need to know that for saving. Abort.\n");
   //
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVE_GAME_THUMBNAIL_EXT );
 
-  Assemble_Combat_Picture ( 0 );
+  AssembleCombatPicture ( 0 );
 
   NewThumbnail = zoomSurface( Screen , 0.32 , 0.32 , 0 );
 

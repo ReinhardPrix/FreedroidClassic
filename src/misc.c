@@ -733,7 +733,7 @@ Pause (void)
   Activate_Conservative_Frame_Computation();
 
   Me[0].status = PAUSE;
-  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+  AssembleCombatPicture ( DO_SCREEN_UPDATE );
 
   while ( Pause )
     {
@@ -742,13 +742,13 @@ Pause (void)
       AnimateRefresh ();
       AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+      AssembleCombatPicture ( DO_SCREEN_UPDATE );
       
       if (CPressed ())
 	{
 	  Me[0].status = CHEESE;
 	  DisplayBanner (NULL, NULL,  0 );
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+	  AssembleCombatPicture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
 	  while ( SpacePressed() ); /* then wait for Space released */
