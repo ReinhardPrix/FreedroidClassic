@@ -1731,6 +1731,40 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_BARREL_4 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_4 ] . is_smashable = TRUE ;
 
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . is_smashable = FALSE ;
+
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . is_smashable = FALSE ;
+
 }; // void load_all_obstacles ( void )
 
 /* ----------------------------------------------------------------------
