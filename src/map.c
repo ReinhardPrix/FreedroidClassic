@@ -587,7 +587,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 {
   int x, y;
   level* loadlevel = curShip . AllLevels [ level_num ] ;
-  int obstacle_counter = 2 ;
+  int obstacle_counter = 0 ;
   int i;
 
   //--------------------
@@ -596,7 +596,7 @@ generate_wallobstacles_from_level_map ( int level_num )
   //
   for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      loadlevel -> obstacle_list [ obstacle_counter ] . type = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
     }
 
   //--------------------

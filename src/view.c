@@ -672,7 +672,8 @@ isometric_show_blocks_around_tux ( int mask )
   // going to have larger levels and we don't want to do 100x100 cyles
   // for nothing each frame.
   //
-  if ( Block_Width == INITIAL_BLOCK_WIDTH )
+  /*
+  if ( Block_Width != INITIAL_BLOCK_WIDTH )
     {
       LineStart = Me [ 0 ] . pos . y - 7 ;
       LineEnd = Me [ 0 ] . pos . y + 7 ;
@@ -686,7 +687,18 @@ isometric_show_blocks_around_tux ( int mask )
       ColStart = -5 ;
       ColEnd = DisplayLevel->xlen + 5 ;
     }
-                         
+  */
+
+  //--------------------
+  // Maybe we should be using a more elegant function here, that will automatically
+  // compute the right amount of squares to blit in each direction from the known amount
+  // of pixel one floor tile takes...  But that must follow later...
+  LineStart = Me [ 0 ] . pos . y - 7 ;
+  LineEnd = Me [ 0 ] . pos . y + 7 ;
+  ColStart = Me [ 0 ] . pos . x - 7 ;
+  ColEnd = Me [ 0 ] . pos . x + 7 ;
+
+                     
   SDL_SetClipRect (Screen , &User_Rect);
 
   for (line = LineStart; line < LineEnd; line++)
@@ -871,7 +883,43 @@ show_obstacles_around_tux ( void )
 {
   int i;
   level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
+  int LineStart, LineEnd, ColStart, ColEnd , line, col;
 
+  //--------------------
+  // There are literally THOUSANDS of obstacles on some levels.
+  // Therefore we will not blit each and every one of them, but only those
+  // that are glued to one of the map tiles in the local area...
+  // That should give us some better performance...
+  //
+
+  //--------------------
+  // We select the following area to be the map excerpt, that can be
+  // visible at most.  This is nescessare now that the Freedroid RPG is
+  // going to have larger levels and we don't want to do 100x100 cyles
+  // for nothing each frame.
+  //
+  LineStart = Me [ 0 ] . pos . y - 7 ;
+  LineEnd = Me [ 0 ] . pos . y + 7 ;
+  ColStart = Me [ 0 ] . pos . x - 7 ;
+  ColEnd = Me [ 0 ] . pos . x + 7 ;
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for (col = ColStart; col < ColEnd; col++)
+	{
+	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    {
+	      if ( obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] != (-1) )
+		{
+		  blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ) ;
+		}
+	      else
+		break;
+	    }
+	}
+    }
+
+		/*
   for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
       if ( obstacle_level -> obstacle_list [ i ] . type >= 0 )
@@ -879,8 +927,11 @@ show_obstacles_around_tux ( void )
 	  blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
 	}
       else 
-	break;
+	  break;
     }
+	      */
+  // DebugPrintf ( 0 , "\nNumber of obstacles on this map: %d." , i );
+
 }; // void show_obstacles_around_tux ( void )
 
 /* -----------------------------------------------------------------
