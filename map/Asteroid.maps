@@ -37,7 +37,7 @@ Area name="Asteroid 232"
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 1
 jump threshold north: 13
 jump threshold south: 13
@@ -152,8 +152,8 @@ ob_type=1 ob_x=45.00 ob_y=13.50 ob_na=-1
 ob_type=2 ob_x=44.50 ob_y=14.00 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=13.50 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=14.00 ob_na=-1 
-ob_type=23 ob_x=45.50 ob_y=14.50 ob_na=-1 
-ob_type=23 ob_x=47.50 ob_y=14.50 ob_na=-1 
+ob_type=24 ob_x=45.50 ob_y=14.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=14.50 ob_na=-1 
 ob_type=1 ob_x=51.00 ob_y=14.50 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=16.00 ob_na=-1 
 ob_type=2 ob_x=21.50 ob_y=16.00 ob_na=-1 
@@ -176,7 +176,7 @@ ob_type=1 ob_x=29.00 ob_y=16.50 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=45.50 ob_y=17.00 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=17.00 ob_na=-1 
-ob_type=23 ob_x=47.50 ob_y=16.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=16.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=16.50 ob_na=-1 
 ob_type=1 ob_x=57.00 ob_y=16.50 ob_na=-1 
 ob_type=1 ob_x=20.00 ob_y=17.50 ob_na=-1 
@@ -217,7 +217,7 @@ ob_type=2 ob_x=21.50 ob_y=20.00 ob_na=-1
 ob_type=2 ob_x=22.50 ob_y=20.00 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=19.50 ob_na=-1 
 ob_type=2 ob_x=23.50 ob_y=20.00 ob_na=-1 
-ob_type=23 ob_x=24.50 ob_y=19.50 ob_na=-1 
+ob_type=24 ob_x=24.50 ob_y=19.50 ob_na=-1 
 ob_type=49 ob_x=27.50 ob_y=19.50 ob_na=-1 
 ob_type=1 ob_x=44.00 ob_y=19.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=19.50 ob_na=-1 
@@ -272,7 +272,7 @@ ob_type=1 ob_x=20.00 ob_y=26.50 ob_na=-1
 ob_type=2 ob_x=19.50 ob_y=27.00 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=27.00 ob_na=-1 
 ob_type=46 ob_x=28.25 ob_y=26.50 ob_na=-1 
-ob_type=23 ob_x=29.50 ob_y=26.50 ob_na=-1 
+ob_type=24 ob_x=29.50 ob_y=26.50 ob_na=-1 
 ob_type=44 ob_x=30.75 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=26.50 ob_na=-1 
@@ -295,8 +295,8 @@ ob_type=1 ob_x=17.00 ob_y=29.50 ob_na=-1
 ob_type=11 ob_x=21.00 ob_y=29.50 ob_na=-1 
 ob_type=11 ob_x=24.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=29.50 ob_na=-1 
-ob_type=23 ob_x=50.50 ob_y=29.50 ob_na=-1 
-ob_type=23 ob_x=51.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=50.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=51.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=21.00 ob_y=30.50 ob_na=-1 
 ob_type=2 ob_x=21.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=22.50 ob_y=31.00 ob_na=-1 
@@ -325,7 +325,7 @@ ob_type=1 ob_x=19.00 ob_y=33.50 ob_na=-1
 ob_type=49 ob_x=21.57 ob_y=31.63 ob_na=-1 
 ob_type=49 ob_x=22.58 ob_y=31.59 ob_na=-1 
 ob_type=1 ob_x=14.00 ob_y=34.50 ob_na=-1 
-ob_type=20 ob_x=15.50 ob_y=34.50 ob_na=-1 
+ob_type=18 ob_x=15.50 ob_y=34.50 ob_na=-1 
 ob_type=11 ob_x=18.00 ob_y=34.50 ob_na=-1 
 ob_type=2 ob_x=39.50 ob_y=35.00 ob_na=-1 
 ob_type=26 ob_x=40.50 ob_y=35.00 ob_na=2 
@@ -352,7 +352,7 @@ ob_type=1 ob_x=44.00 ob_y=36.50 ob_na=-1
 ob_type=1 ob_x=45.00 ob_y=36.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=36.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=37.50 ob_na=-1 
-ob_type=20 ob_x=46.50 ob_y=37.50 ob_na=-1 
+ob_type=18 ob_x=46.50 ob_y=37.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=37.50 ob_na=-1 
 ob_type=1 ob_x=44.00 ob_y=38.50 ob_na=-1 
 ob_type=1 ob_x=45.00 ob_y=38.50 ob_na=-1 
@@ -448,9 +448,9 @@ ob_type=6 ob_x=24.50 ob_y=52.00 ob_na=-1
 ob_type=1 ob_x=26.00 ob_y=51.50 ob_na=-1 
 ob_type=2 ob_x=25.50 ob_y=52.00 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=51.50 ob_na=-1 
-ob_type=23 ob_x=42.50 ob_y=51.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=51.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=52.50 ob_na=-1 
-ob_type=23 ob_x=42.50 ob_y=52.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=52.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=52.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=53.50 ob_na=-1 
 ob_type=2 ob_x=42.50 ob_y=54.00 ob_na=-1 
@@ -460,12 +460,12 @@ ob_type=11 ob_x=42.00 ob_y=54.50 ob_na=-1
 ob_type=11 ob_x=42.00 ob_y=55.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=55.50 ob_na=-1 
 ob_type=11 ob_x=42.00 ob_y=56.50 ob_na=-1 
-ob_type=23 ob_x=13.50 ob_y=57.50 ob_na=-1 
+ob_type=24 ob_x=13.50 ob_y=57.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=57.50 ob_na=-1 
 ob_type=2 ob_x=42.50 ob_y=58.00 ob_na=-1 
 ob_type=2 ob_x=43.50 ob_y=58.00 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=58.50 ob_na=-1 
-ob_type=23 ob_x=42.50 ob_y=58.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=58.50 ob_na=-1 
 ob_type=49 ob_x=22.50 ob_y=59.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=59.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=59.50 ob_na=-1 
@@ -481,7 +481,7 @@ ob_type=2 ob_x=48.50 ob_y=61.00 ob_na=-1
 ob_type=2 ob_x=49.50 ob_y=61.00 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=61.00 ob_na=-1 
 ob_type=2 ob_x=51.50 ob_y=61.00 ob_na=-1 
-ob_type=23 ob_x=13.50 ob_y=62.50 ob_na=-1 
+ob_type=24 ob_x=13.50 ob_y=62.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=62.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=63.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=64.50 ob_na=-1 
@@ -499,7 +499,7 @@ ob_type=2 ob_x=76.50 ob_y=65.00 ob_na=-1
 ob_type=54 ob_x=13.50 ob_y=65.50 ob_na=-1 
 ob_type=49 ob_x=14.50 ob_y=65.50 ob_na=-1 
 ob_type=28 ob_x=15.50 ob_y=65.75 ob_na=-1 
-ob_type=23 ob_x=13.50 ob_y=67.50 ob_na=-1 
+ob_type=24 ob_x=13.50 ob_y=67.50 ob_na=-1 
 ob_type=49 ob_x=13.22 ob_y=70.81 ob_na=-1 
 ob_type=28 ob_x=15.50 ob_y=71.75 ob_na=-1 
 ob_type=2 ob_x=68.50 ob_y=72.00 ob_na=-1 
@@ -512,7 +512,7 @@ ob_type=2 ob_x=74.50 ob_y=72.00 ob_na=-1
 ob_type=2 ob_x=75.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=76.50 ob_y=72.00 ob_na=-1 
 ob_type=1 ob_x=68.00 ob_y=72.50 ob_na=-1 
-ob_type=20 ob_x=69.50 ob_y=72.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=71.00 ob_y=72.50 ob_na=-1 
 ob_type=48 ob_x=73.50 ob_y=72.50 ob_na=-1 
 ob_type=49 ob_x=76.50 ob_y=72.50 ob_na=-1 
@@ -526,7 +526,7 @@ ob_type=2 ob_x=70.50 ob_y=75.00 ob_na=-1
 ob_type=27 ob_x=68.00 ob_y=75.50 ob_na=0 
 ob_type=1 ob_x=71.00 ob_y=75.50 ob_na=-1 
 ob_type=1 ob_x=68.00 ob_y=76.50 ob_na=-1 
-ob_type=20 ob_x=69.50 ob_y=76.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=71.00 ob_y=76.50 ob_na=-1 
 ob_type=2 ob_x=21.54 ob_y=27.03 ob_na=-1 
 ob_type=2 ob_x=22.54 ob_y=27.03 ob_na=-1 
@@ -744,8 +744,8 @@ ob_type=2 ob_x=34.50 ob_y=35.00 ob_na=-1
 ob_type=2 ob_x=33.50 ob_y=35.00 ob_na=-1 
 ob_type=6 ob_x=33.50 ob_y=28.00 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=16.00 ob_na=-1 
-ob_type=23 ob_x=14.50 ob_y=17.50 ob_na=-1 
-ob_type=23 ob_x=13.50 ob_y=21.50 ob_na=-1 
+ob_type=24 ob_x=14.50 ob_y=17.50 ob_na=-1 
+ob_type=24 ob_x=13.50 ob_y=21.50 ob_na=-1 
 ob_type=2 ob_x=68.50 ob_y=70.00 ob_na=-1 
 ob_type=2 ob_x=69.50 ob_y=70.00 ob_na=-1 
 ob_type=2 ob_x=70.50 ob_y=70.00 ob_na=-1 
@@ -1216,7 +1216,7 @@ ob_type=1 ob_x=45.00 ob_y=12.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=13.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=12.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=13.00 ob_na=-1 
-ob_type=23 ob_x=47.50 ob_y=12.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=12.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=12.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=13.00 ob_na=-1 
 ob_type=50 ob_x=39.50 ob_y=11.50 ob_na=-1 
@@ -1266,7 +1266,7 @@ ob_type=2 ob_x=55.50 ob_y=6.00 ob_na=-1
 ob_type=2 ob_x=56.50 ob_y=6.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=8.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=8.00 ob_na=-1 
-ob_type=23 ob_x=36.50 ob_y=7.50 ob_na=-1 
+ob_type=24 ob_x=36.50 ob_y=7.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=8.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=8.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=9.00 ob_na=-1 
@@ -1828,7 +1828,7 @@ ob_type=11 ob_x=66.50 ob_y=29.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=6.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=7.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=8.50 ob_na=-1 
-ob_type=20 ob_x=68.50 ob_y=7.50 ob_na=-1 
+ob_type=18 ob_x=68.50 ob_y=7.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=9.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=9.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=9.50 ob_na=-1 
@@ -1844,8 +1844,8 @@ ob_type=116 ob_x=75.50 ob_y=9.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=9.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=9.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=9.50 ob_na=-1 
-ob_type=20 ob_x=72.50 ob_y=7.50 ob_na=-1 
-ob_type=20 ob_x=76.50 ob_y=7.50 ob_na=-1 
+ob_type=18 ob_x=72.50 ob_y=7.50 ob_na=-1 
+ob_type=18 ob_x=76.50 ob_y=7.50 ob_na=-1 
 ob_type=117 ob_x=71.50 ob_y=21.50 ob_na=-1 
 ob_type=117 ob_x=71.50 ob_y=24.50 ob_na=-1 
 ob_type=117 ob_x=71.50 ob_y=25.50 ob_na=-1 
@@ -2162,7 +2162,7 @@ ob_type=2 ob_x=78.50 ob_y=65.00 ob_na=-1
 ob_type=2 ob_x=77.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=78.50 ob_y=72.00 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=72.50 ob_na=-1 
-ob_type=23 ob_x=78.50 ob_y=72.50 ob_na=-1 
+ob_type=24 ob_x=78.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=74.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=75.50 ob_na=-1 
@@ -2676,7 +2676,7 @@ Levelnumber: 1
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -3872,7 +3872,7 @@ Levelnumber: 2
 xlen of this level: 60
 ylen of this level: 30
 light radius bonus of this level: 1
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -4548,7 +4548,7 @@ Levelnumber: 3
 xlen of this level: 38
 ylen of this level: 22
 light radius bonus of this level: 5
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -5071,7 +5071,7 @@ Levelnumber: 4
 xlen of this level: 44
 ylen of this level: 41
 light radius bonus of this level: 4
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -5996,7 +5996,7 @@ Levelnumber: 5
 xlen of this level: 40
 ylen of this level: 40
 light radius bonus of this level: 3
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -6764,7 +6764,7 @@ Levelnumber: 6
 xlen of this level: 40
 ylen of this level: 40
 light radius bonus of this level: 5
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -7338,7 +7338,7 @@ Levelnumber: 7
 xlen of this level: 44
 ylen of this level: 47
 light radius bonus of this level: 1
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -8058,7 +8058,7 @@ Levelnumber: 8
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
@@ -8388,7 +8388,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8399,14 +8399,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8862,7 +8862,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=25 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=23 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=50 ob_x=39.50 ob_y=88.50 ob_na=-1 
@@ -8912,7 +8912,7 @@ ob_type=2 ob_x=55.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=56.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=25 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9096,7 +9096,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=16 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -9112,8 +9112,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=16 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=16 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
@@ -9422,8 +9422,8 @@ end_of_level
 Levelnumber: 9
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: -3
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -10525,7 +10525,7 @@ Levelnumber: 10
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -11245,7 +11245,7 @@ Levelnumber: 11
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -12514,8 +12514,8 @@ end_of_level
 Levelnumber: 12
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -13242,7 +13242,7 @@ Levelnumber: 13
 xlen of this level: 58
 ylen of this level: 58
 light radius bonus of this level: 2
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -14066,7 +14066,7 @@ Levelnumber: 14
 xlen of this level: 51
 ylen of this level: 26
 light radius bonus of this level: 5
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -14814,7 +14814,7 @@ Levelnumber: 15
 xlen of this level: 50
 ylen of this level: 55
 light radius bonus of this level: 5
-minimal light on this level: 0
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -15338,7 +15338,7 @@ Levelnumber: 16
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
@@ -15976,7 +15976,7 @@ Levelnumber: 17
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
@@ -16771,8 +16771,8 @@ end_of_level
 Levelnumber: 18
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
@@ -17286,8 +17286,8 @@ end_of_level
 Levelnumber: 19
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 3
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -17599,8 +17599,8 @@ end_of_level
 Levelnumber: 20
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -18242,7 +18242,7 @@ Levelnumber: 21
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
@@ -19789,7 +19789,7 @@ Levelnumber: 22
 xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
-minimal light on this level: 0
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
@@ -20861,8 +20861,8 @@ end_of_level
 Levelnumber: 23
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
@@ -21443,8 +21443,8 @@ end_of_level
 Levelnumber: 24
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
@@ -22458,8 +22458,8 @@ end_of_level
 Levelnumber: 25
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 13
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
@@ -23189,8 +23189,8 @@ end_of_level
 Levelnumber: 26
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: -7
-minimal light on this level: 0
+light radius bonus of this level: 3
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -23828,8 +23828,8 @@ end_of_level
 Levelnumber: 27
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 11
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
@@ -24351,8 +24351,8 @@ end_of_level
 Levelnumber: 28
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: 0
-minimal light on this level: 0
+light radius bonus of this level: 12
+minimal light on this level: -9
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
@@ -24850,8 +24850,8 @@ end_of_level
 Levelnumber: 29
 xlen of this level: 25
 ylen of this level: 21
-light radius bonus of this level: 1
-minimal light on this level: 0
+light radius bonus of this level: 4
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -25104,8 +25104,8 @@ end_of_level
 Levelnumber: 30
 xlen of this level: 25
 ylen of this level: 21
-light radius bonus of this level: 1
-minimal light on this level: 0
+light radius bonus of this level: 5
+minimal light on this level: -13
 infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
@@ -25368,7 +25368,7 @@ jump target east: 26
 jump target west: 11
 Name of this level=Power Facility
 Comment of the Influencer on entering this level="This is a new level...
-Name of background song for this level=NOWHERE.MOD
+Name of background song for this level=Daybreak.ogg
 beginning_of_map
   5   5   5   5   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  23   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   6   6   6   6  14   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   5   5   5   5   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  21  16  23   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   6   6   6  24  15  16  20   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
@@ -26661,7 +26661,7 @@ jump target east: -1
 jump target west: -1
 Name of this level=Power Facility Underground
 Comment of the Influencer on entering this level="This is a new level...
-Name of background song for this level=NOWHERE.MOD
+Name of background song for this level=Daybreak.ogg
 beginning_of_map
  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31 
  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31 
@@ -27001,7 +27001,7 @@ jump target east: -1
 jump target west: -1
 Name of this level=Crystal Cavens
 Comment of the Influencer on entering this level="This is a new level...
-Name of background song for this level=NOWHERE.MOD
+Name of background song for this level=Daybreak.ogg
 beginning_of_map
  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31 
  31  31  31   4   4   4   4  31   4   4   4   4   4   4   4   4   4   4   4  31  31  31  31   4   4   4  31  31  31  31  31  31  31  31  31   4   4   4   4   4   4   4   4   4   4   4  31  31   4   4   4   4   4   4   4   4   4   4  31  31  31  31  31  31  31  31   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4  31  31  31   4   4   4  31  31  31 
