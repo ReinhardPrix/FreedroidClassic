@@ -1,4 +1,8 @@
-SUBDIRS = src item_editor croppy win32
+if WIN32
+SUBDIRS = win32 src 
+else
+SUBDIRS = win32 src item_editor croppy 
+endif
 
 man_MANS = freedroidRPG.6
 

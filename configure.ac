@@ -31,6 +31,20 @@ if test x$have_x = xyes; then
 	CFLAGS="$CFLAGS $X_CFLAGS"
 fi
 
+case "$target" in
+	*-*-cygwin* | *-*-mingw32*)
+	CFLAGS="$CFLAGS  -DFD_DATADIR='\".\"'"
+	SYS_GL_LIB=opengl32
+	win32=true
+	;;
+
+	*)
+	CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+	SYS_GL_LIB=GL
+	win32=false
+	;;
+esac
+
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
 
@@ -77,18 +91,14 @@ you need the SDL_mixer library (version >= 1.2.1) if you want sound!
 --> compiling without sound support]))
 
 
-AC_CHECK_LIB([vorbis], [ov_open],, AC_MSG_WARN([
+AC_CHECK_LIB([vorbis], [vorbis_block_init],, AC_MSG_WARN([
 --------------------------------------------------
 libvorbis not found!
 You need the Vorbis libs installed if you want
 Freedroid to be able to play Ogg files (e.g. the Intro theme)
 --------------------------------------------------]))
 
-AC_CHECK_LIB([GL], [glEnable],, AC_MSG_WARN([
---------------------------------------------------
-OpenGL development libs/header not found!
-Building FreedroidRPG without OpenGL support.
---------------------------------------------------]))
+dnl , [ -logg -lvorbisenc -lvorbisfile  ]
 
 dnl Don't Check for getopt_long 
 dnl just use bundled version like hello does, and gnuchess
@@ -97,6 +107,19 @@ dnl just use bundled version like hello does, and gnuchess
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
 			  unistd.h dirent.h sys/soundcard.h GL/gl.h])
+
+
+if test x$win32 = xtrue; then
+dnl use openGL by default for win32 
+LIBS="$LIBS -l$SYS_GL_LIB"
+AC_DEFINE(HAVE_LIBGL, 1)
+else
+AC_CHECK_LIB([GL], [glEnable],, AC_MSG_WARN([
+--------------------------------------------------
+OpenGL development libs/header not found!
+Building FreedroidRPG without OpenGL support.
+--------------------------------------------------]))
+fi
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -109,6 +132,7 @@ AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok usleep])
 
 ## Check gtk libs
+if test x$win32 = xfalse; then
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
 --------------------------------------------------
 WARNING: You need libgtk-dev >= 1.20 in order to 
@@ -116,19 +140,7 @@ be able to build the DialogEditor and ItemEditor!
 
 If you only want to play Freedroid you can ignore this!
 --------------------------------------------------]))
-
-
-case "$target" in
-     *-*-cygwin* | *-*-mingw32*)
-     CFLAGS="$CFLAGS  -DFD_DATADIR='\".\"'"
-     win32=true
-     ;;
-
-     *)
-     CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
-     win32=false
-     ;;
-esac
+fi
 
 dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
