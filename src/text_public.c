@@ -21,6 +21,84 @@ RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
 
 }; // void RotateVectorByAngle ( ... )
 
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+delete_one_dialog_option ( int i , int FirstInitialisation )
+{
+  int j;
+
+  //--------------------
+  // If this is not the first initialisation, we have to free the allocated
+  // strings first, or we'll be leaking memory otherwise...
+  //
+  if ( !FirstInitialisation )
+    {
+      if ( strlen ( ChatRoster[i].option_text ) ) free ( ChatRoster[i].option_text );
+      if ( strlen ( ChatRoster[i].option_sample_file_name ) ) free ( ChatRoster[i].option_sample_file_name );
+    }
+  ChatRoster[i].option_text="";
+  ChatRoster[i].option_sample_file_name="";
+  
+  //--------------------
+  // Now we can set the positions of the dialog boxes within the dialog editor
+  // to 'empty' values.  This will remain completely without effect in FreedroidRPG.
+  // The only one caring about these positions is the Dialog Editor.
+  //
+  ChatRoster[i].position_x = -1;
+  ChatRoster[i].position_y = -1;
+  
+  for ( j = 0 ; j < MAX_REPLIES_PER_OPTION ; j++ )
+    {
+      //--------------------
+      // If this is not the first initialisation, we have to free the allocated
+      // strings first, or we'll be leaking memory otherwise...
+      //
+      if ( !FirstInitialisation )
+	{
+	  if ( strlen ( ChatRoster [ i ] . reply_sample_list [ j ] ) ) 
+	    free ( ChatRoster [ i ] . reply_sample_list [ j ] );
+	  if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) ) 
+	    free ( ChatRoster [ i ] . reply_subtitle_list [ j ] );
+	}
+      ChatRoster [ i ] . reply_sample_list [ j ] = "";
+      ChatRoster [ i ] . reply_subtitle_list [ j ] = "";
+    }
+  
+  for ( j = 0 ; j < MAX_EXTRAS_PER_OPTION ; j++ )
+    {
+      //--------------------
+      // If this is not the first initialisation, we have to free the allocated
+      // strings first, or we'll be leaking memory otherwise...
+      //
+      if ( !FirstInitialisation )
+	{
+	  if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) ) 
+	    free ( ChatRoster [ i ] . extra_list [ j ] );
+	}
+      ChatRoster [ i ] . extra_list [ j ] = "";
+    }
+  
+  //--------------------
+  // If this is not the first initialisation, we have to free the allocated
+  // strings first, or we'll be leaking memory otherwise...
+  //
+  if ( !FirstInitialisation )
+    {
+      if ( strlen ( ChatRoster [ i ] . on_goto_condition ) ) 
+	free ( ChatRoster [ i ] . on_goto_condition );
+    }
+  ChatRoster [ i ] . on_goto_condition = "";
+  ChatRoster [ i ] . on_goto_first_target = (-1);
+  ChatRoster [ i ] . on_goto_second_target = (-1);
+  
+  for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
+    {
+      ChatRoster [ i ] . change_option_nr [ j ] = (-1); 
+      ChatRoster [ i ] . change_option_to_value [ j ] = (-1); 
+    }
+}; // void delete_one_dialog_option ( int i , int FirstInitialisation )
 
 /* ----------------------------------------------------------------------
  * This function should init the chat roster with empty values and thereby
@@ -30,81 +108,11 @@ void
 InitChatRosterForNewDialogue( void )
 {
   int i;
-  int j;
   static int FirstInitialisation = TRUE;
 
   for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
     {
-
-      //--------------------
-      // If this is not the first initialisation, we have to free the allocated
-      // strings first, or we'll be leaking memory otherwise...
-      //
-      if ( !FirstInitialisation )
-	{
-	  if ( strlen ( ChatRoster[i].option_text ) ) free ( ChatRoster[i].option_text );
-	  if ( strlen ( ChatRoster[i].option_sample_file_name ) ) free ( ChatRoster[i].option_sample_file_name );
-	}
-      ChatRoster[i].option_text="";
-      ChatRoster[i].option_sample_file_name="";
-
-      //--------------------
-      // Now we can set the positions of the dialog boxes within the dialog editor
-      // to 'empty' values.  This will remain completely without effect in FreedroidRPG.
-      // The only one caring about these positions is the Dialog Editor.
-      //
-      ChatRoster[i].position_x = -1;
-      ChatRoster[i].position_y = -1;
-
-      for ( j = 0 ; j < MAX_REPLIES_PER_OPTION ; j++ )
-	{
-	  //--------------------
-	  // If this is not the first initialisation, we have to free the allocated
-	  // strings first, or we'll be leaking memory otherwise...
-	  //
-	  if ( !FirstInitialisation )
-	    {
-	      if ( strlen ( ChatRoster [ i ] . reply_sample_list [ j ] ) ) 
-		free ( ChatRoster [ i ] . reply_sample_list [ j ] );
-	      if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) ) 
-		free ( ChatRoster [ i ] . reply_subtitle_list [ j ] );
-	    }
-	  ChatRoster [ i ] . reply_sample_list [ j ] = "";
-	  ChatRoster [ i ] . reply_subtitle_list [ j ] = "";
-	}
-
-      for ( j = 0 ; j < MAX_EXTRAS_PER_OPTION ; j++ )
-	{
-	  //--------------------
-	  // If this is not the first initialisation, we have to free the allocated
-	  // strings first, or we'll be leaking memory otherwise...
-	  //
-	  if ( !FirstInitialisation )
-	    {
-	      if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) ) 
-		free ( ChatRoster [ i ] . extra_list [ j ] );
-	    }
-	  ChatRoster [ i ] . extra_list [ j ] = "";
-	}
-
-      //--------------------
-      // If this is not the first initialisation, we have to free the allocated
-      // strings first, or we'll be leaking memory otherwise...
-      //
-      if ( !FirstInitialisation )
-	{
-	  if ( strlen ( ChatRoster [ i ] . on_goto_condition ) ) 
-	    free ( ChatRoster [ i ] . on_goto_condition );
-	}
-      ChatRoster [ i ] . on_goto_condition = "";
-      ChatRoster [ i ] . on_goto_first_target = (-1);
-      ChatRoster [ i ] . on_goto_second_target = (-1);
-
-      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
-	{
-	  ChatRoster [ i ] . change_option_nr [ j ] = (-1); 
-	  ChatRoster [ i ] . change_option_to_value [ j ] = (-1); 
-	}
+      delete_one_dialog_option ( i , FirstInitialisation );
     }
 
   //--------------------
