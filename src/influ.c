@@ -344,18 +344,22 @@ void
 AnimateInfluence (void)
 {
 #define TOTAL_SWING_TIME 0.7
+#define FULL_BREATHE_TIME 3
 
   if ( Me.weapon_swing_time == (-1) )
     {
-      Me.phase = 0;
+      Me.phase = ( (int) ( Me.MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
     }
   else
     {
-      Me.phase = Me.weapon_swing_time * TUX_PHASES * 1.0 / TOTAL_SWING_TIME ;
+      Me.phase = TUX_BREATHE_PHASES + ( Me.weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ;
       if ( Me.weapon_swing_time > TOTAL_SWING_TIME ) Me.weapon_swing_time = (-1) ;
     }
 
-
+  if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+    {
+      Me.phase = 0;
+    }
 
   /*
   Me.phase +=
@@ -378,11 +382,12 @@ AnimateInfluence (void)
     }
   */
 
+  /*
   if (((int) rintf (Me.phase)) >= DROID_PHASES)
     {
       Me.phase = 0;
     }
-
+  */
 }; // void AnimateInfluence ( void )
 
 /* ----------------------------------------------------------------------

@@ -359,7 +359,8 @@ enum _sounds
 #define ALLSHIPS 		4
 
 #define DROID_PHASES            8
-#define TUX_PHASES 		5
+#define TUX_SWING_PHASES 	7
+#define TUX_BREATHE_PHASES 	5
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
 
