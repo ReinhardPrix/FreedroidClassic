@@ -289,8 +289,8 @@ end_of_level
 Levelnumber: 2
 xlen of this level: 38
 ylen of this level: 17
-color of this level: 0
-Name of this level=research
+color of this level: 5
+Name of this level=emergency bunker
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0  14  14  11   0  14  15  14  14  14  15  15  15   0  13   0  14  14   0  14  15  14  14  14  14  11 

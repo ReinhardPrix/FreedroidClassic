@@ -2079,7 +2079,8 @@ Level_Editor(void)
 		      CurLevel->color--;
 		      while (LeftPressed());
 		    }
-		  
+		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
+		  break;
 		case CHANGE_SIZE_X:
 		  if ( RightPressed() )
 		    {

@@ -299,17 +299,15 @@ location, *Location;
 
 typedef struct
 {
-  /* current location */
-  byte level;
-  byte x;			/* Grob */
-  byte y;
+  int level;   // The level, where this elevtor entrance is located
+  int x;       // The position in x of this elevator entrance within the level
+  int y;       // The position in y of this elevator entrance within the level
 
   /* connections: Numbers in Lift-Array */
-  signed char up;
-  signed char down;
+  int up;
+  int down;
 
-  /* row */
-  byte lift_row;
+  int lift_row;  // which lift column does this lift entrance belong to?
 }
 lift, *Lift;
 

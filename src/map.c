@@ -1136,16 +1136,24 @@ TranslateMap (Level Lev)
 @Int:
 * $Function----------------------------------------------------------*/
 int
-GetLiftConnections (char *shipname)
+GetLiftConnections (char *filename)
 {
-  char filename[FILENAME_LEN + 1];
+  // char filename[FILENAME_LEN + 1];
   int i;
   FILE *Lift_file;
+  struct stat stbuf;
+  char *Data;
+  char *EndPointer;
+  char *EntryPointer;
   int cur_lev, cur_x, cur_y, up, down, lift_row;
+  int Label;
   Lift CurLift;
 
+#define END_OF_LIFT_DATA_STRING "*** End of Lift Data ***"
+#define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
+
   /* Now get the lift-connection data from "FILE.elv" file */
-  strcpy (filename, shipname);	/* get lift filename */
+  // strcpy (filename, shipname);	/* get lift filename */
 
   if ((Lift_file = fopen (filename, "r")) == NULL)
     {
@@ -1157,14 +1165,92 @@ GetLiftConnections (char *shipname)
       DebugPrintf (2, "\n\nLift file successfully opened.");
     }
 
+  if (fstat (fileno (Lift_file), &stbuf) == EOF)
+    {
+      DebugPrintf ( 0 , "\nint GetLiftConnections ( char* filename ): Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf (2, "\nfstating lift file succeeded...");
+    }
+
+  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
+    {
+      DebugPrintf ( 0 , "\nvoid GetLiftConnections ( char *filename ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), Lift_file );
+
+  DebugPrintf ( 2 , "\nReading dat file succeeded... Adding a 0 at the end of read data....");
+
+  if ( (EndPointer = strstr( Data , END_OF_LIFT_DATA_STRING ) ) == NULL )
+    {
+      DebugPrintf ( 0 , "\nERROR!  END OF LIFT DATA STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  DebugPrintf( 0 , "\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+
+  if ( (EntryPointer = strstr( Data , START_OF_LIFT_DATA_STRING ) ) == NULL )
+    {
+      DebugPrintf ( 0 , "\nERROR!  START OF LIFT DATA STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+
+  while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )
+    {
+      EntryPointer += strlen ("Label=");
+      sscanf( EntryPointer , "%d" , &Label );
+      CurLift = &(curShip.AllLifts[Label]);
+
+      EntryPointer = strstr( EntryPointer , "Deck=" ) ;
+      EntryPointer += strlen ("Deck=");
+      sscanf( EntryPointer , "%d" , &(CurLift->level) );
+      
+      EntryPointer = strstr( EntryPointer , "PosX=" ) ;
+      EntryPointer += strlen ("PosX=");
+      sscanf( EntryPointer , "%d" , &(CurLift->x) );
+      
+      EntryPointer = strstr( EntryPointer , "PosY=" ) ;
+      EntryPointer += strlen ("PosY=");
+      sscanf( EntryPointer , "%d" , &(CurLift->y) );
+      
+      EntryPointer = strstr( EntryPointer , "LevelUp=" ) ;
+      EntryPointer += strlen ("LevelUp=");
+      sscanf( EntryPointer , "%d" , &(CurLift->up) );
+      
+      EntryPointer = strstr( EntryPointer , "LevelDown=" ) ;
+      EntryPointer += strlen ("LevelDown=");
+      sscanf( EntryPointer , "%d" , &(CurLift->down) );
+      
+      EntryPointer = strstr( EntryPointer , "LiftRow=" ) ;
+      EntryPointer += strlen ("LiftRow=");
+      sscanf( EntryPointer , "%d" , &(CurLift->lift_row) );
+      
+    }
+
+  curShip.num_lifts = Label;
+
+  /*
+
   for (i = 0; i < MAX_LIFTS; i++)
     {
-      if (fscanf (Lift_file, "%d %d %d %d %d %d",
-		  &cur_lev, &cur_x, &cur_y, &up, &down, &lift_row) == EOF)
-	{
-	  curShip.num_lifts = i;
-	  break;
-	}
+      EntryPointer = strstr ( EntryPointer, "\n" ) + 1;
+      if ( EntryPointer == NULL ) break;
+
+      //if ( sscanf ( EntryPointer, "%d %d %d %d %d %d",
+      //&cur_lev, &cur_x, &cur_y, &up, &down, &lift_row) == EOF)
+      //{
+      //curShip.num_lifts = i;
+      //break;
+      //	}
 
       CurLift = &(curShip.AllLifts[i]);
       CurLift->level = cur_lev;
@@ -1175,9 +1261,12 @@ GetLiftConnections (char *shipname)
       CurLift->lift_row = lift_row;
     }
 
+      */
+
+
   if (fclose (Lift_file) == EOF)
     {
-      printf("\n\nError while trying to close lift file....Terminating....\n\n");
+      DebugPrintf( 0 , "\n\nError while trying to close lift file....Terminating....\n\n");
       Terminate(ERR);
     }
 
