@@ -2790,10 +2790,14 @@ LevelEditor(void)
 	    }
 
 	  ShowLevelEditorTopMenu( Highlight );
-	  ShowGenericButtonFromList ( GO_LEVEL_NORTH_BUTTON );
-	  ShowGenericButtonFromList ( GO_LEVEL_SOUTH_BUTTON );
-	  ShowGenericButtonFromList ( GO_LEVEL_EAST_BUTTON );
-	  ShowGenericButtonFromList ( GO_LEVEL_WEST_BUTTON );
+	  if ( EditLevel -> jump_target_north >= 0 )
+	    ShowGenericButtonFromList ( GO_LEVEL_NORTH_BUTTON );
+	  if ( EditLevel -> jump_target_south >= 0 )
+	    ShowGenericButtonFromList ( GO_LEVEL_SOUTH_BUTTON );
+	  if ( EditLevel -> jump_target_east >= 0 )
+	    ShowGenericButtonFromList ( GO_LEVEL_EAST_BUTTON );
+	  if ( EditLevel -> jump_target_west >= 0 )
+	    ShowGenericButtonFromList ( GO_LEVEL_WEST_BUTTON );
 
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...

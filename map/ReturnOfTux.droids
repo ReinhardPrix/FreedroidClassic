@@ -299,13 +299,11 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
-
-
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
 
 ** End of this levels droid data **
 
