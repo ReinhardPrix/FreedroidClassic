@@ -941,60 +941,60 @@ smash_obstacle ( float x , float y )
  * given position.
  * ---------------------------------------------------------------------- */
 Uint16
-GetMapBrick (Level deck, float x, float y)
+GetMapBrick ( Level deck , float x , float y )
 {
-  Uint16 BrickWanted;
-  int RoundX, RoundY;
-  
-  //--------------------
-  // ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
-  // not an exact foating point division!  Beware of "improvements" here!!!
-  //
-  RoundX = (int) rintf (x) ;
-  RoundY = (int) rintf (y) ;
-
-  if ( RoundY >= deck->ylen)
+    Uint16 BrickWanted;
+    int RoundX, RoundY;
+    
+    //--------------------
+    // ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
+    // not an exact foating point division!  Beware of "improvements" here!!!
+    //
+    RoundX = (int) rintf (x) ;
+    RoundY = (int) rintf (y) ;
+    
+    if ( RoundY >= deck->ylen)
     {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
-      return ISO_COMPLETELY_DARK;
-      Terminate (-1);
+	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
+	return ISO_COMPLETELY_DARK;
+	Terminate (-1);
     }
-  if ( RoundX >= deck->xlen)
+    if ( RoundX >= deck->xlen)
     {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
-      return ISO_COMPLETELY_DARK;
-      Terminate (-1);
+	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
+	return ISO_COMPLETELY_DARK;
+	Terminate (-1);
     }
-  if ( RoundY < 0)
+    if ( RoundY < 0)
     {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
-      return ISO_COMPLETELY_DARK;
-      Terminate (-1);
+	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
+	return ISO_COMPLETELY_DARK;
+	Terminate (-1);
     }
-  if ( RoundX < 0)
+    if ( RoundX < 0)
     {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
-      return ISO_COMPLETELY_DARK;
-      Terminate (-1);
+	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
+	return ISO_COMPLETELY_DARK;
+	Terminate (-1);
     }
-
-  BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
-  if ( BrickWanted >= ALL_ISOMETRIC_FLOOR_TILES )
+    
+    BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
+    if ( BrickWanted >= ALL_ISOMETRIC_FLOOR_TILES )
     {
-      fprintf( stderr , "\nBrickWanted: %d at pos X=%d Y=%d Z=%d." , BrickWanted , RoundX , RoundY , deck->levelnum );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr , "\nBrickWanted: %d at pos X=%d Y=%d Z=%d." , BrickWanted , RoundX , RoundY , deck->levelnum );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 A maplevel in Freedroid contained a brick type, that does not have a\n\
 real graphical representation.  This is a severe error, that really \n\
 shouldn't be occuring in normal game, except perhaps if the level editor\n\
 was just used to add/remove some new doors or refreshes or other animated\n\
 map tiles.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  return BrickWanted;
-
+    
+    return BrickWanted;
+    
 }; // int GetMapBrick( ... ) 
- 
+
 /* ---------------------------------------------------------------------- 
  * This function checks if something special has to be done, cause the
  * Influencer or tux has stepped on some special fields like a lifts or
