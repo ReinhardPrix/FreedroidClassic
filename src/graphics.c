@@ -167,8 +167,8 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	       (pixx >= User_Rect.x + User_Rect.w -1) || 
 	       (pixy <= User_Rect.y ) || 
 	       (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
-	  putpixel( ne_screen , pixx , pixy , Color );
-	  putpixel( ne_screen , pixx-1 , pixy , Color );
+	  putpixel( Screen , pixx , pixy , Color );
+	  putpixel( Screen , pixx-1 , pixy , Color );
 	}
       return; 
     }
@@ -186,7 +186,7 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
   //--------------------
   // Now we start the drawing process
   //
-  // SDL_LockSurface( ne_screen );
+  // SDL_LockSurface( Screen );
 
   slope = ( y2 - y1 ) / (x2 - x1) ;
   for ( i=0 ; i<(x2-x1)*Block_Width ; i++ )
@@ -197,11 +197,11 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	   (pixx >= User_Rect.x + User_Rect.w -1) || 
 	   (pixy <= User_Rect.y ) || 
 	   (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
-      putpixel( ne_screen , pixx , pixy , Color );
-      putpixel( ne_screen , pixx , pixy -1 , Color );
+      putpixel( Screen , pixx , pixy , Color );
+      putpixel( Screen , pixx , pixy -1 , Color );
     }
 
-  // SDL_UnlockSurface( ne_screen );
+  // SDL_UnlockSurface( Screen );
 
 } // void DrawLineBetweenTiles
 
@@ -226,7 +226,7 @@ TakeScreenshot(void)
   DebugPrintf (1, "\n\nScreenshoot function called.\n\n");
   sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
   DebugPrintf(1, "\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
-  SDL_SaveBMP( ne_screen , Screenshoot_Filename );
+  SDL_SaveBMP( Screen , Screenshoot_Filename );
   Number_Of_Screenshot++;
   free(Screenshoot_Filename);
 
@@ -250,25 +250,25 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
   if ( Grid_Rectangle == NULL ) Grid_Rectangle = & User_Rect ;
 
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
-  SDL_LockSurface( ne_screen );
+  SDL_LockSurface( Screen );
   for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++) 
     {
       for ( x = Grid_Rectangle->x ; x < Grid_Rectangle->w ; x++ ) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {
-	      putpixel( ne_screen, x, y, 0 );
+	      putpixel( Screen, x, y, 0 );
 	    }
 	}
     }
   
-  SDL_UnlockSurface( ne_screen );
+  SDL_UnlockSurface( Screen );
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): end of function reached.");
 } // void MakeGridOnSchreen(void)
 
 
 /*----------------------------------------------------------------------
- * This function load an image and displays it directly to the ne_screen
+ * This function load an image and displays it directly to the Screen
  * but without updating it.
  * This might be very handy, especially in the Title() function to 
  * display the title image and perhaps also for displaying the ship
@@ -286,7 +286,7 @@ void DisplayImage( char *datafile )
     Terminate(ERR);
   }
 
-  SDL_BlitSurface(image, NULL, ne_screen, NULL);
+  SDL_BlitSurface(image, NULL, Screen, NULL);
 
   SDL_FreeSurface(image);
 }
@@ -377,7 +377,7 @@ SetCombatScaleTo(float ResizeFactor)
   int i, j;
   SDL_Surface *tmp;
 
-  // CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
+  // CenteredPutString   ( Screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
 
   // just to be sure, reset the size of the graphics
   ReInitPictures();
@@ -778,7 +778,7 @@ Sorry...\n\
 
   #define SCALE_FACTOR 2
 
-  if( !(ne_screen = SDL_SetVideoMode ( SCREENLEN, SCREENHEIGHT , 0 , flags)) )
+  if( !(Screen = SDL_SetVideoMode ( SCREENLEN, SCREENHEIGHT , 0 , flags)) )
     {
       fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
 	      SDL_GetError()); 
@@ -794,7 +794,7 @@ Sorry...\n\
   ne_transp_rgb.gruen =  43; 
   ne_transp_rgb.blau  =  43; 
   /* and corresponding key: */
-  ne_transp_key = SDL_MapRGB(ne_screen->format, ne_transp_rgb.rot,
+  ne_transp_key = SDL_MapRGB(Screen->format, ne_transp_rgb.rot,
 			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
 
   SDL_SetGamma( 1 , 1 , 1 );
@@ -902,10 +902,10 @@ ClearGraphMem ( void )
   BannerIsDestroyed=TRUE;
 
   // 
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetClipRect( Screen, NULL );
 
   // Now we fill the screen with black color...
-  SDL_FillRect( ne_screen , NULL , 0 );
+  SDL_FillRect( Screen , NULL , 0 );
 } // ClearGraphMem( void )
 
 
@@ -932,7 +932,7 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
   // DebugPrintf (2, "\nvoid SetPalCol(...): Real function called.");
   // vga_setpalette (palpos, rot, gruen, blau);
 
-  SDL_SetColors( ne_screen , &ThisOneColor, palpos, 1 );
+  SDL_SetColors( Screen , &ThisOneColor, palpos, 1 );
   // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
 
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );

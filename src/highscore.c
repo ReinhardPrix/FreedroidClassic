@@ -106,8 +106,8 @@ update_highscores (void)
   SetCurrentFont (Highscore_BFont);
 
   MakeGridOnScreen ( NULL );
-  printf_SDL (ne_screen, User_Rect.x, User_Rect.y, "Great Score !\n");
-  printf_SDL (ne_screen, -1, -1, "Enter your name: ");
+  printf_SDL (Screen, User_Rect.x, User_Rect.y, "Great Score !\n");
+  printf_SDL (Screen, -1, -1, "Enter your name: ");
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);
@@ -157,18 +157,18 @@ Show_Highscores (void)
   y0 = 80;  
   height = FontHeight (GetCurrentFont());
 
-  CenteredPrintString (ne_screen, y0, "Top %d  freedom fighters\n", num_highscores);
+  CenteredPrintString (Screen, y0, "Top %d  freedom fighters\n", num_highscores);
   
   for (i=0; i<num_highscores; i++)
     {
-      PrintString (ne_screen, x0, y0 + (i+2)*height, "%d", i+1);
+      PrintString (Screen, x0, y0 + (i+2)*height, "%d", i+1);
       if (Highscores[i]->score >= 0)
-	PrintString (ne_screen, x1, y0 + (i+2)*height, "%s", Highscores[i]->date);
-      PrintString (ne_screen, x2, y0 + (i+2)*height,  "%s", Highscores[i]->name);
+	PrintString (Screen, x1, y0 + (i+2)*height, "%s", Highscores[i]->date);
+      PrintString (Screen, x2, y0 + (i+2)*height,  "%s", Highscores[i]->name);
       if (Highscores[i]->score >= 0)
-	PrintString (ne_screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
+	PrintString (Screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
     }
-  SDL_Flip (ne_screen);
+  SDL_Flip (Screen);
   
   getchar_raw ();
 

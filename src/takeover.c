@@ -661,11 +661,11 @@ ShowPlayground ()
   xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
   yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*140)/2;
 
-  //  SDL_SetColorKey (ne_screen, 0, 0);
-  SDL_SetClipRect (ne_screen , &User_Rect);
+  //  SDL_SetColorKey (Screen, 0, 0);
+  SDL_SetClipRect (Screen , &User_Rect);
 
   if (to_background)
-    SDL_BlitSurface (to_background, NULL, ne_screen, NULL);
+    SDL_BlitSurface (to_background, NULL, Screen, NULL);
   else
     Fill_Rect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
@@ -681,54 +681,54 @@ ShowPlayground ()
 	    User_Rect.w, User_Rect.h);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++)
     {
       SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE],
-		       ne_screen, &Target_Rect);
+		       Screen, &Target_Rect);
 
       Target_Rect.y += GROUNDBLOCKHEIGHT;
     }				/* for i=1 to 12 */
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
 
 
   /* Mittlere Saeule */
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
   SDL_BlitSurface (to_blocks, &ToLeaderBlock,
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
     SDL_BlitSurface (to_blocks, &ToColumnBlock,
-		     ne_screen, &Target_Rect);
+		     Screen, &Target_Rect);
 
 
   /* rechte Saeule */
   Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
     SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
-		     ne_screen, &Target_Rect);
+		     Screen, &Target_Rect);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
 
   /* Fill the Leader-LED with its color */
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
   SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
   Target_Rect.y += FILL_BLOCK_HEIGHT;
   SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   ne_screen, &Target_Rect);
+		   Screen, &Target_Rect);
 
   /* Fill the Display Column with its colors */
   for (i = 0; i < NUM_LINES; i++)
@@ -737,7 +737,7 @@ ShowPlayground ()
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
       SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
-		       ne_screen, &Target_Rect);
+		       Screen, &Target_Rect);
     }
 
 
@@ -748,7 +748,7 @@ ShowPlayground ()
 	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
       }
 
 
@@ -761,7 +761,7 @@ ShowPlayground ()
 		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
       }
 
   /* Show the capsules left for each player */
@@ -776,7 +776,7 @@ ShowPlayground ()
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
       if (NumCapsules[player])
-	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], Screen, &Target_Rect);
 
 
       for (i = 0; i < NumCapsules[player]-1; i++)
@@ -784,11 +784,11 @@ ShowPlayground ()
 	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
 		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
 	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
-			   ne_screen, &Target_Rect);
+			   Screen, &Target_Rect);
 	} /* for capsules */
     } /* for player */
 
-  SDL_Flip (ne_screen);
+  SDL_Flip (Screen);
 
   return;
 

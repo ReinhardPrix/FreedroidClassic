@@ -86,10 +86,10 @@ DoMenuSelection( char* MenuTexts[10] )
       for ( i = 0 ; i < 10 ; i ++ )
 	{
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
-	  CenteredPutString ( ne_screen ,  FIRST_MENU_ITEM_POS_Y + i * h , MenuTexts[ i ] );
+	  CenteredPutString ( Screen ,  FIRST_MENU_ITEM_POS_Y + i * h , MenuTexts[ i ] );
 	}
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
   
       // Wait until the user does SOMETHING
   
@@ -142,11 +142,11 @@ InitiateMenu( void )
   // of the big escape menu.  This prepares the screen, so that we can
   // write on it further down.
   //
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetClipRect( Screen, NULL );
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
   Assemble_Combat_Picture ( 0 );
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetClipRect( Screen, NULL );
   MakeGridOnScreen( NULL );
 } // void InitiateMenu(void)
 
@@ -188,31 +188,31 @@ Cheatmenu (void)
   while (!Weiter)
     {
       ClearGraphMem ();
-      printf_SDL (ne_screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
+      printf_SDL (Screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
 		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
-      printf_SDL (ne_screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
-      printf_SDL (ne_screen, -1, -1, " l. robot list of current level\n");
-      printf_SDL (ne_screen, -1, -1, " g. complete robot list\n");
-      printf_SDL (ne_screen, -1, -1, " d. destroy robots on current level\n");
-      printf_SDL (ne_screen, -1, -1, " t. Teleportation\n");
-      printf_SDL (ne_screen, -1, -1, " r. change to new robot type\n");
-      printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
+      printf_SDL (Screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
+      printf_SDL (Screen, -1, -1, " l. robot list of current level\n");
+      printf_SDL (Screen, -1, -1, " g. complete robot list\n");
+      printf_SDL (Screen, -1, -1, " d. destroy robots on current level\n");
+      printf_SDL (Screen, -1, -1, " t. Teleportation\n");
+      printf_SDL (Screen, -1, -1, " r. change to new robot type\n");
+      printf_SDL (Screen, -1, -1, " i. Invinciblemode: %s",
 		  InvincibleMode ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " e. set energy\n");
-      printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
+      printf_SDL (Screen, -1, -1, " e. set energy\n");
+      printf_SDL (Screen, -1, -1, " h. Hide invisible map parts: %s",
 		  HideInvisibleMap ? "ON\n" : "OFF\n" );
-      printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
+      printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
 		  show_all_droids ? "ON\n" : "OFF\n" );
-      printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
-      printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
+      printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
+      printf_SDL (Screen, -1, -1, " s. Sound: %s",
 		  sound_on ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " x. Fullscreen : %s",
+      printf_SDL (Screen, -1, -1, " x. Fullscreen : %s",
 		  fullscreen_on ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
-      printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
-      printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
+      printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
+      printf_SDL (Screen, -1, -1, " z. change Zoom factor\n");
+      printf_SDL (Screen, -1, -1, " f. Freeze on this positon: %s",
 		  stop_influencer ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
+      printf_SDL (Screen, -1, -1, " q. RESUME game\n");
 
       switch (getchar_raw ())
 	{
@@ -222,9 +222,9 @@ Cheatmenu (void)
 
 	case 'z':
 	  ClearGraphMem();
-	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",
+	  printf_SDL (Screen, x0, y0, "Current Zoom factor: %f\n",
 		      CurrentCombatScaleFactor); 
-	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
+	  printf_SDL (Screen, -1, -1, "New zoom factor: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%f", &CurrentCombatScaleFactor);
 	  free (input);
@@ -244,21 +244,21 @@ Cheatmenu (void)
 		{
 		  if (l && !(l%20)) 
 		    {
-		      printf_SDL (ne_screen, -1, -1, " --- MORE --- \n");
+		      printf_SDL (Screen, -1, -1, " --- MORE --- \n");
 		      if( getchar_raw () == 'q')
 			break;
 		    }
 		  if (!(l % 20) )  
 		    {
 		      ClearGraphMem ();
-		      printf_SDL (ne_screen, x0, y0,
+		      printf_SDL (Screen, x0, y0,
 				   " NR.   ID  X    Y   ENERGY   speedX\n");
-		      printf_SDL (ne_screen, -1, -1,
+		      printf_SDL (Screen, -1, -1,
 				  "---------------------------------------------\n");
 		    }
 		  
 		  l ++;
-		  printf_SDL (ne_screen, -1, -1,
+		  printf_SDL (Screen, -1, -1,
 			      "%d.   %s   %d   %d   %d    %g.\n", i,
 			       Druidmap[AllEnemys[i].type].druidname,
 			       (int)AllEnemys[i].pos.x,
@@ -268,7 +268,7 @@ Cheatmenu (void)
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 
-	  printf_SDL (ne_screen, -1, -1," --- END --- \n");
+	  printf_SDL (Screen, -1, -1," --- END --- \n");
 	  getchar_raw ();
 	  break;
 
@@ -279,25 +279,25 @@ Cheatmenu (void)
 
 	      if (i && !(i%13)) 
 		{
-		  printf_SDL (ne_screen, -1, -1, " --- MORE --- ('q' to quit)\n");
+		  printf_SDL (Screen, -1, -1, " --- MORE --- ('q' to quit)\n");
 		  if (getchar_raw () == 'q')
 		    break;
 		}
 	      if ( !(i % 13) )
 		{
 		  ClearGraphMem ();
-		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
-		  printf_SDL (ne_screen, -1, -1, "------------------------------\n");
+		  printf_SDL (Screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
+		  printf_SDL (Screen, -1, -1, "------------------------------\n");
 		}
 	      
-	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %g\n",
+	      printf_SDL (Screen, -1, -1, "%d  %d  %s  %d  %g\n",
 			  i, AllEnemys[i].levelnum,
 			  Druidmap[AllEnemys[i].type].druidname,
 			  (int)AllEnemys[i].energy,
 			  AllEnemys[i].speed.x);
 	    } /* for (i<NumEnemys) */
 
-	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
+	  printf_SDL (Screen, -1, -1, " --- END ---\n");
 	  getchar_raw ();
 	  break;
 
@@ -308,14 +308,14 @@ Cheatmenu (void)
 	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
 		AllEnemys[i].energy = -100;
 	    }
-	  printf_SDL (ne_screen, -1, -1, "All robots on this deck killed!\n");
+	  printf_SDL (Screen, -1, -1, "All robots on this deck killed!\n");
 	  getchar_raw ();
 	  break;
 
 
 	case 't': /* Teleportation */
 	  ClearGraphMem ();
-	  printf_SDL (ne_screen, x0, y0, "Enter Level, X, Y: ");
+	  printf_SDL (Screen, x0, y0, "Enter Level, X, Y: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
@@ -324,7 +324,7 @@ Cheatmenu (void)
 
 	case 'r': /* change to new robot type */
 	  ClearGraphMem ();
-	  printf_SDL (ne_screen, x0, y0, "Type number of new robot: ");
+	  printf_SDL (Screen, x0, y0, "Type number of new robot: ");
 	  input = GetString (40, 2);
 	  for (i = 0; i < Number_Of_Droid_Types ; i++)
 	    if (!strcmp (Druidmap[i].druidname, input))
@@ -332,7 +332,7 @@ Cheatmenu (void)
 
 	  if ( i == Number_Of_Droid_Types )
 	    {
-	      printf_SDL (ne_screen, x0, y0+20,
+	      printf_SDL (Screen, x0, y0+20,
 			  "Unrecognized robot-type: %s", input);
 	      getchar_raw ();
 	      ClearGraphMem();
@@ -342,7 +342,7 @@ Cheatmenu (void)
 	      Me.type = i;
 	      Me.energy = Druidmap[Me.type].maxenergy;
 	      Me.health = Me.energy;
-	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
+	      printf_SDL (Screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();
 	    }
 	  free (input);
@@ -354,8 +354,8 @@ Cheatmenu (void)
 
 	case 'e': /* complete heal */
 	  ClearGraphMem();
-	  printf_SDL (ne_screen, x0, y0, "Current energy: %f\n", Me.energy);
-	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
+	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me.energy);
+	  printf_SDL (Screen, -1, -1, "Enter your new energy: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &num);
 	  free (input);
@@ -376,7 +376,7 @@ Cheatmenu (void)
 	  break;
 
 	case 'm': /* Show deck map in Concept view */
-	  printf_SDL (ne_screen, -1, -1, "\nLevelnum: ");
+	  printf_SDL (Screen, -1, -1, "\nLevelnum: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &LNum);
 	  free (input);
@@ -394,17 +394,17 @@ Cheatmenu (void)
 	    {
 	      if (i && !(i%20))
 		{
-		  printf_SDL (ne_screen, -1, -1, " ---- MORE -----\n");
+		  printf_SDL (Screen, -1, -1, " ---- MORE -----\n");
 		  if (getchar_raw () == 'q')
 		    break;
 		}
 	      if ( !(i%20) )
 		{
 		  ClearGraphMem ();
-		  printf_SDL (ne_screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
-		  printf_SDL (ne_screen, -1, -1, "------------------------------------\n");
+		  printf_SDL (Screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
+		  printf_SDL (Screen, -1, -1, "------------------------------------\n");
 		}
-	      printf_SDL (ne_screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
+	      printf_SDL (Screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
 			  i, WpList[i].x, WpList[i].y,
 			  WpList[i].connections[0],
 			  WpList[i].connections[1],
@@ -412,7 +412,7 @@ Cheatmenu (void)
 			  WpList[i].connections[3]);
 
 	    } /* for (all waypoints) */
-	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
+	  printf_SDL (Screen, -1, -1, " --- END ---\n");
 	  getchar_raw ();
 	  break;
 
@@ -426,7 +426,7 @@ Cheatmenu (void)
   InitBars = TRUE;
 
   ClearGraphMem ();
-  SDL_Flip (ne_screen);
+  SDL_Flip (Screen);
 
   keyboard_update (); /* treat all pending keyboard events */
   /* 
@@ -465,7 +465,7 @@ enum
 
   DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
 
-  SDL_SetClipRect( ne_screen , NULL );
+  SDL_SetClipRect( Screen , NULL );
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -493,12 +493,12 @@ enum
       SetCurrentFont ( Menu_BFont );
       PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "The Return of the Influence Device");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "The Return of the Influence Device");
+      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
 
       // Wait until the user does SOMETHING
 
@@ -522,8 +522,8 @@ enum
 	    case RESTART_PREVIOUS_MISSION:
 	      if ( NoMissionLoadedEver )
 		{
-		  CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
-		  SDL_Flip( ne_screen );
+		  CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
+		  SDL_Flip( Screen );
 		  while ( EnterPressed() );
 		  while ( (!EnterPressed()) && (!SpacePressed()) );
 		}
@@ -731,11 +731,11 @@ enum
   while (!Weiter)
     {
 
-      SDL_SetClipRect( ne_screen, NULL );
+      SDL_SetClipRect( Screen, NULL );
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
+      SDL_SetClipRect( Screen, NULL );
       MakeGridOnScreen( NULL );
 
       // 
@@ -747,26 +747,26 @@ enum
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
 
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
 		       "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
 		       "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
 		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
 		       "Combat Window Width: %s", User_Rect.x ? "CLASSIC" : "FULL" );
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
 		       "Combat Window Height: %s", (User_Rect.y - BANNER_HEIGHT ) ? "CLASSIC" : "FULL" );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
+      //PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
       //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
+      //PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
       //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
+      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
 		       "Back");
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
 
       // Wait until the user does SOMETHING
 
@@ -839,7 +839,7 @@ enum
 	    {
 	    case SET_FULLSCREEN_FLAG:
 	      while (EnterPressed() || SpacePressed() );
-	      SDL_WM_ToggleFullScreen (ne_screen);
+	      SDL_WM_ToggleFullScreen (Screen);
 	      fullscreen_on = !fullscreen_on;
 	      break;
 
@@ -851,7 +851,7 @@ enum
 		  User_Rect.w=USERFENSTERBREITE;
 		  ClearGraphMem();
 		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( ne_screen );
+		  SDL_Flip( Screen );
 		}
 	      else
 		{
@@ -868,7 +868,7 @@ enum
 		  User_Rect.h=USERFENSTERHOEHE;
 		  ClearGraphMem();
 		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( ne_screen );
+		  SDL_Flip( Screen );
 		}
 	      else
 		{
@@ -1244,15 +1244,15 @@ Multi_Player_Menu (void)
 
       InitiateMenu();
 
-      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
-      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
-      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
-      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
-      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
-      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
-      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
+      CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
+      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
+      LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
+      LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
+      LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
+      LeftPutString ( Screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
+      LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
 
       // Wait until the user does SOMETHING
 
@@ -1281,15 +1281,15 @@ Credits_Menu (void)
       
   DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
-  CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
-  LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
-  RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
-  RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
-  LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
-  RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
-  RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
+  CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "CREDITS" );
+  LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
+  RightPutString ( Screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
+  RightPutString ( Screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
+  LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
+  RightPutString ( Screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
+  RightPutString ( Screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
 
-  SDL_Flip( ne_screen );
+  SDL_Flip( Screen );
 
   // Wait until the user does SOMETHING
   getchar_raw();
@@ -1319,54 +1319,54 @@ Show_Mission_Details ( int MissionNumber )
       DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
       //InitiateMenu();
 
-      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
+      CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
 
-      printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NO" );
+      printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
+      if ( Me.AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+      else printf_SDL( Screen , -1 , -1 , "NO" );
 
-      printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NO" );
-      printf_SDL ( ne_screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachLevel ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( Screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
+      if ( Me.AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+      else printf_SDL( Screen , -1 , -1 , "NO" );
+      printf_SDL ( Screen , -1 , -1 , "   ReachLevel : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachLevel ); 
+      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( ne_screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustReachPoint.x ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachPoint.y );
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( Screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustReachPoint.x ); 
+      else printf_SDL( Screen , -1 , -1 , "NONE" );
+      printf_SDL ( Screen , -1 , -1 , "   Reach Y= : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachPoint.y );
+      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( ne_screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.AllMissions[ MissionNumber ].MustLiveTime ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustBeClass );
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( Screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me.AllMissions[ MissionNumber ].MustLiveTime ); 
+      else printf_SDL( Screen , -1 , -1 , "NONE" );
+      printf_SDL ( Screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustBeClass );
+      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustBeType ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
-      printf_SDL ( ne_screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
-      else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
+      printf_SDL ( Screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustBeType ); 
+      else printf_SDL( Screen , -1 , -1 , "NONE" );
+      printf_SDL ( Screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
+      if ( Me.AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
+      else printf_SDL( Screen , -1 , -1 , "NO\n" );
 
-      printf_SDL ( ne_screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.AllMissions[ MissionNumber ].KillClass] ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
+      if ( Me.AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me.AllMissions[ MissionNumber ].KillClass] ); 
+      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
       
-      //      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
-      //LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
-      //LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
-      //LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
-      //LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      //LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
-      //LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
+      //      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
+      //LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
+      //LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
+      //LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "So the mission is:");
+      //LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
+      //LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
+      //LeftPutString ( Screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
 
       while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
       // Wait until the user does SOMETHING
@@ -1473,7 +1473,7 @@ Show_Mission_Log_Menu (void)
 	  while ( EnterPressed() || SpacePressed() );
 	}
 
-      SDL_Flip( ne_screen );
+      SDL_Flip( Screen );
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{

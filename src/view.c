@@ -230,14 +230,14 @@ ShowInventoryMessages( void )
   User_Rect.w = SCREENLEN/2;
   User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
   User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
-  SDL_SetClipRect( ne_screen, &InventoryRect );
-  SDL_FillRect( ne_screen, & InventoryRect , 0x0FFFFFF );
+  SDL_SetClipRect( Screen, &InventoryRect );
+  SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
  
   fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
 
   InventoryImage = IMG_Load( fpath );
 
-  SDL_BlitSurface ( InventoryImage , NULL , ne_screen , &InventoryRect );
+  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
   SDL_FreeSurface( InventoryImage );
 
@@ -257,7 +257,7 @@ ShowInventoryMessages( void )
       TargetRect.w = 50;
       TargetRect.h = 50;
 
-      SDL_BlitSurface( ItemSurfaceList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ] , NULL , ne_screen , &TargetRect );
+      SDL_BlitSurface( ItemSurfaceList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ] , NULL , Screen , &TargetRect );
       
     }
 
@@ -284,13 +284,13 @@ ShowInventoryMessages( void )
   DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &InventoryRect );
   */
 
-  SDL_UpdateRect( ne_screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
+  SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
 }; // void ShowInventoryMessages();
 
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
- * in ne_screen.
+ * in Screen.
  *
  * Several FLAGS can be used to control its behaviour:
  *
@@ -326,12 +326,12 @@ Assemble_Combat_Picture (int mask)
   // the ship and ends +5 tiles outside the other end of the ship.  That should do it.
   //
 
-  SDL_SetColorKey (ne_screen, 0, 0);
-  // SDL_SetAlpha( ne_screen , 0 , SDL_ALPHA_OPAQUE ); 
+  SDL_SetColorKey (Screen, 0, 0);
+  // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
   // SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE ); 
 
                          
-  SDL_SetClipRect (ne_screen , &User_Rect);
+  SDL_SetClipRect (Screen , &User_Rect);
 
   for (line = -5; line < CurLevel->ylen + 5; line++)
     {
@@ -344,9 +344,9 @@ Assemble_Combat_Picture (int mask)
 	      TargetRectangle.y = User_Rect_Center_y
 		+ ( -Me.pos.y+line-0.5 )*Block_Height;
 	      // SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick,
-	      // ne_screen, &TargetRectangle);
+	      // Screen, &TargetRectangle);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
- 			       ne_screen, &TargetRectangle);
+ 			       Screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
@@ -356,7 +356,7 @@ Assemble_Combat_Picture (int mask)
       // in case we only draw the map, we are done here.  But
       // of course we must check if we should update the screen too.
       if ( mask & DO_SCREEN_UPDATE ) 
-	SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+	SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
       return;
     }
 
@@ -391,28 +391,28 @@ Assemble_Combat_Picture (int mask)
 	  TimeSinceLastFPSUpdate=0;
 	}
 
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
 
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x + 100, 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Axis: %d %d" , input_axis.x, input_axis.y);
     }
 
   if ( GameConfig.Draw_Energy )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
 		       "Resistance: %f " , (Me.Current_Victim_Resistance_Factor) );
     }
 
   if ( GameConfig.Draw_Position )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
     }
@@ -426,7 +426,7 @@ Assemble_Combat_Picture (int mask)
 	  minutes = 0;
 	  seconds = 0;
 	}
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
 		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
@@ -441,7 +441,7 @@ Assemble_Combat_Picture (int mask)
   // an according portion of the screen.
   if ( mask & DO_SCREEN_UPDATE )
     {
-      SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+      SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
 
@@ -528,8 +528,8 @@ PutInfluence ( int x , int y )
 
 
   // Now we draw the hat and shoes of the influencer
-  // SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), Screen, &TargetRectangle );
+  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
 
 
   // Now we draw the first digit of the influencers current number.
@@ -545,8 +545,8 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + First_Digit_Pos_X ;
       TargetRectangle.y=y + First_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , Screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   // Now we draw the second digit of the influencers current number.
   // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
@@ -563,8 +563,8 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + Second_Digit_Pos_X ;
       TargetRectangle.y=y + Second_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , Screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   // Now we draw the third digit of the influencers current number.
   // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
@@ -579,8 +579,8 @@ PutInfluence ( int x , int y )
       TargetRectangle.x=x + Third_Digit_Pos_X ;
       TargetRectangle.y=y + Third_Digit_Pos_Y ;
     }
-  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , Screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, Screen, &TargetRectangle );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
@@ -595,7 +595,7 @@ PutInfluence ( int x , int y )
   //
   if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
-      //      PutStringFont ( ne_screen , FPS_Display_BFont , 
+      //      PutStringFont ( Screen , FPS_Display_BFont , 
       //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
       //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
       //		      Me.TextToBeDisplayed );
@@ -695,13 +695,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
-      // SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
-      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
+      // SDL_BlitSurface(ne_blocks , ne_droid_block+phase, Screen, &TargetRectangle);
+      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
     }
   else
     {
-      // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
-      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
+      // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, Screen, &TargetRectangle);
+      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
 
       if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
 	{
@@ -748,14 +748,14 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, Screen, &TargetRectangle );
     }
   else
     {
       
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1+HumanModifier ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1+HumanModifier ] , NULL, Screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
-      //       ne_screen, &TargetRectangle );
+      //       Screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -773,13 +773,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, Screen, &TargetRectangle );
     }
   else
     {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 +HumanModifier ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
-      // ne_screen, &TargetRectangle );
+      // Screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -795,13 +795,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, Screen, &TargetRectangle );
     }
   else
     {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 +HumanModifier ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
-      //       ne_screen, &TargetRectangle );
+      //       Screen, &TargetRectangle );
     }
 
 
@@ -815,7 +815,7 @@ Sorry...\n\
        && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
        && GameConfig.All_Texts_Switch )
     {
-      PutStringFont ( ne_screen , FPS_Display_BFont , 
+      PutStringFont ( Screen , FPS_Display_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 
 		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
@@ -901,7 +901,7 @@ PutBullet (int BulletNummer)
   TargetRectangle.y = User_Rect_Center_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
-  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, Screen , &TargetRectangle );
 #else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
 
@@ -915,7 +915,7 @@ PutBullet (int BulletNummer)
   TargetRectangle.y = User_Rect_Center_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
-  SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
 #endif
 
@@ -939,7 +939,7 @@ PutItem( int ItemNumber )
   TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
   TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
 
-  SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , ne_screen , &TargetRectangle);
+  SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , Screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------
@@ -961,8 +961,8 @@ PutBlast (int BlastNummer)
   TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
   TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
   // SDL_BlitSurface( ne_blocks, 
-  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
-  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
+  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
+  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
 
 }  // void PutBlast(int BlastNummer)
 
@@ -988,9 +988,9 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
 
   Set_Rect (tmp, rect.x, rect.y, rect.w, rect.h);
 
-  pixcolor = SDL_MapRGB (ne_screen->format, color.r, color.g, color.b);
+  pixcolor = SDL_MapRGB (Screen->format, color.r, color.g, color.b);
 
-  SDL_FillRect (ne_screen, &tmp, pixcolor);
+  SDL_FillRect (Screen, &tmp, pixcolor);
   
   return;
 }; // void Fill_Rect (SDL_Rect rect, SDL_Color color)
@@ -1048,7 +1048,7 @@ Sorry...\n\
   SourceRectangle.w=USERFENSTERBREITE;
   if ( tmp->w > 200 ) 
     {
-      SDL_SetClipRect( ne_screen , NULL );
+      SDL_SetClipRect( Screen , NULL );
       TargetRectangle.x=0;
       TargetRectangle.y=BANNER_HEIGHT;
       SourceRectangle.h=SCREENHEIGHT-BANNER_HEIGHT;
@@ -1060,7 +1060,7 @@ Sorry...\n\
       SourceRectangle.h=USERFENSTERHOEHE;
     }
 
-  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( tmp , &SourceRectangle, Screen , &TargetRectangle );
   
   SDL_FreeSurface(tmp);
 
