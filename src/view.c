@@ -44,9 +44,6 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-
 #define NOT_LOADED_MARKER "nothing_loaded"
 enum
   {
@@ -76,8 +73,6 @@ part_group_strings [ ALL_PART_GROUPS ] =
 #define ALL_TUX_PARTS 12
 #define ALL_TUX_MOTION_CLASSES 2
   static iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
-
-#define LIGHT_RADIUS_CRUDENESS_FACTOR 1
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
   { 
@@ -626,175 +621,6 @@ MapBlockIsVisible ( int col , int line )
   return ( FALSE );
 
 }; // int MapBlockIsVisible ( int col , int line )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
-{
-  SDL_Rect target_rectangle;
-  float texture_start_y;
-  float texture_end_y;
-  int image_start_x;
-  int image_end_x;
-  int image_start_y;
-  int image_end_y;
-
-  //--------------------
-  // At first we need to enable texture mapping for all of the following.
-  // Without that, we'd just get (faster, but plain white) rectangles.
-  //
-  glEnable( GL_TEXTURE_2D );
-  
-  //--------------------
-  // Linear Filtering is slow and maybe not nescessary here, so we
-  // stick to the faster 'nearest' variant.
-  //
-  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  //
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-  
-  //--------------------
-  // Blending can be used, if there is no suitable alpha checking so that
-  // I could get it to work right....
-  //
-  // But alpha check functions ARE a bit faster, even on my hardware, so
-  // let's stick with that possibility for now, especially with the floor.
-  //
-  // glEnable(GL_BLEND);
-  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
-  //
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-  
-  // glDisable(GL_BLEND);
-  // glDisable( GL_ALPHA_TEST );  
-  
-  //--------------------
-  // Now of course we need to find out the proper target position.
-  //
-  target_rectangle . x = 
-    translate_map_point_to_screen_pixel ( our_col , our_line , TRUE ) + 
-    our_floor_iso_image . offset_x ;
-  target_rectangle . y = 
-    translate_map_point_to_screen_pixel ( our_col , our_line , FALSE ) +
-    our_floor_iso_image . offset_y ;
-  
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-
-  //--------------------
-  // Now we can begin to draw the actual textured rectangle.
-  //
-  image_start_x = target_rectangle . x ;
-  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // + 255
-  image_start_y = target_rectangle . y ;
-  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // + 127
-  
-  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
-  
-  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
-  texture_end_y = 0.0 ;
-  
-  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
-  glBegin(GL_QUADS);
-  
-  glTexCoord2i( 0.0f, texture_start_y ); 
-  glVertex2i( image_start_x , image_start_y );
-  glTexCoord2i( 0.0f, texture_end_y ); 
-  glVertex2i( image_start_x , image_end_y );
-  glTexCoord2i( 1.0f, texture_end_y ); 
-  glVertex2i( image_end_x , image_end_y );
-  glTexCoord2f( 1.0f, texture_start_y ); 
-  glVertex2i( image_end_x , image_start_y );
-  
-  glEnd( );
-  
-  //--------------------
-  // But for the rest of the drawing function, the peripherals and other
-  // things that are to be blitted after that, we should not forget to
-  // disable the texturing things again, or HORRIBLE framerates will result...
-  //
-  // So we revert everything that we might have touched to normal state.
-  //
-  glDisable( GL_TEXTURE_2D );
-  glDisable( GL_BLEND );
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-  
-}; // void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) 
-{
-  SDL_Rect target_rectangle;
-  float texture_start_y;
-  float texture_end_y;
-  int image_start_x;
-  int image_end_x;
-  int image_start_y;
-  int image_end_y;
-
-  //--------------------
-  // Linear Filtering is slow and maybe not nescessary here, so we
-  // stick to the faster 'nearest' variant.
-  //
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-  
-  //--------------------
-  // Now of course we need to find out the proper target position.
-  //
-  target_rectangle . x = x ;
-  target_rectangle . y = y ;
-  
-  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-  //--------------------
-  // Now we can begin to draw the actual textured rectangle.
-  //
-  image_start_x = target_rectangle . x ;
-  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
-  image_start_y = target_rectangle . y ;
-  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
-  
-  if ( image_start_x > 640 ) return ;
-  if ( image_end_x < 0 ) return ;
-  if ( image_start_y > 480 ) return;
-  if ( image_end_y < 0 ) return;
-
-  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
-  
-  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
-  texture_end_y = 0.0 ;
-
-  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
-  glBegin(GL_QUADS);
-  glTexCoord2i( 0.0f, texture_start_y ); 
-  glVertex2i( image_start_x , image_start_y );
-  glTexCoord2i( 0.0f, texture_end_y ); 
-  glVertex2i( image_start_x , image_end_y );
-  glTexCoord2i( 1.0f, texture_end_y ); 
-  glVertex2i( image_end_x , image_end_y );
-  glTexCoord2f( 1.0f, texture_start_y ); 
-  glVertex2i( image_end_x , image_start_y );
-  glEnd( );
-
-}; // void blit_open_gl_texture_to_pixel_position ( iso_image our_floor_iso_image , int x, int y ) 
 
 /* ----------------------------------------------------------------------
  *

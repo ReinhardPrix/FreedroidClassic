@@ -115,8 +115,6 @@ EXTERN void enemy_spray_blood ( Enemy CurEnemy ) ;
 #else
 #define EXTERN extern
 #endif
-EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) ;
-EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) ;
 EXTERN void FillRect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
@@ -130,6 +128,27 @@ EXTERN void PutMouseMoveCursor ( void ) ;
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 
+// open_gl.c 
+#undef EXTERN
+#ifdef _open_gl_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN int our_SDL_flip_wrapper ( SDL_Surface *screen ) ;
+EXTERN int our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect);
+EXTERN void our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) ;
+EXTERN int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color);
+EXTERN SDL_Surface* our_SDL_display_format_wrapper ( SDL_Surface *surface );
+EXTERN SDL_Surface* our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface );
+EXTERN SDL_Surface* our_IMG_load_wrapper( const char *file );
+EXTERN void flip_image_horizontally ( SDL_Surface* tmp1 ) ;
+EXTERN void make_texture_out_of_surface ( iso_image* our_image ) ;
+EXTERN SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) ;
+EXTERN int initGL( GLvoid );
+EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) ;
+EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) ;
+
 // blocks.c 
 #undef EXTERN
 #ifdef _blocks_c
@@ -137,8 +156,6 @@ EXTERN void ShowInventoryScreen ( void );
 #else
 #define EXTERN extern
 #endif
-EXTERN void make_texture_out_of_surface ( iso_image* our_image ) ;
-EXTERN SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) ;
 EXTERN void try_to_load_ingame_item_surface ( int item_type );
 EXTERN void iso_load_bullet_surfaces ( void );
 EXTERN void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) ;
@@ -174,14 +191,6 @@ EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image 
 #else
 #define EXTERN extern
 #endif
-EXTERN int our_SDL_flip_wrapper ( SDL_Surface *screen ) ;
-EXTERN int our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect);
-EXTERN void our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) ;
-EXTERN int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color);
-EXTERN SDL_Surface* our_SDL_display_format_wrapper ( SDL_Surface *surface );
-EXTERN SDL_Surface* our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface );
-EXTERN SDL_Surface* our_IMG_load_wrapper( const char *file );
-EXTERN void flip_image_horizontally ( SDL_Surface* tmp1 ) ;
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
 EXTERN void TakeScreenshot( void );
