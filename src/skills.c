@@ -922,7 +922,20 @@ ShowSkillsExplanationScreen( void )
 
   TargetSkillRect.x = 15;
   TargetSkillRect.y = 15;
-  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &TargetSkillRect );
+
+  LoadOneSkillSurfaceIfNotYetLoaded ( Me [ 0 ] . readied_skill );
+
+  if ( use_open_gl )
+    {
+      blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
+						TargetSkillRect . x , TargetSkillRect . y , TRUE );
+    }
+  else
+    {
+      our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , 
+				     NULL , Screen , &TargetSkillRect );
+    }
+
 
   TargetSkillRect.w = 320 - 15 - 15;
   TargetSkillRect.h = 480 - 15 ;
@@ -1008,6 +1021,9 @@ activate_nth_aquired_skill ( int skill_num )
 void 
 ShowSkillsScreen ( void )
 {
+#define INTER_SKILLRECT_DIST 17
+#define FIRST_SKILLRECT_Y 16
+
   static SDL_Rect ButtonRect;
   char CharText[1000];
   static int MouseButtonPressedPreviousFrame = FALSE;
@@ -1016,9 +1032,12 @@ ShowSkillsScreen ( void )
   SDL_Rect SpellLevelRect;
   int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
   int SkillOfThisSlot;
-
-#define INTER_SKILLRECT_DIST 17
-#define FIRST_SKILLRECT_Y 16
+  point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_LEVEL ] =
+    { { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
+      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
+      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
+      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 3 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } , 
+      { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 4 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } };
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -1083,8 +1102,8 @@ ShowSkillsScreen ( void )
   //
   for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_LEVEL ; i ++ )
     {
-      ButtonRect.x = SkillScreenRect.x + 15 ;
-      ButtonRect.y = SkillScreenRect.y + FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST );
+      ButtonRect.x = SkillRectLocations [ i ] . x ;
+      ButtonRect.y = SkillRectLocations [ i ] . y ; 
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
