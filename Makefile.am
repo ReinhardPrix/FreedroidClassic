@@ -1,7 +1,7 @@
 if WIN32
 SUBDIRS = win32 src 
 else
-SUBDIRS = win32 src croppy gluem
+SUBDIRS = win32 src croppy 
 endif
 
 man_MANS = freedroidRPG.6

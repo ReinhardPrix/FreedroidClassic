@@ -133,7 +133,6 @@ AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok ])
 
 ## Check gtk libs
-if test x$win32 = xfalse; then
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
 --------------------------------------------------
 WARNING: You need libgtk-dev >= 1.20 in order to 
@@ -141,7 +140,6 @@ be able to build the DialogEditor and ItemEditor!
 
 If you only want to play Freedroid you can ignore this!
 --------------------------------------------------]))
-fi
 
 dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
