@@ -481,6 +481,63 @@ item types.  This indicates a severe bug in Freedroid.",
 }; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
+ * This function drops an item at a given place, assigning it the given
+ * suffix and prefix code.
+ * ---------------------------------------------------------------------- */
+void
+DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange )
+{
+  int i;
+
+  //--------------------
+  // If given a non-existent item type, we don't do anything
+  // of course (and also don't produce a SEGFAULT or something...)
+  //
+  if ( ItemType == ( -1 ) ) return;
+  if ( ItemType >= Number_Of_Item_Types ) 
+    {
+      fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
+      GiveStandardErrorMessage ( "DropItemAt(...)" , "\
+There was an item code for an item to drop given to the function \n\
+DropItemAt( ... ), which is pointing beyond the scope of the known\n\
+item types.  This indicates a severe bug in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // At first we must find a free item index on this level,
+  // so that we can enter the new item there.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( CurLevel->ChestItemList[ i ].type == (-1) ) 
+	{
+	  break;
+	}
+    }
+  if ( i >= MAX_ITEMS_PER_LEVEL )
+    {
+      DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
+      Terminate( ERR );
+    }
+
+  //--------------------
+  // Now we can construct the new item
+  //
+  CurLevel->ChestItemList[ i ].type = ItemType;
+  CurLevel->ChestItemList[ i ].pos.x = x;
+  CurLevel->ChestItemList[ i ].pos.y = y;
+  CurLevel->ChestItemList[ i ].prefix_code = prefix;
+  CurLevel->ChestItemList[ i ].suffix_code = suffix;
+
+  FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
+
+
+  PlayItemSound( ItemMap[ ItemType ].sound_number );
+
+}; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
+
+/* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level
  * at position ( x , y ).
  *
@@ -515,19 +572,19 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 4 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_DROID_PART_1 , x , y , -1 , -1 , TreasureChestRange );
+	  DropChestItemAt( ITEM_DROID_PART_1 , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_DROID_PART_2 , x , y , -1 , -1 , TreasureChestRange );
+	  DropChestItemAt( ITEM_DROID_PART_2 , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 2:
-	  DropItemAt( ITEM_DROID_PART_3 , x , y , -1 , -1 , TreasureChestRange );
+	  DropChestItemAt( ITEM_DROID_PART_3 , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 3:
-	  DropItemAt( ITEM_DROID_PART_4 , x , y , -1 , -1 , TreasureChestRange );
+	  DropChestItemAt( ITEM_DROID_PART_4 , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 4:
-	  DropItemAt( ITEM_DROID_PART_5 , x , y , -1 , -1 , TreasureChestRange );
+	  DropChestItemAt( ITEM_DROID_PART_5 , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	}
       return;

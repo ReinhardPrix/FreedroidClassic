@@ -641,7 +641,7 @@ MoveInfluence ( int PlayerNum )
     }
 
   //--------------------
-  // Finally we check if perhaps the influencer is close to some targeted enemy droid
+  // Now we check if perhaps the influencer is close to some targeted enemy droid
   // and the takeover skill is activated as well.
   // Then of course, takeover process must be initiated.
   //
@@ -671,7 +671,6 @@ MoveInfluence ( int PlayerNum )
 	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
 	}
     }
-
 
 }; // void MoveInfluence( int PlayerNum );
 
@@ -1021,11 +1020,8 @@ CheckInfluenceEnemyCollision (void)
       //
       if ( AllEnemys[i].pos.z != CurLevel->levelnum )
 	continue;
-      if ( AllEnemys[i].Status == OUT )
-	continue;
       if ( AllEnemys[i].type == ( -1 ) )
 	continue;
-
 
       //--------------------
       // We determine the distance and back out immediately if there
@@ -1046,6 +1042,17 @@ CheckInfluenceEnemyCollision (void)
       dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
       if ( dist2 > 2 * Druid_Radius_X )
 	continue;
+
+      if ( AllEnemys[i].Status == OUT )
+	{
+	  if ( Me[0].status == TRANSFERMODE )
+	    {
+	      EnterChest();
+	      return;
+	    }
+	  continue;
+	}
+
 
       //--------------------
       // At this point we know, that the influencer *has* collided with some
