@@ -14,9 +14,9 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-1. Put each bullet specification variable under the control of the game.dat file
-2. Make fash independent of framerate
-3. Correct the way flash damage is handled:  once and not every frame damage should be done
+DONE Put each bullet specification variable under the control of the game.dat file
+DONE Make fash independent of framerate
+DONE Correct the way flash damage is handled:  once and not every frame damage should be done
 4. Think of a way new tiles can be incorporated into the game
 5. Add documentation about how to incorporate new map tiles into the game
 6. Add function to select map tile code directly
@@ -25,6 +25,11 @@ THESE ITEMS HAVE FIRST PRIORITY:
    but only a dummy and leave the details to the creative people
 8. Add additional map tiles:  autoshooting gun left/right/up/down
    but only a dummy and leave the details to the creative people
+
+9. Analyze the lift data file:  Think of how it works and write some more
+   documentation and perhaps make it a bit better human-readable.
+
+10. Remove all german from the code
 
 *  Add code to animate the autoshooting gun
 *  Add new weapon type: laser: drawing (double) lines from source to target.
@@ -55,7 +60,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
       the level-editor yet.
 
 1. Extend the game dat file
-   a. Add direct control over all individual bullet speeds and damages
+   DONE Add direct control over all individual bullet speeds and damages
    b. Add direct control over blast radiuses and blast damages
 
 2. Extend the game/graphics engine

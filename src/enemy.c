@@ -329,16 +329,16 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	  if ( j == ExceptedDroid ) continue;
 
 	  // so it seems that we need to test this one!!
-	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*DRUIDRADIUSX ) &&
-	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*DRUIDRADIUSY ) ) 
+	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
+	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
 	    {
 	      DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
 	      return FALSE;
 	    }
 	}
 
-      if ( ( fabsf( Me.pos.x - CheckPosition.x ) < 2*DRUIDRADIUSX ) &&
-	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*DRUIDRADIUSY ) ) 
+      if ( ( fabsf( Me.pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
+	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
 	{
 	  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
 	  return FALSE;

@@ -38,7 +38,7 @@
 #include "global.h"
 #include "proto.h"
 
-#define NOSTRAIGHTDIR 112
+// #define NOSTRAIGHTDIR 112
 #define TIMETILLNEXTBULLET 14
 
 #define REFRESH_ENERGY		3
@@ -161,7 +161,10 @@ AutoFireBullet (void)
 	}
     }
 
-  // determine the phase (i.e. the picture) of the shot
+  // determine the angle of the shot
+  AllBullets[j].angle= - ( atan2 ( AllBullets[j].speed.y , AllBullets[j].speed.x ) * 180 / M_PI + 90 );
+
+  /*
   AllBullets[j].phase = NOSTRAIGHTDIR;
   if ((abs (xdist) * 2 / 3) / abs (ydist))
     AllBullets[j].phase = RECHTS;
@@ -179,6 +182,7 @@ AutoFireBullet (void)
     AllBullets[j].phase = OBEN;
   if (AllBullets[j].speed.y == 0)
     AllBullets[j].phase = RECHTS;
+  */
 
   // start the bullet in the center of the droid fireing
   AllBullets[j].pos.x = Me.pos.x;
@@ -764,9 +768,9 @@ ExplodeInfluencer (void)
 	}
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].PX =
-	Me.pos.x - DRUIDRADIUSX / 2 + MyRandom (10)*0.05;
+	Me.pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].PY =
-	Me.pos.y - DRUIDRADIUSY / 2 + MyRandom (10)*0.05;
+	Me.pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }
 
@@ -808,7 +812,7 @@ CheckInfluenceEnemyCollision (void)
 	continue;
 
       dist2 = sqrt( xdist *xdist + ydist * ydist );
-      if (dist2 > 2 * DRUIDRADIUSX)
+      if (dist2 > 2 * Druid_Radius_X )
 	continue;
 
 
@@ -893,10 +897,7 @@ FireBullet (void)
   double BulletSpeed = Bulletmap[guntype].speed;
   double speed_norm;
   finepoint speed;
-  double dir, dir8;
   int max_val;
-
-  dir8 = M_PI/8.0;
 
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
@@ -950,26 +951,8 @@ FireBullet (void)
   CurBullet->speed.x = (speed.x/speed_norm);
   CurBullet->speed.y = (speed.y/speed_norm);
 
-  /* now determine the bullet-pic, i.e. the major direction */
-  dir = atan2 (speed.y,  speed.x);  
-  if ( (dir < dir8) && (dir > -dir8) ) /* r */
-    CurBullet->phase = RECHTS;
-  if ( (dir < 3*dir8) && (dir > dir8) ) /* ro NO RECHTSUNTEN !!! */
-    CurBullet->phase = RECHTSUNTEN;
-  if ( (dir < 5*dir8) && (dir > 3*dir8) ) /* o NO UNTEN */
-    CurBullet->phase = UNTEN;
-  if ( (dir < 7*dir8) && (dir > 5*dir8) ) /* lo NO LINKSUNTEN !!! */
-    CurBullet->phase = LINKSUNTEN;
-  if ( (dir < -7*dir8) || (dir > 7*dir8) ) /* l */
-    CurBullet->phase = LINKS;
-  if ( (dir < -5*dir8) && (dir > -7*dir8) ) /* lu  NO LINKSOBEN !!! */
-    CurBullet->phase = LINKSOBEN;
-  if ( (dir < -3*dir8) && (dir > -5*dir8) ) /* u NO OBEN */
-    CurBullet->phase = OBEN;
-  if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru NO RECHTSOBEN !!! */
-    CurBullet->phase = RECHTSOBEN;
-
-  CurBullet->angle= - (dir * 180 / M_PI +90 );
+  // now determine the angle of the shot
+  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
 
   DebugPrintf( 2 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
   DebugPrintf( 0 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
@@ -989,7 +972,7 @@ FireBullet (void)
 
   return;
 
-}				/* FireBullet */
+}; // FireBullet 
 
 /*@Function============================================================
 @Desc: RefreshInfluencer(): Refresh fields can be used to regain energy

@@ -80,18 +80,14 @@ enum
 #define SOUND_DIR		DATADIR "/sound/"
 #define MAP_DIR			DATADIR "/map/"
 
-// #define NE_MAP_BLOCK_FILE	GRAPHICS_DIR "ne_block_red.gif"
 #define NE_MAP_BLOCK_FILE	"ne_block_red.gif"
-// #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
-// #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
 #define NE_DROID_BLOCK_FILE	"ne_droids.gif"
 #define NE_BULLET_BLOCK_FILE 	"ne_bullet.png"
-// #define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.gif"
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.gif"
+#define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
+
 #define NE_LIFT_PIC_FILE	GRAPHICS_DIR "ne_ship.gif"
 #define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.gif" 
-// #define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.gif"
-#define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
 #define NE_BANNER_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.gif"
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
 #define NE_CREDITS_PIC_FILE     GRAPHICS_DIR "ne_credits.jpg"
@@ -161,9 +157,9 @@ enum
 
 /* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
 //NORMALISATION #define DRUIDRADIUSX		((10*2)/64.0)
-#define DRUIDRADIUSX		(18/64.0)
+// #define DRUIDRADIUSX		(18/64.0)
 //NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
-#define DRUIDRADIUSY		(18/64.0)
+// #define DRUIDRADIUSY		(18/64.0)
 // #define DRUIDRADIUSXY	        ((7*2)/64.0)
 #define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
@@ -171,7 +167,7 @@ enum
 // #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
 /* Dimension eines Blasts */
-#define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )
+// #define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )
 
 // **********************************************************************
 //
@@ -262,10 +258,10 @@ enum _sounds
 					   This variable describes the amount in SECONDS */
 #define WAIT_COLLISION		1 // after a little collision with influ, enemys hold position for a while
                                   // this variable describes the amount of time in SECONDS 
-#define ENEMYMAXWAIT 2		  // after each robot has reached its current destination waypoint is waits a
+#define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
-#define FLASH_DURATION_IN_FRAMES 10
+#define FLASH_DURATION_IN_SECONDS 0.1
 
 /* direction definitions (fireing bullets and testing blockedness of positions) */
 enum _directions
@@ -282,13 +278,7 @@ enum _directions
   LIGHT				/* special: checking passability for light, not for a checkpos */
 };
 
-/* Koordinaten der Bloecke die isoliert werden sollen */
-#define INFLUENCEBLOCKPOSITIONX 0
-#define INFLUENCEBLOCKPOSITIONY 0	/* INITIAL_BLOCK_HEIGHT */
-#define BULLETBLOCKPOSITIONY 0	/* (INITIAL_BLOCK_HEIGHT*4) */
-#define BLASTBLOCKPOSITIONY 0	/* (INITIAL_BLOCK_HEIGHT*3) */
 
-// #define STARTENERGIE 100
 #define ENERGIEBALKENBREITE 15
 #define MAXENERGIEBALKENLAENGE 160
 #define ENERGIEPOSY 180
@@ -310,7 +300,6 @@ enum _directions
 /* Map-related defines:
 	WARNING leave them here, they are required in struct.h
 */
-// #define MAX_WP_CONNECTIONS 	4
 #define MAX_WP_CONNECTIONS 	12
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
@@ -326,7 +315,6 @@ enum _directions
 #define MAX_TRIGGERED_ACTIONS   20   // how many triggerable actions to allow at most
 
 
-// #define MAXWAYPOINTS 		100
 #define MAXWAYPOINTS 		100
 #define MAX_DOORS_ON_LEVEL 	30
 #define MAX_REFRESHES_ON_LEVEL	10

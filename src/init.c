@@ -65,6 +65,9 @@ Get_General_Game_Constants ( void* DataPointer )
 #define CONSTANTS_SECTION_BEGIN_STRING "*** Start of General Game Constants Section: ***"
 #define CONSTANTS_SECTION_END_STRING "*** End of General Game Constants Section: ***"
 #define COLLISION_LOSE_ENERGY_CALIBRATOR_STRING "Energy-Loss-factor for Collisions of Influ with hostile robots="
+#define BLAST_RADIUS_SPECIFICATION_STRING "Radius of explosions (as far as damage is concerned) in multiples of tiles="
+#define DRUID_RADIUS_X_SPECIFICATION_STRING "'Radius' of droids in x direction="
+#define DRUID_RADIUS_Y_SPECIFICATION_STRING "'Radius' of droids in x direction="
 
   if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -101,11 +104,48 @@ Get_General_Game_Constants ( void* DataPointer )
       ValuePointer += strlen ( COLLISION_LOSE_ENERGY_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &collision_lose_energy_calibrator );
       DebugPrintf( 1 , "\ncollision_lose_energy_calibrator reads:  %f" , collision_lose_energy_calibrator );
-      // getchar();
+    }
+
+  // Now we read in the blast radius
+  if ( (ValuePointer = strstr ( DataPointer, BLAST_RADIUS_SPECIFICATION_STRING )) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO BLAST RADIUS SPECIFICATION ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( BLAST_RADIUS_SPECIFICATION_STRING );
+      sscanf ( ValuePointer , "%lf" , &Blast_Radius );
+      DebugPrintf( 1 , "\nBlast_Radius now reads:  %lf" , Blast_Radius );
+    }
+
+  // Now we read in the druid 'radius' in x direction
+  if ( (ValuePointer = strstr ( DataPointer, DRUID_RADIUS_X_SPECIFICATION_STRING )) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO DRUID RADIUS X SPECIFICATION ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( DRUID_RADIUS_X_SPECIFICATION_STRING );
+      sscanf ( ValuePointer , "%lf" , &Druid_Radius_X );
+      DebugPrintf( 1 , "\nDruid_Radius_X now reads:  %f" , Druid_Radius_X );
+    }
+  if ( (ValuePointer = strstr ( DataPointer, DRUID_RADIUS_Y_SPECIFICATION_STRING )) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO DRUID RADIUS Y SPECIFICATION ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( DRUID_RADIUS_Y_SPECIFICATION_STRING );
+      sscanf ( ValuePointer , "%lf" , &Druid_Radius_Y );
+      DebugPrintf( 1 , "\nDruid_Radius_X now reads:  %f" , Druid_Radius_Y );
     }
 
 
-} // 
+
+} // void Get_General_Game_Constants ( void* DataPointer )
 
 /*----------------------------------------------------------------------
  *

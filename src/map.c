@@ -178,7 +178,7 @@ ActSpecialField (float x, float y)
       cy = rintf(y) - y ;
 
       /* Lift nur betreten, wenn ca. im Zentrum */
-      if ((cx * cx + cy * cy) < DRUIDRADIUSX * DRUIDRADIUSX)
+      if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
 	EnterLift ();
       break;
 
@@ -1622,18 +1622,18 @@ DruidPassable (float x, float y)
 
   /* get 8 Check-Points on the druidsurface */
   testpos[OBEN].x = x;
-  testpos[OBEN].y = y - DRUIDRADIUSY;
+  testpos[OBEN].y = y - Druid_Radius_Y;
   testpos[RECHTSOBEN].x = x + DRUIDRADIUSXY;
   testpos[RECHTSOBEN].y = y - DRUIDRADIUSXY;
-  testpos[RECHTS].x = x + DRUIDRADIUSX;
+  testpos[RECHTS].x = x + Druid_Radius_X;
   testpos[RECHTS].y = y;
   testpos[RECHTSUNTEN].x = x + DRUIDRADIUSXY;
   testpos[RECHTSUNTEN].y = y + DRUIDRADIUSXY;
   testpos[UNTEN].x = x;
-  testpos[UNTEN].y = y + DRUIDRADIUSY;
+  testpos[UNTEN].y = y + Druid_Radius_Y;
   testpos[LINKSUNTEN].x = x - DRUIDRADIUSXY;
   testpos[LINKSUNTEN].y = y + DRUIDRADIUSXY;
-  testpos[LINKS].x = x - DRUIDRADIUSX;
+  testpos[LINKS].x = x - Druid_Radius_X;
   testpos[LINKS].y = y;
   testpos[LINKSOBEN].x = x - DRUIDRADIUSXY;
   testpos[LINKSOBEN].y = y - DRUIDRADIUSXY;

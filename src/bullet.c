@@ -41,9 +41,10 @@
 /* Distances for hitting a druid */
 //NORMALISATION #define MORE		4
 #define MORE		(4/64.0)
-//NORMALISATION #define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
+//NORMALISATION #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
 // #define DRUIDHITDIST2		0
-#define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
+// #define DRUIDHITDIST2		(Druid_Radius_X+MORE)*(DRUIDRADIUSY+MORE)
+#define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
 // #define DRUIDHITDIST2		0
 
 
@@ -243,7 +244,7 @@ CheckBulletCollisions (int num)
       // Next we handle the case that the bullet is of type FLASH
     case FLASH:
       // if the flash is over, just delete it and return
-      if ( CurBullet->time_in_frames > FLASH_DURATION_IN_FRAMES )
+      if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
 	{
 	  CurBullet->time_in_frames = 0;
 	  CurBullet->time_in_seconds = 0;
@@ -260,20 +261,21 @@ CheckBulletCollisions (int num)
       // The second and more elegant method is to recursively fill
       // out the room where the flash-maker is in and to hurt all
       // robots in there except of course for those immune.
+      if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
       
       for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
 	{
 	  if ( IsVisible (&AllEnemys[i].pos) &
 	       (!Druidmap[AllEnemys[i].type].flashimmune) )
 	    {
-	      AllEnemys[i].energy -= Bulletmap[FLASH].damage / 2;
+	      AllEnemys[i].energy -= Bulletmap[FLASH].damage;
 	      // Since the enemy just got hit, it might as well say so :)
 	      EnemyHitByBulletText( i );
 	    }
 	}
       
       if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
-	Me.energy -= Bulletmap[FLASH].damage / 2;
+	Me.energy -= Bulletmap[FLASH].damage ;
       
       return;
       break;
@@ -389,8 +391,8 @@ CheckBlastCollisions (int num)
       if (CurBlast->phase > 4)
 	break;
 
-      if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
-	if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
+      if (abs (AllBullets[i].pos.x - CurBlast->PX) < Blast_Radius)
+	if (abs (AllBullets[i].pos.y - CurBlast->PY) < Blast_Radius)
 	  {
 	    /* KILL Bullet silently */
 	    AllBullets[i].type = OUT;
@@ -407,9 +409,9 @@ CheckBlastCollisions (int num)
 	continue;
 
       if (abs (AllEnemys[i].pos.x - CurBlast->PX) <
-	  BLASTRADIUS + DRUIDRADIUSX)
+	  Blast_Radius + Druid_Radius_X)
 	if (abs (AllEnemys[i].pos.y - CurBlast->PY) <
-	    BLASTRADIUS + DRUIDRADIUSY)
+	    Blast_Radius + Druid_Radius_Y)
 	  {
 	    /* drag energy of enemy */
 	    AllEnemys[i].energy -= BLASTDAMAGE * Frame_Time ();
@@ -421,8 +423,8 @@ CheckBlastCollisions (int num)
     }				/* for */
 
   /* Check influence-Blast collisions */
-  if ((Me.status != OUT) && (abs (Me.pos.x - CurBlast->PX) < DRUIDRADIUSX))
-    if (abs (Me.pos.y - CurBlast->PY) < DRUIDRADIUSY)
+  if ((Me.status != OUT) && (abs (Me.pos.x - CurBlast->PX) < Druid_Radius_X))
+    if (abs (Me.pos.y - CurBlast->PY) < Druid_Radius_Y)
       {
 	if (!InvincibleMode)
 	  {

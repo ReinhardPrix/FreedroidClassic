@@ -1,6 +1,36 @@
 
+----------------------------------------------------------------------
+
 This is a data file for Freedroid.
 It contains the specification of all droids appearing in freedroid.
+This file is, as all of Freedroid, put under the GPL License:
+
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+
+Feel free to make any modifications you like.  If you set up 
+something cool, please send your file in to the Freedroid project.
+
 You can edit it with a standard text editor of your choice.
 Feel free to make any modifications you like.
 Freedroid will still accept you modified game dada file as long
@@ -23,6 +53,9 @@ That will not cause any problems.
 *** Start of General Game Constants Section: ***
 
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
+Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
+'Radius' of droids in x direction=0.3
+'Radius' of droids in y direction=0.3
 
 *** End of General Game Constants Section: ***
 
@@ -33,14 +66,16 @@ Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 Common factor for all bullet's speed values: 1.0
 Common factor for all bullet's damage values: 1.0
 
+// this is the influencers small double shot
 ** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 1.0
+Time is takes to recharge this bullet/weapon in seconds : 0.8
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 25
 Number of different phases that were designed for this bullet type : 1
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
+// this is the 476 standard shot
 ** Start of new bullet specification subsection **
 Time is takes to recharge this bullet/weapon in seconds : 1.0
 Flying speed of this bullet type : 8.0
@@ -49,18 +84,20 @@ Number of different phases that were designed for this bullet type : 1
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
+// this is the double 821 military shot
 ** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 1.0
-Flying speed of this bullet type : 8.
+Time is takes to recharge this bullet/weapon in seconds : 1.2
+Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 55
 Number of different phases that were designed for this bullet type : 1
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
+// this is the disruptor, the 742 and 711 use
 ** Start of new bullet specification subsection **
 Time is takes to recharge this bullet/weapon in seconds : 1.0
 Flying speed of this bullet type : 8.0
-Damage cause by a hit of this bullet type : 60
+Damage cause by a hit of this bullet type : 40
 Number of different phases that were designed for this bullet type : 1
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **

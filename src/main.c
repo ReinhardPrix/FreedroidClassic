@@ -156,7 +156,7 @@ UpdateCountersForThisFrame (void)
   int i;
 
 
-    // if (ShipEmptyCounter == 1) GameOver = TRUE;
+  // if (ShipEmptyCounter == 1) GameOver = TRUE;
 
   LastBlastHit++;
 
@@ -204,11 +204,13 @@ UpdateCountersForThisFrame (void)
 	  AllEnemys[i].warten -= Frame_Time() ;
 	  if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
 	}
+
       if (AllEnemys[i].firewait > 0) 
 	{
 	  AllEnemys[i].firewait -= Frame_Time() ;
 	  if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
 	}
+
       AllEnemys[i].TextVisibleTime += Frame_Time();
     } // for (i=0;...
 
