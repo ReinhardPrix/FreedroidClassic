@@ -2247,6 +2247,7 @@ Load_Enemy_Surfaces( void )
     droid_stand_animation_speed_factor [ i ] = 1 ;
     ModelMultiplier  [ i ] = 1 ;i++;
     
+    /*
     PrefixToFilename [ i ] = "brown_worker" ; // 28
     first_walk_animation_image [ i ] = 1 ;
     last_walk_animation_image [ i ] = 1 ;
@@ -2269,23 +2270,64 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
-    
-    PrefixToFilename [ i ] = "blue_guard" ; // 29
-    first_walk_animation_image [ i ] = 1 ;
-    last_walk_animation_image [ i ] = 1 ;
-    first_attack_animation_image [ i ] = 1 ;
-    last_attack_animation_image [ i ] = 1 ;
-    first_gethit_animation_image [ i ] = 1 ;
-    last_gethit_animation_image [ i ] = 1 ;
-    first_death_animation_image [ i ] = 1 ;
-    last_death_animation_image [ i ] = 1 ;
-    first_stand_animation_image [ i ] = 1 ;
-    last_stand_animation_image [ i ] = 1 ;
-    use_default_attack_image [ i ] = TRUE ;
-    use_default_gethit_image [ i ] = TRUE ;
-    use_default_death_image [ i ] = TRUE ;
-    use_default_stand_image [ i ] = TRUE ;
+    */
+
+    PrefixToFilename [ i ] = "default_male" ; // 28
+    //--------------------
+    // As the female_scientist now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 1 ;
+    // first_attack_animation_image [ i ] = 1 ;
+    // last_attack_animation_image [ i ] = 1 ;
+    // first_gethit_animation_image [ i ] = 1 ;
+    // last_gethit_animation_image [ i ] = 1 ;
+    // first_death_animation_image [ i ] = 1 ;
+    // last_death_animation_image [ i ] = 1 ;
+    // first_stand_animation_image [ i ] = 1 ;
+    // last_stand_animation_image [ i ] = 1 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+
+    PrefixToFilename [ i ] = "blue_guard" ; // 29
+    //--------------------
+    // As the female_scientist now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 1 ;
+    // first_attack_animation_image [ i ] = 1 ;
+    // last_attack_animation_image [ i ] = 1 ;
+    // first_gethit_animation_image [ i ] = 1 ;
+    // last_gethit_animation_image [ i ] = 1 ;
+    // first_death_animation_image [ i ] = 1 ;
+    // last_death_animation_image [ i ] = 1 ;
+    // first_stand_animation_image [ i ] = 1 ;
+    // last_stand_animation_image [ i ] = 1 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
     droid_attack_animation_speed_factor [ i ] = 5 ;
     droid_gethit_animation_speed_factor [ i ] = 5 ;

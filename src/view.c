@@ -3648,62 +3648,62 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
 void
 PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 {
-  int Percentage;
-  SDL_Rect FillRect;
-  static Uint32 full_color_enemy ;
-  static Uint32 full_color_friend ;
-  static Uint32 energy_empty_color ;
+    int Percentage;
+    SDL_Rect FillRect;
+    static Uint32 full_color_enemy ;
+    static Uint32 full_color_friend ;
+    static Uint32 energy_empty_color ;
 #define ENEMY_ENERGY_BAR_OFFSET_X 0
-#define ENEMY_ENERGY_BAR_OFFSET_Y (-20)
+#define ENEMY_ENERGY_BAR_OFFSET_Y (0)
 #define ENEMY_ENERGY_BAR_LENGTH 65
-
-  //--------------------
-  // If the enemy is dead already, there's nothing to do here...
-  //
-  if ( AllEnemys [ Enum ] . Status == OUT ) return;
-  if ( AllEnemys [ Enum ] . energy <= 0 ) return;
-
-  //--------------------
-  // Now we need to find the right colors to fill our bars with...
-  //
-  full_color_enemy = SDL_MapRGB( Screen->format, 255 , 0 , 0 ) ; 
-  full_color_friend = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
-  energy_empty_color = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
-
-  //--------------------
-  // Now we fill our bars...
-  //
-  Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
-  
-  FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
-  FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
-  FillRect . h = 7 ; 
-  FillRect . w = Percentage ;
-
-  //--------------------
-  // If the enemy is friendly, then we needn't display his health, right?
-  // Or better yet, we might show a green energy bar instead.  That's even
-  // better!
-  //
-  if ( AllEnemys [ Enum ] . is_friendly ) 
-    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
-  else
-    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
-
-  //--------------------
-  // Now after the energy bar has been drawn, we can start to draw the
-  // empty part of the energy bar (but only of course, if there is some
-  // empty part at all!  (Otherwise we get indefinately large energy
-  // bars...
-  //
-  FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
-  FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
-  FillRect . h = 7 ; 
-  FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
-  
-  if ( Percentage < ENEMY_ENERGY_BAR_LENGTH )
-    our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
-
+    
+    //--------------------
+    // If the enemy is dead already, there's nothing to do here...
+    //
+    if ( AllEnemys [ Enum ] . Status == OUT ) return;
+    if ( AllEnemys [ Enum ] . energy <= 0 ) return;
+    
+    //--------------------
+    // Now we need to find the right colors to fill our bars with...
+    //
+    full_color_enemy = SDL_MapRGB( Screen->format, 255 , 0 , 0 ) ; 
+    full_color_friend = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
+    energy_empty_color = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
+    
+    //--------------------
+    // Now we fill our bars...
+    //
+    Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
+    
+    FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
+    FillRect . y = TargetRectangle . y - 7 - ENEMY_ENERGY_BAR_OFFSET_Y ;
+    FillRect . h = 7 ; 
+    FillRect . w = Percentage ;
+    
+    //--------------------
+    // If the enemy is friendly, then we needn't display his health, right?
+    // Or better yet, we might show a green energy bar instead.  That's even
+    // better!
+    //
+    if ( AllEnemys [ Enum ] . is_friendly ) 
+	our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
+    else
+	our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
+    
+    //--------------------
+    // Now after the energy bar has been drawn, we can start to draw the
+    // empty part of the energy bar (but only of course, if there is some
+    // empty part at all!  (Otherwise we get indefinately large energy
+    // bars...
+    //
+    FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
+    FillRect . y = TargetRectangle . y - 7 - ENEMY_ENERGY_BAR_OFFSET_Y ;
+    FillRect . h = 7 ; 
+    FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
+    
+    if ( Percentage < ENEMY_ENERGY_BAR_LENGTH )
+	our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
+    
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 
 /* ----------------------------------------------------------------------

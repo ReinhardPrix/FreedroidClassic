@@ -384,151 +384,151 @@ GreatDruidShow (void)
 int
 GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 {
-  int ItemType;
-  int Displacement=0;
-  bool finished = FALSE;
-  static int WasPressed = FALSE ;
-  // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
-  // int NumberOfItems;
-  int ItemIndex=0;
-  int PasswordIndex = (-1) ;
-  // int ClearanceIndex = (-1) ;
-  int IdentifyAllowed = FALSE ;
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-
-  //--------------------
-  // We initialize the text rectangle
-  //
-  Cons_Text_Rect . x = 258 ;
-  Cons_Text_Rect . y = 89 ;
-  Cons_Text_Rect . w = 346 ;
-  Cons_Text_Rect . h = 282 ;
-
-  // NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
-
-  if ( ShowPointerList[0] == NULL )
+    int ItemType;
+    int Displacement=0;
+    bool finished = FALSE;
+    static int WasPressed = FALSE ;
+    // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
+    // int NumberOfItems;
+    int ItemIndex=0;
+    int PasswordIndex = (-1) ;
+    // int ClearanceIndex = (-1) ;
+    int IdentifyAllowed = FALSE ;
+    char* MenuTexts[ 10 ];
+    MenuTexts[0]="Yes";
+    MenuTexts[1]="No";
+    MenuTexts[2]="";
+    
+    //--------------------
+    // We initialize the text rectangle
+    //
+    Cons_Text_Rect . x = 258 ;
+    Cons_Text_Rect . y = 89 ;
+    Cons_Text_Rect . w = 346 ;
+    Cons_Text_Rect . h = 282 ;
+    
+    // NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
+    
+    if ( ShowPointerList[0] == NULL )
     {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
-			MenuTexts, 1 , -1 , NULL );
-      return (-1) ;
+	MenuTexts[0]=" BACK ";
+	MenuTexts[1]="";
+	DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
+			  MenuTexts, 1 , -1 , NULL );
+	return (-1) ;
     }
-
-  ItemType = ShowPointerList [ ItemIndex ] -> type ;
-
-  Displacement = 0;
-
-  while (!finished)
+    
+    ItemType = ShowPointerList [ ItemIndex ] -> type ;
+    
+    Displacement = 0;
+    
+    while (!finished)
     {
-      SDL_Delay (1);
-
-      //--------------------
-      // We show all the info and the buttons that should be in this
-      // interface...
-      //
-      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_BG_PIC_BACKGROUND_CODE , TRUE );
-
-      // PutPasswordButtonsAndPassword ( PasswordIndex );
-      // PutSecurityButtonsAndClearance ( ClearanceIndex );
-
-      our_SDL_flip_wrapper( Screen );
-
-      //--------------------
-      // Now we see if identification of the current item is allowed
-      // or not.
-
-      //
-      IdentifyAllowed = FALSE ;
-      if ( PasswordIndex >= 0 )
+	SDL_Delay (1);
+	
+	//--------------------
+	// We show all the info and the buttons that should be in this
+	// interface...
+	//
+	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_BG_PIC_BACKGROUND_CODE , TRUE );
+	
+	// PutPasswordButtonsAndPassword ( PasswordIndex );
+	// PutSecurityButtonsAndClearance ( ClearanceIndex );
+	blit_our_own_mouse_cursor ( );
+	our_SDL_flip_wrapper( Screen );
+	
+	//--------------------
+	// Now we see if identification of the current item is allowed
+	// or not.
+	
+	//
+	IdentifyAllowed = FALSE ;
+	if ( PasswordIndex >= 0 )
 	{
-	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Idenfity" ) )
+	    if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Idenfity" ) )
 	    {
-	      IdentifyAllowed = TRUE ;
+		IdentifyAllowed = TRUE ;
 	    }
 	}
-
-      ItemType = ShowPointerList [ ItemIndex ] -> type ;
-
-      if (SpacePressed() || EscapePressed() || axis_is_active )
+	
+	ItemType = ShowPointerList [ ItemIndex ] -> type ;
+	
+	if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      if ( ItemIndex < NumberOfItems -1 ) 
+		if ( ItemIndex < NumberOfItems -1 ) 
 		{
-		  ItemIndex ++;	    
-		  MoveMenuPositionSound();
-		  Displacement = 0;
+		    ItemIndex ++;	    
+		    MoveMenuPositionSound();
+		    Displacement = 0;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      if ( ItemIndex > 0) 
+		if ( ItemIndex > 0) 
 		{
-		  ItemIndex --;	      
-		  MoveMenuPositionSound();
-		  Displacement = 0;
+		    ItemIndex --;	      
+		    MoveMenuPositionSound();
+		    Displacement = 0;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      MoveMenuPositionSound();
-	      Displacement += FontHeight ( GetCurrentFont () );
+		MoveMenuPositionSound();
+		Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      MoveMenuPositionSound();
-	      // if (page > 0) page --;
-	      Displacement -= FontHeight ( GetCurrentFont () );
+		MoveMenuPositionSound();
+		// if (page > 0) page --;
+		Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed )
 	    {
-	      finished = TRUE;
-	      while (SpacePressed() ||EscapePressed());
+		finished = TRUE;
+		while (SpacePressed() ||EscapePressed());
 	    }
-
+	    
 	}
-
-      WasPressed = axis_is_active;
-
-      if (UpPressed() || MouseWheelUpPressed())
+	
+	WasPressed = axis_is_active;
+	
+	if (UpPressed() || MouseWheelUpPressed())
 	{
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	  Displacement += FontHeight ( GetCurrentFont () );
+	    MoveMenuPositionSound();
+	    while (UpPressed());
+	    Displacement += FontHeight ( GetCurrentFont () );
 	}
-      if (DownPressed() || MouseWheelDownPressed())
+	if (DownPressed() || MouseWheelDownPressed())
 	{
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	  Displacement -= FontHeight ( GetCurrentFont () );
+	    MoveMenuPositionSound();
+	    while (DownPressed());
+	    Displacement -= FontHeight ( GetCurrentFont () );
 	}
-      if (RightPressed() )
+	if (RightPressed() )
 	{
-	  MoveMenuPositionSound();
-	  while (RightPressed());
-	  if ( ItemType < Me[0].type) ItemType ++;
+	    MoveMenuPositionSound();
+	    while (RightPressed());
+	    if ( ItemType < Me[0].type) ItemType ++;
 	}
-      if (LeftPressed() )
+	if (LeftPressed() )
 	{
-	  MoveMenuPositionSound();
-	  while (LeftPressed());
-	  if (ItemType > 0) ItemType --;
+	    MoveMenuPositionSound();
+	    while (LeftPressed());
+	    if (ItemType > 0) ItemType --;
 	}
-      
-      if ( EscapePressed() )
+	
+	if ( EscapePressed() )
 	{
-	  while ( EscapePressed() );
-	  return (-1);
+	    while ( EscapePressed() );
+	    return (-1);
 	}
-
+	
     } // while !finished 
-
-  return ( ItemIndex ) ;  // Currently equippment selection is not yet possible...
-
+    
+    return ( ItemIndex ) ;  // Currently equippment selection is not yet possible...
+    
 }; // int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 
 /* ------------------------------------------------------------
@@ -536,7 +536,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
  * does update the screen, no our_SDL_flip_wrapper() necesary !
  * ------------------------------------------------------------ */
 void 
-ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
+ShowDroidInfo ( int droidtype, int Displacement , char ShowArrows )
 {
     char *item_name;
     int type;
@@ -578,8 +578,8 @@ Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].clas
 	     ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
 	     Brainnames[ Druidmap[droidtype].brain ]);
     
-    if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
-	item_name = ItemMap[type].item_name;                     /* does not segfault */
+    if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) // make sure item=-1 
+	item_name = ItemMap[type].item_name;                 // does not segfault 
     else 
 	item_name = "none";
     
