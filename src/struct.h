@@ -324,6 +324,8 @@ typedef struct
   int PointsToDistribute; // these are the points that are available to distribute upon the character stats
   float Damage; // the current damage the influencer does
   float AC; // the current Armour Class of the influencer
+  float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
+  float RechargeTime; // the actual minimum time to wait for the influencer between shots
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;

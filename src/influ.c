@@ -1035,7 +1035,7 @@ FireBullet (void)
   finepoint speed;
   int max_val;
 
-  // If the victim doesn't have a weapon at all, just return
+  // If the current overtaken droid doesn't have a weapon at all, just return
   if ( Druidmap [ Me.type ].weapon_item.type == (-1) ) return;
 
   // If the influencer is holding something from the invenotry
@@ -1050,10 +1050,9 @@ FireBullet (void)
   if ( axis_is_active && GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
   if ( axis_is_active && GameConfig.CharacterScreen_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
 
-  /* Wenn noch kein Schuss loesbar ist sofort zurueck */
+  // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if (Me.firewait > 0)
     return;
-  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time;
 
   /* Geraeusch eines geloesten Schusses fabrizieren */
   Fire_Bullet_Sound ( guntype );
@@ -1075,9 +1074,18 @@ FireBullet (void)
   CurBullet->pos.x = Me.pos.x;
   CurBullet->pos.y = Me.pos.y;
   CurBullet->type = guntype;
-  CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
+
+  // CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
+  //--------------------
+  // Previously, we had the damage done only dependant upon the weapon used.  Now
+  // the damage value is taken directly from the character stats, and the UpdateAll...stats
+  // has to do the right computation and updating of this value.  hehe. very conventient.
+  CurBullet->damage = Me.Damage;
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
+  // Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time * Me.RechargeTimeModifier;
+  Me.firewait = Me.RechargeTime;
+
 
   speed.x = 0.0;
   speed.y = 0.0;
