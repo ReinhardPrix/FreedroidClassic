@@ -1774,6 +1774,8 @@ gui_show_tooltip ( int x , int y )
   static GtkWidget *tip;
   static char popup_meta_tool_tip_text[20000];
   // char temp_text[20000];
+  gint x_offs = 0 ;
+  gint y_offs = 0 ;
 
   //--------------------
   // At first we need to find out which dialog option really
@@ -1847,9 +1849,17 @@ gui_show_tooltip ( int x , int y )
       //
       gtk_widget_realize (popup_meta_tool_tip);
     
+      //--------------------
+      // We need to respect the current position of the window when calculating
+      // position for the tooltip placement...
+      //
+      // gdk_window_get_origin ( wnd , &x_offs , & y_offs );
+      // gdk_window_get_origin ( graph , &x_offs , & y_offs );
+      gdk_window_get_origin ( wnd->window, &x_offs , &y_offs );
+
       // calculate the position of the popup_meta_tool_tip
-      x = ChatRoster [ DialogOptionCovered ] . position_x ;
-      y = ChatRoster [ DialogOptionCovered ] . position_y ;
+      x = ChatRoster [ DialogOptionCovered ] . position_x + x_offs ;
+      y = ChatRoster [ DialogOptionCovered ] . position_y + y_offs ;
       
       // position and display the popup_meta_tool_tip
       gtk_widget_set_uposition (popup_meta_tool_tip, x , y );
