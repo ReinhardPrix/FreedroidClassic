@@ -422,7 +422,8 @@ ShowCombatScreenTexts ( int mask )
 	{
 	    remaining_bots = 0 ;
 	    
-	    for ( k = 0 ; k < Number_Of_Droids_On_Ship ; k ++ )
+	    // for ( k = 0 ; k < Number_Of_Droids_On_Ship ; k ++ )
+	    for ( k = 0 ; k < MAX_ENEMYS_ON_SHIP ; k ++ )
 	    {
 		if ( ( AllEnemys [ k ] . pos . z == Me [ 0 ] . pos . z ) &&
 		     ( AllEnemys [ k ] . Status != OUT ) &&

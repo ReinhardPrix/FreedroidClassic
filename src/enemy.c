@@ -312,7 +312,7 @@ PermanentHealRobots (void)
   time_since_last_heal = 0 ;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       if ( AllEnemys [ i ] . Status == OUT)
 	continue;
@@ -604,7 +604,7 @@ CheckIfWayIsFreeOfDroidsWithTuxchecking ( float x1 , float y1 , float x2 , float
     for ( i = 0 ; i < Steps + 1 ; i++ )
     {
 	// for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
-	// for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	// for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
 	for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
 	      j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
 	{
@@ -1590,7 +1590,7 @@ MoveEnemys ( void )
     //--------------------
     // Now the pure movement stuff..
     //
-    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
 	ThisRobot = & AllEnemys[ i ];
 	
@@ -1637,7 +1637,7 @@ MoveEnemys ( void )
 	//
 	ProcessAttackStateMachine ( i );
 	
-    }	// for Number_Of_Droids_On_Ship
+    }	// for MAX_ENEMYS_ON_SHIP
     
 }; // MoveEnemys( void ) 
 
@@ -1856,7 +1856,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	{
 	    DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
 	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; 
-		  j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
+		  j < MAX_ENEMYS_ON_SHIP ; j ++ , target_robot ++ )
 	    {
 		if ( target_robot -> Status == OUT ) continue ;
 		if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
@@ -2113,7 +2113,7 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
   int j;
   float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
 
-  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+  for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j++ )
     {
       if ( AllEnemys[ j ].Status == OUT ) continue;
       if ( AllEnemys[ j ].is_friendly ) continue;
@@ -2146,7 +2146,8 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
 {
     int j;
     float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
-    
+    int found_some_target = FALSE;
+
     //--------------------
     // We set some default values, in case there isn't anything attackable
     // found below...
@@ -2183,6 +2184,7 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
 	vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
 	DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
 	DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
+	found_some_target = TRUE ;
 	break;
     }
     
@@ -2202,7 +2204,7 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
     }
     */
     
-    if ( j < Number_Of_Droids_On_Ship - 1 ) 
+    if ( found_some_target ) 
     {
 	ThisRobot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
 	ThisRobot -> attack_target_index = j ;
@@ -3352,8 +3354,8 @@ AnimateEnemys (void)
     int i;
     enemy* our_enemy;
     
-    // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-    for ( i = 0; i < Number_Of_Droids_On_Ship ; i++ )
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
+    // for ( i = 0; i < Number_Of_Droids_On_Ship ; i++ )
     {
       
 	our_enemy = & ( AllEnemys [ i ] ) ;

@@ -562,7 +562,7 @@ CheckIfMissionIsComplete (void)
 	//
 	if ( Me [ 0 ] . AllMissions [ mis_num ].KillOne != (-1) )
 	{
-	    for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
@@ -601,8 +601,7 @@ CheckIfMissionIsComplete (void)
 	//
 	if ( Me[0].AllMissions[ mis_num ].KillAll != (-1) )
 	{
-	    //	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	    for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].is_friendly == FALSE ) )
 		{
@@ -620,8 +619,7 @@ CheckIfMissionIsComplete (void)
 	//
 	if ( Me[0].AllMissions[ mis_num ].KillClass != (-1) )
 	{
-	    // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	    for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
@@ -641,8 +639,7 @@ CheckIfMissionIsComplete (void)
 	//
 	if ( Me[0].AllMissions[ mis_num ]. must_clear_first_level != (-1) )
 	{
-	    // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	    for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
@@ -663,8 +660,7 @@ CheckIfMissionIsComplete (void)
 	//
 	if ( Me[0].AllMissions[ mis_num ]. must_clear_second_level != (-1) )
 	{
-	    // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
-	    for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		     ( AllEnemys[Robot_Counter].Status != OUT ) && 

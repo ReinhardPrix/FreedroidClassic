@@ -2693,15 +2693,15 @@ TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLe
 void
 CountNumberOfDroidsOnShip ( void )
 {
-  int i;
-  int type;
-
-  Number_Of_Droids_On_Ship=0;
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    int i;
+    int type;
+    
+    Number_Of_Droids_On_Ship=0;
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      type = AllEnemys[i].type;
-      if ( type == (-1) ) continue;  // Do nothing to unused entries
-      Number_Of_Droids_On_Ship++;
+	type = AllEnemys [ i ] . type ;
+	if ( type == ( -1 ) ) continue;  // Do nothing to unused entries
+	Number_Of_Droids_On_Ship++;
     }
 }; // void CountNumberOfDroidsOnShip ( void )
 

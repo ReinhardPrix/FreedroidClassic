@@ -331,8 +331,9 @@ show_automap_data_sdl ( void )
   // Now that the pure map data has been drawn, we add red dots for 
   // the ememys around.
   //
-  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
-    {
+  // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+  {
       if ( AllEnemys [ i ] . Status  == OUT ) continue;
       if ( AllEnemys [ i ] . type == (-1) ) continue;
       if ( AllEnemys [ i ] . pos . z != automap_level -> levelnum ) continue;

@@ -2562,7 +2562,8 @@ check_tux_enemy_collision (void)
     //--------------------
     // We need to go through the whole list of enemys...
     //
-    for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    // for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
 	
 	//--------------------
@@ -3187,7 +3188,8 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	Weapon_Target_Vector.y += Me [ player_num ] . pos . y;
 	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
 	
-	for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+	// for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+	for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
 	{
 	    if ( AllEnemys [ i ] . Status == OUT ) continue;
 	    if ( AllEnemys [ i ] . pos . z != Me [ player_num ] . pos . z ) continue;

@@ -1192,9 +1192,10 @@ Cheatmenu (void)
 			printf_SDL (Screen, -1, -1, "\n" );
 			
 		    } // if (enemy on current level)  
-		} // for ( i < Number_Of_Droids_On_Ship ) 
+		} // for ( i < MAX_ENEMYS_ON_SHIP ) 
 		
 		printf_SDL (Screen, 15, -1," --- END --- \n");
+		CountNumberOfDroidsOnShip ( );
 		printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
 		our_SDL_flip_wrapper ( Screen );
 		while ( ( !SpacePressed()) && (!EscapePressed()) );
@@ -1225,7 +1226,7 @@ Cheatmenu (void)
 				Druidmap[AllEnemys[i].type].druidname,
 				(int)AllEnemys[i].energy,
 				AllEnemys[i].speed.x);
-		} // for ( i < Number_Of_Droids_On_Ship ) 
+		} // for ( i < MAX_ENEMYS_ON_SHIP ) 
 		
 		printf_SDL (Screen, -1, -1, " --- END ---\n");
 		our_SDL_flip_wrapper ( Screen );
@@ -1234,7 +1235,8 @@ Cheatmenu (void)
 		
 		
 	    case 'd': // destroy all robots on this level, very useful
-		for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+		// for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+		for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
 		{
 		    if (AllEnemys[i].pos.z == CurLevel->levelnum)
 			AllEnemys[i].energy = -100;

@@ -852,7 +852,8 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
     //
     ThisRobot = & ( AllEnemys [ 0 ] ) ;
     ThisRobot -- ;
-    for ( i = 0; i < Number_Of_Droids_On_Ship; i++ )
+    // for ( i = 0; i < Number_Of_Droids_On_Ship; i++ )
+    for ( i = 0; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
 	ThisRobot ++ ;
 	if ( ThisRobot -> Status == OUT || ThisRobot -> pos . z != level)
@@ -1105,7 +1106,8 @@ CheckBlastCollisions (int num)
     // Now we check for enemys, that might have stepped into this
     // one blasts area of effect...
     //
-    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {
 	if ((AllEnemys[i].Status == OUT)
 	    || (AllEnemys[i].pos.z != level))
