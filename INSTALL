@@ -5,7 +5,7 @@ Freedroid Installation
 [ 0) if you have downloaded your source from the cvs-archive 
    you have to start by typing `./autogen.sh']
 
-1) type `./configure'
+1) autogen will run `./configure' - you don't need to
 2) type `make' to compile the package
 
 3)a) type `make install'. By default this will try to install in 
