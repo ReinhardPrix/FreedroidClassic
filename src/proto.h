@@ -51,6 +51,7 @@ EXTERN void InitNewMission (char *MissionName);
 EXTERN void CheckIfMissionIsComplete (void);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
+EXTERN void Win32Disclaimer (void);
 
 /* influ.c */
 #undef EXTERN

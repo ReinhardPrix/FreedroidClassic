@@ -898,7 +898,8 @@ Init_Video (void)
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
   
-  flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
+  //  flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
+  flags = 0;
   if (GameConfig.UseFullscreen) flags |= SDL_FULLSCREEN;
 
   if (vid_info->wm_available)  /* if there's a window-manager */

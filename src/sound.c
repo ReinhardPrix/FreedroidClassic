@@ -311,7 +311,8 @@ Switch_Background_Music_To ( char* filename_raw )
       return;
     }
 
-#ifndef HAVE_LIBVORBIS
+  // rp: lets cheat when using Mingw32
+#if (!defined __WIN32__  && !defined HAVE_LIBVORBIS)
   if (strstr (filename_raw, ".ogg"))
     {
       DebugPrintf (1, "\n\nWARNING: no ogg vorbis libs were found when configuring,\n\

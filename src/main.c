@@ -74,6 +74,11 @@ main (int argc, char * argv[])
 
   SDL_ShowCursor (SDL_DISABLE);
 
+#ifdef __WIN32__
+  // spread the word :)
+  Win32Disclaimer ();
+#endif
+
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );

@@ -137,7 +137,7 @@ enum _alertnames {
 #ifdef __MACOSX__
 #define FD_DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
 #else
-#define FD_DATADIR ".."   // our local fallback
+#define FD_DATADIR "."   // our local fallback
 #endif
 
 #endif
