@@ -200,9 +200,6 @@ UpdateCountersForThisFrame ( int PlayerNum )
     {
       GameConfig.Mission_Log_Visible_Time += Frame_Time();
       GameConfig.Inventory_Visible_Time += Frame_Time();
-      // if (ShipEmptyCounter == 1) GameOver = TRUE;
-      LastBlastHit++;
-      Total_Frames_Passed_In_Mission++;
 
       // The next couter counts the frames displayed by freedroid during this
       // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!

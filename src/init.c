@@ -47,11 +47,9 @@
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
-char* DebriefingText;
-char* DebriefingSong;
+// char* DebriefingText;
+// char* DebriefingSong;
 char* NextMissionName;
-char Previous_Mission_Name[1000];
-
 extern int feenableexcept (int TheExceptionFlags );
 
 /* ---------------------------------------------------------------------- 
@@ -76,6 +74,81 @@ ShowStartupPercentage ( int Percentage )
   SDL_UpdateRect ( Screen , 200 , 200 , 200 , 30  ) ;
 
 }; // void ShowStartupPercentage ( int Percentage )
+
+/* ----------------------------------------------------------------------
+ * This function can be used to play a generic title file, containing 
+ * 
+ *  1. a background picture name
+ *  2. a background music to play
+ *  3. some text to display in a scrolling fashion
+ *
+ * ---------------------------------------------------------------------- */
+void
+PlayATitleFile ( char* Filename )
+{
+  char* fpath;
+  char* TitleFilePointer;
+  int ScrollEndLine = User_Rect.y;	// endpoint for scrolling...
+  char* NextSubsectionStartPointer;
+  char* PreparedBriefingText;
+  char* TerminationPointer;
+  char* TitlePictureName;
+  char* TitleSongName;
+  int ThisTextLength;
+
+  //--------------------
+  // Now its time to start loading the title file...
+  //
+  fpath = find_file ( Filename , MAP_DIR , FALSE );
+  TitleFilePointer = 
+    ReadAndMallocAndTerminateFile( fpath , "*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
+
+#define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
+#define END_OF_BRIEFING_SUBSECTION_STRING "* End of Mission Briefing Text Subsection *"
+
+  // STRANGE!! This command will be silently ignored by SDL?
+  // WHY?? DONT KNOW!!!
+  // PlaySound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // PlaySound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // SwitchBackgroundMusicTo ( COMBAT_BACKGROUND_MUSIC_SOUND );
+
+  TitleSongName = ReadAndMallocStringFromData ( TitleFilePointer, "The title song in the sound subdirectory for this mission is : " , "\n" ) ;
+
+  SwitchBackgroundMusicTo ( TitleSongName );
+
+  TitlePictureName = ReadAndMallocStringFromData ( TitleFilePointer, "The title picture in the graphics subdirectory for this mission is : " , "\n" ) ;
+
+  SDL_SetClipRect ( Screen, NULL );
+  Me[0].status=BRIEFING;
+  SetCurrentFont( Para_BFont );
+
+  NextSubsectionStartPointer = TitleFilePointer;
+  while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, "*** START OF PURE SCROLLTEXT DATA ***")) 
+	  != NULL )
+    {
+      NextSubsectionStartPointer += strlen ( "*** START OF PURE SCROLLTEXT DATA ***" );
+      if ( (TerminationPointer=strstr ( NextSubsectionStartPointer, "*** END OF PURE SCROLLTEXT DATA ***")) == NULL)
+	{
+	  DebugPrintf (1, "\n\nvoid Title(...): Unterminated Subsection in Mission briefing....Terminating...");
+	  Terminate(ERR);
+	}
+      ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
+      PreparedBriefingText = MyMalloc (ThisTextLength + 10);
+      strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
+      PreparedBriefingText[ThisTextLength]=0;
+      
+      // DebugPrintf (1, "\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
+      fflush(stdout);
+      
+      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
+      free ( PreparedBriefingText );
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  SDL_Flip( Screen );
+  
+}; // void PlayATitleFile ( char* Filename )
 
 /* ----------------------------------------------------------------------
  * This function loads all the constant variables of the game from
@@ -1226,7 +1299,7 @@ Init_Game_Data ( char * Datafilename )
 
 #define INIT_GAME_DATA_DEBUG 1 
 
-  DebugPrintf (2, "\nint Init_Game_Data ( char* Datafilename ) called.");
+  DebugPrintf ( 2 , "\nint Init_Game_Data ( char* Datafilename ) called." );
 
   //--------------------
   // First we load the general game constants
@@ -1769,17 +1842,14 @@ InitHarmlessTuxStatusVariables( int PlayerNum )
  * whenever or better before any new game is started.
  * -----------------------------------------------------------------*/
 void
-InitNewMissionList ( char *MissionName )
+EnforceMissionFile ( char *MissionFileName )
 {
   char *fpath;
   int i , j ;
   char *MainMissionPointer;
-  char *BriefingSectionPointer;
   char *EventSectionPointer;
 
   char* Crewname;
-  char* GameDataName;
-  char* Shipname;
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
@@ -1788,52 +1858,30 @@ InitNewMissionList ( char *MissionName )
   location StartPosition;
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
-#define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
-#define MISSION_ENDTITLE_SONG_NAME_STRING "Song name to play in the end title if the mission is completed: "
 #define EVENT_SECTION_BEGIN_STRING "** Start of Mission Event Section **"
-#define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
-#define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
-#define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
-#define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
 #define MISSION_START_POINT_STRING "Possible Start Point : "
-
-  // #define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
-
 #define INIT_NEW_MISSION_DEBUG 1
 
-  //--------------------
-  // We store the mission name in case the influ
-  // gets destroyed so we know where to continue in
-  // case the player doesn't want to return to the very beginning
-  // but just to replay this mission.
-  //
-  strcpy( Previous_Mission_Name , MissionName ); 
-  
   DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nA new mission is being initialized from file %s.\n" , MissionName );
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nA new mission is being initialized from file %s.\n" , MissionFileName );
 
   //--------------------
   // At first we do the things that must be done for all
   // missions, regardless of mission file given
   //
   Activate_Conservative_Frame_Computation();
-  Total_Frames_Passed_In_Mission=0;
-  LastBlastHit = 0;
-  LastGotIntoBlastSound = 2;
-  LastRefreshSound = 2;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
   RespectVisibilityOnMap = TRUE ;
-  Me[0].Experience = 0; // This should be done at the end of the highscore list procedure
 
   //--------------------
   // Now its time to start decoding the mission file.
   // For that, we must get it into memory first.
   //
-  fpath = find_file (MissionName, MAP_DIR, FALSE);
+  fpath = find_file ( MissionFileName, MAP_DIR, FALSE);
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
 
   //--------------------
@@ -1847,35 +1895,7 @@ InitNewMissionList ( char *MissionName )
   Get_Game_Events ( EventSectionPointer );
   DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
 
-  //--------------------
-  // We start with doing the briefing things...
-  // Now we search for the beginning of the mission briefing big section NOT subsection.
-  // We display the title and explanation of controls and such... 
-  BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
-  Title ( BriefingSectionPointer );
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
-
-  //--------------------
-  // First we extract the game physics file name from the
-  // mission file and load the game data.
-  //
-  GameDataName = 
-    ReadAndMallocStringFromData ( MainMissionPointer , GAMEDATANAME_INDICATION_STRING , "\n" ) ;
-
-  Init_Game_Data ( GameDataName );
-
-  //--------------------
-  // Now its time to get the shipname from the mission file and
-  // read the ship file into the right memory structures
-  //
-  Shipname = 
-    ReadAndMallocStringFromData ( MainMissionPointer , SHIPNAME_INDICATION_STRING , "\n" ) ;
-  fpath = find_file (Shipname, MAP_DIR, FALSE);
-  if ( LoadShip (fpath) == ERR )
-    {
-      DebugPrintf ( 0 , "Error in LoadShip\n");
-      Terminate (ERR);
-    }
+  PlayATitleFile ( "StartOfGame.title" );
 
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission
@@ -1883,7 +1903,6 @@ InitNewMissionList ( char *MissionName )
   Me[0].TextToBeDisplayed =
     ReadAndMallocStringFromData ( MainMissionPointer , "Influs mission start comment=\"" , "\"" ) ;
   Me[0].TextVisibleTime = 0;
-
 
   //--------------------
   // Now its time to get the crew file name from the mission file and
@@ -1899,15 +1918,6 @@ InitNewMissionList ( char *MissionName )
       DebugPrintf ( 0 , "\nInitNewGame(): ERROR: Initialization of enemys failed...");
       Terminate ( ERR );
     }
-
-  //--------------------
-  // Now its time to get the debriefing text from the mission file so that it
-  // can be used, if the mission is completed and also the end title music name
-  // must be read in as well
-  //
-  DebriefingSong = ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_SONG_NAME_STRING , "\n" ) ;
-  DebriefingText =
-    ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_BEGIN_STRING , MISSION_ENDTITLE_END_STRING ) ;
 
   // ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
   ResolveMapLabelOnShip ( "NewTuxStartGameSquare" , &StartPosition );
@@ -1966,6 +1976,7 @@ InitNewMissionList ( char *MissionName )
     {
       strcpy ( Me [ 0 ] . cookie_list [ j ] , "" ) ;
     }
+
   //--------------------
   // When the Tux arrives, he also should be at perfect health
   // and also full with all the mana he can have on him.
@@ -1995,7 +2006,7 @@ InitNewMissionList ( char *MissionName )
 
   Item_Held_In_Hand = ( -1 );
 
-  DebugPrintf ( 0 , "\nInitNewMissionList:  Shuffling droids on all %d levels!" , curShip.num_levels );
+  DebugPrintf ( 0 , "\nEnforceMissionFile:  Shuffling droids on all %d levels!" , curShip.num_levels );
   for ( i = 0 ; i < curShip.num_levels ; i ++ )
     {
       // ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
@@ -2025,7 +2036,7 @@ InitNewMissionList ( char *MissionName )
       Me [ PlayerNum ] . status = OUT ;
     }
 
-}; // void InitNewMissionList ( char* MissionName )
+}; // void EnforceMissionFile ( char* MissionName )
 
 /* ----------------------------------------------------------------------
  * This function clears out the Automap data.
@@ -2193,8 +2204,7 @@ InitFreedroid ( void )
 
   ShowStartupPercentage ( 14 ) ; 
 
-  Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be
-			       // overwritten from the mission file.
+  Init_Game_Data( NULL ); 
 
   ShowStartupPercentage ( 16 ) ; 
 
@@ -2263,20 +2273,9 @@ Title ( char *MissionBriefingPointer )
   TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
   SDL_SetClipRect ( Screen, NULL );
-  // DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
-  // SDL_Flip (Screen);
-
   Me[0].status=BRIEFING;
-
-  // ClearGraphMem ();
-  // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-
-  // SetCurrentFont( FPS_Display_BFont );
   SetCurrentFont( Para_BFont );
 
-
-  // Next we display all the subsections of the briefing section
-  // with scrolling font
   NextSubsectionStartPointer = MissionBriefingPointer;
   while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, NEXT_BRIEFING_SUBSECTION_START_STRING)) != NULL)
     {
@@ -2302,8 +2301,6 @@ Title ( char *MissionBriefingPointer )
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   SDL_Flip( Screen );
 
-  return;
-
 }; // void Title ( void )
 
 /* ----------------------------------------------------------------------
@@ -2313,21 +2310,7 @@ Title ( char *MissionBriefingPointer )
 void
 EndTitle (void)
 {
-  int ScrollEndLine = User_Rect.y;	// endpoint for scrolling...
-
-  DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
-
-  SwitchBackgroundMusicTo ( DebriefingSong );
-
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  // SetCurrentFont( FPS_Display_BFont );
-  SetCurrentFont( Para_BFont );
-
-  ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_FILE );
-
-  while ( SpacePressed() );
-
+  PlayATitleFile ( "EndOfGame.title" );
 }; // void EndTitle( void ) 
 
 /* ----------------------------------------------------------------------
@@ -2439,7 +2422,7 @@ CheckIfMissionIsComplete (void)
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
     {
       EndTitle();
-      InitNewMissionList ( NextMissionName );
+      EnforceMissionFile ( NextMissionName );
     }
 #define MIS_COMPLETE_DEBUG 0
 

@@ -1102,20 +1102,17 @@ GotIntoBlastSound (void)
   return;
 }				// void GotIntoBlastSound(void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ *
+ * ---------------------------------------------------------------------- */
 void
 RefreshSound (void)
 {
   if (!sound_on) return;
 
-  PlaySound (REFRESH_SOUND);
+  // PlaySound (REFRESH_SOUND);
   return;
-}				// void RefreshSound(void)
+}; // void RefreshSound(void)
 
 
 /*@Function============================================================

@@ -893,13 +893,9 @@ CheckBlastCollisions (int num)
 	    }
 	  
 	}
-      // In order to avoid a new sound EVERY frame we check for how long the previous blast 
-      // lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!
-      if (LastGotIntoBlastSound > 1.2)
-	{
-	  GotIntoBlastSound ();
-	  LastGotIntoBlastSound = 0;
-	}
+
+      GotIntoBlastSound ();
+
     }
 
 }; // CheckBlastCollisions( ... )

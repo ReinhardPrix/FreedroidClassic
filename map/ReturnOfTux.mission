@@ -71,8 +71,6 @@ Mission Name: The Outbreak
 +++ At first we specify the other files, that also contain essential
 +++ information about this mission, e.g. maps and droids and that
 +++
-Physics ('game.dat') file to use for this mission: freedroid.ruleset
-Ship file to use for this mission: Asteroid.maps
 Lift file to use for this mission: ReturnOfTux.elevators
 Crew file to use for this mission: ReturnOfTux.droids
 Lifts On file to use for this mission: asteroid_on.png
@@ -685,136 +683,7 @@ Action is Influencer say="Hey, I think I've been assigned another mission!  Supe
 Action is mission assignment=1
 * End of this Event Action Subsection *
 
-
 ** End of Mission Event Section **
-
-**********************************************************************
-**********************************************************************
-**********************************************************************
-+++
-+++ Now we define the BRIEFING and DEBRIEFING texts, displayed as 
-+++ scrolling text at the beginning/end
-+++
-
-** Start of Mission Briefing Text Section **
-
-The title picture in the graphics subdirectory for this mission is : backgrounds/scientist.jpg
-T**he title song in the sound subdirectory for this mission is : BETHOW.MOD
-The title song in the sound subdirectory for this mission is : AnarchyMenu1.mod
-T**he title song in the sound subdirectory for this mission is : Agony-Highlands2.mod
-Song name to play in the end title if the mission is completed: Beachhead_2.mod
-
-* New Mission Briefing Text Subsection *
-It's the the year 2323, and nothing's left that's free (Apologies to Zagar and Evans).
-Anyway, all of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.
-It all began back in 2207, when the military and police forces were automated, because it was cheaper to maintain. The technology extended to interstellar traffic monitoring... even in space, they were there in their nasty uniforms and clipboards.
-By 2313, almost all the droids were running a MegaSoft operating system.
-By the dawn of 2320, it turned out that this proprietary OS was a trojan horse and from then on only responded to MS instruction signals.
-It soon became realised that military and police forces were under MS control.  
-Interstellar traffic now depends upon MS allowance.
-Droids are roaming the streets and announcing the new rule.
-Any resistance is met with utter violence.
-
-But some 20 years after the MS took over the government, the droids running the MS operating system suddenly went bonkers and attacked all life forms, MS and non-MS alike.  
-Few survived this day, that is known as the 'Great Assault' in todays history.
-The few survivers formed small colonies in the outskirts of the galaxy.
-There they live underground, struggling to survive...
-
-But that was in the past... and we are at the present.
-
-THE RETURN:
-There was a crackling sound, followed by a slight electronic hiss.
-"TUX life form online." No-one else heard the voice, it was almost a dream-voice in your mind.
-Your eyes blinked a few times as you tried to focus on... anything. 
-The  world around you looked a little blurred, but gradually sharpened.
-The dream-voice came again. "Mobility circuits functioning. Physical status: 89% functional. 
-Memory status: 47% functional. Efficiency: 77% and holding.
-Welcome back, Tux."
-
-Press Fire to play
-
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-Controls
-
-The game is best controlled via mouse input:  Left click onto the locations 
-where you want to move to.  Holding left button down will keep moving in 
-that direction.  Right click to use special powers, spells and skills.  Left 
-click an enemy to launch an attack or left click a friend to initiate 
-friendly communication.
-
-Additional Keys:
-
-I ... Open/Close Inventory Screen
-C ... Open/Close Character Screen
-S ... Open/Close Spells&Skills Screen
-L ... Show Quest Status Log
-P ... Turn on/off Pause Mode
-Tab ... Turn on/off automap display
-Escape ... Pops up the main menu
-F1-F9 Quick-Switch to skill/ability/spells 1-9
-1-9 ... Quick-Use items from the quick-inventory.  (That's those small items 
-placed on the very bottom of the inventory.)
-
-Space ... Closes all opened screens.
-F12 ... Take a screenshot
-
-Spells&Skills:
-Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on 
-that one.  To take over a hostile bot, select the takeover/chat skill from 
-the skills screen (level 1), then left click on the bot to mark it as target 
-and then press the right mouse button to initiate takeover once you are 
-close engough.  But be warned:  Other bots getting too close to you while 
-takeover is initiated might accidentially become your takeover target.
-For the takeover game, you can use the mouse wheel if you have one, 
-otherwise you must use the cursor keys, sorry :(
-
-Home teleport spell:  Select the skill and right click somewhere to teleport 
-home.  Once home, the northernmost teleporter will take you back to exactly 
-the location where you came from.
-
-Healing spell:  Select the healing spell from the skills screen and right 
-click somewhere.
-
-Remote strike spell:  Fires bullets that do exactly the same damage and have 
-exactly the same chance to hit like your character with his currently 
-equipped weapon.
-
-Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, 
-so that they can move only at a fraction of their normal speed for some 
-time.  They can however still attack at their normal speed.
-
-Poison bolt:  Poisons an enemy (turning green then), delivering some damage 
-over time.  Note that damage duration AND damage effect are cumulative, 
-(i.e. damage done will raise with the square of the poison bolt hits taken).
-
-There are many more skills and spells available in Freedroid.  
-Consult the in-game explanation page from the skills screen for more information.
-Also, to avoid opening unwanted dialogs with people, it might be good to switch so some other skill while moving along, so as not to accidentially start chatting with everyone along the way.
-
-    Press Fire to Play
-
-
-
-
-
-* End of Mission Briefing Text Subsection *
-
-** Beginning of End Title Text Section **
-Congratulations!!
-
-You have managed to reach the end of the Freedroid RPG.  Sorry, that we don't have very much content to offer at this point.  But we're trying to fill this gap.  We've 'hired' to new content writers, but they still need time to get their systems up and running.  We sincerly hope that the next release of Freedroid has more to offer.
-
-If you liked Freedroid RPG and wish to contribute something to development, like some voices or character dialog or the like, you're invited to do so, best by making contact with us on our mailing list (see the sourceforge freedroid project page for more info).
-
-The Freedroid Dev Team
-
-
-Press Fire to continue
-
-
-
-** End of End Title Text Section **
 
 *** End of Mission File ***
 

@@ -51,7 +51,7 @@ EXTERN void Title ( char *MissionBriefingPointer );
 EXTERN void EndTitle (void);
 EXTERN void ClearAutomapData( void );
 EXTERN void InitFreedroid (void);
-EXTERN void InitNewMissionList (char *MissionName);
+EXTERN void EnforceMissionFile ( char *MissionFileName ) ;
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);

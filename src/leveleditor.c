@@ -41,7 +41,6 @@ void LevelEditor(void);
 Level CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
 
-EXTERN char Previous_Mission_Name[1000];
 EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
 char VanishingMessage[10000]="Hello";

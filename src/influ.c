@@ -1719,12 +1719,8 @@ RefreshInfluencer (void)
       if (Me[0].energy > Me[0].health)
 	Me[0].energy = Me[0].health;
 
-      if (LastRefreshSound > 0.6)
-	{
-	  RefreshSound ();
-	  LastRefreshSound = 0;
-	}
-
+      RefreshSound ();
+      
       //--------------------
       // since robots like the refresh, the influencer might also say so...
       //
