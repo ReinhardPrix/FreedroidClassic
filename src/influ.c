@@ -1047,8 +1047,10 @@ FireBullet (void)
   // active, then also just return
   //
   // And for the character screen, do a similar thing
+  //
   if ( axis_is_active && GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
   if ( axis_is_active && GameConfig.CharacterScreen_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
+  if ( GameConfig.CharacterScreen_Visible && GameConfig.Inventory_Visible ) return;
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if (Me.firewait > 0)

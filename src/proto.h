@@ -238,6 +238,7 @@ EXTERN void PlayItemSound ( int SoundCode );
 #else
 #define EXTERN extern
 #endif
+EXTERN void DropSpecificItemAtPosition( int x , int y , int NewItemCode );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
