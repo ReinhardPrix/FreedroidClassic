@@ -36,6 +36,10 @@
 #else
 #define EXTERN extern
 
+EXTERN const SDL_Rect User_Rect;
+EXTERN const SDL_Rect Menu_Rect;
+
+
 EXTERN char EndTitleText1[];
 EXTERN char EndTitleText2[];
 EXTERN char TitleText1[];

@@ -1,4 +1,11 @@
 /* 
+ *  _Definitions_ of global variables
+ * This file should only be included in main.c, and 
+ * the variable _declarations_ should be made in global.h under _main_c
+ *
+ */
+
+/* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -24,7 +31,14 @@
  */
 
 #include "colodefs.h"
+#include "ship.h"
+// this defines our "Userfenster"
+const SDL_Rect User_Rect = { USERFENSTERPOSX, USERFENSTERPOSY,
+		       USERFENSTERBREITE, USERFENSTERHOEHE };
 
+const SDL_Rect Menu_Rect = {MENUTEXT_X, USERFENSTERPOSY,
+			USERFENSTERPOSX + USERFENSTERBREITE,
+			USERFENSTERPOSY + USERFENSTERHOEHE};
 
 
 char EndTitleText1[] =

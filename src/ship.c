@@ -373,7 +373,6 @@ PaintConsoleMenu (void)
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
 
-
   ClearGraphMem ();
 
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
@@ -391,11 +390,7 @@ PaintConsoleMenu (void)
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, Outline320x200, FALSE);
-
-  SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
-		 USERFENSTERPOSX + USERFENSTERBREITE,
-		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
+  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
   strcpy (MenuText, "\nAccess granted.\nShip : ");
   strcat (MenuText, Shipnames[ThisShip]);
@@ -404,10 +399,7 @@ PaintConsoleMenu (void)
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, Outline320x200,
-	       FALSE);
-
-  SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
+  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, &Menu_Rect);
 
   /*
    * Hier werden die Icons des Menus ausgegeben
@@ -421,19 +413,6 @@ PaintConsoleMenu (void)
   TargetRectangle.x=MENUITEMPOSX;
   TargetRectangle.y=MENUITEMPOSY;
   SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
-
-  /*
-  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + Block_Height - 4,
-		     MenuItemPointer,
-		     MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
-
-
-  DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
-		     Influencepointer + BLOCKMEM * ((int) rintf (Me.phase)),
-		     Block_Width, Block_Height, Outline320x200);
-  */
-
-  // SetTextColor (bg, fg); /* restore text color settings */
 
   return;
 }	// PaintConsoleMenu ()
@@ -472,11 +451,12 @@ GreatDruidShow (void)
 	  strcat (InfoText, " - ");
 	  strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
-	  SetTextBorder (USERFENSTERPOSX , USERFENSTERPOSY , USERFENSTERPOSX + 
+	  /*	  SetTextBorder (USERFENSTERPOSX , USERFENSTERPOSY , USERFENSTERPOSX + 
 			 USERFENSTERBREITE-2*FONTBREITE ,
 			 USERFENSTERPOSY + USERFENSTERHOEHE , 36 );
-	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
-		       FALSE);
+	  */
+	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			    Infodroid, RealScreen);
 
@@ -510,8 +490,6 @@ GreatDruidShow (void)
 	  if (SpacePressed ())
 	    {
 	      while (SpacePressed ()) ;
-
-	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 	      return;
 	    }
 
@@ -534,11 +512,12 @@ GreatDruidShow (void)
       strcat (InfoText, " - ");
       strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
-      SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
+      /*      SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
 		     USERFENSTERBREITE, USERFENSTERPOSY + USERFENSTERHOEHE,
 		     36);
-      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
-		   FALSE);
+      */
+      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+
       ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			Infodroid, RealScreen);
 
@@ -555,11 +534,9 @@ GreatDruidShow (void)
       strcat (InfoText, "\nBrain : ");
       strcat (InfoText, Brainnames[Brain[Infodroid]]);
 
-      SetTextBorder (MENUTEXT_X, USERFENSTERPOSX, USERFENSTERPOSX +
-		     USERFENSTERBREITE, USERFENSTERHOEHE + USERFENSTERPOSY,
-		     30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ) , RealScreen,
-		   FALSE);
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
+		   &Menu_Rect);
+
 
       Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
@@ -577,7 +554,6 @@ GreatDruidShow (void)
 	  if (SpacePressed ())
 	    {
 	      while (SpacePressed ()) ;
-	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 	      DebugPrintf
 		("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
 	      return;
@@ -600,11 +576,8 @@ GreatDruidShow (void)
       strcat (InfoText, " - ");
       strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
-      SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
-		     USERFENSTERBREITE, USERFENSTERPOSY + USERFENSTERHOEHE,
-		     36);
-      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
-		   FALSE);
+      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+
       ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			Infodroid, RealScreen);
 
@@ -617,11 +590,8 @@ GreatDruidShow (void)
       strcat (InfoText, "\n          3: ");
       strcat (InfoText, Sensornames[Sensor3[Infodroid]]);
 
-      SetTextBorder (MENUTEXT_X, USERFENSTERPOSX, USERFENSTERPOSX +
-		     USERFENSTERBREITE, USERFENSTERHOEHE + USERFENSTERPOSY,
-		     30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ), RealScreen,
-		   FALSE);
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
+		   &Menu_Rect);
 
       Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
@@ -639,7 +609,6 @@ GreatDruidShow (void)
 	  if (SpacePressed ())
 	    {
 	      while (SpacePressed ()) ;
-	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 	      return;
 	    }
 	}
@@ -660,27 +629,17 @@ GreatDruidShow (void)
       strcat (InfoText, " - ");
       strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
-      SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
-		     USERFENSTERBREITE, USERFENSTERPOSY + USERFENSTERHOEHE,
-		     36);
-      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
-		   FALSE);
+      DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+
       ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			Infodroid, RealScreen);
 
       strcpy (InfoText, "Notes: ");
       strcat (InfoText, Druidmap[Infodroid].notes);
 
-      // SetTextBorder (MENUTEXT_X, USERFENSTERPOSX,
-      // USERFENSTERPOSX + USERFENSTERBREITE,
-      // USERFENSTERHOEHE + USERFENSTERPOSY, 30);
-      SetTextBorder (MENUTEXT_X, USERFENSTERPOSY + (1.35) * FONTHOEHE,
-		     USERFENSTERPOSX + USERFENSTERBREITE,
-		     USERFENSTERHOEHE + USERFENSTERPOSY, 30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ), RealScreen,
-		   FALSE);
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
+		   &Menu_Rect);
 
-      Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
 
       PassOn = 0;
@@ -696,7 +655,6 @@ GreatDruidShow (void)
 	  if (SpacePressed ())
 	    {
 	      while (SpacePressed ()) ;
-	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 	      return;
 	    }
 	}

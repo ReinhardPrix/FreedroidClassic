@@ -291,8 +291,6 @@ SetInfoline (const char *left, const char *right )
       strcpy( previous_right_box , right_box );
       printf("\nHad to update top status line box...");
     }
-  // DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
-  // DisplayText (right_box, RIGHTINFO_X, RIGHTINFO_Y, Outline320x200, FALSE);
 
   return;
 

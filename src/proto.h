@@ -405,27 +405,18 @@ EXTERN void ClearUserFenster (void);
 #define EXTERN extern
 #endif
 
-EXTERN void StoreTextEnvironment (void);
-EXTERN void RestoreTextEnvironment (void);
-
 EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
 EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 
-EXTERN void SetTextBorder (int left, int upper, int right, int lower,
-			   int chars);
-EXTERN void ClearTextBorder (unsigned char *screen, int color);
 EXTERN void SetTextCursor (int x, int y);
 EXTERN void SetLineLength (int);
 
-EXTERN void DisplayText (char *text, int startx, int starty,
-			 unsigned char *screen, int EnterCursor);
-EXTERN void DisplayChar (unsigned char Zeichen, unsigned char *screen);
+EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
+
+EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine);
 
-EXTERN void CheckUmbruch (void);
-EXTERN void ImprovedCheckUmbruch(char *);
-EXTERN void MakeUmbruch (void);
-EXTERN int FensterVoll (void);
+EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString (int MaxLen, int echo);

@@ -42,8 +42,6 @@
 #include "global.h"
 #include "text.h"
 
-#define WAITCHAR 220
-
 int CharLenList[100] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* ' !"#$%&'()' */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* '*+,-./0123' */
@@ -63,12 +61,6 @@ unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
 unsigned int CurrentFontFG = FIRST_FONT_FG;	/* Momentane Schrift-Farben */
 unsigned int CurrentFontBG = FIRST_FONT_BG;
 
-/* Text-Fenster */
-int LeftTextBorder;
-int RightTextBorder;
-int LowerTextBorder;
-int UpperTextBorder;
-
 int CharsPerLine;		/* Zeilenlaenge: veraltet */
 
 /* Aktuelle Text-Einfuege-Position: */
@@ -78,51 +70,12 @@ int MyCursorY;
 /* Buffer fuer Text-Environment */
 int StoreCursorX;
 int StoreCursorY;
-int StoreLeftTextBorder;
-int StoreRightTextBorder;
-int StoreLowerTextBorder;
-int StoreUpperTextBorder;
+
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
 
 extern int TimerFlag;		/* Timerflag- wer haette das gedacht ! */
-
-
-/*@Function============================================================
-@Desc:  This function stores the textenvironment
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-StoreTextEnvironment (void)
-{
-  StoreLeftTextBorder = LeftTextBorder;
-  StoreRightTextBorder = RightTextBorder;
-  StoreLowerTextBorder = LowerTextBorder;
-  StoreUpperTextBorder = UpperTextBorder;
-  StoreCursorX = MyCursorX;
-  StoreCursorY = MyCursorY;
-  GetTextColor (&StoreTextBG, &StoreTextFG);
-}				// void StoreTextEnvironment(void)
-
-/*-----------------------------------------------------------------
- * @Desc:  This function restores the textenvironment
- * 
- *
- *-----------------------------------------------------------------*/
-void
-RestoreTextEnvironment (void)
-{
-  LeftTextBorder = StoreLeftTextBorder;
-  RightTextBorder = StoreRightTextBorder;
-  LowerTextBorder = StoreLowerTextBorder;
-  UpperTextBorder = StoreUpperTextBorder;
-  MyCursorX = StoreCursorX;
-  MyCursorY = StoreCursorY;
-  SetTextColor (StoreTextBG, StoreTextFG);
-}
 
 /*-----------------------------------------------------------------
  * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
@@ -156,55 +109,6 @@ GetTextColor (unsigned int *bg, unsigned int *fg)
 }
 
 /*@Function============================================================
-@Desc: SetTextBorder(): setzt die Bezugs-daten fuer die folgenden
-Text-ausgaben
-RightTextBorder:
-LeftTextBorder:
-UpperTextBorder:
-LowerTextBorder:
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetTextBorder (int left, int upper, int right, int lower, int chars_per_line)
-{
-  LeftTextBorder = left;
-  RightTextBorder = right;
-  UpperTextBorder = upper;
-  LowerTextBorder = lower;
-
-  CharsPerLine = chars_per_line;
-
-  return;
-}				/* SetTextBorder */
-
-/*@Function============================================================
-@Desc: ClearTextBorder(*Paramter_Screen): Loescht am Screen den Bereich des
-					gesetzten Textfensters (textborder)
-
-@Ret: voidN
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ClearTextBorder (unsigned char *Parameter_Screen, int color)
-{
-  int i;
-  int height = LowerTextBorder - UpperTextBorder;
-  int xlen = RightTextBorder - LeftTextBorder;
-  unsigned char *target;
-
-  target = Parameter_Screen + UpperTextBorder * SCREENBREITE + LeftTextBorder;
-
-  for (i = 0; i < height; i++)
-    {
-      memset (target, color, xlen);
-      target += SCREENBREITE;
-    }
-  return;
-}
-
-/*@Function============================================================
 @Desc: SetTextCursor(x, y): Setzt Cursor fuer folgende Textausgaben
 
 @Ret: 
@@ -219,17 +123,18 @@ SetTextCursor (int x, int y)
   return;
 }
 
-/*@Function============================================================
-@Desc: ScrollText(Text, startx, starty):
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ *  scrolls a given text down inside the User-window, 
+ *  defined by the global SDL_Rect User_Rect
+ *
+ *  startx/y give the Start-position, 
+ *  EndLine is the last line (?)
+ *
+ *-----------------------------------------------------------------*/
 int
 ScrollText (char *Text, int startx, int starty, int EndLine)
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
-  long TextHeight;		/* Hoehe des Gesamt-Textes in Pixel */
   char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
   int speed = +2;
@@ -237,19 +142,13 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   printf("\nScrollTest should be starting to scroll now...");
 
-  SDL_SetClipRect( ne_screen , NULL );
-
-  /* Zeilen zaehlen */
+   /* Zeilen zaehlen */
   textpt = Text;
   while (*textpt++)
     if (*textpt == '\n')
       Number_Of_Line_Feeds++;
 
-  /* Texthoehe berechnen */
-  TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine )
-    * ( FontHeight(Menu_BFont) * TEXT_STRETCH );
-
-  while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
+  while (!SpacePressed () )
     {
       if (UpPressed ())
 	{
@@ -267,8 +166,10 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
       usleep (30000);
 
       ClearUserFenster(); 
-      // ClearGraphMem();
-      DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
+
+      if (!DisplayText (Text, startx, InsertLine, &User_Rect))
+	break;  /* Text has been scrolled outside User_Rect */
+
       InsertLine -= speed;
 
       PrepareScaledSurface(TRUE);
@@ -280,142 +181,99 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 	  speed = 0;
 	}
 
-    }
+    } /* while !Space_Pressed */
 
   return OK;
 }				// void ScrollText(void)
 
 /*-----------------------------------------------------------------
- * @Desc: gibt Text beginnend bei startx/starty aus Zeilenumbruch bei 
- *        voller Zeile oder bei '\n' 
+ * @Desc: prints *Text beginning at positions startx/starty, 
  * 
- * Params: 	*screen: Pointer to the screen to use
- * EnterCursor: TRUE/FALSE Cursor darstellen ja/nein.
+ *	and respecting the text-borders set by clip_rect
+ *      -> this includes clipping but also automatic line-breaks
+ *      when end-of-line is reached
  * 
- * @Ret: void
+ *      if clip_rect==NULL, no clipping is performed
+ *      
+ *      NOTE: the previous clip-rectange is restored before
+ *            the function returns!
+ *
+ *      NOTE2: this function _does not_ update the screen
+ *
+ * @Ret: TRUE if some characters where written inside the clip rectangle
+ *       FALSE if not (used by ScrollText to know if Text has been scrolled
+ *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
-void
-DisplayText (char *Text,
-	     int startx, int starty, unsigned char *screen, int EnterCursor)
+int
+DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
-  SDL_Rect TempRect;
-  TempRect.x=USERFENSTERPOSX;
-  TempRect.y=USERFENSTERPOSY;
-  TempRect.w=USERFENSTERBREITE;
-  TempRect.h=USERFENSTERHOEHE;
 
+  SDL_Rect store_clip;
 
-  SDL_SetClipRect( ne_screen, &TempRect);
-
-  MyCursorX = startx;		/* akt. Schreib-Position */
+  MyCursorX = startx;		
   MyCursorY = starty;
 
-  tmp = Text;			/* Auf Text-Begin setzen */
 
-  while (!FensterVoll ())
+  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  if (clip)
+    SDL_SetClipRect (ne_screen, clip);
+
+  tmp = Text;			/* running text-pointer */
+
+  while ( *tmp && (MyCursorY < clip->y + clip->h) )
     {
-
-      if (*tmp == '\0')
-	{			/* Textende erreicht */
-	  /* Cursor darstellen, falls erwuenscht */
-	  if (EnterCursor)
-	    DisplayChar (CURSOR_ICON, screen);
-	  break;
-	}
-
-      if (*tmp == '\n')
-	{			/* Zeilenende erreicht */
-	  MyCursorX = startx;	/* "Wagenruecklauf" */
-	  MyCursorY += FontHeight(Menu_BFont) * TEXT_STRETCH;	/* naechste Zeile */
-	  tmp++;		/* skip the newline-char !! */
-	  continue;
-	}
-
-      if ((unsigned char) *tmp == WAITCHAR)
+      if ( *tmp == '\n' )
 	{
-	  Update_SDL_Screen();
-	  PrepareScaledSurface(TRUE);
-
-	  tmp++;
-	  while (UpPressed () || DownPressed () || LeftPressed ()
-		 || RightPressed ()) ;
-
-	  while (!UpPressed () && !DownPressed () && !LeftPressed ()
-		 && !RightPressed () && !SpacePressed ()) ;
-	  if (SpacePressed ())
-	    continue;
-	  while (UpPressed () || DownPressed () || LeftPressed ()
-		 || RightPressed ()) ;
-	  MyCursorX = startx;
-	  MyCursorY = starty;
-	  // ClearUserFenster ();
-	  ClearTextBorder( Outline320x200, 208 );
-	  continue;
+	  MyCursorX = clip->x;
+	  MyCursorY += FontHeight (Menu_BFont) * TEXT_STRETCH;
 	}
+      else
+	DisplayChar (*tmp);
 
-      /* Normales Zeichen ausgeben: */
-      DisplayChar (*tmp, screen);
       tmp++;
-      
-      // CheckUmbruch ();		/* dont write over RightBorder */
-      ImprovedCheckUmbruch(tmp);
+
+      ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
 
     } // while !FensterVoll()
 
-  return;
+   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
 
-} // void DisplayText(...)
+  /*
+   * ScrollText() wants to know if we still wrote something inside the
+   * clip-rectangle, of if the Text has been scrolled out
+   */
+  if ( (MyCursorY < clip->y) || (starty > clip->y + clip->h) )
+    return FALSE;  /* no text was written inside clip */
+  else
+    return TRUE; 
 
-/*
------------------------------------------------------------------
-@Desc: This function displays a char.  It uses Menu_BFont now
-to do this.  
- 
------------------------------------------------------------------
-*/
+} // DisplayText(...)
+
+/*-----------------------------------------------------------------
+ * @Desc: This function displays a char.  It uses Menu_BFont now
+ * to do this.  MyCursorX is  updated to new position.
+ *
+ *
+ -----------------------------------------------------------------*/
 void
-DisplayChar (unsigned char Zeichen, unsigned char *screen)
+DisplayChar (unsigned char c)
 {
-  char Dummystring[]=" ";
 
-  if (Zeichen == '\n')
+  if ( !isprint(c) ) // don't accept non-printable characters
     {
-      MakeUmbruch ();
-      return;
-    }
-
-  if ( (Zeichen < ' ') || (Zeichen > 131) )
-    {
-      DebugPrintf ("Illegal Char an DisplayChar() uebergeben!");
+      printf ("Illegal char passed to DisplayChar(): %d \n", c);
       Terminate(ERR);
     }
 
-  Dummystring[0]=Zeichen;
-
-  // SDL_SetClipRect( ne_screen , NULL );
-
-  PrintStringFont ( ne_screen , Menu_BFont, MyCursorX , MyCursorY , "%s" , Dummystring );
+  PutCharFont (ne_screen, Menu_BFont, MyCursorX, MyCursorY, c);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
   //
-  MyCursorX += CharWidth (Menu_BFont , Zeichen );
+  MyCursorX += CharWidth (Menu_BFont, c);
   
 } // void DisplayChar(...)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-CheckUmbruch (void)
-{
-  if (MyCursorX > LeftTextBorder + (CharsPerLine-2) * FONTBREITE)
-    MakeUmbruch ();
-} // void CheckUmbruch(void)
 
 
 /*@Function============================================================
@@ -426,13 +284,16 @@ CheckUmbruch (void)
   
   The function could perhaps still need a little improvement.  But for
   now its good enough and improvement enough in comparison to the old
-  CheckUmbruch function above.
+  CheckUmbruch function.
+
+  rp: added argument clip, which contains the text-window we're writing in
+       (formerly known as "TextBorder")
 
   @Ret: 
   @Int:
 * $Function----------------------------------------------------------*/
 void
-ImprovedCheckUmbruch (char* Resttext)
+ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 {
   int i;
   int NeededSpace=0;
@@ -446,47 +307,19 @@ ImprovedCheckUmbruch (char* Resttext)
 	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
 	  { 
 	    NeededSpace+=CharWidth( Menu_BFont , Resttext[i] );
-	    if ( MyCursorX+NeededSpace > USERFENSTERPOSX + USERFENSTERBREITE-10 ) 
+	    if ( MyCursorX+NeededSpace > clip->x + clip->w - 10 )
 	      {
-		MakeUmbruch();
+		MyCursorX = clip->x;
+		MyCursorY += FontHeight (Menu_BFont) * TEXT_STRETCH;
 		return;
 	      }
 	  }
-	else return;
+	else 
+	  return;
       }
   }
-} // void CheckUmbruch(void)
+} // void ImprovedCheckUmbruch(void)
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-MakeUmbruch (void)
-{
-  DebugPrintf("\nvoid MakeUmbruch(void): real function call confirmed.");
-  MyCursorX = LeftTextBorder;
-  MyCursorY += FontHeight( Menu_BFont ) * TEXT_STRETCH;
-  DebugPrintf("\nvoid MakeUmbruch(void): end of function reached.");
-} // void MakeUmbruch(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-FensterVoll (void)
-{
-  if (MyCursorY > LowerTextBorder)
-    return (TRUE);
-  return (FALSE);
-}
 
 /*-----------------------------------------------------------------
  * @Desc: reads a string of "MaxLen" from User-input, and echos it 
@@ -539,8 +372,8 @@ GetString (int MaxLen, int echo)
 	}
       else if (echo == 2)   	/* or use graphics-text */
 	{
-	  DisplayText (clear_str, TextOutX, TextOutY, RealScreen, FALSE);
-	  DisplayText (input,     TextOutX, TextOutY, RealScreen, TRUE);
+	  DisplayText (clear_str, TextOutX, TextOutY, &User_Rect);
+	  DisplayText (input,     TextOutX, TextOutY, &User_Rect);
 	  PrepareScaledSurface(TRUE);
 	} /* if echo */
 

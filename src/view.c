@@ -159,14 +159,8 @@ Assemble_Combat_Picture (int mask)
   int line, col;
   int i, j;
   SDL_Rect TargetRectangle;
-  SDL_Rect CombatRectangle;
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
-
-  CombatRectangle.x=USERFENSTERPOSX;
-  CombatRectangle.y=USERFENSTERPOSY;
-  CombatRectangle.w=USERFENSTERBREITE;
-  CombatRectangle.h=USERFENSTERHOEHE;
   
   if (Conceptview)
     {
@@ -181,7 +175,7 @@ Assemble_Combat_Picture (int mask)
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
   // 
 
-  SDL_SetClipRect( ne_screen , &CombatRectangle );
+  SDL_SetClipRect (ne_screen , &User_Rect);
 
   for (line = 0; line < CurLevel->ylen ; line++)
     {
@@ -202,7 +196,7 @@ Assemble_Combat_Picture (int mask)
       // in case we only draw the map, we are done here.  But
       // of course we must check if we should update the screen too.
       if ( mask & DO_SCREEN_UPDATE ) 
-	SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
+	SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
       return;
     }
 
@@ -230,7 +224,7 @@ Assemble_Combat_Picture (int mask)
 
   if ( mask & DO_SCREEN_UPDATE )
     {
-      SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
+      SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
   return;  // for now
