@@ -153,7 +153,6 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
   Me [ PlayerNum ] .type = DRUID001;
   Me [ PlayerNum ] .speed.x = 0;
   Me [ PlayerNum ] .speed.y = 0;
-  Me [ PlayerNum ] .autofire = FALSE;
   Me [ PlayerNum ] .status = MOBILE;
   Me [ PlayerNum ] .phase = 0;
   Me [ PlayerNum ] .MissionTimeElapsed=0;

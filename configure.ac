@@ -123,6 +123,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/brain_enlargement_antidode/Makefile 
 		graphics/items/desk_lamp/Makefile 
 		graphics/items/dixons_toolbox/Makefile 
+		graphics/items/drinking_mug/Makefile 
 		graphics/items/emp_grenade/Makefile 
 		graphics/items/energy_capsule/Makefile 
 		graphics/items/eating_plate/Makefile 

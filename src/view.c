@@ -1276,7 +1276,7 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   static Uint32 EmptyColor ;
 #define ENEMY_ENERGY_BAR_OFFSET_X 0
 #define ENEMY_ENERGY_BAR_OFFSET_Y -20
-#define ENEMY_ENERGY_BAR_LENGTH 60
+#define ENEMY_ENERGY_BAR_LENGTH 65
 
   //--------------------
   // If the enemy is dead already, there's nothing to do here...

@@ -472,7 +472,6 @@ typedef struct
   float MissionTimeElapsed;
   float got_hit_time;           // how long stunned now since the last time tux got hit 
 
-  int autofire;			/* Status of the Firecontrolautomatics */
   int Strength;  // character Strength value = 'power supply max. capacity'
   int Magic;     // character Magic value = 
   int Dexterity; // character Dexterity value = 'power redistribution speed'
@@ -486,8 +485,6 @@ typedef struct
   float base_damage; // the current damage the influencer does
   float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
-  // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
-  // float RechargeTime; // the actual minimum time to wait for the influencer between shots
   float to_hit;
   int resist_force;        // percentage to reduce from force damage
   int resist_fire;         // percentage to reduce from fire damage
@@ -495,7 +492,6 @@ typedef struct
   
   int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
   int double_ranged_damage;   // does this Tux do double ranged weapon damage?
-  // int spell_level_bonus;      // does this Tux get any bonus to his spell levels?
 
   float maxenergy; // current top limit for the influencers energy
   float maxmana;   // current top limit for the influencers magic power
@@ -515,12 +511,10 @@ typedef struct
   int readied_skill; // which skill does the influencer currently have readied?
   int SkillLevel[ NUMBER_OF_SKILLS ];
   int base_skill_level [ NUMBER_OF_SKILLS ];
-
   int melee_weapon_skill;
   int ranged_weapon_skill;
   int spellcasting_skill;
   int hacking_skill;
-  // int repair_skill;
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
@@ -537,10 +531,6 @@ typedef struct
   int clearance_list[ MAX_CLEARANCES ];
   char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
   char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
-
-  // unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
-  // unsigned char RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
-  // unsigned char SOR_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
 
   //--------------------
   // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED

@@ -1796,7 +1796,7 @@ InitInfluencerPasswordsAndClearances( int PlayerNum )
   strcpy ( Me [ PlayerNum ] . password_list [ 3 ] , "Tux Energy" ) ;
   strcpy ( Me [ PlayerNum ] . password_list [ 4 ] , "Tux Idenfity" ) ;
 
-}; // void
+}; // void InitInfluencerPasswordsAndClearances( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  *
@@ -1810,7 +1810,6 @@ InitHarmlessTuxStatusVariables( int PlayerNum )
   Me[ PlayerNum ].type = DRUID001;
   Me[ PlayerNum ].speed.x = 0;
   Me[ PlayerNum ].speed.y = 0;
-  Me[ PlayerNum ].autofire = FALSE;
   Me[ PlayerNum ].status = MOBILE;
   Me[ PlayerNum ].phase = 0;
   Me[ PlayerNum ].MissionTimeElapsed=0;
@@ -1827,6 +1826,7 @@ InitHarmlessTuxStatusVariables( int PlayerNum )
       Me[ PlayerNum ].DetectedItemList[i].x = 0 ;
       Me[ PlayerNum ].DetectedItemList[i].y = 0 ;
     }
+  Me[ PlayerNum ].Experience = 1;
   Me[ PlayerNum ].exp_level = 1;
   Me[ PlayerNum ].Gold = 0 ; // formerly this was starting funds 100, but no longer... 
 
