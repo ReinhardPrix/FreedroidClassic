@@ -861,6 +861,18 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	    {
 	      OptionOffset -- ;
 	    }
+	  else if ( CursorIsOnButton ( CHAT_PROTOCOL_SCROLL_UP_BUTTON , 
+					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
+					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+	      chat_protocol_scroll_override_from_user -- ;
+	    }
+	  else if ( CursorIsOnButton ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON , 
+					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
+					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+	      chat_protocol_scroll_override_from_user ++ ;
+	    }
 	  //--------------------
 	  // If not, then maybe it was a click into the options window.  That alone
 	  // would be enough to call it a valid user decision.

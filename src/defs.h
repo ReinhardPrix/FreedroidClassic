@@ -543,6 +543,9 @@ enum
 
     DRUID_SHOW_EXIT_BUTTON , 
 
+    CHAT_PROTOCOL_SCROLL_UP_BUTTON,
+    CHAT_PROTOCOL_SCROLL_DOWN_BUTTON,
+
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
     // automatically counts the number of buttons defined.  Other buttons

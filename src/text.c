@@ -469,7 +469,8 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
 
   if ( lines_needed <= 9 ) protocol_offset = 0 ;
   else
-    protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) * ( lines_needed - 9 ) * 1.04 ;
+    protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) 
+      * ( lines_needed - 9 + chat_protocol_scroll_override_from_user ) * 1.04 ;
 
   //--------------------
   // Now we need to clear this window, cause there might still be some
@@ -487,6 +488,8 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
   Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
   Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
   DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
+  ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
+  ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
   our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
 }; // void display_current_chat_protocol ( int background_picture_code )
@@ -1296,6 +1299,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
       if ( chat_protocol != NULL ) free ( chat_protocol );
       chat_protocol = MyMalloc ( 500000 ); // enough for any chat...
       strcpy ( chat_protocol , "--- Start of Dialog ---\n" );
+      chat_protocol_scroll_override_from_user = 0 ;
     }
 
   PrepareMultipleChoiceDialog ( ChatDroid );
