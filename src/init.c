@@ -439,8 +439,8 @@ void InitParaplus(void) {
 
   /* ScreenPointer setzen */
   // PORT RealScreen = MK_FP(SCREENADDRESS, 0);
-  RealScreen = malloc(64010);
-  InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE)+10;
+  RealScreen = malloc( SCREENBREITE * SCREENHOEHE + 10);
+  InternalScreen = (unsigned char*) malloc( SCREENHOEHE * SCREENBREITE +10 );
 
   printf("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
 

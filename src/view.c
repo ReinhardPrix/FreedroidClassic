@@ -845,11 +845,16 @@ SetUserfenster (int color, unsigned char *screen)
   int y0 = USERFENSTERPOSY;
   int y1 = y0 + USERFENSTERHOEHE;
 
-  for (row = y0; row < y1; row++) 
-    gl_hline(x0, row, x1, color);
-  
+  if (screen == RealScreen) {
+    for (row = y0; row < y1; row++) 
+      gl_hline(x0, row, x1, color);
+  } else 
+    {
+      for (row=0; row < USERFENSTERHOEHE; row++ ) 
+	memset( screen + USERFENSTERPOSX + (USERFENSTERPOSY + row) * SCREENBREITE , color, USERFENSTERBREITE );
+    }
   return;
-} 
+} // void SetUserFenster (int color, unsigned char *screen)
 
 /* **********************************************************************
    Diese Funktion zeigt einen Robotter an

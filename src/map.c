@@ -154,6 +154,8 @@ void ActSpecialField(int x, int y)
   unsigned char MapBrick;
   int cx, cy;		/* tmp: NullPunkt im Blockzentrum */
 	
+  DebugPrintf("\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
+
   MapBrick = GetMapBrick(CurLevel,(float) x,(float) y);
 
   switch(MapBrick) {
@@ -189,6 +191,8 @@ void ActSpecialField(int x, int y)
     break;
   } /* switch */
 	
+  DebugPrintf("\nvoid ActSpecialField(int x, int y):  end of function reached.");
+
 } /* ActSpecialField */
 
 /*@Function============================================================

@@ -43,6 +43,7 @@
 #include <vgagl.h>
 #include <vgakeyboard.h>
 
+
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
@@ -931,13 +932,17 @@ void LevelGrauFaerben(void){ SetLevelColor(PD_DARK); }
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void ClearGraphMem(unsigned char* screen){
+void 
+ClearGraphMem(unsigned char* screen)
+{
+
   printf("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
   
   if (screen == RealScreen) vga_clear();
-  else memset( screen , SCREENBREITE*SCREENHOEHE , 0 );
+  else memset( screen , 0 , SCREENBREITE*SCREENHOEHE );
 
   printf("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");
+
 } // void ClearGraphMem(unsigned char* screen)
 
 

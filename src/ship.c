@@ -433,22 +433,30 @@ void PaintConsoleMenu(void){
   ClearGraphMem(InternalScreen);
   GetTextColor(&bg,&fg);           /* Diese Funktion soll die Schriftfarben nicht ver"andern */
 	
-  /* Userfenster faerben */
-  SetUserfenster(KON_BG_COLOR, InternalScreen);
+  DisplayRahmen(InternalScreen);
 
   /* Darstellung des oberen Rahmen mit Inhalt */
   //   SetInfoline();
   // strcpy(LeftInfo, "Console");
-  DisplayRahmen(InternalScreen);
-  SetTextColor( RAHMEN_BG_COLOR,FONT_RED );  /* BG: Rahmenwei"s FG: FONT_RED */
-  SayLeftInfo(LeftInfo,InternalScreen);
-  SayRightInfo(RightInfo,InternalScreen);
+
+  /* Userfenster faerben */
+  SetUserfenster(KON_BG_COLOR, InternalScreen);
+  // ClearUserFenster();
+
+  SetTextColor( RAHMEN_BG_COLOR , FONT_RED );  /* BG: Rahmenwei"s FG: FONT_RED */
+  SayLeftInfo( LeftInfo , InternalScreen );
+  SayRightInfo( RightInfo , InternalScreen );
 	
   /* Konsolen-Menue Farbe setzen */
   SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
 
   DebugPrintf("\nvoid PaintConsoleMenu(void): Now the internals of the console are written to the screen....");
  
+  SetTextBorder(MENUTEXT_X, USERFENSTERPOSY,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,30);
+
+  // ClearUserFenster();
+  // SetUserfenster(KON_BG_COLOR, InternalScreen);
+		
   strcpy(MenuText,"Unit type ");
   strcat(MenuText,Druidmap[Me.type].druidname);
   strcat(MenuText," - ");
@@ -458,8 +466,6 @@ void PaintConsoleMenu(void){
 
   DebugPrintf("\nvoid PaintConsoleMenu(void): Now the screen will be prepared for the real menu....");
 
-  SetTextBorder(MENUTEXT_X, USERFENSTERPOSY,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,30);
-   
   strcpy(MenuText,"\nAccess granted.\nShip : ");
   strcat(MenuText,Shipnames[ThisShip]);
   strcat(MenuText,"\nDeck : ");
