@@ -126,8 +126,8 @@ typedef struct
 
 typedef struct
 {
-  byte level;			/* Level - 'Koordinate' */
-  int x;			/* x,y Koordinaten */
+  byte level;			
+  int x;			
   int y;
 }
 location, *Location;

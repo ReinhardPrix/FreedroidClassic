@@ -42,6 +42,127 @@ void Level_Editor(void);
 EXTERN char Previous_Mission_Name[1000];
 
 /* ----------------------------------------------------------------------
+ * This function should create a completely new level into the existing
+ * ship structure that we already have.  The new level will be rather
+ * small and simple.
+ * ---------------------------------------------------------------------- */
+Level
+CreateNewMapLevel( void )
+{
+  Level NewLevel;
+  int i, k;
+
+  //--------------------
+  // Get the memory for one level 
+  //
+  NewLevel = (Level) MyMalloc (sizeof (level));
+
+  NewLevel->empty = FALSE;
+
+  DebugPrintf (0, "\n-----------------------------------------------------------------");
+  DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
+
+  NewLevel->levelnum = curShip.num_levels;
+  NewLevel->xlen = 9;
+  NewLevel->ylen = 9;
+  NewLevel->color = 1;
+
+  DebugPrintf( 2 , "\nLevelnumber : %d ", NewLevel->levelnum );
+  DebugPrintf( 2 , "\nxlen of this level: %d ", NewLevel->xlen );
+  DebugPrintf( 2 , "\nylen of this level: %d ", NewLevel->ylen );
+  DebugPrintf( 2 , "\ncolor of this level: %d ", NewLevel->ylen );
+
+  NewLevel->Levelname = "New Level just created..." ;
+  NewLevel->Background_Song_Name = "NOWHERE.MOD" ;
+  NewLevel->Level_Enter_Comment = "This is a new level..." ;
+
+  //--------------------
+  // First we initialize the statement array with 'empty' values
+  //
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    {
+      NewLevel->StatementList[ i ].x = ( -1 ) ;
+      NewLevel->StatementList[ i ].y = ( -1 ) ;
+      NewLevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
+    }
+
+  //--------------------
+  // First we initialize the codepanel arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+    {
+      NewLevel->CodepanelList[ i ].x = ( -1 ) ;
+      NewLevel->CodepanelList[ i ].y = ( -1 ) ;
+      NewLevel->CodepanelList[ i ].Secret_Code = "nonono" ;
+    }
+
+  //--------------------
+  // First we initialize the graphics insert array with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+      NewLevel->MapInsertList [ i ] . type = ( -1 ) ;
+      NewLevel->MapInsertList [ i ] . pos . x = ( -1 ) ;
+      NewLevel->MapInsertList [ i ] . pos . y = ( -1 ) ;
+    }
+
+  //--------------------
+  // First we initialize the items arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      NewLevel->ItemList[ i ].pos.x = ( -1 ) ;
+      NewLevel->ItemList[ i ].pos.y = ( -1 ) ;
+      NewLevel->ItemList[ i ].type = ( -1 ) ;
+      NewLevel->ItemList[ i ].currently_held_in_hand = FALSE;
+    }
+
+  //--------------------
+  // Now we add some dummy map content...
+  //
+  for ( i = 0 ; i < NewLevel->ylen ; i ++ )
+    {
+      NewLevel->map[i] = MyMalloc ( NewLevel->xlen + 1 );
+      if ( ( i == 0 ) || ( i == NewLevel->ylen -1 ) ) memset ( NewLevel->map[i] , H_WALL , NewLevel->xlen );
+      else memset ( NewLevel->map[i] , FLOOR , NewLevel->xlen );
+
+      if ( i == 0 )
+	{
+	  NewLevel->map[i][0] = CORNER_LU;
+	  NewLevel->map[i][ NewLevel->xlen -1 ] = CORNER_RU;
+	}
+      else if ( i == NewLevel->ylen -1 )
+	{
+	  NewLevel->map[i][0] = CORNER_LD;
+	  NewLevel->map[i][ NewLevel->xlen -1 ] = CORNER_RD;
+	}
+      else
+	{
+	  NewLevel->map[i][0] = V_WALL;
+	  NewLevel->map[i][ NewLevel->xlen -1 ] = V_WALL;
+	}
+
+    }
+
+  //--------------------
+  // Now we add empty waypoint information...
+  //
+  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    {
+      NewLevel -> AllWaypoints [ i ] . x = -1 ;
+      NewLevel -> AllWaypoints [ i ] . y = -1 ;
+
+      for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
+	{
+	  NewLevel -> AllWaypoints [ i ] . connections [ k ] = -1 ;
+	}
+    }
+
+  //--------------------
+  return NewLevel;
+}; // Level CreateNewMapLevel( void )
+
+/* ----------------------------------------------------------------------
  * This function is used by the Level Editor integrated into 
  * freedroid.  It highlights the map position that is currently 
  * edited or would be edited, if the user pressed something.  I.e. 
@@ -263,7 +384,7 @@ Level_Editor(void)
 
   SDL_Rect Editor_Window;
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , QUIT_LEVEL_EDITOR_POSITION };
   
   Editor_Window.x=User_Rect.x;
   Editor_Window.y=User_Rect.y;  
@@ -877,8 +998,8 @@ Level_Editor(void)
 	  MenuTexts[ 6 ] = Options4;
 	  sprintf( Options5 , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
 	  MenuTexts[ 7 ] = Options5;
-	  MenuTexts[ 8 ] = "Quit Level Editor" ;
-	  MenuTexts[ 9 ] = "" ; 
+	  MenuTexts[ 8 ] = "Add completely new level" ; 
+	  MenuTexts[ 9 ] = "Quit Level Editor" ;
 
 	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
 
@@ -928,6 +1049,17 @@ Level_Editor(void)
 		  SDL_Flip( Screen );
 		  SetTextCursor( 15 , 440 );
 		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case ADD_NEW_LEVEL:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  curShip.AllLevels[ curShip.num_levels ] = CreateNewMapLevel();
+		  curShip.num_levels ++ ;
+		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "New level has been added!");
+		  SDL_Flip( Screen );
+		  while (!SpacePressed() && !EnterPressed() );
+		  while (EnterPressed() || SpacePressed() ) ;
+		  SetTextCursor( 15 , 440 );
 		  Weiter=!Weiter;
 		  break;
 		case QUIT_LEVEL_EDITOR_POSITION:
