@@ -446,6 +446,116 @@ This error indicates some installation problem with freedroid.",
   
     }    
 
+}; // void LoadAndPrepareEnemyRotationModelNr ( int j )
+
+/* ----------------------------------------------------------------------
+ * If needed, we will assemble differently colored versions of the enemy
+ * rotation models...
+ * ---------------------------------------------------------------------- */
+void 
+LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
+{
+  int i;
+  static int FirstCallEver = TRUE ;
+  static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+
+  //--------------------
+  // Maybe this function has just been called for the first time ever.
+  // Then of course we need to initialize the array, that is used for
+  // keeping track of the currently loaded enemy rotation surfaces.
+  // This we do here.
+  //
+  if ( FirstCallEver )
+    {
+      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	{
+	  EnemyFullyPrepared [ i ] = FALSE ;
+	}
+      FirstCallEver = FALSE ;
+    }
+
+  //--------------------
+  // Now a sanity check against using rotation types, that don't exist
+  // in Freedroid RPG at all!
+  //
+  if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    {
+      fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
+      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+Freedroid received a rotation model number that does not exist!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now we can check if the given rotation model type was perhaps already
+  // allocated and loaded and fully prepared.  Then of course we need not 
+  // do anything here...  Otherwise we can have trust and mark it as loaded
+  // already...
+  //
+  if ( EnemyFullyPrepared [ ModelNr ] ) return;
+  EnemyFullyPrepared [ ModelNr ] = TRUE;
+  Activate_Conservative_Frame_Computation();
+
+  //--------------------
+  // Now that we have our enemy surfaces ready, we can create some modified
+  // copies of those surfaces but this a color filter applied to them...
+  //
+  for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+    {
+      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_GREEN );
+    }
+}; // void LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
+  
+/* ----------------------------------------------------------------------
+ * If needed, we will assemble differently colored versions of the enemy
+ * rotation models...
+ * ---------------------------------------------------------------------- */
+void 
+LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
+{
+  int i;
+  static int FirstCallEver = TRUE ;
+  static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+
+  //--------------------
+  // Maybe this function has just been called for the first time ever.
+  // Then of course we need to initialize the array, that is used for
+  // keeping track of the currently loaded enemy rotation surfaces.
+  // This we do here.
+  //
+  if ( FirstCallEver )
+    {
+      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	{
+	  EnemyFullyPrepared [ i ] = FALSE ;
+	}
+      FirstCallEver = FALSE ;
+    }
+
+  //--------------------
+  // Now a sanity check against using rotation types, that don't exist
+  // in Freedroid RPG at all!
+  //
+  if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    {
+      fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
+      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+Freedroid received a rotation model number that does not exist!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now we can check if the given rotation model type was perhaps already
+  // allocated and loaded and fully prepared.  Then of course we need not 
+  // do anything here...  Otherwise we can have trust and mark it as loaded
+  // already...
+  //
+  if ( EnemyFullyPrepared [ ModelNr ] ) return;
+  EnemyFullyPrepared [ ModelNr ] = TRUE;
+  Activate_Conservative_Frame_Computation();
+
+
   //--------------------
   // Now that we have our enemy surfaces ready, we can create some modified
   // copies of those surfaces but this a color filter applied to them...
@@ -454,13 +564,68 @@ This error indicates some installation problem with freedroid.",
     {
       BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
 	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_BLUE );
-      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_GREEN );
+    }
+}; // void LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
+  
+/* ----------------------------------------------------------------------
+ * If needed, we will assemble differently colored versions of the enemy
+ * rotation models...
+ * ---------------------------------------------------------------------- */
+void 
+LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
+{
+  int i;
+  static int FirstCallEver = TRUE ;
+  static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+
+  //--------------------
+  // Maybe this function has just been called for the first time ever.
+  // Then of course we need to initialize the array, that is used for
+  // keeping track of the currently loaded enemy rotation surfaces.
+  // This we do here.
+  //
+  if ( FirstCallEver )
+    {
+      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	{
+	  EnemyFullyPrepared [ i ] = FALSE ;
+	}
+      FirstCallEver = FALSE ;
+    }
+
+  //--------------------
+  // Now a sanity check against using rotation types, that don't exist
+  // in Freedroid RPG at all!
+  //
+  if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    {
+      fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
+      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+Freedroid received a rotation model number that does not exist!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now we can check if the given rotation model type was perhaps already
+  // allocated and loaded and fully prepared.  Then of course we need not 
+  // do anything here...  Otherwise we can have trust and mark it as loaded
+  // already...
+  //
+  if ( EnemyFullyPrepared [ ModelNr ] ) return;
+  EnemyFullyPrepared [ ModelNr ] = TRUE;
+  Activate_Conservative_Frame_Computation();
+
+
+  //--------------------
+  // Now that we have our enemy surfaces ready, we can create some modified
+  // copies of those surfaces but this a color filter applied to them...
+  //
+  for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+    {
       RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
 	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_RED );
     }
-
-}; // void LoadAndPrepareEnemyRotationModelNr ( int j )
+}; // void LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
   
 /* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit the

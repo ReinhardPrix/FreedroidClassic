@@ -1382,14 +1382,17 @@ There was a rotation model type given, that exceeds the number of rotation model
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
+	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 	  SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	}
       else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	{
+	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 	  SDL_BlitSurface( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	}
       else if ( AllEnemys[Enum].frozen != 0 ) 
 	{
+	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 	  SDL_BlitSurface( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	}
       else
