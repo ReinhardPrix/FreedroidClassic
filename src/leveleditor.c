@@ -43,6 +43,10 @@ void SetLevelInterfaces ( void );
 
 EXTERN char Previous_Mission_Name[1000];
 
+char VanishingMessage[10000]="Hello";
+float VanishingMessageDisplayTime = 0;
+int OriginWaypoint = (-1);
+
 enum
   {
     JUMP_THRESHOLD_NORTH = 1,
@@ -1069,6 +1073,390 @@ Show_Waypoints( int PrintConnectionList )
 } // void Show_Waypoints(void);
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+HandleMapTileEditingKeys ( Level CurLevel , int BlockX , int BlockY )
+{
+  
+  //--------------------
+  // Pressing the 'T' key will insert a teleporter field...
+  //
+  if ( TPressed()) 
+    {
+      CurLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
+    }
+  
+  //--------------------
+  // Pressing the '1' to '5' keys will insert either classic 'block'
+  // fixed map tiles or decructible 'box' map blocks.
+  //
+  if (Number1Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=BOX_1;
+      else
+	CurLevel->map[BlockY][BlockX]=BLOCK1;
+    }
+  if (Number2Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=BOX_2;
+      else
+	CurLevel->map[BlockY][BlockX]=BLOCK2;
+    }
+  if (Number3Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=BOX_3;
+      else
+	CurLevel->map[BlockY][BlockX]=BLOCK3;
+    }
+  if (Number4Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=BOX_4;
+      else
+	CurLevel->map[BlockY][BlockX]=BLOCK4;
+    }
+  if (Number5Pressed()) 
+    {
+      CurLevel->map[BlockY][BlockX]=BLOCK5;
+    }
+  if (LPressed()) 
+    {
+      CurLevel->map[BlockY][BlockX]=LIFT;
+    }
+  if (KP_PLUS_Pressed()) 
+    {
+      CurLevel->map[BlockY][BlockX]=V_WALL;
+    }
+  if (KP0Pressed()) 
+    {
+      CurLevel->map[BlockY][BlockX]=H_WALL;
+    }
+  if (KP1Pressed()) 
+    {
+      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_L;
+      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LD;
+      else CurLevel->map[BlockY][BlockX]=CORNER_LD;
+    }
+  if (KP2Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=CONSOLE_D;
+      else if ( Ctrl_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
+      else if ( Alt_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CONVEY_D;
+      else CurLevel->map[BlockY][BlockX]=T_D;
+    }
+  if (KP3Pressed()) 
+    {
+      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_U;
+      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RD;
+      else CurLevel->map[BlockY][BlockX]=CORNER_RD;
+    }
+  if (KP4Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=CONSOLE_L;
+      else if ( Ctrl_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
+      else if ( Alt_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CONVEY_R;
+      else CurLevel->map[BlockY][BlockX]=T_L;
+    }
+  if (KP5Pressed()) 
+    {
+      if (!Shift_Was_Pressed())
+	CurLevel->map[BlockY][BlockX]=KREUZ;
+      else CurLevel->map[BlockY][BlockX]=VOID;
+    }
+  if (KP6Pressed()) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=CONSOLE_R;
+      else if ( Ctrl_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
+      else if ( Alt_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CONVEY_L;
+      else CurLevel->map[BlockY][BlockX]=T_R;
+    }
+  if (KP7Pressed()) 
+    {
+      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_D;
+      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LU;
+      else CurLevel->map[BlockY][BlockX]=CORNER_LU;
+    }
+  if ( KP8Pressed() ) 
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=CONSOLE_U;
+      else if ( Ctrl_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
+      else if ( Alt_Was_Pressed() ) 
+	CurLevel->map[BlockY][BlockX]=CONVEY_U;
+      else CurLevel->map[BlockY][BlockX]=T_U;
+    }
+  if (KP9Pressed()) 
+    {
+      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_R;
+      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RU;
+      else CurLevel->map[BlockY][BlockX]=CORNER_RU;
+    }
+  if (APressed())
+    {
+      CurLevel->map[BlockY][BlockX]=ALERT;	      
+    }
+  if (RPressed())
+    {
+      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX] = CONSUMER_1;
+      else CurLevel->map[BlockY][BlockX] = REFRESH1;	            
+    }
+  if (DPressed())
+    {
+      if ( !Ctrl_Was_Pressed())
+	{
+	  if (Shift_Was_Pressed())
+	    CurLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
+	  else CurLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
+	}
+      else
+	{
+	  if (Shift_Was_Pressed())
+	    CurLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
+	  else CurLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
+	}
+    }
+  if (SpacePressed())
+    {
+      if ( Shift_Was_Pressed() )
+	CurLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
+      else
+	CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+    }
+  
+}; // void 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
+{
+  int MapInsertNr;
+
+  //--------------------
+  // First we wait till the b key is released again...
+  //
+  while ( BPressed() );
+  
+  //--------------------
+  // Now we go and take a look if there is some grapics insert
+  // at this location present already...
+  //
+  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+    {
+      if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
+      if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
+      if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
+      break;
+    }
+  
+  if ( MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL )
+    {
+      sprintf( VanishingMessage , " Old map insert on this position found... " );
+      VanishingMessageDisplayTime = 0 ;
+    }
+  else
+    {
+      sprintf( VanishingMessage , " No Old map insert on this position found. Opening new index...." );
+      VanishingMessageDisplayTime = 0 ;
+      for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+	{
+	  if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
+	}
+      if ( MapInsertNr >= MAX_MAP_INSERTS_PER_LEVEL )
+	{
+	  sprintf( VanishingMessage , " No new map insert index available.\n Overwriting first one..." );
+	  VanishingMessageDisplayTime = 0 ;
+	  MapInsertNr = 0;
+	}
+      
+      //--------------------
+      // Now we enter the right coordinates for our new map index...
+      //
+      CurLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
+      CurLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
+      
+    }
+      
+  //--------------------
+  // At this point we know, that we have a good map insert index at our
+  // hands.  Therefore we increase the number of the type and possible
+  // reset it to -1 if the last index was exceeded...
+  //
+  CurLevel->MapInsertList [ MapInsertNr ] . type ++ ;
+  
+  if ( CurLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
+    CurLevel->MapInsertList [ MapInsertNr ] . type = -1;
+  
+}; // void ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+HandleLevelEditorCursorKeys ( void )
+{
+  if (LeftPressed()) 
+    {
+      if ( rintf(Me[0].pos.x) > 0 ) Me[0].pos.x-=1;
+      while (LeftPressed());
+    }
+  if (RightPressed()) 
+    {
+      if ( rintf(Me[0].pos.x) < CurLevel->xlen-1 ) Me[0].pos.x+=1;
+      while (RightPressed());
+    }
+  if (UpPressed()) 
+    {
+      if ( rintf(Me[0].pos.y) > 0 ) Me[0].pos.y-=1;
+      while (UpPressed());
+    }
+  if (DownPressed()) 
+    {
+      if ( rintf(Me[0].pos.y) < CurLevel->ylen-1 ) Me[0].pos.y+=1;
+      while (DownPressed());
+    }
+}; // void HandleLevelEditorCursorKeys ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
+{
+  int i , k , j ;
+
+  // find out if there is a waypoint on the current square
+  for (i=0 ; i < MAXWAYPOINTS ; i++)
+    {
+      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+	   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+    }
+  
+  // if its waypoint already, this waypoint must be deleted.
+  if ( i != MAXWAYPOINTS )
+    {
+      // Eliminate the waypoint itself
+      CurLevel->AllWaypoints[i].x = 0;
+      CurLevel->AllWaypoints[i].y = 0;
+      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+	CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+      
+		  
+      // Eliminate all connections pointing to this waypoint
+      for ( j = 0; j < MAXWAYPOINTS ; j++ )
+	{
+	  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+	    if ( CurLevel->AllWaypoints[j].connections[k] == i )
+	      CurLevel->AllWaypoints[j].connections[k] = (-1) ;
+	}
+    }
+  else // if its not a waypoint already, it must be made into one
+    {
+      // seek a free position
+      for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+	{
+	  if ( CurLevel->AllWaypoints[i].x == 0 ) break;
+	}
+      if ( i == MAXWAYPOINTS )
+	{
+	  printf("\n\nSorry, no free waypoint available.  Using the first one.");
+	  i = 0;
+	}
+      
+      // Now make the new entry into the waypoint list
+      CurLevel->AllWaypoints[i].x = BlockX;
+      CurLevel->AllWaypoints[i].y = BlockY;
+      
+      // delete all old connection information from the new waypoint
+      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+	CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+      
+    }
+  
+  printf("\n\n  i is now: %d ", i ); fflush(stdout);
+  
+}; // void ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
+{
+  int i , k ;
+
+  // Determine which waypoint is currently targeted
+  for (i=0 ; i < MAXWAYPOINTS ; i++)
+    {
+      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+	   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+    }
+  
+  if ( i == MAXWAYPOINTS )
+    {
+      sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
+      VanishingMessageDisplayTime = 0;
+    }
+  else
+    {
+      sprintf( VanishingMessage , "\n\nYou specified waypoint nr. %d." , i );
+      VanishingMessageDisplayTime = 0;
+      if ( OriginWaypoint== (-1) )
+	{
+	  strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
+	  OriginWaypoint = i;
+	}
+      else
+	{
+	  if ( OriginWaypoint == i )
+	    {
+	      strcat ( VanishingMessage , "\n\nOrigin==Target --> Connection Operation cancelled.");
+	      OriginWaypoint = (-1);
+	    }
+	  else
+	    {
+	      sprintf( VanishingMessage , "\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
+	      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+		{
+		  if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
+		}
+	      if ( k == MAX_WP_CONNECTIONS ) 
+		{
+		  strcat ( VanishingMessage , "\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE." );
+		}
+	      else
+		{
+		  CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
+		  strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
+		}
+	      OriginWaypoint = (-1);
+	    }
+	}
+    }
+
+}; // void ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -1082,21 +1470,19 @@ LevelEditor(void)
   int BlockY=rintf(Me[0].pos.y);
   int Done=FALSE;
   int Weiter=FALSE;
-  int i,j,k;
+  int i ;
   int SpecialMapValue;
   int NewItemCode;
-  int OriginWaypoint = (-1);
   char* NumericInputString;
   char* NewCommentOnThisSquare;
   char linebuf[10000];
-  int MapInsertNr;
-
-  char VanishingMessage[10000]="Hello";
-  float VanishingMessageDisplayTime = 0;
   long OldTicks;
-
   SDL_Rect Editor_Window;
   
+  strcpy ( VanishingMessage , "Hello" );
+  VanishingMessageDisplayTime = 0 ;
+  OriginWaypoint = (-1);
+
   Editor_Window.x=User_Rect.x;
   Editor_Window.y=User_Rect.y;  
   Editor_Window.w=User_Rect.w;
@@ -1154,7 +1540,6 @@ LevelEditor(void)
 	      DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
 	    }
 
-
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
 	  //
@@ -1163,31 +1548,10 @@ LevelEditor(void)
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
 	  // highlited filed (that is Me[0].pos) accordingly. This is done here:
-	  if (LeftPressed()) 
-	    {
-	      if ( rintf(Me[0].pos.x) > 0 ) Me[0].pos.x-=1;
-	      while (LeftPressed());
-	    }
-	  if (RightPressed()) 
-	    {
-	      if ( rintf(Me[0].pos.x) < CurLevel->xlen-1 ) Me[0].pos.x+=1;
-	      while (RightPressed());
-	    }
-	  if (UpPressed()) 
-	    {
-	      if ( rintf(Me[0].pos.y) > 0 ) Me[0].pos.y-=1;
-	      while (UpPressed());
-	    }
-	  if (DownPressed()) 
-	    {
-	      if ( rintf(Me[0].pos.y) < CurLevel->ylen-1 ) Me[0].pos.y+=1;
-	      while (DownPressed());
-	    }
+	  //
+	  HandleLevelEditorCursorKeys();
 
-	  if ( F1Pressed() ) 
-	    {
-	      ShowLevelEditorKeymap ();
-	    }
+	  if ( F1Pressed() ) ShowLevelEditorKeymap ();	   
 
 	  //--------------------
 	  // With the 'S' key, you can attach a statement for the influencer to 
@@ -1332,8 +1696,8 @@ LevelEditor(void)
 	    }
 
 	  //--------------------
-	  //If the person using the level editor decides he/she wants a different
-	  //scale for the editing process, he/she may say so by using the O/I keys.
+	  // If the person using the level editor decides he/she wants a different
+	  // scale for the editing process, he/she may say so by using the O/I keys.
 	  //
 	  if ( OPressed () )
 	    {
@@ -1349,134 +1713,28 @@ LevelEditor(void)
 	      while (IPressed());
 	    }
   
+	  //--------------------
 	  // If the person using the level editor pressed w, the waypoint is
 	  // toggled on the current square.  That means either removed or added.
 	  // And in case of removal, also the connections must be removed.
+	  //
 	  if (WPressed())
 	    {
-	      // find out if there is a waypoint on the current square
-	      for (i=0 ; i < MAXWAYPOINTS ; i++)
-		{
-		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
-		}
-	      
-	      // if its waypoint already, this waypoint must be deleted.
-	      if ( i != MAXWAYPOINTS )
-		{
-		  // Eliminate the waypoint itself
-		  CurLevel->AllWaypoints[i].x = 0;
-		  CurLevel->AllWaypoints[i].y = 0;
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-
-		  
-		  // Eliminate all connections pointing to this waypoint
-		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
-		    {
-		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-			if ( CurLevel->AllWaypoints[j].connections[k] == i )
-			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
-		    }
-		}
-	      else // if its not a waypoint already, it must be made into one
-		{
-		  // seek a free position
-		  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-		    {
-		      if ( CurLevel->AllWaypoints[i].x == 0 ) break;
-		    }
-		  if ( i == MAXWAYPOINTS )
-		    {
-		      printf("\n\nSorry, no free waypoint available.  Using the first one.");
-		      i = 0;
-		    }
-
-		  // Now make the new entry into the waypoint list
-		  CurLevel->AllWaypoints[i].x = BlockX;
-		  CurLevel->AllWaypoints[i].y = BlockY;
-
-		  // delete all old connection information from the new waypoint
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-
-		}
-
-	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
-
+	      ToggleWaypoint ( CurLevel , BlockX, BlockY );
 	      while ( WPressed() );
 	    }
 
+	  //--------------------
 	  // If the person using the level editor presses C that indicated he/she wants
 	  // a connection between waypoints.  If this is the first selected waypoint, its
 	  // an origin and the second "C"-pressed waypoint will be used a target.
 	  // If origin and destination are the same, the operation is cancelled.
+	  //
 	  if (CPressed())
 	    {
-	      // Determine which waypoint is currently targeted
-	      for (i=0 ; i < MAXWAYPOINTS ; i++)
-		{
-		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
-		}
-
-	      if ( i == MAXWAYPOINTS )
-		{
-		  sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
-		  VanishingMessageDisplayTime = 0;
-		}
-	      else
-		{
-		  sprintf( VanishingMessage , "\n\nYou specified waypoint nr. %d." , i );
-		  VanishingMessageDisplayTime = 0;
-		  if ( OriginWaypoint== (-1) )
-		    {
-		      strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
-		      OriginWaypoint = i;
-		    }
-		  else
-		    {
-		      if ( OriginWaypoint == i )
-			{
-			  strcat ( VanishingMessage , "\n\nOrigin==Target --> Connection Operation cancelled.");
-			  OriginWaypoint = (-1);
-			}
-		      else
-			{
-			  sprintf( VanishingMessage , "\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
-			  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-			    {
-			      if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
-			    }
-			  if ( k == MAX_WP_CONNECTIONS ) 
-			    {
-			      strcat ( VanishingMessage , "\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE." );
-			    }
-			  else
-			    {
-			      CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
-			      strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
-			    }
-			  OriginWaypoint = (-1);
-			}
-		    }
-		}
-
+	      ToggleWaypointConnection ( CurLevel, BlockX, BlockY );
 	      while (CPressed());
 	      fflush(stdout);
-	    }
-
-	  //----------------------------------------------------------------------
-	  // If the person using the level editor pressed some editing keys, insert the
-	  // corresponding map tile.  This is done in the following large chunk of code:
-	  //----------------------------------------------------------------------
-
-	  //--------------------
-	  // Pressing the 'T' key will insert a teleporter field...
-	  //
-	  if ( TPressed()) 
-	    {
-	      CurLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
 	    }
 
 	  //--------------------
@@ -1484,212 +1742,16 @@ LevelEditor(void)
 	  //
 	  if ( BPressed()) 
 	    {
-	      //--------------------
-	      // First we wait till the b key is released again...
-	      //
 	      while ( BPressed() );
-
-	      //--------------------
-	      // Now we go and take a look if there is some grapics insert
-	      // at this location present already...
-	      //
-	      for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
-		{
-		  if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
-		  if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
-		  if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
-		  break;
-		}
-
-	      if ( MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL )
-		{
-		  sprintf( VanishingMessage , " Old map insert on this position found... " );
-		  VanishingMessageDisplayTime = 0 ;
-		}
-	      else
-		{
-		  sprintf( VanishingMessage , " No Old map insert on this position found. Opening new index...." );
-		  VanishingMessageDisplayTime = 0 ;
-		  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
-		    {
-		      if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
-		    }
-		  if ( MapInsertNr >= MAX_MAP_INSERTS_PER_LEVEL )
-		    {
-		      sprintf( VanishingMessage , " No new map insert index available.\n Overwriting first one..." );
-		      VanishingMessageDisplayTime = 0 ;
-		      MapInsertNr = 0;
-		    }
-		  
-		  //--------------------
-		  // Now we enter the right coordinates for our new map index...
-		  //
-		  CurLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
-		  CurLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
-		  
-		}
-
-	      //--------------------
-	      // At this point we know, that we have a good map insert index at our
-	      // hands.  Therefore we increase the number of the type and possible
-	      // reset it to -1 if the last index was exceeded...
-	      //
-	      CurLevel->MapInsertList [ MapInsertNr ] . type ++ ;
-
-	      if ( CurLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
-		CurLevel->MapInsertList [ MapInsertNr ] . type = -1;
-
+	      ToggleBigGraphicsInserts ( CurLevel , BlockX, BlockY );
 	    }
-
-	  //--------------------
-	  // Pressing the '1' to '5' keys will insert either classic 'block'
-	  // fixed map tiles or decructible 'box' map blocks.
+	  
+	  //----------------------------------------------------------------------
+	  // If the person using the level editor pressed some editing keys, insert the
+	  // corresponding map tile.  This is done in the following:
 	  //
-	  if (Number1Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=BOX_1;
-	      else
-		CurLevel->map[BlockY][BlockX]=BLOCK1;
-	    }
-	  if (Number2Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=BOX_2;
-	      else
-		CurLevel->map[BlockY][BlockX]=BLOCK2;
-	    }
-	  if (Number3Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=BOX_3;
-	      else
-		CurLevel->map[BlockY][BlockX]=BLOCK3;
-	    }
-	  if (Number4Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=BOX_4;
-	      else
-		CurLevel->map[BlockY][BlockX]=BLOCK4;
-	    }
-	  if (Number5Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK5;
-	    }
-	  if (LPressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=LIFT;
-	    }
-	  if (KP_PLUS_Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=V_WALL;
-	    }
-	  if (KP0Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=H_WALL;
-	    }
-	  if (KP1Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_L;
-	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LD;
-	      else CurLevel->map[BlockY][BlockX]=CORNER_LD;
-	    }
-	  if (KP2Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=CONSOLE_D;
-	      else if ( Ctrl_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
-	      else if ( Alt_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CONVEY_D;
-	      else CurLevel->map[BlockY][BlockX]=T_D;
-	    }
-	  if (KP3Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_U;
-	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RD;
-	      else CurLevel->map[BlockY][BlockX]=CORNER_RD;
-	    }
-	  if (KP4Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=CONSOLE_L;
-	      else if ( Ctrl_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
-	      else if ( Alt_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CONVEY_R;
-	      else CurLevel->map[BlockY][BlockX]=T_L;
-	    }
-	  if (KP5Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=KREUZ;
-	      else CurLevel->map[BlockY][BlockX]=VOID;
-	    }
-	  if (KP6Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=CONSOLE_R;
-	      else if ( Ctrl_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
-	      else if ( Alt_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CONVEY_L;
-	      else CurLevel->map[BlockY][BlockX]=T_R;
-	    }
-	  if (KP7Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_D;
-	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LU;
-	      else CurLevel->map[BlockY][BlockX]=CORNER_LU;
-	    }
-	  if ( KP8Pressed() ) 
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=CONSOLE_U;
-	      else if ( Ctrl_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
-	      else if ( Alt_Was_Pressed() ) 
-		CurLevel->map[BlockY][BlockX]=CONVEY_U;
-	      else CurLevel->map[BlockY][BlockX]=T_U;
-	    }
-	  if (KP9Pressed()) 
-	    {
-	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_R;
-	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RU;
-	      else CurLevel->map[BlockY][BlockX]=CORNER_RU;
-	    }
-	  if (APressed())
-	    {
-	      CurLevel->map[BlockY][BlockX]=ALERT;	      
-	    }
-	  if (RPressed())
-	    {
-	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX] = CONSUMER_1;
-	      else CurLevel->map[BlockY][BlockX] = REFRESH1;	            
-	    }
-	  if (DPressed())
-	    {
-	      if ( !Ctrl_Was_Pressed())
-		{
-		  if (Shift_Was_Pressed())
-		    CurLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
-		  else CurLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
-		}
-	      else
-		{
-		  if (Shift_Was_Pressed())
-		    CurLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
-		  else CurLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
-		}
-	    }
-	  if (SpacePressed())
-	    {
-	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
-	      else
-		CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
-	    }
+	  HandleMapTileEditingKeys ( CurLevel , BlockX , BlockY );
+
 	  if (QPressed())
 	    {
 	      Terminate(0);
@@ -1703,7 +1765,6 @@ LevelEditor(void)
       // display the Menu with level save options and all that.
       //
       Done = DoLevelEditorMainMenu ( CurLevel );
-
       
     } // while (!Done)
 
