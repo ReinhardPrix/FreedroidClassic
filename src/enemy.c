@@ -73,7 +73,7 @@ PermanentHealRobots (void)
 } // void PermanentHealRobots(void)
 
 /*-----------------------------------------------------------------
- * @Desc: initialisiert AllEnemys vollstaendig
+ * @Desc: initialisiert the energy of all enemys
  * 
  *
  *-----------------------------------------------------------------*/
@@ -83,22 +83,13 @@ InitEnemys (void)
   int i;
   int type;
 
-  // return;
-
-  printf("\nNumEnemys ist jetzt: %d " ,NumEnemys );
-  fflush(stdout);
+  // printf("\nNumEnemys ist jetzt: %d " ,NumEnemys );
+  // fflush(stdout);
   for (i = 0; i < NumEnemys; i++)
     {
       type = AllEnemys[i].type;
       AllEnemys[i].energy = Druidmap[type].maxenergy;
     }
-
-  // return;
-
-  /* und gut umruehren */
-  ShuffleEnemys ();
-
-  return;
 
 } /* InitEnemys */
 

@@ -924,6 +924,44 @@ InitNewMission ( char *MissionName )
       printf("\nCrew file name found!  It reads: %s" , Crewname );
     }
   
+  /* initialize enemys according to crew file */
+  // WARNING!! THIS REQUIRES THE game.dat FILE TO BE READ ALREADY, BECAUSE
+  // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
+  //
+
+  if (GetCrew ( Crewname ) == ERR)
+    {
+      printf
+	("\nInitNewGame(): ERROR: Initialization of enemys failed...");
+      Terminate (-1);
+    }
+
+  /* Reactivate the light on alle Levels, that might have been dark */
+  for (i = 0; i < curShip.num_levels; i++)
+    curShip.AllLevels[i]->empty = FALSE;
+  DebugPrintf
+    ("\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
+
+  /* Den Banner fuer das Spiel anzeigen */
+  ClearGraphMem();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
+  SetTextColor (FONT_WHITE, FONT_RED);
+  InitBars = TRUE;
+
+  Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
+
+  // Now that the briefing and all that is done,
+  // the influence structure can be initialized for
+  // the new mission:
+  Me.type = DRUID001;
+  Me.speed.x = 0;
+  Me.speed.y = 0;
+  Me.energy = Druidmap[DRUID001].maxenergy;
+  Me.health = Me.energy;	/* start with max. health */
+  Me.autofire = FALSE;
+  Me.status = MOBILE;
+  Me.phase = 0;
   i = MyRandom (3);  /* chose one out of 4 possible start positions */
   switch (i)
     {
@@ -959,52 +997,14 @@ InitNewMission ( char *MissionName )
     } /* switch */
 
 
-  /* initialize enemys according to crew file */
-  // WARNING!! THIS REQUIRES THE game.dat FILE TO BE READ ALREADY, BECAUSE
-  // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
-  //
-
-  if (GetCrew ( Crewname ) == ERR)
-    {
-      printf
-	("\nInitNewGame(): ERROR: Initialization of enemys failed...");
-      Terminate (-1);
-    }
-
-  /* Reactivate the light on alle Levels, that might have been dark */
-  for (i = 0; i < curShip.num_levels; i++)
-    curShip.AllLevels[i]->empty = FALSE;
-  DebugPrintf
-    ("\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
-
-  
-  /* Farben des aktuellen Levels einstellen */
+  /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
   SetLevelColor (CurLevel->color); 
 
   /* set correct Influ color */
   SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	       Mobilecolor.blau);
 
-  /* Den Banner fuer das Spiel anzeigen */
-  ClearGraphMem();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  SetTextColor (FONT_WHITE, FONT_RED);
-  InitBars = TRUE;
-
-  Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
-
-  // Now that the briefing and all that is done,
-  // the influence structure can be initialized for
-  // the new mission:
-  Me.type = DRUID001;
-  Me.speed.x = 0;
-  Me.speed.y = 0;
-  Me.energy = Druidmap[DRUID001].maxenergy;
-  Me.health = Me.energy;	/* start with max. health */
-  Me.autofire = FALSE;
-  Me.status = MOBILE;
-  Me.phase = 0;
+  ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
   printf("done."); // this matches the printf at the beginning of this function
   fflush(stdout);

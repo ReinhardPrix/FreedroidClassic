@@ -87,6 +87,7 @@ enum
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
 
 #define STANDARD_MISSION        MAP_DIR "classical_paradroid_mission.mission"
+#define NEW_MISSION             MAP_DIR "new_mission_1.mission"
 
 #define PARA_FONT_FILE 		GRAPHICS_DIR "parafont.png"
 // #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"
@@ -287,7 +288,8 @@ enum _directions
 /* Map-related defines:
 	WARNING leave them here, they are required in struct.h
 */
-#define MAX_WP_CONNECTIONS 	4
+// #define MAX_WP_CONNECTIONS 	4
+#define MAX_WP_CONNECTIONS 	12
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
 
@@ -298,7 +300,8 @@ enum _directions
 					/* don't change this easily */
 					/* corresponds to a reserved palette range !*/
 
-#define MAXWAYPOINTS 		30
+// #define MAXWAYPOINTS 		100
+#define MAXWAYPOINTS 		100
 #define MAX_DOORS_ON_LEVEL 	20
 #define MAX_REFRESHES_ON_LEVEL	10
 

@@ -267,18 +267,12 @@ int
 LoadShip (char *filename)
 {
   struct stat stbuf;
-  // char *filename;
   FILE *ShipFile;
   char *ShipData;
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
   int i;
-
-  /* build complete filename from ship-name */
-  // filename = (char *) MyMalloc (strlen (shipname) + strlen (SHIP_EXT) + 10);
-  // strcpy (filename, shipname);
-  // strcat (filename, SHIP_EXT);
 
   /* Read the whole ship-data to memory */
   if ((ShipFile = fopen (filename, "r")) == NULL)
@@ -358,8 +352,8 @@ char *StructToMem(Level Lev)
 		
   /* estimate the amount of memory needed */
   MemAmount = (xlen+1) * ylen; 	/* Map-memory */
-  MemAmount += anz_wp * MAX_WP_CONNECTIONS * 4;
-  MemAmount += 1000;		/* Puffer fuer Dimensionen, mark-strings .. */
+  MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
+  MemAmount += 500000;		/* Puffer fuer Dimensionen, mark-strings .. */
   
   /* allocate some memory */
   if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
@@ -394,14 +388,23 @@ char *StructToMem(Level Lev)
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
-  for(i=0; i<MAXWAYPOINTS; i++) {
-    if ( Lev->AllWaypoints[i].x == 0 ) continue;
-    for( j=0; j<MAX_WP_CONNECTIONS; j++) {
-      sprintf(linebuf, "%d \t ", Lev->AllWaypoints[i].connections[j]);
-      strcat(LevelMem, linebuf);
-    } /* for connections */
-    strcat(LevelMem, "\n");
-  } /* for waypoints */
+  //   for(i=0; i< MAXWAYPOINTS ; i++) {
+  for(i=0; i< 100 ; i++) 
+    {
+      // if ( Lev->AllWaypoints[i].x == 0 ) continue;
+
+      if (i>=MAXWAYPOINTS) sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, 0 , 0 );
+      else sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
+      strcat( LevelMem, linebuf );
+      // for( j=0; j<MAX_WP_CONNECTIONS; j++) 
+      for( j=0; j< 12 ; j++) 
+	{
+	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, "con=%3d \t ", -1 );
+	  else sprintf(linebuf, "con=%3d \t ", Lev->AllWaypoints[i].connections[j]);
+	  strcat(LevelMem, linebuf);
+	} /* for connections */
+      strcat(LevelMem, "\n");
+    } /* for waypoints */
   
   strcat(LevelMem, LEVEL_END_STRING);
   strcat(LevelMem, "\n");
@@ -529,10 +532,14 @@ LevelToStruct (char *data)
   Level loadlevel;
   char *pos;
   char *map_begin, *wp_begin;
+  char *WaypointPointer;
   int i, j;
   int NumWaypoints;
   /*    int NumDoors, NumRefreshes; */
   int zahl;
+  int nr, x, y;
+  int k;
+  int connection;
 
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
@@ -579,8 +586,33 @@ Starting to process information for another level:\n");
   GetDoors (loadlevel);
 
   /* Get Waypoints */
-  NumWaypoints = GetWaypoints (loadlevel);
+  WaypointPointer = wp_begin;
 
+  for (i=0; i<MAXWAYPOINTS ; i++)
+    {
+      WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
+      sscanf( WaypointPointer , "Nr.=%2d" , &nr);
+      WaypointPointer = strstr ( WaypointPointer , "x=" ) +2;
+      sscanf( WaypointPointer , "%4d" , &x );
+      WaypointPointer = strstr ( WaypointPointer , "y=" ) +2;
+      sscanf( WaypointPointer , "%4d" , &y );
+      printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
+
+      for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
+	{
+	  WaypointPointer = strstr ( WaypointPointer , "con=" ) +4;
+	  sscanf( WaypointPointer , "%4d" , &connection );
+	  
+	  printf(", con=%d" , connection );
+	  loadlevel->AllWaypoints[i].x=x;
+	  loadlevel->AllWaypoints[i].y=y;
+	  loadlevel->AllWaypoints[i].connections[k]=connection;
+	}
+
+      // getchar();
+    }
+
+  // NumWaypoints = GetWaypoints (loadlevel);
   /* Get Refreshes */
   GetRefreshes (loadlevel);
 
@@ -588,6 +620,7 @@ Starting to process information for another level:\n");
   pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
 
   /* Read Waypoint-data */
+  /*
   for (i = 0; i < NumWaypoints; i++)
     {
       for (j = 0; j < MAX_WP_CONNECTIONS; j++)
@@ -600,6 +633,7 @@ Starting to process information for another level:\n");
 	  loadlevel->AllWaypoints[i].connections[j] = zahl;
 	}
     }
+  */
   return loadlevel;
 } /* LevelToStruct */
 
@@ -661,9 +695,11 @@ GetDoors (Level Lev)
 int
 GetWaypoints (Level Lev)
 {
-  int i, line, col;
+  int i;
+  // int j;
   int xlen, ylen;
   int curwp = 0;
+  // char* WaypointPointer=(char*)Lev;
 
   xlen = Lev->xlen;
   ylen = Lev->ylen;
@@ -676,6 +712,7 @@ GetWaypoints (Level Lev)
     }
 
   /* Now find the waypoints */
+  /*
   for (line = 0; line < ylen; line++)
     for (col = 0; col < xlen; col++)
       if (Lev->map[line][col] == WAYPOINT_CHAR)
@@ -686,7 +723,8 @@ GetWaypoints (Level Lev)
 
 	  if (curwp > MAXWAYPOINTS)
 	    return ERR;
-	} /* if (WAYPOINT_CHAR) */
+	} // if (WAYPOINT_CHAR) 
+  */
 
   return curwp;  /* return number of waypoints found */
 
@@ -1042,7 +1080,8 @@ GetElevatorConnections (char *shipname)
 }				// int GetElevatorConnections(char *shipname)
 
 /*-----------------------------------------------------------------
- * @Desc: intialisiert AllEnemys
+ * @Desc: This function initializes all enemys
+ * 
  *
  * @Ret: OK or ERR
  * 

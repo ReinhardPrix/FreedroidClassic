@@ -82,6 +82,7 @@ main (int argc, char *const argv[])
     {
 
       InitNewMission ( STANDARD_MISSION );
+      // InitNewMission ( NEW_MISSION );
 
       GameOver = FALSE;
 
