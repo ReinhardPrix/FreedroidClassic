@@ -25,10 +25,6 @@
 /* ----------------------------------------------------------------------
  * Desc: the main program
  * ---------------------------------------------------------------------- */
-/*
- * This file has been checked for remains of german comments in the code
- * I you still find some, please just kill it mercilessly.
- */
 
 #define _main_c
 
@@ -139,9 +135,12 @@ main (int argc, char *const argv[])
 
 	  DoAllMovementAndAnimations();
 
-	  AssembleCombatPicture ( 0 ); 
-	  DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
-	  SDL_Flip ( Screen );
+	  if ( ! GameOver ) 
+	    {
+	      AssembleCombatPicture ( 0 ); 
+	      DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
+	      SDL_Flip ( Screen );
+	    }
 
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 

@@ -447,7 +447,7 @@ PlayGame (void)
       if (!down) down_counter =0;
 
       /* allow for a WIN-key that give immedate victory */
-      if ( WPressed () && Ctrl_Was_Pressed () && Alt_Was_Pressed () )
+      if ( WPressed () && CtrlWasPressed () && Alt_Was_Pressed () )
 	{
 	  LeaderColor = YourColor;   /* simple as that */
 	  return;  /* leave now, to avoid changing of LeaderColor! */

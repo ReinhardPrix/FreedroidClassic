@@ -2163,7 +2163,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (KP1Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_L;
-      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LD;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LD;
       else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LD;
       else EditLevel->map[BlockY][BlockX]=CORNER_LD;
     }
@@ -2184,7 +2184,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (KP3Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_U;
-      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RD;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RD;
       else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RD;
       else EditLevel->map[BlockY][BlockX]=CORNER_RD;
     }
@@ -2229,7 +2229,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (KP7Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_D;
-      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LU;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LU;
       else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LU;
       else EditLevel->map[BlockY][BlockX]=CORNER_LU;
     }
@@ -2250,7 +2250,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (KP9Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_R;
-      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RU;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RU;
       else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RU;
       else EditLevel->map[BlockY][BlockX]=CORNER_RU;
     }
@@ -2265,7 +2265,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     }
   if (DPressed())
     {
-      if ( !Ctrl_Was_Pressed())
+      if ( !CtrlWasPressed())
 	{
 	  if (Shift_Was_Pressed())
 	    EditLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
@@ -2280,7 +2280,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     }
   if (UPressed())
     {
-      if ( !Ctrl_Was_Pressed())
+      if ( !CtrlWasPressed())
 	{
 	  if (Shift_Was_Pressed())
 	    EditLevel->map[BlockY][BlockX]=CHEST_U;	            	      

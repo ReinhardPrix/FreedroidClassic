@@ -298,11 +298,11 @@ ReactToSpecialKeys(void)
   static int Number8PressedLastFrame;
   static int Number9PressedLastFrame;
   influence_t Zwisch_Me;
-  //  char MessageBuffer[1024];
 
-  if ( QPressed() ) /* user asked for quit */
+  if ( QPressed() && CtrlWasPressed() )
     Terminate (OK);
-  if ( DPressed() )
+
+  if ( DPressed() && CtrlWasPressed() ) 
     Me[0].energy = 0;
 
   if ( F1Pressed() )
@@ -726,7 +726,7 @@ ReactToSpecialKeys(void)
   // to make it any more complicated.
   //
   if ( CPressed() && Alt_Was_Pressed()
-       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
+       && CtrlWasPressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
 
   //--------------------
@@ -780,7 +780,7 @@ Shift_Is_Pressed(void)
  *
  * ---------------------------------------------------------------------- */
 int
-Ctrl_Was_Pressed(void)
+CtrlWasPressed(void)
 {
   return (CtrlWasPressedInAddition);  
 }

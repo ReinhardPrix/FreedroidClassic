@@ -343,7 +343,7 @@ EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
 EXTERN int LeftShiftWasPressed(void);
 EXTERN int RightShiftWasPressed(void);
-EXTERN int Ctrl_Was_Pressed(void);
+EXTERN int CtrlWasPressed(void);
 EXTERN int RightCtrlWasPressed(void);
 EXTERN int LeftCtrlWasPressed(void);
 EXTERN int Alt_Was_Pressed(void);
