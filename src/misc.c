@@ -461,6 +461,174 @@ Cheatmenu (void)
 }
 
 
+void
+OptionsMenu (void)
+{
+  char CTaste = ' ';
+  // int vgamode;
+  char NewRoboType[80];		// name of new influencer robot-type, i.e. "123"
+  int Weiter = 0;
+  int LNum, X, Y, i;
+  int X0 = 20, Y0 = 5;		// startpos for gl_- text writing
+
+  // return to normal keyboard operation
+  keyboard_close ();
+
+  //  gotoxy(1,1);
+  //  vgamode = vga_getcurrentmode();
+  //  vga_setmode(TEXT);
+
+  // rp: try out the gl-textfunctions
+  while (!Weiter)
+    {
+      // This is not some Debug Menu but an optically impressive 
+      // menu for the player.  Therefore I suggest we just fade out
+      // the game screen a little bit.
+      MakeGridOnScreen();
+      // vga_clear ();
+
+
+      DisplayMergeBlock(0,0, OptionsMenuPointer, SCREENBREITE, SCREENHOEHE, RealScreen );
+
+      gl_setfont (8, 8, gl_font8x8);
+      gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
+      gl_setfontcolors (0, vga_white ());
+
+      CTaste = getchar ();
+      switch (CTaste)
+	{
+	case 'a':
+	  Weiter = 1;
+	  Armageddon ();
+	  break;
+	case 'l':
+	  vga_clear ();
+	  gl_printf (X0, Y0, "NR.\tID\tX\tY\tENERGY.\n");
+	  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+	    {
+	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
+		gl_printf (-1, -1, "%d.\t%s\t%d\t%d\t%d.\n", i,
+			   Druidmap[Feindesliste[i].type].druidname,
+			   Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+			   Feindesliste[i].energy);
+	    }
+	  getchar ();
+	  break;
+	case 'r':
+	  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+	    {
+	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
+		Feindesliste[i].energy = 0;
+	    }
+	  gl_printf (-1, -1, "All robots on this deck killed!");
+	  getchar ();
+	  break;
+
+	case 'g':
+	  vga_clear ();
+	  gl_printf (X0, Y0, "Nr.\tLev.\tID\tEnergy\n");
+	  for (i = 0; i < NumEnemys; i++)
+	    {
+	      gl_printf (-1, -1, "%d\t%d\t%s\t%d\n",
+			 i, Feindesliste[i].levelnum,
+			 Druidmap[Feindesliste[i].type].druidname,
+			 Feindesliste[i].energy);
+	      if ((i % 22) == 0 && i > 0)
+		{
+		  gl_printf (-1, -1, " --- MORE --- \n");
+		  getchar ();
+		  vga_clear ();
+		  gl_printf (X0, Y0, "Nr.\tLev.\tID\tEnergy\n");
+		}
+	    }
+	  break;
+
+	case 't':
+	  gl_printf (-1, -1, "\n Enter Levelnummer, X-Pos, Y-Pos: ");
+	  scanf ("%d, %d, %d", &LNum, &X, &Y);
+	  getchar ();		// remove the cr from input
+	  vga_clear ();
+	  Teleport (LNum, X, Y);
+	  gl_printf (1, 1, "This is your position on level %d.\n", LNum);
+	  gl_printf (-1, -1, "Press key to continue");
+	  getchar ();
+	  break;
+
+	case 'w':
+	  gl_printf (-1, -1, "\nTypennummer ihres neuen robos: ");
+	  scanf ("%s", NewRoboType);
+	  getchar ();		// remove cr from input
+	  for (i = 0; i < ALLDRUIDTYPES; i++)
+	    {
+	      if (!strcmp (Druidmap[i].druidname, NewRoboType))
+		break;
+	    }
+	  if (i == ALLDRUIDTYPES)
+	    {
+	      gl_printf (-1, -1, "\nUnrecognized robot-type: %s\n",
+			 NewRoboType);
+	      getchar ();
+	    }
+	  else
+	    {
+	      Me.type = i;
+	      Me.energy = Druidmap[Me.type].maxenergy;
+	      Me.health = Me.energy;
+	      gl_printf (-1, -1, "\nYou are now a %s. Have fun!\n",
+			 NewRoboType);
+	      getchar ();
+	      RedrawInfluenceNumber ();
+	    }
+	  break;
+
+	case 'i':
+	  InvincibleMode = !InvincibleMode;
+	  break;
+	case 'v':
+	  Me.energy = Druidmap[Me.type].maxenergy;
+	  Me.health = Me.energy;
+	  gl_printf (-1, -1, "\nSie sind wieder gesund!");
+	  getchar ();
+	  break;
+	case 'b':
+	  Me.energy = 1;
+	  gl_printf (-1, -1, "\nSie sind jetzt ziemlich schwach!");
+	  getchar ();
+	  break;
+	case 'c':
+	  Conceptview = !Conceptview;
+	  break;
+	case 's':
+	  Weiter = 1;
+	  sound_on = !sound_on;
+	  break;
+	case 'm':
+	  gl_printf (-1, -1, "\nLevelnum:");
+	  scanf ("%d", &LNum);
+	  getchar ();
+	  // this function works in raw-kb mode, so we switch again
+	  keyboard_init ();
+	  ShowDeckMap (curShip.AllLevels[LNum]);
+	  keyboard_close ();
+	  break;
+
+	case ' ':
+	case 'q':
+	  Weiter = 1;
+	  break;
+	}
+    }
+  ClearGraphMem (RealScreen);
+  DisplayRahmen (RealScreen);
+  InitBars = TRUE;
+
+  vga_clear ();
+  keyboard_init (); /* return to raw keyboard mode */
+
+  return;
+} // OptionsMenu
+
+
 /*@Function============================================================
 @Desc: Testfunktion fuer InsertMessage()
 

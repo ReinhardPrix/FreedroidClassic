@@ -492,6 +492,8 @@ InitParaplus (void)
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
     {				/* Fehler aufgetreten */
+      DebugPrintf("\n Error in InitPictures reported back... Terminating....");
+      Terminate(ERR);
       return;
     }
 

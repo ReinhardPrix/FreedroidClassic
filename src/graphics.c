@@ -54,6 +54,24 @@
 
 extern int TimerFlag;
 
+
+void 
+MakeGridOnScreen(void){
+  int x,y;
+
+  vga_setcolor(0);
+  for (y=0; y<SCREENHOEHE; y++) 
+    {
+      for (x=0; x<SCREENBREITE; x++) 
+	{
+	  if ((x+y)%2 == 0) 
+	    {
+	      vga_drawpixel(x,y);
+	    }
+	}
+    }
+} // void MakeGridOnSchreen(void)
+
 unsigned char *MemSearch (unsigned char *, unsigned char *, unsigned char *);
 
 void
@@ -253,11 +271,17 @@ InitPictures (void)
 		  EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
 
 
-  /* get Menublocks */
-  Load_PCX_Image (CONSOLENBILD_PCX, InternalScreen, FALSE);
+  /* get Menublocks for the In-game Consoles, not the Options menu! */
+  Load_PCX_Image ( CONSOLENBILD_PCX, InternalScreen, FALSE);
   MenuItemPointer = MyMalloc (MENUITEMMEM);
   IsolateBlock (InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH,
 		MENUITEMHEIGHT);
+
+  /* get Menublocks for the In-game Consoles, not the Options menu! */
+  Load_PCX_Image ( MENU_PICTURE_PCX_FILENAME , InternalScreen, FALSE);
+  OptionsMenuPointer = MyMalloc ( SCREENBREITE * SCREENHOEHE +10 );
+  IsolateBlock (InternalScreen, OptionsMenuPointer, 0, 0, SCREENBREITE ,
+		SCREENHOEHE );
 
   /* get robotpictures */
   DruidFilename = malloc (1000);

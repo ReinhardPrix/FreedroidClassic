@@ -132,6 +132,7 @@ enum _sounds
 #define CONSOLENBILD_PCX           "../graphics/console.pcx"
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.pcx"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.pcx"
+#define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.pcx"
 /* Takeover-game graphics elements: */
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
 

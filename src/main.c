@@ -219,6 +219,8 @@ main (int argc, char *const argv[])
 	    HideInvisibleMap = !HideInvisibleMap;
 	  if (keyboard_keypressed (SCANCODE_C))
 	    Cheatmenu ();
+	  if (keyboard_keypressed (SCANCODE_ESCAPE))
+	    OptionsMenu ();
 	  if (PPressed ())
 	    Pause ();
 
