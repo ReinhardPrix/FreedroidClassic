@@ -2152,6 +2152,10 @@ adapt_global_mode_for_player ( int player_num )
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_EXAMINE )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_REPAIR )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
 	else
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     }
@@ -2160,6 +2164,10 @@ adapt_global_mode_for_player ( int player_num )
     if ( ( LeftPressed ( ) && ( ! left_pressed_previous_frame ) ) || MouseWheelUpPressed ( ) )
     {
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_UNLOCK )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_REPAIR )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
@@ -3663,6 +3671,62 @@ handle_player_loot_command ( int player_num )
 }; // void handle_player_examine_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_unlock_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Unlock command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): unlocking obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Unlocking obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_unlock_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_repair_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Repair command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): repairing obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Repairing obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_repair_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
  * might happen to open some windows, pick up some stuff, smash a box,
  * move somewhere or fire a shot or make a weapon swing.
@@ -3734,6 +3798,34 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
 	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
 	    handle_player_loot_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_REPAIR:
+	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    handle_player_repair_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_UNLOCK:
+	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    handle_player_unlock_command ( 0 ) ;
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	    
 	    //--------------------
