@@ -1765,18 +1765,24 @@ swap_red_and_blue_for_open_gl ( SDL_Surface* FullView )
   int x , y ;
   Uint32 pixel;
 
+  // DebugPrintf ( -1000 , "\nSurface bpp: %d." , FullView -> format -> BytesPerPixel  );
+
+  SDL_LockSurface ( FullView );
   for ( x = 0 ; x < FullView -> w ; x ++ )
     {
       for ( y = 0 ; y < FullView -> h ; y ++ )
 	{
 	  // pixel = GetPixel ( FullView , x , y ) ;
-	  pixel = SDL_MapRGB ( FullView -> format , 
-			       GetBlueComponent ( FullView, x , y ) , 
-			       GetGreenComponent ( FullView, x , y ) , 
-			       GetRedComponent ( FullView, x , y ) );
+	  pixel = SDL_MapRGBA ( FullView -> format , 
+				GetBlueComponent ( FullView, x , y ) , 
+				GetGreenComponent ( FullView, x , y ) , 
+				GetRedComponent ( FullView, x , y ) ,
+				GetAlphaComponent ( FullView , x , y ) );
 	  PutPixel ( FullView , x , y , pixel);
 	}
     }
+  SDL_UnlockSurface ( FullView );
+
 }; // void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView )
 
 

@@ -2515,7 +2515,7 @@ AnimateEnemys (void)
 		{
 		  our_enemy -> animation_type = STAND_ANIMATION ;
 		  our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
-		  DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
+		  // DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
 		}
 	      break;
 	    case ATTACK_ANIMATION:

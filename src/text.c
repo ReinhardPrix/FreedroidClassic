@@ -64,6 +64,14 @@ float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 1000
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
+EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+
+//--------------------
+// This is the droid window we used before Bastian reshaped
+// the chat interface:
+//
+static SDL_Rect Droid_Image_Window = { 48 , 44 , 130 , 172 } ;
+
 #define PUSH_ROSTER 2
 #define POP_ROSTER 3 
 
@@ -740,83 +748,103 @@ ERROR:  UNKNOWN COMMAND STRING GIVEN!",
 }; // void ExecuteChatExtra ( char* ExtraCommandString )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_sure_all_chat_portraits_are_loaded ( void )
+{
+  SDL_Surface* Small_Droid;
+  SDL_Surface* Large_Droid;
+  char *fpath;
+  char fname[500];
+  int i;
+  static int first_call = TRUE ;
+
+  //--------------------
+  // We make sure we only load the portrait files once and not
+  // every time...
+  //
+  if ( ! first_call ) return ;
+  first_call = FALSE ;
+
+  //--------------------
+  // All of the portrait files will now be loaded one after the
+  // other...
+  //
+  for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+    {
+      //--------------------
+      // At first we try to load the image, that is named after this
+      // chat section.  If that succeeds, perfect.  If not, we'll revert
+      // to a default image.
+      //
+      strcpy( fname, "droids/" );
+      strcat( fname, PrefixToFilename [ i ] ) ;
+      strcat( fname , "/portrait.png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      DebugPrintf ( -1000, "\nFilename used for portrait: %s." , fpath );
+
+      Small_Droid = our_IMG_load_wrapper (fpath) ;
+      if ( Small_Droid == NULL )
+	{
+	  strcpy( fname, "droids/" );
+	  strcat( fname, "DefaultPortrait.png" );
+	  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+	  Small_Droid = our_IMG_load_wrapper (fpath) ;
+	}
+      if ( Small_Droid == NULL )
+	{
+	  fprintf( stderr, "\n\nfpath: %s \n" , fpath );
+	  GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
+It wanted to load a small portrait file in order to display it in the \n\
+chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+      
+      Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
+
+      chat_portrait_of_droid [ i ] . surface = Large_Droid ;
+
+      if ( use_open_gl )
+	swap_red_and_blue_for_open_gl ( chat_portrait_of_droid [ i ] . surface );
+
+      SDL_FreeSurface( Small_Droid );
+      
+    }
+
+}; // void make_sure_all_chat_portraits_are_loaded ( void )
+
+/* ----------------------------------------------------------------------
  * This function prepares the chat background window and displays the
  * image of the dialog partner and also sets the right font.
  * ---------------------------------------------------------------------- */
 void
 PrepareMultipleChoiceDialog ( Enemy ChatDroid )
 {
-  SDL_Rect Droid_Image_Window;
-  SDL_Surface* Small_Droid;
-  SDL_Surface* Large_Droid;
-  char *fpath;
-  char fname[500];
+  //--------------------
+  // The dialog will always take more than a few seconds to process
+  // so we need to prevent framerate distortion...
+  //
+  Activate_Conservative_Frame_Computation( );
 
   //--------------------
-  // This is the droid window we used before Bastian reshaped
-  // the chat interface:
+  // We make sure that all the chat portraits we might need are
+  // loaded....
   //
-  Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
-
-  Activate_Conservative_Frame_Computation( );
+  make_sure_all_chat_portraits_are_loaded ( );
 
   //--------------------
   // We select small font for the menu interaction...
   //
   SetCurrentFont( FPS_Display_BFont );
 
-  //--------------------
-  // At first we try to load the image, that is named after this
-  // chat section.  If that succeeds, perfect.  If not, we'll revert
-  // to a default image.
-  //
-  strcpy( fname, "droids/" );
-  // strcat( fname, Druidmap[ ChatDroid -> type ].portrait_filename_without_ext );
-  strcat( fname, ChatDroid -> dialog_section_name );
-  strcat( fname , "/portrait.png" );
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  Small_Droid = our_IMG_load_wrapper (fpath) ;
-  if ( Small_Droid == NULL )
-    {
-      strcpy( fname, "droids/" );
-      strcat( fname, "DefaultPortrait.png" );
-      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-      Small_Droid = our_IMG_load_wrapper (fpath) ;
-    }
-  if ( Small_Droid == NULL )
-    {
-      fprintf( stderr, "\n\nfpath: %s \n" , fpath );
-      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
-It wanted to load a small portrait file in order to display it in the \n\
-chat interface of Freedroid.  But:  Loading this file has failed.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-  // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
-
-  Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
-
-  //--------------------
-  // SDL doesn't understand the flipped around nature of open_gl images, so when
-  // while otherwise continuously using open_gl, we suddenly use SDL here for the
-  // preparation of open_gl output, we must pay respect to this transformation of
-  // coordinates or rather these flipped around images.
-  //
-  if ( use_open_gl )
-    {
-      Droid_Image_Window . x = 48; Droid_Image_Window . y = 480 - 44 - Large_Droid -> h ; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
-    }
-  else
-    {
-      Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
-    }
-
   blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
-  // our_SDL_blit_surface_wrapper ( Large_Droid , NULL , Screen , &Droid_Image_Window );
+  our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
+				 Screen , &Droid_Image_Window );
 
   our_SDL_flip_wrapper( Screen );
-
-  SDL_FreeSurface( Small_Droid );
-  SDL_FreeSurface( Large_Droid );
 
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
@@ -1087,8 +1115,6 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	}
     }
   
-
-
 }; // void ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 
 
@@ -2283,3 +2309,4 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
 
 #undef _text_c
+

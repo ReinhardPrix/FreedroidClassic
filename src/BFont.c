@@ -805,6 +805,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       break;
 
     case 3:
+      // pixel = pixel & 0x0ffffff ;
       if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
 	{
 	  p[0] = (pixel >> 16) & 0xff;
