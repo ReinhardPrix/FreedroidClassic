@@ -583,6 +583,18 @@ MoveInfluence ( int PlayerNum )
     AnalyzePlayersMouseClick ( PlayerNum );
 
   //--------------------
+  // During inventory operations, there should not be any (new) movement
+  //
+  if ( Item_Held_In_Hand != (-1) )
+    {
+      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x ;
+      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y ;
+      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+      return; 
+    }
+
+  //--------------------
   // The influ should lose some of his speed when no key is pressed and
   // also no mouse move target is set.
   //
@@ -1465,9 +1477,12 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
 int 
 ButtonPressWasNotMeantAsFire( PlayerNum )
 {
+  //--------------------
   // If the influencer is holding something from the inventory
   // menu via the mouse, also just return
-  // if ( Item_Held_In_Hand != (-1) ) return;
+  //
+  if ( Item_Held_In_Hand != (-1) ) return ( TRUE ) ;
+  if ( timeout_from_item_drop > 0 ) return ( TRUE ) ;
 
   // If the influencer has pressed fire with the mouse cursor
   // and is in the inventory screen and inventory screen is 

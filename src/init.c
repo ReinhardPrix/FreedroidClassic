@@ -1758,6 +1758,7 @@ InitFreedroid ( void )
   ServerMode = FALSE;
   ClientMode = FALSE;
   RespectVisibilityOnMap = TRUE ; 
+  timeout_from_item_drop = 0 ; 
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;
@@ -1766,7 +1767,7 @@ InitFreedroid ( void )
   Me[0].walk_cycle_phase = 0 ;
   CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
   Me[0].TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
-
+  
   // --------------------
   //
   InventorySize.x = 9;

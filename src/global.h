@@ -144,7 +144,7 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 //
 EXTERN int Number_Of_Item_Types;
 EXTERN itemspec* ItemMap;
-
+EXTERN float timeout_from_item_drop;
 
 
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;

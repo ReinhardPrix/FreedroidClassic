@@ -1643,6 +1643,8 @@ DropHeldItemToTheFloor ( void )
 
   DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
 
+  timeout_from_item_drop = 0.4 ;
+
 }; // void DropHeldItemToTheFloor ( void )
 
 /* ----------------------------------------------------------------------

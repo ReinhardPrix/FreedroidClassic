@@ -218,6 +218,17 @@ UpdateCountersForThisFrame ( int PlayerNum )
       LevelGunsNotFiredTime += Frame_Time();
       if ( SkipAFewFrames ) SkipAFewFrames--;
 
+      //--------------------
+      // This is the timeout, that the tux should not start a movement
+      // some fraction of a second after an item drop.
+      //
+      if ( timeout_from_item_drop > 0 )
+	{
+	  timeout_from_item_drop -= Frame_Time ();
+	  if ( timeout_from_item_drop < 0 ) timeout_from_item_drop = 0 ; 
+	}
+
+
       for ( i = 0 ; i < MAXBULLETS ; i ++ )
 	{
 	  if ( AllBullets [ i ] . time_to_hide_still > 0 )
