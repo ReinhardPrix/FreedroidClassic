@@ -1193,7 +1193,7 @@ parse_command_line (int argc, char *const argv[])
 	  /* version statement -v or --version
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
-	  printf ("\n%s %s  \n", PACKAGE, VERSION); 
+	  printf ("\n%s %s  \n", PACKAGE, VERSION);
 	  printf (copyright);
 	  exit (0);
 	  break;
@@ -1844,6 +1844,10 @@ InitFreedroid (void)
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
   GameConfig.Theme_SubPath="lanzz_theme/";
+
+  //Load user config file if it exists...
+  LoadSettings ();
+
   Copy_Rect (Full_User_Rect, User_Rect);
       
 
