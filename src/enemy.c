@@ -47,6 +47,61 @@
 
 // void PermanentHealRobots (void);
 
+
+/* ----------------------------------------------------------------------
+ * This function tests, if a Robot can go a direct straigt line from
+ * x1 y1 to x2 y2 without hitting a wall or another obstacle.
+ * 
+ * The return value is TRUE or FALSE accoringly.
+ * ----------------------------------------------------------------------*/
+int 
+DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
+{
+  float LargerDistance;
+  int Steps;
+  int i, j;
+  finepoint step;
+  finepoint CheckPosition;
+
+  DebugPrintf( 0, "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+  fflush(stdout);
+
+  if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  else LargerDistance=fabsf(y1-y2);
+
+  Steps=LargerDistance * 4 ;   // We check four times on each map tile...
+  if ( Steps == 0 ) return TRUE;
+
+  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+  step.x = (x2 - x1) / Steps;
+  step.y = (y2 - y1) / Steps;
+
+  DebugPrintf( 2 , "\nint DirectLineWalkable (...) :  step.x=%f step.y=%f." , step.x , step.y );
+
+  // We start from position (x1, y1)
+  CheckPosition.x = x1;
+  CheckPosition.y = y1;
+
+  for ( i = 0 ; i < Steps ; i++ )
+    {
+
+      if ( IsPassable ( CheckPosition.x , CheckPosition.y , CENTER ) != CENTER ) 
+	{
+	  DebugPrintf( 0 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
+	  return FALSE;
+	}
+
+      CheckPosition.x += step.x;
+      CheckPosition.y += step.y;
+    }
+
+  DebugPrintf( 0 , "\n DirectLineWalkable (...) : Connection analysis revealed : FREE!");
+
+  return TRUE;
+
+}; // int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
+
+
 /* ----------------------------------------------------------------------
  * This function tests, if the given Robot can go a direct straigt line 
  * to the next console.  If so, that way is set as his next 'parawaypoint'
@@ -57,10 +112,45 @@
 int 
 SetDirectCourseToConsole( int EnemyNum )
 {
+  int i, j;
+
   DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): real function call confirmed.");
   DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Trying to find direct line to console...");
 
-  return TRUE;
+  for ( i = 0 ; i < CurLevel->xlen ; i ++ )
+    {
+      for ( j = 0 ; j < CurLevel->ylen ; j ++ )
+	{
+	  switch ( CurLevel->map[j][i] )
+	    {
+	    case KONSOLE_U:
+	    case KONSOLE_O:
+	    case KONSOLE_R:
+	    case KONSOLE_L:
+	      DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Console found: %d-%d.",
+			   i , j );
+	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j ) )
+		{
+		  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Walkable is: %d-%d.",
+			       i , j );
+
+		  AllEnemys[ EnemyNum ].PrivatePathway[0].x = i;
+		  AllEnemys[ EnemyNum ].PrivatePathway[0].y = j;
+
+		  return TRUE;
+
+		  // i=CurLevel->xlen;
+		  // j=CurLevel->ylen;
+		  // break;
+		}
+	      break;
+	    default:
+	      break;
+	    }
+	}
+    }
+
+  return FALSE;
 }; // int SetDirectCourseToConsole ( int Enemynum )
 
 void 
@@ -85,6 +175,11 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
       ThisRobot->persuing_given_course = TRUE;
 
       if ( SetDirectCourseToConsole( EnemyNum ) == TRUE ) return;
+      else 
+	{
+	  DebugPrintf( 0 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): giving up way for console....");
+	  ThisRobot->persuing_given_course = FALSE;
+	}
 
     }
 
@@ -120,7 +215,7 @@ PermanentHealRobots (void)
 void
 ClearEnemys (void)
 {
-  int i;
+  int i , j;
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
@@ -142,6 +237,12 @@ ClearEnemys (void)
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
       AllEnemys[i].persuing_given_course = FALSE;
+      
+      for ( j=0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
+	{
+	  AllEnemys[i].PrivatePathway[j].x=0;
+	  AllEnemys[i].PrivatePathway[j].y=0;
+	}
     }
 
   return;
@@ -389,8 +490,15 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
+
+  if ( ThisRobot->persuing_given_course )
+    {
+      nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
+      nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
+    }
 
 
   // determine the remaining way until the target point is reached

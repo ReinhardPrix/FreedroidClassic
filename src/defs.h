@@ -309,6 +309,7 @@ enum _directions
 #define MAX_TELEPORTERS_ON_LEVEL	10
 
 #define MAX_PHASES_IN_A_BULLET 12
+#define MAX_STEPS_IN_GIVEN_COURSE 1000
 
 /* Macros */
 #define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)

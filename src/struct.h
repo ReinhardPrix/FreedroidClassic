@@ -212,7 +212,6 @@ typedef struct
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
-  point PrivatePathway[1000];
 }
 influence_t, *Influence_t;
 
@@ -239,6 +238,7 @@ typedef struct
   double Parameter2;            // This contains special information for AdvancedCommand
   int Friendly;                 // is this a friendly droid or is it a MS controlled one?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
+  point PrivatePathway[1000];
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
