@@ -1353,11 +1353,13 @@ SetTextCursor ( int x , int y )
 }; // void SetTextCursor ( int x , int y )
 
 /* -----------------------------------------------------------------
+ *
  * This function scrolls a given text down inside the User-window, 
  * defined by the global SDL_Rect User_Rect
  *
  * startx/y give the Start-position, 
  * EndLine is the last line (?)
+ *
  * ----------------------------------------------------------------- */
 int
 ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
