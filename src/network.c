@@ -42,7 +42,7 @@
 
 #include "SDL_net.h"
 
-#define FREEDROID_NET_PORT (5671)
+#define FREEDROID_NET_PORT (5674)
 
 #define PERIODIC_MESSAGE_DEBUG 2 
 #define SERVER_SEND_DEBUG 2 

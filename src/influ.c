@@ -138,9 +138,9 @@ CheckIfCharacterIsStillOk ( int PlayerNum )
   //------------------------------
   // Now we check if the main character is really still ok.
   //
-  if (Me [ PlayerNum ] .energy <= 0)
+  if ( Me [ PlayerNum ] .energy <= 0 )
     {
-      if (Me [ PlayerNum ] .type != DRUID001)
+      if ( Me [ PlayerNum ] .type != DRUID001 )
 	{
 	  Me [ PlayerNum ] .type = DRUID001;
 	  Me [ PlayerNum ] .speed.x = 0;
@@ -180,7 +180,7 @@ MoveInfluence ( int PlayerNum )
   // We do not move any players, who's statuses are 'OUT'.
   //
   if ( Me [ PlayerNum ] . status == OUT ) return;
-  if ( Me [ PlayerNum ] . energy <= 0 ) return;
+  // if ( Me [ PlayerNum ] . energy <= 0 ) return;
 
   accel = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel * Frame_Time( ) ;
 
@@ -229,25 +229,36 @@ MoveInfluence ( int PlayerNum )
       Me [ PlayerNum ] .TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
     }
 
-  if ( ! ServerThinksSpacePressed ( PlayerNum ) )
-    Me [ PlayerNum ] .status = MOBILE;
-
-  if (TransferCounter == 1)
+  //--------------------
+  // As long as the tux is still alive, his status will be either
+  // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
+  //
+  if ( Me [ PlayerNum ] . energy >= 0 )
     {
-      Me [ PlayerNum ] .status = TRANSFERMODE;
-      TransferCounter = 0;
+      if ( ! ServerThinksSpacePressed ( PlayerNum ) )
+	{
+	  Me [ PlayerNum ] .status = MOBILE;
+	}
+      if (TransferCounter == 1)
+	{
+	  Me [ PlayerNum ] .status = TRANSFERMODE;
+	  TransferCounter = 0;
+	}
+      if ( ( ServerThinksSpacePressed ( PlayerNum ) ) && ( ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
+	   ( Me [ PlayerNum ] .status != WEAPON ) && ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
+	TransferCounter += Frame_Time();
+
+      if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+	   ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
+	   ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
+	Me [ PlayerNum ] .status = WEAPON ;
     }
 
+  //--------------------
+  // Perhaps the player has pressed the right mouse button, indicating the use
+  // of the currently selected special function or spell.
+  //
   HandleCurrentlyActivatedSkill();
-
-  if ( ( ServerThinksSpacePressed ( PlayerNum ) ) && ( ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
-       ( Me [ PlayerNum ] .status != WEAPON ) && ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
-    TransferCounter += Frame_Time();
-
-  if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
-       ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
-       ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
-    Me [ PlayerNum ] .status = WEAPON ;
 
   // --------------------
   // What is this code good for??

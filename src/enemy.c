@@ -1199,7 +1199,19 @@ AttackInfluence (int enemynum)
 
   if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
-  if ( ! IsVisible ( &ThisRobot->pos , ClosestVisiblePlayer ( ThisRobot ) ) && 
+  TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
+
+  //--------------------
+  // If the closes alive player is not alive at all, that's a sign
+  // that there is nothing to attack any more, but just return.
+  //
+  if ( Me [ TargetPlayer ] . status == OUT ) return;
+
+  //--------------------
+  // If the closest alive player is not visible at all, then there is
+  // nothing to do and we just return.
+  //
+  if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
        ( ThisRobot->Friendly == FALSE ) ) 
     return; 
 
@@ -1232,8 +1244,6 @@ AttackInfluence (int enemynum)
       // ThisRobot->TextVisibleTime = 0 ;
       // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
       //
-      TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
-
       ThisRobot -> persuing_given_course = TRUE;
       ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
       ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
