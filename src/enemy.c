@@ -477,6 +477,68 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   return TRUE;
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
+{
+  finepoint Restweg;
+  float maxspeed;
+
+  //--------------------
+  // According to properties of the robot like being frozen or not,
+  // we define the maximum speed of this machine for later use...
+  // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
+  //
+  // if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+  if ( ThisRobot -> frozen == 0 )
+    maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+  else 
+    maxspeed = 0.2 * ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+
+  //--------------------
+  // Now that we have found out where to go, we can start to determine the remaining 
+  // way until the target point is reached.
+  //
+  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
+  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+
+  //--------------------
+  // As long a the distance from the current position of the enemy
+  // to its next wp is large, movement is rather simple:
+  //
+  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.x =
+	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
+      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
+    } 	 
+  else
+    {
+      // --------------------
+      // Once this enemy is close to his final destination waypoint, we have
+      // to do some fine tuning, and then of course set the next waypoint.
+      ThisRobot->pos.x = nextwp_pos.x;
+      ThisRobot->speed.x = 0;
+    }
+
+  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
+    {
+      ThisRobot->speed.y =
+	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
+      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
+    }
+  else
+    {
+      ThisRobot->pos.y = nextwp_pos.y;
+      ThisRobot->speed.y = 0;
+    }
+
+}; // void
+
 /* ----------------------------------------------------------------------
  * This function moves one robot thowards his next waypoint.  If already
  * there, the function does nothing more.
@@ -484,11 +546,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 void 
 MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 {
-  finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-list */
-  int nextwp;
   finepoint nextwp_pos;
-  float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
   int HistoryIndex;
   Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
@@ -497,36 +556,33 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
   // We do some definitions to save us some more typing later...
   WpList = WaypointLevel->AllWaypoints;
-  nextwp = ThisRobot->nextwaypoint;
 
   //--------------------
   // According to properties of the robot like being frozen or not,
   // we define the maximum speed of this machine for later use...
+  // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
   //
-  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  if ( ThisRobot -> paralysation_duration_left != 0 )
-    {
-      return;
-      // maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-    }
-  if ( ThisRobot -> frozen == 0 )
-    {
-      maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-    }
-  else 
-    {
-      maxspeed = 0.2 * ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-    }
+  if ( ThisRobot -> paralysation_duration_left != 0 ) return;
 
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
-
+  //--------------------
+  // We determine our movement target, either the preset course or the 
+  // current classical waypoint that has been set.
+  //
   if ( ThisRobot->persuing_given_course )
     {
       nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
       nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
     }
+  else
+    {
+      nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x ;
+      nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y ;
+    }
 
+  //--------------------
+  // Maybe this robot is following behind influ.  Then of course we need to set
+  // even different special target positions...
+  //
   if ( ThisRobot->FollowingInflusTail == TRUE )
     {
       if ( ( fabsf( ThisRobot->pos.x - Me[0].pos.x ) > 1 ) || 
@@ -553,80 +609,9 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 	}
     }
 
-  // determine the remaining way until the target point is reached
-  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
-  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
-
-  // --------------------
-  // As long a the distance from the current position of the enemy
-  // to its next wp is large, movement is rather simple:
-  //
-
-  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
-    {
-      ThisRobot->speed.x =
-	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
-      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
-    } 	 
-  else
-    {
-      // --------------------
-      // Once this enemy is close to his final destination waypoint, we have
-      // to do some fine tuning, and then of course set the next waypoint.
-      ThisRobot->pos.x = nextwp_pos.x;
-      ThisRobot->speed.x = 0;
-    }
-
-
-  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
-    {
-      ThisRobot->speed.y =
-	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
-      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
-    }
-  else
-    {
-      // ThisRobot->pos.y += (nextwp_pos.y-ThisRobot->pos.y)*Frame_Time();
-      ThisRobot->pos.y = nextwp_pos.y;
-      ThisRobot->speed.y = 0;
-    }
+  RawEnemyApproachPosition ( ThisRobot , nextwp_pos );
 
 }; // void MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
-
-/* ----------------------------------------------------------------------
- * This function selects the next waypoints or 'parawaypoints' for the
- * droid along some predefined course.
- * 
- ----------------------------------------------------------------------*/
-void 
-PersueGivenCourse ( int EnemyNum )
-{
-  Waypoint WpList;
-  int nextwp;
-  finepoint nextwp_pos;
-  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
-
-  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
-  if ( ! ThisRobot->persuing_given_course ) return;
-  DebugPrintf( 2 , "\nvoid MoveThisRobotAdvanced ( int EnemyNum ) : Robot now on given course!!!. ");
-
-  // We do some definitions to save us some more typing later...
-  WpList = WaypointLevel->AllWaypoints;
-  nextwp = ThisRobot->nextwaypoint;
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
-
-  //--------------------
-  // Now we can see if we are perhaps already there?
-  // then it might be time to set a new waypoint.
-  //
-
-  // ThisRobot->TextVisibleTime = 0;
-  // ThisRobot->TextToBeDisplayed = "Persuing given course!!";
-
-}; // void PersueGivenCourse ( int EnemyNum )
-
 
 /* ----------------------------------------------------------------------
  * This function moves one robot in an advanced way, that hasn't been
@@ -648,27 +633,24 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   int TestConnection;
   Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
-  DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
+  DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
   //--------------------
   // Maybe currently we do not stick to the whole waypoint system but rather 
   // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
   // we select waypoints as we're used to...
   //
-  if ( ThisRobot->persuing_given_course == TRUE ) 
-    {
-      PersueGivenCourse( EnemyNum );
-      return;
-    }
+  if ( ThisRobot->persuing_given_course == TRUE ) return;
 
+  //--------------------
   // We do some definitions to save us some more typing later...
+  //
   WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
-
 
   // determine the remaining way until the target point is reached
   Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
@@ -785,6 +767,7 @@ This is an error in the waypoint structure of this level.",
       
       // set new waypoint...
       ThisRobot->nextwaypoint = trywp;
+
       DebugPrintf ( 2 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
 
     } // if
@@ -1175,10 +1158,6 @@ MoveEnemys ( void )
        // is set, we persue the given course, which allows complete control
        // of the bot moves (via the state machine for example)...
        //
-       // MoveThisEnemy ( i ); // this will now be done in the attack state machine...
-
-       // If its a combat droid, then if might attack...
-       // if ( ! AllEnemys [ i ] . is_friendly ) 
        ProcessAttackStateMachine ( i );
 
      }	// for Number_Of_Droids_On_Ship
@@ -1800,8 +1779,10 @@ ProcessAttackStateMachine (int enemynum)
   // ignore robots on other levels 
   // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
   if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
+
   // ignore dead robots as well...
-  if ( ThisRobot -> Status == OUT ) return;
+  // if ( ThisRobot -> Status == OUT ) return;
+
   // ignore paralyzed robots as well...
   if ( ThisRobot -> paralysation_duration_left != 0 ) return;
   // ignore robots, that don't have any weapon
@@ -1825,11 +1806,14 @@ ProcessAttackStateMachine (int enemynum)
     case FIGHT_ON_TUX_SIDE:
       ThisRobot->TextToBeDisplayed = "state:  Fight On Tux Side." ;
       break;
+    case RELENTLESS_FIRE_TO_GIVEN_POSITION:
+      ThisRobot->TextToBeDisplayed = "state:  RELENTLESS FIRE!" ;
+      break;
     default:
       ThisRobot->TextToBeDisplayed = "state:  UNHANDLED!!" ;
       break;
     }      
-      ThisRobot->TextVisibleTime = 0 ; 
+  ThisRobot->TextVisibleTime = 0 ; 
 
   //--------------------
   // If some special command was given, like 
