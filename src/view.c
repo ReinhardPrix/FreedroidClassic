@@ -106,6 +106,15 @@ Assemble_Combat_Picture (int mask)
 	}			// for(col) 
     }				// for(line) 
 
+
+  if ( GameConfig.Draw_Position )
+    {
+      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
+		       CurLevel->levelnum );
+    }
+
   if (mask & ONLY_SHOW_MAP) 
     {
       // in case we only draw the map, we are done here.  But
@@ -163,14 +172,6 @@ Assemble_Combat_Picture (int mask)
       PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
-    }
-
-  if ( GameConfig.Draw_Position )
-    {
-      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
-		       CurLevel->levelnum );
     }
 
   // At this point we are done with the drawing procedure

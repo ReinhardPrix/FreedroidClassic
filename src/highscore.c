@@ -228,7 +228,7 @@ ShowHighscores (void)
     }
   SDL_Flip (ne_screen);
   
-  while (! (SpacePressed() || MouseLeftPressed() || EscapePressed() ));
+  while (! (SpacePressed() || MouseLeftPressed() || EscapePressed() )) usleep(50);
   while ( (SpacePressed() || MouseLeftPressed() || EscapePressed() ));
 
   SetCurrentFont (prev_font);

@@ -113,7 +113,7 @@ QuitGameMenu (void)
 	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
   SDL_Flip (ne_screen);
 
-  while ( (!NPressed()) && (!YPressed()) );
+  while ( (!NPressed()) && (!YPressed()) ) usleep(50);
   if (YPressed())
     Terminate (OK);
 }
@@ -468,6 +468,8 @@ EscapeMenu (void)
 
       while (!key_pressed)
 	{
+	  usleep (50);
+
 	  if ( EscapePressed() )
 	    {
 	      while ( EscapePressed() );
@@ -615,6 +617,8 @@ enum
 
       while (!key_pressed)
 	{
+	  usleep (50);
+
 	  if ( EscapePressed() )
 	    {
 	      while ( EscapePressed() );
@@ -770,6 +774,9 @@ enum
 
       while (!key_pressed)
 	{
+
+	  usleep(50);
+
 	  if ( EscapePressed() )
 	    {
 	      while ( EscapePressed() );
@@ -884,6 +891,8 @@ Droid_Talk_Options_Menu (void)
 
       while (!key_pressed)
 	{
+	  usleep(50);
+
 	  if ( EscapePressed() )
 	    {
 	      while ( EscapePressed() );
@@ -991,6 +1000,9 @@ enum
 
       while (!key_pressed)
 	{
+
+	  usleep(50);
+
 	  if ( EscapePressed() )
 	    {
 	      while ( EscapePressed() );
@@ -1099,7 +1111,7 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  while (!(SpacePressed() || MouseLeftPressed() || EscapePressed()));
+  while (!(SpacePressed() || MouseLeftPressed() || EscapePressed())) usleep(50);
   while ((SpacePressed() || MouseLeftPressed() || EscapePressed()));
 
   return;
@@ -1781,8 +1793,6 @@ Level_Editor(void)
   return;
 
 } // void Level_Editor(void)
-
-
 
 
 #undef _menu_c
