@@ -43,6 +43,13 @@ Outstanding release-critical bugs (priority: high)
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
+- Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
+  as the current ship.
+
+- Correct the console map:  Do scaling in a way that allows to bring the whole map
+  exactly on the screen and perhaps also give the scaling factor used for generating
+  the map as additional text to the picture.
+
 - (jp) There is still a lot of german in the code.  Since we are growing more and more 
        international, that should be removed and better sooner than later, as well in
        the comments as in the choice of some old variable names, which are from 
