@@ -421,7 +421,9 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
+
   float range_of_vision;
+  float time_spent_eyeing_tux;
   float minimal_range_hostile_bots_are_ignored;
 
   int monster_level;

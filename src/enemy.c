@@ -1884,7 +1884,7 @@ ProcessAttackStateMachine (int enemynum)
       if ( ! ThisRobot -> will_rush_tux )
 	{
 	  ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-	  ThisRobot -> state_timeout = 3.0 ;
+	  ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
 	}
 
       return; 
@@ -1918,7 +1918,10 @@ ProcessAttackStateMachine (int enemynum)
 	      if ( ThisRobot -> is_friendly )
 		{
 		  //--------------------
-		  // No dramatic changes here...
+		  // No dramatic changes here... the bot will just not
+		  // time out eyeing Tux unless the Tux moves away from him
+		  // again...
+		  //
 		  ThisRobot -> state_timeout = 2.0 ; 
 		}
 	      else

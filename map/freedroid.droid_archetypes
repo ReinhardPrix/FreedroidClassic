@@ -88,6 +88,7 @@ Score gained for destroying one of this type: 5
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=3
+Time spent eyeing Tux=3.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.00
 Weight of this droid : 27
@@ -136,7 +137,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 40
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=3.0
+Time spent eyeing Tux=3.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.37
 Weight of this droid : 85
@@ -186,7 +188,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=3.25
+Time spent eyeing Tux=2.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.22
 Weight of this droid : 61
@@ -235,7 +238,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=3.5
+Time spent eyeing Tux=2.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.56
 Weight of this droid : 78
@@ -284,7 +288,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 70
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=3.75
+Time spent eyeing Tux=2.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.63
 Weight of this droid : 83
@@ -333,7 +338,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 90
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=4.0
+Time spent eyeing Tux=2.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.20
 Weight of this droid : 47
@@ -382,7 +388,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 120
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=4.25
+Time spent eyeing Tux=2.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.07
 Weight of this droid : 23
@@ -434,7 +441,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 140
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=4.5
+Time spent eyeing Tux=2.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.07
 Weight of this droid : 31
@@ -483,7 +491,8 @@ Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 180
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=4.75
+Time spent eyeing Tux=2.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.41
 Weight of this droid : 57
@@ -532,7 +541,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=5.0
+Time spent eyeing Tux=2.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.32
 Weight of this droid : 42
@@ -581,7 +591,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 240
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=5.25
+Time spent eyeing Tux=1.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.48
 Weight of this droid : 51
@@ -630,7 +641,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 280
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=5.5
+Time spent eyeing Tux=1.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.57
 Weight of this droid : 74
@@ -679,7 +691,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 320
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=5.75
+Time spent eyeing Tux=1.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.76
 Weight of this droid : 62
@@ -728,7 +741,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 400
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=6.0
+Time spent eyeing Tux=1.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.72
 Weight of this droid : 93
@@ -777,7 +791,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 460
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=6.25
+Time spent eyeing Tux=1.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.93
 Weight of this droid : 121
@@ -826,7 +841,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 500
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=6.5
+Time spent eyeing Tux=1.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.20
 Weight of this droid : 29
@@ -875,7 +891,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 600
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=6.75
+Time spent eyeing Tux=1.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.09
 Weight of this droid : 59
@@ -924,7 +941,8 @@ Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 650
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=7.0
+Time spent eyeing Tux=1.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.93
 Weight of this droid : 102
@@ -973,7 +991,8 @@ Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 700
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=7.25
+Time spent eyeing Tux=0.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 140
@@ -1022,7 +1041,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 800
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=7.5
+Time spent eyeing Tux=0.75
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.93
 Weight of this droid : 227
@@ -1071,7 +1091,8 @@ Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 1000
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=7.75
+Time spent eyeing Tux=0.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.00
 Weight of this droid : 28
@@ -1120,7 +1141,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 1200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=8.0
+Time spent eyeing Tux=0.5
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.10
 Weight of this droid : 34
@@ -1169,7 +1191,8 @@ Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 1500
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=1
-Range of vision of this droid=3
+Range of vision of this droid=8.25
+Time spent eyeing Tux=0.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.62
 Weight of this droid : 79
@@ -1218,7 +1241,8 @@ Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 2000
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3
+Range of vision of this droid=8.5
+Time spent eyeing Tux=0.25
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1268,6 +1292,7 @@ Score gained for destroying one of this type: 500
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=2
 Range of vision of this droid=3
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1317,6 +1342,7 @@ Score gained for destroying one of this type: 800
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=2
 Range of vision of this droid=3
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1366,6 +1392,7 @@ Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1415,6 +1442,7 @@ Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1464,6 +1492,7 @@ Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1513,6 +1542,7 @@ Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
@@ -1562,6 +1592,7 @@ Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=2
+Time spent eyeing Tux=3
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.87
 Weight of this droid : 162
