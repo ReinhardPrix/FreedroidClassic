@@ -44,7 +44,7 @@ The structure of a mission file is simple.
   a building complex somewhere on a planet.
 * A crew file must be specified, where the information which
   droids are to be generated in which levels can be found.
-* A "game.dat" file must be specified, containing all the
+* A "freedroid.ruleset" file must be specified, containing all the
   droid specifications and the constants for the game
   physics.
 * An elevator file must be specified.
@@ -182,10 +182,7 @@ Mission target is to live for how many seconds : -1
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * S**tart of an Event Trigger Subsection *
-Influencer must be at x-coordinate=5
-Influencer must be at y-coordinate=7
-Influencer must be at maplevel=2
-E**vent Action to be triggered by this trigger=0
+Influencer must be at X=2 Y=7 Lev=2
 Event Action to be triggered by this trigger="open_barrier"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
