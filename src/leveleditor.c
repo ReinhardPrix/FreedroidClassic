@@ -430,7 +430,7 @@ Level_Editor(void)
 	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
 
 	      // DropSpecificItemAtPosition( rintf( Me.pos.x ) , rintf( Me.pos.y ) , NewItemCode );
-	      DropItemAt( NewItemCode , rintf( Me.pos.x ) , rintf( Me.pos.y ) );
+	      DropItemAt( NewItemCode , rintf( Me.pos.x ) , rintf( Me.pos.y ) , -1 , -1 );
 	    }
 
 	  //--------------------

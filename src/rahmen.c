@@ -133,10 +133,13 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 
   // --------------------
   // First clear the string and the we print out the item name.  That's simple.
+  // we also add the extension of the name, the 'suffix' to it.
   //
   strcpy( ItemDescText , "" );
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
+  if ( CurItem->suffix_code != (-1) )
+    strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
 
   if ( ForShop )
     {

@@ -2031,13 +2031,14 @@ ThouArtDefeated (void)
   // Now that the influencer is dead, all this precious items
   // spring off of him...
   //
-  DropItemAt ( Me.weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 );
-  DropItemAt ( Me.drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 );
-  DropItemAt ( Me.shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 );
-  DropItemAt ( Me.armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 );
-  DropItemAt ( Me.special_item.type , Me.pos.x - 0.5 , Me.pos.y );
-  DropItemAt ( Me.aux1_item.type , Me.pos.x + 0.5 , Me.pos.y );
-  DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 );
+  DropItemAt ( Me.weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 , -1 , -1 );
+  DropItemAt ( Me.drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 , -1 , -1 );
+  DropItemAt ( Me.shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 , -1 , -1 );
+  DropItemAt ( Me.armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 , -1 , -1 );
+  DropItemAt ( Me.special_item.type , Me.pos.x - 0.5 , Me.pos.y , -1 , -1 );
+  DropItemAt ( Me.aux1_item.type , Me.pos.x + 0.5 , Me.pos.y , -1 , -1 );
+  DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 , -1 , -1 );
+  DropItemAt ( ITEM_MONEY , Me.pos.x , Me.pos.y , -1 , -1 );
 
   while ( SDL_GetTicks()-now < 3000 * WAIT_AFTER_KILLED )
     {
