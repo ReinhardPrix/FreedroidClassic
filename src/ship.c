@@ -443,15 +443,15 @@ PaintConsoleMenu (void)
   // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
   SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 
-  SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
-		 USERFENSTERPOSX + USERFENSTERBREITE,
-		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
-
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
   DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, Outline320x200, FALSE);
+
+  SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
+		 USERFENSTERPOSX + USERFENSTERBREITE,
+		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
 
   strcpy (MenuText, "\nAccess granted.\nShip : ");
   strcat (MenuText, Shipnames[ThisShip]);
@@ -471,8 +471,8 @@ PaintConsoleMenu (void)
    */
 
   DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
-		MenuItemPointer,
-		MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
+		     MenuItemPointer,
+		     MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
 
 
   DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
