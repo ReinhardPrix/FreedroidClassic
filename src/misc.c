@@ -1020,8 +1020,13 @@ LoadSettings()
   // get home-directory to load from
   if ( (homedir = getenv("HOME")) == NULL )
   {
-      DebugPrintf (0, "ERROR loading settings: Environment does not contain HOME variable... \n\
-I need to know that for loading.\n");
+      DebugPrintf ( 0, "\n----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+ERROR loading settings: Environment does not contain HOME variable... \n\
+I need to know that for loading.\n\
+Loading of your settings will be cancelled now.\n\
+No need to panic!  Default settings will be used instead.\n\
+----------------------------------------------------------------------\n");
       return;
   }
 
@@ -1059,7 +1064,7 @@ I need to know that for loading.\n");
   // GameConfig.Theme_SubPath = "lanzz_theme/";
   strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
 
-  DebugPrintf ( 1 , "\nSuccessfully loaded settings file (.freedroid.config) in home directory\n");
+  DebugPrintf ( 0 , "\nSuccessfully loaded settings file (.freedroid.config) in home directory\n");
 
 };
 

@@ -471,16 +471,21 @@ the things soul may finally rest.\n\
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
+
+      /* 
+      // *******************************************************
+      // *** This was the old non-dialog but monolog code... ***
+      // *******************************************************
       Switch_Background_Music_To ( "../speeches/Sorenson01.ogg" );
       ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+      */
 
       //--------------------
       // Now that the SOR has made his first speech, the tux will be
       // assigned the (second and third) mission.
       //
       AssignMission ( 3 );
-      AssignMission ( 1 );
       return;
 
     }
@@ -554,7 +559,13 @@ the things soul may finally rest.\n\
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
-      
+
+      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
+	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
+	{
+	  Me [ 0 ] . RMS_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . RMS_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	}
 
       while (1)
 	{
@@ -643,6 +654,7 @@ the things soul may finally rest.\n\
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Ill_Get_Your_0.wav" , TRUE );
 	      Me [ 0 ] . RMS_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      AssignMission ( 1 ); // this should assign the coffee machine mission...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):

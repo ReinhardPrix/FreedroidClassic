@@ -417,6 +417,7 @@ ReactToSpecialKeys(void)
     {
       GameConfig.Mission_Log_Visible_Time = 0;
       GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
+      DebugPrintf( 0 , "\nMISSION LOG TURNED ON!\n" );
     }
   LPressed_LastFrame = LPressed();
   

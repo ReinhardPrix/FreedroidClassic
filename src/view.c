@@ -267,8 +267,9 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 */
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function should display the currently assigned/unassigned mission
+ * and all that directly over the combat screen without interrupting the
+ * game in any other way.
  * ---------------------------------------------------------------------- */
 void 
 ShowMissionCompletitionMessages( void )
@@ -286,6 +287,7 @@ ShowMissionCompletitionMessages( void )
   // At this point we know, that the quest log is desired and
   // therefore we display it in-game:
   //
+  SDL_SetClipRect( Screen , NULL );
   DisplayText( "See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
 
   for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
