@@ -198,7 +198,7 @@ EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES ];   // A pointer to the s
                                                // enemys in different phases of rotation
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
-EXTERN SDL_Surface *TuxSurfacePointer[ TUX_PHASES ];   // A pointer to the surfaces containing the tux
+EXTERN SDL_Surface *TuxSurfacePointer[ TUX_BREATHE_PHASES + TUX_SWING_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *InfluDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *EnemyDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the

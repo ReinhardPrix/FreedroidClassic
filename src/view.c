@@ -561,11 +561,12 @@ PutInfluence ( int x , int y )
   //
   if ( use_tux )
     {
+      // If we make the angle dependent upon direction of movement we use
       // angle = - ( atan2 (Me.speed.y,  Me.speed.x) * 180 / M_PI + 90 );
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
       tmp_influencer = 
-	rotozoomSurface( TuxSurfacePointer [ ((int) Me.phase) % TUX_PHASES ] , angle , 1.0 , FALSE );
+	rotozoomSurface( TuxSurfacePointer [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
 
       //--------------------
       // The rotation may of course have changed the dimensions of the
