@@ -1031,7 +1031,7 @@ Freedroid received a rotation model number that does not exist!",
   // Maybe we got an image collection file for this enemy?  Then
   // of course we'll use it and not bother with anything else...
   //
-  if ( ( ModelNr == 1 ) || ( ModelNr == 3 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
+  if ( ( ModelNr == 1 ) || ( ModelNr == 3 ) || ( ModelNr == 4 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
   // if ( ( ModelNr == 6 ) )
   {
       grab_enemy_images_from_archive ( ModelNr );
@@ -1525,20 +1525,27 @@ Load_Enemy_Surfaces( void )
   droid_stand_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "249" ; // 4
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 5 ;
-  first_attack_animation_image [ i ] = 6 ;
-  last_attack_animation_image [ i ] = 6 ;
-  first_gethit_animation_image [ i ] = 7 ;
-  last_gethit_animation_image [ i ] = 7 ;
-  first_death_animation_image [ i ] = 8 ;
-  last_death_animation_image [ i ] = 8 ;
-  first_stand_animation_image [ i ] = 9 ;
-  last_stand_animation_image [ i ] = 9 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
+  //--------------------
+  // As the 249 now uses an image collection file, the information
+  // about the first and last animation images will be taken from
+  // the image collection archive anyway, so no need to hard-code
+  // anything here and changes in the image collection file will
+  // take effect immediately without code adaption...
+  //
+  // first_walk_animation_image [ i ] = 1 ;
+  // last_walk_animation_image [ i ] = 5 ;
+  // first_attack_animation_image [ i ] = 6 ;
+  // last_attack_animation_image [ i ] = 6 ;
+  // first_gethit_animation_image [ i ] = 7 ;
+  // last_gethit_animation_image [ i ] = 7 ;
+  // first_death_animation_image [ i ] = 8 ;
+  // last_death_animation_image [ i ] = 8 ;
+  // first_stand_animation_image [ i ] = 9 ;
+  // last_stand_animation_image [ i ] = 9 ;
+  // use_default_attack_image [ i ] = TRUE ;
+  // use_default_gethit_image [ i ] = TRUE ;
+  // use_default_death_image [ i ] = TRUE ;
+  // use_default_stand_image [ i ] = TRUE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
   droid_walk_animation_speed_factor [ i ] = 5 ;
   droid_attack_animation_speed_factor [ i ] = 5 ;
