@@ -887,10 +887,6 @@ InitPictures (void)
 
   DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
 
-  // FIXME: just TESTING white-noise function here!!
-  //  white_noise (ne_screen, &User_Rect);
-  // FIXME
-
   SetCurrentFont (FPS_Display_BFont);
   DisplayText ("Loading Theme config ...", 20, SCREENHEIGHT/3, NULL);
   SDL_Flip (ne_screen);

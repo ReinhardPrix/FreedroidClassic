@@ -1340,6 +1340,8 @@ ThouArtDefeated (void)
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 
+  while (SpacePressed());
+
   now=SDL_GetTicks();
 
   while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) && (!SpacePressed()))

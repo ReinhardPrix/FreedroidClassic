@@ -151,8 +151,6 @@ Assemble_Combat_Picture (int mask)
   int MapBrick;
   int line, col;
   int i;
-  int minutes;
-  int seconds;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
@@ -229,6 +227,8 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
+  SDL_SetClipRect (ne_screen, NULL);  // allow writing outside User_Rect
+
   if ( GameConfig.Draw_Framerate )
     {
       TimeSinceLastFPSUpdate += Frame_Time();
@@ -238,43 +238,24 @@ Assemble_Combat_Picture (int mask)
 	  TimeSinceLastFPSUpdate=0;
 	}
 
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
-
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x + 100, 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Axis: %d %d" , input_axis.x, input_axis.y);
     }
 
   if ( GameConfig.Draw_Energy )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
     }
 
   if ( GameConfig.Draw_Position )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
     }
-
-  if ( Me.mission.MustLiveTime != (-1) )
-    {
-      minutes=floor( ( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) / 60 );
-      seconds= rintf( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) - 60 * minutes;
-      if ( minutes < 0 ) 
-	{
-	  minutes = 0;
-	  seconds = 0;
-	}
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-		       "Time to hold out still: %2d:%2d " , minutes , seconds );
-    }
-
 
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.

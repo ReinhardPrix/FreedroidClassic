@@ -530,7 +530,7 @@ enum
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
 
-      strcpy (theme_string, "Theme: ");
+      strcpy (theme_string, "Tileset: ");
       if (strstr (GameConfig.Theme_SubPath, "default"))
 	strcat (theme_string, "Classic");
       else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
