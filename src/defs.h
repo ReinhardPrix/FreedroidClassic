@@ -548,6 +548,9 @@ enum
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_SECONDS 0.1
 
+#define TUX_MAXSPEED_WITHOUT_DRIVE_ITEM 2
+#define TUX_ACCEL_WITHOUT_DRIVE_ITEM 2
+
 //--------------------
 // direction definitions (fireing bullets and testing blockedness of positions) 
 //

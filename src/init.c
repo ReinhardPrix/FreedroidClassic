@@ -1252,7 +1252,7 @@ http://sourceforge.net/projects/freedroid/\n\n";
  *  exit on error, so we don't need to return success status
  * -----------------------------------------------------------------*/
 void
-parse_command_line (int argc, char *const argv[])
+ParseCommandLine (int argc, char *const argv[])
 {
   int c;
   int timeout_time;		/* timeout to restore text-mode */
@@ -1336,7 +1336,7 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 	}			/* switch(c) */
     }				/* while(1) */
-}				/* parse_command_line */
+}				/* ParseCommandLine */
 
 
 /* ----------------------------------------------------------------------
@@ -1974,7 +1974,7 @@ ClearAutomapData( void )
  * well.
  * ---------------------------------------------------------------------- */
 void 
-Reset_GameConfig_To_Default_Values ( void )
+ResetGameConfigToDefaultValues ( void )
 {
   //--------------------
   // At first we set audio volume to maximum value.
@@ -2054,7 +2054,7 @@ InitFreedroid ( void )
   InventorySize.x = 9;
   InventorySize.y = 6;
 
-  Reset_GameConfig_To_Default_Values ();
+  ResetGameConfigToDefaultValues ();
 
   //Load user config file if it exists...
   LoadGameConfig ();

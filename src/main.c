@@ -73,7 +73,7 @@ main (int argc, char *const argv[])
   mouse_control = TRUE;
   classic_user_rect = FALSE;
 
-  parse_command_line (argc, argv); 
+  ParseCommandLine (argc, argv); 
 
   InitFreedroid ();   // Initialisation of global variables and arrays
 
@@ -147,8 +147,6 @@ main (int argc, char *const argv[])
 	  if ( ! ClientMode )
 	    for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
-
-	  // MoveInfluence ( 0 ) ; // for now, we move only influence nr. 0 
 
 	  UpdateAllCharacterStats ( 0 );
 

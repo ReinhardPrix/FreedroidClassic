@@ -284,7 +284,7 @@ ShowLifts (int level, int liftrow)
   // clear the whole screen
   //ClearGraphMem();
   // fill the user fenster with some color
-  Fill_Rect (User_Rect, lift_bg_color);
+  FillRect (User_Rect, lift_bg_color);
   // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   /* First blit ship "lights off" */

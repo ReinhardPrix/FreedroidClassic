@@ -1262,7 +1262,7 @@ settings file will be generated.\n\
 However, if the problem continues, please inform the freedroid developers\n\
 about it, as always, best send e-mail to freedroid-discussion@lists.sourceforge.net.\n\
 ----------------------------------------------------------------------\n" , fname );
-      Reset_GameConfig_To_Default_Values (  );
+      ResetGameConfigToDefaultValues (  );
       return (ERR);
     };
 

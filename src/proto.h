@@ -43,10 +43,10 @@ EXTERN int ShipEmptyCounter;
 #else
 #define EXTERN extern
 #endif
-EXTERN void Reset_GameConfig_To_Default_Values ( void );
+EXTERN void ResetGameConfigToDefaultValues ( void );
 EXTERN void ShowStartupPercentage ( int Percentage ) ;
 EXTERN void AssignMission( int MissNum );
-EXTERN void parse_command_line (int argc, char *const argv[]);
+EXTERN void ParseCommandLine (int argc, char *const argv[]);
 EXTERN void Title ( char *MissionBriefingPointer );
 EXTERN void EndTitle (void);
 EXTERN void ClearAutomapData( void );
@@ -70,7 +70,7 @@ EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
 EXTERN void FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
 EXTERN void MoveInfluence ( int PlayerNum ) ;
-EXTERN void AdjustSpeed ( int PlayerNum ) ;
+EXTERN void AdjustTuxSpeed ( int PlayerNum ) ;
 EXTERN void CheckInfluenceWallCollisions ( int PlayerNum ) ;
 EXTERN void InfluenceFrictionWithAir ( int PlayerNum ) ;
 EXTERN void CheckEnergieLevel (void);
@@ -103,7 +103,7 @@ EXTERN void CheckBlastCollisions (int num);
 #else
 #define EXTERN extern
 #endif
-EXTERN void Fill_Rect (SDL_Rect rect, SDL_Color color);
+EXTERN void FillRect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void Assemble_Combat_Picture (int );

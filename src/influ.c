@@ -164,7 +164,7 @@ CheckIfCharacterIsStillOk ( int PlayerNum )
 
 	  if ( !ServerMode ) ThouArtDefeated ();
 	  
-	  DebugPrintf (2, "\nvoid MoveInfluence(void):  Alternate end of function reached.");
+	  DebugPrintf (2, "\nvoid CheckIfCharacterIsStillOk( int PlayerNum ):  Alternate end of function reached.");
 	  return;
 	}
     }
@@ -193,7 +193,14 @@ MoveInfluence ( int PlayerNum )
   if ( Me [ PlayerNum ] . status == OUT ) return;
   // if ( Me [ PlayerNum ] . energy <= 0 ) return;
 
-  accel = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel * Frame_Time( ) ;
+  if ( Me [ PlayerNum ] .drive_item.type != (-1) )
+    {
+      accel = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel * Frame_Time( ) ;
+    }
+  else
+    {
+      accel = TUX_ACCEL_WITHOUT_DRIVE_ITEM * Frame_Time( ) ;
+    }
 
   //--------------------
   // We store the influencers position for the history record and so that others
@@ -215,8 +222,8 @@ MoveInfluence ( int PlayerNum )
   // drive unit present!!!  Otherwise only a comment will be
   // printed out!!
   //
-  if ( Me [ PlayerNum ] . drive_item . type != (-1) )
-    {
+  // if ( Me [ PlayerNum ] . drive_item . type != (-1) )
+  // {
 
       //--------------------
       // As a preparation for the later operations, we see if there is
@@ -360,12 +367,16 @@ MoveInfluence ( int PlayerNum )
 	    }
 
 	}
-    }
-  else
+      // }
+     
+      /*
+     else
     {
       Me [ PlayerNum ] .TextVisibleTime = 0;
       Me [ PlayerNum ] .TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
     }
+      */
+
 
   //--------------------
   // As long as the tux is still alive, his status will be either
@@ -411,7 +422,7 @@ MoveInfluence ( int PlayerNum )
   //
   if ( Me [ PlayerNum ] . mouse_move_target . x == (-1) ) InfluenceFrictionWithAir ( PlayerNum ) ; 
 
-  AdjustSpeed ( PlayerNum ) ;  // If the influ is faster than allowed for his type, slow him
+  AdjustTuxSpeed ( PlayerNum ) ;  // If the influ is faster than allowed for his type, slow him
 
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
@@ -564,7 +575,7 @@ Sorry...\n\
     }
 
 
-}; // void MoveInfluence( void );
+}; // void MoveInfluence( int PlayerNum );
 
 
 /* ----------------------------------------------------------------------
@@ -684,7 +695,9 @@ CheckInfluenceWallCollisions ( int PlayerNum )
   if ( Me [ PlayerNum ] . status == OUT ) return;
   if ( Me [ PlayerNum ] . energy <= 0   ) return;
 
-  maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
+  if ( Me [ PlayerNum ] .drive_item.type != (-1) )
+    maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
+  else maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
 
   lastpos.x = Me [ PlayerNum ] .pos.x - SX;
   lastpos.y = Me [ PlayerNum ] .pos.y - SY;
@@ -801,9 +814,18 @@ CheckInfluenceWallCollisions ( int PlayerNum )
  * possible for the influencer (determined by the currely used drive type).
  * ---------------------------------------------------------------------- */
 void
-AdjustSpeed ( int PlayerNum )
+AdjustTuxSpeed ( int PlayerNum )
 {
-  double maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
+  double maxspeed;
+
+  if ( Me [ PlayerNum ] .drive_item.type != (-1) )
+    {
+      maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
+    }
+  else
+    {
+      maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
+    }
 
   if (Me [ PlayerNum ] .speed.x > maxspeed)
     Me [ PlayerNum ] .speed.x = maxspeed;

@@ -159,7 +159,7 @@ Takeover (int enemynum)
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
-  //  Fill_Rect (User_Rect, to_bg_color);
+  //  FillRect (User_Rect, to_bg_color);
 
   Me[0].status = MOBILE; /* the new status _after_ the takeover game */
 
@@ -817,7 +817,7 @@ ShowPlayground ()
   if (to_background)
     SDL_BlitSurface (to_background, NULL, Screen, NULL);
   else
-    Fill_Rect (User_Rect, to_bg_color);  /* fallback if now background pic found */
+    FillRect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y, 0 );

@@ -1447,7 +1447,7 @@ Sorry...\n\
 void
 FlashWindow (SDL_Color Flashcolor)
 {
-  Fill_Rect( User_Rect, Flashcolor);
+  FillRect( User_Rect, Flashcolor);
 }; // void FlashWindow(int Flashcolor)
 
 
@@ -1455,7 +1455,7 @@ FlashWindow (SDL_Color Flashcolor)
  * Fill given rectangle with given RBG color
  * ----------------------------------------------------------------- */
 void
-Fill_Rect (SDL_Rect rect, SDL_Color color)
+FillRect (SDL_Rect rect, SDL_Color color)
 {
   Uint32 pixcolor;
   SDL_Rect tmp;
@@ -1467,7 +1467,7 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
   SDL_FillRect (Screen, &tmp, pixcolor);
   
   return;
-}; // void Fill_Rect (SDL_Rect rect, SDL_Color color)
+}; // void FillRect (SDL_Rect rect, SDL_Color color)
 
 /* ----------------------------------------------------------------------
  * This function displays a robot picture.  This does NOT mean a
