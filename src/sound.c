@@ -147,7 +147,7 @@ Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 // ---------------------------------------------------------------------
 void channelDone(int channel) {
 
-  DebugPrintf( 0 , "\nCALLBACK FUNCTION INVOKED:  channel %d finished playback.\n" , channel );
+  DebugPrintf( 1 , "\nCALLBACK FUNCTION INVOKED:  channel %d finished playback.\n" , channel );
 
   //--------------------
   // Maybe the PlayOnceNeededSoundSample function was called with argument 'non-wait',
@@ -161,7 +161,7 @@ void channelDone(int channel) {
     {
 
 #ifdef HAVE_LIBSDL_MIXER
-      DebugPrintf( 0 , "\nCALLBACK FUNCTION:  Detected soundchannel for sustained release.... freeing chunk..." );
+      DebugPrintf( 1 , "\nCALLBACK FUNCTION:  Detected soundchannel for sustained release.... freeing chunk..." );
       Mix_FreeChunk ( List_Of_Sustained_Release_WAV_Files[ channel ] );
 #endif
 
@@ -323,7 +323,7 @@ either terminate or continue running now.",
     } // if ( !Loaded_WAV...
   else
     {
-      DebugPrintf ( 0 , "\nSuccessfully loaded file %s into memory for playing once, filename is %s ." , 
+      DebugPrintf ( 1 , "\nSuccessfully loaded file %s into memory for playing once, filename is %s ." , 
 		    SoundSampleFileName , fpath );
     }
 
@@ -345,7 +345,7 @@ The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING O
   else
     {
       SoundChannelList[ Newest_Sound_Channel ] = 1;
-      DebugPrintf( 0 , "\nSuccessfully playing the 'ONCE NEEDED' file %s.", SoundSampleFileName ) ;
+      DebugPrintf( 1 , "\nSuccessfully playing the 'ONCE NEEDED' file %s.", SoundSampleFileName ) ;
     }
 
   //--------------------
@@ -562,20 +562,14 @@ not complain any more.",
       DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
     }
 
-  // LoadAllStaticWavFiles();
-
-  // LoadAllStaticModFiles();
-
   //--------------------
   // Since we don't want some sounds to be omitted due to lack of mixing
   // channels, we select to have some at our disposal.  The SDL will do this
   // for a small increase in memory appetite as the price.  Whether this will
   // really resolve the problem however is unsure.
   //
-  DebugPrintf( 0 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 20 ) );
+  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 20 ) );
 
-  // DebugPrintf (1, "done.");
-  // fflush(stdout);
 #endif // HAVE_SDL_MIXER
 }; // void InitAudio(void)
 

@@ -1038,8 +1038,7 @@ LoadThemeConfigurationFile(void)
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
-  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile: Data will be taken from file %s.  Commencing...\n " 
-		, fpath );
+  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile: Data will be taken from file %s.  Commencing...\n " , fpath );
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 

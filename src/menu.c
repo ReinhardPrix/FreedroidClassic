@@ -366,7 +366,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 		}
 	      if ( MenuSelection == use_counter ) 
 		{
-		  DebugPrintf( 0 , "\nOriginal MenuSelect: %d. \nTransposed MenuSelect: %d." , 
+		  DebugPrintf( 1 , "\nOriginal MenuSelect: %d. \nTransposed MenuSelect: %d." , 
 			       MenuSelection , i+1 );
 		  return ( i+1 );
 		}
@@ -421,7 +421,7 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
     }
 
   TextLinesNeeded = i + 1 ;
-  DebugPrintf ( 0 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
+  DebugPrintf ( 1 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
 
   //--------------------
   // Now that we have found our solution, we can restore everything back to normal
@@ -470,7 +470,7 @@ MaxLinesInMenuRectangle;
   Choice_Window . x = 35; Choice_Window . y = 340; Choice_Window . w = 640 - 70; Choice_Window . h = 110;
   MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
   MaxLinesInMenuRectangle = 5;
-  DebugPrintf ( 0 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
+  DebugPrintf ( 1 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
 
   //--------------------
   // We make sure the mouse cursor is visible, so that the user can

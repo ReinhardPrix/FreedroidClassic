@@ -750,7 +750,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      //
 	      if ( Whole_Image == NULL )
 		{
-		  DebugPrintf ( 0 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying 'classic' dir..." );
+		  DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying 'classic' dir..." );
 		  sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -758,7 +758,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 
 	      if ( Whole_Image == NULL )
 		{
-		  DebugPrintf ( 0 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
+		  DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
 		  sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -773,7 +773,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    {
 	      NumberOfImagesInThisRotation = i ;
 	      NumberOfImagesInPreviousRotation = NumberOfImagesInThisRotation ;
-	      DebugPrintf ( 0 , "\nDONE LOADING ITEM IMAGE SERIES.  Loaded %d images into memory." , 
+	      DebugPrintf ( 1 , "\nDONE LOADING ITEM IMAGE SERIES.  Loaded %d images into memory." , 
 			    NumberOfImagesInThisRotation );
 
 	      //--------------------

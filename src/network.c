@@ -339,7 +339,7 @@ The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.",
     }
   else
     {
-      DebugPrintf( 0 , "\nSDL Net initialisation.\n" );
+      DebugPrintf( 1 , "\nSDL Net initialisation successful.\n" );
     }
 
   //--------------------
@@ -369,7 +369,7 @@ The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.",
     }
   else
     {
-      DebugPrintf ( 0 , "\nSet of client sockets established successfully.\n" );
+      DebugPrintf ( 1 , "\nSet of client sockets established successfully.\n" );
     }
 
   //--------------------
@@ -387,7 +387,7 @@ The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.",
     }
   else
     {
-      DebugPrintf ( 0 , "\nSet of the one server sockets established successfully.\n" );
+      DebugPrintf ( 1 , "\nSet of the one server sockets established successfully.\n" );
     }
 
 

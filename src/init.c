@@ -340,7 +340,7 @@ than the maximum allowance for item types in the ALL_ITEMS constant.",
   ReadValueFromString( DataPointer ,  "Common factor for all melee weapons damage values:" , "%f" , 
 		       &melee_weapon_damage_calibrator , EndOfItemData );
 
-  DebugPrintf ( 0 , "\nCommon bullet speed factor: %f.\nCommon bullet damage factor: %f.\nCommon melee damage factor: %f.\n", ranged_weapon_speed_calibrator, ranged_weapon_damage_calibrator , melee_weapon_damage_calibrator );
+  DebugPrintf ( 1 , "\nCommon bullet speed factor: %f.\nCommon bullet damage factor: %f.\nCommon melee damage factor: %f.\n", ranged_weapon_speed_calibrator, ranged_weapon_damage_calibrator , melee_weapon_damage_calibrator );
 
   while ( (ItemPointer = strstr ( ItemPointer, NEW_ITEM_TYPE_BEGIN_STRING )) != NULL)
     {
