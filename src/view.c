@@ -164,6 +164,7 @@ ShowAutomapData( void )
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
       if ( AllEnemys [ i ] . Status  == OUT ) continue;
+      if ( AllEnemys [ i ] . type == (-1) ) continue;
       if ( AllEnemys [ i ] . pos . z != AutomapLevel -> levelnum ) continue;
 
       for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
@@ -947,6 +948,31 @@ PutEnemy (int Enum , int x , int y)
     {
       // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
+    }
+
+  // if the enemy is outside of the current map, that's an error and needs to be correted.
+  if ( ( AllEnemys[Enum]. pos . x <= 0 ) || 
+       ( AllEnemys[Enum]. pos . x >= curShip.AllLevels[ AllEnemys[Enum].pos.z ]->xlen ) ||
+       ( AllEnemys[Enum]. pos . y <= 0 ) || 
+       ( AllEnemys[Enum]. pos . y >= curShip.AllLevels[ AllEnemys[Enum].pos.z ]->ylen ) )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was a droid found outside the bounds of this level.\n\
+\n\
+This is an error and should not occur, but most likely it does since\n\
+the bots are allowed some motion without respect to existing waypoints\n\
+in Freedroid RPG.  \n\
+\n\
+But for now we'll choose not to worry and delete the bots that have\n\
+somehow gotten outside of the map.\n\
+----------------------------------------------------------------------\n\
+\n" );
+      AllEnemys[Enum].type = (-1) ;
+      AllEnemys[Enum].Status = (OUT) ;
+      // Terminate(ERR);
     }
 
   // if the enemy is out of signt, we need not do anything more here

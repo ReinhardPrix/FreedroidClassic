@@ -1991,7 +1991,7 @@ ReviveAllDroidsOnShip ( void )
       type = AllEnemys[i].type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = !OUT;
+      AllEnemys[i].Status = MOBILE; // !OUT;
       AllEnemys[i].has_greeted_influencer = FALSE ;
     }
 }; // void ReviveAllDroidsOnShip ( void )
@@ -2417,7 +2417,7 @@ Sorry...\n\
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
+      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
 
     }  // while (enemy-limit of this level not reached) 
 
@@ -2493,7 +2493,7 @@ Sorry...\n\
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;
+      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
 
       //--------------------

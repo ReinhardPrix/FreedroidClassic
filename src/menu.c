@@ -597,24 +597,29 @@ Cheatmenu (void)
 		    {
 		      ClearGraphMem ();
 		      printf_SDL (Screen, x0, y0,
-				   " NR.   ID  X    Y   ENERGY   speedX\n");
+				   " NR.   ID  X    Y   ENERGY   speedX Status\n");
 		      printf_SDL (Screen, -1, -1,
 				  "---------------------------------------------\n");
 		    }
 		  
 		  l ++;
-		  printf_SDL (Screen, -1, -1,
-			      "%d.   %s   %d   %d   %d    %g.\n", i,
+		  printf_SDL (Screen, 15, -1,
+			      "%d.   %s   %d   %d   %d    %g ", i,
 			       Druidmap[AllEnemys[i].type].druidname,
 			       (int)AllEnemys[i].pos.x,
 			       (int)AllEnemys[i].pos.y,
 			       (int)AllEnemys[i].energy,
-			       AllEnemys[i].speed.x);
+			       AllEnemys[i].speed.x );
+		  if ( AllEnemys[i].Status == MOBILE ) printf_SDL (Screen, -1, -1, "MOB" );
+		  else if ( AllEnemys[i].Status == OUT ) printf_SDL (Screen, -1, -1, "OUT" );
+		  else printf_SDL (Screen, -1, -1, "ERROR-UNKNOWN" );
+		  printf_SDL (Screen, -1, -1, "\n" );
+
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 
-	  printf_SDL (Screen, -1, -1," --- END --- \n");
-	  printf_SDL (Screen, -1, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
+	  printf_SDL (Screen, 15, -1," --- END --- \n");
+	  printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
 	  getchar_raw ();
 	  break;
 
