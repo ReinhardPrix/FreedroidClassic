@@ -896,7 +896,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
-	  MenuItemSelectedSound();
+	  MenuItemDeselectedSound();
 	  return ( -1 );
 	}
       if ( EnterPressed() || SpacePressed() ) 

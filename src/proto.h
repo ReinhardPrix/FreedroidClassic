@@ -225,6 +225,7 @@ EXTERN void TransferSound (void);
 EXTERN void RefreshSound (void);
 EXTERN void MoveLiftSound (void);
 EXTERN void MenuItemSelectedSound (void);
+EXTERN void MenuItemDeselectedSound (void);
 EXTERN void MoveMenuPositionSound (void);
 EXTERN void EnterLiftSound (void);
 EXTERN void LeaveLiftSound (void);

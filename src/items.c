@@ -472,7 +472,7 @@ DamageItem( item* CurItem )
   if ( ( CurItem->type != (-1) ) &&
        ( CurItem->max_duration != (-1) ) )
     {
-      CurItem->current_duration -= 0.003 * MyRandom( 100 ) ;
+      CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
 
       //--------------------
       // If the item has gone over it's threshhold of duration, it finally
