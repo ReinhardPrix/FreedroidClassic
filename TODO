@@ -8,10 +8,6 @@ Release TODO
 (done)- write a HappyPenguin announcement
 (done)- update INSTALL-instructions, README, News etc..
 
-- produce the .tar.gz archive and test it
-- playtest on all possible machines
-- ? produce binary .tgz, rpm's and .deb packages? (later)
-
 Bugs
 =======
 
