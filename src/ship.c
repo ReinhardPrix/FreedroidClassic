@@ -370,6 +370,28 @@ EnterCodepanel (void)
 	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
 	    {
 	    case LOCKED_H_ZUTUERE:
+	      CurLevel->map[ map_y ] [ map_x + 1 ] = H_ZUTUERE;
+	      break;
+	    case LOCKED_V_ZUTUERE:
+	      CurLevel->map[ map_y ] [ map_x + 1 ] = V_ZUTUERE;
+	      break;
+	    default:
+	      break;
+	    }
+	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
+	    {
+	    case LOCKED_H_ZUTUERE:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_ZUTUERE;
+	      break;
+	    case LOCKED_V_ZUTUERE:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = V_ZUTUERE;
+	      break;
+	    default:
+	      break;
+	    }
+	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
+	    {
+	    case LOCKED_H_ZUTUERE:
 	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_ZUTUERE;
 	      break;
 	    case LOCKED_V_ZUTUERE:

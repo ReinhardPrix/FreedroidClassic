@@ -1928,6 +1928,78 @@ Level_Editor(void)
 	    }
 
 	  //--------------------
+	  // With the 'P' key, you can edit the codepanel codeword attached to any 
+	  // codepanel.  Of course the cursor must be positioned at this codepanel
+	  // so the feature can work.
+	  //
+	  if ( PPressed () )
+	    {
+	      while (PPressed());
+	      SetCurrentFont( FPS_Display_BFont );
+
+	      // First we check if we really are directly on a codepanel:
+	      switch ( CurLevel->map [ (int)rintf( Me.pos.y) ] [ (int)rintf( Me.pos.x ) ] )
+		{
+		case CODEPANEL_L:
+		case CODEPANEL_R:
+		case CODEPANEL_U:
+		case CODEPANEL_D:
+
+		  // If yes, we ask for the new codepanel keyword
+		  DisplayText ( "\n Please enter new codepanel codeword: \n" , -1 , -1 , &User_Rect );
+		  SDL_Flip( ne_screen );
+		  NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+
+		  // Now we see if a codepanel entry is existing already for this square
+		  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+		    {
+		      if ( ( CurLevel->CodepanelList[ i ].x == (int)rintf( Me.pos.x) ) &&
+			   ( CurLevel->CodepanelList[ i ].y == (int)rintf( Me.pos.y) ) ) break;
+		    }
+		  if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
+		    {
+		      DisplayText ( "\nNo existing codepanel entry found...\n" , -1 , -1 , &User_Rect );
+		      i=0;
+		      for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+			{
+			  if ( CurLevel->CodepanelList[ i ].x == (-1) )
+			    break;
+			}
+		      if ( i >= MAX_CODEPANELS_PER_LEVEL )
+			{
+			  DisplayText ( "\nNo more free codepanel entry found... using first\n" , -1 , -1 , &User_Rect );
+			  i = 0;
+			}
+		      else
+			{
+			  DisplayText ( "\nUsing new codepanel list entry...\n" , -1 , -1 , &User_Rect );
+			}
+		      // Terminate( ERR );
+		    }
+		  else
+		    {
+		      DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
+
+		    }
+		  CurLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
+		  CurLevel->CodepanelList[ i ].x = rintf( Me.pos.x );
+		  CurLevel->CodepanelList[ i ].y = rintf( Me.pos.y );
+
+
+		  SDL_Flip ( ne_screen );
+		  getchar_raw();
+		  
+		  break;
+		default:
+		  DisplayText ( "\nBut you are not on a codepanel!!\n" , -1 , -1 , &User_Rect );
+		  SDL_Flip( ne_screen );
+		  getchar_raw();
+		  break;
+		}
+	      
+	    }
+
+	  //--------------------
 	  // Since the level editor will not always be able to
 	  // immediately feature all the the map tiles that might
 	  // have been added recently, we should offer a feature, so that you can
