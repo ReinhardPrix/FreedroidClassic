@@ -211,14 +211,14 @@ enum _sounds
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 
-#define WAIT_LEVELEMPTY		1.0	/* warte bevor Graufaerben (in seconds)*/
-#define WAIT_AFTER_KILLED	1500  // time (in ms) to wait and still display pictures after the destruction of 
+#define WAIT_LEVELEMPTY		1.0  /* warte bevor Graufaerben (in seconds)*/
+#define WAIT_AFTER_KILLED	2000 // time (in ms) to wait and still display pictures after the destruction of 
 #define SHOW_WAIT           3500   // std amount of time to show something
                                    // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
-					   stand still with space pressed, before switching into transfermode 
-					   This variable describes the amount in SECONDS */
+#define WAIT_TRANSFERMODE	0.3   /* this is a "float" indicating the number of seconds the influence 
+					 stand still with space pressed, before switching into transfermode 
+					 This variable describes the amount in SECONDS */
 #define WAIT_COLLISION		1 // after a little collision with influ, enemys hold position for a while
                                   // this variable describes the amount of time in SECONDS 
 #define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a

@@ -424,21 +424,17 @@ char *StructToMem(Level Lev)
   char linebuf[81];		/* Buffer */
   char HumanReadableMapLine[10000]="Hello, this is gonna be a made into a readable map-string.";
   
-  /* Get the number of waypoints */
-  anz_wp = 0;
-  while( Lev->AllWaypoints[anz_wp++].x != 0 );
-  anz_wp --;		/* we counted one too much */
+  anz_wp = Lev->num_waypoints;
 		
   /* estimate the amount of memory needed */
   MemAmount = (xlen+1) * ylen; 	/* Map-memory */
-  MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
-  MemAmount += 500000;		/* Puffer fuer Dimensionen, mark-strings .. */
+  MemAmount += anz_wp * MAX_WP_CONNECTIONS * 4;
+  MemAmount += 50000;		/* Puffer fuer Dimensionen, mark-strings .. */
   
   /* allocate some memory */
   if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
     DebugPrintf(1, "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
     Terminate(ERR);
-    return NULL;
   }
 
   // Write the data to memory:
@@ -477,7 +473,7 @@ char *StructToMem(Level Lev)
 
   // There might be LEADING -1 entries in front of other connection entries.
   // This is unwanted and shall be corrected here.
-  CheckWaypointIntegrity( Lev );
+  //  CheckWaypointIntegrity( Lev );
 
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
@@ -491,13 +487,14 @@ char *StructToMem(Level Lev)
       for( j=0; j<MAX_WP_CONNECTIONS; j++) 
 	{
 	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	  strcat(LevelMem, linebuf);
 	  if (Lev->AllWaypoints[i].connections[j] == -1)
 	    break;
-	  
-	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");
     } /* for waypoints */
+  sprintf(linebuf, "Nr.=%3d x=  -1 y=  -1 \n", Lev->num_waypoints);  // end of waypoints marker
+  strcat( LevelMem, linebuf );
   
   strcat(LevelMem, LEVEL_END_STRING);
   strcat(LevelMem, "\n----------------------------------------------------------------------\n");
@@ -508,11 +505,10 @@ char *StructToMem(Level Lev)
     {
       printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
       Terminate(ERR);
-      return NULL;
     } 
   
   /* all ok : */
-  return LevelMem;
+  return (LevelMem);
   
 } /* Struct to Mem */
 

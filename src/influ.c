@@ -685,10 +685,8 @@ ExplodeInfluencer (void)
 	  Terminate(ERR);
 	}
       AllBlasts[counter].type = DRUIDBLAST;
-      AllBlasts[counter].PX =
-	Me.pos.x - Droid_Radius / 2 + MyRandom (10)*0.05;
-      AllBlasts[counter].PY =
-	Me.pos.y - Droid_Radius / 2 + MyRandom (10)*0.05;
+      AllBlasts[counter].PX = Me.pos.x - Droid_Radius / 2 + MyRandom (10)*0.05;
+      AllBlasts[counter].PY = Me.pos.y - Droid_Radius / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }
 

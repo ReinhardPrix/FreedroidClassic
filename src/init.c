@@ -1073,42 +1073,48 @@ ThouArtVictorious(void)
 void
 ThouArtDefeated (void)
 {
-  int now;
-
-  // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
-  Activate_Conservative_Frame_Computation ();
+  Uint32 now;
 
   Me.status = TERMINATED;
   SDL_ShowCursor (SDL_DISABLE);
-  ThouArtDefeatedSound ();
+
   ExplodeInfluencer ();
 
-  now=SDL_GetTicks();
+  now = SDL_GetTicks();
 
   while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )
     {
+      // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPSover1
+      FPSover1 *= 2.0;
+
+      StartTakingTimeForFPSCalculation();
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+      ComputeFPSForThisFrame ();
     }
   
   Mix_HaltMusic ();
 
+  // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
+  Activate_Conservative_Frame_Computation ();
+
   white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
 
-  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+  Assemble_Combat_Picture (DO_SCREEN_UPDATE);
   MakeGridOnScreen (&User_Rect);
 
   ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+  ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);
   DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
-  now=SDL_GetTicks();
-  while (  (SDL_GetTicks() - now < SHOW_WAIT) ); 
+
+  usleep(1000*SHOW_WAIT);
 
   UpdateHighscores ();
 

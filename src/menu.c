@@ -50,7 +50,7 @@ void Level_Editor(void);
 #define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 #define OPTIONS_MENU_ITEM_POS_X (UserCenter_x - 120)
-#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_X 0.0
 #define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 
 EXTERN int MyCursorX;
@@ -1256,16 +1256,17 @@ Show_Waypoints(void)
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
       //
-      for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
-	{
-	  if ( CurLevel->AllWaypoints[wp].connections[i] == -1 )
-	    break;
-	  else if ( (BlockX == CurLevel->AllWaypoints[wp].x) && (BlockY == CurLevel->AllWaypoints[wp].y) )
-	    DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-				  CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				  CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
-				  color );
-	}
+      if ( (BlockX == CurLevel->AllWaypoints[wp].x) && (BlockY == CurLevel->AllWaypoints[wp].y) )
+	for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
+	  {
+	    if ( CurLevel->AllWaypoints[wp].connections[i] == -1 )
+	      break;
+	    else
+	      DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
+				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+				    color );
+	  }
     }
   SDL_UnlockSurface( ne_screen );
 
@@ -1300,10 +1301,11 @@ Level_Editor(void)
   char* OldMapPointer;
   bool key_pressed;
   SDL_Rect rect;
+  int xoffs = 110;
   int KeymapOffset = 15;
 
   enum { 
-    SAVE_LEVEL_POSITION=1, 
+    BACK = 1,
     CHANGE_LEVEL_POSITION, 
     CHANGE_COLOR,
     CHANGE_SIZE_X, 
@@ -1311,7 +1313,9 @@ Level_Editor(void)
     SET_LEVEL_NAME, 
     SET_BACKGROUND_SONG_NAME, 
     SET_LEVEL_COMMENT, 
-    BACK};
+    SAVE_LEVEL_POSITION,
+    LAST
+    };
   
   Copy_Rect (User_Rect, rect);
   Copy_Rect (Full_User_Rect, User_Rect);
@@ -1393,9 +1397,9 @@ Level_Editor(void)
 	  if ( EPressed () )
 	    {
 	      while (EPressed());
-	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value: ");
 	      SDL_Flip( ne_screen );
-	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      NumericInputString = GetString (10, 2); 
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
 	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
@@ -1648,8 +1652,6 @@ Level_Editor(void)
       InitiateMenu (FALSE);
       while (!Weiter)
 	{
-	  int xoffs = 110;
-
 	  usleep(50);
 
 	  key_pressed = FALSE;
@@ -1668,7 +1670,8 @@ Level_Editor(void)
 	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*fheight);
 
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*fheight, 
-		       "Save ship as  'Testship.shp'");
+		       "Quit Level Editor");
+
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
 		       "Current: %d.  Level +/-" , CurLevel->levelnum );
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
@@ -1684,8 +1687,8 @@ Level_Editor(void)
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*fheight, 
 		       "Level Comment: %s" , CurLevel->Level_Enter_Comment );
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*fheight, 
-		       "Quit Level Editor");
-	  
+		       "Save ship as  'Testship.shp'");
+
 	  SDL_Flip ( ne_screen );
 	  
 	  while (!key_pressed)
@@ -1708,7 +1711,7 @@ Level_Editor(void)
 		  
 		    case SAVE_LEVEL_POSITION:
 		      SaveShip("Testship");
-		      CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		      CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
 		      SDL_Flip ( ne_screen );
 		      while (!(SpacePressed() || MouseLeftPressed())); 
 		      while ((SpacePressed() || MouseLeftPressed()));
@@ -1718,24 +1721,21 @@ Level_Editor(void)
 		    case CHANGE_COLOR:
 		      break;
 		    case SET_LEVEL_NAME:
-		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("New level name: ",
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 				   &Full_User_Rect);
 		      SDL_Flip( ne_screen );
-		      CurLevel->Levelname=GetString(15, FALSE );
+		      CurLevel->Levelname = GetString(15, 2);
 		      Weiter=!Weiter;
 		      break;
 		    case SET_BACKGROUND_SONG_NAME:
-		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("Bg music filename: ", 
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 				   &Full_User_Rect);
 		      SDL_Flip( ne_screen );
-		      CurLevel->Background_Song_Name=GetString(20 , FALSE );
+		      CurLevel->Background_Song_Name=GetString(20, 2);
 		      break;
 		    case SET_LEVEL_COMMENT:
-		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		      DisplayText ("New level-comment :",
 				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 				   &Full_User_Rect);
@@ -1779,6 +1779,7 @@ Level_Editor(void)
 			}
 		      
 		      SetCombatScaleTo ( CurrentCombatScaleFactor );
+		      InitiateMenu(FALSE);
 		      break;
 		  
 		    case CHANGE_COLOR:
@@ -1815,6 +1816,8 @@ Level_Editor(void)
 			  // allocation of new memory or things like that are not nescessary.
 			  while (LeftPressed());
 			}
+
+		      InitiateMenu (FALSE);
 		      break;
 		  
 		    case CHANGE_SIZE_Y:
@@ -1838,6 +1841,8 @@ Level_Editor(void)
 			  // allocation of new memory or things like that are not nescessary.
 			  while (LeftPressed());
 			}
+
+		      InitiateMenu (FALSE);
 		      break;
 		  
 		    }
@@ -1848,14 +1853,14 @@ Level_Editor(void)
 	      if (UpPressed() || WheelUpPressed ()) 
 		{
 		  if (MenuPosition > 1) MenuPosition--;
-		  else MenuPosition = BACK;
+		  else MenuPosition = LAST-1;
 		  MoveMenuPositionSound();
 		  while (UpPressed());
 		  key_pressed = TRUE;
 		}
 	      if (DownPressed() || WheelDownPressed ()) 
 		{
-		  if ( MenuPosition < BACK ) MenuPosition++;
+		  if ( MenuPosition < LAST-1 ) MenuPosition++;
 		  else MenuPosition = 1;
 		  MoveMenuPositionSound();
 		  while (DownPressed());
