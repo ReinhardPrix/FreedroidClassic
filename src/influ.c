@@ -822,7 +822,7 @@ FireBullet ( int PlayerNum )
   moderately_finepoint Weapon_Target_Vector;
   float angle;
 
-  DebugPrintf ( 0 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
+  DebugPrintf ( 2 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
 
   // If the currently overtaken droid doesn't have a weapon at all, just return
   // if ( Me [ PlayerNum ] .weapon_item.type == (-1) ) return;

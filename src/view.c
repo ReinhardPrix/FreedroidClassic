@@ -1323,7 +1323,7 @@ ShowInventoryScreen( void )
   //--------------------
   // Now we display all the items the influencer is carrying with him
   //
-  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
+  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY -1 ; SlotNum ++ )
     {
       // In case the item does not exist at all, we need not do anything more...
       if ( Me[0].Inventory[ SlotNum ].type == ( -1 ) ) 
