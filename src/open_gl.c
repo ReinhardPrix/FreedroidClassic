@@ -833,7 +833,7 @@ safely_set_some_open_gl_flags_and_shade_model ( void )
     glDisable ( GL_LIGHTING );
     glDisable ( GL_TEXTURE_1D );
     glDisable ( GL_TEXTURE_2D );
-    glDisable ( GL_TEXTURE_3D );
+    glDisable ( GL_TEXTURE_3D_EXT );
     glShadeModel ( GL_FLAT );
     
     //--------------------
