@@ -1849,6 +1849,7 @@ InitNewMissionList ( char *MissionName )
   Me [ 0 ] . ranged_weapon_skill = 0 ;
   Me [ 0 ] . spellcasting_skill = 0 ;
   Me [ 0 ] . hacking_skill = 0 ;
+  Me [ 0 ] . repair_skill = 0 ;
 
   UpdateAllCharacterStats( 0 );
 

@@ -766,6 +766,10 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me[0].AC );
   DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
 
+  //--------------------
+  // Now we print out the current skill levels in hacking skill, 
+  // spellcasting, melee combat, ranged weapon combat and repairing things
+  //
   DisplayText( AllSkillTexts [ Me [ 0 ] . melee_weapon_skill ] , 
 	       MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect );
   DisplayText( AllSkillTexts [ Me [ 0 ] . ranged_weapon_skill ] , 
@@ -774,6 +778,10 @@ ShowCharacterScreen ( void )
 	       SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect );
   DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
 	       HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect );
+  if ( Me [ 0 ] . repair_skill ) 
+    DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+  else
+    DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
 
   /*
 
