@@ -459,6 +459,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     {
 	DebugPrintf ( -1000 , "\nThis bot will now follow Tux." );
 	ChatDroid -> follow_tux = TRUE ;
+	ChatDroid -> CompletelyFixed = FALSE ;
     }
     else if ( ! strcmp ( ExtraCommandString , "SetMoveFreelyProperty" ) )
     {
