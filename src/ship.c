@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------
  *
- * Desc: the konsole- and elevator functions
+ * Desc: the konsole- and lift functions
  *
  *----------------------------------------------------------------------*/
 
@@ -42,51 +42,46 @@
 
 int NoKeyPressed (void);
 
-int WaitElevatorCounter = 0;
 int ConsoleMenuPos=0;
 
 
 /*-----------------------------------------------------------------
- * @Desc: does all the work when we enter an elevator
+ * @Desc: does all the work when we enter a lift
  * 
  *-----------------------------------------------------------------*/
 void
-EnterElevator (void)
+EnterLift (void)
 {
   int i;
   int curLevel;
-  int curElev, upElev, downElev, row;
+  int curLift, upLift, downLift, liftrow;
 
-  DebugPrintf ("\nvoid EnterElevator(void): Function call confirmed.");
+  DebugPrintf ("\nvoid EnterLiftator(void): Function call confirmed.");
 
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu. */
   Activate_Conservative_Frame_Computation();
 
-  /* Prevent the influ from coming out of the elevator in transfer mode
-   * by turning off transfer mode as soon as the influ enters the elevator */
+  /* Prevent the influ from coming out of the lift in transfer mode
+   * by turning off transfer mode as soon as the influ enters the lift */
   Me.status= ELEVATOR;
 
   curLevel = CurLevel->levelnum;
 
-  if ((curElev = GetCurrentElevator ()) == -1)
+  if ((curLift = GetCurrentLift ()) == -1)
     {
-      printf ("Elevator out of order, I'm so sorry !");
+      printf ("Lift out of order, I'm so sorry !");
       return;
     }
 
-  EnterElevatorSound ();
+  EnterLiftSound ();
 
-  upElev = curShip.AllElevators[curElev].up;
-  downElev = curShip.AllElevators[curElev].down;
+  upLift = curShip.AllLifts[curLift].up;
+  downLift = curShip.AllLifts[curLift].down;
 
-  row = curShip.AllElevators[curElev].elevator_row;
+  liftrow = curShip.AllLifts[curLift].lift_row;
 
-  ShowElevators (curLevel, row);
-
-  //  HilightElevator (row);
-  //  SDL_Flip ( ne_screen );
-  //  PrepareScaledSurface(TRUE);
+  ShowLifts (curLevel, liftrow);
 
   /* Warten, bis User Feuer auslaesst */
   while (SpacePressed ()) ;
@@ -95,56 +90,46 @@ EnterElevator (void)
   while (!SpacePressed ())
     {
       if (UpPressed () && !DownPressed ())
-	if (upElev != -1)
+	if (upLift != -1)
 	  {			/* gibt es noch einen Lift hoeher ? */
-	    if (curShip.AllElevators[upElev].x == 99)
+	    if (curShip.AllLifts[upLift].x == 99)
 	      {
 		printf ("Out of order, so sorry ..");
 	      }
 	    else
 	      {
-		downElev = curElev;
-		curElev = upElev;
-		curLevel = curShip.AllElevators[curElev].level;
-		upElev = curShip.AllElevators[curElev].up;
+		downLift = curLift;
+		curLift = upLift;
+		curLevel = curShip.AllLifts[curLift].level;
+		upLift = curShip.AllLifts[curLift].up;
 
-		ShowElevators (curLevel, row);
-		//	HilightLevel (curLevel);	/* highlight new level */
-		//		HilightElevator (row);
-		//		SDL_Flip ( ne_screen );
+		ShowLifts (curLevel, liftrow);
 
 		/* Warten, bis user Taste auslaesst */
-		WaitElevatorCounter = WAIT_ELEVATOR;
-		MoveElevatorSound ();
-		//PORT while( UpPressed() && WaitElevatorCounter ) {
+		MoveLiftSound ();
 		while (UpPressed ()) ;
 	      }
 	  }			/* if uplevel */
 
 
       if (DownPressed () && !UpPressed ())
-	if (downElev != -1)
+	if (downLift != -1)
 	  {			/* gibt es noch einen Lift tiefer ? */
-	    if (curShip.AllElevators[downElev].x == 99)
+	    if (curShip.AllLifts[downLift].x == 99)
 	      {
 		printf ("Out of order, so sorry ..");
 	      }
 	    else
 	      {
-		upElev = curElev;
-		curElev = downElev;
-		curLevel = curShip.AllElevators[curElev].level;
-		downElev = curShip.AllElevators[curElev].down;
+		upLift = curLift;
+		curLift = downLift;
+		curLevel = curShip.AllLifts[curLift].level;
+		downLift = curShip.AllLifts[curLift].down;
 
-		ShowElevators (curLevel, row);
-		//		HilightLevel (curLevel);
-		//		HilightElevator (row);
-		//		SDL_Flip ( ne_screen );
+		ShowLifts (curLevel, liftrow);
 
 		/* Warten, bis User Taste auslaesst */
-		WaitElevatorCounter = WAIT_ELEVATOR;
-		MoveElevatorSound ();
-		// PORT while( DownPressed() && WaitElevatorCounter ) {
+		MoveLiftSound ();
 		while (DownPressed ()) ;
 	      }
 	  }			/* if downlevel */
@@ -172,9 +157,9 @@ EnterElevator (void)
 
       /* Position des Influencer richtig setzen */
       Me.pos.x =
-	curShip.AllElevators[curElev].x; //NORMALISATION * Block_Width + Block_Width / 2;
+	curShip.AllLifts[curLift].x; //NORMALISATION * Block_Width + Block_Width / 2;
       Me.pos.y =
-	curShip.AllElevators[curElev].y; //NORMALISATION* Block_Height + Block_Height / 2;
+	curShip.AllLifts[curLift].y; //NORMALISATION* Block_Height + Block_Height / 2;
 
       /* Alle Blasts und Bullets loeschen */
       for (i = 0; i < MAXBLASTS; i++)
@@ -187,7 +172,7 @@ EnterElevator (void)
 
     }				/* if neuer Level */
 
-  LeaveElevatorSound ();
+  LeaveLiftSound ();
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
@@ -203,11 +188,11 @@ EnterElevator (void)
 
   Me.status = MOBILE;
 
-  DebugPrintf ("\nvoid EnterElevator(void): Usual end of function reached.");
-}	/* EnterElevator */
+  DebugPrintf ("\nvoid EnterLift(void): Usual end of function reached.");
+}	/* EnterLift */
 
 /*-----------------------------------------------------------------
- * @Desc: show elevator view of the ship, and hightlight the current 
+ * @Desc: show side-view of the ship, and hightlight the current 
  *        level + lift
  *
  *  if level==-1: don't highlight any level
@@ -215,7 +200,7 @@ EnterElevator (void)
  *
  *-----------------------------------------------------------------*/
 void
-ShowElevators (int level, int liftrow)
+ShowLifts (int level, int liftrow)
 {
   SDL_Rect dst;
 
@@ -240,15 +225,9 @@ ShowElevators (int level, int liftrow)
   if (liftrow >=0)
     SDL_UpdateRects (ne_screen, 1, &curShip.LiftRow_Rect[liftrow]);
 
-  //  HilightLevel (curLevel);
-  //  PrepareScaledSurface( TRUE );
-
-  printf ("\nShowElevators() complete...\n");
-  getchar_raw();
-
   return;
 
-} /* ShowElevators() */
+} /* ShowLifts() */
 
 /*@Function============================================================
 @Desc: EnterKonsole(): does all konsole- duties
@@ -331,7 +310,7 @@ EnterKonsole (void)
       if ((ConsoleMenuPos == 3) & (SpacePressed ()))
 	{
 	  while (SpacePressed ());
-	  ShowElevators (CurLevel->levelnum, -1);
+	  ShowLifts (CurLevel->levelnum, -1);
 	  while (!SpacePressed ());
 	  while (SpacePressed ());
 	}
@@ -425,7 +404,6 @@ GreatDruidShow (void)
   char InfoText[10000];
   int Infodroid;
   char PassOn = 0;
-  char EntryText[100];
   SDL_Rect Droid_Text_Rect;
 
   DebugPrintf ("\nvoid GreadDruidShow(void): Function call confirmed.");
@@ -688,81 +666,6 @@ ShowDeckMap (Level deck)
 
   // ne_blocks=zwisch;
 } /* ShowDeckMap() */
-
-
-/*@Function============================================================
-@Desc: Diese Funktion dient dazu, wenn die Seitenansicht des aktuellen
-	Schiffes gezeigt ist, den momentanen Level als solchen zu kennzeichnen
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-HilightLevel (int Levelnumber)
-{
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
-  SDL_Surface *tmp;
-  char* Levelname;
-
-  Levelname=malloc(100);
-  sprintf( Levelname , GRAPHICS_DIR "ne_level_%d.gif", Levelnumber );
-  // printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Levelname );
-
-  SourceRectangle.x=0;
-  SourceRectangle.y=0;
-  SourceRectangle.w=USERFENSTERBREITE;
-  SourceRectangle.h=USERFENSTERHOEHE;
-  TargetRectangle.x=USERFENSTERPOSX;
-  TargetRectangle.y=USERFENSTERPOSY;
-
-  tmp= IMG_Load ( Levelname );
-  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
-
-  free( Levelname );
-
-} // void HilightLevel (int Levelnumber)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-HilightElevator (int ElevatorRow)
-{
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
-  SDL_Surface *tmp;
-  char* Elevatorname;
-
-  Elevatorname=malloc(100);
-  sprintf( Elevatorname , GRAPHICS_DIR "ne_lift_%d.gif", ElevatorRow );
-  // printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Elevatorname );
-
-  SourceRectangle.x=0;
-  SourceRectangle.y=0;
-  SourceRectangle.w=USERFENSTERBREITE;
-  SourceRectangle.h=USERFENSTERHOEHE;
-  TargetRectangle.x=USERFENSTERPOSX;
-  TargetRectangle.y=USERFENSTERPOSY;
-
-  tmp= IMG_Load ( Elevatorname );
-
-  // Since we only want the elevators to be blitted now, we must
-  // set a color key accordingly.  This is the pink color you can
-  // see in all the ne_lift pictures.
-  //
-  SDL_SetColorKey( tmp , SDL_SRCCOLORKEY , SDL_MapRGB( tmp->format, 0x0FF, 0x000, 0x0FF ) );
-
-
-  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
-
-  free( Elevatorname );
-
-  // printf("\n\nHighlightElevator (int ElevatorRow): ElevatorRow=%d.", ElevatorRow );
-}  // void HilightElevator (int ElevatorRow)
 
 /*@Function============================================================
 @Desc: 

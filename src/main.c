@@ -188,8 +188,6 @@ UpdateCountersForThisFrame (void)
     }
   if (ShipEmptyCounter > 1)
     ShipEmptyCounter--;
-  if (WaitElevatorCounter > 0)
-    WaitElevatorCounter--;
   if (CurLevel->empty > 2)
     CurLevel->empty--;
   if (RealScore > ShowScore)

@@ -478,12 +478,12 @@ RefreshSound (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-MoveElevatorSound (void)
+MoveLiftSound (void)
 {
   if (!sound_on) return;
 
   Play_Sound (MOVE_ELEVATOR_SOUND);
-}				// void MoveElevatorSound(void)
+}				// void MoveLiftSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -497,7 +497,7 @@ MenuItemSelectedSound (void)
   if (!sound_on) return;
 
   Play_Sound ( MENU_ITEM_SELECTED_SOUND );
-}				// void MoveElevatorSound(void)
+}				// void MoveLiftSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -511,7 +511,7 @@ MoveMenuPositionSound (void)
   if (!sound_on) return;
 
   Play_Sound ( MOVE_MENU_POSITION_SOUND );
-}				// void MoveElevatorSound(void)
+}				// void MoveLiftSound(void)
 
 
 /*@Function============================================================
@@ -525,7 +525,7 @@ ThouArtDefeatedSound (void)
 {
   if (!sound_on) return;
   Play_Sound (THOU_ART_DEFEATED_SOUND);
-}				// void MoveElevatorSound(void)
+}				// void MoveLiftSound(void)
 
 
 /*@Function============================================================
@@ -535,13 +535,13 @@ ThouArtDefeatedSound (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-EnterElevatorSound (void)
+EnterLiftSound (void)
 {
   if (!sound_on) return;
 
   Play_Sound (ENTER_ELEVATOR_SOUND);
   return;
-}				// void EnterElevatorSound(void)
+}				// void EnterLiftSound(void)
 
 
 /*@Function============================================================
@@ -551,14 +551,14 @@ EnterElevatorSound (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-LeaveElevatorSound (void)
+LeaveLiftSound (void)
 {
   if (!sound_on) return;
 
   Play_Sound (LEAVE_ELEVATOR_SOUND);
 
   return;
-}				// void LeaveElevatorSound(void)
+}				// void LeaveLiftSound(void)
 
 
 /*@Function============================================================

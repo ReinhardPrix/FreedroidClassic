@@ -724,23 +724,23 @@ InitNewMission ( char *MissionName )
   char *BriefingSectionPointer;
   char *EndPointer;
   char *ShipnamePointer;
-  char *ElevatornamePointer;
+  char *LiftnamePointer;
   char *CrewnamePointer;
   char *GameDataNamePointer;
   char Shipname[2000];
-  char Elevatorname[2000];
+  char Liftname[2000];
   char Crewname[2000];
   char GameDataName[2000];
   int ShipnameLength;
   int CrewnameLength;
-  int ElevatornameLength;
+  int LiftnameLength;
   int GameDataNameLength;
   // char filename[]=MAP_DIR "game.dat";
   // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
-#define ELEVATORNAME_INDICATION_STRING "Elevator file to use for this mission: "
+#define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 
@@ -903,28 +903,28 @@ InitNewMission ( char *MissionName )
   // Now its time to get the elevator file name from the mission file and
   // read the elevator file into the right memory structures
   //
-  if ( (ElevatornamePointer = strstr ( MainMissionPointer, ELEVATORNAME_INDICATION_STRING )) == NULL )
+  if ( (LiftnamePointer = strstr ( MainMissionPointer, ELEVATORNAME_INDICATION_STRING )) == NULL )
     {
       printf("\nERROR! NO ELEVATORNAME FOUND! TERMINATING!");
-      printf("Elevator indication string was: %s." , ELEVATORNAME_INDICATION_STRING );
+      printf("Lift indication string was: %s." , ELEVATORNAME_INDICATION_STRING );
       Terminate(ERR);
     }
   else
     {
-      strcpy( Elevatorname , MAP_DIR );
-      ElevatornamePointer += strlen ( ELEVATORNAME_INDICATION_STRING );
+      strcpy( Liftname , MAP_DIR );
+      LiftnamePointer += strlen ( ELEVATORNAME_INDICATION_STRING );
       
-      ElevatornameLength = strstr (ElevatornamePointer , "\n") - ElevatornamePointer;
-      strncat( Elevatorname , ElevatornamePointer , ElevatornameLength );
-      Shipname[ strlen(MAP_DIR) + ElevatornameLength ] = 0;
+      LiftnameLength = strstr (LiftnamePointer , "\n") - LiftnamePointer;
+      strncat( Liftname , LiftnamePointer , LiftnameLength );
+      Shipname[ strlen(MAP_DIR) + LiftnameLength ] = 0;
       
-      printf("\nElevator file name found!  It reads: %s" , Elevatorname );
+      printf("\nLift file name found!  It reads: %s" , Liftname );
     }
   
   /* Get the elevator connections */
-  if (GetElevatorConnections ( Elevatorname ) == ERR)
+  if (GetLiftConnections ( Liftname ) == ERR)
     {
-      printf ("\nError in GetElevatorConnections ");
+      printf ("\nError in GetLiftConnections ");
       Terminate (ERR);
     }
 

@@ -567,7 +567,7 @@ Teleport (int LNum, int X, int Y)
       Me.pos.y = Y;
     }
 
-  LeaveElevatorSound ();
+  LeaveLiftSound ();
 
   UnfadeLevel ();
 

@@ -36,7 +36,6 @@
 #endif
 
 EXTERN int ShipEmptyCounter;
-EXTERN int WaitElevatorCounter;
 
 /* main.c */
 #undef EXTERN
@@ -213,7 +212,7 @@ EXTERN void Flimmern (int type);
 #define EXTERN extern
 #endif
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
-EXTERN int GetCurrentElevator (void);
+EXTERN int GetCurrentLift (void);
 EXTERN void ActSpecialField (float, float);
 
 EXTERN int LoadShip (char *shipname);
@@ -221,7 +220,7 @@ EXTERN int SaveShip(char *shipname);
 EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
-EXTERN int GetElevatorConnections (char *shipname);
+EXTERN int GetLiftConnections (char *shipname);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
@@ -248,11 +247,11 @@ EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void CrySound (void);
 EXTERN void RefreshSound (void);
-EXTERN void MoveElevatorSound (void);
+EXTERN void MoveLiftSound (void);
 EXTERN void MenuItemSelectedSound (void);
 EXTERN void MoveMenuPositionSound (void);
-EXTERN void EnterElevatorSound (void);
-EXTERN void LeaveElevatorSound (void);
+EXTERN void EnterLiftSound (void);
+EXTERN void LeaveLiftSound (void);
 // EXTERN void FireBulletSound (void);
 EXTERN void Fire_Bullet_Sound (int);
 EXTERN void BounceSound (void);
@@ -396,16 +395,14 @@ EXTERN int ClassOfDruid (int druidtype);
 #define EXTERN extern
 #endif
 EXTERN void ShowDeckMap (Level deck);
-EXTERN void EnterElevator (void);
+EXTERN void EnterLift (void);
 EXTERN void EnterKonsole (void);
 EXTERN void AlleLevelsGleichFaerben (void);
-EXTERN void HilightLevel (int);
-EXTERN void HilightElevator (int);
 EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
-void ShowElevators (int level, int liftrow);
+void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (void);
 
 /* text.c */

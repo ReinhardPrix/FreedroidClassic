@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------
  *
  * Desc: All map-related functions, which also includes loading of decks 
- * and whole ships, starting the elevators and consoles if close to the 
+ * and whole ships, starting the lifts and consoles if close to the 
  * paradroid, refreshes as well as determining the map brick that contains
  * specified coordinates are done in this file.
  *
@@ -116,15 +116,15 @@ GetMapBrick (Level deck, float x, float y)
 } /* GetMapBrick() */
 
 /*@Function============================================================
-@Desc: int GetCurrentElevator: finds Elevator-number to your position 
+@Desc: int GetCurrentLift: finds Lift-number to your position 
 
 @Ret: -1: 	Not found !!
-		num: 	Number of cur. Elevator in AllElevators[]
+		num: 	Number of cur. Lift in AllLifts[]
 		
 @Int:
 * $Function----------------------------------------------------------*/
 int
-GetCurrentElevator (void)
+GetCurrentLift (void)
 {
   int i;
   int curlev = CurLevel->levelnum;
@@ -135,10 +135,10 @@ GetCurrentElevator (void)
 
   for (i = 0; i < curShip.num_lifts; i++)
     {
-      if (curShip.AllElevators[i].level != curlev)
+      if (curShip.AllLifts[i].level != curlev)
 	continue;
-      if ((curShip.AllElevators[i].x == gx) &&
-	  (curShip.AllElevators[i].y == gy))
+      if ((curShip.AllLifts[i].x == gx) &&
+	  (curShip.AllLifts[i].y == gy))
 	break;
     }
 
@@ -146,12 +146,12 @@ GetCurrentElevator (void)
     return -1;
   else
     return i;
-}				/* GetCurrentElevator */
+}				/* GetCurrentLift */
 
 
 /*@Function============================================================
 @Desc: ActSpecialField: checks Influencer on SpecialFields like
-Elevators and Konsoles and acts on it 
+Lifts and Konsoles and acts on it 
 
 @Ret: void
 @Int:
@@ -179,7 +179,7 @@ ActSpecialField (float x, float y)
 
       /* Lift nur betreten, wenn ca. im Zentrum */
       if ((cx * cx + cy * cy) < DRUIDRADIUSX * DRUIDRADIUSX)
-	EnterElevator ();
+	EnterLift ();
       break;
 
     case KONSOLE_R:
@@ -632,10 +632,7 @@ LevelToStruct (char *data)
   char *pos;
   char *map_begin, *wp_begin;
   char *WaypointPointer;
-  int i, j;
-  int NumWaypoints;
-  /*    int NumDoors, NumRefreshes; */
-  int zahl;
+  int i;
   int nr, x, y;
   int k;
   int connection;
@@ -1084,61 +1081,60 @@ TranslateMap (Level Lev)
 
 
 /*@Function============================================================
-@Desc: GetElevatorConnections(char *ship): loads elevator-connctions
+@Desc: GetLiftConnections(char *ship): loads lift-connctions
 					to cur-ship struct
 
 @Ret: 	OK | ERR
 @Int:
 * $Function----------------------------------------------------------*/
 int
-GetElevatorConnections (char *shipname)
+GetLiftConnections (char *shipname)
 {
   char filename[FILENAME_LEN + 1];
   int i;
-  FILE *Elevfile;
-  int cur_lev, cur_x, cur_y, up, down, elev_row;
-  Elevator CurElev;
+  FILE *Lift_file;
+  int cur_lev, cur_x, cur_y, up, down, lift_row;
+  Lift CurLift;
 
-  /* Now get the elevator-connection data from "FILE.elv" file */
-  strcpy (filename, shipname);	/* get elevator filename */
-  // strcat (filename, ELEVEXT);
+  /* Now get the lift-connection data from "FILE.elv" file */
+  strcpy (filename, shipname);	/* get lift filename */
 
-  if ((Elevfile = fopen (filename, "r")) == NULL)
+  if ((Lift_file = fopen (filename, "r")) == NULL)
     {
-      printf("\n\nCouldn't open elevator file...Terminating....\n");
+      printf("\n\nCouldn't open lift file...Terminating....\n");
       Terminate (ERR);
     }
   else 
     {
-      printf("\n\nElevator file successfully opened.");
+      printf("\n\nLift file successfully opened.");
     }
 
   for (i = 0; i < MAX_LIFTS; i++)
     {
-      if (fscanf (Elevfile, "%d %d %d %d %d %d",
-		  &cur_lev, &cur_x, &cur_y, &up, &down, &elev_row) == EOF)
+      if (fscanf (Lift_file, "%d %d %d %d %d %d",
+		  &cur_lev, &cur_x, &cur_y, &up, &down, &lift_row) == EOF)
 	{
 	  curShip.num_lifts = i;
 	  break;
 	}
 
-      CurElev = &(curShip.AllElevators[i]);
-      CurElev->level = cur_lev;
-      CurElev->x = cur_x;
-      CurElev->y = cur_y;
-      CurElev->up = up;
-      CurElev->down = down;
-      CurElev->elevator_row = elev_row;
+      CurLift = &(curShip.AllLifts[i]);
+      CurLift->level = cur_lev;
+      CurLift->x = cur_x;
+      CurLift->y = cur_y;
+      CurLift->up = up;
+      CurLift->down = down;
+      CurLift->lift_row = lift_row;
     }
 
-  if (fclose (Elevfile) == EOF)
+  if (fclose (Lift_file) == EOF)
     {
-      printf("\n\nError while trying to close elevator file....Terminating....\n\n");
+      printf("\n\nError while trying to close lift file....Terminating....\n\n");
       Terminate(ERR);
     }
 
   return OK;
-}				// int GetElevatorConnections(char *shipname)
+}				// int GetLiftConnections(char *shipname)
 
 /*-----------------------------------------------------------------
  * @Desc: This function initializes all enemys

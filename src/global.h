@@ -205,8 +205,6 @@ EXTERN unsigned char *Enemypointer;
 EXTERN unsigned char *Influencepointer;
 EXTERN unsigned char *MapBlocks;
 EXTERN unsigned char *Digitpointer;
-EXTERN unsigned char *ElevatorBlocks;
-EXTERN unsigned char *ElevatorPicture;
 EXTERN unsigned char *MenuItemPointer;
 EXTERN unsigned char *Robotptr;
 
