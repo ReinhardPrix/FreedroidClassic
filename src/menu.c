@@ -815,7 +815,7 @@ Sell_Items( int ForHealer )
 	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	  sprintf( DescriptionText , "%6.0f" , 
-		   SELL_PRICE_FACTOR * CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] , FALSE ) );
+		   SELL_PRICE_FACTOR * ( (float) CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] , FALSE ) ) );
 	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
       

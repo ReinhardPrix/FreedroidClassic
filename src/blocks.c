@@ -416,10 +416,17 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
   else
     {
       Previous_weapon_item  [ PlayerNum ] = Me [ PlayerNum ] . weapon_item. type ;
-      Previous_shield_item  [ PlayerNum ] = Me [ PlayerNum ] . shield_item. type  ;
-      Previous_armour_item  [ PlayerNum ] = Me [ PlayerNum ] . armour_item. type  ;
+      Previous_shield_item  [ PlayerNum ] = Me [ PlayerNum ] . shield_item. type ;
+      Previous_armour_item  [ PlayerNum ] = Me [ PlayerNum ] . armour_item. type ;
       Previous_special_item [ PlayerNum ] = Me [ PlayerNum ] . special_item.type ; 
     }
+
+  //--------------------
+  // Since the assembling of the tux with the home made alpha merging code
+  // takes considerable time, be must activate the conservative frame computation
+  // here, or the player might jump through walls or something...
+  //
+  Activate_Conservative_Frame_Computation ( ) ;
     
   //--------------------
   // First we blit the chest and feet of the influencer, paying attention to the currently
