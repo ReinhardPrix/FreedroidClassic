@@ -204,6 +204,57 @@ closed_chest_below_mouse_cursor ( int player_num )
 
 /* ----------------------------------------------------------------------
  *
+ *
+ * ---------------------------------------------------------------------- */
+int
+smashable_barred_below_mouse_cursor ( int player_num ) 
+{
+  finepoint MapPositionOfMouse;
+  int i;
+  int obst_index ;
+
+  if ( CursorIsInUserRect( GetMousePos_x()+16 , GetMousePos_y()+16 ) && ( CurLevel != NULL ) )
+    {
+      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+
+      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	{
+	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
+	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
+
+	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
+
+	  if ( obst_index == (-1) ) continue;
+
+	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+	    {
+	    case ISO_BARREL_1:
+	    case ISO_BARREL_2:
+	    case ISO_BARREL_3:
+	    case ISO_BARREL_4:
+	      return ( obst_index ) ;
+	      break;
+		
+	    default: 
+	      break;
+	    }
+	}
+    }
+
+  return ( -1 ) ;
+
+}; // int smashable_barred_below_mouse_cursor ( int player_num ) 
+
+
+/* ----------------------------------------------------------------------
+ *
  * 
  * ---------------------------------------------------------------------- */
 void
@@ -1326,52 +1377,6 @@ CheckInfluenceEnemyCollision (void)
 }; // void CheckInfluenceEnemyCollision( void )
 
 /* ----------------------------------------------------------------------
- * This function checks if there is a crushable box below the mouse 
- * cursor or not.
- * This function is useful for determining if a mouse-button-press was
- * meant as a mouse-indicated move instruction was given or rather a 
- * weapon swing/weapon fire command was meant by the player.
- * ---------------------------------------------------------------------- */
-int
-CrushableBoxBelowMouseCursor ( int player_num )
-{
-  Level SpecialFieldLevel;
-  unsigned char MapBrick;
-  float Mouse_Blocks_X, Mouse_Blocks_Y;
-
-  Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( player_num )) / ((float)Block_Width  ) ;
-  Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( player_num )) / ((float)Block_Height ) ;
-
-  //--------------------
-  // Now we get the brick code at our corrent location.
-  //
-  SpecialFieldLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
-  MapBrick = GetMapBrick ( SpecialFieldLevel , Me [ player_num ] . pos . x + Mouse_Blocks_X , 
-			   Me [ player_num ] . pos . y + Mouse_Blocks_Y ) ;
-
-  switch ( MapBrick )
-    {
-    case BOX_1:
-    case BOX_2:
-    case BOX_3:
-    case BOX_4:
-      return ( TRUE );
-      break;
-    default:
-      return ( FALSE );
-      break;
-    }
-
-  //--------------------
-  // It seems that we were unable to locate a box under the mouse 
-  // cursor.  So we return, giving this very same message.
-  //
-  return ( FALSE );
-
-}; // int CrushableBoxBelowMouseCursor ( int player_num )
-
-
-/* ----------------------------------------------------------------------
  * This function checks if there is some living droid below the current
  * mouse cursor and returns the index number of this droid in the array.
  * ---------------------------------------------------------------------- */
@@ -1892,43 +1897,70 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
 }; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
 /* ----------------------------------------------------------------------
- * If the user clicked his mouse, this might have several reasons.  It 
- * might happen to open some windows, pick up some stuff, smash a box,
- * move somewhere or fire a shot or make a weapon swing.
- * 
- * Therefore it is not so easy to decide what to do upon a users mouse
- * click and so this function analyzes the situation and decides what to
- * do.
+ *
+ *
  * ---------------------------------------------------------------------- */
 void
-AnalyzePlayersMouseClick ( int player_num )
+check_for_chests_to_open ( int player_num ) 
 {
-  int chest_index ;
-  int index_of_droid_below_mouse_cursor = (-1) ;
+  int chest_index = closed_chest_below_mouse_cursor ( player_num ) ;
+  Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
-  DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
-
-  if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
-
-  //--------------------
-  // A chest, that has been clicked on, will be opened and the content thrown out...
-  //
-  chest_index = closed_chest_below_mouse_cursor ( player_num ) ;
   if ( chest_index != (-1) )
     {
-      if ( fabsf ( Me [ player_num ] . pos . x - curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . pos . x ) +
-	   fabsf ( Me [ player_num ] . pos . y - curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
+      if ( fabsf ( Me [ player_num ] . pos . x - our_level -> obstacle_list [ chest_index ] . pos . x ) +
+	   fabsf ( Me [ player_num ] . pos . y - our_level -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
 	{
 	  throw_out_all_chest_content ( chest_index ) ;
 
-	  if ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type == ISO_H_CHEST_CLOSED )
-	    curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
-	  if ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
-	    curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
+	  if ( our_level -> obstacle_list [ chest_index ] . type == ISO_H_CHEST_CLOSED )
+	    our_level -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
+	  if ( our_level -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
+	    our_level -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
 	}
     }
 
-  index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+}; // void check_for_chests_to_open ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_for_barrels_to_smash ( player_num ) 
+{
+  int index_of_barrel_below_mouse_cursor = smashable_barred_below_mouse_cursor ( player_num ) ;
+  Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+
+  if ( index_of_barrel_below_mouse_cursor != (-1) )
+    {
+      if ( Me [ 0 ] . weapon_item . type >= 0 )
+	{
+	  if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
+	       ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+					our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x ,
+					our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y ) 
+		 > BEST_MELEE_DISTANCE+0.1 ) )
+	    return;
+	}
+      else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+				       our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x ,
+				       our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y ) 
+		> BEST_MELEE_DISTANCE+0.1 )
+	return;
+
+      tux_wants_to_attack_now ( player_num ) ;
+    }
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_for_droids_to_attack ( int player_num ) 
+{
+  int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
 
   //--------------------
   // Now the new mouse move: If there is 
@@ -1940,8 +1972,7 @@ AnalyzePlayersMouseClick ( int player_num )
   // a move to that location, not a fire command, 
   // so only new target will be set and return without attack motion.
   //
-  if  ( ( index_of_droid_below_mouse_cursor == (-1) ) && 
-	( ! CrushableBoxBelowMouseCursor ( player_num ) ) )
+  if ( index_of_droid_below_mouse_cursor == (-1) )
     {
       Me [ player_num ] . mouse_move_target . x = 
 	translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) ;
@@ -1954,26 +1985,6 @@ AnalyzePlayersMouseClick ( int player_num )
       Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
       return; // no attack motion since no target given!!
     }
-
-  if ( CrushableBoxBelowMouseCursor ( player_num ) )
-    {
-
-      Me [ player_num ] . mouse_move_target . x = 
-	Me [ player_num ] . pos . x + ( (float) ServerThinksInputAxisX ( player_num ) ) / (float) Block_Width ;
-      Me [ player_num ] . mouse_move_target . y = 
-	Me [ player_num ] . pos . y + ( (float) ServerThinksInputAxisY ( player_num ) ) / (float) Block_Width ;
-      Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-
-      //--------------------
-      // Only if the Tux wields a melee weapon and is too far away will we return 
-      // instead of continuing for the attack move now...
-      //
-      if ( ! ( ( ( fabsf ( Me [ player_num ] . mouse_move_target . x - Me [ player_num ] . pos . x ) < ATTACK_BOXES_DISTANCE ) && 
-		 ( fabsf ( Me [ player_num ] . mouse_move_target . y - Me [ player_num ] . pos . y ) < ATTACK_BOXES_DISTANCE ) ) ||
-	       ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 ) ) )
-	return;
-    }
-
 
   if ( index_of_droid_below_mouse_cursor != (-1) )
     {
@@ -2002,6 +2013,29 @@ AnalyzePlayersMouseClick ( int player_num )
 
       tux_wants_to_attack_now ( player_num ) ;
     }
+};
+
+/* ----------------------------------------------------------------------
+ * If the user clicked his mouse, this might have several reasons.  It 
+ * might happen to open some windows, pick up some stuff, smash a box,
+ * move somewhere or fire a shot or make a weapon swing.
+ * 
+ * Therefore it is not so easy to decide what to do upon a users mouse
+ * click and so this function analyzes the situation and decides what to
+ * do.
+ * ---------------------------------------------------------------------- */
+void
+AnalyzePlayersMouseClick ( int player_num )
+{
+  DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
+
+  if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+
+  check_for_chests_to_open ( player_num ) ;
+
+  check_for_barrels_to_smash ( player_num ) ;
+
+  check_for_droids_to_attack ( player_num ) ;
 
 }; // void AnalyzePlayersMouseClick ( int player_num )
 

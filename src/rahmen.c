@@ -817,6 +817,15 @@ ShowCurrentTextWindow ( void )
 	}
 
       //--------------------
+      // Maybe the cursor in the user rect is hovering right over a closed chest.
+      // In this case we say so in the top status banner.
+      //
+      if ( smashable_barred_below_mouse_cursor ( 0 ) != (-1) )
+	{
+	  strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+	}
+
+      //--------------------
       // Maybe there is a living droid below the current mouse cursor.  In this
       // case, we'll give the decription of the corresponding bot.  (Also this serves
       // as a good way to check whether the 'droid below mouse cursor' functions are
