@@ -3740,9 +3740,9 @@ handle_player_examine_command ( int player_num )
     int obstacle_index ;
     obstacle* our_obstacle;
     char game_message_text[ 10000 ] ;
-    int final_bot_found=(-1);
     int chat_section;
     Level obstacle_level;
+    int final_bot_found=(-1);
 
     //--------------------
     // The highest priority is other droids and characters.  If one
@@ -3832,6 +3832,22 @@ handle_player_loot_command ( int player_num )
     int way_find_attempts;
     moderately_finepoint offset_vector;
     our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+    int final_bot_found=(-1);
+
+    //--------------------
+    // The highest priority is other droids and characters.  If one
+    // of those is under the mouse cursor, then the loot command
+    // is interpretet to refer to him/her and therefore we will say,
+    // that no looting of characters is possible, i.e. no pickpocket.
+    // 
+    final_bot_found = GetLivingDroidBelowMouseCursor ( player_num ) ;
+    if ( final_bot_found != (-1) )
+    {
+	sprintf( game_message_text , "Sorry, looting characters is not possible.  If you intended to pickpocket the characters, sorry this is not possible in this version of freedroidRPG.  Maybe later later versions of the game might allow usage of that as a skill." ) ;
+	append_new_game_message ( game_message_text );
+	return;
+    }
+
 
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )

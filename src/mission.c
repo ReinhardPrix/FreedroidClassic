@@ -337,6 +337,7 @@ quest_browser_display_mission_list ( int list_type )
 	//
 	for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
 	{
+	    if ( ! Me [ 0 ] . AllMissions [ mis_num ] . MissionWasAssigned ) continue ;
 	    //--------------------
 	    // At first we bring the short/long buttons into position.
 	    // This position might be well off the screen.  That's no
@@ -414,6 +415,18 @@ void
 quest_browser_interface ( void )
 {
     int back_to_game = FALSE;
+    static int first_call = TRUE ;
+
+    //--------------------
+    // On the very first 
+    if ( first_call )
+    {
+	first_call = FALSE ;
+	mission_description_rect . x *= (((float)GameConfig . screen_width) / 640.0 ) ;
+	mission_description_rect . y *= (((float)GameConfig . screen_height) / 480.0 ) ;
+	mission_description_rect . w *= (((float)GameConfig . screen_width) / 640.0 ) ;
+	mission_description_rect . h *= (((float)GameConfig . screen_height) / 480.0 ) ;
+    }
 
     //--------------------
     // This might take some time, so we need to be careful here,
