@@ -923,7 +923,7 @@ FireBullet ( int PlayerNum )
   // NOT THE FIREING INTENTION ANY MORE, BUT RATHER THE (MOUSE-)MOVE INTENTION TO THAT
   // LOCATION, SO THAT MOVING NO LONGER STRICTLY REQUIRED KEYBOARD USAGE.
   //
-  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) )
+  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
     {
       //--------------------
       // Later, we will add the new mouse move intention at this point

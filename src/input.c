@@ -114,6 +114,7 @@ int CurrentlyF11Pressed=0;
 int CurrentlyF12Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyTabPressed=0;
+int CurrentlyShiftPressed=0;
 int CurrentlyBackspacePressed=0;
 
 
@@ -602,12 +603,29 @@ ReactToSpecialKeys(void)
   
 }; // void ReactToSpecialKeys(void)
 
+/* ----------------------------------------------------------------------
+ * Two functions are important concerning the SHIFT keys:  One says if
+ * the shift key has been pressed during the previous key-down event
+ * and the other one just reports if the shift key is pressed currently.
+ * These two functions should not be mixed up!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * ---------------------------------------------------------------------- */
 int
 Shift_Was_Pressed(void)
 {
   return (ShiftWasPressedInAddition);  
-}
+};
 
+int
+Shift_Is_Pressed(void)
+{
+  keyboard_update ();
+  return ( CurrentlyShiftPressed );  
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 int
 Ctrl_Was_Pressed(void)
 {
@@ -874,6 +892,12 @@ keyboard_update(void)
 	    case SDLK_TAB:
 	      CurrentlyTabPressed=TRUE;
 	      break;
+	    case SDLK_RSHIFT:
+	      CurrentlyShiftPressed=TRUE;
+	      break;
+	    case SDLK_LSHIFT:
+	      CurrentlyShiftPressed=TRUE;
+	      break;
 	    default:
 	      /*
 		printf("\n\nUnhandled keystroke!! Terminating...\n\n");
@@ -1122,6 +1146,12 @@ keyboard_update(void)
 	      break;
 	    case SDLK_TAB:
 	      CurrentlyTabPressed=FALSE;
+	      break;
+	    case SDLK_RSHIFT:
+	      CurrentlyShiftPressed=FALSE;
+	      break;
+	    case SDLK_LSHIFT:
+	      CurrentlyShiftPressed=FALSE;
 	      break;
 	    default:
 	      break;

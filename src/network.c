@@ -284,6 +284,7 @@ typedef struct
   int server_mouse_y;
   int network_status;
   unsigned char server_keyboard [ MAX_KEYCODES ] ;
+  unsigned char server_keyboard_shift_key ;
 }
 remote_player, *Remote_Player;
 
@@ -474,6 +475,32 @@ ServerThinksAxisIsActive ( int PlayerNum )
     }
 
 }; // int ServerThinksRightPressed ( int Playernum )
+
+
+/* ----------------------------------------------------------------------
+ * This function reports if the server thinks that the cursor left key
+ * was pressed or not.  If not in server mode, this function returns just
+ * the local keyboard status.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksShiftWasPressed ( int PlayerNum )
+{
+
+  if ( ServerMode ) 
+    {
+      return ( AllPlayers [ PlayerNum ] . server_keyboard [ SDLK_RSHIFT ] || 
+	       AllPlayers [ PlayerNum ] . server_keyboard [ SDLK_LSHIFT ] );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( Shift_Is_Pressed ( ) ) ;
+      else
+	return ( FALSE );
+    }
+
+  return FALSE;
+}; // int ServerThinksLeftPressed ( int Playernum )
 
 
 /* ----------------------------------------------------------------------
@@ -2707,6 +2734,15 @@ ExecutePlayerCommand ( int PlayerNum )
 	  //
 	  DebugPrintf ( 0 , "\nKEYBOARD EVENT: Key down received... " );
 	  AllPlayers [ PlayerNum ] . server_keyboard [ KeyEventPointer -> key.keysym.sym ] = TRUE ;
+
+	  //--------------------
+	  // Now we report the shift key status to the server as well...
+	  //
+	  // if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
+	  // ShiftWasPressedInAddition=TRUE;
+	  // else ShiftWasPressedInAddition=FALSE;
+
+
 	  break;
 	case SDL_KEYUP:
 	  //--------------------
