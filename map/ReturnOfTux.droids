@@ -547,6 +547,17 @@ SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=20 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=20 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
 SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=20 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
 
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=37 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=37 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=37 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=37 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=38 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=38 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=38 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=38 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level22Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
