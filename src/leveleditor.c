@@ -89,6 +89,51 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y )
+{
+  int i;
+  int free_index = ( -1 ) ;
+
+  //--------------------
+  // First we find a free obstacle index to insert our new obstacle
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( EditLevel -> obstacle_list [ i ] . type == (-1) )
+	{
+	  free_index = i ;
+	  break;
+	}
+    }
+  if ( free_index < 0 )
+    {
+      GiveStandardErrorMessage ( "create_new_obstacle_on_level (...)" , "\
+Ran out of obstacles!   Too bad!  Raise max obstacles constant!" , 
+				 PLEASE_INFORM , IS_FATAL );
+    }
+
+  //--------------------
+  // Now that we have an obstacle at our disposal, we can start to fill in
+  // the right obstacle properties.
+  //
+  EditLevel -> obstacle_list [ free_index ] . type = our_obstacle_type; 
+  EditLevel -> obstacle_list [ free_index ] . pos . x = pos_x ;
+  EditLevel -> obstacle_list [ free_index ] . pos . y = pos_y ;
+  EditLevel -> obstacle_list [ free_index ] . name_index = (-1) ;
+
+  //--------------------
+  // Now that the new obstacle has been created, it must still be glued to the
+  // floor on some tile, so that the engine will recognize the need to blit it.
+  //
+  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+
+}; // void create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y )
+
+/* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the map labels south of this
  * line must move too with the rest of the map.  This function sees to it.
  * ---------------------------------------------------------------------- */
@@ -2347,15 +2392,18 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       if ( !CtrlWasPressed())
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX] . floor_value =V_SHUT_DOOR;	            	      
-	  else EditLevel->map[BlockY][BlockX] . floor_value =H_SHUT_DOOR;	            	      
+	    create_new_obstacle_on_level ( EditLevel , ISO_V_DOOR_000_OPEN , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
+	  else 	    
+	    create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_000_OPEN , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
 	}
       else
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX] . floor_value =LOCKED_V_SHUT_DOOR;	            	      
-	  else EditLevel->map[BlockY][BlockX] . floor_value =LOCKED_H_SHUT_DOOR;	            	      
+	    create_new_obstacle_on_level ( EditLevel , ISO_V_DOOR_LOCKED , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
+	  else 
+	    create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_LOCKED , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
 	}
+      while ( DPressed() );
     }
   if (UPressed())
     {
