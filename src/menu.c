@@ -1643,7 +1643,7 @@ Level_Editor(void)
   char* OldMapPointer;
 
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , QUIT_LEVEL_EDITOR_POSITION };
 
   while ( !Done )
     {
@@ -1963,7 +1963,9 @@ Level_Editor(void)
 				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
 	  CenteredPrintString ( ne_screen ,  9*FontHeight(Menu_BFont),    
 				"Level name: %s" , CurLevel->Levelname );
-	  CenteredPutString   ( ne_screen ,  10*FontHeight(Menu_BFont),    
+	  CenteredPrintString ( ne_screen ,  10*FontHeight(Menu_BFont),    
+				"Background music file name: %s" , CurLevel->Background_Song_Name );
+	  CenteredPutString   ( ne_screen ,  11*FontHeight(Menu_BFont),    
 				"Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
@@ -2004,9 +2006,16 @@ Level_Editor(void)
 		  break;
 		case SET_LEVEL_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont), "Please enter new level name:");
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
 		  SDL_Flip( ne_screen );
 		  CurLevel->Levelname=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case SET_BACKGROUND_SONG_NAME:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
+		  SDL_Flip( ne_screen );
+		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case QUIT_LEVEL_EDITOR_POSITION:
