@@ -70,8 +70,6 @@
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
 
-int FullScreen_Requested_By_Player=FALSE;
-
 char EndTitleText1[] =
 "Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
 
@@ -148,6 +146,7 @@ For more information about these matters, see the file named COPYING.\n";
 char usage_string[] =
   "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] 
 			[-t|--timeout=SECONDS]
+			[-f|--fullscreen] [-w|--window]
 	      		[-d|--debug=LEVEL]\n
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
@@ -162,19 +161,20 @@ parse_command_line (int argc, char *const argv[])
   int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
-    {"version",    0, 0, 'v'},
-    {"help", 	   0, 0, 'h'},
-    {"nosound",    0, 0, 'q'},
-    {"sound", 	   0, 0, 's'},
-    {"timeout",    1, 0, 't'},
-    {"debug", 	   2, 0, 'd'},
-    {"fullscreen", 0, 0, 'f'},
-    { 0, 	   0, 0,  0}
+    {"version", 0, 0, 'v'},
+    {"help", 	0, 0, 'h'},
+    {"nosound", 0, 0, 'q'},
+    {"sound", 	0, 0, 's'},
+    {"timeout", 1, 0, 't'},
+    {"debug", 	2, 0, 'd'},
+    {"window",  0, 0, 'w'},
+    {"fullscreen",0,0,'f'},
+    { 0, 	0, 0,  0}
   };
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vfqst:h?d::", long_options, NULL);
+      c = getopt_long (argc, argv, "vqst:h?d::wf", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -219,9 +219,10 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 
 	case 'f':
-	  // printf (PACKAGE_STRING); 
-	  printf ("\nPlayer has requested FULLSCREEN via command line option...\n");
-	  FullScreen_Requested_By_Player=TRUE;
+	  use_fullscreen = TRUE;
+	  break;
+	case 'w':
+	  use_fullscreen = FALSE;
 	  break;
 
 	default:
@@ -282,7 +283,7 @@ InitNewGame (void)
   DebugPrintf ("\nvoid InitNewGame(void): All blasts have been deleted...");
 
   /* Alle Levels wieder aktivieren */
-  for (i = 0; i < curShip.LevelsOnShip; i++)
+  for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
 
   DebugPrintf
