@@ -2164,9 +2164,9 @@ Credits_Menu (void)
                                       Bastian Salmela\n\n\
                                       Lanzz\n\n\n\
    STORY AND CHARACTERS:\n\n\
-                                      Willian Eugene Frazier\n\n\
-                                      Pete Spicer\n\n\
                                       Johannes Prix\n\n\n\
+   OPENING TEXT:\n\n\
+                                      Pete Spicer\n\n\n\
    LEVEL DESIGN:\n\n\
                                       Johannes Prix\n\n\n\
    MOD COMPOSERS:\n\n\
