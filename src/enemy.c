@@ -326,7 +326,6 @@ ShuffleEnemys ( int LevelNum )
   int wp_num;
   int wp = 0;
   int BestWaypoint;
-  finepoint influ_coord;
   Level ShuffleLevel = curShip.AllLevels[ LevelNum ];
 
   // count the number of waypoints on CurLevel
@@ -626,7 +625,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  int trywp;
+  int trywp = 0 ;
   float maxspeed;
   int FreeWays[ MAX_WP_CONNECTIONS ];
   int SolutionFound;
@@ -1480,7 +1479,7 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
 int
 DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
-  int j;
+  int j = 0 ;
   int TargetPlayerNum;
   float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
 

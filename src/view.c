@@ -602,7 +602,6 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 {
   int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-  SDL_Rect TargetRectangle;
 
   //--------------------
   // Maybe we should be using a more elegant function here, that will automatically
@@ -664,8 +663,6 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
-  Uint32 temp_Rmask;
-  Uint32 temp_Bmask;
   iso_image tmp;
   // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
   // our_obstacle -> pos . x , our_obstacle -> pos . y );
@@ -715,8 +712,6 @@ There was an obstacle type given, that exceeds the number of\n\
 void
 blit_one_obstacle_zoomed ( obstacle* our_obstacle )
 {
-  Uint32 temp_Rmask;
-  Uint32 temp_Bmask;
   iso_image tmp;
   // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
   // our_obstacle -> pos . x , our_obstacle -> pos . y );
@@ -992,8 +987,6 @@ void
 insert_bullets_into_blitting_list ( void )
 {
   int i;
-  float enemy_norm;
-  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
 
   for ( i = 0 ; i < MAXBULLETS ; i ++ )
     {
@@ -1011,8 +1004,6 @@ void
 insert_blasts_into_blitting_list ( void )
 {
   int i;
-  float enemy_norm;
-  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
 
   for ( i = 0 ; i < MAXBLASTS ; i ++ )
     {
@@ -1156,7 +1147,6 @@ void
 AssembleCombatPicture (int mask)
 {
   int i;
-  int PlayerNum;
 
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
@@ -1332,7 +1322,7 @@ iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotat
   static int first_call = TRUE;
   char* fpath;
   char constructed_filename[5000];
-  int part_index;
+  int part_index = 0 ;
   int i, j , k ;
 
   //--------------------
@@ -1575,10 +1565,6 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
 void
 iso_put_tux ( int x , int y , int PlayerNum )
 {
-  static iso_image tmp;
-  static int first_call = TRUE;
-  char* fpath;
-  char constructed_filename[5000];
   int rotation_index;
   float angle;
 
@@ -2223,9 +2209,7 @@ void
 PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
-  SDL_Rect TargetRectangle;
   int PhaseOfBullet;
-  SDL_Surface* tmp;
   int direction_index;
 
   //--------------------
@@ -2281,7 +2265,6 @@ PutItem( int ItemNumber )
 {
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
-  SDL_Rect TargetRectangle;
   gps ItemGPS;
 
   //--------------------
@@ -2325,15 +2308,6 @@ There was an item type given, that exceeds the range of item images loaded.",
   //
   if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image . surface == NULL )
     try_to_load_ingame_item_surface ( CurItem -> type );
-
-  /*
-  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE ) -
-    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
-  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , FALSE ) -
-    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
-  // translate_map_point_to_screen_pixel ( CurItem -> pos . x , CurItem -> pos . y , TRUE );
-  SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_surface , NULL , Screen , &TargetRectangle);
-  */
 
   blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
 				   CurItem -> pos . x , CurItem -> pos . y );

@@ -126,6 +126,57 @@ void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
 int IsWallBlock ( int block );
 
+
+/* -----------------------------------------------------------------
+ *
+ *
+ *-----------------------------------------------------------------*/
+int
+decode_floor_tiles_of_this_level (Level Lev)
+{
+  int xdim = Lev->xlen;
+  int ydim = Lev->ylen;
+  int row, col;
+  map_tile *Buffer;
+  int tmp;
+  int glue_index;
+
+  DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
+
+  for (row = 0; row < ydim  ; row++)
+    {
+
+      //--------------------
+      // Now a strange thing is going on here:  The floor tile information, stored
+      // as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
+      // COMPLETELY DIFFERENT than a text pointer.  But the information is there
+      // we need to convert it into real map information with proper struct...
+      // Finally the proper struct can then replace the old map pointer.
+      //
+      Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
+      for ( col = 0 ; col < xdim  ; col ++ )
+	{
+	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+	  Buffer [ col ] . floor_value = (Uint16) tmp;
+	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    {
+	      Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
+	    }
+	}
+
+      //--------------------
+      // Now the old text pointer can be replaced with a pointer to the 
+      // correctly assembled struct...
+      //
+      Lev -> map [ row ] = Buffer;
+
+    }				/* for (row=0..) */
+
+  DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
+
+  return OK;
+}; // int decode_floor_tiles_of_this_level ( Level lev )
+
 /* ----------------------------------------------------------------------
  * Now that we plan not to use hard-coded and explicitly human written 
  * coordinates any more, we need to use some labels instead.  But there
@@ -1404,9 +1455,7 @@ void
 smash_obstacle ( float x , float y )
 {
   int map_x, map_y;
-  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i, smash_x, smash_y ;
-  Obstacle target_obstacle;
+  int smash_x, smash_y ;
 
   map_x=(int)rintf(x);
   map_y=(int)rintf(y);
@@ -3348,56 +3397,6 @@ TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLe
 
 }; // void TranslateToHumanReadable( ... )
 
-/* -----------------------------------------------------------------
- *
- *
- *-----------------------------------------------------------------*/
-int
-decode_floor_tiles_of_this_level (Level Lev)
-{
-  int xdim = Lev->xlen;
-  int ydim = Lev->ylen;
-  int row, col;
-  map_tile *Buffer;
-  int tmp;
-  int glue_index;
-
-  DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
-
-  for (row = 0; row < ydim  ; row++)
-    {
-
-      //--------------------
-      // Now a strange thing is going on here:  The floor tile information, stored
-      // as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
-      // COMPLETELY DIFFERENT than a text pointer.  But the information is there
-      // we need to convert it into real map information with proper struct...
-      // Finally the proper struct can then replace the old map pointer.
-      //
-      Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
-      for ( col = 0 ; col < xdim  ; col ++ )
-	{
-	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
-	  Buffer [ col ] . floor_value = (Uint16) tmp;
-	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
-	    {
-	      Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
-	    }
-	}
-
-      //--------------------
-      // Now the old text pointer can be replaced with a pointer to the 
-      // correctly assembled struct...
-      //
-      Lev -> map [ row ] = Buffer;
-
-    }				/* for (row=0..) */
-
-  DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
-
-  return OK;
-}; // int decode_floor_tiles_of_this_level ( Level lev )
-
 /* ----------------------------------------------------------------------
  * This function is used to calculate the number of the droids on the 
  * ship, which is a global variable.
@@ -3671,7 +3670,7 @@ GetThisLevelsDroids( char* SectionPointer )
   int ListIndex;
   char TypeIndicationString[1000];
   int ListOfTypesAllowed[1000];
-  int FreeAllEnemysPosition;
+  int FreeAllEnemysPosition = 0 ;
 
 #define DROIDS_LEVEL_INDICATION_STRING "Level="
 #define DROIDS_LEVEL_END_INDICATION_STRING "** End of this levels droid data **"
@@ -3782,7 +3781,6 @@ void
 MoveLevelDoors ( int PlayerNum )
 {
   int i, j;
-  int doorx, doory;
   float xdist, ydist;
   float dist2;
   int *Pos;
@@ -4273,8 +4271,6 @@ IsPassable ( float x , float y , int z , int Checkpos)
   unsigned char MapBrick;
   int ret = -1;
   Level PassLevel = curShip . AllLevels [ z ] ;
-  int obstacle_index;
-  int glue_index;
   int x_tile_start, y_tile_start;
   int x_tile_end, y_tile_end;
   int x_tile, y_tile;

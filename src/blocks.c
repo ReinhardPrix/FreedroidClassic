@@ -170,7 +170,6 @@ Load_Item_Surfaces( void )
 void
 try_to_load_ingame_item_surface ( int item_type )
 {
-  SDL_Rect target;
   char ConstructedFileName[5000];
   char* fpath;
   SDL_Surface *Whole_Image;

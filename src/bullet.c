@@ -760,12 +760,7 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		  //
 		  if ( CurBullet -> mine ) 
 		    {
-
-		      // SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
 		      robot_group_turn_hostile ( i );
-		      // AllEnemys [ i ] . is_friendly = FALSE ;
-		      // AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
-		      
 		    }
 		  
 		  AllEnemys[i].frozen += CurBullet->freezing_level;
@@ -884,11 +879,7 @@ check_bullet_bullet_collsisions ( bullet* CurBullet , int num )
 void
 CheckBulletCollisions (int num)
 {
-  int i;
-  double xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
-  int level = CurBullet -> pos.z ;
-  int PlayerNum;
 
   switch ( CurBullet -> type )
     {

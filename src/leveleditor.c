@@ -334,7 +334,6 @@ ShowLevelEditorTopMenu( int Highlight )
   int i;
   SDL_Rect TargetRectangle;
   int selected_index = FirstBlock;
-  Level DisplayLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   static SDL_Surface *LevelEditorTopBanner = NULL;
   SDL_Surface *tmp = NULL;
   char* fpath;
@@ -2039,7 +2038,6 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
 void 
 Highlight_Current_Block(void)
 {
-  int i;
   Level EditLevel;
   static iso_image level_editor_cursor = { NULL , 0 , 0 } ;
   char* fpath;
@@ -2081,7 +2079,7 @@ Unable to load the level editor floor cursor.",
  * current map tile target.
  * ---------------------------------------------------------------------- */
 void 
-draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int Color )
+draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 )
 {
   float steps;
   float dist;
@@ -2136,10 +2134,7 @@ ShowWaypoints( int PrintConnectionList )
 {
   int wp;
   int i;
-  int x;
-  int y;
   int BlockX, BlockY;
-  int color;
   char ConnectionText[5000];
   char TextAddition[1000];
   Level EditLevel;
@@ -2213,18 +2208,10 @@ Unable to load the level editor waypoint cursor.",
 		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
 		      SDL_LockSurface( Screen );
 		    }
-	
-		  /*
-		  DrawLineBetweenTiles( EditLevel->AllWaypoints[wp].x , EditLevel->AllWaypoints[wp].y , 
-					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x , 
-					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y ,
-					color );
-		  */
 
 		  draw_connection_between_tiles ( EditLevel->AllWaypoints[wp].x + 0.5 , EditLevel->AllWaypoints[wp].y + 0.5 , 
 						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x + 0.5 , 
-						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y + 0.5 ,
-						  color );
+						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y + 0.5 );
 
 		}
 	    }
@@ -3038,9 +3025,8 @@ add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type )
 void
 delete_obstacle ( level* EditLevel , obstacle* our_obstacle )
 {
-  int i,j;
+  int i;
   int obstacle_index = (-1) ;
-  int xtile, ytile;
 
   //--------------------
   // The likely case that no obstacle was currently marked.

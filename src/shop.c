@@ -81,7 +81,7 @@ TryToPutItem( item* SellItem , int AmountToSellAtMost )
   if ( AmountToSellAtMost <= 0 ) 
     {
       DebugPrintf ( 0 , "\nTried to put 0 items of a kind into a chest or container... doing nothing... " );
-      return;
+      return ( FALSE );
     }
 
   if ( AmountToSellAtMost > SellItem -> multiplicity )
@@ -885,7 +885,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
   int InMenuPosition = 0;
   int MenuInListPosition = 0;
   char DescriptionText[5000];
-  float PriceFound;
+  float PriceFound = 0;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any

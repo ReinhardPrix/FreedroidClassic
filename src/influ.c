@@ -1262,7 +1262,6 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
-  float max_val;
   float OffsetFactor;
 
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 

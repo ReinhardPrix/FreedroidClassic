@@ -129,6 +129,9 @@ EXTERN void ShowInventoryScreen ( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void try_to_load_ingame_item_surface ( int item_type );
+EXTERN void iso_load_bullet_surfaces ( void );
+EXTERN void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) ;
 EXTERN void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image );
 EXTERN void Load_Item_Surfaces (void);
 EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
@@ -198,6 +201,7 @@ EXTERN void LoadAndShowStats ( char* CoreFilename );
 #else
 #define EXTERN extern
 #endif
+EXTERN void glue_obstacles_to_floor_tiles_for_level ( int level_num );
 EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
@@ -279,6 +283,7 @@ EXTERN void Play_Spell_DetectItems_Sound( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void silently_unhold_all_items ( void );
 EXTERN int CountItemtypeInInventory( int Itemtype , int PlayerNum );
 EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum );
 EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum );
@@ -470,6 +475,7 @@ EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
 #else
 #define EXTERN extern
 #endif
+EXTERN void robot_group_turn_hostile ( int enemy_num );
 EXTERN void SetRestOfGroupToState ( Enemy ThisRobot , int NewState );
 EXTERN int MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot );
 EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );

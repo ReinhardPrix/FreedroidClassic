@@ -514,7 +514,9 @@ CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType )
 {
   SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
   int x , y ; // for processing through the surface...
-  Uint8 red, green, blue;
+  Uint8 red=0;
+  Uint8 green=0;
+  Uint8 blue=0;
   float alpha3 ;
 
   //--------------------
@@ -594,7 +596,7 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 {
   SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
   int x , y ; // for processing through the surface...
-  Uint8 new_red, new_green, new_blue, red1, red2, green1, green2, blue1 , blue2, raw_alpha1, raw_alpha2 ;
+  Uint8 new_red=0, new_green=0, new_blue=0, red1, red2, green1, green2, blue1 , blue2, raw_alpha1, raw_alpha2 ;
   float alpha1, alpha2, alpha3 ;
   SDL_PixelFormat *fmt1;
   SDL_PixelFormat *fmt2;
@@ -1356,7 +1358,6 @@ InitPictures (void)
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-  // Load_Bullet_Surfaces();
   iso_load_bullet_surfaces();
 
   ShowStartupPercentage ( 92 ) ; 

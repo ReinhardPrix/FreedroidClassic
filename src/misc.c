@@ -767,7 +767,6 @@ move_all_items_to_level ( int target_level )
   int source_level_num ;
   int AreaWidth;
   int AreaHeight;
-  int TargetStartLine;
 
   //--------------------
   // We must check all four interface areas and maybe grab the items from

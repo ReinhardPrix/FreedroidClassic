@@ -344,7 +344,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   //--------------------
   // We filter out those answering options that are allowed by the flag mask
   //
-  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: \n" , i ) ; 
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: \n" , FirstItem ) ; 
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
       FilteredChatMenuTexts [ i ] = "" ; 
@@ -471,13 +471,12 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int MenuOptionLineRequirement[20] ;
   SDL_Rect Choice_Window;
   SDL_Rect HighlightRect;
-  int 
-MaxLinesInMenuRectangle;
+  int MaxLinesInMenuRectangle;
   int OptionOffset = 0 ;
   int SpaceUsedSoFar;
   int BreakOffCauseAllDisplayed ;
-  int BreakOffCauseNoRoom ;
-  int LastOptionVisible;
+  int BreakOffCauseNoRoom = FALSE ;
+  int LastOptionVisible = 0 ;
   int MenuLineOfMouseCursor;
   int ThisOptionEnd;
 
@@ -502,7 +501,7 @@ MaxLinesInMenuRectangle;
   // First thing we do is find out how may options we have
   // been given for the menu
   //
-  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: \n" , i ) ; 
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: \n" , FirstItem ) ; 
   for ( i = 0 ; i < 10 ; i ++ )
     {
       DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 

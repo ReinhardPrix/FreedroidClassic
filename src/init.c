@@ -1638,7 +1638,9 @@ ResetGameConfigToDefaultValues ( void )
 void
 InitFreedroid ( void )
 {
+#ifndef USE_SDL_FRAMERATE
   struct timeval timestamp;
+#endif
   int i;
 
   // feenableexcept ( FE_ALL_EXCEPT );
@@ -1748,8 +1750,10 @@ InitFreedroid ( void )
    * Initialise random-number generator in order to make 
    * level-start etc really different at each program start
    */
+#ifndef USE_SDL_FRAMERATE
   gettimeofday(&timestamp, NULL);
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
+#endif
 
   // initialize the highscore list 
   Init_Highscores ();

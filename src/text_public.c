@@ -186,7 +186,7 @@ ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString ,
 {
   char* SearchPointer;
   char* EndOfStringPointer;
-  char* ReturnString;
+  char* ReturnString = "" ;
   int StringLength;
 
   if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )
@@ -770,8 +770,8 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
   char* fpath;
   int OptionIndex;
   int NumberOfOptionsInSection;
-  char TempSavedCharacter;
-  char *TempEndPointer;
+  char TempSavedCharacter = 'A' ;
+  char *TempEndPointer = NULL ;
   int NumberOfReplySubtitles;
   int NumberOfReplySamples;
   int NumberOfOptionChanges;
