@@ -515,6 +515,8 @@ typedef struct
   gps teleport_anchor;            // where from have you last teleported home
   gps mouse_move_target;          // where the tux is going automatically by virtue of mouse move 
   int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
+  int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
+  int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
   double health;		  // the max. possible energy in the moment 
   double energy;		  // current energy level 
   double mana;                    // current mana level 

@@ -65,6 +65,7 @@ int NoInfluBulletOnWay (void);
 void limit_tux_speed_to_a_maximum ( int player_num );
 void set_up_intermediate_course_for_tux ( int player_num );
 void clear_out_intermediate_points ( int player_num );
+void check_for_chests_to_open ( int player_num , int chest_index ) ;
 
 char recursion_grid[ MAX_MAP_LINES ][ MAX_MAP_LINES ] ;
 // moderately_finepoint first_found_walkable_point;
@@ -993,28 +994,6 @@ tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float 
 }; // int tux_can_walk_this_line ( float x1, float y1 , float x2 , float y2 )
 
 /* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-/*
-void
-move_tux_thowards_mouse_move_target ( int player_num )
-{
-
-  if ( move_tux_thowards_raw_position ( player_num , Me [ player_num ] . mouse_move_target . x , 
-					Me [ player_num ] . mouse_move_target . y ) )
-    {
-      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-
-      clear_out_intermediate_points ( player_num );
-    }
-
-}; // void move_tux_thowards_mouse_move_target ( int player_num )
-*/
-
-/* ----------------------------------------------------------------------
  * After a course for the Tux has been set up, the Tux can start to 
  * proceed thowards his target.  However, the unmodified recursive course
  * is often a bit awakward and goes back and forth a lot.
@@ -1476,7 +1455,35 @@ move_tux_thowards_intermediate_point ( int player_num )
   // in this function.
   //
   if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
-    return;
+    {
+      //--------------------
+      // The fact that there is no more intermediate course can mean, that
+      // there never has been any intermediate course or we have now arrived
+      // at the end of the previous intermediate course.
+      //
+      // But that maybe means, that it is now time for the combo_action, that
+      // can occur on the end of any intermediate course, like e.g. open a
+      // chest or pick up some item.
+      //
+      // DebugPrintf ( -4 , "\nAm I now at the last intermediate point???" );
+      
+      switch ( Me [ player_num ] . mouse_move_target_combo_action_type )
+	{
+	case NO_COMBO_ACTION_SET:
+	  break;
+	case COMBO_ACTION_OPEN_CHEST:
+	  check_for_chests_to_open ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
+	  break;
+	case COMBO_ACTION_PICK_UP_ITEM:
+	  break;
+	default:
+	  GiveStandardErrorMessage ( "move_tux_thowards_intermediate_point(...)" , 
+				     "Unhandled combo action for intermediate course encountered!" ,
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
+      return;
+    }
 
   //--------------------
   // Now we move the Tux thowards the next intermediate course point
@@ -2468,13 +2475,20 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
  *
  * ---------------------------------------------------------------------- */
 void
-check_for_chests_to_open ( int player_num ) 
+check_for_chests_to_open ( int player_num , int chest_index ) 
 {
-  int chest_index = closed_chest_below_mouse_cursor ( player_num ) ;
   Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
   if ( chest_index != (-1) )
     {
+      //--------------------
+      // So the player clicked on a chest.  Well, if the chest is already close
+      // enough, it should be sufficient to just spill out the contents of the
+      // chest and then return.  However, if the player was not yet close enough
+      // to the chest, we need to SET A COMBINED_ACTION, i.e. first set the walk
+      // thowards the chest and then set the open_chest action, which is more
+      // complicated of course.
+      //
       if ( fabsf ( Me [ player_num ] . pos . x - our_level -> obstacle_list [ chest_index ] . pos . x ) +
 	   fabsf ( Me [ player_num ] . pos . y - our_level -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
 	{
@@ -2484,6 +2498,59 @@ check_for_chests_to_open ( int player_num )
 	    our_level -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
 	  if ( our_level -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
 	    our_level -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
+
+	  //--------------------
+	  // Maybe a combo_action has made us come here and open the chest.  Then of
+	  // course we can remove the combo action setting now...
+	  //
+	  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+	  Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
+
+	  //--------------------
+	  // Now that the chest has been opend, we don't need to do anything more
+	  //
+	  return;
+	}
+      else
+	{
+	  //--------------------
+	  // So here we know, that we must set the course thowards the chest.  We
+	  // do so first.
+	  //
+	  DebugPrintf ( -4 , "\ncheck_for_chests_to_open:  setting up combined mouse move target!" );
+
+	  switch ( our_level -> obstacle_list [ chest_index ] . type )
+	    {
+	    case ISO_V_CHEST_CLOSED:
+	    case ISO_V_CHEST_OPEN:
+	      Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
+	      Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+	      Me [ player_num ] . mouse_move_target . x += 0.8 ;
+	      set_up_intermediate_course_for_tux ( player_num ) ;
+
+	      Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
+	      Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
+	      
+	      break;
+	    case ISO_H_CHEST_CLOSED:
+	    case ISO_H_CHEST_OPEN:
+	      Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
+	      Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+	      Me [ player_num ] . mouse_move_target . y += 0.8 ;
+	      set_up_intermediate_course_for_tux ( player_num ) ;
+
+	      Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
+	      Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
+
+	      break;
+	    default:
+	      GiveStandardErrorMessage ( "check_for_chests_to_open(...)" , 
+					 "chest to be approached is not a chest obstacle!!" ,
+					 PLEASE_INFORM, IS_FATAL );
+	      break;
+	    }
 	}
     }
 
@@ -2627,7 +2694,7 @@ AnalyzePlayersMouseClick ( int player_num )
 
   if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
 
-  check_for_chests_to_open ( player_num ) ;
+  check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
   check_for_barrels_to_smash ( player_num ) ;
 

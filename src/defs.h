@@ -794,8 +794,18 @@ enum _networking_status
     GAME_ON
   };
 
-
-#define DECKCOMPLETEBONUS 500
+//--------------------
+// It is possible, that the Tux must fist move somewhere AND
+// then open a chest or move somewhere AND then pick something up
+// or the like.  These are called 'combo_actions' and some definition
+// has to be made about the type of current combo_action.
+//
+enum _combo_action_types
+  {
+    NO_COMBO_ACTION_SET = -10 ,
+    COMBO_ACTION_OPEN_CHEST = 15 ,
+    COMBO_ACTION_PICK_UP_ITEM = 16
+  };
 
 //--------------------
 // For shop interfaces and chest interfaces we need some constants to
