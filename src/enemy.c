@@ -1056,7 +1056,8 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
 {
   int PlayerNum;
   int BestTarget = 0 ;
-  int BestDistance = 10000 ;
+  int BestDistance = 100000 ;
+  int FoundDistance;
 
   for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
@@ -1071,15 +1072,24 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
       if ( Me [ PlayerNum ] . status == OUT ) continue;
 
       //--------------------
-      // A dead or deactivated player can never be the closest player.
+      // Now we compute the distance and see if this robot is closer than
+      // the previous best target.
       //
-      
+      FoundDistance = ( Me [ PlayerNum ] . pos . x - ThisRobot -> pos . x ) *
+	( Me [ PlayerNum ] . pos . x - ThisRobot -> pos . x ) +
+	( Me [ PlayerNum ] . pos . y - ThisRobot -> pos . y ) * 
+	( Me [ PlayerNum ] . pos . y - ThisRobot -> pos . y ) ;
 
-
+      if ( FoundDistance < BestDistance )
+	{
+	  BestDistance = FoundDistance ;
+	  BestTarget = PlayerNum ;
+	}
     }
-  return 0;
 
-};
+  return BestTarget ;
+
+}; // int ClosestVisiblePlayer ( Enemy ThisRobot ) 
 
 /* ----------------------------------------------------------------------
  * determine the distance vector to the target of this shot.  The target
@@ -1100,12 +1110,13 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  if ( AllEnemys[ j ].Status == OUT ) continue;
 	  if ( AllEnemys[ j ].Friendly ) continue;
 	  if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
-	  if ( DirectLineWalkable( ThisRobot->pos.x , ThisRobot->pos.y , AllEnemys[j].pos.x , AllEnemys[j].pos.y , ThisRobot -> pos . z ) != 
-	       TRUE ) continue;
+	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
+				    AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
+				    ThisRobot -> pos . z ) != TRUE ) continue;
 
 	  // At this point we have found our target
-	  vect_to_target->x = AllEnemys[j].pos.x - ThisRobot->pos.x;
-	  vect_to_target->y = AllEnemys[j].pos.y - ThisRobot->pos.y;
+	  vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
+	  vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
 	  break;
 	}
       // Maybe we havn't found a single target.  Then we don't attack anything of course.
@@ -1115,8 +1126,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
     {
 
       TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
-      vect_to_target->x = Me[0].pos.x - ThisRobot->pos.x;
-      vect_to_target->y = Me[0].pos.y - ThisRobot->pos.y;
+      vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
+      vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
 
     }
 
@@ -1136,7 +1147,7 @@ AttackInfluence (int enemynum)
 {
   moderately_finepoint vect_to_target;
   float dist2;
-  Enemy ThisRobot=&AllEnemys[ enemynum ];
+  Enemy ThisRobot = & AllEnemys[ enemynum ] ;
   float StepSize;
   float TargetRange;
 
@@ -1150,10 +1161,10 @@ AttackInfluence (int enemynum)
   if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
 
   // ignore dead robots as well...
-  if ( ThisRobot->Status == OUT ) return;
+  if ( ThisRobot -> Status == OUT ) return;
 
   // ignore robots, that don't have any weapon
-  if ( Druidmap [ ThisRobot->type ].weapon_item.type == (-1) ) return;
+  if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
 
   //--------------------
   // If some special command was given, like 
@@ -1174,10 +1185,9 @@ AttackInfluence (int enemynum)
   // determine the distance vector to the target of this shot.  The target
   // depends of course on wheter it's a friendly device or a hostile device.
   //
-  DetermineVectorToShotTarget( ThisRobot , & vect_to_target );
+  DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
   // vect_to_target.x = 1;
   // vect_to_target.y = 1;
-
 
   dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
 
@@ -1188,7 +1198,9 @@ AttackInfluence (int enemynum)
 
   if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
-  if ( ! IsVisible ( &ThisRobot->pos , 0 ) && ( ThisRobot->Friendly == FALSE ) ) return; // WARNING! Player 0 always is wrong
+  if ( ! IsVisible ( &ThisRobot->pos , ClosestVisiblePlayer ( ThisRobot ) ) && 
+       ( ThisRobot->Friendly == FALSE ) ) 
+    return; 
 
   //--------------------
   // At this point we know, that the influencer is visible!  Perhaps we have
