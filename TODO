@@ -11,7 +11,7 @@ Outstanding release-critical bugs (priority: high)
                perhaps it was due to the "level gray"-change delay?!?
        rp: nope. Recently reproduced: jumped across a wall inside
            level after a melee
-       jp: --> damn! --> introduces extra security, that will prevent
+       jp: --> damn! --> introduced extra security, that will prevent
            this hopefully, but alter game behaviour if framerate drops under 20 fps.
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
@@ -22,19 +22,9 @@ Outstanding release-critical bugs (priority: high)
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
-- DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
-       as the current ship.
-
 - Correct the console map:  Do scaling in a way that allows to bring the whole map
   exactly on the screen and perhaps also give the scaling factor used for generating
   the map as additional text to the picture.
-
-- (jp) There is still a lot of german in the code.  Since we are growing more and more 
-       international, that should be removed and better sooner than later, as well in
-       the comments as in the choice of some old variable names, which are from 
-       historical origin, long before I started using the internet at all.
-
-- (rp) missing "takeover announcement" of droid opponent
 
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
   (seems ok so far..)
@@ -62,6 +52,14 @@ Wishlist
 
 Resolved bugs
 -------------
+- DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
+       as the current ship.
+- DONE There is still a lot of german in the code.  Since we are growing more and more 
+       international, that should be removed and better sooner than later, as well in
+       the comments as in the choice of some old variable names, which are from 
+       historical origin, long before I started using the internet at all.
+- DONE missing "takeover announcement" of droid opponent
+
 - DONE mouse-support (should be good with touchstick on laptop!)
 
 - DONE Before any release the levelcolor changing procedure must be rearranged to work

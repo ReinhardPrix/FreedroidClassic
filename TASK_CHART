@@ -20,22 +20,9 @@ THESE ITEMS HAVE FIRST PRIORITY:
   that they can use our code, if they want to
 * Add X-tra items of two types ( minor accessory , major accessory )
   instead of 
-* Change project description on the sourceforge, mentioning the new
-  project style in the extended mission
-* Talk to the colleagues about project future:  diablo-style?? of the
-  extensions
-* Add shield item
-* Add item descriptions: take a look at diablo for this again--> They
-  have a 3-line at least black rectangle in their bottom status banner,
-  where they can denote item properties
-* Add 'liquid containers' displaying current health
-* Add 'character screen'
-
 
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------
-
-2. Implement option to watch other droid than Influencer as center
 
 3. Extend the freedroid world/missions
    * (Outline for later:  other settings: )
@@ -51,8 +38,6 @@ THESE ITEMS ARE OF SECOND PRIORITY:
    d.                                      HAVE_BETTER_WAYPOINT
    DONE split up state machines for fireing and movement
    f. movement to new waypoint immediately if threatened by enemy fire
-
-10. Remove all german from the code
 
 *  Add code to animate the autoshooting gun
 
@@ -103,11 +88,3 @@ rp
 - Lift & ship view
 - Automake/configure/Makefile 
 - cheatmenu
-
-
-
-
-
-
-
-
