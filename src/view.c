@@ -1041,6 +1041,7 @@ There was an obstacle type given, that exceeds the number of\n\
       // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
       blit_iso_image_to_map_position ( tmp , 
 				       our_obstacle -> pos . x , our_obstacle -> pos . y );
+      SDL_FreeSurface ( tmp . surface );
       // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
       // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
       // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
