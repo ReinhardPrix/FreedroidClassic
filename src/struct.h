@@ -108,6 +108,7 @@ typedef struct
   int use_bars_instead_of_energy_o_meter;
   int show_quick_inventory;
   int show_blood; // this can be used to make the game more friendly for children...
+  int show_tooltips;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

@@ -1746,6 +1746,7 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . use_bars_instead_of_energy_o_meter = FALSE ;
 
   GameConfig . show_blood = TRUE ;
+  GameConfig . show_tooltips = TRUE;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 

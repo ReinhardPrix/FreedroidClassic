@@ -3497,13 +3497,13 @@ LevelEditor(void)
 	  else
 	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON );
 
-	  if ( 1 ) 
+	  if ( GameConfig . show_tooltips ) 
 	  {
-	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF );
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON );
 	    show_level_editor_tooltips (  );
 	  }
 	  else
-	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON );
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF );
 
 
 	  //--------------------
@@ -3866,7 +3866,7 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
 	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
-		   // turn off here
+	       GameConfig . show_tooltips = ! GameConfig . show_tooltips ;
 		}
 
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
