@@ -9,7 +9,7 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 
-AM_INIT_AUTOMAKE(freedroid, 0.8.4)
+AM_INIT_AUTOMAKE(freedroid, 1.0.1)
 
 AM_CONFIG_HEADER(config.h)
 
@@ -86,7 +86,7 @@ AC_HEADER_TIME
  Checks for library functions.
 AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
 
 
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
