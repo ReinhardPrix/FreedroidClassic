@@ -1027,7 +1027,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_multiplicity =  1 ;
 	  break;
 	case 8:
-	  drop_item_type = ITEM_MEDIUM_SHIELD ;
+	  drop_item_type = ITEM_LARGE_SHIELD ;
 	  drop_item_multiplicity =  1 ;
 	  break;
 	case 9:

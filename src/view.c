@@ -2065,20 +2065,18 @@ iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
   // If there is no weapon item present, we just need to blit the shield, cause
   // it's 'sword motion class' then.
   //
-  if ( Me [ player_num ] . weapon_item . type == (-1) )
-    {
-      iso_put_tux_part ( PART_GROUP_SHIELD , "iso_buckler" , x , y , player_num , rotation_index );
-      return;
-    }
 
-  //--------------------
-  // In case of a weapon item present, we need to look up the weapon item motion class
-  // and then decide which shield to use.
-  //
-  if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
+  if ( Me [ player_num ] . weapon_item . type != (-1) )
     {
-      iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
-      return;
+      //--------------------
+      // In case of a weapon item present, we need to look up the weapon item motion class
+      // and then decide which shield to use.
+      //
+      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
+	{
+	  iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
+	  return;
+	}
     }
 
   //--------------------
@@ -2091,6 +2089,8 @@ iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
     iso_put_tux_part ( PART_GROUP_SHIELD , "iso_small_shield" , x , y , player_num , rotation_index );
   else if ( Me [ player_num ] . shield_item . type == ITEM_STANDARD_SHIELD )
     iso_put_tux_part ( PART_GROUP_SHIELD , "iso_standard_shield" , x , y , player_num , rotation_index );
+  else if ( Me [ player_num ] . shield_item . type == ITEM_LARGE_SHIELD )
+    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_large_shield" , x , y , player_num , rotation_index );
   else
     {
       fprintf ( stderr , "Shield item code: %d " , Me [ player_num ] . shield_item . type ) ;
@@ -2606,8 +2606,8 @@ PrintCommentOfThisEnemy ( int Enum )
       //--------------------
       // Now we add some more debug info here...
       //
-      /*
       sprintf ( phase_text , "a-phase: %3.3f a-type: %d" , AllEnemys [ Enum ] . animation_phase , AllEnemys [ Enum ] . animation_type );
+      /*
       PutStringFont ( Screen , FPS_Display_BFont , 
 		      x_pos , y_pos + FontHeight ( FPS_Display_BFont ) ,  
 		      phase_text );
