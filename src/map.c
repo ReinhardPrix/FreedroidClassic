@@ -1109,6 +1109,13 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	    case REFRESH3:
 	    case REFRESH4:
 	      Lev->map[i][col]=REFRESH1;
+	      break;
+	    case TELE_1:
+	    case TELE_2:
+	    case TELE_3:
+	    case TELE_4:
+	      Lev->map[i][col]=TELE_1;
+	      break;
 	    default:
 	      break;
 	    }
