@@ -376,6 +376,56 @@ DeleteBlast (int BlastNum)
 }; // void DeleteBlast( int BlastNum )
 
 /* ----------------------------------------------------------------------
+ * This function advances the currently active spells.
+ * ---------------------------------------------------------------------- */
+void
+MoveActiveSpells (void)
+{
+  int i;
+  float PassedTime;
+
+  PassedTime = Frame_Time ();
+
+  for ( i = 0; i < MAX_ACTIVE_SPELLS; i++ )
+    {
+      //--------------------
+      // We can ignore all unused entries...
+      //
+      if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+
+      //--------------------
+      // All spells should count their lifetime...
+      //
+      AllActiveSpells [ i ] . spell_age += PassedTime;
+
+      //--------------------
+      // Now we handle the emp waves...
+      //
+      if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE )
+	{
+	  AllActiveSpells [ i ] . spell_radius += 6.0 * PassedTime;
+
+	  //--------------------
+	  // Such a spell can not live for longer than 1.0 seconds, say
+	  //
+	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
+	}
+
+    }
+
+}; // void MoveActiveSpells( ... )
+
+/* ----------------------------------------------------------------------
+ * This function deletes a single blast entry from the list of all blasts
+ * ---------------------------------------------------------------------- */
+void
+DeleteSpell (int SpellNum)
+{
+  AllActiveSpells [ SpellNum ] . type = ( -1 );
+  AllActiveSpells [ SpellNum ] . spell_age = 0 ;
+}; // void DeleteSpell( int SpellNum )
+
+/* ----------------------------------------------------------------------
  * THIS FUNCTION IS CURRENTLY NOWHERE USED!!!
  * Is shall obviously tell from which direction a given robot was hit.
  * (I guess this function may fail utterly when framerate is low!)

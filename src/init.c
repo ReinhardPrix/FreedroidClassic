@@ -1719,6 +1719,11 @@ InitNewMissionList ( char *MissionName )
       DeleteBlast( i );
     }
   DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
+  for (i = 0; i < MAX_ACTIVE_SPELLS; i++)
+    {
+      DeleteSpell( i );
+    }
+  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All active spells have been deleted...");
 
   //--------------------
   //Now its time to start decoding the mission file.

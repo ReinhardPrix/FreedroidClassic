@@ -126,6 +126,8 @@ main (int argc, char *const argv[])
 
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
 
+	  MoveActiveSpells (); // move moving spells currently active...
+
 	  //--------------------
 	  // Now, for multiplayer, we update all player images...
 	  //

@@ -94,6 +94,8 @@ EXTERN void DeleteBullet (int num , int StartBlast );
 EXTERN void StartBlast ( float x , float y , int level , int type );
 EXTERN void ExplodeBlasts (void);
 EXTERN void DeleteBlast (int num);
+EXTERN void MoveActiveSpells (void);
+EXTERN void DeleteSpell (int num);
 EXTERN void CheckBulletCollisions (int num);
 EXTERN void CheckBlastCollisions (int num);
 

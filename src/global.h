@@ -118,6 +118,7 @@ EXTERN int ServerMode;
 EXTERN int ClientMode;
 
 EXTERN enemy AllEnemys[ MAX_ENEMYS_ON_SHIP ];
+EXTERN spell_active AllActiveSpells[ MAX_ACTIVE_SPELLS ];
 EXTERN network_enemy NetworkAllEnemys[ MAX_ENEMYS_ON_SHIP ];
 EXTERN event_trigger AllEventTriggers[ MAX_EVENT_TRIGGERS ];
 EXTERN triggered_action AllTriggeredActions[ MAX_TRIGGERED_ACTIONS_IN_GAME ];

@@ -402,11 +402,43 @@ ShowItemAlarm( void )
 void
 PutMiscellaneousSpellEffects ( void )
 {
-  long Ticks;
+  int i;
 
-  Ticks = SDL_GetTicks ( );
+  //--------------------
+  // This is here for some debugging/testing purpose
+  //
+  // long Ticks = SDL_GetTicks ( );
+  // PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
 
-  PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
+  //--------------------
+  // Now we put all the spells in the list of active spells
+  //
+  for ( i = 0 ; i < MAX_ACTIVE_SPELLS; i ++ )
+    {
+      if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) 
+	{
+	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+			       AllActiveSpells [ i ] . spell_center . y , 
+			       AllActiveSpells [ i ] . spell_radius );
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was a bogus spell type entry found in the active spell list.\n\
+\n\
+This is a severe error and should not occur.\n\
+\n\
+The code in question was: %d.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem.\n\
+----------------------------------------------------------------------\n\
+\n" , AllActiveSpells [ i ] . type );
+	}
+    }
 
 }; // void PutMiscellaneousSpellEffects ( void )
 

@@ -343,11 +343,54 @@ ForceExplosionCircle ( gps ExpCenter )
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
+RadialEMPWave ( gps ExpCenter )
+{
+  int SpellCost = ManaCostTable [ SPELL_RADIAL_EMP_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int i;
+
+  if ( Me[0].mana >= SpellCost )
+    {
+      //--------------------
+      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
+      //
+      // Me[0].mana -= SpellCost;
+      //
+
+      //--------------------
+      // First we find a new entry in the active spells list
+      //
+      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	{
+	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	}
+      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+      
+      //--------------------
+      // Now we start our new emp wave
+      //
+      AllActiveSpells [ i ] . type = SPELL_RADIAL_EMP_WAVE ; 
+      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+      AllActiveSpells [ i ] . spell_radius = 1 ;
+      AllActiveSpells [ i ] . spell_age = 0 ; 
+      
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void RadialEMPWave ( finepoint ExpCenter )
+
+/* ----------------------------------------------------------------------
+ * This function handles the ForceExplosionCircle skill.
+ * ---------------------------------------------------------------------- */
+void
 ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
   moderately_finepoint step;
-  // int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_RAY ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ] ;
   int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_RAY ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
@@ -367,8 +410,6 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
       Not_Enough_Mana_Sound(  );
     }
-
-
 
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
@@ -407,24 +448,22 @@ void
 HandleCurrentlyActivatedSkill( void )
 {
   static int RightPressedPreviousFrame = 0;
-  // gps TargetLocation;
   moderately_finepoint TargetPoint;
 
-  if ( Me[0].readied_skill == SPELL_TRANSFERMODE )
+  switch ( Me [ 0 ] . readied_skill )
     {
+    case SPELL_TRANSFERMODE:
       if (MouseRightPressed() == 1)
 	Me[0].status = TRANSFERMODE;
-    }
-  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_CIRCLE )
-    {
+      break;
+    case SPELL_FORCE_EXPLOSION_CIRCLE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    ForceExplosionCircle( Me[0].pos );
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_RAY )
-    {
+      break;
+    case SPELL_FORCE_EXPLOSION_RAY:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -432,9 +471,8 @@ HandleCurrentlyActivatedSkill( void )
 	      ForceExplosionRay ( Me[0].pos , input_axis );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_FORCE_TO_ENERGY )
-    {
+      break;
+    case SPELL_FORCE_TO_ENERGY:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -442,9 +480,8 @@ HandleCurrentlyActivatedSkill( void )
 	      ForceToEnergyConversion ( );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_TELEPORT_HOME )
-    {
+      break;
+    case SPELL_TELEPORT_HOME:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -453,9 +490,8 @@ HandleCurrentlyActivatedSkill( void )
 	      TeleportHome (  ) ;
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_FIREY_BOLT )
-    {
+      break;
+    case SPELL_FIREY_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -465,9 +501,8 @@ HandleCurrentlyActivatedSkill( void )
 	      FireyBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_COLD_BOLT )
-    {
+      break;
+    case SPELL_COLD_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -477,9 +512,8 @@ HandleCurrentlyActivatedSkill( void )
 	      ColdBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_REPAIR_SKILL )
-    {
+      break;
+    case SPELL_REPAIR_SKILL:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( !CursorIsInInvRect( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) || !GameConfig.Inventory_Visible )
@@ -491,9 +525,8 @@ HandleCurrentlyActivatedSkill( void )
 	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE );      
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_POISON_BOLT )
-    {
+      break;
+    case SPELL_POISON_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -503,9 +536,8 @@ HandleCurrentlyActivatedSkill( void )
 	      PoisonBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_PARALYZE_BOLT )
-    {
+      break;
+    case SPELL_PARALYZE_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -515,9 +547,8 @@ HandleCurrentlyActivatedSkill( void )
 	      ParalyzeBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
-    }
-  else if ( Me[0].readied_skill == SPELL_DETECT_ITEM )
-    {
+      break;
+    case SPELL_DETECT_ITEM:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
@@ -525,8 +556,32 @@ HandleCurrentlyActivatedSkill( void )
 	      DetectItemsSpell (  ) ;
 	    }
 	}
+      break;
+    case SPELL_RADIAL_EMP_WAVE:
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      RadialEMPWave ( Me [ 0 ] . pos );
+	    }
+	}
+      break;
+    default:
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was a request for a spell/skill that is currently not handled.\n\
+\n\
+Nothing will be done then.  This is a warning message only.\n\
+The code of the requested spell was: %d.\n\
+Usually this error is not severe.\n\
+\n\
+For now we'll choose not to worry and return.\n\
+----------------------------------------------------------------------\n\
+\n" , Me [ 0 ] . readied_skill );
+      break;
     }
-
 
   RightPressedPreviousFrame = MouseRightPressed() ;
 

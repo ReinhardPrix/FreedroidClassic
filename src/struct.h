@@ -770,6 +770,15 @@ blast, *Blast;
 
 typedef struct
 {
+  int type; // what type of spell is active?
+  moderately_finepoint spell_center;
+  float spell_radius;
+  float spell_age;
+}
+spell_active, *Spell_Active;
+
+typedef struct
+{
   int level;   // The level, where this elevtor entrance is located
   int x;       // The position in x of this elevator entrance within the level
   int y;       // The position in y of this elevator entrance within the level
