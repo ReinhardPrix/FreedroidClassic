@@ -929,7 +929,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
   if ( *Resttext == ' ' ) {
     for (i=1;i<MAX_WORD_LENGTH;i++) 
       {
-	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
+	if ( (Resttext[i] != ' ') && (Resttext[i] != '\n') && (Resttext[i] != 0) )
 	  { 
 	    NeededSpace+=CharWidth( GetCurrentFont() , Resttext[i] );
 	    if ( MyCursorX+NeededSpace > clip->x + clip->w - 10 )
