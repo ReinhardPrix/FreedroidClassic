@@ -668,7 +668,6 @@ InitPictures (void)
   ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, TRUE));
   FreeIfUsed(ship_off_pic);
   ship_off_pic= IMG_Load (find_file (SHIP_OFF_PIC_FILE, GRAPHICS_DIR, TRUE));
-  printf_SDL (ne_screen, -1, -1, " ok\n");
 
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
@@ -695,6 +694,8 @@ InitPictures (void)
       printf_SDL (ne_screen, -1, -1, ".");
     }
   
+  printf_SDL (ne_screen, -1, -1, " ok\n");
+
   SetCurrentFont (oldfont);
 
   first_call = FALSE;

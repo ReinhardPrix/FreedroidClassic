@@ -1276,9 +1276,11 @@ Level_Editor(void)
 
   while ( !Done )
     {
+      usleep(50);
       Weiter=FALSE;
       while (!EscapePressed())
 	{
+	  usleep(50);
 	  BlockX=rintf(Me.pos.x);
 	  BlockY=rintf(Me.pos.y);
 	  
@@ -1576,6 +1578,9 @@ Level_Editor(void)
       while (!Weiter)
 	{
 	  int xoffs = 110;
+
+	  usleep(50);
+
 	  key_pressed = FALSE;
 
 	  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
@@ -1606,6 +1611,7 @@ Level_Editor(void)
 	  
 	  while (!key_pressed)
 	    {
+	      usleep(50);
 	      if ( EscapePressed() )
 		{
 		  while (EscapePressed());

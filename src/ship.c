@@ -324,6 +324,7 @@ EnterKonsole (void)
 
   while (!ReenterGame)
     {
+      usleep(50);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
@@ -399,7 +400,8 @@ EnterKonsole (void)
 	      Fill_Rect(User_Rect, Black);
 	      ShowLifts (CurLevel->levelnum, -1);
 	      // this sucks, but we dont have anything better at the moment....
-	      while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() ));
+	      while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() ))
+		usleep(50);
 	      while (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed());
 	      PaintConsoleMenu(pos, 0);
 	      break;
@@ -498,7 +500,8 @@ ShowDeckMap (Level deck)
   Me.pos.y=tmp.y;
 
   // this sucks, but we dont have anything better at the moment....
-  while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() ));
+  while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() )) 
+    usleep(50);
   while (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed());
 
   SetCombatScaleTo (1.0);
@@ -569,6 +572,7 @@ GreatDruidShow (void)
 
   while (!finished)
     {
+      usleep(50);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 

@@ -670,7 +670,7 @@ InitNewMission ( char *MissionName )
   oldfont = GetCurrentFont ();
 
   SetCurrentFont (FPS_Display_BFont);
-  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading mission data ");
+  //  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading mission data ");
 
   /* Read the whole mission data to memory */
   fpath = find_file (MissionName, MAP_DIR, FALSE);
@@ -689,7 +689,7 @@ InitNewMission ( char *MissionName )
     ReadAndMallocStringFromData ( MainMissionPointer , GAMEDATANAME_INDICATION_STRING , "\n" ) ;
 
   Init_Game_Data ( GameDataName );
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now its time to get the shipname from the mission file and
   // read the ship file into the right memory structures
@@ -702,7 +702,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "Error in LoadShip\n");
       Terminate (ERR);
     }
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now its time to get the elevator file name from the mission file and
   // read the elevator file into the right memory structures
@@ -714,7 +714,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "\nError in GetLiftConnections ");
       Terminate (ERR);
     }
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission
   //
@@ -737,7 +737,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "\nInitNewGame(): ERROR: Initialization of enemys failed...");
       Terminate (-1);
     }
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
 
   //--------------------
   // Now its time to get the debriefing text from the mission file so that it
@@ -795,10 +795,10 @@ InitNewMission ( char *MissionName )
   // At this point the position history can be initialized
   //
   InitInfluPositionHistory();
-  printf_SDL (ne_screen, -1, -1, ".");
+  //  printf_SDL (ne_screen, -1, -1, ".");
 
 
-  printf_SDL (ne_screen, -1, -1, " ok\n");
+  //  printf_SDL (ne_screen, -1, -1, " ok\n");
   SetCurrentFont (oldfont);
   //--------------------
   // We start with doing the briefing things...
