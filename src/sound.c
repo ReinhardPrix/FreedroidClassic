@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 26
+#define ALL_SOUNDS 28
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -71,6 +71,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Single_Pulse_Sound_0.wav",
    "Fire_Bullet_Military_Sound_0.wav",
    "Fire_Bullet_Flash_Sound_0.wav",
+   "Fire_Bullet_Exterminator_Sound_0.wav",
+   "Fire_Bullet_Laser_Rifle_Sound_0.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav"
 };
@@ -670,6 +672,14 @@ Fire_Bullet_Sound (int BulletType)
 
       case FLASH:
 	Play_Sound ( FIRE_BULLET_FLASH_SOUND );
+	break;
+
+      case EXTERMINATOR:
+	Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
+	break;
+
+      case LASER_RIFLE:
+	Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
 	break;
 
     }
