@@ -815,6 +815,18 @@ PlayGreetingSound ( int SoundCode )
     case 14:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE );
       break;
+    case 15:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE );
+      break;
+    case 16:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE );
+      break;
+    case 17:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE );
+      break;
+    case 18:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE );
+      break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
       Terminate( ERR );
@@ -840,6 +852,9 @@ PlayStartAttackSound ( int SoundCode )
     case 1:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE );
       break;
+    case 2:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_2.wav" , FALSE );
+      break;
     case 9:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE );
       break;
@@ -857,6 +872,18 @@ PlayStartAttackSound ( int SoundCode )
       break;
     case 14:
       PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE );
+      break;
+    case 15:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_15.wav" , FALSE );
+      break;
+    case 16:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_16.wav" , FALSE );
+      break;
+    case 17:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_17.wav" , FALSE );
+      break;
+    case 18:
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_18.wav" , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");

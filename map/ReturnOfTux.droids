@@ -260,6 +260,15 @@ SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=8 AdvancedCommand=2 Parameter1=0
 SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=8 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
 SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=8 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot7StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
 
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=28 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=28 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=28 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=28 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=29 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=29 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=29 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level8Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
