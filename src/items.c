@@ -39,6 +39,9 @@
 #include "items.h"
 
 
+#define RECT_DEBUG 2 
+
+
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
@@ -340,11 +343,11 @@ CursorIsInWeaponRect( int x , int y )
 
   if ( ( CurPos.x >= 20 ) && ( CurPos.x <= 20 + WEAPON_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
+      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 10 ) && 
 	   ( CurPos.y <= User_Rect.y + 10 + WEAPON_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
+	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -366,11 +369,11 @@ CursorIsInDriveRect( int x , int y )
 
   if ( ( CurPos.x >= 240 ) && ( CurPos.x <= 240 + DRIVE_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
+      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 93 ) && 
 	   ( CurPos.y <= User_Rect.y + 93 + DRIVE_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
+	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -510,11 +513,11 @@ CursorIsInInventoryGrid( int x , int y )
 
   if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + INVENTORY_GRID_WIDTH * 32 ) )
     {
-      // DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as x is concerned.");
+      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in inventory, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * INVENTORY_GRID_HEIGHT ) && 
 	   ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
 	{
-	  // DebugPrintf( 0 , "\nMight be grabbing in inventory, as far as y is concerned.");
+	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in inventory, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -1121,7 +1124,7 @@ DropHeldItemToInventory( void )
 void 
 ManageInventoryScreen ( void )
 {
-  SDL_Rect TargetRect;
+  // SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
   static int RightPressedPreviousFrame = FALSE;
   point CurPos;
@@ -1132,6 +1135,10 @@ ManageInventoryScreen ( void )
   // static int Item_Grabbed = FALSE;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
+
+  DebugPrintf ( 0 , "\nRight: %d Left: %d Held: %d ", 
+		RightPressedPreviousFrame , MouseButtonPressedPreviousFrame , Item_Held_In_Hand );
+
 
   // --------------------
   // We will need the current mouse position on several spots...
@@ -1148,7 +1155,7 @@ ManageInventoryScreen ( void )
   //
   if ( GameConfig.Inventory_Visible == FALSE ) 
     {
-
+      DebugPrintf( 0 , "\nINVENTORY NOT VISIBLE!!" );
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
@@ -1558,6 +1565,7 @@ ManageInventoryScreen ( void )
   // Maybe the user is just pressing the RIGHT mouse button inside the inventory recatangle
   // which would mean for us that he is applying the item under the mouse button
   //
+  
   if ( MouseRightPressed ( ) && ( !RightPressedPreviousFrame ) )
     {
       if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
@@ -1573,7 +1581,6 @@ ManageInventoryScreen ( void )
 	  if ( Grabbed_InvPos == (-1) )
 	    {
 	      // Nothing grabbed, so we need not do anything more here..
-	      Item_Held_In_Hand = ( -1 );
 	      DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
 	    }
 	  else
@@ -1585,7 +1592,6 @@ ManageInventoryScreen ( void )
 	    }
 	}
     }
-
 
   //--------------------
   // Finally, we want the part of the screen we have been editing to become

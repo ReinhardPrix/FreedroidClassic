@@ -1653,7 +1653,8 @@ NoDirectionPressed (void)
 int
 MouseRightPressed(void)
 {
-  keyboard_update();
+  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
   return CurrentlyMouseRightPressed;
 }
 
