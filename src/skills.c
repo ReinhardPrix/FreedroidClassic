@@ -227,27 +227,27 @@ ColdBoltSpell ( gps BoltSource )
 void
 PoisonBoltSpell ( gps BoltSource )
 {
-  int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
-  moderately_finepoint target_location;
-
-  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  if ( Me [ 0 ] . mana >= SpellCost )
+    int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+    moderately_finepoint target_location;
+    
+    target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+    target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+    
+    if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
-
-      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-
-      Play_Spell_ForceToEnergy_Sound( );
-
+	Me[0].mana -= SpellCost;
+	
+	//FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
+	FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+	
+	Play_Spell_ForceToEnergy_Sound( );
+	
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me[0].TextVisibleTime = 0;
+	Me[0].TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
 }; // void PoisonBoltSpell ( ... )
 
@@ -563,6 +563,7 @@ HandleCurrentlyActivatedSkill( int player_num )
     Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     moderately_finepoint loc_pos ;
     int index_of_droid_below_mouse_cursor = ( -1 ) ;
+    int SpellCost;
 
     switch ( Me [ 0 ] . readied_skill )
     {
@@ -793,21 +794,33 @@ HandleCurrentlyActivatedSkill( int player_num )
 	case SPELL_IDENTIFY_SKILL:
 	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
+		//--------------------
+		// Maybe the identify spell has already been triggered and
+		// is activated right now.  Then of course this (second) mouse
+		// click must be ignored completely.
+		//
+		if ( global_ingame_mode == GLOBAL_INGAME_MODE_IDENTIFY ) break;
 
-		/*
-		if ( !MouseCursorIsInInvRect( GetMousePos_x()  , 
-					 GetMousePos_y()  ) 
-		     || ( ! GameConfig.Inventory_Visible ) )
+		//--------------------
+		// We need to see if sufficient mana for the identify skill
+		// is present.  Only then can we deduct mana and enter
+		// identification global mode.
+		//
+		SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+		if ( Me [ 0 ] . mana >= SpellCost )
 		{
-		    //--------------------
-		    // Do nothing here.  The right mouse click while in inventory screen
-		    // will be handled in the inventory screen management function.
-		    //
-		    PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
-		}
-		*/
-		global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+		    Me [ 0 ] . mana -= SpellCost;
+		    Play_Spell_ForceToEnergy_Sound( );
 
+		    silently_unhold_all_items ( );
+		    global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+		}
+		else
+		{
+		    Me [ 0 ] . TextVisibleTime = 0;
+		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+		    Not_Enough_Mana_Sound(  );
+		}
 	    }
 	    break;
 	case SPELL_POISON_BOLT:

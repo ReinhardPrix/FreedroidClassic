@@ -378,6 +378,7 @@ EXTERN void play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Wa
 #else
 #define EXTERN extern
 #endif
+EXTERN void handle_player_identification_command ( int player_num );
 EXTERN void MoveItem( item* SourceItem , item* DestItem );
 EXTERN void silently_unhold_all_items ( void );
 EXTERN int required_spellcasting_skill_for_item ( int item_type );

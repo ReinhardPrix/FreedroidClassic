@@ -2943,7 +2943,7 @@ ManageInventoryScreen ( void )
     Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     int index_of_item_under_mouse_cursor = (-1) ;
     
-    DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
+    DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
     
     DebugPrintf ( INVENTORY_MOUSE_BUTTON_DEBUG , "\nRight: %d Left: %d Held: %d ", 
 		  RightPressedPreviousFrame , MouseButtonPressedPreviousFrame , Item_Held_In_Hand );
@@ -3067,7 +3067,10 @@ ManageInventoryScreen ( void )
     // If the user now presses the left mouse button and it was not pressed before,
     // the the user has 'grabbed' the item directly under the mouse button
     //
-    if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
+    if ( ( axis_is_active ) && 
+	 ( !MouseButtonPressedPreviousFrame ) && 
+	 ( Item_Held_In_Hand == (-1) ) &&
+	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
 	DebugPrintf( 1 , "\nTrying to 'grab' the item below the mouse cursor.");
 	
@@ -3625,10 +3628,6 @@ ManageInventoryScreen ( void )
 		    if ( Me [ 0 ] . aux2_item . type != (-1) )
 			HomeMadeItemRepair ( & ( Me [ 0 ] . aux2_item ) );
 		}
-		break;
-		
-	    case SPELL_IDENTIFY_SKILL:
-		handle_player_identification_command( 0 );
 		break;
 		
 	    default:
