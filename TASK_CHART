@@ -14,6 +14,26 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
+*  Add code to allow for top views of the robot DROPPING FINALLY THE OLD
+   BALL WITH NUMBER DESIGN!!
+*  Add documentation about how to incorporate new map tiles into the game
+*  Make the map tile reading function decide the number of tiles from the
+   size of the picuture itself.  (Eliminate the contant for the number of
+   map tiles as it is now.  Make a variable out of it.)
+*  Add additional map tiles:  destroyed console left/right/up/down
+*  Add additional map tiles:  autoshooting gun left/right/up/down
+*  Add code to animate the autoshooting gun
+*  Add new weapon type: laser: drawing (double) lines from source to target.
+*  Add new weapon type: dumb missile 
+*  Add new weapon type: homing missile
+*  Add old explosions of larger size to make the game graphically more advanced
+*  Add old sparks and lightning flashed on a robot to make the game graphically
+   more advanced
+*  Add new third mission with bomb defusal mission target and heavy guard and
+   time limit for the defusal of the bomb.
+*  Add surface lift to the asteroid map, that should not be accessible from the start.
+
+
 0. Extend the level Editor
    DONE Extend the Level Editor to show waypoint connections
    b. Extend the Level Editor to allow for resizing of decks
@@ -25,6 +45,10 @@ THESE ITEMS HAVE FIRST PRIORITY:
    DONE Do segfault protection from planting tiles outside map structure
    DINE Allow for more things to be set directly: Elevators & Boxes
    h. Add safety/correction check against leading -1 waypoint connections
+   i. Add a function to specify map tiles to be planted using their number
+      instead of a fixed key.  That should provide a fallback for freshly
+      self-implemented tiles, that do not have their own key sequence in
+      the level-editor yet.
 
 1. Extend the game dat file
    a. Add direct control over all individual bullet speeds and damages
