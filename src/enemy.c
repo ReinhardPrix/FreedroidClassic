@@ -1277,9 +1277,9 @@ AttackInfluence (int enemynum)
   if ( ThisRobot->has_greeted_influencer == FALSE )
     {
       ThisRobot->has_greeted_influencer = TRUE;
-      if ( Druidmap[ ThisRobot->type ].Greeting_Sound_Type != (-1) )
+      if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 	{
-	  PlayGreetingSound( Druidmap[ ThisRobot->type ].Greeting_Sound_Type );
+	  PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 	}
     }
 

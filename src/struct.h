@@ -121,6 +121,14 @@ typedef struct
 
 typedef struct
 {
+  byte level;			/* Level - 'Koordinate' */
+  int x;			/* x,y Koordinaten */
+  int y;
+}
+location, *Location;
+
+typedef struct
+{
   signed char x;
   signed char y;
 }
@@ -155,6 +163,7 @@ typedef struct
 }
 mission, *Mission;
 
+//--------------------
 // This structure can contain things, that might be triggered by a special
 // condition, that can be specified in the mission file as well.
 //
@@ -180,6 +189,7 @@ typedef struct
 }
 triggered_action , *Triggered_action;
 
+//--------------------
 // This structure can contain conditions that must be fulfilled, so that a special
 // event is triggered.  Such conditions may be specified in the mission file as well
 //
@@ -378,7 +388,7 @@ typedef struct
   item aux1_item;
   item aux2_item;
 
-  int Greeting_Sound_Type; // which sample to play in order to 'greet' the influencer?
+  int greeting_sound_type; // which sample to play in order to 'greet' the influencer?
   int Got_Hit_Sound_Type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target
   int getting_hit_modifier; // modifier for this droid to receive a hit from the player
@@ -386,7 +396,7 @@ typedef struct
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
-  int IsHuman;
+  int is_human;
 }
 druidspec, *Druidspec;
 
@@ -461,7 +471,7 @@ typedef struct
   // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
   // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
   //
-  int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
+  Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?
   Uint8 Automap [MAX_LEVELS][100][100]; // this is the data for the automatic map
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
@@ -643,7 +653,6 @@ bulletspec, *Bulletspec;
 
 typedef struct
 {
-  // finepoint pos;
   int type;
   gps pos;
   moderately_finepoint speed;
@@ -680,7 +689,6 @@ bullet, *Bullet;
 typedef struct
 {
   int phases;
-  unsigned char *picpointer;
   double total_animation_time;
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                            // the blast images of this blast type
@@ -689,7 +697,6 @@ blastspec, *Blastspec;
 
 typedef struct
 {
-  // moderately_finepoint pos;
   gps pos;
   int type;
   double phase;
@@ -699,19 +706,11 @@ blast, *Blast;
 
 typedef struct
 {
-  byte level;			/* Level - 'Koordinate' */
-  int x;			/* x,y Koordinaten */
-  int y;
-}
-location, *Location;
-
-typedef struct
-{
   int level;   // The level, where this elevtor entrance is located
   int x;       // The position in x of this elevator entrance within the level
   int y;       // The position in y of this elevator entrance within the level
 
-  /* connections: Numbers in Lift-Array */
+  // connections: Numbers in Lift-Array 
   int up;
   int down;
 
@@ -762,23 +761,5 @@ typedef struct
   int num_level_rects[MAX_LEVELS];  /* how many rects has a level */
 }
 ship, *Ship;
-
-
-typedef struct
-{
-  char *FCUName;
-}
-FCU;
-
-
-typedef struct
-{
-  point pos;
-  int len;
-  int hgt;
-  int oldval;
-  int col;
-}
-bar, *Bar;
 
 #endif
