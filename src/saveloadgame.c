@@ -329,6 +329,55 @@ freedroid-discussion@lists.sourceforge.net\n\
  * This function loads an old saved game of Freedroid from a file.
  * ---------------------------------------------------------------------- */
 int 
+DeleteGame( void )
+{
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
+  char filename[1000];
+
+  if ( ( homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf (0, "\n----------------------------------------------------------------------\n\
+ERROR: Environment does not contain HOME variable... \n\
+I need to know that for loading.  Giving up loading of games....\n\
+Freedroid will not be terminated now, but continue running.\n\
+The game however could NOT be saved.\n\
+----------------------------------------------------------------------\n");
+      return (ERR);
+    }
+
+  //--------------------
+  // Now we generate the right directory for saving from the home
+  // directory.
+  //
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT);
+
+  remove ( filename ) ;
+
+  //--------------------
+  // First, we must determine the savedgame data file name
+  //
+  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVEDGAME_EXT);
+
+  remove ( filename );
+
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
+
+  remove ( filename );
+
+  return ( OK );
+
+}; // int DeleteGame( void )
+
+/* ----------------------------------------------------------------------
+ * This function loads an old saved game of Freedroid from a file.
+ * ---------------------------------------------------------------------- */
+int 
 LoadGame( void )
 {
   char Saved_Games_Dir[1000];

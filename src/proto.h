@@ -176,6 +176,7 @@ EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN void LoadAndShowThumbnail ( char* CoreFilename );
 EXTERN int SaveGame( void );
 EXTERN int LoadGame( void );
+EXTERN int DeleteGame( void );
 
 // map.c 
 #undef EXTERN

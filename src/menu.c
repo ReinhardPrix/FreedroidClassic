@@ -59,6 +59,7 @@ EXTERN void Level_Editor(void);
 
 #define SINGLE_PLAYER_STRING "Single Player"
 #define LOAD_EXISTING_HERO_STRING "The first 10 characters: "
+#define DELETE_EXISTING_HERO_STRING "Select character to delete: "
 
 /* ----------------------------------------------------------------------
  * This function tells over which menu item the mouse cursor would be,
@@ -169,7 +170,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       RightPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , VERSION );
       // printf ("\n%s %s  \n", PACKAGE, VERSION);
     }
-  else if ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) )
+  else if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
+	    ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
     {
       MenuWithFileInformation = TRUE ;
     }
@@ -1016,14 +1018,6 @@ enum
 	case ( RESUME_GAME_POSITION ) :
 	  Weiter=!Weiter;
 	  break;
-	  /*
-	case SINGLE_PLAYER_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  New_Game_Requested=FALSE;
-	  Single_Player_Menu();
-	  if (New_Game_Requested) Weiter = TRUE;   // jp forgot this... ;) 
-	  break;
-	  */
 	case OPTIONS_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  Options_Menu();
@@ -1963,6 +1957,138 @@ The problem occured in the function 'int Load_Existing_Hero_Menu ( void )'.\n\
 
 
 /* ----------------------------------------------------------------------
+ * This is the function available from the freedroid startup menu, that
+ * should display the available characters in the users home directory
+ * and eventually let the player select one of his old characters there.
+ * ---------------------------------------------------------------------- */
+int 
+Delete_Existing_Hero_Menu ( void )
+{
+  char *homedir;
+  char Saved_Games_Dir[1000];
+  char* MenuTexts[ 10 ];
+  struct dirent **eps;
+  int n;  
+  int cnt;
+  int MenuPosition;
+  int FinalDecision;
+  char SafetyText[2000];
+
+  DebugPrintf ( 0 , "\nint Delete_Existing_Hero_Menu ( void ): real function call confirmed.");
+  InitiateMenu( NE_TITLE_PIC_FILE );
+  MenuTexts[0]="";
+  MenuTexts[1]="";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[8]="";
+  MenuTexts[9]="";
+
+  //--------------------
+  // get home-directory to save in
+  //
+  if ( (homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      return (ERR);
+    }
+
+  //--------------------
+  // Now we generate the right directory for saving from the home
+  // directory.
+  //
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+
+  // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
+
+  //--------------------
+  // This is a slightly modified copy of the code sniplet from the
+  // GNU C Library description on directory operations...
+  //
+  n = scandir ( Saved_Games_Dir , &eps, one , alphasort);
+  if (n > 0)
+    {
+      for (cnt = 0; cnt < n; ++cnt) 
+	{
+	  puts ( eps[cnt]->d_name );
+	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
+	  if ( cnt < 10 ) 
+	    {
+	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+	    }
+	}
+
+      MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+
+      if ( MenuPosition == (-1) ) return ( FALSE );
+      else
+	{
+	  //--------------------
+	  // We store the character name, just for the case of eventual deletion later!
+	  //
+	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
+
+	  //--------------------
+	  // We do a final safety check to ask for confirmation.
+	  //
+	  MenuTexts [ 0 ] = "Sure!" ;
+	  MenuTexts [ 1 ] = "BACK" ;
+	  MenuTexts [ 2 ] = "";
+	  MenuTexts [ 3 ] = "";
+	  MenuTexts [ 4 ] = "";
+	  MenuTexts [ 5 ] = "";
+	  MenuTexts [ 6 ] = "";
+	  MenuTexts [ 7 ] = "";
+	  MenuTexts [ 8 ] = "";
+	  MenuTexts [ 9 ] = "";
+	  sprintf( SafetyText , "Really delete hero '%s'?" , Me[0].character_name ) ;
+	  FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+
+	  if ( FinalDecision == 1 )
+	    {
+	      DeleteGame( );
+	    }
+	  return ( TRUE );
+	}
+    }
+  else
+    {
+      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:  Either it couldn't open the directory for the saved games\n\
+which should be %s,\n\
+or there were no saved games present in this directory.\n\
+Freedroid will continue execution now, since this problem will be dealt with in-game.\n\
+The problem occured in the function 'int Load_Existing_Hero_Menu ( void )'.\n\
+----------------------------------------------------------------------\n" , Saved_Games_Dir );
+
+      MenuTexts[0]="BACK";
+      MenuTexts[1]="";
+      MenuTexts[2]=""; MenuTexts[3]=""; MenuTexts[4]=""; MenuTexts[5]="";
+      MenuTexts[8]=""; MenuTexts[6]=""; MenuTexts[7]=""; MenuTexts[9]="";
+
+      while ( SpacePressed() || EnterPressed() );
+      DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      
+      DebugPrintf ( 0 , " NOW WE GOT TO RETURN THE PROBEM!!! " );
+
+      return ( FALSE );
+      // Terminate( ERR );
+    }
+
+
+  SDL_Flip( Screen );
+
+  return ( OK );
+}; // int Delete_Existing_Hero_Menu ( void )
+
+
+/* ----------------------------------------------------------------------
  * This function provides the single player menu.  It offers to start a
  * new hero, to load an old one and to go back.
  *
@@ -1983,13 +2109,14 @@ enum
   { 
     NEW_HERO_POSITION=1, 
     LOAD_EXISTING_HERO_POSITION, 
+    DELETE_EXISTING_HERO_POSITION,
     BACK_POSITION
   };
 
   MenuTexts[0]="New Hero";
   MenuTexts[1]="Load existing Hero";
-  MenuTexts[2]="Back";
-  MenuTexts[3]="";
+  MenuTexts[2]="Delete existing Hero";
+  MenuTexts[3]="Back";
   MenuTexts[4]="";
   MenuTexts[5]="";
   MenuTexts[6]="";
@@ -2003,10 +2130,6 @@ enum
 
       switch (MenuPosition) 
 	{
-	case (-1):
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
 	case NEW_HERO_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 
@@ -2016,8 +2139,8 @@ enum
 	      Weiter=TRUE;
 	      return ( TRUE );
 	    }
-
 	  break;
+
 	case LOAD_EXISTING_HERO_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
 
@@ -2031,10 +2154,18 @@ enum
 	      Weiter = FALSE;
 	      // return ( FALSE );
 	    }
-
 	  break;
-	case BACK_POSITION:
+
+	case DELETE_EXISTING_HERO_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
+	  Delete_Existing_Hero_Menu ( ) ;
+	  Weiter= FALSE ;
+	  // return ( FALSE );
+	  break;
+
+	case (-1):
+	case BACK_POSITION:
+	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
 	  Weiter=!Weiter;
 	  return ( FALSE );
 	  break;
