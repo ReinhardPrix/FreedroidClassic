@@ -34,6 +34,7 @@ fi
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
 
+SDL_VERSION=1.2.3
 AM_PATH_SDL($SDL_VERSION,
             :,
 	    AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
@@ -117,8 +118,3 @@ CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatad
 AC_CONFIG_FILES([Makefile src/Makefile])
 
 AC_OUTPUT
-
-
-
-
-
