@@ -679,6 +679,46 @@ InitPictures (void)
   ne_influ_block =
     ne_get_blocks ( fpath , DROID_PHASES, 0, 0, block_line++);
 
+  // At first we create a surface of the size of one map tile and then
+  // we make sure it is supplied with an alpha channel
+  tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+  tmp4 = SDL_DisplayFormatAlpha( tmp3 );
+  SDL_FreeSurface( tmp3 );
+
+  // In order to make sure, that he alpha cannel from the ne_blocks surface 
+  // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
+  SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
+      
+  // The influencer has several phases
+  for ( j = 0 ; j < ENEMYPHASES ; j++ )
+    {
+      // Now we can copy the RGB information together with the alpha channel.
+      Source_Rectangle.x= j * Block_Width;
+      Source_Rectangle.y= (block_line -1) * Block_Height ;
+      Source_Rectangle.w=Block_Width;
+      Source_Rectangle.h=Block_Height;
+      Destination_Rectangle.x=0;
+      Destination_Rectangle.y=0;
+      Destination_Rectangle.w=Block_Width;
+      Destination_Rectangle.h=Block_Height;
+      SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
+      // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
+      // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      InfluencerSurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
+      if ( InfluencerSurfacePointer[j] == NULL )
+	{
+	  DebugPrintf( 0 , "\nProblem converting influencer image to alpha surface....\nTerminating...\n\n");
+	  Terminate(ERR);
+	}
+
+      SDL_SetAlpha( InfluencerSurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      
+    } // for j = 0 to PHASES OF INFLUENCER
+
+  SDL_FreeSurface ( tmp4 );
+
+
+
   ne_droid_block =
     ne_get_blocks ( fpath , DROID_PHASES, 0, 1, block_line++);
 

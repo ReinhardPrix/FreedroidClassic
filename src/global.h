@@ -172,6 +172,8 @@ EXTERN SDL_Surface *ne_screen;   /* the graphics display */
 EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
 EXTERN SDL_Surface *EnemySurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
+EXTERN SDL_Surface *InfluencerSurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
+                                               // influencer in different phases of rotation
 EXTERN char *ship_on_filename;
 EXTERN char *ship_off_filename;
 EXTERN int BannerIsDestroyed;

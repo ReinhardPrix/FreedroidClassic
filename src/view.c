@@ -361,7 +361,8 @@ PutInfluence ( int x, int y)
 
 
   // Now we draw the hat and shoes of the influencer
-  SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
+  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , ne_screen, &TargetRectangle );
 
 
   // Now we draw the first digit of the influencers current number.
@@ -522,7 +523,8 @@ Sorry...\n\
     }
   else
     {
-      SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
+      // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
+      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
     }
 
   //--------------------
