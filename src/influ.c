@@ -193,7 +193,8 @@ MoveInfluence (void)
   static float TransferCounter = 0;
   int i;
 
- 
+  accel *= Frame_Time();
+
   DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
   for (i=0; i<10; i++)

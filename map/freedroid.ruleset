@@ -146,7 +146,7 @@ value in the detailed description of each robot further below
 and make your modifiactions there.
 
 Common factor for all droids maxspeed values: 0.7
-Common factor for all droids acceleration values: 0.1
+Common factor for all droids acceleration values: 3.0
 Common factor for all droids maximum energy values: 1.0
 Common factor for all droids energyloss values: 0.3
 Common factor for all droids aggression values: 1.0

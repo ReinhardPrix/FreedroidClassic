@@ -7,6 +7,7 @@ Outstanding release-critical bugs (priority: high)
 - (rp) stabilise Highscore list
 - (rp) improve keyboard-repeat in takeover
 - (rp) fix small mouse-shooting inconsistencies
+       ? which ones are left ?
 
 - (rp/jp) put a crosshair mouse-cursor
   jp: --> done via taking and modifieing the example from the SDL doku

@@ -166,8 +166,12 @@ EnterLift (void)
 	AllBlasts[i].type = OUT;
       for (i = 0; i < MAXBULLETS; i++)
 	{
-	  AllBullets[i].type = OUT;
-	  AllBullets[i].mine = FALSE;
+	  // AllBullets[i].type = OUT;
+	  // AllBullets[i].mine = FALSE;
+	  // Never remove bullets any other way than via DeleteBullet or you will
+	  // get SEGFAULTS!!!!!!!!!!
+	  DeleteBullet ( i ) ;
+	  
 	}
 
     }				/* if neuer Level */
