@@ -1105,11 +1105,7 @@ Show_Mission_Instructions_Menu (void)
 void 
 Highlight_Current_Block(void)
 {
-  // int IntPosx, IntPosy;
-  int i, j;
-
-  // IntPosx=(int)(rintf(Me.pos.x));
-  // IntPosy=(int)(rintf(Me.pos.y));
+  int i;
 
   for (i=0; i<BLOCKBREITE; i++)
     {
@@ -1131,8 +1127,13 @@ Highlight_Current_Block(void)
 void 
 Level_Editor(void)
 {
+  int BlockX, BlockY;
+
   while (!EscapePressed())
     {
+      BlockX=(int)(floor(Me.pos.x/BLOCKBREITE));
+      BlockY=(int)(floor(Me.pos.y/BLOCKHOEHE));
+
       GetView();
       GetInternFenster( SHOW_MAP );
       Highlight_Current_Block();
@@ -1162,6 +1163,42 @@ Level_Editor(void)
 	  while (DownPressed());
 	}
       
+      if (KP1Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=ECK_LU;
+	}
+      if (KP2Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=T_U;
+	}
+      if (KP3Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=ECK_RU;
+	}
+      if (KP4Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=T_L;
+	}
+      if (KP5Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=KREUZ;
+	}
+      if (KP6Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=T_R;
+	}
+      if (KP7Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=ECK_RO;
+	}
+      if (KP8Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=T_O;
+	}
+      if (KP9Pressed()) 
+	{
+	  CurLevel->map[BlockY][BlockX]=ECK_RO;
+	}
     } // while (!EscapePressed())
 
   while( EscapePressed() );

@@ -74,6 +74,16 @@ int CurrentlyWPressed=0;
 int CurrentlyXPressed=0;
 int CurrentlyYPressed=0;
 int CurrentlyZPressed=0;
+int CurrentlyKP0Pressed=0;
+int CurrentlyKP1Pressed=0;
+int CurrentlyKP2Pressed=0;
+int CurrentlyKP3Pressed=0;
+int CurrentlyKP4Pressed=0;
+int CurrentlyKP5Pressed=0;
+int CurrentlyKP6Pressed=0;
+int CurrentlyKP7Pressed=0;
+int CurrentlyKP8Pressed=0;
+int CurrentlyKP9Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
@@ -105,6 +115,36 @@ keyboard_update(void)
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_KP0:
+	      CurrentlyKP0Pressed=TRUE;
+	      break;
+	    case SDLK_KP1:
+	      CurrentlyKP1Pressed=TRUE;
+	      break;
+	    case SDLK_KP2:
+	      CurrentlyKP2Pressed=TRUE;
+	      break;
+	    case SDLK_KP3:
+	      CurrentlyKP3Pressed=TRUE;
+	      break;
+	    case SDLK_KP4:
+	      CurrentlyKP4Pressed=TRUE;
+	      break;
+	    case SDLK_KP5:
+	      CurrentlyKP5Pressed=TRUE;
+	      break;
+	    case SDLK_KP6:
+	      CurrentlyKP6Pressed=TRUE;
+	      break;
+	    case SDLK_KP7:
+	      CurrentlyKP7Pressed=TRUE;
+	      break;
+	    case SDLK_KP8:
+	      CurrentlyKP8Pressed=TRUE;
+	      break;
+	    case SDLK_KP9:
+	      CurrentlyKP9Pressed=TRUE;
+	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=TRUE;
 	      break;
@@ -230,6 +270,36 @@ keyboard_update(void)
 	case SDL_KEYUP:
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_KP0:
+	      CurrentlyKP0Pressed=FALSE;
+	      break;
+	    case SDLK_KP1:
+	      CurrentlyKP1Pressed=FALSE;
+	      break;
+	    case SDLK_KP2:
+	      CurrentlyKP2Pressed=FALSE;
+	      break;
+	    case SDLK_KP3:
+	      CurrentlyKP3Pressed=FALSE;
+	      break;
+	    case SDLK_KP4:
+	      CurrentlyKP4Pressed=FALSE;
+	      break;
+	    case SDLK_KP5:
+	      CurrentlyKP5Pressed=FALSE;
+	      break;
+	    case SDLK_KP6:
+	      CurrentlyKP6Pressed=FALSE;
+	      break;
+	    case SDLK_KP7:
+	      CurrentlyKP7Pressed=FALSE;
+	      break;
+	    case SDLK_KP8:
+	      CurrentlyKP8Pressed=FALSE;
+	      break;
+	    case SDLK_KP9:
+	      CurrentlyKP9Pressed=FALSE;
+	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=FALSE;
 	      break;
@@ -388,6 +458,76 @@ ClearKbState (void)
 {
   keyboard_clearstate ();	// This resets the state of all keys when keyboard in raw mode
 }				// void ClearKbState(void)
+
+int
+KP0Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP0Pressed;
+}				// int KP0Pressed(void)
+
+int
+KP1Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP1Pressed;
+}				// int KP1Pressed(void)
+
+int
+KP2Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP2Pressed;
+}				// int KP2Pressed(void)
+
+int
+KP3Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP3Pressed;
+}				// int KP3Pressed(void)
+
+int
+KP4Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP4Pressed;
+}				// int KP4Pressed(void)
+
+int
+KP5Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP5Pressed;
+}				// int KP5Pressed(void)
+
+int
+KP6Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP6Pressed;
+}				// int KP6Pressed(void)
+
+int
+KP7Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP7Pressed;
+}				// int KP7Pressed(void)
+
+int
+KP8Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP8Pressed;
+}				// int KP8Pressed(void)
+
+int
+KP9Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKP9Pressed;
+}				// int KP9Pressed(void)
 
 int
 LeftPressed (void)
