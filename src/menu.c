@@ -282,7 +282,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 
   while ( !SpacePressed() && !EscapePressed() )
     {
-      InitiateMenu ( NULL );
+      // InitiateMenu ( NULL );
+      InitiateMenu ( SHOP_BACKGROUND_IMAGE );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -557,7 +558,8 @@ Sell_Items( int ForHealer )
 
   while ( !SpacePressed() && !EscapePressed() )
     {
-      InitiateMenu( NULL );
+      // InitiateMenu( NULL );
+      InitiateMenu( SHOP_BACKGROUND_IMAGE );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -766,7 +768,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE );
 
       switch (MenuPosition) 
 	{
