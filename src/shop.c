@@ -752,11 +752,13 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		       ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price > 1 ) )
 		    {
 		      //--------------------
-		      // We calculate what the Tux could afford here...
+		      // If this is a shops buy menu, then we calculate what the Tux could afford here,
+		      // otherwise we give the range of selection according to amount in chest/player inventory.
 		      //
-		      // Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price 
-		      ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
-											      
+		      if ( ShowChestButtons == 1 )
+			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
+		      else
+			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
 		    }
 		  else
 		      ShopOrder -> number_selected = 1;
@@ -2016,7 +2018,8 @@ EnterChest ( moderately_finepoint pos )
       switch ( ShopOrder . shop_command )
 	{
 	case BUY_1_ITEM:
-	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 1 ) ;
+	  // TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
+	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , ShopOrder . number_selected ) ;
 	  break;
 	case BUY_10_ITEMS:
 	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 10 ) ;
@@ -2025,7 +2028,8 @@ EnterChest ( moderately_finepoint pos )
 	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 100 ) ;
 	  break;
 	case SELL_1_ITEM:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 , pos ) ;
+	  // TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 , pos ) ;
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , ShopOrder . number_selected , pos ) ;
 	  break;
 	case SELL_10_ITEMS:
 	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 , pos ) ;

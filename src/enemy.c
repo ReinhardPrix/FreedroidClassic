@@ -618,7 +618,7 @@ void
 RawSetNewRandomWaypoint ( Enemy ThisRobot )
 {
   int i;
-  Waypoint WpList;		/* Pointer to waypoint-liste */
+  Waypoint WpList;	
   int nextwp;
   finepoint nextwp_pos;
   waypoint *this_wp;
@@ -655,6 +655,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   // following change of target waypoint procedure
   if (  num_conn == 0 ) // no connections found!
     {
+      fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
       GiveStandardErrorMessage ( "RawSetNewRandomWaypoint ( ... )" , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
 This is an error in the waypoint structure of this level.",

@@ -1281,6 +1281,8 @@ get_light_strength ( moderately_finepoint target_pos )
   int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   // int final_darkness = NUMBER_OF_SHADOW_IMAGES;
 
+
+
   return ( (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ) ;
 
 }; // int get_light_strength ( moderately_finepoint target_pos )
