@@ -150,13 +150,13 @@ ShuffleEnemys (void)
   int i;
   int nth_enemy;
   int wp_num;
-  int wp;
+  int wp = 0;
   finepoint influ_coord;
 
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
   wp_num = 0;
-  while (CurLevel->AllWaypoints[wp_num++].x != 0);
-  wp_num--;			/* einer zuviel */
+  while (CurLevel->AllWaypoints[wp_num].x != 0)
+    wp_num ++;
 
   nth_enemy = 0;
   for (i = 0; i < NumEnemys; i++)
@@ -170,10 +170,8 @@ ShuffleEnemys (void)
 	wp = nth_enemy;
       else
 	{
-	  gotoxy (1, 1);
-	  DebugPrintf ("\nWeniger waypoints als \n Gegner hier !!");
-	  getchar ();
-	  return;
+	  DebugPrintf ("\nWeniger waypoints als Gegner auf Level ?? !");
+	  Terminate (-1);
 	}
 
       Feindesliste[i].pos.x =
@@ -185,7 +183,7 @@ ShuffleEnemys (void)
       Feindesliste[i].lastwaypoint = wp;
       Feindesliste[i].nextwaypoint = wp;
 
-    }				/* for */
+    }/* for(NumEnemys) */
 
   /* enemys ein bisschen sich selbst ueberlassen */
 
@@ -201,7 +199,7 @@ ShuffleEnemys (void)
   Me.pos.x = influ_coord.x;
   Me.pos.y = influ_coord.y;
 
-}				/* ShuffleEnemys() */
+}	/* ShuffleEnemys() */
 
 /*@Function============================================================
 @Desc: 
@@ -218,16 +216,15 @@ MoveEnemys (void)
   int nextwp;
   finepoint nextwp_pos;
   int trywp;
-  int PossibleConnections;
-
-  if (BeamLine)
-    return;
 
   PermanentHealRobots ();
 
   for (i = 0; i < NumEnemys; i++)
     {
 
+      /* 
+       * what the heck is this ?? (rp) 
+       */
       if (Feindesliste[i].nextwaypoint == 100)
 	continue;
 
@@ -264,15 +261,15 @@ MoveEnemys (void)
       /* Ermittlung des Restweges zum naechsten Ziel */
       WpList = CurLevel->AllWaypoints;
       nextwp = Feindesliste[i].nextwaypoint;
-      nextwp_pos.x = WpList[nextwp].x * BLOCKBREITE + BLOCKBREITE / 2;
-      nextwp_pos.y = WpList[nextwp].y * BLOCKHOEHE + BLOCKHOEHE / 2;
+      nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
+      nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
 
       Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
       Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
 
 
       /* Bewegung wenn der Abstand noch groesser als maxspeed ist */
-      if ((fabsf (Restweg.x) >=
+      if ((abs (Restweg.x) >=
 	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
 	  && (Restweg.x != 0))
 	{
@@ -282,7 +279,7 @@ MoveEnemys (void)
 	  Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time ();
 	}
 
-      if ((fabsf (Restweg.y) >=
+      if ((abs (Restweg.y) >=
 	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
 	  && (Restweg.y != 0))
 	{
@@ -316,28 +313,18 @@ MoveEnemys (void)
 
 	  /* suche moegliche Verbindung von hier */
 	  DebugPrintf ("/* suche moegliche Verbindung von hier */");
-	  PossibleConnections = -1;
-	  while ((PossibleConnections < MAX_WP_CONNECTIONS) &&
-		 (WpList[nextwp].connections[++PossibleConnections] != -1));
 
-	  if (PossibleConnections > 0)
-	    {
-	      do
-		{
-		  trywp =
-		    (WpList[nextwp]).
-		    connections[MyRandom (PossibleConnections)];
-		}
-	      while (trywp == -1);
+	  while ( (trywp = WpList[nextwp].
+		   connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
 
-	      /* setze neuen Waypoint */
-	      Feindesliste[i].nextwaypoint = trywp;
-	    }			/* if */
+
+
+	  /* setze neuen Waypoint */
+	  Feindesliste[i].nextwaypoint = trywp;
 	}			/* if */
+    }	/* for (NumEnemeys) */
 
-    }				/* for */
-
-}				/* MoveEnemys */
+} /* MoveEnemys() */
 
 /*@Function============================================================
 @Desc: AttackInfluence(): enemynum schiesst unter gegebenen Umstaenden auf
