@@ -2396,35 +2396,15 @@ get_motion_class ( player_num )
 }; // int get_motion_class ( player_num ) 
 
 /* ----------------------------------------------------------------------
- * While earlier we used lots and lots of isolated .png and .offset files
- * to store the information about the Tux, we've now moved over to using
- * a single archive file that holds all the image and all the offset 
- * information, even in uncompressed form, making access at runtime even
- * *much* faster than it was before.  This file grabs one tux part from
- * such an archive file.  It's typically called once or twice whenever 
- * either a fresh game is started/loaded or when the Tux is changing
- * equipment.
+ * We open a tux image archive file corresponding to the currently needed
+ * tux image series.
  * ---------------------------------------------------------------------- */
-void
-grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* part_string )
+FILE*
+open_tux_image_archive_file ( int tux_part_group , int motion_class , char* part_string )
 {
-    int rotation_index;
-    int our_phase ;
-    FILE *DataFile;
     char constructed_filename[10000];
     char* fpath;
-    size_t chunks_read;
-    void* tmp_buff;
-
-    Sint16 img_xlen;
-    Sint16 img_ylen;
-    Sint16 img_x_offs;
-    Sint16 img_y_offs;
-
-    //--------------------
-    // A short message for debug purposes
-    //
-    DebugPrintf ( 1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
+    FILE *DataFile;
 
     //--------------------
     // We need a file name!
@@ -2451,6 +2431,50 @@ This indicates a serious bug in this installation of Freedroid.",
 	DebugPrintf ( 1 , "\ngrab_tux_images_from_archive (...): Opening file succeeded...");
     }
 
+    return ( DataFile );
+
+}; // FILE* open_tux_image_archive_file ( int tux_part_group , int motion_class , char* part_string )
+
+/* ----------------------------------------------------------------------
+ * While earlier we used lots and lots of isolated .png and .offset files
+ * to store the information about the Tux, we've now moved over to using
+ * a single archive file that holds all the image and all the offset 
+ * information, even in uncompressed form, making access at runtime even
+ * *much* faster than it was before.  This file grabs one tux part from
+ * such an archive file.  It's typically called once or twice whenever 
+ * either a fresh game is started/loaded or when the Tux is changing
+ * equipment.
+ * ---------------------------------------------------------------------- */
+void
+grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* part_string )
+{
+    int rotation_index;
+    int our_phase ;
+    FILE *DataFile;
+    size_t chunks_read;
+    void* tmp_buff;
+
+    char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
+    char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
+
+    Sint16 cooked_walk_object_phases;
+    Sint16 cooked_attack_object_phases;
+    Sint16 cooked_gethit_object_phases;
+    Sint16 cooked_death_object_phases;
+    Sint16 cooked_stand_object_phases;
+
+    Sint16 img_xlen;
+    Sint16 img_ylen;
+    Sint16 img_x_offs;
+    Sint16 img_y_offs;
+
+    //--------------------
+    // A short message for debug purposes
+    //
+    DebugPrintf ( 1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
+
+    DataFile = open_tux_image_archive_file ( tux_part_group , motion_class , part_string );
+
     //--------------------
     // We store the currently loaded part string, so that we can later
     // decide if we need to do something upon an equipment change or
@@ -2459,13 +2483,54 @@ This indicates a serious bug in this installation of Freedroid.",
     strcpy ( previous_part_strings [ tux_part_group ] , part_string );
     DebugPrintf ( 1 , "\n%s(): getting image series for group %d." , __FUNCTION__ , tux_part_group );
 
+    //--------------------
+    // Now we assume, that this is an image collection file for tux
+    // and therefore it should have the right header bytes (keyword tuxX)
+    // and it also should be suitable for pure SDL (keyword sdlX)
+    //
+    fread ( archive_type_string , 4 , 1 , DataFile ) ;
+    fread ( ogl_support_string , 4 , 1 , DataFile ) ;
+
+    //--------------------
+    // We check if this is really an image archive of ENEMY type...
+    //
+    if ( strncmp ( "tuxX" , archive_type_string , 4 ) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Initial archive type string doesn't look like it's from an image archive of TUX type.\n\
+This indicates a serious bug in this installation of Freedroid.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    //--------------------
+    // We check if this is really an image archive of ENEMY type...
+    //
+    if ( strncmp ( "sdlX" , ogl_support_string , 4 ) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Initial archive type string doesn't look like this is a pure-SDL\n\
+arranged image archive.  While this is not impossible to use, it's\n\
+still quite inefficient, and I can only recommend to use sdl-sized\n\
+images.  Therefore I refuse to process this file any further here.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+
+    //--------------------
+    // Now we know that this is an archive of tux type.  Therefore
+    // we can start to read out some entries, that are only found in
+    // enemy image collections and then disregard them, because for
+    // tux, we don't need this kind of information anyway.
+    //
+    fread ( & ( cooked_walk_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_attack_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_gethit_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_death_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_stand_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
 
     //--------------------
     // Now we can start to really load the images.
     //
     for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
     {
-	// for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
 	for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES ; our_phase ++ )
 	{	    
 	    //--------------------
@@ -2563,7 +2628,6 @@ Surface to be loaded didn't have empty (NULL) pointer in the first place.",
 
     if ( fclose ( DataFile ) == EOF)
     {
-	fprintf( stderr, "\n\nfilename: '%s'\n" , fpath );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to close the image archive file.\n\
 This indicates a strange bug in this installation of Freedroid, that is\n\
@@ -2785,17 +2849,6 @@ to draw attention to the possible problem...",
 				   PLEASE_INFORM, IS_FATAL );
 		}
 	    }
-
-	    // DebugPrintf ( -4 , "%s: loaded surface phase=%d rotation_index=%d.\n" , 
-	    // __FUNCTION__ ,  enemy_phase , rotation_index );
-/*
-	    DebugPrintf ( -4 , "\noriginal_image: %5d / %5d " , 
-			  enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_width , 
-			  enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_height );
-	    DebugPrintf ( -4 , "\ntexture_width:  %5d / %5d " , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_width , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_height );
-	    DebugPrintf ( -4 , "\noffset:         %5d / %5d " , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_x , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_y );
-	    DebugPrintf ( -4 , "\n---" );
-*/
 	}
     }
 
