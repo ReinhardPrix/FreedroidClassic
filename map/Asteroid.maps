@@ -8286,7 +8286,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=21 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8297,14 +8297,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=21 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=21 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=21 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8792,7 +8792,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=21 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=23 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -8990,7 +8990,7 @@ ob_type=2 ob_x=75.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=76.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=21 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9215,6 +9215,8 @@ label.pos.x=63 label.pos.y=7 label.label_name="Lev8Start123Nr19"
 label.pos.x=61 label.pos.y=5 label.label_name="Lev8Start123Nr20"
 label.pos.x=69 label.pos.y=12 label.label_name="TeleportIntoTheWarehouse"
 label.pos.x=68 label.pos.y=12 label.label_name="ArrivePointBackFromWarehouse"
+label.pos.x=59 label.pos.y=39 label.label_name="Some296StartsHere1"
+label.pos.x=56 label.pos.y=37 label.label_name="Some296StartsHere2"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 obstacle_label.index=0 obstacle_label_name="AccessDoorToWarehouse"
@@ -9374,6 +9376,10 @@ Nr.=123 x=  72 y=   7	 connections:  126 124
 Nr.=124 x=  74 y=   7	 connections:  123 125
 Nr.=125 x=  74 y=   9	 connections:  126 124
 Nr.=126 x=  72 y=   9	 connections:  125 123
+Nr.=127 x=  56 y=  37	 connections:  130 128
+Nr.=128 x=  59 y=  37	 connections:  127 129
+Nr.=129 x=  59 y=  39	 connections:  130 128
+Nr.=130 x=  56 y=  39	 connections:  127 129
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 9
