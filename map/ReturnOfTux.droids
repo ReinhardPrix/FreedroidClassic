@@ -162,7 +162,7 @@ Allowed Type of Random Droid for this level: 139
 Allowed Type of Random Droid for this level: 123
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 249
-SpecialForce: Type=883 X=29 Y=21 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="DAP" ShortLabel="Dark Apprentice of the MS"
+SpecialForce: Type=883 X=29 Y=21 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="DAP" ShortLabel="Dark Apprentice of the MS"
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
@@ -192,7 +192,7 @@ Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 249
 Allowed Type of Random Droid for this level: 302
 S**pecialForce: Type=883 X=29 Y=21 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-SpecialForce: Type=883 X=10 Y=37 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Heavy Teleporter Guard"
+SpecialForce: Type=883 X=10 Y=37 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Heavy Teleporter Guard"
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
