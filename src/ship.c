@@ -823,7 +823,16 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 	  DebugPrintf (0, "ERROR: failed to unpack droid-portraits of droid-type %d\n", droid_type);
 	  return; // ok, so no pic but we continue ;)
 	}
-      droid_pics = SDL_DisplayFormatAlpha (tmp);
+      // now see if its a jpg, then we add some transparency by color-keying:
+      if (IMG_isJPG(packed_portraits[droid_type]))
+	{
+	  SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
+	  droid_pics = SDL_DisplayFormat (tmp);
+	} // else assume it's png ;)
+      else
+	{
+	  droid_pics = SDL_DisplayFormatAlpha (tmp);
+	}
       SDL_FreeSurface (tmp);
 
       last_droid_type = droid_type;

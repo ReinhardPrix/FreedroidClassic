@@ -895,6 +895,8 @@ Init_Video (void)
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
 
+  TransparentPixel = SDL_MapRGB(ne_screen->format, 0, 0, 0); // colorkey = black at the mo
+
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
 

@@ -172,7 +172,7 @@ EXTERN int Third_Digit_Pos_X;
 EXTERN int Third_Digit_Pos_Y;
 EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN int screen_bpp; 			/* bits per pixel */
-EXTERN Uint32 TransparentRGB;           // RGB value of our transparent color
+EXTERN Uint32 TransparentPixel;           // pixel-value of our transparent color
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];
