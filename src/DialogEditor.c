@@ -123,6 +123,8 @@ GdkPixmap *surface = NULL + 1 ;     // Drawing surface
 GtkWidget *filew;
 
 int currently_mouse_grabbed_option = (-1) ;
+int currently_mouse_grabbed_option_start_x = (-1) ;
+int currently_mouse_grabbed_option_start_y = (-1) ;
 char LastUsedFileName[10000] = "UNDEFINED_FILENAME.dialog" ;
 
 static int graph_has_been_created = FALSE ;
@@ -928,49 +930,25 @@ on_radio_button_pressed ( GtkWidget *w, GtkFileSelection *fs )
 
 /* ----------------------------------------------------------------------
  * When the user presses the right mouse button in the graph window, this
- * click is interpreted as marking or unmarking dialog options or drawing
- * new connections or different connection types between the options in
- * question.  This is performed here, with the given parameter being the
- * option that the user right-clicked upon.
+ * click is interpreted as drawing new connections or different
+ * connection types between the options in question.  This is performed
+ * here, with the given parameter being the option that the user right-
+ * clicked upon.
  * ---------------------------------------------------------------------- */
 void
-gui_react_to_right_mousebutton ( int dialog_option_index )
+gui_cycle_dialog_option_connection ( int dialog_option_index )
 {
   int i;
 
-  DebugPrintf ( 1 , "\ngui_react_to_right_mousebutton (...):  real function call confirmed." );
+  DebugPrintf ( 1 , "\ngui_cycle_dialog_option_connection (...):  real function call confirmed." );
 
   //--------------------
   // The click was right in the void?  --  no reaction, no comment.
   //
-  if ( dialog_option_index < 0 ) 
+  if ( dialog_option_index < 0 || dialog_option_index == currently_marked_dialog_option )
     {
       DebugPrintf ( 1 , "\nNothing needs to be done, cause click was into the void...." );
       return ;
-    }
-
-  //--------------------
-  // The click was on an option and no other option currently marked? -- 
-  // then we interpret this as marking an option.
-  //
-  if ( currently_marked_dialog_option == (-1) )
-    {
-      currently_marked_dialog_option = dialog_option_index ;
-      DebugPrintf ( 1 , "\nMarked dialog option is now: %d." , currently_marked_dialog_option );
-      gui_redraw_graph_completely (  );
-      return;
-    }
-
-  //--------------------
-  // The click occured on the very same option that is already marked? --
-  // then we unmark this option again.
-  //
-  if ( currently_marked_dialog_option == dialog_option_index )
-    {
-      currently_marked_dialog_option = (-1) ;
-      DebugPrintf ( 1 , "\nMarked dialog option is now: NONE ANY MORE." );
-      gui_redraw_graph_completely (  );
-      return;
     }
 
   //--------------------
@@ -1017,7 +995,7 @@ gui_react_to_right_mousebutton ( int dialog_option_index )
 	}
     }
   
-}; // void gui_react_to_right_mousebutton ( int dialog_option_index )
+}; // void gui_cycle_dialog_option_connection ( int dialog_option_index )
 
 
 /* ----------------------------------------------------------------------
@@ -1946,6 +1924,8 @@ gint button_release_event (GtkWidget *widget, GdkEventButton *event, gpointer da
     {
     case 1:
       currently_mouse_grabbed_option = (-1) ;
+      currently_mouse_grabbed_option_start_x = (-1) ;
+      currently_mouse_grabbed_option_start_y = (-1) ;
       DebugPrintf ( 1 , "\n Now the 'Drop' in 'Drag and Drop' has occured..." );
       break;
     default:
@@ -2034,6 +2014,18 @@ key_press_event ( GtkWidget *widget , GdkEventButton *event , gpointer data )
 	    save_dialog_roster_to_file ( file_name_found );
 	    break;
 
+	case GDK_Escape:
+	    if ( currently_mouse_grabbed_option > 0 )
+	      {
+		ChatRoster [ currently_mouse_grabbed_option ] . position_x = event -> x = currently_mouse_grabbed_option_start_x ;
+		ChatRoster [ currently_mouse_grabbed_option ] . position_y = event -> x = currently_mouse_grabbed_option_start_y ;
+		currently_mouse_grabbed_option = (-1) ;
+		currently_mouse_grabbed_option_start_x = (-1) ;
+		currently_mouse_grabbed_option_start_y = (-1) ;
+		gui_redraw_graph_completely (  );
+	      }
+	    break;
+ 
 	default:
 	    DebugPrintf ( 1 , "\nUnhandled press event encountered..." );
 	    break;
@@ -3031,17 +3023,15 @@ or it can also DISABLE other dialog options (blue arrow).\n\
 It can also ignore the availability of any other dialog option (no arrow).\n\
 \n\
 In order to change current connection situation, first mark the SOURCE\n\
-dialog option by clicking the middle mouse button on it.  (That might be\n\
-both buttons simulaneously, if you're using a 2-button-mouse and have \n\
-emulation of third button turned on.)\n\
-Then click the middle mouse button again on the TARGET dialog option.\n\
+dialog option by clicking the left mouse button on it.\n\
+Then click the right mouse button on the TARGET dialog option.\n\
 The connection status should cycle from DISABLE to MAKE AVAILABE \n\
 to NO CONNECTION to DISABLE to MAKE AVAILABLE to NO ... \n\
 \n\
 EDITING THE INNER WORKINGS OF A DIALOG OPTION\n\
 \n\
-Use right-mouse button directly on the option.  That should open up a popup\n\
-window and prompt you for new input.\n\
+Double-click the left mouse button directly on the option.  That should\n\
+open up a popup window and prompt you for new input.\n\
 \n\
 For option text and option file names there are certain keywords that\n\
 the game engine will understand.  These keywords are:\n\
@@ -3487,47 +3477,46 @@ configure_event (GtkWidget *widget, GdkEventConfigure *event)
 static gint 
 button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-  int Pos_x, Pos_y;
+  int dialog_option_index ;
 
 #define MOUSE_BUTTON_PRESS_DEBUG 1
 
   //--------------------
   // We get the mouse position where the mouse click occured...
   //
-  Pos_x = event -> x ;
-  Pos_y = event -> y ;
+  dialog_option_index = option_under_position ( event -> x , event -> y ) ;
 
   //--------------------
   // Now let's see which button it was:  1 is left, 2 is middle and 3 is right 
   // mouse button...
   //
-  switch ( event->button )
+  if (event -> button == 1)
     {
-    case 1:  
-      DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nButton 1 WAS PRESSED!!" );
-      
-      currently_mouse_grabbed_option = option_under_position ( Pos_x , Pos_y ) ;
-
-      gui_redraw_graph_completely (  );
-
-      break;
-    case 3:  
+      if (event -> type == GDK_BUTTON_PRESS)
+	{
+	  DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nButton 1 WAS PRESSED!!" );
+	  currently_marked_dialog_option = dialog_option_index ;
+	  currently_mouse_grabbed_option = dialog_option_index ;
+	  currently_mouse_grabbed_option_start_x = ChatRoster [ currently_mouse_grabbed_option ] . position_x ;
+	  currently_mouse_grabbed_option_start_y = ChatRoster [ currently_mouse_grabbed_option ] . position_y ;
+	  DebugPrintf ( 1 , "\nMarked dialog option is now: %d." , currently_marked_dialog_option );
+	  gui_redraw_graph_completely (  );
+	}
+      else if (event->type == GDK_2BUTTON_PRESS)
+	{
+	  DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nButton 1 was doubleclicked" );
+	  gui_edit_dialog_option_interface ( dialog_option_index ) ;
+	  gui_redraw_graph_completely (  );
+	}
+    }
+  else if (event -> button == 3)
+    {
       DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nButton 3 WAS PRESSED!!" );
-
-      gui_edit_dialog_option_interface ( option_under_position ( Pos_x , Pos_y ) ) ;
-
-      gui_redraw_graph_completely (  );
-
-      break;
-    case 2:  
-      DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nButton 2 WAS PRESSED!!" );
-
-      gui_react_to_right_mousebutton ( option_under_position ( Pos_x , Pos_y ) ) ;
-
-      break;
-    default:
-      DebugPrintf ( MOUSE_BUTTON_PRESS_DEBUG , "\nERROR!  UNRECOGNIZED MOUSE BUTTON WAS PRESSED!!" );
-      break;
+      gui_cycle_dialog_option_connection ( dialog_option_index ) ;
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\n Unhandled mouse button press event encountered..." );
     }
   return TRUE;
 }; // static gint button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer data)
