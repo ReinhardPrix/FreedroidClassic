@@ -1310,6 +1310,78 @@ This error indicates some installation problem with freedroid.",
 }; // void LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
 
 /* ---------------------------------------------------------------------- 
+ * This function should initialize all obstacle types that are known in
+ * FreedroidRPG, such as walls and doors and pillars and teleporters and
+ * the like...
+ *
+ * for now it will not load 'offset' files, but rather just use hard-coded
+ * info...
+ *
+ * ---------------------------------------------------------------------- */
+void
+load_all_obstacles ( void )
+{
+  int i;
+  SDL_Surface* Whole_Image;
+  char *fpath;
+  char ConstructedFileName[2000];
+  char NumberBuffer[1000];
+
+  for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+    {
+      //--------------------
+      // At first we hard-code the drawing offset to 0
+      //
+      obstacle_map [ i ] . image . offset_x = 0 ;
+      obstacle_map [ i ] . image . offset_y = 0 ;
+
+      //--------------------
+      // Now we can load the associated surface...
+      //
+
+      //--------------------
+      // At first we construct the file name of the single tile file we are about to load...
+      //
+      strcpy ( ConstructedFileName , "iso_obstacle_" );
+      sprintf ( NumberBuffer , "%04d" , i );
+      strcat ( ConstructedFileName , NumberBuffer );
+      strcat ( ConstructedFileName , ".png" );
+      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+      
+      //--------------------
+      // Now we load the single tile image file and check for errors while loading...
+      //
+      Whole_Image = IMG_Load( fpath );
+      if ( Whole_Image == NULL )
+	{
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "load_all_obstacles ( ... )" , "\
+Freedroid was unable to load a certain single map tile from the hard disk\n\
+into memory.\n\
+This error indicates some installation problem with freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      
+      //--------------------
+      // Now we convert this to display format and set alpha and colorkey
+      // properties right...
+      //
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      obstacle_map [ i ] . image . surface = SDL_DisplayFormat( Whole_Image );
+      SDL_SetColorKey( obstacle_map [ i ] . image . surface , 0 , 0 );
+      SDL_SetAlpha( obstacle_map [ i ] . image . surface , 0 , 0 );
+      
+      //--------------------
+      // Now that this is all done, we can mark the map tile as loaded (later)
+      // and free the small image we have loaded from the disk.
+      //
+      SDL_FreeSurface( Whole_Image );
+      
+    }
+  
+}; // void LoadAllMapTilesThatAreNotYetLoaded( void )
+
+/* ---------------------------------------------------------------------- 
  *
  *
  * ---------------------------------------------------------------------- */

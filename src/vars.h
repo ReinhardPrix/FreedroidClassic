@@ -53,6 +53,14 @@ int Shieldcolors[INITIAL_BLOCK_WIDTH];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
+obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] = 
+  {
+    { { NULL , 0 , 0 } , 1.1 } ,
+    { { NULL , 0 , 0 } , 1.1 } ,
+    { { NULL , 0 , 0 } , 1.1 } ,
+    { { NULL , 0 , 0 } , 1.1 } 
+  };
+
 item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } , // 0-3
   { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } , // 4

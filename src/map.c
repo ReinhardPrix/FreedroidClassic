@@ -579,6 +579,78 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
 
 
 /* ----------------------------------------------------------------------
+ * Next we extract the map labels of this level WITHOUT destroying
+ * or damaging the data in the process!
+ * ---------------------------------------------------------------------- */
+void 
+DecodeObstaclesOfThisLevel ( Level loadlevel , char* DataPointer )
+{
+  int i;
+  /*
+  char PreservedLetter;
+  char* MapLabelPointer;
+  char* MapLabelSectionBegin;
+  char* MapLabelSectionEnd;
+  int NumberOfMapLabelsInThisLevel;
+  */
+
+  //--------------------
+  // First we initialize the obstacle list with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+    }
+
+  loadlevel -> obstacle_list [ i ] . type = 0 ;
+  loadlevel -> obstacle_list [ i ] . pos . x = 20 ;
+  loadlevel -> obstacle_list [ i ] . pos . y = 80 ;
+
+  /*
+  //--------------------
+  // Now we look for the beginning and end of the map labels section
+  //
+  MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
+  MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
+
+  //--------------------
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  //
+  PreservedLetter=MapLabelSectionEnd[0];
+  MapLabelSectionEnd[0]=0;
+  NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
+
+  //--------------------
+  // Now we decode all the map label information
+  //
+  MapLabelPointer=MapLabelSectionBegin;
+  for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
+    {
+      MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
+      ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
+			   &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
+      ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
+			   &(loadlevel->labels[ i ].pos.y) , MapLabelSectionEnd );
+      loadlevel->labels[ i ].label_name = 
+	ReadAndMallocStringFromData ( MapLabelPointer , LABEL_ITSELF_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 1 , "\npos.x=%d pos.y=%d label_name=\"%s\"" , loadlevel->labels[ i ].pos.x , 
+		   loadlevel->labels[ i ].pos.y , loadlevel->labels[ i ].label_name );
+    }
+
+  //--------------------
+  // Now we repair the damage done to the loaded level data
+  //
+  MapLabelSectionEnd[0]=PreservedLetter;
+  */
+
+}; // void DecodeObstaclesOfThisLevel ( Level loadlevel , char* DataPointer );
+
+
+/* ----------------------------------------------------------------------
  * This function returns TRUE for blocks classified as "Walls" and false
  * otherwise.
  * ---------------------------------------------------------------------- */
@@ -2155,6 +2227,8 @@ DecodeLoadedLeveldata ( char *data )
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
   DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
+
+  DecodeObstaclesOfThisLevel ( loadlevel , DataPointer );
 
   //--------------------
   // Next we extract the statments of the influencer on this level WITHOUT destroying

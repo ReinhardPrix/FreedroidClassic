@@ -217,6 +217,12 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   //
   TicksNow = SDL_GetTicks();
   if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) ) return;
+
+  //--------------------
+  // For now, we disable the bombardment with 'no voice sample yet...'
+  //
+  // if ( ! strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) return;
+
   PreviousStartTicks = TicksNow;
   strcpy ( PreviousFileName , SoundSampleFileName );
 

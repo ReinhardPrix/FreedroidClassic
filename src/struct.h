@@ -62,7 +62,7 @@ typedef struct
   char *button_image_file_name;
   SDL_Rect button_rect;
 }
-mouse_press_button, Mouse_press_button;
+mouse_press_button, *Mouse_press_button;
 
 typedef struct
 {
@@ -826,6 +826,13 @@ waypoint, *Waypoint;
 
 typedef struct
 {
+  int type;
+  moderately_finepoint pos;
+}
+obstacle, *Obstacle;
+
+typedef struct
+{
   // int empty;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
@@ -837,7 +844,7 @@ typedef struct
   int xlen;		/* X dimension */
   int ylen;
   int color;
-  Uint16 *map[MAX_MAP_LINES];	/* this is a vector of pointers ! */
+  Uint16 *map[MAX_MAP_LINES];	// this is a vector of pointers
   int jump_threshold_north;
   int jump_threshold_south;
   int jump_threshold_east;
@@ -846,6 +853,9 @@ typedef struct
   int jump_target_south;
   int jump_target_east;
   int jump_target_west;
+
+  obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
+
   point refreshes[MAX_REFRESHES_ON_LEVEL];
   point consumers[MAX_CONSUMERS_ON_LEVEL];
   point teleporters[MAX_TELEPORTERS_ON_LEVEL];
@@ -894,6 +904,21 @@ typedef struct
   int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
 }
 dialogue_option, *Dialogue_option;
+
+typedef struct
+{
+  SDL_Surface* surface;
+  int offset_x;
+  int offset_y;
+}
+iso_image, *Iso_image;
+
+typedef struct
+{
+  iso_image image;
+  float block_area_size;
+}
+obstacle_spec, *Obstacle_spec;
 
 
 
