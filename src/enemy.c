@@ -385,7 +385,7 @@ AttackInfluence (int enemynum)
 	  return;
 	}
 
-      FireBulletSound ();
+      Fire_Bullet_Sound ( guntype );
 
       /* Einen bulleteintragg suchen, der noch nicht belegt ist */
       for (j = 0; j < MAXBULLETS; j++)

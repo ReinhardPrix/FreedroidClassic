@@ -133,7 +133,9 @@ AutoFireBullet (void)
       return;
     }
 
-  FireBulletSound ();
+  guntype = Druidmap[Me.type].gun;
+
+  Fire_Bullet_Sound ( guntype );
 
   xdist = Feindesliste[TargetNum].pos.x - Me.pos.x;
   ydist = Feindesliste[TargetNum].pos.y - Me.pos.y;
@@ -151,8 +153,6 @@ AutoFireBullet (void)
     xdist = 2;
   if (ydist == -1)
     ydist = 2;
-
-  guntype = Druidmap[Me.type].gun;
 
   /* Einen bulleteintragg suchen, der noch nicht belegt ist */
   for (j = 0; j < MAXBULLETS - 1; j++)
@@ -746,7 +746,7 @@ FireBullet (void)
   Me.firewait = Bulletmap[guntype].WaitNextTime;
 
 /* Geraeusch eines geloesten Schusses fabrizieren */
-  FireBulletSound ();
+  Fire_Bullet_Sound ( guntype );
 
 /* Naechste Freie Bulletposition suchen */
   for (i = 0; i < (MAXBULLETS); i++)

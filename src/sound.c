@@ -81,7 +81,7 @@ int rate = 8000;
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 21
+#define ALL_SOUNDS 24
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ERRORSOUND_NILL",
   "/../sound/Combat_Background_Music.wav",
@@ -90,7 +90,6 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Classical_Beep_Beep_Background_Music.wav",
   "/../sound/BlastSound1.wav",
   "/../sound/CollisionSound1.wav",
-  "/../sound/FireSound1.wav",
   "/../sound/GotIntoBlastSound.wav",
   "/../sound/MoveElevatorSound1.wav",
   "/../sound/RefreshSound.wav",
@@ -103,7 +102,11 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Move_Menu_Position_Sound_0.wav",
   "/../sound/Takeover_Game_Won_Sound_0.wav",
   "/../sound/Takeover_Game_Deadlock_Sound_0.wav",
-  "/../sound/Takeover_Game_Lost_Sound_0.wav"
+  "/../sound/Takeover_Game_Lost_Sound_0.wav",
+  "/../sound/Fire_Bullet_Pulse_Sound_0.wav",
+  "/../sound/Fire_Bullet_Single_Pulse_Sound_0.wav",
+  "/../sound/Fire_Bullet_Military_Sound_0.wav",
+  "/../sound/Fire_Bullet_Flash_Sound_0.wav"
 };
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
@@ -409,28 +412,6 @@ Play_YIFF_Server_Sound (int Tune)
     YStartPlaySoundObjectSimple (BackgroundMusic_con,
 				 ExpandedSoundSampleFilenames[Tune]);
 
-  return;
-
-
-  if (Tune == FIRESOUND)
-    {
-      // TEST   if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
-      //    if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
-      //      {
-      // Can't get sound object attributes.
-      //          fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
-      //                   ExpandedFireSoundSampleFilename );
-      //  printf(" CWD: %s \n\n",getcwd(NULL,0));
-      //          Terminate(ERR);
-      //      }
-      //    else
-      //      {
-      //TEST      play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
-      // play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
-      //      }
-    }
-
-
 #endif /* HAVE_LIBY2 */
 
 }				// void Play_YIFF_Server_Sound(int Tune)
@@ -639,11 +620,29 @@ LeaveElevatorSound (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-FireBulletSound (void)
+Fire_Bullet_Sound (int BulletType)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (FIRESOUND);
+  switch (BulletType)
+    {
+      case PULSE:
+	Play_YIFF_Server_Sound ( FIRE_BULLET_PULSE_SOUND );
+	break;
+
+      case SINGLE_PULSE:
+	Play_YIFF_Server_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+	break;
+
+      case MILITARY:
+	Play_YIFF_Server_Sound ( FIRE_BULLET_MILITARY_SOUND );
+	break;
+
+      case FLASH:
+	Play_YIFF_Server_Sound ( FIRE_BULLET_FLASH_SOUND );
+	break;
+
+    }
 }				// void FireBulletSound(void)
 
 
