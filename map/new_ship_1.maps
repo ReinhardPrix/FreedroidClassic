@@ -156,6 +156,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 1
 xlen of this level: 48
 ylen of this level: 16
@@ -280,6 +283,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 2
 xlen of this level: 18
 ylen of this level: 11
@@ -399,6 +405,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 3
 xlen of this level: 31
 ylen of this level: 13
@@ -520,6 +529,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 4
 xlen of this level: 32
 ylen of this level: 13
@@ -641,6 +653,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 5
 xlen of this level: 38
 ylen of this level: 15
@@ -764,6 +779,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 6
 xlen of this level: 38
 ylen of this level: 15
@@ -887,6 +905,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 7
 xlen of this level: 38
 ylen of this level: 17
@@ -1012,6 +1033,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 8
 xlen of this level: 38
 ylen of this level: 12
@@ -1132,6 +1156,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 9
 xlen of this level: 20
 ylen of this level: 8
@@ -1248,6 +1275,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 10
 xlen of this level: 22
 ylen of this level: 5
@@ -1361,6 +1391,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 11
 xlen of this level: 34
 ylen of this level: 15
@@ -1484,6 +1517,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 12
 xlen of this level: 34
 ylen of this level: 16
@@ -1608,6 +1644,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 13
 xlen of this level: 34
 ylen of this level: 16
@@ -1732,6 +1771,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 14
 xlen of this level: 26
 ylen of this level: 16
@@ -1856,6 +1898,9 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+
 Levelnumber: 15
 xlen of this level: 10
 ylen of this level: 15
@@ -1979,3 +2024,6 @@ Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
+
+----------------------------------------------------------------------
+

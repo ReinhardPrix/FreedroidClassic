@@ -54,7 +54,6 @@ EXTERN float FPSover10;
 EXTERN float FPSover100;
 EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
-EXTERN char *Decknames[];
 EXTERN char *Classname[];
 EXTERN char *Classes[];
 EXTERN char *Height[];

@@ -1665,7 +1665,7 @@ Level_Editor(void)
   char* OldMapPointer;
 
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, BACK_TO_LEVEL_EDITING, QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , QUIT_LEVEL_EDITOR_POSITION };
 
   while ( !Done )
     {
@@ -1983,8 +1983,8 @@ Level_Editor(void)
 				"Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
 	  CenteredPrintString ( ne_screen ,  8*FontHeight(Menu_BFont),    
 				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
-	  CenteredPutString   ( ne_screen ,  9*FontHeight(Menu_BFont),    
-				"Back to Level editing");
+	  CenteredPrintString ( ne_screen ,  9*FontHeight(Menu_BFont),    
+				"Level name: %s" , CurLevel->Levelname );
 	  CenteredPutString   ( ne_screen ,  10*FontHeight(Menu_BFont),    
 				"Quit Level Editor");
 	  
@@ -2011,7 +2011,7 @@ Level_Editor(void)
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  SaveShip("Testship");
-		  CenteredPutString ( ne_screen ,  9*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		  SDL_Flip ( ne_screen );
 		  while (!EnterPressed() && !SpacePressed() ) ;
 		  while (EnterPressed() || SpacePressed() ) ;
@@ -2022,18 +2022,13 @@ Level_Editor(void)
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case CHANGE_TILE_SET_POSITION: 
-		  // if ( CurLevel->color  < 6 )
-		  // CurLevel->color++;
-		  // else 
-		  // CurLevel->color=0;
-		  // SetCombatScaleTo ( 1 );
-		  // Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
-		  // SetCombatScaleTo ( CurrentCombatScaleFactor );
-		  // Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
-		case BACK_TO_LEVEL_EDITING:
+		case SET_LEVEL_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont), "Please enter new level name:");
+		  SDL_Flip( ne_screen );
+		  CurLevel->Levelname=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case QUIT_LEVEL_EDITOR_POSITION:

@@ -568,7 +568,11 @@ char *StructToMem(Level Lev)
     } /* for waypoints */
   
   strcat(LevelMem, LEVEL_END_STRING);
-  strcat(LevelMem, "\n");
+  strcat(LevelMem, 
+"\n\
+\n\
+----------------------------------------------------------------------\n\
+\n");
   
   /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
   /* wenn nicht: :-(  */
