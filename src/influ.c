@@ -815,6 +815,13 @@ FireBullet (void)
 	  AllEnemys[ i ].energy -= Me.base_damage + MyRandom( Me.damage_modifier );
 	  AllEnemys[ i ].firewait = 2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 	}
+
+      //--------------------
+      // Also, we should check if there was perhaps a chest or box
+      // or something that can be smashed up, cause in this case, we
+      // must open pendoras box now.
+      //
+      Smash_Box ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
       
       //--------------------
       // Finally we add a new wait-counter, so that bullets or swings
