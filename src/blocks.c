@@ -134,7 +134,7 @@ Load_Item_Surfaces( void )
   ItemImageList[ 14 ].inv_size.x = 2;
   ItemImageList[ 14 ].inv_size.y = 2;
   ItemImageList[ 15 ].inv_size.x = 2;
-  ItemImageList[ 15 ].inv_size.y = 3;
+  ItemImageList[ 15 ].inv_size.y = 2;
   ItemImageList[ 16 ].inv_size.x = 2;
   ItemImageList[ 16 ].inv_size.y = 2;
   ItemImageList[ 17 ].inv_size.x = 1;
@@ -156,7 +156,7 @@ Load_Item_Surfaces( void )
   ItemImageList[ 25 ].inv_size.x = 2;
   ItemImageList[ 25 ].inv_size.y = 3;
   ItemImageList[ 26 ].inv_size.x = 2;
-  ItemImageList[ 26 ].inv_size.y = 2;
+  ItemImageList[ 26 ].inv_size.y = 3;
   ItemImageList[ 27 ].inv_size.x = 1;
   ItemImageList[ 27 ].inv_size.y = 1;
   ItemImageList[ 28 ].inv_size.x = 1;
@@ -171,10 +171,10 @@ Load_Item_Surfaces( void )
   ItemImageList[ 32 ].inv_size.y = 2;
   ItemImageList[ 33 ].inv_size.x = 2;
   ItemImageList[ 33 ].inv_size.y = 2;
-  ItemImageList[ 34 ].inv_size.x = 2;
-  ItemImageList[ 34 ].inv_size.y = 2;
-  ItemImageList[ 35 ].inv_size.x = 2;
-  ItemImageList[ 35 ].inv_size.y = 2;
+  ItemImageList[ 34 ].inv_size.x = 1;
+  ItemImageList[ 34 ].inv_size.y = 1;
+  ItemImageList[ 35 ].inv_size.x = 1;
+  ItemImageList[ 35 ].inv_size.y = 1;
   ItemImageList[ 36 ].inv_size.x = 2;
   ItemImageList[ 36 ].inv_size.y = 2;
   ItemImageList[ 37 ].inv_size.x = 2;

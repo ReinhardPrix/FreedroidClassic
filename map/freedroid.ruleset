@@ -567,7 +567,7 @@ Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=14
+Picture number=2
 Sound number=7
 Base list price=250
 ** End of new item specification subsection **
@@ -1045,7 +1045,7 @@ Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=19
+Picture number=20
 Sound number=0 
 Base list price=240
 ** End of new item specification subsection **
@@ -1078,7 +1078,7 @@ Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=19
+Picture number=21
 Sound number=0 
 Base list price=310
 ** End of new item specification subsection **
@@ -1257,7 +1257,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=10 plus duration modifier=8
-Picture number=24
+Picture number=6
 Sound number=0 
 Base list price=90
 ** End of new item specification subsection **
@@ -1329,6 +1329,58 @@ Picture number=33
 Sound number=5 
 Base list price=1000
 ** End of new item specification subsection **
+
+// Item No. 48
+** Start of new item specification subsection **
+Item name="Medium Energy Capsule"
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=34
+Sound number=5
+Base list price=100
+** End of new item specification subsection **
+
+// Item No. 49
+** Start of new item specification subsection **
+Item name="Medium Force Capsule"
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=35
+Sound number=5
+Base list price=100
+** End of new item specification subsection **
+
+// Item No. 50
+** Start of new item specification subsection **
+Item name="Small Helm"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="special"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=4
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=18 plus duration modifier=10
+Picture number=36
+Sound number=0 
+Base list price=75
+** End of new item specification subsection **
+
 
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **
@@ -2359,7 +2411,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.22
 Weight of this droid : 61
@@ -2398,7 +2450,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 82
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=1
+Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.56
 Weight of this droid : 78
@@ -2437,7 +2489,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 84
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=2
+Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.63
 Weight of this droid : 83
