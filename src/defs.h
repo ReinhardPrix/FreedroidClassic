@@ -723,7 +723,7 @@ enum _directions
 #define MAX_TRIGGERED_ACTIONS_IN_GAME   100   // how many triggerable actions to allow at most
 
 
-#define MAXWAYPOINTS 		150
+#define MAXWAYPOINTS 		200
 #define MAX_DOORS_ON_LEVEL 	80
 #define MAX_AUTOGUNS_ON_LEVEL 	60
 #define MAX_REFRESHES_ON_LEVEL	39

@@ -1615,4 +1615,28 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
 
 }; // CheckForTriggeredEventsAndStatements (void )
 
+
+/*----------------------------------------------------------------------
+ * Copyright (C) 1997-2001 Id Software, Inc., under GPL
+ *
+ * va(fmt, ...)
+ * 
+ * does a varargs printf into a temp buffer, so I don't need to have
+ * varargs versions of all text functions.
+ *----------------------------------------------------------------------*/
+char
+*va (char *format, ...)
+{
+  va_list	argptr;
+  static char	string[1024];
+  
+  va_start (argptr, format);
+  vsprintf (string, format,argptr);
+  va_end (argptr);
+  
+  return string;	
+}
+
+
+
 #undef _misc_c

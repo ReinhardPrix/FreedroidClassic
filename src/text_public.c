@@ -39,7 +39,7 @@
 extern int Number_Of_Item_Types;
 extern itemspec* ItemMap;
 
-/* ----------------------------------------------------------------------
+/* ---------------------------------------------------------------------- 
  * This function works a malloc, except that it also checks for
  * success and terminates in case of "out of memory", so we dont
  * need to do this always in the code.
@@ -48,15 +48,20 @@ void *
 MyMalloc (long Mamount)
 {
   void *Mptr = NULL;
-
-  if ((Mptr = malloc ((size_t) Mamount)) == NULL)
+  
+  // make Gnu-compatible even if on a broken system:
+  if (Mamount == 0)
+    Mamount = 1;
+  
+  if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
     {
-      printf (" MyMalloc(%ld) did not succeed!\n", Mamount);
+      fprintf (stderr, " MyMalloc(%ld) did not succeed!\n", Mamount);
+      fflush (stderr);
       Terminate(ERR);
     }
-
+  
   return Mptr;
-}; // void* MyMalloc ( long Mamount )
+}				// void* MyMalloc(long Mamount)
 
 /* ----------------------------------------------------------------------
  * This function is used for debugging purposes.  It writes the

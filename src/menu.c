@@ -2426,7 +2426,8 @@ Credits_Menu (void)
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\n\
    ADDITIONAL ARTWORK:\n\n\
-                                      Johannes Prix\n\n\n\
+                                      Johannes Prix\n\n\
+                                      Lukas Huber\n\n\n\
    STORY AND CHARACTERS:\n\n\
                                       Johannes Prix\n\n\n\
    OPENING TEXT:\n\n\

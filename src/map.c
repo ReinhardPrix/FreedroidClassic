@@ -41,78 +41,6 @@
 
 #include "map.h"
 
-#define MAP_BEGIN_STRING	"beginning_of_map"
-#define WP_SECTION_BEGIN_STRING		"wp"
-#define LEVEL_END_STRING	"end_of_level"
-
-#define AREA_NAME_STRING "Area name=\""
-#define LEVEL_NAME_STRING "Name of this level="
-#define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
-#define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
-#define MAP_END_STRING "End of pure map information for this level"
-
-#define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
-#define ITEMS_SECTION_END_STRING "End of pure items information for this level"
-#define ITEM_CODE_STRING "New item: type="
-#define ITEM_POS_X_STRING " X="
-#define ITEM_POS_Y_STRING " Y="
-#define ITEM_AC_BONUS_STRING " AC="
-#define ITEM_DAMAGE_STRING " DoDamage="
-#define ITEM_DAMAGE_MODIFIER_STRING " ModifyDamage="
-#define ITEM_MAX_DURATION_STRING " MaxDur="
-#define ITEM_CUR_DURATION_STRING " CurDur="
-#define ITEM_GOLD_AMOUNT_STRING " Gold="
-#define ITEM_MULTIPLICITY_STRING " Multiplicity="
-#define ITEM_PREFIX_CODE_STRING " PrefixCode="
-#define ITEM_SUFFIX_CODE_STRING " SuffixCode="
-#define ITEM_BONUS_TO_STR_STRING " StrBon="
-#define ITEM_BONUS_TO_DEX_STRING " StrDex="
-#define ITEM_BONUS_TO_VIT_STRING " StrVit="
-#define ITEM_BONUS_TO_MAG_STRING " StrMag="
-#define ITEM_BONUS_TO_ALLATT_STRING " StrAllAtt="
-#define ITEM_BONUS_TO_LIFE_STRING " StrLife="
-#define ITEM_BONUS_TO_FORCE_STRING " StrForce="
-#define ITEM_BONUS_TO_TOHIT_STRING " StrToHit="
-#define ITEM_BONUS_TO_ACDAM_STRING " StrACDam="
-#define ITEM_BONUS_TO_RESELE_STRING " ResEle="
-#define ITEM_BONUS_TO_RESFIR_STRING " ResFir="
-#define ITEM_BONUS_TO_RESFOR_STRING " ResFor="
-
-#define CHEST_ITEMS_SECTION_BEGIN_STRING "Start of pure chest item information for this level"
-#define CHEST_ITEMS_SECTION_END_STRING "End of pure chest item information for this level"
-
-#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
-#define STATEMENT_END_STRING "End of pure statement information for this level"
-#define X_POSITION_OF_STATEMENT_STRING "PosX="
-#define Y_POSITION_OF_STATEMENT_STRING "PosY="
-#define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
-
-#define MAP_LABEL_BEGIN_STRING "Start of pure map label information for this level"
-#define MAP_LABEL_END_STRING "End of pure map label information for this level"
-#define X_POSITION_OF_LABEL_STRING "label.pos.x="
-#define Y_POSITION_OF_LABEL_STRING "label.pos.y="
-#define LABEL_ITSELF_ANNOUNCE_STRING "label.label_name=\""
-
-#define OBSTACLE_LABEL_BEGIN_STRING "Start of pure obstacle label information for this level"
-#define OBSTACLE_LABEL_END_STRING "End of pure obstacle label information for this level"
-#define OBSTACLE_LABEL_ANNOUNCE_STRING "obstacle_label_name=\""
-#define INDEX_OF_OBSTACLE_NAME "obstacle_label.index="
-
-#define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
-#define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
-#define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
-#define POSITION_Y_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosY="
-#define BIG_MAP_INSERT_TYPE_STRING "BigGraphicsInsertType="
-
-#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
-
-#define OBSTACLE_DATA_BEGIN_STRING "Begin of obstacle data"
-#define OBSTACLE_DATA_END_STRING "End of obstacle data"
-#define OBSTACLE_TYPE_STRING "ob_type="
-#define OBSTACLE_X_POSITION_STRING "ob_x="
-#define OBSTACLE_Y_POSITION_STRING "ob_y="
-#define OBSTACLE_LABEL_INDEX_STRING "ob_na="
-
 void
 TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
 // void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
@@ -1587,6 +1515,7 @@ EncodeLevelForSaving(Level Lev)
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		// number of Waypoints 
   char linebuf[5000];		// Buffer 
+  waypoint *this_wp;
   Uint16 HumanReadableMapLine[10000];
   
   // Get the number of waypoints 
@@ -1684,38 +1613,24 @@ jump target west: %d\n",
   strcat(LevelMem, WP_SECTION_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
-  for(i=0; i< MAXWAYPOINTS ; i++)
-  // for(i=0; i< 100 ; i++) THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
+  for(i=0; i< Lev->num_waypoints ; i++)
     {
-      // if ( Lev->AllWaypoints[i].x == 0 ) continue;
-
-      if (i>=MAXWAYPOINTS) sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, 0 , 0 );
-      else sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
+      sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
-      strcat( LevelMem, "\t connections: ");
+      strcat( LevelMem, "\t ");
+      strcat (LevelMem, CONNECTION_STRING);
 
-      for( j=0; j<MAX_WP_CONNECTIONS; j++) 
-      // for( j=0; j< 12 ; j++)  THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
+      this_wp = &Lev->AllWaypoints[i];
+      for( j=0; j < this_wp->num_connections; j++) 
 	{
-	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, " %3d", -1 );
-	  else 
-	    {
-	      if (Lev->AllWaypoints[i].x == 0 )
-		sprintf(linebuf, " %3d", (-1) );
-	      else 
-		sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
-	    }
+	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
 	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");
     } /* for waypoints */
   
   strcat(LevelMem, LEVEL_END_STRING);
-  strcat(LevelMem, 
-"\n\
-\n\
-----------------------------------------------------------------------\n\
-\n");
+  strcat(LevelMem, "\n----------------------------------------------------------------------\n");
   
   //--------------------
   // So we're done now.  Did the estimate for the amount of memory hit
@@ -2066,12 +1981,10 @@ DecodeLoadedLeveldata ( char *data )
   int nr, x, y;
   int k;
   int connection;
-  char ThisLine[1000];
-  char* ThisLinePointer;
+  char *this_line;
   char* DataPointer;
-  char* end_of_waypoint_data;
-  char preserved_letter ;
-  int number_of_waypoints_found ;
+  char* level_end;
+  int res;
 
   //--------------------
   // Get the memory for one level 
@@ -2144,77 +2057,60 @@ DecodeLoadedLeveldata ( char *data )
 
   DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
 
-  //--------------------
-  // We count the number of waypoints in the level data file.  For this
-  // we need to insert a termination character and then undo the damage
-  // again after the counting has been done...
-  //
-  end_of_waypoint_data = LocateStringInData ( wp_begin , LEVEL_END_STRING ) ;
-  preserved_letter = end_of_waypoint_data [ 0 ] ;
-  end_of_waypoint_data [ 0 ] = 0 ;
-#define WP_BEGIN_STRING "Nr.="
-  number_of_waypoints_found = CountStringOccurences ( wp_begin , WP_BEGIN_STRING ) ;
-  DebugPrintf ( 1 , "\nNumberOfWaypointsFound: %d." , number_of_waypoints_found );
-  if ( number_of_waypoints_found > MAXWAYPOINTS )
-    {
-      fprintf ( stderr , "\nnumber_of_waypoints_found: %d." , number_of_waypoints_found );
-      GiveStandardErrorMessage ( "DecodeLoadedLeveldata ( ... )" , 
-				 "The number of waypoints found in a level seems to be greater than the number\nof waypoints currently allowed in a Freedroid map.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-
-  //--------------------
-  // We init the waypoint data with 'empty' information
-  //
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-    {
-      loadlevel -> AllWaypoints [ i ] . x = 0 ;
-      loadlevel -> AllWaypoints [ i ] . y = 0 ;
-      for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
-	{
-	  loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection ;
-	}
-    }
+  level_end = LocateStringInData ( wp_begin , LEVEL_END_STRING ) ;
   
   //--------------------
   // We decode the waypoint data from the data file into the waypoint
   // structs...
-  //
-  for ( i = 0 ; i < number_of_waypoints_found ; i++ )
+  strtok (wp_begin, "\n");
+
+  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-      WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
+      if ( (this_line = strtok (NULL, "\n")) == NULL)
+	return (NULL);
+      if (this_line == level_end)
+	{
+	  loadlevel->num_waypoints = i;
+	  break;
+	}
+      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
 
-      strncpy (ThisLine , WaypointPointer , strstr( WaypointPointer , "\n") - WaypointPointer + 2);
-      ThisLine[strstr( WaypointPointer , "\n") - WaypointPointer + 1 ]=0;
-      sscanf( ThisLine , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
-      // printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
-
+      // completely ignore x=0/y=0 entries, which are considered non-waypoints!!
+      if ( x == 0 && y == 0 )
+	continue;
+      
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
-      if ( ( loadlevel->AllWaypoints[i].x == 255 ) && ( loadlevel->AllWaypoints[i].y == 255 ) )
-	{
-	  loadlevel->AllWaypoints[i].x=0;
-	  loadlevel->AllWaypoints[i].y=0;
-	}
+      pos = strstr (this_line, CONNECTION_STRING);
+      pos += strlen (CONNECTION_STRING);	// skip connection-string
+      pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
 
-      ThisLinePointer = strstr ( ThisLine , "connections: " ) +strlen("connections: ");
 
       for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
 	{
-	  sscanf( ThisLinePointer , "%4d" , &connection );
-	  // printf(", con=%d" , connection );
+	  if (*pos == '\0')
+	    break;
+	  res = sscanf( pos , "%d" , &connection );
+	  if ( (connection == -1) || (res == 0) || (res == EOF) )
+	    break;
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
-	  ThisLinePointer+=4;
-	}
 
-      // getchar();
-    }
+	  pos += strcspn (pos, WHITE_SPACE); // skip last token
+	  pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
 
-  /* Scan the waypoint- connections */
-  pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
+	} // for k < MAX_WP_CONNECTIONS
 
-  return loadlevel;
+      loadlevel->AllWaypoints[i].num_connections = k;
+
+    } // for i < MAXWAYPOINTS
+
+  //not quite finished yet: the old waypoint treatment has probably lead to 
+  // "holes" (0/0) in the waypoint-list, and we had to keep all of the in
+  // but now let's get rid of them!
+  PurifyWaypointList (loadlevel);
+
+  return (loadlevel);
 
 }; // Level DecodeLoadedLeveldata (char *data)
 
@@ -3398,6 +3294,109 @@ AnimateCyclingMapTiles (void)
   // AnimateConsumer();
   AnimateTeleports();
 }; // void AnimateCyclingMapTiles (void)
+
+
+/*----------------------------------------------------------------------
+ *  get rid of all "holes" (0/0) in waypoint-list, which are due to
+ * old waypoint-handling
+ *----------------------------------------------------------------------*/
+void
+PurifyWaypointList (level* Lev)
+{
+  int i;
+  waypoint *WpList, *ThisWp;
+
+  WpList = Lev->AllWaypoints;
+  for (i=0; i < Lev->num_waypoints; i++)
+    {
+      ThisWp = &WpList[i];
+      if (ThisWp->x == 0 && ThisWp->y == 0)
+	{
+	  DeleteWaypoint (Lev, i);
+	  i--; // this one was deleted, so dont' step on
+	}
+    }
+
+  return;
+
+} // PurifyWaypointList()
+
+/*----------------------------------------------------------------------
+ * delete given waypoint num (and all its connections) on level Lev
+ *----------------------------------------------------------------------*/
+void
+DeleteWaypoint (level *Lev, int num)
+{
+  int i, j;
+  waypoint *WpList, *ThisWp;
+  int wpmax;
+
+  WpList = Lev->AllWaypoints;
+  wpmax = Lev->num_waypoints - 1;
+  
+  // is this the last one? then just delete
+  if (num == wpmax)
+    WpList[num].num_connections = 0;
+  else // otherwise shift down all higher waypoints
+    memcpy (&WpList[num], &WpList[num+1], (wpmax - num) * sizeof(waypoint) );
+
+  // now there's one less:
+  Lev->num_waypoints --;
+  wpmax --;
+
+  // now adjust the remaining wp-list to the changes:
+  ThisWp = WpList;
+  for (i=0; i < Lev->num_waypoints; i++, ThisWp++)
+    for (j=0; j < ThisWp->num_connections; j++)
+      {
+	// eliminate all references to this waypoint
+	if (ThisWp->connections[j] == num)
+	  {
+	    // move all connections after this one down
+	    memcpy (&(ThisWp->connections[j]), &(ThisWp->connections[j+1]), 
+		    (ThisWp->num_connections-1 - j)*sizeof(int));
+	    ThisWp->num_connections --;
+	    j --;  // just to be sure... check the next connection as well...(they have been shifted!)
+	    continue;
+	  }
+	// adjust all connections to the shifted waypoint-numbers
+	else if (ThisWp->connections[j] > num)
+	  ThisWp->connections[j] --;
+	
+      } // for j < num_connections
+
+  return;
+
+} // DeleteWaypoint()
+
+/*----------------------------------------------------------------------
+ * create a new empty waypoint on position x/y
+ *----------------------------------------------------------------------*/
+void
+CreateWaypoint (level *Lev, int x, int y)
+{
+  int num;
+
+  if (Lev->num_waypoints == MAXWAYPOINTS)
+    {
+      DebugPrintf (0, "WARNING: maximal number of waypoints (%d) reached on this level!!\n",
+		   MAXWAYPOINTS);
+      DebugPrintf (0, "... cannot insert any more, sorry!\n");
+      return;
+    }
+
+  num = Lev->num_waypoints;
+  Lev->num_waypoints ++;
+
+  Lev->AllWaypoints[num].x = x;
+  Lev->AllWaypoints[num].y = y;
+  Lev->AllWaypoints[num].num_connections = 0;
+
+  return;
+} // CreateWaypoint()
+
+
+
 
 
 #undef _map_c

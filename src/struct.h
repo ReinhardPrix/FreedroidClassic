@@ -848,9 +848,10 @@ lift, *Lift;
 
 typedef struct
 {
-  byte x;			
-  byte y;
-  signed char connections [ MAX_WP_CONNECTIONS ] ;
+  int x;			
+  int y;
+  int num_connections;
+  int connections [ MAX_WP_CONNECTIONS ] ;
 }
 waypoint, *Waypoint;
 
@@ -903,6 +904,7 @@ typedef struct
   int autogun_obstacle_indices [ MAX_AUTOGUNS_ON_LEVEL ] ;
 
   map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
+  int num_waypoints;
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;

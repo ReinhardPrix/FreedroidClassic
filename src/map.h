@@ -36,6 +36,84 @@
 
 /* some defines */
 
+
+#define CONNECTION_STRING	"connections: "
+#define WHITE_SPACE 		" \t"
+#define MAP_BEGIN_STRING	"beginning_of_map"
+#define WP_SECTION_BEGIN_STRING		"wp"
+#define LEVEL_END_STRING	"end_of_level"
+
+#define AREA_NAME_STRING "Area name=\""
+#define LEVEL_NAME_STRING "Name of this level="
+#define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
+#define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
+#define MAP_END_STRING "End of pure map information for this level"
+
+#define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
+#define ITEMS_SECTION_END_STRING "End of pure items information for this level"
+#define ITEM_CODE_STRING "New item: type="
+#define ITEM_POS_X_STRING " X="
+#define ITEM_POS_Y_STRING " Y="
+#define ITEM_AC_BONUS_STRING " AC="
+#define ITEM_DAMAGE_STRING " DoDamage="
+#define ITEM_DAMAGE_MODIFIER_STRING " ModifyDamage="
+#define ITEM_MAX_DURATION_STRING " MaxDur="
+#define ITEM_CUR_DURATION_STRING " CurDur="
+#define ITEM_GOLD_AMOUNT_STRING " Gold="
+#define ITEM_MULTIPLICITY_STRING " Multiplicity="
+#define ITEM_PREFIX_CODE_STRING " PrefixCode="
+#define ITEM_SUFFIX_CODE_STRING " SuffixCode="
+#define ITEM_BONUS_TO_STR_STRING " StrBon="
+#define ITEM_BONUS_TO_DEX_STRING " StrDex="
+#define ITEM_BONUS_TO_VIT_STRING " StrVit="
+#define ITEM_BONUS_TO_MAG_STRING " StrMag="
+#define ITEM_BONUS_TO_ALLATT_STRING " StrAllAtt="
+#define ITEM_BONUS_TO_LIFE_STRING " StrLife="
+#define ITEM_BONUS_TO_FORCE_STRING " StrForce="
+#define ITEM_BONUS_TO_TOHIT_STRING " StrToHit="
+#define ITEM_BONUS_TO_ACDAM_STRING " StrACDam="
+#define ITEM_BONUS_TO_RESELE_STRING " ResEle="
+#define ITEM_BONUS_TO_RESFIR_STRING " ResFir="
+#define ITEM_BONUS_TO_RESFOR_STRING " ResFor="
+
+#define CHEST_ITEMS_SECTION_BEGIN_STRING "Start of pure chest item information for this level"
+#define CHEST_ITEMS_SECTION_END_STRING "End of pure chest item information for this level"
+
+#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
+#define STATEMENT_END_STRING "End of pure statement information for this level"
+#define X_POSITION_OF_STATEMENT_STRING "PosX="
+#define Y_POSITION_OF_STATEMENT_STRING "PosY="
+#define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
+
+#define MAP_LABEL_BEGIN_STRING "Start of pure map label information for this level"
+#define MAP_LABEL_END_STRING "End of pure map label information for this level"
+#define X_POSITION_OF_LABEL_STRING "label.pos.x="
+#define Y_POSITION_OF_LABEL_STRING "label.pos.y="
+#define LABEL_ITSELF_ANNOUNCE_STRING "label.label_name=\""
+
+#define OBSTACLE_LABEL_BEGIN_STRING "Start of pure obstacle label information for this level"
+#define OBSTACLE_LABEL_END_STRING "End of pure obstacle label information for this level"
+#define OBSTACLE_LABEL_ANNOUNCE_STRING "obstacle_label_name=\""
+#define INDEX_OF_OBSTACLE_NAME "obstacle_label.index="
+
+#define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
+#define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
+#define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
+#define POSITION_Y_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosY="
+#define BIG_MAP_INSERT_TYPE_STRING "BigGraphicsInsertType="
+
+#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
+
+#define OBSTACLE_DATA_BEGIN_STRING "Begin of obstacle data"
+#define OBSTACLE_DATA_END_STRING "End of obstacle data"
+#define OBSTACLE_TYPE_STRING "ob_type="
+#define OBSTACLE_X_POSITION_STRING "ob_x="
+#define OBSTACLE_Y_POSITION_STRING "ob_y="
+#define OBSTACLE_LABEL_INDEX_STRING "ob_na="
+
+
+
+
 #define OUTER_REFRESH_COUNTER 2
 #define INNER_REFRESH_COUNTER 4
 #define INNER_PHASES		4

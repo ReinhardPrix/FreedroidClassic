@@ -262,6 +262,9 @@ EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
 EXTERN int DruidPassable ( float x , float y , int z );
 EXTERN int IsVisible ( GPS objpos , int player_num ) ;
 EXTERN int TranslateMap (Level Lev);
+EXTERN void PurifyWaypointList (level* Lev);
+EXTERN void DeleteWaypoint (level *Lev, int num);
+EXTERN void CreateWaypoint (level *Lev, int x, int y);
 
 // sound.c  OR nosound.c 
 #undef EXTERN
@@ -505,7 +508,6 @@ EXTERN void StartTakingTimeForFPSCalculation(void);
 EXTERN int Get_Average_FPS ( void );
 EXTERN float Frame_Time (void);
 EXTERN void Activate_Conservative_Frame_Computation(void);
-EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
@@ -514,11 +516,11 @@ EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);
 EXTERN void Terminate (int);
-EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
 EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int player_num ) ;
 EXTERN void ExecuteEvent ( int EventNumber , int player_num );
+EXTERN char *va (char *format, ...);
 
 // enemy.c 
 #undef EXTERN
@@ -607,6 +609,8 @@ EXTERN void LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename );
 EXTERN void delete_one_dialog_option ( int i , int FirstInitialisation );
 EXTERN void InitChatRosterForNewDialogue( void );
 EXTERN void Get_Item_Data ( char* DataPointer );
+EXTERN void DebugPrintf (int db_level, char *fmt, ...);
+EXTERN void *MyMalloc (long);
 
 // rahmen.c 
 #undef EXTERN

@@ -51,9 +51,11 @@ void add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type 
 
 // EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
+waypoint *SrcWp;
+int OriginWaypoint = (-1);
+
 char VanishingMessage[10000]="Hello";
 float VanishingMessageDisplayTime = 0;
-int OriginWaypoint = (-1);
 SDL_Rect EditorBannerRect;
 int FirstBlock = 0 ;
 int Highlight = 3 ;
@@ -2370,6 +2372,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
   Level EditLevel;
   static iso_image level_editor_waypoint_cursor = { NULL , 0 , 0 } ;
   char* fpath;
+  waypoint *this_wp;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
@@ -2394,19 +2397,17 @@ Unable to load the level editor waypoint cursor.",
   BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
   BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
 	  
-  for (wp=0; wp<MAXWAYPOINTS; wp++)
+  for (wp=0; wp<EditLevel->num_waypoints; wp++)
     {
-
-      if ( EditLevel->AllWaypoints[wp].x == 0) continue;
+      this_wp = &(EditLevel->AllWaypoints[wp]);
+      if ( this_wp->x == 0 && this_wp->y == 0) continue;
 
       if ( mask && ZOOM_OUT )
 	blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor ) , 
-						EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
-						EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
+						this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
       else
 	blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
-					 EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
-					 EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
+					 this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
       
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
@@ -2416,11 +2417,11 @@ Unable to load the level editor waypoint cursor.",
 	  strcpy( ConnectionText , "List of connection for this wp:\n" );
 	}
 
-      for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
+      for ( i=0; i < this_wp->num_connections; i++ )
 	{
-	  if ( EditLevel->AllWaypoints[wp].connections[i] != (-1) )
+	  if ( this_wp->connections[i] != (-1) )
 	    {
-	      if ( ( BlockX == EditLevel->AllWaypoints[wp].x ) && ( BlockY == EditLevel->AllWaypoints[wp].y ) )
+	      if ( ( BlockX == this_wp->x ) && ( BlockY == this_wp->y ) )
 		{
 		  // color = ACTIVE_WP_COLOR ;
 		  // else color = HIGHLIGHTCOLOR ; 
@@ -2436,17 +2437,16 @@ Unable to load the level editor waypoint cursor.",
 		    {
 		      SDL_UnlockSurface( Screen );
 		      sprintf ( TextAddition , "To: X=%d Y=%d    " , 
-				EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x , 
-				EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y 
-				);
+				EditLevel->AllWaypoints[this_wp->connections[i]].x , 
+				EditLevel->AllWaypoints[this_wp->connections[i]].y);
 		      strcat ( ConnectionText , TextAddition );
 		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
 		      SDL_LockSurface( Screen );
 		    }
 
-		  draw_connection_between_tiles ( EditLevel->AllWaypoints[wp].x + 0.5 , EditLevel->AllWaypoints[wp].y + 0.5 , 
-						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x + 0.5 , 
-						  EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y + 0.5 );
+		  draw_connection_between_tiles ( this_wp->x + 0.5, this_wp->y + 0.5 , 
+						  EditLevel->AllWaypoints[this_wp->connections[i]].x + 0.5 , 
+						  EditLevel->AllWaypoints[this_wp->connections[i]].y + 0.5 );
 
 		}
 	    }
@@ -2484,7 +2484,7 @@ ShowMapLabels( int mask )
   //--------------------
   // Now we can draw a fine indicator at all the position nescessary...
   //
-  for (LabelNr=0; LabelNr<MAXWAYPOINTS; LabelNr++)
+  for ( LabelNr = 0 ; LabelNr < MAX_MAP_LABELS_PER_LEVEL ; LabelNr ++ )
     {
       if ( EditLevel->labels[LabelNr].pos.x == (-1) ) continue;
 
@@ -2703,57 +2703,22 @@ HandleLevelEditorCursorKeys ( void )
 void
 ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 {
-  int i , k , j ;
+  int i;
 
   // find out if there is a waypoint on the current square
-  for (i=0 ; i < MAXWAYPOINTS ; i++)
+  for (i=0 ; i < EditLevel->num_waypoints ; i++)
     {
       if ( ( EditLevel->AllWaypoints[i].x == BlockX ) &&
 	   ( EditLevel->AllWaypoints[i].y == BlockY ) ) break;
     }
   
   // if its waypoint already, this waypoint must be deleted.
-  if ( i != MAXWAYPOINTS )
-    {
-      // Eliminate the waypoint itself
-      EditLevel->AllWaypoints[i].x = 0;
-      EditLevel->AllWaypoints[i].y = 0;
-      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-	EditLevel->AllWaypoints[i].connections[k] = (-1) ;
-      
-		  
-      // Eliminate all connections pointing to this waypoint
-      for ( j = 0; j < MAXWAYPOINTS ; j++ )
-	{
-	  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-	    if ( EditLevel->AllWaypoints[j].connections[k] == i )
-	      EditLevel->AllWaypoints[j].connections[k] = (-1) ;
-	}
-    }
+  if ( i < EditLevel->num_waypoints )
+    DeleteWaypoint (EditLevel, i);
   else // if its not a waypoint already, it must be made into one
-    {
-      // seek a free position
-      for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-	{
-	  if ( EditLevel->AllWaypoints[i].x == 0 ) break;
-	}
-      if ( i == MAXWAYPOINTS )
-	{
-	  printf("\n\nSorry, no free waypoint available.  Using the first one.");
-	  i = 0;
-	}
-      
-      // Now make the new entry into the waypoint list
-      EditLevel->AllWaypoints[i].x = BlockX;
-      EditLevel->AllWaypoints[i].y = BlockY;
-      
-      // delete all old connection information from the new waypoint
-      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-	EditLevel->AllWaypoints[i].connections[k] = (-1) ;
-      
-    }
+    CreateWaypoint (EditLevel, BlockX, BlockY);
   
-  printf("\n\n  i is now: %d ", i ); fflush(stdout);
+  DebugPrintf (1, "\n\n  i is now: %d ", i );
   
 }; // void ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 
@@ -2764,16 +2729,16 @@ ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 void
 ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 {
-  int i , k ;
-
+  int i;
+ 
   // Determine which waypoint is currently targeted
-  for (i=0 ; i < MAXWAYPOINTS ; i++)
+  for (i=0 ; i < EditLevel->num_waypoints ; i++)
     {
       if ( ( EditLevel->AllWaypoints[i].x == BlockX ) &&
 	   ( EditLevel->AllWaypoints[i].y == BlockY ) ) break;
     }
   
-  if ( i == MAXWAYPOINTS )
+  if ( i == EditLevel->num_waypoints )
     {
       sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
       VanishingMessageDisplayTime = 0;
@@ -2784,8 +2749,22 @@ ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
       VanishingMessageDisplayTime = 0;
       if ( OriginWaypoint== (-1) )
 	{
-	  strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
 	  OriginWaypoint = i;
+	  SrcWp = &(EditLevel->AllWaypoints[i]);
+	  if (SrcWp->num_connections < MAX_WP_CONNECTIONS)
+	    {
+	      strcat ( VanishingMessage , "\nIt has been marked as the origin of the next connection." );
+	      DebugPrintf (1, "\nWaypoint nr. %d. selected as origin\n", i);
+	    }
+	  else
+	    {
+	      strcat ( VanishingMessage , "\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE." );
+	      strcat ( VanishingMessage, 
+		       va("\nSorry, maximal number of waypoint-connections (%d) reached!\n", MAX_WP_CONNECTIONS));
+	      DebugPrintf (0, "Operation not possible\n");
+	      OriginWaypoint = (-1);
+	      SrcWp = NULL;
+	    }
 	}
       else
 	{
@@ -2793,29 +2772,23 @@ ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 	    {
 	      strcat ( VanishingMessage , "\n\nOrigin==Target --> Connection Operation cancelled.");
 	      OriginWaypoint = (-1);
+	      SrcWp = NULL;
 	    }
 	  else
 	    {
 	      sprintf( VanishingMessage , "\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
-	      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-		{
-		  if (EditLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
-		}
-	      if ( k == MAX_WP_CONNECTIONS ) 
-		{
-		  strcat ( VanishingMessage , "\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE." );
-		}
-	      else
-		{
-		  EditLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
-		  strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
-		}
+	      SrcWp->connections[SrcWp->num_connections] = i;
+	      SrcWp->num_connections ++;
+	      strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
 	      OriginWaypoint = (-1);
+	      SrcWp = NULL;
 	    }
 	}
     }
 
-}; // void ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
+  return;
+
+}; // void ToggleWaypointConnection
 
 /* ----------------------------------------------------------------------
  * With the 'M' key, you can edit the map labels.

@@ -61,7 +61,7 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
   DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
   ThisRobot->AdvancedCommand = 0 ;
   
-  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+  for ( i = 0 ; i < ThisLevel->num_waypoints ; i ++ )
     {
       if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
       
@@ -328,14 +328,8 @@ ShuffleEnemys ( int LevelNum )
   int BestWaypoint;
   Level ShuffleLevel = curShip.AllLevels[ LevelNum ];
 
-  // count the number of waypoints on CurLevel
-  wp_num = 0;
-
-  for ( i=0 ; i<MAXWAYPOINTS ; i++ )
-    {
-      if ( ShuffleLevel->AllWaypoints[i].x != 0 ) wp_num ++;
-    }
-
+  // get the number of waypoints on CurLevel
+  wp_num = ShuffleLevel->num_waypoints;;
   nth_enemy = 0;
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
@@ -362,7 +356,7 @@ ShuffleEnemys ( int LevelNum )
 	  // and source waypoint.  That's it for special forces.
 	  //
 	  BestWaypoint = 0;
-	  for ( j=0 ; j<MAXWAYPOINTS ; j ++ )
+	  for ( j=0 ; j<wp_num ; j ++ )
 	    {
 	      if ( fabsf ( ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) *
 			   ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) +
@@ -623,10 +617,12 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 void
 RawSetNewRandomWaypoint ( Enemy ThisRobot )
 {
-  int i,j;
+  int i;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
+  waypoint *this_wp;
+  int num_conn;
   int trywp = 0 ;
   float maxspeed;
   int FreeWays[ MAX_WP_CONNECTIONS ];
@@ -652,70 +648,66 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   
   // search for the first connection, that doesn't exist any more, so
   // that we know, which connections surely do exist
-  for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
-    if ( WpList[nextwp].connections[j] == -1 )
-      break;
-  
-  DebugPrintf ( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ):  Found %d possible targets." , j );
+  this_wp = &WpList[nextwp];
+  num_conn = this_wp->num_connections;
   
   // Of course, only if such connections exist at all, we do the
   // following change of target waypoint procedure
-  if ( j < MAX_WP_CONNECTIONS )
-    {
-      //--------------------
-      // At this point, we should check, if there is another waypoint 
-      // and also if the way there is free of other droids
-      //
-      for ( i = 0; i < j ; i++ )
-	{
-	  FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot );
-	}
-      
-      //--------------------
-      // Now see whether any way point at all is free in that sense
-      // otherwise we set this robot to waiting and return;
-      //
-      for ( i = 0 ; i < j ; i++ )
-	{
-	  if ( FreeWays[i] ) break;
-	}
-      if ( i == j )
-	{
-	  DebugPrintf( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
-	  ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
-	  if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
-	       ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
-	    ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
-	  return;
-	}
-      
-      //--------------------
-      // Now that we know, there is some way out of this, we can test around
-      // and around randomly until we finally find some solution.
-      //
-      // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
-      // 
-      SolutionFound=FALSE;
-      while ( !SolutionFound )
-	{
-	  TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
-	  
-	  if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
-	  if ( !FreeWays[TestConnection] ) continue;
-	  
-	  trywp = WpList[nextwp].connections[ TestConnection ];
-	  SolutionFound = TRUE;
-	}
-      
-    }
-  else
+  if (  num_conn == 0 ) // no connections found!
     {
       GiveStandardErrorMessage ( "RawSetNewRandomWaypoint ( ... )" , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
 This is an error in the waypoint structure of this level.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
+      Terminate(ERR);
+    }
+
+  //--------------------
+  // At this point, we should check, if there is another waypoint 
+  // and also if the way there is free of other droids
+  //
+  for ( i = 0; i < num_conn ; i++ )
+    {
+      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot );
     }
   
+  //--------------------
+  // Now see whether any way point at all is free in that sense
+  // otherwise we set this robot to waiting and return;
+  //
+  for ( i = 0 ; i < num_conn ; i++ )
+    {
+      if ( FreeWays[i] ) break;
+    }
+  if ( i == num_conn )
+    {
+      DebugPrintf( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): Sorry, there seems no free way out.  I'll wait then... , num_conn was : %d ." , num_conn);
+      ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
+      if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
+	   ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
+	ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
+      return;
+    }
+  
+  //--------------------
+  // Now that we know, there is some way out of this, we can test around
+  // and around randomly until we finally find some solution.
+  //
+  // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
+  // 
+  SolutionFound=FALSE;
+  while ( !SolutionFound )
+    {
+      TestConnection = MyRandom (WpList[nextwp].num_connections - 1);
+      
+      if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
+      if ( !FreeWays[TestConnection] ) continue;
+      
+      trywp = WpList[nextwp].connections[ TestConnection ];
+      SolutionFound = TRUE;
+    }
+  
+
   // set new waypoint...
   ThisRobot->nextwaypoint = trywp;
   
