@@ -1267,8 +1267,9 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 }; // void GL_HighlightRectangle
 
 /* ----------------------------------------------------------------------
- *
- *
+ * For blitting backgrounds and static images in various positions of the
+ * game, we got this function, that handles them, taking especal care to
+ * use open-gl textures for faster blitting in OpenGL settings.
  * ---------------------------------------------------------------------- */
 void 
 blit_special_background ( int background_code )
@@ -1282,30 +1283,47 @@ blit_special_background ( int background_code )
 #define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
 #define ITEM_BROWSER_BG_PIC_FILE "backgrounds/item_browser.jpg"
 #define ITEM_BROWSER_SHOP_FILE "backgrounds/item_browser_shop.jpg"
+#define NE_CONSOLE_FG_1_FILE     "backgrounds/console_fg_1.png" 
+#define NE_CONSOLE_FG_2_FILE     "backgrounds/console_fg_2.png" 
+#define NE_CONSOLE_FG_3_FILE     "backgrounds/console_fg_3.png" 
+#define NE_CONSOLE_FG_4_FILE     "backgrounds/console_fg_4.png" 
+#define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
+#define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
 
-#define ALL_KNOWN_BACKGROUNDS 9
+#define ALL_KNOWN_BACKGROUNDS 14
 
   static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
   static int first_call = TRUE;
-  static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE , 
-								  CHARACTER_SCREEN_BACKGROUND_FILE ,
-								  SKILL_SCREEN_BACKGROUND_FILE ,
-								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE ,
-								  NE_TITLE_PIC_FILE ,
-								  NE_CREDITS_PIC_FILE ,
-								  SHOP_BACKGROUND_IMAGE ,
-								  ITEM_BROWSER_BG_PIC_FILE ,
-								  ITEM_BROWSER_SHOP_FILE } ;
+  static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
+								  CHARACTER_SCREEN_BACKGROUND_FILE ,  // 1 
+								  SKILL_SCREEN_BACKGROUND_FILE ,      // 2
+								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , // 3
+								  NE_TITLE_PIC_FILE ,                 // 4
+								  NE_CREDITS_PIC_FILE ,               // 5
+								  SHOP_BACKGROUND_IMAGE ,             // 6
+								  ITEM_BROWSER_BG_PIC_FILE ,          // 7
+								  ITEM_BROWSER_SHOP_FILE ,            // 8 
+								  NE_CONSOLE_FG_1_FILE ,              // 9 
+								  NE_CONSOLE_FG_2_FILE ,              // 10
+								  NE_CONSOLE_FG_3_FILE ,              // 11
+								  NE_CONSOLE_FG_4_FILE ,              // 12
+								  NE_CONSOLE_BG_PIC1_FILE } ;         // 13
 
-  SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } , 
-							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
-							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } ,
-							      { 0 , 0 , 0 , 0 } } ;
+  SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
+							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
+							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 2
+							      { 0 , 0 , 0 , 0 } ,               // 3
+							      { 0 , 0 , 0 , 0 } ,               // 4 
+							      { 0 , 0 , 0 , 0 } ,               // 5
+							      { 0 , 0 , 0 , 0 } ,               // 6
+							      { 0 , 0 , 0 , 0 } ,               // 7
+							      { 0 , 0 , 0 , 0 } ,               // 8
+
+							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 9
+							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 10
+							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 11
+							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 12
+							      { 0 , 0 , 0 , 0 } };              // 13
   int i;
   char *fpath;
   

@@ -262,9 +262,6 @@ enum
 #define SKILL_ICON_FILE         "skills.png"
 #define SKILL_LEVEL_BUTTON_FILE "skill_buttons.png"
 
-#define NE_CONSOLE_PIC_FILE     "backgrounds/console_fg.png" 
-#define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
-#define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
 #define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
 #define HS_BACKGROUND_FILE     "backgrounds/transfer.jpg"  
 
@@ -280,6 +277,11 @@ enum
 #define SHOP_BACKGROUND_IMAGE_CODE 6
 #define ITEM_BROWSER_BG_PIC_BACKGROUND_CODE 7
 #define ITEM_BROWSER_SHOP_BACKGROUND_CODE 8
+#define NE_CONSOLE_FG_1_PIC_CODE 9
+#define NE_CONSOLE_FG_2_PIC_CODE 10
+#define NE_CONSOLE_FG_3_PIC_CODE 11
+#define NE_CONSOLE_FG_4_PIC_CODE 12
+#define NE_CONSOLE_BACKGROUND_CODE 13
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 

@@ -57,8 +57,6 @@ int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVE
 
 void ShowDroidPicture (int PosX, int PosY, int Number );
 
-SDL_Surface *console_pic = NULL ;
-
 char *EmailText1 = "Hello Tux!\n\nHello Tux!\nI'm glad to see you alive and moving again.\nYour awakening has stirred considerable amounts of dicsussion within our group, but it's a bit too early to disclose anything yet.\nAnyway, we're glad you're back.";
 
 char *EmailText2 = "The FreedroidRPG maps are currently full of bugs.\n\nBut that's only the start of our problems.\nWe also need more characters, maps and story and quests.\nPlease take a look at he 'contribute' section of the main menu to see on what ways you could aid the FreedroidRPG development team.\n\nThanks a lot and see ya, the FreedroidRPG dev team.";
@@ -117,29 +115,18 @@ EnterConsole (void)
 {
   int finished = FALSE;
   int menu_pos = 0;
-  char* fpath;
   int NumberOfItems;
   item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
 
   //--------------------
-  // Console picture need not be rendered fast or something.  This
-  // really has time, so we load it as a surface and do not take the
-  // elements apart (they dont have typical block format either)
-  //
-  if ( console_pic == NULL )
-    {
-      fpath = find_file ( NE_CONSOLE_PIC_FILE , GRAPHICS_DIR , FALSE );
-      console_pic = our_IMG_load_wrapper ( fpath ); 
-    }
-
-  //--------------------
   // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
+  // the time spent in the menu.
+  //
   Activate_Conservative_Frame_Computation();
 
-  Me[0].status = CONSOLE;
+  Me [ 0 ] . status = CONSOLE;
 
-  SwitchBackgroundMusicTo (CONSOLE_BACKGROUND_MUSIC_SOUND);
+  SwitchBackgroundMusicTo ( CONSOLE_BACKGROUND_MUSIC_SOUND );
 
   SetCurrentFont( Para_BFont );
   SDL_SetClipRect ( Screen , NULL );
@@ -237,29 +224,16 @@ void
 PaintConsoleMenu (int menu_pos)
 {
   char MenuText[1000];
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
-  static SDL_Surface *image = NULL ;
 
   //--------------------
-  // If this has not happend yet, we load the console menu image
-  // once and for all to be kept until the end of the game.
+  // We blit the background for the console
   //
-  if ( image == NULL )
-    {
-      image = our_IMG_load_wrapper( find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) );
-      if ( image == NULL ) {
-	fprintf(stderr, "Couldn't load image %s: %s\n",
-		find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) , IMG_GetError ( ) );
-	Terminate(ERR);
-      }
-    }
-
+  blit_special_background ( NE_CONSOLE_BACKGROUND_CODE );
+  
   //--------------------
-  // At this point we can safely display the image from memory.
+  // Now we blit the current status of the Tux, i.e. current location
+  // and the like...
   //
-  our_SDL_blit_surface_wrapper( image , NULL , Screen , NULL );
-
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me[0].type].druidname);
   strcat (MenuText, " - ");
@@ -273,15 +247,11 @@ PaintConsoleMenu (int menu_pos)
 
   DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
-  /*
-   * display the console menu-bar
-   */
-  SourceRectangle.x=(CONS_MENU_LENGTH+2)*menu_pos;
-  SourceRectangle.y=0;
-  SourceRectangle.w=CONS_MENU_LENGTH;
-  SourceRectangle.h=CONS_MENU_HEIGHT;
-  Copy_Rect (Cons_Menu_Rect, TargetRectangle);
-  our_SDL_blit_surface_wrapper( console_pic , &SourceRectangle , Screen , &TargetRectangle );
+  //--------------------
+  // Now we blit the menu (4 items above each other, with highlight on the
+  // currently selected menu item, done via 4 pre-rendered images...
+  //
+  blit_special_background ( NE_CONSOLE_FG_1_PIC_CODE + menu_pos );
 
 }; // void PaintConsoleMenu ( int MenuPos )
 
