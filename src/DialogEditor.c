@@ -2499,32 +2499,34 @@ gint on_file_new_activate ( GtkWidget *widget,
 gint 
 file_load_event_callback_function ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
-  DebugPrintf ( 1 , "\nfile_load_event_callback_function(...): function call confirmed." );
+    DebugPrintf ( 1 , "\n%s(): function call confirmed." , __FUNCTION__ );
     
-  /* Create a new file selection widget */
-  filew = gtk_file_selection_new ("File selection");
-  
-  gtk_signal_connect (GTK_OBJECT (filew), "destroy",
-		      (GtkSignalFunc) delete_event, &filew);
-  /* Connect the ok_button to load_dialog_file_selector function */
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filew)->ok_button),
-		      "clicked", (GtkSignalFunc) load_dialog_file_selector , filew );
-  
-  /* Connect the cancel_button to destroy the widget */
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION
-					 (filew)->cancel_button),
-			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (filew));
-  
-  /* Lets set the filename, as if this were a save dialog, and we are giving
-     a default filename */
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION(filew), 
-				   "../dialogs/penguin.png");
-  
-  gtk_widget_show(filew);
-  gtk_main ();
-  
-  return(FALSE);
+    /* Create a new file selection widget */
+    filew = gtk_file_selection_new ( "File selection" );
+    
+    gtk_signal_connect (GTK_OBJECT (filew), "destroy",
+			(GtkSignalFunc) delete_event, &filew);
+
+    /* Connect the ok_button to load_dialog_file_selector function */
+    gtk_signal_connect ( GTK_OBJECT ( GTK_FILE_SELECTION (filew) -> ok_button ),
+			 "clicked", (GtkSignalFunc) load_dialog_file_selector , filew );
+    
+    /* Connect the cancel_button to destroy the widget */
+    gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION
+					   (filew)->cancel_button),
+			       "clicked", (GtkSignalFunc) gtk_widget_destroy,
+			       GTK_OBJECT (filew));
+    
+    /* Lets set the filename, as if this were a save dialog, and we are giving
+       a default filename */
+    gtk_file_selection_set_filename (GTK_FILE_SELECTION(filew), 
+				     "../dialogs/penguin.png");
+    
+    gtk_widget_show(filew);
+    gtk_main ();
+    
+    return ( FALSE ) ;
+
 }; // gint file_load_event_callback_function ( GtkWidget *widget, GdkEvent *event, gpointer data )
 
 /* ----------------------------------------------------------------------
