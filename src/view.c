@@ -2626,13 +2626,12 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 {
   int Percentage;
   SDL_Rect FillRect;
-  static Uint32 FullColor ;
-  static Uint32 EmptyColor ;
+  static Uint32 full_color_enemy ;
+  static Uint32 full_color_friend ;
+  static Uint32 energy_empty_color ;
 #define ENEMY_ENERGY_BAR_OFFSET_X 0
 #define ENEMY_ENERGY_BAR_OFFSET_Y (-20)
 #define ENEMY_ENERGY_BAR_LENGTH 65
-
-  return;
 
   //--------------------
   // If the enemy is dead already, there's nothing to do here...
@@ -2641,15 +2640,11 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   if ( AllEnemys [ Enum ] . energy <= 0 ) return;
 
   //--------------------
-  // If the enemy is friendly, then we needn't display his health, right?
-  //
-  if ( AllEnemys [ Enum ] . is_friendly ) return;
-
-  //--------------------
   // Now we need to find the right colors to fill our bars with...
   //
-  FullColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ) ; 
-  EmptyColor = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
+  full_color_enemy = SDL_MapRGB( Screen->format, 255 , 0 , 0 ) ; 
+  full_color_friend = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
+  energy_empty_color = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
 
   //--------------------
   // Now we fill our bars...
@@ -2661,14 +2656,22 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   FillRect . h = 7 ; 
   FillRect . w = Percentage ;
 
-  our_SDL_fill_rect_wrapper ( Screen , &FillRect , FullColor ) ;
+  //--------------------
+  // If the enemy is friendly, then we needn't display his health, right?
+  // Or better yet, we might show a green energy bar instead.  That's even
+  // better!
+  //
+  if ( AllEnemys [ Enum ] . is_friendly ) 
+    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
+  else
+    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
 
   FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
   FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
   FillRect . h = 7 ; 
   FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
   
-  our_SDL_fill_rect_wrapper ( Screen , &FillRect , EmptyColor ) ;
+  our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
 
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 

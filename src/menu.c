@@ -2573,7 +2573,9 @@ Credits_Menu (void)
                                       Simon Newton\n\n\
                                       Leslie Viljonen\n\n\n\
    PROFILING AND TESTING:\n\n\
-                                      Ryan 'simcop2387' Voots\n\n\n\
+                                      Ryan 'simcop2387' Voots\n\n\
+                                      Andrew A. Gill\n\n\
+                                      Evan Vittitow\n\n\n\
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\n\
    ADDITIONAL ARTWORK:\n\n\
