@@ -70,6 +70,7 @@ EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
+EXTERN int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] ;
 EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
 EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 EXTERN map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] ;
@@ -200,7 +201,7 @@ EXTERN SDL_Rect InventoryRect;
 EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
-EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILL_ICONS ]; // A pointer all skill icon surfaces
+EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILLS ]; // A pointer all skill icon surfaces
 EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the

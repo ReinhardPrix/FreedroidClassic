@@ -77,7 +77,8 @@
 #define SNIPER_BOT 2
 #define MIND_BOT 3
 
-#define NUMBER_OF_SKILL_ICONS 6
+#define NUMBER_OF_SKILLS 6
+#define NUMBER_OF_SKILL_LEVELS 10
 
 //--------------------
 // This is old and should go out, but that must be done from at home, 

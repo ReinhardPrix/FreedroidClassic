@@ -319,7 +319,7 @@ ShowSkillsScreen ( void )
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
   int i;
-  char* SkillName[ NUMBER_OF_SKILL_ICONS ];
+  char* SkillName[ NUMBER_OF_SKILLS ];
 
   SkillName[ 0 ] = "Takeover/Talk Skill";
   SkillName[ 1 ] = "Force Explosion Circle";
@@ -399,6 +399,9 @@ ShowSkillsScreen ( void )
       sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[i] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+      sprintf( CharText , "Mana cost: %d " , ManaCostTable[i][Me[0].SkillLevel[i]] );
+      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       
     }
 
