@@ -1425,11 +1425,6 @@ Resolving part string to index failed!",
 	motion_class = 0 ;
       else
 	motion_class = 1 ;
-
-      //--------------------
-      // Some security against missing images...
-      //
-      if ( ( part_index == 8 ) ) motion_class = 0 ;
     }
 
 
