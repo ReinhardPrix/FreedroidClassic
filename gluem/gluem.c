@@ -75,6 +75,7 @@ int Number_Of_Item_Types = 0 ;
 int all_object_directions = -1 ;
 int max_object_phases = -1 ;
 int tux_direction_numbering = FALSE ;
+int open_gl_sized_images = FALSE ;
 
 //--------------------
 // Another dummy function, such that the (unused) parts of the
@@ -272,6 +273,51 @@ Terminate (int ExitCode)
   return;
 }; // void Terminate ( int ExitCode )
 
+/* ----------------------------------------------------------------------
+ * Maybe the user did not bother with specifying the right amount of 
+ * phases to use for this animation.  Then the gluem tool is supposed to
+ * find out the correct number completely on it's own.
+ * ---------------------------------------------------------------------- */
+void
+auto_probe_max_object_phases ( void )
+{
+    char temp_filename[10000];
+    FILE* temp_file;
+    int i = 0 ;
+    
+    DebugPrintf ( -4 , "\nNow auto-probing max_object_phases..." );
+    
+    while ( 1 ) 
+    {
+	sprintf ( temp_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , 0 , i + 1 );
+	
+	//--------------------
+	// Let's see if we can find an offset file...
+	//
+	if ( ( temp_file = fopen ( temp_filename , "rb") ) == NULL )
+	{
+	    max_object_phases = i ;
+	    DebugPrintf ( -4 , "\nThis file seems not to be there any more: %s." , temp_filename );
+	    DebugPrintf ( -4 , "\nThat means the final max_object_phases=%d." , max_object_phases );
+	    break; 
+	}
+	else
+	{
+	    if ( fclose ( temp_file ) == EOF)
+	    {
+		fprintf( stderr, "\n\noffset_file_name: '%s'\n" , temp_filename );
+		DebugPrintf ( -4 , "\nClosing the tested file failed!! ERROR!! STRANGE!!");
+	    }
+	    else
+	    {
+		DebugPrintf ( 1 , "\nThe tested file seems to be there at least.....");
+		DebugPrintf ( 1 , "\nClosing again...");
+	    }
+	}
+	i++ ;
+    }
+
+}; // void auto_probe_max_object_phases ( void )
 
 /* -----------------------------------------------------------------
  * parse command line arguments and set global switches 
@@ -290,13 +336,14 @@ ParseCommandLine (int argc, char *const argv[])
 	    { "max_object_phases",       required_argument , 0,  'p' },
 	    { "all_object_directions",       required_argument , 0,  'd' },
 	    { "tux_16_direction_numbering",      0 , 0,  't' },
+	    { "open_gl_sized_images",      0 , 0,  'o' },
 	    // { "debug",            2, 0,  'd' },
 	    {  0,                 0, 0,   0  }
 	};
     
     while (1)
     {
-	c = getopt_long (argc, argv, "tvi:h?d:p:", long_options, NULL);
+	c = getopt_long (argc, argv, "tovi:h?d:p:", long_options, NULL);
 	if (c == -1)
 	    break;
 	
@@ -318,6 +365,10 @@ ParseCommandLine (int argc, char *const argv[])
 		
 	    case 't':
 		tux_direction_numbering = TRUE ;
+		break;
+		
+	    case 'o':
+		open_gl_sized_images = TRUE ;
 		break;
 		
 	    case 'i':
@@ -390,9 +441,9 @@ ParseCommandLine (int argc, char *const argv[])
     }
 
     if ( tux_direction_numbering )
-	DebugPrintf ( 0 , "\nTux direction numbering ENABLED.\n" );
+	DebugPrintf ( 0 , "\nTux direction numbering ENABLED." );
     else
-	DebugPrintf ( 0 , "\nTux direction numbering DISABLED.\n" );
+	DebugPrintf ( 0 , "\nTux direction numbering DISABLED." );
 
     if ( ( 16 % all_object_directions ) && tux_direction_numbering )
     {
@@ -400,7 +451,18 @@ ParseCommandLine (int argc, char *const argv[])
 	exit ( -1 ) ;
     }
 
-}; // ParseCommandLine 
+    if ( open_gl_sized_images )
+	DebugPrintf ( 0 , "\nOpen_gl_sized_images ENABLED.\n" );
+    else
+	DebugPrintf ( 0 , "\nOpen_gl_sized_images DISABLED.\n" );
+
+    if ( max_object_phases == 0 )
+    {
+	DebugPrintf ( 0 , "\nZero value for max_object_phases detected --> will use auto-probing now...\n" );	
+	auto_probe_max_object_phases();
+    }
+
+}; // void ParseCommandLine(...)
 
 /* -----------------------------------------------------------------
  * This funciton initialises the video display and opens up a 
@@ -602,8 +664,8 @@ main (int argc, char *const argv[])
     sprintf ( output_file_filename , "./%s.tux_image_archive" , current_file_series_prefix );
     if ( ( output_file = fopen ( output_file_filename , "wb" ) ) == NULL ) 
     {
-	printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
-	Terminate(ERR);
+	printf( "\n\nError opening save game file for writing...\n\nTerminating...\n\n" );
+	Terminate( ERR );
 	// return ERR;
     }
     else
@@ -645,7 +707,7 @@ main (int argc, char *const argv[])
 	    
 	    add_loaded_image_to_output_file ( ) ;
 	    
-	    DebugPrintf ( 0 , "\nSuccessfully loaded input image %s." , current_filename );
+	    // DebugPrintf ( 0 , "\nSuccessfully loaded offset file for image %s." , current_filename );
 	    
 	}
 
