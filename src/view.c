@@ -2355,6 +2355,22 @@ This indicates a serious bug in this installation of Freedroid.",
     first_stand_animation_image [ enemy_model_nr ] = last_death_animation_image [ enemy_model_nr ] + 1 ;
     last_stand_animation_image [ enemy_model_nr ] = last_death_animation_image [ enemy_model_nr ] + cooked_stand_object_phases ;
 
+    //--------------------
+    // Now some error checking against more phases in this enemy animation than
+    // currently allowed from the array size...
+    //
+    if ( last_stand_animation_image [ enemy_model_nr ] >= MAX_ENEMY_MOVEMENT_PHASES )
+    {
+	DebugPrintf( -4 , "\nenemy_model_nr=%d." , enemy_model_nr );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+The number of images found in the image collection to bigger than currently allowed.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+
+    //--------------------
+    // Now we can proceed to read in the pure image data from the image
+    // collection archive file
+    //
     for ( rotation_index = 0 ; rotation_index < ROTATION_ANGLES_PER_ROTATION_MODEL ; rotation_index ++ )
     {
 	for ( enemy_phase = 0 ; enemy_phase < last_stand_animation_image [ enemy_model_nr ] ; enemy_phase ++ )
