@@ -94,8 +94,6 @@ EXTERN int ThisShip;
 EXTERN float RealScore;
 EXTERN long ShowScore;
 
-EXTERN Hall_entry highscores;
-
 EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];
 EXTERN event_trigger AllEventTriggers[MAX_EVENT_TRIGGERS];
 EXTERN triggered_action AllTriggeredActions[MAX_TRIGGERED_ACTIONS];
@@ -243,5 +241,14 @@ EXTERN SDL_Joystick *joy;
 EXTERN int joy_num_axes; /* number of joystick axes */ 
 EXTERN int joy_sensitivity;
 EXTERN point input_axis;  /* joystick (and mouse) axis values */
+
+#undef EXTERN
+#ifdef _highscore_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN highscore_entry **Highscores;
+EXTERN int num_highscores;  /* total number of entries in our list (fixed) */
 
 #endif  // _global_h

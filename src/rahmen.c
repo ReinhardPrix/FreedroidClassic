@@ -77,7 +77,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
   if (Wert < 0)
     Wert = 0;
-  BarPoint += AllBars[BarCode].pos.x + AllBars[BarCode].pos.y * SCREENBREITE;
+  BarPoint += AllBars[BarCode].pos.x + AllBars[BarCode].pos.y * SCREENLEN;
 
   if (InitBars)
     {
@@ -85,7 +85,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 	{
 	  memset (BarPoint, AllBars[BarCode].col, Wert);
 	  memset (BarPoint + Wert, 0, abs (AllBars[BarCode].len - Wert));
-	  BarPoint += SCREENBREITE;
+	  BarPoint += SCREENLEN;
 	}
       AllBars[BarCode].oldval = Wert;
       return;
@@ -112,7 +112,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
   for (i = 0; i < AllBars[BarCode].hgt; i++)
     {
       memset (BarPoint, barcol, xlen);
-      BarPoint += SCREENBREITE;
+      BarPoint += SCREENLEN;
     }
 
   AllBars[BarCode].oldval = Wert;

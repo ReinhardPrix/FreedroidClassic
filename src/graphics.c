@@ -160,9 +160,9 @@ MakeGridOnScreen(void)
 
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
   SDL_LockSurface( ne_screen );
-  for (y=0; y<SCREENHOEHE; y++) 
+  for (y=0; y<SCREENHEIGHT; y++) 
     {
-      for (x=0; x<SCREENBREITE; x++) 
+      for (x=0; x<SCREENLEN; x++) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {
@@ -514,7 +514,7 @@ InitPictures (void)
   */
   tmp = SDL_CreateRGBSurface( SDL_SRCALPHA , NUM_MAP_BLOCKS*Block_Width,
 			      18*Block_Height, ne_bpp, 0, 0, 0, 0);
-  tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
+  tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
     {
       DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
@@ -966,7 +966,7 @@ Sorry...\n\
 
   #define SCALE_FACTOR 2
 
-  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 240*SCALE_FACTOR , 0 , flags)) )
+  if( !(ne_screen = SDL_SetVideoMode ( SCREENLEN, SCREENHEIGHT , 0 , flags)) )
     {
       fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
 	      SDL_GetError()); 

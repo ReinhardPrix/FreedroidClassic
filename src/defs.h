@@ -55,9 +55,11 @@
 /* ************************************************************
  * Highscore related defines 
  *************************************************************/
-#define MAX_NAME_LEN 	20     /* max len of highscore name entry */
+#define HS_BACKGROUND_FILE     "transfer.jpg"
+#define HS_EMPTY_ENTRY  "--- empty ---"
+#define MAX_NAME_LEN 	15     /* max len of highscore name entry */
 #define MAX_HIGHSCORES  10     /* only keep Top10 */
-#define DATE_LEN	20     /* reserved for the date-string */
+#define DATE_LEN	10     /* reserved for the date-string */
 
 // The flags for DisplayBanner are:
 enum
@@ -114,23 +116,21 @@ enum
 #define DIGITNUMBER 22
 #define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
 
-#define SCREENBREITE 		(320*2)
-#define SCREENHOEHE 		(200*2)
-#define SCREENLEN		(320*2)
-#define SCREENHEIGHT		(200*2)
+#define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
+#define SCREENLEN		(320*SCALE_FACTOR)
+#define SCREENHEIGHT		(240*SCALE_FACTOR)
 
 #define USERFENSTERHOEHE 	4*INITIAL_BLOCK_HEIGHT
 #define USERFENSTERBREITE 	9*INITIAL_BLOCK_WIDTH
-#define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
+#define USERFENSTERPOSX 	( (SCREENLEN-USERFENSTERBREITE) / 2)
+#define USERFENSTERPOSY 	( 2*(SCREENHEIGHT-USERFENSTERHOEHE)/3 )
 #define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
 #define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
 
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
 
-#define SCALE_FACTOR  2 /* This constant (please let it be an int!) defines how many times the
-			   actually displayed screen shall be bigger than the 320x200 window. */
+
 
 /* Startpos + dimesnions of Banner-Texts */
 #define LEFT_INFO_X 	(13*2)
@@ -140,7 +140,7 @@ enum
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
-#define BANNER_WIDTH		SCREENBREITE
+#define BANNER_WIDTH		SCREENLEN
 #define BANNER_HEIGHT		INITIAL_BLOCK_HEIGHT
 
 

@@ -51,7 +51,6 @@ EXTERN void InitFreedroid (void);
 EXTERN void InitNewMission (char *MissionName);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
-EXTERN void Debriefing (void);
 EXTERN void CheckIfMissionIsComplete (void);
 
 /* influ.c */
@@ -468,38 +467,12 @@ EXTERN int IsActive (int color, int row);
 EXTERN void InitTakeover (void);
 
 #undef EXTERN
-#ifdef _svgaemu_c
+#ifdef _highscore_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
-EXTERN void Lock_SDL_Screen(void);
-EXTERN void Unlock_SDL_Screen(void);
-
-EXTERN int vga_flip(void);
-EXTERN int vga_getxdim(void);
-EXTERN int vga_getydim(void);
-EXTERN int vga_getcolors(void);
-EXTERN int vga_setpalette(int index, int red, int green, int blue);
-EXTERN int vga_getpalette(int index, int *red, int *green, int *blue);
-EXTERN int vga_setpalvec(int start, int num, int *pal);
-EXTERN int vga_getpalvec(int start, int num, int *pal);
-EXTERN int vga_screenoff(void);
-EXTERN int vga_screenon(void);
-EXTERN int vga_setcolor(int color);
-EXTERN int vga_drawpixel(int x, int y);
-EXTERN int vga_drawline(int x1, int y1, int x2, int y2);
-EXTERN int vga_drawscanline(int line, unsigned char *colors);
-EXTERN int vga_drawscansegment(unsigned char *colors, int x, int y, int length);
-EXTERN int vga_getpixel(int x, int y);      /* Added. */
-EXTERN int vga_getscansegment(unsigned char *colors, int x, int y, int length);
-EXTERN int vga_getch(void);
-EXTERN int vga_dumpregs(void);
-EXTERN int vga_white(void);
-EXTERN void vga_waitretrace(void);
-EXTERN int vga_getdefaultmode(void);
-
-
-
+EXTERN void Init_Highscores (void);
+EXTERN void update_highscores (void);
+EXTERN void Show_Highscores (void);
 #endif

@@ -42,7 +42,7 @@
 
 /* Scroll- Fenster */
 #define SCROLLSTARTX		USERFENSTERPOSX
-#define SCROLLSTARTY		SCREENHOEHE
+#define SCROLLSTARTY		SCREENHEIGHT
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
@@ -1142,13 +1142,9 @@ InitFreedroid (void)
   gettimeofday(&timestamp, NULL);
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 
-  /* initialize the high score values */
-  /* 
-   * this really should be read from disk here, 
-   * but for the moment we just start from zero 
-   * each time
-   */
-  highscores = NULL;
+  /* initialize the highscore list */
+  Init_Highscores ();
+ 
 
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
@@ -1322,7 +1318,7 @@ ThouArtDefeated (void)
       RotateBulletColor ();
     }
 
-  Debriefing ();
+  update_highscores ();
 
   GameOver = TRUE;
 
@@ -1347,86 +1343,6 @@ ThouArtVictorious (void)
 }
 
 
-/*----------------------------------------------------------------------
- * Mission debriefing.  
- * Mainly managing of highscore entries 
- *
- *----------------------------------------------------------------------*/
-void
-Debriefing (void)
-{
-  char *tmp_name;
-  Hall_entry new, tmp, last;
-  //  int DebriefColor;
-  int count;
-  //  BFont_Info *prev_font;
-
-  if (RealScore <= 0)  /* don't even bother.. */
-    return;
-
-  //  DebriefColor = FONT_WHITE;
-  Me.status = DEBRIEFING;
-  //  SetUserfenster (DebriefColor);	// KON_BG_COLOR
-
-  count = 0;
-  if ( (tmp = highscores) != NULL)
-    {
-      count = 1;
-      while (tmp->next) { count++; tmp = tmp->next;}  /* tmp now points to lowest! */
-      last = tmp; /* remember this one */
-    }
-
-
-  if ( (count == MAX_HIGHSCORES) && (RealScore <= last->score) )
-    return; /* looser! ;) */
-      
-  /* else: prepare a new entry */
-  new = MyMalloc (sizeof(hall_entry));
-  new->score = RealScore;
-  new->next = new->prev = NULL;
-  //  prev_font = CurrentFont;
-  //  SetCurrentFont (Highscore_BFont);
-  printf_SDL (ne_screen, User_Rect.x, User_Rect.y, "Great Score !\n");
-  printf_SDL (ne_screen, -1, -1, "Enter your name: ");
-  tmp_name = GetString (MAX_NAME_LEN, 2);
-  strcpy (new->name, tmp_name);
-  free (tmp_name);
-  //  SetCurrentFont (prev_font);
-
-  if (!highscores)  /* hey, no previous entries! */
-    highscores = new;
-  else if (RealScore <= last->score) /* you're the last */
-    {
-      count ++;
-      last->next = new;
-      new->prev = last;
-    }
-  else   /* link in the new entry inside existing list */
-    {
-      count ++;
-      tmp = last;  /* work your way back up from last enty */
-      while ( tmp->prev && (RealScore > ((Hall_entry)(tmp->prev))->score) )
-	tmp = tmp->prev;
-
-      /* tmp now points to the entry to be pushed down */
-      ((Hall_entry)tmp->prev)->next = new;
-      new->prev = tmp->prev;
-      new->next = tmp;
-      tmp->prev = new;
-    }
-
-  /* now check the length of our new highscore list.
-   * if longer than MAX_HIGHSCORES */
-
-  if ( count > MAX_HIGHSCORES ) /* the last one drops out */
-    {
-      ((Hall_entry)(last->prev))->next = NULL;
-      free (last);
-    }
-  
-  return;
-
-} /* Debriefing() */
 
 /*----------------------------------------------------------------------
  * This function checks, if the influencer has succeeded in his given 

@@ -1076,7 +1076,7 @@ CreateMessageBar (char *MText)
     {
       for (j = 0; j < 8; j++)
 	{
-	  memcpy ((MessageBar + i * 8 + j * SCREENBREITE),
+	  memcpy ((MessageBar + i * 8 + j * SCREENLEN),
 		  (Data70Pointer + Worktext[i] * 8 * 8 + j * 8), 8);
 	}
     }

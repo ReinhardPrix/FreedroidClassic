@@ -853,7 +853,7 @@ Sorry...\n\
       SDL_SetClipRect( ne_screen , NULL );
       TargetRectangle.x=0;
       TargetRectangle.y=BANNER_HEIGHT;
-      SourceRectangle.h=SCREENHOEHE-BANNER_HEIGHT;
+      SourceRectangle.h=SCREENHEIGHT-BANNER_HEIGHT;
     }
   else 
     {

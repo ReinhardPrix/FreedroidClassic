@@ -44,7 +44,6 @@ int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
 
-void Debriefing (void);
 void UpdateCountersForThisFrame (void);
 
 /*-----------------------------------------------------------------
