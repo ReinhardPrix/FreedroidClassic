@@ -2558,8 +2558,33 @@ This indicates a serious bug in this installation of Freedroid.",
 	    }
 	    else
 	    {
-		make_texture_out_of_prepadded_image ( 
-		    & ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] ) ) ;
+		if ( ! strncmp ( "oglX" , ogl_support_string , 4 ) )
+		{
+		    make_texture_out_of_prepadded_image ( 
+			& ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] ) ) ;
+		}
+		else
+		{
+		    //--------------------
+		    // Of course we could handle the case on non-open-gl optimized image
+		    // collection files used with OpenGL output.  But that would be a
+		    // sign of a bug, so we don't properly handle it (like below) but
+		    // rather give out a fatal error message, just to be safe against
+		    // non-open-gl-optimized image archives slipping undetected into some
+		    // release or something...
+		    //
+		    // make_texture_out_of_surface ( 
+		    // & ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] ) ) ;
+		    //
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+This image collection archive is not optimized for OpenGL usage\n\
+but still used in conjunction with OpenGL graphics output.\n\
+This is strange.  While of course we could handle this (a bit)\n\
+slower than optimized archive, it's an indication that something\n\
+is wrong with this installation of FreedroidRPG.  So we terminate\n\
+to draw attention to the possible problem...",
+				   PLEASE_INFORM, IS_FATAL );
+		}
 	    }
 
 	    // DebugPrintf ( -4 , "%s: loaded surface phase=%d rotation_index=%d.\n" , 
