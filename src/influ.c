@@ -1095,7 +1095,7 @@ PermanentLoseEnergy (void)
   if (InvincibleMode) return;
 
   /* health decreases with time */
-  Me.health -= Druidmap[Me.type].lose_health * Frame_Time ();
+  Me.health -= Druidmap[Me.type].lose_health * Frame_Time () * Me.Current_Victim_Resistance_Factor;
 
   /* you cant have more energy than health */
   if (Me.energy > Me.health) Me.energy = Me.health;

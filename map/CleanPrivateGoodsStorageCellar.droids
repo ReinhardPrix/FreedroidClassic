@@ -98,11 +98,13 @@ Question="hello" Answer="Hello!  Come inside quickly and pray that they have not
 
 Question="job" Answer="I used to serve Dr. Sorenson.  But I fear that she is no longer alive."
 
-Question="Sorenson" Answer="She taught me lot of things.  But now I fear that she is no longer alive."
+Question="sorenson" Answer="She taught me lot of things.  But now I fear that she is no longer alive."
 
 Question="taught" Answer="Yes.  Like to talk polite or to pray."
 
-Question="alive" Answer="We were on the quarters deck, when the 751 laser generated plasma chunk hit her in the chest.  Her head and guts and arms were spilling all over the room and redening the walls.  I fear that she might not have survived this.  I came here to look for medical supplies in her private goods, but didn't find any."
+Question="alive" Answer="We were on the quarters deck, when a plasma chunk hit her in the chest.  Her head and guts and arms were spilling all over the room and redening the walls.  I fear that she might not have survived this.  I came here to look for medical supplies in her private goods, but didn't find any."
+
+Question="plasma" Answer="Yes,  plasma like the 751 laser weapons generate it.  It is very deadly, especially to humans."
 
 Question="goods" Answer="She used to have lots of clothes in big boxes cause they didn't fit into her room any more.  She really loved clothes."
 
@@ -110,7 +112,7 @@ Question="sorry" Answer="It's a sad thing indeed."
 
 Question="pray" Answer="Yes.  It's a technique I've learned from my maker Dr. Sorenson.  She taught me lots of useful things."
 
-Question="MS" Answer="The MS killer machines are assaulting the scientists retreat.  Why are they doing this?  They have kiled people up at the private quarters deck.  I fear that once they are done with the humans, they will go for us droids too."
+Question="ms" Answer="The MS killer machines are assaulting the scientists retreat.  Why are they doing this?  They have kiled people up at the private quarters deck.  I fear that once they are done with the humans, they will go for us droids too."
 
 Question="droids" Answer=""
 

@@ -210,6 +210,7 @@ typedef struct
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
+  float Current_Victim_Resistance_Factor;
 }
 influence_t, *Influence_t;
 

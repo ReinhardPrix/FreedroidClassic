@@ -99,6 +99,18 @@ int CurrentlyKP6Pressed=0;
 int CurrentlyKP7Pressed=0;
 int CurrentlyKP8Pressed=0;
 int CurrentlyKP9Pressed=0;
+int CurrentlyF1Pressed=0;
+int CurrentlyF2Pressed=0;
+int CurrentlyF3Pressed=0;
+int CurrentlyF4Pressed=0;
+int CurrentlyF5Pressed=0;
+int CurrentlyF6Pressed=0;
+int CurrentlyF7Pressed=0;
+int CurrentlyF8Pressed=0;
+int CurrentlyF9Pressed=0;
+int CurrentlyF10Pressed=0;
+int CurrentlyF11Pressed=0;
+int CurrentlyF12Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
@@ -315,6 +327,43 @@ keyboard_update(void)
 	    case SDLK_KP9:
 	      CurrentlyKP9Pressed=TRUE;
 	      break;
+	    case SDLK_F1:
+	      CurrentlyF1Pressed=TRUE;
+	      break;
+	    case SDLK_F2:
+	      CurrentlyF2Pressed=TRUE;
+	      TakeScreenshot();
+	      break;
+	    case SDLK_F3:
+	      CurrentlyF3Pressed=TRUE;
+	      break;
+	    case SDLK_F4:
+	      CurrentlyF4Pressed=TRUE;
+	      break;
+	    case SDLK_F5:
+	      CurrentlyF5Pressed=TRUE;
+	      break;
+	    case SDLK_F6:
+	      CurrentlyF6Pressed=TRUE;
+	      break;
+	    case SDLK_F7:
+	      CurrentlyF7Pressed=TRUE;
+	      break;
+	    case SDLK_F8:
+	      CurrentlyF8Pressed=TRUE;
+	      break;
+	    case SDLK_F9:
+	      CurrentlyF9Pressed=TRUE;
+	      break;
+	    case SDLK_F10:
+	      CurrentlyF10Pressed=TRUE;
+	      break;
+	    case SDLK_F11:
+	      CurrentlyF11Pressed=TRUE;
+	      break;
+	    case SDLK_F12:
+	      CurrentlyF12Pressed=TRUE;
+	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=TRUE;
 	      break;
@@ -392,7 +441,6 @@ keyboard_update(void)
 	      break;
 	    case SDLK_s:
 	      CurrentlySPressed=TRUE;
-	      TakeScreenshot();
 	      break;
 	    case SDLK_t:
 	      CurrentlyTPressed=TRUE;
@@ -523,6 +571,42 @@ keyboard_update(void)
 	      break;
 	    case SDLK_KP9:
 	      CurrentlyKP9Pressed=FALSE;
+	      break;
+	    case SDLK_F1:
+	      CurrentlyF1Pressed=FALSE;
+	      break;
+	    case SDLK_F2:
+	      CurrentlyF2Pressed=FALSE;
+	      break;
+	    case SDLK_F3:
+	      CurrentlyF3Pressed=FALSE;
+	      break;
+	    case SDLK_F4:
+	      CurrentlyF4Pressed=FALSE;
+	      break;
+	    case SDLK_F5:
+	      CurrentlyF5Pressed=FALSE;
+	      break;
+	    case SDLK_F6:
+	      CurrentlyF6Pressed=FALSE;
+	      break;
+	    case SDLK_F7:
+	      CurrentlyF7Pressed=FALSE;
+	      break;
+	    case SDLK_F8:
+	      CurrentlyF8Pressed=FALSE;
+	      break;
+	    case SDLK_F9:
+	      CurrentlyF9Pressed=FALSE;
+	      break;
+	    case SDLK_F10:
+	      CurrentlyF10Pressed=FALSE;
+	      break;
+	    case SDLK_F11:
+	      CurrentlyF11Pressed=FALSE;
+	      break;
+	    case SDLK_F12:
+	      CurrentlyF12Pressed=FALSE;
 	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=FALSE;
@@ -949,6 +1033,90 @@ KP9Pressed (void)
   keyboard_update ();
   return CurrentlyKP9Pressed;
 }				// int KP9Pressed(void)
+
+int
+F1Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF1Pressed;
+}				// int F1Pressed(void)
+
+int
+F2Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF2Pressed;
+}				// int F2Pressed(void)
+
+int
+F3Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF3Pressed;
+}				// int F3Pressed(void)
+
+int
+F4Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF4Pressed;
+}				// int F4Pressed(void)
+
+int
+F5Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF5Pressed;
+}				// int F5Pressed(void)
+
+int
+F6Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF6Pressed;
+}				// int F6Pressed(void)
+
+int
+F7Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF7Pressed;
+}				// int F7Pressed(void)
+
+int
+F8Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF8Pressed;
+}				// int F8Pressed(void)
+
+int
+F9Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF9Pressed;
+}				// int F9Pressed(void)
+
+int
+F10Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF10Pressed;
+}				// int F10Pressed(void)
+
+int
+F11Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF11Pressed;
+}				// int F11Pressed(void)
+
+int
+F12Pressed (void)
+{
+  keyboard_update ();
+  return CurrentlyF12Pressed;
+}				// int F12Pressed(void)
 
 int
 LeftPressed (void)
