@@ -82,7 +82,7 @@ enum
 
 #define NE_MAP_BLOCK_FILE	GRAPHICS_DIR "ne_block_red.gif"
 #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.gif"
-#define NE_BULLET_BLOCK_FILE 	GRAPHICS_DIR "ne_bullet.gif"
+#define NE_BULLET_BLOCK_FILE 	GRAPHICS_DIR "ne_bullet2.gif"
 #define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.gif"
 #define NE_LIFT_PIC_FILE	GRAPHICS_DIR "ne_ship.gif"
 #define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.gif" 

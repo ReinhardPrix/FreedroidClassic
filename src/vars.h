@@ -202,12 +202,22 @@ Druidspec Druidmap;
 #define BULLET_SPEED_CALIBRATOR (0.8)
 bulletspec Bulletmap[ALLBULLETTYPES] = {
 /*  
+  double recharging_time;       // time until the next shot can be made, measures in seconds
+  double speed;			// speed of the bullet 
+  int damage;			// damage done by this bullettype 
+  int phases;			// how many phases in motion to show 
+  int blast;			// which blast does this bullet create 
+  unsigned char *picpointer;	// pointer to picture of bullet 
+  signed char oneshotonly;	// if this is set, there is only 1 shot 
+  int WaitNextTime;
+  SDL_Rect *block;              // the coordinates of the blocks in ne_blocks 
+
   speed                                      blast                 oneshotonly
                               damage phases	                pic.	
 ------------------------------------------------------------*/
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 25                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 40                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 55                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 25                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 40                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 55                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
   { 1.0, 10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
 };
 

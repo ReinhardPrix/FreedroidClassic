@@ -68,39 +68,39 @@ Get_General_Game_Constants ( void* DataPointer )
 
   if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
     {
-      DebugPrintf(1, "\n\nBegin of General Game Constants Section string not found...\n\nTerminating...\n\n");
+      DebugPrintf( 0 , "\n\nBegin of General Game Constants Section string not found...\n\nTerminating...\n\n");
       Terminate(ERR);
     }
   else
     {
-      DebugPrintf (2, "\n\nBegin of General Game Constants Section found. Good.");  
+      DebugPrintf ( 2 , "\n\nBegin of General Game Constants Section found. Good.");  
       // fflush(stdout);
     }
   
   if ( ( strstr ( DataPointer , CONSTANTS_SECTION_END_STRING ) ) == NULL)
     {
-      DebugPrintf(1, "\n\nEnd of General Game Constants Section string not found...\n\nTerminating...\n\n");
+      DebugPrintf( 0 , "\n\nEnd of General Game Constants Section string not found...\n\nTerminating...\n\n");
       Terminate(ERR);
     }
   else
     {
-      DebugPrintf (2, "\n\nEnd of General Game Constants Section found. Good.");  
+      DebugPrintf ( 2 , "\n\nEnd of General Game Constants Section found. Good.");  
       fflush(stdout);
     }
   
-  DebugPrintf (2, "\n\nStarting to read contents of General Game Constants section\n\n");
+  DebugPrintf ( 2 , "\n\nStarting to read contents of General Game Constants section\n\n");
 
   // Now we read in the speed calibration factor for all bullets
   if ( (ValuePointer = strstr ( DataPointer, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING )) == NULL )
     {
-      DebugPrintf(1, "\nERROR! NO COLLISION LOSE ENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
+      DebugPrintf( 0 , "\nERROR! NO COLLISION LOSE ENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
       Terminate(ERR);
     }
   else
     {
       ValuePointer += strlen ( COLLISION_LOSE_ENERGY_CALIBRATOR_STRING );
       sscanf ( ValuePointer , "%lf" , &collision_lose_energy_calibrator );
-      DebugPrintf( 0 , "%f" , collision_lose_energy_calibrator );
+      DebugPrintf( 1 , "\ncollision_lose_energy_calibrator reads:  %f" , collision_lose_energy_calibrator );
       // getchar();
     }
 
@@ -264,18 +264,17 @@ Get_Mission_Events ( char* EventSectionPointer )
   EventActionNumber=0;
   while ( ( EventPointer = strstr ( EventPointer , EVENT_ACTION_BEGIN_STRING ) ) != NULL)
     {
-      DebugPrintf(1, "\nBegin of a new Event Action Section found. Good. ");
+      DebugPrintf(2, "\nBegin of a new Event Action Section found. Good. ");
       EventPointer += strlen( EVENT_ACTION_BEGIN_STRING ) + 1;
 
       if ( ( strstr ( EventSectionPointer , EVENT_ACTION_END_STRING ) ) == NULL)
 	{
-	  DebugPrintf(1, "\n\nEnd of Event Action Section string not found...\n\nTerminating...\n\n");
+	  DebugPrintf(0, "\n\nEnd of Event Action Section string not found...\n\nTerminating...\n\n");
 	  Terminate(ERR);
 	}
       else
 	{
 	  DebugPrintf (2, "\n\nEnd of this Event Action Section found. Good.");  
-	  fflush(stdout);
 	}
   
       DebugPrintf (2, "\n\nStarting to read details of this event action section\n\n");
@@ -288,53 +287,53 @@ Get_Mission_Events ( char* EventSectionPointer )
       // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INDEX NUMBER TO USE ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INDEX NUMBER TO USE ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING );
 	  sscanf ( ValuePointer , "%d" , &EventActionNumber );
-	  DebugPrintf( 0 , "\nNEW EVENT ACTION NUMBER=%d" , EventActionNumber );
+	  DebugPrintf( 2 , "\nNEW EVENT ACTION NUMBER=%d" , EventActionNumber );
 	}
 
       // Now we read in the map changing position in x coordinates
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_X_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE POSITION X ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE POSITION X ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_X_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x );
-	  DebugPrintf( 0 , "\nMapchange at position x=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.x );
+	  DebugPrintf( 2 , "\nMapchange at position x=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.x );
 	}
 
       // Now we read in the map changing position in y coordinates
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_Y_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE POSITION Y ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE POSITION Y ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_Y_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y );
-	  DebugPrintf( 0 , "\nMapchange at position y=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.y );
+	  DebugPrintf( 2 , "\nMapchange at position y=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.y );
 	}
 
       // Now we read in the map changing position level
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE MAPLEVEL ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION MAPCHANGE MAPLEVEL ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel );
-	  DebugPrintf( 0 , "\nMapchange at Level=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLevel );
+	  DebugPrintf( 2 , "\nMapchange at Level=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLevel );
 	}
 
       // Now we read in the new value for that map tile
@@ -347,26 +346,26 @@ Get_Mission_Events ( char* EventSectionPointer )
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapTo );
-	  DebugPrintf( 0 , "\nChange map to new value that is=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapTo );
+	  DebugPrintf( 1 , "\nChange map to new value that is=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapTo );
 	}
 
       // Now we read in if the influencer is to say something
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_SOMETHING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INFLUENCER SAY SOMETHING ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INFLUENCER SAY SOMETHING ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_ACTION_INFLUENCER_SAY_SOMETHING );
 	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething );
-	  DebugPrintf( 0 , "\nInfluencer say something at tiggering of event is=%d" , AllTriggeredActions[ EventActionNumber].InfluencerSaySomething );
+	  DebugPrintf( 1 , "\nInfluencer say something at tiggering of event is=%d" , AllTriggeredActions[ EventActionNumber].InfluencerSaySomething );
 	}
 
       // Now we read in if the text for the influencer to say
       if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_TEXT )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INFLUENCER SAY TEXT ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0 , "\nERROR! NO EVENT ACTION INFLUENCER SAY TEXT ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
@@ -375,7 +374,7 @@ Get_Mission_Events ( char* EventSectionPointer )
 	  SayString = strstr( ValuePointer , "\"" );
 	  if (SayString == NULL )
 	    {
-	      DebugPrintf(1, "\nERROR! INFLUENCER SAY TEXT STRING NOT TERMINATED!!!! TERMINATING!");
+	      DebugPrintf( 0 , "\nERROR! INFLUENCER SAY TEXT STRING NOT TERMINATED!!!! TERMINATING!");
 	      Terminate(ERR);
 	    }
 	  // Now we allocate memory and copy the string...
@@ -383,13 +382,13 @@ Get_Mission_Events ( char* EventSectionPointer )
 	  strncpy ( AllTriggeredActions[ EventActionNumber ].InfluencerSayText , ValuePointer, SayString - ValuePointer );
 	  AllTriggeredActions[ EventActionNumber ].InfluencerSayText[SayString - ValuePointer ] = 0;
 
-	  DebugPrintf( 0 , "\nInfluencer say text is:%s" , AllTriggeredActions[ EventActionNumber].InfluencerSayText );
+	  DebugPrintf( 1 , "\nInfluencer say text is:%s" , AllTriggeredActions[ EventActionNumber].InfluencerSayText );
 	}
 
     } // While Event action begin string found...
 
 
-  DebugPrintf (0, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
+  DebugPrintf (1, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
 
 
   //----------------------------------------------------------------------
@@ -406,7 +405,7 @@ Get_Mission_Events ( char* EventSectionPointer )
 
       if ( ( strstr ( EventSectionPointer , EVENT_TRIGGER_END_STRING ) ) == NULL)
 	{
-	  DebugPrintf(1, "\n\nEnd of Event Trigger Section string not found...\n\nTerminating...\n\n");
+	  DebugPrintf(0, "\n\nEnd of Event Trigger Section string not found...\n\nTerminating...\n\n");
 	  Terminate(ERR);
 	}
       else
@@ -424,76 +423,73 @@ Get_Mission_Events ( char* EventSectionPointer )
       // Now we read in the triggering position in x coordinates
       if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_X_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION X ENTRY FOUND! TERMINATING!");
+	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER POSITION X ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_TRIGGER_POS_X_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
-	  DebugPrintf( 0 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
+	  DebugPrintf( 1 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
 	}
 
       // Now we read in the triggering position in x coordinates
       if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_Y_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION Y ENTRY FOUND! TERMINATING!");
+	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER POSITION Y ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_TRIGGER_POS_Y_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
-	  DebugPrintf( 0 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
+	  DebugPrintf( 1 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
 	}
 
       // Now we read in the triggering position in levels
       if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_MAPLEVEL_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION MAPLEVEL ENTRY FOUND! TERMINATING!");
+	  DebugPrintf( 0, "\nERROR! NO EVENT TRIGGER POSITION MAPLEVEL ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_TRIGGER_POS_MAPLEVEL_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
-	  DebugPrintf( 0 , "\nEvent Trigger Position Level is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
+	  DebugPrintf( 1 , "\nEvent Trigger Position Level is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
 	}
 
       // Now we read whether or not to delete the trigger after being triggers
       if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_DELETED_AFTER_TRIGGERING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER DELETE AFTER TRIGGERING ENTRY FOUND! TERMINATING!");
+	  DebugPrintf(0, "\nERROR! NO EVENT TRIGGER DELETE AFTER TRIGGERING ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_TRIGGER_DELETED_AFTER_TRIGGERING );
 	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
-	  DebugPrintf( 0 , "\nEvent Trigger Deleted after execution is=%d" , AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
+	  DebugPrintf( 1 , "\nEvent Trigger Deleted after execution is=%d" , AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
 	}
 
       // Now we read in the action to be invoked by this trigger
       if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_WHICH_ACTION_STRING )) == NULL )
 	{
-	  DebugPrintf(1, "\nERROR! NO EVENT TO TRIGGER ENTRY FOUND! TERMINATING!");
+	  DebugPrintf(0, "\nERROR! NO EVENT TO TRIGGER ENTRY FOUND! TERMINATING!");
 	  Terminate(ERR);
 	}
       else
 	{
 	  ValuePointer += strlen ( EVENT_TRIGGER_WHICH_ACTION_STRING );
 	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].EventNumber );
-	  DebugPrintf( 0 , "\nEvent Trigger causes Action number is=%d" , AllEventTriggers[ EventTriggerNumber ].EventNumber );
+	  DebugPrintf( 1 , "\nEvent Trigger causes Action number is=%d" , AllEventTriggers[ EventTriggerNumber ].EventNumber );
 	}
 
       EventTriggerNumber++;
     } // While Event trigger begin string found...
 
 
-  DebugPrintf (0, "\nThat must have been the last Event Trigger section.\nWe are DONE HERE!!! Good.");  
-
-
-
+  DebugPrintf (1 , "\nThat must have been the last Event Trigger section.");
 
 } // void Get_Mission_Events ( char* EventSectionPointer );
 

@@ -670,8 +670,7 @@ LevelToStruct (char *data)
   /* Get Waypoints */
   WaypointPointer = wp_begin;
 
-  printf("\nReached Waypoint-read-routine.");
-  fflush(stdout);
+  DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
 
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
@@ -745,10 +744,28 @@ GetDoors (Level Lev)
 
 	      if (curdoor > MAX_DOORS_ON_LEVEL)
 		{
-		  printf("\n Fatal error in GetDoors!");
-		  fflush(stdout);
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The number of doors found in level %d seems to be greater than the number\n\
+of doors currently allowed in a freedroid map.\n\
+\n\
+The constant for the maximum number of doors currently is set to %d in the\n\
+freedroid defs.h file.  You can enlarge the constant there, then start make\n\
+and make install again, and the map will be loaded without complaint.\n\
+\n\
+The constant in defs.h is names 'MAX_DOORS_ON_LEVEL'.  If you received this \n\
+message, please also tell the developers of the freedroid project, that they\n\
+should enlarge the constant in all future versions as well.\n\
+\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention to this small map problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , Lev->levelnum , MAX_DOORS_ON_LEVEL );
 		  Terminate(ERR);
-		  return ERR;
 		}
 
 	    }			/* if */

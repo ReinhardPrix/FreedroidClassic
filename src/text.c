@@ -43,19 +43,6 @@
 #include "text.h"
 
 
-int CharLenList[100] = {
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* ' !"#$%&'()' */
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* '*+,-./0123' */
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* '456789:;<=' */
-  0, 0, 0, 1, 1, 1, 1, 1, 1, 1,	/* '>?@ABCDEFG' */
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	/* 'HIJKLMNOPQ' */
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 0,	/* 'RSTUVWXYZ[' */
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* '\]^_`abcde' */
-  0, 0, 0, 0, 0, 0, 0, 1, 0, 0,	/* 'fghijklmno' */
-  0, 0, 0, 0, 0, 0, 0, 1, 0, 0,	/* 'pqrstuvwxy' */
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 1	/* 'z{|}~ ... ' */
-};
-
 char *Wordpointer;
 unsigned char *Fontpointer;
 unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
@@ -83,13 +70,22 @@ EnemyHitByBulletText( int Enum )
   
   ThisRobot->TextVisibleTime=0;
   if ( !ThisRobot->Friendly )
-    switch (MyRandom(1))
+    switch (MyRandom(4))
     {
     case 0:
       ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
       break;
     case 1:
       ThisRobot->TextToBeDisplayed="System fault. Please buy a newer version.";
+      break;
+    case 2:
+      ThisRobot->TextToBeDisplayed="System error. Might be a virus.";
+      break;
+    case 3:
+      ThisRobot->TextToBeDisplayed="System error. Pleae buy an upgrade from MS.";
+      break;
+    case 4:
+      ThisRobot->TextToBeDisplayed="System error. Press any key to reboot.";
       break;
     }
   else
@@ -109,7 +105,15 @@ EnemyInfluCollisionText ( int Enum )
     }
   else
     {
-      ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+      switch (MyRandom(1))
+	{
+	case 0:
+	  ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+	  break;
+	case 1:
+	  ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
+	  break;
+	}
     }
 
 } // void AddStandingAndAimingText( int Enum )

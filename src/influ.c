@@ -954,21 +954,22 @@ FireBullet (void)
   dir = atan2 (speed.y,  speed.x);  
   if ( (dir < dir8) && (dir > -dir8) ) /* r */
     CurBullet->phase = RECHTS;
-  if ( (dir < 3*dir8) && (dir > dir8) ) /* ro */
+  if ( (dir < 3*dir8) && (dir > dir8) ) /* ro NO RECHTSUNTEN !!! */
     CurBullet->phase = RECHTSUNTEN;
-  if ( (dir < 5*dir8) && (dir > 3*dir8) ) /* o */
-    CurBullet->phase = OBEN;
-  if ( (dir < 7*dir8) && (dir > 5*dir8) ) /* lo */
-    CurBullet->phase = RECHTSOBEN;
+  if ( (dir < 5*dir8) && (dir > 3*dir8) ) /* o NO UNTEN */
+    CurBullet->phase = UNTEN;
+  if ( (dir < 7*dir8) && (dir > 5*dir8) ) /* lo NO LINKSUNTEN !!! */
+    CurBullet->phase = LINKSUNTEN;
   if ( (dir < -7*dir8) || (dir > 7*dir8) ) /* l */
-    CurBullet->phase = RECHTS;
-  if ( (dir < -5*dir8) && (dir > -7*dir8) ) /* lu */
-    CurBullet->phase = RECHTSUNTEN;
-  if ( (dir < -3*dir8) && (dir > -5*dir8) ) /* u */
+    CurBullet->phase = LINKS;
+  if ( (dir < -5*dir8) && (dir > -7*dir8) ) /* lu  NO LINKSOBEN !!! */
+    CurBullet->phase = LINKSOBEN;
+  if ( (dir < -3*dir8) && (dir > -5*dir8) ) /* u NO OBEN */
     CurBullet->phase = OBEN;
-  if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru */
+  if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru NO RECHTSOBEN !!! */
     CurBullet->phase = RECHTSOBEN;
 
+  printf("\nPhase: %d." , CurBullet->phase );
   
   //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);

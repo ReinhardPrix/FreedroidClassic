@@ -798,12 +798,12 @@ ExecuteEvent ( int EventNumber )
 	   ( AllTriggeredActions[ EventNumber ].ChangeMapLocation.y == (-1) ) ||
 	   ( AllTriggeredActions[ EventNumber ].ChangeMapLevel == (-1) ) )
 	{
-	  printf("\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
+	  DebugPrintf( 0 , "\n\nSorry! There has been a corrupt event specification!\n\nTerminating...\n\n");
 	  Terminate(ERR);
 	}
       else
 	{
-	  printf("\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
+	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
 	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
 	}
     }
@@ -817,8 +817,6 @@ ExecuteEvent ( int EventNumber )
     }
 
   AllTriggeredActions[0].ChangeMapLocation.y=0;
-
-
 
 }; // void ExecuteEvent ( int EventNumber )
 
