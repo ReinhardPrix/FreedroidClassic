@@ -9747,6 +9747,12 @@ label.pos.x=38 label.pos.y=64 label.label_name="Lev8Start123Nr15"
 label.pos.x=40 label.pos.y=66 label.label_name="Lev8Start123Nr16"
 label.pos.x=43 label.pos.y=56 label.label_name="Lev8Start123Nr17"
 label.pos.x=41 label.pos.y=55 label.label_name="Lev8Start123Nr18"
+label.pos.x=72 label.pos.y=9 label.label_name="Lev8Start139Nr1"
+label.pos.x=74 label.pos.y=7 label.label_name="Lev8Start139Nr2"
+label.pos.x=63 label.pos.y=11 label.label_name="Lev8Start139Nr3"
+label.pos.x=65 label.pos.y=9 label.label_name="Lev8Start139Nr4"
+label.pos.x=63 label.pos.y=7 label.label_name="Lev8Start123Nr19"
+label.pos.x=61 label.pos.y=5 label.label_name="Lev8Start123Nr20"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 End of pure obstacle label information for this level
@@ -9889,18 +9895,18 @@ Nr.=111 x=  41 y=  57	 connections:  112 114  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=112 x=  41 y=  55	 connections:  113 111  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=113 x=  42 y=  55	 connections:  114 112  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=114 x=  43 y=  56	 connections:  113 111  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=115 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=116 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=117 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=118 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=119 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=120 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=121 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=122 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=123 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=124 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=125 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=126 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=115 x=  61 y=   5	 connections:  118 116  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=116 x=  63 y=   5	 connections:  117 115  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=117 x=  63 y=   7	 connections:  118 116 119  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=118 x=  61 y=   7	 connections:  115 117  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=119 x=  63 y=   9	 connections:  122 117 120  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=120 x=  63 y=  11	 connections:  119 121  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=121 x=  65 y=  11	 connections:  120 122  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=122 x=  65 y=   9	 connections:  119 121  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=123 x=  72 y=   7	 connections:  126 124  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=124 x=  74 y=   7	 connections:  123 125  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=125 x=  74 y=   9	 connections:  126 124  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=126 x=  72 y=   9	 connections:  125 123  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=127 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=128 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=129 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

@@ -293,6 +293,15 @@ SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=45 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr17" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr18" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
 
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr19" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr20" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr1" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr2" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr3" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr4" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
+
 SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="The302InFrontOfTheTempleStart" RushTux="no" DialogSectionToUse="883" ShortLabel="Temple Nemesis"
 
 
