@@ -1709,6 +1709,7 @@ PerformanceTweaksOptionsMenu (void)
   char Options3[1000];
   char Options4[1000];
   char Options5[1000];
+  char Options6[1000];
   char* MenuTexts[10];
   enum
     { 
@@ -1718,6 +1719,7 @@ PerformanceTweaksOptionsMenu (void)
       SHOW_QUICK_INVENTORY_MODE,
       SKIP_LIGHT_RADIUS_MODE,
       USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
+      TUX_IMAGE_UPDATE_POLICY,
       LEAVE_PERFORMANCE_TWEAKS_MENU 
     };
 
@@ -1737,8 +1739,8 @@ PerformanceTweaksOptionsMenu (void)
       sprintf ( Options4 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
       sprintf ( Options5 , "Use bars for energy display: %s", 
 		GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
-      strcpy ( Options2 , "Menu handling: " );
 
+      strcpy ( Options2 , "Menu handling: " );
       switch ( GameConfig . menu_mode )
 	{
 	case MENU_MODE_FAST:
@@ -1751,18 +1753,34 @@ PerformanceTweaksOptionsMenu (void)
 	  strcat ( Options2, "DOUBLE" );
 	  break;
 	default:
-	  
 	  break;
 	}
       
+      strcpy ( Options6 , "Tux image update:" );
+      switch ( GameConfig . tux_image_update_policy )
+	{
+	case TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE:
+	  strcat ( Options6 , " AT ONCE" );
+	  break;
+	case TUX_IMAGE_UPDATE_CONTINUOUSLY:
+	  strcat ( Options6, " CONTINUOUS" );
+	  break;
+	default:
+	  GiveStandardErrorMessage ( "PerformanceTweaksOptionsMenu(...)" , "\
+Unhandles Tux image update policy encountered!",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
+
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
       MenuTexts[4]=Options4;
       MenuTexts[5]=Options5;
-      MenuTexts[6]="Back";
-      MenuTexts[7]="";
+      MenuTexts[6]=Options6;
+      MenuTexts[7]="Back";
+      MenuTexts[8]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
@@ -1807,6 +1825,14 @@ PerformanceTweaksOptionsMenu (void)
 	  GameConfig . use_bars_instead_of_energy_o_meter = ! GameConfig . use_bars_instead_of_energy_o_meter ;
 	  break;
 
+	case TUX_IMAGE_UPDATE_POLICY:
+	  while (EnterPressed() || SpacePressed() );
+	  if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE )
+	    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_CONTINUOUSLY ;
+	  else if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_CONTINUOUSLY )
+	    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+	  break;
+
 	case LEAVE_PERFORMANCE_TWEAKS_MENU:
 	  while (EnterPressed() || SpacePressed() );
 	  Weiter=TRUE;
@@ -1824,7 +1850,7 @@ PerformanceTweaksOptionsMenu (void)
 
   return;
 
-}; // void New_GraphicsSound_Options_Menu (void)
+}; // void PerformanceTweaksOptionsMenu (void)
 
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 

@@ -84,7 +84,9 @@ int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] =
     { 1 , 0 } , // weaponarm
   } ;
 
-char previously_used_part_strings [ ALL_PART_GROUPS ] [ 2000 ] ;
+char previous_part_strings [ ALL_PART_GROUPS ] [ 200 ] ;
+
+char previous_part_strings_for_each_phase_and_direction [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] [ 200 ] ;
 
 char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
 int previously_used_motion_class = -4 ; // something we'll never really use...
@@ -1792,12 +1794,12 @@ clear_all_loaded_tux_images ( int with_free )
   int j;
   int k;
 
-  strcpy ( previously_used_part_strings [ 0 ] , NOT_LOADED_MARKER );
-  strcpy ( previously_used_part_strings [ 1 ] , NOT_LOADED_MARKER );
-  strcpy ( previously_used_part_strings [ 2 ] , NOT_LOADED_MARKER );
-  strcpy ( previously_used_part_strings [ 3 ] , NOT_LOADED_MARKER );
-  strcpy ( previously_used_part_strings [ 4 ] , NOT_LOADED_MARKER );
-  strcpy ( previously_used_part_strings [ 5 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
+  strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
   
   for ( i = 0 ; i < ALL_TUX_PARTS ; i ++ )
     {
@@ -1811,8 +1813,35 @@ clear_all_loaded_tux_images ( int with_free )
 	    }
 	}
     }
-  
+
+  //--------------------
+  // If we're using continuous tux update policy, we'll also need
+  // the following...
+  //
+  for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+    {
+      for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
+	{
+	  for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	    {
+	      strcpy ( previous_part_strings_for_each_phase_and_direction [ i ] [ j ] [ k ] , NOT_LOADED_MARKER );
+	    }
+	}
+    }
+
 }; // void clear_all_loaded_tux_images ( int force_free )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+free_single_tux_image ( tux_part_group , our_phase , rotation_index )
+{
+  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
+    SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
+  loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = NULL ;
+}; // free_single_tux_image ( tux_part_group , our_phase , rotation_index )
 
 /* ----------------------------------------------------------------------
  *
@@ -1932,7 +1961,15 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
       sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s_%02d_%04d.png" , motion_class_string[motion_class] , part_group_strings [ tux_part_group ] , part_string , rotation_index , our_phase + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) , TRUE ) ;
-      strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
+      strcpy ( previous_part_strings [ tux_part_group ] , part_string );
+
+      //--------------------
+      // If we're using the continuous tux image update policy, we'll also need to set
+      // the individual strings for previous tux parts...
+      //
+      strcpy ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string );
+
+      // DebugPrintf ( -1000 , "\nmake_sure_tux_image_is_loaded ( ... ): new image has just been loaded!" );
     }
 
 }; // void make_sure_tux_image_is_loaded ( ... )
@@ -1988,23 +2025,6 @@ iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int 
   motion_class = get_motion_class ( player_num ) ;
 
   //--------------------
-  // If some part string given is unlike the part string we were using so
-  // far, then we'll need to free that old part and (later) load the new
-  // part.
-  //
-  for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-    {
-      if ( strcmp ( previously_used_part_strings [ tux_part_group ] , part_string ) ) 
-	{
-	  // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
-	  // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
-	  free_one_loaded_tux_image_series ( tux_part_group );
-
-	  make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
-	}
-    }
-
-  //--------------------
   // Now we need to resolve the part_string given as parameter
   //
   if ( strlen ( part_string ) == 0 )
@@ -2020,7 +2040,60 @@ Empty part string received!",
   //
   our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
 
+  //--------------------
+  // Depending on our current tux image update policy, we check for images of
+  // Tux parts to be loaded and either load everything for the current Tux or
+  // load just what is needed in this very instant.
+  //
+  if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE )
+    {
+      //--------------------
+      // If some part string given is unlike the part string we were using so
+      // far, then we'll need to free that old part and (later) load the new
+      // part.
+      //
+      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	{
+	  if ( strcmp ( previous_part_strings [ tux_part_group ] , part_string ) ) 
+	    {
+	      // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
+	      // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
+	      free_one_loaded_tux_image_series ( tux_part_group );
+	      
+	      make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
+	    }
+	}
+    }
+  else if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_CONTINUOUSLY )
+    {
+      //--------------------
+      // If some part string given is unlike the part string we were using 
+      // FOR THIS TUX PART so far, then we'll need to free that old part and 
+      // load the new part.
+      //
+      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	{
+	  if ( strcmp ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string ) ) 
+	    {
+	      // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
+	      // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
+	      // free_one_loaded_tux_image_series ( tux_part_group );
+	      free_single_tux_image ( tux_part_group , our_phase , rotation_index );
+	      
+	      // make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
+	      make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+	    }
+	}
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "iso_put_tux_part(...)" , "Unhandled update policy encountered!", 
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
   // make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+
+  
 
   //--------------------
   // Now everything should be loaded correctly and we just need to blit the Tux.  Anything
@@ -2042,7 +2115,7 @@ Empty part string received!",
     }
   else
     {
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "Unable to load tux part!", PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "iso_put_tux_part(...)" , "Unable to load tux part!", PLEASE_INFORM, IS_FATAL );
     }
 
 }; // void iso_put_tux_part ( char* part_string , int x , int y , int player_num )

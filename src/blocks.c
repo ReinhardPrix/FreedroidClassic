@@ -2097,6 +2097,7 @@ Load_Enemy_Surfaces( void )
  * 
  *
  * ---------------------------------------------------------------------- */
+/*
 void
 LoadOneTuxSurfaceIfNotYetLoaded ( int TuxModel , int TuxPhase )
 {
@@ -2143,10 +2144,13 @@ This error indicates some installation problem with freedroid.",
   SDL_FreeSurface( Whole_Image );
 
 }; // void LoadOneTuxSurfaceIfNotYetLoaded ( int TuxModel , int TuxPhase )
+*/
 
 /* ----------------------------------------------------------------------
  * This function sets the current archetypes to unloaded value...
+ *
  * ---------------------------------------------------------------------- */
+/*
 void 
 Load_Tux_Surfaces( void )
 {
@@ -2155,12 +2159,13 @@ Load_Tux_Surfaces( void )
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
       // ShowStartupPercentage ( 30 + j * 4 ) ; 
-      for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
 	{
 	  TuxMotionArchetypes [ j ] [ i ] = NULL;
 	}
     }
 }; // void Load_Tux_Surfaces( void )
+*/
 
 /* ----------------------------------------------------------------------
  *

@@ -109,6 +109,7 @@ typedef struct
   int show_quick_inventory;
   int show_blood; // this can be used to make the game more friendly for children...
   int show_tooltips;
+  int tux_image_update_policy ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

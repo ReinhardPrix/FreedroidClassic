@@ -1752,6 +1752,8 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . show_blood = TRUE ;
   GameConfig . show_tooltips = TRUE;
 
+  GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------
