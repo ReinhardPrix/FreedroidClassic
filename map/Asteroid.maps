@@ -8713,7 +8713,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -8729,8 +8729,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
@@ -10135,6 +10135,7 @@ ob_type=127 ob_x=4.50 ob_y=87.50 ob_na=-1
 ob_type=166 ob_x=5.50 ob_y=86.50 ob_na=-1 
 ob_type=60 ob_x=9.50 ob_y=86.50 ob_na=-1 
 ob_type=60 ob_x=11.50 ob_y=86.50 ob_na=-1 
+ob_type=152 ob_x=56.54 ob_y=19.63 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=33 label.pos.y=40 label.label_name="JackGuard1StartGameSquare"

@@ -559,9 +559,9 @@ Sp**ecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter
 Sp**ecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level17Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 Sp**ecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level17Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=614 X=57 Y=46 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinGuardStartGameSquare" RushTux="yes" DialogSectionToUse="KevinGuard" ShortLabel="614 -- Kevin's Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=614 X=57 Y=46 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinGuardStartGameSquare" RushTux="yes" DialogSectionToUse="KevinGuard" ShortLabel="614 -- Kevin's Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=PRO X=70 Y=52 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinStartGameSquare" RushTux="no" DialogSectionToUse="Kevin" ShortLabel="Kevin --- Hacker " attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=PRO X=70 Y=52 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinStartGameSquare" RushTux="no" DialogSectionToUse="Kevin" ShortLabel="Kevin --- Hacker " attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 SpecialForce: Type=598 X=61 Y=42 Fixed=0 Marker=9998 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins598StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot" attack_run_only_when_direct_line="yes" on_death_drop_item_code=-1
 
