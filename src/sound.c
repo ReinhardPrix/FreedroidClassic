@@ -407,7 +407,8 @@ The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING O
 	    // Now the channel has finished playing (or we have stopped it) and
 	    // now we can unallocate the resources used by it...
 	    //
-	    Mix_FreeChunk ( One_Shot_WAV_File );
+	    if ( One_Shot_WAV_File != NULL )
+		Mix_FreeChunk ( One_Shot_WAV_File );
 	    
 	}
     }

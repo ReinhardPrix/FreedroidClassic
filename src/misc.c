@@ -151,8 +151,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorKeymapButton.png"      , { -120 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorQuitButton.png"        , { -30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
 
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorUndergroundLightButton.png"    , { 30 , 150 , 30 ,  30 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorUndergroundLightOffButton.png" , { 30 , 150 , 30 ,  30 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorUndergroundLightButton.png"    , { -30 , 150 , 30 ,  30 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorUndergroundLightOffButton.png" , { -30 , 150 , 30 ,  30 } , FALSE , FALSE } ,
 
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } , FALSE , FALSE } ,
