@@ -201,8 +201,47 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.4  1993/05/23 21:07:55  prix
- * Sun May 23 16:15:04 1993: added druid and druidmodel structs: first concepts
+ * Revision 1.5  1993/08/03 18:31:23  prix
+ * Mon May 24 20:18:48 1993: *picture in struct druidmodel to type void*
+ * Mon May 24 20:20:54 1993: druidname is now const char*
+ * Tue May 25 14:35:29 1993: Bullet auf Absolutkoordinaten reduziert
+ * Fri May 28 17:36:51 1993: added struct guntype
+ * Fri May 28 19:47:59 1993: made picpointers far
+ * Fri May 28 21:20:44 1993: added phase-vars to druid-structs
+ * Fri May 28 21:46:09 1993: changed Blast-struct: no grob/fein pos !
+ * Fri May 28 22:05:32 1993: made point and vect structs with signed ints
+ * Sat May 29 22:38:29 1993: made map-array char in struct Level
+ * Sun May 30 10:16:26 1993: map in Levelstruct ist wieder int !
+ * Sun May 30 10:45:58 1993: map is char* again
+ * Sun May 30 18:50:46 1993: renamed a bit
+ * Sun May 30 19:27:16 1993: additions to druidspec struct
+ * Sun May 30 20:36:27 1993: added blastspec struct
+ * Mon May 31 14:40:55 1993: made blast/bullet the struct and Blast/Bullet a pointer to it
+ * Tue Jun 01 08:49:41 1993: druidspec includes maxenergy now
+ * Tue Jun 01 11:57:32 1993: bulletspec includes the blast it makes now
+ * Tue Jun 01 16:08:09 1993: detabbed for printing
+ * Sat Jul 24 14:15:17 1993: enemy-Struktur eingefuehrt
+ * Sat Jul 24 16:25:28 1993: feindphase eingefuehrt
+ * Sun Jul 25 07:53:45 1993: aenderung der Struct enemy: waypoints und point-Koordinaten
+ * Mon Jul 26 12:33:49 1993: notes on the druid in the structure
+ * Thu Jul 29 07:39:06 1993: warten in enemy-struct eingefuehrt
+ * Thu Jul 29 09:23:23 1993: PX,PY,SX,SY sind int
+ * Thu Jul 29 12:14:28 1993: Elevator struct eingefuehrt ???
+ * Thu Jul 29 12:34:29 1993: energy auf damage umbenannt
+ * Sat Jul 31 07:41:52 1993: struct color hinzugefuegt
+ * Sat Jul 31 10:46:56 1993: waypoints - array now out of enemy-array (easier to init !)
+ * Sat Jul 31 11:35:08 1993: added firewait to druidspec
+ * Sat Jul 31 11:49:35 1993: changed druidspec: no phases, turnable; added aggression
+ * Sat Jul 31 12:05:02 1993: added levelnum to level-struct
+ * Sat Jul 31 12:11:05 1993: removed firewait again: in bulletspec-struct !!
+ * Sat Jul 31 12:15:12 1993: changed druid-struct: firewait instead of firedir
+ * Sat Jul 31 12:22:59 1993: changed nofire in enemy to firewait
+ * Sat Jul 31 12:50:44 1993: Influence now has his own type
+ * Sat Jul 31 17:47:35 1993: firedir added to Influence_t -struct
+ * Sat Jul 31 19:43:57 1993: added levelnum to enemy struct
+ * Sat Jul 31 21:30:52 1993: added doorsarray to level struct
+ * Tue Aug 03 14:27:31 1993: removed drive from druidspec-struct
+ * Tue Aug 03 14:31:16 1993: removed firedir and levelnum of influence_t struct
  *
  * Revision 1.6  1993/09/30  17:57:20  prix
  * Fri Aug 06 14:56:25 1993: added first version of ship-struct
