@@ -5,13 +5,16 @@ SOUNDLIBS = -lasound -lY2
 
 CC = gcc
 HFILES = Makefile defs.h proto.h global.h struct.h paravars.h
-OBJ = para.o graphics.o view.o blocks.o sound.o map.o misc.o enemy.o influ.o bullet.o ship.o takeover.o rahmen.o paratext.o keyboard.o parainit.o
+OBJ = para.o graphics.o view.o blocks.o  map.o misc.o enemy.o influ.o bullet.o ship.o takeover.o rahmen.o paratext.o keyboard.o parainit.o
 
-para: $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(SOUNDLIBS) $(OBJ)
+SND_OBJ =  sound.o
+NOSND_OBJ= nosound.o
 
-paranosound: $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(OBJ)
+para: $(OBJ) $(SND_OBJ)
+	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(SOUNDLIBS) $(OBJ) $(SND_OBJ)
+
+paranosound: $(OBJ) $(NOSND_OBJ)
+	$(CC) -o $@ $(CFLAGS)  $(STDLIBS) $(OBJ) $(NOSND_OBJ)
 
 %.o : %.c $(HFILES)
 	$(CC) -c $(CFLAGS) $(INC) $<
