@@ -78,14 +78,14 @@ Load_Blast_Surfaces( void )
   //
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
-      sprintf ( constructed_filename , "iso_blast_bullet_%04d.png" , j + 1 );
+      sprintf ( constructed_filename , "blasts/iso_blast_bullet_%04d.png" , j + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 0 ] . image [ j ] ) ) ;
     }
 
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
-      sprintf ( constructed_filename , "iso_blast_droid_%04d.png" , j + 1 );
+      sprintf ( constructed_filename , "blasts/iso_blast_droid_%04d.png" , j + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) ) ;
     }

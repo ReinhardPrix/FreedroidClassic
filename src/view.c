@@ -1273,7 +1273,7 @@ blit_light_radius ( void )
       first_call = FALSE;
       for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
 	{
-	  sprintf ( constructed_file_name , "iso_light_radius_darkness_%04d.png" , i + 1 );
+	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
 	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
 	}
