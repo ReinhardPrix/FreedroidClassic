@@ -283,7 +283,7 @@ Takeover (int enemynum)
 	  usleep (30000);
 	  waiter--;
 	  RollToColors ();
-	  SetInfoline( message, NULL );	
+	  SetInfoline( message, NULL , 0 );	
 	  ShowPlayground ();
 	} /* WHILE waiter */
 
@@ -347,7 +347,7 @@ ChooseColor (void)
       countdown--;		/* Count down */
       sprintf (count_text, "Color? %d", countdown);
 
-      SetInfoline (count_text, NULL);
+      SetInfoline (count_text, NULL , 0);
       ShowPlayground (); 
 
 
@@ -419,7 +419,7 @@ PlayGame (void)
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
-	  SetInfoline (count_text, NULL );
+	  SetInfoline (count_text, NULL , 0 );
 
 	  RollToColors ();
 	  if (countdown == 0)

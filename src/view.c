@@ -228,6 +228,13 @@ Assemble_Combat_Picture (int mask)
 		       "FPS: %d " , (int) (1.00/Frame_Time()) );
     }
 
+  if ( Draw_Energy )
+    {
+      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "Energy: %d " , (int) (Me.energy) );
+    }
+
 
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.

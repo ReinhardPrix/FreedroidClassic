@@ -133,6 +133,8 @@ RAHMEN_FORCE_UPDATE=1: Forces the redrawing of the title bar
 RAHMEN_DONT_TOUCH_TEXT=2: Prevents DisplayRahmen from touching the
 text, i.e. calling SetInfoline            
 
+RAHMEN_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+
 To update the information in the top status line only, you can
 as well use the function SetInfoline.
 
@@ -202,7 +204,8 @@ DisplayRahmen ( int flags )
       // Now the text should be ready and its
       // time to display it...
       if ( (strcmp( left_box , previous_left_box )) || 
-	   (strcmp( right_box , previous_right_box )) )
+	   (strcmp( right_box , previous_right_box )) ||
+	   ( flags & RAHMEN_FORCE_UPDATE ) )
 	{
 	  PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
 	  strcpy( previous_left_box , left_box );
@@ -213,7 +216,7 @@ DisplayRahmen ( int flags )
 
       // finally update the whole top status box
       // printf("\nHad to update whole top status line box...");
-      SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
+      if ( !(flags & RAHMEN_NO_SDL_UPDATE ) )SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
       RahmenIsDestroyed=FALSE;
       return;
     }
@@ -227,11 +230,12 @@ DisplayRahmen ( int flags )
  *  *left, *right: pointer to strings to display left and right
  *                 ! strings longer than LEFT/RIGHT_TEXT_LEN get cut
  *
+
  * NULL-pointer indicates to display default: left=MODE, right=SCORE 
  * 
  *-----------------------------------------------------------------*/
 void
-SetInfoline (const char *left, const char *right )
+SetInfoline (const char *left, const char *right , int flags )
 {
   char dummy[80];
   char left_box [LEFT_TEXT_LEN + 10];
@@ -274,13 +278,13 @@ SetInfoline (const char *left, const char *right )
 
   /* Hintergrund Textfarbe setzen */
   SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
-
   
   SDL_SetClipRect( ne_screen , NULL );
   // Now the text should be ready and its
   // time to display it...
   if ( (strcmp( left_box , previous_left_box )) || 
-       (strcmp( right_box , previous_right_box )) )
+       (strcmp( right_box , previous_right_box )) ||
+       ( flags & RAHMEN_FORCE_UPDATE ) )
     {
       SetCurrentFont(Para_BFont);
       DisplayRahmen( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );

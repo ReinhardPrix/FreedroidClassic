@@ -591,10 +591,10 @@ enum
     {
 
       SDL_SetClipRect( ne_screen, NULL );
-
-      DisplayRahmen( 0 );
+      ClearGraphMem();
+      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
-
+      SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen();
 
       // 
@@ -607,10 +607,10 @@ enum
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*FontHeight(Para_BFont),    "Multi Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*FontHeight(Para_BFont),    "Options");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*FontHeight(Para_BFont),    "Level Editor");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(Para_BFont),    "Quit Game");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*FontHeight(GetCurrentFont()),    "Multi Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*FontHeight(GetCurrentFont()),    "Options");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*FontHeight(GetCurrentFont()),    "Level Editor");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(GetCurrentFont()),    "Quit Game");
 
       // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
       SDL_Flip( ne_screen );
@@ -675,6 +675,7 @@ enum
 	}
     }
 
+  ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   RahmenIsDestroyed=TRUE;
@@ -714,9 +715,12 @@ enum
   while (!Weiter)
     {
 
-      Assemble_Combat_Picture ( 0 );
-      MakeGridOnScreen();
       SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
 
       // 
       // we highlight the currently selected option with an 
@@ -865,33 +869,40 @@ enum
 void
 Single_Player_Menu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
   int Weiter = 0;
   int MenuPosition=1;
+
+  #define SINGLE_PLAYER_MENU_ITEM_POS_X (Block_Width*1.2)
 
   while (!Weiter)
     {
 
-      MakeGridOnScreen( Outline320x200 );
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
 
-      // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - Block_Width/4, 
-			 Influencepointer, Block_Width, Block_Height, RealScreen );
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( SINGLE_PLAYER_MENU_ITEM_POS_X - Block_Width/2, 
+		    (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
 
-      PrepareScaledSurface(FALSE);
+      CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "New Game");
+      CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
+      CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
+      CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Back");
 
-      CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "New Game");
-      CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
-      CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
-      CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Back");
-
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
-      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() )  keyboard_update();
+      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() )  
+	keyboard_update();
 
       if ( EscapePressed() )
 	{
@@ -947,7 +958,6 @@ Single_Player_Menu (void)
   InitBars = TRUE;
 
   return;
-#endif // !NEW_ENGINE
 } // Single_Player_Menu
 
 /*-----------------------------------------------------------------

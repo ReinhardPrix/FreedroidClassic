@@ -51,7 +51,7 @@
 
 // The flags for DisplayRahmen are:
 enum
-  { RAHMEN_FORCE_UPDATE=1 , RAHMEN_DONT_TOUCH_TEXT=2 };
+  { RAHMEN_FORCE_UPDATE=1 , RAHMEN_DONT_TOUCH_TEXT=2 , RAHMEN_NO_SDL_UPDATE=4 };
 
 // The flags for AssembleCombatWindow are:
 enum
@@ -87,7 +87,8 @@ enum
 #define PARA_FONT_FILE 		GRAPHICS_DIR "parafont.png"
 // #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"
 // #define MENU_FONT_FILE		GRAPHICS_DIR "NeonFont.png"
-#define MENU_FONT_FILE 		GRAPHICS_DIR "parafont.png"
+// #define MENU_FONT_FILE 		GRAPHICS_DIR "parafont.png"
+#define MENU_FONT_FILE 		GRAPHICS_DIR "ArialGold.png"
 // #define FPS_FONT_FILE		GRAPHICS_DIR "font05.png"
 #define FPS_FONT_FILE 		GRAPHICS_DIR "parafont.png"
 #define ICON_FILE		GRAPHICS_DIR "paraicon.bmp"

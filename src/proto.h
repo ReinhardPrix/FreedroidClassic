@@ -428,7 +428,7 @@ EXTERN char *GetString (int MaxLen, int echo);
 #define EXTERN extern
 #endif
 EXTERN void DisplayRahmen ( int flags );
-EXTERN void SetInfoline (const char *left, const char *right );
+EXTERN void SetInfoline (const char *left, const char *right , int flags );
 
 
 /* takeover.c */
