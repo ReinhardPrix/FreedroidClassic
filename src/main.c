@@ -107,6 +107,8 @@ main (int argc, char *const argv[])
 
 	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
+	  Update_Tux_Working_Copy ();
+
 	  // Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 	  Assemble_Combat_Picture ( 0 ); 
 

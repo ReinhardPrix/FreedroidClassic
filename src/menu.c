@@ -679,7 +679,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       // influencer to the left before it
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
 		    first_menu_item_pos_y +
-		    ( MenuPosition - 1.5 ) * h );
+		    ( MenuPosition - 0.5 ) * h );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{

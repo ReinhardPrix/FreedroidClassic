@@ -566,26 +566,26 @@ PutInfluence ( int x , int y )
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
       tmp_influencer = 
-	rotozoomSurface( TuxSurfacePointer [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
+	rotozoomSurface( TuxWorkingCopy [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
 
       //--------------------
       // The rotation may of course have changed the dimensions of the
       // block to be blitted, so we must adapt the blit target coordinates
       // accoridngly
       //
+      in_tile_shift.x = 0 ;
+      in_tile_shift.y = - Block_Height/2 ; // tux is half a tile lower the tux_tile center
+      RotateVectorByAngle ( & in_tile_shift , angle );
+	  
       if ( x == -1 ) 
 	{
-	  in_tile_shift.x = 0 ;
-	  in_tile_shift.y = - Block_Height/2 ; // tux is half a tile lower the tux_tile center
-	  RotateVectorByAngle ( & in_tile_shift , angle );
-	  
 	  TargetRectangle.x = UserCenter_x - tmp_influencer->w / 2 + in_tile_shift.x ;
 	  TargetRectangle.y = UserCenter_y - tmp_influencer->h / 2 + in_tile_shift.y ;
 	}
       else
 	{
-	  TargetRectangle.x = x ;
-	  TargetRectangle.y = y ;
+	  TargetRectangle.x = x - tmp_influencer->w / 2 + in_tile_shift.x;
+	  TargetRectangle.y = y - tmp_influencer->h / 2 + in_tile_shift.y;
 	}
       
       SDL_BlitSurface( tmp_influencer , NULL , Screen, &TargetRectangle );
