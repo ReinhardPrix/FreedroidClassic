@@ -219,6 +219,10 @@ EnterConsole (void)
 
   SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
 
+  UpdateAllCharacterStats ( 0 );
+
+  if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
+
 } // void EnterConsole(void)
 
 /* -----------------------------------------------------------------
