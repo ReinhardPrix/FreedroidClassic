@@ -69,6 +69,8 @@ typedef struct
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
+
+
 typedef struct
 {
   int x;
@@ -107,6 +109,46 @@ typedef struct
   int MustBeOne;
 }
 missiontarget, *Missiontarget;
+
+// This structure can contain things, that might be triggered by a special
+// condition, that can be specified in the mission file as well.
+//
+typedef struct
+{
+  // Maybe the triggered event consists of the influencer saying something
+  int InfluencerSaySomething;
+  char* InfluencerSayText;
+  // Maybe the triggered event consists of the map beeing changed at some tile
+  int ChangeMap;
+  point ChangeMapLocation;
+  int ChangeMapTo;
+  int ChangeMapLevel;
+
+  // Maybe the triggered event consists of ??????
+
+}
+triggered_action , *Triggered_action;
+
+// This structure can contain conditions that must be fulfilled, so that a special
+// event is triggered.  Such conditions may be specified in the mission file as well
+//
+typedef struct
+{
+  // Maybe the event is triggerd by the influencer stepping somewhere
+  int Influ_Must_Be_At_Level;
+  point Influ_Must_Be_At_Point;
+
+  // Maybe the event is triggered by time
+  float Mission_Time_Must_Have_Passed;
+  float Mission_Time_Must_Not_Have_Passed;
+
+  // And now of course which event to trigger!!!!
+  // Thats propably the most important information at all!!!
+  int EventNumber;
+}
+event_trigger , *Event_trigger;
+
+
 
 typedef struct
 {

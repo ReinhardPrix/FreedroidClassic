@@ -877,6 +877,36 @@ InitNewMission ( char *MissionName )
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...
   InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
+
+  // Delete all events and event triggers
+  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+    {
+      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
+      
+      // Maybe the event is triggered by time
+      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
+      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
+      
+      // And now of course which event to trigger!!!!
+      // Thats propably the most important information at all!!!
+      AllEventTriggers[i].EventNumber=-1;
+    }
+  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS ; i++ )
+    {
+      // Maybe the triggered event consists of the influencer saying something
+      AllTriggeredActions[i].InfluencerSaySomething=-1;
+      AllTriggeredActions[i].InfluencerSayText="";
+      // Maybe the triggered event consists of the map beeing changed at some tile
+      AllTriggeredActions[i].ChangeMap=-1;
+      AllTriggeredActions[i].ChangeMapLevel=-1;
+      AllTriggeredActions[i].ChangeMapLocation.x=-1;
+      AllTriggeredActions[i].ChangeMapLocation.y=-1;
+      AllTriggeredActions[i].ChangeMapTo=-1;
+      // Maybe the triggered event consists of ??????
+    }
+
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
     {

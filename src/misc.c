@@ -775,4 +775,20 @@ MyMalloc (long Mamount)
   return Mptr;
 }				// void* MyMalloc(long Mamount)
 
+/*@Function============================================================
+@Desc: This function checks for triggered events.  Those events are
+       usually entered via the mission file and read into the apropriate
+       structures via the InitNewMission function.  Here we check, whether
+       the nescessary conditions for an event are satisfied, and in case that
+       they are, we order the apropriate event to be executed.
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void 
+CheckForTriggeredEvents ( void )
+{
+
+
+}; // CheckForTriggeredEvents (void )
+
 #undef _misc_c

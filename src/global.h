@@ -97,6 +97,8 @@ EXTERN long ShowScore;
 EXTERN Hall_entry highscores;
 
 EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];
+EXTERN event_trigger AllEventTriggers[MAX_EVENT_TRIGGERS];
+EXTERN triggered_action AllTriggeredActions[MAX_TRIGGERED_ACTIONS];
 
 EXTERN int NumEnemys;
 

@@ -326,7 +326,7 @@ EXTERN int YPressed (void);
 EXTERN int ZPressed (void);
 EXTERN int NoDirectionPressed (void);
 
-/* misc.c */
+/* menu.c */
 #undef EXTERN
 #ifdef _menu_c
 #define EXTERN
@@ -346,6 +346,7 @@ EXTERN void EscapeMenu (void);
 #define EXTERN extern
 #endif
 
+EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);
 EXTERN void StartTakingTimeForFPSCalculation(void);
