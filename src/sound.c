@@ -582,13 +582,11 @@ Switch_Background_Music_To ( char* filename_raw_parameter )
   // music files via the mission files and that.  So we load the music now.
   //
 
-  /*
   if ( Loaded_MOD_Files[ 0 ] != NULL )
     {
       Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
       Loaded_MOD_Files [ 0 ] = NULL ;
     }
-  */
 
   strcpy ( filename_raw , "music/" );
   strcat ( filename_raw , filename_raw_parameter );
