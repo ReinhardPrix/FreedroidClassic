@@ -471,7 +471,7 @@ ThouArtDefeated (void)
     }
 
   /* Ein Flimmer zieht "uber den Schirm */
-  Flimmern (4);  /* type 4 flimmer */
+  // Flimmern (4);  /* type 4 flimmer */
   Debriefing ();
 
   /* Soundblaster soll keine Toene mehr spucken */

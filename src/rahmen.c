@@ -163,9 +163,10 @@ SetInfoline (const char *left, const char *right)
   char right_box[RIGHT_TEXT_LEN + 10];
   int left_len, right_len;   /* the actualy string-lens */
 
-#ifdef NEW_ENGINE
-  return;
-#endif
+  // #ifdef NEW_ENGINE
+  //   return;
+  // #endif
+
   if (left == NULL)       /* Left-DEFAULT: Mode */
     left = InfluenceModeNames[Me.status];
 

@@ -496,16 +496,48 @@ Init_Druidmap (void)
 void
 Title (void)
 {
+  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
+
 #ifdef NEW_ENGINE
+  Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
+
+  // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
+  // Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
+
+  PrepareScaledSurface(TRUE);
+
+  while (!SpacePressed ());
+  while (SpacePressed());
+
+
+  InitPalette ();		/* This function writes into InternalScreen ! */
+
+  DisplayRahmen(NULL); //Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
+
+
+  SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
+		 USERFENSTERPOSX + USERFENSTERBREITE,
+		 USERFENSTERPOSY + USERFENSTERHOEHE, CHARSPERLINE);
+
+  SetTextColor (FONT_BLACK, FONT_RED);
+
+  // *          Auskommentiert zu Testzwecken
+  // *
+
+  ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+
+  SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
+
   return;
 #else
-
-  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
-  Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
+  // Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
 
   PrepareScaledSurface(TRUE);
 

@@ -134,8 +134,8 @@ EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
 #endif
 EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;
-// EXTERN BFont_Info *Font1=NULL;
-EXTERN BFont_Info *Font1;
+EXTERN BFont_Info *Menu_BFont;
+EXTERN BFont_Info *Para_BFont;
 
 
 #undef EXTERN

@@ -347,6 +347,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       PrepareScaledSurface(TRUE);
 
+      
       //      ClearTextBorder (InternalScreen, CurrentFontBG);
       DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
       InsertLine -= speed;
@@ -378,9 +379,9 @@ DisplayText (char *Text,
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
-#ifdef NEW_ENGINE
-  return;
-#endif
+  // #ifdef NEW_ENGINE
+  //   return;
+  // #endif
 
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
@@ -457,8 +458,38 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
   int i;
   int ZNum = Zeichen - ' ';
   int ZLen = CharLenList[ZNum];
-
   unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
+  char Dummystring[]=" ";
+
+#ifdef NEW_ENGINE
+
+  // printf("\nDisplay Char called...");
+  if (Zeichen == '\n')
+    {
+      MakeUmbruch ();
+      return;
+    }
+
+  if ( (Zeichen < ' ') || (Zeichen > 131) )
+    {
+      DebugPrintf ("Illegal Char an DisplayChar() uebergeben!");
+      Terminate(ERR);
+    }
+
+  Dummystring[0]=Zeichen;
+  SDL_SetClipRect( ne_screen , NULL );
+  PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY ,     
+		    "%s" , Dummystring );
+  // PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY , "AB" );
+
+
+  // DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
+  // FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
+
+  MyCursorX += FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
+  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
+  return;
+#else
 
   if (Zeichen == '\n')
     {
@@ -477,6 +508,7 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
       DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
 		    FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
     }
+
   else
     {
       for (i = 0; i < FONTHOEHE; i++)
@@ -501,8 +533,8 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
   MyCursorX += FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
 
   DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
-
   return;
+#endif
 }				// void DisplayChar(...)
 
 /*@Function============================================================

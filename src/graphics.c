@@ -492,12 +492,20 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  if ( ( Font1 = LoadFont("../graphics/font01.png") ) == NULL )
+  //  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
+  //    {
+  //      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+  //      Terminate(ERR);
+  //} else
+  // printf("\nSDL Menu Font initialisation successful.\n");
+
+  if ( ( Para_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
+  // if ( ( Para_BFont = LoadFont("../graphics/font01.png") ) == NULL )
     {
       fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
       Terminate(ERR);
     } else
-      printf("\nSDL Font initialisation successful.\n");
+      printf("\nSDL Para Font initialisation successful.\n");
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
