@@ -5,6 +5,13 @@
 	o) incorporated "Nighthawk"-type mouse control
 	   based on a patch sent in by Tanel Kylaots <mou@tdl.ee>
 
+2002-06-09  rprix  <rprix@users.sourceforge.net>
+
+	* menu.c, view.c, global.h, graphics.c, influ.c, input.c, main.c:
+	o) further improvements of the joystick fireing
+	o) incorporated "Nighthawk"-type mouse control
+	   based on a patch sent in by Tanel Kylaots <mou@tdl.ee>
+
 2002-06-09  jprix  <johannesprix@users.sourceforge.net>
 
 	* configure.ac, game.dat, global.h, influ.c, init.c:

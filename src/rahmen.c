@@ -780,7 +780,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
 
-  ShowCurrentHealthAndForceLevel ( );
+  if ( ( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible ) )
+    ShowCurrentHealthAndForceLevel ( );
 
   ShowCurrentTextWindow ( );
 

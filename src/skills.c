@@ -100,6 +100,9 @@ CreateTeleportal ( gps PortalTarget )
 	{
 	  curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] = TELE_1 ;
 	}
+
+      Play_Spell_ForceToEnergy_Sound( );
+
     }
   else
     {
@@ -123,6 +126,8 @@ TeleportHome ( void )
       Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
       Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
       Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
+
+      Play_Spell_ForceToEnergy_Sound( );
 
       Teleport ( 0 , 3 , 3 , 0 ) ;
 
