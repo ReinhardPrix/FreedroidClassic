@@ -3705,8 +3705,9 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 }; // void check_for_droids_to_attack ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global examine aid and clicked the
+ * left button, the examine command must be executed.  This function
+ * should deal with the effects of one such examine click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_examine_command ( int player_num ) 
@@ -3792,8 +3793,9 @@ handle_player_examine_command ( int player_num )
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global mode loot and clicked the
+ * left button, the loot command must be executed.  This function
+ * should deal with the effects of one such loot click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_loot_command ( int player_num ) 
@@ -3894,8 +3896,9 @@ handle_player_loot_command ( int player_num )
 }; // void handle_player_loot_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global mode unlock and clicked the
+ * left button, the unlock command must be executed.  This function
+ * should deal with the effects of one such unlock click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_unlock_command ( int player_num ) 
@@ -3922,8 +3925,9 @@ handle_player_unlock_command ( int player_num )
 }; // void handle_player_unlock_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global mode repair and clicked the
+ * left button, the repair command must be executed.  This function
+ * should deal with the effects of one such repair click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_repair_command ( int player_num ) 
@@ -3950,8 +3954,9 @@ handle_player_repair_command ( int player_num )
 }; // void handle_player_repair_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global mode talk/hack and clicked the
+ * left button, an talk/hack command must be executed.  This function
+ * should deal with the effects of one such talk/hack click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_talk_command ( int player_num ) 
@@ -4027,8 +4032,9 @@ handle_player_talk_command ( int player_num )
 }; // void handle_player_talk_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global mode first aid and clicked the
+ * left button, the first aid command must be executed.  This function
+ * should deal with the effects of one such first aid click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_first_aid_command ( int player_num ) 
@@ -4106,8 +4112,9 @@ handle_player_first_aid_command ( int player_num )
 }; // void handle_player_first_aid_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global attack mode and clicked the
+ * left button, the attack command must be executed.  This function
+ * should deal with the effects of one such attack click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_attack_command ( int player_num ) 
@@ -4134,8 +4141,9 @@ handle_player_attack_command ( int player_num )
 }; // void handle_player_attack_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has actiavted global pickpocket aid and clicked the
+ * left button, the pickpocket command must be executed.  This function
+ * should deal with the effects of one such pickpocket click by the player.
  * ---------------------------------------------------------------------- */
 void
 handle_player_pickpocket_command ( int player_num ) 
