@@ -616,7 +616,7 @@ enum
 void
 GraphicsSound_Options_Menu (void)
 {
-
+  int i;
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -758,8 +758,20 @@ enum
 		  GameConfig.Theme_SubPath="default_theme/";
 		}
 	      ReInitPictures();
-	      // SDL_WM_ToggleFullScreen (ne_screen);
-	      // fullscreen_on = !fullscreen_on;
+
+	      //--------------------
+	      // Now we have loaded a new theme with new images!!  It might however be the
+	      // case, that also the number of phases per bullet, which is specific to each
+	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
+	      // Because the old number of phases is still attached to living bullets, it
+	      // might try to blit a new (higher) number of phases although there are only
+	      // less Surfaces generated for the bullet in the old theme.  The solution seems
+	      // to be simply to request new graphics to be attached to each bullet, which
+	      // should be simply setting a flag for each of the bullets:
+	      for ( i = 0 ; i < MAXBULLETS ; i++ )
+		{
+		  AllBullets[i].Surfaces_were_generated = FALSE ;
+		}
 	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );
