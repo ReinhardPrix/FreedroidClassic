@@ -833,15 +833,12 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/05/23 14:47:02  prix
- * Sat May 22 18:33:18 1993: SB-Initialisierung hizugefuegt
- * Sat May 22 19:28:26 1993: Bullet soll hoerbar sein
- * Sat May 22 19:58:48 1993: Energieblaken anzeigen
- * Sun May 23 07:40:54 1993: LaufRichtung begonnen
- * Sun May 23 08:07:22 1993: Laufanzeige sollte kunktionieren !
- * Sun May 23 08:27:11 1993: Schussrichtung wird korrekt angezeigt !
- * Sun May 23 08:55:40 1993: Standardenergieverbrauch eingefuehrt
- * Sun May 23 10:39:45 1993: Reactor eingefuehrt
+ * Revision 1.4  1993/05/23 21:04:04  prix
+ * Sun May 23 11:02:50 1993: added CurLevel init to InitGlobalVars
+ * Sun May 23 11:21:30 1993: modified MoveLevelDoors: removed multiple ifs and made a switch()
+ * Sun May 23 11:47:59 1993: Level[][] replaced by CurLevel.map[][]
+ * Sun May 23 12:18:41 1993: old Level removed completely
+ * Sun May 23 13:14:37 1993: Umstellung auf neue Level-struct fertig
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
