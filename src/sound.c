@@ -564,7 +564,7 @@ CrySound (void)
 void
 play_open_chest_sound( void )
 {
-  PlayOnceNeededSoundSample ( "../effects/enter_chest_sound.wav" , FALSE , TRUE );
+  PlayOnceNeededSoundSample ( "../effects/open_chest_sound.wav" , FALSE , TRUE );
 }; // void play_open_chest_sound( void )
 
 /* ----------------------------------------------------------------------
