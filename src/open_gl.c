@@ -379,12 +379,12 @@ pad_image_for_texture ( SDL_Surface* our_surface )
 
   SDL_SetAlpha( our_surface , 0 , 0 );
   SDL_SetColorKey( our_surface , 0 , 0x0FF );
-
+  
   dest . x = 0;
   dest . y = y - our_surface -> h ;
   dest . w = our_surface -> w ;
   dest . h = our_surface -> h ;
-
+  
   target_color = SDL_MapRGBA( tmp_surf -> format, 0, 0, 0, 0 );
   for ( x = 0 ; x < tmp_surf -> w ; x ++ )
     {
@@ -420,12 +420,11 @@ pad_image_for_texture ( SDL_Surface* our_surface )
 void
 make_texture_out_of_surface ( iso_image* our_image ) 
 {
+  SDL_Surface* right_sized_image ;
 
 #ifdef HAVE_LIBGL
 
   if ( ! use_open_gl ) return;
-
-  SDL_Surface* right_sized_image ;
 
   //--------------------
   // If the texture has been created before and this function is called
@@ -434,8 +433,8 @@ make_texture_out_of_surface ( iso_image* our_image )
   //
   if ( our_image -> texture_has_been_created )
     {
-      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
-Texture has been created already according to flag...\n\
+      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , 
+"Texture has been created already according to flag...\n\
 hmmm... either the surface has been freed and the pointer moved cleanly to NULL\n\
 (which is good for bug detection) or something is not right here...",
 				 PLEASE_INFORM, IS_FATAL ); // WARNING_ONLY );
@@ -448,7 +447,6 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
   // for textures on most OpenGL capable cards.
   //
   right_sized_image = pad_image_for_texture ( our_image -> surface ) ;
-  
   our_image -> texture_width = right_sized_image -> w ;
   our_image -> texture_height = right_sized_image -> h ;
   our_image -> original_image_width = our_image -> surface -> w ;
