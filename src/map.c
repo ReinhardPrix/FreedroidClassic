@@ -141,12 +141,13 @@ GetCurrentLift (void)
 
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): curlev=%d gx=%d gy=%d" , curlev, gx, gy );
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
-  for (i = 0; i < curShip.num_lifts; i++)
+  for (i = 0; i < curShip.num_lifts+1; i++)
     {
       DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
     }
 
-  for (i = 0; i < curShip.num_lifts; i++)
+  for (i = 0; i < curShip.num_lifts+1; i++) // we check for one more than present, so the last reached
+                                            // will really mean: NONE FOUND.
     {
       if (curShip.AllLifts[i].level != curlev)
 	continue;
@@ -155,7 +156,7 @@ GetCurrentLift (void)
 	break;
     }
 
-  if (i == curShip.num_lifts)	/* keinen gefunden */
+  if (i == curShip.num_lifts+1)	// none found
     return -1;
   else
     return i;
