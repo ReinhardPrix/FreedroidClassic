@@ -663,14 +663,19 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  
 	  //--------------------
 	  // If some stuff in the Tux inventory is currently highlighted, we might
-	  // eventually show repair and identify buttons, but only if appropriate
+	  // eventually show repair and identify buttons, but only if appropriate, which
+	  // means if reapair/identify is applicable AND also we're in a shop and NOT IN
+	  // SOME CHEST!!!!
 	  //
-	  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
-	       ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
-	    ShowGenericButtonFromList ( REPAIR_BUTTON );
-
-	  if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
-	    ShowGenericButtonFromList ( IDENTIFY_BUTTON );
+	  if ( ! ShowChestButtons )
+	    {
+	      if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+		   ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+		ShowGenericButtonFromList ( REPAIR_BUTTON );
+	      
+	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+		ShowGenericButtonFromList ( IDENTIFY_BUTTON );
+	    }
 
 	}
       else
@@ -800,7 +805,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		}
 	    }
 	  else if ( CursorIsOnButton( REPAIR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && 
-		    axis_is_active && !WasPressed )
+		    axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
 	      //--------------------
 	      // Of course the repair button should only have effect, if there is
@@ -817,7 +822,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  return ( 0 );
 		}
 	    }
-	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
 
 	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )

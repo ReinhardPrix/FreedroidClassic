@@ -75,7 +75,7 @@
 #define ITEM_BONUS_TO_RESELE_STRING " ResEle="
 #define ITEM_BONUS_TO_RESFIR_STRING " ResFir="
 #define ITEM_BONUS_TO_RESFOR_STRING " ResFor="
-
+#define ITEM_IS_IDENTIFIED_STRING " IsIdentif="
 #define CHEST_ITEMS_SECTION_BEGIN_STRING "Start of pure chest item information for this level"
 #define CHEST_ITEMS_SECTION_END_STRING "End of pure chest item information for this level"
 

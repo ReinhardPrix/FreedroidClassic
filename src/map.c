@@ -1474,6 +1474,10 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_fire );
   strcat( LevelMem , linebuf );
   
+  strcat( LevelMem , ITEM_IS_IDENTIFIED_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->is_identified );
+  strcat( LevelMem , linebuf );
+  
   strcat( LevelMem , "\n" );
   
 }; // void WriteOutOneItem ( LevelMem , ItemToWriteOut ) 
@@ -1899,6 +1903,10 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
 		       &( TargetItem -> bonus_to_resist_fire ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_resist_force ) , ItemsSectionEnd );
+  // Now we see if the item is identified...
+  ReadValueFromString( ItemPointer , ITEM_IS_IDENTIFIED_STRING , "%d" , 
+		       &( TargetItem -> is_identified ) , ItemsSectionEnd );
+
   DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , TargetItem -> pos.x , 
 	       TargetItem -> pos.y , TargetItem -> type );
   

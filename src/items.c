@@ -517,6 +517,8 @@ item types.  This indicates a severe bug in Freedroid.",
 
   CurLevel->ItemList[ i ].multiplicity = multiplicity ;
   CurLevel->ItemList[ i ].throw_time = 0.01 ; // something > 0 
+  if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) CurLevel->ItemList[ i ].is_identified = TRUE ;
+  else CurLevel->ItemList[ i ].is_identified = FALSE ;
 
   // PlayItemSound( ItemMap[ ItemType ].sound_number );
   play_item_sound( ItemType );
