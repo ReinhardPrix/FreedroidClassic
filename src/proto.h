@@ -274,6 +274,7 @@ EXTERN void DropHeldItemToWeaponSlot ( void );
 EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
+EXTERN void ShowQuickInventory ( void );
 EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
