@@ -1871,6 +1871,7 @@ InitFreedroid (void)
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets[i].Surfaces_were_generated = FALSE;
+      DeleteBullet( i , FALSE );
     }
 
   Overall_Average=0.041;

@@ -98,6 +98,13 @@ point, *Point;
 
 typedef struct
 {
+  float x;
+  float y;
+}
+moderately_finepoint, *Moderately_finepoint;
+
+typedef struct
+{
   double x;
   double y;
 }

@@ -798,6 +798,24 @@ PutBullet (int BulletNummer)
     } // if type == FLASH
 
 
+  // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
+  if ( CurBullet->type >= Number_Of_Bullet_Types ) 
+    {
+      fprintf (stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The PutBullet function should blit a bullet of a type that does not\n\
+exist at all.  THIS IS A SEVERE INTERNAL BUG IN FREEDROID.  IF YOU EVER\n\
+ENCOUNTER THIS MESSAGE, PLEASE CONTACT THE DEVELOPERS AND TELL THEM\n\
+ABOUT THIS ERROR MESSAGE!! THANKS A LOT.
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      Terminate( ERR );
+    };
 
   PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
 
