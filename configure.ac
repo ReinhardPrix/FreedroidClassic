@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroidRPG, 0.9.10)
+AC_INIT(freedroidRPG, 0.9.10-test1)
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
@@ -148,6 +148,6 @@ AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 dnl send a signal to automake wether gtk was found or not
 AM_CONDITIONAL(FOUND_GTK, test x$found_gtk = xtrue)
 
-AC_CONFIG_FILES([Makefile src/Makefile item_editor/Makefile croppy/Makefile win32/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile item_editor/Makefile croppy/Makefile gluem/Makefile win32/Makefile])
 
 AC_OUTPUT
