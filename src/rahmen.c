@@ -670,6 +670,22 @@ blit_energy_and_mana_bars ( void )
   SDL_Rect Unhealth_Rect;
   SDL_Rect Force_Rect;
   SDL_Rect Unforce_Rect;
+  static Uint32 health_rect_color = 0 ;
+  static Uint32 force_rect_color = 0 ;
+  static Uint32 un_health_rect_color = 0 ;
+  static Uint32 un_force_rect_color = 0 ;
+
+  //--------------------
+  // Upon the very first function call, the health and force colors are not yet
+  // set.  Therefore we set these colors once and for the rest of the game.
+  //
+  if ( health_rect_color == 0 )
+    {
+      health_rect_color = SDL_MapRGBA( Screen->format , 255 , 0 , 0 , 0 );
+      force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 255 , 0 );
+      un_health_rect_color = SDL_MapRGBA( Screen->format , 20 , 0 , 0 , 0 );
+      un_force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 20 , 0 );
+    }
 
   if ( GameConfig.Inventory_Visible ) 
     {
@@ -704,10 +720,10 @@ blit_energy_and_mana_bars ( void )
   if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );
-  our_SDL_fill_rect_wrapper( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
-  our_SDL_fill_rect_wrapper( Screen , & ( Unhealth_Rect ) , 0x0FF00000 );
-  our_SDL_fill_rect_wrapper( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
-  our_SDL_fill_rect_wrapper( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
+  our_SDL_fill_rect_wrapper( Screen , & ( Health_Rect ) , health_rect_color );
+  our_SDL_fill_rect_wrapper( Screen , & ( Unhealth_Rect ) , un_health_rect_color );
+  our_SDL_fill_rect_wrapper( Screen , & ( Force_Rect ) , force_rect_color );
+  our_SDL_fill_rect_wrapper( Screen , & ( Unforce_Rect ) , un_force_rect_color );
   
 }; // void blit_energy_and_mana_bars ( void )
 
