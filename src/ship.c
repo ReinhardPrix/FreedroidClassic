@@ -610,154 +610,154 @@ Sensors  1: %s\n          2: %s\n          3: %s",
 void
 ShowItemPicture (int PosX, int PosY, int Number )
 {
-  SDL_Surface *tmp;
-  SDL_Rect target;
-  char ConstructedFileName[5000];
-  char* fpath;
-  static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
-  static int NumberOfImagesInPreviousRotation = 0 ;
-  static int NumberOfImagesInThisRotation = 0 ;
+    SDL_Surface *tmp;
+    SDL_Rect target;
+    char ConstructedFileName[5000];
+    char* fpath;
+    static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
+    static int NumberOfImagesInPreviousRotation = 0 ;
+    static int NumberOfImagesInThisRotation = 0 ;
 #define NUMBER_OF_IMAGES_IN_ITEM_ROTATION 16
 #define MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION 100
-  static SDL_Surface *ItemRotationSurfaces[ MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
-  SDL_Surface *Whole_Image;
-  int i;
-  int RotationIndex;
-
-  // DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
-
-  // if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
-  // return; // later this should be a default-correction instead
-
-  //--------------------
-  // Maybe we have to reload the whole image series
-  //
-  if ( strcmp ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix ) )
+    static SDL_Surface *ItemRotationSurfaces[ MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
+    SDL_Surface *Whole_Image;
+    int i;
+    int RotationIndex;
+    
+    // DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
+    
+    // if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+    // return; // later this should be a default-correction instead
+    
+    //--------------------
+    // Maybe we have to reload the whole image series
+    //
+    if ( strcmp ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix ) )
     {
-      //--------------------
-      // Maybe we have to free the series from an old item display first
-      //
-      if ( ItemRotationSurfaces[ 0 ] != NULL )
+	//--------------------
+	// Maybe we have to free the series from an old item display first
+	//
+	if ( ItemRotationSurfaces[ 0 ] != NULL )
 	{
-	  for ( i = 0 ; i < NumberOfImagesInPreviousRotation ; i ++ )
+	    for ( i = 0 ; i < NumberOfImagesInPreviousRotation ; i ++ )
 	    {
-	      SDL_FreeSurface ( ItemRotationSurfaces[ i ] ) ;
+		SDL_FreeSurface ( ItemRotationSurfaces[ i ] ) ;
 	    }
 	}
-
-      //--------------------
-      // Now we can start to load the whole series into memory
-      //
-      for ( i=0 ; i < MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
+	
+	//--------------------
+	// Now we can start to load the whole series into memory
+	//
+	for ( i=0 ; i < MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
 	{
-	  //--------------------
-	  // At first we will try to find some item rotation models in the
-	  // new directory structure.
-	  //
-	  sprintf ( ConstructedFileName , "items/%s/portrait_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-	  
-	  //--------------------
-	  // If that didn't work, then it's time to try the same directory with 'png' ending...
-	  // Maybe there's still some (old) rotation image of this kind.
-	  //
-	  if ( Whole_Image == NULL )
+	    //--------------------
+	    // At first we will try to find some item rotation models in the
+	    // new directory structure.
+	    //
+	    sprintf ( ConstructedFileName , "items/%s/portrait_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+	    fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	    
+	    //--------------------
+	    // If that didn't work, then it's time to try the same directory with 'png' ending...
+	    // Maybe there's still some (old) rotation image of this kind.
+	    //
+	    if ( Whole_Image == NULL )
 	    {
-	      DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying png..." );
-	      sprintf ( ConstructedFileName , "items/%s/portrait_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+		DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying png..." );
+		sprintf ( ConstructedFileName , "items/%s/portrait_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
-	  
-	  //--------------------
-	  // If that didn't work, then it's time to try out the 'classic' rotation models directory.
-	  // Maybe there's still some rotation image there.
-	  //
-	  if ( Whole_Image == NULL )
+	    
+	    //--------------------
+	    // If that didn't work, then it's time to try out the 'classic' rotation models directory.
+	    // Maybe there's still some rotation image there.
+	    //
+	    if ( Whole_Image == NULL )
 	    {
-	      DebugPrintf ( 1 , "\nNo luck trying to load .png item image series from the 'bastian' dir... trying 'classic' dir..." );
-	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+		DebugPrintf ( 1 , "\nNo luck trying to load .png item image series from the 'bastian' dir... trying 'classic' dir..." );
+		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
-	  
-	  if ( Whole_Image == NULL )
+	    
+	    if ( Whole_Image == NULL )
 	    {
-	      DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
-	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+		DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
+		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
-	  // }
-	  
-	  //--------------------
-	  // But at this point, we should have found the image!!
-	  // or if not, this maybe indicates that we have reached the
-	  // last image in the image series...
-	  //
-	  if ( Whole_Image == NULL )
+	    // }
+	    
+	    //--------------------
+	    // But at this point, we should have found the image!!
+	    // or if not, this maybe indicates that we have reached the
+	    // last image in the image series...
+	    //
+	    if ( Whole_Image == NULL )
 	    {
-	      NumberOfImagesInThisRotation = i ;
-	      NumberOfImagesInPreviousRotation = NumberOfImagesInThisRotation ;
-	      DebugPrintf ( 1 , "\nDONE LOADING ITEM IMAGE SERIES.  Loaded %d images into memory." , 
-			    NumberOfImagesInThisRotation );
-
-	      //--------------------
-	      // Maybe we've received the nothing loaded case even on the first attempt
-	      // to load something.  This of course would mean a severe error in Freedroid!
-	      //
-	      if ( NumberOfImagesInThisRotation <= 0 )
+		NumberOfImagesInThisRotation = i ;
+		NumberOfImagesInPreviousRotation = NumberOfImagesInThisRotation ;
+		DebugPrintf ( 1 , "\nDONE LOADING ITEM IMAGE SERIES.  Loaded %d images into memory." , 
+			      NumberOfImagesInThisRotation );
+		
+		//--------------------
+		// Maybe we've received the nothing loaded case even on the first attempt
+		// to load something.  This of course would mean a severe error in Freedroid!
+		//
+		if ( NumberOfImagesInThisRotation <= 0 )
 		{
-		  fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-		  GiveStandardErrorMessage ( __FUNCTION__  , "\
+		    fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to load even one image of a rotated item image series into memory.\n\
 This error indicates some installation problem with freedroid.",
-					     PLEASE_INFORM, IS_FATAL );
+					       PLEASE_INFORM, IS_FATAL );
 		}
-
-	      break;
+		
+		break;
 	    }
-	  
-	  //--------------------
-	  // Also we must check for our upper bound of the list of 
-	  // item images.  This will most likely never be exceeded, but it
-	  // can hurt to just be on the safe side.
-	  //
-	  if ( i >= MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION -2 )
+	    
+	    //--------------------
+	    // Also we must check for our upper bound of the list of 
+	    // item images.  This will most likely never be exceeded, but it
+	    // can hurt to just be on the safe side.
+	    //
+	    if ( i >= MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION -2 )
 	    {
-	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was encountered more item images in an item rotation image series\n\
 than it is able to handle.  This is a very strange error.  Someone has been\n\
 trying to make the ultra-fine item rotation series.  Strange.",
-					 PLEASE_INFORM, IS_FATAL );
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-
-	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	  ItemRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  SDL_FreeSurface( Whole_Image );
-
-	  // We must remember, that his is already loaded of course
-	  strcpy ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix );
-	  
+	    
+	    SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+	    ItemRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	    SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
+	    SDL_FreeSurface( Whole_Image );
+	    
+	    // We must remember, that his is already loaded of course
+	    strcpy ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix );
+	    
 	}
-
+	
     }
-
-  RotationIndex = ( SDL_GetTicks() / 70 ) ;
-
-  RotationIndex = RotationIndex - ( RotationIndex / NumberOfImagesInThisRotation ) * NumberOfImagesInThisRotation ;
-
-  tmp = ItemRotationSurfaces[ RotationIndex ] ;
-
-  SDL_SetClipRect( Screen , NULL );
-  Set_Rect ( target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
-  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
-
-  DebugPrintf (2, "\nvoid ShowItemPicture(...): Usual end of function reached.");
-
+    
+    RotationIndex = ( SDL_GetTicks() / 70 ) ;
+    
+    RotationIndex = RotationIndex - ( RotationIndex / NumberOfImagesInThisRotation ) * NumberOfImagesInThisRotation ;
+    
+    tmp = ItemRotationSurfaces[ RotationIndex ] ;
+    
+    SDL_SetClipRect( Screen , NULL );
+    Set_Rect ( target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
+    our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
+    
+    DebugPrintf ( 2 , "\n%s(): Usual end of function reached." , __FUNCTION__ );
+    
 }; // void ShowItemPicture ( ... )
 
 
@@ -914,170 +914,167 @@ write_full_item_name_into_string ( item* ShowItem , char* full_item_name )
 void 
 ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int background_code , int title_text_flag )
 {
-  char InfoText[10000];
-  char TextChunk[2000];
-  char* ClassString;
-  long int repairPrice = 0;
-
-  SDL_SetClipRect ( Screen , NULL );
-
-  // our_SDL_blit_surface_wrapper( BackgroundSurfaceBackup , NULL, Screen, NULL);
-
-  // DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
-  
-  blit_special_background ( background_code );
-  ShowItemPicture ( 45 , 190 , ShowItem->type );
-
-  //--------------------
-  // If that is wanted, we fill out the title header line, announcing the
-  // currently browsed items name in full glory.
-  //
-  if ( title_text_flag )
+    char InfoText[10000];
+    char TextChunk[2000];
+    char* ClassString;
+    long int repairPrice = 0;
+    
+    SDL_SetClipRect ( Screen , NULL );
+    
+    blit_special_background ( background_code );
+    ShowItemPicture ( 45 * GameConfig . screen_width / 640 , 
+		      190 * GameConfig . screen_height / 480 , ShowItem->type );
+    
+    //--------------------
+    // If that is wanted, we fill out the title header line, announcing the
+    // currently browsed items name in full glory.
+    //
+    if ( title_text_flag )
     {
-      SetCurrentFont ( Menu_BFont );
-      strcpy ( TextChunk , ItemMap [ ShowItem->type ] . item_name );
-      CutDownStringToMaximalSize ( TextChunk , 225 );
-      PutString ( Screen , 330, 38, TextChunk );
+	SetCurrentFont ( Menu_BFont );
+	strcpy ( TextChunk , ItemMap [ ShowItem->type ] . item_name );
+	CutDownStringToMaximalSize ( TextChunk , 225 );
+	PutString ( Screen , 330, 38, TextChunk );
     }
-
-  //--------------------
-  // Now we can display the rest of the smaller-font item description.
-  //
-  if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_weapon_slot )
-    ClassString = "Weapon" ;
-  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
-    ClassString = "Drive" ; 
-  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_armour_slot )
-    ClassString = "Armour" ; 
-  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_shield_slot )
-    ClassString = "Shield" ; 
-  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_special_slot )
-    ClassString = "Helm" ; 
-  else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_aux_slot )
-    ClassString = "Wristband/Collar" ; 
-  else ClassString = "Miscellaneous" ; 
-
-  write_full_item_name_into_string ( ShowItem , TextChunk ) ;
-  sprintf( InfoText, "Item: %s \nClass: %s\n" , TextChunk , ClassString );
-
-
-  if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
+    
+    //--------------------
+    // Now we can display the rest of the smaller-font item description.
+    //
+    if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_weapon_slot )
+	ClassString = "Weapon" ;
+    else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
+	ClassString = "Drive" ; 
+    else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_armour_slot )
+	ClassString = "Armour" ; 
+    else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_shield_slot )
+	ClassString = "Shield" ; 
+    else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_special_slot )
+	ClassString = "Helm" ; 
+    else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_aux_slot )
+	ClassString = "Wristband/Collar" ; 
+    else ClassString = "Miscellaneous" ; 
+    
+    write_full_item_name_into_string ( ShowItem , TextChunk ) ;
+    sprintf( InfoText, "Item: %s \nClass: %s\n" , TextChunk , ClassString );
+    
+    
+    if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
     {
-      strcat ( InfoText , "Multiplicity: " );
-      sprintf( TextChunk, "%d \n" , 
-	       (int)ShowItem->multiplicity );
-      strcat ( InfoText , TextChunk );
+	strcat ( InfoText , "Multiplicity: " );
+	sprintf( TextChunk, "%d \n" , 
+		 (int)ShowItem->multiplicity );
+	strcat ( InfoText , TextChunk );
     }
-
-  strcat ( InfoText , "Duration: " );
-  if ( ShowItem->max_duration >= 0 )
-    sprintf( TextChunk, "%d / %d\n" , 
-	     (int)ShowItem->current_duration, 
-	     ShowItem->max_duration );
-  else
-    sprintf( TextChunk, "Indestructible\n" );
-  strcat ( InfoText , TextChunk );
-
-  strcat ( InfoText , "Attributes required: " );
-  
-  if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
-       ( ItemMap [ ShowItem->type ] . item_require_dexterity == (-1) ) &&
-       ( ItemMap [ ShowItem->type ] . item_require_magic == (-1) ) )
+    
+    strcat ( InfoText , "Duration: " );
+    if ( ShowItem->max_duration >= 0 )
+	sprintf( TextChunk, "%d / %d\n" , 
+		 (int)ShowItem->current_duration, 
+		 ShowItem->max_duration );
+    else
+	sprintf( TextChunk, "Indestructible\n" );
+    strcat ( InfoText , TextChunk );
+    
+    strcat ( InfoText , "Attributes required: " );
+    
+    if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
+	 ( ItemMap [ ShowItem->type ] . item_require_dexterity == (-1) ) &&
+	 ( ItemMap [ ShowItem->type ] . item_require_magic == (-1) ) )
     {
-      strcat ( InfoText , "NONE\n" );
+	strcat ( InfoText , "NONE\n" );
     }
-  else
+    else
     {
-      if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
+	if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
 	{
-	  sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
-	  strcat ( InfoText , TextChunk );
+	    sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
+	    strcat ( InfoText , TextChunk );
 	}
-      if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
+	if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
 	{
-	  sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
-	  strcat ( InfoText , TextChunk );
+	    sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
+	    strcat ( InfoText , TextChunk );
 	}
-      if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
+	if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
 	{
-	  sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
-	  strcat ( InfoText , TextChunk );
+	    sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
+	    strcat ( InfoText , TextChunk );
 	}
-      strcat ( InfoText , "\n" );
+	strcat ( InfoText , "\n" );
     }
-
-  //--------------------
-  // Now we give some pricing information, the base list price for the item,
-  // the repair price and the sell value
-  sprintf( TextChunk, "Base list price: %ld\n", 
-	   calculate_item_buy_price ( ShowItem ) ) ;
-  strcat ( InfoText , TextChunk );
-  sprintf( TextChunk, "Sell value: %ld\n", 
-	   calculate_item_sell_price ( ShowItem ) ) ;
-  strcat ( InfoText , TextChunk );
-  if ( ShowItem->current_duration == ShowItem->max_duration ||
-       ShowItem->max_duration == ( -1 ) )
-    repairPrice = 0;
-  else
-    repairPrice = calculate_item_repair_price ( ShowItem );
-  sprintf( TextChunk, "Repair cost: %ld\n", repairPrice );
-  strcat ( InfoText , TextChunk );
-
-  //--------------------
-  // If the item is a weapon, then we print out some weapon stats...
-  //
-  if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )
+    
+    //--------------------
+    // Now we give some pricing information, the base list price for the item,
+    // the repair price and the sell value
+    sprintf( TextChunk, "Base list price: %ld\n", 
+	     calculate_item_buy_price ( ShowItem ) ) ;
+    strcat ( InfoText , TextChunk );
+    sprintf( TextChunk, "Sell value: %ld\n", 
+	     calculate_item_sell_price ( ShowItem ) ) ;
+    strcat ( InfoText , TextChunk );
+    if ( ShowItem->current_duration == ShowItem->max_duration ||
+	 ShowItem->max_duration == ( -1 ) )
+	repairPrice = 0;
+    else
+	repairPrice = calculate_item_repair_price ( ShowItem );
+    sprintf( TextChunk, "Repair cost: %ld\n", repairPrice );
+    strcat ( InfoText , TextChunk );
+    
+    //--------------------
+    // If the item is a weapon, then we print out some weapon stats...
+    //
+    if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )
     {
-      sprintf( TextChunk, "Damage: %d - %d\n" , 
-	       ItemMap [ ShowItem->type ] . base_item_gun_damage,
-	       ItemMap [ ShowItem->type ] . base_item_gun_damage + 
-	       ItemMap [ ShowItem->type ] . item_gun_damage_modifier );
-      strcat ( InfoText , TextChunk );
+	sprintf( TextChunk, "Damage: %d - %d\n" , 
+		 ItemMap [ ShowItem->type ] . base_item_gun_damage,
+		 ItemMap [ ShowItem->type ] . base_item_gun_damage + 
+		 ItemMap [ ShowItem->type ] . item_gun_damage_modifier );
+	strcat ( InfoText , TextChunk );
     }
-
-  if ( ItemMap [ ShowItem->type ] . item_gun_recharging_time > 0 )
+    
+    if ( ItemMap [ ShowItem->type ] . item_gun_recharging_time > 0 )
     {
-      sprintf( TextChunk, "Recharge time: %3.2f\n" , 
-	       ItemMap [ ShowItem->type ] . item_gun_recharging_time );
-      strcat ( InfoText , TextChunk );
+	sprintf( TextChunk, "Recharge time: %3.2f\n" , 
+		 ItemMap [ ShowItem->type ] . item_gun_recharging_time );
+	strcat ( InfoText , TextChunk );
     }
-
-  if ( ShowItem->ac_bonus > 0 )
+    
+    if ( ShowItem->ac_bonus > 0 )
     {
-      sprintf ( TextChunk, "Defence bonus: %d\n" , ShowItem->ac_bonus ) ;
-      strcat ( InfoText , TextChunk );
+	sprintf ( TextChunk, "Defence bonus: %d\n" , ShowItem->ac_bonus ) ;
+	strcat ( InfoText , TextChunk );
     }
-
-  sprintf ( TextChunk, "Notes: %s", 
-	    ItemMap [ ShowItem->type ] . item_description );
-  strcat ( InfoText, TextChunk );
-
-  switch ( ItemMap [ ShowItem->type ] . item_gun_use_ammunition )
+    
+    sprintf ( TextChunk, "Notes: %s", 
+	      ItemMap [ ShowItem->type ] . item_description );
+    strcat ( InfoText, TextChunk );
+    
+    switch ( ItemMap [ ShowItem->type ] . item_gun_use_ammunition )
     {
-    case ITEM_PLASMA_AMMUNITION:
-      strcat ( InfoText, " This weapon requires standard plasma ammunition." );
-      break;
-    case ITEM_LASER_AMMUNITION:
-      strcat ( InfoText, " This weapon requires standard laser crystal ammunition." );
-      break;
-    case ITEM_EXTERMINATOR_AMMUNITION:
-      strcat ( InfoText, " This weapon requires standard exterminator ammunition spheres." );
-      break;
-    default:
-      break;
+	case ITEM_PLASMA_AMMUNITION:
+	    strcat ( InfoText, " This weapon requires standard plasma ammunition." );
+	    break;
+	case ITEM_LASER_AMMUNITION:
+	    strcat ( InfoText, " This weapon requires standard laser crystal ammunition." );
+	    break;
+	case ITEM_EXTERMINATOR_AMMUNITION:
+	    strcat ( InfoText, " This weapon requires standard exterminator ammunition spheres." );
+	    break;
+	default:
+	    break;
     }
-
-  // SetCurrentFont( Para_BFont );
-  // SetCurrentFont( Menu_BFont );
-  SetCurrentFont( FPS_Display_BFont );
-  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
-
-  if ( ShowArrows ) 
+    
+    // SetCurrentFont( Para_BFont );
+    // SetCurrentFont( Menu_BFont );
+    SetCurrentFont( FPS_Display_BFont );
+    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
+    
+    if ( ShowArrows ) 
     {
-      ShowGenericButtonFromList ( UP_BUTTON );
-      ShowGenericButtonFromList ( DOWN_BUTTON );
+	ShowGenericButtonFromList ( UP_BUTTON );
+	ShowGenericButtonFromList ( DOWN_BUTTON );
     }
-
+    
 }; // void ShowItemInfo ( ... )
 
 /* ----------------------------------------------------------------------

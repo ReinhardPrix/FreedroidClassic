@@ -269,7 +269,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
       while(extensions[i] != NULL)
       {
         strcpy(extension, extensions[i]);
-        fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+        fpath = find_file_silent ( Temp_Filename , SOUND_DIR, FALSE);
         One_Shot_WAV_File = Mix_LoadWAV( fpath );
         if(One_Shot_WAV_File != NULL)
         {

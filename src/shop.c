@@ -586,7 +586,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	if ( Displacement < -500 ) Displacement = -500 ;
 	if ( Displacement > 50 ) Displacement = 50 ;
 	
-	SDL_Delay (1);
+	SDL_Delay ( 1 );
 	ShopOrder -> shop_command = DO_NOTHING ;
 	
 	//--------------------
@@ -672,8 +672,14 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	    SellButtonActive = FALSE ;
 	}
 
+	//--------------------
+	// We show the current amount of 'gold' or 'cyberbucks' the tux
+	// has on him.  However we need to take into account the scaling
+	// of the whole screen again for this.
+	//
 	sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
-	PutStringFont ( Screen , Menu_BFont, 46, 143, GoldString );
+	PutStringFont ( Screen , Menu_BFont, 46 * GameConfig . screen_width / 640 , 
+			143 * GameConfig . screen_height / 480 , GoldString );
 	
 	our_SDL_flip_wrapper( Screen );
 	
