@@ -415,6 +415,8 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ;
   ModelMultiplier  [ i ] = 5 ;i++;
+  PrefixToFilename [ i ] = "proffa" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
 
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 

@@ -3250,7 +3250,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 22
+Individual shape of this droid or just -1 for classic ball shaped : 24
 Going to request reinforcements typical for this droid : 0
 This is Dr. Chanra, a leading scientist in the field of artificial intelligence and droid construction optimization theory.
 
@@ -3410,7 +3410,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 22
+Individual shape of this droid or just -1 for classic ball shaped : 24
 Going to request reinforcements typical for this droid : 0
 Sorenson, teacher of magical abilities.
 
