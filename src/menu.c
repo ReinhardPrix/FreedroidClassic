@@ -365,7 +365,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   //--------------------
   // We filter out those answering options that are allowed by the flag mask
   //
-  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: %d \n" , FirstItem ) ; 
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\n%s(): %d \n" , __FUNCTION__ , FirstItem ) ; 
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
       FilteredChatMenuTexts [ i ] = "" ; 
@@ -548,8 +548,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     int win32_iterations = 0 ;
 #endif
     
-    DebugPrintf ( 2 , "\nINSIDE:  First Item now: %d." , FirstItem );
-    
     //--------------------
     // First we initialize the menu positions
     //
@@ -580,7 +578,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     // First thing we do is find out how may options we have
     // been given for the menu
     //
-    DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: %d \n" , FirstItem ) ; 
+    DebugPrintf ( MENU_SELECTION_DEBUG , "\n%s(): %d \n" , __FUNCTION__ , FirstItem ) ; 
     for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
 	DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
@@ -657,6 +655,14 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      //
 	      display_current_chat_protocol ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE , ChatDroid , FALSE );
 	  }
+
+	  //--------------------
+	  // Now that the possible font-changing chat protocol display is
+	  // done, we can finally set the right font for the menu itself.
+	  //
+	  if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
+	  else SetCurrentFont ( (BFont_Info*) MenuFont );
+	  h = FontHeight ( GetCurrentFont() );
 	  
 	  //--------------------
 	  // Now that we have a new choice window, we should automatically compute the right
