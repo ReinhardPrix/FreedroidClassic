@@ -311,7 +311,9 @@ TextWidthFont (BFont_Info * Font, char *text)
 {
   int i = 0, x = 0;
   //--------------------
-  // Based on Bastians hack: 'I added little hack to kern MenuFont..
+  // Based on Bastians hack: 
+  // 
+  // 'I added little hack to kern MenuFont..
   // This basicly just prints them more tight on the screen.
   // basse, 15.2.03'
   //

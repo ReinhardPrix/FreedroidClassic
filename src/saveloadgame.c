@@ -154,8 +154,6 @@ Sorry...\n\
       Terminate(ERR);
     };
 
-  DebugPrintf ( 0 , "\nRawDateResult : %ld. " , FileInfoBuffer.st_atime );
-
   LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
 
   sprintf( InfoString , "%d/%02d/%02d %02d:%02d" , 
@@ -165,8 +163,8 @@ Sorry...\n\
 	   LocalTimeSplitup->tm_hour ,
 	   LocalTimeSplitup->tm_min );
 
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 4 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 3 * FontHeight ( GetCurrentFont () ) , InfoString );
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 3 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , InfoString );
 
   //--------------------
   // Now that the modification time has been set up, we can start to compute
@@ -209,10 +207,10 @@ Sorry...\n\
         FileSize += FileInfoBuffer.st_size;
     }
 
-  sprintf( InfoString , "%2.3f MB" , 
+  sprintf( InfoString , "File Size: %2.3f MB" , 
 	   ((float)FileSize) / ( 1024.0 * 1024.0 ) );
 
-  PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
+  // PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
   PutString ( Screen , 240 , SCREEN_HEIGHT - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
 
 }; // void LoadAndShowStats ( char* filename );
