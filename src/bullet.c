@@ -396,124 +396,141 @@ DeleteBlast (int BlastNum)
 void
 MoveActiveSpells (void)
 {
-  int i , j ;
-  float PassedTime;
-  float DistanceFromCenter;
-  PassedTime = Frame_Time ();
+    int i , j ;
+    float PassedTime;
+    float DistanceFromCenter;
+    PassedTime = Frame_Time ();
+    int direction_index;
+    moderately_finepoint Displacement;
+    moderately_finepoint final_point;
+    float Angle;
 
-  for ( i = 0; i < MAX_ACTIVE_SPELLS; i++ )
+    for ( i = 0; i < MAX_ACTIVE_SPELLS; i++ )
     {
-      //--------------------
-      // We can ignore all unused entries...
-      //
-      if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+	//--------------------
+	// We can ignore all unused entries...
+	//
+	if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+	
+	//--------------------
+	// All spells should count their lifetime...
+	//
+	AllActiveSpells [ i ] . spell_age += PassedTime;
 
-      //--------------------
-      // All spells should count their lifetime...
-      //
-      AllActiveSpells [ i ] . spell_age += PassedTime;
+/*
+    for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
+    {
+	Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
+	
+	Displacement . x = 0 ; Displacement . y = - Radius ;
+	
+	RotateVectorByAngle ( &Displacement , Angle );
+	
+	PrerotationIndex = rintf ( ( Angle  ) * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
+	if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
+	
+	if ( ! active_direction [ PrerotationIndex ] ) continue ;
 
-      //--------------------
-      // Now we handle the emp waves...
-      //
-      if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE )
+*/
+	
+	//--------------------
+	// Now we handle the emp waves...
+	//
+	if ( ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) ||
+	     ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) ||
+	     ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) )
 	{
-	  AllActiveSpells [ i ] . spell_radius += 5.0 * PassedTime;
-
-	  //--------------------
-	  // Here we also do the spell-collision checking in this case
-	  //
-	  for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	    AllActiveSpells [ i ] . spell_radius += 5.0 * PassedTime;
+	    
+	    //--------------------
+	    // We do some collision checking with the obstacles in each
+	    // 'active_direcion' of the spell and deactivate those directions,
+	    // where some collision with solid material has happend.
+	    //
+	    for ( direction_index = 0 ; direction_index < RADIAL_SPELL_DIRECTIONS ; direction_index ++ )
 	    {
-	      if ( AllEnemys [ j ] . Status == OUT ) continue;
-	      if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
-
-	      DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
-					  ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) +
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) *
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) );
-	      
-	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
-		{
-		  AllEnemys [ j ] . energy -= 80.0 * Frame_Time();
-		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
-		}
+		Angle = 360.0 * (float)direction_index / RADIAL_SPELL_DIRECTIONS ;
+		Displacement . x = 0 ; Displacement . y = - AllActiveSpells [ i ] . spell_radius ;
+		RotateVectorByAngle ( &Displacement , Angle );
+		final_point . x = AllActiveSpells [ i ] . spell_center . x + Displacement . x ;
+		final_point . y = AllActiveSpells [ i ] . spell_center . y + Displacement . y ;
+		// current_active_direction = rintf ( ( Angle  ) * (float) RADIAL_SPELL_DIRECTIONS / 360.0 ); 
+		if ( ! IsPassable ( final_point . x , final_point . y , Me [ 0 ] . pos . z ) )
+		    AllActiveSpells [ i ] . active_directions [ direction_index ] = 
+			FALSE ;
 	    }
 
-	  //--------------------
-	  // Such a spell can not live for longer than 1.0 seconds, say
-	  //
-	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
-	}
-
-      //--------------------
-      // Now we handle the vmx waves...
-      //
-      if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE )
-	{
-	  AllActiveSpells [ i ] . spell_radius += 6.0 * PassedTime;
-
-	  //--------------------
-	  // Here we also do the spell-collision checking in this case
-	  //
-	  for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	    
+	    //--------------------
+	    // Here we also do the spell damage application here
+	    //
+	    for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
 	    {
-	      if ( AllEnemys [ j ] . Status == OUT ) continue;
-	      if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
-
-	      DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
-					  ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) +
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) *
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) );
-	      
-	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
+		if ( AllEnemys [ j ] . Status == OUT ) continue;
+		if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
+		
+		DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
+					    ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) +
+					    ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) *
+					    ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) );
+		
+		if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
 		{
-		  AllEnemys [ j ] . energy -= 180.0 * Frame_Time();
-		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
+
+		    //--------------------
+		    // Let's see if that enemy has a direction, that is still
+		    // active for the spell.  If not, then the enemy got away
+		    // for this time at least...
+		    //
+		    // We get the angle in radians but with zero at the 'north' direction.
+		    //
+		    Displacement . x = AllEnemys [ j ] . pos . x - AllActiveSpells [ i ] . spell_center . x ;
+		    Displacement . y = AllEnemys [ j ] . pos . y - AllActiveSpells [ i ] . spell_center . y ;
+		    Angle = atan2 ( Displacement . y , Displacement . x ) + M_PI + 3 * M_PI / 2 ;
+		    while ( Angle >= 2 * M_PI ) Angle -= 2 * M_PI ;
+		    //
+		    // Now we convert the angle to a normal direction index
+		    //
+		    direction_index = (int) ( ( Angle * RADIAL_SPELL_DIRECTIONS ) / ( 2 * M_PI ) ) ;
+		    DebugPrintf ( 1 , "\n%s():Enemy found at angle=%f, i.e. direction index: %d." , 
+				  __FUNCTION__ , Angle, direction_index );
+		    if ( AllActiveSpells [ i ] . active_directions [ direction_index ] )
+		    {
+			DebugPrintf ( 1 , "\n%s(): Bot is affected.  Doing damage... " , __FUNCTION__ );
+			//--------------------
+			// We do some damage to the enemy in question
+			//
+			switch ( AllActiveSpells [ i ] . type )
+			{
+			    case SPELL_RADIAL_EMP_WAVE:
+				AllEnemys [ j ] . energy -= 80.0 * Frame_Time();
+				break;
+			    case SPELL_RADIAL_VMX_WAVE:
+				AllEnemys [ j ] . energy -= 180.0 * Frame_Time();
+				break;
+			    case SPELL_RADIAL_FIRE_WAVE:
+				AllEnemys [ j ] . energy -= 300.0 * Frame_Time();
+				break;
+			    default:
+				break;
+			}
+			AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
+		    }
+		    else
+		    {
+			DebugPrintf ( 1 , "\n%s(): Bot is NOT affected.  Doing damage... " , __FUNCTION__ );
+		    }
 		}
 	    }
-
-	  //--------------------
-	  // Such a spell can not live for longer than 1.0 seconds, say
-	  //
-	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
+	    
+	    //--------------------
+	    // Such a spell can not live for longer than 1.0 seconds, say
+	    //
+	    if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
 	}
-
-      //--------------------
-      // Now we handle the fire waves...
-      //
-      if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE )
-	{
-	  AllActiveSpells [ i ] . spell_radius += 6.0 * PassedTime;
-
-	  //--------------------
-	  // Here we also do the spell-collision checking in this case
-	  //
-	  for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
-	    {
-	      if ( AllEnemys [ j ] . Status == OUT ) continue;
-	      if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
-
-	      DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
-					  ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) +
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) *
-					  ( AllActiveSpells [ i ] . spell_center . y - AllEnemys [ j ] . pos . y ) );
-	      
-	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
-		{
-		  AllEnemys [ j ] . energy -= 300.0 * Frame_Time();
-		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
-		}
-	    }
-
-	  //--------------------
-	  // Such a spell can not live for longer than 1.0 seconds, say
-	  //
-	  if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
-	}
-
+	
     }
-
+    
 }; // void MoveActiveSpells( ... )
 
 /* ----------------------------------------------------------------------

@@ -645,6 +645,7 @@ enum
 
 #define TUX_MODELS              13
 #define MAX_TUX_DIRECTIONS      16
+#define RADIAL_SPELL_DIRECTIONS 16
 #define BULLET_DIRECTIONS       16
 
 #define WAIT_AFTER_KILLED	3.0  // time to wait and still display pictures after the destruction of 

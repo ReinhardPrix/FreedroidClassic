@@ -346,42 +346,50 @@ ForceExplosionCircle ( gps ExpCenter )
 void
 RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = SpellSkillMap [ SPELL_RADIAL_EMP_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-  int i;
+    int SpellCost = SpellSkillMap [ SPELL_RADIAL_EMP_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int i;
+    int j;
 
-  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana )
+    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana )
     {
-      //--------------------
-      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
-      //
-      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
-      //
-      Play_Spell_ForceToEnergy_Sound( );
-
-      //--------------------
-      // First we find a new entry in the active spells list
-      //
-      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	//--------------------
+	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
+	//
+	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	//
+	Play_Spell_ForceToEnergy_Sound( );
+	
+	//--------------------
+	// First we find a new entry in the active spells list
+	//
+	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
 	{
-	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
 	}
-      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-      
-      //--------------------
-      // Now we start our new emp wave
-      //
-      AllActiveSpells [ i ] . type = SPELL_RADIAL_EMP_WAVE ; 
-      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-      AllActiveSpells [ i ] . spell_radius = 0.3 ;
-      AllActiveSpells [ i ] . spell_age = 0 ; 
+	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+	
+	//--------------------
+	// Now we start our new emp wave
+	//
+	AllActiveSpells [ i ] . type = SPELL_RADIAL_EMP_WAVE ; 
+	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+	AllActiveSpells [ i ] . spell_radius = 0.3 ;
+	AllActiveSpells [ i ] . spell_age = 0 ; 
+
+	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
+	{
+	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
+	}
+
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me[0].TextVisibleTime = 0;
+	Me[0].TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
+
 }; // void RadialEMPWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
@@ -390,43 +398,50 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = SpellSkillMap [ SPELL_RADIAL_VMX_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-  int i;
+    int SpellCost = SpellSkillMap [ SPELL_RADIAL_VMX_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int i;
+    int j;
 
-  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
+    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
     {
-      //--------------------
-      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
-      //
-      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
-      //
-      Play_Spell_ForceToEnergy_Sound( );
-
-      //--------------------
-      // First we find a new entry in the active spells list
-      //
-      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	//--------------------
+	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
+	//
+	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	//
+	Play_Spell_ForceToEnergy_Sound( );
+	
+	//--------------------
+	// First we find a new entry in the active spells list
+	//
+	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
 	{
-	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
 	}
-      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-      
-      //--------------------
-      // Now we start our new emp wave
-      //
-      AllActiveSpells [ i ] . type = SPELL_RADIAL_VMX_WAVE ; 
-      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-      AllActiveSpells [ i ] . spell_radius = 0.3 ;
-      AllActiveSpells [ i ] . spell_age = 0 ; 
-      
+	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+	
+	//--------------------
+	// Now we start our new emp wave
+	//
+	AllActiveSpells [ i ] . type = SPELL_RADIAL_VMX_WAVE ; 
+	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+	AllActiveSpells [ i ] . spell_radius = 0.3 ;
+	AllActiveSpells [ i ] . spell_age = 0 ; 
+
+	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
+	{
+	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
+	}
+	
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me[0].TextVisibleTime = 0;
+	Me[0].TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
+
 }; // void RadialVMXWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
@@ -435,42 +450,48 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialFireWave ( gps ExpCenter , int SpellCostsMana )
 {
-  int SpellCost = SpellSkillMap [ SPELL_RADIAL_FIRE_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-  int i;
-
-  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
+    int SpellCost = SpellSkillMap [ SPELL_RADIAL_FIRE_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int i;
+    int j;
+    
+    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
     {
-      //--------------------
-      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
-      //
-      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
-      //
-      Play_Spell_ForceToEnergy_Sound( );
-
-      //--------------------
-      // First we find a new entry in the active spells list
-      //
-      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	//--------------------
+	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
+	//
+	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	//
+	Play_Spell_ForceToEnergy_Sound( );
+	
+	//--------------------
+	// First we find a new entry in the active spells list
+	//
+	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
 	{
-	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
 	}
-      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-      
-      //--------------------
-      // Now we start our new emp wave
-      //
-      AllActiveSpells [ i ] . type = SPELL_RADIAL_FIRE_WAVE ; 
-      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-      AllActiveSpells [ i ] . spell_radius = 0.3 ;
-      AllActiveSpells [ i ] . spell_age = 0 ; 
-      
+	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+	
+	//--------------------
+	// Now we start our new emp wave
+	//
+	AllActiveSpells [ i ] . type = SPELL_RADIAL_FIRE_WAVE ; 
+	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+	AllActiveSpells [ i ] . spell_radius = 0.3 ;
+	AllActiveSpells [ i ] . spell_age = 0 ; 
+	
+	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
+	{
+	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
+	}
+
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me [ 0 ] . TextVisibleTime = 0;
+	Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
 }; // void RadialFireWave ( finepoint ExpCenter )
 
