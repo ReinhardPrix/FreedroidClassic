@@ -105,7 +105,7 @@ item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
 //
 typedef struct
 {
-  int status;			/* attacking, defense, dead, ... */
+  int8_t status;			/* attacking, defense, dead, ... */
   int8_t phase;                 // the current phase of motion
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */

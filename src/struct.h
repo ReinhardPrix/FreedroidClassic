@@ -317,11 +317,7 @@ typedef struct
 
 typedef struct
 {
-  unsigned char r_wall;
-  unsigned char l_wall;
-  unsigned char u_wall;
-  unsigned char d_wall;
-  unsigned char filled;
+  Uint8 storebyte;
 } automap_tile , *Automap_tile;
 
 
@@ -402,9 +398,9 @@ druidspec, *Druidspec;
 
 typedef struct
 {
-  int type;			/* what kind of druid is this ? */
-  int character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  int status;			/* attacking, defense, dead, ... */
+  int8_t type;			/* what kind of druid is this ? */
+  int8_t character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  int8_t status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
@@ -480,9 +476,9 @@ influence_t, *Influence_t;
 
 typedef struct
 {
-  int type;			/* what kind of druid is this ? */
-  int character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  int status;			/* attacking, defense, dead, ... */
+  int8_t type;			/* what kind of druid is this ? */
+  int8_t character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  int8_t status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */

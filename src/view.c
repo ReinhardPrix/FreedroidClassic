@@ -103,25 +103,25 @@ ShowAutomapData( void )
     {
       for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
 	{
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . r_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & RIGHT_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . l_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & LEFT_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . u_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & UP_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . d_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & DOWN_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
