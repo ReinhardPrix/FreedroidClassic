@@ -760,7 +760,7 @@ FireBullet (void)
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
   // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me.Damage;
+  CurBullet->damage = Me.Base_Damage + MyRandom( Me.Damage_Modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
   CurBullet->bullet_lifetime = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_lifetime;
@@ -775,8 +775,8 @@ FireBullet (void)
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me.to_hit;
   // Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time * Me.RechargeTimeModifier;
-  Me.firewait = Me.RechargeTime;
-
+  // Me.firewait = Me.RechargeTime;
+  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time;
 
   speed.x = 0.0;
   speed.y = 0.0;
