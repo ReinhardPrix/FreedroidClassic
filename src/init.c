@@ -324,14 +324,7 @@ InitParaplus (void)
 
   Init_Video ();
 
-#ifndef USE_SDL_AUDIO
-  // Only if sound output via YIFF and NOT via SDL is used,
-  // then we init the YIFF sound server.
-  Init_YIFF_Sound_Server ();
-#endif
-
-  Current_BG_Music_Volume=0.5;
-  Current_Sound_FX_Volume=0.5;
+  Init_Audio ();
 
   /* 
    * Initialise random-number generator in order to make 

@@ -230,6 +230,7 @@ EXTERN int TranslateMap (Level Lev);
 #else
 #define EXTERN extern
 #endif
+EXTERN void Init_Audio(void);
 EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
 EXTERN void YIFF_Server_Check_Events (void);

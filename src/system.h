@@ -62,7 +62,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
+#include <SDL/SDL_mixer.h>
 
 #if HAVE_LIBY2
 #include <Y2/Y.h>		//  Basic Y types and constants.

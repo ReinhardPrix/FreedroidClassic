@@ -97,6 +97,44 @@ YEvent event;
 #endif /* HAVE_LIBY2 */
 
 
+void 
+Init_Audio(void)
+{
+  Current_BG_Music_Volume=0.5;
+  Current_Sound_FX_Volume=0.5;
+
+#ifdef USE_SDL_AUDIO
+
+  // Only if SDL AUDIO is used for sound output may SDL_AUDIO
+  // or SDL_TIMER be initialized.  Otherwise the yiff will not
+  // start up later.  So we really cannot do both here!
+
+  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Timer initialisation successful.\n");
+  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Audio initialisation successful.\n");
+
+#else
+
+  // Only if sound output via YIFF and NOT via SDL is used,
+  // then we init the YIFF sound server.
+  Init_YIFF_Sound_Server ();
+
+#endif
+
+
+
+}
+
+
 void
 ExitProc ()
 {
