@@ -264,7 +264,7 @@ blit_our_own_mouse_cursor ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 3 ; i ++ )
+	for ( i = 0 ; i < 4 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -299,6 +299,14 @@ Error loading flag image.",
 		break;
 	    case GLOBAL_INGAME_MODE_NORMAL:
 		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_EXAMINE:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 2 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_LOOT:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 3 ] , 
 							  GetMousePos_x () , GetMousePos_y () , TRUE );
 		break;
 	    default:

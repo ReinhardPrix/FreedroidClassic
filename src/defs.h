@@ -170,7 +170,9 @@ enum
 enum _global_ingame_modes
 {
     GLOBAL_INGAME_MODE_IDENTIFY = 7123 ,
-    GLOBAL_INGAME_MODE_NORMAL = 7124 
+    GLOBAL_INGAME_MODE_NORMAL = 7124 ,
+    GLOBAL_INGAME_MODE_EXAMINE = 7125 ,
+    GLOBAL_INGAME_MODE_LOOT = 7126 ,
 };
 
 enum _spell_names

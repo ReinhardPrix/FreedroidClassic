@@ -2094,6 +2094,52 @@ move_tux_thowards_intermediate_point ( int player_num )
     
 }; // void move_tux_thowards_intermediate_point ( int player_num )
 
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+adapt_global_mode_for_player ( int player_num )
+{
+    int obstacle_index;
+    static int right_pressed_previous_frame = FALSE ;
+    static int left_pressed_previous_frame = FALSE ;
+
+    //--------------------
+    // At first we need to find the obstacle under the current mouse
+    // corsor.  If there isn't any obstacle under it, then the global
+    // mode can be (more or less) reset.
+    //
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+
+    if ( obstacle_index == (-1) )
+    {
+	if ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY )
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	return;
+    }
+
+    if ( ( RightPressed ( ) && ( ! right_pressed_previous_frame) ) || MouseWheelDownPressed ( ) )
+    {
+	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_EXAMINE )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
+	else
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+    }
+
+
+    if ( LeftPressed ( ) || MouseWheelUpPressed ( ) )
+    {
+	
+    }
+
+    right_pressed_previous_frame =  RightPressed ( ) ;
+    left_pressed_previous_frame =  LeftPressed ( ) ;
+
+}; // void adapt_global_mode_for_player ( int player_num )
+
 /* ----------------------------------------------------------------------
  * This function moves the influencer, adjusts his speed according to
  * keys pressed and also adjusts his status and current "phase" of his 
@@ -2160,6 +2206,14 @@ move_tux ( int player_num )
     //
     HandleCurrentlyActivatedSkill( player_num );
     
+    //--------------------
+    // Perhaps the player has turned the mouse wheel.  In that case we might
+    // need to change the current global mode, depending on whether a change
+    // of global mode (with the current obstacles under the mouse cursor)
+    // makes sense or not.
+    // 
+    adapt_global_mode_for_player ( player_num );
+
     // --------------------
     // Maybe we need to fire a bullet or set a new mouse move target
     // for the new move-to location
@@ -3519,6 +3573,55 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 }; // void check_for_droids_to_attack ( int player_num ) 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_examine_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Examine command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): examining obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+
+}; // void handle_player_examine_command ( int player_num ) 
+
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_loot_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Loot command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): looting obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+
+}; // void handle_player_examine_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
  * might happen to open some windows, pick up some stuff, smash a box,
  * move somewhere or fire a shot or make a weapon swing.
@@ -3551,6 +3654,34 @@ AnalyzePlayersMouseClick ( int player_num )
 	    check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 	    check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
 	    check_for_droids_to_attack_or_talk_with ( player_num ) ;
+	    break;
+	case GLOBAL_INGAME_MODE_EXAMINE:
+	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    handle_player_examine_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_LOOT:
+	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    handle_player_loot_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
 	    break;
 	default:
 	    DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
