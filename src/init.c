@@ -105,7 +105,7 @@ ShowStartupPercentage ( int Percentage )
 
   our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
 
-  DebugPrintf ( -4 , "\nNow at percentage: %d." , Percentage );
+  DebugPrintf ( 1 , "\nNow at percentage: %d." , Percentage );
 
 }; // void ShowStartupPercentage ( int Percentage )
 
