@@ -766,70 +766,68 @@ void clear_screen() {
 int
 initialzize_our_default_open_gl_parameters ( void )
 {
-
 #ifdef HAVE_LIBGL
-
-  //--------------------
-  // Set up the screne, viewport matrix, coordinate system and all that...
-  //
-  glViewport(0,0,640,480);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0.0f,640.0f,480.0f,0.0f,-1.0f,1.0f);
-  glMatrixMode(GL_MODELVIEW);
-
-  glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-  
-  //--------------------
-  // We turn off a lot of stuff for faster blitting.  All this can
-  // be turned on again later anyway as needed.  
-  //
-  // (Well, yes, the above is true, but function call overhead might
-  //  be enourmous!  So don't change too much inside of quick loops
-  //  if it can be avoided.)
-  //
-  glDisable (GL_BLEND);
-  glDisable (GL_DITHER);
-  glDisable (GL_FOG);
-  glDisable (GL_LIGHTING);
-  glDisable (GL_TEXTURE_1D);
-  glDisable (GL_TEXTURE_2D);
-  glDisable (GL_TEXTURE_3D);
-  glShadeModel (GL_FLAT);
-
-  //--------------------
-  // We disable depth test for all purposes.
-  //
-  glDisable(GL_DEPTH_TEST);
-  
-  //--------------------
-  // The default output method will be alpha test with threshold 0.5.
-  //
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-
-  //--------------------
-  // NeHe docu reveals, that it can happen (and it does happen) that textures
-  // get deleted and overwritten when there are multiple calls to glgentexture.
-  // So we can't have that any more.  We need to create all the textures we 
-  // need once and forall and then later never again call glgentextures.
-  // 
-  // So we do the texture generation (not the texture loading) here once and
-  // for all:
-  //
-  glGenTextures( MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE , & ( all_freedroid_textures [ 0 ] ) );  
-
-  //--------------------
-  // Also we must initialize an index to the texture array, so that we can keep
-  // track of which textures have been created and bound already.
-  //
-  // BEWARE:  Index 0 must not be used according to some docu...
-  //
-  next_texture_index_to_use = 1 ;
-
+    //--------------------
+    // Set up the screne, viewport matrix, coordinate system and all that...
+    //
+    glViewport( 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT );
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho( 0.0f , SCREEN_WIDTH , SCREEN_HEIGHT , 0.0f , -1.0f , 1.0f );
+    glMatrixMode(GL_MODELVIEW);
+    
+    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+    
+    //--------------------
+    // We turn off a lot of stuff for faster blitting.  All this can
+    // be turned on again later anyway as needed.  
+    //
+    // (Well, yes, the above is true, but function call overhead might
+    //  be enourmous!  So don't change too much inside of quick loops
+    //  if it can be avoided.)
+    //
+    glDisable (GL_BLEND);
+    glDisable (GL_DITHER);
+    glDisable (GL_FOG);
+    glDisable (GL_LIGHTING);
+    glDisable (GL_TEXTURE_1D);
+    glDisable (GL_TEXTURE_2D);
+    glDisable (GL_TEXTURE_3D);
+    glShadeModel (GL_FLAT);
+    
+    //--------------------
+    // We disable depth test for all purposes.
+    //
+    glDisable(GL_DEPTH_TEST);
+    
+    //--------------------
+    // The default output method will be alpha test with threshold 0.5.
+    //
+    glEnable( GL_ALPHA_TEST );  
+    glAlphaFunc ( GL_GREATER , 0.5 ) ;
+    
+    //--------------------
+    // NeHe docu reveals, that it can happen (and it does happen) that textures
+    // get deleted and overwritten when there are multiple calls to glgentexture.
+    // So we can't have that any more.  We need to create all the textures we 
+    // need once and forall and then later never again call glgentextures.
+    // 
+    // So we do the texture generation (not the texture loading) here once and
+    // for all:
+    //
+    glGenTextures( MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE , & ( all_freedroid_textures [ 0 ] ) );  
+    
+    //--------------------
+    // Also we must initialize an index to the texture array, so that we can keep
+    // track of which textures have been created and bound already.
+    //
+    // BEWARE:  Index 0 must not be used according to some docu...
+    //
+    next_texture_index_to_use = 1 ;
+    
 #endif
-
-  return( TRUE );
+    
+    return( TRUE );
 
 }; // int initialzize_our_default_open_gl_parameters ( void )
 

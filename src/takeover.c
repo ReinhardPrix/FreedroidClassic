@@ -895,8 +895,8 @@ ShowPlayground ( void )
   int xoffs, yoffs;
   SDL_Rect Target_Rect;
 
-  xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
-  yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*140)/2;
+  xoffs = User_Rect.x + ( User_Rect.w - 2 * 290 ) / 2 ;
+  yoffs = User_Rect.y + ( User_Rect.h - 2 * 140 ) / 2 ;
 
   //  SDL_SetColorKey (Screen, 0, 0);
   SDL_SetClipRect (Screen , &User_Rect);
