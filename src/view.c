@@ -3272,14 +3272,9 @@ There was a droid type on this level, that does not really exist.",
 void
 PutBullet ( int bullet_index , int mask )
 {
-  bullet* CurBullet;
+  bullet* CurBullet = & ( AllBullets [ bullet_index ] ) ;
   int PhaseOfBullet;
   int direction_index;
-
-  fprintf ( stderr , "\nInside PutBullet:  bullet_index = %d." , bullet_index );
-  fflush ( stderr );
-
-  CurBullet = & ( AllBullets [ bullet_index ] ) ;
 
   if ( CurBullet -> time_to_hide_still > 0 ) 
     return ;
@@ -3316,11 +3311,6 @@ PutBullet ( int bullet_index , int mask )
 There was a bullet to be blitted of a type that does not really exist.",
 				 PLEASE_INFORM, IS_FATAL );
     };
-
-  fprintf ( stderr , "\nInside PutBullet (2nd time):  bullet_index = %d." , bullet_index );
-  fprintf ( stderr , "\nBulletmap [ 2 ] . phase_changes_per_second =%f." , Bulletmap [ 2 ] . phase_changes_per_second );
-  fprintf ( stderr , "\nBulletmap [ 4 ] . phase_changes_per_second =%f." , Bulletmap [ 4 ] . phase_changes_per_second );
-  fflush ( stderr );
 
   PhaseOfBullet = CurBullet -> time_in_seconds * Bulletmap [ CurBullet -> type ] . phase_changes_per_second ;
 

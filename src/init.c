@@ -54,7 +54,6 @@ clear_out_arrays_for_fresh_game ( void )
   int i;
 
   level_editor_marked_obstacle = NULL ;
-  Bulletmap=NULL;  // That will cause the memory to be allocated later
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets [ i ] . Surfaces_were_generated = FALSE;
@@ -269,7 +268,7 @@ Get_Bullet_Data ( char* DataPointer )
   //
   if ( Bulletmap == NULL )
     {
-      i=sizeof(bulletspec);
+      i = sizeof ( bulletspec ) ;
       Bulletmap = MyMalloc ( i * ( Number_Of_Bullet_Types + 1 ) + 1 );
       DebugPrintf ( 1 , "\nvoid Get_Bullet_Data( char* DatapPointer ) : We have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
       // DebugPrintf ( 0 , "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
@@ -1814,6 +1813,11 @@ InitFreedroid ( void )
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
+ 
+  //--------------------
+  // That will cause the memory to be allocated later...
+  //
+  Bulletmap = NULL;  
 
   //--------------------
   // We set these dummy values, so that when the title plays (and banner and
@@ -1838,6 +1842,7 @@ InitFreedroid ( void )
   GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
 
   clear_out_arrays_for_fresh_game ();
+
 
   ServerMode = FALSE;
   ClientMode = FALSE;
