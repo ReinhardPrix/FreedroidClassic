@@ -206,6 +206,8 @@ enum _sounds
   TRANSFER_SOUND,
   COUNTDOWN_SOUND,
   ENDCOUNTDOWN_SOUND,
+  INFLUEXPLOSION_SOUND,
+  WHITE_NOISE,
   ALL_SOUNDS   // marks the last entry always!
 };
 

@@ -69,7 +69,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Countdown_Sound.wav",
-   "EndCountdown_Sound.wav"
+   "EndCountdown_Sound.wav",
+   "InfluExplosion.wav",
+   "WhiteNoise.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
