@@ -903,12 +903,12 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.Draw_Energy = TRUE;
   GameConfig.Draw_DeathCount = FALSE;
   GameConfig.Draw_Position = FALSE;
-  // this is the "classic" version, so defaults are set on "classic"
+
   sprintf (GameConfig.Theme_Name, "classic");
-  GameConfig.FullUserRect = FALSE;
+  GameConfig.FullUserRect = TRUE;
   GameConfig.UseFullscreen = FALSE;
   GameConfig.TakeoverActivates = TRUE;  
-  GameConfig.ShowDecals = FALSE;
+  GameConfig.ShowDecals = TRUE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
 
   // now load saved options from the config-file
