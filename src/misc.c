@@ -61,6 +61,79 @@ message* Queue=NULL;
 // int ThisMessageTime=0;		/* Counter fuer Message-Timing */
 
 
+int LeftPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORLEFT)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int LeftPressed(void)
+
+int RightPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORRIGHT)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int RightPressed(void)
+
+int UpPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORUP)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int UpPressed(void)
+
+int DownPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORDOWN)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int DownPressed(void)
+
+int SpacePressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_SPACE)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int SpacePressed(void)
+
+int PPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_P)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int SpacePressed(void)
+
+int QPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_Q)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int QPressed(void)
+
+int WPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_W)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int WPressed(void)
+
+
 /* **********************************************************************
 	Diese Funktion l"oscht alle Roboter auf dem momentanen Level
 	**********************************************************************/

@@ -100,7 +100,13 @@ void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
 
-
+float Frame_Time(void){
+  if (FPSover1 > 10) {
+    return (1/FPSover1);
+  } else {
+    return (1/10);
+  }
+} // float Frame_Time(void)
 
 void CalibratedDelay(long delay){
   usleep(delay);
@@ -120,79 +126,6 @@ void CalibratedDelay(long delay){
 void ClearKbState(void) {
   keyboard_clearstate();
 }
-
-
-int LeftPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_CURSORLEFT)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int LeftPressed(void)
-
-int RightPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_CURSORRIGHT)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int RightPressed(void)
-
-int UpPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_CURSORUP)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int UpPressed(void)
-
-int DownPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_CURSORDOWN)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int DownPressed(void)
-
-int SpacePressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_SPACE)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int SpacePressed(void)
-
-int PPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_P)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int SpacePressed(void)
-
-int QPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_Q)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int QPressed(void)
-
-int WPressed(void){
-  keyboard_update();
-  if(keyboard_keypressed(SCANCODE_W)) {
-    return(TRUE);
-  } else {
-    return(FALSE);
-  }
-} // int WPressed(void)
 
 //
 // This function is for stability while working with the SVGALIB, which otherwise would
@@ -544,6 +477,7 @@ int main(void)
       // gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
       // gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay,FPSover10);
       gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
+      gl_printf(-1,-1,"Frame_Time(): %f \n",Frame_Time());
       // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec,now.tv_usec);
       // gl_printf(-1,-1,"sec : %d usec : %d \n",onehundredframetimestamp.tv_sec,onehundredframetimestamp.tv_usec);
       // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec-onehundredframetimestamp.tv_sec,now.tv_usec-onehundredframetimestamp.tv_usec);

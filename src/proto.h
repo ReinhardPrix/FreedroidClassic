@@ -12,17 +12,11 @@
 #define EXTERN extern
 #endif
 
+EXTERN float Frame_Time(void);
 EXTERN void CalibratedDelay(long);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;
-EXTERN int LeftPressed(void);
-EXTERN int RightPressed(void);
-EXTERN int UpPressed(void);
-EXTERN int DownPressed(void);
-EXTERN int SpacePressed(void);
-EXTERN int QPressed(void);
-EXTERN int WPressed(void);
 EXTERN void reverse(char*);
 EXTERN char* itoa(int,char*,int);
 EXTERN char* ltoa(long,char*,int);
@@ -248,6 +242,13 @@ EXTERN void sbfm_silence(void);
 #define EXTERN extern
 #endif
 
+EXTERN int LeftPressed(void);
+EXTERN int RightPressed(void);
+EXTERN int UpPressed(void);
+EXTERN int DownPressed(void);
+EXTERN int SpacePressed(void);
+EXTERN int QPressed(void);
+EXTERN int WPressed(void);
 EXTERN void Armageddon(void);
 EXTERN void Teleport(int LNum,int X,int Y);
 EXTERN void Cheatmenu(void);
