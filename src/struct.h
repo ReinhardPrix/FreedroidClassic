@@ -113,13 +113,10 @@ typedef struct
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
   int gun;			/* Which gun does this druid use */
-  // int vneutral;		/* Is there a velocityneutralisator for Bullets ? */
   int aggression;		/* The aggressiveness of this druidtype */
-  int firewait;		        /* Wait approx. after shoot, in 1/4 sec. */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */
   char *notes;			/* notes on the druid of this type */
-  // char *image;
 }
 druidspec, *Druidspec;
 
@@ -162,11 +159,11 @@ enemy, *Enemy;
 
 typedef struct
 {
+  double recharging_time;       // time until the next shot can be made, measures in seconds
   double speed;			/* speed of the bullet */
   int damage;			/* damage done by this bullettype */
-  int time;		        // ??? SENSELESS VARIABLE?  how long does bullet exist, measured in number of frames
-  byte phases;			/* how many phases in motion to show */
-  byte blast;			/* which blast does this bullet create */
+  int phases;			/* how many phases in motion to show */
+  int blast;			/* which blast does this bullet create */
   unsigned char *picpointer;	/* pointer to picture of bullet */
   signed char oneshotonly;	/* if this is set, there is only 1 shot */
   int WaitNextTime;

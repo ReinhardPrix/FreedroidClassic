@@ -274,77 +274,18 @@ FCU AllFCUs[] = {
 // ((40) /64.0)
 #define ROBOT_ACCEL_CALIBRATOR (10.0/64.0)
 #define LOSE_HEALTH_CALIBRATOR 0.2
-druidspec Druidmap[ALLDRUIDTYPES] = {
-/*
-variable lose_health:  How much energy to lose per second for the influencer if controlling
-                       this host and how much energy to gain per second for the enemys of that type.
--------------------------------------------------------------------------------------------
-    name        maxspeed             cl.        accel.              energy lose_health
--------------------------------------------------------------------------------------------
-   gun  ,        aggr. firewait flashimmune score notes
-------------------------------------------------------------------------------------------- */
-  {"001", ROBOT_SPEED_CALIBRATOR * 5, 0, 1 * ROBOT_ACCEL_CALIBRATOR, 100, 1*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 0, NULL},
-  {"123", ROBOT_SPEED_CALIBRATOR * 2, 1, 1 * ROBOT_ACCEL_CALIBRATOR,  20, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 25, NULL},
-  {"139", ROBOT_SPEED_CALIBRATOR * 2, 1, 1 * ROBOT_ACCEL_CALIBRATOR,  20, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 25, NULL},
-  {"247", ROBOT_SPEED_CALIBRATOR * 4, 2, 1 * ROBOT_ACCEL_CALIBRATOR,  20, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 50, NULL},
-  {"249", ROBOT_SPEED_CALIBRATOR * 4, 2, 1 * ROBOT_ACCEL_CALIBRATOR,  20, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0,    0, 50, NULL},
-  {"296", ROBOT_SPEED_CALIBRATOR * 2, 2, 1 * ROBOT_ACCEL_CALIBRATOR,  40, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0,    0, 50, NULL},
-  {"302", ROBOT_SPEED_CALIBRATOR * 7, 3, 2 * ROBOT_ACCEL_CALIBRATOR,  40, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 75, NULL},
-  {"329", ROBOT_SPEED_CALIBRATOR * 1, 3, 1 * ROBOT_ACCEL_CALIBRATOR,  40, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 0, 75, NULL},
-  {"420", ROBOT_SPEED_CALIBRATOR * 2, 4, 1 * ROBOT_ACCEL_CALIBRATOR,  60, 2*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00,   0, 1, 100, NULL},
-  {"476", ROBOT_SPEED_CALIBRATOR * 4, 4, 1 * ROBOT_ACCEL_CALIBRATOR,  70, 2*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 65,   6, 0, 100, NULL},
-  {"493", ROBOT_SPEED_CALIBRATOR * 4, 4, 1 * ROBOT_ACCEL_CALIBRATOR,  80, 3*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00, 0, 0, 100, NULL},
-  {"516", ROBOT_SPEED_CALIBRATOR * 3, 5, 1 * ROBOT_ACCEL_CALIBRATOR,  80, 3*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00, 0, 0, 125, NULL},
-  {"571", ROBOT_SPEED_CALIBRATOR * 4, 5, 1 * ROBOT_ACCEL_CALIBRATOR,  80, 3*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00, 0, 0, 125, NULL},
-  {"598", ROBOT_SPEED_CALIBRATOR * 3, 5, 1 * ROBOT_ACCEL_CALIBRATOR,  80, 3*LOSE_HEALTH_CALIBRATOR,
-   PULSE,        00, 0, 0, 125, NULL},
-  {"614", ROBOT_SPEED_CALIBRATOR * 3, 6, 1 * ROBOT_ACCEL_CALIBRATOR, 100, 3*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 50, 6, 0, 150, NULL},
-  {"615", ROBOT_SPEED_CALIBRATOR * 4, 6, 1 * ROBOT_ACCEL_CALIBRATOR, 100, 3*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 50, 6, 0, 150, NULL},
-  {"629", ROBOT_SPEED_CALIBRATOR * 2, 6, 1 * ROBOT_ACCEL_CALIBRATOR, 100, 3*LOSE_HEALTH_CALIBRATOR,
-   MILITARY,     60, 6, 0, 150, NULL},
-  {"711", ROBOT_SPEED_CALIBRATOR * 5, 7, 1 * ROBOT_ACCEL_CALIBRATOR, 110, 3*LOSE_HEALTH_CALIBRATOR,
-   FLASH,        30, 5, 1, 175, NULL},
-  {"742", ROBOT_SPEED_CALIBRATOR * 4, 7, 1 * ROBOT_ACCEL_CALIBRATOR, 130, 3*LOSE_HEALTH_CALIBRATOR,
-   FLASH,        30, 5, 1, 175, NULL},
-  {"751", ROBOT_SPEED_CALIBRATOR * 5, 7, 1 * ROBOT_ACCEL_CALIBRATOR, 150, 3*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 60, 5, 0, 175, NULL},
-  {"821", ROBOT_SPEED_CALIBRATOR * 6, 8, 2 * ROBOT_ACCEL_CALIBRATOR, 160, 3*LOSE_HEALTH_CALIBRATOR,
-   MILITARY,     70, 3, 1, 200, NULL},
-  {"834", ROBOT_SPEED_CALIBRATOR * 7, 8, 1 * ROBOT_ACCEL_CALIBRATOR, 140, 3*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 70, 5, 0, 200, NULL},
-  {"883", ROBOT_SPEED_CALIBRATOR * 2, 8, 1 * ROBOT_ACCEL_CALIBRATOR, 180, 3*LOSE_HEALTH_CALIBRATOR,
-   SINGLE_PULSE, 80, 3, 0, 200, NULL},
-  {"999", ROBOT_SPEED_CALIBRATOR * 6, 9, 2 * ROBOT_ACCEL_CALIBRATOR, 300, 15*LOSE_HEALTH_CALIBRATOR,
-   MILITARY,     60, 3, 1, 225, NULL}
-};
-
-
+druidspec Druidmap[ALLDRUIDTYPES];
 
 #define BULLET_SPEED_CALIBRATOR (ROBOT_SPEED_CALIBRATOR)
 bulletspec Bulletmap[ALLBULLETTYPES] = {
 /*  
-  speed                             salve         blast                 oneshotonly
-                              damage 	phases	                pic.	
+  speed                                      blast                 oneshotonly
+                              damage phases	                pic.	
 ------------------------------------------------------------*/
-  {10 * BULLET_SPEED_CALIBRATOR, 25, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
-  {10 * BULLET_SPEED_CALIBRATOR, 40, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
-  {10 * BULLET_SPEED_CALIBRATOR, 55, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
-  {10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 1, 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 25                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 40                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 55                            , 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
 };
 
 blastspec Blastmap[ALLBLASTTYPES] = {

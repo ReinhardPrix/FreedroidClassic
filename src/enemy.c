@@ -113,7 +113,8 @@ ClearEnemys (void)
       AllEnemys[i].feindphase = 0;
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
       AllEnemys[i].Status = OUT;
-      AllEnemys[i].warten = AllEnemys[i].firewait = 0;
+      AllEnemys[i].warten = 0;
+      AllEnemys[i].firewait = 0;
     }
 
   return;
@@ -366,14 +367,15 @@ AttackInfluence (int enemynum)
       (!AllEnemys[enemynum].firewait) &&
       IsVisible (&AllEnemys[enemynum].pos))
     {
+
+      /*
       if ( MyRandom (AGGRESSIONMAX)  >=
  	  Druidmap[AllEnemys[enemynum].type].aggression )
 	{
-	  /* Diesmal nicht schiessen */
-	  AllEnemys[enemynum].firewait =
-	    MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
+	  AllEnemys[enemynum].firewait = MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
 	  return;
 	}
+      */
 
       Fire_Bullet_Sound ( guntype );
 
@@ -446,8 +448,7 @@ AttackInfluence (int enemynum)
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      AllEnemys[enemynum].firewait =
-	MyRandom ( Druidmap[AllEnemys[enemynum].type].firewait ) ;
+      AllEnemys[enemynum].firewait = Bulletmap[Druidmap[AllEnemys[enemynum].type].gun].recharging_time ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;

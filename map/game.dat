@@ -1,18 +1,27 @@
+
 This is a data file for Freedroid.
 It contains the specification of all droids appearing in freedroid.
 You can edit it with a standard text editor of your choice.
 Feel free to make any modifications you like.
 Freedroid will still accept you modified game dada file as long
 as you stick to the following rules:
-1.) the Text indicating the Start of the Robot Data Section must not
+1.) the text indicating the Start of the Robot Data Section must not
     be removed or changed.  It is needed by Freedroid in order to find
     the robot section in your modified file.
+2.) the text indicating the end of the data file must not be removed.
+    It is needed by Freedroid to ensure the integrity of this data file.
+3.) Every new robot must begin with the typical "Start of new Robot"
+    string AND the asterisks as you see in the existing robots.
+    Best copy an existing robots data to a new location at the end
+    of the robot data section and modify the values to your liking. 
 
+YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
+That will not cause any problems.  
 
-Lets see if it makes sense.
 *** Start of Robot Data Section: *** 
+
 ** Start of new Robot: ** 
-Droidname: 002
+Droidname: 001
 Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
@@ -22,8 +31,9 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 0
+
 ** Start of new Robot: ** 
-Droidname: 124
+Droidname: 123
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -33,8 +43,9 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
+
 ** Start of new Robot: ** 
-Droidname: 130
+Droidname: 139
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -44,6 +55,259 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
+
+** Start of new Robot: ** 
+Droidname: 247
+Maximum speed of this droid: 4.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+
+** Start of new Robot: ** 
+Droidname: 249
+Maximum speed of this droid: 2.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+
+** Start of new Robot: ** 
+Droidname: 302
+Maximum speed of this droid: 7.1
+Class of this droid: 3
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 75
+
+** Start of new Robot: ** 
+Droidname: 329
+Maximum speed of this droid: 1.1
+Class of this droid: 3
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 75
+
+** Start of new Robot: ** 
+Droidname: 420
+Maximum speed of this droid: 2.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 60.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 100
+
+** Start of new Robot: ** 
+Droidname: 476
+Maximum speed of this droid: 4.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 70.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 65
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 100
+
+** Start of new Robot: ** 
+Droidname: 493
+Maximum speed of this droid: 4.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 100
+
+** Start of new Robot: ** 
+Droidname: 516
+Maximum speed of this droid: 3.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+
+** Start of new Robot: ** 
+Droidname: 571
+Maximum speed of this droid: 4.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+
+** Start of new Robot: ** 
+Droidname: 598
+Maximum speed of this droid: 3.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+
+** Start of new Robot: ** 
+Droidname: 614
+Maximum speed of this droid: 3.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 50
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+
+** Start of new Robot: ** 
+Droidname: 615
+Maximum speed of this droid: 4.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 50
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+
+** Start of new Robot: ** 
+Droidname: 629
+Maximum speed of this droid: 2.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+
+** Start of new Robot: ** 
+Droidname: 711
+Maximum speed of this droid: 5.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 110.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 3
+Aggression rate of this droid: 30
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 175
+
+** Start of new Robot: ** 
+Droidname: 742
+Maximum speed of this droid: 4.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 130.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 3
+Aggression rate of this droid: 30
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 175
+
+** Start of new Robot: ** 
+Droidname: 751
+Maximum speed of this droid: 5.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 150.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 175
+
+** Start of new Robot: ** 
+Droidname: 821
+Maximum speed of this droid: 6.1
+Class of this droid: 8
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 160.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 70
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 200
+
+** Start of new Robot: ** 
+Droidname: 834
+Maximum speed of this droid: 7.1
+Class of this droid: 8
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 140.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 70
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+
+** Start of new Robot: ** 
+Droidname: 883
+Maximum speed of this droid: 2.1
+Class of this droid: 8
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 180.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 80
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+
+** Start of new Robot: ** 
+Droidname: 999
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+
+Start of new Robot: ** 
+Droidname: 963
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+
 
 *** End of game.dat File ***
 
