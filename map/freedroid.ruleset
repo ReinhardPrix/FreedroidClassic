@@ -1172,7 +1172,7 @@ Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
+Base item duration=40 plus duration modifier=40
 Picture number=31
 Sound number=0 
 Base list price=50
