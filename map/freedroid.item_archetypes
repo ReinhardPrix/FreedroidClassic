@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 2003 Johannes Prix
+ *   Copyright (c) 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -52,7 +52,7 @@ Common factor for all melee weapons damage values: 1.0
 ** Start of new item specification subsection **
 Item name="none present"
 Position_X=245
-Position_Y=20
+Position_Y=53
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -91,8 +91,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 1
 ** Start of new item specification subsection **
 Item name="Minor Health Capsule"
-Position_X=57
-Position_Y=182
+Position_X=34
+Position_Y=223
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -131,8 +131,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 2
 ** Start of new item specification subsection **
 Item name="Major Health Capsule"
-Position_X=42
-Position_Y=239
+Position_X=17
+Position_Y=279
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1691,8 +1691,8 @@ Item as gun: weapon requires both hands="no"
 // Item No. 41
 ** Start of new item specification subsection **
 Item name="Minor Force Capsule"
-Position_X=38
-Position_Y=297
+Position_X=25
+Position_Y=338
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1731,8 +1731,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 42
 ** Start of new item specification subsection **
 Item name="Major Force Capsule"
-Position_X=53
-Position_Y=343
+Position_X=55
+Position_Y=376
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1811,8 +1811,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 44
 ** Start of new item specification subsection **
 Item name="Source Book of the Healing spell"
-Position_X=43
-Position_Y=42
+Position_X=779
+Position_Y=391
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1851,8 +1851,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 45
 ** Start of new item specification subsection **
 Item name="Source Book of Teleport Home"
-Position_X=44
-Position_Y=83
+Position_X=780
+Position_Y=269
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1891,8 +1891,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 46
 ** Start of new item specification subsection **
 Item name="Source Book of Explosion Circle"
-Position_X=43
-Position_Y=123
+Position_X=779
+Position_Y=211
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1931,8 +1931,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 47
 ** Start of new item specification subsection **
 Item name="Source Book of Explosion Ray"
-Position_X=42
-Position_Y=163
+Position_X=780
+Position_Y=150
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1971,8 +1971,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 48
 ** Start of new item specification subsection **
 Item name="Medium Health Capsule"
-Position_X=43
-Position_Y=204
+Position_X=51
+Position_Y=244
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2011,8 +2011,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 49
 ** Start of new item specification subsection **
 Item name="Medium Force Capsule"
-Position_X=41
-Position_Y=271
+Position_X=22
+Position_Y=308
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2331,8 +2331,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 57
 ** Start of new item specification subsection **
 Item name="Running Power Capsule"
-Position_X=42
-Position_Y=239
+Position_X=33
+Position_Y=260
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2371,8 +2371,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 58
 ** Start of new item specification subsection **
 Item name="Barfs Energy Drink"
-Position_X=57
-Position_Y=182
+Position_X=55
+Position_Y=204
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2387,7 +2387,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="blue_energy_drink/inv_image.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
-Item description text="Warning!  These energy dinks contain (among other ingredients) high doses of coffee!  Beware that the average person overdosed as 12g of caffeine.  One of these bottles contains about double that amount." 
+Item description text="Warning!  These energy dinks contain (among other ingredients) high doses of coffee!  Beware that the average person overdosed as 12g of caffeine.  One of these bottles contains about double that amount."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2691,8 +2691,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 66
 ** Start of new item specification subsection **
 Item name="3 mm Plasma Ammunition"
-Position_X=64
-Position_Y=363
+Position_X=40
+Position_Y=392
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2731,8 +2731,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 67
 ** Start of new item specification subsection **
 Item name="4 MW Laser Weapon Ammunition"
-Position_X=63
-Position_Y=256
+Position_X=39
+Position_Y=289
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2771,8 +2771,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 68
 ** Start of new item specification subsection **
 Item name="2 mm Exterminator Ammunition"
-Position_X=60
-Position_Y=223
+Position_X=56
+Position_Y=270
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2811,8 +2811,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 69
 ** Start of new item specification subsection **
 Item name="VMX Gas Grenade"
-Position_X=60
-Position_Y=64
+Position_X=27
+Position_Y=171
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2851,8 +2851,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 70
 ** Start of new item specification subsection **
 Item name="EMP Shock Grenade"
-Position_X=37
-Position_Y=325
+Position_X=30
+Position_Y=369
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2931,8 +2931,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 72
 ** Start of new item specification subsection **
 Item name="Plasma Grenade"
-Position_X=57
-Position_Y=312
+Position_X=48
+Position_Y=352
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3091,8 +3091,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 76
 ** Start of new item specification subsection **
 Item name="Strength Pill"
-Position_X=62
-Position_Y=283
+Position_X=46
+Position_Y=318
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3131,8 +3131,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 77
 ** Start of new item specification subsection **
 Item name="Dexterity Pill"
-Position_X=56
-Position_Y=145
+Position_X=31
+Position_Y=195
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3171,8 +3171,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 78
 ** Start of new item specification subsection **
 Item name="Magic Pill"
-Position_X=60
-Position_Y=104
+Position_X=48
+Position_Y=177
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3371,8 +3371,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 83
 ** Start of new item specification subsection **
 Item name="Source Book of Plasma Bolt"
-Position_X=28
-Position_Y=104
+Position_X=780
+Position_Y=240
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3411,8 +3411,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 84
 ** Start of new item specification subsection **
 Item name="Source Book of Ice Bolt"
-Position_X=79
-Position_Y=48
+Position_X=780
+Position_Y=360
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3451,8 +3451,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 85
 ** Start of new item specification subsection **
 Item name="Source Book of Poison Bolt"
-Position_X=27
-Position_Y=63
+Position_X=780
+Position_Y=329
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3491,8 +3491,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 86
 ** Start of new item specification subsection **
 Item name="Source Book of Petrification"
-Position_X=64
-Position_Y=31
+Position_X=779
+Position_Y=421
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3531,8 +3531,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 87
 ** Start of new item specification subsection **
 Item name="Source Book of Radial EMP Wave"
-Position_X=72
-Position_Y=84
+Position_X=780
+Position_Y=299
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3571,8 +3571,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 88
 ** Start of new item specification subsection **
 Item name="Source Book of Radial VMX Wave"
-Position_X=72
-Position_Y=165
+Position_X=781
+Position_Y=181
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3611,8 +3611,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 89
 ** Start of new item specification subsection **
 Item name="Source Book of Radial Plasma Wave"
-Position_X=71
-Position_Y=201
+Position_X=780
+Position_Y=120
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3651,8 +3651,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 90
 ** Start of new item specification subsection **
 Item name="Source Book of Detect Items"
-Position_X=37
-Position_Y=357
+Position_X=781
+Position_Y=85
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3691,8 +3691,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 91
 ** Start of new item specification subsection **
 Item name="Source Book of Identify"
-Position_X=49
-Position_Y=379
+Position_X=782
+Position_Y=54
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3730,13 +3730,13 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 92
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
+Item name="Strength Capsule"
 Position_X=244
 Position_Y=91
-Item can be applied in combat="no"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3744,10 +3744,10 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+File or directory name for inventory image="inventory_image_1.png"
+Item uses drop sound with filename="drop_potion_sound.wav"
+Base list price=150
+Item description text="These small containers hold purified strength.  This item will give a temporary boost to dexterity.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3770,13 +3770,13 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 93
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
+Item name="Dexterity Capsule"
 Position_X=245
 Position_Y=126
-Item can be applied in combat="no"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3784,10 +3784,10 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+File or directory name for inventory image="inventory_image_1.png"
+Item uses drop sound with filename="drop_potion_sound.wav"
+Base list price=150
+Item description text="These small containers hold purified dexterity.  This item will give a temporary bonus to dexterity.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
