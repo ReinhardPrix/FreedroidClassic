@@ -553,7 +553,7 @@ void GreatDruidShow(void){
       SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
 		    USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
       DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-      ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY,Infodroid,RealScreen);
+      ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
 
       // PORT if (!GameAdapterPresent) while (!kbhit());
  		   
