@@ -7,7 +7,8 @@ dist-hook:
 	rm -f  `find $(distdir) -name "*.blend"`
 
 install-data-local:
-	echo "Now copying all the data-files recursively (by hand) ..."
+	mkdir -p $(pkgdatadir)
+	echo "Installing the data-files ..."
 	cp -r $(srcdir)/$(EXTRA_DIST) $(pkgdatadir)/
 	echo "... and cleaning CVS and blender-sources:"
 	rm -rf `find $(pkgdatadir) -name CVS`
