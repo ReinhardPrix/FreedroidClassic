@@ -978,43 +978,43 @@ chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
 void
 PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
 {
-  //--------------------
-  // The dialog will always take more than a few seconds to process
-  // so we need to prevent framerate distortion...
-  //
-  Activate_Conservative_Frame_Computation( );
-
-  //--------------------
-  // We make sure that all the chat portraits we might need are
-  // loaded....
-  //
-  make_sure_chat_portraits_loaded_for_this_droid ( ChatDroid ) ;
-  //make_sure_all_chat_portraits_are_loaded ( );
-
-  //--------------------
-  // We select small font for the menu interaction...
-  //
-  SetCurrentFont( FPS_Display_BFont );
-
-  blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
-  our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
-				 Screen , &Droid_Image_Window );
-
-  if ( with_flip ) 
-      our_SDL_flip_wrapper( Screen );
-
+    //--------------------
+    // The dialog will always take more than a few seconds to process
+    // so we need to prevent framerate distortion...
+    //
+    Activate_Conservative_Frame_Computation( );
+    
+    //--------------------
+    // We make sure that all the chat portraits we might need are
+    // loaded....
+    //
+    make_sure_chat_portraits_loaded_for_this_droid ( ChatDroid ) ;
+    //make_sure_all_chat_portraits_are_loaded ( );
+    
+    //--------------------
+    // We select small font for the menu interaction...
+    //
+    SetCurrentFont( FPS_Display_BFont );
+    
+    blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+    our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
+				   Screen , &Droid_Image_Window );
+    
+    if ( with_flip ) 
+	our_SDL_flip_wrapper( Screen );
+    
 #if __WIN32__
-  //--------------------
-  // When using win32, after flipping we may have a damaged (or rather out of date)
-  // screen in the other buffer or something... dunno... well, we just paint the
-  // same background a second time.  That should resolve the problem in all cases.
-  //
-  blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
-  our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
-				 Screen , &Droid_Image_Window );
-  if ( with_flip ) our_SDL_flip_wrapper( Screen );
+    //--------------------
+    // When using win32, after flipping we may have a damaged (or rather out of date)
+    // screen in the other buffer or something... dunno... well, we just paint the
+    // same background a second time.  That should resolve the problem in all cases.
+    //
+    blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+    our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
+				   Screen , &Droid_Image_Window );
+    if ( with_flip ) our_SDL_flip_wrapper( Screen );
 #endif
-
+    
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
 /* ----------------------------------------------------------------------
@@ -1027,146 +1027,146 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
 int
 TextConditionIsTrue ( char* ConditionString )
 {
-  int TempValue;
-  char* CookieText;
-  int i ;
-  int old_town_mission_score;
-
-  if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
+    int TempValue;
+    char* CookieText;
+    int i ;
+    int old_town_mission_score;
+    
+    if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
     {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission complete." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
-
-      if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionIsComplete )
-	return ( TRUE );
-      else
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission complete." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
+	
+	if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionIsComplete )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "MissionAssigned" ) )
+    {
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission assigned." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
+	
+	if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionWasAssigned )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "HaveItemWithCode" ) )
+    {
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for have item in inventory." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to item code: %d." , TempValue );
+	
+	if ( CountItemtypeInInventory ( TempValue , 0 ) )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "PointsToDistributeAtLeast" ) )
+    {
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for available skill points to distribute." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned number of points: %d." , TempValue );
+	
+	if ( Me [ 0 ] . points_to_distribute >= TempValue )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "GoldIsLessThan" ) )
+    {
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for amount of gold Tux has on him." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
+	
+	if ( Me [ 0 ] . Gold < TempValue )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "MeleeSkillLesserThan" ) )
+    {
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for melee skill lesser than value." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned level: %d." , TempValue );
+	
+	if ( Me [ 0 ] . melee_weapon_skill < TempValue )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "CookieIsPlanted" ) )
+    {
+	DebugPrintf ( -4 , "\nCondition String identified as question for cookie planted." );
+	
+	CookieText = 
+	    ReadAndMallocStringFromData ( ConditionString , "CookieIsPlanted:" , ":" ) ;
+	DebugPrintf ( -4 , "\nCookieText mentioned: '%s'." , CookieText );
+	
+	for ( i = 0 ; i < MAX_COOKIES ; i ++ )
+	{
+	    DebugPrintf ( 1 , "\nCookie entry to compare to: %s." , Me [ 0 ] . cookie_list [ i ] );
+	    if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
+	    if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
+		return ( TRUE );
+	    //--------------------
+	    // Now some extra safety, cause the ':' termination character might still be on 
+	    // the cookie or on the comparison string
+	    //
+	    if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= ( ( int ) strlen ( CookieText ) ) ) 
+		return ( TRUE ); 
+	}
+	
+	free ( CookieText );
+	
 	return ( FALSE );
+	
     }
-  else if ( CountStringOccurences ( ConditionString , "MissionAssigned" ) )
+    else if ( CountStringOccurences ( ConditionString , "OldTownMissionScoreAtLeast" ) )
     {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission assigned." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
-
-      if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionWasAssigned )
-	return ( TRUE );
-      else
-	return ( FALSE );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for old town mission score." );
+	ReadValueFromString( ConditionString , ":", "%d" , 
+			     &TempValue , ConditionString + strlen ( ConditionString ) );
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned mission score of : %d old town mission points." , 
+		      TempValue );
+	
+	old_town_mission_score = 0 ;
+	if ( Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete )
+	    old_town_mission_score += 10 ;
+	if ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete )
+	    old_town_mission_score += 15 ;
+	if ( Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete )
+	    old_town_mission_score += 10 ;
+	if ( Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete )
+	    old_town_mission_score += 10 ;
+	if ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete )
+	    old_town_mission_score += 20 ;
+	if ( Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete )
+	    old_town_mission_score += 15 ;
+	
+	if ( old_town_mission_score >= TempValue )
+	    return ( TRUE );
+	else
+	    return ( FALSE );
     }
-  else if ( CountStringOccurences ( ConditionString , "HaveItemWithCode" ) )
-    {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for have item in inventory." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to item code: %d." , TempValue );
-
-      if ( CountItemtypeInInventory ( TempValue , 0 ) )
-	return ( TRUE );
-      else
-	return ( FALSE );
-    }
-  else if ( CountStringOccurences ( ConditionString , "PointsToDistributeAtLeast" ) )
-    {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for available skill points to distribute." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned number of points: %d." , TempValue );
-
-      if ( Me [ 0 ] . points_to_distribute >= TempValue )
-	return ( TRUE );
-      else
-	return ( FALSE );
-    }
-  else if ( CountStringOccurences ( ConditionString , "GoldIsLessThan" ) )
-    {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for amount of gold Tux has on him." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
-
-      if ( Me [ 0 ] . Gold < TempValue )
-	return ( TRUE );
-      else
-	return ( FALSE );
-    }
-  else if ( CountStringOccurences ( ConditionString , "MeleeSkillLesserThan" ) )
-    {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for melee skill lesser than value." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned level: %d." , TempValue );
-
-      if ( Me [ 0 ] . melee_weapon_skill < TempValue )
-	return ( TRUE );
-      else
-	return ( FALSE );
-    }
-  else if ( CountStringOccurences ( ConditionString , "CookieIsPlanted" ) )
-    {
-      DebugPrintf ( -4 , "\nCondition String identified as question for cookie planted." );
-
-      CookieText = 
-	ReadAndMallocStringFromData ( ConditionString , "CookieIsPlanted:" , ":" ) ;
-      DebugPrintf ( -4 , "\nCookieText mentioned: '%s'." , CookieText );
-
-      for ( i = 0 ; i < MAX_COOKIES ; i ++ )
-      {
-	  DebugPrintf ( 1 , "\nCookie entry to compare to: %s." , Me [ 0 ] . cookie_list [ i ] );
-	  if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
-	  if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
-	      return ( TRUE );
-	  //--------------------
-	  // Now some extra safety, cause the ':' termination character might still be on 
-	  // the cookie or on the comparison string
-	  //
-	  if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= ( ( int ) strlen ( CookieText ) ) ) 
-	      return ( TRUE ); 
-      }
-
-      free ( CookieText );
-
-      return ( FALSE );
-
-    }
-  else if ( CountStringOccurences ( ConditionString , "OldTownMissionScoreAtLeast" ) )
-    {
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for old town mission score." );
-      ReadValueFromString( ConditionString , ":", "%d" , 
-			   &TempValue , ConditionString + strlen ( ConditionString ) );
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String mentioned mission score of : %d old town mission points." , 
-		    TempValue );
-
-      old_town_mission_score = 0 ;
-      if ( Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete )
-	old_town_mission_score += 10 ;
-      if ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete )
-	old_town_mission_score += 15 ;
-      if ( Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete )
-	old_town_mission_score += 10 ;
-      if ( Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete )
-	old_town_mission_score += 10 ;
-      if ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete )
-	old_town_mission_score += 20 ;
-      if ( Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete )
-	old_town_mission_score += 15 ;
-
-      if ( old_town_mission_score >= TempValue )
-	return ( TRUE );
-      else
-	return ( FALSE );
-    }
-
-  fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    
+    fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There were was a Condition string (most likely used for an on-goto-command\n\
 in the Freedroid.dialogues file, that contained a seemingly bogus condition.\n\
 Freedroid was unable to determine the type of said condition.",
-			     PLEASE_INFORM, IS_FATAL );
-
-  return ( TRUE );
+			       PLEASE_INFORM, IS_FATAL );
+    
+    return ( TRUE );
 }; // int TextConditionIsTrue ( char* ConditionString )
 
 /* ----------------------------------------------------------------------
@@ -1176,124 +1176,126 @@ Freedroid was unable to determine the type of said condition.",
 void
 ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 {
-  int i;
+    int i;
 
-  //--------------------
-  // Now a menu section has been made.  We do the reaction:
-  // say the samples and the replies, later we'll set the new option values
-  //
-  // But it might be the case that this option is more technical and not accompanied
-  // by any reply.  This case must also be caught.
-  //
-  if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
+    //--------------------
+    // Now a menu section has been made.  We do the reaction:
+    // say the samples and the replies, later we'll set the new option values
+    //
+    // But it might be the case that this option is more technical and not accompanied
+    // by any reply.  This case must also be caught.
+    //
+    if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
     {
-      // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
-      strcat ( chat_protocol , "\1TUX:" );
-      GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
-			    ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid , TRUE ) ;
-      strcat ( chat_protocol , "\2" );
+	// PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+	strcat ( chat_protocol , "\1TUX:" );
+	GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
+			      ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid , TRUE ) ;
+	strcat ( chat_protocol , "\2" );
     }
-  
-  //--------------------
-  // Now we can proceed to execute
-  // the rest of the reply that has been set up for this (the now maybe modified)
-  // dialog option.
-  //
-  for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
+    
+    //--------------------
+    // Now we can proceed to execute
+    // the rest of the reply that has been set up for this (the now maybe modified)
+    // dialog option.
+    //
+    for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
     {
-      //--------------------
-      // Once we encounter an empty string here, we're done with the reply...
-      //
-      if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
-	break;
-      
-      GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
-			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ] , ChatDroid , TRUE ) ;
+	//--------------------
+	// Once we encounter an empty string here, we're done with the reply...
+	//
+	if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
+	    break;
+	
+	GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
+			      ChatRoster [ MenuSelection ] . reply_sample_list [ i ] , ChatDroid , TRUE ) ;
     }
-  
-  //--------------------
-  // Now that all the replies have been made, we can start on changing
-  // the option flags to their new values
-  //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    
+    //--------------------
+    // Now that all the replies have been made, we can start on changing
+    // the option flags to their new values
+    //
+    for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      //--------------------
-      // Maybe all nescessary changes were made by now.  Then it's time
-      // to quit...
-      //
-      if ( ChatRoster [ MenuSelection ] . change_option_nr [ i ] == (-1) ) 
-	break;
-      
-      Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
-	ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nChanged chat flag nr. %d to new value %d." ,
-		    ChatRoster [ MenuSelection ] . change_option_nr[i] ,
-		    ChatRoster [ MenuSelection ] . change_option_to_value[i] );
+	//--------------------
+	// Maybe all nescessary changes were made by now.  Then it's time
+	// to quit...
+	//
+	if ( ChatRoster [ MenuSelection ] . change_option_nr [ i ] == (-1) ) 
+	    break;
+	
+	Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
+	    ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nChanged chat flag nr. %d to new value %d." ,
+		      ChatRoster [ MenuSelection ] . change_option_nr[i] ,
+		      ChatRoster [ MenuSelection ] . change_option_to_value[i] );
     }
-  
-  //--------------------
-  // Maybe this option should also invoke some extra function like opening
-  // a shop interface or something.  So we do this here.
-  //
-  for ( i = 0 ; i < MAX_EXTRAS_PER_OPTION ; i ++ )
+    
+    //--------------------
+    // Maybe this option should also invoke some extra function like opening
+    // a shop interface or something.  So we do this here.
+    //
+    for ( i = 0 ; i < MAX_EXTRAS_PER_OPTION ; i ++ )
     {
-      //--------------------
-      // Maybe all nescessary extras were executed by now.  Then it's time
-      // to quit...
-      //
-      if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
-	break;
-      
-      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
-		    ChatRoster [ MenuSelection ] . extra_list[i] );
-      
-      ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
-
-      //--------------------
-      // Maybe the chat extra has annoyed the chat partner and he is now
-      // suddenly hostile and breaks off the chat.  This is handled here.
-      //
-      if ( ! ChatDroid -> is_friendly ) return ;
-      
-      //--------------------
-      // It can't hurt to have the overall background redrawn after each extra command
-      // which could have destroyed the background by drawing e.g. a shop interface
-      PrepareMultipleChoiceDialog ( ChatDroid , FALSE ) ;
+	//--------------------
+	// Maybe all nescessary extras were executed by now.  Then it's time
+	// to quit...
+	//
+	if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
+	    break;
+	
+	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
+		      ChatRoster [ MenuSelection ] . extra_list[i] );
+	
+	ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
+	
+	//--------------------
+	// Maybe the chat extra has annoyed the chat partner and he is now
+	// suddenly hostile and breaks off the chat.  This is handled here.
+	//
+	if ( ! ChatDroid -> is_friendly ) return ;
+	
+	//--------------------
+	// It can't hurt to have the overall background redrawn after each extra command
+	// which could have destroyed the background by drawing e.g. a shop interface
+	PrepareMultipleChoiceDialog ( ChatDroid , FALSE ) ;
     }
-
-  //--------------------
-  // Maybe there was an ON-GOTO-CONDITION specified for this option.
-  // Then of course we have to jump to the new location!!!
-  //
-  while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+    
+    //--------------------
+    // Maybe there was an ON-GOTO-CONDITION specified for this option.
+    // Then of course we have to jump to the new location!!!
+    //
+    while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
     {
-      DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
-      if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+	DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
+	if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
 	{
-	  DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
-		       ChatRoster [ MenuSelection ] . on_goto_first_target );
-	  MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
-
-	  ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-	  return ;
+	    DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
+			 ChatRoster [ MenuSelection ] . on_goto_first_target );
+	    MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
+	    
+	    ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	    return ;
 	}
-      else
+	else
 	{
-	  DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
-		       ChatRoster [ MenuSelection ] . on_goto_second_target );
-	  MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
-
-	  ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-	  return ;
+	    DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
+			 ChatRoster [ MenuSelection ] . on_goto_second_target );
+	    MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
+	    
+	    ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	    return ;
 	}
     }
-  
+    
 }; // void ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This is the most important subfunction of the whole chat with friendly
+ * droids and characters.  After the pure chat data has been loaded from
+ * disk, this function is invoked to handle the actual chat interaction
+ * and the dialog flow.
  * ---------------------------------------------------------------------- */
 void
 DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int clear_protocol )
@@ -1329,274 +1331,279 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
 	}
     }
-  // DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+    // DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
 
-  //--------------------
-  // Now we execute all the options that were marked to be executed
-  // prior to dialog startup
-  //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    //--------------------
+    // Now we execute all the options that were marked to be executed
+    // prior to dialog startup
+    //
+    for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
+	if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
 	{
-	  DebugPrintf ( 0 , "\nExecuting option no. %d prior to dialog start.\n" , i );
-	  ProcessThisChatOption ( i , PlayerNum , ChatPartnerCode , ChatDroid );
+	    DebugPrintf ( 0 , "\nExecuting option no. %d prior to dialog start.\n" , i );
+	    ProcessThisChatOption ( i , PlayerNum , ChatPartnerCode , ChatDroid );
 	}
     }
-
-  while (1)
+    
+    while (1)
     {
-      //--------------------
-      // Now maybe this is one of the bots that is rushing the Tux!  Then of course
-      // we won't do the first selection, but instead immediately call the very first
-      // dialog option and then continue with normal dialog.
-      //
-      if ( ChatDroid -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
+	//--------------------
+	// Now maybe this is one of the bots that is rushing the Tux!  Then of course
+	// we won't do the first selection, but instead immediately call the very first
+	// dialog option and then continue with normal dialog.
+	//
+	if ( ChatDroid -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
 	{
-	  MenuSelection = 1 ;
-	  ChatDroid -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-	  ChatDroid -> persuing_given_course = FALSE ;
-	  ChatDroid -> has_greeted_influencer = TRUE ;
+	    MenuSelection = 1 ;
+	    ChatDroid -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	    ChatDroid -> persuing_given_course = FALSE ;
+	    ChatDroid -> has_greeted_influencer = TRUE ;
 	}
-      else
-	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
-
-      //--------------------
-      // We do some correction of the menu selection variable:
-      // The first entry of the menu will give a 1 and so on and therefore
-      // we need to correct this to more C style.
-      //
-      MenuSelection --;
-      if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 ) || ( MenuSelection < 0 ) )
+	else
+	    MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
+	
+	//--------------------
+	// We do some correction of the menu selection variable:
+	// The first entry of the menu will give a 1 and so on and therefore
+	// we need to correct this to more C style.
+	//
+	MenuSelection --;
+	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 ) || ( MenuSelection < 0 ) )
 	{
-	  MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
+	    MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
 	}
-
-      ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-
-      if ( ! ChatDroid -> is_friendly ) return ;
-
-      if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
+	
+	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	
+	if ( ! ChatDroid -> is_friendly ) return ;
+	
+	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
 	{
-	  return;
+	    return;
 	}
     }
-  
+    
 }; // void DoChatFromChatRosterData( ... )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the Tux (or rather the player :) ) clicks on a friendly droid,
+ * a chat menu will be invoked to do the communication with that friendly
+ * character.  However, before the chat menu even starts up, there is a
+ * certain time frame still spent in the isometric viewpoint where the
+ * two characters (Tux and the chat partner) should turn to each other,
+ * so the scene looks a bit more personal and realistic.  This function
+ * handles that time interval and the two characters turning to each
+ * other.
  * ---------------------------------------------------------------------- */
 void
 DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 {
-  int TurningDone = FALSE;
-  float AngleInBetween;
-  // float WaitBeforeTurningTime = 0.4 ;
-  // float WaitAfterTurningTime = 0.4 ;
-  float WaitBeforeTurningTime = 0.1 ;
-  float WaitAfterTurningTime = 0.1 ;
-  int TurningStartTime;
-  float OldAngle;
-  float RightAngle;
-  float TurningDirection;
-
+    int TurningDone = FALSE;
+    float AngleInBetween;
+    float WaitBeforeTurningTime = 0.1 ;
+    float WaitAfterTurningTime = 0.1 ;
+    int TurningStartTime;
+    float OldAngle;
+    float RightAngle;
+    float TurningDirection;
+    
 #define TURN_SPEED 90.0
-
-  Activate_Conservative_Frame_Computation();
-
-  //--------------------
-  // We make sure the one droid in question is in the standing and not
-  // in the middle of the walking motion when turning to the chat partner...
-  //
-  // Calling AnimatEnemies() ONCE for this task seems justified...
-  //
-  ChatDroid -> speed . x = 0 ;
-  ChatDroid -> speed . y = 0 ;
-  AnimateEnemys ( ) ; 
-
-  //--------------------
-  // At first do some waiting before the turning around starts...
-  //
-  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
-  while ( !TurningDone )
+    
+    Activate_Conservative_Frame_Computation();
+    
+    //--------------------
+    // We make sure the one droid in question is in the standing and not
+    // in the middle of the walking motion when turning to the chat partner...
+    //
+    // Calling AnimatEnemies() ONCE for this task seems justified...
+    //
+    ChatDroid -> speed . x = 0 ;
+    ChatDroid -> speed . y = 0 ;
+    AnimateEnemys ( ) ; 
+    
+    //--------------------
+    // At first do some waiting before the turning around starts...
+    //
+    TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
+    while ( !TurningDone )
     {
-      StartTakingTimeForFPSCalculation();       
-
-      AssembleCombatPicture ( SHOW_ITEMS ); 
-
-      our_SDL_flip_wrapper ( Screen );
-      
-      if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
-	TurningDone = TRUE;
-      
-      ComputeFPSForThisFrame();
+	StartTakingTimeForFPSCalculation();       
+	
+	AssembleCombatPicture ( SHOW_ITEMS ); 
+	
+	our_SDL_flip_wrapper ( Screen );
+	
+	if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
+	    TurningDone = TRUE;
+	
+	ComputeFPSForThisFrame();
     }
-
-  //--------------------
-  // Now we find out what the final target direction of facing should
-  // be.
-  //
-  // For this we use the atan2, which gives angles from -pi to +pi.
-  // 
-  // Attention must be paid, since 'y' in our coordinates ascends when
-  // moving down and descends when moving 'up' on the scren.  So that
-  // one sign must be corrected, so that everything is right again.
-  //
-  RightAngle = ( atan2 ( - ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ) ,  
-			 + ( Me [ 0 ] . pos . x - ChatDroid -> pos . x ) ) * 180.0 / M_PI ) ;
-  //
-  // Another thing there is, that must also be corrected:  '0' begins
-  // with facing 'down' in the current rotation models.  Therefore angle
-  // 0 corresponds to that.  We need to shift again...
-  //
-  RightAngle += 90 ;
-
-  //--------------------
-  // Now it's time do determine which direction to move, i.e. if to 
-  // turn to the left or to turn to the right...  For this purpose
-  // we convert the current angle, which is between 270 and -90 degrees
-  // to one between -180 and +180 degrees...
-  //
-  if ( RightAngle > 180.0 ) RightAngle -= 360.0 ; 
-
-  // DebugPrintf ( 0 , "\nRightAngle: %f." , RightAngle );
-  // DebugPrintf ( 0 , "\nCurrent angle: %f." , ChatDroid -> current_angle );
-
-  //--------------------
-  // Having done these preparations, it's now easy to determine the right
-  // direction of rotation...
-  //
-  AngleInBetween = RightAngle - ChatDroid -> current_angle ;
-  if ( AngleInBetween > 180 ) AngleInBetween -= 360;
-  if ( AngleInBetween <= -180 ) AngleInBetween += 360;
-
-  if ( AngleInBetween > 0 )
-    TurningDirection = +1 ; 
-  else 
-    TurningDirection = -1 ; 
-
-  //--------------------
-  // Now we turn and show the image until both chat partners are
-  // facing each other, mostly the chat partner is facing the Tux,
-  // since the Tux may still turn around to somewhere else all the 
-  // while, if the chose so
-  //
-  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
-  while ( !TurningDone )
+    
+    //--------------------
+    // Now we find out what the final target direction of facing should
+    // be.
+    //
+    // For this we use the atan2, which gives angles from -pi to +pi.
+    // 
+    // Attention must be paid, since 'y' in our coordinates ascends when
+    // moving down and descends when moving 'up' on the scren.  So that
+    // one sign must be corrected, so that everything is right again.
+    //
+    RightAngle = ( atan2 ( - ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ) ,  
+			   + ( Me [ 0 ] . pos . x - ChatDroid -> pos . x ) ) * 180.0 / M_PI ) ;
+    //
+    // Another thing there is, that must also be corrected:  '0' begins
+    // with facing 'down' in the current rotation models.  Therefore angle
+    // 0 corresponds to that.  We need to shift again...
+    //
+    RightAngle += 90 ;
+    
+    //--------------------
+    // Now it's time do determine which direction to move, i.e. if to 
+    // turn to the left or to turn to the right...  For this purpose
+    // we convert the current angle, which is between 270 and -90 degrees
+    // to one between -180 and +180 degrees...
+    //
+    if ( RightAngle > 180.0 ) RightAngle -= 360.0 ; 
+    
+    // DebugPrintf ( 0 , "\nRightAngle: %f." , RightAngle );
+    // DebugPrintf ( 0 , "\nCurrent angle: %f." , ChatDroid -> current_angle );
+    
+    //--------------------
+    // Having done these preparations, it's now easy to determine the right
+    // direction of rotation...
+    //
+    AngleInBetween = RightAngle - ChatDroid -> current_angle ;
+    if ( AngleInBetween > 180 ) AngleInBetween -= 360;
+    if ( AngleInBetween <= -180 ) AngleInBetween += 360;
+    
+    if ( AngleInBetween > 0 )
+	TurningDirection = +1 ; 
+    else 
+	TurningDirection = -1 ; 
+    
+    //--------------------
+    // Now we turn and show the image until both chat partners are
+    // facing each other, mostly the chat partner is facing the Tux,
+    // since the Tux may still turn around to somewhere else all the 
+    // while, if the chose so
+    //
+    TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
+    while ( !TurningDone )
     {
-      StartTakingTimeForFPSCalculation();       
-
-      AssembleCombatPicture ( SHOW_ITEMS ); 
-      our_SDL_flip_wrapper ( Screen );
-
-      OldAngle = ChatDroid -> current_angle;
-
-      ChatDroid -> current_angle = OldAngle + TurningDirection * Frame_Time() * TURN_SPEED ;
-
-      //--------------------
-      // In case of positive turning direction, we wait, till our angle is greater
-      // than the right angle.
-      // Otherwise we wait till our angle is lower than the right angle.
-      //
-      AngleInBetween = RightAngle - ChatDroid -> current_angle ;
-      if ( AngleInBetween > 180 ) AngleInBetween -= 360;
-      if ( AngleInBetween <= -180 ) AngleInBetween += 360;
-      
-      if ( ( TurningDirection > 0 ) && ( AngleInBetween < 0 ) ) TurningDone = TRUE;
-      if ( ( TurningDirection < 0 ) && ( AngleInBetween > 0 ) ) TurningDone = TRUE;
-
-      ComputeFPSForThisFrame();
+	StartTakingTimeForFPSCalculation();       
+	
+	AssembleCombatPicture ( SHOW_ITEMS ); 
+	our_SDL_flip_wrapper ( Screen );
+	
+	OldAngle = ChatDroid -> current_angle;
+	
+	ChatDroid -> current_angle = OldAngle + TurningDirection * Frame_Time() * TURN_SPEED ;
+	
+	//--------------------
+	// In case of positive turning direction, we wait, till our angle is greater
+	// than the right angle.
+	// Otherwise we wait till our angle is lower than the right angle.
+	//
+	AngleInBetween = RightAngle - ChatDroid -> current_angle ;
+	if ( AngleInBetween > 180 ) AngleInBetween -= 360;
+	if ( AngleInBetween <= -180 ) AngleInBetween += 360;
+	
+	if ( ( TurningDirection > 0 ) && ( AngleInBetween < 0 ) ) TurningDone = TRUE;
+	if ( ( TurningDirection < 0 ) && ( AngleInBetween > 0 ) ) TurningDone = TRUE;
+	
+	ComputeFPSForThisFrame();
     }
-
-  //--------------------
-  // Now that turning around is basically done, we still wait a few frames
-  // until we start the dialog...
-  //
-  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
-  while ( !TurningDone )
+    
+    //--------------------
+    // Now that turning around is basically done, we still wait a few frames
+    // until we start the dialog...
+    //
+    TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
+    while ( !TurningDone )
     {
-      StartTakingTimeForFPSCalculation();       
-
-      AssembleCombatPicture ( SHOW_ITEMS ); 
-      our_SDL_flip_wrapper ( Screen );
-      
-      if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )
-	TurningDone = TRUE;
-      
-      ComputeFPSForThisFrame();
+	StartTakingTimeForFPSCalculation();       
+	
+	AssembleCombatPicture ( SHOW_ITEMS ); 
+	our_SDL_flip_wrapper ( Screen );
+	
+	if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )
+	    TurningDone = TRUE;
+	
+	ComputeFPSForThisFrame();
     }
-
+    
 }; // void DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 
 /* ----------------------------------------------------------------------
- * This function does the communication routine when the influencer in
- * transfer mode touched a friendly droid.
+ * This is more or less the 'main' function of the chat with friendly 
+ * droids and characters.  It is invoked directly from the user interface
+ * function as soon as the player requests communication or there is a
+ * friendly bot who rushes Tux and opens talk.
  * ---------------------------------------------------------------------- */
 void 
 ChatWithFriendlyDroid( Enemy ChatDroid )
 {
-  int i ;
-  SDL_Rect Chat_Window;
-  char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
-  int ChatFlagsIndex = (-1);
-  char *fpath;
-  char tmp_filename[5000];
-
-  //--------------------
-  // Now that we know, that a chat with a friendly droid is planned, the 
-  // friendly droid and the Tux should first turn to each other before the
-  // real dialog is started...
-  //
-  DialogPartnersTurnToEachOther ( ChatDroid );
-
-  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-
-  //--------------------
-  // First we empty the array of possible answers in the
-  // chat interface.
-  //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    int i ;
+    SDL_Rect Chat_Window;
+    char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+    int ChatFlagsIndex = (-1);
+    char *fpath;
+    char tmp_filename[5000];
+    
+    //--------------------
+    // Now that we know, that a chat with a friendly droid is planned, the 
+    // friendly droid and the Tux should first turn to each other before the
+    // real dialog is started...
+    //
+    DialogPartnersTurnToEachOther ( ChatDroid );
+    
+    Chat_Window . x = 242 ; Chat_Window . y = 100; Chat_Window . w = 380; Chat_Window . h = 314;
+    
+    //--------------------
+    // First we empty the array of possible answers in the
+    // chat interface.
+    //
+    for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      DialogMenuTexts [ i ] = "" ;
+	DialogMenuTexts [ i ] = "" ;
     }
-
-  //--------------------
-  // This should make all the answering possibilities available
-  // that are there without any prerequisite and that can be played
-  // through again and again without any modification.
-  //
-  RestoreChatVariableToInitialValue( 0 ); // Player=0 for now.
-  
-
-  // From initiating transfer mode, space might still have been pressed. 
-  // So we wait till it's released...
-  while ( SpacePressed ( ) );
-  
-  //--------------------
-  // We clean out the chat roster from any previous use
-  //
-  InitChatRosterForNewDialogue(  );
-
-  ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid -> dialog_section_name ) ;
-
-  //--------------------
-  // Now that the 'LoadChatRosterWithChatSequence' function will also be
-  // used from within the dialog editor, but with explicit path and file
-  // name there, we can not assemble the file name inside of the function
-  // but must do it here instead...
-  //
-  strcpy ( tmp_filename , ChatDroid -> dialog_section_name );
-  strcat ( tmp_filename , ".dialog" );
-  fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
-  LoadChatRosterWithChatSequence ( fpath );
-  
-  //--------------------
-  // Now with the loaded chat data, we can do the real chat now...
-  //
-  DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid , TRUE );
-
+    
+    //--------------------
+    // This should make all the answering possibilities available
+    // that are there without any prerequisite and that can be played
+    // through again and again without any modification.
+    //
+    RestoreChatVariableToInitialValue( 0 ); // Player=0 for now.
+    
+    // From initiating transfer mode, space might still have been pressed. 
+    // So we wait till it's released...
+    while ( SpacePressed ( ) );
+    
+    //--------------------
+    // We clean out the chat roster from any previous use
+    //
+    InitChatRosterForNewDialogue(  );
+    
+    ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid -> dialog_section_name ) ;
+    
+    //--------------------
+    // Now that the 'LoadChatRosterWithChatSequence' function will also be
+    // used from within the dialog editor, but with explicit path and file
+    // name there, we can not assemble the file name inside of the function
+    // but must do it here instead...
+    //
+    strcpy ( tmp_filename , ChatDroid -> dialog_section_name );
+    strcat ( tmp_filename , ".dialog" );
+    fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
+    LoadChatRosterWithChatSequence ( fpath );
+    
+    //--------------------
+    // Now with the loaded chat data, we can do the real chat now...
+    //
+    DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid , TRUE );
+    
 }; // void ChatWithFriendlyDroid( int Enum );
 
 /* ----------------------------------------------------------------------
@@ -1606,32 +1613,32 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 void 
 EnemyHitByBulletText( int Enum )
 {
-  Enemy ThisRobot=&AllEnemys[ Enum ];
+    Enemy ThisRobot=&AllEnemys[ Enum ];
 
-  if ( !GameConfig.Enemy_Hit_Text ) return;
-  
-  ThisRobot->TextVisibleTime=0;
-  if ( !ThisRobot->is_friendly )
-    switch (MyRandom(4))
-    {
-    case 0:
-      ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
-      break;
-    case 1:
-      ThisRobot->TextToBeDisplayed="System fault. Please buy a newer version.";
-      break;
-    case 2:
-      ThisRobot->TextToBeDisplayed="System error. Might be a virus.";
-      break;
-    case 3:
-      ThisRobot->TextToBeDisplayed="System error. Pleae buy an upgrade from MS.";
-      break;
-    case 4:
-      ThisRobot->TextToBeDisplayed="System error. Press any key to reboot.";
-      break;
-    }
-  else
-    ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
+    if ( !GameConfig.Enemy_Hit_Text ) return;
+    
+    ThisRobot->TextVisibleTime=0;
+    if ( !ThisRobot->is_friendly )
+	switch (MyRandom(4))
+	{
+	    case 0:
+		ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
+		break;
+	    case 1:
+		ThisRobot->TextToBeDisplayed="System fault. Please buy a newer version.";
+		break;
+	    case 2:
+		ThisRobot->TextToBeDisplayed="System error. Might be a virus.";
+		break;
+	    case 3:
+		ThisRobot->TextToBeDisplayed="System error. Pleae buy an upgrade from MS.";
+		break;
+	    case 4:
+		ThisRobot->TextToBeDisplayed="System error. Press any key to reboot.";
+		break;
+	}
+    else
+	ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
 }; // void EnemyHitByBullet( int Enum );
 
 /* ----------------------------------------------------------------------
@@ -1641,29 +1648,29 @@ EnemyHitByBulletText( int Enum )
 void 
 EnemyInfluCollisionText ( int Enum )
 {
-  Enemy ThisRobot=&AllEnemys[ Enum ];
-
-  if ( !GameConfig.Enemy_Bump_Text ) return;
-  
-  ThisRobot->TextVisibleTime=0;
-	      
-  if ( ThisRobot->is_friendly )
+    Enemy ThisRobot=&AllEnemys[ Enum ];
+    
+    if ( !GameConfig.Enemy_Bump_Text ) return;
+    
+    ThisRobot->TextVisibleTime=0;
+    
+    if ( ThisRobot->is_friendly )
     {
-      ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
+	ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
     }
-  else
+    else
     {
-      switch (MyRandom(1))
+	switch ( MyRandom ( 1 ) )
 	{
-	case 0:
-	  ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
-	  break;
-	case 1:
-	  ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
-	  break;
+	    case 0:
+		ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+		break;
+	    case 1:
+		ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
+		break;
 	}
     }
-
+    
 }; // void EnemyInfluCollisionText ( int Enum )
 
 /* ----------------------------------------------------------------------
@@ -1673,21 +1680,21 @@ EnemyInfluCollisionText ( int Enum )
 void 
 AddStandingAndAimingText ( int Enum )
 {
-  Enemy ThisRobot=&AllEnemys[ Enum ];
-
-  if ( !GameConfig.Enemy_Aim_Text ) return;
-  
-  ThisRobot->TextVisibleTime=0;
-	      
-  if ( ( fabsf (Me[0].speed.x) < 1 ) && ( fabsf (Me[0].speed.y) < 1 ) )
+    Enemy ThisRobot=&AllEnemys[ Enum ];
+    
+    if ( !GameConfig.Enemy_Aim_Text ) return;
+    
+    ThisRobot->TextVisibleTime=0;
+    
+    if ( ( fabsf ( Me [ 0 ] . speed . x ) < 1 ) && ( fabsf ( Me [ 0 ] . speed . y ) < 1 ) )
     {
-      ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
+	ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
     }
-  else
+    else
     {
-      ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
+	ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
     }
-
+    
 }; // void AddStandingAndAimingText( int Enum )
 
 /* ----------------------------------------------------------------------
@@ -1697,40 +1704,40 @@ AddStandingAndAimingText ( int Enum )
 void
 AddInfluBurntText( void )
 {
-  int FinalTextNr;
-
-  if ( !GameConfig.Influencer_Blast_Text ) return;
-  
-  Me[0].TextVisibleTime=0;
-  
-  FinalTextNr=MyRandom ( 6 );
-  switch ( FinalTextNr )
+    int FinalTextNr;
+    
+    if ( !GameConfig.Influencer_Blast_Text ) return;
+    
+    Me[0].TextVisibleTime=0;
+    
+    FinalTextNr=MyRandom ( 6 );
+    switch ( FinalTextNr )
     {
-    case 0:
-      Me[0].TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
-      break;
-    case 1:
-      Me[0].TextToBeDisplayed="Hell, that blast was hot!";
-      break;
-    case 2:
-      Me[0].TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
-      break;
-    case 3:
-      Me[0].TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
-      break;
-    case 4:
-      Me[0].TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
-      break;
-    case 5:
-      Me[0].TextToBeDisplayed="I hope that didn't melt any circuits!";
-      break;
-    case 6:
-      Me[0].TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
-      break;
-    default:
-      printf("\nError in AddInfluBurntText! That shouldn't be happening.");
-      Terminate(ERR);
-      break;
+	case 0:
+	    Me[0].TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
+	    break;
+	case 1:
+	    Me[0].TextToBeDisplayed="Hell, that blast was hot!";
+	    break;
+	case 2:
+	    Me[0].TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
+	    break;
+	case 3:
+	    Me[0].TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
+	    break;
+	case 4:
+	    Me[0].TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
+	    break;
+	case 5:
+	    Me[0].TextToBeDisplayed="I hope that didn't melt any circuits!";
+	    break;
+	case 6:
+	    Me[0].TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
+	    break;
+	default:
+	    printf("\nError in AddInfluBurntText! That shouldn't be happening.");
+	    Terminate(ERR);
+	    break;
     }
 }; // void AddInfluBurntText( void )
 
@@ -1740,10 +1747,10 @@ AddInfluBurntText( void )
 void
 SetTextCursor ( int x , int y )
 {
-  MyCursorX = x;
-  MyCursorY = y;
-
-  return;
+    MyCursorX = x; 
+    MyCursorY = y; 
+    
+    return;
 }; // void SetTextCursor ( int x , int y )
 
 /* -----------------------------------------------------------------
@@ -1758,107 +1765,107 @@ SetTextCursor ( int x , int y )
 int
 ScrollText (char *Text, int startx, int starty, int EndLine , int background_code )
 {
-  int Number_Of_Line_Feeds = 0;	// number of lines used for the text
-  char *textpt;			// mobile pointer to the text
-  int InsertLine = starty;
-  int speed = +4;
-  int maxspeed = 8;
-
-  Activate_Conservative_Frame_Computation( );
-
-  if ( background_code != ( -1 ) )
-    blit_special_background ( background_code );
-
-  SetCurrentFont( Para_BFont );
-
-  // count the number of lines in the text
-  textpt = Text;
-  while (*textpt++)
-    if (*textpt == '\n')
-      Number_Of_Line_Feeds++;
-
-  while ( !SpacePressed () 
-	  || ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
-				  GetMousePos_y()  ) )
-	  || ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
-				  GetMousePos_y()  ) ) )
-    {
-      if ( UpPressed () 
-	   || ( SpacePressed () 
-		&& ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
-					GetMousePos_y()  ) ) ) )
-	{
-	  speed--;
-	  if (speed < -maxspeed)
-	    speed = -maxspeed;
-	}
-      if ( DownPressed ()
-	   || ( SpacePressed () 
-		&& ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
-					GetMousePos_y()  ) ) ) )
-	{
-	  speed++;
-	  if (speed > maxspeed)
-	    speed = maxspeed;
-	}
-
-      if ( MouseWheelDownPressed() )
-	{
-	  speed++;
-	  if (speed > maxspeed)
-	    speed = maxspeed;
-	}
-      if ( MouseWheelUpPressed() )
-	{
-	  speed--;
-	  if (speed < -maxspeed)
-	    speed = -maxspeed;
-	}
-
-      SDL_Delay (30);
-
-      if ( background_code != ( -1 ) )
+    int Number_Of_Line_Feeds = 0;	// number of lines used for the text
+    char *textpt;			// mobile pointer to the text
+    int InsertLine = starty;
+    int speed = +4;
+    int maxspeed = 8;
+    
+    Activate_Conservative_Frame_Computation( );
+    
+    if ( background_code != ( -1 ) )
 	blit_special_background ( background_code );
-
-      if (!DisplayText (Text, startx, InsertLine, &User_Rect))
+    
+    SetCurrentFont( Para_BFont );
+    
+    // count the number of lines in the text
+    textpt = Text;
+    while (*textpt++)
+	if (*textpt == '\n')
+	    Number_Of_Line_Feeds++;
+    
+    while ( !SpacePressed () 
+	    || ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
+					 GetMousePos_y()  ) )
+	    || ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
+					 GetMousePos_y()  ) ) )
+    {
+	if ( UpPressed () 
+	     || ( SpacePressed () 
+		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
+					       GetMousePos_y()  ) ) ) )
 	{
-	  // JP: I've disabled this, since with this enabled we won't even
-	  // see a single line of the first section of the briefing.
-	  // But this leads to that we currently NEVER can see the second 
-	  // or third part of the briefing text, cause it will not start
-	  // the new text part when the lower end of the first text part
-	  // is reached.  I don't consider this bug release-critical.
-	  //
-	  // break;  /* Text has been scrolled outside User_Rect */
+	    speed--;
+	    if (speed < -maxspeed)
+		speed = -maxspeed;
 	}
-
-      InsertLine -= speed;
-
-      //--------------------
-      // We might add some buttons to be displayed here, so that, if you don't have
-      // a mouse wheel and don't know about cursor keys, you can still click on these
-      // buttons to control the scrolling speed of the text.
-      //
-      ShowGenericButtonFromList ( SCROLL_TEXT_UP_BUTTON );
-      ShowGenericButtonFromList ( SCROLL_TEXT_DOWN_BUTTON );
-
-      our_SDL_flip_wrapper (Screen);
-
-      //--------------------
-      // impose some limit on the amount to scroll away downwards
-      //
-      if (InsertLine > GameConfig . screen_height - 10 && (speed < 0))
+	if ( DownPressed ()
+	     || ( SpacePressed () 
+		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
+					       GetMousePos_y()  ) ) ) )
 	{
-	  InsertLine = GameConfig . screen_height - 10;
-	  speed = 0;
+	    speed++;
+	    if (speed > maxspeed)
+		speed = maxspeed;
 	}
-
+	
+	if ( MouseWheelDownPressed() )
+	{
+	    speed++;
+	    if (speed > maxspeed)
+		speed = maxspeed;
+	}
+	if ( MouseWheelUpPressed() )
+	{
+	    speed--;
+	    if (speed < -maxspeed)
+		speed = -maxspeed;
+	}
+	
+	SDL_Delay (30);
+	
+	if ( background_code != ( -1 ) )
+	    blit_special_background ( background_code );
+	
+	if (!DisplayText (Text, startx, InsertLine, &User_Rect))
+	{
+	    // JP: I've disabled this, since with this enabled we won't even
+	    // see a single line of the first section of the briefing.
+	    // But this leads to that we currently NEVER can see the second 
+	    // or third part of the briefing text, cause it will not start
+	    // the new text part when the lower end of the first text part
+	    // is reached.  I don't consider this bug release-critical.
+	    //
+	    // break;  /* Text has been scrolled outside User_Rect */
+	}
+	
+	InsertLine -= speed;
+	
+	//--------------------
+	// We might add some buttons to be displayed here, so that, if you don't have
+	// a mouse wheel and don't know about cursor keys, you can still click on these
+	// buttons to control the scrolling speed of the text.
+	//
+	ShowGenericButtonFromList ( SCROLL_TEXT_UP_BUTTON );
+	ShowGenericButtonFromList ( SCROLL_TEXT_DOWN_BUTTON );
+	
+	our_SDL_flip_wrapper (Screen);
+	
+	//--------------------
+	// impose some limit on the amount to scroll away downwards
+	//
+	if (InsertLine > GameConfig . screen_height - 10 && (speed < 0))
+	{
+	    InsertLine = GameConfig . screen_height - 10;
+	    speed = 0;
+	}
+	
     } // while !Space_Pressed 
-
-  while ( SpacePressed() ); // so that we don't touch again immediately.
-
-  return OK;
-
+    
+    while ( SpacePressed() ); // so that we don't touch again immediately.
+    
+    return OK;
+    
 }; // int ScrollText ( ... )
 
 /*-----------------------------------------------------------------
@@ -1887,69 +1894,69 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 int
 DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
 {
-  char *tmp;	// mobile pointer to the current position as the text is drawn
-  // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
-
-  SDL_Rect store_clip;
-
-  if ( startx != -1 ) MyCursorX = startx;		
-  if ( starty != -1 ) MyCursorY = starty;
-
-  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
-  if (clip)
-    SDL_SetClipRect (Screen, clip);
-  else
+    char *tmp;	// mobile pointer to the current position as the text is drawn
+    // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
+    
+    SDL_Rect store_clip;
+    
+    if ( startx != -1 ) MyCursorX = startx;		
+    if ( starty != -1 ) MyCursorY = starty;
+    
+    SDL_GetClipRect (Screen, &store_clip);  // store previous clip-rect 
+    if (clip)
+	SDL_SetClipRect (Screen, clip);
+    else
     {
-      clip = & User_Rect;
+	clip = & User_Rect;
     }
-
-
-  tmp = Text;			/* running text-pointer */
-
-  while ( *tmp && (MyCursorY < clip->y + clip->h) )
+    
+    
+    tmp = Text;			// running text-pointer 
+    
+    while ( *tmp && (MyCursorY < clip->y + clip->h) )
     {
-      if ( *tmp == '\n' )
+	if ( *tmp == '\n' )
 	{
-	  MyCursorX = clip->x;
-	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+	    MyCursorX = clip->x;
+	    MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
 	}
-      else
-	DisplayChar (*tmp);
-      tmp++;
-
-      //--------------------
-      // Here we plant in the question for ---more--- and a key to be pressed,
-      // before we clean the screen and restart displaying text from the top
-      // of the given Clipping rectangle
-      //
-      // if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
-      if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
+	else
+	    DisplayChar (*tmp);
+	tmp++;
+	
+	//--------------------
+	// Here we plant in the question for ---more--- and a key to be pressed,
+	// before we clean the screen and restart displaying text from the top
+	// of the given Clipping rectangle
+	//
+	// if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
+	if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
-	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
-	  our_SDL_flip_wrapper( Screen );
-	  while ( !SpacePressed() );
-	  while (  SpacePressed() );
-	  our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
-	  MyCursorY = clip->y;
-	  our_SDL_flip_wrapper( Screen );
+	    DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
+	    our_SDL_flip_wrapper( Screen );
+	    while ( !SpacePressed() );
+	    while (  SpacePressed() );
+	    our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
+	    MyCursorY = clip->y;
+	    our_SDL_flip_wrapper( Screen );
 	};
-      
-      if (clip)
-	ImprovedCheckLineBreak(tmp, clip);   /* dont write over right border */
-
-    } // while !FensterVoll()
-
-   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
-
-  /*
-   * ScrollText() wants to know if we still wrote something inside the
-   * clip-rectangle, of if the Text has been scrolled out
-   */
-   if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
-     return FALSE;  /* no text was written inside clip */
-   else
-     return TRUE; 
-
+	
+	if ( clip )
+	    ImprovedCheckLineBreak ( tmp , clip );   // dont write over right border 
+	
+    } 
+    
+    SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
+    
+    //--------------------
+    // ScrollText() wants to know if we still wrote something inside the
+    // clip-rectangle, of if the Text has been scrolled out
+    // 
+    if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
+	return FALSE;  // no text was written inside clip 
+    else
+	return TRUE; 
+    
 };
 
 /* ----------------------------------------------------------------------
@@ -2026,77 +2033,77 @@ DisplayBigScreenMessage( void )
 int
 DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
-  char *tmp;	// mobile pointer to the current position in the string to be printed
-  SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
-  SDL_Rect store_clip;
-
-  //--------------------
-  // We position the internal text cursor on the right spot for
-  // the first character to be printed.
-  //
-  if ( startx != -1 ) MyCursorX = startx;		
-  if ( starty != -1 ) MyCursorY = starty;
-
-  //--------------------
-  // We make a backup of the current clipping rect, so we can respore
-  // it later.
-  //
-  SDL_GetClipRect (Screen, &store_clip);
-
-  //--------------------
-  // If we did receive some clipping rect in the parameter list (like e.g. it's
-  // always the case with dialog output) we enforce this new clipping rect, otherwise
-  // we just set the clipping rect to contain the whole screen.
-  //
-  if ( clip != NULL )
+    char *tmp;	// mobile pointer to the current position in the string to be printed
+    SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
+    SDL_Rect store_clip;
+    
+    //--------------------
+    // We position the internal text cursor on the right spot for
+    // the first character to be printed.
+    //
+    if ( startx != -1 ) MyCursorX = startx;		
+    if ( starty != -1 ) MyCursorY = starty;
+    
+    //--------------------
+    // We make a backup of the current clipping rect, so we can respore
+    // it later.
+    //
+    SDL_GetClipRect (Screen, &store_clip);
+    
+    //--------------------
+    // If we did receive some clipping rect in the parameter list (like e.g. it's
+    // always the case with dialog output) we enforce this new clipping rect, otherwise
+    // we just set the clipping rect to contain the whole screen.
+    //
+    if ( clip != NULL )
     {
-      SDL_SetClipRect ( Screen , clip );
+	SDL_SetClipRect ( Screen , clip );
     }
-  else
+    else
     {
-      clip = & Temp_Clipping_Rect;
-      Temp_Clipping_Rect.x=0;
-      Temp_Clipping_Rect.y=0;
-      Temp_Clipping_Rect.w=GameConfig . screen_width;
-      Temp_Clipping_Rect.h=GameConfig . screen_height;
+	clip = & Temp_Clipping_Rect;
+	Temp_Clipping_Rect.x=0;
+	Temp_Clipping_Rect.y=0;
+	Temp_Clipping_Rect.w=GameConfig . screen_width;
+	Temp_Clipping_Rect.h=GameConfig . screen_height;
     }
-
-  //--------------------
-  // Now we can start to print the actual text to the screen.
-  //
-  // The running text pointer must be initialized.
-  //
-  tmp = Text;
-
-  while ( *tmp && (MyCursorY < clip->y + clip->h) )
+    
+    //--------------------
+    // Now we can start to print the actual text to the screen.
+    //
+    // The running text pointer must be initialized.
+    //
+    tmp = Text;
+    
+    while ( *tmp && ( MyCursorY < clip -> y + clip -> h ) )
     {
-      if ( *tmp == '\n' )
+	if ( *tmp == '\n' )
 	{
-	  MyCursorX = clip->x;
-	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+	    MyCursorX = clip->x;
+	    MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
 	}
-      else
-	DisplayChar (*tmp);
-
-      tmp++;
-
-      if (clip)
-	ImprovedCheckLineBreak(tmp, clip);   /* dont write over right border */
-
-    } // while !FensterVoll()
-
-  SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
-
-  /*
-   * ScrollText() wants to know if we still wrote something inside the
-   * clip-rectangle, of if the Text has been scrolled out
-   */
-   if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
-     return FALSE;  /* no text was written inside clip */
-   else
-     return TRUE; 
-
-} // DisplayText(...)
+	else
+	    DisplayChar (*tmp);
+	
+	tmp++;
+	
+	if (clip)
+	    ImprovedCheckLineBreak(tmp, clip);   // dont write over right border 
+	
+    }
+    
+    SDL_SetClipRect (Screen, &store_clip); // restore previous clip-rect 
+    
+    //--------------------
+    // ScrollText() wants to know if we still wrote something inside the
+    // clip-rectangle, of if the Text has been scrolled out
+    //
+    if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
+	return FALSE;  // no text was written inside clip 
+    else
+	return TRUE; 
+    
+}; // int DisplayText(...)
 
 /* -----------------------------------------------------------------
  * This function displays a char.  It uses Menu_BFont now
@@ -2106,42 +2113,42 @@ void
 DisplayChar (unsigned char c)
 {
 
-  if ( c == 1 ) 
+    if ( c == 1 ) 
     {
-      SetCurrentFont ( Red_BFont );
-      return;
+	SetCurrentFont ( Red_BFont );
+	return;
     }
-  else if ( c == 2 ) 
+    else if ( c == 2 ) 
     {
-      SetCurrentFont ( Blue_BFont );
-      return;
+	SetCurrentFont ( Blue_BFont );
+	return;
     }
-  else if ( c == 3 ) 
+    else if ( c == 3 ) 
     {
-      SetCurrentFont ( FPS_Display_BFont );
-      return;
+	SetCurrentFont ( FPS_Display_BFont );
+	return;
     }
-  else if ( !isprint(c) ) // don't accept non-printable characters
+    else if ( !isprint(c) ) // don't accept non-printable characters
     {
-      fprintf ( stderr , "\nIllegal char passed to DisplayChar(): %d \n", c);
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr , "\nIllegal char passed to DisplayChar(): %d \n", c);
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an illegal character passed to DisplayChar for printing.\n\
 This indicates some error within Freedroid or within one of the dialog\n\
 files of Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-      return;
+				   PLEASE_INFORM, IS_FATAL );
+	return;
     }
-
-  if ( ! display_char_disabled ) 
-    PutChar ( Screen, MyCursorX, MyCursorY, c );
-
-  // DebugPrintf( 0 , "%c" , c );
-
-  // After the char has been displayed, we must move the cursor to its
-  // new position.  That depends of course on the char displayed.
-  //
-  MyCursorX += CharWidth ( GetCurrentFont() , c);
-  
+    
+    if ( ! display_char_disabled ) 
+	PutChar ( Screen, MyCursorX, MyCursorY, c );
+    
+    // DebugPrintf( 0 , "%c" , c );
+    
+    // After the char has been displayed, we must move the cursor to its
+    // new position.  That depends of course on the char displayed.
+    //
+    MyCursorX += CharWidth ( GetCurrentFont() , c);
+    
 }; // void DisplayChar(...)
 
 /* ----------------------------------------------------------------------
