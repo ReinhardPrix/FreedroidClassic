@@ -971,8 +971,8 @@ Show_Highscore_Menu (void)
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),
 		       " Lowest Score:  %10s : %6.2f", LowestName,   LowestScoreOfDay);
 
-      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
-      LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
+      // LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
+      // LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 

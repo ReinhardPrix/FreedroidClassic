@@ -678,12 +678,17 @@ GetString (int MaxLen, int echo)
 	finished = TRUE;
 
       else if (isprint (key) && (curpos < MaxLen) )  
-	input[curpos ++] = key;   /* printable characters are entered in string */
+	input[curpos ++] = (char) key;   /* printable characters are entered in string */
 
       else if (key == SDLK_BACKSPACE)
 	if (curpos > 0) curpos --;
       
     } /* while(!finished) */
+
+  DebugPrintf("\n\nchar *GetString(..):  The final string is:\n");
+  DebugPrintf( input );
+  DebugPrintf("\n\n");
+
 
   return (input);
 

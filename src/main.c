@@ -265,6 +265,16 @@ main (int argc, char *const argv[])
 	    ShowHighscoreList ();
 	  if ( IPressed() )
 	    ShowDebugInfos ();
+	  if ( KP0Pressed() )
+	    {
+	      while (KP0Pressed());
+	      RealScore-=1000;
+	    }
+	  if ( KP1Pressed() )
+	    {
+	      while (KP1Pressed());
+	      RealScore+=1000;
+	    }
 	  if ( CPressed() && Alt_Was_Pressed()
 	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
 	    Cheatmenu ();
