@@ -1660,7 +1660,6 @@ RestoreMenuBackground ( int backup_slot )
 {
     if ( use_open_gl )
     {
-	return;
 	
 #ifdef HAVE_LIBGL
 	glRasterPos2i ( 0 , GameConfig . screen_height - 1 ) ; 
@@ -2222,7 +2221,7 @@ blit_special_background ( int background_code )
 	    TRUE  , // 27
 	    TRUE  , // 28
 	    TRUE  , // 29
-	    TRUE    // 30
+	    FALSE   // 30
 	};
 	    
     //--------------------

@@ -424,8 +424,10 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
 	current_value = 0 ;
     }
     
-    MakeGridOnScreen ( NULL );
+    // MakeGridOnScreen ( NULL );
     
+    StoreMenuBackground ( 1 );
+
     //--------------------
     // Next we prepare the selection knob for all later operations
     //
@@ -454,6 +456,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	//
 	// then: show it.
 	//
+	RestoreMenuBackground ( 1 );
 	blit_special_background ( NUMBER_SELECTOR_BACKGROUND_CODE );
 	ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
 	knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
