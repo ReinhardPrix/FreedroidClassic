@@ -175,6 +175,8 @@ enum
 #define NE_CONSOLE_BG_PIC2_FILE "console_bg2.jpg"
 #define NE_CREDITS_PIC_FILE     "credits.jpg"
 
+#define FREEDROID_LOADING_PICTURE_NAME "startup1.jpg"
+
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 

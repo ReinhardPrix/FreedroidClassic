@@ -568,6 +568,9 @@ Load_Tux_Surfaces( void )
 
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
+
+      ShowStartupPercentage ( 30 + j * 4 ) ; 
+
       for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
 	{
 	  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );

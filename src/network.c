@@ -3384,7 +3384,7 @@ SendPeriodicServerMessagesToAllClients ( void )
   int PlayerNum;
   static int DelayCounter = 0;
 
-#define SEND_PACKET_ON_EVERY_FRAME_CONG_MOD ( 10 )
+#define SEND_PACKET_ON_EVERY_FRAME_CONG_MOD ( 3 )
 
   DelayCounter ++ ;
   if ( DelayCounter < SEND_PACKET_ON_EVERY_FRAME_CONG_MOD ) return;
