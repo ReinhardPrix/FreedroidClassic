@@ -41,13 +41,14 @@
 
 #define FRICTION_CONSTANT (0.02)
 
-#define BEST_MELEE_DISTANCE_IN_SQUARES (1.0)
-#define BEST_CHAT_DISTANCE_IN_SQUARES ( BEST_MELEE_DISTANCE_IN_SQUARES + 0.2 )
+#define BEST_MELEE_DISTANCE (1.0)
+#define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
 #define DISTANCE_TOLERANCE (0.2)
 #define FORCE_FIRE_DISTANCE (1.5)
 #define ATTACK_BOXES_DISTANCE (2.0)
 // #define DROID_SELECTION_TOLERANCE (0.9)
-#define DROID_SELECTION_TOLERANCE (0.3)
+// #define DROID_SELECTION_TOLERANCE (0.3)
+#define DROID_SELECTION_TOLERANCE (0.5)
 
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
@@ -56,8 +57,19 @@
 #define BOUNCE_LOSE_FACT 1
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
+void limit_tux_speed_to_a_maximum ( int player_num );
 
 #define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+float
+calc_euklid_distance ( float pos1_x , float pos1_y , float pos2_x , float pos2_y ) 
+{
+  return sqrt ( (pos1_x-pos2_x)*(pos1_x-pos2_x) + (pos1_y-pos2_y)*(pos1_y-pos2_y) ) ;
+};
 
 /* ----------------------------------------------------------------------
  *
@@ -522,6 +534,8 @@ UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
 	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x ;
       Me [ player_num ] . mouse_move_target . y = 
 	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y ;
+      Me [ player_num ] . mouse_move_target . z = 
+	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z ;
       
       RemainingWay . x = Me [ player_num ] . pos . x - Me [ player_num ] . mouse_move_target . x ;
       RemainingWay . y = Me [ player_num ] . pos . y - Me [ player_num ] . mouse_move_target . y ;
@@ -530,13 +544,15 @@ UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
 				   ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
       
       RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
-	( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
+	( RemainingWayLength - BEST_MELEE_DISTANCE ) ;
       RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
-	( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
+	( RemainingWayLength - BEST_MELEE_DISTANCE ) ;
       
       Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
       Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
-      
+
+      DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
+
     }
 }; // void UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
 
@@ -572,6 +588,7 @@ MoveTuxAccordingToHisSpeed ( int player_num )
 {
   float planned_step_x;
   float planned_step_y;
+
 
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
@@ -630,6 +647,8 @@ move_tux_thowards_mouse_move_target ( int player_num )
   //
   if ( Me [ player_num ] . status == OUT ) return;
   // if ( Me [ player_num ] . energy <= 0 ) return;
+
+  DebugPrintf ( 0 , "\nNot at:  move_tux_thowards_mouse_move_target." );
 
   accel = 5.0 * Frame_Time() ;
 
@@ -781,7 +800,7 @@ MoveInfluence ( int player_num )
   //
   if ( Me [ player_num ] . mouse_move_target . x == (-1) ) InfluenceFrictionWithAir ( player_num ) ; 
 
-  AdjustTuxSpeed ( player_num ) ;  // If the influ is faster than allowed for his type, slow him
+  limit_tux_speed_to_a_maximum ( player_num ) ;  
 
   MoveTuxAccordingToHisSpeed ( player_num );
 
@@ -817,9 +836,9 @@ MoveInfluence ( int player_num )
   //
   if ( ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) ) &&
        ( fabsf( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x -
-		Me [ player_num ] . pos . x ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+		Me [ player_num ] . pos . x ) < BEST_CHAT_DISTANCE ) &&  
        ( fabsf( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y -
-		Me [ player_num ] . pos . y ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+		Me [ player_num ] . pos . y ) < BEST_CHAT_DISTANCE ) &&  
        ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z -
 	   Me [ player_num ] . pos . z ) == 0 ) &&
        ( Me [ player_num ] . readied_skill == SPELL_TRANSFERMODE ) &&
@@ -1090,20 +1109,9 @@ CheckInfluenceWallCollisions ( int player_num )
  * possible for the influencer (determined by the currely used drive type).
  * ---------------------------------------------------------------------- */
 void
-AdjustTuxSpeed ( int player_num )
+limit_tux_speed_to_a_maximum ( int player_num )
 {
-  double maxspeed;
-
-  if ( Me [ player_num ] .drive_item.type != (-1) )
-    {
-      maxspeed = ItemMap [ Me [ player_num ] .drive_item.type ].item_drive_maxspeed ;
-    }
-  else
-    {
-      maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
-    }
-
-  maxspeed = 7.0 ;
+  double maxspeed = 7.0 ;
 
   //--------------------
   // First we adjust the speed, so that the Tux can never go too fast
@@ -1120,7 +1128,7 @@ AdjustTuxSpeed ( int player_num )
     Me [ player_num ] .speed.y = (-maxspeed);
 
 
-}; // void AdjustSpeed ( int player_num ) 
+}; // void limit_tux_speed_to_a_maximum ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  * This function reduces the influencers speed as long as no direction 
@@ -1316,56 +1324,6 @@ CheckInfluenceEnemyCollision (void)
     }				/* for */
 
 }; // void CheckInfluenceEnemyCollision( void )
-
-/* ----------------------------------------------------------------------
- * This function checks if there is some living droid below the current
- * mouse cursor. 
- * This function is useful for determining if a mouse-button-press was
- * meant as a mouse-indicated move instruction was given or rather a 
- * weapon swing/weapon fire command was meant by the player.
- * ---------------------------------------------------------------------- */
-int 
-LivingDroidBelowMouseCursor ( int player_num )
-{
-  int i;
-  float Mouse_Blocks_X, Mouse_Blocks_Y;
-
-  // Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( player_num )) / ((float)Block_Width  ) ;
-  // Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( player_num )) / ((float)Block_Height ) ;
-
-  Mouse_Blocks_X = translate_pixel_to_map_location ( player_num , 
-						     (float) ServerThinksInputAxisX ( player_num ) , 
-						     (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-  Mouse_Blocks_Y = translate_pixel_to_map_location ( player_num , 
-						     (float) ServerThinksInputAxisX ( player_num ) , 
-						     (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
-    {
-      if (AllEnemys[i].Status == OUT)
-	continue;
-      if (AllEnemys[i].pos.z != Me[ player_num ] . pos . z )
-	continue;
-      if ( fabsf ( AllEnemys [ i ] . pos.x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
-	continue;
-      if ( fabsf ( AllEnemys [ i ] . pos.y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
-	continue;
-      
-      //--------------------
-      // So this must be a possible target for the next weapon swing.  Yes, there
-      // is some living droid beneath the mouse cursor.
-      //
-      return ( TRUE );
-    }
-
-  //--------------------
-  // It seems that we were unable to locate a living droid under the mouse 
-  // cursor.  So we return, giving this very same message.
-  //
-  return ( FALSE );
-
-}; // int LivingDroidBelowMouseCursor ( int player_num )
 
 /* ----------------------------------------------------------------------
  * This function checks if there is a crushable box below the mouse 
@@ -1946,6 +1904,7 @@ void
 AnalyzePlayersMouseClick ( int player_num )
 {
   int chest_index ;
+  int index_of_droid_below_mouse_cursor = (-1) ;
 
   DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
 
@@ -1969,8 +1928,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	}
     }
 
-
-
+  index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
 
   //--------------------
   // Now the new mouse move: If there is 
@@ -1982,7 +1940,7 @@ AnalyzePlayersMouseClick ( int player_num )
   // a move to that location, not a fire command, 
   // so only new target will be set and return without attack motion.
   //
-  if  ( ( ! LivingDroidBelowMouseCursor ( player_num ) ) && 
+  if  ( ( index_of_droid_below_mouse_cursor == (-1) ) && 
 	( ! CrushableBoxBelowMouseCursor ( player_num ) ) )
     {
       Me [ player_num ] . mouse_move_target . x = 
@@ -2017,80 +1975,33 @@ AnalyzePlayersMouseClick ( int player_num )
     }
 
 
-  if ( LivingDroidBelowMouseCursor ( player_num ) )
+  if ( index_of_droid_below_mouse_cursor != (-1) )
     {
       //--------------------
       // We assign the target robot of the coming attack operation.
       // In case of no robot, we should get (-1), which is also serving us well.
       //
-      Me [ player_num ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( player_num ) ;
+      Me [ player_num ] . mouse_move_target_is_enemy = index_of_droid_below_mouse_cursor ;
 
       if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) return ;
 
       if ( Me [ 0 ] . weapon_item . type >= 0 )
 	{
-	  if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change )
-	    {
-	      Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
-	      Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
-	      Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
-	      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
-	    }
+	  if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
+	       ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+					AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
+					AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
+		 > BEST_MELEE_DISTANCE+0.1 ) )
+	    return;
 	}
+      else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+				       AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
+				       AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
+		> BEST_MELEE_DISTANCE+0.1 )
+	return;
 
       tux_wants_to_attack_now ( player_num ) ;
-
-      //--------------------
-      // It would be tempting to return now, but perhaps the player is just targeting and fighting a robot.
-      // Then of course we must not return, but execute the stroke!!
-      //
-      if ( ! ( ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) ) &&
-	       ( fabsf ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x - 
-			 Me [ player_num ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
-	       ( fabsf ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y - 
-			 Me [ player_num ] . pos . y ) < FORCE_FIRE_DISTANCE  ) 
-	       ) )
-	{
-	  return;
-	}
     }
-
-  return;
-
-  // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
-  if ( Me [ player_num ] .firewait > 0 )
-    return;
-
-  // If a friendly bot is targeted, we also won't attack
-  if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) ) 
-    {
-      if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) return;
-    }
-  
-  //--------------------
-  // If the Tux has a weapon and this weapon requires some ammunition, then
-  // we have to check for enough ammunition first...
-  //
-  if ( Me [ player_num ] . weapon_item . type >= 0 )
-    {
-      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_use_ammunition )
-	{
-	  if ( !CountItemtypeInInventory ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_use_ammunition , 
-					  player_num ) )
-	    {
-	      No_Ammo_Sound();
-	      //--------------------
-	      // So no ammunition... We should say so and return...
-	      //
-	      return;
-	    }
-	  else
-	    DeleteOneInventoryItemsOfType( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_use_ammunition , 
-					   player_num );
-	}
-    }
-
-  PerformTuxAttackRaw ( player_num ) ;
 
 }; // void AnalyzePlayersMouseClick ( int player_num )
 

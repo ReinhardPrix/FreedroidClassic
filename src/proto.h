@@ -61,6 +61,7 @@ EXTERN void PlayATitleFile ( char* Filename );
 #else
 #define EXTERN extern
 #endif
+EXTERN int GetLivingDroidBelowMouseCursor ( int player_num );
 EXTERN int find_free_floor_items_index ( int levelnum ) ;
 EXTERN int closed_chest_below_mouse_cursor ( int player_num ) ;
 EXTERN void tux_wants_to_attack_now ( int player_num ) ;
@@ -73,7 +74,6 @@ EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
 EXTERN void FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
 EXTERN void MoveInfluence ( int player_num ) ;
-EXTERN void AdjustTuxSpeed ( int player_num ) ;
 EXTERN void CheckInfluenceWallCollisions ( int player_num ) ;
 EXTERN void InfluenceFrictionWithAir ( int player_num ) ;
 EXTERN void CheckEnergieLevel (void);

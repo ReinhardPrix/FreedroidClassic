@@ -634,6 +634,7 @@ ShowCurrentTextWindow ( void )
   char* LongTextPointer;
   int InterLineDistance;
   int StringLength;
+  int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
 
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
@@ -791,22 +792,15 @@ ShowCurrentTextWindow ( void )
 	  strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ); 
 	}
 
-
-
-
-      for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
+      //--------------------
+      // Maybe there is a living droid below the current mouse cursor.  In this
+      // case, we'll give the decription of the corresponding bot.  (Also this serves
+      // as a good way to check whether the 'droid below mouse cursor' functions are
+      // doing a good job or not.
+      //
+      if ( index_of_droid_below_mouse_cursor != (-1) )
 	{
-	  // We don't describe enemys that are not on this level...
-	  if ( AllEnemys[ i ].pos.z != CurLevel->levelnum ) continue;
-	  if ( AllEnemys[ i ].Status == OUT ) continue;
-
-	  if ( ( fabsf( MapPositionOfMouse.x - AllEnemys[ i ].pos.x ) < 0.5 ) &&
-	       ( fabsf( MapPositionOfMouse.y - AllEnemys[ i ].pos.y ) < 0.5 ) )
-	    {
-	      // GiveDroidDescription ( ItemDescText , &( AllEnemys[ i ]) );
-	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
-	      strcpy( ItemDescText , AllEnemys[ i ].short_description_text );
-	    }
+	  strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
 	}
     }
 
