@@ -861,6 +861,41 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	    case ALERT:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ALERT ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case ENHANCER_RU:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_RU ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case ENHANCER_RD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_RD ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case ENHANCER_LU:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_LU ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case ENHANCER_LD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_LD ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
 	      //--------------------
 	      // Now we add the old blocks and make them into some obstacles, some
 	      // classical columns mostly I think this will be....
