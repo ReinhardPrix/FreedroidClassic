@@ -527,128 +527,108 @@ end_of_level
 ----------------------------------------------------------------------
 
 Levelnumber: 3
-xlen of this level: 49
-ylen of this level: 17
+xlen of this level: 38
+ylen of this level: 22
 color of this level: 5
-Name of this level=Private Goods Storage Cellar
-Comment of the Influencer on entering this level="This is the level, where I was created, back in the scientists makeshift bunker
-Name of background song for this level=The_Last_V8.mod
+Name of this level=stores
+Comment of the Influencer on entering this level="This is a level, like many other levels.
+Name of background song for this level=DELTA2.MOD
 beginning_of_map
-  7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10   8  10  10   8  10   8  10  10   9 
- 11   0   0   0   0   0   0   0   0   0   0   0   0  14  14  11   0  14  15  14  14  14  15  15  15   0  13   0  14  14   0  14  15  14  14  14   0  46   0   0  11   0   0  45   0  11   0   0  11 
- 11   0  14   0   0  14   0  14  15  15  14   0   0  14  14  11   0   0  15  14  14   0   0   0   0   0   0   0   0   0   0  14  15  15   0   0   0  44   0   0  11   0   0  44   0  46   0   0  11 
- 11   0  14  16   0   0   0   0   0   0   0   0   0   0  14  11  34   0   0  16   0   0   7   9   0  16   0   0   0  14  14   0  14   0   0   0   0   4  10  10   5  10  10   6   0  44   0   0  11 
- 11   0  14   0   7  10  10  10  10   9   0   0   0   0   0  11   0   0   0   0   0   0   1   3   0   0   0   0   0   0  14   0   0   0   0   0   0  46   0   0  11   0   0  45   0  11   0   0  11 
- 11   0   0   0  11  12  14  15  12  11   0   0   0   0   0  27   0   0   0  32   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  44   0   0  11   0   0  44   0   4  10  10   6 
- 11   0  14   0  45  16  38   0  24  11   0   0   0   0   0  11   0  55  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56   0   4  10  10   5  10  10   6   0  46   0   0  11 
- 11   0  14   0  27   0  17   0   0  24   0   0   0   0   0  27   0  55   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  57   0  46   0   0  11   0   0  45   0  44   0   0  11 
- 11   0   0   0  45  16   0  34  24  11   0   0   0   0   0  11   0  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  57   0  44   0   0  11   0   0  44   0   4  10  10   6 
- 11   0  14   0  11  12  14  15  12  11   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   4  10  10   5  10  10   6   0  46   0   0  11 
- 11   0  14   0   1  10  10  10  10   3   0   0   0   0   0  11  17   0   0   0   0  16   0   0   0   0   0   7  10  10   9   0  14  14   0  15   0  46   0   0  11   0   0  45   0  44   0   0  11 
- 11   0   0   0   0   0   0   0   0   0  16   0   0   0   0  11  16  15  14   0   0   0   0   0   0   0   0  27   0  34  11  14  15  15  15  15   0  44   0   0  11   0   0  44   0   4  10  10   6 
- 11   0   0   0  15  15  15  14  14  49   0   0  14   0   0  11  15  14  14  14  14   0   0   0   0   0   0  27   0  24  11  14  15  16  15  15   0   1  10  10   2  10  10   3   0  46   0   0  11 
- 11   0   0   0  54  54  54  54  54  51   0   0  15  15  14  11  15  15  15  14  15  15   0   0   0   0   0  27   0  34  11  15  15  15  15  15   0   0   0   0   0   0   0   0   0  44   0   0  11 
-  1  10  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10   5  10   8   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10   3 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11  32  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33   7  10  10   8  10   8  10  10   9  33  33  33  33   7  10  10  10   8  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
+ 33  33  33   7   3   0   0  27   0  27   0   0   1   9  33  33   7   3  25  25  25  11   0   0   0   0   0   0   0  27   0   0  13  14  15  15  15  11 
+ 33  33   7   3   0   0   0  11   0  11   0   0   0   1  10   8   3  23   0   0   0  11   0   0   0   0   0   0   0  11   0   0   0  14  15  15  14  11 
+ 33   7   3   0   0   0  24  11   0  27   0  38   0   0  24  11  23   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0  13  14  11 
+  7   3   0   0   0  26  12  11   0  11   0   0   0   0   7   2   9  26   0   0  26  11   0   0   0   0   0   0   0  11   0   0   0   0   0   0  15  11 
+ 11   0   0   0   7  10  10   3   0   1  10  10  10  10   3  13   1  10  10  18  10   5  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
+ 11   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0  14  11   0  13   0   0   0  16  24  11 
+ 11   0   0   0   1  18  10   9   0   7  10  10  10   8   9  15   7  10  10  10  10   6  16   0  24  13   0   0   0  27   0   0   0   0  16  17  24  11 
+  1   9   0   0   0   0   0  11   0  11  14  14  14  11   1  10   3   0   0  14   0  27   0   0   0   0   0   0  15  11   0  15   0   0   0  16  24  11 
+ 33   1   9   0  34   0  34  11   0  11   0   0  14  11   0   0   0   0   0  15   0   4  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
+ 33  33   1   9   0   0   0  11   0  27   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0  15  11 
+ 33  33  33   1   9   0   0  11   0  11   0   0   0  11   0   0   0   0  14   0   0  11   0   0   0   0   0   0   0  11   0   0   0   0   0  15  15  11 
+ 33  33  33  33   1  10  10   2  10   5  10  10  10   2  10   8  10  10  10  10  10   6  15   0   0   0   0   0   0  27   0   0  15  16   0  14  15  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  11  49  49  49  49  49  11  15  16  15  15  16  15  14  11   0  15  15  38  15  15  15  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  27  49  49  49  49  49   4  10  10  10  10  10  10  10   3   0  14  14  14  15  14  13  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  11  49  49  49  49  49  11   0   0  49  49  49   0   0   0   0   0   0  13  13  14  16  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   1  10  10  10  10  10   3   0   0   0   0   0   0   0   0   0   0   0   0  16  15  15  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  16  16  15  11 
+ 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   7  10  10  10  10   9   0   0   0   0   0   0   0   0   0   0   0   0  15  49  15  11 
+ 33  33  33  33  33  33  33  33  33  11  49   0   0   0  49  49  11  33  33  33  33  11  49  49  49   0   0   0   0   0   0   0   0   0  15  15  15  11 
+ 33  33  33  33  33  33  33  33  33  11  49  49   0  49  49  49   4  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3 
+ 33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
-PosX=1 PosY=1 Statement="This must be the upper left corner of the room."
-PosX=1 PosY=2 Statement="I must be close to the upper left corner of the room."
-PosX=2 PosY=1 Statement="I must be close to the upper left corner of the room."
-PosX=5 PosY=7 Statement="I'm sure this door could be locked/unlocked by using the right code on that panel."
-PosX=10 PosY=7 Statement="This barrier is scarred from lots of bullet holes and plasma burns."
-PosX=6 PosY=6 Statement="This is a teleportation device.  Maybe Dr. Chandra can teleport me out this way?"
-PosX=8 PosY=6 Statement="Hey, there's a penguin command clone running on this console!  Or is that a game at all?"
 End of pure statement information for this level
 Start of pure codepanel information for this level
-PanelposX=4 PanelposY=8 Secret Code="hello"
-PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of big graphics insert information for this level
 BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
 End of big graphics insert information for this level
 Start of pure items information for this level
-New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=34  X=8.000000  Y=6.000000  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=20  CurDur=8.000000  Gold=31  PrefixCode=7  SuffixCode=8  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=9  StrToHit=8  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
-Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  1 x=  12 y=   1	 connections:    0   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   3 y=   3	 connections:    3  15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  3 x=  12 y=   3	 connections:    1   6  26   2  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  16 y=   3	 connections:    7   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=  25 y=   3	 connections:    4  25  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=  10 y=   5	 connections:    7   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=  16 y=   5	 connections:    6   4  19  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  14 y=  11	 connections:   16   9  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=  14 y=   9	 connections:    8  20  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 11 x=  26 y=   7	 connections:   14  24  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 12 x=  19 y=   9	 connections:   14  20  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=  10 y=  10	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 14 x=  21 y=  10	 connections:   12  11  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 15 x=   3 y=  11	 connections:    2  17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 16 x=  11 y=  11	 connections:   18  15  13   8  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 17 x=   1 y=  13	 connections:   18   0  15  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=  11 y=  13	 connections:   17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=  16 y=   7	 connections:    7  11  20  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 20 x=  16 y=   9	 connections:   12  19   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=  24 y=  13	 connections:   14  22  24  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=  29 y=  13	 connections:   21  23  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=  29 y=  11	 connections:   22  24  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 24 x=  26 y=  11	 connections:   23  21  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 25 x=  29 y=   7	 connections:   11   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=  14 y=   5	 connections:    3   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=   6 y=   7	 connections:   29  28  31  30  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=   5 y=   6	 connections:   29  27  30  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=   5 y=   8	 connections:   27  28  31  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 30 x=   7 y=   6	 connections:   27  28  31  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 31 x=   7 y=   8	 connections:   27  29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 33 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 35 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 36 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 37 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 38 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 39 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 40 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 41 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 42 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 43 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 44 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 45 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 46 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 47 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 48 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 49 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 50 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 51 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 52 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 53 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 54 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 55 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 56 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 57 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 58 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 59 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 60 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=   4 y=   3	 connections:   19  18   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=   8 y=   1	 connections:   18   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=   8 y=   3	 connections:    1   3   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  3 x=  13 y=   3	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=  19 y=   3	 connections:    8  22  20  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=   1 y=   6	 connections:    0   6  17  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=   5 y=   6	 connections:    7   5  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=   8 y=   6	 connections:    2   6  14   8  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  19 y=   6	 connections:    4   9   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=  26 y=   6	 connections:    8  10  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=  27 y=   7	 connections:    9  23  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 11 x=   5 y=   9	 connections:    6  12  13  17  16  -1  -1  -1  -1  -1  -1  -1
+Nr.= 12 x=   4 y=  10	 connections:   11  13  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 13 x=   6 y=  10	 connections:   11  12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 14 x=   8 y=  10	 connections:    7  15  36  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 15 x=  17 y=  10	 connections:   14  25  36  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 16 x=   6 y=   9	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 17 x=   4 y=   9	 connections:   11   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 18 x=   6 y=   1	 connections:    1   0  19  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 19 x=   5 y=   3	 connections:    0  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 20 x=  22 y=   3	 connections:    4  27  28  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 21 x=  26 y=   8	 connections:   10  24   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 22 x=  17 y=   3	 connections:    4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 23 x=  35 y=   7	 connections:   10  26  31  27  30  32  -1  -1  -1  -1  -1  -1
+Nr.= 24 x=  20 y=   8	 connections:   25  21  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 25 x=  20 y=  10	 connections:   15  24  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=  30 y=   7	 connections:   23  10  27  31  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=  30 y=   3	 connections:   26  20  28  30  23  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=  28 y=   3	 connections:   27  20  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=  28 y=   1	 connections:   28  30  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 30 x=  30 y=   1	 connections:   27  29  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 31 x=  30 y=  10	 connections:   26  23  32  34  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 32 x=  30 y=  12	 connections:   31  23  33  38  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 33 x=  28 y=  12	 connections:   32  34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 34 x=  28 y=  10	 connections:   31  33  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 35 x=  22 y=  10	 connections:   25  34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 36 x=  11 y=  10	 connections:   14  15  37  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 37 x=  11 y=   9	 connections:   36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 38 x=  30 y=  17	 connections:   32  39  59  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 39 x=  33 y=  17	 connections:   38  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 40 x=  12 y=  13	 connections:   43  41  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 41 x=  13 y=  14	 connections:   52  40  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 42 x=  14 y=  15	 connections:   41  60  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 43 x=  11 y=  14	 connections:   44  53  40  52  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 44 x=  10 y=  15	 connections:   49  43  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 45 x=  14 y=  18	 connections:   54  46  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 46 x=  13 y=  19	 connections:   45  51  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 47 x=  11 y=  19	 connections:   51  48  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 48 x=  10 y=  18	 connections:   47  50  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 49 x=  11 y=  16	 connections:   50  44  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 50 x=  11 y=  17	 connections:   48  49  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 51 x=  12 y=  19	 connections:   46  47  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 52 x=  12 y=  14	 connections:   43  41  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 53 x=  10 y=  13	 connections:   43  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 54 x=  15 y=  17	 connections:   55  45  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 55 x=  22 y=  17	 connections:   57  56  54  58  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 56 x=  23 y=  16	 connections:   58  55  57  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 57 x=  23 y=  18	 connections:   58  55  56  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 58 x=  24 y=  17	 connections:   59  57  56  55  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 59 x=  27 y=  17	 connections:   38  58  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 60 x=  14 y=  17	 connections:   42  45  50  54  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 61 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 62 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 63 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -693,6 +673,170 @@ end_of_level
 ----------------------------------------------------------------------
 
 Levelnumber: 4
+xlen of this level: 44
+ylen of this level: 41
+color of this level: 4
+Name of this level=upper cargo
+Comment of the Influencer on entering this level="This is a level, like many other levels.
+Name of background song for this level=ACEII.MOD
+beginning_of_map
+  7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33 
+ 11  12   0   0   0   0   0   0   0   0   0   0  51  52  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
+ 11  23   0   0   0   0   0   0   0   0   0   0   0  52  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11  13   0  38   0  11  33  33  33  33  33  33  33  33  33  33 
+ 11  13   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   7  10  10  10  10  10  10  10   9   0   0  11  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
+ 11  51   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0  11  12  34   0  34   0  34  12  11   0   0  11   0  16  13  16  11  33  33  33  33  33  33  33  33  33  33 
+  4  10  10  18  18   9   0   0   0   0   0   0   0   0  11   0   0  27   0   0   0   0   0   0   0  27   0   0  27   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
+ 11  49  50   0   0  11   0   0   0   0   0   0   0   0  11   0   0  27   0   0   0   0   0   0   0  27   0   0  11   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
+ 11  52   0   0   0   1  10  10  10  10  18  18  10  10   5  18  18   2  10  10  10  10  10  10  10   2  10  10   5  10  10  10  18   5  10  10  10  10  10  10   9  33  33  33 
+ 11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0  50  14  14  14  15  51  52   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 11   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 11   0   0   0   0  12   0   0   0  34   0   0   0   0  27   0   0   0   0  12   0   0   0  34   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 11   0   0   0   0  13   0   0   0  13   0   0   0   0  11   0   0   0  49  13   0   0   0  13   0   0   0  14  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 11  51   0   0   0   0   0   0   0   0   0   0   0  51  11   0   0   0   0   0   0   0   0   0   0   0  15  14  11   0   0   0  50   7  10  18  18  18  10  10   6  33  33  33 
+ 11  52  52   0   0   0   0   0   0   0   0   0  49  50  11   0   0   0   0   0   0   0   0   0   0   0  15  15  11   0  26  51  52  11   0   0   0   0   0   0  11  33  33  33 
+  1   8  10  10  18  18  10  10  10  18  18  10  10   8   2  10  10  18  10  10  18  10  10  18  10  10  10  10   2  10  10  10  10   3   0   0   0   0   0   0  11  33  33  33 
+ 33  11  14  15   0   0  14  14  14   0  16  14  15  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 33  11  14  16   0   0   0   0   0   0   0   0   0  27   0  15  14  17  14  14  17  15  15   0  14  49   0  14  49   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 33  11  15  16   0   0   0   0   0   0   0   0   0  27   0  15  14  17  15  15  17  15  14   0  51  50   0  51  50   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 33  11  15  16   0   0   0   0  17   0   0   0   0  11   0  17  17  16  17  17  16  17  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 33  11  14  14   0   0   0   0   0   0  16   0   0  27   0  14  14  17  14  14  17  15  14   0  52  14   0  15  15   0   0  15  15   0  14  14   0  14  15   0  11  33  33  33 
+ 33  11  15  14   0   0   0   0   0   0   0   0   0  27   0  15  14  17  14  14  17  15  15   0  50  52   0  14  14   0   0  15  14   0  15  15   0  14  13   0  11  33  33  33 
+ 33  11  13  15  14  15   0   0  14  15  15  14   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
+ 33   1  10  10  10  10  10  10  10  10  10  10  10   5  10  10  10  18  10  10  18  10  10  18  10  10  18  10  10  18  10  10  10  10  10  18  18  10  10  10   2  10  10   9 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  13  17  15  13   0  15  14  17  15  15   0  14  14  17  13  13   0  13  13  17  13  15   0  15  14  17  50  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  14  17  15  13   0  14  14  17  13  13   0  14  14  17  13  15   0  13  15  17  14  13   0  14  13  17  52  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  17  17  16  17  17   0  17  17  17  17  17   0  17  17  16  17  17   0  17  17  17  13  17   0  17  17  17  52  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  15  14  17  14  13   0  14  14  17  14  15   0  15  14  17  13  13   0  13  13  17  15  13   0  15  14  17  49  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  13  14  17  15  14   0  15  13  17  14  14   0  15  13  17  15  13   0  13  15  17  15  13   0  14  13  17  52  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17  17  17  52  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  13  17  14  13   0  15  15  17  15  15   0  13  13  17  13  13   0  15  13  17  14  13   0  14  15  17  50  11 
+ 33  33  33  33  33  33  33   7  10  10  10  10  10   6   0  13  13  17  15  14   0  14  13  17  14  13   0  13  15  17  13  13   0  15  13  17  13  13   0  15  13  17  51  11 
+ 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  17  17  16  17  17   0  17  17  17  17  17   0  17  17  16  17  17   0  17  17  16  13  17   0  17  17  17  50  11 
+ 33  33  33  33  33  33  33  11   0   0  14   0   0  11   0  15  13  17  14  13   0  13  15  17  15  15   0  13  13  17  15  13   0  14  14  17  15  13   0  14  15  17  51  11 
+ 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  14  14  17  14  13   0  13  15  17  14  14   0  15  13  17  13  13   0  13  13  17  13  13   0  14  14  17  49  11 
+ 33  33  33  33  33  33  33  11  14   0  38   0  17  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17  17  17  51  11 
+ 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  15  14  17  14  13  17  14  14  17  14  14  17  13  13  17  13  13  17  15  14  17  13  15  17  13  15  17  50  11 
+ 33  33  33  33  33  33  33  11   0   0  14   0   0  11   0  15  13  17  15  13  17  14  14  17  14  13  17  13  15  17  15  13  17  14  15  17  13  13  17  15  16  17  50  11 
+ 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  14  14  49  50  50  11 
+ 33  33  33  33  33  33  33   1  10  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3 
+End of pure map information for this level
+Start of pure statement information for this level
+End of pure statement information for this level
+Start of pure codepanel information for this level
+End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
+End of big graphics insert information for this level
+Start of pure items information for this level
+End of pure items information for this level
+wp
+Nr.=  0 x=  15 y=   1	 connections:   15   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=  27 y=   1	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=   4 y=   4	 connections:   10   3   4  16  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  3 x=  10 y=   4	 connections:    2   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=  15 y=   4	 connections:    5   3   2   0  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=  16 y=   5	 connections:    4   6   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=  27 y=   5	 connections:    5   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=  32 y=   5	 connections:    9   6   5  61  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  26 y=   9	 connections:   15   9  68  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=  32 y=   9	 connections:    8   7  61  60  59  68  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=   4 y=  10	 connections:   11  16   2  12  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 11 x=  10 y=  10	 connections:   12  17  10  13  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 12 x=  16 y=  10	 connections:   13  18  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 13 x=  18 y=  10	 connections:   14  12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 14 x=  24 y=  10	 connections:   15  19  13  12  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 15 x=  27 y=  10	 connections:    8  14  13  12  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 16 x=   4 y=  14	 connections:   10  17   2  38  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 17 x=  10 y=  14	 connections:   11  16  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 18 x=  16 y=  14	 connections:   12  19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 19 x=  24 y=  14	 connections:   14  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 20 x=  17 y=  19	 connections:   31  21  43  27  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 21 x=  20 y=  19	 connections:   20  26  23  22  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 22 x=  23 y=  19	 connections:   24  25  21  44  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 23 x=  20 y=  16	 connections:   21  31  24  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 24 x=  23 y=  16	 connections:   23  22  48  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 25 x=  23 y=  22	 connections:   26  22  47  77  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=  20 y=  22	 connections:   27  21  25  81  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=  17 y=  22	 connections:   28  20  26  78  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=  14 y=  22	 connections:   29  27  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=  14 y=  20	 connections:   33  28  32  43  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 30 x=  14 y=  16	 connections:   32  31  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 31 x=  17 y=  16	 connections:   30  20  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 32 x=  14 y=  18	 connections:   34  29  30  43  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 33 x=  12 y=  20	 connections:   37  29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 34 x=  12 y=  18	 connections:   36  32  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 35 x=  10 y=  16	 connections:   36  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 36 x=  10 y=  18	 connections:   41  34  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 37 x=  10 y=  20	 connections:   40  42  33  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 38 x=   4 y=  16	 connections:   16  39  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 39 x=   4 y=  18	 connections:   38  40  41  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 40 x=   4 y=  20	 connections:   39  37  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 41 x=   7 y=  18	 connections:   39  36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 42 x=   7 y=  20	 connections:   37  40  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 43 x=  14 y=  19	 connections:   20  32  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 44 x=  26 y=  19	 connections:   47  22  48  45  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 45 x=  29 y=  19	 connections:   49  44  46  55  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 46 x=  29 y=  22	 connections:   47  45  50  70  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 47 x=  26 y=  22	 connections:   25  46  44  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 48 x=  26 y=  16	 connections:   44  24  49  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 49 x=  29 y=  16	 connections:   48  45  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 50 x=  33 y=  22	 connections:   46  51  55  76  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 51 x=  36 y=  22	 connections:   54  52  50  76  75  -1  -1  -1  -1  -1  -1  -1
+Nr.= 52 x=  39 y=  22	 connections:   53  51  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 53 x=  39 y=  19	 connections:   54  52  56  69  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 54 x=  36 y=  19	 connections:   55  53  51  56  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 55 x=  33 y=  19	 connections:   45  54  50  56  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 56 x=  36 y=  16	 connections:   54  55  53  57  58  69  -1  -1  -1  -1  -1  -1
+Nr.= 57 x=  36 y=  12	 connections:   56  58  66  67  59  -1  -1  -1  -1  -1  -1  -1
+Nr.= 58 x=  36 y=  14	 connections:   56  57  64  65  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 59 x=  36 y=   9	 connections:   63  62  57   9  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 60 x=  31 y=  10	 connections:    9  62  68  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 61 x=  32 y=   8	 connections:    9   7  63  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 62 x=  37 y=  10	 connections:   59  66  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 63 x=  35 y=   8	 connections:   61  59  67  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 64 x=  37 y=  14	 connections:   58  66  69  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 65 x=  35 y=  14	 connections:   58  67  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 66 x=  37 y=  12	 connections:   64  57  62  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 67 x=  35 y=  12	 connections:   65  57  63  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 68 x=  30 y=   9	 connections:   60   9   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 69 x=  39 y=  16	 connections:   53  56  64  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 70 x=  29 y=  27	 connections:   71  73  77  46  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 71 x=  29 y=  33	 connections:   70  80  87  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 72 x=  35 y=  33	 connections:   73  89  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 73 x=  35 y=  27	 connections:   74  72  70  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 74 x=  35 y=  24	 connections:   76  75  73  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 75 x=  36 y=  24	 connections:   51  74  91  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 76 x=  35 y=  22	 connections:   50  51  74  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 77 x=  23 y=  27	 connections:   78  80  70  25  81  -1  -1  -1  -1  -1  -1  -1
+Nr.= 78 x=  17 y=  27	 connections:   79  77  81  27  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 79 x=  17 y=  33	 connections:   80  78  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 80 x=  23 y=  33	 connections:   71  79  77  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 81 x=  20 y=  27	 connections:   78  77  26  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 82 x=  41 y=  24	 connections:   91  83  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 83 x=  41 y=  27	 connections:   82  84  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 84 x=  41 y=  30	 connections:   83  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 85 x=  41 y=  33	 connections:   84  86  92  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 86 x=  41 y=  36	 connections:   85  88  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 87 x=  29 y=  36	 connections:   90  71  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 88 x=  38 y=  36	 connections:   86  89  92  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 89 x=  35 y=  36	 connections:   88  90  72  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 90 x=  32 y=  36	 connections:   89  87  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 91 x=  38 y=  24	 connections:   75  82  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 92 x=  38 y=  33	 connections:   88  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 93 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 94 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 95 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 96 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+end_of_level
+
+----------------------------------------------------------------------
+
+Levelnumber: 5
 xlen of this level: 32
 ylen of this level: 30
 color of this level: 3
@@ -845,72 +989,100 @@ end_of_level
 
 ----------------------------------------------------------------------
 
-Levelnumber: 5
-xlen of this level: 38
-ylen of this level: 15
-color of this level: 4
-Name of this level=Robot construction facility
-Comment of the Influencer on entering this level="This is a level, like many other levels.
+Levelnumber: 6
+xlen of this level: 49
+ylen of this level: 17
+color of this level: 5
+Name of this level=Private Goods Storage Cellar
+Comment of the Influencer on entering this level="This is the level, where I was created, back in the scientists makeshift bunker
 Name of background song for this level=The_Last_V8.mod
 beginning_of_map
- 33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
- 33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33   7  10  10   8  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0   0   0   0   0   0   0   0   0   0   7   9   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33   7  10   2  18  10   6   0   1   9   0   0  13   0   0  13   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0  32  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0   7   2  10  10   9   0   0   0   7  18   9   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  11  23   0   0  24  11   0  27   0   0   0  27   0   0   0  27  34  27   0   0   0  12   0   0   0  11   0   0   0   0   0   0  12  11 
- 33  33  33  33   1  10   8  18  10   6   0  11   0   0   0  11   0   0   0   1  18   3   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0  24  11   0  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  34   4  10  18  10  10  18  10  10   6 
- 33  33  33  33  33  33  11   0  24  11   0   4  10  10  18   6   0   0   0   0   0   0   0   0   7   9   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0  27   0   0   0   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33   1  10  10   2  10   2  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10   3 
+  7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10   8  10  10   8  10   8  10  10   9 
+ 11   0   0   0   0   0   0   0   0   0   0   0   0  14  14  11   0  14  15  14  14  14  15  15  15   0  13   0  14  14   0  14  15  14  14  14   0  46   0   0  11   0   0  45   0  11   0   0  11 
+ 11   0  14   0   0  14   0  14  15  15  14   0   0  14  14  11   0   0  15  14  14   0   0   0   0   0   0   0   0   0   0  14  15  15   0   0   0  44   0   0  11   0   0  44   0  46   0   0  11 
+ 11   0  14  16   0   0   0   0   0   0   0   0   0   0  14  11  34   0   0  16   0   0   7   9   0  16   0   0   0  14  14   0  14   0   0   0   0   4  10  10   5  10  10   6   0  44   0   0  11 
+ 11   0  14   0   7  10  10  10  10   9   0   0   0   0   0  11   0   0   0   0   0   0   1   3   0   0   0   0   0   0  14   0   0   0   0   0   0  46   0   0  11   0   0  45   0  11   0   0  11 
+ 11   0   0   0  11  12  14  15  12  11   0   0   0   0   0  27   0   0   0  32   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  44   0   0  11   0   0  44   0   4  10  10   6 
+ 11   0  14   0  45  16  38   0  24  11   0   0   0   0   0  11   0  55  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56  56   0   4  10  10   5  10  10   6   0  46   0   0  11 
+ 11   0  14   0  27   0  17   0   0  24   0   0   0   0   0  27   0  55   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  57   0  46   0   0  11   0   0  45   0  44   0   0  11 
+ 11   0   0   0  45  16   0  34  24  11   0   0   0   0   0  11   0  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  54  57   0  44   0   0  11   0   0  44   0   4  10  10   6 
+ 11   0  14   0  11  12  14  15  12  11   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   4  10  10   5  10  10   6   0  46   0   0  11 
+ 11   0  14   0   1  10  10  10  10   3   0   0   0   0   0  11  17   0   0   0   0  16   0   0   0   0   0   7  10  10   9   0  14  14   0  15   0  46   0   0  11   0   0  45   0  44   0   0  11 
+ 11   0   0   0   0   0   0   0   0   0  16   0   0   0   0  11  16  15  14   0   0   0   0   0   0   0   0  27   0  34  11  14  15  15  15  15   0  44   0   0  11   0   0  44   0   4  10  10   6 
+ 11   0   0   0  15  15  15  14  14  49   0   0  14   0   0  11  15  14  14  14  14   0   0   0   0   0   0  27   0  24  11  14  15  16  15  15   0   1  10  10   2  10  10   3   0  46   0   0  11 
+ 11   0   0   0  54  54  54  54  54  51   0   0  15  15  14  11  15  15  15  14  15  15   0   0   0   0   0  27   0  34  11  15  15  15  15  15   0   0   0   0   0   0   0   0   0  44   0   0  11 
+  1  10  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10   5  10   8   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10   3 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11  32  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
+PosX=1 PosY=1 Statement="This must be the upper left corner of the room."
+PosX=1 PosY=2 Statement="I must be close to the upper left corner of the room."
+PosX=2 PosY=1 Statement="I must be close to the upper left corner of the room."
+PosX=5 PosY=7 Statement="I'm sure this door could be locked/unlocked by using the right code on that panel."
+PosX=10 PosY=7 Statement="This barrier is scarred from lots of bullet holes and plasma burns."
+PosX=6 PosY=6 Statement="This is a teleportation device.  Maybe Dr. Chandra can teleport me out this way?"
+PosX=8 PosY=6 Statement="Hey, there's a penguin command clone running on this console!  Or is that a game at all?"
 End of pure statement information for this level
 Start of pure codepanel information for this level
+PanelposX=4 PanelposY=8 Secret Code="hello"
+PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of big graphics insert information for this level
 BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
 End of big graphics insert information for this level
 Start of pure items information for this level
+New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
-Nr.=  0 x=  22 y=   7	 connections:   14  17   5  10  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  1 x=   7 y=   3	 connections:   24   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=  10 y=   3	 connections:    1  18   3  23  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  3 x=  16 y=   3	 connections:    2   4  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  18 y=   5	 connections:    3   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=  22 y=   5	 connections:    4   6  17   0  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=  28 y=   5	 connections:    5   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=  28 y=   6	 connections:    6   8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  30 y=   6	 connections:    7  11  15  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=  18 y=   7	 connections:   10  21  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=  20 y=   7	 connections:    9   0  16  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 11 x=  31 y=   7	 connections:    8  15  12  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 12 x=  35 y=   7	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=  10 y=   7	 connections:   25  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 14 x=  23 y=   8	 connections:   17  15   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 15 x=  30 y=   8	 connections:   14  11   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 16 x=  20 y=   9	 connections:   17  22  10  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 17 x=  22 y=   9	 connections:    5  14  16   0  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=  10 y=  11	 connections:   20  19   2  13  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=   7 y=  11	 connections:   18  24  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 20 x=  14 y=  11	 connections:   21  25  18  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=  18 y=  11	 connections:   22  20   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=  20 y=  11	 connections:   16  21  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=  12 y=   3	 connections:    3   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 24 x=   7 y=   7	 connections:   19   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 25 x=  14 y=   7	 connections:   20   9  13  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=  12 y=   1	 connections:    0   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=   3 y=   3	 connections:    3  15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  3 x=  12 y=   3	 connections:    1   6  26   2  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=  16 y=   3	 connections:    7   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=  25 y=   3	 connections:    4  25  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=  10 y=   5	 connections:    7   3  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=  16 y=   5	 connections:    6   4  19  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  14 y=  11	 connections:   16   9  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=  14 y=   9	 connections:    8  20  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 11 x=  26 y=   7	 connections:   14  24  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 12 x=  19 y=   9	 connections:   14  20  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 13 x=  10 y=  10	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 14 x=  21 y=  10	 connections:   12  11  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 15 x=   3 y=  11	 connections:    2  17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 16 x=  11 y=  11	 connections:   18  15  13   8  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 17 x=   1 y=  13	 connections:   18   0  15  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 18 x=  11 y=  13	 connections:   17  16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 19 x=  16 y=   7	 connections:    7  11  20  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 20 x=  16 y=   9	 connections:   12  19   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 21 x=  24 y=  13	 connections:   14  22  24  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 22 x=  29 y=  13	 connections:   21  23  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 23 x=  29 y=  11	 connections:   22  24  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 24 x=  26 y=  11	 connections:   23  21  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 25 x=  29 y=   7	 connections:   11   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=  14 y=   5	 connections:    3   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=   6 y=   7	 connections:   29  28  31  30  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=   5 y=   6	 connections:   29  27  30  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=   5 y=   8	 connections:   27  28  31  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 30 x=   7 y=   6	 connections:   27  28  31  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 31 x=   7 y=   8	 connections:   27  29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 33 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -940,152 +1112,6 @@ Nr.= 57 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 58 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 59 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 60 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 61 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 62 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 63 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 64 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 65 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 66 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 67 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 68 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 69 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 70 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 71 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 72 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 73 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 74 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 75 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 76 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 77 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 78 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 79 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 80 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 81 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 82 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 83 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 84 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 85 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 86 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 87 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 88 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 89 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 90 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 91 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 92 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 93 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 94 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 95 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 96 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-end_of_level
-
-----------------------------------------------------------------------
-
-Levelnumber: 6
-xlen of this level: 38
-ylen of this level: 22
-color of this level: 5
-Name of this level=stores
-Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=DELTA2.MOD
-beginning_of_map
- 33  33  33  33   7  10  10   8  10   8  10  10   9  33  33  33  33   7  10  10  10   8  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
- 33  33  33   7   3   0   0  27   0  27   0   0   1   9  33  33   7   3  25  25  25  11   0   0   0   0   0   0   0  27   0   0  13  14  15  15  15  11 
- 33  33   7   3   0   0   0  11   0  11   0   0   0   1  10   8   3  23   0   0   0  11   0   0   0   0   0   0   0  11   0   0   0  14  15  15  14  11 
- 33   7   3   0   0   0  24  11   0  27   0  38   0   0  24  11  23   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0  13  14  11 
-  7   3   0   0   0  26  12  11   0  11   0   0   0   0   7   2   9  26   0   0  26  11   0   0   0   0   0   0   0  11   0   0   0   0   0   0  15  11 
- 11   0   0   0   7  10  10   3   0   1  10  10  10  10   3  13   1  10  10  18  10   5  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
- 11   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0  14  11   0  13   0   0   0  16  24  11 
- 11   0   0   0   1  18  10   9   0   7  10  10  10   8   9  15   7  10  10  10  10   6  16   0  24  13   0   0   0  27   0   0   0   0  16  17  24  11 
-  1   9   0   0   0   0   0  11   0  11  14  14  14  11   1  10   3   0   0  14   0  27   0   0   0   0   0   0  15  11   0  15   0   0   0  16  24  11 
- 33   1   9   0  34   0  34  11   0  11   0   0  14  11   0   0   0   0   0  15   0   4  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
- 33  33   1   9   0   0   0  11   0  27   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0  15  11 
- 33  33  33   1   9   0   0  11   0  11   0   0   0  11   0   0   0   0  14   0   0  11   0   0   0   0   0   0   0  11   0   0   0   0   0  15  15  11 
- 33  33  33  33   1  10  10   2  10   5  10  10  10   2  10   8  10  10  10  10  10   6  15   0   0   0   0   0   0  27   0   0  15  16   0  14  15  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  11  49  49  49  49  49  11  15  16  15  15  16  15  14  11   0  15  15  38  15  15  15  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  27  49  49  49  49  49   4  10  10  10  10  10  10  10   3   0  14  14  14  15  14  13  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0  11  49  49  49  49  49  11   0   0  49  49  49   0   0   0   0   0   0  13  13  14  16  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   1  10  10  10  10  10   3   0   0   0   0   0   0   0   0   0   0   0   0  16  15  15  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  16  16  15  11 
- 33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   7  10  10  10  10   9   0   0   0   0   0   0   0   0   0   0   0   0  15  49  15  11 
- 33  33  33  33  33  33  33  33  33  11  49   0   0   0  49  49  11  33  33  33  33  11  49  49  49   0   0   0   0   0   0   0   0   0  15  15  15  11 
- 33  33  33  33  33  33  33  33  33  11  49  49   0  49  49  49   4  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3 
- 33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
-End of pure map information for this level
-Start of pure statement information for this level
-End of pure statement information for this level
-Start of pure codepanel information for this level
-End of pure codepanel information for this level
-Start of big graphics insert information for this level
-BigGraphicsInsertPosX=-1 BigGraphicsInsertPosY=-1 BigGraphicsInsertType=-256 
-End of big graphics insert information for this level
-Start of pure items information for this level
-New item: type=34  X=8.000000  Y=6.000000  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=20  CurDur=8.000000  Gold=31  PrefixCode=7  SuffixCode=8  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=9  StrToHit=8  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-End of pure items information for this level
-wp
-Nr.=  0 x=   4 y=   3	 connections:   19  18   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  1 x=   8 y=   1	 connections:   18   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   8 y=   3	 connections:    1   3   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  3 x=  13 y=   3	 connections:    2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  19 y=   3	 connections:    8  22  20  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=   1 y=   6	 connections:    0   6  17  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=   5 y=   6	 connections:    7   5  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=   8 y=   6	 connections:    2   6  14   8  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  19 y=   6	 connections:    4   9   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=  26 y=   6	 connections:    8  10  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=  27 y=   7	 connections:    9  23  21  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 11 x=   5 y=   9	 connections:    6  12  13  17  16  -1  -1  -1  -1  -1  -1  -1
-Nr.= 12 x=   4 y=  10	 connections:   11  13  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=   6 y=  10	 connections:   11  12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 14 x=   8 y=  10	 connections:    7  15  36  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 15 x=  17 y=  10	 connections:   14  25  36  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 16 x=   6 y=   9	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 17 x=   4 y=   9	 connections:   11   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=   6 y=   1	 connections:    1   0  19  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=   5 y=   3	 connections:    0  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 20 x=  22 y=   3	 connections:    4  27  28  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=  26 y=   8	 connections:   10  24   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=  17 y=   3	 connections:    4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=  35 y=   7	 connections:   10  26  31  27  30  32  -1  -1  -1  -1  -1  -1
-Nr.= 24 x=  20 y=   8	 connections:   25  21  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 25 x=  20 y=  10	 connections:   15  24  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=  30 y=   7	 connections:   23  10  27  31  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=  30 y=   3	 connections:   26  20  28  30  23  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=  28 y=   3	 connections:   27  20  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=  28 y=   1	 connections:   28  30  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 30 x=  30 y=   1	 connections:   27  29  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 31 x=  30 y=  10	 connections:   26  23  32  34  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 32 x=  30 y=  12	 connections:   31  23  33  38  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 33 x=  28 y=  12	 connections:   32  34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 34 x=  28 y=  10	 connections:   31  33  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 35 x=  22 y=  10	 connections:   25  34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 36 x=  11 y=  10	 connections:   14  15  37  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 37 x=  11 y=   9	 connections:   36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 38 x=  30 y=  17	 connections:   32  39  59  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 39 x=  33 y=  17	 connections:   38  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 40 x=  12 y=  13	 connections:   43  41  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 41 x=  13 y=  14	 connections:   52  40  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 42 x=  14 y=  15	 connections:   41  60  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 43 x=  11 y=  14	 connections:   44  53  40  52  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 44 x=  10 y=  15	 connections:   49  43  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 45 x=  14 y=  18	 connections:   54  46  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 46 x=  13 y=  19	 connections:   45  51  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 47 x=  11 y=  19	 connections:   51  48  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 48 x=  10 y=  18	 connections:   47  50  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 49 x=  11 y=  16	 connections:   50  44  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 50 x=  11 y=  17	 connections:   48  49  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 51 x=  12 y=  19	 connections:   46  47  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 52 x=  12 y=  14	 connections:   43  41  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 53 x=  10 y=  13	 connections:   43  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 54 x=  15 y=  17	 connections:   55  45  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 55 x=  22 y=  17	 connections:   57  56  54  58  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 56 x=  23 y=  16	 connections:   58  55  57  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 57 x=  23 y=  18	 connections:   58  55  56  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 58 x=  24 y=  17	 connections:   59  57  56  55  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 59 x=  27 y=  17	 connections:   38  58  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 60 x=  14 y=  17	 connections:   42  45  50  54  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 61 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 62 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 63 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1857,54 +1883,28 @@ end_of_level
 ----------------------------------------------------------------------
 
 Levelnumber: 12
-xlen of this level: 44
-ylen of this level: 41
+xlen of this level: 38
+ylen of this level: 15
 color of this level: 4
-Name of this level=upper cargo
+Name of this level=Robot construction facility
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=ACEII.MOD
+Name of background song for this level=The_Last_V8.mod
 beginning_of_map
-  7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33 
- 11  12   0   0   0   0   0   0   0   0   0   0  51  52  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
- 11  23   0   0   0   0   0   0   0   0   0   0   0  52  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11  13   0  38   0  11  33  33  33  33  33  33  33  33  33  33 
- 11  13   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   7  10  10  10  10  10  10  10   9   0   0  11  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
- 11  51   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0  11  12  34   0  34   0  34  12  11   0   0  11   0  16  13  16  11  33  33  33  33  33  33  33  33  33  33 
-  4  10  10  18  18   9   0   0   0   0   0   0   0   0  11   0   0  27   0   0   0   0   0   0   0  27   0   0  27   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
- 11  49  50   0   0  11   0   0   0   0   0   0   0   0  11   0   0  27   0   0   0   0   0   0   0  27   0   0  11   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33 
- 11  52   0   0   0   1  10  10  10  10  18  18  10  10   5  18  18   2  10  10  10  10  10  10  10   2  10  10   5  10  10  10  18   5  10  10  10  10  10  10   9  33  33  33 
- 11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0  50  14  14  14  15  51  52   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 11   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 11   0   0   0   0  12   0   0   0  34   0   0   0   0  27   0   0   0   0  12   0   0   0  34   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 11   0   0   0   0  13   0   0   0  13   0   0   0   0  11   0   0   0  49  13   0   0   0  13   0   0   0  14  11   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 11  51   0   0   0   0   0   0   0   0   0   0   0  51  11   0   0   0   0   0   0   0   0   0   0   0  15  14  11   0   0   0  50   7  10  18  18  18  10  10   6  33  33  33 
- 11  52  52   0   0   0   0   0   0   0   0   0  49  50  11   0   0   0   0   0   0   0   0   0   0   0  15  15  11   0  26  51  52  11   0   0   0   0   0   0  11  33  33  33 
-  1   8  10  10  18  18  10  10  10  18  18  10  10   8   2  10  10  18  10  10  18  10  10  18  10  10  10  10   2  10  10  10  10   3   0   0   0   0   0   0  11  33  33  33 
- 33  11  14  15   0   0  14  14  14   0  16  14  15  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 33  11  14  16   0   0   0   0   0   0   0   0   0  27   0  15  14  17  14  14  17  15  15   0  14  49   0  14  49   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 33  11  15  16   0   0   0   0   0   0   0   0   0  27   0  15  14  17  15  15  17  15  14   0  51  50   0  51  50   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 33  11  15  16   0   0   0   0  17   0   0   0   0  11   0  17  17  16  17  17  16  17  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 33  11  14  14   0   0   0   0   0   0  16   0   0  27   0  14  14  17  14  14  17  15  14   0  52  14   0  15  15   0   0  15  15   0  14  14   0  14  15   0  11  33  33  33 
- 33  11  15  14   0   0   0   0   0   0   0   0   0  27   0  15  14  17  14  14  17  15  15   0  50  52   0  14  14   0   0  15  14   0  15  15   0  14  13   0  11  33  33  33 
- 33  11  13  15  14  15   0   0  14  15  15  14   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33 
- 33   1  10  10  10  10  10  10  10  10  10  10  10   5  10  10  10  18  10  10  18  10  10  18  10  10  18  10  10  18  10  10  10  10  10  18  18  10  10  10   2  10  10   9 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  13  17  15  13   0  15  14  17  15  15   0  14  14  17  13  13   0  13  13  17  13  15   0  15  14  17  50  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  14  17  15  13   0  14  14  17  13  13   0  14  14  17  13  15   0  13  15  17  14  13   0  14  13  17  52  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  17  17  16  17  17   0  17  17  17  17  17   0  17  17  16  17  17   0  17  17  17  13  17   0  17  17  17  52  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  15  14  17  14  13   0  14  14  17  14  15   0  15  14  17  13  13   0  13  13  17  15  13   0  15  14  17  49  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  13  14  17  15  14   0  15  13  17  14  14   0  15  13  17  15  13   0  13  15  17  15  13   0  14  13  17  52  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17  17  17  52  11 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  14  13  17  14  13   0  15  15  17  15  15   0  13  13  17  13  13   0  15  13  17  14  13   0  14  15  17  50  11 
- 33  33  33  33  33  33  33   7  10  10  10  10  10   6   0  13  13  17  15  14   0  14  13  17  14  13   0  13  15  17  13  13   0  15  13  17  13  13   0  15  13  17  51  11 
- 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  17  17  16  17  17   0  17  17  17  17  17   0  17  17  16  17  17   0  17  17  16  13  17   0  17  17  17  50  11 
- 33  33  33  33  33  33  33  11   0   0  14   0   0  11   0  15  13  17  14  13   0  13  15  17  15  15   0  13  13  17  15  13   0  14  14  17  15  13   0  14  15  17  51  11 
- 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  14  14  17  14  13   0  13  15  17  14  14   0  15  13  17  13  13   0  13  13  17  13  13   0  14  14  17  49  11 
- 33  33  33  33  33  33  33  11  14   0  38   0  17  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17  17  17  51  11 
- 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0  15  14  17  14  13  17  14  14  17  14  14  17  13  13  17  13  13  17  15  14  17  13  15  17  13  15  17  50  11 
- 33  33  33  33  33  33  33  11   0   0  14   0   0  11   0  15  13  17  15  13  17  14  14  17  14  13  17  13  15  17  15  13  17  14  15  17  13  13  17  15  16  17  50  11 
- 33  33  33  33  33  33  33  11   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  14  14  49  50  50  11 
- 33  33  33  33  33  33  33   1  10  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3 
+ 33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
+ 33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33   7  10  10   8  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0   0   0   0   0   0   0   0   0   0   7   9   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33   7  10   2  18  10   6   0   1   9   0   0  13   0   0  13   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  11  23   0   0  24  11   0  32  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  11  23   0   0  24  11   0   7   2  10  10   9   0   0   0   7  18   9   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
+ 33  33  33  33  11  23   0   0  24  11   0  27   0   0   0  27   0   0   0  27  34  27   0   0   0  12   0   0   0  11   0   0   0   0   0   0  12  11 
+ 33  33  33  33   1  10   8  18  10   6   0  11   0   0   0  11   0   0   0   1  18   3   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  11   0  24  11   0  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  34   4  10  18  10  10  18  10  10   6 
+ 33  33  33  33  33  33  11   0  24  11   0   4  10  10  18   6   0   0   0   0   0   0   0   0   7   9   0   0   0  27   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  11   0   0  27   0  27   0   0   0  27   0   0   0   0   0   0   0   0   1   3   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33   1  10  10   2  10   2  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10   3 
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
@@ -1916,99 +1916,99 @@ End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
-Nr.=  0 x=  15 y=   1	 connections:   15   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  1 x=  27 y=   1	 connections:    6  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   4 y=   4	 connections:   10   3   4  16  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  3 x=  10 y=   4	 connections:    2   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  15 y=   4	 connections:    5   3   2   0  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  5 x=  16 y=   5	 connections:    4   6   7  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  6 x=  27 y=   5	 connections:    5   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  7 x=  32 y=   5	 connections:    9   6   5  61  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  8 x=  26 y=   9	 connections:   15   9  68  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  9 x=  32 y=   9	 connections:    8   7  61  60  59  68  -1  -1  -1  -1  -1  -1
-Nr.= 10 x=   4 y=  10	 connections:   11  16   2  12  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 11 x=  10 y=  10	 connections:   12  17  10  13  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 12 x=  16 y=  10	 connections:   13  18  11  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 13 x=  18 y=  10	 connections:   14  12  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 14 x=  24 y=  10	 connections:   15  19  13  12  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 15 x=  27 y=  10	 connections:    8  14  13  12  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 16 x=   4 y=  14	 connections:   10  17   2  38  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 17 x=  10 y=  14	 connections:   11  16  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=  16 y=  14	 connections:   12  19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=  24 y=  14	 connections:   14  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 20 x=  17 y=  19	 connections:   31  21  43  27  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=  20 y=  19	 connections:   20  26  23  22  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=  23 y=  19	 connections:   24  25  21  44  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=  20 y=  16	 connections:   21  31  24  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 24 x=  23 y=  16	 connections:   23  22  48  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 25 x=  23 y=  22	 connections:   26  22  47  77  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=  20 y=  22	 connections:   27  21  25  81  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=  17 y=  22	 connections:   28  20  26  78  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=  14 y=  22	 connections:   29  27  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=  14 y=  20	 connections:   33  28  32  43  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 30 x=  14 y=  16	 connections:   32  31  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 31 x=  17 y=  16	 connections:   30  20  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 32 x=  14 y=  18	 connections:   34  29  30  43  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 33 x=  12 y=  20	 connections:   37  29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 34 x=  12 y=  18	 connections:   36  32  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 35 x=  10 y=  16	 connections:   36  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 36 x=  10 y=  18	 connections:   41  34  35  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 37 x=  10 y=  20	 connections:   40  42  33  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 38 x=   4 y=  16	 connections:   16  39  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 39 x=   4 y=  18	 connections:   38  40  41  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 40 x=   4 y=  20	 connections:   39  37  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 41 x=   7 y=  18	 connections:   39  36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 42 x=   7 y=  20	 connections:   37  40  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 43 x=  14 y=  19	 connections:   20  32  29  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 44 x=  26 y=  19	 connections:   47  22  48  45  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 45 x=  29 y=  19	 connections:   49  44  46  55  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 46 x=  29 y=  22	 connections:   47  45  50  70  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 47 x=  26 y=  22	 connections:   25  46  44  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 48 x=  26 y=  16	 connections:   44  24  49  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 49 x=  29 y=  16	 connections:   48  45  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 50 x=  33 y=  22	 connections:   46  51  55  76  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 51 x=  36 y=  22	 connections:   54  52  50  76  75  -1  -1  -1  -1  -1  -1  -1
-Nr.= 52 x=  39 y=  22	 connections:   53  51  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 53 x=  39 y=  19	 connections:   54  52  56  69  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 54 x=  36 y=  19	 connections:   55  53  51  56  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 55 x=  33 y=  19	 connections:   45  54  50  56  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 56 x=  36 y=  16	 connections:   54  55  53  57  58  69  -1  -1  -1  -1  -1  -1
-Nr.= 57 x=  36 y=  12	 connections:   56  58  66  67  59  -1  -1  -1  -1  -1  -1  -1
-Nr.= 58 x=  36 y=  14	 connections:   56  57  64  65  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 59 x=  36 y=   9	 connections:   63  62  57   9  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 60 x=  31 y=  10	 connections:    9  62  68  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 61 x=  32 y=   8	 connections:    9   7  63  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 62 x=  37 y=  10	 connections:   59  66  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 63 x=  35 y=   8	 connections:   61  59  67  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 64 x=  37 y=  14	 connections:   58  66  69  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 65 x=  35 y=  14	 connections:   58  67  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 66 x=  37 y=  12	 connections:   64  57  62  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 67 x=  35 y=  12	 connections:   65  57  63  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 68 x=  30 y=   9	 connections:   60   9   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 69 x=  39 y=  16	 connections:   53  56  64  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 70 x=  29 y=  27	 connections:   71  73  77  46  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 71 x=  29 y=  33	 connections:   70  80  87  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 72 x=  35 y=  33	 connections:   73  89  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 73 x=  35 y=  27	 connections:   74  72  70  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 74 x=  35 y=  24	 connections:   76  75  73  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 75 x=  36 y=  24	 connections:   51  74  91  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 76 x=  35 y=  22	 connections:   50  51  74  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 77 x=  23 y=  27	 connections:   78  80  70  25  81  -1  -1  -1  -1  -1  -1  -1
-Nr.= 78 x=  17 y=  27	 connections:   79  77  81  27  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 79 x=  17 y=  33	 connections:   80  78  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 80 x=  23 y=  33	 connections:   71  79  77  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 81 x=  20 y=  27	 connections:   78  77  26  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 82 x=  41 y=  24	 connections:   91  83  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 83 x=  41 y=  27	 connections:   82  84  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 84 x=  41 y=  30	 connections:   83  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 85 x=  41 y=  33	 connections:   84  86  92  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 86 x=  41 y=  36	 connections:   85  88  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 87 x=  29 y=  36	 connections:   90  71  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 88 x=  38 y=  36	 connections:   86  89  92  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 89 x=  35 y=  36	 connections:   88  90  72  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 90 x=  32 y=  36	 connections:   89  87  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 91 x=  38 y=  24	 connections:   75  82  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 92 x=  38 y=  33	 connections:   88  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  0 x=  22 y=   7	 connections:   14  17   5  10  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  1 x=   7 y=   3	 connections:   24   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=  10 y=   3	 connections:    1  18   3  23  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  3 x=  16 y=   3	 connections:    2   4  23  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=  18 y=   5	 connections:    3   5  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  5 x=  22 y=   5	 connections:    4   6  17   0  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  6 x=  28 y=   5	 connections:    5   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  7 x=  28 y=   6	 connections:    6   8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  8 x=  30 y=   6	 connections:    7  11  15  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  9 x=  18 y=   7	 connections:   10  21  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 10 x=  20 y=   7	 connections:    9   0  16  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 11 x=  31 y=   7	 connections:    8  15  12  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 12 x=  35 y=   7	 connections:   11  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 13 x=  10 y=   7	 connections:   25  18  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 14 x=  23 y=   8	 connections:   17  15   0  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 15 x=  30 y=   8	 connections:   14  11   8  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 16 x=  20 y=   9	 connections:   17  22  10  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 17 x=  22 y=   9	 connections:    5  14  16   0  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 18 x=  10 y=  11	 connections:   20  19   2  13  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 19 x=   7 y=  11	 connections:   18  24  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 20 x=  14 y=  11	 connections:   21  25  18  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 21 x=  18 y=  11	 connections:   22  20   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 22 x=  20 y=  11	 connections:   16  21  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 23 x=  12 y=   3	 connections:    3   2  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 24 x=   7 y=   7	 connections:   19   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 25 x=  14 y=   7	 connections:   20   9  13  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 33 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 35 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 36 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 37 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 38 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 39 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 40 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 41 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 42 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 43 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 44 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 45 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 46 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 47 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 48 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 49 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 50 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 51 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 52 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 53 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 54 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 55 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 56 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 57 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 58 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 59 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 60 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 61 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 62 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 63 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 64 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 65 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 66 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 67 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 68 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 69 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 70 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 71 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 72 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 73 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 74 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 75 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 76 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 77 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 78 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 79 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 80 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 81 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 82 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 83 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 84 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 85 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 86 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 87 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 88 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 89 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 90 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 91 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 92 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 93 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 94 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 95 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
