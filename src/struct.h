@@ -727,8 +727,9 @@ typedef struct
 {
   int phases;			/* how many phases in motion to show */
   double phase_changes_per_second; // how many different phases to display every second
-  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
+  // SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                            // the bullet images of this bullet
+  iso_image image [ BULLET_DIRECTIONS ] [ MAX_PHASES_IN_A_BULLET ] ;
 } 
 bulletspec, *Bulletspec;
 

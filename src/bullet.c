@@ -71,8 +71,8 @@ move_this_bullet_and_check_its_collisions ( int num )
   //
   number_of_steps = rintf ( whole_step_size / 0.25 ) + 1 ;
 
-  bullet_step_vector . x = CurBullet -> speed . x * Frame_Time () / number_of_steps ;
-  bullet_step_vector . y = CurBullet -> speed . y * Frame_Time () / number_of_steps ;
+  bullet_step_vector . x = 0.1 * CurBullet -> speed . x * Frame_Time () / number_of_steps ;
+  bullet_step_vector . y = 0.1 * CurBullet -> speed . y * Frame_Time () / number_of_steps ;
 
   for ( i = 0 ; i < number_of_steps ; i ++ )
     {

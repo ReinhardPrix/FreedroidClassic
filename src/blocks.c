@@ -336,6 +336,7 @@ Load_Skill_Level_Button_Surfaces( void )
  * This function loads the Bullet image and decodes it into the multiple
  * small Blast surfaces.
  * ---------------------------------------------------------------------- */
+/*
 void 
 Load_Bullet_Surfaces( void )
 {
@@ -381,10 +382,10 @@ Load_Bullet_Surfaces( void )
       tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 
-      for ( j=0 ; j < Bulletmap[i].phases ; j++ )
+      for ( j=0 ; j < Bulletmap [ i ] . phases ; j++ )
 	{
-	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
+	  Bulletmap [ i ] . image [ 0 ] [ j ] . surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( Bulletmap [ i ] . image [ 0 ] [ j ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
 	  Source.x = j*(Block_Width+2);
 	  // Source.y = i*(Block_Height+2);
@@ -396,15 +397,90 @@ Load_Bullet_Surfaces( void )
 	  Target.w = 0; // Block_Width;
 	  Target.h = 0; // Block_Height;
 	  // SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
-	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , NULL );
-	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap [ i ] . image [ 0 ] [ j ] . surface , NULL );
+	  SDL_SetAlpha( Bulletmap [ i ] . image [ 0 ] [ j ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
+	  //--------------------
+	  // Now we add proper offset in here, so that we can later conveniently use
+	  // the standard iso_object blitting functions refering to map locations.
+	  //
+	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
+	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
 	}
       RowTop += BulletImageHeightTable[ i ] + 2;
       SDL_FreeSurface( tmp_surf );
     }
+
   SDL_FreeSurface( Whole_Image );
 
 }; // void Load_Bullet_Surfaces( void )
+*/
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+iso_load_bullet_surfaces ( void )
+{
+  int i , j , k ;
+  char *fpath;
+  char constructed_filename[ 5000 ];
+
+  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
+    {
+      // tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
+      // SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
+      for ( j=0 ; j < Bulletmap [ i ] . phases ; j++ )
+	{
+	
+	  for ( k = 0 ; k < BULLET_DIRECTIONS ; k ++ )
+	    {
+	      //--------------------
+	      // We construct the file name
+	      //
+	      sprintf ( constructed_filename , "iso_bullet_%03d_%02d_%04d.png" , 1 , k , j + 1 );
+	      fpath = find_file ( constructed_filename , GRAPHICS_DIR , TRUE );
+
+	      get_iso_image_from_file_and_path ( fpath , & ( Bulletmap [ i ] . image [ k ] [ j ] ) ) ;
+
+	      /*
+	      //--------------------
+	      // We load the image and check that this operation has been successful
+	      //
+	      Whole_Image = IMG_Load( fpath ); 
+	      if ( Whole_Image == NULL )
+		{
+		  fprintf ( stderr , "\nfpath: %s." , fpath );
+		  GiveStandardErrorMessage ( "iso_load_bullet_surfaces(...)" , "\
+Unable to open file.",
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+	      //--------------------
+	      // Now we convert the loaded file and free the old surface again.
+	      //
+	      Bulletmap [ i ] . image [ k ] [ j ] . surface = SDL_DisplayFormatAlpha( Whole_Image );
+	      SDL_SetColorKey( Bulletmap [ i ] . image [ k ] [ j ] . surface , 0 , 0 );
+	      SDL_SetAlpha( Bulletmap [ i ] . image [ k ] [ j ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
+	      SDL_FreeSurface ( Whole_Image );
+	      */
+
+	    }
+
+	  //--------------------
+	  // Now we add proper offset in here, so that we can later conveniently use
+	  // the standard iso_object blitting functions refering to map locations.
+	  //
+	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
+	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
+	}
+    }
+
+}; // void iso_load_bullet_surfaces ( void )
 
 /* ----------------------------------------------------------------------
  *

@@ -2081,8 +2081,8 @@ PutBullet (int BulletNummer)
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
   int PhaseOfBullet;
-  // int i;
   SDL_Surface* tmp;
+  int direction_index;
 
   //--------------------
   // in case our bullet is of the type "FLASH", we only
@@ -2106,7 +2106,6 @@ PutBullet (int BulletNummer)
 	}
     } // if type == FLASH
 
-
   // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
   if ( CurBullet->type >= Number_Of_Bullet_Types ) 
     {
@@ -2118,77 +2117,13 @@ There was a bullet to be blitted of a type that does not really exist.",
   PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
 
   PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
-
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
 
-  // #define ONE_ROTATION_ONLY
-#undef ONE_ROTATION_ONLY
-#ifdef ONE_ROTATION_ONLY
-  //--------------------
-  // Maybe it's the first time this bullet is displayed.  But then, the images
-  // of the rotated bullet in all phases are not yet attached to the bullet.
-  // Then, we'll have to generate these
-  //
-  //if ( CurBullet->time_in_frames == 1 )
-  if ( !CurBullet->Surfaces_were_generated )
-    {
-      for ( i=0; i<Bulletmap[ CurBullet->type ].phases ; i++ )
-	{
-	  CurBullet->SurfacePointer[i] = 
-	    rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle , 1.0 , FALSE );
-	}
-      DebugPrintf( 1 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
-      CurBullet->Surfaces_were_generated=TRUE;
-    }
+  direction_index = ( ( CurBullet -> angle + 360.0 + 360 / ( 2 * BULLET_DIRECTIONS ) ) * BULLET_DIRECTIONS / 360 ) ;
+  while ( direction_index < 0  ) direction_index += BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+  while ( direction_index >= BULLET_DIRECTIONS ) direction_index -= BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
 
-  //
-  // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
-  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
-  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
-  // This has to be taken into account when calculating the target position for the 
-  // blit of these surfaces!!!!
-  //
-  /*
-  TargetRectangle.x = UserCenter_x
-    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = UserCenter_y
-    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
-  */
-
-  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , TRUE ) 
-    - CurBullet -> SurfacePointer [ PhaseOfBullet ] -> w / 2;
-  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , FALSE ) 
-    - CurBullet -> SurfacePointer [ PhaseOfBullet ] -> h / 2;
-
-  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, Screen , &TargetRectangle );
-#else
-  tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
-
-  //
-  // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
-  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
-  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
-  // This has to be taken into account when calculating the target position for the 
-  // blit of these surfaces!!!!
-  //
-  /*
-  TargetRectangle.x = UserCenter_x
-    - (Me[0].pos.x-CurBullet->pos.x)*Block_Width - tmp -> w / 2 ;
-  TargetRectangle.y = UserCenter_y
-    - (Me[0].pos.y-CurBullet->pos.y)*Block_Width - tmp -> h / 2 ;
-  */
-
-  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , TRUE ) 
-    - tmp -> w / 2;
-  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , FALSE ) 
-    - tmp -> h / 2;
-
-
-  SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
-  SDL_FreeSurface( tmp );
-  CurBullet->Surfaces_were_generated = FALSE ;
-
-#endif
+  blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
 
 }; // void PutBullet (int Bulletnumber )
 

@@ -1003,7 +1003,7 @@ ReInitPictures (void)
     {
       for ( i = 0 ; i < Bulletmap[j].phases ; i++ )
 	{
-	  SDL_FreeSurface( Bulletmap[j].SurfacePointer[i] );
+	  SDL_FreeSurface( Bulletmap [ j ] . image [ 0 ] [ i ] . surface );
 	}
     }
 
@@ -1356,7 +1356,8 @@ InitPictures (void)
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-  Load_Bullet_Surfaces();
+  // Load_Bullet_Surfaces();
+  iso_load_bullet_surfaces();
 
   ShowStartupPercentage ( 92 ) ; 
   
