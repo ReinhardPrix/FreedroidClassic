@@ -66,21 +66,21 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   2   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   7 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   2   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   4   4   6   7 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1  11  11  11   1   1   1   1   1   1  11  11  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   7 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   7 
-  4   4   4   4   4   1   1   2   3   1   1   1   1   1   3   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   6 
-  4   4   4   4   4   1   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
-  4   4   4   4   4   1   1   2   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
-  4   4   4   4   4   1   1   1   1   1   1   1   3   1   3   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
-  4   4   4   4   4   1   1   1   1  11  11   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   2   3   2   1   3   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1  11  11  11   1   1   1   1   1   1  11  11  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   7 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   7 
+  4   4   4   4   4   1   1   2   3   1   1   1   1   1   3   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   6   6 
+  4   4   4   4   4   1   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
+  4   4   4   4   4   1   1   2   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   2  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
+  4   4   4   4   4   1   1   1   1   1   1   1   3   1   3   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   3  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
+  4   4   4   4   4   1   1   1   1  11  11   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   2  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   2   3   2   1   3   3  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
@@ -90,15 +90,15 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   1   2   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   2   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   3   1   1   2   1   1  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1  11  11  11  11  11  11  11  11   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1  11  11  11  11  11  11  11   1   1   1   1   1   1  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1  11  11  11  11  11  11  11   2   1   1   1   1   1  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11   1   1   1   1   1   1   1  11  11  11  11  11  11  11  11   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1  11  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   2   2   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11   1   1   3   1   1   2   1   1  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11  11  11   1   1   1   1  11  11  11  11  11  11  11  11   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1  11  11  11  11  11  11  11  11  11   1   1   1   1  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1  11  11  11  11  11  11  11   2  11   1   1   1   1  11  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11  11  11   1   1   1   1  11  11  11  11  11  11  11  11   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11  11  11   1   1   1   1   1   1  11  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11  11   1   1   1   1   1   1   1  11  11  11  11   1   2   2   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1  11  11  11  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
@@ -974,7 +974,6 @@ ob_type=11 ob_x=24.00 ob_y=28.50 ob_na=-1
 ob_type=49 ob_x=27.50 ob_y=28.50 ob_na=-1 
 ob_type=48 ob_x=31.50 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=28.50 ob_na=-1 
-ob_type=1 ob_x=50.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=57.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=65.00 ob_y=28.50 ob_na=-1 
@@ -1006,11 +1005,7 @@ ob_type=1 ob_x=5.00 ob_y=30.50 ob_na=-1
 ob_type=1 ob_x=6.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=7.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=13.00 ob_y=30.50 ob_na=-1 
-ob_type=1 ob_x=17.00 ob_y=30.50 ob_na=-1 
-ob_type=2 ob_x=16.50 ob_y=31.00 ob_na=-1 
-ob_type=2 ob_x=17.50 ob_y=31.00 ob_na=-1 
 ob_type=1 ob_x=21.00 ob_y=30.50 ob_na=-1 
-ob_type=2 ob_x=20.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=21.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=22.50 ob_y=31.00 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=30.50 ob_na=-1 
@@ -1047,8 +1042,6 @@ ob_type=1 ob_x=7.00 ob_y=31.50 ob_na=-1
 ob_type=1 ob_x=13.00 ob_y=31.50 ob_na=-1 
 ob_type=2 ob_x=13.50 ob_y=32.00 ob_na=-1 
 ob_type=11 ob_x=16.00 ob_y=31.50 ob_na=-1 
-ob_type=21 ob_x=16.50 ob_y=31.50 ob_na=-1 
-ob_type=1 ob_x=18.00 ob_y=31.50 ob_na=-1 
 ob_type=2 ob_x=18.50 ob_y=32.00 ob_na=-1 
 ob_type=1 ob_x=20.00 ob_y=31.50 ob_na=-1 
 ob_type=2 ob_x=19.50 ob_y=32.00 ob_na=-1 
@@ -1368,7 +1361,6 @@ ob_type=1 ob_x=5.00 ob_y=44.50 ob_na=-1
 ob_type=1 ob_x=6.00 ob_y=44.50 ob_na=-1 
 ob_type=1 ob_x=7.00 ob_y=44.50 ob_na=-1 
 ob_type=1 ob_x=18.00 ob_y=44.50 ob_na=-1 
-ob_type=21 ob_x=18.50 ob_y=44.50 ob_na=-1 
 ob_type=1 ob_x=21.00 ob_y=44.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=44.50 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=44.50 ob_na=-1 
@@ -1444,8 +1436,6 @@ ob_type=1 ob_x=42.00 ob_y=47.50 ob_na=-1
 ob_type=46 ob_x=42.25 ob_y=47.50 ob_na=-1 
 ob_type=49 ob_x=45.50 ob_y=47.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=47.50 ob_na=-1 
-ob_type=48 ob_x=47.50 ob_y=47.50 ob_na=-1 
-ob_type=49 ob_x=48.50 ob_y=47.50 ob_na=-1 
 ob_type=28 ob_x=49.50 ob_y=47.25 ob_na=-1 
 ob_type=48 ob_x=50.50 ob_y=47.50 ob_na=-1 
 ob_type=48 ob_x=51.50 ob_y=47.50 ob_na=-1 
@@ -1466,7 +1456,6 @@ ob_type=1 ob_x=23.00 ob_y=48.50 ob_na=-1
 ob_type=6 ob_x=23.50 ob_y=49.00 ob_na=-1 
 ob_type=6 ob_x=24.50 ob_y=49.00 ob_na=-1 
 ob_type=2 ob_x=25.50 ob_y=49.00 ob_na=-1 
-ob_type=1 ob_x=26.00 ob_y=48.50 ob_na=-1 
 ob_type=1 ob_x=27.00 ob_y=48.50 ob_na=-1 
 ob_type=2 ob_x=26.50 ob_y=49.00 ob_na=-1 
 ob_type=1 ob_x=28.00 ob_y=48.50 ob_na=-1 
@@ -2379,6 +2368,47 @@ ob_type=2 ob_x=22.54 ob_y=27.03 ob_na=-1
 ob_type=2 ob_x=23.53 ob_y=27.02 ob_na=-1 
 ob_type=2 ob_x=24.53 ob_y=27.02 ob_na=-1 
 ob_type=2 ob_x=52.49 ob_y=26.99 ob_na=-1 
+ob_type=71 ob_x=47.34 ob_y=47.51 ob_na=-1 
+ob_type=79 ob_x=47.20 ob_y=48.53 ob_na=-1 
+ob_type=67 ob_x=13.37 ob_y=69.51 ob_na=-1 
+ob_type=67 ob_x=13.45 ob_y=64.55 ob_na=-1 
+ob_type=68 ob_x=15.47 ob_y=57.35 ob_na=-1 
+ob_type=79 ob_x=29.19 ob_y=75.50 ob_na=-1 
+ob_type=67 ob_x=29.35 ob_y=77.56 ob_na=-1 
+ob_type=78 ob_x=29.96 ob_y=75.52 ob_na=-1 
+ob_type=75 ob_x=35.37 ob_y=77.54 ob_na=-1 
+ob_type=67 ob_x=35.33 ob_y=78.33 ob_na=-1 
+ob_type=79 ob_x=41.23 ob_y=75.53 ob_na=-1 
+ob_type=67 ob_x=41.39 ob_y=76.52 ob_na=-1 
+ob_type=78 ob_x=41.87 ob_y=75.50 ob_na=-1 
+ob_type=76 ob_x=43.45 ob_y=73.28 ob_na=-1 
+ob_type=80 ob_x=22.62 ob_y=40.20 ob_na=-1 
+ob_type=77 ob_x=22.60 ob_y=40.98 ob_na=-1 
+ob_type=75 ob_x=21.32 ob_y=41.50 ob_na=-1 
+ob_type=71 ob_x=18.38 ob_y=44.47 ob_na=-1 
+ob_type=79 ob_x=13.21 ob_y=26.51 ob_na=-1 
+ob_type=76 ob_x=13.45 ob_y=25.28 ob_na=-1 
+ob_type=78 ob_x=13.85 ob_y=26.54 ob_na=-1 
+ob_type=75 ob_x=13.31 ob_y=30.54 ob_na=-1 
+ob_type=2 ob_x=16.52 ob_y=30.02 ob_na=-1 
+ob_type=2 ob_x=17.48 ob_y=30.03 ob_na=-1 
+ob_type=2 ob_x=18.49 ob_y=30.02 ob_na=-1 
+ob_type=2 ob_x=19.49 ob_y=30.02 ob_na=-1 
+ob_type=2 ob_x=20.49 ob_y=30.02 ob_na=-1 
+ob_type=1 ob_x=19.98 ob_y=30.47 ob_na=-1 
+ob_type=1 ob_x=16.01 ob_y=30.50 ob_na=-1 
+ob_type=72 ob_x=16.53 ob_y=30.38 ob_na=-1 
+ob_type=42 ob_x=18.59 ob_y=30.53 ob_na=-1 
+ob_type=21 ob_x=17.55 ob_y=30.64 ob_na=-1 
+ob_type=80 ob_x=49.62 ob_y=17.23 ob_na=-1 
+ob_type=77 ob_x=49.66 ob_y=17.80 ob_na=-1 
+ob_type=76 ob_x=51.45 ob_y=16.25 ob_na=-1 
+ob_type=75 ob_x=48.38 ob_y=18.50 ob_na=-1 
+ob_type=71 ob_x=50.42 ob_y=27.49 ob_na=-1 
+ob_type=3 ob_x=50.01 ob_y=28.51 ob_na=-1 
+ob_type=79 ob_x=48.29 ob_y=24.56 ob_na=-1 
+ob_type=78 ob_x=49.26 ob_y=24.59 ob_na=-1 
+ob_type=75 ob_x=48.35 ob_y=23.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=48 label.pos.y=21 label.label_name="StoneStartGameSquare"
@@ -2419,6 +2449,14 @@ End of pure statement information for this level
 Start of pure items information for this level
 New item: type=19  X=16.326372  Y=62.438004  AC=2  DoDamage=0  ModifyDamage=0  MaxDur=11  CurDur=5.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=39  X=30.116034  Y=74.320068  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -2492,25 +2530,25 @@ Nr.= 65 x=  24 y=  46	 connections:   63  62  66  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 66 x=  24 y=  49	 connections:   65  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 67 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 68 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 69 x=  15 y=  28	 connections:   77  75  74  70  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 69 x=  15 y=  28	 connections:   77  74  70  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 70 x=  15 y=  25	 connections:   69  74  73  71  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 71 x=  17 y=  25	 connections:   70  72  18  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 72 x=  17 y=  24	 connections:   73  71  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 73 x=  14 y=  24	 connections:   70  72  74  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 74 x=  14 y=  26	 connections:   69  75  70  73  77  -1  -1  -1  -1  -1  -1  -1
-Nr.= 75 x=  13 y=  27	 connections:   69  74  76  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 76 x=  13 y=  29	 connections:   77  75  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 77 x=  14 y=  29	 connections:   78  76  69  74  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 74 x=  14 y=  26	 connections:   69  70  73  77  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 75 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 76 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 77 x=  14 y=  29	 connections:   78  69  74  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 78 x=  14 y=  31	 connections:   79  77  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 79 x=  16 y=  31	 connections:   78  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 80 x=  35 y=  73	 connections:   46  81  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 81 x=  37 y=  73	 connections:   82  80  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 82 x=  39 y=  75	 connections:   83  81  46  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 83 x=  39 y=  77	 connections:   82  46  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 84 x=  41 y=  73	 connections:   86  85   4  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 85 x=  43 y=  75	 connections:   87  86  84   4  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 86 x=  41 y=  77	 connections:   87  85  84  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 87 x=  45 y=  77	 connections:   86  85   4  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 84 x=  41 y=  73	 connections:   85   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 85 x=  43 y=  75	 connections:   87  84   4  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 86 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 87 x=  45 y=  77	 connections:   85   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 88 x=  21 y=  59	 connections:   92  89  91  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 89 x=  22 y=  58	 connections:   88  90  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 90 x=  23 y=  59	 connections:   91  89  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -8201,7 +8239,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=26.50 ob_na=-1 
@@ -8216,8 +8254,8 @@ ob_type=1 ob_x=1.00 ob_y=27.50 ob_na=-1
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=28.50 ob_na=-1 
@@ -8229,7 +8267,7 @@ ob_type=1 ob_x=1.00 ob_y=29.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=30.50 ob_na=-1 
@@ -8689,7 +8727,7 @@ ob_type=1 ob_x=18.00 ob_y=88.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=89.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=89.00 ob_na=-1 
-ob_type=22 ob_x=36.50 ob_y=88.50 ob_na=-1 
+ob_type=21 ob_x=36.50 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=89.00 ob_na=-1 
 ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
 ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
@@ -8739,6 +8777,10 @@ ob_type=1 ob_x=86.00 ob_y=89.50 ob_na=-1
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
 ob_type=1 ob_x=0.99 ob_y=45.45 ob_na=-1 
 ob_type=2 ob_x=0.51 ob_y=45.99 ob_na=-1 
+ob_type=72 ob_x=40.50 ob_y=16.28 ob_na=-1 
+ob_type=80 ob_x=54.54 ob_y=9.21 ob_na=-1 
+ob_type=77 ob_x=54.56 ob_y=9.89 ob_na=-1 
+ob_type=81 ob_x=48.41 ob_y=14.71 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -8775,14 +8817,6 @@ End of pure statement information for this level
 
 Start of pure items information for this level
 New item: type=12  X=44.000000  Y=52.000000  AC=0  DoDamage=8  ModifyDamage=8  MaxDur=16  CurDur=8.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=10  X=22.000000  Y=84.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=4  X=16.000000  Y=84.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=5  X=17.000000  Y=84.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=7  X=19.000000  Y=84.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=8  X=19.000000  Y=82.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=9  X=20.000000  Y=82.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=10  X=21.000000  Y=82.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=11  X=22.000000  Y=82.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=27  X=40.237449  Y=27.950050  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=20.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 

@@ -1765,6 +1765,72 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_2 = 0.80 ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . is_smashable = FALSE ;
 
+  obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_N_TOILET_SMALL ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_E_TOILET_SMALL ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_S_TOILET_SMALL ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_W_TOILET_SMALL ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_N_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_N_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_N_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_N_TOILET_BIG ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_E_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_E_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_E_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_E_TOILET_BIG ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_S_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_S_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_S_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_S_TOILET_BIG ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_W_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_W_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_W_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_W_TOILET_BIG ] . is_smashable = TRUE ;
+
+  obstacle_map [ ISO_N_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_N_CHAIR ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_N_CHAIR ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_N_CHAIR ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_E_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_E_CHAIR ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_E_CHAIR ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_E_CHAIR ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_S_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_S_CHAIR ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_S_CHAIR ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_S_CHAIR ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_W_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_W_CHAIR ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_W_CHAIR ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_W_CHAIR ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_N_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_N_DESK ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_N_DESK ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_N_DESK ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_E_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_E_DESK ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_E_DESK ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_E_DESK ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_S_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_S_DESK ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_S_DESK ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_S_DESK ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_W_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_W_DESK ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_W_DESK ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_W_DESK ] . is_smashable = TRUE ;
+
 }; // void load_all_obstacles ( void )
 
 /* ----------------------------------------------------------------------

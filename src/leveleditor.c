@@ -395,6 +395,9 @@ ShowLevelEditorTopMenu( int Highlight )
     {
       for ( i = 0 ; i < 9 ; i ++ )
 	{
+	  if ( selected_index >= NUMBER_OF_OBSTACLE_TYPES ) continue ;
+
+
 	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
 	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
 	  
