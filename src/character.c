@@ -434,13 +434,13 @@ UpdateAllCharacterStats ( int PlayerNum )
   if ( Me [ PlayerNum ] .Experience > Me [ PlayerNum ] .ExpRequired ) 
     {
       Me [ PlayerNum ] .exp_level ++ ;
-      Me [ PlayerNum ] .points_to_distribute += 10;
+      Me [ PlayerNum ] .points_to_distribute += 5;
 
       //--------------------
       // Like in the Gothic 1 game, maximum life force will now automatically
       // be increased upon reaching a new character level.
       //
-      Me [ PlayerNum ] .base_vitality += 10;
+      Me [ PlayerNum ] .base_vitality += 3;
 
       //--------------------
       // When a droid reaches a new experience level, all health and 
