@@ -101,6 +101,10 @@ Sorry...\n\
     }
 
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
+
+  if ( CurItem->prefix_code != (-1) )
+    strcat( ItemDescText , PrefixList[ CurItem->prefix_code ].bonus_name );
+
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
 
   if ( CurItem->suffix_code != (-1) )
@@ -221,56 +225,56 @@ Sorry...\n\
       strcat ( ItemDescText , "\n" );
       strcat ( ItemDescText , font_switchto_red );
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_str )
+      if ( CurItem->bonus_to_str )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d to Power\n" , CurItem->bonus_to_str );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_dex )
+      if ( CurItem->bonus_to_dex )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d to Power Distribution\n" , CurItem->bonus_to_dex );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_mag )
+      if ( CurItem->bonus_to_mag )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d to Mind\n" , CurItem->bonus_to_mag );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_vit )
+      if ( CurItem->bonus_to_vit )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d to Vitality\n" , CurItem->bonus_to_vit );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_life )
+      if ( CurItem->bonus_to_life )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d Energy\n" , CurItem->bonus_to_life );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_force )
+      if ( CurItem->bonus_to_force )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d Force\n" , CurItem->bonus_to_force );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_tohit )
+      if ( CurItem->bonus_to_tohit )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d%% to hit\n" , CurItem->bonus_to_tohit );
 	  strcat( ItemDescText , linebuf );
 	}
 
-      if ( SuffixList[ CurItem->suffix_code ].base_bonus_to_all_attributes )
+      if ( CurItem->bonus_to_all_attributes )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
 	  sprintf( linebuf , "+%d to all attributes \n" , CurItem->bonus_to_all_attributes );
