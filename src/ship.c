@@ -284,22 +284,11 @@ EnterCodepanel (void)
 {
   int map_x;
   int map_y;
+  int Codepanel_Index;
   int Weiter=FALSE;
   char* RequestString;
-  // char* DecisionString;
-  // int i;
-  // char *fpath;
-  // char fname[500];
-  // char ReplyString[10000];
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
-  SDL_Rect Droid_Image_Window;
-
-
-  //--------------------
-  // First we arrange the background, so that everything looks fine,
-  // similar as in the DroidChat.
-  //
 
   while (SpacePressed());
   
@@ -308,10 +297,29 @@ EnterCodepanel (void)
   Chat_Window.w=380;
   Chat_Window.h=314;
 
-  Droid_Image_Window.x=15;
-  Droid_Image_Window.y=82;
-  Droid_Image_Window.w=215;
-  Droid_Image_Window.h=330;
+  //--------------------
+  // A codepanel has been entered.  Therefore we try to find the appropriate
+  // code word specified in the code panel array.  Let's see if we can find
+  // a matching index:
+  //
+  for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
+    {
+      if ( ( ( (int) rintf( Me.pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) &&
+	   ( ( (int) rintf( Me.pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
+	break;
+    }
+  if ( Codepanel_Index == MAX_CODEPANELS_PER_LEVEL )
+    {
+      DisplayText ( "\nLast codepanel entry used or no codepanel entry present!!" , 100 , 100 , &User_Rect );
+      SDL_Flip ( ne_screen );
+      getchar_raw();
+      Codepanel_Index = 0;
+    }
+
+  //--------------------
+  // First we arrange the background, so that everything looks fine,
+  // similar as in the DroidChat.
+  //
 
   Activate_Conservative_Frame_Computation( );
   Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
@@ -353,7 +361,7 @@ EnterCodepanel (void)
 	  return;
 	}
 
-      if ( !strcmp ( RequestString , "1234" ) )
+      if ( !strcmp ( RequestString , CurLevel->CodepanelList[ Codepanel_Index ].Secret_Code ) )
 	{
 	  Me.TextVisibleTime=0;
 	  Me.TextToBeDisplayed="Wow! I've hacked this terminal.  Cool!";
