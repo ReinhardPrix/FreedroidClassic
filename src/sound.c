@@ -1529,6 +1529,9 @@ The SDL mixer was unable to play a certain sound sample file, that was supposed 
 void 
 remove_all_samples_from_WAV_cache( void )
 {
+
+#ifdef HAVE_LIBSDL_MIXER
+
   for ( i = 0 ; i < next_free_position_in_cache ; i ++ )
     {
       //--------------------
@@ -1551,6 +1554,8 @@ remove_all_samples_from_WAV_cache( void )
   next_free_position_in_cache = 0 ;
 
   DebugPrintf ( -3 , "\nremove_all_samples_from_WAV_cache(...): Successfully cleared the whole WAV cache." );
+
+#endif // HAVE_LIBSDL_MIXER
 
 }; // void remove_all_samples_from_WAV_cache( void )
 
