@@ -146,10 +146,10 @@ PrepareScaledSurface(int With_Screen_Update)
   SDL_UnlockSurface( ScaledSurface );
 
   if (Draw_Framerate)
-    PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2 , "FPS: %d", 
+    PrintStringFont (ScaledSurface , Menu_BFont, 0, RAHMENHOEHE*2 , "FPS: %d", 
 		     5*(int)(rintf(0.2/Frame_Time())) );
   if (Draw_Energy)
-    PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2+FontHeight(Font1) , "Energy: %d", 
+    PrintStringFont (ScaledSurface , Menu_BFont, 0, RAHMENHOEHE*2+FontHeight(Menu_BFont) , "Energy: %d", 
 		     (int)(rintf(Me.energy)) );
 
 

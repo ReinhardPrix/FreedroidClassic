@@ -49,6 +49,8 @@ void
 MakeGridOnScreen(unsigned char* Parameter_Screen){
   int x,y;
 
+  DebugPrintf("\nvoid MakeGridOnScreen(...): real function call confirmed.");
+
   for (y=0; y<SCREENHOEHE; y++) 
     {
       for (x=0; x<SCREENBREITE; x++) 
@@ -60,6 +62,8 @@ MakeGridOnScreen(unsigned char* Parameter_Screen){
 	}
     }
   
+  DebugPrintf("\nvoid MakeGridOnScreen(...): end of function reached.");
+
 } // void MakeGridOnSchreen(void)
 
 SDL_Surface *LoadImage(char *datafile, int transparent)
@@ -492,12 +496,12 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  //  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
-  //    {
-  //      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
-  //      Terminate(ERR);
-  //} else
-  // printf("\nSDL Menu Font initialisation successful.\n");
+  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
+      {
+        fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+        Terminate(ERR);
+  } else
+  printf("\nSDL Menu Font initialisation successful.\n");
 
   if ( ( Para_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
   // if ( ( Para_BFont = LoadFont("../graphics/font01.png") ) == NULL )

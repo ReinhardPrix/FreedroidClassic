@@ -374,13 +374,17 @@ AnimateInfluence (void)
    * Farbe des Influencers (15) richtig setzen
    */
 
-#undef SET_INFLU_COLOR_EVERY_FRAME
+#define SET_INFLU_COLOR_EVERY_FRAME
 #ifdef SET_INFLU_COLOR_EVERY_FRAME
   if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
 	       Transfercolor.blau);
 
   if (((Me.status == MOBILE) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
+    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+	       Mobilecolor.blau);
+
+  if (((Me.status == WEAPON) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	       Mobilecolor.blau);
 #endif

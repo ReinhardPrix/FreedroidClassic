@@ -575,6 +575,9 @@ enum
     QUIT_POSITION=5 
   };
 
+ DebugPrintf("\nvoid EscapeMenu(void): real function call confirmed."); 
+
+
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
@@ -582,6 +585,8 @@ enum
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
+
+  SetCurrentFont( Menu_BFont );
 
   while ( EscapePressed() );
 
@@ -593,17 +598,17 @@ enum
       MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "Single Player");
-      CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Multi Player");
-      CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Options");
-      CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Level Editor");
-      CenteredPutString (ScaledSurface ,  8*FontHeight(Font1),    "Quit Game");
+      CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "Single Player");
+      CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Multi Player");
+      CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Options");
+      CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Level Editor");
+      CenteredPutString (ScaledSurface ,  8*FontHeight(Menu_BFont),    "Quit Game");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -711,26 +716,26 @@ enum
       MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( OPTIONS_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+      DisplayMergeBlock( OPTIONS_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
 
       PrepareScaledSurface(FALSE);
 
       // PrintStringFont          (screen, Font2,0, 4*h2+100,"%2.0f %s",10.0," funny lib!" ); 
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 4*FontHeight(Menu_BFont),    
 		       "Background Music Volume: %1.2f" , Current_BG_Music_Volume );
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 5*FontHeight(Menu_BFont),    
 		       "Sound Effects Volume: %1.2f", Current_Sound_FX_Volume );
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 6*FontHeight(Menu_BFont),    
 		       "Gamma Correction: %1.2f", Current_Gamma_Correction );
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 7*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 7*FontHeight(Menu_BFont),    
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 8*FontHeight(Menu_BFont),    
 		       "Show Framerate: %s", Draw_Framerate? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 9*FontHeight(Menu_BFont),    
 		       "Show Energy: %s", Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 10*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 10*FontHeight(Menu_BFont),    
 		       "Back");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
@@ -870,15 +875,15 @@ Single_Player_Menu (void)
       MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "New Game");
-      CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Show Hiscore List");
-      CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Show Mission Instructions");
-      CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Back");
+      CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "New Game");
+      CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
+      CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
+      CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Back");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -968,19 +973,19 @@ Show_Highscore_Menu (void)
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface, 1*FontHeight(Font1), "Highscore list:" );
+      CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "Highscore list:" );
 
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 4*FontHeight(Menu_BFont),    
 		       "Highest score: %10s : %6.2f" , HighestName, HighestScoreOfDay );
 
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 5*FontHeight(Menu_BFont),
 		       "Great score: %10s : %6.2f" , GreatScoreName,  GreatScore);
 
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 6*FontHeight(Menu_BFont),
 		       " Lowest Score:  %10s : %6.2f", LowestName,   LowestScoreOfDay);
 
-      // LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
-      // LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
+      // LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
+      // LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "new missions and levels from you!");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -1026,15 +1031,15 @@ Multi_Player_Menu (void)
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface, 1*FontHeight(Font1), "MULTI PLAYER" );
+      CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
 
       
-      LeftPutString (ScaledSurface , 3*FontHeight(Font1), "We are sorry, but a multi player");
-      LeftPutString (ScaledSurface , 4*FontHeight(Font1), "mode has not yet been implemented.");
-      LeftPutString (ScaledSurface , 5*FontHeight(Font1), "There are plans to do this, but");
-      LeftPutString (ScaledSurface , 6*FontHeight(Font1), "currently it is not a priority.");
-      LeftPutString (ScaledSurface , 8*FontHeight(Font1), "If you feel like setting something");
-      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "up, please contact the developers.");
+      LeftPutString (ScaledSurface , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
+      LeftPutString (ScaledSurface , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
+      LeftPutString (ScaledSurface , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
+      LeftPutString (ScaledSurface , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
+      LeftPutString (ScaledSurface , 8*FontHeight(Menu_BFont), "If you feel like setting something");
+      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -1079,14 +1084,14 @@ Show_Mission_Instructions_Menu (void)
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "MISSION INSTRUCTIONS");
-      LeftPutString (ScaledSurface , 3*FontHeight(Font1), "This is the first mission.  It is");
-      LeftPutString (ScaledSurface , 4*FontHeight(Font1), "identical to the original Paradroid");
-      LeftPutString (ScaledSurface , 5*FontHeight(Font1), "mission from the Commodore C64.");
-      LeftPutString (ScaledSurface , 6*FontHeight(Font1), "So the mission is:");
-      LeftPutString (ScaledSurface , 7*FontHeight(Font1), "Destroy all robots on the ship.");
-      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
-      LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
+      CenteredPutString (ScaledSurface ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
+      LeftPutString (ScaledSurface , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
+      LeftPutString (ScaledSurface , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
+      LeftPutString (ScaledSurface , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
+      LeftPutString (ScaledSurface , 6*FontHeight(Menu_BFont), "So the mission is:");
+      LeftPutString (ScaledSurface , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
+      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
+      LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "new missions and levels from you!");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -1157,7 +1162,7 @@ Level_Editor(void)
 	  Highlight_Current_Block();
 	  PutInternFenster( FALSE );
 	  PrepareScaledSurface( FALSE );
-	  CenteredPutString (ScaledSurface ,  1*FontHeight(Font1),    "LEVEL EDITOR");
+	  CenteredPutString (ScaledSurface ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
 	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
 	  // If the Level editor pressed some cursor keys, move the
@@ -1264,15 +1269,15 @@ Level_Editor(void)
 	  MakeGridOnScreen( Outline320x200 );
 
 	  // Highlight currently selected option with an influencer before it
-	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
 			     Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 	  
 	  PrepareScaledSurface(FALSE);
 
-	  CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "Save Level:");
-	  CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Set Level name:");
-	  CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Back to Level editing");
-	  CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Quit Level Editor");
+	  CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "Save Level:");
+	  CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Set Level name:");
+	  CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Back to Level editing");
+	  CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Quit Level Editor");
 	  
 	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 	  
@@ -1296,7 +1301,7 @@ Level_Editor(void)
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  SaveShip("Testship");
-		  CenteredPutString (ScaledSurface ,  9*FontHeight(Font1),    "Your ship was saved...");
+		  CenteredPutString (ScaledSurface ,  9*FontHeight(Menu_BFont),    "Your ship was saved...");
 		  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 		  while (!EnterPressed() && !SpacePressed() ) ;
 		  while (EnterPressed() || SpacePressed() ) ;

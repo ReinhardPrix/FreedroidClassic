@@ -115,7 +115,7 @@ enum _sounds
 #define INFLUENCEBILD_PCX          "../graphics/influ.bmp"
 #define DIGITBILD_PCX              "../graphics/digits.bmp"
 #define ENEMYBILD_PCX              "../graphics/enemy.bmp"
-#define SEITENANSICHTBILD_PCX      "../graphics/ship.bm"
+#define SEITENANSICHTBILD_PCX      "../graphics/ship.bmp"
 #define EL_BLOCKS_FILE_PCX         "../graphics/ship2.bmp"
 #define FONTBILD_PCX               "../graphics/parafont.bmp"
 #define CONSOLENBILD_PCX           "../graphics/console.bmp"
