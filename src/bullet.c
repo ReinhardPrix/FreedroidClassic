@@ -291,7 +291,8 @@ CheckBulletCollisions (int num)
       // robots in there except of course for those immune.
       if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
       
-      for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+      // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+      for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
 	{
 	  if ( IsVisible (&AllEnemys[i].pos) &
 	       (!Druidmap[AllEnemys[i].type].flashimmune) )
@@ -344,7 +345,8 @@ CheckBulletCollisions (int num)
 	}
       
       // check for collision with enemys
-      for (i = 0; i < NumEnemys; i++)
+      // for (i = 0; i < NumEnemys; i++)
+      for (i = 0; i < Number_Of_Droids_On_Ship; i++)
 	{
 	  if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
 	    continue;
@@ -382,10 +384,12 @@ CheckBulletCollisions (int num)
 	  // it seems like we have a collision of two bullets!
 	  // both will be deleted and replaced by blasts..
 	  DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
-	  CurBullet->type=OUT;
-	  AllBullets[num].type=OUT;
+	  
+	  //CurBullet->type=OUT;
+	  //AllBullets[num].type=OUT;
 	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
 	  StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
+	  DeleteBullet( num );
 	}
       break;
     } // switch ( Bullet-Type )
@@ -423,8 +427,9 @@ CheckBlastCollisions (int num)
 	if (abs (AllBullets[i].pos.y - CurBlast->PY) < Blast_Radius)
 	  {
 	    /* KILL Bullet silently */
-	    AllBullets[i].type = OUT;
-	    AllBullets[i].mine = FALSE;
+	    //AllBullets[i].type = OUT;
+	    //AllBullets[i].mine = FALSE;
+	    DeleteBullet( i );
 	  }
 
     }				/* for */
