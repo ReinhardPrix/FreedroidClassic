@@ -1077,7 +1077,7 @@ get_standard_iso_floor_tile_size ( void )
 {
   SDL_Surface *standard_floor_tile;
 
-  standard_floor_tile = IMG_Load( find_file ( "floor/iso_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
+  standard_floor_tile = IMG_Load( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
   if ( standard_floor_tile == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
