@@ -2927,7 +2927,7 @@ This is a dark Apprentice of the evil MS Super-Corporation.
 Droidname: CHA
 Droid portrait file name (without extension) to use="CHA"
 Maximum speed of this droid: 6.1
-Class of this droid: 16
+Class of this droid: 18
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2999,7 +2999,7 @@ Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Going to request reinforcements typical for this droid : 0
-This is Mr. Stone, a sales representative of the United Machines Corporation.
+Friendly Mrs. Stone, who runs a small equipment shop.
 
 ** Start of new Robot: ** 
 Droidname: SOR
@@ -3038,7 +3038,7 @@ Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Going to request reinforcements typical for this droid : 0
-This is Mr. Stone, a sales representative of the United Machines Corporation.
+Sorenson, teacher of magical abilities.
 
 ** Start of new Robot: ** 
 Droidname: HEA
@@ -3122,7 +3122,7 @@ This is Richard, who escaped from the second level
 Droidname: DIX
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 13
+Class of this droid: 17
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -3161,7 +3161,7 @@ This is Dixon, who maintains the teleporters.
 Droidname: PEN
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 13
+Class of this droid: 16
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
