@@ -505,6 +505,7 @@ Title (void)
   Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
+  SDL_SetClipRect ( ne_screen, NULL );
   DisplayImage ( NE_TITLE_PIC_FILE );
 
   PrepareScaledSurface(TRUE);
