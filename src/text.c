@@ -223,11 +223,12 @@ Of course you can ask the droid about anything else it has told you or about wha
       if ( !strcmp ( RequestString , "follow" ) ) 
 	{
 	  DisplayTextWithScrolling( 
-		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up." , 
+		      "Ok.  I'm on your tail.  I go where you go.  I will rest where you have rested.  I will follow your every step.  I try to do it at your speed.  You lead and I follow.  I hope you know where you're going.  I'll do my best to keep up." , 
 		      -1 , -1 , &Chat_Window , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
 	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
 	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS ( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
+	  AllEnemys[ Enum ].warten = AllEnemys[ Enum ].StayHowManySecondsBehind;
 	  // printf(" Staying %d Frames behind.  Should be 5 seconds." , AllEnemys[ Enum ].StayHowManyFramesBehind );
 	  // fflush( stdout );
 	  continue;

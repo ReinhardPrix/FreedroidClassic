@@ -234,7 +234,7 @@ typedef struct
   int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  double warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  double warten;		// time till the droid will start to move again
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
