@@ -132,9 +132,16 @@ void display_bmp(char *file_name)
 
   DebugPrintf
     ("\nvoid display_bmp(char *file_name):  end of function reached...");
-} 
+
+  return;
+}  /* display_bmp() */
 
 
+/*-----------------------------------------------------------------
+ * 
+ * 
+ * 
+ *-----------------------------------------------------------------*/
 void
 Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal)
 {
@@ -259,6 +266,8 @@ InitPictures (void)
 } // int InitPictures(void)
 
 /*-----------------------------------------------------------------
+ * OBSOLETED by SDL, don't use this any more!!!
+ * 
  * @Desc: doesnt really _swap_ anything, but copies InternalScreen
  *        onto the Real vga screen
  *
@@ -267,7 +276,10 @@ void
 SwapScreen (void)
 {
 
+  printf ("\nSwapScreen() called: OBSOLETE!!! don't use any more!!\n");
   memcpy( Outline320x200, InternalScreen, SCREENBREITE * SCREENHOEHE );
+
+  return;
 
 } /* SwapScreen() */
 
@@ -705,7 +717,8 @@ WaitVRetrace (void)
      Parameter: keine
    */
 
-  vga_waitretrace ();
+  printf ("\nCompletely OBSOLETE WaitVRtrace called!! deprecated\n");
+  return;
 
 }				// void WaitVRetrace(void)
 
@@ -887,9 +900,6 @@ ClearGraphMem (unsigned char *Parameter_screen)
 {
   SDL_Rect ThisRectangle;
 
-  DebugPrintf
-    ("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
-
   if (Parameter_screen == RealScreen) 
     {
       ThisRectangle.x=0;
@@ -901,9 +911,6 @@ ClearGraphMem (unsigned char *Parameter_screen)
     }
   else
     memset (Parameter_screen, 0, SCREENBREITE * SCREENHOEHE);
-
-  DebugPrintf
-    ("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");
 
 }				// void ClearGraphMem(unsigned char* screen)
 
