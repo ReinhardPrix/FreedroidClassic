@@ -584,7 +584,7 @@ EnterKonsole (void)
 	    case 2:
 	      ClearGraphMem();
 	      ShowDeckMap (CurLevel);
-	      getchar_raw();
+	      // getchar_raw();
 	      SetCombatScaleTo( 1 );
 	      break;
 	    case 3:
@@ -598,58 +598,8 @@ EnterKonsole (void)
 	      break;
 	    } // switch menu_pos 
 	}
-      
 
-      /*
-
-      switch (key)
-	{
-	case SDLK_DOWN:
-	  if (menu_pos < 3) menu_pos++;
-	  break;
-	case SDLK_UP:
-	  if (menu_pos > 0) menu_pos--;
-	  break;
-
-	case SDLK_SPACE:
-	case SDLK_RETURN:
-	  switch (menu_pos)
-	    {
-	    case 0:
-	      finished = TRUE;
-	      break;
-	    case 1:
-	      GreatDruidShow ();
-	      break;
-	    case 2:
-	      ClearGraphMem();
-	      ShowDeckMap (CurLevel);
-	      getchar_raw();
-	      SetCombatScaleTo( 1 );
-	      break;
-	    case 3:
-	      ClearGraphMem();
-	      ShowLifts (CurLevel->levelnum, -1);
-	      getchar_raw();
-	      break;
-	    default:
-	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
-	      Terminate(-1);
-	      break;
-	    } // switch menu_pos 
-	  break;
-
-	case SDLK_ESCAPE:
-	  finished = TRUE;
-	  break;
-
-	default:
-	  break;
-	} // switch key 
-
-      */
-
-    } /* while (!finished) */
+    } // while (!finished) 
 
   Me[0].status = MOBILE;
   ClearGraphMem ( );
@@ -1036,6 +986,8 @@ void
 ShowDeckMap (Level deck)
 {
   finepoint tmp;
+  static char LeftMouseWasPressed = FALSE;
+
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
 
@@ -1068,9 +1020,29 @@ ShowDeckMap (Level deck)
 	  if ( Me[0].pos.x > 1 ) Me[0].pos.x --;
 	  while ( LeftPressed ( ) );
 	}
- 
+
+      //--------------------
+      // Pressing the mouse button should allow to move about over the small
+      // map displayed in the console screen.
+      //
+      if ( !LeftMouseWasPressed && axis_is_active )
+	{
+	  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+	  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
+	    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
+	  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
+
+	  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+	  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
+	    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
+	  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+	}
+
+      ClearUserFenster();
       Assemble_Combat_Picture( ONLY_SHOW_MAP );
       SDL_Flip (Screen);
+
+      LeftMouseWasPressed = axis_is_active;
 
     }
   while (EscapePressed());
