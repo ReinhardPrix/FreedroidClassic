@@ -33,6 +33,9 @@
  * AC-defined conditionals and pretend it's standard linux
  */
 
+#ifndef _SYSTEM_H
+#define _SYSTEM_H
+
 #include "config.h"
 
 #include <stdio.h>
@@ -96,22 +99,9 @@
 #endif
 
 #ifdef HAVE_LIBGL
-
-#  ifdef HAVE_GL_GL_H
-#     include "GL/gl.h"
-#  endif
-#  ifdef HAVE_OPENGL_GL_H
-#     include "OpenGL/gl.h"
-#  endif
-
-
-#  ifdef HAVE_GL_GLEXT_H
-#     include "GL/glext.h"
-#  endif
-#  ifdef HAVE_OPENGL_GLEXT_H
-#     include "OpenGL/glext.h"
-#  endif
-
-
+#include "SDL_opengl.h"
 #endif /* HAVE_LIBGL */
 
+
+
+#endif /* double-inclusion protection */

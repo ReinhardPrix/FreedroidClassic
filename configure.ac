@@ -130,10 +130,6 @@ else
    LIBS="$LIBS $GL_LIBS"
    CFLAGS="$CFLAGS $GL_CFLAGS"
 fi
-AC_CHECK_HEADERS([GL/gl.h  OpenGL/gl.h])
-
-AC_CHECK_HEADERS([GL/glext.h], [], [], [ #include <GL/gl.h> ])
-AC_CHECK_HEADERS([OpenGL/glext.h], [], [], [ #include <OpenGL/gl.h> ])
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
