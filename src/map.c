@@ -168,25 +168,37 @@ CollectAutomapData ( void )
 	      //
 	      ObjPos.x = x + 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].r_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) 
+		{
+		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | RIGHT_WALL_BIT ;
+		}
 	      //--------------------
 	      // Now we check, if there are some left sides of walls visible
 	      //
 	      ObjPos.x = x - 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].l_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) )
+		{
+		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | LEFT_WALL_BIT ;
+		}
 	      //--------------------
 	      // Now we check, if there are some southern sides of walls visible
 	      //
 	      ObjPos.x = x + 0;
 	      ObjPos.y = y + 0.75;
-	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].d_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) 
+		{
+		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | DOWN_WALL_BIT ;
+		}
 	      //--------------------
 	      // Now we check, if there are some northern sides of walls visible
 	      //
 	      ObjPos.x = x + 0.0 ;
 	      ObjPos.y = y - 0.75 ;
-	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].u_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) 
+		{
+		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | UP_WALL_BIT ;
+		}
 	    }
 	}
     }

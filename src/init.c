@@ -1826,11 +1826,7 @@ ClearAutomapData( void )
     {
       for ( x = 0 ; x < 200 ; x ++ )
 	{
-	  Me[0].Automap[y][x].r_wall = FALSE;
-	  Me[0].Automap[y][x].l_wall = FALSE;
-	  Me[0].Automap[y][x].u_wall = FALSE;
-	  Me[0].Automap[y][x].d_wall = FALSE;
-	  Me[0].Automap[y][x].filled = FALSE;
+	  Me [ 0 ] . Automap[y][x] . storebyte = 0 ;
 	}
     }
 }; // void ClearAutomapData ( void )
