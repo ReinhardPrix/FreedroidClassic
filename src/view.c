@@ -668,6 +668,7 @@ blit_one_obstacle ( obstacle* our_obstacle )
 
   if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
     {
+	fprintf ( stderr , "\nobstacle_type found=%d." , our_obstacle-> type ) ;
       GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
 There was an obstacle type given, that exceeds the number of\n\
  obstacle types allowed and loaded in Freedroid.",

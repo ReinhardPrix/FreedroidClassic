@@ -3276,16 +3276,8 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
     {
       if ( ( obs_type >= ISO_H_DOOR_000_OPEN ) && ( obs_type <= ISO_V_DOOR_100_OPEN ) )
 	return ( FALSE );
-      // ISO_H_DOOR_000_OPEN = 6,
-      // ISO_H_DOOR_025_OPEN = 7,
-      // ISO_H_DOOR_050_OPEN = 8,
-      // ISO_H_DOOR_075_OPEN = 9,
-      // ISO_H_DOOR_100_OPEN = 10,
-      // ISO_V_DOOR_000_OPEN = 11,
-      // ISO_V_DOOR_025_OPEN = 12,
-      // ISO_V_DOOR_050_OPEN = 13,
-      // ISO_V_DOOR_075_OPEN = 14,
-      // ISO_V_DOOR_100_OPEN = 15,
+      if ( ( obs_type >= ISO_OUTER_DOOR_V_00 ) && ( obs_type <= ISO_OUTER_DOOR_H_100 ) )
+	return ( FALSE );
     }
 
   //--------------------

@@ -1550,7 +1550,12 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       //--------------------
       // Now we make sure the door lists and that are all updated...
       //
-      GetAllAnimatedMapTiles ( curShip.AllLevels[ obstacle_level_num ] );
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ obstacle_level_num ] ) ;
+      //--------------------
+      // Also make sure the other maps realize the change too, if it
+      // maybe happend in the border area where two maps are glued together
+      //
+      ExportLevelInterface ( obstacle_level_num ) ;
     }
 
   // Does the action include a teleport of the influencer to some other location?

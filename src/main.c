@@ -133,6 +133,11 @@ main (int argc, char * argv[])
     test_float_3 = test_float_1 / test_float_2 ;
   */
 
+  DebugPrintf ( 1 , "\nNumber of obstacles: %d." , NUMBER_OF_OBSTACLE_TYPES ) ;
+  DebugPrintf ( 1 , "\nNumber of ISO_V_BATHTUB : %d." , ISO_V_BATHTUB ) ;
+  DebugPrintf ( 1 , "\nNumber of ISO_ROOM_WALL_V_RED : %d." , ISO_ROOM_WALL_V_RED ) ;
+  DebugPrintf ( 1 , "\nNumber of  ISO_OUTER_DOOR_V_00 : %d." , ISO_OUTER_DOOR_V_00 ) ;
+
   GameOver = FALSE;
   QuitProgram = FALSE;
 
