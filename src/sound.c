@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/05 23:09:01  jprix
+ * Project can now be compiled and run entirely without any yiff installation.
+ *
  * Revision 1.6  1997/06/05 09:24:15  jprix
  * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
  *
@@ -46,7 +49,10 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#include "defs.h"
+
 // Leave the following lines in.  They are for the yiff sound server!!
+#ifdef PARADROID_SOUND_SUPPORT_ON
 #include <Y2/Y.h>         //  Basic Y types and constants. 
 #include <Y2/Ylib.h>      //  YLib functions and structs. 
 /* Change this to the address and port of the Y server you want
@@ -54,11 +60,9 @@
  * meaning `localhost'.
  */
 #define CON_ARG             "127.0.0.1:9433"
+#endif
 // Thanks a lot for leaving the above lines in.  They are for the yiff sound server!!
 
-
-
-#include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
@@ -95,6 +99,7 @@ unsigned char *FireSoundSamplePointer;
 
 
 // The following Lines define several channels for sound output to the yiff sound server!!!
+#ifdef PARADROID_SOUND_SUPPORT_ON
 // Cannel 1
 YConnection *con;
 YEventSoundObjectAttributes sndobj_attrib;
@@ -109,6 +114,7 @@ YEvent event2;
 YID BlastSoundSampleYID;
 YID FireSoundSampleYID;
 YID CollisionSoundSampleYID;
+#endif
 // The above Lines define several channels for sound output to the yiff sound server!!!
 
 void ExitProc() {
@@ -273,6 +279,11 @@ long FragmentRoundUp(long FormerLength){
 
 void YIFF_Server_Check_Events(void){
 
+  // This function can and should only be compiled on machines, that have the YIFF sound
+  // server installed.  Compilation therefore is optional and can be toggled with the following
+  // definition.
+#ifdef PARADROID_SOUND_SUPPORT_ON
+
   // FIRST CHECK EVENTS FOR THE FIRST CHANNEL
 
   // Get the next event (if any) in the first Channel 
@@ -343,9 +354,17 @@ void YIFF_Server_Check_Events(void){
 	}
     }
     
+#endif
+
 } // void YIFF_Server_Check_Events(void)
 
 void YIFF_Server_Close_Connections(void){
+
+  // This function can and should only be compiled on machines, that have the YIFF sound
+  // server installed.  Compilation therefore is optional and can be toggled with the following
+  // definition.
+#ifdef PARADROID_SOUND_SUPPORT_ON
+
 
   /* Disconnect from the Y server. We need to pass the
    * original connection pointer con to close that
@@ -366,6 +385,8 @@ void YIFF_Server_Close_Connections(void){
 
   YCloseConnection(con2, False);
   con2 = NULL;
+
+#endif
 
 } // void YIFF_Server_Close_Connections(void)
 
@@ -420,11 +441,10 @@ void Play_YIFF_Server_Sound(int Tune){
 #define NUMBER_OF_CHANNELS 2
 
 
-// For development purposes, the sound will not be activated unless the following definition is made
-#ifndef PARADROID_SOUND_SUPPORT_ON
-  return;
-#endif
-
+  // This function can and should only be compiled on machines, that have the YIFF sound
+  // server installed.  Compilation therefore is optional and can be toggled with the following
+  // definition.
+#ifdef PARADROID_SOUND_SUPPORT_ON
 
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
 
@@ -454,6 +474,8 @@ void Play_YIFF_Server_Sound(int Tune){
   if (Tune == BLASTSOUND) {
     play_id = YStartPlaySoundObjectSimple( con, BlastSoundSampleFilename );
   }
+
+#endif
 
 } // void Play_OSS(int Tune)
 
@@ -502,6 +524,14 @@ The connection argument is a string of the format ":".
 * $Function----------------------------------------------------------*/
 
 int Init_YIFF_Sound_Server(void){
+
+  // This function can and should only be compiled on machines, that have the YIFF sound
+  // server installed.  Compilation therefore is optional and can be toggled with the following
+  // definition.
+#ifdef PARADROID_SOUND_SUPPORT_ON
+
+
+
   con = YOpenConnection(
 			NULL,
 			CON_ARG
@@ -618,6 +648,8 @@ int Init_YIFF_Sound_Server(void){
   //  }
   //
   //
+
+#endif
 
 } // void Init_YIFF_Sound_Server(void)
 
