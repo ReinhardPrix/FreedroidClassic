@@ -126,8 +126,12 @@ SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter
 //--------------------
 // This is Spencer 'SPE', the chief of the guard, who won't let Tux into the citadel
 //
-S**pecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+//--------------------
+// This is Lukas, the man running the armoury inside the red guard building
+//
+SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="LukasStartGameSquare" RushTux="no" DialogSectionToUse="Lukas" ShortLabel="Lukas -- Head of Armory" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Tybalt, the 'citadel' gate guardian
