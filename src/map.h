@@ -1,33 +1,47 @@
-/* 
+/*=@Header==============================================================
+ * $Source$
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ * @Desc:  Definitions for the map.c file
+ * 	
+ * $Revision$
+ * $State$
+ *
+ * $Author$
+ *
+ * $Log$
+ * Revision 1.4  2002/04/08 09:48:23  rp
+ * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ *
+ * Revision 1.3  1994/06/19  16:43:06  prix
+ * clean up
+ *
+ * Revision 1.2  1993/10/25  17:54:27  prix
+ * Fri Jul 30 11:50:42 1993: new door phases: map werte verschoben
+ * Wed Aug 04 10:37:50 1993: made symtrans struct more readable
+ * Wed Aug 04 13:18:53 1993: added some defines from defs.h that belong to here
+ * Wed Aug 04 13:28:56 1993: Konstanten fuer Kartenwerte
+ * Wed Aug 04 13:32:05 1993: moved PUSHSPEED to defs.h again
+ * Wed Aug 04 13:39:20 1993: moved BLOCKANZAHL in here
+ * Wed Aug 04 13:42:34 1993: removed BLOCKANZAHL again
+ * Wed Aug 04 15:12:04 1993: added KONSOLEPASS_*
+ * Sun Aug 08 22:39:41 1993: added Waypoint-symbol (x) to Translator
+ * Mon Aug 09 18:15:02 1993: moved DRUIDRADIUS* to defs.h
+ * Sat Aug 21 15:00:42 1993: NEW DEFINES
+ * Sat Aug 21 15:01:42 1993: added some defines of maped.h
+ * Sat Aug 21 19:30:31 1993: NEUE Reihenfolge der Bloecke
+ * Sat Aug 21 19:43:30 1993: 4 refresh phases now
+ * Fri Aug 27 20:59:17 1993: inserted a void-block
+ * Sat Sep 18 12:45:20 1993: added REFRESH_WAIT_COUNTER
+ * Sat Sep 18 17:17:17 1993: added inner-refresh values
+ * Sat Sep 18 17:29:20 1993: OUTER and INNER REFRESH_COUNTER
+ * Sat Sep 18 17:31:41 1993: added INNER_PHASES
+ * Mon Oct 25 13:53:46 1993: added translation for block4 and 5
+ *
+ * Revision 1.1  1993/07/29  17:30:12  prix
+ * Initial revision
  *
  *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
-
-/*----------------------------------------------------------------------
- *
- * Desc:  Definitions for the map.c file
- *
- *----------------------------------------------------------------------*/
-
+ *-@Header------------------------------------------------------------*/
 #ifndef _map_h
 #define _map_h
 
@@ -72,15 +86,14 @@ LIFT, VOID, REFRESH1, REFRESH2, REFRESH3, REFRESH4,
 I_REFRESH1, I_REFRESH2, I_REFRESH3, I_REFRESH4, INVISIBLE_BRICK
 };
 
-
 #define WAYPOINT_CHAR		'x'
-#define NO_WAYPOINT  		-1
+#define NO_WAYPOINT  	-1
 
 /* Extensions for Map and Elevator - data */
-#define FILENAME_LEN	128
+#define FILENAME_LEN		128
 #define SHIP_EXT	".shp"
-#define ELEVEXT		".elv"
-#define CREWEXT		".crw"
+#define ELEVEXT	".elv"
+#define CREWEXT	".crw"
 
 
 /* string - signs in ship-data files */
@@ -94,6 +107,39 @@ typedef struct {
 	int intern;			/* the map-symbols in internal notation */
 } symtrans;
 
+#ifdef _map_c
+
+symtrans Translator[BLOCKANZAHL] = {
+	{'.',FLOOR},
+	{'\'',VOID},
+	{'x',FLOOR},	/* A waypoint is invisible */
+	{'À',ECK_LU},
+	{'Á',T_U},
+	{'Ù',ECK_RU},
+	{'Ã',T_L},
+	{'Å',KREUZ},
+	{'´',T_R},
+	{'Ú',ECK_LO},
+	{'Â',T_O},
+	{'¿',ECK_RO},
+	{'Ä',H_WALL},
+	{'³',V_WALL},
+	{'"',H_ZUTUERE},
+	{'=',V_ZUTUERE},
+	{'[',KONSOLE_L},
+	{']',KONSOLE_R},
+	{'(',KONSOLE_O},
+	{')',KONSOLE_U},
+	{'o',LIFT},
+	{'@',REFRESH1},
+	{'a',ALERT},
+	{'1',BLOCK1},
+	{'2',BLOCK2},
+	{'3',BLOCK3},
+	{'4',BLOCK4},
+	{'5',BLOCK5}
+};
+#endif /* defined _map_c */
 
 enum _colornames {
 	PD_RED,

@@ -1,40 +1,39 @@
-/* 
+/*=@Header==============================================================
+ * $Source$
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ * @Desc:	Rahmen - related functions 
+ *	 
+ * 	
+ * $Revision$
+ * $State$
+ *
+ * $Author$
+ *
+ * $Log$
+ * Revision 1.2  2002/04/08 09:48:23  rp
+ * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ *
+ * Revision 1.1  1994/06/19  16:39:46  prix
+ * Initial revision
  *
  *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
+ *-@Header------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------
- *
- * Desc: contains functions to update and draw the top status line with
- *	score and status etc...
- *
- *----------------------------------------------------------------------*/
+static const char RCSid[]=\
+"$Id$";
 
 #define _rahmen_c
 
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#include <alloc.h>
+#include <mem.h>
 #include <string.h>
+#include <dos.h>
 #include <math.h>
+#include <process.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -80,42 +79,42 @@ void DrawBar(int,int,unsigned char*);
 @Int:
 * $Function----------------------------------------------------------*/
 void DrawBar(int BarCode,int Wert,unsigned char* Screen){
-  unsigned char* BarPoint=Screen;
-  int xlen;
-  int barcol=0;
-  int i;
+	unsigned char* BarPoint=Screen;
+	int xlen;
+	int barcol=0;
+	int i,j;
 
-  if (Wert<0) Wert=0;
-  BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
+	if (Wert<0) Wert=0;
+	BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
 
-  if (InitBars) {
-    for(i=0;i<AllBars[BarCode].hgt;i++){
-      memset(BarPoint,AllBars[BarCode].col,Wert);
-      memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
-      BarPoint+=SCREENBREITE;
-    }
-    AllBars[BarCode].oldval=Wert;
-    return;
-  }
+	if (InitBars) {
+ 		for(i=0;i<AllBars[BarCode].hgt;i++){
+			memset(BarPoint,AllBars[BarCode].col,Wert);
+			memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
+			BarPoint+=SCREENBREITE;
+		}
+		AllBars[BarCode].oldval=Wert;
+		return;
+	}
 	
-  if (Wert==AllBars[BarCode].oldval) return;
-  
-  xlen=abs(Wert-AllBars[BarCode].oldval);
+	if (Wert==AllBars[BarCode].oldval) return;
 
-  // Den Cursor an die Position stellen und rot oder schwarz einstellen.	
-  if (Wert>AllBars[BarCode].oldval) {
-    barcol=AllBars[BarCode].col;
-    BarPoint+=AllBars[BarCode].oldval;
-  } else BarPoint+=Wert;
+	xlen=abs(Wert-AllBars[BarCode].oldval);
 
-  // Balken soweit zeichnen, wie die Ver"anderung ausmacht.
-  for(i=0;i<AllBars[BarCode].hgt;i++){
-    memset(BarPoint,barcol,xlen);
-    BarPoint+=SCREENBREITE;
-  }
+// Den Cursor an die Position stellen und rot oder schwarz einstellen.	
+	if (Wert>AllBars[BarCode].oldval) {
+		barcol=AllBars[BarCode].col;
+		BarPoint+=AllBars[BarCode].oldval;
+	} else BarPoint+=Wert;
 
-  AllBars[BarCode].oldval=Wert;
-} // void DrawBar(...)
+// Balken soweit zeichnen, wie die Ver"anderung ausmacht.
+	for(i=0;i<AllBars[BarCode].hgt;i++){
+		memset(BarPoint,barcol,xlen);
+		BarPoint+=SCREENBREITE;
+	}
+
+	AllBars[BarCode].oldval=Wert;
+}
 
 /*@Function============================================================
 @Desc: SayLeftInfo( char* text):
@@ -126,22 +125,23 @@ void DrawBar(int BarCode,int Wert,unsigned char* Screen){
 @Int:
 * $Function----------------------------------------------------------*/
 void SayLeftInfo(char *text, unsigned char *screen ) {
-  char textbox[LEFT_TEXT_LEN + 10];
+	char textbox[LEFT_TEXT_LEN + 10];
 	
-  if (!PlusExtentionsOn) {
-    /* Hintergrund Textfarbe setzen */
-    SetTextColor(FONT_WHITE,FONT_RED);	// FONT_RED, 0
-    
-    strncpy(textbox, text, LEFT_TEXT_LEN);
-    if( strlen(text) < LEFT_TEXT_LEN )
-      strncat(textbox, "           ", LEFT_TEXT_LEN -strlen(text));
-    textbox[LEFT_TEXT_LEN] = '\0'; 	/* String abschliessen */
-    
-    /* Text ausgeben */
-    DisplayText( textbox, LEFTINFO_X, LEFTINFO_Y, screen,FALSE);
-    return;
-  }
-} // void SayLeftInfo(...)
+	if (!PlusExtentionsOn) {
+	/* Hintergrund Textfarbe setzen */
+		SetTextColor(FONT_WHITE,FONT_RED);	// FONT_RED, 0
+	
+		strncpy(textbox, text, LEFT_TEXT_LEN);
+		if( strlen(text) < LEFT_TEXT_LEN )
+			strncat(textbox, "           ", LEFT_TEXT_LEN -strlen(text));
+		textbox[LEFT_TEXT_LEN] = '\0'; 	/* String abschliessen */
+	
+	/* Text ausgeben */
+		DisplayText( textbox, LEFTINFO_X, LEFTINFO_Y, screen,FALSE);
+		return;
+	}
+
+}
 
 /*@Function============================================================
 @Desc: SayRightInfo(char *text): wie SayLeftInfo()
@@ -151,21 +151,22 @@ void SayLeftInfo(char *text, unsigned char *screen ) {
 * $Function----------------------------------------------------------*/
 void SayRightInfo(char *text, unsigned char *screen)
 {
-  char textbox[RIGHT_TEXT_LEN + 10];
+	char textbox[RIGHT_TEXT_LEN + 10];
 
-  if (!PlusExtentionsOn) {
-    /* Hintergrund Textfarbe richtig setzen */
-    SetTextColor(FONT_WHITE, FONT_RED);
-    
-    strncpy(textbox, text, RIGHT_TEXT_LEN);
-    if( strlen(text) < RIGHT_TEXT_LEN) 
-      strncat(textbox, "           ", RIGHT_TEXT_LEN-strlen(text));
-    textbox[RIGHT_TEXT_LEN] = '\0';
+	if (!PlusExtentionsOn) {
+	/* Hintergrund Textfarbe richtig setzen */
+		SetTextColor(FONT_WHITE, FONT_RED);
+
+		strncpy(textbox, text, RIGHT_TEXT_LEN);
+		if( strlen(text) < RIGHT_TEXT_LEN) 
+			strncat(textbox, "           ", RIGHT_TEXT_LEN-strlen(text));
+		textbox[RIGHT_TEXT_LEN] = '\0';
 		
-    /* Text ausgeben */
-    DisplayText( textbox, RIGHTINFO_X, RIGHTINFO_Y, screen,FALSE);
-  }
-  return;
+	/* Text ausgeben */
+		DisplayText( textbox, RIGHTINFO_X, RIGHTINFO_Y, screen,FALSE);
+	}
+	
+ 	return;
 } /* SayRightInfo */
 
  
@@ -178,17 +179,17 @@ void SayRightInfo(char *text, unsigned char *screen)
 * $Function----------------------------------------------------------*/
 void DisplayRahmen(unsigned char *screen)
 {
-  // unsigned int bg;
-  // unsigned int fg;
-  
-  DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+	unsigned int bg;
+	unsigned int fg;
 
-  /*	GetTextColor(&bg,&fg);
+	DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+
+/*	GetTextColor(&bg,&fg);
 	SetTextColor(FONT_WHITE,FONT_RED);    */    /* BG: Rahmenwei"s FG: FONT_RED */
-  SayRightInfo(RightInfo, screen);
-  SayLeftInfo(LeftInfo, screen);
-  /*	SetTextColor(bg,fg); */
-  return;
+	SayRightInfo(RightInfo, screen);
+	SayLeftInfo(LeftInfo, screen);
+/*	SetTextColor(bg,fg); */
+	return;
 } /* DisplayRahmen */
 
 
@@ -201,16 +202,17 @@ void DisplayRahmen(unsigned char *screen)
 * $Function----------------------------------------------------------*/
 void SetInfoline(void)
 {
-  char dummy[80];
-  /* Modus des Influencers links angeben  */
-  strncpy(LeftInfo, InfluenceModeNames[Me.status], LEFT_TEXT_LEN-1);
-  LeftInfo[LEFT_TEXT_LEN-1] = '\0';
+	char dummy[80];
+	/* Modus des Influencers links angeben  */
+	strncpy(LeftInfo, InfluenceModeNames[Me.status], LEFT_TEXT_LEN-1);
+	LeftInfo[LEFT_TEXT_LEN-1] = '\0';
 	
-  /* Punkte des Users rechts ausgeben */
-  strncpy(RightInfo, ltoa(ShowScore, dummy, 10), RIGHT_TEXT_LEN-1);
-  RightInfo[RIGHT_TEXT_LEN-1] = '\0';
 	
-  return;
+	/* Punkte des Users rechts ausgeben */
+	strncpy(RightInfo, ltoa(ShowScore, dummy, 10), RIGHT_TEXT_LEN-1);
+	RightInfo[RIGHT_TEXT_LEN-1] = '\0';
+	
+	return;
 } /* SetInfoline */
 
 
@@ -223,36 +225,29 @@ void SetInfoline(void)
 * $Function----------------------------------------------------------*/
 void UpdateInfoline(void)
 {
-  static char LastLeft[50];			/* the change-detectors */
-  static char LastRight[50];
-  int NoNeedToSaveEnv = 1;
+	static char LastLeft[50];			/* the change-detectors */
+	static char LastRight[50];
+	int NoNeedToSaveEnv = 1;
+	int i;
 
-  if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
+	if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
 	
-  if (!NoNeedToSaveEnv) StoreTextEnvironment();
+	if (!NoNeedToSaveEnv) StoreTextEnvironment();
 
-  if( strcmp(LastLeft, LeftInfo) != 0 ) {
-    SetTextColor(FONT_WHITE,FONT_RED);
-    SayLeftInfo(LeftInfo, RealScreen);
-    strcpy(LastLeft, LeftInfo);
-  }
+	
+	if( strcmp(LastLeft, LeftInfo) != 0 ) {
+	 	SetTextColor(FONT_WHITE,FONT_RED);
+		SayLeftInfo(LeftInfo, RealScreen);
+		strcpy(LastLeft, LeftInfo);
+	}
 
-  if( strcmp(LastRight, RightInfo) != 0 ) {
-    SayRightInfo(RightInfo, RealScreen);
-    strcpy(LastRight, RightInfo);
-  }
+	if( strcmp(LastRight, RightInfo) != 0 ) {
+		SayRightInfo(RightInfo, RealScreen);
+		strcpy(LastRight, RightInfo);
+	}
 
-  if (!NoNeedToSaveEnv) RestoreTextEnvironment();
-  return;
-} // void UpdateInfoline(void)
+	if (!NoNeedToSaveEnv) RestoreTextEnvironment();
+	return;
+} /* UpdateInfoline */
 
 #undef _rahmen_c
-
-
-
-
-
-
-
-
-

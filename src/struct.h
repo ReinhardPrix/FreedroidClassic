@@ -1,27 +1,3 @@
-/* 
- *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
- *
- *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
-
 #ifndef _struct_h
 #define _struct_h
 
@@ -39,45 +15,21 @@
 #endif
 
 typedef struct {
-  char signature;
-  char version;
-  char encoding;
-  char bytes_per_pixel;
-  unsigned short int xmin;
-  unsigned short int ymin;
-  unsigned short int xmax;
-  unsigned short int ymax;
-  unsigned short int vres;
-  unsigned short int hres;
-  char palette[48];
-  char reserved;
-  char color_layers;
-  unsigned short int bytes_per_line;
-  unsigned short int palette_type;
-  char unused[58];
-} PCX_Header;
-
-typedef struct {
-  long PlayerScore;
-  void* NextPlayer;
-  char* PlayerName;
+	long PlayerScore;
+	void* NextPlayer;
+	char* PlayerName;
 } HallElement;
 
 typedef struct {
-  unsigned char rot;
-  unsigned char gruen;
-  unsigned char blau;
+	unsigned char rot;
+	unsigned char gruen;
+	unsigned char blau;
 } color, *Color;
 
 typedef struct {
-  signed short x;
-  signed short y;
+   signed short x;
+   signed short y;
 } point, *Point;
-
-typedef struct {
-  float x;
-  float y;
-} finepoint, *Finepoint;
 
 typedef struct {
    signed char x;
@@ -90,58 +42,59 @@ typedef grob_Point Vect;
 
 
 typedef struct {
-  const char *druidname;
-  float maxspeed;    /* the maximum of speed it can go */
-  int class;
-  byte accel;       /* its acceleration */
-  float maxenergy;    /* the maximum energy the batteries can carry */
-  byte lose_health; /* the energy/time the duid loses under influence-control */
-  byte gun;         /* Which gun does this druid use */
-  byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
-  byte aggression;	/* The aggressiveness of this druidtype */
-  byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
-  byte flashimmune;	/* is the droid immune to FLASH-bullets */
-  int score;			/* Punkte f"ur die Vernichtung dieses Modells */
-  char *notes;		/* notes on the druid of this type */
+   const char *druidname;
+   byte maxspeed;    /* the maximum of speed it can go */
+   char class;
+   byte accel;       /* its acceleration */
+   int maxenergy;    /* the maximum energy the batteries can carry */
+   byte lose_health; /* the energy/time the duid loses under influence-control */
+   byte gun;         /* Which gun does this druid use */
+   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
+	byte aggression;	/* The aggressiveness of this druidtype */
+	byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
+	byte flashimmune;	/* is the droid immune to FLASH-bullets */
+	int score;			/* Punkte f"ur die Vernichtung dieses Modells */
+   char *notes;		/* notes on the druid of this type */
 } druidspec, *Druidspec;
 
 typedef struct {
-  int type;         /* what kind of druid is this ? */
-  byte status;       /* attacking, defense, dead, ... */
-  finepoint speed;       /* the current speed of the druid */
-  finepoint pos;        /* current position in level levelnum */
-  float health;		/* the max. possible energy in the moment */
-  float energy;       /* current energy */
-  byte firewait;	/* counter after fire */
-  float phase;        /* the current phase of animation */
-  int autofire;		/* Status of the Firecontrolautomatics */
-  int vneut;		/* Status of Velocityneutralizer for the gun */
-  int MyFCU;		/* FCU (Fire Control Unit) installed */
-  int MyShield;		/* Shield device installed */
-  int Shield[4];	/* Status of Partial Shields */
+   byte type;         /* what kind of druid is this ? */
+   byte status;       /* attacking, defense, dead, ... */
+   vect speed;       /* the current speed of the druid */
+   point pos;        /* current position in level levelnum */
+   int health;			/* the max. possible energy in the moment */
+   int energy;       /* current energy */
+	byte firewait;		/* counter after fire */
+   byte  phase;        /* the current phase of animation */
+   int autofire;		/* Status of the Firecontrolautomatics */
+   int vneut;			/* Status of Velocityneutralizer for the gun */
+   int MyFCU;			/* FCU (Fire Control Unit) installed */
+   int MyShield;		/* Shield device installed */
+   int Shield[4];		/* Status of Partial Shields */
 } influence_t, *Influence_t;
 
 typedef struct {
-  byte type;		/* gibt die Nummer in Druidmap an */
-  int levelnum;		/* Level in dem sich enemy befindet */
-  finepoint pos;	/* gibt die Koordinaten der Momentanposition an */
-  finepoint speed;	/* current speed  */
-  float energy;		/* gibt die Energie dieses Robots an */
-  float feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
-  byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
-  byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
-  byte Status;		/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  byte warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
-  byte passable;	/* Zeit (counter), in der druid passable ist */
-  byte firewait;	/* gibt die Zeit bis zum naechsten Schuss an */
-  byte onscreen;	/* gibt an ob der Robot im moment sichtbar ist */
-  int Shield[4];	// Status of Partial shields
+	byte type;			/* gibt die Nummer in Druidmap an */
+	byte levelnum;		/* Level in dem sich enemy befindet */
+	point pos;			/* gibt die Koordinaten der Momentanposition an */
+	vect speed;			/* current speed  */
+	int energy;		/* gibt die Energie dieses Robots an */
+	byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
+	int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
+	byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
+	byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
+	byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+	byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+	byte passable;			/* Zeit (counter), in der druid passable ist */
+	byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+	byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+	int Shield[4];		// Status of Partial shields
 } enemy, *Enemy;
 
 typedef struct {
-   int  speed;        /* speed of the bullet */
-   int  damage;					/* damage done by this bullettype */
-   int  time;              /* how long does bullet exist */
+   byte speed;        /* speed of the bullet */
+   byte damage;					/* damage done by this bullettype */
+   byte time;              /* how long does bullet exist */
    byte phases;             /* how many phases in motion to show */
    byte blast;              /* which blast does this bullet create */
    unsigned char *picpointer; /* pointer to picture of bullet */
@@ -150,13 +103,15 @@ typedef struct {
 } bulletspec, *Bulletspec;
 
 typedef struct {
-  finepoint pos;
-  finepoint speed;
-  byte type;
-  byte phase;
-  byte time;
-  signed char mine;
-  int owner;
+   int PX;
+   int PY;
+   signed char SX; /* SpeedX */
+   signed char SY; /* SpeedY */
+   byte type;
+   byte phase;
+   byte time;
+   signed char mine;
+   int owner;
 } bullet, *Bullet;
 
 typedef struct {
@@ -168,69 +123,69 @@ typedef struct {
    int PX;  /* PosX */
    int PY;  /* PosY */
    byte type;
-   float phase;
+   byte phase;
 } blast, *Blast;
 
 typedef struct {
-  byte level;	/* Level - 'Koordinate' */
-  int x;	/* x,y Koordinaten */
-  int y;
+	byte level;	/* Level - 'Koordinate' */
+	int x;	/* x,y Koordinaten */
+	int y;
 } location, *Location;
 
 typedef struct {
-  /* current location */
-  byte level;
-  byte x;		/* Grob */
-  byte y;
+	/* current location */
+	byte level;
+	byte x;		/* Grob */
+	byte y;
 	
-  /* connections: Numbers in Elevator-Array */
-  signed char up;
-  signed char down;
-  
-  /* row */
-  byte elevator_row; /* number of elev. column */
+	/* connections: Numbers in Elevator-Array */
+	signed char up;
+	signed char down;
+
+	/* row */
+	byte elevator_row; /* number of elev. column */
 } elevator, *Elevator;
 
 typedef struct {
-  byte x;		/* Grob */
-  byte y;
-  signed char connections[MAX_WP_CONNECTIONS];
+	byte x;		/* Grob */
+	byte y;
+	signed char connections[MAX_WP_CONNECTIONS];
 } waypoint, *Waypoint;
 
 typedef struct {
-  byte empty;
-  unsigned int levelnum;  /* Number of this level */
-  char *Levelname;	  /* Name of this level */
-  unsigned int xlen;      /* X dimension */
-  unsigned int ylen;
-  unsigned int color;
-  char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
-  grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
-  grob_point doors[MAX_DOORS_ON_LEVEL];
-  waypoint AllWaypoints[MAXWAYPOINTS];
+	byte empty;
+   byte levelnum;				/* Number of this level */
+   char *Levelname;			/* Name of this level */
+   byte xlen;    /* X dimension */
+   byte ylen;
+   byte color;
+   char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
+   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
+   grob_point doors[MAX_DOORS_ON_LEVEL];
+   waypoint AllWaypoints[MAXWAYPOINTS];
 } level, *Level; 
 
 typedef struct {
-  int LevelsOnShip;
-  Level AllLevels[MAX_LEVELS_ON_SHIP];
-  elevator AllElevators[ALLELEVATORS];
+	int LevelsOnShip;
+	Level AllLevels[MAX_LEVELS_ON_SHIP];
+	elevator AllElevators[ALLELEVATORS];
 } ship, *Ship;
 
 
 typedef struct {
-  char* FCUName;
+	char* FCUName;
 } FCU;
 
 typedef struct {
-  char* shieldname;
+	char* shieldname;
 } shieldspec, *Shieldspec;
 
 typedef struct {
-  point pos;
-  int len;
-  int hgt;
-  int oldval;
-  int col;
+	point pos;
+	int len;
+	int hgt;
+	int oldval;
+	int col;
 } bar, *Bar;
 
 #endif
@@ -246,52 +201,8 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.21  1997/06/10 20:10:47  rprix
- * Put complete source under GPL Licence: added GPL-Licence file: COPYING
- * and added Copyright-header to all .c and .h files.
- * PS: How do you copyright binaries (.pcx,.wav...) and data-files (.shp)??
- *
- * Neue Header braucht das Land: Alte RCS- Keyword header ganz entfernt,
- * only Description-entry in header remains.
- *
- * Revision 1.20  1997/06/09 23:08:59  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.19  1997/06/09 21:53:49  jprix
- * Rotation of enemys and influencer now independant of the framerate.
- *
- * Revision 1.18  1997/06/09 21:00:56  jprix
- * The constants for the druids have been largely rescaled to MUCH larger values.
- * This is for the new float and framedependent movement of the enemys.  It works nicley
- * as you will see from the now very smooth movement of each of them.
- *
- * Revision 1.17  1997/06/09 16:22:07  jprix
- * Original images partly overwritten by old versions corrected.
- * Started Load_PCX_Image(..) function.
- *
- * Revision 1.16  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * Revision 1.15  1997/06/09 10:50:29  jprix
- * Halfway through with making robot coordinates also info floats.  Still works :->
- *
- * Revision 1.14  1997/06/08 23:46:44  jprix
- * influence_t uses floats now for the coodinates of the influ.  transition successful.
- *
- * Revision 1.13  1997/06/08 23:19:38  jprix
- * Transition to floating point coordinates started.  This version is still working.
- *
- * Revision 1.12  1997/06/08 21:46:00  jprix
- * Modified energy of influence and enemys to be now floats instead of ints. cool.
- *
- * Revision 1.11  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
- *
- * Revision 1.10  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.10  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
+ * Revision 1.8  2002/04/08 09:48:23  rp
+ * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
  *
  * Revision 1.7  1994/06/19  16:41:38  prix
  * Thu Sep 30 13:57:49 1993: Header moved to end of file

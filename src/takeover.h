@@ -1,33 +1,25 @@
-/* 
+/*=@Header==============================================================
+ * $Source$
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ * @Desc:  The Takeover-game of Paradroid
+ * 	
+ * $Revision$
+ * $State$
+ *
+ * $Author$
+ *
+ * $Log$
+ * Revision 1.3  2002/04/08 09:48:23  rp
+ * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ *
+ * Revision 1.2  1994/06/19  16:42:56  prix
+ * ??
+ *
+ * Revision 1.1  1993/10/22  20:13:54  prix
+ * Initial revision
  *
  *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
-
-/*----------------------------------------------------------------------
- *
- * Desc:  The Takeover-game of Paradroid
- *
- *----------------------------------------------------------------------*/
-
+ *-@Header------------------------------------------------------------*/
 #ifndef _takeover_h
 #define _takeover_h
 
@@ -179,6 +171,9 @@ enum to_blocks {
 
 #define NUM_LAYERS		4			/* dimension of the playground */
 #define NUM_LINES			12
+
+#define PLAYGROUND_FILE	"daten\\to_ground.lbm"	/* graphics - files */
+#define ELEMENTS_FILE	"daten\\to_elem.lbm"
 
 /* the playground type */
 typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES]; 

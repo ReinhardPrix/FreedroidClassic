@@ -1,41 +1,39 @@
-/* 
+/*=@Header==============================================================
+ * $Source$
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ * @Desc:  the takeover-game of Paradroid
+ *	 
+ * 	
+ * $Revision$
+ * $State$
+ *
+ * $Author$
+ *
+ * $Log$
+ * Revision 1.3  2002/04/08 09:48:23  rp
+ * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ *
+ * Revision 1.2  1994/06/19  16:42:11  prix
+ * Thu Jun 02 19:42:47 1994: ??
+ *
+ * Revision 1.1  1993/10/22  20:13:35  prix
+ * Initial revision
  *
  *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
+ *-@Header------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------
- *
- * Desc: Everything that has to do with the takeover game of Paradroid
- * 	is contained in this file.
- *
- *----------------------------------------------------------------------*/
+static const char RCSid[]=\
+"$Id$";
 
 #define _takeover_c
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/asoundlib.h>
-#include <vgakeyboard.h>
+#include <dos.h>
+#include <alloc.h>
+#include <mem.h>
+#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -134,15 +132,15 @@ void RollToColors(void);
 void InitTakeover(void)
 {
 	if( RealScreen == NULL )
-	  // PORT RealScreen = MK_FP(SCREENADDRESS,0000);	
-	  RealScreen=malloc(64010);
+		RealScreen = MK_FP(SCREENADDRESS, 0x0000);
+		
 
 	if( InternalScreen == NULL ) 
 		InternalScreen = (unsigned char*)MyMalloc((size_t)SCREENLEN*SCREENHEIGHT);
 
 	if( InternalScreen == NULL ) {		
-		printf("\nvoid InitTakeover(void): Fatal Error: No memory !");
-		getchar();
+		printf("\nFatal Error: No memory !");
+		getch();
 		
 		Terminate(-1);
 	}
@@ -165,139 +163,129 @@ void InitTakeover(void)
 * $Function----------------------------------------------------------*/
 int Takeover(int enemynum)
 {
-  int row;
-  int FinishTakeover = FALSE;
-  int waiter = 0;
-  static int RejectEnergy=0;		/* your energy if you're rejected */
-  char *message;
+	int taste;
+	int row;
+	int FinishTakeover = FALSE;
+	int waiter = 0;
+	static int RejectEnergy=0;		/* your energy if you're rejected */
+	char *message;
 
-  printf("\nvoid Takeover(int enemynum): Funktion echt aufgerufen.");
+ 	/* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
+	   kommt, wird diese Funktion tempor"ar desaktiviert. */
+	InterruptInfolineUpdate = 0;
 
-  /* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
-     kommt, wird diese Funktion tempor"ar desaktiviert. */
-  InterruptInfolineUpdate = 0;
+	Me.status = MOBILE;
+	SetPalCol(INFLUENCEFARBWERT,Mobilecolor.rot,Mobilecolor.gruen,Mobilecolor.blau);
 
-  Me.status = MOBILE;
-  SetPalCol(INFLUENCEFARBWERT,Mobilecolor.rot,Mobilecolor.gruen,Mobilecolor.blau);
-
-  /* Tastaturwiederholrate richtig setzen */
-  SetTypematicRate(TYPEMATIC_FAST);
+	/* Tastaturwiederholrate richtig setzen */
+	SetTypematicRate(TYPEMATIC_FAST);
 	
-  /* Userfenster faerben */
-  SetUserfenster(TO_BG_COLOR, RealScreen);
+ 	/* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
+	   kommt, wird diese Funktion tempor"ar desaktiviert. */
+	InterruptInfolineUpdate = 0;
+		
+	/* Userfenster faerben */
+	SetUserfenster(TO_BG_COLOR, RealScreen);
 	
-  /* Warte, bis User Space auslaesst */
-  while( SpacePressed() ) {
-    JoystickControl();
-    keyboard_update();
-  }
+	/* Warte, bis User Space auslaesst */
+	while( SpacePressed ) JoystickControl();
 
-  Load_PCX_Image( TAKEOVERBACKGROUNDBILD_PCX , RealScreen , FALSE );
-
-  while( !FinishTakeover ) {
+	while( !FinishTakeover ) {
 	
-    /* Init Color-column and Capsule-Number for each opponenet and your color */
-    for( row=0; row<NUM_LINES; row++) {
-      DisplayColumn[row] = (row % 2);
-      CapsuleCountdown[GELB][row] = -1;
-      CapsuleCountdown[VIOLETT][row] = -1;
-    } /* for row */
+		/* Init Color-column and Capsule-Number for each opponenet and your color */
+		for( row=0; row<NUM_LINES; row++) {
+			DisplayColumn[row] = (row % 2);
+			CapsuleCountdown[GELB][row] = -1;
+			CapsuleCountdown[VIOLETT][row] = -1;
+		} /* for row */
 			
-    YourColor = GELB;
-    OpponentColor = VIOLETT;
+		YourColor = GELB;
+		OpponentColor = VIOLETT;
 		
-    CapsuleCurRow[GELB] = 0;
-    CapsuleCurRow[VIOLETT] = 0;
+		CapsuleCurRow[GELB] = 0;
+		CapsuleCurRow[VIOLETT] = 0;
 		
-    OpponentType = Feindesliste[enemynum].type;
-    NumCapsules[YOU] = 3+ClassOfDruid(Me.type);
-    NumCapsules[ENEMY] = 4+ClassOfDruid(OpponentType);
+		OpponentType = Feindesliste[enemynum].type;
+		NumCapsules[YOU] = 3+ClassOfDruid(Me.type);
+		NumCapsules[ENEMY] = 4+ClassOfDruid(OpponentType);
 		
-    InventPlayground();
+		InventPlayground();
 
-    ShowPlayground();
-
-    printf("\nvoid Takeover(int enemynum): Erstmalige Darstellung ist erfolgt.");
+		ShowPlayground();
 	
-    ChooseColor();
+		ChooseColor();
 
-    PlayGame();
+		PlayGame();
 
-    printf("\nvoid Takeover(int enemynum): PlayGames ist wieder zurueckgekehrt.");
-	
-    /* Ausgang beurteilen und returnen */
-    if( LeaderColor == YourColor ) {
-      if( Me.type == DRUID001 ) {
-	RejectEnergy = Me.energy;
-	PreTakeEnergy = Me.energy;
-      }
-      Me.energy=(int)(
-		      ((long)STARTENERGIE * Feindesliste[enemynum].energy)
-		      / Druidmap[OpponentType].maxenergy);
-      Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
-      
-      Me.type = Feindesliste[enemynum].type;
+		/* Ausgang beurteilen und returnen */
+		if( LeaderColor == YourColor ) {
+			if( Me.type == DRUID001 ) {
+				RejectEnergy = Me.energy;
+				PreTakeEnergy = Me.energy;
+			}
+			Me.energy=(int)(
+				((long)STARTENERGIE * Feindesliste[enemynum].energy)
+					 / Druidmap[OpponentType].maxenergy);
+			Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+			
+			Me.type = Feindesliste[enemynum].type;
 
-      RealScore += Druidmap[OpponentType].score;
+			RealScore += Druidmap[OpponentType].score;
 
-      message = "Complete";
-      FinishTakeover = TRUE;
-    }
+			message = "Complete";
+			FinishTakeover = TRUE;
+		}
 		
-    if( LeaderColor == OpponentColor ) {
-      if( Me.type != DRUID001 ) {
-	message = "Rejected";
-	Me.type = DRUID001;
-	Me.energy = RejectEnergy;
-      } else {
-	message = "Burnt Out";
-	Me.energy = 0;
-      }
-      FinishTakeover = TRUE;
-    }
+		if( LeaderColor == OpponentColor ) {
+			if( Me.type != DRUID001 ) {
+				message = "Rejected";
+				Me.type = DRUID001;
+				Me.energy = RejectEnergy;
+			} else {
+				message = "Burnt Out";
+				Me.energy = 0;
+			}
+			FinishTakeover = TRUE;
+			
+		}
 		
-    if( LeaderColor == REMIS ) { 
-      message = "Deadlock";
-    }
+		if( LeaderColor == REMIS ) { 
+			message = "Deadlock";
+		}
 
-    RedrawInfluenceNumber();
+		RedrawInfluenceNumber();
 		
-    /* Feind in jedem Fall ausschalten */		
-    Feindesliste[enemynum].Status = OUT;
-    OpponentType = -1;		/* dont display enemy any more */
+		/* Feind in jedem Fall ausschalten */		
+		Feindesliste[enemynum].Status = OUT;
+		OpponentType = -1;		/* dont display enemy any more */
 		
-    /* Wait a turn */
-    waiter = WAIT_AFTER_GAME;
-    while( waiter != 0 ) {
-      // PORT if( TimerFlag ) {
-      // PORT TimerFlag = FALSE;
-      usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+		/* Wait a turn */
+		waiter = WAIT_AFTER_GAME;
+		while( waiter != 0 ) {
+			if( TimerFlag ) {
+				TimerFlag = FALSE;
+				waiter--;
+				RollToColors();
+				SetInfoline();
+				strcpy(LeftInfo, message);		/* eigene Message anzeigen */
 
-      
-      waiter--;
-      RollToColors();
-      SetInfoline();
-      strcpy(LeftInfo, message);		/* eigene Message anzeigen */
-      
-      ShowPlayground();
-      printf("\nvoid Takeover(int EnemyNum): Mitten in der Endschleife.");
+				ShowPlayground();
 				
-      // PORT } /* if TimerFlag */
-    } /* while waiter */			
-  } /* while !FinishTakeover */
+			} /* if TimerFlag */
+		} /* while waiter */
+			
+	} /* while !FinishTakeover */
 
-  /* Tastaturwiederholung wieder auf langsam setzen */
-  SetTypematicRate(TYPEMATIC_SLOW);
-  
-  /* Die Rahmenupdatefunktion kann wieder aktiviert werden. */
-  InterruptInfolineUpdate = 1;
+	/* Tastaturwiederholung wieder auf langsam setzen */
+	SetTypematicRate(TYPEMATIC_SLOW);
 
-  printf("\nvoid Takeover(int enemynum): Funktionsende ordnungsgemaess erreicht....");
+	/* Die Rahmenupdatefunktion kann wieder aktiviert werden. */
+	InterruptInfolineUpdate = 1;
 	
-  if( LeaderColor == YourColor ) return TRUE;
-  else return FALSE;
+	if( LeaderColor == YourColor ) return TRUE;
+	else return FALSE;
 	
-} // void Takeover(int enemynum)
+} /* Takeover */
 
 
 /*@Function============================================================
@@ -308,63 +296,44 @@ int Takeover(int enemynum)
 * $Function----------------------------------------------------------*/
 void ChooseColor(void)
 {
-  // int countdown = COLOR_COUNTDOWN * 2;
-  int countdown = 200;
-  int ColorChosen = FALSE;
-  char dummy[80];
-
-  printf("\nvoid ChooseColor(void): Funktion echt aufgerufen.");
-  
-  while (SpacePressed()) {
-    JoystickControl();
-    keyboard_update();
-  }
-
+	int countdown = COLOR_COUNTDOWN * 2;
+	int ColorChosen = FALSE;
+	char dummy[80];
 	
-  //PORT  TimerFlag = FALSE;
-  while( !ColorChosen ) {
-    //if(kbhit()) getchar();
-    
-    //while( countdown );		/* Wait for next timer-interrupt */
-    //TimerFlag = FALSE;
+	TimerFlag = FALSE;
+	while( !ColorChosen ) {
+		if(kbhit()) getch();
+		
+		while( !TimerFlag );		/* Wait for next timer-interrupt */
+		TimerFlag = FALSE;
 
-    usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+		countdown --;		/* Count down */
+	
+		JoystickControl();
+		
+		if( RightPressed ) {
+			YourColor = VIOLETT;
+			OpponentColor = GELB;
+		}
+		if( LeftPressed ) {
+			YourColor = GELB;
+			OpponentColor = VIOLETT;
+		}
 
-    countdown--;		/* Count down */
-    
-    JoystickControl();
+		if( SpacePressed ) ColorChosen = TRUE;
+		
+		ShowPlayground();
 
-    keyboard_update();
+		strcpy(LeftInfo, "Color? ");
+		strcat(LeftInfo, itoa(countdown/2, dummy, 10));
 
-    if( RightPressed() ) {
-      YourColor = VIOLETT;
-      OpponentColor = GELB;
-    }
-    if( LeftPressed() ) {
-      YourColor = GELB;
-      OpponentColor = VIOLETT;
-    }
-    
-    if( SpacePressed() ) {
-      ColorChosen = TRUE;
-      while (SpacePressed()) {
-	JoystickControl();
-	keyboard_update();
-      }
-    }
-      
-    ShowPlayground();
-    printf("\nvoid ChooseColor(void): ShowPlayground erfolgreich durchgefuehrt.....");
+		if( countdown == 0 ) ColorChosen = TRUE;
+		
+	} /* while */
 
-    strcpy(LeftInfo, "Color? ");
-    strcat(LeftInfo, itoa(countdown/2, dummy, 10));
 
-    if( countdown == 0 ) ColorChosen = TRUE;
-    
-  } /* while */
-  printf("\nvoid ChooseColor(void): Funktionsende ordnungsgemaess erreicht.");
-  return;
-} // void ChooseColor(void)
+	return;
+}	
 
 
 /*@Function============================================================
@@ -375,127 +344,112 @@ void ChooseColor(void)
 * $Function----------------------------------------------------------*/
 void PlayGame(void)
 {
-  int countdown = GAME_COUNTDOWN*2;
-  char dummy[80];
-  int FinishTakeover = FALSE;
-  int waiter = 0;
-  int row;
+	int countdown = GAME_COUNTDOWN*2;
+	char dummy[80];
+	int taste;
+	int FinishTakeover = FALSE;
+	int waiter = 0;
+	int row;
 	
-  printf("\nvoid PlayGame(void): Funktion echt aufgerufen.");
-
-  TimerFlag = FALSE;
+	TimerFlag = FALSE;
 	
-  while( !FinishTakeover) {
-    //PORT if( kbhit() ) taste = getchar();
-    //KillTastaturPuffer();
-    
-    //PORT    while( !TimerFlag );
-    //PORTTimerFlag = FALSE;
+	while( !FinishTakeover) {
+		if( kbhit() ) taste = getch();
+		KillTastaturPuffer();
 
-    keyboard_update();
-    
-    if( WPressed() ) {
-      LeaderColor = YourColor;
-      printf("\nvoid PlayGame(void): Cheat invoked!  Funktion will return now....");
-      return;
-    } 
+		while( !TimerFlag );
+		TimerFlag = FALSE;
 
-    usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+		if( taste == 'w' ) {
+			LeaderColor = YourColor;
+			return;
+		}
 
-    countdown --;
-    
-    strcpy(LeftInfo, "Finish-");
-    strcat(LeftInfo, itoa(countdown/2,dummy, 10));
-
-    if( countdown == 0 ) FinishTakeover = TRUE;
+		countdown --;
 		
-    if( waiter > 0 ) waiter --;
+		strcpy(LeftInfo, "Finish-");
+		strcat(LeftInfo, itoa(countdown/2,dummy, 10));
 
-
-    RollToColors();
+		if( countdown == 0 ) FinishTakeover = TRUE;
 		
-    if( QPressed() ) {
-      FinishTakeover = TRUE;
-    }
+		if( waiter > 0 ) waiter --;
 
-    printf("\nvoid PlayGame(void): EnemyMovements wird aufgerufen.....");
-
-    EnemyMovements();
-
-    printf("\nvoid PlayGame(void): EnemyMovements erfolgreich zuruckgekehrt.....");
-
-    JoystickControl();
-
-    keyboard_update();
+		RollToColors();
 		
-    if( UpPressed() && !waiter) {
-      waiter = WAIT_MOVEMENT;
-      CapsuleCurRow[YourColor] --;
-      if( CapsuleCurRow[YourColor] < 1 ) CapsuleCurRow[YourColor] = NUM_LINES;
-      // PORT UpPressed() = FALSE;
-    }
+		if( QPressed ) {
+			FinishTakeover = TRUE;
+			QPressed = FALSE;
+		}
 
-    if( DownPressed() && !waiter) {
-      waiter = WAIT_MOVEMENT;
-      CapsuleCurRow[YourColor] ++;
-      if( CapsuleCurRow[YourColor] > NUM_LINES ) CapsuleCurRow[YourColor] = 1;
-      // PORT DownPressed = FALSE;
-    }
+		EnemyMovements();
+		
+		JoystickControl();
+		
+		if( UpPressed && !waiter) {
+			waiter = WAIT_MOVEMENT;
+			CapsuleCurRow[YourColor] --;
+			if( CapsuleCurRow[YourColor] < 1 ) CapsuleCurRow[YourColor] = NUM_LINES;
+			UpPressed = FALSE;
+		}
 
-    if( SpacePressed() && (NumCapsules[YOU] != 0) ) {
-      row = CapsuleCurRow[YourColor] -1;
-      
-      if( (row >= 0) &&
-	  (ToPlayground[YourColor][0][row] != KABELENDE) &&
-	  (ToPlayground[YourColor][0][row] < ACTIVE_OFFSET) ) {
+		if( DownPressed && !waiter) {
+			waiter = WAIT_MOVEMENT;
+			CapsuleCurRow[YourColor] ++;
+			if( CapsuleCurRow[YourColor] > NUM_LINES ) CapsuleCurRow[YourColor] = 1;
+			DownPressed = FALSE;
+		}
+
+		if( SpacePressed && (NumCapsules[YOU] != 0) ) {
+			row = CapsuleCurRow[YourColor] -1;
+			
+			if( (row >= 0) &&
+				(ToPlayground[YourColor][0][row] != KABELENDE) &&
+				(ToPlayground[YourColor][0][row] < ACTIVE_OFFSET) ) {
+
+				NumCapsules[YOU] --;
+				CapsuleCurRow[YourColor] = 0;
+				ToPlayground[YourColor][0][row] = VERSTAERKER;
+				ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
+				CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN*2;
+			} /* if */
+		}
+
+		ProcessCapsules();		/* count down the lifetime of the capsules */
+		
+		ProcessPlayground();
+		ProcessPlayground();
+		ProcessPlayground();
+		ProcessPlayground(); /* this has to be done some times to be sure */
+
+		ProcessDisplayColumn();
+		
+		ShowPlayground();
+		
+	} /* while !FinishTakeover */
+
+	/* Schluss- Countdown */
+	countdown = CAPSULE_COUNTDOWN+10; 
 	
-	NumCapsules[YOU] --;
-	CapsuleCurRow[YourColor] = 0;
-	ToPlayground[YourColor][0][row] = VERSTAERKER;
-	ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
-	CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN*2;
-      } /* if */
-    }
+	while( countdown -- ) {
+		while( !TimerFlag );
+		TimerFlag = FALSE;
 
-    ProcessCapsules();		/* count down the lifetime of the capsules */
+		RollToColors();
 		
-    ProcessPlayground();
-    ProcessPlayground();
-    ProcessPlayground();
-    ProcessPlayground(); /* this has to be done some times to be sure */
-    
-    ProcessDisplayColumn();
+		ProcessCapsules();		/* count down the lifetime of the capsules */
+		ProcessCapsules();		/* do it twice this time to be faster */
 		
-    ShowPlayground();
-		
-  } /* while !FinishTakeover */
+		ProcessPlayground();
+		ProcessPlayground();
+		ProcessPlayground();
+		ProcessPlayground(); /* this has to be done some times to be sure */
 
-  /* Schluss- Countdown */
-  countdown = CAPSULE_COUNTDOWN+10; 
-	
-  while( countdown -- ) {
-    // while( !TimerFlag );
-    // TimerFlag = FALSE;
-    
-    usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
-
-    RollToColors();
-    
-    ProcessCapsules();		/* count down the lifetime of the capsules */
-    ProcessCapsules();		/* do it twice this time to be faster */
-    
-    ProcessPlayground();
-    ProcessPlayground();
-    ProcessPlayground();
-    ProcessPlayground(); /* this has to be done some times to be sure */
-
-    ProcessDisplayColumn();
+		ProcessDisplayColumn();
 		
-    ShowPlayground();
-  } /* while .. */
-	
-  printf("\nvoid PlayGame(void): Funktionsende ordnungsgemaess erreicht....");	
-} // void PlayGame(void)
+		ShowPlayground();
+	} /* while .. */
+		
+} /* PlayGame */
 
 /*@Function============================================================
 @Desc: void RollToColors():
@@ -505,17 +459,14 @@ void PlayGame(void)
 * $Function----------------------------------------------------------*/
 void RollToColors(void)
 {
-  static int rotate_waiter = 0;
+	static int rotate_waiter = 0;
 	
-  printf("\nvoid RollToColors(void): Funktion echt aufgerufen....");	
-
-  if( rotate_waiter-- == 0 ) {
-    RotateColors(67, 70);
-    RotateColors(74, 77);
-    rotate_waiter = WAIT_COLOR_ROTATION;
-  }
-  printf("\nvoid RollToColors(void): Funktionsende ordnungsgemaess erreicht....");	
-} // void RollToColors(void) 
+	if( rotate_waiter-- == 0 ) {
+		RotateColors(67, 70);
+		RotateColors(74, 77);
+		rotate_waiter = WAIT_COLOR_ROTATION;
+	}
+} /* RollToColors() */
 
 /*@Function============================================================
 @Desc: void EnemyMovements():		animiert Gegner beim Uebernehm-Spiel
@@ -537,11 +488,11 @@ void  EnemyMovements(void)
 	if( NumCapsules[ENEMY] == 0 ) return;
 	
 	
-	action = MyRandom(Actions);
+	action = random(Actions);
 	switch(action) {
 		
 		case 0:	/* Move along */
-			if( MyRandom(100) <= MoveProbability ) {
+			if( random(100) <= MoveProbability ) {
 				row += direction;
 				if( row > NUM_LINES-1 ) row = 0;
 				if( row < 0 ) row = NUM_LINES-1;
@@ -549,13 +500,13 @@ void  EnemyMovements(void)
 			break;
 
 		case 1: /* Turn around */
-			if( MyRandom(100) <= TurnProbability ) {
+			if( random(100) <= TurnProbability ) {
 				direction *= -1;
 			}
 			break;
 
 		case 2:	/* Try to set  capsule */
-			if( MyRandom(100) <= SetProbability ) {
+			if( random(100) <= SetProbability ) {
 				if( (row >= 0) &&
 					(ToPlayground[OpponentColor][0][row] != KABELENDE) &&
 					(ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET) ) {
@@ -566,7 +517,7 @@ void  EnemyMovements(void)
 					CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
 					row = -1;	/* For the next capsule: startpos */
 				} /* if */
-			} /* if MyRandom */
+			} /* if random */
 
 			break;
 
@@ -589,88 +540,89 @@ void  EnemyMovements(void)
 * $Function----------------------------------------------------------*/
 int GetTakeoverGraphics(void)
 {
-  unsigned char *tmp;
-  int i, j;
-  int curx, cury;
+	unsigned char *tmp;
+	int i, j;
+	int curx, cury;
 	
-  /* Get the elements */	
-  Load_PCX_Image( ELEMENTS_FILE_PCX , InternalScreen , FALSE );
-  
-  curx = 0;
-  cury = 0;		/* readpos in pic */
-	
-  /* Get the fill-blocks */
-  FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
-  IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN+1;
-  
-  IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
-	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN+1;
-  
-  IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
-	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN+1;
-  
 
-  /* Get the capsule Blocks */
-  CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
-  for( i=0; i<3; i++) {
-    IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
-		 curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-    curx += CAPSULE_LEN+1;
-  }
-  
-  curx = 0;
-  cury += FILLBLOCKHEIGHT+1;	
+	/* Get the elements */	
+	LadeLBMBild(ELEMENTS_FILE,InternalScreen,FALSE);
+
+	curx = 0;
+	cury = 0;		/* readpos in pic */
+	
+	/* Get the fill-blocks */
+	FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
+	IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
+	curx += FILLBLOCKLEN+1;
+	
+	IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
+				FILLBLOCKLEN, FILLBLOCKHEIGHT);
+	curx += FILLBLOCKLEN+1;
+	
+	IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
+				FILLBLOCKLEN, FILLBLOCKHEIGHT);
+	curx += FILLBLOCKLEN+1;
+
+
+	/* Get the capsule Blocks */
+	CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
+	for( i=0; i<3; i++) {
+		IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
+			curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+		curx += CAPSULE_LEN+1;
+	}
+
+	curx = 0;
+	cury += FILLBLOCKHEIGHT+1;	
 		
-  /* get the game-blocks */
-  
-  ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
-  
-  tmp = ToGameBlocks;
-  for ( j=0; j<4; j++) {
-    
-    for( i=0; i<7; i++ ) {
-      IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
-      tmp += TO_BLOCKMEM;
-      curx += TO_BLOCKLEN+1;
-    }
-    
-    curx = 0;		
-    cury += TO_BLOCKHEIGHT+1;
-    
-    for( i=0; i<4; i++ ) {
-      IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
-      tmp += TO_BLOCKMEM;
-      curx += TO_BLOCKLEN+1;
-    }
+	/* get the game-blocks */
+	
+	ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
 
-    curx = 0;
-    cury += TO_BLOCKHEIGHT+1;
-  }
-  
-  
-  /* Get the ground, column and leader blocks */
-  ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
-  tmp = ToGroundBlocks;
-  for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
-    IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
-    curx += GROUNDBLOCKLEN+1;
-  }
-  cury += GROUNDBLOCKHEIGHT+1;
-  curx = 0;
-  
-  ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
-  IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
-  curx += COLUMNBLOCKLEN+1;
-  
-  ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
-  IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
-  
-  return OK;
-  
-} // int GetTakeoverGraphics(void)
+	tmp = ToGameBlocks;
+	for ( j=0; j<4; j++) {
+
+		for( i=0; i<7; i++ ) {
+			IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
+			tmp += TO_BLOCKMEM;
+			curx += TO_BLOCKLEN+1;
+		}
+
+		curx = 0;		
+		cury += TO_BLOCKHEIGHT+1;
+		
+		for( i=0; i<4; i++ ) {
+			IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
+			tmp += TO_BLOCKMEM;
+			curx += TO_BLOCKLEN+1;
+		}
+
+		curx = 0;
+		cury += TO_BLOCKHEIGHT+1;
+	}
+		
+	
+	/* Get the ground, column and leader blocks */
+	ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
+	tmp = ToGroundBlocks;
+	for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
+		IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
+		curx += GROUNDBLOCKLEN+1;
+	}
+	cury += GROUNDBLOCKHEIGHT+1;
+	curx = 0;
+
+	ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
+	IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
+	curx += COLUMNBLOCKLEN+1;
+
+	ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
+	IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+	
+	return OK;
+	
+}
 
 /*@Function============================================================
 @Desc: void ShowPlayground(void): displays complete initial Playground
@@ -680,28 +632,25 @@ int GetTakeoverGraphics(void)
 * $Function----------------------------------------------------------*/
 void ShowPlayground(void)
 {
-  int i, j;
-  int color, opponent;
-  unsigned char *LeftDruid, *RightDruid;
-  unsigned char *Enemypic;
-  register int curx, cury;
-  unsigned char *tmp;
-  int caps_row, caps_x, caps_y;		/* Play-capsule state */
+ 	int i, j;
+	int color, opponent;
+	unsigned char *LeftDruid, *RightDruid;
+	unsigned char *Enemypic;
+	register int curx, cury;
+	unsigned char *tmp;
+	int caps_row, caps_x, caps_y;		/* Play-capsule state */
 	
-  static unsigned char *WorkBlock = NULL;
+	static unsigned char *WorkBlock = NULL;
 
-  printf("\nvoid ShowPlayground(void): Funktion echt aufgerufen.");
+	if( WorkBlock == NULL ) {
+		WorkBlock = MyMalloc(BLOCKMEM+10);
+	}
 	
+	UpdateInfoline();
 
-  if( WorkBlock == NULL ) {
-    WorkBlock = MyMalloc(BLOCKMEM+10);
-  }
-	
-  UpdateInfoline();
-
-  /* Linke Saeule */
-  curx = USERFENSTERPOSX + LEFT_OFFS_X;
-  cury = USERFENSTERPOSY + LEFT_OFFS_Y;
+	/* Linke Saeule */
+	curx = USERFENSTERPOSX + LEFT_OFFS_X;
+	cury = USERFENSTERPOSY + LEFT_OFFS_Y;
 
 				
 	if( YourColor == GELB ) opponent = YOU;
@@ -862,10 +811,7 @@ void ShowPlayground(void)
 		BLOCKBREITE, BLOCKHOEHE-5,
 		RealScreen);
 
-	printf("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
-	
-
-} // void ShowPlayground(void)
+}
 
 
 /*@Function============================================================
@@ -917,8 +863,8 @@ void InventPlayground(void)
 			for( row = 0; row < NUM_LINES; row ++) {
 				if( ToPlayground[color][layer][row] != KABEL ) continue;
 				
-				newElement = MyRandom(TO_ELEMENTS);
-				if( MyRandom(MAX_PROB) > ElementProb[newElement]) {
+				newElement = random(TO_ELEMENTS);
+				if( random(MAX_PROB) > ElementProb[newElement]) {
 					row --;
 					continue;
 				}
@@ -1156,75 +1102,80 @@ void ProcessPlayground(void)
 
 /*@Function============================================================
 @Desc:  ProcessDisplayColumn(): setzt die Korrekten Werte in der Display-
-        Saeule. Blinkende LEDs werden ebenfalls hier realisiert
+										Saeule. Blinkende LEDs werden ebenfalls hier
+										realisiert
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void ProcessDisplayColumn(void)
 {
-  static int CLayer = 3;			/* the connection-layer to the Column */	
-  static int flicker_color=0;
-  int row;
-  int GelbCounter, ViolettCounter;
-  int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
-  
-  flicker_color = !flicker_color;
-  
-  for( row=0; row < NUM_LINES; row++ ) {
-		
-    /* eindeutig gelb */
-    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-	(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
-      /* Farbtauscher ??? */
-      if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
-	DisplayColumn[row] = VIOLETT;
-      else
-	DisplayColumn[row] = GELB;
-      continue;
-    }
-	
-    /* eindeutig violett */
-    if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
-	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-      /* Farbtauscher ??? */
-      if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
-	DisplayColumn[row] = GELB;
-      else
-	DisplayColumn[row] = VIOLETT;
-      
-      continue;
-    }
+	static int CLayer = 3;			/* the connection-layer to the Column */	
+	static int flicker_color=0;
+	int row, color;
+	int GelbCounter, ViolettCounter;
+	int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
 
-    /* unentschieden: Flimmern */
-    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-      /* Farbtauscher - Faelle */
-      if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
-	  (ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
-	DisplayColumn[row] = VIOLETT;
-      else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
-	       (ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
-	DisplayColumn[row] = GELB;
-      else {
-	if( flicker_color == 0 ) DisplayColumn[row] = GELB;
-	else DisplayColumn[row] = VIOLETT;
-      } /* if - else if - else */
-      
-    } /* if unentschieden */
-    
-  } /* for */
-  
-  /* Win Color beurteilen */
-  GelbCounter = 0;
-  ViolettCounter = 0;
-  for( row = 0; row < NUM_LINES; row ++) 
-    if( DisplayColumn[row] == GELB ) GelbCounter ++;
-    else ViolettCounter ++;
-  
-  if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
-  else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
-  else LeaderColor = REMIS;
+	flicker_color = !flicker_color;
+ 	
+	for( row=0; row < NUM_LINES; row++ ) {
+		
+		/* eindeutig gelb */
+		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+			(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
+			/* Farbtauscher ??? */
+			if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
+				DisplayColumn[row] = VIOLETT;
+			else
+				DisplayColumn[row] = GELB;
+				
+			continue;
+		}
+
+	
+		/* eindeutig violett */
+		if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
+			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+			/* Farbtauscher ??? */
+			if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
+				DisplayColumn[row] = GELB;
+			else
+				DisplayColumn[row] = VIOLETT;
+				
+			continue;
+		}
+
+		/* unentschieden: Flimmern */
+		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+			/* Farbtauscher - Faelle */
+			if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
+				(ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
+				DisplayColumn[row] = VIOLETT;
+			else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
+					(ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
+						DisplayColumn[row] = GELB;
+			else {
+				if( flicker_color == 0 ) DisplayColumn[row] = GELB;
+				else DisplayColumn[row] = VIOLETT;
+			} /* if - else if - else */
+			
+		} /* if unentschieden */
+		
+
+	} /* for */
+
+	/* Win Color beurteilen */
+	GelbCounter = 0;
+	ViolettCounter = 0;
+	for( row = 0; row < NUM_LINES; row ++) 
+		if( DisplayColumn[row] == GELB ) GelbCounter ++;
+		else ViolettCounter ++;
+
+	if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
+	else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
+	else LeaderColor = REMIS;
+	
 	
 } /* ProcessDisplayColumn */
 
@@ -1237,21 +1188,21 @@ void ProcessDisplayColumn(void)
 * $Function----------------------------------------------------------*/
 void ProcessCapsules(void)
 {
-  int row;
-  int color;
-  
-  for( color=GELB; color <= VIOLETT; color++ )
-    for( row = 0; row < NUM_LINES; row ++ ) {
-      if( CapsuleCountdown[color][row] > 0 )
-	CapsuleCountdown[color][row] --;
-      
-      if( CapsuleCountdown[color][row] == 0 ) {
-	CapsuleCountdown[color][row] = -1;
-	ToPlayground[color][0][row] = KABEL;
-      }
-      
-    } /* for row */
-  
+	int row;
+	int color;
+
+	for( color=GELB; color <= VIOLETT; color++ )
+		for( row = 0; row < NUM_LINES; row ++ ) {
+			if( CapsuleCountdown[color][row] > 0 )
+				CapsuleCountdown[color][row] --;
+				
+			if( CapsuleCountdown[color][row] == 0 ) {
+				CapsuleCountdown[color][row] = -1;
+				ToPlayground[color][0][row] = KABEL;
+			}
+
+		} /* for row */
+		
 } /* ProcessCapsules() */		
 		
 
