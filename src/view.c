@@ -198,7 +198,7 @@ Assemble_Combat_Picture (int mask)
     PutEnemy (i);
 
   if (Me.energy > 0)
-    PutInfluence ();
+    PutInfluence ( -1 , -1 );
 
   for (i = 0; i < (MAXBULLETS); i++)
     if (AllBullets[i].type != OUT)
@@ -401,14 +401,22 @@ GetConceptInternFenster (void)
  *-----------------------------------------------------------------*/
 
 void
-PutInfluence (void)
+PutInfluence ( int x, int y)
 {
   SDL_Rect TargetRectangle;
 
   DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2;
+  if ( x == -1 ) 
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2;
+    }
+  else
+    {
+      TargetRectangle.x=x;
+      TargetRectangle.y=y;
+    }
 
   SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
 

@@ -160,10 +160,6 @@ SetInfoline (const char *left, const char *right)
   char right_box[RIGHT_TEXT_LEN + 10];
   int left_len, right_len;   /* the actualy string-lens */
 
-  // #ifdef NEW_ENGINE
-  //   return;
-  // #endif
-
   if (left == NULL)       /* Left-DEFAULT: Mode */
     left = InfluenceModeNames[Me.status];
 
@@ -198,8 +194,10 @@ SetInfoline (const char *left, const char *right)
   SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
 
   /* Text ausgeben */
-  DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
-  DisplayText (right_box, RIGHTINFO_X, RIGHTINFO_Y, Outline320x200, FALSE);
+  PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
+  PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+  //  DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
+  // DisplayText (right_box, RIGHTINFO_X, RIGHTINFO_Y, Outline320x200, FALSE);
 
   return;
 

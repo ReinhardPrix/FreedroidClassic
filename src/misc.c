@@ -559,7 +559,7 @@ Cheatmenu (void)
 void
 EscapeMenu (void)
 {
-#define FIRST_MENU_ITEM_POS_X 3*(BLOCKBREITE - 7)
+#define FIRST_MENU_ITEM_POS_X (2*BLOCKBREITE)
 enum
   { 
     SINGLE_PLAYER_POSITION=1, 
@@ -585,6 +585,8 @@ enum
   // the game screen a little bit.
 
   SetCurrentFont( Para_BFont );
+  
+  SDL_SetClipRect( ne_screen, NULL );
 
   while ( EscapePressed() );
 
@@ -596,9 +598,11 @@ enum
       // MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
+
       // DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
       // Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
+      PutInfluence( FIRST_MENU_ITEM_POS_X , (MenuPosition+3) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
 
       PrepareScaledSurface(FALSE);
 

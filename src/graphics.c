@@ -341,7 +341,8 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
+  if ( ( Menu_BFont = LoadFont("../graphics/para_font_for_BFont_01.png") ) == NULL )
+    //  if ( ( Menu_BFont = LoadFont("../graphics/font01.png") ) == NULL )
       {
         fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
         Terminate(ERR);

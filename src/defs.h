@@ -80,10 +80,10 @@
 #define RAHMENHOEHE		BLOCKHOEHE
 
 /* Startpos + lens of Rahmen-Texts */
-#define LEFTINFO_X 	(12*2)
-#define LEFTINFO_Y	(8*2)
-#define RIGHTINFO_X	(242*2)
-#define RIGHTINFO_Y	(8*2)
+#define LEFT_INFO_X 	(12*2)
+#define LEFT_INFO_Y	(8*2)
+#define RIGHT_INFO_X	(242*2)
+#define RIGHT_INFO_Y	(8*2)
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 
