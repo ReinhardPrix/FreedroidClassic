@@ -134,7 +134,6 @@ enum _alertnames {
 // the root "FD_DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
 #ifndef FD_DATADIR
-
 #ifdef __MACOSX__
 #define FD_DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
 #else

@@ -304,6 +304,13 @@ Switch_Background_Music_To ( char* filename_raw )
 
   if ( !sound_on ) return;
 
+  if ( filename_raw == NULL ) 
+    {
+      Mix_PauseMusic(); // pause currently played background music
+      paused = TRUE;
+      return;
+    }
+
 #ifndef HAVE_LIBVORBIS
   if (strstr (filename_raw, ".ogg"))
     {
@@ -313,14 +320,6 @@ Switch_Background_Music_To ( char* filename_raw )
     }
 
 #endif
-
-
-  if ( filename_raw == NULL ) 
-    {
-      Mix_PauseMusic(); // pause currently played background music
-      paused = TRUE;
-      return;
-    }
 
   // New feature: choose background music by level-color:
   // if filename_raw==BYCOLOR then chose bg_music[color]

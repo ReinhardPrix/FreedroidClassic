@@ -75,7 +75,7 @@ EnterLift (void)
   int curLevel;
   int curLift, upLift, downLift, liftrow;
 
-  DebugPrintf (2, "\nvoid EnterLiftator(void): Function call confirmed.");
+  DebugPrintf (2, "\nvoid EnterLift(void): Function call confirmed.");
 
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu. */

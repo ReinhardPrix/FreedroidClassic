@@ -144,8 +144,10 @@ LoadGameConfig (void)
 
   // first we need the user's homedir for loading/saving stuff
   if ( (homedir = getenv("HOME")) == NULL )
-    DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
-Cannot Load or Save settings.\n");
+    {
+      DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...using local dir\n");
+      homedir = ".";
+    }
 
   sprintf (ConfigDir, "%s/.freedroidClassic", homedir);
   
@@ -153,6 +155,8 @@ Cannot Load or Save settings.\n");
     DebugPrintf (1, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
 #if __WIN32__
     _mkdir (ConfigDir);
+    DebugPrintf (1, "ok\n");
+    return (OK);
 #else
     if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
       {
@@ -168,19 +172,14 @@ Cannot Load or Save settings.\n");
   }
 
   sprintf (fname, "%s/config", ConfigDir);
-  
-  if ( stat (fname, &statbuf) == -1 )
-    {
-      DebugPrintf (0, "Couldn't stat config-file: %s\n", fname);
-      return (ERR);
-    }
-  size = statbuf.st_size;
 
   if( (fp = fopen (fname, "r")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
       return (ERR);
     }
+
+  size = FS_filelength (fp);
   
   // Now read the raw data
   data = MyMalloc (size+10);
@@ -188,6 +187,9 @@ Cannot Load or Save settings.\n");
   data [read_size] = '\0';  // properly terminate as string!
 
   DebugPrintf (2, "Wanted to read %d bytes, got %d bytes\n", size, read_size);
+
+  // windoze doesn't seem to be its numbers right, so let's just close our eyes here..
+#ifndef __WIN32__
   if ( read_size != size )
     {
       DebugPrintf (0, "WARNING: error in reading config-file %s\n Giving up...", fname);
@@ -195,6 +197,8 @@ Cannot Load or Save settings.\n");
       free (data);
       return (ERR);
     }
+#endif
+
   fclose (fp);
 
   if ( read_variable (data, VERSION_STRING, "%s", version_string) == ERR)
@@ -1006,8 +1010,8 @@ Teleport (int LNum, int X, int Y)
 void
 Terminate (int ExitCode)
 {
-  printf("\n----------------------------------------------------------------------");
-  printf("\nTermination of Freedroid initiated...");
+  DebugPrintf(0,"\n----------------------------------------------------------------------");
+  DebugPrintf(0,"\nTermination of Freedroid initiated...");
 
   if (ExitCode == OK)
     {
@@ -1017,7 +1021,7 @@ Terminate (int ExitCode)
       SaveHighscores ();
     }
 
-  printf("Thank you for playing Freedroid.\n\n");
+  DebugPrintf(0, "Thank you for playing Freedroid.\n\n");
   SDL_Quit();
   exit (ExitCode);
   return;
@@ -1048,5 +1052,25 @@ MyMalloc (long Mamount)
 
   return Mptr;
 }				// void* MyMalloc(long Mamount)
+
+/*----------------------------------------------------------------------
+ * FS_filelength().. (taken from quake2)
+ * 		contrary to stat() this fct is nice and portable, 
+ *----------------------------------------------------------------------*/
+int
+FS_filelength (FILE *f)
+{
+  int		pos;
+  int		end;
+
+  pos = ftell (f);
+  fseek (f, 0, SEEK_END);
+  end = ftell (f);
+  fseek (f, pos, SEEK_SET);
+  
+  return end;
+}
+
+
 
 #undef _misc_c

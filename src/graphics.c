@@ -767,11 +767,6 @@ load_raw_pic (char *fpath)
 	DebugPrintf (0, "ERROR: load_raw_pic() called with NULL argument!\n");
 	Terminate (ERR);
       }
-    if (stat(fpath, &statbuf) == -1) 
-      {
-	DebugPrintf (0, "ERROR: Couldn't stat file %s. Giving up\n", fpath);
-	Terminate (ERR);
-      }
 
     fp = fopen (fpath, "rb");
     if (!fp)
@@ -780,7 +775,7 @@ load_raw_pic (char *fpath)
 	Terminate (ERR);
       }
 
-    size = statbuf.st_size;
+    size = FS_filelength (fp);
     mem = MyMalloc (size);
     if (fread (mem, 1, size, fp) != size)
       {

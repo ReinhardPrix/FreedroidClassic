@@ -264,6 +264,7 @@ EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void Terminate (int);
 EXTERN void *MyMalloc (long);
+EXTERN int FS_filelength (FILE *f);
 
 /* enemy.c */
 #undef EXTERN
