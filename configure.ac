@@ -70,21 +70,20 @@ AC_CHECK_LIB([SDL_net], [SDLNet_Init],,
 see http://www.libsdl.org/]))
 
 
-AC_CHECK_LIB([vorbis], [ov_open],, AC_MSG_WARN([
---------------------------------------------------
-libvorbis not found!
-You need the Vorbis libs installed if you want
-Freedroid to be able to play Ogg files (e.g. the Intro theme)
---------------------------------------------------]))
-
-
-
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
 AC_CHECK_LIB([SDL_mixer], [Mix_ChannelFinished],,
 	AC_MSG_WARN([libSDL_mixer not found!
 you need the SDL_mixer library (version >= 1.2.1) if you want sound!
 (see see http://www.libsdl.org/)
 --> compiling without sound support]))
+
+
+AC_CHECK_LIB([vorbis], [ov_open],, AC_MSG_WARN([
+--------------------------------------------------
+libvorbis not found!
+You need the Vorbis libs installed if you want
+Freedroid to be able to play Ogg files (e.g. the Intro theme)
+--------------------------------------------------]))
 
 
 # Checks for header files.
@@ -103,8 +102,13 @@ AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
 
 ## Check gtk libs
-AM_PATH_GTK(1.2.0,,AC_MSG_WARN(You need libgtk >= 1.20 for the DialogEditor))dnl
+AM_PATH_GTK(1.2.0,,AC_MSG_WARN([
+--------------------------------------------------
+WARNING: You need libgtk-dev >= 1.20 in order to 
+be able to build the DialogEditor!
 
+If you only want to play Freedroid you can ignore this!
+--------------------------------------------------]))dnl
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
 
 
