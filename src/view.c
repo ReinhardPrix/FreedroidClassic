@@ -208,7 +208,7 @@ Assemble_Combat_Picture (int mask)
   // so we start drawing the rest of the INTERIOR of the combat window:
 
   for (i = 0; i < NumEnemys; i++)
-    PutEnemy (i);
+    PutEnemy (i , -1 , -1 );
 
   if (Me.energy > 0)
     PutInfluence ( -1 , -1 );
@@ -284,8 +284,8 @@ PutInfluence ( int x, int y)
     }
   else
     {
-      TargetRectangle.x=x;
-      TargetRectangle.y=y;
+      TargetRectangle.x=x ;
+      TargetRectangle.y=y ;
     }
 
   // Now we draw the hat and shoes of the influencer
@@ -301,8 +301,8 @@ PutInfluence ( int x, int y)
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X;
-      TargetRectangle.y=y + Digit_Pos_Y;
+      TargetRectangle.x=x + Digit_Pos_X ;
+      TargetRectangle.y=y + Digit_Pos_Y ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -316,8 +316,8 @@ PutInfluence ( int x, int y)
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X + Digit_Length;
-      TargetRectangle.y=y + Digit_Pos_Y;
+      TargetRectangle.x=x + Digit_Pos_X + Digit_Length ;
+      TargetRectangle.y=y + Digit_Pos_Y                ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -331,8 +331,8 @@ PutInfluence ( int x, int y)
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X + 2*Digit_Length;
-      TargetRectangle.y=y + Digit_Pos_Y;
+      TargetRectangle.x=x + Digit_Pos_X + 2*Digit_Length ;
+      TargetRectangle.y=y + Digit_Pos_Y                  ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -350,7 +350,7 @@ PutInfluence ( int x, int y)
 * $Function----------------------------------------------------------*/
 
 void
-PutEnemy (int Enum)
+PutEnemy (int Enum , int x , int y)
 {
   const char *druidname;	/* the number-name of the Enemy */
   int phase;
@@ -406,45 +406,79 @@ Sorry...\n\
       Terminate(ERR);
     }
 
+  //--------------------
   // First blit just the enemy hat and shoes.
+  // If no coordinates, i.e. "-1", were given, we blit to the correct location in
+  // the combat window, else we blit to the given location.
   // The number will be blittet later
 
   druidname = Druidmap[AllEnemys[Enum].type].druidname;
   phase = AllEnemys[Enum].feindphase;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X+ 
-    ( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
-    ( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
-  // TargetRectangle.w=Block_Width;
-  // TargetRectangle.h=Block_Height;
-
+  if ( x == (-1) ) 
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X+ 
+	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
+	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
+    }
+  else
+    {
+      TargetRectangle.x=x;
+      TargetRectangle.y=y;
+    }
   SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
 
+  //--------------------
   // Now the numbers should be blittet.
-
-  TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
+  // again, if no coordinates, i.e. "-1", were given, we blit to the correct location in
+  // the combat window, else we blit to the given location.
+  if ( x == (-1) )
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - 
+	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - 
+	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
+    }
+  else
+    {
+     TargetRectangle.x=x + Digit_Pos_X;
+     TargetRectangle.y=y + Digit_Pos_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+11) , 
-		   ne_screen, &TargetRectangle );
+		       ne_screen, &TargetRectangle );
 
+  if ( x == (-1) )
+    {
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
     (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Digit_Pos_X + Digit_Length-1 - Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
     (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Digit_Pos_Y - Block_Height/2 ;
+    }
+  else
+    {
+     TargetRectangle.x=x + Digit_Pos_X + Digit_Length-1;
+     TargetRectangle.y=y + Digit_Pos_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
+  if ( x == (-1) )
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
+    }
+  else
+    {
+     TargetRectangle.x=x + Digit_Pos_X + 2*(Digit_Length-1);
+     TargetRectangle.y=y + Digit_Pos_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
-}	// void PutEnemy(int Enum) 
+}	// void PutEnemy(int Enum , int x , int y) 
 
 /*@Function============================================================
 @Desc: PutBullet: draws a Bullet into the combat window.  The only 

@@ -106,7 +106,7 @@ EXTERN void Assemble_Combat_Picture (int );
 EXTERN void PutInfluence (int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutBlast (int);
-EXTERN void PutEnemy (int);
+EXTERN void PutEnemy (int Enum, int x , int y );
 EXTERN void PutInternFenster (int);
 EXTERN int PutObject (int x, int y, unsigned char *pic, int check);
 EXTERN void DrawDigit (unsigned char *, unsigned char *);
