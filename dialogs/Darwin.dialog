@@ -33,8 +33,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -83,7 +85,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="I would like to learn more about how to extract parts."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Darwin/Tux_Id_like_to_learn_more.wav"
 PositionX=277  PositionY=393  
 Subtitle="Good.  But that knowledge only comes for a fee."
 ReplySample="Darwin/DAR_Fee2.wav"
