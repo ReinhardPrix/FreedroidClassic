@@ -586,6 +586,27 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	    AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
 	}
     }
+    else if ( ! strcmp ( ExtraCommandString , "SetCompletelyFixedProperty" ) )
+    {
+	DebugPrintf ( -1000 , "\nThis bot will now pull its breaks and not move any more." );
+	ChatDroid -> CompletelyFixed = TRUE ;
+    }
+    else if ( ! strcmp ( ExtraCommandString , "UnsetCompletelyFixedProperty" ) )
+    {
+	DebugPrintf ( -1000 , "\nThis bot will now move again." );
+	ChatDroid -> CompletelyFixed = FALSE ;
+    }
+    else if ( ! strcmp ( ExtraCommandString , "SetFollowTuxProperty" ) )
+    {
+	DebugPrintf ( -1000 , "\nThis bot will now follow Tux." );
+	ChatDroid -> follow_tux = TRUE ;
+    }
+    else if ( ! strcmp ( ExtraCommandString , "SetMoveFreelyProperty" ) )
+    {
+	DebugPrintf ( -1000 , "\nThis bot will now move freely." );
+	ChatDroid -> CompletelyFixed = FALSE ;
+	ChatDroid -> follow_tux = FALSE ;
+    }
     else if ( ! strcmp ( ExtraCommandString , "MakeTuxTownGuardMember" ) )
     {
 	DebugPrintf ( -1000 , "\nTux should now be a member of the old town's guard." );

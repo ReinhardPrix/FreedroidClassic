@@ -349,6 +349,7 @@ ClearEnemys ( void )
 	our_bot -> SpecialForce = 0;
 	our_bot -> AdvancedCommand = 0;
 	our_bot -> CompletelyFixed = 0;
+	our_bot -> follow_tux = 0;
 	our_bot -> Parameter1 = 0;
 	our_bot -> Parameter2 = 0;
 	our_bot -> marker = 0;
@@ -733,6 +734,17 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     float maxspeed;
     
     //--------------------
+    // If the robot has the 'completely fixed' property, then
+    // we don't move anywhere
+    //
+    if ( ThisRobot -> CompletelyFixed )
+    {
+	ThisRobot -> speed . x = 0;	
+	ThisRobot -> speed . y = 0;
+	return;
+    }
+
+    //--------------------
     // According to properties of the robot like being frozen or not,
     // we define the maximum speed of this machine for later use...
     // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
@@ -1075,14 +1087,38 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 
     // DebugPrintf( -4 , "\n%s(): real function call confirmed. " , __FUNCTION__ );
     
-    for ( i = 0 ; i < MAX_RANDOM_WALK_ATTEMPTS_BEFORE_GIVING_UP ; i ++ )
+    //--------------------
+    // At first we see if this bot is trying to keep up with the Tux
+    // 
+    if ( ThisRobot -> follow_tux )
     {
-	//--------------------
-	// We select a possible new walktarget for this bot, not too
-	// far away from the current position...
-	//
-	target_candidate . x = ThisRobot -> pos . x + ( MyRandom ( 600 ) - 300 ) / 100 ; 
-	target_candidate . y = ThisRobot -> pos . y + ( MyRandom ( 600 ) - 300 ) / 100 ; 
+
+	target_candidate . x = ThisRobot -> pos . x ;
+	target_candidate . y = ThisRobot -> pos . y ;
+
+	if ( fabsf ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) > 1.4 )
+	{
+	    if ( ThisRobot -> virt_pos . x > Me [ 0 ] . pos . x )
+	    {
+		target_candidate . x -= 1.0 ;
+	    }		
+	    else
+	    {
+		target_candidate . x += 1.0 ;
+	    }
+	}
+
+	if ( fabsf ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) > 1.4 )
+	{
+	    if ( ThisRobot -> virt_pos . y > Me [ 0 ] . pos . y )
+	    {
+		target_candidate . y -= 1.0 ;
+	    }		
+	    else
+	    {
+		target_candidate . y += 1.0 ;
+	    }
+	}
 
 	if ( droid_can_walk_this_line ( ThisRobot -> pos . z , ThisRobot -> pos . x , ThisRobot -> pos . y , 
 					target_candidate . x , target_candidate . y ) )
@@ -1091,7 +1127,31 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 	    ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = target_candidate . y ;
 	    success = TRUE ;
-	    break;
+	    // break;
+	}
+	
+
+    }
+    else
+    {
+	for ( i = 0 ; i < MAX_RANDOM_WALK_ATTEMPTS_BEFORE_GIVING_UP ; i ++ )
+	{
+	    //--------------------
+	    // We select a possible new walktarget for this bot, not too
+	    // far away from the current position...
+	    //
+	    target_candidate . x = ThisRobot -> pos . x + ( MyRandom ( 600 ) - 300 ) / 100 ; 
+	    target_candidate . y = ThisRobot -> pos . y + ( MyRandom ( 600 ) - 300 ) / 100 ; 
+	    
+	    if ( droid_can_walk_this_line ( ThisRobot -> pos . z , ThisRobot -> pos . x , ThisRobot -> pos . y , 
+					    target_candidate . x , target_candidate . y ) )
+	    {
+		ThisRobot -> persuing_given_course = TRUE ;
+		ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
+		ThisRobot -> PrivatePathway [ 0 ] . y = target_candidate . y ;
+		success = TRUE ;
+		break;
+	    }
 	}
     }
 

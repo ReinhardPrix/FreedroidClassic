@@ -781,6 +781,7 @@ typedef struct
     double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
     
     int CompletelyFixed;          // set this flat to make the robot entirely immobile
+    int follow_tux;               // does this robot try to follow tux via it's random movements?
     int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
     int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
     int on_death_drop_item_code;  // drop a pre-determined item when dying?
