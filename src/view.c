@@ -1185,7 +1185,7 @@ blit_light_radius ( void )
   static SDL_Rect target_rectangle;
   int chunk_size_x;
   int chunk_size_y;
-
+  int window_offset_x;
 
   //--------------------
   // If the darkenss chunks have not yet been loaded, we load them...
@@ -1251,6 +1251,7 @@ blit_light_radius ( void )
   our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
   our_max_height = our_max_width;
 
+  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
 
   for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
     {
@@ -1263,7 +1264,7 @@ blit_light_radius ( void )
 	  if ( light_strength <= 0 ) continue ;
 
 	  // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
-	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] ;
+	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
 	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
 	  SDL_BlitSurface( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
 	  
