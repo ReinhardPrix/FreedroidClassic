@@ -65,6 +65,7 @@ update_light_list ( int player_num )
     int obs_index;
     int next_light_emitter_index;
     obstacle* emitter;
+    int blast;
 
     //--------------------
     // At first we fill out the light sources array with 'empty' information,
@@ -93,6 +94,30 @@ update_light_list ( int player_num )
 	light_source_strengthes [ 0 ] = 1;
     next_light_emitter_index = 1 ;
 
+    //--------------------
+    // Now we can fill in any explosions, that are currently going on.
+    // These will typically emanate a lot of light.
+    //
+    for ( blast = 0 ; blast < MAXBLASTS ; blast ++ )
+    {
+	if ( ! ( AllBlasts [ blast ] . type == DRUIDBLAST ) ) continue ;
+
+	light_sources [ next_light_emitter_index ] . x = AllBlasts [ blast ] . pos . x ;
+	light_sources [ next_light_emitter_index ] . y = AllBlasts [ blast ] . pos . y ;
+	light_source_strengthes [ next_light_emitter_index ] = 20 ;	    
+	next_light_emitter_index ++ ;
+	
+	//--------------------
+	// We must not write beyond the bounds of our light sources array!
+	//
+	if ( next_light_emitter_index >= MAX_NUMBER_OF_LIGHT_SOURCES - 1 )
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+WARNING!  End of light sources array reached!",
+				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	    return;
+	}
+    }
 
     //--------------------
     // Now we can fill in the remaining light sources of this level.
@@ -269,8 +294,18 @@ calculate_light_strength ( moderately_finepoint target_pos )
 }; // int calculate_light_strength ( moderately_finepoint target_pos )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the light radius (i.e. the shadow values for the floor) has been
+ * set up, the shadows usually are very 'hard' in the sense that extreme
+ * darkness can be right next to very bright light.  This does not look
+ * very real.  Therefore we 'soften' the shadow a bit, by allowing only
+ * a limited step size from one shadow square to the next.  Of course 
+ * these changes have to be propagated, so we run through the whole
+ * shadow grid twice and propagate in 'both' directions.  
+ * The hardness of the shadow can be controlled in the definition of
+ * MAX_LIGHT_STEP.  Higher values will lead to harder shadows, while 
+ * lower values will give very smooth and flourescent shadows propagating
+ * even a bit under walls (which doesn't look too good).  4 seems like
+ * a reasonable setting.
  * ---------------------------------------------------------------------- */
 void
 soften_light_distribution ( void )
@@ -323,8 +358,6 @@ set_up_light_strength_buffer ( void )
     int screen_x ;
     int screen_y ;
 
-    // DebugPrintf ( -4 , "\n%s(): function call confirmed." , __FUNCTION__ );
-
     for ( x = 0 ; x < 64 ; x ++ )
     {
 	for ( y = 0 ; y < 48 ; y ++  )
@@ -362,12 +395,12 @@ get_light_strength ( moderately_finepoint target_pos )
 
     if ( ( x < 0 ) || ( y < 0 ) || ( x >= 64 ) || ( y >= 48 ) )
     {
-	/*
-	fprintf ( stderr , "\nx: %d.  y: %d.  " , x , y );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Problem with light strength buffering encountered.",
-				   PLEASE_INFORM, IS_WARNING_ONLY );
-	*/
+	//--------------------
+	// If a request reaches outside the prepared buffer, we use the
+	// nearest point, if we can get it easily, otherwise we'll use
+	// blackness by default.
+	//
+
 	if ( ( x >= 0 ) && ( x < 64 ) )
 	{
 	    if ( y >= 48 )
@@ -382,9 +415,9 @@ Problem with light strength buffering encountered.",
 	    if ( x < 0 )
 		return ( light_strength_buffer [ 0 ] [ y ] );
 	}
-
 	return ( NUMBER_OF_SHADOW_IMAGES );
     }
+
     return ( light_strength_buffer [ x ] [ y ] );
     
 }; // int get_light_strength ( moderately_finepoint target_pos )
@@ -476,13 +509,25 @@ blit_classic_SDL_light_radius( void )
 }; // void blit_classic_SDL_light_radius( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * FreedroidRPG does some light/shadow computations and then draws some
+ * shadows/light on the floor.  There is a certain amount of light around
+ * the Tux.  This light is called the 'light radius'.  
+ * 
+ * This function is supposed to compute all light/shadow values for the
+ * the floor and then draw the light radius on the floor.  Note, that 
+ * this is something completely different from the prerendered shadows
+ * that are to be blitted for obstacles, when they are exposed to 
+ * daylight.
  * ---------------------------------------------------------------------- */
 void
 blit_light_radius ( void )
 {
 
+    //--------------------
+    // Before making any reference to the light, it's best to 
+    // first calculate the values in the light buffer, because
+    // those will be used when drawing the light radius.
+    //
     set_up_light_strength_buffer ( );
 
     if ( use_open_gl )

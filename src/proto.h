@@ -158,6 +158,8 @@ EXTERN int level_is_partly_visible ( int level_num );
 #define EXTERN extern
 #endif
 EXTERN int get_light_strength ( moderately_finepoint target_pos );
+EXTERN void update_light_list ( int player_num );
+EXTERN void blit_light_radius ( void );
 
 // open_gl.c 
 #undef EXTERN
