@@ -96,7 +96,7 @@ main (int argc, char *const argv[])
 
 	  MoveLevelDoors ();	
 
-	  CheckForTriggeredEvents();
+	  CheckForTriggeredEventsAndStatements();
 
 	  AnimateRefresh ();	
 

@@ -1272,20 +1272,40 @@ ExecuteEvent ( int EventNumber )
     }
 }; // void ExecuteEvent ( int EventNumber )
 
-/*@Function============================================================
-@Desc: This function checks for triggered events.  Those events are
-       usually entered via the mission file and read into the apropriate
-       structures via the InitNewMission function.  Here we check, whether
-       the nescessary conditions for an event are satisfied, and in case that
-       they are, we order the apropriate event to be executed.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks for triggered events & statements.  Those events are
+ * usually entered via the mission file and read into the apropriate
+ * structures via the InitNewMission function.  Here we check, whether
+ * the nescessary conditions for an event are satisfied, and in case that
+ * they are, we order the apropriate event to be executed.
+ *
+ * In addition, statements are started, if the influencer is at the 
+ * right location for them.
+ *
+ * $Function----------------------------------------------------------*/
 void 
-CheckForTriggeredEvents ( void )
+CheckForTriggeredEventsAndStatements ( void )
 {
   int i;
+  int map_x, map_y;
 
+  //--------------------
+  // Now we check if some statment location is reached
+  //
+  map_x = (int) rintf( Me.pos.x ); map_y = (int) rintf( Me.pos.y );
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i++ )
+    {
+      if ( ( map_x == CurLevel->StatementList[ i ].x ) &&
+	   ( map_y == CurLevel->StatementList[ i ].y ) )
+	{
+	  Me.TextVisibleTime=0;
+	  Me.TextToBeDisplayed=CurLevel->StatementList[ i ].Statement_Text;
+	}
+    }
+
+  //--------------------
+  // Now we check if some event tirgger is fullfilled.
+  //
   for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
     {
       // if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
@@ -1322,6 +1342,6 @@ CheckForTriggeredEvents ( void )
 	}
     }
 
-}; // CheckForTriggeredEvents (void )
+}; // CheckForTriggeredEventsAndStatements (void )
 
 #undef _misc_c
