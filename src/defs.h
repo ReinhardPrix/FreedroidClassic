@@ -209,7 +209,7 @@ enum
 #define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
 
 #define NE_CONSOLE_PIC_FILE     "backgrounds/console_fg.png" 
-#define NE_BANNER_BLOCK_FILE    "backgrounds/banner.png"
+// #define NE_BANNER_BLOCK_FILE    "backgrounds/banner.png"
 #define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"

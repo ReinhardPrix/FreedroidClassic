@@ -352,64 +352,6 @@ This error indicates some installation problem with freedroid.",
 }; // void LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
 
 /* ----------------------------------------------------------------------
- * This function creates all the surfaces, that are nescessary to blit the
- * skill icons somewhere on the screen, so that you know what skill is
- * currently set to active.
- * ---------------------------------------------------------------------- */
-void 
-Load_SkillIcon_Surfaces( void )
-{
-  int i;
-
-  return;
-
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i++ )
-    {
-      LoadOneSkillSurfaceIfNotYetLoaded ( i );
-    }
-
-  /*
-
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  char *fpath;
-
-  fpath = find_file ( SKILL_ICON_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-  for ( i=0 ; i < NUMBER_OF_SKILLS ; i++ )
-    {
-      SpellSkillMap [ i ] . spell_skill_icon_surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( SpellSkillMap [ i ] . spell_skill_icon_surface , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      Source.x=i*(Block_Height+2);
-      Source.y=0*(Block_Width+2);
-      Source.w=Block_Width;
-      Source.h=Block_Height;
-      Target.x=0;
-      Target.y=0;
-      Target.w=Block_Width;
-      Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , SpellSkillMap [ i ] . spell_skill_icon_surface , &Target );
-      SDL_SetAlpha( SpellSkillMap [ i ] . spell_skill_icon_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-    }
-
-  SDL_FreeSurface( Whole_Image );
-  SDL_FreeSurface( tmp_surf );
-
-  */
-
-}; // void Load_SkillIcon_Surfaces( void )
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */

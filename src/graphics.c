@@ -1178,7 +1178,6 @@ int
 InitPictures (void)
 {
   SDL_Surface *tmp;
-  char *fpath;
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -1273,8 +1272,6 @@ InitPictures (void)
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
 
-  Load_SkillIcon_Surfaces();
-
   ShowStartupPercentage ( 80 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
@@ -1286,25 +1283,9 @@ InitPictures (void)
 
   ShowStartupPercentage ( 84 ) ; 
 
-  fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
-  tmp = IMG_Load (fpath); 
-
   ShowStartupPercentage ( 86 ) ; 
 
-  banner_pic = SDL_DisplayFormat (tmp);
-  SDL_FreeSurface (tmp);  
-
   ShowStartupPercentage ( 88 ) ; 
-
-  /*
-  //--------------------
-  // Console picture need not be rendered fast or something.  This
-  // really has time, so we load it as a surface and do not take the
-  // elements apart (they dont have typical block format either)
-  //
-  fpath = find_file (NE_CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
-  console_pic = IMG_Load (fpath); 
-  */
 
   ShowStartupPercentage ( 90 ) ; 
 
