@@ -26,10 +26,7 @@
  * This file does everything that has to do with the takeover game from
  * the original paradroid game.
  * ---------------------------------------------------------------------- */
-/*
- * This file has been checked for remains of german comments in the code
- * I you still find some, please just kill it mercilessly.
- */
+
 #define _takeover_c
 
 #include "system.h"
@@ -42,8 +39,8 @@
 #include "ship.h"
 #include "map.h"
 
-Uint32 cur_time;  		/* current time in ms */
-SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
+Uint32 cur_time;  		// current time in ms 
+SDL_Surface *to_blocks;         // the global surface containing all game-blocks 
 SDL_Surface *to_background;
 
 /* the rectangles containing the blocks */
@@ -54,30 +51,34 @@ SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
 SDL_Rect ToColumnBlock;
 SDL_Rect ToLeaderBlock;
 
-/* Class seperation of the blocks */
+//--------------------
+// Class seperation of the blocks 
+//
 int BlockClass[TO_BLOCKS] = {
-  CONNECTOR,			/* KABEL */
-  NON_CONNECTOR,		/* KABELENDE */
-  CONNECTOR,			/* VERSTAERKER */
-  CONNECTOR,			/* FARBTAUSCHER */
-  CONNECTOR,			/* VERZWEIGUNG_O */
-  NON_CONNECTOR,		/* VERZWEIGUNG_M */
-  CONNECTOR,			/* VERZWEIGUNG_U */
-  NON_CONNECTOR,		/* GATTER_O */
-  CONNECTOR,			/* GATTER_M */
-  NON_CONNECTOR,		/* GATTER_U */
-  NON_CONNECTOR			/* LEER */
+  CONNECTOR,			// cable
+  NON_CONNECTOR,		// end of cable
+  CONNECTOR,			// re-enforcer
+  CONNECTOR,			// color-change
+  CONNECTOR,			// bridge above
+  NON_CONNECTOR,		// bridge middle
+  CONNECTOR,			// bridge below
+  NON_CONNECTOR,		// uniter above
+  CONNECTOR,			// uniter middle
+  NON_CONNECTOR,		// uniter below
+  NON_CONNECTOR			// empty
 };
 
-/* Probability of the various elements */
+//--------------------
+// Probability of the various elements 
+//
 #define MAX_PROB		100
 int ElementProb[TO_ELEMENTS] = {
-  100,				/* EL_KABEL */
-  2,				/* EL_KABELENDE */
-  5,				/* EL_VERSTAERKER */
-  5,				/* EL_FARBTAUSCHER: only on last layer */
-  5,				/* EL_VERZWEIGUNG */
-  5				/* EL_GATTER */
+  100,				// EL_KABEL 
+  2,				// EL_KABELENDE 
+  5,				// EL_VERSTAERKER 
+  5,				// EL_FARBTAUSCHER: only on last layer 
+  5,				// EL_VERZWEIGUNG 
+  5				// EL_GATTER 
 };
 
 
@@ -766,7 +767,7 @@ GetTakeoverGraphics (void)
   //
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
-  if (to_blocks)   /* this happens when we do theme-switching */
+  if (to_blocks)   // this happens when we do theme-switching 
     free (to_blocks);
   if (to_background)
     free (to_background);
@@ -780,23 +781,22 @@ GetTakeoverGraphics (void)
   to_blocks = our_SDL_display_format_wrapperAlpha( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
 
-  /* Get the fill-blocks */
+  // Get the fill-blocks 
   for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
     Set_Rect (FillBlocks[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
 
-  /* Get the capsule Blocks */
+  // Get the capsule blocks 
   for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
     Set_Rect (CapsuleBlocks[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
 
-  /* Get the default background color, to be used when no background picture found! */
+  // Get the default background color, to be used when no background picture found! 
   curx += CAPSULE_LEN + 2;
   
 
   curx = 0;
   cury += FILL_BLOCK_HEIGHT + 2;
 
-  /* get the game-blocks */
-
+  // get the game-blocks 
   for (j = 0; j < 2*NUM_PHASES; j++)
     {
       for (i = 0; i < TO_BLOCKS; i++)
@@ -808,7 +808,7 @@ GetTakeoverGraphics (void)
       cury += TO_BLOCKHEIGHT + 2;
     }
 
-  /* Get the ground, column and leader blocks */
+  // Get the ground, column and leader blocks 
   for (i = 0; i < NUM_GROUND_BLOCKS; i++)
     {
       Set_Rect (ToGroundBlocks[i], curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
@@ -840,7 +840,7 @@ GetTakeoverGraphics (void)
  *
  * ----------------------------------------------------------------- */
 void
-ShowPlayground ()
+ShowPlayground ( void )
 {
   int i, j;
   int color, player;
@@ -857,10 +857,10 @@ ShowPlayground ()
   if (to_background)
     our_SDL_blit_surface_wrapper (to_background, NULL, Screen, NULL);
   else
-    FillRect (User_Rect, to_bg_color);  /* fallback if now background pic found */
+    FillRect (User_Rect, to_bg_color);  // fallback if now background pic found 
 
-  blit_tux (xoffs + DruidStart[YourColor].x,
-		yoffs + DruidStart[YourColor].y, 0 );
+  blit_tux ( xoffs + DruidStart[YourColor].x,
+	     yoffs + DruidStart[YourColor].y, 0 );
 
   if (AllEnemys[DroidNum].Status != OUT)
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
@@ -870,68 +870,68 @@ ShowPlayground ()
   Set_Rect (Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
 	    User_Rect.w, User_Rect.h);
 
-  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_OBEN],
-		   Screen, &Target_Rect);
+  our_SDL_blit_surface_wrapper ( to_blocks, &ToGroundBlocks[GELB_OBEN],
+				 Screen, &Target_Rect );
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++)
     {
       our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_MITTE],
-		       Screen, &Target_Rect);
+				    Screen, &Target_Rect);
 
       Target_Rect.y += GROUNDBLOCKHEIGHT;
     }				/* for i=1 to 12 */
 
-  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_UNTEN],
-		   Screen, &Target_Rect);
+  our_SDL_blit_surface_wrapper ( to_blocks, &ToGroundBlocks[GELB_UNTEN],
+				 Screen, &Target_Rect);
 
 
-  /* Mittlere Saeule */
+  // the middle column
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
   our_SDL_blit_surface_wrapper (to_blocks, &ToLeaderBlock,
-		   Screen, &Target_Rect);
+				Screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
     our_SDL_blit_surface_wrapper (to_blocks, &ToColumnBlock,
-		     Screen, &Target_Rect);
+				  Screen, &Target_Rect);
 
 
-  /* rechte Saeule */
+  // the right column
   Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
 
   our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
-		   Screen, &Target_Rect);
+				Screen, &Target_Rect);
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
     our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
-		     Screen, &Target_Rect);
+				  Screen, &Target_Rect);
 
   our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
-		   Screen, &Target_Rect);
+				Screen, &Target_Rect);
 
-  /* Fill the Leader-LED with its color */
+  // Fill the leader-LED with its color 
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
   our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[LeaderColor],
-		   Screen, &Target_Rect);
+				Screen, &Target_Rect);
   Target_Rect.y += FILL_BLOCK_HEIGHT;
   our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[LeaderColor],
-		   Screen, &Target_Rect);
+				Screen, &Target_Rect);
 
-  /* Fill the Display Column with its colors */
+  // Fill the display column with its colors 
   for (i = 0; i < NUM_LINES; i++)
     {
       Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
       our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[DisplayColumn[i]],
-		       Screen, &Target_Rect);
+				    Screen, &Target_Rect);
     }
 
 
-  /* Show the yellow playground */
+  // Show the yellow playground 
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
@@ -942,7 +942,7 @@ ShowPlayground ()
       }
 
 
-  /* Show the violett playground */
+  // Show the violett playground 
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
@@ -954,7 +954,7 @@ ShowPlayground ()
 	our_SDL_blit_surface_wrapper (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
       }
 
-  /* Show the capsules left for each player */
+  // Show the capsules left for each player 
   for (player = 0; player < 2; player++)
     {
       if (player == YOU)
@@ -975,12 +975,12 @@ ShowPlayground ()
 		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
 	  our_SDL_blit_surface_wrapper (to_blocks, &CapsuleBlocks[color],
 			   Screen, &Target_Rect);
-	} /* for capsules */
-    } /* for player */
+	} // for capsules 
+    } // for player 
 
   return;
 
-}				/* ShowPlayground */
+}; // ShowPlayground 
 
 /*-----------------------------------------------------------------
  * @Desc: Clears Playground (and ActivationMap) to default start-values
