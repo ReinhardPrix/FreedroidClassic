@@ -9,8 +9,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.6  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.7  2002/04/08 10:25:30  rp
+ * ALLDRUIDTYPES set to 24 (instead of 25), which is the correct value IMHO
+ *
+ * Revision 1.7  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.4  1994/06/19  16:17:44  prix
  * Sat May 21 07:52:34 1994: neues Rahmenbild
@@ -117,7 +120,7 @@
 #define INTERNBREITE 11			/* 11 */
 #define INTERNHOEHE 9
 
-/* Diese Konstanten geben die Groesse des unsichtbaren Bereiches links,rechts
+/* Diese Konstanten geben die Groeáe des unsichtbaren Bereiches links,rechts
 	und oberhalb des Userfensters an. */
 #define USERFENSTERLINKS (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
 //#define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
@@ -199,8 +202,8 @@ enum _directions {
 
 #define BLOCKANZAHL 43
 
-#define ALLDRUIDTYPES		25		/* number of druid-models that exist */
-#define ALLBULLETTYPES		4		/* number of bullet-types */
+#define ALLDRUIDTYPES		24	/* number of druid-models that exist */
+#define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2     /* number of different exposions */
 
 #define MAXBULLETS		10		/* maximum possible Bullets in the air */
