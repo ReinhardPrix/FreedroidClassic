@@ -1762,7 +1762,7 @@ SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
 
   MarkerCode = ThisRobot -> marker ;
 
-  if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
+  if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) )return ;
 
   for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {

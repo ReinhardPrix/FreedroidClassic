@@ -970,24 +970,23 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	  break;
 	case SET_LEVEL_NAME:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
-	  SDL_Flip( Screen );
-	  EditLevel->Levelname=GetString( 100 , FALSE );
+	  EditLevel->Levelname = 
+	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level name: \n\n" ,
+					     EditLevel->Levelname );
 	  Weiter=!Weiter;
 	  break;
 	case SET_BACKGROUND_SONG_NAME:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
-	  SDL_Flip( Screen );
-	  EditLevel->Background_Song_Name=GetString( 100 , FALSE );
+	  EditLevel->Background_Song_Name = 
+	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new music file name: \n\n" ,
+					     EditLevel->Background_Song_Name );
 	  Weiter=!Weiter;
 	  break;
 	case SET_LEVEL_COMMENT:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
-	  SDL_Flip( Screen );
-	  SetTextCursor( 15 , 440 );
-	  EditLevel->Level_Enter_Comment=GetString( 100 , FALSE );
+	  EditLevel->Level_Enter_Comment = 
+	    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level comment: \n\n" ,
+					     EditLevel->Level_Enter_Comment );
 	  Weiter=!Weiter;
 	  break;
 	case ADD_NEW_LEVEL:
@@ -2547,9 +2546,9 @@ EditCodepanelData ( Level EditLevel )
     case CODEPANEL_D:
       
       // If yes, we ask for the new codepanel keyword
-      DisplayText ( "\n Please enter new codepanel codeword: \n" , -1 , -1 , &User_Rect );
-      SDL_Flip( Screen );
-      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+      NewCommentOnThisSquare = 
+	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new codepanel codeword: \n\n" ,
+					 "" );
       
       // Now we see if a codepanel entry is existing already for this square
       for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
@@ -2628,7 +2627,7 @@ EditMapLabelData ( Level EditLevel )
     {
       DisplayText ( "\nNo existing map label entry found...\n" , -1 , -1 , &User_Rect );
       NewCommentOnThisSquare = 
-	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" ,
+	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n\n" ,
 					 "" );
 
       i=0;
@@ -2652,7 +2651,7 @@ EditMapLabelData ( Level EditLevel )
     {
       DisplayText ( "\nOverwriting existing map label list entry...\n" , -1 , -1 , &User_Rect );
       NewCommentOnThisSquare = 
-	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" ,
+	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n\n" ,
 					 EditLevel -> labels [ i ] . label_name );
     }
 
@@ -2847,10 +2846,9 @@ LevelEditor(void)
 	    {
 	      while (SPressed());
 	      SetCurrentFont( FPS_Display_BFont );
-	      // CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
-	      DisplayText ( "\n Please enter comment below: \n" , -1 , -1 , &User_Rect );
-	      SDL_Flip( Screen );
-	      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+	      NewCommentOnThisSquare = 
+		GetEditableStringInPopupWindow ( 1000 , "\n Please enter new statement for this tile: \n\n" ,
+						 "" );
 	      for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
 		{
 		  if ( EditLevel->StatementList[ i ].x == (-1) ) break;
@@ -2892,9 +2890,9 @@ LevelEditor(void)
 	  if ( EPressed () )
 	    {
 	      while (EPressed());
-	      CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
-	      SDL_Flip( Screen );
-	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      NumericInputString = 
+		GetEditableStringInPopupWindow ( 10 , "\n You have chosen to enter a floor tile by it's numeric value.\n\nPlease enter the numeric value of the tile below: \n\n" ,
+						 "" );
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
 
@@ -2915,9 +2913,9 @@ LevelEditor(void)
 	  if ( GPressed () )
 	    {
 	      while ( GPressed() );
-	      CenteredPutString   ( Screen ,  91 + 6*FontHeight(Menu_BFont), "Please enter code of new item:");
-	      SDL_Flip( Screen );
-	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      NumericInputString = 
+		GetEditableStringInPopupWindow ( 10 , "\n You have chosen to drop an item to the floor here.\n\nPlease enter the numeric value of the new item below: \n\n" ,
+						 "" );
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
 	      if ( NewItemCode >= Number_Of_Item_Types ) 
 		{

@@ -2315,7 +2315,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 
 #define EDIT_WINDOW_TEXT_OFFSET 15
 
-  if ( MaxLen > 70 ) MaxLen = 70;
+  if ( MaxLen > 60 ) MaxLen = 60;
 
   if ( strlen ( DefaultString ) >= MaxLen -1 ) DefaultString [ MaxLen - 1 ] = 0 ;
 
