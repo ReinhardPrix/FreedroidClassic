@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -490,10 +490,10 @@ CheckBulletCollisions (int num)
 	  else
 	    {
 	      DeleteBullet ( num , TRUE ); // we want a bullet-explosion
-	      return;			
+	      return;
 	    }
 	}
-      
+
       // check for collision with influencer
       xdist = Me.pos.x - CurBullet->pos.x;
       ydist = Me.pos.y - CurBullet->pos.y;
@@ -505,7 +505,7 @@ CheckBulletCollisions (int num)
 	      if ( MyRandom ( 100 ) < CurBullet->to_hit )
 		{
 		  CurBullet->miss_hit_influencer = HIT ;
-		  
+
 		  //--------------------
 		  // NEW RULE:  Even when the bullet hits, there's still a chance that
 		  // the armour will compensate the shot
@@ -513,7 +513,7 @@ CheckBulletCollisions (int num)
 		  if ( MyRandom( 100 ) < Me.AC )
 		    {
 		      Me.TextVisibleTime = 0;
-		      Me.TextToBeDisplayed = "That one went into the armour.";		  
+		      Me.TextToBeDisplayed = "That one went into the armour.";
 		    }
 		  else
 		    {
@@ -546,17 +546,17 @@ CheckBulletCollisions (int num)
 	    }
 	}
 
-      
+
       // check for collision with enemys
       // for (i = 0; i < NumEnemys; i++)
       for (i = 0; i < Number_Of_Droids_On_Ship; i++)
 	{
 	  if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
 	    continue;
-	  
+
 	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
 	  ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
-	  
+
 	  if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
 	    {
 	      if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
@@ -571,17 +571,17 @@ CheckBulletCollisions (int num)
 		      // fire immediately now but takes double normal time for the next shot.
 		      //
 		      AllEnemys[i].energy -= CurBullet->damage;
-		      GotHitSound ();
-		      AllEnemys[i].firewait = 
-			2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 		      
+		      AllEnemys[i].firewait =
+			2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+
 		      // Maybe he will also stop doing his fixed routine and return to normal
 		      // operation as well
 		      AllEnemys[i].AdvancedCommand = 0;
-		      
+
 		      // We might also start a little bullet-blast even after the
 		      // collision of the bullet with an enemy (not in Paradroid)
-		      
+
 		      //--------------------
 		      // If the blade can pass through dead and not dead bodies, it will so
 		      // so and create a small explosion passing by.  But if it can't, it should
@@ -590,9 +590,9 @@ CheckBulletCollisions (int num)
 		      if ( CurBullet->pass_through_hit_bodies )
 			StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
 		      else DeleteBullet( num , TRUE ); // we want a bullet-explosion
-		      
+
 		      Enemy_Post_Bullethit_Behaviour( i );
-		      
+
 		      if (!CurBullet->mine)
 			{
 			  FBTZaehler++;
