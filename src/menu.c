@@ -345,14 +345,20 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int i;
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
-  int first_menu_item_pos_y;
 #define ITEM_DIST 50
-  int MenuPosX[] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
-  int MenuPosY[] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
+  int MenuPosX[20] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
+  int MenuPosY[20] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
       90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
   SDL_Rect Choice_Window;
 
-  Choice_Window.x= 260; Choice_Window.y=60; Choice_Window.w=640 - 10 - 260; Choice_Window.h= 480 - 60;
+  //--------------------
+  // This is the old (before Bastians redesign) choice window:
+  //
+  // Choice_Window.x= 260; Choice_Window.y=60; Choice_Window.w=640 - 10 - 260; Choice_Window.h= 480 - 60;
+  // 
+  // Now we have a new design:
+  //
+  Choice_Window . x = 35; Choice_Window . y = 340; Choice_Window . w = 640 - 70; Choice_Window . h = 110;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -373,7 +379,15 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
     }
   NumberOfOptionsGiven = i;
 
-  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+  //--------------------
+  // Now that we have a new choice window, we should automatically compute the right
+  // positions for the various chat alternatives.
+  //
+  for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
+    {
+      MenuPosX[ i ]  = Choice_Window . x ;
+      MenuPosY[ i ]  = Choice_Window . y + i * Choice_Window .h / NumberOfOptionsGiven ;
+    }
 
   //--------------------
   // We need to prepare the background for the menu, so that
@@ -407,8 +421,9 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  // PutString ( Screen ,  MenuPosX[i] , MenuPosY[i] , MenuTexts[ i ] );
 	  DisplayText ( MenuTexts[i] , MenuPosX[i] , MenuPosY[i] , &Choice_Window );
 	}
-      if ( strlen( InitialText ) > 0 ) 
-	DisplayText ( InitialText , 50 , 50 , NULL );
+
+      // if ( strlen( InitialText ) > 0 ) DisplayText ( InitialText , 50 , 50 , NULL );
+
 
       SDL_Flip( Screen );
   

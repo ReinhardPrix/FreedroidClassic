@@ -190,9 +190,14 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
   if ( !GameConfig.show_subtitles_in_dialogs ) return;
 
   //--------------------
-  // First we define our subtitle window.
+  // First we define our subtitle window.  We formerly had a small
+  // narrow subtitle window of a format like this:
   //
-  Subtitle_Window.x= 15; Subtitle_Window.y=435; Subtitle_Window.w=600; Subtitle_Window.h=44;
+  // Subtitle_Window.x= 15; Subtitle_Window.y=435; Subtitle_Window.w=600; Subtitle_Window.h=44;
+  // 
+  // But now we have a new subtitle window for Bastians reshaped chat interface:
+  //
+  Subtitle_Window . x = 260; Subtitle_Window . y = 42; Subtitle_Window . w = 337 ; Subtitle_Window . h = 216;
 
   //--------------------
   // Now we need to clear this window, cause there might still be some
@@ -235,14 +240,26 @@ PrepareMultipleChoiceDialog ( int Enum )
   char *fpath;
   char fname[500];
 
-  Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+  // #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test.jpg" 
+#define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test2.jpg" 
+
+  //--------------------
+  // This is the droid window we used before Bastian reshaped
+  // the chat interface:
+  //
+  // Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+  // 
+  // But now we have a different chat window format:
+  //
+  Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
+
   Activate_Conservative_Frame_Computation( );
 
   //--------------------
   // Next we prepare the whole background for all later text operations
   //
   if ( Background == NULL )
-    Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+    Background = IMG_Load( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
   else
     {
       //--------------------
@@ -251,12 +268,12 @@ PrepareMultipleChoiceDialog ( int Enum )
       // discussion partner on it.
       //
       SDL_FreeSurface( Background );
-      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+      Background = IMG_Load( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
     }
   if ( Background == NULL )
     {
       DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
-ChatWithFriendlyDroid: ERROR LOADING BACKGROUND IMAGE FILE!!!!  \n\
+PrepareMultipleChoiceDialog: ERROR LOADING BACKGROUND IMAGE FILE!!!!  \n\
 Error code: %s \n\
 Freedroid will terminate now to draw attention to the graphics loading\n\
 problem it could not resolve.  Sorry.\n\
@@ -264,22 +281,28 @@ problem it could not resolve.  Sorry.\n\
       Terminate(ERR);
     }
 
+  //--------------------
+  // All droid chat should be done in the paradroid font I would say...
+  //
+  // SetCurrentFont( Para_BFont );
+  //
+  // Or better we stick to the small font?
+  //
+  SetCurrentFont( FPS_Display_BFont );
+
   strcpy( fname, "droids/" );
   strcat( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
   strcat( fname , ".png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
   Small_Droid = IMG_Load (fpath) ;
-  Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+  // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+  Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
   SDL_BlitSurface( Background , NULL , Screen , NULL );
   SDL_Flip( Screen );
 
   SDL_FreeSurface( Small_Droid );
   SDL_FreeSurface( Large_Droid );
-
-  // All droid chat should be done in the paradroid font I would say...
-  // SetCurrentFont( Para_BFont );
-  SetCurrentFont( FPS_Display_BFont );
 
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
