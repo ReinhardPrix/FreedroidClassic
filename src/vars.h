@@ -301,7 +301,11 @@ char* AllSkillTexts [ ] =
     "experienced",
     "skilled",
     "adept",
-    "masterful"
+    "masterful",
+    "inhuman",
+    "god-like",
+    "super-god-like",
+    "ERROR/UNDEFINED SKILL_LEVEL"
   };
 
 //--------------------
@@ -343,14 +347,14 @@ int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
 // These multipliers are given by the table below.
 //
 float MeleeDamageMultiplierTable [  ] =
-  {  1.0 , 1.5 , 2.0 , 2.5 , 3.0 , 3.5 } ;
+  {  1.0 , 1.5 , 2.0 , 2.5 , 3.0 , 3.5 , 4.0 , 4.5 , 5.0 } ;
 float MeleeRechargeMultiplierTable [  ] =
-  {  1.0 , 0.8 , 0.6 , 0.5 , 0.4 , 0.2 } ;
+  {  1.0 , 0.8 , 0.6 , 0.5 , 0.4 , 0.2 , 0.15 , 0.10 , 0.05 } ;
 
 float RangedDamageMultiplierTable [  ] =
-  {  1.0 , 1.5 , 2.0 , 2.5 , 3.0 , 3.5 } ;
+  {  1.0 , 1.5 , 2.0 , 2.5 , 3.0 , 3.5 , 4.0 , 4.5 , 5.0} ;
 float RangedRechargeMultiplierTable [  ] =
-  {  1.0 , 0.8 , 0.6 , 0.5 , 0.4 , 0.2 } ;
+  {  1.0 , 0.8 , 0.6 , 0.5 , 0.4 , 0.2 , 0.15 , 0.10 , 0.05 } ;
 
 //--------------------
 // In the game, many spells are still internally similar
@@ -360,7 +364,7 @@ float RangedRechargeMultiplierTable [  ] =
 // table:
 //
 int SpellHitPercentageTable [  ] =
-  {  50 , 70 , 90 , 110 , 130 , 150 } ;
+  {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
 char* SkillName[ NUMBER_OF_SKILLS ] = {
 
