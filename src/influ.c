@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.15  1997/06/09 21:53:49  jprix
+ * Rotation of enemys and influencer now independant of the framerate.
+ *
  * Revision 1.14  1997/06/09 21:00:56  jprix
  * The constants for the druids have been largely rescaled to MUCH larger values.
  * This is for the new float and framedependent movement of the enemys.  It works nicley
@@ -291,7 +294,6 @@ int NoInfluBulletOnWay(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void AnimateInfluence(void) {
-  static int Teilphase;
   static unsigned char Palwert=0;
   static int blinkwaiter=0;
   static int Crywait=1;
@@ -301,11 +303,10 @@ void AnimateInfluence(void) {
    * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
    */
 	 
-  Teilphase+=Me.energy;
-  Me.phase=Teilphase/(Druidmap[DRUID001].maxenergy);
-  if (Me.phase >= ENEMYPHASES) {
+
+  Me.phase += (Me.energy/(Druidmap[Me.type].maxenergy)) * Frame_Time() * ENEMYPHASES * 3;
+  if ( ((int) rintf(Me.phase)) >= ENEMYPHASES) {
     Me.phase=0;
-    Teilphase=0;
   }
 
 

@@ -70,7 +70,7 @@ typedef struct {
   float maxspeed;    /* the maximum of speed it can go */
   int class;
   byte accel;       /* its acceleration */
-  int maxenergy;    /* the maximum energy the batteries can carry */
+  float maxenergy;    /* the maximum energy the batteries can carry */
   byte lose_health; /* the energy/time the duid loses under influence-control */
   byte gun;         /* Which gun does this druid use */
   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
@@ -89,7 +89,7 @@ typedef struct {
   float health;		/* the max. possible energy in the moment */
   float energy;       /* current energy */
   byte firewait;	/* counter after fire */
-  byte  phase;        /* the current phase of animation */
+  float phase;        /* the current phase of animation */
   int autofire;		/* Status of the Firecontrolautomatics */
   int vneut;		/* Status of Velocityneutralizer for the gun */
   int MyFCU;		/* FCU (Fire Control Unit) installed */
@@ -103,8 +103,7 @@ typedef struct {
   finepoint pos;	/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;	/* current speed  */
   float energy;		/* gibt die Energie dieses Robots an */
-  byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
-  int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
+  float feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
   byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
   byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
   byte Status;		/* gibt z.B. an ob der Robotter abgeschossen wurde */
@@ -176,9 +175,9 @@ typedef struct {
 
 typedef struct {
   byte empty;
-  unsigned int levelnum;				/* Number of this level */
-  char *Levelname;			/* Name of this level */
-  unsigned int xlen;    /* X dimension */
+  unsigned int levelnum;  /* Number of this level */
+  char *Levelname;	  /* Name of this level */
+  unsigned int xlen;      /* X dimension */
   unsigned int ylen;
   unsigned int color;
   char *map[MAXMAPLINES]; /* this is a vector of pointers ! */
@@ -223,6 +222,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.19  1997/06/09 21:53:49  jprix
+ * Rotation of enemys and influencer now independant of the framerate.
+ *
  * Revision 1.18  1997/06/09 21:00:56  jprix
  * The constants for the druids have been largely rescaled to MUCH larger values.
  * This is for the new float and framedependent movement of the enemys.  It works nicley

@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/09 21:53:49  jprix
+ * Rotation of enemys and influencer now independant of the framerate.
+ *
  * Revision 1.7  1997/06/09 18:01:51  jprix
  * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
  * LBM files have been removed from repository. (I hope all of them.)
@@ -486,7 +489,7 @@ void PaintConsoleMenu(void){
       
   DisplayMergeBlock(
 		    MENUITEMPOSX+15, MENUITEMPOSY,
-		    Influencepointer + BLOCKMEM * Me.phase,
+		    Influencepointer + BLOCKMEM * ((int)rintf(Me.phase)),
 		    BLOCKBREITE, BLOCKHOEHE,
 		    InternalScreen);
 

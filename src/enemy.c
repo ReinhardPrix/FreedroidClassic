@@ -92,17 +92,17 @@ void InitEnemys(void)
 * $Function----------------------------------------------------------*/
 void ClearEnemys(void)
 {
-	int i;
+  int i;
 	
-	for ( i = 0; i < MAX_ENEMYS_ON_SHIP; i++ ) {
-		Feindesliste[i].type = -1;
-		Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
-		Feindesliste[i].feindphase = Feindesliste[i].feindrehcode = 0;
-		Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint = 0;
-		Feindesliste[i].Status = OUT;
-		Feindesliste[i].warten = Feindesliste[i].firewait = 0;
-	}
-}
+  for ( i = 0; i < MAX_ENEMYS_ON_SHIP; i++ ) {
+    Feindesliste[i].type = -1;
+    Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
+    Feindesliste[i].feindphase = 0;
+    Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint = 0;
+    Feindesliste[i].Status = OUT;
+    Feindesliste[i].warten = Feindesliste[i].firewait = 0;
+  }
+} // void ClearEnemys(void)
 
 
 /*@Function============================================================
@@ -463,8 +463,9 @@ void AnimateEnemys(void) {
     if ( Feindesliste[i].levelnum != CurLevel->levelnum) continue;
     if ( Feindesliste[i].Status == OUT ) continue;
 		
-    Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
-    Feindesliste[i].feindphase=Feindesliste[i].feindrehcode/Druidmap[Feindesliste[i].type].maxenergy; 
+    // Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
+    Feindesliste[i].feindphase += 
+      (Feindesliste[i].energy/Druidmap[Feindesliste[i].type].maxenergy) * Frame_Time() * ENEMYPHASES * 2.5; 
 			
     if (Feindesliste[i].feindphase>=ENEMYPHASES) {
 #ifdef ENEMYPHASEDEBUG			
@@ -474,11 +475,9 @@ void AnimateEnemys(void) {
       }
 #endif			
       Feindesliste[i].feindphase=0;
-      Feindesliste[i].feindrehcode=0;
     }
   }
-	
-}
+} // void AnimateEnemys(void)
 
 /*@Function============================================================
 @Desc: ClassOfDruid(druidtype): liefert die Classe des Druidtypes type

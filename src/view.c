@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.19  1997/06/09 21:53:49  jprix
+ * Rotation of enemys and influencer now independant of the framerate.
+ *
  * Revision 1.18  1997/06/09 13:01:29  jprix
  * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
  *
@@ -443,7 +446,7 @@ void PutInfluence(void)
   printf("\nvoid PutInfluence(void): REAL function called.");
 
 
-  source = Influencepointer+(Me.phase)*BLOCKMEM;
+  source = Influencepointer+((int)rintf(Me.phase))*BLOCKMEM;
 
 
   // PORT
