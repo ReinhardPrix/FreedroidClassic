@@ -238,6 +238,7 @@ EXTERN void PlayItemSound ( int SoundCode );
 #else
 #define EXTERN extern
 #endif
+EXTERN void DamageAllEquipment( void );
 EXTERN void DropSpecificItemAtPosition( int x , int y , int NewItemCode );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
@@ -261,6 +262,7 @@ EXTERN void DropHeldItemToTheFloor ( void );
 EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem );
+EXTERN void DeleteItem( item* Item );
 
 // character.c
 #undef EXTERN

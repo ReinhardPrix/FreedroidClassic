@@ -402,6 +402,10 @@ CheckBulletCollisions (int num)
 		  Me.energy -= CurBullet->damage;	// loose some energy
 		  GotHitSound ();
 		}
+	      //--------------------
+	      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+	      //
+	      DamageAllEquipment(  );
 	    }
 	  
 	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
