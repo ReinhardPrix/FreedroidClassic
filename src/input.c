@@ -184,6 +184,53 @@ ApplyItemFromInventory( int ItemNum )
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
+int
+Inv_Pos_Is_Free( int x , int y )
+{
+  int i;
+  int item_width;
+  int item_height;
+  grob_point ItemSizeTable[ ALL_ITEMS ];
+  ItemSizeTable[ 0 ].x = 1;
+  ItemSizeTable[ 0 ].y = 1;
+  ItemSizeTable[ 1 ].x = 2;
+  ItemSizeTable[ 1 ].y = 2;
+  ItemSizeTable[ 2 ].x = 2;
+  ItemSizeTable[ 2 ].y = 2;
+  ItemSizeTable[ 3 ].x = 2;
+  ItemSizeTable[ 3 ].y = 2;
+  ItemSizeTable[ 4 ].x = 2;
+  ItemSizeTable[ 4 ].y = 2;
+  ItemSizeTable[ 5 ].x = 2;
+  ItemSizeTable[ 5 ].y = 2;
+  ItemSizeTable[ 6 ].x = 2;
+  ItemSizeTable[ 6 ].y = 2;
+  ItemSizeTable[ 7 ].x = 2;
+  ItemSizeTable[ 7 ].y = 2;
+  ItemSizeTable[ 8 ].x = 2;
+  ItemSizeTable[ 8 ].y = 2;
+  ItemSizeTable[ 9 ].x = 2;
+  ItemSizeTable[ 9 ].y = 2;
+  
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
+    {
+      if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
+
+      for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
+	{
+	  for ( item_width = 0 ; item_width < ItemSizeTable[ Me.Inventory[ i ].type ].x ; item_width ++ )
+	    {
+	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
+		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
+		return ( FALSE );
+	    }
+	}
+
+    }
+  return ( TRUE );
+}; // int Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y )
+
 /* ----------------------------------------------------------------------
  * This function does the reactions to keypresses of the player other
  * than pressing cursor keys.
@@ -195,6 +242,7 @@ ReactToSpecialKeys(void)
   int InvPos;
   static int IPressed_LastFrame;
   char TempText[1000];
+  grob_point Inv_Loc;
 
 
   if ( QPressed() ) /* user asked for quit */
@@ -268,9 +316,7 @@ ReactToSpecialKeys(void)
   double item_drive_accel;	// as drive, how fast can you accelerate with this item
 
   // How good is the item as weapon???
-  double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
   double item_gun_speed;			// speed of the bullet 
-  int item_gun_damage;			// damage done by this bullettype 
   int item_gun_blast;			// which blast does this bullet create 
   int item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
 
@@ -307,6 +353,9 @@ ReactToSpecialKeys(void)
   //
   if ( TPressed() )
     {
+      InventorySize.x = 9;
+      InventorySize.y = 6;
+      
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
@@ -320,11 +369,29 @@ ReactToSpecialKeys(void)
       //
       if ( i < MAX_ITEMS_PER_LEVEL )
 	{
-	  // find a free position in the inventory
+	  // find a free position in the inventory list
 	  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
 	    {
 	      if ( Me.Inventory [ InvPos ].type == (-1) ) break;
 	    }
+
+
+	  // find enough free squares in the inventory to fit
+	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y ; Inv_Loc.y ++ )
+	    {
+	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x ; Inv_Loc.x ++ )
+		{
+		  if ( Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) )
+		    {
+		      Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
+		      Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+		      goto Inv_Loc_Found;
+		    }
+		}
+	    }
+
+	Inv_Loc_Found:
+	  
 	  if ( InvPos == MAX_ITEMS_IN_INVENTORY ) 
 	    {
 	      Me.TextVisibleTime = 0;
@@ -333,12 +400,19 @@ ReactToSpecialKeys(void)
 	    }
 	  else
 	    {
+	      // We announce that we have taken the item
 	      Me.TextVisibleTime = 0;
 	      sprintf( TempText , "Item taken: %s." , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
 	      Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
 	      strcpy ( Me.TextToBeDisplayed , TempText );
+
+	      // We
 	      Me.Inventory[ InvPos ].type = CurLevel->ItemList[ i ].type;
+
+	      // We remove the item from the floor
 	      CurLevel->ItemList[ i ].type = (-1);
+
+	      // We make the sound of an item being taken
 	      ItemTakenSound();
 	    }
 	}

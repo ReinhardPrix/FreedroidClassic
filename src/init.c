@@ -455,6 +455,10 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );
 
+      // Now we read in the image type that should be generated for this bullet
+      ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
+			   &ItemMap[ItemIndex].item_gun_bullet_image_type , EndOfItemData );
+
 
 
 
@@ -780,8 +784,8 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].lose_health , EndOfDataPointer );
 
       // Now we read in the class of this droid.
-      ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].gun , EndOfDataPointer );
+      // ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" , 
+      // &Druidmap[RobotIndex].gun , EndOfDataPointer );
 
       // Now we read in the aggression rate of this droid.
       ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" , 

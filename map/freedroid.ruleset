@@ -142,22 +142,23 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 // Item No. 0
 ** Start of new item specification subsection **
-Item name="Single Energy Capsule"
-Item can be applied in combat="yes"
+Item name="none present"
+Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
 Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
-Energy gain on application in combat=35
-Item weight=0.4
-Item drive maxspeed=0
-Item drive acceleration=0
+Energy gain on application in combat=0
+Item weight=0.0
+Item drive maxspeed=1
+Item drive acceleration=1
 Item as gun: recharging time=0.1
 Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -179,6 +180,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -200,6 +202,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -221,6 +224,7 @@ Item as gun: speed of bullets=8.0
 Item as gun: damage of bullets=25
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -242,6 +246,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=3
 ** End of new item specification subsection **
 
@@ -263,6 +268,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -284,6 +290,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=1
 ** End of new item specification subsection **
 
@@ -305,6 +312,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -326,6 +334,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -347,6 +356,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -368,6 +378,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -389,6 +400,7 @@ Item as gun: speed of bullets=5
 Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -410,6 +422,7 @@ Item as gun: speed of bullets=8.0
 Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=5
 Picture number=2
 ** End of new item specification subsection **
 
@@ -431,6 +444,7 @@ Item as gun: speed of bullets=8.0
 Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
 Picture number=2
 ** End of new item specification subsection **
 
@@ -452,6 +466,7 @@ Item as gun: speed of bullets=8.0   // don't set this to zero ever!! Or division
 Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=3
 Picture number=2
 ** End of new item specification subsection **
 
@@ -473,6 +488,7 @@ Item as gun: speed of bullets=8.0
 Item as gun: damage of bullets=55
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=2
 Picture number=2
 ** End of new item specification subsection **
 
@@ -494,6 +510,7 @@ Item as gun: speed of bullets=8.0
 Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=1
 Picture number=2
 ** End of new item specification subsection **
 

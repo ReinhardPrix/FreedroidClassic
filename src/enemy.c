@@ -907,7 +907,7 @@ AttackInfluence (int enemynum)
   if (ydist == 0) ydist = 0.01;
 
   // if odds are good, make a shot at your target
-  guntype = Druidmap[ThisRobot->type].gun;
+  guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item ].item_gun_bullet_image_type;
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
 

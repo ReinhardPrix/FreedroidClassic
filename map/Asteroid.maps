@@ -360,7 +360,6 @@ PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=0  X=7.000000  Y=7.000000 
 New item: type=1  X=6.000000  Y=7.000000 
 New item: type=2  X=7.000000  Y=6.000000 
 New item: type=3  X=7.000000  Y=8.000000 
