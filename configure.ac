@@ -108,7 +108,20 @@ dnl Don't Check for getopt_long
 dnl just use bundled version like hello does, and gnuchess
 
 
-CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+case "$target" in
+     *-*-cygwin* | *-*-mingw32*)
+     CFLAGS="$CFLAGS  -DFD_DATADIR='\".\"'"
+     win32=true
+     ;;
+
+     *)
+     CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+     win32=false
+     ;;
+esac
+
+dnl send a signal to automake if we're compiling for win32
+AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
 
 AC_CONFIG_FILES([Makefile src/Makefile])
