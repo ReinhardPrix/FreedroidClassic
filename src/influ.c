@@ -228,7 +228,6 @@ MoveInfluence (void)
   static float TransferCounter = 0;
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter = -1;
-  static int AlwaysWeaponOn=FALSE;
   int i;
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Real function call confirmed.");
@@ -301,10 +300,6 @@ MoveInfluence (void)
   if ( (SpacePressed ()) && (!NoDirectionPressed () ) &&
        (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
-
-  if ( WPressed() ) AlwaysWeaponOn=TRUE;
-
-  if (AlwaysWeaponOn) Me.status=WEAPON;
 
   if (Me.autofire)
     AutoFireBullet ();
@@ -379,6 +374,7 @@ AnimateInfluence (void)
    * Farbe des Influencers (15) richtig setzen
    */
 
+  /*
   if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
 	       Transfercolor.blau);
@@ -386,6 +382,7 @@ AnimateInfluence (void)
   if ((Me.status == MOBILE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	       Mobilecolor.blau);
+  */
 
   /*
    * Wenn die Energie den kritischen Stand erreicht hat,

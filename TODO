@@ -20,16 +20,6 @@ Outstanding normal bugs (priority: normal)
   Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
   fragwuerdig. 
 
-- NEW!  There is a very strange bug:  When the influ switches to weapon
-        mode or just is in WEAPON mode, the framerate GOES UP AND ALMOST
-	DOUBLES!!!  This double framerate and the sudden change in framerate
-	causes some ugly jumps in the position vectorys destroying the
-	otherwise so smooth movement of the game.  Very strange bug.  At
-	first I thought it had to do with keyboard handling, but that IS
-	WRONG FOR SURE: tests have shown that WEAPON mode is sufficient for
-	this strange change in framerate.  The bug also persists, no matter
-	wether SDL or ansi C framerate computation is used.
-
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
 - Colors sind allgemein ein wenig verdreht seit SDL Port
@@ -110,6 +100,20 @@ Resolved bugs
   (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
   hoffe dass niemand sie doch gebraucht haette...
 - (rp) "Ghosts" (i.e. Enemeys go throught walls...)
+- NEW! but DONE! 
+        There is a very strange bug:  When the influ switches to weapon
+        mode or just is in WEAPON mode, the framerate GOES UP AND ALMOST
+	DOUBLES!!!  This double framerate and the sudden change in framerate
+	causes some ugly jumps in the position vectorys destroying the
+	otherwise so smooth movement of the game.  Very strange bug.  At
+	first I thought it had to do with keyboard handling, but that IS
+	WRONG FOR SURE: tests have shown that WEAPON mode is sufficient for
+	this strange change in framerate.  The bug also persists, no matter
+	wether SDL or ansi C framerate computation is used.
+	jp: The problem was that palette operations are SOOOO slow under X11
+	and the SDL.  Now Influ-color is not set every frame.  This was the
+        default in WEAPON mode only.  Now we have DOUBLE framerate!  coool!
+
 - DONE     (rp:) game should be able to check if yiff is actually _running_ and
                  complain if not and/or continue  
            (jp:) I do not see this problem.  If yiff is not started, it will be

@@ -134,6 +134,7 @@ keyboard_update(void)
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
 	  printf("\nSLD_KEYDOWN event detected...");
+	  fflush(stdout);
 	  // Check for some additional modifiers and set flags accordingly
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
 	    ShiftWasPressedInAddition=TRUE;
@@ -304,6 +305,7 @@ keyboard_update(void)
 	  /* careful not to zero the velocities when we shouldn't*/
 	case SDL_KEYUP:
 	  printf("\nSLD_KEYUP event detected...");
+	  fflush(stdout);
 
 	  // Check for some additional modifiers and set flags accordingly
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
@@ -827,16 +829,10 @@ EscapePressed (void)
 int
 NoDirectionPressed (void)
 {
-  if (DownPressed ())
-    return (0);
-  if (UpPressed ())
-    return (0);
-  if (LeftPressed ())
-    return (0);
-  if (RightPressed ())
-    return (0);
-  return (1);
-}				// int NoDirectionPressed(void)
+  if (DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
+    return ( FALSE );
+  return ( TRUE );
+} // int NoDirectionPressed(void)
 
 /* ************************************************************** *
  * * Diese Funktion setzt die Zeichenwiederholrate der Tastatur * *
