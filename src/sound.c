@@ -849,6 +849,34 @@ PlayGreetingSound ( int SoundCode )
     }
 }; // void PlayGreetingSound ( int SoundCode )
 
+
+/* ----------------------------------------------------------------------
+ * Whenever a bot dies, that should create a dying sound.  But so far,
+ * this will be done only for fully animated bots, since the other bots
+ * just explode and that has a sound of it's own.
+ * ---------------------------------------------------------------------- */
+void
+play_death_sound_for_bot ( enemy* ThisRobot )
+{
+  char filename[5000];
+
+  //--------------------
+  // If the keyword 'none' for the death sound file name is encountered,
+  // nothing will be done...
+  //.
+  if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name , "none" ) )
+    return;
+
+  //--------------------
+  // Now we play the given death sound, looking for the file in the
+  // appropriate sound folder.
+  //
+  strcpy ( filename , "../effects/bot_sounds/" );
+  strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name );
+  PlayOnceNeededSoundSample ( filename , FALSE );
+
+}; // void play_death_sound_for_bot ( enemy* ThisRobot )
+
 /* ----------------------------------------------------------------------
  * Whenever a bot starts to attack the Tux, he'll issue the attack cry.
  * This is done here, and no respect to loading time issues for now...

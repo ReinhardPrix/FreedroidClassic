@@ -1137,6 +1137,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	{
 	  ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) + 0.1 ;
 	  ThisRobot -> animation_type = DEATH_ANIMATION;
+	  play_death_sound_for_bot ( ThisRobot );
 	}
       else
 	{

@@ -643,6 +643,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SPECIAL_ITEM_BEGIN_STRING "Special item="
 #define GREETING_SOUND_STRING "Greeting Sound number="
 #define ENEMY_GOT_HIT_SOUND_STRING "Got Hit Sound number="
+#define DROID_DEATH_SOUND_FILE_NAME "Death sound file name=\""
 #define TO_HIT_STRING "Chance of this robot scoring a hit="
 #define GETTING_HIT_MODIFIER_STRING "Chance modifier, that this robot gets hit="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
@@ -710,8 +711,10 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[RobotIndex].druidname =
 	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
 
+      //--------------------
       // Now we read in the file name of the portrait file for this droid.  
       // Is should be enclosed in double-quotes.
+      //
       Druidmap[RobotIndex].portrait_filename_without_ext =
 	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
 
@@ -720,6 +723,13 @@ Get_Robot_Data ( void* DataPointer )
       // to use for the console droid rotation
       Druidmap [ RobotIndex ] . droid_portrait_rotation_series_prefix =
 	ReadAndMallocStringFromData ( RobotPointer , DROID_PORTRAIT_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
+
+      //--------------------
+      // Now we read in the file name of the death sound for this droid.  
+      // Is should be enclosed in double-quotes.
+      //
+      Druidmap [ RobotIndex ] . droid_death_sound_file_name =
+	ReadAndMallocStringFromData ( RobotPointer , DROID_DEATH_SOUND_FILE_NAME , "\"" ) ;
 
       // Now we read in the maximal speed this droid can go. 
       ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 

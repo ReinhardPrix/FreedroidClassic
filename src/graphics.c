@@ -882,6 +882,12 @@ TakeScreenshot( void )
   free(Screenshoot_Filename);
 
   //--------------------
+  // Now that a screenshot has been taken, we might as well start
+  // the sound of a camera taking a picture... :)
+  //
+  PlayOnceNeededSoundSample( "../effects/CameraTakesPicture.wav" , FALSE ) ;
+
+  //--------------------
   // Taking the screenshot, converting is and saving it, maybe also
   // flipping it around, all these things cost time, so in order not
   // to make to much of a jump after a screenshot has been made and

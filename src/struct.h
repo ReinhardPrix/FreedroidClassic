@@ -448,6 +448,7 @@ typedef struct
   char *druidname;
   char *portrait_filename_without_ext;
   char *droid_portrait_rotation_series_prefix;
+  char *droid_death_sound_file_name;
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
   double maxmana;		/* the maximum force this droids mind can carry */
