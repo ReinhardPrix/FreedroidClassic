@@ -1551,7 +1551,7 @@ update_light_list ( int player_num )
     // We must not in any case tear a hole into the beginning of
     // the list though...
     //
-    if ( light_source_strengthes [ 0 ] == 0 )
+    if ( light_source_strengthes [ 0 ] <= 0 )
 	light_source_strengthes [ 0 ] = 1;
     next_light_emitter_index = 1 ;
 
@@ -1631,6 +1631,8 @@ get_light_strength ( moderately_finepoint target_pos )
 {
     int final_darkness = NUMBER_OF_SHADOW_IMAGES;
     int i;
+    float xdist;
+    float ydist;
     
     //--------------------
     // Now that the light sources array is fully set up, we can start
@@ -1655,16 +1657,29 @@ get_light_strength ( moderately_finepoint target_pos )
 	// any place.  But maybe addition of light would be better, so we use the latter
 	// code.
 	//
-	if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-			      ( light_sources [ i ] . x - target_pos . x ) + 
-			      ( light_sources [ i ] . y - target_pos . y ) * 
-			      ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-	       - light_source_strengthes [ i ] ) < final_darkness )
-	    final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-					    ( light_sources [ i ] . x - target_pos . x ) + 
-					    ( light_sources [ i ] . y - target_pos . y ) * 
-					    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+	// If the sign of the inequality determines the outcome already, then we need not
+	// do anything else.  This might save a lot of computation time... and also it 
+	// allows to take the square of the inequality after that SAFELY!!!
+	//
+	if ( final_darkness + light_source_strengthes [ i ] <= 0 ) continue;
+
+	//--------------------
+	// This function is time-critical, simply because it's used a lot every frame for 
+	// the light radius.  Therefore we avoid square roots here and use squared for the
+	// inequality now.  Let's see if that has some numerical advantage already...
+	//
+	xdist = light_sources [ i ] . x - target_pos . x ;
+	ydist = light_sources [ i ] . y - target_pos . y ;
+
+	if (  ( xdist * xdist + ydist * ydist ) * 4.0 * 4.0 
+	     < 
+ 	     ( final_darkness + light_source_strengthes [ i ] ) *  
+  	     ( final_darkness + light_source_strengthes [ i ] ) )
+	{
+	    final_darkness = (int) ( sqrt ( xdist * xdist + 
+					    ydist * ydist ) * 4.0 ) 
 		- light_source_strengthes [ i ] ;
+	}
     }
     
     if ( final_darkness < -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )
