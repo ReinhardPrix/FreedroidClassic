@@ -1812,11 +1812,218 @@ prepare_open_gl_for_blending_textures( void )
 }; // void prepare_open_gl_for_blending_textures( void )
 
 /* ----------------------------------------------------------------------
+ * Following a suggestion from Simon, we're now implementing one single
+ * small texture (to be modified with pixel operations every frame) that
+ * can be stretched out over the whole screen via OpenGL.
+ * This function is here to set up the texture in the first place.
+ * ---------------------------------------------------------------------- */
+void
+set_up_stretched_texture_for_light_radius ( void )
+{
+#ifdef HAVE_LIBGL
+
+    static int texture_is_set_up_already = FALSE ;
+    Uint32 rmask, gmask, bmask, amask ;
+
+    //--------------------
+    // In the non-open-gl case, this function shouldn't be called ever....
+    //
+    if ( ! use_open_gl ) return;
+
+    //--------------------
+    // Some protection against creating this texture twice...
+    //
+    if ( texture_is_set_up_already ) return ;
+    texture_is_set_up_already = TRUE ;
+
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
+#else
+    rmask = 0x000000ff;
+    gmask = 0x0000ff00;
+    bmask = 0x00ff0000;
+    amask = 0xff000000;
+#endif
+
+    //--------------------
+    // We create an SDL surface, so that we can make the texture for the
+    // stretched-texture method light radius from it...
+    //
+    light_radius_stretch_surface = SDL_CreateRGBSurface( SDL_SWSURFACE , LIGHT_RADIUS_STRETCH_TEXTURE_WIDTH , LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT , 32, rmask , gmask, bmask , amask );
+
+    //--------------------
+    // Having prepared the raw image it's now time to create the real
+    // textures.
+    //
+    glPixelStorei( GL_UNPACK_ALIGNMENT , 1 );
+
+    //--------------------
+    // We must not call glGenTextures more than once in all of Freedroid,
+    // according to the nehe docu and also confirmed instances of textures
+    // getting overwritten.  So all the gentexture stuff is now in the
+    // initialzize_our_default_open_gl_parameters function and we'll use stuff from there.
+    //
+    // glGenTextures( 1, & our_image -> texture );
+    //
+    light_radius_stretch_texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
+    next_texture_index_to_use ++ ;
+
+    if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Ran out of initialized texture positions to use for new textures.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    else
+    {
+	DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+    }
+    
+    //--------------------
+    // Typical Texture Generation Using Data From The Bitmap 
+    //
+    glBindTexture( GL_TEXTURE_2D, * ( light_radius_stretch_texture ) );
+  
+    //--------------------
+    // Setting texture parameters like in NeHe tutorial...
+    //
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+
+    //--------------------
+    // We will use the 'GL_REPLACE' texturing environment or get 
+    // unusable (and slow) results.
+    //
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+    // Generate The Texture 
+    glTexImage2D( GL_TEXTURE_2D, 0, 4, light_radius_stretch_surface -> w,
+		  light_radius_stretch_surface -> h, 0, GL_BGRA,
+		  GL_UNSIGNED_BYTE, light_radius_stretch_surface -> pixels );
+
+    DebugPrintf ( 1 , "\n%s(): Texture has been set up..." , __FUNCTION__ );
+
+#endif
+
+}; // void set_up_stretched_texture_for_light_radius ( void )
+
+/* ----------------------------------------------------------------------
+ * This function updated the automap texture, such that all info from the
+ * current square is on the automap.
+ * ---------------------------------------------------------------------- */
+void
+light_radius_update_stretched_texture ( void ) 
+{
+#ifdef HAVE_LIBGL
+    int x , y ;
+    int red = 0 ; 
+    int blue = 0 ;
+    int green = 0 ;
+    int alpha = 0 ;
+    moderately_finepoint target_pos ;
+    int square_width = GameConfig . screen_width / 64 ;
+    int square_height = GameConfig . screen_height / 48 ;
+    int light_strength ;
+
+    //--------------------
+    // Now it's time to edit the automap texture.
+    //
+    for ( x = 0 ; x < 64 ; x ++ )
+    {
+	for ( y = 0 ; y < 48 ; y ++ )
+	{
+	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + x ) * square_width - UserCenter_x + square_width ,
+							       ( 0 + y ) * square_height - UserCenter_y + square_width , TRUE );
+	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + x ) * square_width - UserCenter_x + square_width ,
+							       ( 0 + y ) * square_height - UserCenter_y + square_width , FALSE );
+
+	    light_strength = get_light_strength ( target_pos );
+	    
+	    if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
+	    if ( light_strength <= 0 ) light_strength = 0 ;
+	    
+	    alpha = ( 255.0 / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) * ( (float) light_strength ) ; 
+
+	    PutPixel ( light_radius_stretch_surface , x , LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT - y - 1 , 
+		       SDL_MapRGBA ( light_radius_stretch_surface -> format , red , green , blue , alpha ) ) ;
+
+	}
+    }
+
+    glEnable ( GL_TEXTURE_2D );
+    glBindTexture ( GL_TEXTURE_2D , *light_radius_stretch_texture );
+    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
+		      0  , 0 ,
+		      64 ,
+		      64 ,
+		      GL_RGBA, 
+		      GL_UNSIGNED_BYTE, 
+		      light_radius_stretch_surface -> pixels );
+
+    open_gl_check_error_status ( __FUNCTION__ );
+
+#endif
+
+}; // void light_radius_update_stretched_texture ( void ) 
+
+/* ----------------------------------------------------------------------
+ * Following a suggestion from Simon, we're now implementing one single
+ * small texture (to be modified with pixel operations every frame) that
+ * can be stretched out over the whole screen via OpenGL.
+ * This function is here to set up the texture in the first place.
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_stretched_texture_light_radius ( void )
+{
+#ifdef HAVE_LIBGL
+    iso_image local_iso_image;
+    
+    //--------------------
+    // We make sure, that there is one single texture created before
+    // doing any of our texture-blitting or texture-modification stuff
+    // with it.
+    //
+    set_up_stretched_texture_for_light_radius ( );
+
+    light_radius_update_stretched_texture ( ) ;
+
+    //--------------------
+    // Now we blit the current automap texture to the screen.  We use standard
+    // texture blitting code for this, so we need to embed the automap texture
+    // in a surrounting 'iso_image', but that shouldn't be costly or anything...
+    //
+    local_iso_image . texture = light_radius_stretch_texture ;
+    local_iso_image . texture_width = LIGHT_RADIUS_STRETCH_TEXTURE_WIDTH ;
+    local_iso_image . texture_height = LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT ;
+    local_iso_image . original_image_width = LIGHT_RADIUS_STRETCH_TEXTURE_WIDTH ;
+    local_iso_image . original_image_height = LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT ;
+    local_iso_image . texture_has_been_created = TRUE ;
+    local_iso_image . offset_x = 0 ;    
+    local_iso_image . offset_y = 0 ;
+
+    blit_zoomed_open_gl_texture_to_screen_position ( 
+	& local_iso_image , 
+	0,
+	0,
+	TRUE ,
+	((float)GameConfig . screen_width) / ((float)LIGHT_RADIUS_STRETCH_TEXTURE_WIDTH) );
+
+#endif
+
+}; // void blit_open_gl_stretched_texture_light_radius ( void )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_cheap_light_radius ( void )
+blit_open_gl_cheap_multi_quad_light_radius ( void )
 {
 #ifdef HAVE_LIBGL
     int our_height, our_width;
@@ -1868,7 +2075,7 @@ blit_open_gl_cheap_light_radius ( void )
     
 #endif
 
-}; // void blit_open_gl_cheap_light_radius ( void )
+}; // void blit_open_gl_multi_quad_light_radius ( void )
 
 /* ----------------------------------------------------------------------
  *

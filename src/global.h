@@ -205,6 +205,8 @@ EXTERN SDL_Rect InventoryRect;
 EXTERN SDL_Rect CharacterRect;
 #ifdef HAVE_LIBGL
 EXTERN GLuint *automap_texture;  // this is to store an open_gl texture...
+EXTERN GLuint *light_radius_stretch_texture;  // this is to store an open_gl texture...
+EXTERN SDL_Surface* light_radius_stretch_surface ;
 #endif
 
 #undef EXTERN

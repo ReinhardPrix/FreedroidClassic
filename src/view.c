@@ -1773,16 +1773,17 @@ void
 blit_light_radius ( void )
 {
 
-  if ( use_open_gl )
+    if ( use_open_gl )
     {
-      // blit_open_gl_light_radius ();
-      blit_open_gl_cheap_light_radius ();
+	// blit_open_gl_light_radius ();
+	// blit_open_gl_cheap_light_radius ();
+	blit_open_gl_stretched_texture_light_radius ();
     }
-  else
+    else
     {
-      blit_classic_SDL_light_radius();
+	blit_classic_SDL_light_radius();
     }
-
+    
 }; // void blit_light_radius ( void )
 
 /* ----------------------------------------------------------------------

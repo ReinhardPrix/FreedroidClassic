@@ -41,6 +41,27 @@
 
 
 /* ----------------------------------------------------------------------
+ * This function clears out the Automap data.
+ * ---------------------------------------------------------------------- */
+void 
+ClearAutomapData( void )
+{
+    int x , y , level ;
+
+    for ( level = 0 ; level < MAX_LEVELS ; level ++ )
+    {
+	for ( y = 0 ; y < 200 ; y ++ )
+	{
+	    for ( x = 0 ; x < 200 ; x ++ )
+	    {
+		Me [ 0 ] . Automap[level][y][x] = 0 ;
+	    }
+	}
+    }
+    
+}; // void ClearAutomapData ( void )
+
+/* ----------------------------------------------------------------------
  *
  * When OpenGL is used for graphics output, we use one single texture for 
  * the automap.  This texture will be updated and modified again and
@@ -128,7 +149,7 @@ set_up_texture_for_automap ( void )
 
     SDL_FreeSurface ( pure_surface );
 
-    DebugPrintf ( 1 , "\nset_up_texture_for_automap ( ): Texture for AUTOMAP has been set up..." );
+    DebugPrintf ( 1 , "\n%s(): Texture has been set up..." , __FUNCTION__ );
 
 #endif
 
@@ -414,23 +435,6 @@ automap_update_texture_for_square ( int x , int y )
 			      GL_UNSIGNED_BYTE, 
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> pixels );
     
-
-	    /*
-	    switch ( glGetError( ) )
-	    {
-		case GL_NO_ERROR:
-		    //--------------------
-		    // All is well.  No messages need to be generated...
-		    break;
-		default:
-		    DebugPrintf ( -4 , "\n%s(): GL_OUT_OF_MEMORY (most likely) w: %d. h: %d. " ,
-				  __FUNCTION__ , 
-				  obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
-				  obstacle_map [ our_obstacle -> type ] . automap_version -> h );
-		    raise ( SIGSEGV );
-		    break;
-	    }	
-	    */    
 	    open_gl_check_error_status ( __FUNCTION__ );
 	}
     }

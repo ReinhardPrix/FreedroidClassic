@@ -855,11 +855,11 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 void 
 MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 {
-    Waypoint WpList;		/* Pointer to waypoint-list */
+    Waypoint WpList;		// Pointer to waypoint-list 
     finepoint nextwp_pos;
     Enemy ThisRobot = & ( AllEnemys [ EnemyNum ] ) ;
     int HistoryIndex;
-    Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
+    Level WaypointLevel = curShip . AllLevels [ AllEnemys [ EnemyNum ] . pos . z ];
     
     // DebugPrintf( 2 , "\n%s(): real function call confirmed. " , __FUNCTION__ );
     

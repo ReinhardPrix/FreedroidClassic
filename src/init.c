@@ -1608,27 +1608,6 @@ PrepareStartOfNewCharacter ( void )
 }; // void PrepareStartOfNewCharacter ( char* MissionName )
 
 /* ----------------------------------------------------------------------
- * This function clears out the Automap data.
- * ---------------------------------------------------------------------- */
-void 
-ClearAutomapData( void )
-{
-  int x , y , level ;
-
-  for ( level = 0 ; level < MAX_LEVELS ; level ++ )
-    {
-      for ( y = 0 ; y < 200 ; y ++ )
-	{
-	  for ( x = 0 ; x < 200 ; x ++ )
-	    {
-	      Me [ 0 ] . Automap[level][y][x] = 0 ;
-	    }
-	}
-    }
-
-}; // void ClearAutomapData ( void )
-
-/* ----------------------------------------------------------------------
  * This function sets the GameConfig back to the default values, NOT THE
  * VALUES STORED IN THE USERS CONFIG FILE.  This function is useful if 
  * no config file if found or if the config file turns out to originate
