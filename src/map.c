@@ -48,11 +48,13 @@
 #define LEVEL_NAME_STRING "Name of this level="
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
+#define MAP_END_STRING "End of pure map information for this level"
+#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
+#define STATEMENT_END_STRING "End of pure statement information for this level"
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
-
-
+Level Decode_Loaded_Leveldata ( char *data );
 
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
@@ -294,12 +296,11 @@ AnimateTeleports (void)
 
 }; // void AnimateTeleports ( void )
 
-/*@Function============================================================
-@Desc: 	LoadShip(): loads the data for a whole ship
-
-@Ret: OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function loads the data for a whole ship
+ *
+ * @Ret: OK | ERR
+ * ---------------------------------------------------------------------- */
 int
 LoadShip (char *filename)
 {
@@ -343,7 +344,7 @@ LoadShip (char *filename)
 
   for (i = 0; i < curShip.num_levels; i++)
     {
-      curShip.AllLevels[i] = LevelToStruct (LevelStart[i]);
+      curShip.AllLevels[i] = Decode_Loaded_Leveldata (LevelStart[i]);
 
       TranslateMap (curShip.AllLevels[i]);
 
@@ -414,13 +415,10 @@ void CheckWaypointIntegrity(Level Lev)
 }; // void CheckWaypointIntegrity(Level Lev)
 
 		
-/*@Function============================================================
-@Desc: char *StructToMem(Level Lev):
-
-@Ret: 	char *: pointer to Map in a memory field
-@Int:
-* $Function----------------------------------------------------------*/
-char *StructToMem(Level Lev)
+/* ----------------------------------------------------------------------
+ * This function generates savable text out of the current lavel data
+ * ---------------------------------------------------------------------- */
+char *Encode_Level_For_Saving(Level Lev)
 {
   char *LevelMem;
   int i, j;
@@ -476,6 +474,26 @@ char *StructToMem(Level Lev)
     strncat(LevelMem, HumanReadableMapLine , xlen * 4 ); // We need FOUR chars per map tile
     strcat(LevelMem, "\n");
   }
+
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  strcat(LevelMem, MAP_END_STRING);
+  strcat(LevelMem, "\n");
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, STATEMENT_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, STATEMENT_END_STRING);
+  strcat(LevelMem, "\n");
+  
 
   // --------------------  
   // The next thing we must do is write the waypoints of this level also
@@ -621,7 +639,7 @@ freedroid-discussion@lists.sourceforge.net\n\
   
   DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
 
-  for( i=0; i<level_anz; i++) 
+  for( i = 0 ; i < level_anz ; i++ ) 
     {
 
       //--------------------
@@ -656,7 +674,7 @@ freedroid-discussion@lists.sourceforge.net\n\
       // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
       // then this string is wirtten to the file.  easy. simple.
       //
-      LevelMem = StructToMem(curShip.AllLevels[array_num]);
+      LevelMem = Encode_Level_For_Saving (curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
     
       free(LevelMem);
@@ -688,22 +706,21 @@ freedroid-discussion@lists.sourceforge.net\n\
 } /* SaveShip */
 
 
-/*@Function============================================================
- * @Desc: Level LevelToStruct(char *data):
- *      This function is for LOADING map data!
- * 	This function extracts the data from *data and writes them 
- *      into a Level-struct:
+/* ----------------------------------------------------------------------
+ * This function is for LOADING map data!
+ * This function extracts the data from *data and writes them 
+ * into a Level-struct:
  *
- *	NOTE:  Here, the map-data are NOT yet translated to their 
- *             their internal values, like "VOID", "H_GANZTUERE" and
- *             all the other values from the defs.h file.
+ * NOTE:  Here, the map-data are NOT yet translated to their 
+ *        their internal values, like "VOID", "H_GANZTUERE" and
+ *         all the other values from the defs.h file.
  *
- *	Doors and Waypoints Arrays are initialized too
+ * Doors and Waypoints Arrays are initialized too
  *
- *	@Ret:  Level or NULL
-* $Function----------------------------------------------------------*/
+ * @Ret:  Level or NULL
+ * ---------------------------------------------------------------------- */
 Level
-LevelToStruct (char *data)
+Decode_Loaded_Leveldata (char *data)
 {
   Level loadlevel;
   char *pos;
@@ -805,7 +822,7 @@ LevelToStruct (char *data)
 
   return loadlevel;
 
-} /* LevelToStruct */
+}; // Level Decode_Loaded_Leveldata (char *data)
 
 
 
@@ -1135,7 +1152,6 @@ TranslateMap (Level Lev)
       Lev->map[row]=Buffer;
     }				/* for (row=0..) */
 
-
   /* Get Doors Array */
   GetDoors ( Lev );
 
@@ -1144,7 +1160,7 @@ TranslateMap (Level Lev)
   // Get Refreshes 
   GetRefreshes ( Lev );
 
-  // Get Refreshes 
+  // Get Teleports
   GetTeleports ( Lev );
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");

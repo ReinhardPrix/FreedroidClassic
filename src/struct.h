@@ -182,7 +182,12 @@ typedef struct
 }
 event_trigger , *Event_trigger;
 
-
+typedef struct
+{
+  int x;
+  int y;
+  char* Statement_Text;
+} map_statement , *Map_statement;
 
 typedef struct
 {
@@ -379,6 +384,7 @@ typedef struct
   char *Levelname;		/* Name of this level */
   char *Background_Song_Name;
   char *Level_Enter_Comment;
+  map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;
   int color;

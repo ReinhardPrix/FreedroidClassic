@@ -282,16 +282,15 @@ ShowLifts (int level, int liftrow)
 void
 EnterCodepanel (void)
 {
-  int Code;
   int map_x;
   int map_y;
   int Weiter=FALSE;
   char* RequestString;
-  char* DecisionString;
-  int i;
-  char *fpath;
-  char fname[500];
-  char ReplyString[10000];
+  // char* DecisionString;
+  // int i;
+  // char *fpath;
+  // char fname[500];
+  // char ReplyString[10000];
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
