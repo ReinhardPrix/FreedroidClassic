@@ -261,6 +261,9 @@ SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 
 SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MelfisStartGameSquare" RushTux="no" DialogSectionToUse="Melfis" ShortLabel="Melfis -- Hunting Apprentice" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="The302InFrontOfTheTempleStart" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Temple Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="InTempleBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=6 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
