@@ -1205,7 +1205,7 @@ ShowCurrentTextWindow ( void )
 	// Maybe the cursor in the user rect is hovering right over a closed chest.
 	// In this case we say so in the top status banner.
 	//
-	if ( smashable_barred_below_mouse_cursor ( 0 ) != (-1) )
+	if ( smashable_barrel_below_mouse_cursor ( 0 ) != (-1) )
 	{
 	    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
 	}

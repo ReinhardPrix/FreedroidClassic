@@ -1125,7 +1125,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
   // can properly highlight this enemy...
   //
   enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
-  barrel_under_cursor = smashable_barred_below_mouse_cursor ( 0 ) ;
+  barrel_under_cursor = smashable_barrel_below_mouse_cursor ( 0 ) ;
   chest_under_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
   item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 

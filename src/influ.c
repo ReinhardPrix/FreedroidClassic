@@ -184,114 +184,14 @@ throw_out_all_chest_content ( int obst_index )
 }; // void throw_out_all_chest_content ( int obst_index )
 
 /* ----------------------------------------------------------------------
+ * This is a useful utilitiy subfunction for the checks whether the 
+ * mouse cursor is on an enemy, a closed chest or a barrel.
+ * The function detects, if the current mouse cursor is over the graphics
+ * mentioned in that iso image, using the given position from the 
+ * parameter list.
  *
- *
- * ---------------------------------------------------------------------- */
-int
-closed_chest_below_mouse_cursor ( int player_num ) 
-{
-  finepoint MapPositionOfMouse;
-  int i;
-  int obst_index ;
-
-  if ( MouseCursorIsInUserRect( GetMousePos_x()  , GetMousePos_y()  ) && ( CurLevel != NULL ) )
-    {
-      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-
-      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
-	{
-	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
-	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
-
-	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
-
-	  if ( obst_index == (-1) ) continue;
-
-	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
-	    {
-	    case ISO_H_CHEST_CLOSED:
-	    case ISO_V_CHEST_CLOSED:
-	      // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
-	      // strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
-	      return ( obst_index ) ;
-	      break;
-		
-	    default: 
-	      break;
-	    }
-	}
-    }
-
-  return ( -1 ) ;
-
-}; // int closed_chest_below_mouse_cursor ( int player_num ) 
-
-/* ----------------------------------------------------------------------
- * This function checks if there is a smashable barrel under the mouse
- * cursor and if this is so, then the obstacle index of that barrel will
- * be returned.  Else -1 is returned for no barrel.
- * ---------------------------------------------------------------------- */
-/*
-int
-smashable_barred_below_mouse_cursor ( int player_num ) 
-{
-    finepoint MapPositionOfMouse;
-    int i;
-    int obst_index ;
-    
-    if ( MouseCursorIsInUserRect( GetMousePos_x()  , 
-				  GetMousePos_y()  ) && ( CurLevel != NULL ) )
-    {
-	MapPositionOfMouse.x = translate_pixel_to_map_location ( 
-	    player_num , 
-	    (float) ServerThinksInputAxisX ( player_num ) , 
-	    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-	MapPositionOfMouse.y = translate_pixel_to_map_location ( 
-	    player_num , 
-	    (float) ServerThinksInputAxisX ( player_num ) , 
-	    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-	
-	for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
-	{
-	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
-	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
-
-	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
-
-	  if ( obst_index == (-1) ) continue;
-
-	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
-	    {
-	    case ISO_BARREL_1:
-	    case ISO_BARREL_2:
-	    case ISO_BARREL_3:
-	    case ISO_BARREL_4:
-	      return ( obst_index ) ;
-	      break;
-		
-	    default: 
-	      break;
-	    }
-	}
-    }
-
-  return ( -1 ) ;
-
-}; // int smashable_barred_below_mouse_cursor ( int player_num ) 
-*/
-
-/* ----------------------------------------------------------------------
- *
- *
+ * TRUE or FALSE is returned, depending on whether the cursor IS or 
+ * IS NOT on that particular iso_image, if positioned on that given spot.
  * ---------------------------------------------------------------------- */
 int
 mouse_cursor_is_on_that_iso_image ( float pos_x , float pos_y , iso_image* our_iso_image )
@@ -318,9 +218,14 @@ mouse_cursor_is_on_that_iso_image ( float pos_x , float pos_y , iso_image* our_i
     return ( FALSE );
 };
 
-/* ---------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------
+ * This is a useful utilitiy subfunction for the checks whether the 
+ * mouse cursor is on an enemy, a closed chest or a barrel.
+ * The function detects, if the current mouse cursor is over the graphics
+ * mentioned in that obstacle.
  *
- *
+ * TRUE or FALSE is returned, depending on whether the cursor IS or 
+ * IS NOT on that particular iso_image, if positioned on that obstacle.
  * ---------------------------------------------------------------------- */
 int
 mouse_cursor_is_on_that_obstacle ( int obst_index ) 
@@ -337,11 +242,147 @@ mouse_cursor_is_on_that_obstacle ( int obst_index )
 }; // int mouse_cursor_is_on_that_obstacle ( int obst_index ) 
 
 /* ----------------------------------------------------------------------
+ * This function checks if there is a closed chest beneath the current 
+ * mouse cursor.  
+ * It takes into account the actual size of the barrel/crate
+ * graphics and not only the geographic position of the mouse cursor on
+ * the floor.
  *
+ * If there is a closed chest below the mouse cursor, the function will
+ * return the obstacle index of the chest in question.  Else -1 will be
+ * returned.
+ * ---------------------------------------------------------------------- */
+/*
+int
+closed_chest_below_mouse_cursor ( int player_num ) 
+{
+    finepoint MapPositionOfMouse;
+    int i;
+    int obst_index ;
+    
+    if ( MouseCursorIsInUserRect( GetMousePos_x()  , GetMousePos_y()  ) && ( CurLevel != NULL ) )
+    {
+	MapPositionOfMouse.x = 
+	    translate_pixel_to_map_location ( player_num , 
+					      (float) ServerThinksInputAxisX ( player_num ) , 
+					      (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	MapPositionOfMouse.y = 
+	    translate_pixel_to_map_location ( player_num , 
+					      (float) ServerThinksInputAxisX ( player_num ) , 
+					      (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+
+	for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	{
+	    if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
+		 ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
+		 ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
+		 ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
+	    
+	    obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
+	    
+	    if ( obst_index == (-1) ) continue;
+	    
+	    switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+	    {
+		case ISO_H_CHEST_CLOSED:
+		case ISO_V_CHEST_CLOSED:
+		    // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
+		    // strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
+		    return ( obst_index ) ;
+		    break;
+		    
+		default: 
+		    break;
+	    }
+	}
+    }
+    
+    return ( -1 ) ;
+    
+}; // int closed_chest_below_mouse_cursor ( int player_num ) 
+*/
+int
+closed_chest_below_mouse_cursor ( int player_num ) 
+{
+    int x, y ;
+    finepoint MapPositionOfMouse;
+    int i;
+    int obst_index ;
+
+    //--------------------
+    // Now if the cursor is not inside the user rectangle at all, then
+    // there can never be a barrel under the mouse cursor...
+    //
+    if ( ! MouseCursorIsInUserRect ( GetMousePos_x() , 
+				     GetMousePos_y() ) && ( CurLevel != NULL ) )
+	return ( -1 ) ;
+
+
+    //--------------------
+    // We find the approximate position of the mouse cursor on the floor.
+    // We will use that as the basis for our scanning for barrels under the
+    // current mouse cursor.
+    //
+    MapPositionOfMouse.x = translate_pixel_to_map_location ( 
+	player_num , 
+	(float) ServerThinksInputAxisX ( player_num ) , 
+	(float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+    MapPositionOfMouse.y = translate_pixel_to_map_location ( 
+	player_num , 
+	(float) ServerThinksInputAxisX ( player_num ) , 
+	(float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+    
+    for ( x = MapPositionOfMouse . x + 3 ; x > MapPositionOfMouse . x - 3 ; x -- )
+    {
+	for ( y = MapPositionOfMouse . y + 3 ; y > MapPositionOfMouse . y - 3 ; y -- )
+	{
+	    if ( ( ( (int) x ) < 0 ) ||
+		 ( ( (int) y ) < 0 ) ||
+		 ( ( (int) x ) >= CurLevel -> xlen ) ||
+		 ( ( (int) y ) >= CurLevel -> ylen ) ) continue ;
+	    
+	    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	    {
+		
+		obst_index = CurLevel -> map [ (int) y ] [ (int) x ] . obstacles_glued_to_here [ i ] ;
+		
+		if ( obst_index == (-1) ) continue;
+		
+		switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+		{
+		    case ISO_H_CHEST_CLOSED:
+		    case ISO_V_CHEST_CLOSED:
+			if ( mouse_cursor_is_on_that_obstacle ( obst_index ) )
+			{
+			    DebugPrintf ( 1 , "\n%s(): closed chest under cursor identified." , __FUNCTION__ );		    
+			    return ( obst_index ) ;
+			}
+			break;
+			
+		    default: 
+			break;
+		}
+		
+	    }
+	}
+    }
+    
+    return ( -1 ) ;
+
+}; // int closed_chest_below_mouse_cursor ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ * This function checks if there is a barrel beneath the current mouse
+ * cursor.  It takes into account the actual size of the barrel/crate
+ * graphics and not only the geographic position of the mouse cursor on
+ * the floor.
  *
+ * If there is a barrel below the mouse cursor, the function will
+ * return the obstacle index of the chest in question.  Else -1 will be
+ * returned.
  * ---------------------------------------------------------------------- */
 int
-smashable_barred_below_mouse_cursor ( int player_num ) 
+smashable_barrel_below_mouse_cursor ( int player_num ) 
 {
     int x, y ;
     finepoint MapPositionOfMouse;
@@ -410,7 +451,7 @@ smashable_barred_below_mouse_cursor ( int player_num )
     
     return ( -1 ) ;
 
-}; // int smashable_barred_below_mouse_cursor ( int player_num ) 
+}; // int smashable_barrel_below_mouse_cursor ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -3313,7 +3354,7 @@ AnalyzePlayersMouseClick ( int player_num )
 
   check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
-  check_for_barrels_to_smash ( player_num , smashable_barred_below_mouse_cursor ( player_num ) ) ;
+  check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
 
   check_for_droids_to_attack_or_talk_with ( player_num ) ;
 
