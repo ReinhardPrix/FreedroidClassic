@@ -1549,7 +1549,7 @@ Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=60
 Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=0.250000
+Item as gun: recharging time=0.400000
 Item as gun: speed of bullets=0.100000
 Item as gun: angle change of bullets=720.000000
 Item as gun: damage of bullets=1
