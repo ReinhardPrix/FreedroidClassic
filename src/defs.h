@@ -61,6 +61,10 @@
 #define BLASTSOUND 1
 #define FIRESOUND 2
 #define COLLISIONSOUND 3
+#define ENTER_ELEVATOR_SOUND 4
+#define LEAVE_ELEVATOR_SOUND 5
+#define MOVE_ELEVATOR_SOUND 6
+#define GOT_INTO_BLAST_SOUND 7
 
 /* Konstanten fuer die Dateinamen */
 /*

@@ -143,6 +143,8 @@ int main(void)
   GameOver = FALSE;
   QuitProgram = FALSE;
   Conceptview = FALSE;
+
+  sound_on=TRUE;
   
   InterruptInfolineUpdate=TRUE;
 

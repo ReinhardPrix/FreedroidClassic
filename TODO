@@ -24,6 +24,12 @@ DONE RECENTLY- (jp) Sound support: Sound effects and background music and
 
 - (?) find more open and free sounds be can use legally
 
+- correct the too fast refresh movement and effect
+
+- correct the too fast explosion (blast) damage effect
+
+- (jp) add more sounds
+
 Missing features
 -----------------
 - use multitasking (fork()) for background processes... (update

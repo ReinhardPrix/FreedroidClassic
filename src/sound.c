@@ -68,6 +68,7 @@
 #include "proto.h"
 
 
+
 int handle = -1;
 int setting = 0x000C000D; // 12 fragments size 8kb
 int channels = 0;         // 0=mono 1=stereo
@@ -77,11 +78,21 @@ int rate = 8000;
 char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
 char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
 char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
+char GotIntoBlastSoundSampleFilename[]="/../sound/GotIntoBlastSound.wav";
+char MoveElevatorSoundSampleFilename[]="/../sound/MoveElevatorSound2.wav";
+char RefreshSoundSampleFilename[]="/../sound/RefreshSound.wav";
+char LeaveElevatorSoundSampleFilename[]="/../sound/LeaveElevatorSound2.wav";
+char EnterElevatorSoundSampleFilename[]="/../sound/EnterElevatorSound.wav";
 // char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
 char* ExpandedFireSoundSampleFilename;
 char* ExpandedBackgroundMusicSampleFilename;
+char* ExpandedGotIntoBlastSoundSampleFilename;
+char* ExpandedMoveElevatorSoundSampleFilename;
+char* ExpandedRefreshSoundSampleFilename;
+char* ExpandedLeaveElevatorSoundSampleFilename;
+char* ExpandedEnterElevatorSoundSampleFilename;
 
 long BlastSoundSampleLength=0;
 long CollisionSoundSampleLength=0;
@@ -366,9 +377,6 @@ void Play_YIFF_BackgroundMusic(int Tune){
 
 
 void Play_YIFF_Server_Sound(int Tune){
-  //  static int previous_channel;
-#define NUMBER_OF_CHANNELS 2
-
 
   // This function can and should only be compiled on machines, that have the YIFF sound
   // server installed.  Compilation therefore is optional and can be toggled with the following
@@ -376,7 +384,6 @@ void Play_YIFF_Server_Sound(int Tune){
 #if HAVE_LIBY2
 
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
-
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
   if (Tune == FIRESOUND) {
@@ -408,6 +415,26 @@ void Play_YIFF_Server_Sound(int Tune){
     // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
     play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedBlastSoundSampleFilename );
   }
+
+  if (Tune == ENTER_ELEVATOR_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedEnterElevatorSoundSampleFilename );
+  }
+
+  if (Tune == LEAVE_ELEVATOR_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedLeaveElevatorSoundSampleFilename );
+  }
+
+  if (Tune == MOVE_ELEVATOR_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedMoveElevatorSoundSampleFilename );
+  }
+
+  if (Tune == GOT_INTO_BLAST_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedGotIntoBlastSoundSampleFilename );
+  }
 #endif /* HAVE_LIBY2 */
 
 } // void Play_YIFF_Server_Sound(int Tune)
@@ -438,6 +465,12 @@ int Init_YIFF_Sound_Server(void){
   ExpandedFireSoundSampleFilename=ExpandFilename(FireSoundSampleFilename);
   //  ExpandedBackgroundMusicSampleFilename=ExpandFilename(BackgroundMusicSampleFilename);
   ExpandedBackgroundMusicSampleFilename=ExpandFilename( PARADROID_ORIGINAL_TITLE_MUSIC );
+  ExpandedGotIntoBlastSoundSampleFilename=ExpandFilename( GotIntoBlastSoundSampleFilename );
+  ExpandedMoveElevatorSoundSampleFilename=ExpandFilename( MoveElevatorSoundSampleFilename );
+  ExpandedRefreshSoundSampleFilename=ExpandFilename( RefreshSoundSampleFilename );
+  ExpandedLeaveElevatorSoundSampleFilename=ExpandFilename( LeaveElevatorSoundSampleFilename );
+  ExpandedEnterElevatorSoundSampleFilename=ExpandFilename( EnterElevatorSoundSampleFilename );
+
 
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
   // therefore a yiff server will be started even if none is running!!  great!!
@@ -604,9 +637,7 @@ void GotHitSound(void){
 * $Function----------------------------------------------------------*/
 void GotIntoBlastSound(void){
 
-  /* Sound "uber FM-Generatoren */
-  // MakeSound(&GotIntoBlastTune);
-  /* oder "uber MOD-Abspielroutine */
+  
   return;
 } // void GotIntoBlastSound(void)
 
@@ -649,9 +680,8 @@ void MoveElevatorSound(void){
 * $Function----------------------------------------------------------*/
 void EnterElevatorSound(void){
 
-  /* Sound "uber FM-Generatoren */
-  // MakeSound(&MoveElevatorTune);
-  /* oder "uber MOD-Abspielroutine */
+  Play_YIFF_Server_Sound(ENTER_ELEVATOR_SOUND);
+
   return;
 } // void EnterElevatorSound(void)
 
@@ -663,6 +693,8 @@ void EnterElevatorSound(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void LeaveElevatorSound(void){
+
+	Play_YIFF_Server_Sound(LEAVE_ELEVATOR_SOUND);
 
 	return;
 }
