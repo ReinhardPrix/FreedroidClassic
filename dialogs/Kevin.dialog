@@ -31,32 +31,18 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-
 This is Kevin's Guard
-
-
-
-
-
-
-
-
-
 
 END OF AUTORS NOTES
 
-
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=2  OptionText="Hi, I'm new here"
+New Option Nr=0  OptionText="Hi, I'm new here"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=382  PositionY=357  
 Subtitle="Hi, I'm Kevin, a hacker"
 ReplySample=""
-ChangeOption=2 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
