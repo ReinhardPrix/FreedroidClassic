@@ -86,7 +86,7 @@ you need the SDL_mixer library if you want sound!
 --> compiling without sound support
 --------------------------------------------------]))
 
-AC_CHECK_LIB([vorbis], [ov_openA],, AC_MSG_WARN([
+AC_CHECK_LIB([vorbis], [ov_open],, AC_MSG_WARN([
 --------------------------------------------------
 libvorbis not found!
 You need the Vorbis libs installed if you want
