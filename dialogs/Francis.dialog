@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -35,8 +34,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -61,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=1  OptionText="I wish to return to my home world."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=283  PositionY=568  
+PositionX=244  PositionY=51  
 Subtitle="Maybe it is possible to leave this planet somehow.  But you'll have to talk to our leader.  He's in the town to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
@@ -72,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="Where am I?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Do you not remember?  The MS imprisoned you here three years ago, shortly before they took over the government."
+Subtitle="Do you not remember?  The MS imprisoned you here seven month ago, shortly before they took over the government."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=18 ChangeToValue=1
 ChangeOption=2 ChangeToValue=0
@@ -140,10 +141,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=16  OptionText="Why are you helping me?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=249  PositionY=445  
+PositionX=244  PositionY=141  
 Subtitle="Because you needed help.  And because I hate the MS.  Not at first, but now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And since the MS imprisoned you here, I thought I could hit them by releasing you.  I hope it pays off and you really kick some ass."
+Subtitle="And since the MS imprisoned you here, maybe it's also an unjust ruling, so I disabled the stasis generators now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -158,7 +159,7 @@ Subtitle="Well, at first we thought they would get the problem under control aga
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But we waited and waited and they promised to fix it and we waited and millions were slaughtered while we could just stand and watch."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But after some time it became clear that the MS itself was out of control.  Several branches had split off and were now fighting each other.  Complete chaos."
+Subtitle="But after some time it became clear that the MS itself was out of control.  It's unclear what was really going on.  But most of them are dead."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -197,7 +198,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=99  OptionText="Thanks for the help.  I'll be going now."
 OptionSample="Francis/Tux_thanks_for_the_help.wav"
-PositionX=529  PositionY=533  
+PositionX=551  PositionY=367  
 Subtitle="I am glad if I could help you along.  Also you should be careful around here.  Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=1
