@@ -833,7 +833,7 @@ typedef struct
 {
   byte x;			
   byte y;
-  signed char connections[MAX_WP_CONNECTIONS];
+  signed char connections [ MAX_WP_CONNECTIONS ] ;
 }
 waypoint, *Waypoint;
 

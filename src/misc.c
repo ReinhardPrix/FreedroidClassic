@@ -117,7 +117,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
     { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 233 , 90 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20-17 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
     { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
     { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { 0 , 480-40 , 160 ,  20 } } ,

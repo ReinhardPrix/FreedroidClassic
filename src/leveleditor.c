@@ -2554,16 +2554,15 @@ EditMapLabelData ( Level EditLevel )
   for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
       if ( ( fabsf ( EditLevel -> labels [ i ] . pos . x + 0.5 - Me[0].pos.x ) < 0.5 ) &&
-	   ( fabsf ( EditLevel -> labels [ i ] . pos . y + 0.5 - Me[0].pos.y ) ) ) 
+	   ( fabsf ( EditLevel -> labels [ i ] . pos . y + 0.5 - Me[0].pos.y ) < 0.5 ) ) 
 	{
 	  break;
 	}
     }
   if ( i >= MAX_MAP_LABELS_PER_LEVEL ) 
     {
-      DisplayText ( "\nNo existing map label entry found...\n" , -1 , -1 , &User_Rect );
       NewCommentOnThisSquare = 
-	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n\n" ,
+	GetEditableStringInPopupWindow ( 1000 , "\nNo existing map label entry for this position found...\n Please enter new label for this map position: \n\n" ,
 					 "" );
 
       i=0;
@@ -2585,9 +2584,8 @@ EditMapLabelData ( Level EditLevel )
     }
   else
     {
-      DisplayText ( "\nOverwriting existing map label list entry...\n" , -1 , -1 , &User_Rect );
       NewCommentOnThisSquare = 
-	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n\n" ,
+	GetEditableStringInPopupWindow ( 1000 , "\nOverwriting existing map label list entry...\n Please enter new label for this map position: \n\n" ,
 					 EditLevel -> labels [ i ] . label_name );
     }
 

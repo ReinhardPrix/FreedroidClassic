@@ -1459,22 +1459,18 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
   
-  obstacle_map [ ISO_AUTOGUN_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
-  obstacle_map [ ISO_AUTOGUN_N ] . is_smashable = FALSE ;
-  obstacle_map [ ISO_AUTOGUN_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_N ] . filename = "iso_autogun_0002.png" ;
   obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_2 = 0.9 ;
-  obstacle_map [ ISO_AUTOGUN_S ] . is_smashable = FALSE ;
-  obstacle_map [ ISO_AUTOGUN_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_S ] . filename = "iso_autogun_0004.png" ;
   obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_2 = 0.9 ;
-  obstacle_map [ ISO_AUTOGUN_E ] . is_smashable = FALSE ;
-  obstacle_map [ ISO_AUTOGUN_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_AUTOGUN_E ] . filename = "iso_autogun_0003.png" ;
   obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_2 = 0.9 ;
-  obstacle_map [ ISO_AUTOGUN_W ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_AUTOGUN_W ] . filename = "iso_autogun_0001.png" ;
 
   obstacle_map [ ISO_CAVE_CORNER_NE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_CORNER_NE ] . block_area_parm_1 = 1.0 ;

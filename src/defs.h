@@ -689,7 +689,7 @@ enum _directions
 #define MAX_TRIGGERED_ACTIONS_IN_GAME   100   // how many triggerable actions to allow at most
 
 
-#define MAXWAYPOINTS 		100
+#define MAXWAYPOINTS 		150
 #define MAX_DOORS_ON_LEVEL 	80
 #define MAX_AUTOGUNS_ON_LEVEL 	60
 #define MAX_REFRESHES_ON_LEVEL	39
@@ -708,10 +708,6 @@ enum _directions
 
 
 
-#define BREMSDREHUNG 3		// STUPID AND SHOULD BE REMOVED
-
-//--------------------
-// NORMALISATION #define PUSHSPEED 2
 #define PUSHSPEED 2 // speed at which influ will be pushed away from doors and such...
 
 //--------------------

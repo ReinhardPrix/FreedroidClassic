@@ -42,7 +42,7 @@
 #include "map.h"
 
 #define MAP_BEGIN_STRING	"beginning_of_map"
-#define WP_BEGIN_STRING		"wp"
+#define WP_SECTION_BEGIN_STRING		"wp"
 #define LEVEL_END_STRING	"end_of_level"
 
 #define AREA_NAME_STRING "Area name=\""
@@ -1719,7 +1719,7 @@ jump target west: %d\n",
   // This is unwanted and shall be corrected here.
   CheckWaypointIntegrity( Lev );
 
-  strcat(LevelMem, WP_BEGIN_STRING);
+  strcat(LevelMem, WP_SECTION_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
   for(i=0; i< MAXWAYPOINTS ; i++)
@@ -2107,6 +2107,9 @@ DecodeLoadedLeveldata ( char *data )
   char ThisLine[1000];
   char* ThisLinePointer;
   char* DataPointer;
+  char* end_of_waypoint_data;
+  char preserved_letter ;
+  int number_of_waypoints_found ;
 
   //--------------------
   // Get the memory for one level 
@@ -2163,7 +2166,7 @@ DecodeLoadedLeveldata ( char *data )
     return NULL;
 
   /* set position to Waypoint-Data */
-  if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
+  if ((wp_begin = strstr (data, WP_SECTION_BEGIN_STRING)) == NULL)
     return NULL;
 
   /* now scan the map */
@@ -2179,7 +2182,43 @@ DecodeLoadedLeveldata ( char *data )
 
   DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
 
+  //--------------------
+  // We count the number of waypoints in the level data file.  For this
+  // we need to insert a termination character and then undo the damage
+  // again after the counting has been done...
+  //
+  end_of_waypoint_data = LocateStringInData ( wp_begin , LEVEL_END_STRING ) ;
+  preserved_letter = end_of_waypoint_data [ 0 ] ;
+  end_of_waypoint_data [ 0 ] = 0 ;
+#define WP_BEGIN_STRING "Nr.="
+  number_of_waypoints_found = CountStringOccurences ( wp_begin , WP_BEGIN_STRING ) ;
+  DebugPrintf ( 0 , "\nNumberOfWaypointsFound: %d." , number_of_waypoints_found );
+  if ( number_of_waypoints_found > MAXWAYPOINTS )
+    {
+      fprintf ( stderr , "\nnumber_of_waypoints_found: %d." , number_of_waypoints_found );
+      GiveStandardErrorMessage ( "DecodeLoadedLeveldata ( ... )" , 
+				 "The number of waypoints found in a level seems to be greater than the number\nof waypoints currently allowed in a Freedroid map.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // We init the waypoint data with 'empty' information
+  //
   for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    {
+      loadlevel -> AllWaypoints [ i ] . x = 0 ;
+      loadlevel -> AllWaypoints [ i ] . y = 0 ;
+      for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
+	{
+	  loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection ;
+	}
+    }
+  
+  //--------------------
+  // We decode the waypoint data from the data file into the waypoint
+  // structs...
+  //
+  for ( i = 0 ; i < number_of_waypoints_found ; i++ )
     {
       WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
 
@@ -2199,7 +2238,7 @@ DecodeLoadedLeveldata ( char *data )
 
       ThisLinePointer = strstr ( ThisLine , "connections: " ) +strlen("connections: ");
 
-      for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
+      for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
 	{
 	  sscanf( ThisLinePointer , "%4d" , &connection );
 	  // printf(", con=%d" , connection );
