@@ -28,7 +28,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _freeinit_c
+#define _init_c
 
 #include "system.h"
 
@@ -688,4 +688,4 @@ EndTitle (void)
 
 } /* EndTitle() */
 
-#undef _freeinit_c
+#undef _init_c
