@@ -208,28 +208,36 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 {
   int Rand;
   int Suf; int Pre;
+  int DropDecision;
 
   //--------------------
   // First we determine if there is something dropped at all or not,
   // cause in the later case, we can return immediately.  If a drop is
   // forced, we need not check for not do drop.
   //
-  if ( !ForceDrop )
+  DropDecision = MyRandom( 100 );
+
+  //--------------------
+  // We decide whether we drop something at all or not
+  //
+  if ( ( !ForceDrop ) && ( DropDecision < 100 - GOLD_DROP_PERCENTAGE - ITEM_DROP_PERCENTAGE ) ) return;
+
+  //--------------------
+  // Perhaps it's some gold that will be dropped.  That's rather
+  // simple, so we do this first.
+  //
+  if ( ( !ForceDrop ) && ( DropDecision < 100 - ITEM_DROP_PERCENTAGE ) )
     {
-      Rand = MyRandom( 1000 );
-      if ( Rand < 800 )
-	{
-	  return;
-	}
-    }
-  else
-    {
-      DebugPrintf( 0 , "\n FORCED ITEM DROP ENCOUNTERED!!!" );
+      DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+      return;
     }
 
   //--------------------
+  // So at this point we know, that an item will be dropped...
+  //
   // Since there are no prefixes set up yet, we just need to consider
   // the suffixes.  In case 
+  //
   Pre = ( -1 ) ;
   if ( ForceMagical )
     {
@@ -244,13 +252,13 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 5 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf );
 	  break;
 	case 2:
 	  DropItemAt( ITEM_SMALL_HEALTH_POTION , x , y , -1 , -1 );
@@ -264,22 +272,16 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 5:
 	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf );
 	  break;
-	case 6:
-	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf );
-	  break;
-	case 7:
-	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf );
-	  break;
 	}
       break;
     case 1:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 5 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
 	  break;
 	case 2:
 	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
@@ -292,23 +294,17 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 5:
 	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
-	  break;
-	case 6:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
-	  break;
-	case 7:
-	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf );
 	  break;
 	}
       break;
     case 2:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 5 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
 	  break;
 	case 2:
 	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
@@ -321,12 +317,6 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 5:
 	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
-	  break;
-	case 6:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
-	  break;
-	case 7:
-	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
 	  break;
 	}
       break;
@@ -334,10 +324,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 7 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
 	  break;
 	case 2:
 	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
@@ -350,12 +340,6 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 5:
 	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
-	  break;
-	case 6:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
-	  break;
-	case 7:
-	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
 	  break;
 	}
       break;
@@ -672,7 +656,7 @@ ApplyItem( item* CurItem )
   // In some cases the item concerned is a one-shot-device like a health potion, which should
   // evaporize after the first application.  Therefore we delete the item from the inventory list.
   //
-  CurItem->type = (-1);
+  DeleteItem ( CurItem );
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
