@@ -422,8 +422,11 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 	  if ( i == 0 )
 	    DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
 	  else
-	    GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", 
-				       NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+	    {
+	      DebugPrintf ( -4 , "The file name was: %s.\n" , fname );
+	      GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", 
+					 NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+	    }
 	}
     } // for i 
 

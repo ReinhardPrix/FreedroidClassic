@@ -1590,7 +1590,7 @@ move_tux_thowards_intermediate_point ( int player_num )
       // can occur on the end of any intermediate course, like e.g. open a
       // chest or pick up some item.
       //
-      // DebugPrintf ( -4 , "\nAm I now at the last intermediate point???" );
+      // DebugPrintf ( 2 , "\nAm I now at the last intermediate point???" );
       
       switch ( Me [ player_num ] . mouse_move_target_combo_action_type )
 	{
@@ -2668,7 +2668,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 	  // So here we know, that we must set the course thowards the chest.  We
 	  // do so first.
 	  //
-	  DebugPrintf ( -4 , "\ncheck_for_chests_to_open:  setting up combined mouse move target!" );
+	  DebugPrintf ( 2 , "\ncheck_for_chests_to_open:  setting up combined mouse move target!" );
 
 	  switch ( our_level -> obstacle_list [ chest_index ] . type )
 	    {
@@ -2823,7 +2823,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
       //
       Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
       Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
-      DebugPrintf ( -4 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
+      DebugPrintf ( 2 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
     }
 }; // void check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 

@@ -804,7 +804,7 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
   strcat( fname, PrefixToFilename [ model_number ] ) ;
   strcat( fname , "/portrait.png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  DebugPrintf ( -1000, "\nFilename used for portrait: %s." , fpath );
+  DebugPrintf ( 2 , "\nFilename used for portrait: %s." , fpath );
 
   Small_Droid = our_IMG_load_wrapper (fpath) ;
   if ( Small_Droid == NULL )

@@ -372,7 +372,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   int i;
   int use_counter = 0;
 
-  DebugPrintf ( -100, "\nBEFORE:  First Item now: %d." , FirstItem );
+  DebugPrintf ( 2 , "\nBEFORE:  First Item now: %d." , FirstItem );
 
   //--------------------
   // We filter out those answering options that are allowed by the flag mask
@@ -395,7 +395,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	}
     }
 
-  DebugPrintf ( -100, "\nMIDDLE:  First Item now: %d." , FirstItem );
+  DebugPrintf ( 2 , "\nMIDDLE:  First Item now: %d." , FirstItem );
 
   //--------------------
   // Now we do the usual menu selection, using only the activated chat alternatives...
@@ -547,7 +547,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
   int mouse_now_over_different_item = FALSE ;
   int cursors_menu_position = - 1000 ;
 
-  DebugPrintf ( -100, "\nINSIDE:  First Item now: %d." , FirstItem );
+  DebugPrintf ( 2 , "\nINSIDE:  First Item now: %d." , FirstItem );
 
   //--------------------
   // First we initialize the menu positions

@@ -241,13 +241,32 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 
   strcpy ( Temp_Filename , "speeches/" );
   strcat ( Temp_Filename , SoundSampleFileName );
-  fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-  One_Shot_WAV_File = Mix_LoadWAV( fpath );
+
+  //--------------------
+  // Only if the file name wasn't 'no_voice_sample', we really
+  // try to load anything...
+  //
+  if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
+    {
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+      One_Shot_WAV_File = Mix_LoadWAV( fpath );
+    }
+  else
+    One_Shot_WAV_File = NULL ;
+
+  //--------------------
+  // Now some error checking against failed/missing sound samples...
+  //
   if ( One_Shot_WAV_File == NULL )
     {
-
-      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
+      //--------------------
+      // A warning message about a missing speech file should only be issued,
+      // if it wasn't the 'no_voice_sample' dummy entry anyway...
+      //
+      if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
+	{
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 The reason for this is as follows:  Speech files are stored in wav format\n\
 for technical reasons in conjunction with the SDL and the background music.\n\
@@ -259,7 +278,8 @@ But to ensure smooth gameplay even with missing sound files, there is an option\
 to have freedroid either ignore the missing dialog sound samples or to terminate\n\
 on encountering a missing sound sample.  According to this option, Freedroid will\n\
 either terminate or continue running now.",
-				 NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
+				     NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
+	}
 
       if ( !GameConfig.terminate_on_missing_speech_sample )
 	{
