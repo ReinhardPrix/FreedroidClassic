@@ -315,13 +315,13 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	  // OK pressed?  Then we can return the current scale value and
 	  // that's it...
 	  //
-	  if ( CursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    ok_button_was_pressed = TRUE ;
-	  if ( CursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      if ( knob_offset_x > 0 ) knob_offset_x -- ;
 	    }
-	  if ( CursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
 	    }

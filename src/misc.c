@@ -192,7 +192,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
  * inventory screen toggle button or not.
  * ---------------------------------------------------------------------- */
 int
-CursorIsInRect ( SDL_Rect* our_rect , int x , int y )
+MouseCursorIsInRect ( SDL_Rect* our_rect , int x , int y )
 {
   //--------------------
   // Now we can start to check if the mouse cursor really is on that
@@ -209,14 +209,14 @@ CursorIsInRect ( SDL_Rect* our_rect , int x , int y )
   //
   return ( TRUE );
 
-}; // int CursorIsInRect( SDL_rect* our_rect , int x , int y )
+}; // int MouseCursorIsInRect( SDL_rect* our_rect , int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
  * inventory screen toggle button or not.
  * ---------------------------------------------------------------------- */
 int
-CursorIsOnButton( int ButtonIndex , int x , int y )
+MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 {
   //--------------------
   // First a sanity check if the button index given does make
@@ -224,7 +224,7 @@ CursorIsOnButton( int ButtonIndex , int x , int y )
   //
   if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {
-      GiveStandardErrorMessage ( "CursorIsOnButton(...)" , "\
+      GiveStandardErrorMessage ( "MouseCursorIsOnButton(...)" , "\
 A Button that should be checked for mouse contact was requested, but the\n\
 button index given exceeds the number of buttons defined in freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
@@ -236,9 +236,9 @@ button index given exceeds the number of buttons defined in freedroid.",
   // So since the cursor is not outside of this rectangle, it must
   // we inside, and so we'll return this answer.
   //
-  return ( CursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
+  return ( MouseCursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
 
-}; // int CursorIsOnButton( int ButtonIndex , int x , int y )
+}; // int MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function blits a button to the screen.  The button must have been

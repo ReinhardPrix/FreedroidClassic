@@ -1768,7 +1768,7 @@ MouseCursorIsInInvRect( int x , int y )
  * where the inventory of the player is usually located or not.
  * ---------------------------------------------------------------------- */
 int 
-CursorIsInInventoryGrid( int x , int y )
+MouseCursorIsInInventoryGrid( int x , int y )
 {
   point CurPos;
 
@@ -1786,7 +1786,7 @@ CursorIsInInventoryGrid( int x , int y )
 	}
     }
   return( FALSE );
-}; // int CursorIsInInventoryGrid( int x , int y )
+}; // int MouseCursorIsInInventoryGrid( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function gives the x coordinate of the inventory square that 
@@ -2330,38 +2330,58 @@ ShowQuickInventory ( void )
 int
 get_floor_item_index_under_mouse_cursor ( int player_num )
 {
-  Level PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
-  finepoint MapPositionOfMouse;
-  int i;
-
-  //--------------------
-  // We get the in-game map coordinates of the spot the mouse cursor
-  // is pointing to...
-  //
-  MapPositionOfMouse . x = 
-    translate_pixel_to_map_location ( 0 , 
-				      ServerThinksInputAxisX ( 0 ) , 
-				      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  MapPositionOfMouse . y = 
-    translate_pixel_to_map_location ( 0 , 
-				      ServerThinksInputAxisX ( 0 ) , 
-				      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  //--------------------
-  // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+    Level PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+    finepoint MapPositionOfMouse;
+    int i;
+    
+    //--------------------
+    // In the case that shift was pressed, we don't use the item positions but rather
+    // we use the item slot rectangles from the item texts.
+    //
+    if ( Shift_Is_Pressed() )
     {
-      if ( PlayerLevel -> ItemList [ i ] . type == (-1) ) continue;
-      
-      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel -> ItemList [ i ] . pos . x ) < 0.5 ) &&
-	   ( fabsf( MapPositionOfMouse.y - PlayerLevel -> ItemList [ i ] . pos . y ) < 0.5 ) )
+	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
-	  return ( i ) ;
+	    if ( PlayerLevel -> ItemList [ i ] . type == (-1) ) continue;
+
+	    if ( MouseCursorIsInRect ( & ( PlayerLevel -> ItemList [ i ] . text_slot_rectangle ) , 
+				       GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , 
+				       GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    {
+		return ( i ) ;
+	    }
+	}
+    }
+    //--------------------
+    // If no shift was pressed, we only use the floor position the mouse
+    // has pointed to and see if we can find an item that has geographically
+    // that very same (or a similar enough) position.
+    //
+    else
+    {
+	MapPositionOfMouse . x = 
+	    translate_pixel_to_map_location ( 0 , 
+					      ServerThinksInputAxisX ( 0 ) , 
+					      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+	MapPositionOfMouse . y = 
+	    translate_pixel_to_map_location ( 0 , 
+					      ServerThinksInputAxisX ( 0 ) , 
+					      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+	
+	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	{
+	    if ( PlayerLevel -> ItemList [ i ] . type == (-1) ) continue;
+	    
+	    if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel -> ItemList [ i ] . pos . x ) < 0.5 ) &&
+		 ( fabsf( MapPositionOfMouse.y - PlayerLevel -> ItemList [ i ] . pos . y ) < 0.5 ) )
+	    {
+		return ( i ) ;
+	    }
 	}
     }
 
-  return ( -1 );
-
+    return ( -1 );
+    
 }; // int get_floor_item_index_under_mouse_cursor ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -2493,7 +2513,7 @@ ManageInventoryScreen ( void )
     {
       DebugPrintf( 1 , "\nTrying to 'grab' the item below the mouse cursor.");
       
-      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	  Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	  Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
@@ -2522,7 +2542,7 @@ ManageInventoryScreen ( void )
 	      Me[0].Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in weapons rect!" );
 	  if ( Me[0].weapon_item.type > 0 )
@@ -2536,7 +2556,7 @@ ManageInventoryScreen ( void )
 	      Me[0].weapon_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in drive rect!" );
 	  if ( Me[0].drive_item.type > 0 )
@@ -2550,7 +2570,7 @@ ManageInventoryScreen ( void )
 	      Me[0].drive_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in shield rect!" );
 	  if ( Me[0].shield_item.type > 0 )
@@ -2564,7 +2584,7 @@ ManageInventoryScreen ( void )
 	      Me[0].shield_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in armour rect!" );
 	  if ( Me[0].armour_item.type > 0 )
@@ -2578,7 +2598,7 @@ ManageInventoryScreen ( void )
 	      Me[0].armour_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in special rect!" );
 	  if ( Me[0].special_item.type > 0 )
@@ -2592,7 +2612,7 @@ ManageInventoryScreen ( void )
 	      Me[0].special_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in aux1 rect!" );
 	  if ( Me[0].aux1_item.type > 0 )
@@ -2606,7 +2626,7 @@ ManageInventoryScreen ( void )
 	      Me[0].aux1_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in aux2 rect!" );
 	  if ( Me[0].aux2_item.type > 0 )
@@ -2670,7 +2690,7 @@ ManageInventoryScreen ( void )
       // then on not only no longer be in the players hand but also remain at
       // the newly assigned position.
       //
-      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped in inventory window!" );
 	  Item_Held_In_Hand = ( -1 );
@@ -2692,7 +2712,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the weapons rect, i.e. the small box top left, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the weapons rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2759,7 +2779,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the drive rect, i.e. the small box to the right, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( DRIVE_RECT_BUTTON, CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON, CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the drive rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2783,7 +2803,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the armour rect, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the armour rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2807,7 +2827,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the shield rect, i.e. the small box to the top right, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the shield rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2851,7 +2871,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the special rect, i.e. the small box to the top left, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the special rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2875,7 +2895,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the aux1 rect, i.e. the small box to the left middle, then
       // the item should be dropped onto the players current aux1 slot
       //
-      if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the aux1 rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2899,7 +2919,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the aux2 rect, i.e. the small box to the left middle, then
       // the item should be dropped onto the players current aux1 slot
       //
-      if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the aux2 rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2958,7 +2978,7 @@ ManageInventoryScreen ( void )
 	  // Here we know, that the repair skill is selected, therefore we try to 
 	  // repair the item currently under the mouse cursor.
 	  //
-	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	  if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	    {
 	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
@@ -2978,43 +2998,43 @@ ManageInventoryScreen ( void )
 		  HomeMadeItemRepair ( & ( Me[0].Inventory[ Grabbed_InvPos ] ) ) ;
 		}
 	    }
-	  else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the weapons rectangle!" );
 	      if ( Me [ 0 ] . weapon_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . weapon_item ) );
 	    }
-	  else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the drive rectangle!" );
 	      if ( Me [ 0 ] . drive_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . drive_item ) );
 	    }
-	  else if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the shield rectangle!" );
 	      if ( Me [ 0 ] . shield_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . shield_item ) );
 	    }
-	  else if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the armour rectangle!" );
 	      if ( Me [ 0 ] . armour_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . armour_item ) );
 	    }
-	  else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the special rectangle!" );
 	      if ( Me [ 0 ] . special_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . special_item ) );
 	    }
-	  else if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the Aux1 rectangle!" );
 	      if ( Me [ 0 ] . aux1_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . aux1_item ) );
 	    }
-	  else if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the Aux2 rectangle!" );
 	      if ( Me [ 0 ] . aux2_item . type != (-1) )
@@ -3027,7 +3047,7 @@ ManageInventoryScreen ( void )
 	  // Here we know, that the identify skill is selected, therefore we try to 
 	  // repair the item currently under the mouse cursor.
 	  //
-	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	  if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	    {
 	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
@@ -3075,7 +3095,7 @@ ManageInventoryScreen ( void )
 	  // i.e. expend the item, if it can be used up just so like a potion.  So
 	  // we do this here.
 	  //
-	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	  if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	    {
 	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );

@@ -871,23 +871,23 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  //--------------------
 	  // First we see if there was perhaps a click on one of the active scroll buttons
 	  //
-	  if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
+	  if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
 	       ( BreakOffCauseNoRoom ) )
 	    {
 	      OptionOffset ++ ;
 	    }
-	  else if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
+	  else if ( ( MouseCursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
 	       ( OptionOffset ) )
 	    {
 	      OptionOffset -- ;
 	    }
-	  else if ( CursorIsOnButton ( CHAT_PROTOCOL_SCROLL_UP_BUTTON , 
+	  else if ( MouseCursorIsOnButton ( CHAT_PROTOCOL_SCROLL_UP_BUTTON , 
 					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
 					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      chat_protocol_scroll_override_from_user -- ;
 	    }
-	  else if ( CursorIsOnButton ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON , 
+	  else if ( MouseCursorIsOnButton ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON , 
 					 GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , 
 					 GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {

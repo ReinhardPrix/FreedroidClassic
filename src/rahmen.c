@@ -1021,7 +1021,7 @@ ShowCurrentTextWindow ( void )
       // Perhaps the cursor is over some item of the inventory?
       // let's check this case first.
       //
-      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	  inv_square.x = GetInventorySquare_x( CurPos.x );
 	  inv_square.y = GetInventorySquare_y( CurPos.y );
@@ -1034,37 +1034,37 @@ ShowCurrentTextWindow ( void )
 	      GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
 	    }
 	} 
-      else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  if ( Me[0].weapon_item.type > 0 )
 	    GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
 	}
-      else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  if ( Me[0].drive_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].shield_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].shield_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].armour_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].special_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].aux1_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].aux2_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );

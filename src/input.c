@@ -962,8 +962,8 @@ LeftShiftWasPressed(void)
 int
 Shift_Is_Pressed(void)
 {
-  keyboard_update ();
-  return ( CurrentlyShiftPressed );  
+    keyboard_update ();
+    return ( CurrentlyShiftPressed );  
 };
 
 /* ----------------------------------------------------------------------
@@ -994,11 +994,16 @@ Alt_Was_Pressed(void)
   return (AltWasPressedInAddition);  
 }
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 int
 LeftAltWasPressed(void)
 {
-  return (LeftAltWasPressedInAddition);  
-}
+    keyboard_update ();
+    return (LeftAltWasPressedInAddition);  
+}; // int LeftAltWasPressed(void)
 
 int
 RightAltWasPressed(void)

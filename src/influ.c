@@ -69,7 +69,6 @@ void check_for_chests_to_open ( int player_num , int chest_index ) ;
 void check_for_barrels_to_smash ( int player_num , int index_of_barrel_below_mouse_cursor ) ;
 
 char recursion_grid[ MAX_MAP_LINES ][ MAX_MAP_LINES ] ;
-// moderately_finepoint first_found_walkable_point;
 moderately_finepoint last_sight_contact;
 int next_index_to_set_up = 30000 ;
 int bad_luck_in_4_directions_counter = 0;
@@ -2310,7 +2309,7 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 	enemy_screen_rectangle . w = our_iso_image -> original_image_width ;
 	enemy_screen_rectangle . h = our_iso_image -> original_image_height ;
 
-	if ( CursorIsInRect ( & ( enemy_screen_rectangle ) , ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
+	if ( MouseCursorIsInRect ( & ( enemy_screen_rectangle ) , ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
 			      ServerThinksInputAxisY ( player_num ) + User_Rect . h / 2 + User_Rect . y ) )
 	{
 	    TargetFound = i;
@@ -2524,9 +2523,9 @@ ButtonPressWasNotMeantAsFire( player_num )
   // not interpret this as a common in-game movement or firing command.
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
-       ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
-	 CursorIsOnButton( SKI_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
-	 CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
+       ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	 MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	 MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;

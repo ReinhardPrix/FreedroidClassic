@@ -437,38 +437,39 @@ typedef struct
 
 typedef struct
 {
-  // Here are the rather short-lived properties of the item
-  finepoint pos;
-  int type;
-  int currently_held_in_hand;      // is the item currently held 'in hand' with the mouse cursor?
-  int is_identified;               // is the item identified already?
-  int max_duration;                // the maximum item durability reachable for this item
-  float current_duration;          // the currently remaining durability for this item
-  float throw_time;                // has this item just jumped out from a chest maybe or is it jumping right now?
+    // Here are the rather short-lived properties of the item
+    finepoint pos;
+    SDL_Rect text_slot_rectangle;
+    int type;
+    int currently_held_in_hand;      // is the item currently held 'in hand' with the mouse cursor?
+    int is_identified;               // is the item identified already?
+    int max_duration;                // the maximum item durability reachable for this item
+    float current_duration;          // the currently remaining durability for this item
+    float throw_time;                // has this item just jumped out from a chest maybe or is it jumping right now?
+    
+    // Here are the rather long-lived properties of the item
+    int prefix_code;
+    int suffix_code;
+    
+    int bonus_to_dex;
+    int bonus_to_str;
+    int bonus_to_vit;
+    int bonus_to_mag;
+    int bonus_to_life;
+    int bonus_to_force;
+    int bonus_to_tohit;
+    int bonus_to_all_attributes;
+    int bonus_to_ac_or_damage;       // this is a percentage
+    int bonus_to_resist_fire;        // this is a percentage
+    int bonus_to_resist_electricity; // this is a percentage
+    int bonus_to_resist_force;       // this is a percentage
 
-  // Here are the rather long-lived properties of the item
-  int prefix_code;
-  int suffix_code;
-
-  int bonus_to_dex;
-  int bonus_to_str;
-  int bonus_to_vit;
-  int bonus_to_mag;
-  int bonus_to_life;
-  int bonus_to_force;
-  int bonus_to_tohit;
-  int bonus_to_all_attributes;
-  int bonus_to_ac_or_damage;       // this is a percentage
-  int bonus_to_resist_fire;        // this is a percentage
-  int bonus_to_resist_electricity; // this is a percentage
-  int bonus_to_resist_force;       // this is a percentage
-
-  int ac_bonus;                    // how much is ac increased by this item worn
-  int damage;                      // how much damage does this item
-  int damage_modifier;             // how much additional damage can add to the base damage
-  int gold_amount;                 // how much cyberbucks are there, IN CASE OF CYBERBUCKS
-  int multiplicity;
-  point inventory_position;
+    int ac_bonus;                    // how much is ac increased by this item worn
+    int damage;                      // how much damage does this item
+    int damage_modifier;             // how much additional damage can add to the base damage
+    int gold_amount;                 // how much cyberbucks are there, IN CASE OF CYBERBUCKS
+    int multiplicity;
+    point inventory_position;
 } item, *Item;
 
 typedef struct

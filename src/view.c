@@ -1651,6 +1651,192 @@ blit_light_radius ( void )
 
 }; // void blit_light_radius ( void )
 
+/* ----------------------------------------------------------------------
+ * Each item is lying on the floor.  But that means some of the items,
+ * especially the smaller but not nescessary less valuable items will not
+ * be easy to make out under all the bushed, trees, rubble and stuff.
+ * So the solution is to offer a special key that when pressed will make
+ * all item names flash up, so that you can't possibly miss an item that
+ * you're standing close to.
+ *
+ * This function blits all the item names to the screen on the exact
+ * positions that have been computed before (hopefully!) in other 
+ * functions like update_item_text_slot_positions ( ... ) or so.
+ * ---------------------------------------------------------------------- */
+void
+blit_all_item_slots ( void )
+{
+    int i;
+    level* item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+	//--------------------
+	// We don't work with unused item slots...
+	//
+	if ( item_level -> ItemList [ i ] . type == (-1) ) continue;
+
+	//--------------------
+	// Now we check if the cursor is on that slot, because then the
+	// background of the slot will be highlighted...
+	//
+	if ( MouseCursorIsInRect ( & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
+				   GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , 
+				   GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
+					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x099 ) );
+	else
+	    our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
+					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+
+	//--------------------
+	// Finally it's time to insert the font into the item slot.  We
+	// use the item name, but currently font color is not adapted for
+	// special item properties...
+	//
+	PutStringFont ( Screen , FPS_Display_BFont , item_level -> ItemList [ i ] . text_slot_rectangle . x , 
+			item_level -> ItemList [ i ] . text_slot_rectangle . y , 
+			ItemMap [ item_level -> ItemList [ i ] . type ] . item_name );
+
+    }
+    
+}; // void blit_all_item_slots ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+item_slot_position_blocked ( item* given_item , int last_slot_to_check )
+{
+    int i;
+    item* cur_item;
+    level* item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    for ( i = 0 ; i < last_slot_to_check + 1 ; i ++ )
+    {
+	cur_item = & ( item_level -> ItemList [ i ] ) ;
+
+	if ( cur_item -> type == (-1) )
+	    continue;
+	
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x ,
+				   given_item -> text_slot_rectangle . y ) )
+	{
+	    return ( TRUE );
+	}
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x ,
+				   given_item -> text_slot_rectangle . y + FontHeight ( FPS_Display_BFont ) ) )
+	{
+	    return ( TRUE );
+	}
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x + 
+				   given_item -> text_slot_rectangle . w ,
+				   given_item -> text_slot_rectangle . y ) )
+	{
+	    return ( TRUE );
+	}
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x + 
+				   given_item -> text_slot_rectangle . w,
+				   given_item -> text_slot_rectangle . y + FontHeight ( FPS_Display_BFont ) ) )
+	{
+	    return ( TRUE );
+	}
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x + 
+				   given_item -> text_slot_rectangle . w / 2  ,
+				   given_item -> text_slot_rectangle . y ) )
+	{
+	    return ( TRUE );
+	}
+	if ( MouseCursorIsInRect ( & ( cur_item -> text_slot_rectangle ) , 
+				   given_item -> text_slot_rectangle . x + 
+				   given_item -> text_slot_rectangle . w / 2 ,
+				   given_item -> text_slot_rectangle . y + FontHeight ( FPS_Display_BFont ) ) )
+	{
+	    return ( TRUE );
+	}
+    }
+    
+    return ( FALSE );
+}; // void item_slot_position_blocked ( int x , int y , int last_slot_to_check )
+
+/* ----------------------------------------------------------------------
+ * Each item is lying on the floor.  But that means some of the items,
+ * especially the smaller but not nescessary less valuable items will not
+ * be easy to make out under all the bushed, trees, rubble and stuff.
+ * So the solution is to offer a special key that when pressed will make
+ * all item names flash up, so that you can't possibly miss an item that
+ * you're standing close to.
+ *
+ * This function computes the best rectangles and positions for such 
+ * item names to flash up.
+ * ---------------------------------------------------------------------- */
+void
+update_item_text_slot_positions ( void )
+{
+    int i;
+    level* item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    BFont_Info* BFont_to_use = FPS_Display_BFont ;
+    item* cur_item;
+
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+	cur_item = & ( item_level -> ItemList [ i ] ) ;
+
+	if ( cur_item -> type == (-1) )
+	    continue;
+	
+	//--------------------
+	// We try to use a text rectangle that is close to the
+	// actual item...
+	//
+	cur_item -> text_slot_rectangle . h = FontHeight ( BFont_to_use ) ;
+	cur_item -> text_slot_rectangle . w = 
+	    TextWidthFont ( BFont_to_use , ItemMap [ cur_item -> type ] . item_name );
+	cur_item -> text_slot_rectangle . x = 
+	    translate_map_point_to_screen_pixel ( 
+		cur_item -> pos . x , 
+		cur_item -> pos . y , TRUE ) - cur_item -> text_slot_rectangle . w / 2 ;
+	cur_item -> text_slot_rectangle . y = 
+	    translate_map_point_to_screen_pixel ( 
+		cur_item -> pos . x , 
+		cur_item -> pos . y , FALSE ) - cur_item -> text_slot_rectangle . h / 2 ;
+
+	//--------------------
+	// But maybe the situation is already very crowded, i.e. maybe there are
+	// already (a lot of) items there with slot positions conflicting...
+	// Well, what to do?  If there is already an item there, we try to escape,
+	// that's it.
+	//
+	if ( ( item_slot_position_blocked ( cur_item , i - 1 ) ) )
+	{
+	    while ( item_slot_position_blocked ( cur_item , i - 1 ) )
+	    {
+		if ( i % 2 )
+		    cur_item -> text_slot_rectangle . y += 2 ;
+		else
+		    cur_item -> text_slot_rectangle . y -= 2 ;
+
+		//--------------------
+		// Maybe just a hundred left or right would also do...  but if it
+		// doesn't, we'll undo the changes made.
+		//
+		cur_item -> text_slot_rectangle . x += 50 ;
+		if ( item_slot_position_blocked ( cur_item , i - 1 ) ) 
+		    cur_item -> text_slot_rectangle . x -= 50 ;
+		cur_item -> text_slot_rectangle . x -= 50 ;
+		if ( item_slot_position_blocked ( cur_item , i - 1 ) ) 
+		    cur_item -> text_slot_rectangle . x += 50 ;
+	    }
+	}
+    }
+}; // void update_item_text_slot_positions ( void )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -1673,145 +1859,151 @@ blit_light_radius ( void )
 void
 AssembleCombatPicture (int mask)
 {
-  int i;
-  int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+    int i;
+    int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+    
+    clear_screen() ;
+    
+    //--------------------
+    // We generate a list of obstacles (and other stuff) that might
+    // emitt some light.  It should be sufficient to establish this
+    // list once in the code and the to use it for all light computations
+    // of this frame.
+    //
+    update_light_list ( 0 );
+    
+    //--------------------
+    // Within all of this display code, we only check for LIGHT as far
+    // as 'passability' is concerned.  Outside of this function, we'll
+    // always check for real material collisions.  Accordingly we set
+    // and unset the following flag at the beginning/ending of this
+    // function respectively.
+    // (I know that this is not considered a perfectly 'clean' method,
+    //  but since collision checks are _most_ time-critical, I think
+    //  we can live with it this time...)
+    //
+    global_check_for_light_only_collisions_flag = TRUE ;
 
-  clear_screen() ;
-  
-  //--------------------
-  // We generate a list of obstacles (and other stuff) that might
-  // emitt some light.  It should be sufficient to establish this
-  // list once in the code and the to use it for all light computations
-  // of this frame.
-  //
-  update_light_list ( 0 );
-
-  //--------------------
-  // Within all of this display code, we only check for LIGHT as far
-  // as 'passability' is concerned.  Outside of this function, we'll
-  // always check for real material collisions.  Accordingly we set
-  // and unset the following flag at the beginning/ending of this
-  // function respectively.
-  // (I know that this is not considered a perfectly 'clean' method,
-  //  but since collision checks are _most_ time-critical, I think
-  //  we can live with it this time...)
-  //
-  global_check_for_light_only_collisions_flag = TRUE ;
-
-  isometric_show_floor_around_tux_without_doublebuffering ( mask );
-
-  set_up_ordered_blitting_list ( mask );
-
-  blit_preput_objects_according_to_blitting_list ( mask );
-
-  PutMouseMoveCursor ( );
-
-  if ( mask & SHOW_ITEMS )
+    isometric_show_floor_around_tux_without_doublebuffering ( mask );
+    
+    set_up_ordered_blitting_list ( mask );
+    
+    blit_preput_objects_according_to_blitting_list ( mask );
+    
+    PutMouseMoveCursor ( );
+    
+    if ( mask & SHOW_ITEMS )
     {
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  if ( i == item_under_cursor )
-	    PutItem ( i , mask , PUT_NO_THROWN_ITEMS , TRUE ); 
-	  else
-	    PutItem ( i , mask , PUT_NO_THROWN_ITEMS , FALSE ); 
+	    if ( i == item_under_cursor )
+		PutItem ( i , mask , PUT_NO_THROWN_ITEMS , TRUE ); 
+	    else
+		PutItem ( i , mask , PUT_NO_THROWN_ITEMS , FALSE ); 
 	}
     }
- // if ( ! GameConfig . skip_light_radius ) blit_light_radius();
-
-  set_up_ordered_blitting_list ( mask );
-
-  blit_nonpreput_objects_according_to_blitting_list ( mask );
+    // if ( ! GameConfig . skip_light_radius ) blit_light_radius();
+    
+    set_up_ordered_blitting_list ( mask );
+    
+    blit_nonpreput_objects_according_to_blitting_list ( mask );
+    
+    if ( ! GameConfig . skip_light_radius ) blit_light_radius();
   
-  if ( ! GameConfig . skip_light_radius ) blit_light_radius();
-  
-  PutMiscellaneousSpellEffects ( );
-      
-  if (mask & ONLY_SHOW_MAP) 
+    PutMiscellaneousSpellEffects ( );
+    
+    if (mask & ONLY_SHOW_MAP) 
     {
-      // in case we only draw the map, we are done here.  But
-      // of course we must check if we should update the screen too.
-      if ( mask & DO_SCREEN_UPDATE ) 
+	// in case we only draw the map, we are done here.  But
+	// of course we must check if we should update the screen too.
+	if ( mask & DO_SCREEN_UPDATE ) 
+	    our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+	
+	//--------------------
+	// Within all of this display code, we only check for LIGHT as far
+	// as 'passability' is concerned.  Outside of this function, we'll
+	// always check for real material collisions.  Accordingly we set
+	// and unset the following flag at the beginning/ending AND OF COURSE
+	// AT ANY RETURN COMMAND of this
+	// function respectively.
+	// (I know that this is not considered a perfectly 'clean' method,
+	//  but since collision checks are _most_ time-critical, I think
+	//  we can live with it this time...)
+	//
+	global_check_for_light_only_collisions_flag = FALSE ;
+	return;
+    }
+    
+    show_obstacle_labels ( mask );
+    
+    ShowAutomapData();
+    
+    ShowCombatScreenTexts ( mask );
+    
+    if ( Shift_Is_Pressed() )
+    {
+	update_item_text_slot_positions ( );
+	blit_all_item_slots ( );
+    }
+
+    //--------------------
+    // Here are some more things, that are not needed in the level editor
+    // view...
+    //
+    if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
+    {
+	ShowItemAlarm();
+	ShowCharacterScreen ( );
+	ShowSkillsScreen ( );
+	ManageInventoryScreen ( );
+	ShowQuickInventory ();
+	DisplayButtons( );
+	if ( ! GameOver )
+	    DisplayBanner ( );
+    }
+    
+    if ( ServerMode )
+	CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );
+    
+    if ( GameConfig.Inventory_Visible ) 
+    {
+	User_Rect.x = SCREEN_WIDTH/2;
+	User_Rect.w = SCREEN_WIDTH/2;
+    }
+    else if ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) 
+    {
+	User_Rect.x = 0; // SCREEN_WIDTH/2;
+	User_Rect.w = SCREEN_WIDTH/2;
+    }
+    else
+    {
+	User_Rect.x = 0;
+	User_Rect.w = SCREEN_WIDTH;
+    }
+    
+    //--------------------
+    // At this point we are done with the drawing procedure
+    // and all that remains to be done is updating the screen.
+    // Depending on where we did our modifications, we update
+    // an according portion of the screen.
+    //
+    if ( mask & DO_SCREEN_UPDATE )
+    {
 	our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
-
-      //--------------------
-      // Within all of this display code, we only check for LIGHT as far
-      // as 'passability' is concerned.  Outside of this function, we'll
-      // always check for real material collisions.  Accordingly we set
-      // and unset the following flag at the beginning/ending AND OF COURSE
-      // AT ANY RETURN COMMAND of this
-      // function respectively.
-      // (I know that this is not considered a perfectly 'clean' method,
-      //  but since collision checks are _most_ time-critical, I think
-      //  we can live with it this time...)
-      //
-      global_check_for_light_only_collisions_flag = FALSE ;
-      return;
     }
 
-  show_obstacle_labels ( mask );
-
-  ShowAutomapData();
-
-  ShowCombatScreenTexts ( mask );
-
-  //--------------------
-  // Here are some more things, that are not needed in the level editor
-  // view...
-  //
-  if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
-    {
-      ShowItemAlarm();
-      ShowCharacterScreen ( );
-      ShowSkillsScreen ( );
-      ManageInventoryScreen ( );
-      ShowQuickInventory ();
-      DisplayButtons( );
-      if ( ! GameOver )
-	DisplayBanner ( );
-    }
-
-  if ( ServerMode )
-    CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );
-
-  if ( GameConfig.Inventory_Visible ) 
-    {
-      User_Rect.x = SCREEN_WIDTH/2;
-      User_Rect.w = SCREEN_WIDTH/2;
-    }
-  else if ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) 
-    {
-      User_Rect.x = 0; // SCREEN_WIDTH/2;
-      User_Rect.w = SCREEN_WIDTH/2;
-    }
-  else
-    {
-      User_Rect.x = 0;
-      User_Rect.w = SCREEN_WIDTH;
-    }
-
-  //--------------------
-  // At this point we are done with the drawing procedure
-  // and all that remains to be done is updating the screen.
-  // Depending on where we did our modifications, we update
-  // an according portion of the screen.
-  //
-  if ( mask & DO_SCREEN_UPDATE )
-    {
-      our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
-    }
-
-  //--------------------
-  // Within all of this display code, we only check for LIGHT as far
-  // as 'passability' is concerned.  Outside of this function, we'll
-  // always check for real material collisions.  Accordingly we set
-  // and unset the following flag at the beginning/ending AND OF COURSE
-  // AT ANY RETURN COMMAND of this
-  // function respectively.
-  // (I know that this is not considered a perfectly 'clean' method,
-  //  but since collision checks are _most_ time-critical, I think
-  //  we can live with it this time...)
-  //
-  global_check_for_light_only_collisions_flag = FALSE ;
+    //--------------------
+    // Within all of this display code, we only check for LIGHT as far
+    // as 'passability' is concerned.  Outside of this function, we'll
+    // always check for real material collisions.  Accordingly we set
+    // and unset the following flag at the beginning/ending AND OF COURSE
+    // AT ANY RETURN COMMAND of this
+    // function respectively.
+    // (I know that this is not considered a perfectly 'clean' method,
+    //  but since collision checks are _most_ time-critical, I think
+    //  we can live with it this time...)
+    //
+    global_check_for_light_only_collisions_flag = FALSE ;
 
 }; // void AssembleCombatPicture(...)
 

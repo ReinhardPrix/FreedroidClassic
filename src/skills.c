@@ -1159,7 +1159,7 @@ ShowSkillsScreen ( void )
 					       NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
     }
   
-  if ( CursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
+  if ( MouseCursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
        axis_is_active &&
        ! MouseButtonPressedPreviousFrame )
     {
