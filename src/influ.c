@@ -359,8 +359,13 @@ AnimateInfluence (void)
     }
   else
     {
-      Me.phase = TUX_BREATHE_PHASES + ( Me.weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ;
+      Me.phase = ( TUX_BREATHE_PHASES + ( Me.weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
       if ( Me.weapon_swing_time > TOTAL_SWING_TIME ) Me.weapon_swing_time = (-1) ;
+      if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+	{
+	  Me.phase = 0;
+	}
+
     }
 
   if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
