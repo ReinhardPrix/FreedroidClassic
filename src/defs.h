@@ -224,7 +224,18 @@ enum _spell_names
 enum
 { ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 , ONLY_SHOW_MAP_AND_TEXT = 4 , SHOW_GRID = 8 , SHOW_TUX_AND_ENEMIES = 16 , SHOW_TEXT = 32 , SHOW_ITEMS = 64 , OMIT_OBSTACLES = 128 , OMIT_TUX = 256 , OMIT_ENEMIES = 512 , SHOW_OBSTACLE_NAMES = 1024 , ZOOM_OUT = 2048 , OMIT_BLASTS = 4096 };
 
-#define FIXED_ZOOM_OUT_FACT 8.0
+//--------------------
+// This controls the zoom factor for the automap.  Since this uses
+// a different update policy than the level editor, even strong zoom
+// will not be a problem here...
+//
+#define LEVEL_EDITOR_ZOOM_OUT_FACT 3.0
+//--------------------
+// This controls the zoom factor for the automap.  Since this uses
+// a different update policy than the level editor, even strong zoom
+// will not be a problem here...
+//
+#define AUTOMAP_ZOOM_OUT_FACT 8.0
 
 // The color filters are:
 enum

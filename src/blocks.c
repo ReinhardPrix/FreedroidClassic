@@ -54,10 +54,22 @@ make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
 {
   if ( our_iso_image -> zoomed_out_surface == NULL )
     {
-	our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / FIXED_ZOOM_OUT_FACT ) ,
-							  ( 1.0 / FIXED_ZOOM_OUT_FACT ) , FALSE );
+	our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) ,
+							  ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) , FALSE );
     }
 }; // void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_sure_automap_surface_is_there ( obstacle_spec* our_obstacle_spec )
+{
+    our_obstacle_spec -> automap_version = 
+	zoomSurface ( our_obstacle_spec -> image . surface , ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) ,
+		      ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) , FALSE );
+}; // void make_sure_automap_surface_is_there ( iso_image* our_iso_image )
 
 /* ----------------------------------------------------------------------
  * This function loads the Blast image and decodes it into the multiple
@@ -695,25 +707,25 @@ blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , floa
 void
 blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y )
 {
-  SDL_Rect target_rectangle;
+    SDL_Rect target_rectangle;
 
-  target_rectangle . x = 
-    translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , TRUE ) + 
-    our_iso_image -> offset_x / FIXED_ZOOM_OUT_FACT ;
-  target_rectangle . y = 
-    translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE ) +
-    our_iso_image -> offset_y / FIXED_ZOOM_OUT_FACT ;
-
-  if ( use_open_gl )
+    target_rectangle . x = 
+	translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , TRUE ) + 
+	our_iso_image -> offset_x / LEVEL_EDITOR_ZOOM_OUT_FACT ;
+    target_rectangle . y = 
+	translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE ) +
+	our_iso_image -> offset_y / LEVEL_EDITOR_ZOOM_OUT_FACT ;
+    
+    if ( use_open_gl )
     {
-      raise ( SIGSEGV );
-      blit_zoomed_open_gl_texture_to_screen_position ( our_iso_image , target_rectangle . x , 
-						       target_rectangle . y , TRUE , 0.25 ) ;
+	raise ( SIGSEGV );
+	blit_zoomed_open_gl_texture_to_screen_position ( our_iso_image , target_rectangle . x , 
+							 target_rectangle . y , TRUE , 0.25 ) ;
     }
-  else
+    else
     {
-      make_sure_zoomed_surface_is_there ( our_iso_image );
-      our_SDL_blit_surface_wrapper( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
+	make_sure_zoomed_surface_is_there ( our_iso_image );
+	our_SDL_blit_surface_wrapper( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
     }
 
 }; // void blit_zoomed_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
@@ -3593,7 +3605,8 @@ load_all_obstacles ( void )
 	    get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) , TRUE ); 
 	    // obstacle_map [ i ] . automap_version = asdf
 	    make_sure_zoomed_surface_is_there ( & ( obstacle_map [ i ] . image ) ); 
-
+	    make_sure_automap_surface_is_there ( & ( obstacle_map [ i ] ) ); 
+	    
 	    make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
 	}
 	else
@@ -3624,6 +3637,7 @@ load_one_isometric_floor_tile ( int tile_type )
     if ( use_open_gl )
     {
 	get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) , TRUE ) ;
+	
 	make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
     }
     else

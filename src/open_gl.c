@@ -972,7 +972,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
  *
  * ---------------------------------------------------------------------- */
 void
-blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture , int blend) 
+blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture , int blend ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -984,7 +984,7 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   int image_end_x;
   int image_start_y;
   int image_end_y;
-  float zoom_factor = 0.25 ;
+  float zoom_factor = ( 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT ) ;
 
   //--------------------
   // At first we need to enable texture mapping for all of the following.
@@ -1007,9 +1007,10 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
   // let's stick with that possibility for now, especially with the floor.
   //
   //
-  if(blend && GameConfig . transparency) {
-   glEnable(GL_BLEND);
-   glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+  if ( blend && GameConfig . transparency ) 
+  {
+      glEnable(GL_BLEND);
+      glBlendFunc( GL_SRC_ALPHA , GL_ONE );
   }
 
   glEnable( GL_ALPHA_TEST );  

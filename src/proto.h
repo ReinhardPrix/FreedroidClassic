@@ -199,6 +199,7 @@ EXTERN void try_to_load_ingame_item_surface ( int item_type );
 EXTERN void iso_load_bullet_surfaces ( void );
 EXTERN void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image , int use_offset_file ) ;
 EXTERN void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image );
+EXTERN void make_sure_automap_surface_is_there ( obstacle_spec* our_obstacle_spec );
 EXTERN void load_item_surfaces_for_item_type ( int item_type );
 EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
 EXTERN void Load_Skill_Level_Button_Surfaces( void );

@@ -287,7 +287,7 @@ iso_image, *Iso_image;
 typedef struct
 {
     iso_image image;
-    SDL_Surface automap_version;
+    SDL_Surface* automap_version;
     //--------------------
     // Some obstacles will block the Tux from walking through them.
     // Currently only rectangles are supported block areas.  The width

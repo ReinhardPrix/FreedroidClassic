@@ -382,23 +382,23 @@ automap_update_texture_for_square ( int x , int y )
 	    //
 	    // DebugPrintf ( -4 , "\nType is: %d." , our_obstacle -> type );
 	    // DebugPrintf ( -4 , "\nwidth/height:   %d / %d." , 
-	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w ,
-	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h );
-	    // memset ( obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> pixels ,
-	    // 0 , obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w *
-	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h );
+	    // obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
+	    // obstacle_map [ our_obstacle -> type ] . automap_version -> h );
+	    // memset ( obstacle_map [ our_obstacle -> type ] . automap_version -> pixels ,
+	    // 0 , obstacle_map [ our_obstacle -> type ] . automap_version -> w *
+	    // obstacle_map [ our_obstacle -> type ] . automap_version -> h );
 	    // 
 	    // glEnable ( GL_TEXTURE_2D );
 	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
 	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
-			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ,
-			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ) ,
-			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w ,
-			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h ,
+			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
+			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
+			      obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
+			      obstacle_map [ our_obstacle -> type ] . automap_version -> h ,
 			      // GL_RGBA, 
 			      GL_BGRA, 
 			      GL_UNSIGNED_BYTE, 
-			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> pixels );
+			      obstacle_map [ our_obstacle -> type ] . automap_version -> pixels );
     
 	    open_gl_check_error_status ( __FUNCTION__ );
 	}
@@ -577,10 +577,10 @@ show_automap_data_ogl ( void )
 	local_iso_image , 
 	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) + SCREEN_WIDTH / 2 -
 	GameConfig . automap_manual_shift_x -
-	( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) , 
+	( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
 	- ( AUTOMAP_TEXTURE_HEIGHT / 2 ) + SCREEN_HEIGHT / 2 -
 	GameConfig . automap_manual_shift_y -
-	( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) );
+	( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) );
 
     //--------------------
     // Now that the map has been blitted, it's time to add some icon for the

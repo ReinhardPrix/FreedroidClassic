@@ -2800,12 +2800,12 @@ translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float a
 {
   if ( give_x )
     {
-      return ( Me [ player_num ] . pos . x + ( FIXED_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( FIXED_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
+      return ( Me [ player_num ] . pos . x + ( LEVEL_EDITOR_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( LEVEL_EDITOR_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
       // return ( ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
   else
     {
-      return ( Me [ player_num ] . pos . y - ( FIXED_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( FIXED_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
+      return ( Me [ player_num ] . pos . y - ( LEVEL_EDITOR_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( LEVEL_EDITOR_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
       // return ( - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
 	      
@@ -2841,11 +2841,11 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
 {
   if ( give_x )
     {
-      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / (2 * FIXED_ZOOM_OUT_FACT) ) ; 
+      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / ( 2 * LEVEL_EDITOR_ZOOM_OUT_FACT) ) ; 
     }
   else
     {
-      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / ( 2 * FIXED_ZOOM_OUT_FACT ) ) ) ;
+      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / ( 2 * LEVEL_EDITOR_ZOOM_OUT_FACT ) ) ) ;
     }
 }; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 

@@ -4679,6 +4679,18 @@ LevelEditor(void)
 	  }
 
 	  //--------------------
+	  // The tab key should toggle the automap.  Inside the level editor,
+	  // if would also be good, if the automap could immediately reveal
+	  // all the info on the current map.
+	  //
+	  if ( TabPressed () )
+	  {
+	      GameConfig . Automap_Visible = ! GameConfig . Automap_Visible ;
+	      
+	      while ( TabPressed() );
+	  }
+
+	  //--------------------
 	  // The FKEY can be used to toggle between 'floor' and 'obstacle' edit modes
 	  //
 	  if ( FPressed () )
