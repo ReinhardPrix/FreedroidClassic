@@ -210,6 +210,16 @@ EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 200 ] ;
 #endif
 
 #undef EXTERN
+#ifdef _enemy_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+EXTERN int first_index_of_bot_on_level [ MAX_LEVELS ] ;
+EXTERN int last_index_of_bot_on_level [ MAX_LEVELS ] ;
+
+#undef EXTERN
 #ifdef _graphics_c
 #define EXTERN
 #else

@@ -2109,6 +2109,7 @@ GetLivingDroidBelowMouseCursor ( int player_num )
   int TargetFound = (-1);
   float DistanceFound = 1000;
   float CurrentDistance;
+  enemy* this_bot;
 
   // Mouse_Blocks_X = (float)ServerThinksInputAxisX ( player_num ) / (float)Block_Width ;
   // Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( player_num ) / (float)Block_Height ;
@@ -2120,25 +2121,33 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 						     (float) ServerThinksInputAxisX ( player_num ) , 
 						     (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
 
+  //--------------------
+  // We make sure the first and last but indices for the current 
+  // level are at least halfway correct...
+  //
+  occasionally_update_first_and_last_bot_indices ( );
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+  // for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+  for ( i  = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
+	i <=  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
     {
-      if (AllEnemys[i].Status == OUT)
+      this_bot = & ( AllEnemys [ i ] );
+
+      if ( this_bot -> Status == OUT)
 	continue;
-      if (AllEnemys[i].pos.z != Me[ player_num ] . pos . z )
+      if ( this_bot -> pos . z != Me [ player_num ] . pos . z )
 	continue;
-      if ( fabsf ( AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( this_bot -> pos . x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
-      if ( fabsf ( AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
+      if ( fabsf ( this_bot -> pos . y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
 
       CurrentDistance = 
-	( fabsf (AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) ) *
-	( fabsf (AllEnemys[i].pos.x - ( Mouse_Blocks_X ) ) ) +
-	( fabsf (AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) ) *
-	( fabsf (AllEnemys[i].pos.y - ( Mouse_Blocks_Y ) ) ) ;
-
+	( this_bot -> pos . x - Mouse_Blocks_X ) *
+	( this_bot -> pos . x - Mouse_Blocks_X ) +
+	( this_bot -> pos . y - Mouse_Blocks_Y ) *
+	( this_bot -> pos . y - Mouse_Blocks_Y ) ;
 
       if ( CurrentDistance < DistanceFound )
 	{

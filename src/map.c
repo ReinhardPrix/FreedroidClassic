@@ -2868,6 +2868,8 @@ MoveLevelDoors ( int PlayerNum )
   int PlayerIndex ;
   int door_obstacle_index;
 
+
+
   DoorLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
@@ -2887,6 +2889,12 @@ MoveLevelDoors ( int PlayerNum )
   if ( Me [ PlayerNum ] . status == OUT ) return;
 
   // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , DoorLevel -> levelnum , Me [ PlayerNum ] . pos . z );
+
+  //--------------------
+  // We make sure the 'first' and 'last' indices of bots on the
+  // level in question are at least halfway correct.
+  //
+  occasionally_update_first_and_last_bot_indices ( );
 
   //--------------------
   // Now we go through the whole prepared list of doors for this
@@ -2980,7 +2988,9 @@ Error:  Doors pointing not to door obstacles found.",
 	  // see if perhaps one of the enemys is close enough, so that
 	  // the door would still get opened instead of closed.
 	  //
-	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	  // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	  for ( j  = first_index_of_bot_on_level [ DoorLevel->levelnum ] ; 
+		j <=  last_index_of_bot_on_level [ DoorLevel->levelnum ] ; j ++ )	    
 	    {
 	      /* ignore druids that are dead or on other levels */
 	      if ( ( AllEnemys[j].Status == OUT ) ||

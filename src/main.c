@@ -221,6 +221,7 @@ UpdateCountersForThisFrame ( int player_num )
   int i;
   Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   float my_speed ;
+  enemy* this_bot;
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -286,42 +287,43 @@ UpdateCountersForThisFrame ( int player_num )
 
       for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
 	{
+	  this_bot = & ( AllEnemys [ i ] );
+
+	  if ( this_bot -> Status == OUT ) continue;
 	  
-	  if (AllEnemys[i].Status == OUT ) continue;
-	  
-	  if (AllEnemys[i].warten > 0) 
+	  if ( this_bot -> warten > 0 ) 
 	    {
-	      AllEnemys[i].warten -= Frame_Time() ;
-	      if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
+	      this_bot -> warten -= Frame_Time() ;
+	      if ( this_bot -> warten < 0 ) this_bot -> warten = 0;
 	    }
 	  
-	  if (AllEnemys[i].frozen > 0) 
+	  if ( this_bot -> frozen > 0 ) 
 	    {
-	      AllEnemys[i].frozen -= Frame_Time() ;
-	      if (AllEnemys[i].frozen < 0) AllEnemys[i].frozen = 0;
+	      this_bot -> frozen -= Frame_Time() ;
+	      if ( this_bot -> frozen < 0 ) this_bot -> frozen = 0;
 	    }
 	  
-	  if (AllEnemys[i].poison_duration_left > 0) 
+	  if ( this_bot -> poison_duration_left > 0 ) 
 	    {
-	      AllEnemys[i].poison_duration_left -= Frame_Time() ;
-	      if (AllEnemys[i].poison_duration_left < 0) AllEnemys[i].poison_duration_left = 0;
-	      AllEnemys[i].energy -= Frame_Time() * AllEnemys[i].poison_damage_per_sec ;
+	      this_bot -> poison_duration_left -= Frame_Time() ;
+	      if ( this_bot -> poison_duration_left < 0 ) this_bot -> poison_duration_left = 0 ;
+	      this_bot -> energy -= Frame_Time() * this_bot -> poison_damage_per_sec ;
 	    }
 	  
-	  if (AllEnemys[i].paralysation_duration_left > 0) 
+	  if ( this_bot -> paralysation_duration_left > 0 ) 
 	    {
-	      AllEnemys[i].paralysation_duration_left -= Frame_Time() ;
-	      if (AllEnemys[i].paralysation_duration_left < 0) AllEnemys[i].paralysation_duration_left = 0;
-	      // AllEnemys[i].energy -= Frame_Time() * AllEnemys[i].paralysation_damage_per_sec ;
+	      this_bot -> paralysation_duration_left -= Frame_Time() ;
+	      if ( this_bot -> paralysation_duration_left < 0 ) this_bot -> paralysation_duration_left = 0 ;
+	      // this_bot -> energy -= Frame_Time() * this_bot -> paralysation_damage_per_sec ;
 	    }
 	  
-	  if (AllEnemys[i].firewait > 0) 
+	  if ( this_bot -> firewait > 0 ) 
 	    {
-	      AllEnemys[i].firewait -= Frame_Time() ;
-	      if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
+	      this_bot -> firewait -= Frame_Time() ;
+	      if ( this_bot -> firewait <= 0 ) this_bot -> firewait = 0 ;
 	    }
 	  
-	  AllEnemys[i].TextVisibleTime += Frame_Time();
+	  this_bot -> TextVisibleTime += Frame_Time();
 	} // for (i=0;...
 
     }; // things that need to be done only once per program, not per player

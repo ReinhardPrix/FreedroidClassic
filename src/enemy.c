@@ -44,9 +44,6 @@
 void ProcessAttackStateMachine ( int enemynum );
 void AnimateEnemys ( void );
 
-int first_index_of_bot_on_level [ MAX_LEVELS ] ;
-int last_index_of_bot_on_level [ MAX_LEVELS ] ;
-
 /* ----------------------------------------------------------------------
  * In the very beginning of each game, it is not enough to just place the
  * bots onto the right locations.  They must also be integrated into the
@@ -541,21 +538,20 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   int i, j;
   moderately_finepoint step;
   moderately_finepoint CheckPosition;
-
-  occasionally_update_first_and_last_bot_indices();
+  enemy* this_enemy;
 
   // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   // fflush(stdout);
 
-  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
   else LargerDistance=fabsf(y1-y2);
 
   Steps = LargerDistance * 2 + 1 ;   // We check four times on each map tile...
   // if ( Steps == 0 ) return TRUE;
 
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  step.x = (x2 - x1) / ((float)Steps) ;
-  step.y = (y2 - y1) / ((float)Steps) ;
+  step.x = ( x2 - x1 ) / ((float)Steps) ;
+  step.y = ( y2 - y1 ) / ((float)Steps) ;
 
   // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
 
@@ -567,20 +563,19 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
     {
       // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
       // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
-      for ( j = first_index_of_bot_on_level [ OurLevel ] ; j <= last_index_of_bot_on_level [ OurLevel ] ; j ++ )
+      for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
+	    j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
 	{
-	  if ( AllEnemys[j].pos.z != OurLevel ) continue;
-	  if ( AllEnemys[j].Status == OUT ) continue;
-	  if ( AllEnemys[j].energy <= 0 ) continue;
-
-	  // if ( j == ExceptedDroid ) continue;
-	  if ( & ( AllEnemys [ j ] ) == ExceptedRobot ) continue;
-
-	  if ( AllEnemys[j].warten > 0 ) continue;
+	  this_enemy = & ( AllEnemys [ j ] ) ;
+	  if ( this_enemy -> pos.z != OurLevel ) continue;
+	  if ( this_enemy -> Status == OUT ) continue;
+	  if ( this_enemy -> energy <= 0 ) continue;
+	  if ( this_enemy -> warten > 0 ) continue;
+	  if ( this_enemy == ExceptedRobot ) continue;
 
 	  // so it seems that we need to test this one!!
-	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2.0 * Druid_Radius_X ) &&
-	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2.0 * Druid_Radius_Y ) ) 
+	  if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
+	       ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
 	    {
 	      // DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
 	      return FALSE;
@@ -592,16 +587,16 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
       //
       if ( ! ExceptTux )
 	{
-	  if ( ( fabsf( Me[0].pos.x - CheckPosition.x ) < 2*Druid_Radius_X ) &&
-	       ( fabsf( Me[0].pos.y - CheckPosition.y ) < 2*Druid_Radius_Y ) ) 
+	  if ( ( fabsf( Me [ 0 ] . pos.x - CheckPosition.x ) < 2 * Druid_Radius_X ) &&
+	       ( fabsf( Me [ 0 ] . pos.y - CheckPosition.y ) < 2 * Druid_Radius_Y ) ) 
 	    {
 	       DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
 	      return FALSE;
 	    }
 	}
 	      
-      CheckPosition.x += step.x;
-      CheckPosition.y += step.y;
+      CheckPosition . x += step . x;
+      CheckPosition . y += step . y;
     }
 
   return TRUE;

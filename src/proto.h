@@ -561,6 +561,7 @@ EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
 EXTERN int find_free_bullet_index ( void ) ;
 EXTERN int IsActiveLevel ( int levelnum ) ;
 EXTERN void AnimateEnemys ( void ) ;
+EXTERN void occasionally_update_first_and_last_bot_indices ( void );
 
 // ship.c 
 #undef EXTERN
