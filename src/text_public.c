@@ -1230,11 +1230,7 @@ Get_Item_Data ( char* DataPointer )
 	}
       else
 	{
-	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
-The item specification of an item in freedroid.item_archetypes should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.",
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "The item specification of an item in freedroid.item_archetypes should contain an \nanswer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\nThis indicated a corrupted freedroid.ruleset file with an error at least in\nthe item specification section.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
@@ -1250,11 +1246,7 @@ the item specification section.",
 	}
       else
 	{
-	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
-The item specification of an item in freedroid.item_archetypes should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.",
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "The item specification of an item in freedroid.item_archetypes should contain an \nanswer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\nThis indicated a corrupted freedroid.ruleset file with an error at least in\nthe item specification section.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
@@ -1297,10 +1289,7 @@ the item specification section.",
       else
 	{
 	  fprintf(stderr, "\n\nItemIndex: %d.\n" ,ItemIndex ); 
-	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer for the slot installation possiblieties, that was neither \n\
-'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",\
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "The item specification of an item in freedroid.ruleset should contain an \nanswer for the slot installation possiblieties, that was neither \n'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
