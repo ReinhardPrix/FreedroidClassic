@@ -478,6 +478,18 @@ Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
+Action label for this action="unlock_east_gate_of_town"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="EastGateOfTown"
+modify_obstacle_to_type=11
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="East gate of town now unlocked..."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
 Action label for this action="unlock_novice_arena_access_door"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET" 
