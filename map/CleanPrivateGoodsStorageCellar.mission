@@ -188,6 +188,16 @@ Event Action to be triggered by this trigger="open_barrier"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
+//--------------------
+// the following trigger teleports the influencer into the main area
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=11 Lev=0
+Event Action to be triggered by this trigger="teleport_in"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
 // ------------------------------------------------------------
 // The following triggers launch comments of the influ on the situation on
 // board the ship
@@ -209,6 +219,7 @@ Delete the event trigger after it has been triggered=-1
 * Start of an Event Action Subsection *
 Action label for this action="open_barrier"
 Mapchange at X=4 Y=7 Lev=2 to new value=27
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say="Thanks for unlocking the door!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -217,9 +228,21 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="close_barrier"
 Mapchange at X=4 Y=7 Lev=2 to new value=23
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say=""
 Action is mission assignment=-1
 * End of this Event Action Subsection *
+
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_in"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=2 TelY=1 TelLev=2
+Action is Influencer say="Now I should get teleported...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
 
 //--------------------
 // Now the influencer makes simple comments without any other implication
@@ -227,6 +250,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="stay_with_first_mission_comment"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -235,6 +259,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="wow_done_mission_zero"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -246,6 +271,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_zero"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say="Hey, I think I've been assigned a mission!  Cool!"
 Action is mission assignment=0
 * End of this Event Action Subsection *
@@ -254,6 +280,7 @@ Action is mission assignment=0
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_one"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Action is Influencer say="Hey, I think I've been assigned another mission!  Super!"
 Action is mission assignment=1
 * End of this Event Action Subsection *

@@ -630,6 +630,10 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING " Lev="
 #define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING " to new value="
 
+#define EVENT_ACTION_TELEPORT_POS_X_STRING "Teleport to TelX="
+#define EVENT_ACTION_TELEPORT_POS_Y_STRING " TelY="
+#define EVENT_ACTION_TELEPORT_LEVEL_STRING " TelLev="
+
 #define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer say=\""
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
 #define ACTION_LABEL_INDICATION_STRING "Action label for this action=\""
@@ -701,15 +705,21 @@ Get_Game_Events ( char* EventSectionPointer )
       AllTriggeredActions[ EventActionNumber].ActionLabel =
 	ReadAndMallocStringFromData ( EventPointer , ACTION_LABEL_INDICATION_STRING , "\"" ) ;
 
-      // Now we read in the map changing position in x and y coordinates
+      // Now we read in the map changing position in x and y and level coordinates
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_X_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_Y_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y , EndOfEvent );
-
-      // Now we read in the map changing position level
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel , EndOfEvent );
+
+      // Now we read in the teleport target position in x and y and level coordinates
+      ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_POS_X_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].TeleportTarget.x , EndOfEvent );
+      ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_POS_Y_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].TeleportTarget.y , EndOfEvent );
+      ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_LEVEL_STRING , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].TeleportTargetLevel , EndOfEvent );
 
       // Now we read in the new value for that map tile
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
