@@ -914,12 +914,29 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
   static int MOD_Music_Channel = -1;
   char* fpath;
   char filename_raw[5000];
+  static char PreviousFileParameter[5000]="NONE_AT_ALL";
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
 
   if ( !sound_on ) return;
+
+  //--------------------
+  // Maybe the background music switch command given instructs us to initiate
+  // the same background music that has been playing all the while anyway in 
+  // an endless loop.  So in this case, we need not touch anything at all and
+  // just return.
+  //
+  if ( !strcmp ( PreviousFileParameter , filename_raw_parameter ) )
+    {
+      DebugPrintf ( 0 , "\nSwitch BG music instruction just repeats running music... nothing done.\n");
+      return;
+    }
+  else
+    {
+      strcpy ( PreviousFileParameter , filename_raw_parameter );
+    }
 
 
   if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
