@@ -1354,9 +1354,10 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
  *
  * ---------------------------------------------------------------------- */
 void 
-DropItemToTheFloor ( Item DropItemPointer , float x , float y )
+DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
 {
   int i;
+  Level DropLevel = curShip . AllLevels [ levelnum ] ;
 
   // --------------------
   // Now we want to drop the item to the floor.
@@ -1365,11 +1366,11 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y )
   //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurLevel->ItemList [ i ].type == ( -1 ) ) break;
+      if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) break;
     }
   if ( i >= MAX_ITEMS_PER_LEVEL )
     {
-      DebugPrintf( 0 , "\n No free position to drop item!!! ");
+      DebugPrintf ( 0 , "\n No free position to drop item!!! " ) ;
       i = 0 ;
       Terminate( ERR );
     }
@@ -1377,23 +1378,23 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y )
   //--------------------
   // Now we enter the item into the item list of this level
   //
-  CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) , TRUE );
-  // CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
-  // CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
-  CurLevel->ItemList[ i ].pos.x = x ; 
-  CurLevel->ItemList[ i ].pos.y = y ; 
-  CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
-  // CurLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
+  CopyItem( DropItemPointer , & ( DropLevel -> ItemList [ i ] ) , TRUE ) ;
+  // DropLevel->ItemList[ i ].pos.x = Me[0].pos.x;
+  // DropLevel->ItemList[ i ].pos.y = Me[0].pos.y;
+  DropLevel -> ItemList [ i ] . pos . x = x ; 
+  DropLevel -> ItemList [ i ] . pos . y = y ; 
+  DropLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
+  // DropLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
   
   // Me[0].Inventory[ InvPos ].type = ( -1 );
-  DeleteItem( DropItemPointer );
+  DeleteItem ( DropItemPointer ) ;
 
   
-  if ( ClientMode && !ServerMode ) 
+  if ( ClientMode && ! ServerMode ) 
     {
       SendPlayerItemDropToServer ( GetPositionCode ( DropItemPointer )  , 
-				   CurLevel -> ItemList [ i ] . pos . x ,
-				   CurLevel -> ItemList [ i ] . pos . y ) ;
+				   DropLevel -> ItemList [ i ] . pos . x ,
+				   DropLevel -> ItemList [ i ] . pos . y ) ;
     }
 
 }; // void DropItemToTheFloor ( void )
@@ -1425,7 +1426,7 @@ DropHeldItemToTheFloor ( void )
   x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - UserCenter_x ) / ( float ) Block_Width;
   y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - UserCenter_y ) / ( float ) Block_Height; 
 
-  DropItemToTheFloor ( DropItemPointer , x , y ) ;
+  DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
 
 }; // void DropHeldItemToTheFloor ( void )
 
