@@ -82,7 +82,7 @@ Item description text="This is an item. Oh yes! This comment can go over multipl
 
 // Item No. 1
 ** Start of new item specification subsection **
-Item name="Minor Energy Capsule"
+Item name="Minor Health Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -99,12 +99,12 @@ Picture number=27
 Rotation model number=0
 Sound number=5
 Base list price=50
-Item description text="Will not give you the same boost as a full energy capsule, but does an adequate job."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 2
 ** Start of new item specification subsection **
-Item name="Full Energy Capsule"
+Item name="Major Health Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -121,7 +121,7 @@ Picture number=0
 Rotation model number=0
 Sound number=5 
 Base list price=150
-Item description text="The best money can buy- usually used on the lowest energy situations."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -668,7 +668,7 @@ Item description text="This is an item. Oh yes! This comment can go over multipl
 
 // Item No. 22
 ** Start of new item specification subsection **
-Item name="Single laser"
+Item name="Single laser Class A"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1333,12 +1333,12 @@ Picture number=30
 Rotation model number=0
 Sound number=5
 Base list price=50
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 42
 ** Start of new item specification subsection **
-Item name="Full Force Capsule"
+Item name="Major Force Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1355,7 +1355,7 @@ Picture number=29
 Rotation model number=0
 Sound number=5 
 Base list price=150
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 43
@@ -1470,7 +1470,7 @@ Item description text="Another damaging book, this one having a similar effect t
 
 // Item No. 48
 ** Start of new item specification subsection **
-Item name="Medium Energy Capsule"
+Item name="Medium Health Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1487,7 +1487,7 @@ Picture number=34
 Rotation model number=0
 Sound number=5
 Base list price=100
-Item description text="Regain a good amount of energy with this handy item."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 49
@@ -1509,7 +1509,7 @@ Picture number=35
 Rotation model number=0
 Sound number=5
 Base list price=100
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
 
 // Item No. 50

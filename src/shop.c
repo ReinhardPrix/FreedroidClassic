@@ -592,12 +592,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       sprintf ( GoldString , "Your Gold: %d." , (int) Me [ 0 ] . Gold );
       PutStringFont ( Screen , Menu_BFont, 10, 110, GoldString );
-      /*
-      sprintf ( GoldString , "T-RowStart: %d T-IIndex: %d." , TuxRowStart, TuxItemIndex );
-      PutStringFont ( Screen , FPS_Display_BFont, 10, 110, GoldString );
-      sprintf ( GoldString , "RowStart: %d IIndex: %d." , RowStart, ItemIndex );
-      PutStringFont ( Screen , FPS_Display_BFont, 10, 130, GoldString );
-      */
 
       SDL_Flip( Screen );
 
@@ -639,27 +633,43 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( CursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( 0 < RowStart ) RowStart --;
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( CursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( RowStart + RowLength < NumberOfItems ) RowStart ++;
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
 	  else if ( CursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      if ( 0 < TuxRowStart ) TuxRowStart --;
+	      if ( 0 < RowStart ) 
+		{
+		  RowStart --;
+		  if ( ( ItemIndex != (-1) ) && ( ItemIndex >= RowStart + RowLength ) ) ItemIndex --;
+		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
 	  else if ( CursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) TuxRowStart ++;
+	      if ( RowStart + RowLength < NumberOfItems ) 
+		{
+		  RowStart ++;
+		  if ( ( ItemIndex != (-1) ) && ( ItemIndex < RowStart ) ) ItemIndex++;
+		}
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( CursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( 0 < TuxRowStart ) 
+		{
+		  TuxRowStart --;
+		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex >= TuxRowStart + TuxRowLength ) ) TuxItemIndex --;
+		}
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( CursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
+		{
+		  TuxRowStart ++;
+		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex < TuxRowStart ) ) TuxItemIndex ++ ;
+		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }

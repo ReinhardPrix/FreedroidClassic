@@ -193,12 +193,12 @@ ChangeOption=0 ChangeToValue=0
 Subtitle="Welcome to this camp!  I'm Ms. Stone.  I run this shop."
 ReplySample="STO_Welcome_To_This_0.wav"
 ChangeOption=1 ChangeToValue=1
-ChangeOption=2 ChangeToValue=1
-ChangeOption=3 ChangeToValue=1
-ChangeOption=4 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0 // selling is in the buy menu
+ChangeOption=3 ChangeToValue=0 // no identify
+ChangeOption=4 ChangeToValue=0 // no repair
 ChangeOption=5 ChangeToValue=0 // I disable magic stuff now...  We havn't decided about 'magic stuff' issues...
 
-New Option Nr=1 OptionText=" I would like to buy some equippment." 
+New Option Nr=1 OptionText="I would like to trade with you." 
 OptionSample="Tux_STO_I_Would_Like_0.wav"
 Subtitle="Good!  Here is the selection of items I have for sale."
 ReplySample="STO_Good_Here_Is_0.wav"
