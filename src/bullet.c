@@ -408,6 +408,7 @@ CheckBulletCollisions (int num)
   // int level = CurLevel->levelnum;
   int level = CurBullet -> pos.z ;
   static int FBTZaehler = 0;
+  int PlayerNum;
 
   switch (CurBullet->type)
     {
@@ -486,61 +487,77 @@ CheckBulletCollisions (int num)
 	    }
 	}
 
-      // check for collision with influencer
-      xdist = Me[0].pos.x - CurBullet->pos.x;
-      ydist = Me[0].pos.y - CurBullet->pos.y;
-      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+      //--------------------
+      // Now we check for collisions with one of the players.
+      //
+      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
 	{
+	  //--------------------
+	  // Of course only active players and players on the same level
+	  // may be checked!
+	  //
+	  if ( Me [ PlayerNum ] . status == OUT ) continue;
+	  if ( Me [ PlayerNum ] . pos . z != CurBullet -> pos . z ) continue;
 
-	  if ( (!InvincibleMode) && ( CurBullet->miss_hit_influencer == UNCHECKED ) )
+	  //--------------------
+	  // Now we see if the distance to the bullet is as low as hitting
+	  // distance or not.
+	  //
+	  xdist = Me [ PlayerNum ] . pos . x - CurBullet -> pos . x ;
+	  ydist = Me [ PlayerNum ] . pos . y - CurBullet -> pos . y ;
+	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
-	      if ( MyRandom ( 100 ) < CurBullet->to_hit )
+	      
+	      if ( (!InvincibleMode) && ( CurBullet->miss_hit_influencer == UNCHECKED ) )
 		{
-		  CurBullet->miss_hit_influencer = HIT ;
-
-		  //--------------------
-		  // NEW RULE:  Even when the bullet hits, there's still a chance that
-		  // the armour will compensate the shot
-		  //
-		  if ( MyRandom( 100 ) < Me[0].AC )
+		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
 		    {
-		      Me[0].TextVisibleTime = 0;
-		      Me[0].TextToBeDisplayed = "That one went into the armour.";
-		      BulletReflectedSound ( ) ;
+		      CurBullet->miss_hit_influencer = HIT ;
+		      
+		      //--------------------
+		      // NEW RULE:  Even when the bullet hits, there's still a chance that
+		      // the armour will compensate the shot
+		      //
+		      if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
+			{
+			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			  Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
+			  BulletReflectedSound ( ) ;
+			}
+		      else
+			{
+			  
+			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			  Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
+			  Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
+			  
+			  //--------------------
+			  // As the new rule, the influencer after getting hit, must completely
+			  // start anew to recover his weapon from the previous shot
+			  //
+			  Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
+			  Me [ PlayerNum ] . got_hit_time = 0;
+			  
+			  // GotHitSound ();
+			  Influencer_Scream_Sound ( );
+			}
+		      //--------------------
+		      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+		      //
+		      DamageAllEquipment ( PlayerNum ) ;
+		      DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
+		      return;  // This bullet was deleted and does not need to be processed any further...
 		    }
 		  else
 		    {
-
-		      Me[0].TextVisibleTime = 0;
-		      Me[0].TextToBeDisplayed = "Ouch!";
-		      Me[0].energy -= CurBullet->damage;	// loose some energy
-
-		      //--------------------
-		      // As the new rule, the influencer after getting hit, must completely
-		      // start anew to recover his weapon from the previous shot
-		      //
-		      Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
-		      Me[0].got_hit_time = 0;
-
-		      // GotHitSound ();
-		      Influencer_Scream_Sound ( );
+		      CurBullet->miss_hit_influencer = MISS ;
 		    }
-		  //--------------------
-		  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-		  //
-		  DamageAllEquipment(  );
-		  DeleteBullet( num , TRUE ); // we want a bullet-explosion
-		  return;			/* Bullet ist hin */
-		}
-	      else
-		{
-		  CurBullet->miss_hit_influencer = MISS ;
 		}
 	    }
 	}
 
-
-      // check for collision with enemys
+      //--------------------
+      // Check for collision with enemys
       // for (i = 0; i < NumEnemys; i++)
       for (i = 0; i < Number_Of_Droids_On_Ship; i++)
 	{

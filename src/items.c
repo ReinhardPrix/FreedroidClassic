@@ -655,15 +655,17 @@ DamageItem( item* CurItem )
  * This is exactly what this function does:  apply the damage.
  * ---------------------------------------------------------------------- */
 void 
-DamageAllEquipment( void )
+DamageAllEquipment( int PlayerNum )
 {
-  DamageItem( & ( Me[0].weapon_item ) );
-  DamageItem( & ( Me[0].armour_item ) );
-  DamageItem( & ( Me[0].shield_item ) );
-  DamageItem( & ( Me[0].drive_item ) );
-  DamageItem( & ( Me[0].special_item ) );
-  DamageItem( & ( Me[0].aux1_item ) );
-  DamageItem( & ( Me[0].aux2_item ) );
+
+  DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
+  DamageItem ( & ( Me [ PlayerNum ] . armour_item  ) );
+  DamageItem ( & ( Me [ PlayerNum ] . shield_item  ) );
+  DamageItem ( & ( Me [ PlayerNum ] . drive_item   ) );
+  DamageItem ( & ( Me [ PlayerNum ] . special_item ) );
+  DamageItem ( & ( Me [ PlayerNum ] . aux1_item    ) );
+  DamageItem ( & ( Me [ PlayerNum ] . aux2_item    ) );
+
 }; // void DamageAllEquipment( void )
 
 /* ----------------------------------------------------------------------
