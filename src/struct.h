@@ -165,6 +165,7 @@ typedef struct
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
+  int Friendly;                 // is this a friendly droid or is it a MS controlled one?
 }
 enemy, *Enemy;
 

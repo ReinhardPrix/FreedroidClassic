@@ -484,7 +484,15 @@ Sorry...\n\
       TargetRectangle.x=x;
       TargetRectangle.y=y;
     }
-  SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+
+  if ( AllEnemys[Enum].Friendly == 0 ) 
+    {
+      SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+    }
+  else
+    {
+      SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
+    }
 
   //--------------------
   // Now the numbers should be blittet.
@@ -502,8 +510,17 @@ Sorry...\n\
      TargetRectangle.x=x + Digit_Pos_X;
      TargetRectangle.y=y + Digit_Pos_Y;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+11) , 
+
+  if ( AllEnemys[Enum].Friendly == 0 )
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+11) , 
 		       ne_screen, &TargetRectangle );
+    }
+  else
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
+		       ne_screen, &TargetRectangle );
+    }
 
   if ( x == (-1) )
     {
@@ -517,8 +534,17 @@ Sorry...\n\
      TargetRectangle.x=x + Digit_Pos_X + Digit_Length-1;
      TargetRectangle.y=y + Digit_Pos_Y;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+11) , 
-		   ne_screen, &TargetRectangle );
+
+  if ( AllEnemys[Enum].Friendly == 0 )
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+11) , 
+		       ne_screen, &TargetRectangle );
+    }
+  else
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
+		       ne_screen, &TargetRectangle );
+    }
 
   if ( x == (-1) )
     {
@@ -530,8 +556,17 @@ Sorry...\n\
      TargetRectangle.x=x + Digit_Pos_X + 2*(Digit_Length-1);
      TargetRectangle.y=y + Digit_Pos_Y;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
-		   ne_screen, &TargetRectangle );
+
+  if ( AllEnemys[Enum].Friendly == 0 )
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
+		       ne_screen, &TargetRectangle );
+    }
+  else
+    {
+      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
+		       ne_screen, &TargetRectangle );
+    }
 
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 

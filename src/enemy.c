@@ -118,6 +118,7 @@ ClearEnemys (void)
       AllEnemys[i].Parameter1 = 0;
       AllEnemys[i].Parameter2 = 0;
       AllEnemys[i].Marker = 0;
+      AllEnemys[i].Friendly = 0;
     }
 
   return;

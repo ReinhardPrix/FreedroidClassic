@@ -1499,6 +1499,16 @@ Sorry...\n\
       sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
       // printf("\nParameter2 entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
       
+      SearchPointer = strstr ( SearchPointer , "Friendly=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Friendly= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
+      SearchPointer += strlen ( "Friendly=" );
+      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].Friendly );
+      // printf("\nFriendly entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].Friendly );
+      
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = !OUT;

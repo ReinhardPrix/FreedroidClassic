@@ -32,26 +32,31 @@ THESE ITEMS HAVE FIRST PRIORITY:
 2. Extend the game/graphics engine
    a. Takeover sound should be added
    b. Takeover graphics effect (alpha-blending?) should be added
+   c. Collision damage should be done to the "lighter" droid
+   d. dimensions of combat window should be enlarged vertically
+   e. use fixes pictures for each droid.  when no image found-->generate generic ones
+   f. use ints instead of chars to write the map file to the disk
+   g. introduce friendly droids, that can be added via the droids file
 
-5. Write a new ship/area for testing purposes: "The mining community"
-   2.a One deck at least.
-   2.b A second deck
-   2.c One elevator connecting them
-   2.d Draw a side elevation of the mining asteroid
-   2.e Outline:  Command cyborg experiment facility (999, 998, 997, ... 990),
-                 Mining community
-                 Police station
+3. Extend the freedroid world/missions
+   DONE one deck at least.
+   DONE a second deck
+   DONE one elevator connecting them
+   DONE draw a side elevation of the new area
+	(Outline for later:  other settings: )
+         Command cyborg experiment facility (999, 998, 997, ... 990),
+                 Mining community, Police station
              
-3. Implement the new and advanced combat behaviour:
-     * Introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
-       That should give the player a chance to compete.  Otherywise they might become too powerful.
-     * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
-     * Fireing state machine && Movement state machine: both independent decision processes
-     * Changing of waypoints not randomly but decision as demanded
-       by the combat situation
-     * Movement to new waypoint immediately if threatened by enemy fire
+4. New combat behaviour
+   a. introduce reaction time:  States and decisions only made every e.g. 2 seconds or so.
+      (that should give the player a chance to compete.  Otherywise they might become too powerful.)
+   b. analyze current state and set flags: WILL_BE_HIT_BY_BULLET
+   c.                                      HAVE_DIRECT_LINE_OF_FIRE_AT_INFLU
+   d.                                      HAVE_BETTER_WAYPOINT
+   e. split up state machines for fireing and movement
+   f. movement to new waypoint immediately if threatened by enemy fire
 
-4. Add more doku extra lines to the 
+5. Add more doku extra lines to the 
    a. external game dat file, 
    b. droids files and 
    c. mission files.
@@ -71,6 +76,8 @@ DONE Adapt the crew file format, so that you can enter types by
 
 THESE ITEMS ARE OF THIRD PRIORITY:
 ----------------------------------
+
+(?) Update the task list on the sourceforge
 
 (?) Read more about SDL_net &&  Add networking support
 
@@ -92,10 +99,8 @@ more detailed list of planned activities:
 
 *) "clean-up" code, esp. get rid of all the obsolete "Screens"..
 *) Takeover game: rahmen, points etc + Keyboard-sensitivity better
-*) have a look at Map-editor and save-function
-
 *) Add the Homepage-Makefile into the general autoconf/automake machinery
---> Perhaps get the save routine in the leveleditor to work?? just a suggestion
+
 
 
 limo
