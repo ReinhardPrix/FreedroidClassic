@@ -8370,10 +8370,10 @@ beginning_of_map
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   8   8   8   8   8  28   8   6   6   6   7   7   7   7   7   7   7   7   7   9   9   9   9   7   7   6   6  24  20   4   4   6   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   8   8   8   8   8   8   8   6   6   7   7   9   9   7   7   7   7   7   7   7   7   9   9   7   6   6   7  20   4   4   4   6   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   8   8   8   8   8   8   6   6   6   7   9   8   8   8   7   7   7   7   7   7   7   7   9   7   6   6   7   7   4   4   4   6   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4  18   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   7   8   8   6   6   6   6   6   7   8   8   9   9   9   8   9   7   7   7   7   7   7   6   7   6   6   7   7   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4  18   7  14   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   8   8   8   6   4   6   4   7   9   8   9   9   9   9   9   8   8   7   7   7   6   6   7   7   6   6   7   7   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4  18  18  18  18  18   7   7  14   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   7   8   8   8   6   4   6   7   7   9   8   9   9   9   9   9   8   8   7   7   6   7   6   7   7   6   6   7   7   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   7   7   7   7   7   7   7  13   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   7   8   8   8   6   4   6   7   7   9   8   8   9   9   9   9   7   7   7   9   7   7   6   7   7   6   6  14   7   7   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4  18   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   7   8   8   6   6   6   6   6   7   8   8   9   9   9   8   9   7   7   7   7   7   7   6   7   6   6   7   7   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4  18   7  14   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   8   8   8   6   4   6   4   7   9   8   9   9   9   9   9   8   8   7   7   7   6   6   7   7   6   6   7   7   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4  18  18  18  18  18   7   7  14   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   8   8   8   6   4   6   7   7   9   8   9   9   9   9   9   8   8   7   7   6   7   6   7   7   6   6   7   7   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   7   7   7   7   7   7   7  13   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   7   7   8   8   8   6   4   6   7   7   9   8   8   9   9   9   9   7   7   7   9   7   7   6   7   7   6   6  14   7   7   4   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   7   7   7   4   7   7  14   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   8   8   8  28   8   6   6   7   7   7   7   6   9   9   7   7   7   6   7   7   9   8   7   7   7   6  24  20   7   7   4   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   7   7   7   7   7   7  14   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   8   8   8   8   8   6   6   7   7   7   7   7   6   7   9   6   7   7   7   9   8   8   7   7   6  24  20   4   4   7   4   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   7   7   7   7   7   7   7  14   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   7   8   8   8   8   6   4   6   6   7   7   7   7   6   6   6   7   8   8   8   9   9   9   6   7   6  13   4   4  18  19   7  19   4   4   4   4 
@@ -8722,7 +8722,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8731,21 +8731,17 @@ ob_type=2 ob_x=32.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
-ob_type=1 ob_x=50.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
-ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
-ob_type=1 ob_x=50.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
-ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 
@@ -9111,7 +9107,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=22 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=21 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -9309,7 +9305,7 @@ ob_type=2 ob_x=75.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=76.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=22 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=21 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9440,7 +9436,7 @@ ob_type=117 ob_x=67.50 ob_y=13.50 ob_na=-1
 ob_type=121 ob_x=67.50 ob_y=14.50 ob_na=-1 
 ob_type=116 ob_x=68.50 ob_y=14.50 ob_na=-1 
 ob_type=116 ob_x=70.50 ob_y=14.50 ob_na=-1 
-ob_type=19 ob_x=69.50 ob_y=12.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=12.50 ob_na=-1 
 ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=0 
 ob_type=36 ob_x=77.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=78.50 ob_y=0.50 ob_na=-1 
@@ -9606,6 +9602,12 @@ ob_type=37 ob_x=81.50 ob_y=15.50 ob_na=-1
 ob_type=37 ob_x=81.50 ob_y=11.50 ob_na=-1 
 ob_type=41 ob_x=81.50 ob_y=16.50 ob_na=-1 
 ob_type=40 ob_x=81.50 ob_y=10.50 ob_na=-1 
+ob_type=2 ob_x=50.50 ob_y=26.00 ob_na=-1 
+ob_type=2 ob_x=50.50 ob_y=30.00 ob_na=-1 
+ob_type=1 ob_x=51.00 ob_y=29.50 ob_na=-1 
+ob_type=1 ob_x=51.00 ob_y=28.50 ob_na=-1 
+ob_type=1 ob_x=51.00 ob_y=27.50 ob_na=-1 
+ob_type=1 ob_x=51.00 ob_y=26.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9672,7 +9674,6 @@ New item: type=20  X=45.000000  Y=23.000000  AC=5  DoDamage=0  ModifyDamage=0  M
 New item: type=19  X=42.000000  Y=22.000000  AC=1  DoDamage=0  ModifyDamage=0  MaxDur=17  CurDur=11.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=25  X=48.000000  Y=19.000000  AC=6  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=19  X=6.000000  Y=2.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=11  X=22.000000  Y=80.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=27  X=40.250000  Y=28.500000  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=20.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
