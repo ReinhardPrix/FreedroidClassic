@@ -713,8 +713,8 @@ Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me.type].class],
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
-      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0)
-	ItemName = ItemMap[type].ItemName;
+      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
+	ItemName = ItemMap[type].ItemName;                     /* does not segfault */
       else 
 	ItemName = None;
 
