@@ -1353,6 +1353,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   Uint8 color;
   SDL_Surface *tmp, *tmp2;
   SDL_Surface *noise_tiles[NOISE_TILES];
+  SDL_Rect clip_rect;
   char used_tiles[NOISE_TILES/2+1];
   int next_tile;
   int now;
@@ -1406,6 +1407,9 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       memmove(used_tiles,used_tiles+1,sizeof(used_tiles)-1);
       used_tiles[sizeof(used_tiles)-1] = next_tile;
       
+      // make sure we can blit the full rect without clipping! (would change *rect!)
+      SDL_GetClipRect (ne_screen, &clip_rect);
+      SDL_SetClipRect (ne_screen, NULL);
       // set it
       SDL_BlitSurface (noise_tiles[next_tile], NULL, ne_screen, rect);
       SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
@@ -1415,6 +1419,9 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 	break;
 
     } // while (! finished)
+
+  //restore previous clip-rectange
+  SDL_SetClipRect (ne_screen, &clip_rect);
 
   for (i=0; i<NOISE_TILES; i++)
     free(noise_tiles[i]);
