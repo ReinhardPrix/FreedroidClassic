@@ -273,6 +273,7 @@ enum
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE 19
 #define CHAT_DIALOG_BACKGROUND_PICTURE_CODE 20
 #define CHAT_DIALOG_BACKGROUND_EXCERPT_CODE 21
+#define LEVEL_EDITOR_WALL_MENU_CODE 22
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 
@@ -765,7 +766,8 @@ enum _status
 enum _level_editor_edit_modes
   {
     LEVEL_EDITOR_EDIT_FLOOR = 3,
-    LEVEL_EDITOR_EDIT_OBSTACLES = 4
+    LEVEL_EDITOR_EDIT_OBSTACLES = 4,
+    LEVEL_EDITOR_EDIT_WALLS = 5
   };
 
 enum _enemy_combat_state_machine_states

@@ -63,6 +63,80 @@ SDL_Rect EditorBannerRect = { 0 , 0 , 640 , 90 } ;
 int FirstBlock = 0 ;
 int Highlight = 3 ;
 
+int number_of_walls;
+
+int wall_indices[ 5000 ] = { 
+  ISO_V_WALL ,
+  ISO_H_WALL ,
+  ISO_V_WALL_WITH_DOT ,
+  ISO_H_WALL_WITH_DOT ,
+  ISO_GREY_WALL_END_W ,
+  ISO_GREY_WALL_END_N ,
+  ISO_GREY_WALL_END_E ,
+  ISO_GREY_WALL_END_S ,
+  ISO_CAVE_WALL_H ,
+  ISO_CAVE_WALL_V ,
+  ISO_CAVE_CORNER_NE ,
+  ISO_CAVE_CORNER_SE ,
+  ISO_CAVE_CORNER_NW ,
+  ISO_CAVE_CORNER_SW ,
+  ISO_CAVE_WALL_END_W ,
+  ISO_CAVE_WALL_END_N ,
+  ISO_CAVE_WALL_END_E ,
+  ISO_CAVE_WALL_END_S ,
+  ISO_V_WOOD_FENCE ,
+  ISO_H_WOOD_FENCE , 
+  ISO_V_DENSE_FENCE ,
+  ISO_H_DENSE_FENCE ,
+  ISO_V_MESH_FENCE ,
+  ISO_H_MESH_FENCE , 
+  ISO_V_WIRE_FENCE ,
+  ISO_H_WIRE_FENCE ,
+  ISO_V_CURTAIN ,
+  ISO_H_CURTAIN ,
+  ISO_THICK_WALL_H ,
+  ISO_THICK_WALL_V ,
+  ISO_THICK_WALL_CORNER_NE ,
+  ISO_THICK_WALL_CORNER_SE ,
+  ISO_THICK_WALL_CORNER_NW ,
+  ISO_THICK_WALL_CORNER_SW ,
+  ISO_THICK_WALL_T_N ,
+  ISO_THICK_WALL_T_E ,
+  ISO_THICK_WALL_T_S ,
+  ISO_THICK_WALL_T_W ,
+  ISO_BRICK_WALL_H ,
+  ISO_BRICK_WALL_V ,
+  ISO_BRICK_WALL_END ,
+  ISO_BRICK_WALL_CORNER_1 , 
+  ISO_BRICK_WALL_CORNER_2 , 
+  ISO_BRICK_WALL_CORNER_3 , 
+  ISO_BRICK_WALL_CORNER_4 ,
+  ISO_ROOM_WALL_V_RED ,
+  ISO_ROOM_WALL_H_RED ,
+  ISO_ROOM_WALL_V_GREEN ,
+  ISO_ROOM_WALL_H_GREEN ,
+  ISO_OUTER_WALL_N1,
+  ISO_OUTER_WALL_N2,
+  ISO_OUTER_WALL_N3,
+  ISO_OUTER_WALL_S1,
+  ISO_OUTER_WALL_S2,
+  ISO_OUTER_WALL_S3,
+
+  ISO_OUTER_WALL_E1,
+  ISO_OUTER_WALL_E2,
+  ISO_OUTER_WALL_E3,
+  ISO_OUTER_WALL_W1,
+  ISO_OUTER_WALL_W2,
+  ISO_OUTER_WALL_W3,
+  
+  ISO_OUTER_WALL_CORNER_1 ,
+  ISO_OUTER_WALL_CORNER_2 ,
+  ISO_OUTER_WALL_CORNER_3 ,
+  ISO_OUTER_WALL_CORNER_4 ,
+  -1
+};
+
+
 enum
   {
     JUMP_THRESHOLD_NORTH = 1,
@@ -128,6 +202,30 @@ create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float p
 {
   int i;
   int free_index = ( -1 ) ;
+
+  //--------------------
+  // The special 'obstacle_type' (-1) can be given, which means that this
+  // function will have to find out the proper type all by itself...
+  //
+  if ( our_obstacle_type == (-1) )
+    {
+      switch ( GameConfig . level_editor_edit_mode )
+	{
+	case LEVEL_EDITOR_EDIT_FLOOR:
+	  break;
+	case LEVEL_EDITOR_EDIT_OBSTACLES:
+	  our_obstacle_type = Highlight ;
+	  break;
+	case LEVEL_EDITOR_EDIT_WALLS:
+	  our_obstacle_type = wall_indices [ Highlight ] ;
+	  break;
+	default:
+	  GiveStandardErrorMessage ( "create_new_obstacle_on_level (...)" , "\
+Illegal level editor mode encountered!" , 
+				     PLEASE_INFORM , IS_FATAL );
+	  break;
+	}	  
+    }
 
   //--------------------
   // First we find a free obstacle index to insert our new obstacle
@@ -538,6 +636,26 @@ ClickWasInEditorBannerRect( void )
  *
  * ---------------------------------------------------------------------- */
 void
+update_number_of_walls ( void )
+{
+  int i;
+
+  for ( i = 0 ; i < 5000 ; i ++ )
+    {
+      if ( wall_indices [ i ] == (-1) )
+	{
+	  number_of_walls = i ;
+	  break;
+	}
+    }
+
+}; // void update_number_of_walls ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 HandleBannerMouseClick( void )
 {
   SDL_Rect TargetRect;
@@ -584,6 +702,8 @@ HandleBannerMouseClick( void )
   // Now some extra security against selecting indices that would point to
   // undefined objects (floor tiles or obstacles) later
   // The following should never occur now - SN
+  //
+  update_number_of_walls ( ) ;
   if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
     {
       if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
@@ -593,6 +713,11 @@ HandleBannerMouseClick( void )
     {
       if ( Highlight >= NUMBER_OF_OBSTACLE_TYPES )
 	Highlight = NUMBER_OF_OBSTACLE_TYPES - 1;
+    }
+  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+    {
+      if ( Highlight >= number_of_walls )
+	Highlight = number_of_walls - 1;
     }
 
 }; // void HandleBannerMouseClick( void )
@@ -611,7 +736,10 @@ ShowLevelEditorTopMenu( int Highlight )
   SDL_Surface *tmp = NULL;
   float zoom_factor;
 
-  blit_special_background ( LEVEL_EDITOR_BANNER_CODE );
+  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+    blit_special_background ( LEVEL_EDITOR_WALL_MENU_CODE );
+  else
+    blit_special_background ( LEVEL_EDITOR_BANNER_CODE );
 
   //--------------------
   // Time to fill something into the top selection banner, so that the
@@ -708,10 +836,64 @@ ShowLevelEditorTopMenu( int Highlight )
 	  if ( selected_index < NUMBER_OF_OBSTACLE_TYPES -1 ) selected_index ++ ;
 	}
     }
+  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+    {
+      for ( i = 0 ; i < 9 ; i ++ )
+	{
+	  update_number_of_walls();
+
+	  if ( selected_index >= number_of_walls ) continue ;
+
+	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+
+	  //--------------------
+	  // We find the proper zoom_factor, so that the obstacle in question will
+	  // fit into one tile in the level editor top status selection row.
+	  //
+	  if ( use_open_gl )
+	    {
+	      zoom_factor = min ( 
+				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_width ) ,
+				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_height ) );
+	    }
+	  else
+	    {
+	      zoom_factor = min ( 
+				 ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->w ) ,
+				 ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->h ) );
+	    }
+
+	  if ( use_open_gl )
+	    {
+	      blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
+	    }
+	  else
+	    {
+	      //--------------------
+	      // We create a scaled version of the obstacle in question
+	      //
+	      tmp = zoomSurface ( obstacle_map [ wall_indices [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
+	      
+	      //--------------------
+	      // Now we can show and free the scaled verion of the floor tile again.
+	      //
+	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
+	      SDL_FreeSurface ( tmp );
+	    }
+
+	  if ( selected_index == Highlight ) 
+	    HighlightRectangle ( Screen , TargetRectangle );
+	  
+	  if ( selected_index < number_of_walls -1 ) selected_index ++ ;
+	}
+    }
   else
     {
       GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , "\
-Unhandles level editor edit mode received.",
+Unhandled level editor edit mode received.",
 				 PLEASE_INFORM , IS_FATAL );
     }
 
@@ -2705,47 +2887,47 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   */
   if (KP1Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 1.0 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 1.0 );
       while ( KP1Pressed() );
     }
   if (KP2Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 1.0 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 1.0 );
       while ( KP2Pressed() );
     }
   if (KP3Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 1.0 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 1.0 );
       while ( KP3Pressed() );
     }
   if (KP4Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
       while ( KP4Pressed() );
     }
   if (KP5Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 0.5 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) + 0.5 );
       while ( KP5Pressed() );
     }
   if (KP6Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 0.5 );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) + 0.5 );
       while ( KP6Pressed() );
     }
   if (KP7Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) );
       while ( KP7Pressed() ); 
     }
   if ( KP8Pressed() ) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
       while ( KP8Pressed() ); 
     }
   if (KP9Pressed()) 
     {
-      create_new_obstacle_on_level ( EditLevel , Highlight , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) );
+      create_new_obstacle_on_level ( EditLevel , -1 , ((int)Me[0].pos.x) + 1.0 , ((int)Me[0].pos.y) );
       while ( KP9Pressed() ); 
     }
   if (DPressed())
@@ -3610,9 +3792,19 @@ LevelEditor(void)
 		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
 	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
 		{
+		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_WALLS ;
+		}
+	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+		{
 		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
 		}
-	      while ( FPressed() );
+	      else
+		{
+		  GiveStandardErrorMessage ( "LevelEditor(...)" , "\
+Illegal editor mode encountered!" , 
+					     PLEASE_INFORM , IS_FATAL );
+		}
+	      while ( FPressed ( ) );
 	      Highlight = 0 ;
 	      FirstBlock = 0 ;
 	    }
@@ -3970,6 +4162,11 @@ LevelEditor(void)
 		    {
 		      add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , Highlight );
 		    }
+		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
+		    {
+		      add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , wall_indices [ Highlight ] );
+		    }
+
 		}
 	    }
 
