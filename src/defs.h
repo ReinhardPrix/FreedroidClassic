@@ -38,6 +38,8 @@
 // **********************************************************************
 // Konstants about the size (and mem?) of pixmaps
 
+#define NEW_ENGINE
+
 #define BLOCKBREITE 		64
 #define BLOCK_WIDTH		BLOCKBREITE
 
