@@ -900,18 +900,21 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
     }
   NumberOfOptionsGiven = i;
 
-
   first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
 
-  SetCurrentFont ( Menu_BFont );
-  // SetCurrentFont ( FPS_Display_BFont );
-  h = FontHeight ( GetCurrentFont() );
-
-  // DisplayText ( InitialText , 50 , 50 , &Full_Screen_Rect );
-
+  //--------------------
+  // We need to prepare the background for the menu, so that
+  // it can be accessed with proper speed later...
+  //
   InitiateMenu( BackgroundToUse );
-
   StoreMenuBackground ();
+
+  //--------------------
+  // Now that the possible font-changing background assembling is
+  // done, we can finally set the right font for the menu itself.
+  //
+  SetCurrentFont ( Menu_BFont );
+  h = FontHeight ( GetCurrentFont() );
 
   while ( 1 )
     {
@@ -945,7 +948,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  MenuItemDeselectedSound();
 	  return ( -1 );
 	}
-      if ( EnterPressed() || SpacePressed() ) 
+      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
 	{
 	  //--------------------
 	  // The space key or enter key or left mouse button all indicate, that
@@ -970,7 +973,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	    }
 	  else
 	    {
-	      while ( EnterPressed() || SpacePressed() );
+	      while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
 	      MenuItemSelectedSound();
 	      return ( MenuPosition );
 	    }
@@ -1165,15 +1168,13 @@ enum
   return;
 }; // void HealerMenu ( void )
 
-/*@Function============================================================
-@Desc: This function prepares the screen for the big Escape menu and 
-       its submenus.  This means usual content of the screen, i.e. the 
-       combat screen and top status bar, is "faded out", the rest of 
-       the screen is cleared.  This function resolves some redundance 
-       that occured since there are so many submenus needing this.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function prepares the screen for the big Escape menu and 
+ * its submenus.  This means usual content of the screen, i.e. the 
+ * combat screen and top status bar, is "faded out", the rest of 
+ * the screen is cleared.  This function resolves some redundance 
+ * that occured since there are so many submenus needing this.
+ * ---------------------------------------------------------------------- */
 void 
 InitiateMenu( char* BackgroundToUse )
 {
@@ -1197,7 +1198,7 @@ InitiateMenu( char* BackgroundToUse )
     }
 
   SDL_SetClipRect( Screen, NULL );
-} // void InitiateMenu(void)
+}; // void InitiateMenu(void)
 
 /*@Function============================================================
 @Desc: This function provides a convenient cheat menu, so that any 
@@ -1721,9 +1722,15 @@ enum
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
+  //--------------------
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
+
+  //--------------------
+  // Escape must be expected to be pressed right now for this menu to
+  // to be entered, so we wait until the escape key is released...
+  //
   while ( EscapePressed() );
 
   while (!Weiter)
@@ -1827,14 +1834,170 @@ enum
 
 }; // void EscapeMenu( void )
 
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
+void
+New_GraphicsSound_Options_Menu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+  char Options0[1000];
+  char Options1[1000];
+  char Options2[1000];
+  char Options3[1000];
+  char Options4[1000];
+  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
+			"" , "" , "" , "" , "" };
+  enum
+    { 
+      SET_BG_MUSIC_VOLUME=1, 
+      SET_SOUND_FX_VOLUME, 
+      SET_GAMMA_CORRECTION, 
+      SET_FULLSCREEN_FLAG, 
+      CW_SIZE,
+      LEAVE_OPTIONS_MENU 
+    };
 
-@Ret:  none
-* $Function----------------------------------------------------------*/
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      sprintf( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      sprintf( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      sprintf( Options2 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      sprintf( Options3 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      sprintf( Options4 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
+      MenuTexts[0]=Options0;
+      MenuTexts[1]=Options1;
+      MenuTexts[2]=Options2;
+      MenuTexts[3]=Options3;
+      MenuTexts[4]=Options4;
+      MenuTexts[5]="Back";
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+
+      switch (MenuPosition) 
+	{
+
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+
+	case SET_BG_MUSIC_VOLUME:
+
+	  if ( RightPressed() ) 
+	    {
+	      while ( RightPressed());
+	      if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
+	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	    }
+
+
+	  if ( LeftPressed() ) 
+	    {
+	      while (LeftPressed());
+	      if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
+	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	    }
+
+	  break;
+
+	case SET_SOUND_FX_VOLUME:
+
+	  if ( RightPressed() ) 
+	    {
+	      while ( RightPressed());
+	      if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
+	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+	    }
+
+	  if ( LeftPressed() ) 
+	    {
+	      while (LeftPressed());
+	      if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
+	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+	    }
+
+	  break;
+
+	case SET_GAMMA_CORRECTION:
+
+	  if ( RightPressed() ) 
+	    {
+	      while ( RightPressed());
+	      GameConfig.Current_Gamma_Correction+=0.05;
+	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	    }
+
+	  if ( LeftPressed() ) 
+	    {
+	      while (LeftPressed());
+	      GameConfig.Current_Gamma_Correction-=0.05;
+	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	    }
+
+	  break;
+
+	case SET_FULLSCREEN_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  SDL_WM_ToggleFullScreen (Screen);
+	  fullscreen_on = !fullscreen_on;
+	  break;
+
+	case CW_SIZE:
+	  while (EnterPressed() || SpacePressed() );
+	  
+	  if (classic_user_rect)
+	    {
+	      classic_user_rect = FALSE;
+	      Copy_Rect (Full_User_Rect, User_Rect);
+	    }
+	  else
+	    {
+	      classic_user_rect = TRUE;
+	      Copy_Rect (Classic_User_Rect, User_Rect);
+	    }
+	  
+	  ClearGraphMem();
+	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	  SDL_Flip( Screen );
+	  
+	  break;
+
+	case LEAVE_OPTIONS_MENU:
+	  while (EnterPressed() || SpacePressed() );
+	  Weiter=TRUE;
+	  break;
+
+	default: 
+	  break;
+
+	} 
+    }
+
+  ClearGraphMem ();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+  InitBars = TRUE;
+
+  return;
+
+}; // void New_GraphicsSound_Options_Menu (void)
+
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
 void
 GraphicsSound_Options_Menu (void)
 {
@@ -1842,12 +2005,14 @@ GraphicsSound_Options_Menu (void)
   int MenuPosition=1;
 #define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
-  { SET_BG_MUSIC_VOLUME=1, 
+  { 
+    SET_BG_MUSIC_VOLUME=1, 
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
     CW_SIZE,
-    LEAVE_OPTIONS_MENU };
+    LEAVE_OPTIONS_MENU 
+  };
 
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
@@ -2196,14 +2361,12 @@ Droid_Talk_Options_Menu (void)
 
 }; // Droid_Talk_Options_Menu
 
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
 void
 Options_Menu (void)
 {
@@ -2211,15 +2374,13 @@ Options_Menu (void)
   int MenuPosition=1;
   char* MenuTexts[10];
 enum
-  { GRAPHICS_SOUND_OPTIONS=1, 
+  { 
+    GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
     SAVE_OPTIONS, 
-    LEAVE_OPTIONS_MENU };
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
+    LEAVE_OPTIONS_MENU 
+  };
 
   MenuTexts[0]="Graphics & Sound";
   MenuTexts[1]="Droid Talk";
@@ -2234,7 +2395,8 @@ enum
 
   while ( !Weiter )
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2243,7 +2405,7 @@ enum
 	  break;
 	case GRAPHICS_SOUND_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
-	  GraphicsSound_Options_Menu();
+	  New_GraphicsSound_Options_Menu();
 	  break;
 	case DROID_TALK_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
