@@ -865,24 +865,14 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
   char *fpath;
-  char *ModPointer;
   char fname[500];
-  int i;
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   strcpy( fname, Druidmap[Number].druidname );
-  strcat( fname , ".jpg" );
+  strcat( fname , ".png" );
 
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-
-  /*
-  ModPointer = strstr ( fpath , "//" );
-  for ( i = 0 ; i < 10 ; i ++ )
-    {
-      ModPointer[i]=ModPointer[i+1];
-    }
-  */
 
   if ( (tmp=IMG_Load (fpath)) == NULL )
     {

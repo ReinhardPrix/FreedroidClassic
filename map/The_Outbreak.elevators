@@ -46,7 +46,7 @@ The data in this file has the format:
 
 Elevator Number=0 ElRowX= 68 ElRowY= 18 ElRowW=16 ElRowH=160
 Elevator Number=1 ElRowX=132 ElRowY= 66 ElRowW=16 ElRowH=208
-Elevator Number=2 ElRowX=228 ElRowY= 34 ElRowW=16 ElRowH= 30
+Elevator Number=2 ElRowX=119 ElRowY= 69 ElRowW=16 ElRowH=135
 Elevator Number=3 ElRowX=308 ElRowY= 18 ElRowW=16 ElRowH= 78
 Elevator Number=4 ElRowX=274 ElRowY= 50 ElRowW=16 ElRowH= 73
 Elevator Number=5 ElRowX=356 ElRowY=130 ElRowW=16 ElRowH= 46
