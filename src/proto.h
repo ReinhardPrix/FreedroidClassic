@@ -413,6 +413,9 @@ EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString (int MaxLen, int echo);
+EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
+EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
+
 
 /* rahmen.c */
 #undef EXTERN
