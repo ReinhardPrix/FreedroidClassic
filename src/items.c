@@ -2855,6 +2855,79 @@ get_floor_item_index_under_mouse_cursor ( int player_num )
 }; // int get_floor_item_index_under_mouse_cursor ( int player_num )
 
 /* ----------------------------------------------------------------------
+ * When the player has given an identification command, i.e. triggered
+ * the mouse button when in identification mode, we see if maybe the
+ * mouse cursor has pointed to an item, that can be identified.  In that
+ * case, we'll try to identify it, otherwise we'll simply cancel the
+ * whole identification operation.
+ * ---------------------------------------------------------------------- */
+void
+handle_player_identification_command( int player_num )
+{
+    point Inv_GrabLoc;
+    point CurPos;
+    int Grabbed_InvPos = (-1) ;
+    int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+
+    //--------------------
+    // If the inventory sceen isn't open at all, then we can cancel
+    // the whole operation right away
+    //
+    if ( ! GameConfig.Inventory_Visible ) 
+	return;
+
+    // --------------------
+    // We will need the current mouse position on several spots...
+    //
+    CurPos . x = GetMousePos_x() ;
+    CurPos . y = GetMousePos_y()  ;
+    
+    //--------------------
+    // Here we know, that the identify skill is selected, therefore we try to 
+    // repair the item currently under the mouse cursor.
+    //
+    if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+    {
+	Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+	
+	DebugPrintf( 0 , "\nTrying to repair item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	
+	Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	DebugPrintf( 0 , "\nTrying to repair inventory entry no.: %d." , Grabbed_InvPos );
+	
+	if ( Grabbed_InvPos == (-1) )
+	{
+	    // Nothing grabbed, so we need not do anything more here..
+	    DebugPrintf( 0 , "\nIdentifying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+	}
+	else
+	{
+	    if ( Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified == TRUE )
+	    {
+		PlayOnceNeededSoundSample ( "../effects/is_already_indentif.wav" , FALSE , FALSE );
+	    }
+	    else
+	    {
+		if ( Me [ 0 ] . mana >= SpellCost )
+		{
+		    Me [ 0 ] . mana -= SpellCost;
+		    Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
+		    Play_Spell_ForceToEnergy_Sound( );
+		    Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
+		}
+		else
+		{
+		    Me [ 0 ] . TextVisibleTime = 0;
+		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+		    Not_Enough_Mana_Sound(  );
+		}
+	    }
+	}
+    }
+}; // void handle_player_identification_command( int player_num )
+
+/* ----------------------------------------------------------------------
  * This function display the inventory screen and also checks for mouse
  * actions in the invenotry screen.
  * ---------------------------------------------------------------------- */
@@ -2868,7 +2941,6 @@ ManageInventoryScreen ( void )
     int Grabbed_InvPos;
     finepoint MapPositionOfMouse;
     Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-    int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
     int index_of_item_under_mouse_cursor = (-1) ;
     
     DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
@@ -3556,49 +3628,7 @@ ManageInventoryScreen ( void )
 		break;
 		
 	    case SPELL_IDENTIFY_SKILL:
-		//--------------------
-		// Here we know, that the identify skill is selected, therefore we try to 
-		// repair the item currently under the mouse cursor.
-		//
-		if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
-		{
-		    Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
-		    Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
-		    
-		    DebugPrintf( 0 , "\nTrying to repair item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
-		    
-		    Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-		    DebugPrintf( 0 , "\nTrying to repair inventory entry no.: %d." , Grabbed_InvPos );
-		    
-		    if ( Grabbed_InvPos == (-1) )
-		    {
-			// Nothing grabbed, so we need not do anything more here..
-			DebugPrintf( 0 , "\nIdentifying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
-		    }
-		    else
-		    {
-			if ( Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified == TRUE )
-			{
-			    PlayOnceNeededSoundSample ( "../effects/is_already_indentif.wav" , FALSE , FALSE );
-			}
-			else
-			{
-			    if ( Me [ 0 ] . mana >= SpellCost )
-			    {
-				Me [ 0 ] . mana -= SpellCost;
-				Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
-				Play_Spell_ForceToEnergy_Sound( );
-				Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
-			    }
-			    else
-			    {
-				Me [ 0 ] . TextVisibleTime = 0;
-				Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-				Not_Enough_Mana_Sound(  );
-			    }
-			}
-		    }
-		}
+		handle_player_identification_command( 0 );
 		break;
 		
 	    default:

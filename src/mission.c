@@ -428,9 +428,12 @@ quest_browser_interface ( void )
     while ( SpacePressed() );
     while ( QPressed() );
 
+    blit_special_background ( QUEST_BROWSER_BACKGROUND_CODE );
+    StoreMenuBackground ( 1 );
+
     while ( ! back_to_game )
     {
-	blit_special_background ( QUEST_BROWSER_BACKGROUND_CODE );
+	RestoreMenuBackground ( 1 );
 	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_OPEN_MISSIONS )
 	{
 	    ShowGenericButtonFromList ( QUEST_BROWSER_OPEN_QUESTS_BUTTON );

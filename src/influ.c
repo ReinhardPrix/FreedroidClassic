@@ -3422,16 +3422,17 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 void
 AnalyzePlayersMouseClick ( int player_num )
 {
-  DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
+    DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
 
-  if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+    if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
 
-  check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
+    check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
-  check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
+    check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
 
-  check_for_droids_to_attack_or_talk_with ( player_num ) ;
+    check_for_droids_to_attack_or_talk_with ( player_num ) ;
 
+    
 }; // void AnalyzePlayersMouseClick ( int player_num )
 
 #undef _influ_c
