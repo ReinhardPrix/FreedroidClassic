@@ -150,6 +150,20 @@ item_move_engram ItemMoveEngram;
 
 //--------------------
 // Now we define a short message, that is designed to
+// be sent from the server to the client, to inform the client
+// that it should swap two enemys.
+//
+typedef struct
+{
+  int FirstBotIndex;
+  int SecondBotIndex;
+}
+enemy_swap_signal, *Enemy_Swap_Signal;
+
+enemy_swap_signal EnemySwapSignal;
+
+//--------------------
+// Now we define a short message, that is designed to
 // be sent from the server to the client, best periodically,
 // no matter whether whether there was some change or not.
 //
@@ -248,6 +262,7 @@ enum
     PLAYER_ACCEPT_UPDATE_ENEMY_ENGRAM ,
 
     PLAYER_DELETE_ALL_YOUR_ENEMYS,
+    PLAYER_ACCEPT_THIS_ENEMY_SWAP_SIGNAL ,
 
     SERVER_ACCEPT_THIS_KEYBOARD_EVENT ,
     SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT ,
@@ -1384,6 +1399,73 @@ Sorry...\n\
 }; // void SendFullPlayerEngramToClient ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
+ * This function sends a signal to swap two enemys to the client
+ * ---------------------------------------------------------------------- */
+void
+SendEnemySwapSignalToClient ( int PlayerNum , int First , int Second )
+{
+  int CommunicationResult;
+  int len;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending swap enemy signal to client in command form.\n" ) ;
+  len = sizeof ( EnemySwapSignal ) ; // the amount of bytes in the data buffer
+
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long full EnemySwapSignal to client... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // We prepare the signal we want to send...
+  //
+  EnemySwapSignal.FirstBotIndex = First;
+  EnemySwapSignal.SecondBotIndex = Second;
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  LocalCommandBuffer . command_code = PLAYER_ACCEPT_THIS_ENEMY_SWAP_SIGNAL ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , & ( EnemySwapSignal ) , len );
+
+  CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Enemy swap signal returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND AN ENEMY SWAP SIGNAL TO THE CLIENT SUCCESSFULLY\n\
+in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+
+}; // void SendEnemySwapSignalToClient ( int PlayerNum , int First , int Second )
+
+/* ----------------------------------------------------------------------
  * This function sends a text message to a client in command form.
  * ---------------------------------------------------------------------- */
 void
@@ -2124,6 +2206,12 @@ ExecuteServerCommand ( void )
     case PLAYER_DELETE_ALL_YOUR_ENEMYS:
       DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_DELETE_ALL_YOUR_ENEMYS command received... " );
       ClearEnemys ( ) ;
+      break;
+
+    case PLAYER_ACCEPT_THIS_ENEMY_SWAP_SIGNAL:
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_THIS_ENEMY_SWAP_SIGNAL command received... " );
+      memcpy ( & ( EnemySwapSignal ) , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( EnemySwapSignal ) );
+      SwapEnemys ( EnemySwapSignal.FirstBotIndex , EnemySwapSignal.SecondBotIndex );
       break;
 
     default:
