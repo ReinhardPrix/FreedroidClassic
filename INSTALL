@@ -8,32 +8,18 @@ Freedroid Installation
 1) type `./configure'
 2) type `make' to compile the package
 
-**) If you have the release 0.7.3 or earlier, you run the game by typing
-   `cd src', followed by `./freedroid'
+3)a) type `make install'. By default this will try to install in 
+   /usr/local/, in which case you have to be root to do that.
+   You can instead specify `--prefix=<yourdir>' to `configure', in
+   which case `make install' will install in <yourdir>.
 
-**) if you have a release later than 0.7.3 or you downloaded it from 
-   the cvs tree, you have three options to run the game:
+ALTERNATIVELY:
 
-   3a) install the package by typing `make install' 
-   You have to be root to do this, as this will try to install freedroid in 
-   /usr/local/bin, and the data-files in /usr/local/share/freedroid.
+3)b) you can run the game locally by typing: 
+   `cd src' followed by `./freedroid'
 
-   3b) If you're not root on this machine or you don't want a global 
-	installation, you can optionally specify a different
-	install-location, by typing:
-
-	`make clean; make prefix=<your-install-dir>'  followed by
-	`make install prefix=<your-install-dir>'
-
-	This will install the executable in <your-install-dir>/bin
-	and the data-files in <your-install-dir>/share/freedroid
-	
-   3c) You can also run the game without installing at all by  typing
-
-	   `make clean; make pkgdatadir=..'
-
-	   In this case you run the game by typing: 
-	   `cd src', followed by `./freedroid'
+If you don't have sound or SDL-sound installed, you might have to run
+freedroid with the command-line option `-q'.
 
 Have fun!
 Reinhard
