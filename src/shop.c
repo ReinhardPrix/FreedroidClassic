@@ -668,14 +668,16 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       if ( ForHealer ) 
 	{
 	  SalesList[ i ].type = 0 ; // something that can NOT be applied in combat
-	  while ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) 
+	  while ( ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) ||
+		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) )
 	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
 	}
       else
 	{
 	  SalesList[ i ].type = 1 ; // something that can be applied in combat
 	  while ( ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat || 
-		  SalesList [ i ].type == ITEM_MONEY ) 
+		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) ||
+		  ( SalesList [ i ].type == ITEM_MONEY ) )
 	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
 	}
 
@@ -974,23 +976,6 @@ Sell_Items( int ForHealer )
   //
   ItemSelected = 0;
 
-  /*
-  //--------------------
-  // We will use recursion here instead of a loop...
-  //
-  // while ( ItemSelected != (-1) )
-  // {
-  sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
-  ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
-  if ( ItemSelected != (-1) ) 
-    {
-      TryToSellItem( Sell_Pointer_List[ ItemSelected ] ) ;
-      Sell_Items ( ForHealer );
-    }
-  // }
-  */
-
-  //--------------------
   while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );

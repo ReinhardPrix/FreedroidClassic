@@ -259,7 +259,9 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_SHIELD_SLOT "Item can be installed in shield slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_SPECIAL_SLOT "Item can be installed in special slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT "Item can be installed in aux slot=\""
+
 #define ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME "Item can be installed in slot with name=\""
+#define ITEM_CAN_BE_BOUGHT_IN_SHOP "Item can be bought in shop=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
 
@@ -431,6 +433,37 @@ to the initialisation problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , ItemIndex );
+	  Terminate( ERR );
+	}
+
+      // Now we read in if this item can bought in shops
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_BOUGHT_IN_SHOP , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_bought_in_shop = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_bought_in_shop = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
 	  Terminate( ERR );
 	}
 
@@ -1983,7 +2016,6 @@ InitFreedroid ( void )
   Reset_GameConfig_To_Default_Values ();
 
   //Load user config file if it exists...
-  // LoadSettings ();
   LoadGameConfig ();
 
   Copy_Rect (Full_User_Rect, User_Rect);

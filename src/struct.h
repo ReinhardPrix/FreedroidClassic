@@ -302,6 +302,9 @@ typedef struct
   int item_can_be_installed_in_shield_slot;
   int item_can_be_installed_in_special_slot;
   int item_can_be_installed_in_aux_slot;
+
+  int item_can_be_bought_in_shop;
+
   // double energy_gain_uppon_application_in_combat;
   // double item_weight;
 
