@@ -47,7 +47,7 @@
 
 #define ALL_SOUNDS 26
 char *SoundSampleFilenames[ALL_SOUNDS] = {
-   "ERRORSOUND_NILL",
+   "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
    "Takeover_Background_Music.wav",
    "Console_Background_Music.wav",
@@ -77,6 +77,17 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
+#endif
+
+#define ALL_MOD_MUSICS 2
+
+char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
+   "ERRORSOUND_NILL.NOMOD",
+   "The_Last_V8.mod"
+};
+
+#ifdef HAVE_LIBSDL_MIXER
+Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS];
 #endif
 
 void 
@@ -171,9 +182,9 @@ Sorry...\n\
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      fpath = find_file (SoundSampleFilenames[i], SOUND_DIR, FALSE);
-      Loaded_WAV_Files[i] = Mix_LoadWAV(fpath);
-      if ( !Loaded_WAV_Files[i] )
+      fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, FALSE);
+      Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
+      if ( Loaded_WAV_Files[i] == NULL )
 	{
 	  fprintf (stderr,
 		   "\n\
@@ -205,6 +216,41 @@ Sorry...\n\
     } // for (i=0; ...
 
 
+
+  fpath = find_file ( MOD_Music_SampleFilenames [ 1 ], SOUND_DIR, FALSE);
+  Loaded_MOD_Files [ 1 ] = Mix_LoadMUS( fpath );
+  if ( Loaded_MOD_Files[ 1 ] == NULL )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+If the problem persists and you do not find this sound file in the\n\
+Freedroid archive, please inform the developers about the problem.\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , MOD_Music_SampleFilenames[ 1 ]);
+	  Terminate (ERR);
+	} // if ( !Loaded_WAV...
+  else
+    {
+      DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ 1 ]);
+    }
+
+
+
   // DebugPrintf (1, "done.");
   // fflush(stdout);
 #endif // HAVE_SDL_MIXER
@@ -219,6 +265,10 @@ int SampleLaenge;
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
+
+  // FOR NOW 
+  return;
+
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
@@ -315,9 +365,13 @@ Switch_Background_Music_To (int Tune)
   return;
 #else
 
-static int Background_Music_Channel = -1;
+  static int Background_Music_Channel = -1;
 
+  static int MOD_Music_Channel = -1;
 
+  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 1 ] , -1 );
+
+  /*
   if ( !sound_on ) return;
 
   DebugPrintf (1, "\n\nBACKGROUND_MUSIC_CHANNEL IS NOW: %d ", Background_Music_Channel );
@@ -337,48 +391,9 @@ static int Background_Music_Channel = -1;
       DebugPrintf (1, "\nNew Background music ist being initiated....");
       fflush(stdout);
       Background_Music_Channel = Mix_PlayChannel( -1, Loaded_WAV_Files[ Tune ], -1 );
-      // Play_Sound ( Tune );
-
-      /*
-      if ( Background_Music_Channel == -1 )
-	{
-	  fprintf (stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-Analysis of the error has returned the following explanation through SDL:\n\
-%s \n\
-The most likely cause for the problem however is, that too many sounds\n\
-have been played in too rapid succession, which should be caught.\n\
-If the problem persists, please inform the developers about it.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more. \n\
-\n\
-This error is not really fatal, but on the other hand in this case the\n\
-file to be played is a file of background music, where it really shoudlnt\n\
-happen that no channels are available.\n\
-\n\
-Freedroid will therefore now be terminated now to draw attention \n\
-to this sound problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
-	  Terminate (ERR);
-	}
-      else
-	{
-	  DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-	}
-      */
     }
+
+  */
 
   // Play_Sound ( Tune );
 
