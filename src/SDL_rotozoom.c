@@ -928,6 +928,21 @@ SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, int smoo
 	SDL_FreeSurface(rz_src);
     }
 
+    //--------------------
+    // If the original surface did have some color key set, this should also be 
+    // true for the zoomed surface again, so we make sure these properties are
+    // properly inherited...
+    //
+    if ( src -> flags & SDL_SRCCOLORKEY )
+      {
+	rz_dst -> flags =
+	  rz_dst -> flags | SDL_SRCCOLORKEY ;
+	
+	rz_dst -> format -> colorkey =
+	  src -> format -> colorkey ;
+      }
+
+
     /*
      * Return destination surface 
      */

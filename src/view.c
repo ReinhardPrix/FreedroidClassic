@@ -652,7 +652,6 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 		{
 		  blit_zoomed_iso_image_to_map_position ( & ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] ) , 
 							  ((float)col)+0.5 , ((float)line) +0.5 );
-		  
 		}	// if !INVISIBLE_BRICK 
 	    }		// for(col) 
 	}		// for(line) 
