@@ -1139,6 +1139,7 @@ GetCrew (char *filename)
   char *DroidSectionPointer;
   char *EndOfThisDroidSectionPointer;
   struct stat stbuf;
+  int i, type;
 
 #define START_OF_DROID_DATA_STRING "*** Beginning of Droid Data ***"
 #define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
@@ -1231,10 +1232,22 @@ GetCrew (char *filename)
     }
 
 
-  InitEnemys ();  // set energy to the correct values
+  //--------------------
+  // Now that the correct crew types have been filled into the 
+  // right structure, it's time to set the energy of the corresponding
+  // droids to "full" which means to the maximum of each type.
+  //
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    {
+      type = AllEnemys[i].type;
+      if ( type == (-1) ) continue;  // Do nothing to unused entries
+      AllEnemys[i].energy = Druidmap[type].maxenergy;
+      AllEnemys[i].Status = !OUT;
+    }
+
+
 
   return (OK);
-
 } /* GetCrew () */
 
 

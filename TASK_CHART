@@ -30,9 +30,9 @@ THESE ITEMS HAVE FIRST PRIORITY:
    b. Add direct control over blast radiuses and blast damages
 
 2. Extend the game/graphics engine
-   a. Takeover sound should be added
+   DONE Takeover sound should be added
    b. Takeover graphics effect (alpha-blending?) should be added
-   c. Collision damage should be done to the "lighter" droid
+   c. collision damage should be done to the "lighter" droid
    d. dimensions of combat window should be enlarged vertically
    e. use fixed pictures for each droid.  when no image found-->generate generic ones
    f. use ints instead of chars to write the map file to the disk

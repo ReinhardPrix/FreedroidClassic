@@ -374,7 +374,6 @@ EXTERN void ShowDebugInfos (void);
 #else
 #define EXTERN extern
 #endif
-EXTERN void InitEnemys (void);
 EXTERN void ShuffleEnemys (void);
 EXTERN int CheckEnemyEnemyCollision (int enemynum);
 EXTERN void MoveEnemys (void);

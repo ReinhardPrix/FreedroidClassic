@@ -71,26 +71,6 @@ PermanentHealRobots (void)
     }
 } // void PermanentHealRobots(void)
 
-/*-----------------------------------------------------------------
- * @Desc: initialisiert the energy of all enemys
- * 
- *
- *-----------------------------------------------------------------*/
-void
-InitEnemys (void)
-{
-  int i;
-  int type;
-
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-    {
-      type = AllEnemys[i].type;
-      if ( type == (-1) ) continue;
-      AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = !OUT;
-    }
-
-} /* InitEnemys */
 
 /*-----------------------------------------------------------------
  * @Desc: setzt AllEnemys - Array auf 0
@@ -231,19 +211,13 @@ MoveEnemys (void)
   int trywp;
   float maxspeed;
 
-  PermanentHealRobots ();
+  PermanentHealRobots ();  // enemy robots heal as time passes...
 
   AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
      {
-       maxspeed = Druidmap[Me.type].maxspeed;
-
-       /* 
-	* what the heck is this ?? (rp) 
-	*/
-       if (AllEnemys[i].nextwaypoint == 100)
-	 continue;
+       maxspeed = Druidmap[ AllEnemys[i].type ].maxspeed;
 
        /* ignore robots on other levels */
        if (AllEnemys[i].levelnum != CurLevel->levelnum)
@@ -283,11 +257,9 @@ MoveEnemys (void)
        // Now check for collisions of this enemy with his colleagues
        CheckEnemyEnemyCollision (i);
 
-       /* Ermittlung des Restweges zum naechsten Ziel */
+       // determine the remaining way until the target point is reached
        WpList = CurLevel->AllWaypoints;
        nextwp = AllEnemys[i].nextwaypoint;
-       // NORMALISATION nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
-       // NORMALISATION nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
        nextwp_pos.x = WpList[nextwp].x;
        nextwp_pos.y = WpList[nextwp].y;
 
