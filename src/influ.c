@@ -1240,6 +1240,12 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
 
   Me [ PlayerNum ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
 
+  //--------------------
+  // The recharging time is now modified by the ranged weapon skill
+  //
+  Me [ PlayerNum ] . firewait *= RangedRechargeMultiplierTable [ Me [ PlayerNum ] . ranged_weapon_skill ] ;
+
+
   speed.x = 0.0;
   speed.y = 0.0;
 

@@ -77,6 +77,8 @@ EXTERN int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] ;
 EXTERN int SpellHitPercentageTable [  ] ;
 EXTERN float MeleeDamageMultiplierTable [  ] ;
 EXTERN float MeleeRechargeMultiplierTable [  ] ;
+EXTERN float RangedDamageMultiplierTable [  ] ;
+EXTERN float RangedRechargeMultiplierTable [  ] ;
 EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
 EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
 EXTERN map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] ;

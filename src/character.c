@@ -644,6 +644,7 @@ UpdateAllCharacterStats ( int PlayerNum )
 	  //--------------------
 	  // Damage modifier is computed:  
 	  // WEAPON's modifier * (100+Strenth)%
+	  //
 	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
 	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
 
@@ -657,10 +658,22 @@ UpdateAllCharacterStats ( int PlayerNum )
 	}
       else
 	{
+
+	  //--------------------
+	  // Damage modifier is computed:  
+	  // WEAPON's modifier * (100+Dexterity)%
+	  //
 	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
 	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
 	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
 	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
+
+	  //--------------------
+	  // Damage AND damage modifier a modified by additional ranged weapon
+	  // skill:  A multiplier is applied!
+	  //
+	  Me [ PlayerNum ] .damage_modifier *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+	  Me [ PlayerNum ] .base_damage     *= RangedDamageMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
 
 	  //--------------------
 	  // Maybe there is a plugin for double damage present ?
