@@ -2238,8 +2238,7 @@ SaveShip(char *filename)
   MapHeaderString="\n\
 ----------------------------------------------------------------------\n\
  *\n\
- *   Copyright (c) 1994, 2002 Johannes Prix\n\
- *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *   Copyright (c) 2002, 2003 Johannes Prix\n\
  *\n\
  *\n\
  *  This file is part of Freedroid\n\
