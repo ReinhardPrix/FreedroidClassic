@@ -9,7 +9,7 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 
-AM_INIT_AUTOMAKE(freedroid, 1.0.1)
+AM_INIT_AUTOMAKE(freedroid, 1.0.2)
 
 AM_CONFIG_HEADER(config.h)
 
@@ -76,7 +76,8 @@ you need the SDL_mixer library if you want sound!
 
  Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h unistd.h dirent.h])
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
+			  unistd.h dirent.h getopt.h sys/soundcard.h])
 
  Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -87,6 +88,7 @@ AC_HEADER_TIME
 AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
+
 
 
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
