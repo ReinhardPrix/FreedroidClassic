@@ -249,7 +249,7 @@ enum _directions {
 #define ALLLEVELS			18
 #define MAX_LEVELS_ON_SHIP		20
 
-#define MAX_ENEMYS_ON_SHIP		150
+#define MAX_ENEMYS_ON_SHIP		1000
 
 #define ALLELEVATORS		30
 #define MAXWAYPOINTS 30

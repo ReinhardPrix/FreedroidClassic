@@ -163,7 +163,7 @@ int main(int argc, char * const argv[])
   RedrawInfluenceNumber();
 #endif
 
-  printf("void main(void): Vor Beginn der !QuitProgram - Schreife....\n");
+  DebugPrintf("\nvoid main(void): Vor Beginn der !QuitProgram - Schreife....\n");
 
   while( !QuitProgram ) {
 		

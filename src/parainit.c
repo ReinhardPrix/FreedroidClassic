@@ -188,6 +188,8 @@ void InitNewGame(void)
 {
   int i;	
 
+  DebugPrintf("\nvoid InitNewGame(void): real function call confirmed...");
+
   InterruptInfolineUpdate = TRUE;
   LastBlastHit = 0;
   LastGotIntoBlastSound=2;
@@ -204,7 +206,7 @@ void InitNewGame(void)
 
   /* L"oschen der Messagequeue */
   KillQueue();
-  InsertMessage(" Hello. Good Game And Good Luck To The.");
+  InsertMessage(" Game on!  Good Luck,,.");
 	
   /* Alle Bullets und Blasts loeschen */
   for (i=0; i<MAXBULLETS; i++) {
@@ -212,49 +214,73 @@ void InitNewGame(void)
     AllBullets[i].mine = FALSE;
   }
 
+  DebugPrintf("\nvoid InitNewGame(void): All bullets have been deleted...");
+
   for (i=0; i<MAXBLASTS; i++) {
     AllBlasts[i].phase = OUT;
     AllBlasts[i].type = OUT;
   }
 
+  DebugPrintf("\nvoid InitNewGame(void): All blasts have been deleted...");
+
   /* Alle Levels wieder aktivieren */
   for(i=0; i<curShip.LevelsOnShip; i++ )
     curShip.AllLevels[i]->empty =FALSE;
 
+  DebugPrintf("\nvoid InitNewGame(void): All levels have been set to 'active'...");
 
   i=MyRandom(4);
-  switch(i) {
-  case 0: {
-    Me.pos.x = 120;
-    Me.pos.y =  48;
-    CurLevel = curShip.AllLevels[4];
-    break;
-  }
-  case 1: {
-    Me.pos.x = 120;
-    Me.pos.y =  48;
-    CurLevel = curShip.AllLevels[5];
-    break;
-  }
-  case 2: {
-    Me.pos.x = 120;
-    Me.pos.y =  48;
-    CurLevel = curShip.AllLevels[6];
-    break;
-  }
-  case 3: {
-    Me.pos.x = 120;
-    Me.pos.y =  48;
-    CurLevel = curShip.AllLevels[7];
-    break;
-  }
-  }
+  switch(i) 
+    {
+    case 0: 
+      {
+	Me.pos.x = 120;
+	Me.pos.y =  48;
+	CurLevel = curShip.AllLevels[4];
+	break;
+      }
+    case 1: 
+      {
+	Me.pos.x = 120;
+	Me.pos.y =  48;
+	CurLevel = curShip.AllLevels[5];
+	break;
+      }
+    case 2: 
+      {
+	Me.pos.x = 120;
+	Me.pos.y =  48;
+	CurLevel = curShip.AllLevels[6];
+	break;
+      }
+    case 3: 
+      {
+	Me.pos.x = 120;
+	Me.pos.y =  48;
+	CurLevel = curShip.AllLevels[7];
+	break;
+      }
+    case 4: 
+      {
+	DebugPrintf("\nvoid InitNewGame(void): ERROR: Impossible case 4 encountered.  Terminating...");
+	Terminate(ERR);
+	break;
+      }
+    }
+
+  DebugPrintf("\nvoid InitNewGame(void): Starting point for the influencer has been set...:");
+  printf("%f,%f",Me.pos.x,Me.pos.y);
 
   /* Alertcolor auf Gruen zurueckschalten */
   Alert = 0;
 	
   /* Enemys initialisieren */
-  if( GetCrew(SHIPNAME) == ERR ) Terminate(-1);
+  if( GetCrew(SHIPNAME) == ERR ) {
+    DebugPrintf("\nvoid InitNewGame(void): ERROR: Initialization of enemys failed... Terminating...");
+    Terminate(-1);
+  }
+
+  DebugPrintf("\nvoid InitNewGame(void): Enemys have been initialized...:");
 
   /* Influ initialisieren */
   Me.type = DRUID001;
@@ -265,13 +291,19 @@ void InitNewGame(void)
   Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
+
+  DebugPrintf("\nvoid InitNewGame(void): The status of the influencer has been initialized...:");
+
   RedrawInfluenceNumber();
 	
+  DebugPrintf("\nvoid InitNewGame(void): The influence number has been redrawn...:");
 
   /* Introduction und Title */
 #ifdef TITLE_EIN
   Title();
 #endif
+
+  DebugPrintf("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 	
   /* Farben des aktuellen Levels einstellen */
   SetLevelColor(CurLevel->color);
@@ -292,6 +324,8 @@ void InitNewGame(void)
   Monitorsignalunterbrechung(0);
 #endif
   InitBars=TRUE;
+
+  DebugPrintf("\nvoid InitNewGame(void): end of function reached.");
 
 } /* InitNewGame */
 
@@ -488,6 +522,8 @@ void Title(void)
   int ScrollEndLine = USERFENSTERPOSY;		/* Endpunkt des Scrollens */
   int OldUpdateStatus = InterruptInfolineUpdate;
 
+  DebugPrintf("\nvoid Title(void): real function call confirmed...:");
+
   InterruptInfolineUpdate=FALSE;
 #ifdef NOJUNKWHILEINIT
   Monitorsignalunterbrechung(0);
@@ -525,7 +561,10 @@ void Title(void)
 
   SetTypematicRate(TYPEMATIC_SLOW);
   InterruptInfolineUpdate=OldUpdateStatus;
-}
+
+  DebugPrintf("\nvoid Title(void): end of function reached...:");
+
+} // void Title(void)
 
 #undef _parainit_c
 

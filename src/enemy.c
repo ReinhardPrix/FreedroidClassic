@@ -85,20 +85,23 @@ void PermanentHealRobots(void){
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void InitEnemys(void)
+void 
+InitEnemys(void)
 {
-	int i;
-	int type;
+  int i;
+  int type;
 
-	for(i=0; i<NumEnemys; i++) {
-		type = Feindesliste[i].type;
-		Feindesliste[i].energy = Druidmap[type].maxenergy;
-	}
+  DebugPrintf("\nvoid InitEnemys(void): real function call confirmed....:");
 
-	/* und gut umruehren */
-	ShuffleEnemys();
+  for(i=0; i<NumEnemys; i++) {
+    type = Feindesliste[i].type;
+    Feindesliste[i].energy = Druidmap[type].maxenergy;
+  }
+  
+  /* und gut umruehren */
+  ShuffleEnemys();
 	
-	return;
+  DebugPrintf("\nvoid InitEnemys(void): end of function reached.");
 } /* InitEnemys */
 
 /*@Function============================================================
@@ -111,6 +114,8 @@ void ClearEnemys(void)
 {
   int i;
 	
+  DebugPrintf("\nvoid ClearEnemys(void): real function call confirmed...:");
+
   for ( i = 0; i < MAX_ENEMYS_ON_SHIP; i++ ) {
     Feindesliste[i].type = -1;
     Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
@@ -119,6 +124,9 @@ void ClearEnemys(void)
     Feindesliste[i].Status = OUT;
     Feindesliste[i].warten = Feindesliste[i].firewait = 0;
   }
+
+  DebugPrintf("\nvoid ClearEnemys(void): end of function reached...:");
+
 } // void ClearEnemys(void)
 
 

@@ -50,6 +50,7 @@
 #include <vga.h>
 #include <vgagl.h>
 #include <vgakeyboard.h>
+#include <math.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -96,16 +97,20 @@ int MyRandom(int Obergrenze)
   double ReinerZufall;
   int Endwert;
 
-  //  printf("\nint MyRandom(int Obergrenze): Obergrenze ist jetzt: %d.",Obergrenze);
+  DebugPrintf("\nint MyRandom(int Obergrenze): real function call confirmed...");
+  printf("Obergrenze ist jetzt: %d.",Obergrenze);
+
   ReinerZufall=(double)rand();
-  //  printf("\nint MyRandom(int Obergrenze): Reiner Zufall ist jetzt: %f.",ReinerZufall);
+  printf("\nint MyRandom(int Obergrenze): Reiner Zufall ist jetzt: %f.",ReinerZufall);
   Zwisch=((float)ReinerZufall) / ((float)RAND_MAX);
-  //  printf("\nint MyRandom(int Obergrenze): Zwisch ist jetzt: %f.",Zwisch);
+  printf("\nint MyRandom(int Obergrenze): Zwisch ist jetzt: %f.",Zwisch);
   Zwisch=Zwisch*((float)Obergrenze);
-  Endwert=(unsigned int)Zwisch;
-#ifdef DEBUG_MYRANDOM
+  Endwert=(unsigned int)rintf(Zwisch);
+
+
   printf("\nint MyRandom(int Obergrenze): Endwert ist jetzt: %d.",Endwert);
-#endif
+  DebugPrintf("\nint MyRandom(int Obergrenze): end of function reached...");
+
   return Endwert;
 };
 
@@ -388,16 +393,21 @@ void Cheatmenu(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void InsertNewMessage(void) {
-	static int counter = 0;
-	char testmessage[100];
-	
-	counter ++;
-	sprintf(testmessage, "Das ist die %d .te Message !!", counter);
-	InsertMessage(testmessage);
+void 
+InsertNewMessage(void) 
+{
+  static int counter = 0;
+  char testmessage[100];
+  
+  DebugPrintf("\nvoid InsertNewMessage(void): real function call confirmed...");
 
-	return;
-}
+  counter ++;
+  sprintf(testmessage, "Das ist die %d .te Message !!", counter);
+  InsertMessage(testmessage);
+
+  DebugPrintf("\nvoid InsertNewMessage(void): end of function reached...");
+  return;
+} // void InsertNewMessage(void)
 
 /*@Function============================================================
 @Desc: 	Diese Funktion beendet das Programm und setzt alle notwendigen Dinge
@@ -625,30 +635,34 @@ void CreateMessageBar(char* MText)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void InsertMessage(char* MText)
+void 
+InsertMessage(char* MText)
 {
-	message* LQueue=Queue;
-	
+  message* LQueue=Queue;
 
-	if( LQueue ) {
-		// Bis vor die n"achste freie Position vorr"ucken
-		while (LQueue->NextMessage != NULL) LQueue=LQueue->NextMessage;
-		LQueue->NextMessage=MyMalloc(sizeof(message)+1);
-		LQueue=LQueue->NextMessage;
-	} else {
-		Queue = MyMalloc(sizeof(message)+1);
-		LQueue = Queue;
-	}
-	
-	LQueue->MessageText=MyMalloc(MAX_MESSAGE_LEN+1);
-	strcpy(LQueue->MessageText,MText);
-	LQueue->NextMessage=NULL;
-	LQueue->MessageCreated = FALSE;
+  DebugPrintf("\nvoid InsertMessage(char* MText): real function call confirmed...");
+
+  if( LQueue ) {
+    // Bis vor die n"achste freie Position vorr"ucken
+    while (LQueue->NextMessage != NULL) LQueue=LQueue->NextMessage;
+    LQueue->NextMessage=MyMalloc(sizeof(message)+1);
+    LQueue=LQueue->NextMessage;
+  } else {
+    Queue = MyMalloc(sizeof(message)+1);
+    LQueue = Queue;
+  }
+  
+  LQueue->MessageText=MyMalloc(MAX_MESSAGE_LEN+1);
+  strcpy(LQueue->MessageText,MText);
+  LQueue->NextMessage=NULL;
+  LQueue->MessageCreated = FALSE;
 #ifdef QUEUEDEBUG
-	gotoxy(1,11);
-	printf(" A message has been added:\n%s",MText);
+  gotoxy(1,11);
+  printf("\nvoid InsertMessage(char* MText): A message has been added:%s",MText);
 #endif
-}
+
+  DebugPrintf("\nvoid InsertMessage(char* MText): end of function reached.");
+} // void InsertMessage(char* MText)
 
 /* **********************************************************************
 	Diese Funktion erledigt ein normales Malloc, trifft zuerst aber ein

@@ -163,7 +163,6 @@ int InitParaplusFont(void){
 		   (CharLenList[j*10+i] == 0 ) ? FONTBREITE : 2*FONTBREITE, FONTHOEHE);
       FontXPos += FONTBREITE+1 + (CharLenList[j*10+i]*(FONTBREITE+1));
     }
-    
   }
 	
   return (OK);

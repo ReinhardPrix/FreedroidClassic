@@ -5,6 +5,9 @@
 
 Bugs
 ----
+- (rp) IMPORTANT:  The automake/autoconf procedure needs to be looked over again.
+  Compiler warnings SHOULD REALLY BE ENABLED AND STRICT if not pedantic!!!!
+
 - Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
   NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
 

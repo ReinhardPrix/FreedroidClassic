@@ -690,6 +690,8 @@ int GetCrew(char *shipname)
   int linelen = CREW_LINE_LEN;
   char line[CREW_LINE_LEN];
   char *pos;
+
+  DebugPrintf("\nint GetCrew(char *shipname): real function call confirmed...:");
   
   /* get filename */
   strcpy(filename, shipname);
@@ -698,16 +700,31 @@ int GetCrew(char *shipname)
   /* Clear Enmey - Array */
   ClearEnemys();
   
-  if( (CrewFile = fopen(filename, "r")) == NULL) return FALSE;
+  if( (CrewFile = fopen(filename, "r")) == NULL) {
+    DebugPrintf("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
+    return FALSE;
+  }
   
+  DebugPrintf("\nint GetCrew(char *shipname): file has been opened...:");
+
   enemy_nr = 0;
 	
   while( fgets(line, linelen, CrewFile) ) {
     if( sscanf(line, "%d %d %d ",
-	       &level_num, &upper_limit, &lower_limit) == EOF) return ERR;
+	       &level_num, &upper_limit, &lower_limit) == EOF) 
+      {
+	DebugPrintf("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
+	return ERR;
+      }
     
-    if ( strtok(line, ",") == NULL ) return ERR;
+    if ( strtok(line, ",") == NULL ) 
+      {
+	DebugPrintf("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
+	return ERR;
+      }
     
+    DebugPrintf("\nint GetCrew(char *shipname): first two if conditionals passed...:");
+
     type_anz = 0;
     while( (pos=strtok(NULL, " \t")) != NULL)
       sscanf(pos, "%d", &(types[type_anz++]));
@@ -720,16 +737,28 @@ int GetCrew(char *shipname)
       enemy_nr ++;
     }/* while noch_enemy */
     
-    if( enemy_nr >= MAX_ENEMYS_ON_SHIP ) return ERR;
+    DebugPrintf("\nint GetCrew(char *shipname): first two while loops passed...:");
+
+    if( enemy_nr >= MAX_ENEMYS_ON_SHIP ) 
+      {
+	DebugPrintf("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
+	return ERR;
+      }
     
   } /* while fgets() */
+
+  DebugPrintf("\nint GetCrew(char *shipname): file has been successfully read.:");
   
   NumEnemys = enemy_nr;
   
   fclose(CrewFile);
 
+  DebugPrintf("\nint GetCrew(char *shipname): file has been closed.:");
+
   InitEnemys();		/* Energiewerte richtig setzen */
 		
+  DebugPrintf("\nint GetCrew(char *shipname): end of function reached..:");
+  
   return OK;
 } // int GetCrew(char *shipname)
 		
