@@ -50,7 +50,93 @@ EXTERN char Previous_Mission_Name[1000];
 #define FIRST_MENU_ITEM_POS_X (2*Block_Width)
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
 
+/* ----------------------------------------------------------------------
+ * This is the menu, where you can buy basic items.
+ * ---------------------------------------------------------------------- */
+void
+Buy_Basic_Items( void )
+{
+#define BASIC_ITEMS_NUMBER 10
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+  item SalesList[ BASIC_ITEMS_NUMBER ];
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
 
+  //--------------------
+  // First we make a selection of items, that can be considered 'basic'
+  //
+  for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
+    {
+      SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+      FillInItemProperties( & ( SalesList[ i ] ) );
+    }
+
+  while ( !SpacePressed() )
+    {
+      InitiateMenu();
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
+	{
+	  // DisplayText( ItemMap [ SalesList[ i ].type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + i * 80 , NULL );
+	  sprintf( DescriptionText , "%4ld" , 
+		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) ) );
+	  DisplayText( DescriptionText , 580 , 50 + i * 80 , NULL );
+	}
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + InMenuPosition * 80 );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
+	  else 
+	    {
+	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}
+      
+      
+
+    }
+
+
+  while ( SpacePressed() );
+
+}; // void Buy_Basic_Items( void )
+
+
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
 int
 DoMenuSelection( char* MenuTexts[10] )
 {
@@ -125,6 +211,94 @@ DoMenuSelection( char* MenuTexts[10] )
 
   return ( -1 );
 }; // int DoMenuSelection( char* MenuTexts[10] )
+
+/* ----------------------------------------------------------------------
+ * This function does all the buying/selling interaction with the 
+ * weaponsmith Mr. Stone.
+ * ---------------------------------------------------------------------- */
+void
+BuySellMenu ( void )
+{
+enum
+  { 
+    BUY_BASIC_ITEMS=1, 
+    BUY_PREMIUM_ITEMS, 
+    SELL_ITEMS, 
+    REPAIR_ITEMS,
+    LEAVE_BUYSELLMENU
+  };
+
+  int Weiter = 0;
+  int MenuPosition=1;
+  char theme_string[40];
+  char* MenuTexts[10];
+
+  Me.status=MENU;
+
+  DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+      strcpy (theme_string, "Theme: ");
+      if (strstr (GameConfig.Theme_SubPath, "classic"))
+	strcat (theme_string, "Classic");
+      else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
+	strcat (theme_string, "Lanzz");
+      else
+	strcat (theme_string, "unknown");
+
+      MenuTexts[0]="Buy Basic Items";
+      MenuTexts[1]="Buy Premium Items";
+      MenuTexts[2]="Sell Items";
+      MenuTexts[3]="Repair Items";
+      MenuTexts[4]="Leave the Sales Representative";
+      MenuTexts[5]="";
+      MenuTexts[8]="";
+      MenuTexts[6]="";
+      MenuTexts[7]="";
+      MenuTexts[9]="";
+
+      MenuPosition = DoMenuSelection( MenuTexts );
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+	case BUY_BASIC_ITEMS:
+	  while (EnterPressed() || SpacePressed() );
+	  Buy_Basic_Items();
+	  break;
+	case BUY_PREMIUM_ITEMS:
+	  while (EnterPressed() || SpacePressed() );
+	  break;
+	case SELL_ITEMS:
+	  while (EnterPressed() || SpacePressed() );
+	  break;
+	case REPAIR_ITEMS:
+	  while (EnterPressed() || SpacePressed() );
+	  break;
+	case LEAVE_BUYSELLMENU:
+	  Weiter = !Weiter;
+	  break;
+	default: 
+	  break;
+	} 
+    }
+
+  ClearGraphMem();
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  BannerIsDestroyed=TRUE;
+  Me.status=MOBILE;
+
+  return;
+}; // void BuySellMenu ( void )
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 

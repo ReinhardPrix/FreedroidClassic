@@ -194,12 +194,12 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 1
 ** Start of new item specification subsection **
-Item name="Energy Capsule
-Recover partial health"
+Item name="Energy Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
@@ -231,12 +231,12 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=0
 Sound number=5
+Base list price=50
 ** End of new item specification subsection **
 
 // Item No. 2
 ** Start of new item specification subsection **
-Item name="Full Energy Capsule
-Recover Full Health"
+Item name="Full Energy Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
@@ -268,6 +268,7 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=0
 Sound number=5 
+Base list price=150
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -304,6 +305,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=9
 Sound number=3 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 4
@@ -340,6 +342,7 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=3
 Sound number=4
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 5
@@ -376,6 +379,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=4
 Sound number=1 
+Base list price=200
 ** End of new item specification subsection **
 
 // Item No. 6
@@ -412,6 +416,7 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=1
 Sound number=2 
+Base list price=1
 ** End of new item specification subsection **
 
 // Item No. 7
@@ -448,6 +453,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=5
 Sound number=3 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 8
@@ -455,7 +461,7 @@ Sound number=3
 Item name="Tri-pedal Drive"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
-Item can be installed in drive slot="no"
+Item can be installed in drive slot="yes"
 Item can be installed in weapon slot="no"
 Item can be installed in armour slot="no"
 Item can be installed in shield slot="no"
@@ -484,6 +490,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=8
 Sound number=4 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 9
@@ -520,6 +527,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=10
 Sound number=4 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 10
@@ -556,6 +564,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=11
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 11
@@ -592,6 +601,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=4
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 12
@@ -628,6 +638,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=2
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 13
@@ -664,6 +675,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=12
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 14
@@ -700,6 +712,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=13
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 15
@@ -736,6 +749,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=9
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 16
@@ -772,6 +786,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=14
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 17
@@ -808,6 +823,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=12
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 18
@@ -844,6 +860,7 @@ Base item duration=30
 Item duration modifier=15
 Picture number=15
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 19
@@ -880,6 +897,7 @@ Base item duration=25
 Item duration modifier=10
 Picture number=6
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 20
@@ -916,6 +934,7 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=16
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 21
@@ -952,6 +971,7 @@ Base item duration=-1
 Item duration modifier=0
 Picture number=17
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 22
@@ -988,6 +1008,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=18
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 23
@@ -1024,6 +1045,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=18
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 24
@@ -1060,6 +1082,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=18
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 // Item No. 25
@@ -1096,6 +1119,7 @@ Base item duration=10
 Item duration modifier=10
 Picture number=15
 Sound number=0 
+Base list price=0
 ** End of new item specification subsection **
 
 *** End of item data section: ***

@@ -331,7 +331,7 @@ ShowCharacterScreen ( void )
   static SDL_Surface *PlusButtonImage = NULL;
   char *fpath;
   char CharText[1000];
-  SDL_Rect TargetRect;
+  // SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
 

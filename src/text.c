@@ -68,7 +68,10 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
-
+/* ----------------------------------------------------------------------
+ * This function does all the (text) interaction with a friendly droid
+ * and maybe also does special interacions like Chandra and Stone.
+ * ---------------------------------------------------------------------- */
 char* 
 GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
 {
@@ -170,12 +173,24 @@ Please, you must go and try to save who you can!  Our best wishes will accompany
   
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
-
       Switch_Background_Music_To ( "Chandra01.ogg" );
 
       ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       // AnarchyMenu1.mod
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+      return;
+    }
+
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
+    {
+      // Switch_Background_Music_To ( "Chandra01.ogg" );
+
+      // ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
+      // AnarchyMenu1.mod
+      // Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+      
+      BuySellMenu( );
 
       return;
     }

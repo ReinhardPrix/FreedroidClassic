@@ -240,6 +240,8 @@ EXTERN void PlayItemSound ( int SoundCode );
 #else
 #define EXTERN extern
 #endif
+EXTERN long CalculateItemPrice ( item* BuyItem );
+EXTERN void FillInItemProperties( item* ThisItem );
 EXTERN void DamageAllEquipment( void );
 EXTERN void DropItemAt( int ItemType , int x , int y );
 EXTERN void ApplyItem( item* CurItem );
@@ -381,7 +383,7 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
-
+EXTERN void BuySellMenu ( void );
 EXTERN void InitiateMenu( void );
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
@@ -501,6 +503,7 @@ EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 #else
 #define EXTERN extern
 #endif
+EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
 EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
 /* takeover.c */

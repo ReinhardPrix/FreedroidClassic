@@ -44,6 +44,55 @@
  *
  *
  * ---------------------------------------------------------------------- */
+long
+CalculateItemPrice ( item* BuyItem )
+{
+  return ( ItemMap [ BuyItem->type ].base_list_price );
+}; // long CalculateItemPrice ( item* BuyItem )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+FillInItemProperties( item* ThisItem )
+{
+
+  ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage +
+    MyRandom( ItemMap[ ThisItem->type ].item_gun_damage_modifier );
+  ThisItem->ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
+    MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
+
+  //--------------------
+  // In case of cyberbucks, we have to specify the amount of cyberbucks
+  //
+  if ( ThisItem->type == ITEM_MONEY )
+    {
+      ThisItem->gold_amount = MyRandom( 20 ) + 1;
+    }
+
+  //--------------------
+  // We now have to set a duration, as well a maximum duration
+  // as well as a current duration, the later of which will be
+  // a fraction of the maximum duration.
+  //
+  if ( ItemMap[ ThisItem->type ].base_item_duration != (-1) )
+    {
+      ThisItem->max_duration = ItemMap[ ThisItem->type ].base_item_duration +
+	MyRandom( ItemMap[ ThisItem->type ].item_duration_modifier );
+      ThisItem->current_duration = MyRandom( ThisItem->max_duration ) ;
+    }
+  else
+    {
+      ThisItem->max_duration = ( -1 );
+      ThisItem->current_duration = 1 ;
+    }
+}; // void FillInItemProperties( item* ThisItem )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 DropItemAt( int ItemType , int x , int y )
 {
@@ -72,39 +121,13 @@ DropItemAt( int ItemType , int x , int y )
   CurLevel->ItemList[ i ].type = ItemType;
   CurLevel->ItemList[ i ].pos.x = x;
   CurLevel->ItemList[ i ].pos.y = y;
-  CurLevel->ItemList[ i ].damage = ItemMap[ ItemType ].base_item_gun_damage +
-    MyRandom( ItemMap[ ItemType ].item_gun_damage_modifier );
-  CurLevel->ItemList[ i ].ac_bonus = ItemMap[ ItemType ].base_ac_bonus +
-    MyRandom( ItemMap[ ItemType ].ac_bonus_modifier );
 
-  //--------------------
-  // In case of cyberbucks, we have to specify the amount of cyberbucks
-  //
-  if ( ItemType == ITEM_MONEY )
-    {
-      CurLevel->ItemList[ i ].gold_amount = MyRandom( 20 ) + 1;
-    }
+  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) );
 
-  //--------------------
-  // We now have to set a duration, as well a maximum duration
-  // as well as a current duration, the later of which will be
-  // a fraction of the maximum duration.
-  //
-  if ( ItemMap[ ItemType ].base_item_duration != (-1) )
-    {
-      CurLevel->ItemList[ i ].max_duration = ItemMap[ ItemType ].base_item_duration +
-	MyRandom( ItemMap[ ItemType ].item_duration_modifier );
-      CurLevel->ItemList[ i ].current_duration = MyRandom( CurLevel->ItemList[ i ].max_duration ) ;
-    }
-  else
-    {
-      CurLevel->ItemList[ i ].max_duration = ( -1 );
-      CurLevel->ItemList[ i ].current_duration = 1 ;
-    }
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );
 
-}; // void DropItemAt( int x , int y )
+}; // void DropItemAt( int ItemType , int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level

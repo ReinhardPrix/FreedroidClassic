@@ -621,6 +621,10 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
 			   &ItemMap[ItemIndex].sound_number , EndOfItemData );
 
+      // Now we read in the base list price for this item
+      ReadValueFromString( ItemPointer ,  "Base list price=" , "%d" , 
+			   &ItemMap[ItemIndex].base_list_price , EndOfItemData );
+
       ItemIndex++;
     }
 
