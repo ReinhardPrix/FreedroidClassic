@@ -1316,8 +1316,9 @@ blit_special_background ( int background_code )
 #define NE_CONSOLE_FG_4_FILE     "backgrounds/console_fg_4.png" 
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
+#define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
 
-#define ALL_KNOWN_BACKGROUNDS 14
+#define ALL_KNOWN_BACKGROUNDS 15
 
   static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
   static int first_call = TRUE;
@@ -1334,7 +1335,8 @@ blit_special_background ( int background_code )
 								  NE_CONSOLE_FG_2_FILE ,              // 10
 								  NE_CONSOLE_FG_3_FILE ,              // 11
 								  NE_CONSOLE_FG_4_FILE ,              // 12
-								  NE_CONSOLE_BG_PIC1_FILE } ;         // 13
+								  NE_CONSOLE_BG_PIC1_FILE ,           // 13
+                                                                  LEVEL_EDITOR_BANNER_FILE } ;        // 14
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1350,7 +1352,8 @@ blit_special_background ( int background_code )
 							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 10
 							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 11
 							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 12
-							      { 0 , 0 , 0 , 0 } };              // 13
+							      { 0 , 0 , 0 , 0 } ,               // 13
+							      { 0 , 0 , 0 , 0 } };              // 14
   int i;
   char *fpath;
   

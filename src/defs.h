@@ -266,7 +266,6 @@ enum
 #define HS_BACKGROUND_FILE     "backgrounds/transfer.jpg"  
 
 #define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
-#define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
 
 #define INVENTORY_SCREEN_BACKGROUND_CODE 0
 #define CHARACTER_SCREEN_BACKGROUND_CODE 1
@@ -282,6 +281,7 @@ enum
 #define NE_CONSOLE_FG_3_PIC_CODE 11
 #define NE_CONSOLE_FG_4_PIC_CODE 12
 #define NE_CONSOLE_BACKGROUND_CODE 13
+#define LEVEL_EDITOR_BANNER_CODE 14 
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 

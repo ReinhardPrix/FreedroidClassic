@@ -591,32 +591,10 @@ ShowLevelEditorTopMenu( int Highlight )
   int i;
   SDL_Rect TargetRectangle;
   int selected_index = FirstBlock;
-  static SDL_Surface *LevelEditorTopBanner = NULL;
   SDL_Surface *tmp = NULL;
-  char* fpath;
   float zoom_factor;
 
-  //--------------------
-  // At first we check if we might need to load the top status and
-  // selection banner.  This will have to be done only once.
-  //
-  if ( LevelEditorTopBanner == NULL )
-    {
-      fpath = find_file ( LEVEL_EDITOR_BANNER_FILE , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      LevelEditorTopBanner = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
-
-      EditorBannerRect.x = 0;
-      EditorBannerRect.y = 0; 
-      EditorBannerRect.w = LevelEditorTopBanner -> w;
-      EditorBannerRect.h = LevelEditorTopBanner -> h;
-    }
-  
-  //--------------------
-  // Now we blit the top status and selection banner background.  Fine.
-  //
-  our_SDL_blit_surface_wrapper ( LevelEditorTopBanner , NULL , Screen , &EditorBannerRect );
+  blit_special_background ( LEVEL_EDITOR_BANNER_CODE );
 
   //--------------------
   // Time to fill something into the top selection banner, so that the
