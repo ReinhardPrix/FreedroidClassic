@@ -517,6 +517,8 @@ Assemble_Combat_Picture (int mask)
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	PutEnemy (i , -1 , -1 );
       
+      PutMouseMoveCursor ( );
+
       //--------------------
       // Now we blit all the player tuxes...
       //
@@ -533,8 +535,6 @@ Assemble_Combat_Picture (int mask)
       for (i = 0; i < (MAXBLASTS); i++)
 	if (AllBlasts[i].type != OUT)
 	  PutBlast (i);
-
-      PutMouseMoveCursor ( );
 
       DisplayBigScreenMessage();
 
