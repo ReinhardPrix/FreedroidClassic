@@ -719,16 +719,16 @@ Get_Robot_Data ( void* DataPointer )
 	ReadAndMallocStringFromData ( RobotPointer , DROID_PORTRAIT_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
 
       // Now we read in the maximal speed this droid can go. 
-      // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
-      // &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
+      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
 
       // Now we read in the class of this droid.
       ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].class , EndOfDataPointer );
 
       // Now we read in the maximal acceleration this droid can go. 
-      // ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
-      // &Druidmap[RobotIndex].accel , EndOfDataPointer );
+      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].accel , EndOfDataPointer );
 
       // Now we read in the maximal energy this droid can store. 
       ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
@@ -905,6 +905,8 @@ Get_Robot_Data ( void* DataPointer )
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
+      Druidmap[i].maxspeed *= maxspeed_calibrator;
+      // Druidmap[i].accel *= maxenergy_calibrator;
       Druidmap[i].maxenergy *= maxenergy_calibrator;
       Druidmap[i].lose_health *= energyloss_calibrator;
       Druidmap[i].aggression *= aggression_calibrator;

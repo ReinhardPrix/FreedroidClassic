@@ -495,10 +495,19 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
   // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
   //
   // if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+
+  /*
   if ( ThisRobot -> frozen == 0 )
     maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   else 
     maxspeed = 0.2 * ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+  */
+
+  if ( ThisRobot -> frozen == 0 )
+    maxspeed = Druidmap [ ThisRobot -> type ] . maxspeed;
+  else 
+    maxspeed = 0.2 * Druidmap [ ThisRobot->type ] . maxspeed;
+ 
 
   //--------------------
   // Now that we have found out where to go, we can start to determine the remaining 
