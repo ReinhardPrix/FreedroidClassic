@@ -248,9 +248,7 @@ typedef struct
   int damage;			/* damage done by this bullettype */
   int phases;			/* how many phases in motion to show */
   int blast;			/* which blast does this bullet create */
-  unsigned char *picpointer;	/* pointer to picture of bullet */
-  signed char oneshotonly;	/* if this is set, there is only 1 shot */
-  int WaitNextTime;
+  int oneshotonly;	        /* if this is set, there is only 1 shot */
   SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
 }
 bulletspec, *Bulletspec;

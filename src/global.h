@@ -76,7 +76,8 @@ EXTERN FCU AllFCUs[];
 EXTERN influence_t Me;		/* the influence data */
 // EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
 EXTERN Druidspec Druidmap;     
-EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
+// EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
+EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 

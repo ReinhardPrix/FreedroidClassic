@@ -75,7 +75,7 @@ AutoFireBullet (void)
 
   if (Me.firewait)
     return;
-  Me.firewait = Bulletmap[Druidmap[Me.type].gun].WaitNextTime;
+  Me.firewait = Bulletmap[Druidmap[Me.type].gun].recharging_time;
 
   // find out the number of the shots target
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
@@ -901,7 +901,7 @@ FireBullet (void)
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
-  Me.firewait = Bulletmap[guntype].WaitNextTime;
+  Me.firewait = Bulletmap[guntype].recharging_time;
 
   /* Geraeusch eines geloesten Schusses fabrizieren */
   Fire_Bullet_Sound ( guntype );

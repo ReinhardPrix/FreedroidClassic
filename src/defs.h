@@ -374,7 +374,7 @@ enum _bullets
 /* Explosionstypen */
 enum _explosions
 {
-  BULLETBLAST,
+  BULLETBLAST=0,
   DRUIDBLAST,
   OWNBLAST
 };

@@ -182,7 +182,7 @@ UpdateCountersForThisFrame (void)
 
   if ( Me.firewait > 0 )
     {
-      Me.firewait-=Frame_Time()*20;
+      Me.firewait-=Frame_Time();
       if (Me.firewait < 0) Me.firewait=0;
     }
   if (ShipEmptyCounter > 1)

@@ -33,6 +33,39 @@ Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 Common factor for all bullet's speed values: 1.0
 Common factor for all bullet's damage values: 1.0
 
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.0
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 25
+Number of different phases that were designed for this bullet type : 1
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.0
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 40
+Number of different phases that were designed for this bullet type : 1
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.0
+Flying speed of this bullet type : 8.
+Damage cause by a hit of this bullet type : 55
+Number of different phases that were designed for this bullet type : 1
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.0
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 60
+Number of different phases that were designed for this bullet type : 1
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+
 *** End of Bullet Data Section: ***
 
 ----------------------------------------------------------------------

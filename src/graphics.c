@@ -542,7 +542,7 @@ LoadThemeConfigurationFile(void)
       DebugPrintf ( 0 , "\n\nDigit two position y string found. Good.");  
       ReadPointer += strlen ( DIGIT_TWO_POSITION_Y_STRING );
       sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_Y );
-      DebugPrintf( 0 , "\Second_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
+      DebugPrintf( 0 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
       // getchar();
     }
 
@@ -667,7 +667,7 @@ InitPictures (void)
   strcat( PicturePath , GameConfig.Theme_SubPath );
   strcat( PicturePath , NE_MAP_BLOCK_FILE );
 
-  DebugPrintf( 2 , "\nThe path to the tileset image is now : %s." , PicturePath );
+  DebugPrintf( 2 , "\nvoid InitPictures(void): The path to the tileset image is now : %s." , PicturePath );
 
   if ( CurLevel == NULL )
     ne_map_block =
@@ -679,6 +679,7 @@ InitPictures (void)
     }
 
   // We set the correct path to the influencer/enemy image file for this theme and load it
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
   strcpy( PicturePath , GRAPHICS_DIR );
   strcat( PicturePath , GameConfig.Theme_SubPath );
   strcat( PicturePath , NE_DROID_BLOCK_FILE );
@@ -690,6 +691,7 @@ InitPictures (void)
     ne_get_blocks ( PicturePath , DROID_PHASES, 0, 1, block_line++);
 
   // We set the correct path to the bullet file for this theme and load it
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
   strcpy( PicturePath , GRAPHICS_DIR );
   strcat( PicturePath , GameConfig.Theme_SubPath );
   strcat( PicturePath , NE_BULLET_BLOCK_FILE );
@@ -700,7 +702,7 @@ InitPictures (void)
       // It should soon be no longer nescessary to read more than one type in, but
       // it doesn't hurt and for now we can leave it as it is
       Bulletmap[i].block =
-	ne_get_blocks ( PicturePath , Bulletmap[i].phases, 0, i, block_line++);
+	ne_get_blocks ( PicturePath , 1 , 0, i, block_line++);
 
       // At first we create a surface of the size of one map tile and then
       // we make sure it is supplied with an alpha channel
@@ -732,6 +734,7 @@ InitPictures (void)
 
 
   // We set the correct path to the blast file for this theme and load it
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
   strcpy( PicturePath , GRAPHICS_DIR );
   strcat( PicturePath , GameConfig.Theme_SubPath );
   strcat( PicturePath , NE_BLAST_BLOCK_FILE );

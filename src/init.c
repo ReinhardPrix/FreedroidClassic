@@ -117,18 +117,28 @@ void
 Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
+  char *CountBulletsPointer;
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
   int i;
+  int Number_Of_Bullet_Types;
+  int BulletIndex=0;
 
   double bullet_speed_calibrator;
   double bullet_damage_calibrator;
 
 #define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
 #define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
+#define NEW_BULLET_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
+
+#define BULLET_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
+#define BULLET_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
+#define BULLET_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
+#define BULLET_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
+#define BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
+
 #define BULLET_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
 #define BULLET_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
-
 
   if ( (BulletPointer = strstr ( DataPointer , BULLET_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -151,13 +161,115 @@ Get_Bullet_Data ( char* DataPointer )
       DebugPrintf (2, "\n\nEnd of Bullet Data Section found. Good.");  
       fflush(stdout);
     }
-  
-  DebugPrintf (2, "\n\nStarting to read bullet calibration section\n\n");
 
-  // Now we read in the speed calibration factor for all bullets
-  if ( (ValuePointer = strstr ( BulletPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
+  DebugPrintf (2, "\n\nStarting to read bullet data...\n\n");
+  //--------------------
+  // At first, we must allocate memory for the droid specifications.
+  // How much?  That depends on the number of droids defined in game.dat.
+  // So we have to count those first.  ok.  lets do it.
+
+  CountBulletsPointer=DataPointer;
+  Number_Of_Bullet_Types=0;
+  while ( ( CountBulletsPointer = strstr ( CountBulletsPointer, NEW_BULLET_TYPE_BEGIN_STRING)) != NULL)
     {
-      DebugPrintf(1, "\nERROR! NO BULLET SPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
+      CountBulletsPointer += strlen ( NEW_BULLET_TYPE_BEGIN_STRING );
+      Number_Of_Bullet_Types++;
+    }
+
+  // Not that we know how many bullets are defined in game.dat, we can allocate
+  // a fitting amount of memory.
+  i=sizeof(bulletspec);
+  Bulletmap = MyMalloc ( i * (Number_Of_Bullet_Types + 1) + 1 );
+  DebugPrintf (0, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Droid_Types );
+  DebugPrintf (0, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+
+  //--------------------
+  // Now we start to read the values for each bullet type:
+  // 
+  BulletPointer=DataPointer;
+  while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
+    {
+      DebugPrintf (0, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
+      BulletPointer ++; // to avoid doubly taking this entry
+
+      // Now we read in the recharging time for this bullettype(=weapontype)
+      if ( (ValuePointer = strstr ( BulletPointer, BULLET_RECHARGE_TIME_BEGIN_STRING )) == NULL )
+	{
+	  DebugPrintf(0, "\nERROR! NO BULLET RECHARGE TIME ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BULLET_RECHARGE_TIME_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].recharging_time );
+	  DebugPrintf( 0 , "\nrecharging time now reads: %f. " , Bulletmap[BulletIndex].recharging_time );
+	}
+
+      // Now we read in the maximal speed this type of bullet can go.
+      if ( (ValuePointer = strstr ( BulletPointer, BULLET_SPEED_BEGIN_STRING )) == NULL )
+	{
+	  DebugPrintf(0, "\nERROR! NO BULLET SPEED ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BULLET_SPEED_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].speed );
+	  DebugPrintf( 0 , "\nbullet speed now reads: %f. " , Bulletmap[BulletIndex].speed );
+	}
+
+      // Now we read in the damage this bullet can do
+      if ( (ValuePointer = strstr ( BulletPointer, BULLET_DAMAGE_BEGIN_STRING )) == NULL )
+	{
+	  DebugPrintf(0, "\nERROR! NO BULLET DAMAGE ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BULLET_DAMAGE_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].damage );
+	  DebugPrintf( 0 , "\nbullet damage now reads: %d. " , Bulletmap[BulletIndex].damage );
+	}
+
+      // Now we read in the number of phases that are designed for this bullet type
+      if ( (ValuePointer = strstr ( BulletPointer, BULLET_NUMBER_OF_PHASES_BEGIN_STRING )) == NULL )
+	{
+	  DebugPrintf(0, "\nERROR! NO NUMBER OF PHASES FOR THIS BULLET ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BULLET_NUMBER_OF_PHASES_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].phases );
+	  DebugPrintf( 0 , "\nbullet phases now reads: %d. " , Bulletmap[BulletIndex].phases );
+	}
+
+      // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
+      if ( (ValuePointer = strstr ( BulletPointer, BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING )) == NULL )
+	{
+	  DebugPrintf(0, "\nERROR! NO TYPE OF BLAST CAUSED BY THIS BULLET ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].blast );
+	  DebugPrintf( 0 , "\nbullet causes blast of type : %d. " , Bulletmap[BulletIndex].blast );
+	}
+
+      BulletIndex++;
+    }
+
+  //--------------------
+  // Now that the detailed values for the bullets have been read in,
+  // we now read in the general calibration contants and after that
+  // the start to apply them right now, so they also take effect.
+  
+  DebugPrintf (0, "\n\nStarting to read bullet calibration section\n\n");
+  // Now we read in the speed calibration factor for all bullets
+  if ( (ValuePointer = strstr ( DataPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO BULLET SPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
       Terminate(ERR);
     }
   else
@@ -167,9 +279,9 @@ Get_Bullet_Data ( char* DataPointer )
     }
 
   // Now we read in the damage calibration factor for all bullets
-  if ( (ValuePointer = strstr ( BulletPointer, BULLET_DAMAGE_CALIBRATOR_STRING )) == NULL )
+  if ( (ValuePointer = strstr ( DataPointer, BULLET_DAMAGE_CALIBRATOR_STRING )) == NULL )
     {
-      DebugPrintf(1, "\nERROR! NO BULLET DAMAGE CALIBRATOR ENTRY FOUND! TERMINATING!");
+      DebugPrintf( 0 , "\nERROR! NO BULLET DAMAGE CALIBRATOR ENTRY FOUND! TERMINATING!");
       Terminate(ERR);
     }
   else
@@ -188,6 +300,7 @@ Get_Bullet_Data ( char* DataPointer )
       Bulletmap[i].damage *= bullet_damage_calibrator;
     }
 
+  DebugPrintf (0, "\n\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
 } // void Get_Bullet_Data ( char* DataPointer );
 
 
@@ -651,7 +764,7 @@ Get_Robot_Data ( void* DataPointer )
   // Not that we know how many robots are defined in game.dat, we can allocate
   // a fitting amount of memory.
   i=sizeof(druidspec);
-  Druidmap = malloc ( i * (Number_Of_Droid_Types + 1) + 1 );
+  Druidmap = MyMalloc ( i * (Number_Of_Droid_Types + 1) + 1 );
   DebugPrintf(1, "\nWe have counted %d different druid types in the game data file." , Number_Of_Droid_Types );
   DebugPrintf (2, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
 
@@ -674,7 +787,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen (DROIDNAME_BEGIN_STRING);
 	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
-	  Druidmap[RobotIndex].druidname = malloc ( StringLength + 1 );
+	  Druidmap[RobotIndex].druidname = MyMalloc ( StringLength + 1 );
 	  strncpy ( (char*) Druidmap[RobotIndex].druidname , ValuePointer , StringLength );
 	  Druidmap[RobotIndex].druidname[StringLength]=0;
 	}
@@ -916,7 +1029,7 @@ Get_Robot_Data ( void* DataPointer )
 	{
 	  ValuePointer += strlen (NOTES_BEGIN_STRING);
 	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
-	  Druidmap[RobotIndex].notes = malloc ( StringLength + 1 );
+	  Druidmap[RobotIndex].notes = MyMalloc ( StringLength + 1 );
 	  strncpy ( (char*) Druidmap[RobotIndex].notes , ValuePointer , StringLength );
 	  Druidmap[RobotIndex].notes[StringLength]=0;
 	  // printf("\nNotes concerning the droid found!  They read: %s" , Druidmap[RobotIndex].notes );
@@ -989,7 +1102,7 @@ Init_Game_Data ( char * Datafilename )
       DebugPrintf (2, "\nfstating game data file succeeded...");
     }
 
-  if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
     {
       DebugPrintf ( 0 , "\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
@@ -1291,7 +1404,7 @@ InitNewMission ( char *MissionName )
       // printf("\nfstating %s file succeeded..." , MissionName );
     }
 
-  if (( MainMissionPointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+  if (( MainMissionPointer = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
     {
       DebugPrintf (2, "\nint InitNewMission ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
@@ -1447,7 +1560,7 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      ship_on_filename = malloc(2000);
+      ship_on_filename = MyMalloc(2000);
       strcpy( ship_on_filename , GRAPHICS_DIR );
       ShipOnPointer += strlen ( LIFTS_ON_INDICATION_STRING );
       
@@ -1464,7 +1577,7 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      ship_off_filename = malloc(2000);
+      ship_off_filename = MyMalloc(2000);
       strcpy( ship_off_filename , GRAPHICS_DIR );
       ShipOffPointer += strlen ( LIFTS_OFF_INDICATION_STRING );
       
@@ -1522,7 +1635,7 @@ InitNewMission ( char *MissionName )
     {
       EndTitlePointer += strlen ( MISSION_ENDTITLE_BEGIN_STRING ) + 1;
       EndTitleLength = strstr ( EndTitlePointer , MISSION_ENDTITLE_END_STRING ) - EndTitlePointer;
-      DebriefingText = malloc ( EndTitleLength +10 );
+      DebriefingText = MyMalloc ( EndTitleLength +10 );
       strncpy( DebriefingText , EndTitlePointer , EndTitleLength +1 );
       DebriefingText[EndTitleLength] = 0;
       
@@ -1721,7 +1834,7 @@ InitNewMission ( char *MissionName )
     {
       NextMissionNamePointer += strlen ( NEXT_MISSION_NAME_STRING ) ;
       NextMissionNameLength = strstr ( NextMissionNamePointer , "\n" ) - NextMissionNamePointer;
-      NextMissionName = malloc ( NextMissionNameLength +10 );
+      NextMissionName = MyMalloc ( NextMissionNameLength +10 );
       strncpy( NextMissionName , NextMissionNamePointer , NextMissionNameLength +1 );
       NextMissionName[NextMissionNameLength] = 0;
       // DebugPrintf (1, "\nNext mission name found!  It reads: %s" , NextMissionName );
@@ -1920,7 +2033,7 @@ Title ( char *MissionBriefingPointer )
 	  Terminate(ERR);
 	}
       ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
-      PreparedBriefingText = malloc (ThisTextLength + 10);
+      PreparedBriefingText = MyMalloc (ThisTextLength + 10);
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
       

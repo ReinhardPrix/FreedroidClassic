@@ -1307,7 +1307,7 @@ GetThisLevelsDroids( char* SectionPointer )
 	{
 	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
 	}
-      if ( ListIndex == Number_Of_Droid_Types )
+      if ( ListIndex >= Number_Of_Droid_Types )
 	{
       fprintf(stderr, "\n\
 \n\

@@ -14,16 +14,18 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-([[*]])  Add code to allow for top views of the robot DROPPING FINALLY THE OLD
-         BALL WITH NUMBER DESIGN!!
-	 --> rethink this issue:  will it still be easy to tell the types immediately??
+1. Put each bullet specification variable under the control of the game.dat file
+2. Make fash independent of framerate
+3. Correct the way flash damage is handled:  once and not every frame damage should be done
+4. Think of a way new tiles can be incorporated into the game
+5. Add documentation about how to incorporate new map tiles into the game
+6. Add function to select map tile code directly
 
-*  Add documentation about how to incorporate new map tiles into the game
-*  Make the map tile reading function decide the number of tiles from the
-   size of the picuture itself.  (Eliminate the contant for the number of
-   map tiles as it is now.  Make a variable out of it.)
-*  Add additional map tiles:  destroyed console left/right/up/down
-*  Add additional map tiles:  autoshooting gun left/right/up/down
+7. Add additional map tiles:  destroyed console left/right/up/down 
+   but only a dummy and leave the details to the creative people
+8. Add additional map tiles:  autoshooting gun left/right/up/down
+   but only a dummy and leave the details to the creative people
+
 *  Add code to animate the autoshooting gun
 *  Add new weapon type: laser: drawing (double) lines from source to target.
 *  Add new weapon type: dumb missile 
@@ -62,7 +64,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
    DONE collision damage should be done to the "lighter" droid
    d. dimensions of combat window should be enlarged vertically
    e. use fixed pictures for each droid.  when no image found-->generate generic ones
-   f. use ints instead of chars to write the map file to the disk
+   DONE use ints instead of chars to write the map file to the disk
    DONE introduce friendly droids, that can be added via the droids file
    h. add new tiles: barred door horizontally/vertically (of about wall size)
 

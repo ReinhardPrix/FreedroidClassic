@@ -200,7 +200,9 @@ FCU AllFCUs[] = {
 Druidspec Druidmap;
 
 #define BULLET_SPEED_CALIBRATOR (0.8)
-bulletspec Bulletmap[ALLBULLETTYPES] = {
+
+Bulletspec Bulletmap;
+// bulletspec Bulletmap[ALLBULLETTYPES] = {
 /*  
   double recharging_time;       // time until the next shot can be made, measures in seconds
   double speed;			// speed of the bullet 
@@ -215,16 +217,13 @@ bulletspec Bulletmap[ALLBULLETTYPES] = {
   speed                                      blast                 oneshotonly
                               damage phases	                pic.	
 ------------------------------------------------------------*/
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 25                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 40                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 55                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
-  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
-};
+//  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 25                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
+    //  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 40                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
+//  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, 55                            , 8, BULLETBLAST, NULL, FALSE, 34, NULL},
+//  { 1.0, 10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
+//};
 
-blastspec Blastmap[ALLBLASTTYPES] = {
-/*  phases		picpointer */
-  {6, NULL},			/* BULLETBLAST */
-  {9, NULL}			/* DRUIDBLAST */
-};
+blastspec Blastmap[ALLBLASTTYPES];
+
 
 
