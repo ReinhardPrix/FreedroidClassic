@@ -2,64 +2,36 @@
 Bugs
 =======
 
-Outstanding release-critical bugs (priority: high)
+Preparing "final" release 1.0.0:
+==> all bugs are to be considered release-critical now!
+
+Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- (jp) Collision with robo can still kick you out of level..
-       jp: --> absolutely not on my machine!!!!!
-       rp: might be related to framerate, I have ~40 fps ?!
-       jp: --> couldn't reproduce this with 20 fps on Irenes maching
-               perhaps it was due to the "level gray"-change delay?!?
-       rp: nope. Recently reproduced: jumped across a wall inside
-           level after a melee
-       jp: --> damn! --> introduced extra security, that will prevent
-           this hopefully, but alter game behaviour if framerate drops under 20 fps.
+- (rp) when SoundInit fails: get SegFault instead of proper termination
+      (also bad because corrupts highscore file apparently)
 
-- (jp) The game SHOULD be playtested on a *SLOW* machine before any release
-       to make sure all the constants are in the right range for slow machines
-       too.  I don't experience many bugs, because the constants are well suited
-       for my 1400 Mhz machine.  I could use the 166 Mhz Pentium of Irene.
+- (rp) frame-rate neglected when counting out after takeover finished
 
+- (rp) sometimes droids get created in "piles", i.e. on top of each other...
+
+-  Collision with robo can still kick you out of level.. ??
+   --> (rp) check on slow machine if this is still an issue...
+           
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
-- Correct the console map:  Do scaling in a way that allows to bring the whole map
-  exactly on the screen and perhaps also give the scaling factor used for generating
-  the map as additional text to the picture.
-
-- (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
-  (seems ok so far..)
-
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
-- Walls are too "sticky", would be better playable if one could "slide"
-  (jp:)  That has been completely resolved, at least for my machine!!
-         Please tell me if you still experience trouble.
-
-- (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
 
 Wishlist
 --------
 - Add the original energy-upload-function from the C64 classical game start
   to Freedroid (instead of BeamLine perhaps...)
 
-- (jp) add more sounds:  
-  We might use a new sound file for every different level. That would be
-  nice.  But where to get that?
-
-- save highscores to disk
-
-- (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
+  --> (rp) mhh, dunno if that's worth the effort, let's see
 
 Resolved bugs
 -------------
-- DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
-       as the current ship.
-- DONE There is still a lot of german in the code.  Since we are growing more and more 
-       international, that should be removed and better sooner than later, as well in
-       the comments as in the choice of some old variable names, which are from 
-       historical origin, long before I started using the internet at all.
-- DONE missing "takeover announcement" of droid opponent
-
 - DONE mouse-support (should be good with touchstick on laptop!)
 
 - DONE Before any release the levelcolor changing procedure must be rearranged to work
@@ -251,14 +223,41 @@ Resolved bugs
 	  square of this size.
 
 
-- !! We should have a common bug/patch mailing address somewhere !!
-  freedroid@....
-- (rp) fix small mouse-shooting inconsistencies
-       ? which ones are left ?
 
-- The console picture, i.e. the picture for the menu at the console is a terrible mess.
-  Someone must sooner or later set up something more proper for the ne_cons.bmp file
-  containing the different phases of the console, or end users must be tolerant.
-  jp: --> Corrected, thanks to the great new picture provided by Lanzz! Thanks a lot!!!
+- DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
+       as the current ship.
+
+- Correct the console map:  Do scaling in a way that allows to bring the whole map
+  exactly on the screen and perhaps also give the scaling factor used for generating
+  the map as additional text to the picture.
+
+- (jp) There is still a lot of german in the code.  Since we are growing more and more 
+       international, that should be removed and better sooner than later, as well in
+       the comments as in the choice of some old variable names, which are from 
+       historical origin, long before I started using the internet at all.
+
+- (rp) missing "takeover announcement" of droid opponent
+
+- (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
+  (seems ok so far..)
 
 - (jp) some missing "color rotations": takeover-mode 
+
+- Walls are too "sticky", would be better playable if one could "slide"
+  (jp:)  That has been completely resolved, at least for my machine!!
+         Please tell me if you still experience trouble.
+
+- (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
+
+- (jp) add more sounds:  
+  We might use a new sound file for every different level. That would be
+  nice.  But where to get that?
+
+- save highscores to disk
+
+- (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
+       
+
+- !! We should have a common bug/patch mailing address somewhere !!
+  freedroid@....
+

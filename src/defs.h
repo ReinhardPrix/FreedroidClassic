@@ -26,7 +26,7 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
+1 *
  */
 
 
@@ -102,7 +102,7 @@ enum
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
 #define PARA_FONT_FILE 		"parafont.png"
-#define MENU_FONT_FILE 		"ArialGold.png"
+
 #define FPS_FONT_FILE 		"font05.png"
 #define ICON_FILE		"paraicon.bmp"
 
