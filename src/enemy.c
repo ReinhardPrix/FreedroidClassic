@@ -1599,6 +1599,13 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
     {
 
       //--------------------
+      // We set some default values, in case there isn't anything attackable
+      // found below...
+      //
+      vect_to_target -> x = -1000;
+      vect_to_target -> y = -1000;
+
+      //--------------------
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
@@ -1642,6 +1649,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  return; 
 	}
       */
+
+      
 
     }
   else
@@ -2038,10 +2047,10 @@ ProcessAttackStateMachine ( int enemynum )
   //
   TargetIsEnemy = DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
 
-  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.x  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
+  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
     ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
 
-  dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
+  dist2 = sqrt( vect_to_target . x * vect_to_target . x + vect_to_target . y * vect_to_target . y );
 
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
 
@@ -2296,7 +2305,7 @@ ProcessAttackStateMachine ( int enemynum )
 
   RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
-}; // void AttackInfluence ( int enemynum )
+}; // void ProcessAttackStateMachine ( int enemynum )
 
 /* ----------------------------------------------------------------------
  * This function checks for enemy collsions and returns TRUE if enemy 
