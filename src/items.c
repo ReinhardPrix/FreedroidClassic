@@ -2113,23 +2113,23 @@ ManageInventoryScreen ( void )
   //
   if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
     {
-      DebugPrintf( 0 , "\nTrying to 'grab' the item below the mouse cursor.");
+      DebugPrintf( 1 , "\nTrying to 'grab' the item below the mouse cursor.");
       
       if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	  Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	  Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
 
-	  DebugPrintf( 0 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	  DebugPrintf( 1 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
 	      
 	  Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	  DebugPrintf( 0 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
+	  DebugPrintf( 1 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
 
 	  if ( Grabbed_InvPos == (-1) )
 	    {
 	      // Nothing grabbed, so we need not do anything more here..
 	      Item_Held_In_Hand = ( -1 );
-	      DebugPrintf( 0 , "\nGrabbing in INVENTORY grid FAILED!" );
+	      DebugPrintf( 1 , "\nGrabbing in INVENTORY grid FAILED!" );
 	    }
 	  else
 	    {
@@ -2145,7 +2145,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in weapons rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in weapons rect!" );
 	  if ( Me[0].weapon_item.type > 0 )
 	    {
 	      //--------------------
@@ -2159,7 +2159,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in drive rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in drive rect!" );
 	  if ( Me[0].drive_item.type > 0 )
 	    {
 	      //--------------------
@@ -2173,7 +2173,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in shield rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in shield rect!" );
 	  if ( Me[0].shield_item.type > 0 )
 	    {
 	      //--------------------
@@ -2187,7 +2187,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in armour rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in armour rect!" );
 	  if ( Me[0].armour_item.type > 0 )
 	    {
 	      //--------------------
@@ -2201,7 +2201,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in special rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in special rect!" );
 	  if ( Me[0].special_item.type > 0 )
 	    {
 	      //--------------------
@@ -2215,7 +2215,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in aux1 rect!" );
 	  if ( Me[0].aux1_item.type > 0 )
 	    {
 	      //--------------------
@@ -2229,7 +2229,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in aux2 rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in aux2 rect!" );
 	  if ( Me[0].aux2_item.type > 0 )
 	    {
 	      //--------------------
@@ -2243,7 +2243,7 @@ ManageInventoryScreen ( void )
 	}
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in user rect!" );
+	  DebugPrintf( 1 , "\nGrabbing in user rect!" );
 	  // MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
 	  // MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
 	  MapPositionOfMouse . x = 
@@ -2288,7 +2288,7 @@ ManageInventoryScreen ( void )
 	{
 	  // Nothing grabbed, so we need not do anything more here..
 	  Item_Held_In_Hand = ( -1 );
-	  DebugPrintf( 0 , "\nGrabbing UTTERLY FAILED!" );
+	  DebugPrintf( 1 , "\nGrabbing UTTERLY FAILED!" );
 	}
       goto NoMoreGrabbing;
     }
@@ -2314,7 +2314,7 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped in inventory window!" );
+	  DebugPrintf( 1 , "\nItem dropped in inventory window!" );
 	  Item_Held_In_Hand = ( -1 );
 	  DropHeldItemToInventory( );
 	}
@@ -2325,7 +2325,7 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsInUserRect ( CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the floor of the combat window!" );
+	  DebugPrintf( 1 , "\nItem dropped onto the floor of the combat window!" );
 	  Item_Held_In_Hand = ( -1 );
 	  DropHeldItemToTheFloor( );
 	}
@@ -2336,8 +2336,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the weapons rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the weapons rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot ) )
 	    {
@@ -2360,8 +2360,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( DRIVE_RECT_BUTTON, CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the drive rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the drive rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot ) )
 	    {
@@ -2384,8 +2384,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the armour rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the armour rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot ) )
 	    {
@@ -2408,8 +2408,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the shield rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot ) )
 	    {
@@ -2432,8 +2432,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the special rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the special rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot ) )
 	    {
@@ -2456,8 +2456,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the aux1 rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the aux1 rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
@@ -2480,8 +2480,8 @@ ManageInventoryScreen ( void )
       //
       if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the aux2 rectangle!" );
-	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  DebugPrintf( 1 , "\nItem dropped onto the aux2 rectangle!" );
+	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {

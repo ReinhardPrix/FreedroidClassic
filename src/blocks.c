@@ -190,7 +190,7 @@ try_to_load_ingame_item_surface ( int item_type )
       // No ingame item surface found? -- give error message and then use
       // the inventory item_surface for the job.
       //
-      fprintf ( stderr , "\nitem_type=%d." , item_type );
+      DebugPrintf ( 1 , "\nitem_type=%d." , item_type );
       GiveStandardErrorMessage ( "try_to_load_ingame_item_surface (...)" , "\
 Unable to load an item ingame surface on demand.\n\
 Since there seems to be no ingame item surface yet, the inventory\n\
@@ -362,7 +362,7 @@ iso_load_bullet_surfaces ( void )
       "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 19 error-code
     };
 
-  DebugPrintf ( 0 , "Number_Of_Bullet_Types: %d." , Number_Of_Bullet_Types );
+  DebugPrintf ( 1, "Number_Of_Bullet_Types: %d." , Number_Of_Bullet_Types );
 
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {

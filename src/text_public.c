@@ -89,6 +89,11 @@ DebugPrintf (int db_level, char *fmt, ...)
 void
 GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal )
 {
+
+  // rp: suppress all non-essential warnings if debug_level > 0
+  if ( !IsFatal && !InformDevelopers && (debug_level<=0) )
+    return;
+
   fprintf (stderr, "\n----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n" );
   fprintf (stderr, "In Function: %s.\n" , FunctionName );

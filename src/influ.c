@@ -1097,7 +1097,7 @@ CheckInfluenceWallCollisions ( int player_num )
 	{
 	  Me [ player_num ] .pos.x = GetInfluPositionHistoryX( 2 );
 	  Me [ player_num ] .pos.y = GetInfluPositionHistoryY( 2 );
-	  DebugPrintf ( 0, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
+	  DebugPrintf ( 1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
 	}
 
     }
