@@ -637,24 +637,53 @@ TryToBuyItem( item* BuyItem )
 void
 Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
+
+#define FIXED_SHOP_INVENTORY TRUE
+#define NUMBER_OF_ITEMS_IN_SHOP 16
+
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
   int i;
-  // int InMenuPosition = 0;
-  // int MenuInListPosition = 0;
   char DescriptionText[5000];
-  int basic_items_number = 20; // this must be <= MAX_ITEMS_IN_INVENTORY -1 !!!
-  int ItemSelected;
+  int ItemSelected=0;
+
+  int StandardShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
+    { 
+      ITEM_SMALL_HEALTH_POTION,
+      ITEM_SMALL_MANA_POTION,
+      ITEM_MEDIUM_HEALTH_POTION,
+      ITEM_MEDIUM_MANA_POTION,
+
+      ITEM_SHORT_BOW,
+      ITEM_HUNTERS_BOW,
+      ITEM_BUCKLER,
+      ITEM_SMALL_SHIELD,
+
+      ITEM_CLOAK,
+      ITEM_ROBE,
+
+      ITEM_DAGGER,
+      ITEM_SHORT_SWORD,
+      ITEM_SCIMITAR,
+      ITEM_STAFF,
+
+      ITEM_CAP,
+      ITEM_SMALL_HELM,
+
+    };
 
   //--------------------
   // First we make a selection of items, that can be considered 'basic'.
   // This selection depends of course on wheter the menu is generated
   // for the smith or for the healer.
   //
-  for ( i = 0 ; i < basic_items_number ; i++ )
+  for ( i = 0 ; i < NUMBER_OF_ITEMS_IN_SHOP ; i++ )
     {
       if ( ForHealer ) 
 	{
+	  //--------------------
+	  // Here comes the random item selection for the healer
+	  //
 	  SalesList[ i ].type = 0 ; // something that can NOT be applied in combat
 	  while ( ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) ||
 		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) )
@@ -662,16 +691,25 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	}
       else
 	{
+	  //--------------------
+	  // Here comes the random item selection for the general shop
+	  //
 	  SalesList[ i ].type = 1 ; // something that can be applied in combat
 	  while ( ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat || 
 		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) ||
 		  ( SalesList [ i ].type == ITEM_MONEY ) )
 	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+
+	  if ( FIXED_SHOP_INVENTORY )
+	    {
+	      SalesList[ i ].type = StandardShopInventory [ i ];
+	    }
 	}
 
       SalesList[ i ].prefix_code = ( -1 );
       if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
       else SalesList[ i ].suffix_code = ( -1 );
+
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
       SalesList[ i ].is_identified = TRUE;
 
@@ -683,17 +721,35 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   //
   Buy_Pointer_List [ i ] = NULL ; 
   
+
+
   //--------------------
   // Now here comes the new thing:  This will be a loop from now
   // on.  The buy and buy and buy until at one point we say 'BACK'
   //
-  ItemSelected = 0;
-
   while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
       ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
       if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
+
+      //--------------------
+      // And since it can be assumed that the shop never runs
+      // out of supply for a certain good, we can as well restore
+      // the shop inventory list at this position.
+      //
+      if ( FIXED_SHOP_INVENTORY )
+	{
+	  for ( i = 0 ; i < NUMBER_OF_ITEMS_IN_SHOP ; i++ )
+	    {
+	      SalesList[ i ].type = StandardShopInventory [ i ];
+	      SalesList[ i ].prefix_code = ( -1 );
+	      SalesList[ i ].suffix_code = ( -1 );
+	      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
+	      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
+	    }
+	  Buy_Pointer_List [ i ] = NULL ; 
+	}
     }
 
 }; // void Buy_Basic_Items( void )

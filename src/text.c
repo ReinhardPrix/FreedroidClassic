@@ -967,7 +967,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
       // we need to correct this to more C style.
       //
       MenuSelection --;
-      if ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 )
+      if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 ) || ( MenuSelection < 0 ) )
 	{
 	  MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
 	}
