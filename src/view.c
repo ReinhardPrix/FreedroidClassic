@@ -1008,6 +1008,9 @@ This indicates a severe error in the map insert handling of Freedroid.",
 void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
+  Uint32 temp_Rmask;
+  Uint32 temp_Bmask;
+  iso_image tmp;
   // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
   // our_obstacle -> pos . x , our_obstacle -> pos . y );
 
@@ -1020,8 +1023,32 @@ There was an obstacle type given, that exceeds the number of\n\
 
     }
 
-  blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-				   our_obstacle -> pos . x , our_obstacle -> pos . y );
+  //--------------------
+  // We blit the obstacle in question, but if we're in the level editor and this
+  // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
+  // it just so.
+  //
+  if ( our_obstacle == level_editor_marked_obstacle )
+    {
+      DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+      tmp . surface = SDL_DisplayFormatAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+      tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+      tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+      tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+      tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Gmask = 0x0FFFFFFFF ;
+      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      blit_iso_image_to_map_position ( tmp , 
+				       our_obstacle -> pos . x , our_obstacle -> pos . y );
+      // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
+      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+    }
+  else
+    blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+				     our_obstacle -> pos . x , our_obstacle -> pos . y );
 }; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
@@ -1755,7 +1782,7 @@ void
 iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotation_index )
 {
 
-  DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
+  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
 
   switch ( rotation_index )
     {

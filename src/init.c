@@ -1653,6 +1653,7 @@ InitFreedroid ( void )
   // will never be set again if not Surfaces are allocated too and then they
   // can of course also be freed as well.
   //
+  level_editor_marked_obstacle = NULL ;
   Bulletmap=NULL;  // That will cause the memory to be allocated later
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {

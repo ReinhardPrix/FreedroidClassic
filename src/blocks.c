@@ -603,6 +603,12 @@ This error indicates some installation problem with freedroid.",
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
   our_iso_image -> surface = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
   SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
+  //--------------------
+  // Some test here...
+  //
+  // our_iso_image -> surface -> format -> Bmask = 0 ; 
+  // our_iso_image -> surface -> format -> Rmask = 0 ; 
+
   SDL_FreeSurface( Whole_Image );
 
   //--------------------

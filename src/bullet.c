@@ -690,8 +690,8 @@ check_bullet_player_collsisions ( bullet* CurBullet , int num )
 			  // As the new rule, the influencer after getting hit, must completely
 			  // start anew to recover his weapon from the previous shot
 			  //
-			  Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
-			  Me [ PlayerNum ] . got_hit_time = 0;
+			  // Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
+			  // Me [ PlayerNum ] . got_hit_time = 0;
 			  
 			  // GotHitSound ();
 			  Influencer_Scream_Sound ( );

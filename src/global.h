@@ -294,6 +294,15 @@ EXTERN unsigned char *Robotptr;
 #endif
 
 #undef EXTERN
+#ifdef _leveleditor_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+EXTERN obstacle* level_editor_marked_obstacle;
+
+#undef EXTERN
 #ifdef _input_c
 #define EXTERN
 #else

@@ -3051,6 +3051,21 @@ LevelEditor(void)
 	  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
 	  GetAllAnimatedMapTiles ( EditLevel );
 
+	  //--------------------
+	  // For testing purposes, we just select the next best obstacle as
+	  // the marked obstacle (for now)
+	  //
+	  if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] != (-1) )
+	    {
+	      level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
+	      DebugPrintf ( 0 , "\nObstacle marked now!" );
+	    }
+	  else
+	    {
+	      level_editor_marked_obstacle = NULL ;
+	      DebugPrintf ( 0 , "\nNo obstacle marked now!" );
+	    }
+
 	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
 	  OldTicks = SDL_GetTicks ( ) ;
 
