@@ -762,13 +762,16 @@ PutEnemy (int Enum)
 
   TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X;
   TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , ne_screen, &TargetRectangle );
-  TargetRectangle.x += DIGITLENGTH-1;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , ne_screen, &TargetRectangle );
-  TargetRectangle.x += DIGITLENGTH-1;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , ne_screen, &TargetRectangle );
-
-
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , 
+		   ne_screen, &TargetRectangle );
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X + DIGITLENGTH-1;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , 
+		   ne_screen, &TargetRectangle );
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , 
+		   ne_screen, &TargetRectangle );
 
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 

@@ -103,6 +103,7 @@ enum _sounds
 #define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
 #define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
 #define NE_DIGIT_BLOCK_FILE     "../graphics/digits.bmp"
+#define NE_RAHMEN_BLOCK_FILE    "../graphics/rahmen.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"

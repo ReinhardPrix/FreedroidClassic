@@ -143,6 +143,14 @@ EXTERN SDL_Rect *ne_get_blocks (char *picfile, int num_blocks,
 				int blocks_per_line, int source_line,
 				int target_line);
 
+EXTERN SDL_Rect *ne_get_digit_blocks (char *picfile, int num_blocks,
+				int blocks_per_line, int source_line,
+				int target_line);
+
+EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile, int num_blocks,
+				int blocks_per_line, int source_line,
+				int target_line);
+
 EXTERN unsigned char *GetBlocks (char *picfile, int line, int num);
 EXTERN int MergeBlockToWindow (register unsigned char *source,
 			       register unsigned char *target,

@@ -177,6 +177,7 @@ EXTERN SDL_Rect *ne_map_block; 			/* arrays of block positions */
 EXTERN SDL_Rect *ne_droid_block;
 EXTERN SDL_Rect *ne_influ_block;
 EXTERN SDL_Rect *ne_digit_block;
+EXTERN SDL_Rect *ne_rahmen_block;
 EXTERN SDL_Surface *ne_console_surface;
 #endif
 

@@ -207,7 +207,7 @@ InitPictures (void)
      create the internal storage for all our blocks 
   */
   tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*BLOCK_WIDTH,
-			     10*BLOCK_HEIGHT, ne_bpp, 0, 0, 0, 0);
+			     12*BLOCK_HEIGHT, ne_bpp, 0, 0, 0, 0);
   if (tmp == NULL)
     {
       printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());
@@ -259,20 +259,20 @@ InitPictures (void)
   ne_digit_block =
     ne_get_digit_blocks (NE_DIGIT_BLOCK_FILE, DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
+  ne_rahmen_block = ne_get_rahmen_block ( NE_RAHMEN_BLOCK_FILE, 1, 1, 0, block_line++);
   
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)
   ne_console_surface=SDL_LoadBMP( NE_CONSOLEN_PIC_FILE );
 
-
-
   /* 
      TEST: show those successively on the screen 
   */
-  
+
   SDL_SaveBMP (ne_blocks, "../graphics/debug.bmp");
 
+  /*
   for (i=0; i<ALLBLASTTYPES; i++)
     for (j=0; j<Blastmap[i].phases; j++)
       {
@@ -281,8 +281,7 @@ InitPictures (void)
 	SDL_UpdateRect (ne_screen, 0,0,0,0);
 	getchar_raw ();
       }
-
-
+  */
   // Terminate(OK);
   
   return (TRUE);

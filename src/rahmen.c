@@ -132,6 +132,11 @@ void
 DisplayRahmen (unsigned char *Parameter_Screen)
 {
 #ifdef NEW_ENGINE
+  SDL_Rect TargetRectangle;
+  TargetRectangle.x=0;
+  TargetRectangle.y=0;
+  SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
+  SDL_BlitSurface( ne_blocks , ne_rahmen_block , ne_screen , &TargetRectangle );
   return;
 #endif
   DisplayMergeBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
