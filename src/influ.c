@@ -1027,7 +1027,11 @@ FireBullet ( int PlayerNum )
   // NOT THE FIREING INTENTION ANY MORE, BUT RATHER THE (MOUSE-)MOVE INTENTION TO THAT
   // LOCATION, SO THAT MOVING NO LONGER STRICTLY REQUIRED KEYBOARD USAGE.
   //
-  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+  if ( ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
+       ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
+	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  ) || 
+	   ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height ) ) ) 
+       )
     {
       //--------------------
       // Later, we will add the new mouse move intention at this point
@@ -1040,7 +1044,6 @@ FireBullet ( int PlayerNum )
 
       return;
     }
-
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if ( Me [ PlayerNum ] .firewait > 0 )
