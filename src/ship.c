@@ -45,6 +45,14 @@
 #include "ship.h"
 #include "SDL_rotozoom.h"
 
+enum 
+  {
+    NO_FUNCTION,
+    UNLOCK_FUNCTION,
+    GUNON_FUNCTION,
+    GUNOFF_FUNCTION
+  };
+
 
 int NoKeyPressed (void);
 void GreatItemShow (void);
@@ -96,6 +104,50 @@ If you are interested, please email to
 freedroid-discussion@lists.sourceforge.net. (You can expect approval of your message shortly.) You also might check out the cvs source code directly. The latest release of the rpg branch does not contain appropriate examples of what the dialogs look like.
 
 ";
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+PutPasswordButtonsAndPassword ( int PasswordIndex )
+{
+  ShowGenericButtonFromList ( MAP_PASSWORDMIDDLE_BUTTON );
+  ShowGenericButtonFromList ( MAP_PASSWORDRIGHT_BUTTON );
+  ShowGenericButtonFromList ( MAP_PASSWORDLEFT_BUTTON );
+  if ( PasswordIndex >= 0 )
+    {
+      PutString ( Screen , 440 , 440 , Me [ 0 ] . password_list [ PasswordIndex ] );      
+    }
+  else
+    {
+      PutString ( Screen , 440 , 440 , "-------" );      
+    }
+}; // void PutPasswordButtonsAndPassword ( int ClearanceIndex )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+PutSecurityButtonsAndClearance ( int ClearanceIndex )
+{
+  ShowGenericButtonFromList ( MAP_SECURITYMIDDLE_BUTTON );
+  ShowGenericButtonFromList ( MAP_SECURITYRIGHT_BUTTON );
+  ShowGenericButtonFromList ( MAP_SECURITYLEFT_BUTTON );
+  
+  if ( ClearanceIndex >= 0 )
+    {
+      PutString ( Screen , 210 , 440 , Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . druidname );      
+    }
+  else
+    {
+      PutString ( Screen , 210 , 440 , "---" );      
+    }
+}; // void PutSecurityButtonsAndClearance ( int ClearanceIndex )
+
+
+
 /*-----------------------------------------------------------------
  * This function does all the work when we enter a lift
  *-----------------------------------------------------------------*/
@@ -533,7 +585,6 @@ GreatDruidShow (void)
   int droidtype;
   int page;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
   static int WasPressed = FALSE ;
   int ClearanceIndex = 0;
   int NumberOfClearances = 0;
@@ -554,19 +605,15 @@ GreatDruidShow (void)
 
   page = 0;
 
-  show_droid_info (droidtype, page , TRUE );
-
   while (!finished)
     {
       usleep ( 2 );
 
       droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
 
-      if (key_pressed)
-	{
-	  show_droid_info (droidtype, page , TRUE );
-	  key_pressed = FALSE;
-	}
+      show_droid_info (droidtype, page , TRUE );
+      ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
+      SDL_Flip ( Screen );
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -577,7 +624,6 @@ GreatDruidShow (void)
 		  ClearanceIndex ++;	    
 		  MoveMenuPositionSound();
 		}
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
@@ -586,19 +632,21 @@ GreatDruidShow (void)
 		  ClearanceIndex --;	      
 		  MoveMenuPositionSound();
 		}
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page < 2) page ++;
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page > 0) page --;
-	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      finished = TRUE;
+	      while (SpacePressed() ||EscapePressed());
 	    }
 
 	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
@@ -606,8 +654,8 @@ GreatDruidShow (void)
 	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
 	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 	    {
-	      finished = TRUE;
-	      while (SpacePressed() ||EscapePressed());
+	      // finished = TRUE;
+	      // while (SpacePressed() ||EscapePressed());
 	    }
 
 	}
@@ -619,34 +667,118 @@ GreatDruidShow (void)
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	  if ( droidtype < Me[0].type) droidtype ++;
-	  key_pressed = TRUE;
 	}
       if (DownPressed() || MouseWheelDownPressed())
 	{
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	  if (droidtype > 0) droidtype --;
-	  key_pressed = TRUE;
 	}
       if (RightPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
 	  if (page < 2) page ++;
-	  key_pressed = TRUE;
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
 	  if (page > 0) page --;
-	  key_pressed = TRUE;
 	}
 
     } /* while !finished */
 
   return;
 }; // void GreatDroidShow( void ) 
+
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+int
+AssemblePointerListForItemShow ( item** ItemPointerListPointer , int PlayerNum )
+{
+  int i;
+  item** CurrentItemPointer;
+  int NumberOfItems = 0 ;
+
+  //--------------------
+  // First we clean out the new Show_Pointer_List
+  //
+  CurrentItemPointer = ItemPointerListPointer ;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      *CurrentItemPointer = NULL;
+      CurrentItemPointer++;
+    }
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items
+  // currently equipped
+  //
+  CurrentItemPointer = ItemPointerListPointer;
+  if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .weapon_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .drive_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .drive_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .armour_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .armour_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .shield_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .shield_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .special_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .special_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .aux1_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux1_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  if ( Me [ PlayerNum ] .aux2_item.type != ( -1 ) )
+    {
+      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux2_item );
+      CurrentItemPointer ++;
+      NumberOfItems ++;
+    }
+  
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items in the
+  // pure unequipped inventory
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me [ PlayerNum ] .Inventory [ i ].type == (-1) ) continue;
+      else
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .Inventory[ i ] );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+    }
+
+  return ( NumberOfItems );
+
+}; // void AssemblePointerListForItemShow ( .. )
 
 /* ----------------------------------------------------------------------
  * This function does the item show when the user has selected item
@@ -658,15 +790,13 @@ GreatItemShow (void)
   int ItemType;
   int page;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
   static int WasPressed = FALSE ;
-  // int ClearanceIndex = 0;
-  // int NumberOfClearances = 0;
-  int i;
-  item* Show_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
-  int Pointer_Index=0;
-  int NumberOfItems=0;
+  item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
+  int NumberOfItems;
   int ItemIndex=0;
+  int PasswordIndex = (-1) ;
+  int ClearanceIndex = (-1) ;
+  int IdentifyAllowed = FALSE ;
   char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
@@ -679,80 +809,10 @@ GreatItemShow (void)
   MenuTexts[7]="";
   MenuTexts[9]="";
 
-  //--------------------
-  // First we clean out the new Show_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Show_Pointer_List[ i ] = NULL;
-    }
+  NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
 
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items
-  // currently equipped
-  //
-  if ( Me[0].weapon_item.type != ( -1 ) )
+  if ( ShowPointerList[0] == NULL )
     {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].drive_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].armour_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].shield_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].special_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].special_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].aux1_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].aux1_item );
-      Pointer_Index ++;
-    }
-  if ( Me[0].aux2_item.type != ( -1 ) )
-    {
-      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].aux2_item );
-      Pointer_Index ++;
-    }
-
-
-
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items in the
-  // pure unequipped inventory
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      else
-	{
-	  //--------------------
-	  // Now depending on whether we sell to the healer or to
-	  // the weaponsmith, we can either sell one thing or the
-	  // other
-	  //
-	  // if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  // if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  Show_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-	  Pointer_Index ++;
-	}
-    }
-
-  if ( Pointer_Index == 0 )
-    {
-      // PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
@@ -760,10 +820,7 @@ GreatItemShow (void)
       return;
     }
 
-  NumberOfItems = Pointer_Index ;
-
-  // ItemType = Me[0].type;
-  ItemType = Show_Pointer_List [ ItemIndex ] -> type ;
+  ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
   page = 0;
 
@@ -771,16 +828,40 @@ GreatItemShow (void)
     {
       usleep ( 2 );
 
-      show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
-
-      ItemType = Show_Pointer_List [ ItemIndex ] -> type ;
-      // ItemType = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
-
-      if (key_pressed)
+      //--------------------
+      // We show all the info and the buttons that should be in this
+      // interface...
+      //
+      show_item_info ( ShowPointerList [ ItemIndex ] , page , TRUE );
+      PutPasswordButtonsAndPassword ( PasswordIndex );
+      PutSecurityButtonsAndClearance ( ClearanceIndex );
+      ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
+      if ( ShowPointerList [ ItemIndex ] -> is_identified ) 
+	ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_YELLOW );
+      else 
 	{
-	  show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
-	  key_pressed = FALSE;
+	  if ( IdentifyAllowed )
+	    ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_GREEN );
+	  else
+	    ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_RED );
 	}
+      SDL_Flip( Screen );
+
+      //--------------------
+      // Now we see if identification of the current item is allowed
+      // or not.
+      //
+      IdentifyAllowed = FALSE ;
+      if ( PasswordIndex >= 0 )
+	{
+	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Idenfity" ) )
+	    {
+	      IdentifyAllowed = TRUE ;
+	    }
+	}
+
+      ItemType = ShowPointerList [ ItemIndex ] -> type ;
+      // ItemType = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -791,7 +872,6 @@ GreatItemShow (void)
 		  ItemIndex ++;	    
 		  MoveMenuPositionSound();
 		}
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
@@ -800,32 +880,69 @@ GreatItemShow (void)
 		  ItemIndex --;	      
 		  MoveMenuPositionSound();
 		}
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page < 2) page ++;
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page > 0) page --;
-	      key_pressed = TRUE;
 	    }
 	  else if ( CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      Show_Pointer_List [ ItemIndex ] ->is_identified = TRUE;
-	      key_pressed = TRUE;
+	      ShowPointerList [ ItemIndex ] ->is_identified = TRUE;
 	    }
-
-	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ClearanceIndex > 0 ) 
+		{
+		  ClearanceIndex --;
+		  MenuItemSelectedSound ( ) ;
+		  PasswordIndex = (-1) ;
+		  // SelectedFunction = NO_FUNCTION ;
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ClearanceIndex < MAX_CLEARANCES - 1 )
+		{
+		  if ( Me [ 0 ] . clearance_list [ ClearanceIndex + 1 ] ) 
+		    {
+		      ClearanceIndex ++;
+		      MenuItemSelectedSound();
+		      PasswordIndex = (-1) ;
+		      // SelectedFunction = NO_FUNCTION ;
+		    }
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_PASSWORDLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( PasswordIndex > 0 ) 
+		{
+		  PasswordIndex --;
+		  MenuItemSelectedSound ( ) ;
+		  ClearanceIndex = (-1) ;
+		  // SelectedFunction = NO_FUNCTION ;
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( PasswordIndex < MAX_PASSWORDS - 1 )
+		{
+		  if ( strlen ( Me [ 0 ] . password_list [ PasswordIndex + 1 ] ) > 0 ) 
+		    {
+		      PasswordIndex ++;
+		      MenuItemSelectedSound();
+		      ClearanceIndex = (-1) ;
+		      // SelectedFunction = NO_FUNCTION ;
+		    }
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -840,28 +957,24 @@ GreatItemShow (void)
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	  if ( ItemType < Me[0].type) ItemType ++;
-	  key_pressed = TRUE;
 	}
       if (DownPressed() || MouseWheelDownPressed())
 	{
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	  if (ItemType > 0) ItemType --;
-	  key_pressed = TRUE;
 	}
       if (RightPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
 	  if (page < 2) page ++;
-	  key_pressed = TRUE;
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
 	  if (page > 0) page --;
-	  key_pressed = TRUE;
 	}
 
     } /* while !finished */
@@ -933,7 +1046,7 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
 
   if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
 
-  SDL_Flip (Screen);
+  // SDL_Flip (Screen);
 
 } /* show_droid_info */
 
@@ -1178,21 +1291,9 @@ Notes: %s",
 
   if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
 
-  if ( ShowItem->is_identified ) ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_YELLOW );
-  else ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_GREEN );
+  // SDL_Flip (Screen);
 
-  SDL_Flip (Screen);
-
-} /* show_item_info */
-
-
-enum 
-  {
-    NO_FUNCTION,
-    UNLOCK_FUNCTION,
-    GUNON_FUNCTION,
-    GUNOFF_FUNCTION
-  };
+}; // void show_item_info ( ... )
 
 /* ----------------------------------------------------------------------
  * This function should delect a certain security clearance and reorder 
@@ -1208,6 +1309,7 @@ DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
       Me [ PlayerNum ] . clearance_list [ i ] = Me [ PlayerNum ] . clearance_list [ i + 1 ] ;
     }
 }; // void DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
+
 
 /* -----------------------------------------------------------------
  * This function displays the map of the current level and also 
@@ -1733,36 +1835,14 @@ ShowDeckMap (Level deck)
 		      FontHeight ( GetCurrentFont() ) ) / 2 ) , EnergyRationString ); 
 
 
-      ShowGenericButtonFromList ( MAP_SECURITYMIDDLE_BUTTON );
-      ShowGenericButtonFromList ( MAP_SECURITYRIGHT_BUTTON );
-      ShowGenericButtonFromList ( MAP_SECURITYLEFT_BUTTON );
-
-      ShowGenericButtonFromList ( MAP_PASSWORDMIDDLE_BUTTON );
-      ShowGenericButtonFromList ( MAP_PASSWORDRIGHT_BUTTON );
-      ShowGenericButtonFromList ( MAP_PASSWORDLEFT_BUTTON );
-
       //--------------------
       // Now we print out the currently selected password AND
       // the currently selected security clearance.
       //
-      // SetCurrentFont ( Menu_BFont );
-      if ( ClearanceIndex >= 0 )
-	{
-	  PutString ( Screen , 210 , 440 , Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . druidname );      
-	}
-      else
-	{
-	  PutString ( Screen , 210 , 440 , "---" );      
-	}
+      
+      PutSecurityButtonsAndClearance ( ClearanceIndex ) ;
 
-      if ( PasswordIndex >= 0 )
-	{
-	  PutString ( Screen , 440 , 440 , Me [ 0 ] . password_list [ PasswordIndex ] );      
-	}
-      else
-	{
-	  PutString ( Screen , 440 , 440 , "-------" );      
-	}
+      PutPasswordButtonsAndPassword ( PasswordIndex ) ;
 
       SDL_Flip (Screen);
 

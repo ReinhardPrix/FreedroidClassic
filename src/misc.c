@@ -58,8 +58,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
     { NULL , "UPButton.png"                     , { 580 , 180 ,  50 , 100 } } ,
     { NULL , "DOWNButton.png"                   , { 580 , 330 ,  50 , 100 } } ,
-    { NULL , "LEFTButton.png"                   , { 300 , 420 , 100 ,  50 } } ,
-    { NULL , "RIGHTButton.png"                  , { 450 , 420 , 100 ,  50 } } ,
+    { NULL , "LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
+    { NULL , "RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } } ,
     { NULL , "MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } } ,
     { NULL , "MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } } ,
     { NULL , "MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } } ,
@@ -90,9 +90,9 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } } ,
     { NULL , "MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } ,
 
-    { NULL , "ConsoleIdentifyButton_green.png"  , {  50 ,   5 , 100 ,  50 } } ,
-    { NULL , "ConsoleIdentifyButton_red.png"    , {  50 ,   5 , 100 ,  50 } } ,
-    { NULL , "ConsoleIdentifyButton_yellow.png" , {  50 ,   5 , 100 ,  50 } } 
+    { NULL , "ConsoleIdentifyButton_green.png"  , {  50 ,  60 , 100 ,  50 } } ,
+    { NULL , "ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } } ,
+    { NULL , "ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -1110,8 +1110,8 @@ LNum , X , Y );
 	{
 	  DeleteBullet ( i , FALSE ); // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
 	                              // in this case, we need no bullet-explosions
-	    //AllBullets[i].type = OUT;
-	    //AllBullets[i].mine = FALSE;
+	  //AllBullets[i].type = OUT;
+	  //AllBullets[i].mine = FALSE;
 	}
       
       // clear the automapping information
