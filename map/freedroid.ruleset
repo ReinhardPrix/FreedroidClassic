@@ -164,6 +164,30 @@ Item weight=0.8
 Picture number=2
 ** End of new item specification subsection **
 
+** Start of new item specification subsection **
+Item name="Mountable Lasers Class Alpha"
+Item can be applied in combat="yes"
+Energy gain on application in combat=60
+Item weight=0.8
+Picture number=2
+** End of new item specification subsection **
+
+** Start of new item specification subsection **
+Item name="Droid Energetic Heart Class Beta"
+Item can be applied in combat="yes"
+Energy gain on application in combat=60
+Item weight=0.8
+Picture number=2
+** End of new item specification subsection **
+
+** Start of new item specification subsection **
+Item name="Droid Antigrav Drive Class Alpha"
+Item can be applied in combat="yes"
+Energy gain on application in combat=60
+Item weight=0.8
+Picture number=2
+** End of new item specification subsection **
+
 *** End of item data section: ***
 
 ----------------------------------------------------------------------

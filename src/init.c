@@ -1495,6 +1495,22 @@ InitFreedroid (void)
   AllItems[ 1 ].pos.y = 7;
   AllItems[ 1 ].type = 1 ;
 
+  AllItems[ 2 ].pos.x = 7;
+  AllItems[ 2 ].pos.y = 6;
+  AllItems[ 2 ].type = 2 ;
+
+  AllItems[ 3 ].pos.x = 7;
+  AllItems[ 3 ].pos.y = 8;
+  AllItems[ 3 ].type = 3 ;
+
+  AllItems[ 4 ].pos.x = 5;
+  AllItems[ 4 ].pos.y = 6;
+  AllItems[ 4 ].type = 4 ;
+
+  AllItems[ 5 ].pos.x = 6;
+  AllItems[ 5 ].pos.y = 6;
+  AllItems[ 5 ].type = 5 ;
+
 
   Init_Video ();
 
