@@ -59,6 +59,13 @@ SaveGame( void )
   char linebuf[10000];
   char *homedir;
 
+  //--------------------
+  // Saving might take a while, therefore we activate the conservative
+  // frame rate, just to be sure, so that no sudden jumps occur, perhaps
+  // placing the influencer or some bullets outside the map even!
+  //
+  Activate_Conservative_Frame_Computation();
+
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
 
   // get home-directory to save in
@@ -225,6 +232,13 @@ LoadGame( void )
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
+
+  //--------------------
+  // Loading might take a while, therefore we activate the conservative
+  // frame rate, just to be sure, so that no sudden jumps occur, perhaps
+  // placing the influencer or some bullets outside the map even!
+  //
+  Activate_Conservative_Frame_Computation();
 
   //--------------------
   // Maybe someone just lost in the game and has then pressed the load
