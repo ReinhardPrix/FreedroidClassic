@@ -2923,11 +2923,25 @@ ManageInventoryScreen ( void )
 		
 		if ( index_of_item_under_mouse_cursor != (-1) )
 		{
-		    Item_Held_In_Hand = ( -1 ); 
-		    AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
-		    MouseButtonPressedPreviousFrame = axis_is_active;
-		    RightPressedPreviousFrame = MouseRightPressed ( ) ;
-		    return;
+
+		    //--------------------
+		    // We will only do something there, if the way from the Tux
+		    // to the item in question is really free
+		    //
+		    if ( DirectLineWalkable ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . x , PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . y , 
+					Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+					Me [ 0 ] . pos . z ) )
+		    {
+			Item_Held_In_Hand = ( -1 ); 
+			AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
+			MouseButtonPressedPreviousFrame = axis_is_active;
+			RightPressedPreviousFrame = MouseRightPressed ( ) ;
+			return;
+		    }
+		    else
+		    {
+			DebugPrintf ( 1 , "\n%s(): Refusing to pick up even the very close item, because it's not directly accessible." , __FUNCTION__ );
+		    }
 		}
 		
 	    }
@@ -3132,22 +3146,32 @@ ManageInventoryScreen ( void )
 	else if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
 	    DebugPrintf( 1 , "\nGrabbing in user rect!" );
-	    DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+	    DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	    
 	    index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 	    
 	    if ( index_of_item_under_mouse_cursor != (-1) )
 	    {
-		if ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type == ITEM_MONEY ) 		      
+		//--------------------
+		// We only take the item directly into out 'hand' i.e. the mouse cursor,
+		// if the item in question can be reached directly and isn't blocked by
+		// some walls or something...
+		//
+		if ( DirectLineWalkable ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . x , PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . y , 
+					  Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+					  Me [ 0 ] . pos . z ) )
 		{
-		    AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
-		    return;
-		}
-		else
-		{
-		    Item_Held_In_Hand = PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type ;
-		    PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . currently_held_in_hand = TRUE;
-		    // break;
+		    if ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type == ITEM_MONEY )
+		    {
+			AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
+			return;
+		    }
+		    else
+		    {
+			Item_Held_In_Hand = PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type ;
+			PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . currently_held_in_hand = TRUE;
+			// break;
+		    }
 		}
 	    }
 	}
