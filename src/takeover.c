@@ -586,14 +586,18 @@ GetTakeoverGraphics (void)
   to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
 
-  /* Set the fill-blocks */
+  /* Get the fill-blocks */
   for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
     Set_Rect (FillBlocks[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
 
-  /* Set the capsule Blocks */
+  /* Get the capsule Blocks */
   for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
     Set_Rect (CapsuleBlocks[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+
+  /* Get the default background color, to be used when no background picture found! */
+  curx += CAPSULE_LEN + 2;
   
+
   curx = 0;
   cury += FILL_BLOCK_HEIGHT + 2;
 
