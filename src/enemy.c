@@ -753,6 +753,26 @@ SelectNextWaypointAdvanced ( int EnemyNum )
     }			/* if */
 }; // void MoveThisRobotAdvanced ( int EnemyNum )
 
+/* ----------------------------------------------------------------------
+ * In order to make sure that dead robots are blitted first, we swap them
+ * to the beginning of the AllEnemys array.
+ * ---------------------------------------------------------------------- */
+void
+SwapThisRobotToFrontPosition ( enemy* ThisRobot )
+{
+  int i;
+  enemy Zwisch;
+
+  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
+    {
+      if ( AllEnemys[ i ] .Status != OUT )
+	{
+	  memcpy ( &Zwisch , & ( AllEnemys[ i ] ) , sizeof( enemy ) );
+	  memcpy ( & ( AllEnemys[ i ] ) , ThisRobot , sizeof( enemy ) );
+	  memcpy ( ThisRobot , & Zwisch , sizeof( enemy ) );
+	}
+    }
+}; // void SwapThisRobotToFrontPosition ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
  * This function moves a single enemy.  It is used by MoveEnemys().
@@ -784,7 +804,7 @@ MoveThisEnemy( int EnemyNum )
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
 		   DRUIDBLAST);
       Me.KillRecord[ ThisRobot->type ] ++;
-      
+      SwapThisRobotToFrontPosition ( ThisRobot );
 
       //--------------------
       // Maybe that robot did have something with him?  The item should then
@@ -1281,7 +1301,10 @@ AnimateEnemys (void)
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
       if (AllEnemys[i].Status == OUT)
-	continue;
+	{
+	  AllEnemys[i].feindphase = DROID_PHASES ;
+	  continue;
+	}
 
       // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;
       AllEnemys[i].feindphase +=

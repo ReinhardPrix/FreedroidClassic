@@ -655,13 +655,6 @@ PutEnemy (int Enum , int x , int y)
       return;
     }
 
-  // if this enemy is dead, we need not do anything more here
-  if (AllEnemys[Enum].Status == OUT)
-    {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
-      return;
-    }
-
   // if the enemy is out of signt, we need not do anything more here
   if ((!show_all_droids) && (!IsVisible (&AllEnemys[Enum].pos)) )
     {
@@ -743,6 +736,13 @@ Sorry...\n\
 	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
 	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 	}
+    }
+
+  // if this enemy is dead, we need not do anything more here
+  if (AllEnemys[Enum].Status == OUT)
+    {
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
+      return;
     }
 
   //--------------------

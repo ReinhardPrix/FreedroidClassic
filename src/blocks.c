@@ -313,7 +313,7 @@ Load_Enemy_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
-  for ( i=0 ; i < DROID_PHASES ; i++ )
+  for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
@@ -355,7 +355,7 @@ Load_Influencer_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
-  for ( i=0 ; i < DROID_PHASES ; i++ )
+  for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
