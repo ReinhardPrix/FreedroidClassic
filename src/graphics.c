@@ -1431,7 +1431,14 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
   // SDL for creating the initial output window...
   //
   video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
-  video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
+
+  //--------------------
+  // Now according to the document http://sdldoc.csn.ul.ie/guidevideoopengl.php
+  // we do need the SDL_GL_SetAttribute ( SDL_GL_DOUBLEBUFFER, 1 ) and NOT
+  // this here...
+  //
+  // video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
+
   // video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
   video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
   if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
@@ -1528,6 +1535,19 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
   // Maybe resize the window to standard size?
   //
   // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+  //
+
+  //--------------------
+  // Now under win32 we're running into problems, because there seems to be some
+  // garbage in ONE OF THE TWO BUFFERS from the double-buffering.  Maybe cleaning
+  // that out solves part of the problem.  Well, not all, since there is still the
+  // dialog background not visible.  But anyway, let's just clear the two buffers
+  // for now...
+  //
+  our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
+  our_SDL_flip_wrapper ( Screen ) ;
+  our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
+  our_SDL_flip_wrapper ( Screen ) ;
   
 #endif // HAVE_LIBGL
 
