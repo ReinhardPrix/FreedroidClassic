@@ -387,6 +387,27 @@ void
 Update_Tux_Working_Copy ( void )
 {
   int i;
+  static int Previous_weapon_item = (-2) ;
+  static int Previous_shield_item = (-2) ;
+  static int Previous_special_item = (-2) ;
+  static int Previous_armour_item = (-2) ; 
+
+  if ( ( Previous_weapon_item == Me.weapon_item.type ) &&
+       ( Previous_shield_item == Me.shield_item.type ) &&
+       ( Previous_armour_item == Me.armour_item.type ) &&
+       ( Previous_special_item == Me.special_item.type ) )
+    {
+      return;
+    }
+  else
+    {
+      Previous_weapon_item  = Me.weapon_item.type  ;
+      Previous_shield_item  = Me.shield_item.type  ;
+      Previous_armour_item  = Me.armour_item.type  ;
+      Previous_special_item = Me.special_item.type ; 
+    }
+    
+  
 
   // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
 
