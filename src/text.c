@@ -193,7 +193,7 @@ the things soul may finally rest.\n\
   
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
-      Switch_Background_Music_To ( "Chandra01.ogg" );
+      Switch_Background_Music_To ( "../speeches/Chandra01.ogg" );
       ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       return;
@@ -201,7 +201,7 @@ the things soul may finally rest.\n\
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
-      Switch_Background_Music_To ( "Sorenson01.ogg" );
+      Switch_Background_Music_To ( "../speeches/Sorenson01.ogg" );
       ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       return;
@@ -209,7 +209,7 @@ the things soul may finally rest.\n\
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
     {
-      Switch_Background_Music_To ( "Richard01.ogg" );
+      Switch_Background_Music_To ( "../speeches/Richard01.ogg" );
       ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       return;

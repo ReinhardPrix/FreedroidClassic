@@ -118,7 +118,11 @@ char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
 };
 
 #ifdef HAVE_LIBSDL_MIXER
-Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS];
+Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
+{
+  NULL,
+  NULL
+};
 #endif
 
 void 
@@ -134,6 +138,7 @@ Init_Audio(void)
   int audio_channels = 2;
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
+  char Temp_Filename[5000];
 
   DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
@@ -206,7 +211,9 @@ Sorry...\n\
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, FALSE);
+      strcpy ( Temp_Filename , "effects/" );
+      strcat ( Temp_Filename , SoundSampleFilenames[ i ] );
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
       Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
       if ( Loaded_WAV_Files[i] == NULL )
 	{
@@ -215,7 +222,7 @@ Sorry...\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN FILE INTO MEMORY.\n\
+The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
 \n\
 The name of the problematic file is:\n\
 %s \n\
@@ -244,7 +251,9 @@ Sorry...\n\
   Loaded_MOD_Files[0]=NULL;
   for (i = 1; i < ALL_MOD_MUSICS; i++)
     {
-      fpath = find_file ( MOD_Music_SampleFilenames [ i ], SOUND_DIR, FALSE);
+      strcpy ( Temp_Filename , "music/" );
+      strcat ( Temp_Filename , MOD_Music_SampleFilenames[ i ] );
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
       Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
       if ( Loaded_MOD_Files[ i ] == NULL )
 	{
@@ -273,7 +282,7 @@ Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , MOD_Music_SampleFilenames[ i ] , Mix_GetError() );
 	  Terminate (ERR);
-	} // if ( !Loaded_WAV...
+	} // if ( !Loaded_MOD...
       else
 	{
 	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
@@ -529,28 +538,21 @@ Mission_Status_Change_Sound (void)
   Play_Sound ( MISSION_STATUS_CHANGE_SOUND );
 }
 
-/*@Function============================================================
-@Desc: 
-
-This function is intended to provide a convenient way of switching
-between different backround sounds in freedroid.
-If no background sound was yet running, the function should start playing
-the given background music.
-If some background sound was already playing, the function should shut down
-the old background music and start playing the new one.
-
-Technical details:
-
-
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is intended to provide a convenient way of switching
+ * between different backround sounds in freedroid.
+ * If no background sound was yet running, the function should start playing
+ * the given background music.
+ * If some background sound was already playing, the function should shut down
+ * the old background music and start playing the new one.
+ *
+ * ---------------------------------------------------------------------- */
 void
-Switch_Background_Music_To ( char* filename_raw )
+Switch_Background_Music_To ( char* filename_raw_parameter )
 {
   static int MOD_Music_Channel = -1;
   char* fpath;
+  char filename_raw[5000];
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -579,7 +581,17 @@ Switch_Background_Music_To ( char* filename_raw )
   // of the audio thing.  But now we want to allow for dynamic specification of
   // music files via the mission files and that.  So we load the music now.
   //
-  Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
+
+  /*
+  if ( Loaded_MOD_Files[ 0 ] != NULL )
+    {
+      Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
+      Loaded_MOD_Files [ 0 ] = NULL ;
+    }
+  */
+
+  strcpy ( filename_raw , "music/" );
+  strcat ( filename_raw , filename_raw_parameter );
   fpath = find_file ( filename_raw , SOUND_DIR, FALSE);
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
@@ -588,13 +600,13 @@ Switch_Background_Music_To ( char* filename_raw )
 	       "\n\
 \n\
 ----------------------------------------------------------------------\n\
-Freedroid has encountered a problem in function SwitchBackgroundMusicTo( char* filename ):\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY ON THE FLY.\n\
 \n\
 The name of the problematic file is:\n\
 %s \n\
 \n\
-The SDL says the reason for this would be:\n\
+The SDL says the reason for this would be the following:\n\
 %s \n\
 \n\
 If the problem persists and you do not find this sound file in the\n\
@@ -609,7 +621,7 @@ Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , fpath , Mix_GetError() );
       Terminate (ERR);
-    } // if ( !Loaded_WAV...
+    } // if ( !Loaded_MOD...
   else
     {
       DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );

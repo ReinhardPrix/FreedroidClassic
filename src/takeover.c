@@ -150,7 +150,6 @@ Takeover (int enemynum)
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
-  // Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
   Switch_Background_Music_To ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
   /* Get a new Internfenster without any robots, blasts bullets etc
@@ -201,7 +200,7 @@ Takeover (int enemynum)
       // evaluate the final score of the game and return it
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
-	  Switch_Background_Music_To (SILENCE);
+	  // Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Won_Sound ();
 	  if (Me[0].type == DRUID001)
 	    {
