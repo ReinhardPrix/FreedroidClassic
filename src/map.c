@@ -1289,7 +1289,7 @@ MoveLevelDoors (void)
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if (AllEnemys[j].status == OUT ||
+	      if (AllEnemys[j].status == OUT || AllEnemys[j].status == TERMINATED || 
 		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 
@@ -1733,7 +1733,7 @@ IsVisible (Finepoint objpos)
   a_y = influ_y - objpos->y;
 
   a_len = sqrt (  a_x * a_x + a_y * a_y );
-  step_num = a_len * 3;
+  step_num = a_len * 4.0;
 
   if (step_num == 0)
     step_num = 1;

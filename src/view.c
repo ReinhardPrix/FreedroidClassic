@@ -79,6 +79,10 @@ Assemble_Combat_Picture (int mask)
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
   SDL_Rect TxtRect;
+  finepoint pos, vect;
+  float len;
+  bool vis = TRUE;
+
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
@@ -92,7 +96,28 @@ Assemble_Combat_Picture (int mask)
     {
       for (col = -5; col < CurLevel->xlen + 5; col++)
 	{
-	  MapBrick = GetMapBrick( CurLevel, col , line );
+	  vis = TRUE;
+	  if ( !GameConfig.AllMapVisible )
+	    {
+	      pos.x = col;
+	      pos.y = line;
+	      vect.x = Me.pos.x - pos.x;
+	      vect.y = Me.pos.y - pos.y;
+	      len = sqrt( vect.x * vect.x + vect.y * vect.y) + 0.01;
+	      vect.x /= len;
+	      vect.y /= len;
+	      if (len > 0.5)
+		{
+		  pos.x += vect.x;
+		  pos.y += vect.y;
+		}
+	      if ( !IsVisible (&pos) )
+		vis = FALSE;
+	    }
+	  if (!vis)
+	    MapBrick = INVISIBLE;
+	  else
+	    MapBrick = GetMapBrick( CurLevel, col , line );
 	  TargetRectangle.x = USER_FENSTER_CENTER_X + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
 	  TargetRectangle.y = USER_FENSTER_CENTER_Y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
 	  SDL_BlitSurface( MapBlockSurfacePointer[CurLevel->color][MapBrick], NULL, ne_screen, &TargetRectangle);
@@ -153,8 +178,18 @@ Assemble_Combat_Picture (int mask)
 
       SDL_SetClipRect (ne_screen, &User_Rect);
 
+
+      // make sure Ashes are displayed _before_ droids, so that they are _under_ them!
       for (i = 0; i < NumEnemys ; i++)
-	PutEnemy (i , -1 , -1 );
+	if ( (AllEnemys[i].levelnum != CurLevel->levelnum) || (AllEnemys[i].status == OUT) )
+	  continue;
+	else if (AllEnemys[i].status == TERMINATED)
+	  {
+	    if (IsVisible (&(AllEnemys[i].pos) ) )
+		PutAshes (AllEnemys[i].pos.x, AllEnemys[i].pos.y);
+	  }
+	else
+	  PutEnemy (i , -1 , -1 );
 
       if (Me.energy > 0)
 	PutInfluence ( -1 , -1 );
@@ -318,7 +353,8 @@ PutEnemy (int Enum , int x , int y)
 
   droid = &AllEnemys[Enum];
 
-  if ((droid->status == OUT) || (droid->levelnum != CurLevel->levelnum) )
+  if ( (droid->status == TERMINATED) || (droid->status == OUT) || 
+       (droid->levelnum != CurLevel->levelnum) )
     return;
 
   // if the enemy is out of sight, we need not do anything more here
@@ -327,21 +363,6 @@ PutEnemy (int Enum , int x , int y)
       DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
     }
-
-  // if it's just a dead-enemy, put some decals if that feature is activated
-  if (droid->status == TERMINATED)
-    {
-      if (!GameConfig.ShowDecals)
-	return;
-
-      TargetRectangle.x = USER_FENSTER_CENTER_X + 
-	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-      TargetRectangle.y = USER_FENSTER_CENTER_Y + 
-	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
-      SDL_BlitSurface( Decal_pics[0], NULL , ne_screen, &TargetRectangle);
-      return;
-    }
-
 
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)
@@ -456,6 +477,26 @@ Sorry...\n\
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }	// void PutEnemy(int Enum , int x , int y) 
+
+
+// ----------------------------------------------------------------------
+// put some ashes at (x,y)
+//----------------------------------------------------------------------
+void
+PutAshes (float x, float y)
+{
+  SDL_Rect dst;
+
+  if (!GameConfig.ShowDecals)
+    return;
+
+  dst.x = USER_FENSTER_CENTER_X + ( -Me.pos.x + x ) * Block_Width  -Block_Width/2;
+  dst.y = USER_FENSTER_CENTER_Y + ( -Me.pos.y + y ) * Block_Height -Block_Height/2;
+  SDL_BlitSurface( Decal_pics[0], NULL , ne_screen, &dst);
+
+  return;
+
+} // PutAshes
 
 /*@Function============================================================
 @Desc: PutBullet: draws a Bullet into the combat window.  The only 

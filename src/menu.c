@@ -147,6 +147,7 @@ Cheatmenu (void)
   int x0, y0, line;
   Waypoint WpList;      /* pointer on current waypoint-list  */
   BFont_Info *font;
+  char *status;
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -227,19 +228,26 @@ Cheatmenu (void)
 		    {
 		      ClearGraphMem ();
 		      printf_SDL (ne_screen, x0, y0,
-				   " NR.   ID  X    Y   ENERGY   speedX\n");
+				   " NR.   ID  X    Y   ENERGY   Status\n");
 		      printf_SDL (ne_screen, -1, -1,
 				  "---------------------------------------------\n");
 		    }
 		  
 		  l ++;
+		  if (AllEnemys[i].status == OUT) 
+		    status = "OUT";
+		  else if (AllEnemys[i].status == TERMINATED)
+		    status = "DEAD";
+		  else
+		    status = "ACTIVE";
+
 		  printf_SDL (ne_screen, -1, -1,
-			      "%d.   %s   %d   %d   %d    %g.\n", i,
-			       Druidmap[AllEnemys[i].type].druidname,
-			       (int)AllEnemys[i].pos.x,
-			       (int)AllEnemys[i].pos.y,
-			       (int)AllEnemys[i].energy,
-			       AllEnemys[i].speed.x);
+			      "%d.   %s   %d   %d   %d    %s.\n", i,
+			      Druidmap[AllEnemys[i].type].druidname,
+			      (int)AllEnemys[i].pos.x,
+			      (int)AllEnemys[i].pos.y,
+			      (int)AllEnemys[i].energy,
+			      status);
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 

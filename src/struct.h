@@ -78,10 +78,11 @@ typedef struct
   float Current_Sound_FX_Volume;
   float Current_Gamma_Correction;
   char Theme_Name[100];  // name of graphics-theme : dirname = graphics/TNAME_theme/
-  bool FullUserRect;   // use "full" or "classic" (=small) User_Rect
-  bool UseFullscreen;	/* toggle for use of fullscreen vs. X11-window */
-  bool TakeoverActivates; // toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
-  bool ShowDecals;        // show dead droids-ashes...
+  int FullUserRect;   // use "full" or "classic" (=small) User_Rect
+  int UseFullscreen;	/* toggle for use of fullscreen vs. X11-window */
+  int TakeoverActivates; // toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
+  int ShowDecals;        // show dead droids-ashes...
+  int AllMapVisible;     // complete map is visible?
 }
 config_t;
 

@@ -519,7 +519,8 @@ LevelEmpty (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((AllEnemys[i].status != OUT) && (AllEnemys[i].levelnum == levelnum))
+      if ((AllEnemys[i].levelnum == levelnum) && 
+	  ( (AllEnemys[i].status != OUT) && (AllEnemys[i].status != TERMINATED) ) )
 	return FALSE;
     }
 

@@ -104,6 +104,7 @@ EXTERN void PutInfluence (int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
+EXTERN void PutAshes (float x, float y);
 EXTERN void SetUserfenster (int color );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int droid_num, int frame_num);
 EXTERN void DisplayBanner (const char* left, const char* right, int flags );

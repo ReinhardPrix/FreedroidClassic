@@ -555,16 +555,6 @@ MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
-  //--------------------
-  // At first, we check for a lot of cases in which we do not
-  // need to move anything for this reason or for that
-  //
-
-  // ignore robots on other levels, except, it it's following influ's trail
-  if ( (ThisRobot->status == OUT) || (ThisRobot->status == TERMINATED) || 
-       (ThisRobot->levelnum != CurLevel->levelnum) )
-    return;
-
   // Now check if the robot is still alive
   // if the robot just got killed, initiate the
   // explosion and all that...
@@ -621,6 +611,10 @@ MoveEnemys (void)
 
   for (i = 0; i < NumEnemys; i++)
      {
+
+       if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED) || 
+	    (AllEnemys[i].levelnum != CurLevel->levelnum) )
+	 continue;
 
        MoveThisEnemy(i);
 
