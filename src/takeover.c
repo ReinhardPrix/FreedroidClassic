@@ -174,10 +174,20 @@ Takeover (int enemynum)
   Activate_Conservative_Frame_Computation ();
 
   //--------------------
+  // We set the UserRect to full again, no matter what other windows might
+  // be open right now...
+  //
+  User_Rect . x = 0 ;
+  User_Rect . y = 0 ;
+  User_Rect . w = 640 ;
+  User_Rect . h = 480 ;
+
+  //--------------------
   // Maybe takeover graphics haven't been loaded yet.  Then we do this
   // here now and for once.  Later calls will be ignored inside the function.
   //
   GetTakeoverGraphics ( ) ;
+
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
