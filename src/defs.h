@@ -201,7 +201,7 @@ enum
 
 /* Scroll- Fenster */
 #define SCROLLSTARTX		User_Rect.x
-#define SCROLLSTARTY		SCREENHEIGHT
+#define SCROLLSTARTY		SCREEN_HEIGHT
 
 
 #define INITIAL_DIGIT_LENGTH (8*2)
@@ -212,8 +212,8 @@ enum
 #define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
 
 #define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
-#define SCREENLEN		(320*SCALE_FACTOR)
-#define SCREENHEIGHT		(240*SCALE_FACTOR)
+#define SCREEN_WIDTH		(320*SCALE_FACTOR)
+#define SCREEN_HEIGHT		(240*SCALE_FACTOR)
 
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
@@ -228,7 +228,7 @@ enum
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
-#define BANNER_WIDTH		SCREENLEN
+#define BANNER_WIDTH		SCREEN_WIDTH
 // #define BANNER_HEIGHT		( INITIAL_BLOCK_HEIGHT+15 )
 // #define BANNER_HEIGHT		( 115 )
 #define BANNER_HEIGHT		( 2 )

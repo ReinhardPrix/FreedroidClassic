@@ -178,7 +178,7 @@ typedef struct
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   int16_t energy;		// current energy of this droid
-  int8_t feindphase;		// current phase of rotation of this droid
+  int8_t phase;		// current phase of rotation of this droid
   int8_t friendly;
 
 }
@@ -722,7 +722,7 @@ FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
   EnemyEngram [ WriteIndex ] . pos . y    = AllEnemys [ EnemyIndex ] . pos . y ;
   EnemyEngram [ WriteIndex ] . pos . z    = AllEnemys [ EnemyIndex ] . pos . z ;
   EnemyEngram [ WriteIndex ] . energy     = AllEnemys [ EnemyIndex ] . energy ;
-  EnemyEngram [ WriteIndex ] . feindphase = AllEnemys [ EnemyIndex ] . feindphase ;
+  EnemyEngram [ WriteIndex ] . phase = AllEnemys [ EnemyIndex ] . phase ;
   EnemyEngram [ WriteIndex ] . friendly   = AllEnemys [ EnemyIndex ] . Friendly ;
 
 }; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
@@ -995,7 +995,7 @@ EnforceServersFullEnemysEngram ( void )
       AllEnemys [ i ] . pos . y    = EnemyEngram [ i ] . pos . y ;
       AllEnemys [ i ] . pos . z    = EnemyEngram [ i ] . pos . z ;
       AllEnemys [ i ] . energy     = EnemyEngram [ i ] . energy ;
-      AllEnemys [ i ] . feindphase = EnemyEngram [ i ] . feindphase ;
+      AllEnemys [ i ] . phase = EnemyEngram [ i ] . phase ;
       AllEnemys [ i ] . Friendly   = EnemyEngram [ i ] . friendly ;
 
     }
@@ -1037,7 +1037,7 @@ EnforceServersUpdateEnemysEngram ( int NumberOfTargets )
       AllEnemys [ WriteIndex ] . pos . y    = EnemyEngram [ i ] . pos . y ;
       AllEnemys [ WriteIndex ] . pos . z    = EnemyEngram [ i ] . pos . z ;
       AllEnemys [ WriteIndex ] . energy     = EnemyEngram [ i ] . energy ;
-      AllEnemys [ WriteIndex ] . feindphase = EnemyEngram [ i ] . feindphase ;
+      AllEnemys [ WriteIndex ] . phase = EnemyEngram [ i ] . phase ;
       AllEnemys [ WriteIndex ] . Friendly   = EnemyEngram [ i ] . friendly ;
 
     }

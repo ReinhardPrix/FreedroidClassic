@@ -711,9 +711,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       SDL_Flip (Screen);
 
       /* Nicht bel. nach unten wegscrollen */
-      if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
+      if (InsertLine > SCREEN_HEIGHT - 10 && (speed < 0))
 	{
-	  InsertLine = SCREENHEIGHT - 10;
+	  InsertLine = SCREEN_HEIGHT - 10;
 	  speed = 0;
 	}
 
@@ -856,8 +856,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       clip = & Temp_Clipping_Rect;
       Temp_Clipping_Rect.x=0;
       Temp_Clipping_Rect.y=0;
-      Temp_Clipping_Rect.w=SCREENLEN;
-      Temp_Clipping_Rect.h=SCREENHEIGHT;
+      Temp_Clipping_Rect.w=SCREEN_WIDTH;
+      Temp_Clipping_Rect.h=SCREEN_HEIGHT;
     }
 
 
@@ -1014,8 +1014,8 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREENLEN, height, vid_bpp, 0, 0, 0, 0);
-  Set_Rect (store_rect, x0, y0, SCREENLEN, height);
+  store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
+  Set_Rect (store_rect, x0, y0, SCREEN_WIDTH, height);
   SDL_BlitSurface (Screen, &store_rect, store, NULL);
 
   // allocate memory for the users input

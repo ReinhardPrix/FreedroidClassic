@@ -429,7 +429,7 @@ ShowCurrentHealthAndForceLevel( void )
       // We define the right side of the user screen as the rectangle
       // for our speed-o-meter
       //
-      SpeedMeterRect.x = SCREENLEN - SpeedMeterImage->w;
+      SpeedMeterRect.x = SCREEN_WIDTH - SpeedMeterImage->w;
       SpeedMeterRect.y = 0; 
       SpeedMeterRect.w = SpeedMeterImage->w;
       SpeedMeterRect.h = SpeedMeterImage->h;
@@ -571,7 +571,7 @@ ShowCurrentTextWindow ( void )
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
   //
-  // if ( GetMousePos_y( ) >= ( SCREENHEIGHT / 2 ) )
+  // if ( GetMousePos_y( ) >= ( SCREEN_HEIGHT / 2 ) )
   if ( GetMousePos_y( ) + 16 >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
     {
       Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;

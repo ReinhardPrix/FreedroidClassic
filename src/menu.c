@@ -51,7 +51,7 @@ EXTERN void Level_Editor(void);
 EXTERN char Previous_Mission_Name[1000];
 
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
-#define FIRST_MENU_ITEM_POS_XX ( SCREENLEN - FIRST_MENU_ITEM_POS_X )
+#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
 
 /* ----------------------------------------------------------------------
@@ -864,7 +864,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   NumberOfOptionsGiven = i;
 
 
-  first_menu_item_pos_y = ( SCREENHEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
 
   SetCurrentFont ( Menu_BFont );
   // SetCurrentFont ( FPS_Display_BFont );
@@ -881,10 +881,10 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       // We highlight the currently selected option with an 
       // influencer to the left and right of it.
       //
-      PutInfluence( ( SCREENLEN - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
+      PutInfluence( ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
-      PutInfluence( ( SCREENLEN + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
+      PutInfluence( ( SCREEN_WIDTH + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
 

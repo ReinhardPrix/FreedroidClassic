@@ -1794,12 +1794,12 @@ ShowQuickInventory ( void )
   //
   for ( i = 0 ; i < 9 ; i ++ )
     {
-      PutCharFont ( Screen , FPS_Display_BFont , SCREENLEN - 32 , 100 + i * 32 , '1' + i );
+      PutCharFont ( Screen , FPS_Display_BFont , SCREEN_WIDTH - 32 , 100 + i * 32 , '1' + i );
       if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
 	   ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
 	   ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
 	{
-	  TargetRect.x = SCREENLEN - 32 ;
+	  TargetRect.x = SCREEN_WIDTH - 32 ;
 	  TargetRect.y = 100 + i * 32 ;
       
 	  SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].Inventory[ Index ].type ].picture_number ].Surface , 
