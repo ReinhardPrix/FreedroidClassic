@@ -1813,29 +1813,48 @@ There was a bullet to be blitted of a type that does not really exist.",
       CurBullet->Surfaces_were_generated=TRUE;
     }
 
+  //
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
   // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
+  //
+  /*
   TargetRectangle.x = UserCenter_x
     - (Me[0].pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
   TargetRectangle.y = UserCenter_y
     - (Me[0].pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+  */
+
+  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , TRUE ) 
+    - CurBullet -> SurfacePointer [ PhaseOfBullet ] -> w / 2;
+  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , FALSE ) 
+    - CurBullet -> SurfacePointer [ PhaseOfBullet ] -> h / 2;
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, Screen , &TargetRectangle );
 #else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
 
+  //
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
   // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
+  //
+  /*
   TargetRectangle.x = UserCenter_x
     - (Me[0].pos.x-CurBullet->pos.x)*Block_Width - tmp -> w / 2 ;
   TargetRectangle.y = UserCenter_y
     - (Me[0].pos.y-CurBullet->pos.y)*Block_Width - tmp -> h / 2 ;
+  */
+
+  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , TRUE ) 
+    - tmp -> w / 2;
+  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurBullet -> pos . x , CurBullet -> pos . y , FALSE ) 
+    - tmp -> h / 2;
+
 
   SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
   SDL_FreeSurface( tmp );

@@ -107,7 +107,9 @@
 
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
-void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void
+TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
+// void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
 int IsWallBlock ( int block );
@@ -2094,7 +2096,8 @@ jump target west: %d\n",
  * It is not only used by the level editor, but also by the function that
  * saves whole games.
  * ---------------------------------------------------------------------- */
-int SaveShip(char *filename)
+int 
+SaveShip(char *filename)
 {
   char *LevelMem;		/* linear memory for one Level */
   char *MapHeaderString;
@@ -2778,7 +2781,7 @@ of doors currently allowed in a Freedroid map.",
  * can later be written to the map file on disk.
  * ---------------------------------------------------------------------- */
 void
-TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine)
+TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
   int col;
   int i;
@@ -2801,14 +2804,14 @@ TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLeng
 	    case V_HALF_DOOR2:
 	    case V_HALF_DOOR3:
 	    case V_OPEN_DOOR:
-	      Lev->map[i][col] . floor_value =V_SHUT_DOOR;
+	      Lev->map[i][col] . floor_value = V_SHUT_DOOR;
 	      break;
 	    case H_SHUT_DOOR:
 	    case H_HALF_DOOR1:
 	    case H_HALF_DOOR2:
 	    case H_HALF_DOOR3:
 	    case H_OPEN_DOOR:
-	      Lev->map[i][col] . floor_value =H_SHUT_DOOR;
+	      Lev->map[i][col] . floor_value = H_SHUT_DOOR;
 	      break;
 	      /*
 	    case REFRESH1:
@@ -2822,7 +2825,7 @@ TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLeng
 	    case TELE_2:
 	    case TELE_3:
 	    case TELE_4:
-	      Lev->map[i][col] . floor_value =TELE_1;
+	      Lev->map[i][col] . floor_value = TELE_1;
 	      break;
 	    default:
 	      break;
@@ -2837,7 +2840,7 @@ TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLeng
 
   for (col = 0; col < LineLength; col++)
     {
-      sprintf( Buffer , "%3d " , MapInfo[col] );
+      sprintf( Buffer , "%3d " , MapInfo [col] . floor_value );
       strcat ( (char*)HumanReadable , Buffer );
     }
 

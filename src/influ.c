@@ -1259,7 +1259,7 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
-  int max_val;
+  float max_val;
   float OffsetFactor;
 
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 
@@ -1363,11 +1363,13 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
       "\nFireTuxRangedWeaponRaw(...) : Server thinks axis: (%d/%d)." , ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisX ( PlayerNum ) );
       }
   */
-  
-  max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
-		  abs( ServerThinksInputAxisY ( PlayerNum ) ) );
-  speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
-  speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
+
+  //--------------------
+  // Use the map location to
+  // pixel translation and vice versa to compute firing direction...
+  //
+  speed.x = translate_pixel_to_map_location ( PlayerNum , ServerThinksInputAxisX ( PlayerNum ) + 16 , ServerThinksInputAxisY ( PlayerNum ) + 16 , TRUE ) - Me [ PlayerNum ] . pos . x ;
+  speed.y = translate_pixel_to_map_location ( PlayerNum , ServerThinksInputAxisX ( PlayerNum ) + 16 , ServerThinksInputAxisY ( PlayerNum ) + 16 , FALSE ) - Me [ PlayerNum ] . pos . y ;
 
   //--------------------
   // It might happen, that this is not a normal shot, but rather the
@@ -1389,7 +1391,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // the picture of the bullet itself
   //
   
-  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
+  CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 + 45 );
 
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );

@@ -583,7 +583,7 @@ not complain any more.",
   // for a small increase in memory appetite as the price.  Whether this will
   // really resolve the problem however is unsure.
   //
-  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 20 ) );
+  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 200 ) );
 
 #endif // HAVE_SDL_MIXER
 }; // void InitAudio(void)
