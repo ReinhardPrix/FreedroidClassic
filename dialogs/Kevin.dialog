@@ -31,9 +31,14 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-This is Kevin's Guard
+
+
+This is Kevin's 
+
+
 
 END OF AUTORS NOTES
+
 
 Beginning of new chat dialog for character="XXXXX"
 
@@ -48,10 +53,33 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=612  PositionY=256  
+Subtitle="You don't have enough cash cheapskate. Come back when you can afford to pay me."
+ReplySample=""
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=722  PositionY=288  
+Subtitle="Ok, your hacking skill has increased"
+ReplySample=""
+ChangeOption=2 ChangeToValue=0
+DoSomethingExtra="IncreaseHackingSkill"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=3  OptionText="What can you teach me about hacking ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=517  PositionY=388  
 Subtitle="I can increase your hacking skill, but that knowledge comes for a fee."
+ReplySample=""
+Subtitle="Now what will it be?"
 ReplySample=""
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -59,13 +87,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="I want to meet with him."
+New Option Nr=4  OptionText="Improve Hacking Ability (cost 300 cash, 5 ability points)"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=651  PositionY=382  
-Subtitle="Ok, I've unlocked the door for you"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=4 ChangeToValue=0
+PositionX=648  PositionY=382  
+ChangeOption=4 ChangeToValue=1
 DoSomethingExtra="ExecuteActionWithLabel:unlock_kevins_door"
+OnCondition="GoldIsLessThan:300" JumpToOption=1 ElseGoto=2
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
