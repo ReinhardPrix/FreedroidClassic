@@ -1,0 +1,16 @@
+
+
+** Start of iso_image offset file **
+
+FreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.
+
+
+OffsetX=-24
+
+OffsetY=-52
+
+GraphicsFileName=/home/johannes/FreeDroid/graphics/lanzz_theme/iso_bullet_military_11_0001.png
+
+
+** End of iso_image offset file **
+
