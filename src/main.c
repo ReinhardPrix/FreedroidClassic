@@ -93,6 +93,8 @@ main (int argc, char *const argv[])
 
 	  UpdateCountersForThisFrame ();
 
+	  CollectAutomapData ();
+
 	  ReactToSpecialKeys();
 
 	  MoveLevelDoors ();	

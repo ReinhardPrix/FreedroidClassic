@@ -75,6 +75,62 @@ Cent (int Val)
 }
 
 /* ----------------------------------------------------------------------
+ * This function should display the automap data, that was collected so
+ * far, by the tux.
+ * ---------------------------------------------------------------------- */
+void
+ShowAutomapData( void )
+{
+  int x , y ;
+#define AUTOMAP_SQUARE_SIZE 3
+#define AUTOMAP_COLOR 0x0FFFF
+
+  for ( y = 0 ; y < CurLevel->ylen ; y ++ )
+    {
+      for ( x = 0 ; x < CurLevel->xlen ; x ++ )
+	{
+	  if ( Me.Automap[y][x].r_wall )
+	    {
+	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
+	    }
+	  if ( Me.Automap[y][x].l_wall )
+	    {
+	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
+	    }
+	  if ( Me.Automap[y][x].u_wall )
+	    {
+	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
+	    }
+	  if ( Me.Automap[y][x].d_wall )
+	    {
+	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
+	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
+	    }
+	}
+    }
+
+  //--------------------
+  // Now that the automap is drawn so far, we add a red dot for the
+  // tux himself.
+  //
+  for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
+    {
+      for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
+	{
+	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me.pos.x + x , AUTOMAP_SQUARE_SIZE * Me.pos.y + y , 63 );
+	}
+    }
+
+}; // void ShowAutomapData( void )
+
+/* ----------------------------------------------------------------------
  * There is more than one approach to the problem of disruptor flashes.
  * (*) One solution is to just completely fill the visible screen white and
  *     black altenatingly.
@@ -398,8 +454,8 @@ Assemble_Combat_Picture (int mask)
 		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
 
+  ShowAutomapData();
   ShowItemAlarm();
-
   ShowMissionCompletitionMessages();
   ShowCharacterScreen ( );
   ShowSkillsScreen ( );

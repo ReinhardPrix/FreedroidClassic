@@ -95,6 +95,82 @@ void GetThisLevelsDroids( char* SectionPointer );
 Level Decode_Loaded_Leveldata ( char *data );
 
 /* ----------------------------------------------------------------------
+ * This function returns TRUE for blocks classified as "Walls" and false
+ * otherwise.
+ * ---------------------------------------------------------------------- */
+int
+IsWallBlock (int block)
+{
+  switch (block)
+    {
+    case KREUZ:
+    case H_WALL:
+    case V_WALL:
+    case H_ZUTUERE:
+    case V_ZUTUERE:
+    case LOCKED_H_ZUTUERE:
+    case LOCKED_V_ZUTUERE:
+    case ECK_LU:
+    case T_U:
+    case ECK_RU:
+    case T_L:
+    case T_R:
+    case ECK_LO:
+    case T_O:
+    case ECK_RO:
+      return (TRUE);
+    default:
+      return (FALSE);
+    }				// switch
+}; // int IsWallBlock( .. )
+
+/* ----------------------------------------------------------------------
+ * This function collects the automap data and stores it in the Me data
+ * structure.
+ * ---------------------------------------------------------------------- */
+void
+CollectAutomapData ( void )
+{
+  int x , y ;
+  finepoint ObjPos;
+
+  for ( y = 0 ; y < CurLevel->ylen ; y ++ )
+    {
+      for ( x = 0 ; x < CurLevel->xlen ; x ++ )
+	{
+	  if ( IsWallBlock( CurLevel->map[y][x] ) ) 
+	    {
+	      //--------------------
+	      // First we check, if there are some right sides of walls visible
+	      //
+	      ObjPos.x = x + 0.5;
+	      ObjPos.y = y + 0;
+	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].r_wall = TRUE;
+	      //--------------------
+	      // Now we check, if there are some left sides of walls visible
+	      //
+	      ObjPos.x = x - 0.5;
+	      ObjPos.y = y + 0;
+	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].l_wall = TRUE;
+	      //--------------------
+	      // Now we check, if there are some southern sides of walls visible
+	      //
+	      ObjPos.x = x + 0;
+	      ObjPos.y = y + 0.5;
+	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].d_wall = TRUE;
+	      //--------------------
+	      // Now we check, if there are some northern sides of walls visible
+	      //
+	      ObjPos.x = x + 0.0 ;
+	      ObjPos.y = y - 0.5 ;
+	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].u_wall = TRUE;
+	    }
+	}
+    }
+
+}; // void CollectAutomapData ( void )
+
+/* ----------------------------------------------------------------------
  * When one of the box tiles gets hit, e.g. by a blast exploding on the
  * tile or a influencer melee hit on the tile, then the box explodes,
  * possibly leaving some goods behind.
@@ -2692,17 +2768,18 @@ IsVisible (Finepoint objpos)
   testpos.x = objpos->x;
   testpos.y = objpos->y;
 
-  for (i = 0; i < step_num; i++)
+  for (i = 0; i < step_num + 1 ; i++)
     {
-
-      testpos.x += step.x;
-      testpos.y += step.y;
 
       if (IsPassable (testpos.x, testpos.y, LIGHT) != CENTER)
 	{
 	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	  return FALSE;
 	}
+
+      testpos.x += step.x;
+      testpos.y += step.y;
+
     }
   DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 

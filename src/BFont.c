@@ -624,8 +624,16 @@ void
 PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 {
   int bpp = surface->format->BytesPerPixel;
+  Uint8 *p;
+
+  //--------------------
+  // Here I add a security query against segfaults due to writing
+  // perhaps even far outside of the surface pixmap data.
+  //
+  if ( ( x < 0 ) || ( y < 0 ) || ( x >= surface->w ) || ( y >= surface->h ) ) return;
+
   /* Here p is the address to the pixel we want to set */
-  Uint8 *p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
 
   switch (bpp)
     {
@@ -656,7 +664,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       *(Uint32 *) p = pixel;
       break;
     }
-}
+}; // void PutPixel ( ... )
 
 Uint32
 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)

@@ -1770,6 +1770,27 @@ InitNewMissionList ( char *MissionName )
 
 }; // void InitNewMissionList ( char* MissionName )
 
+/* ----------------------------------------------------------------------
+ * This function clears out the Automap data.
+ * ---------------------------------------------------------------------- */
+void 
+ClearAutomapData( void )
+{
+  int x , y ;
+
+  for ( y = 0 ; y < 200 ; y ++ )
+    {
+      for ( x = 0 ; x < 200 ; x ++ )
+	{
+	  Me.Automap[y][x].r_wall = FALSE;
+	  Me.Automap[y][x].l_wall = FALSE;
+	  Me.Automap[y][x].u_wall = FALSE;
+	  Me.Automap[y][x].d_wall = FALSE;
+	  Me.Automap[y][x].filled = FALSE;
+	}
+    }
+}; // void ClearAutomapData ( void )
+
 /*-----------------------------------------------------------------
  * @Desc: This function initializes the whole Freedroid game.
  * 
@@ -1834,6 +1855,12 @@ InitFreedroid (void)
   GameConfig.Draw_Energy=FALSE;
   GameConfig.Draw_Position=FALSE;
   GameConfig.All_Texts_Switch = FALSE;
+
+  //--------------------
+  // Now we prepare the automap data for later use
+  //
+  GameConfig.Automap_Visible = TRUE;
+  ClearAutomapData( );
 
   //Load user config file if it exists...
   LoadSettings ();

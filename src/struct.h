@@ -87,6 +87,7 @@ typedef struct
   int SkillScreen_Visible;
   float SkillScreen_Visible_Time;
   float SkillScreen_Visible_Max_Time;
+  int Automap_Visible;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -316,6 +317,14 @@ typedef struct
 
 } itemspec , *Itemspec;
 
+typedef struct
+{
+  unsigned char r_wall;
+  unsigned char l_wall;
+  unsigned char u_wall;
+  unsigned char d_wall;
+  unsigned char filled;
+} automap_tile , *Automap_tile;
 
 
 typedef struct
@@ -447,7 +456,7 @@ typedef struct
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
-
+  
   int readied_skill; // which skill does the influencer currently have readied?
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
@@ -460,6 +469,7 @@ typedef struct
   item aux2_item;
 
   int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
+  automap_tile Automap[200][200]; // this is the data for the automatic map
 }
 influence_t, *Influence_t;
 
