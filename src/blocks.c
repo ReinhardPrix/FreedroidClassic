@@ -14,6 +14,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.16  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.15  1997/06/09 13:01:29  jprix
  * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
  *
@@ -161,7 +165,7 @@ void GetDigits(void){
   int i;
 
   Digitpointer=MyMalloc(DIGITMEM);
-  LadeLBMBild(DIGITBILD,InternalScreen,FALSE);
+  Load_PCX_Image( DIGITBILD_PCX , InternalScreen , FALSE );
 
   for (i=0;i<20;i++) {
     IsolateBlock(
@@ -225,7 +229,7 @@ void GetMapBlocks(void)
 	unsigned char *tmp;
 
 	MapBlocks=(unsigned char*)MyMalloc(BLOCKANZAHL*BLOCKMEM+100);
-	LadeLBMBild(BLOCKBILD1,InternalScreen,FALSE);
+	Load_PCX_Image(BLOCKBILD1_PCX , InternalScreen , FALSE );
 
 	tmp = MapBlocks;
 	
@@ -257,67 +261,66 @@ void GetMapBlocks(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void GetShieldBlocks(void){
-	int i;
+  int i;
 
-	// Sicherheitsabfrage gegen doppeltes initialisieren
-	if (ShieldBlocks) {
-		printf(" Die Schildbloecke waren schon initialisiert !");
-		getchar();
-		Terminate(ERR);
-	}
+  // Sicherheitsabfrage gegen doppeltes initialisieren
+  if (ShieldBlocks) {
+    printf(" Die Schildbloecke waren schon initialisiert !");
+    getchar();
+    Terminate(ERR);
+  }
 
-	if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
-		printf(" Keine Memory fuer ShieldBlocks !.");
-		getchar();
-		Terminate(ERR);
-	}
+  if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
+    printf(" Keine Memory fuer ShieldBlocks !.");
+    getchar();
+    Terminate(ERR);
+  }
 	
-	// Laden des Bildes
-	LadeLBMBild(SHIELDPICTUREBILD,InternalScreen,FALSE);
+  // Laden des Bildes
+  Load_PCX_Image( SHIELDPICTUREBILD_PCX , InternalScreen , FALSE );
 
-	// Isolieren der Schildbl"ocke
-	for(i=0;i<4;i++){
-		IsolateBlock(InternalScreen, ShieldBlocks+i*BLOCKBREITE*BLOCKHOEHE, i*(BLOCKBREITE+1), 0, BLOCKBREITE, BLOCKHOEHE);
-	}
-}
-
+  // Isolieren der Schildbl"ocke
+  for(i=0;i<4;i++){
+    IsolateBlock(InternalScreen, ShieldBlocks+i*BLOCKBREITE*BLOCKHOEHE, i*(BLOCKBREITE+1), 0, BLOCKBREITE, BLOCKHOEHE);
+  }
+} // void GetShieldBlocks(void)
 
 
 /*@Function============================================================
 @Desc: GetBlocks
-				gets the requested picture file and returns a pointer to
-				the requested blocks (sequtially stored)
+gets the requested picture file and returns a pointer to
+the requested blocks (sequtially stored)
 				
 @Arguments:	char *picfile	: the picture-file to load, or
-									NULL to use the old one
+NULL to use the old one
 									
-				int line: block-line to get blocks from
-				int num:	number of blocks to get from line
+int line: block-line to get blocks from
+int num:	number of blocks to get from line
 
 @Ret: char * : pointer to 
 @Int:
 * $Function----------------------------------------------------------*/
 unsigned char *GetBlocks(char *picfile, int line, int num)
 {
-	int i;
-	unsigned char *tmp;
-	unsigned char *blocktarget;
+  int i;
+  unsigned char *tmp;
+  unsigned char *blocktarget;
+  
+  if(picfile) {
+    Load_PCX_Image( picfile , InternalScreen , FALSE );
+  }
 	
-	if(picfile) {
-		LadeLBMBild(picfile,InternalScreen,FALSE);
-	}
+  if(!num) return NULL; /* this was only an 'init'-call */
 	
-	if(!num) return NULL; /* this was only an 'init'-call */
+  blocktarget=MyMalloc(BLOCKMEM * num+1600);
+  tmp = blocktarget;
 	
-	blocktarget=MyMalloc(BLOCKMEM * num+1600);
-	tmp = blocktarget;
-	
-	for (i=0;i<num;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), line*(BLOCKHOEHE+1),
-			BLOCKBREITE, BLOCKHOEHE );
+  for (i=0;i<num;tmp += BLOCKMEM, i++)
+    IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), line*(BLOCKHOEHE+1),
+		 BLOCKBREITE, BLOCKHOEHE );
 
-	return blocktarget;
-}
+  return blocktarget;
+} // unsigned char *GetBlocks(...)
 
 
 /*@function============================================================

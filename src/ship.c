@@ -10,6 +10,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.6  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -137,7 +141,7 @@ void EnterElevator(void)
   while( !SpacePressed() ) {
     JoystickControl();		/* Falls vorhanden einlesen */
     keyboard_update();
-    // if( kbhit() ) getchar();		/* Tastatur-Buffer leeren */
+    // if( kbhit() ) getchar();		/* Tastaturuffer leeren */
 	   
     if( UpPressed() && !DownPressed() ) 
       if( upElev != -1 ) { 	/* gibt es noch einen Lift hoeher ? */
@@ -300,7 +304,7 @@ void ShowElevators(void)
 	return;
 	}
 
-	LadeLBMBild(SEITENANSICHTBILD,RealScreen,FALSE);
+	Load_PCX_Image( SEITENANSICHTBILD_PCX , RealScreen , FALSE );
 	AlleLevelsGleichFaerben();
 	AlleElevatorsGleichFaerben();
 	

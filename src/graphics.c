@@ -53,101 +53,104 @@ extern int TimerFlag;
 
 unsigned char* MemSearch(unsigned char* , unsigned char * , unsigned char * );
 
+void readpcximage(FILE * file,void * target,int size)
+{
+  unsigned char buf;
+  unsigned int counter;
+  int i=0;
+  while(i<=size)  /* Image not entirely read? */
+    {
+      /* Get one byte */
+      fread(&buf,1,1,file);
+      /* Check the 2 most significant bits */
+      if ((buf&192)==192)
+	{
+	  /* We have 11xxxxxx */
+	  counter=(buf&63);         /* Number of times to repeat next byte */
+	  fread(&buf,1,1,file);     /* Get next byte */
+	  for(;counter>0;counter--) /* and copy it counter times */
+	    {
+              ((char*)target)[i]=buf;
+              i++;   /* increase the number of bytes written */
+	    }
+	}
+      else
+	{
+	  /* Just copy the byte */
+	  ((char*)target)[i]=buf;
+	  i++;   /* Increase the number of bytes written */
+	}
+    }
+}  // void readpcximage(...)
+
+void *readpcx(FILE *file, char *palette,unsigned short int *length,
+	      unsigned short int *height)
+     /* Returns NULL if failed, otherwise a pointer to the loaded image */
+{
+  PCX_Header header;
+  void *target;
+  fseek(file,0,SEEK_SET);
+  fread(&header,sizeof(PCX_Header),1,file);   /* read the header */
+  /* Check if this file is in pcx format */
+  if((header.signature!=0x0a)||(header.version!=5))
+    return(NULL);
+  else
+    {/* it is! */
+      /* Return height and length */
+      *length=header.xmax+1-header.xmin;
+      *height=header.ymax+1-header.ymin;
+      /* Allocate the sprite buffer */
+      target=(void *)malloc((*length)*(*height));
+      /* Read the image */
+      readpcximage(file,target,(*length)*(*height));
+      fseek(file,-768,SEEK_END);
+      /* Get the palette */
+      fread(palette,1,768,file);
+      /* PCX succesfully read! */
+      return(target);
+    }
+} // void *readpcx(...)
 
 
 void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 {
-  // MODIFIED FOR THE PORT!!!!
-  // Variables used by the function
-  char* BodyPtr;
-  long BytesWritten=0;
-  FILE* BildDateihandle;
-  char* BildDateiPointer;
-  struct stat stbuf;
+  FILE *file;
+  void *image;
   int i;
-  int y;
+  unsigned short int length, height;
+  unsigned char palette[768];
 
-  unsigned char* BeginningOfScreen;
-	
-  BeginningOfScreen=Screen;
-
-  /* *******************  ILBM-Bild laden und anzeigen  ******************** */
-
-  /* Speicher fuer die Bildbearbeitung reservieren */
-
-  if ((BildDateihandle=fopen(PCX_Filename,"rb")) == NULL) {
-    printf("\nLadeLBM: Konnte die Datei %s nicht oeffnen !",PCX_Filename);
-    getchar(); Terminate(-1);
-  }
-	
-  if( fstat(fileno(BildDateihandle), &stbuf) == EOF) Terminate(-1);
-
-  if( (BildDateiPointer = (char*) MyMalloc((size_t)stbuf.st_size + 10)) == NULL) {
-    printf("\nOut of Memory in LadeLBMBild()");
-    getchar();
-    Terminate(-1);
+  if ((file=fopen(PCX_Filename , "r")) == NULL) {
+    printf("\nLoad_PCX_Image(...): Can't open file!\n");
+    Terminate(ERR);
   }
 
-	
-  /* File von Diskette in den reservierten Speicher laden */
-
-  fread(BildDateiPointer, 1, (size_t)stbuf.st_size, BildDateihandle);	
-  if (fclose(BildDateihandle) == EOF) {
-    printf("\nLadeLBM: Konnte die Datei %s nicht schlieáen !",PCX_Filename);
-    getchar(); Terminate(-1);
-  }
-	
-
-  // First Part: Decode the Body of the LBM-File
-  BodyPtr=(char *)MemSearch(
-			    (unsigned char*)BildDateiPointer,
-			    (unsigned char*)(BildDateiPointer + (int)stbuf.st_size),
-			    (unsigned char*)"BODY");		
-  BodyPtr+=strlen("BODY")+4;
-
-	
-  while(BytesWritten < 63999)
+  if ((image=readpcx(file,palette,&length,&height))==NULL)
     {
-      if (*BodyPtr < 0)
-	{
-	  memset(Screen,BodyPtr[1],abs(BodyPtr[0])+1);
-	  BytesWritten+=abs(BodyPtr[0])+1;
-	  Screen+=abs(BodyPtr[0])+1;
-	  BodyPtr+=2;
-	} else {
-	  memcpy(Screen,BodyPtr+1,BodyPtr[0]+1);
-	  BytesWritten+=BodyPtr[0]+1;
-	  Screen+=BodyPtr[0]+1;
-	  BodyPtr+=BodyPtr[0]+2;
-	}
+      printf("\nLoad_PCX_Image(...): Error loading file!\n");
+      Terminate(ERR);
     }
+  fclose(file);
 
-
-  if( LoadPal ) {			
-    // Second Part: Decode the Color-Information		
-    BodyPtr=(char*)MemSearch(
-			     (unsigned char*)BildDateiPointer,
-			     (unsigned char*)(BildDateiPointer + (int)stbuf.st_size),
-			     (unsigned char*)"CMAP");    
-    BodyPtr+=strlen("CMAP")+4;
-    for(i=0;i<(256*3);i++)
-      {
-	BodyPtr[i]=BodyPtr[i]>>2;
-      }
-    SetColors(0,255,BodyPtr);
-  } /* if LoadPal */
-
-  free(BildDateiPointer);
-  printf("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",PCX_Filename);
-
-  for (y=0;y<199;y++) {
-    vga_drawscanline(y,BeginningOfScreen);
-    BeginningOfScreen+=320;
+  printf("\nLoad_PCX_Image(...): Image is %dx%d sized.\n",length,height);
+  if ( (length>320) || (height>200) ) {
+    printf("Image is too big!\n");
+    Terminate(ERR);
   }
 
-  printf("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",PCX_Filename);
-} // LadeLBMBild 
+  if (LoadPal) {
+    for (i=0;i<768;i++) palette[i]=palette[i]>>2;
+    gl_setpalette(palette);
+  }
 
+  if (Screen == RealScreen) {
+    gl_clearscreen(0);
+    gl_putbox(0,0,length,height,image);
+  } else {
+    memcpy( Screen, image , length*height );
+  } 
+
+} // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
 /*@Function============================================================
 @Desc: 	int InitPictures(void):
@@ -166,33 +169,33 @@ int InitPictures(void) {
   GetMapBlocks();
 
   /* Get the enemy-blocks */
-  GetBlocks(ENEMYBILD, 0, 0);
+  GetBlocks(ENEMYBILD_PCX, 0, 0);
   Enemypointer = GetBlocks(NULL, 0, ENEMYPHASES);
 
   /* Get the influence-blocks */
-  GetBlocks(INFLUENCEBILD, 0, 0);
+  GetBlocks(INFLUENCEBILD_PCX, 0, 0);
   Influencepointer = GetBlocks(NULL, 0, ENEMYPHASES);
 	
   /* the same game for the bullets */
-  GetBlocks(BULLETBILD, 0, 0);
+  GetBlocks(BULLETBILD_PCX, 0, 0);
   for (i=0; i<ALLBULLETTYPES; i++) {
     Bulletmap[i].picpointer = GetBlocks(NULL, i, Bulletmap[i].phases);
   }
 
   /* ...and the blasts */
-  GetBlocks(BLASTBILD, 0, 0);
+  GetBlocks(BLASTBILD_PCX, 0, 0);
   for (i=0; i<ALLBLASTTYPES; i++) {
     Blastmap[i].picpointer = GetBlocks(NULL, i, Blastmap[i].phases);
   }
 
   /* Get the Frame */
-  LadeLBMBild(RAHMENBILD1,InternalScreen,FALSE); 
+  Load_PCX_Image( RAHMENBILD1_PCX , InternalScreen , FALSE ); 
   RahmenPicture = (unsigned char *)MyMalloc(RAHMENBREITE*RAHMENHOEHE+10);
   IsolateBlock(InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE, RAHMENHOEHE);
 
   /* get the Elevator-Blocks */
   ElevatorBlocks = (unsigned char*)MyMalloc(NUM_EL_BLOCKS*EL_BLOCK_MEM+100);
-  LadeLBMBild(EL_BLOCKS_FILE,InternalScreen,FALSE);
+  Load_PCX_Image( EL_BLOCKS_FILE_PCX , InternalScreen , FALSE );
   for( i=0; i<NUM_EL_BLOCKS; i++)
     IsolateBlock(
 		 InternalScreen, 
@@ -202,7 +205,7 @@ int InitPictures(void) {
 		
 
   /* get Menublocks */
-  LadeLBMBild(CONSOLENBILD,InternalScreen,FALSE);
+  Load_PCX_Image( CONSOLENBILD_PCX , InternalScreen , FALSE );
   MenuItemPointer=MyMalloc(MENUITEMMEM);
   IsolateBlock(InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH, MENUITEMHEIGHT);	
 
@@ -346,7 +349,7 @@ void Monitorsignalunterbrechung(int Signal){
 * $Function----------------------------------------------------------*/
 int InitPalette(void) {
   /* Hier sollte die Palette geladen werden */
-  LadeLBMBild(PALBILD,InternalScreen,TRUE);
+  Load_PCX_Image( PALBILD_PCX , InternalScreen , TRUE );
   return OK;
 } // int InitPalette(void)
 

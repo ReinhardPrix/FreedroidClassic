@@ -213,7 +213,7 @@ int main(void)
 
       /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
       printf("\nvoid main: Me.speed.x: %f!" , Me.speed.x);
-      gl_printf(1,40,"\nvoid main: Me.speed.y: %f!", Me.speed.y);
+      gl_printf(-1,-1,"\nmain: speed:%f/%f!", Me.speed.x, Me.speed.y);
       Me.pos.x += Me.speed.x * Frame_Time();
       Me.pos.y += Me.speed.y * Frame_Time();
       AdjustSpeed();
@@ -244,8 +244,8 @@ int main(void)
       FPSover100=1000000*100 / (float)onehundredframedelay;
       // gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
       // gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay,FPSover10);
-      gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
-      gl_printf(-1,-1,"Frame_Time(): %f \n",Frame_Time());
+      //       gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
+      gl_printf( 1 , 33 , "Frame_Time(): %f \n" , Frame_Time() );
       // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec,now.tv_usec);
       // gl_printf(-1,-1,"sec : %d usec : %d \n",onehundredframetimestamp.tv_sec,onehundredframetimestamp.tv_usec);
       // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec-onehundredframetimestamp.tv_sec,now.tv_usec-onehundredframetimestamp.tv_usec);

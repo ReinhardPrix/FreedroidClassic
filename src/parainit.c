@@ -9,6 +9,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.5  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.4  1997/06/08 23:19:38  jprix
  * Transition to floating point coordinates started.  This version is still working.
  *
@@ -416,7 +420,9 @@ void Title(void)
   Monitorsignalunterbrechung(0);
 #endif
 
-  LadeLBMBild(TITELBILD1,RealScreen,FALSE);	/* Titelbild laden */
+  // LadeLBMBild(TITELBILD1,RealScreen,FALSE);	/* Titelbild laden */
+  Load_PCX_Image( TITELBILD1_PCX , RealScreen , FALSE );	/* Titelbild laden */
+
   while (!SpacePressed()) JoystickControl();
 	
   FadeColors1();					/* Titelbild langsam ausblenden */

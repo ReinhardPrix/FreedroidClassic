@@ -10,6 +10,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.16  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.15  1997/06/09 11:17:56  jprix
  * Threw out the SpeedX and SpeedY macros/definitions because they get confused with local variables.
  *
@@ -55,12 +59,14 @@
 #define COLLISIONSOUND 3
 
 /* Konstanten fuer die Dateinamen */
-#define SHIPNAME "./map/ship1"
+/*
+#define SHIPNAME "./map/ship1" 
 #define PALBILD	"./graphics/palbild.lbm"
 #define COLORFILE "./map/levels.col"
 #define BLOCKBILD1 "./graphics/block.lbm"
 #define BLOCKBILD2 ""
-#define TITELBILD1 "./graphics/title.lbm"
+// #define TITELBILD1 "./graphics/title.lbm"
+#define TITELBILD1PCX "./graphics/title.pcx"
 #define RAHMENBILD1 "./graphics/rahmen.lbm"
 #define PARAPLUSRAHMENBILD "./graphics/plusrah1.lbm"
 #define BLASTBILD "./graphics/blast.lbm"
@@ -75,10 +81,35 @@
 #define CONSOLENBILD "./graphics/console.lbm"
 #define ROBOTPICTUREBILD "./graphics/robots.lbm"
 #define SHIELDPICTUREBILD "./graphics/shield.lbm"
-
 #define TAKEOVERBACKGROUNDBILD "./graphics/overtake.lbm"
-#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	/* graphics - files */
+#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	// graphics - files 
 #define ELEMENTS_FILE	"./graphics/to_elem.lbm"
+*/
+
+#define PALBILD_PCX                "./graphics/palbild.pcx"
+#define BLOCKBILD1_PCX             "./graphics/block.pcx"
+#define BLOCKBILD2_PCX             ""
+#define TITELBILD1_PCX             "./graphics/title.pcx"
+#define RAHMENBILD1_PCX            "./graphics/rahmen.pcx"
+#define PARAPLUSRAHMENBILD_PCX     "./graphics/plusrah1.pcx"
+#define BLASTBILD_PCX              "./graphics/blast.pcx"
+#define BULLETBILD_PCX             "./graphics/bullet.pcx"
+#define INFLUENCEBILD_PCX          "./graphics/influ.pcx"
+#define DIGITBILD_PCX              "./graphics/digits.pcx"
+#define ENEMYBILD_PCX              "./graphics/enemy.pcx"
+#define SEITENANSICHTBILD_PCX      "./graphics/ship.pcx"
+#define EL_BLOCKS_FILE_PCX         "./graphics/ship2.pcx"
+#define FONTBILD_PCX               "./graphics/parafont.pcx"
+#define CONSOLENBILD_PCX           "./graphics/console.pcx"
+#define ROBOTPICTUREBILD_PCX       "./graphics/robots.pcx"
+#define SHIELDPICTUREBILD_PCX      "./graphics/shield.pcx"
+#define TAKEOVERBACKGROUNDBILD_PCX "./graphics/overtake.pcx"
+#define PLAYGROUND_FILE_PCX    	   "./graphics/to_ground.pcx"	// graphics - files 
+#define ELEMENTS_FILE_PCX	   "./graphics/to_elem.pcx"
+
+#define DATA70ZEICHENSATZ          "./graphics/para8x8.fnt"
+#define SHIPNAME                   "./map/ship1" 
+#define COLORFILE                  "./map/levels.col"
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */

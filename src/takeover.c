@@ -10,6 +10,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.7  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -199,7 +203,7 @@ int Takeover(int enemynum)
     keyboard_update();
   }
 
-  LadeLBMBild(TAKEOVERBACKGROUNDBILD,RealScreen,FALSE);
+  Load_PCX_Image( TAKEOVERBACKGROUNDBILD_PCX , RealScreen , FALSE );
 
   while( !FinishTakeover ) {
 	
@@ -596,89 +600,88 @@ void  EnemyMovements(void)
 * $Function----------------------------------------------------------*/
 int GetTakeoverGraphics(void)
 {
-	unsigned char *tmp;
-	int i, j;
-	int curx, cury;
+  unsigned char *tmp;
+  int i, j;
+  int curx, cury;
 	
-
-	/* Get the elements */	
-	LadeLBMBild(ELEMENTS_FILE,InternalScreen,FALSE);
-
-	curx = 0;
-	cury = 0;		/* readpos in pic */
+  /* Get the elements */	
+  Load_PCX_Image( ELEMENTS_FILE_PCX , InternalScreen , FALSE );
+  
+  curx = 0;
+  cury = 0;		/* readpos in pic */
 	
-	/* Get the fill-blocks */
-	FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
-	IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
-	
-	IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
-				FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
-	
-	IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
-				FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
+  /* Get the fill-blocks */
+  FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
+  IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
+  IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
+	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
+  IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
+	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
 
-
-	/* Get the capsule Blocks */
-	CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
-	for( i=0; i<3; i++) {
-		IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
-			curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-		curx += CAPSULE_LEN+1;
-	}
-
-	curx = 0;
-	cury += FILLBLOCKHEIGHT+1;	
+  /* Get the capsule Blocks */
+  CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
+  for( i=0; i<3; i++) {
+    IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
+		 curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+    curx += CAPSULE_LEN+1;
+  }
+  
+  curx = 0;
+  cury += FILLBLOCKHEIGHT+1;	
 		
-	/* get the game-blocks */
-	
-	ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
+  /* get the game-blocks */
+  
+  ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
+  
+  tmp = ToGameBlocks;
+  for ( j=0; j<4; j++) {
+    
+    for( i=0; i<7; i++ ) {
+      IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
+      tmp += TO_BLOCKMEM;
+      curx += TO_BLOCKLEN+1;
+    }
+    
+    curx = 0;		
+    cury += TO_BLOCKHEIGHT+1;
+    
+    for( i=0; i<4; i++ ) {
+      IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
+      tmp += TO_BLOCKMEM;
+      curx += TO_BLOCKLEN+1;
+    }
 
-	tmp = ToGameBlocks;
-	for ( j=0; j<4; j++) {
-
-		for( i=0; i<7; i++ ) {
-			IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
-			tmp += TO_BLOCKMEM;
-			curx += TO_BLOCKLEN+1;
-		}
-
-		curx = 0;		
-		cury += TO_BLOCKHEIGHT+1;
-		
-		for( i=0; i<4; i++ ) {
-			IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
-			tmp += TO_BLOCKMEM;
-			curx += TO_BLOCKLEN+1;
-		}
-
-		curx = 0;
-		cury += TO_BLOCKHEIGHT+1;
-	}
-		
-	
-	/* Get the ground, column and leader blocks */
-	ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
-	tmp = ToGroundBlocks;
-	for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
-		IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
-		curx += GROUNDBLOCKLEN+1;
-	}
-	cury += GROUNDBLOCKHEIGHT+1;
-	curx = 0;
-
-	ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
-	IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
-	curx += COLUMNBLOCKLEN+1;
-
-	ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
-	IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
-	
-	return OK;
-	
-}
+    curx = 0;
+    cury += TO_BLOCKHEIGHT+1;
+  }
+  
+  
+  /* Get the ground, column and leader blocks */
+  ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
+  tmp = ToGroundBlocks;
+  for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
+    IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
+    curx += GROUNDBLOCKLEN+1;
+  }
+  cury += GROUNDBLOCKHEIGHT+1;
+  curx = 0;
+  
+  ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
+  IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
+  curx += COLUMNBLOCKLEN+1;
+  
+  ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
+  IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+  
+  return OK;
+  
+} // int GetTakeoverGraphics(void)
 
 /*@Function============================================================
 @Desc: void ShowPlayground(void): displays complete initial Playground

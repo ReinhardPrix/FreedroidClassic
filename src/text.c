@@ -12,6 +12,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/09 18:01:51  jprix
+ * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
+ * LBM files have been removed from repository. (I hope all of them.)
+ *
  * Revision 1.6  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -134,7 +138,7 @@ int InitParaplusFont(void){
     Terminate(-1);
   }
 	
-  LadeLBMBild(FONTBILD,InternalScreen,FALSE);
+  Load_PCX_Image( FONTBILD_PCX , InternalScreen , FALSE );
 
   FontMem = (unsigned char*)MyMalloc(FONTANZAHL*FONTMEM*2+10);
 	
