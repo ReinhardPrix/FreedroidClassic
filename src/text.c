@@ -3,7 +3,8 @@
  * Desc: contains all functions dealing with the HUGE, BIG font used for
  *	the top status line, the score and the text displayed during briefing
  *	and highscore inverview.  This has NOTHING to do with the fonts
- *	of the SVGALIB or the fonts used for the horizontal srolling message line!
+ *	of the SVGALIB or the fonts used for the horizontal srolling
+ *      message line!
  *
  *----------------------------------------------------------------------*/
 
@@ -31,7 +32,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _freetext_c
+#define _text_c
 
 #include "system.h"
 
@@ -699,4 +700,4 @@ GetString (int MaxLen, int echo)
 } /* GetString() */
 
 
-#undef _freetext_c
+#undef _text_c
