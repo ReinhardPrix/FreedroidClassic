@@ -1381,7 +1381,7 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
   switch ( rotation_index )
     {
     case 0:
-    case 4:
+    case 8:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
@@ -1390,9 +1390,13 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
       break;
 
-    case 7:
-    case 6:
-    case 5:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+    case 15:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
@@ -1401,9 +1405,13 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       break;
 
-    case 3:
-    case 2:
     case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
