@@ -148,10 +148,9 @@ typedef struct
   char* ActionLabel;  // this is a better reference than a number
 
   // Maybe the triggered event consists of the influencer saying something
-  int InfluencerSaySomething;
   char* InfluencerSayText;
+
   // Maybe the triggered event consists of the map beeing changed at some tile
-  int ChangeMap;
   point ChangeMapLocation;
   int ChangeMapTo;
   int ChangeMapLevel;

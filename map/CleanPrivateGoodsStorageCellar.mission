@@ -282,14 +282,9 @@ Delete the event trigger after it has been triggered=-1
 +++
 
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=0
 Action label for this action="open_barrier"
-Action is mapchange at positionX=4
-Action is mapchange at positionY=7
-Action is mapchange at maplevel=2
-Action is change map there to new value=0
-Action is Influencer saying something=1
-Action is Influencer saying the following text="Thanks for removing the barrier!"
+Mapchange at X=4 Y=7 Lev=2 to new value=0
+Action is Influencer say="Thanks for removing the barrier!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
@@ -297,110 +292,70 @@ Action is mission assignment=-1
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=1
 Action label for this action="remind"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="Don't forget to close the barrier behind me again!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Don't forget to close the barrier behind me again!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This action closes the barrier behind the influencer again. There are several
 // event triggers set to cause this action.
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=2
 Action label for this action="close_barrier"
-Action is mapchange at positionX=4
-Action is mapchange at positionY=7
-Action is mapchange at maplevel=2
-Action is change map there to new value=23
-Action is Influencer saying something=-1
-Action is Influencer saying the following text=""
+Mapchange at X=4 Y=7 Lev=2 to new value=23
+Action is Influencer say=""
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=3
 Action label for this action="barrier_bullet_comment"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="This barrier is scarred from lots of bullet holes!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="This barrier is scarred from lots of bullet holes!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=4
 Action label for this action="teleport_not_working_comment"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="This teleportation device is not yet functional!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="This teleportation device is not yet functional!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=5
 Action label for this action="stay_with_first_mission_comment"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
 // This is a pure mission assignment
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=6
 Action label for this action="assign_mission_zero"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="Hey, I think I've been assigned a mission!  Cool!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Hey, I think I've been assigned a mission!  Cool!"
 Action is mission assignment=0
 * End of this Event Action Subsection *
 
 // This is a pure mission assignment
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=7
 Action label for this action="assign_mission_one"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="Hey, I think I've been assigned another mission!  Super!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Hey, I think I've been assigned another mission!  Super!"
 Action is mission assignment=1
 * End of this Event Action Subsection *
 
 // This is a pure mission assignment
 * Start of an Event Action Subsection *
-ACTION INDEX NUMBER TO USE=8
 Action label for this action="wow_done_mission_zero"
-Action is mapchange at positionX=-1
-Action is mapchange at positionY=-1
-Action is mapchange at maplevel=-1
-Action is change map there to new value=-1
-Action is Influencer saying something=1
-Action is Influencer saying the following text="Hey, I think I've completed this mission!  Hey, cool!"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 

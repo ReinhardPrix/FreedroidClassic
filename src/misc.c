@@ -1262,7 +1262,7 @@ ExecuteEvent ( int EventNumber )
     }
 
   // Does the defined action make the influencer say something?
-  if ( AllTriggeredActions[ EventNumber ].InfluencerSaySomething != -1 )
+  if ( strlen ( AllTriggeredActions[ EventNumber ].InfluencerSayText ) > 0 )
     {
       //YES. So we need to output his sentence as usual
       Me.TextVisibleTime=0;
