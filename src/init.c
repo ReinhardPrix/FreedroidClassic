@@ -1521,13 +1521,6 @@ InitNewMissionList ( char *MissionName )
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
-  GameConfig.Draw_Framerate=TRUE;
-  // GameConfig.Draw_Framerate=FALSE;
-  GameConfig.Draw_Energy=FALSE;
-  // GameConfig.Draw_Energy=TRUE;
-  // GameConfig.Draw_Position=TRUE;
-  GameConfig.Draw_Position=FALSE;
-  GameConfig.All_Texts_Switch = FALSE;
 
   Me.Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
@@ -1844,6 +1837,10 @@ InitFreedroid (void)
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
   GameConfig.Theme_SubPath="lanzz_theme/";
+  GameConfig.Draw_Framerate=TRUE;
+  GameConfig.Draw_Energy=FALSE;
+  GameConfig.Draw_Position=FALSE;
+  GameConfig.All_Texts_Switch = FALSE;
 
   //Load user config file if it exists...
   LoadSettings ();
