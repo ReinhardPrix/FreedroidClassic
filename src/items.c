@@ -223,7 +223,10 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
   // or selling the item.
   //
   if ( BuyItem -> prefix_code != (-1) )
-    PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
+    {
+      PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
+      // DebugPrintf ( 0 , "\nPriceFactor : %f . " , PrefixMultiplier ) ;
+    }
   if ( BuyItem -> suffix_code != (-1) )
     SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
 

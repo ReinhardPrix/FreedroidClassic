@@ -369,7 +369,10 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   Uint8 ALoss_1 , ALoss_2 , RLoss_1, RLoss_2, GLoss_1, GLoss_2, BLoss_1, BLoss_2;
   Uint32* pixel_pointer1;
   Uint32* pixel_pointer2;
+  Uint32 pixel;
   // Uint8 blue;
+  int bpp;
+  Uint8 *p;
 
 
   //--------------------
@@ -388,6 +391,7 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   // ready to be blitted.
   //
   ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+  bpp = ThirdSurface->format->BytesPerPixel;
 
   //--------------------
   // Now we prepare some pointer, so that we only have to increase it later on...
@@ -396,8 +400,10 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   fmt2 = SecondSurface -> format ;
   SDL_LockSurface ( FirstSurface ) ;
   SDL_LockSurface ( SecondSurface ) ;
+  SDL_LockSurface ( ThirdSurface ) ;
   pixel_pointer1 = ( ( ( Uint32* ) FirstSurface -> pixels ) + 0 + 0 * FirstSurface->w )  ;
   pixel_pointer2 = ( ( ( Uint32* ) SecondSurface -> pixels ) + 0 + 0 * SecondSurface->w )  ;
+  p = (Uint8 *) ThirdSurface -> pixels + 0 * ThirdSurface -> pitch + 0 * bpp;
 
   //--------------------
   // Now we prepare some surface properties, so that we don't have to retrieve
@@ -504,23 +510,15 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  // Now we can start to do our normal operation like in the
 	  // well working but too slow slow variant...
 	  //
-
 	  alpha1 = ( ( float ) raw_alpha1 ) / 255.0 ;
 	  alpha2 = ( ( float ) raw_alpha2 ) / 255.0 ;
 	  alpha3 = 1 - ( 1 - alpha1 ) * ( 1 - alpha2 ) ;
 
+	  // alpha3 = ( 255 * 255  - ( 255 - raw_alpha1 ) * ( 255 - raw_alpha2 ) ) / ( 255.0 * 255.0 )  ;
+
 	  //--------------------
 	  // In some cases we give exact alpha values...
 	  //
-	  /*
-	  if ( ( x == 64 ) && ( y == 96 ) )
-	    {
-	      DebugPrintf( 0 , "\nOldAlphaValue 1: %d OldAlphaValue 2: %d " , 
-			   GetAlphaComponent (  FirstSurface , x , y ) ,
-			   GetAlphaComponent ( SecondSurface , x , y ) 
-			   ) ;
-	    }
-	  */
 
 	  new_red =  ( alpha2 * red2 +
 		   ( 1 - alpha2 ) * alpha1 * red1 ) 
@@ -534,19 +532,58 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 		   ( 1 - alpha2 ) * alpha1 * blue1 ) 
 	    / alpha3 ;
 
+	  alpha3 *= 255.0 ; 
+
 	  //--------------------
 	  // This putpixel must go out and be replaced by something with
 	  // less overhead...
 	  //
-	  putpixel ( ThirdSurface , x , y , 
-		     SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , 255.0 * alpha3 ) ) ;
+	  // putpixel ( ThirdSurface , x , y , 
+	  // SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ) ;
 
+	  switch (bpp)
+	    {
+	    case 1:
+	      // *p = pixel;
+	      *p = SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ;
+	      break;
+	      
+	    case 2:
+	      // *(Uint16 *) p = pixel;
+	      *(Uint16 *) p = SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ;
+	      break;
+	      
+	    case 3:
+	      pixel = SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ;
+
+	      if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+		{
+		  p[0] = (pixel >> 16) & 0xff;
+		  p[1] = (pixel >> 8) & 0xff;
+		  p[2] = pixel & 0xff;
+		}
+	      else
+		{
+		  p[0] = pixel & 0xff;
+		  p[1] = (pixel >> 8) & 0xff;
+		  p[2] = (pixel >> 16) & 0xff;
+		}
+	      break;
+
+	    case 4:
+	      *(Uint32 *) p = SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ;
+	      break;
+	    }
+	  
+	  p += bpp;
+	  
 	}
     }
 
 
   SDL_UnlockSurface ( FirstSurface ) ;
   SDL_UnlockSurface ( SecondSurface ) ;
+  SDL_UnlockSurface ( ThirdSurface ) ;
 
   return ( ThirdSurface );
 

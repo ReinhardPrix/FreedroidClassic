@@ -664,6 +664,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       *(Uint32 *) p = pixel;
       break;
     }
+
 }; // void PutPixel ( ... )
 
 Uint32
