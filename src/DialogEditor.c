@@ -433,8 +433,19 @@ dialog_option_set_loop_status ( int dialog_option_index , int we_shall_loop )
     {
       if ( ChatRoster [ dialog_option_index ] . change_option_nr [ i ] == dialog_option_index )
 	{
-	  ChatRoster [ dialog_option_index ] . change_option_to_value [ i ] = we_shall_loop ; 
-	  we_re_done = TRUE ;
+	  if ( ! we_re_done )
+	    {
+	      ChatRoster [ dialog_option_index ] . change_option_to_value [ i ] = we_shall_loop ; 
+	      we_re_done = TRUE ;
+	    }
+	  else
+	    {
+	      //--------------------
+	      // We do this to prevent double self-references...
+	      //
+	      ChatRoster [ dialog_option_index ] . change_option_to_value [ i ] = -1 ; 
+	      ChatRoster [ dialog_option_index ] . change_option_nr [ i ] = -1 ; 
+	    }
 	}
     }
   //--------------------
@@ -452,6 +463,7 @@ dialog_option_set_loop_status ( int dialog_option_index , int we_shall_loop )
       if ( ChatRoster [ dialog_option_index ] . change_option_nr [ i ] == (-1) )
 	{
 	  ChatRoster [ dialog_option_index ] . change_option_to_value [ i ] = we_shall_loop ; 
+	  ChatRoster [ dialog_option_index ] . change_option_nr [ i ] = dialog_option_index ;
 	  return ;
 	}
     }

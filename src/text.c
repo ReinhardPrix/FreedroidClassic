@@ -909,6 +909,11 @@ TextConditionIsTrue ( char* ConditionString )
 	  if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
 	  if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
 	    return ( TRUE );
+	  //--------------------
+	  // Now some extra safety, cause the ':' termination character might still be on the cookie!
+	  //
+	  if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= strlen ( CookieText ) ) 
+	    return ( TRUE ); 
 	}
 
       free ( CookieText );

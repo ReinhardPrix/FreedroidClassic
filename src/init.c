@@ -1156,6 +1156,8 @@ GetQuestList ( char* QuestListFilename )
 #define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
 #define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
 #define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droids with marker : "
+#define MISSION_TARGET_MUST_CLEAR_FIRST_LEVEL "Mission target is to kill all hostile droids this first level : "
+#define MISSION_TARGET_MUST_CLEAR_SECOND_LEVEL "Mission target is to also kill all hostile droids on second level : "
 #define MISSION_TARGET_MUST_REACH_LEVEL_STRING "Mission target is to reach level : "
 #define MISSION_TARGET_MUST_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
 #define MISSION_TARGET_MUST_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
@@ -1235,6 +1237,10 @@ GetQuestList ( char* QuestListFilename )
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ].KillOne , EndOfMissionTargetPointer );
 
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_CLEAR_SECOND_LEVEL , "%d" , 
+			   &Me[0].AllMissions[ MissionTargetIndex ]. must_clear_second_level , EndOfMissionTargetPointer );
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_CLEAR_FIRST_LEVEL , "%d" , 
+			   &Me[0].AllMissions[ MissionTargetIndex ]. must_clear_second_level , EndOfMissionTargetPointer );
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ].MustBeClass , EndOfMissionTargetPointer );
 
@@ -2032,6 +2038,49 @@ CheckIfMissionIsComplete (void)
 		}
 	    }
 	}
+
+      //--------------------
+      // Continue if the Mission target must_clear_first_level is given but not fullfilled
+      //
+      if ( Me[0].AllMissions[ MissNum ]. must_clear_first_level != (-1) )
+	{
+	  // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    {
+	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		   ( ! AllEnemys[Robot_Counter]. is_friendly ) && 
+		   ( AllEnemys[Robot_Counter] . pos . z == Me[0].AllMissions[ MissNum ].must_clear_first_level ) ) 
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne bot on that first level is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+				Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
+				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+		  goto CheckNextMission;
+		}
+	    }
+	}
+
+      //--------------------
+      // Continue if the Mission target must_clear_second_level is given but not fullfilled
+      //
+      if ( Me[0].AllMissions[ MissNum ]. must_clear_second_level != (-1) )
+	{
+	  // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
+	    {
+	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		   ( ! AllEnemys[Robot_Counter]. is_friendly ) && 
+		   ( AllEnemys[Robot_Counter] . pos . z == Me[0].AllMissions[ MissNum ].must_clear_second_level ) ) 
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne bot on that second level is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+				Robot_Counter , AllEnemys[Robot_Counter].pos.z , 
+				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+		  goto CheckNextMission;
+		}
+	    }
+	}
+
       
       //--------------------
       // Continue if the Mission target MustBeClass is given but not fullfilled

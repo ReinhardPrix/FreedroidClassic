@@ -175,6 +175,8 @@ typedef struct
   int KillAll;
   int KillClass;
   int KillOne;
+  int must_clear_first_level;
+  int must_clear_second_level;
   int   MustReachLevel;
   point MustReachPoint;
   double MustLiveTime;
