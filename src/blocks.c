@@ -395,7 +395,7 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[3][i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[4][i] );
 	}
     }
   else if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
@@ -414,6 +414,22 @@ Update_Tux_Working_Copy ( void )
 	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[0][i] );
 	}
     }
+
+  //--------------------
+  // Now we blit the shields OVER it.
+  //
+  if ( ( Me.shield_item.type != (-1) ) && ( ! Me.shield_item.currently_held_in_hand ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  // SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  SDL_SetAlpha( TuxMotionArchetypes[3][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
+	  SDL_BlitSurface ( TuxMotionArchetypes[3][i] , NULL , TuxWorkingCopy[i] , NULL );
+	}
+    }
+  
+
 }; // void Update_Tux_Working_Copy ( void )
 
 
