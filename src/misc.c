@@ -539,7 +539,6 @@ Pause (void)
 
   while ( Pause )
     {
-      // usleep(10);
       SetNewBigScreenMessage( " Pause " );
       AnimateInfluence ( 0 );
       AnimateRefresh ();
@@ -564,6 +563,12 @@ Pause (void)
 	  Pause = FALSE;
 	  while ( SpacePressed() );  /* wait for release */
 	}
+
+      //--------------------
+      // During the Pause mode, there is again no need to hog the CPU and to 
+      // go at full force.  We introduce some rest for the CPU here...
+      //
+      usleep(50);
 
     } /* while (Pause) */
   SetNewBigScreenMessage( "" );

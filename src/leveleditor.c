@@ -276,6 +276,13 @@ Level_Editor(void)
       OldTicks = SDL_GetTicks ( ) ;
       while (!EscapePressed())
 	{
+	  //--------------------
+	  // Also in the Level-Editor, there is no need to go at full framerate...
+	  // We can do with less, cause there are no objects supposed to be 
+	  // moving fluently anyway.  Therefore we introduce some rest for the CPU.
+	  //
+	  usleep ( 2 );
+
 	  BlockX=rintf(Me[0].pos.x);
 	  BlockY=rintf(Me[0].pos.y);
 	  
@@ -1016,29 +1023,11 @@ Level_Editor(void)
 		}
 	    } // if LeftPressed || RightPressed
 
-	  // If the user pressed up or down, the cursor within
-	  // the level editor menu has to be moved, which is done here:
-	  /*
-	  if (UpPressed()) 
-	    {
-	      if (MenuPosition > 1) MenuPosition--;
-	      MoveMenuPositionSound();
-	      while (UpPressed());
-	    }
-	  if (DownPressed()) 
-	    {
-	      if ( MenuPosition < QUIT_LEVEL_EDITOR_POSITION ) MenuPosition++;
-	      MoveMenuPositionSound();
-	      while (DownPressed());
-	    }
-	  */
-
-
 	}
       
     } // while (!Done)
 
-} // void Level_Editor(void)
+}; // void Level_Editor ( void )
 
 
 

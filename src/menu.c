@@ -247,14 +247,11 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  while (DownPressed());
 	}
 
-      /*
-      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
-	   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
-	{
-	  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
-	}
-      */
-
+      //--------------------
+      // At this the while (1) overloop ends.  But for the menu, we really do not
+      // need to hog the CPU.  Therefore some waiting should be introduced here.
+      //
+      usleep ( 50 );
     }
 
   SDL_ShowCursor( SDL_ENABLE );
