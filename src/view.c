@@ -426,7 +426,19 @@ local_update_of_automap_texture ( void )
 #define AUTOMAP_SQUARE_SIZE 3
 #define AUTOMAP_COLOR 0x0FFFF
     Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    static float automap_update_counter = 0 ;
 
+    //--------------------
+    // This function is a bit costly, so we don't do it every frame,
+    // but rather only ever second second :)
+    //
+    automap_update_counter += Frame_Time();
+    if ( automap_update_counter < 1.5 ) return ;
+
+    //--------------------
+    // We prepare the area around the Tux, where the map should be
+    // updated...
+    //
     start_x = Me [ 0 ] . pos . x - 7 ; 
     end_x = Me [ 0 ] . pos . x + 7 ; 
     start_y = Me [ 0 ] . pos . y - 7 ; 
