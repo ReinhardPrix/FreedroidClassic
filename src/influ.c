@@ -28,12 +28,6 @@
  * extras of the influencer.
  * ---------------------------------------------------------------------- */
 
-/*
- * This file has been checked for remains of german comments in the code
- * I you still find some, please let me know.
- */
-
-
 #define _influ_c
 
 #include "system.h"
@@ -206,7 +200,6 @@ InitInfluPositionHistory( int PlayerNum )
     {
       Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . x = Me [ PlayerNum ] . pos . x ;
       Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . y = Me [ PlayerNum ] . pos . y ;
-      // Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . z = CurLevel->levelnum ;
       Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . z = Me [ PlayerNum ] . pos . z ;
     }
 } // void InitInfluPositionHistory( void )
@@ -1507,6 +1500,19 @@ PerformTuxAttackRaw ( int PlayerNum )
   // motion phases
   //
   Me [ PlayerNum ] . weapon_swing_time = 0;
+
+  //--------------------
+  // Now that an attack is being made, the Tux must turn thowards the direction
+  // of the attack, no matter what.
+  //
+  Me [ PlayerNum ] . angle = - ( atan2 ( ServerThinksInputAxisY ( PlayerNum ) + 16 ,  
+					 ServerThinksInputAxisX ( PlayerNum ) + 16 ) * 180 / M_PI + 90 );
+  Me [ PlayerNum ] . speed . x = 0 ;
+  Me [ PlayerNum ] . speed . y = 0 ;
+  Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x ;
+  Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y ;
+  Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z; 
+  Me [ PlayerNum ] . mouse_move_target_is_enemy = FALSE ;
 
   //--------------------
   // But if the currently used weapon is a melee weapon, the tux no longer

@@ -203,17 +203,6 @@ EXTERN SDL_Rect InventoryRect;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
 
-EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
-
-//--------------------
-// Now the pointers for the very old paradroid-like
-// ball-shaped droid images...
-//
-EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   
-EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ]; 
-EXTERN SDL_Surface *GreenEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];
-EXTERN SDL_Surface *RedEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];  
-
 //--------------------
 // Now the iso-image pointers for the new individually shaped
 // isometric enemy images

@@ -916,13 +916,8 @@ Freedroid received a rotation model number that does not exist!",
 void 
 Load_Enemy_Surfaces( void )
 {
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
   int i;
   int j;
-  char *fpath;
 
   //--------------------
   // We clean out the rotated enemy surface pointers, so that later we

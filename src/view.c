@@ -1551,11 +1551,36 @@ iso_put_tux ( int x , int y , int PlayerNum )
   float angle;
 
   //--------------------
-  // If we make the angle dependent upon direction of movement we use
+  // In case there is no weapon swing going on, we can select the direction
+  // of facing by examining the current speed.
   //
-  angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI - 45 -180 );
-  angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
-  while ( angle < 0 ) angle += 360;
+  if ( ( Me [ PlayerNum ] . phase > 0 ) && ( Me [ PlayerNum ] . phase <= TUX_SWING_PHASES ) )
+    {
+      //--------------------
+      // Don't touch the direction of heading here, cause it's set correctly
+      // within the raw tux attack function anyway.
+      //
+      angle = Me [ PlayerNum ] . angle ;
+    }
+  else
+    {
+      //--------------------
+      // We make the angle dependent upon direction of movement, but only if there really is
+      // at least some movement.
+      //
+      if ( fabsf ( Me [ PlayerNum ] . speed . x ) + fabsf ( Me [ PlayerNum ] . speed . y ) > 0.1 )
+	{
+	  angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI - 45 -180 );
+	  angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+	  while ( angle < 0 ) angle += 360;
+	  Me [ PlayerNum ] . angle = angle ;
+	}
+      else
+	{ 
+	  angle = Me [ PlayerNum ] . angle ;
+	}
+    }
+
   //
   // But currently, we use as the angle the current location of the mouse on the local
   // client for the first player,
@@ -1600,7 +1625,6 @@ PutInfluence ( int x , int y , int PlayerNum )
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
   int alpha_value;
-  int use_tux = TRUE;
   point UpperLeftBlitCorner;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
@@ -1684,19 +1708,7 @@ PutInfluence ( int x , int y , int PlayerNum )
   // Either we draw the classical influencer or we draw the more modern
   // tux, a descendant of the influencer :)
   //
-  if ( use_tux )
-    {
-      iso_put_tux ( x , y , PlayerNum );
-    }
-  else
-    {
-      //--------------------
-      // Now we draw the hat and shoes of the influencer
-      // and the digits of the influencers current number.
-      //
-      SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me [ PlayerNum ].phase) ], NULL , Screen, &TargetRectangle );
-    }
-
+  iso_put_tux ( x , y , PlayerNum );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
@@ -2005,7 +2017,7 @@ There was a rotation model type given, that exceeds the number of rotation model
       // Only if the robot is dead already, we can print
       // out the explosion dust like in the classic ball shaped version.
       //
-      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+      // SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
     }
 
 

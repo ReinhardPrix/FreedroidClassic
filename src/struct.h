@@ -479,6 +479,7 @@ typedef struct
 
   double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			// the current phase of animation 
+  float angle ;
   float walk_cycle_phase;       // 
   float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
   float MissionTimeElapsed;
