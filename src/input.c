@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: functions for keyboard and joystick handling
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,6 +22,10 @@
  *  MA  02111-1307  USA
  *
  */
+/* ----------------------------------------------------------------------
+ * This file contains (all) functions for keyboard and joystick handling
+ * ---------------------------------------------------------------------- */
+
 #define _input_c
 
 #include "system.h"
@@ -114,6 +112,9 @@ int CurrentlyF12Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
+
+grob_point ItemSizeTable[ ALL_ITEMS ];
+
 int sgn (int x)
 {
   return (x ? ((x)/abs(x)) : 0);
@@ -190,13 +191,12 @@ Inv_Pos_Is_Free( int x , int y )
   int i;
   int item_width;
   int item_height;
-  grob_point ItemSizeTable[ ALL_ITEMS ];
   ItemSizeTable[ 0 ].x = 1;
   ItemSizeTable[ 0 ].y = 1;
-  ItemSizeTable[ 1 ].x = 2;
-  ItemSizeTable[ 1 ].y = 2;
-  ItemSizeTable[ 2 ].x = 2;
-  ItemSizeTable[ 2 ].y = 2;
+  ItemSizeTable[ 1 ].x = 1;
+  ItemSizeTable[ 1 ].y = 1;
+  ItemSizeTable[ 2 ].x = 1;
+  ItemSizeTable[ 2 ].y = 1;
   ItemSizeTable[ 3 ].x = 2;
   ItemSizeTable[ 3 ].y = 2;
   ItemSizeTable[ 4 ].x = 2;
@@ -377,9 +377,9 @@ ReactToSpecialKeys(void)
 
 
 	  // find enough free squares in the inventory to fit
-	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y ; Inv_Loc.y ++ )
+	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemSizeTable[ CurLevel->ItemList[ i ].type ].y + 1 ; Inv_Loc.y ++ )
 	    {
-	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x ; Inv_Loc.x ++ )
+	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemSizeTable[ CurLevel->ItemList[ i ].type ].x + 1 ; Inv_Loc.x ++ )
 		{
 		  if ( Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) )
 		    {
