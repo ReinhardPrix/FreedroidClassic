@@ -74,6 +74,18 @@ unsigned char *MessageBar;
 message *Queue = NULL;
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
 
+/*
+----------------------------------------------------------------------
+@Desc: This function prepares the screen for the big Escape menu and its
+submenus.  This means usual content of the screen, i.e. the combat screen
+and top status bar, is "faded out", the rest of the screen is cleared.
+This function resolves some redundance that occured since there are so
+many submenus needing this.
+
+@Ret: 
+@Int:
+----------------------------------------------------------------------
+*/
 void 
 InitiateMenu( void )
 {
@@ -1090,23 +1102,47 @@ Show_Mission_Instructions_Menu (void)
 
 } // ShowMissionInstructionsMenu
 
+/*
+----------------------------------------------------------------------
+@Desc: This function is used by the Level Editor integrated into 
+Freedroid.  It highlights the map position that is currently edited
+or would be edited, if the user pressed something.  I.e. its a "cursor"
+for the Level Editor.
+
+@Ret: 
+@Int:
+----------------------------------------------------------------------
+*/
 void 
 Highlight_Current_Block(void)
 {
   int i;
+#define HIGHLIGHTCOLOR 255
+
+  SDL_LockSurface( ne_screen );
 
   for (i=0; i<Block_Width; i++)
     {
-      // This draws a line at the upper border of the current block
-      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+ 		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
+      // This draws a (double) line at the upper border of the current block
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
+
       // This draws a line at the lower border of the current block
-      // InternWindow[(INTERNHOEHE+1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
+
       // This draws a line at the left border of the current block
-      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE-1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
+      putpixel( ne_screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+
       // This draws a line at the right border of the current block
-      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE+1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
+      putpixel( ne_screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+
     }
-}
+
+  SDL_UnlockSurface( ne_screen );
+    } // void Highlight_Current_Block(void)
 
 void 
 Level_Editor(void)

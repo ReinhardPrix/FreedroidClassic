@@ -702,9 +702,19 @@ Sorry...\n\
   SourceRectangle.x=0;
   SourceRectangle.y=0;
   SourceRectangle.w=USERFENSTERBREITE;
-  SourceRectangle.h=USERFENSTERHOEHE;
-  TargetRectangle.x=USERFENSTERPOSX;
-  TargetRectangle.y=USERFENSTERPOSY + TEXT_STRETCH * FontHeight(Menu_BFont) ;
+  if ( tmp->w > 200 ) 
+    {
+      TargetRectangle.x=0;
+      TargetRectangle.y=RAHMENHOEHE;
+      SourceRectangle.h=SCREENHOEHE-RAHMENHOEHE;
+    }
+  else 
+    {
+      TargetRectangle.x=USERFENSTERPOSX;
+      TargetRectangle.y=USERFENSTERPOSY + TEXT_STRETCH * FontHeight(Menu_BFont) ;
+      SourceRectangle.h=USERFENSTERHOEHE;
+    }
+
   SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
   
   SDL_FreeSurface(tmp);
