@@ -154,8 +154,8 @@ DebugPrintf (int db_level, char *fmt, ...)
     {
       tmp = (char *) MyMalloc (1000000 + 1);
       vsprintf (tmp, fmt, args);
-      fprintf (stderr, tmp);
-
+      fprintf ( stdout , tmp );
+      fflush ( stdout );
       free (tmp);
     }
 
@@ -304,7 +304,7 @@ InitVideo (void)
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
 
-  if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
+  if ( SDL_Init ( SDL_INIT_VIDEO ) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
@@ -747,7 +747,7 @@ copy_and_crop_input_file ( )
   // (This measure seems to be nescessary with mogrify versions like the one used
   // on basse's machine.)
   //
-  sprintf ( parameter_buf , "mv %s %s" , mgk_filename , input_filename );
+  sprintf ( parameter_buf , "mv %s %s 2>/dev/null" , mgk_filename , input_filename );
   DebugPrintf ( 0 , "\nCROPPY:  Now executing command : %s" , parameter_buf );
   system ( parameter_buf );
 
