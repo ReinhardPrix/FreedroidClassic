@@ -1054,12 +1054,15 @@ insert_enemies_into_blitting_list ( void )
   int i;
   float enemy_norm;
   float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
-
+  enemy* ThisRobot = & ( AllEnemys [ 0 ] ) ;
+  
+  ThisRobot -- ;
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
-      if ( AllEnemys [ i ] . Status == OUT ) continue;
-      if ( AllEnemys [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
-      enemy_norm = AllEnemys [ i ] . pos . x + AllEnemys [ i ] . pos . y ;
+      ThisRobot ++ ;
+      if ( ( ThisRobot -> Status == OUT ) && ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] == 0 ) ) continue;
+      if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) continue;
+      enemy_norm = ThisRobot -> pos . x + ThisRobot -> pos . y ;
       
       if ( fabsf ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
 
@@ -1169,26 +1172,40 @@ blit_preput_objects_according_to_blitting_list ( int mask )
   for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
     {
       if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
-      if ( blitting_list [ i ] . element_type != BLITTING_TYPE_OBSTACLE ) continue ;
-
-      if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
+      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_OBSTACLE )
 	{
-	  GiveStandardErrorMessage ( "blit_preput_objects_according_to_blitting_list (...)" , 
-"The blitting list contained an illegal blitting object type.",
-				     PLEASE_INFORM, IS_FATAL );
+	  if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
+	    {
+	      GiveStandardErrorMessage ( "blit_preput_objects_according_to_blitting_list (...)" , 
+					 "The blitting list contained an illegal blitting object type.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  
+	  if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
+	  
+	  //--------------------
+	  // So now we know that we must blit this one obstacle...
+	  //
+	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
+	    {
+	      if ( mask & ZOOM_OUT )
+		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	      else
+		blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	    }
 	}
-
-      if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
-
       //--------------------
-      // So now we know that we must blit this one obstacle...
+      // Enemies, which are dead already become like decoration on the floor.  
+      // They should never obscur the Tux, so we blit them beforehand and not
+      // again later from the list.
       //
-      if ( ! ( mask & OMIT_OBSTACLES ) ) 
+      if ( ( blitting_list [ i ] . element_type == BLITTING_TYPE_ENEMY ) &&
+	   ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 ) )
 	{
-	  if ( mask & ZOOM_OUT )
-	    blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
-	  else
-	    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	  if ( ! ( mask & OMIT_ENEMIES ) ) 
+	    {
+	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); // this blits player 0 
+	    }
 	}
     }
 
@@ -1229,6 +1246,8 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	case BLITTING_TYPE_ENEMY:
 	  if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
+	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 )
+		continue;
 	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); // this blits player 0 
 	    }
 	  break;
@@ -2537,6 +2556,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
   int phase = AllEnemys[Enum].phase;
   int RotationModel;
   int RotationIndex;
+  enemy* ThisRobot = & ( AllEnemys [ Enum ] ) ;
 
   //--------------------
   // Now that the angle the robot is facing is determined, we just need to
@@ -2546,7 +2566,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
   // For this, several 'rounding' issues have to be taken into account!
   // But now it has optimal performance.
   //
-  RotationIndex = ( ( AllEnemys [ Enum ] . current_angle - 45.0 + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+  RotationIndex = ( ( ThisRobot -> current_angle - 45.0 + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
   while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
 
@@ -2555,29 +2575,29 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
   // right at the borderline between two possible 8-way directions, we introduce some
   // enforced consistency onto the droid...
   //
-  if ( RotationIndex == AllEnemys [ Enum ] . previous_phase )
+  if ( RotationIndex == ThisRobot -> previous_phase )
     {
-      AllEnemys [ Enum ] . last_phase_change += Frame_Time ();
+      ThisRobot -> last_phase_change += Frame_Time ();
     }
   else
     {
-      if ( AllEnemys [ Enum ] . last_phase_change >= 0.33 )
+      if ( ThisRobot -> last_phase_change >= 0.33 )
 	{
-	  AllEnemys [ Enum ] . last_phase_change = 0.0 ;
-	  AllEnemys [ Enum ] . previous_phase = RotationIndex ;
+	  ThisRobot -> last_phase_change = 0.0 ;
+	  ThisRobot -> previous_phase = RotationIndex ;
 	}
       else
 	{
 	  //--------------------
 	  // In this case we don't permit to use a new 8-way direction now...
 	  //
-	  RotationIndex = AllEnemys [ Enum ] . previous_phase ;
-	  AllEnemys [ Enum ] . last_phase_change += Frame_Time ();
+	  RotationIndex = ThisRobot -> previous_phase ;
+	  ThisRobot -> last_phase_change += Frame_Time ();
 	}
     }
 
   // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
-  RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
+  RotationModel = Druidmap [ ThisRobot -> type ] . individual_shape_nr ;
   
   //--------------------
   // A sanity check for roation model to use can never hurt...
@@ -2594,7 +2614,7 @@ There was a rotation model type given, that exceeds the number of rotation model
   // then we can use the explosion dust from the classic ball-shaped
   // version.
   //
-  if ( phase != DROID_PHASES )
+  if ( ( phase != DROID_PHASES ) || ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
     {
       
       //--------------------
@@ -2627,14 +2647,14 @@ There was a rotation model type given, that exceeds the number of rotation model
 	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 	  // our_SDL_blit_surface_wrapper( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
       else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	{
 	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 	  // our_SDL_blit_surface_wrapper( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 
 	}
       else if ( AllEnemys[Enum].frozen != 0 ) 
@@ -2642,7 +2662,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 	  // our_SDL_blit_surface_wrapper( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
       else
 	{
@@ -2656,17 +2676,17 @@ There was a rotation model type given, that exceeds the number of rotation model
 	  else
 	    {
 	      if ( mask & ZOOM_OUT )
-		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , ThisRobot -> pos . x , ThisRobot -> pos . y );
 	      else
 		{
-		  if ( phases_in_enemy_animation [ RotationModel ] == 1 )
+		  if ( last_death_animation_image [ RotationModel ] - first_walk_animation_image [ RotationModel ] == 0 )
 		    {
-		      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 		  else
 		    {
-		      // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ ( SDL_GetTicks() / 100 ) % phases_in_enemy_animation [ RotationModel ] ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
-		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) AllEnemys [ Enum ] . animation_phase ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		      // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ ( SDL_GetTicks() / 100 ) % phases_in_enemy_animation [ RotationModel ] ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 		}
 
@@ -2688,16 +2708,6 @@ There was a rotation model type given, that exceeds the number of rotation model
 	    }
 	}
     }
-  else
-    {
-      //--------------------
-      // Only if the robot is dead already, we can print
-      // out the explosion dust like in the classic ball shaped version.
-      //
-      // our_SDL_blit_surface_wrapper( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-    }
-
-
   
 }; // void PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
 

@@ -2399,6 +2399,8 @@ PerformTuxAttackRaw ( int player_num )
 	  AllEnemys[ i ] . energy -= Me [ player_num ] .base_damage + MyRandom( Me [ player_num ] .damage_modifier );
 	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 
+	  start_gethit_animation_if_applicable ( & ( AllEnemys [ i ] ) ) ; 
+
 	  // AllEnemys[ i ] . is_friendly = 0 ;
 	  // AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
 	  robot_group_turn_hostile ( i );

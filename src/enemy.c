@@ -293,7 +293,6 @@ ClearEnemys ( void )
     {
       AllEnemys[i].type = -1;
       AllEnemys[i].pos.z = AllEnemys[i].energy = 0;
-      AllEnemys[i].phase = 0;
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
       AllEnemys[i].Status = OUT;
       AllEnemys[i].warten = 0;
@@ -314,6 +313,10 @@ ClearEnemys ( void )
       AllEnemys[i].persuing_given_course = FALSE;
       AllEnemys[i].FollowingInflusTail = FALSE;
       AllEnemys[i].StayHowManySecondsBehind = 5;
+
+      AllEnemys[i].phase = 0;
+      AllEnemys[i].animation_type = WALK_ANIMATION ;
+      AllEnemys[i].animation_phase = 0.0 ;
 
       AllEnemys[i].previous_angle = 0 ;         // which angle has this robot been facing the frame before?
       AllEnemys[i].current_angle = 0 ;          // which angle will the robot be facing now?
@@ -1065,13 +1068,13 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
     }
 
   ThisRobot->Status = OUT;
+
   //--------------------
   // The dead enemy will now explode and drop treasure, provided that 
   // it was still on this map
   //
   if ( MakeSureEnemyIsInsideThisLevel ( ThisRobot ) ) 
     {
-      StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
       Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
       //--------------------
       // Maybe that robot did have something with him?  The item should then
@@ -1081,6 +1084,28 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       // must be dropped and they must always be magical.
       //
       DropEnemyTreasure ( ThisRobot ) ;
+
+      //--------------------
+      // Maybe this robot is already fully animated or has at least one
+      // 'death' image.  Then we'll activate it.
+      //
+      if ( ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
+	{
+	  ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) + 0.1 ;
+	  ThisRobot -> animation_type = DEATH_ANIMATION;
+	}
+      else
+	{
+	  StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+	}
+
+      //--------------------
+      // And, not that the enemy is dead, some more blood will be spilled...
+      //
+      enemy_spray_blood ( ThisRobot ) ;
+      enemy_spray_blood ( ThisRobot ) ;
+      enemy_spray_blood ( ThisRobot ) ;
+
     }
   
   if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
@@ -1380,9 +1405,10 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // can delete the bullet that might have been created and just apply some
   // damage to the Tux if the Tux was sufficiently close
   //
-  if ( ( phases_in_enemy_animation [ ThisRobot -> type ] > 1 ) && ( ThisRobot -> animation_phase == 0 ) )
+  if ( ( last_attack_animation_image [ ThisRobot -> type ] - first_attack_animation_image [ ThisRobot -> type ] > 0 ) && ( ThisRobot -> animation_phase == 0 ) )
     {
-      ThisRobot -> animation_phase = 0.1 ;
+      ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
+      ThisRobot -> animation_type = ATTACK_ANIMATION;
       DeleteBullet ( bullet_index , FALSE );
       ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
       Me [ 0 ] . energy -= 10 ;
@@ -2356,6 +2382,24 @@ CheckEnemyEnemyCollision (int enemynum)
 }; // int CheckEnemyEnemyCollision
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+start_gethit_animation_if_applicable ( enemy* ThisRobot ) 
+{
+  //--------------------
+  // Maybe this robot is already fully animated.  In this case, after getting
+  // hit, the gethit animation should be displayed, which we'll initiate here.
+  //
+  if ( ( last_gethit_animation_image [ ThisRobot -> type ] - first_gethit_animation_image [ ThisRobot -> type ] > 0 ) )
+    {
+      ThisRobot -> animation_phase = ((float)first_gethit_animation_image [ ThisRobot -> type ]) + 0.1 ;
+      ThisRobot -> animation_type = GETHIT_ANIMATION;
+    }
+}; // void start_gethit_animation_if_applicable ( enemy* ThisRobot ) 
+
+/* ----------------------------------------------------------------------
  * This function does the rotation of the enemys according to their 
  * current energy level.
  * ---------------------------------------------------------------------- */
@@ -2376,6 +2420,60 @@ AnimateEnemys (void)
       // if (AllEnemys[i].pos.z != CurLevel->levelnum)
       if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
 	continue;
+
+      //--------------------
+      // While the old 'phase' doesn't have much meaning today any more, the
+      // new animation phase does.
+      //
+      // First the walkphases,
+      // Then the attack phases
+      // then the gethit phases
+      // finally the death phases
+      //
+      if ( our_enemy -> animation_phase > 0 )
+	{
+	  our_enemy -> animation_phase += Frame_Time() * 15 ;
+
+	  switch ( our_enemy -> animation_type )
+	    {
+	    case WALK_ANIMATION:
+	      if ( our_enemy -> animation_phase >= last_walk_animation_image [ our_enemy -> type ] )
+		{
+		  our_enemy -> animation_phase = 0 ;
+		  our_enemy -> animation_type = WALK_ANIMATION;
+		}
+	      break;
+	    case ATTACK_ANIMATION:
+	      if ( our_enemy -> animation_phase >= last_attack_animation_image [ our_enemy -> type ] )
+		{
+		  our_enemy -> animation_phase = 0 ;
+		  our_enemy -> animation_type = WALK_ANIMATION;
+		}
+	      break;
+	    case GETHIT_ANIMATION:
+	      if ( our_enemy -> animation_phase >= last_gethit_animation_image [ our_enemy -> type ] )
+		{
+		  our_enemy -> animation_phase = 0 ;
+		  our_enemy -> animation_type = WALK_ANIMATION;
+		}
+	      break;
+	    case DEATH_ANIMATION:
+	      if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] )
+		{
+		  our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
+		  our_enemy -> animation_type = DEATH_ANIMATION ;
+		}
+	      break;
+	    default:
+	      fprintf ( stderr , "\nThe animation type found is: %d.", our_enemy -> animation_type );
+	      GiveStandardErrorMessage ( "AnimateEnemys ( ... )" , "\
+There was an animation type encountered that isn't defined in FreedroidRPG.\n\
+That means:  Something is going *terribly* wrong!" ,
+					 PLEASE_INFORM, IS_FATAL );
+	      break;
+	    }
+	}
+
 
       if ( our_enemy -> Status == OUT)
 	{
@@ -2398,13 +2496,6 @@ AnimateEnemys (void)
       if ( our_enemy -> phase >= DROID_PHASES)
 	{
 	  our_enemy -> phase = 0;
-	}
-
-      if ( our_enemy -> animation_phase > 0 )
-	{
-	  our_enemy -> animation_phase += Frame_Time() * 15 ;
-	  if ( our_enemy -> animation_phase >= phases_in_enemy_animation [ our_enemy -> type ] )
-	    our_enemy -> animation_phase = 0 ;
 	}
 
     }

@@ -677,8 +677,10 @@ typedef struct
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
+
   double phase;	                // current phase of rotation of this droid
   float animation_phase;        // the current animation frame for this enemy (starting at 0 of course...)
+  int animation_type;           // walk-animation, attack-animation, gethit animation, death animation
 
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came

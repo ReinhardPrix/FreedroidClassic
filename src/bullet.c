@@ -759,24 +759,28 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
   double xdist, ydist;
   int level = CurBullet -> pos.z ;
   static int FBTZaehler = 0;
+  enemy* ThisRobot;
 
   //--------------------
   // Check for collision with enemys
   //
+  ThisRobot = & ( AllEnemys [ 0 ] ) ;
+  ThisRobot -- ;
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
     {
-      if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != level)
+      ThisRobot ++ ;
+      if ( ThisRobot -> Status == OUT || ThisRobot -> pos . z != level)
 	continue;
       
-      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
-      ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
+      xdist = CurBullet->pos.x - ThisRobot -> pos . x;
+      ydist = CurBullet->pos.y - ThisRobot -> pos . y;
       
       if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
 	{
 #ifdef USE_MISS_HIT_ARRAYS
 	  if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
 	    {
-	      if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
+	      if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ ThisRobot -> type ] . getting_hit_modifier )
 		{
 		  CurBullet->total_miss_hit[ i ] = HIT;
 #endif
@@ -785,9 +789,9 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		  // also gets stunned from the hit, which only means that the enemy can't
 		  // fire immediately now but takes (double?) normal time for the next shot.
 		  //
-		  AllEnemys[i].energy -= CurBullet->damage;
+		  ThisRobot -> energy -= CurBullet->damage;
 		  
-		  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+		  enemy_spray_blood ( ThisRobot ) ;
 
 		  //--------------------
 		  // If it was a friend, and the bullet came from Tux, the friend
@@ -798,21 +802,23 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		      robot_group_turn_hostile ( i );
 		    }
 		  
-		  AllEnemys[i].frozen += CurBullet->freezing_level;
+		  ThisRobot -> frozen += CurBullet -> freezing_level;
 		  
-		  AllEnemys[i].poison_duration_left += CurBullet->poison_duration;
-		  AllEnemys[i].poison_damage_per_sec += CurBullet->poison_damage_per_sec;
+		  ThisRobot -> poison_duration_left += CurBullet->poison_duration;
+		  ThisRobot -> poison_damage_per_sec += CurBullet->poison_damage_per_sec;
 		  
-		  AllEnemys[i].paralysation_duration_left += CurBullet->paralysation_duration;
+		  ThisRobot -> paralysation_duration_left += CurBullet->paralysation_duration;
 		  
-		  // AllEnemys[i].firewait =
-		  // 1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+		  // ThisRobot -> firewait =
+		  // 1 * ItemMap [ Druidmap [ ThisRobot -> type ].weapon_item.type ].item_gun_recharging_time ;
 		  
-		  AllEnemys [ i ] . firewait = Druidmap [ AllEnemys [ i ] . type ] . recover_time_after_getting_hit ;
-		  
+		  ThisRobot -> firewait = Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit ;
+
+		  start_gethit_animation_if_applicable ( ThisRobot ) ;
+
 		  // Maybe he will also stop doing his fixed routine and return to normal
 		  // operation as well
-		  AllEnemys[i].AdvancedCommand = 0;
+		  ThisRobot -> AdvancedCommand = 0;
 		  
 		  // We might also start a little bullet-blast even after the
 		  // collision of the bullet with an enemy (not in Paradroid)
@@ -822,8 +828,8 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		  // so and create a small explosion passing by.  But if it can't, it should
 		  // be completely deleted of course, with the same small explosion as well
 		  //
-		  if ( CurBullet->pass_through_hit_bodies )
-		    StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
+		  if ( CurBullet -> pass_through_hit_bodies )
+		    StartBlast ( CurBullet -> pos.x , CurBullet -> pos.y , CurBullet -> pos.z , BULLETBLAST );
 		  else DeleteBullet( num , TRUE ); // we want a bullet-explosion
 		  
 		  Enemy_Post_Bullethit_Behaviour( i );
@@ -838,9 +844,9 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 	      
 	      else
 		{
-		  CurBullet->total_miss_hit[ i ] = MISS;
-		  AllEnemys[ i ].TextVisibleTime = 0;
-		  AllEnemys[ i ].TextToBeDisplayed = "Haha, you missed me!";
+		  CurBullet -> total_miss_hit[ i ] = MISS;
+		  ThisRobot -> TextVisibleTime = 0;
+		  ThisRobot -> TextToBeDisplayed = "Haha, you missed me!";
 		}
 	    }
 #endif
