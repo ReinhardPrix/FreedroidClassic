@@ -45,7 +45,7 @@ jump target north: 8
 jump target south: 11
 jump target east: 9
 jump target west: 10
-Name of this level=maintenance
+Name of this level=Town
 Comment of the Influencer on entering this level="This must be the Old Town.
 Name of background song for this level=Bleostrada.ogg
 beginning_of_map
@@ -7904,7 +7904,7 @@ jump target north: -1
 jump target south: 0
 jump target east: 17
 jump target west: 16
-Name of this level=Main reactor block
+Name of this level=Temple Wood
 Comment of the Influencer on entering this level="This must be the main reactor level.  Humans are not allowed here.
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -8286,7 +8286,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8297,14 +8297,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8646,7 +8646,7 @@ ob_type=1 ob_x=38.00 ob_y=31.50 ob_na=-1
 ob_type=1 ob_x=38.00 ob_y=32.50 ob_na=-1 
 ob_type=6 ob_x=38.50 ob_y=33.00 ob_na=-1 
 ob_type=6 ob_x=39.50 ob_y=33.00 ob_na=-1 
-ob_type=19 ob_x=69.50 ob_y=12.50 ob_na=-1 
+ob_type=17 ob_x=69.50 ob_y=12.50 ob_na=-1 
 ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=0 
 ob_type=2 ob_x=50.50 ob_y=26.00 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=30.00 ob_na=-1 
@@ -9387,7 +9387,7 @@ jump target north: 17
 jump target south: -1
 jump target east: 27
 jump target west: 0
-Name of this level=MS Facility Gate
+Name of this level=Crystal Caverns
 Comment of the Influencer on entering this level="MS Facility Gate
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
@@ -16203,7 +16203,7 @@ jump target north: -1
 jump target south: 9
 jump target east: 28
 jump target west: 8
-Name of this level=This is the level to the top left
+Name of this level=Empty Plains
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
