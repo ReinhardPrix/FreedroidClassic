@@ -2,16 +2,12 @@
 Bugs
 =======
 
-next release: 0.7.2  (bug-fix release) 
-
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- (jp/rp?) make sure sound-code respects HAVE_LIBSDL_MIXER #define!!
 
-- (rp!!) SegFault caused by entering Highscore list?! also after/in takeover ?! 
+- (rp) SegFault caused by entering Highscore list?! also after/in takeover ?! 
 ==> tritt das wirklich immer noch auf??
 
-... and then: ready for the last release of the old engine!??
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -172,3 +168,6 @@ Resolved bugs
 
 - (DONE) Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
          bequem einstellen kann: Use ESCAPE key to access menu
+
+- (jp/rp?) make sure sound-code respects HAVE_LIBSDL_MIXER #define!!
+  (DONE)
