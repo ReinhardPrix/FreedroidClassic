@@ -1216,61 +1216,73 @@ ApplyItem( item* CurItem )
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
       Me [ 0 ] . SkillLevel [ SPELL_FORCE_TO_ENERGY ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_FORCE_TO_ENERGY ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
     {
       Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
     {
       Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
     {
       Me [ 0 ] . SkillLevel [ SPELL_TELEPORT_HOME ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_TELEPORT_HOME ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_PLASMA_BOLT )
     {
       Me [ 0 ] . SkillLevel [ SPELL_FIREY_BOLT ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_FIREY_BOLT ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_ICE_BOLT )
     {
       Me [ 0 ] . SkillLevel [ SPELL_COLD_BOLT ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_COLD_BOLT ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_POISON_BOLT )
     {
       Me [ 0 ] . SkillLevel [ SPELL_POISON_BOLT ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_POISON_BOLT ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_PETRIFICATION )
     {
       Me [ 0 ] . SkillLevel [ SPELL_PARALYZE_BOLT ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_PARALYZE_BOLT ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE )
     {
       Me [ 0 ] . SkillLevel [ SPELL_RADIAL_EMP_WAVE ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_EMP_WAVE ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE )
     {
       Me [ 0 ] . SkillLevel [ SPELL_RADIAL_VMX_WAVE ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_VMX_WAVE ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE )
     {
       Me [ 0 ] . SkillLevel [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_DETECT_ITEMS )
     {
       Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_DETECT_ITEM ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
 

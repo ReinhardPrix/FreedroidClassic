@@ -1342,23 +1342,26 @@ InitInfluencerStartupSkills( int PlayerNum )
       Me[ PlayerNum ].SkillLevel [ i ] = 0 ;
       Me[ PlayerNum ].base_skill_level [ i ] = 0 ;
     }
-  Me[ PlayerNum ].SkillLevel [ 0 ] = 1 ;
-  Me[ PlayerNum ].base_skill_level [ 0 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 1 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 2 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 3 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 4 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 5 ] = 0 ;  // teleport home disabled for consistency...
-  Me[ PlayerNum ].base_skill_level [ 6 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 7 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 8 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 9 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 10 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 11 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 12 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 13 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 14 ] = 1;
-  Me[ PlayerNum ].base_skill_level [ 14 ] = 1;
+  Me[ PlayerNum ] . SkillLevel [ 0 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [  0 ] = 1 ; // transfer mode present...
+  Me[ PlayerNum ].base_skill_level [  1 ] = 1 ; // loot chest present...
+  Me[ PlayerNum ].base_skill_level [  2 ] = 1 ; // repair skill present...
+  Me[ PlayerNum ].base_skill_level [  3 ] = 1 ; // weapon skill present...
+  Me[ PlayerNum ].base_skill_level [  4 ] = 0 ; // force-to-energy (HEALING) NOT present...
+  Me[ PlayerNum ].base_skill_level [  5 ] = 0 ; // teleport home disabled for consistency...
+  Me[ PlayerNum ].base_skill_level [  6 ] = 0 ; // firy-bolt NOT present...
+  /*
+  Me[ PlayerNum ].base_skill_level [  7 ] = 1 ; 
+  Me[ PlayerNum ].base_skill_level [  8 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [  9 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 10 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 11 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 12 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 13 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 14 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 14 ] = 1 ;
+  */
+
   GameConfig.spell_level_visible = 0;
 
   Me [ PlayerNum ] . melee_weapon_skill = 0 ;
