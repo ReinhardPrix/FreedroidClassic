@@ -516,6 +516,36 @@ GetHeldItemCode ( void )
       return ( Druidmap[ Me.type ].weapon_item.type );
     }
 
+  if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].drive_item.type );
+    }
+
+  if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].armour_item.type );
+    }
+
+  if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].shield_item.type );
+    }
+
+  if ( Druidmap[ Me.type ].special_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].special_item.type );
+    }
+
+  if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].aux1_item.type );
+    }
+
+  if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand ) 
+    {
+      return ( Druidmap[ Me.type ].aux2_item.type );
+    }
+
   //--------------------
   // If we ever reach this point, that means that the held items code
   // could not be correctly computed, which should mean a reason to
@@ -567,22 +597,19 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 void 
 DropHeldItemToTheFloor ( void )
 {
-  // point CurPos;
-  int InvPos;
+  item* DropItemPointer;
   int i;
 
   // --------------------
-  // First we find out the inventory index of the item we want to
-  // drop
+  // First we find out which item we want to drop onto the floor
   //
-  InvPos = GetHeldItemInventoryIndex(  );
-
-  if ( InvPos ==  (-1) )
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor: No item in inventory seems to be currently held in hand...");
+      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
       return;
-    }
-
+    } 
+  
   // --------------------
   // Now we want to drop the item to the floor.
   // We therefore find a free position in the item list of this level
@@ -602,11 +629,15 @@ DropHeldItemToTheFloor ( void )
   // --------------------
   // Now we enter the item into the item list of this level
   //
-  CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
+  CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) );
   CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   CurLevel->ItemList[ i ].pos.y = Me.pos.y;
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // CurLevel->ItemList[ i ].pos.x = Me.pos.x;
+  // CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  // CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
+  
+  // Me.Inventory[ InvPos ].type = ( -1 );
+  DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToTheFloor ( void )
 
