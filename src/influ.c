@@ -328,14 +328,28 @@ MoveInfluence (void)
       TransferCounter=0;
     }
 
-  if (UpPressed ())
-    Me.speed.y -= accel;
-  if (DownPressed ())
-    Me.speed.y += accel;
-  if (LeftPressed ())
-    Me.speed.x -= accel;
-  if (RightPressed ())
-    Me.speed.x += accel;
+
+  //--------------------
+  // Acceleration occurs, but only if there is at least some
+  // drive unit present!!!  Otherwise only a comment will be
+  // printed out!!
+  //
+  if ( Druidmap[ Me.type ].drive_item.type != (-1) )
+    {
+      if (UpPressed ())
+	Me.speed.y -= accel;
+      if (DownPressed ())
+	Me.speed.y += accel;
+      if (LeftPressed ())
+	Me.speed.x -= accel;
+      if (RightPressed ())
+	Me.speed.x += accel;
+    }
+  else
+    {
+      Me.TextVisibleTime = 0;
+      Me.TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
+    }
 
   if (!SpacePressed ())
     Me.status = MOBILE;

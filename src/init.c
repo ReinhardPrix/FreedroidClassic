@@ -1743,6 +1743,11 @@ InitFreedroid (void)
   // Me.TextToBeDisplayed = "Hello, I'm 001.";
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
+  // --------------------
+  //
+  InventorySize.x = 9;
+  InventorySize.y = 6;
+
   // At first we set audio volume to maximum value.
   // This might be replaced later with values from a 
   // private user Freedroid config file.  But for now
@@ -1762,6 +1767,7 @@ InitFreedroid (void)
   GameConfig.Inventory_Visible_Max_Time = 5;
   GameConfig.Theme_SubPath="lanzz_theme/";
   Copy_Rect (Full_User_Rect, User_Rect);
+      
 
   Init_Video ();
 

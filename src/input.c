@@ -257,7 +257,6 @@ ReactToSpecialKeys(void)
   int InvPos;
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
-  char TempText[1000];
   grob_point Inv_Loc;
   int item_width;
   int item_height;
@@ -370,9 +369,6 @@ ReactToSpecialKeys(void)
   //
   if ( TPressed() )
     {
-      InventorySize.x = 9;
-      InventorySize.y = 6;
-      
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
@@ -380,78 +376,10 @@ ReactToSpecialKeys(void)
 	       ( fabsf( Me.pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
 	    break;
 	}
-      //--------------------
-      // In case we found an item on the floor, we remove it from the floor
-      // and add it to influs inventory
-      //
+
       if ( i < MAX_ITEMS_PER_LEVEL )
 	{
-	  // find a free position in the inventory list
-	  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
-	    {
-	      if ( Me.Inventory [ InvPos ].type == (-1) ) break;
-	    }
-
-
-	  // find enough free squares in the inventory to fit
-	  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemImageList[ ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ].inv_size.y + 1 ; Inv_Loc.y ++ )
-	    {
-	      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemImageList[ ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ].inv_size.x + 1 ; Inv_Loc.x ++ )
-		{
-		  
-		  for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[CurLevel->ItemList[ i ].type].picture_number ].inv_size.y ; item_height ++ )
-		    {
-		      for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[CurLevel->ItemList[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
-			{
-			  printf( "\nChecking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
-			  if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
-						 Inv_Loc.y + item_height ) )
-			    {
-			      Me.Inventory[ InvPos ].inventory_position.x = -1;
-			      Me.Inventory[ InvPos ].inventory_position.y = -1;
-			      goto This_Is_No_Possible_Location;
-			    }
-			}
-		    }
-		  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
-
-		  // At this point we know we have reached a position where we can plant this item.
-		  Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-		  Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-		  goto Inv_Loc_Found;
-
-		This_Is_No_Possible_Location:
-
-		}
-
-	    }
-
-	Inv_Loc_Found:
-	  
-	  if ( ( InvPos == MAX_ITEMS_IN_INVENTORY ) || ( Me.Inventory[ InvPos ].inventory_position.x == (-1) ) )
-	    {
-	      Me.TextVisibleTime = 0;
-	      Me.TextToBeDisplayed = "I can't carry any more.";
-	      CantCarrySound();
-	      // can't take any more items,
-	    }
-	  else
-	    {
-	      // We announce that we have taken the item
-	      Me.TextVisibleTime = 0;
-	      sprintf( TempText , "Item taken: %s." , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
-	      Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
-	      strcpy ( Me.TextToBeDisplayed , TempText );
-
-	      // We
-	      Me.Inventory[ InvPos ].type = CurLevel->ItemList[ i ].type;
-
-	      // We remove the item from the floor
-	      CurLevel->ItemList[ i ].type = (-1);
-
-	      // We make the sound of an item being taken
-	      ItemTakenSound();
-	    }
+	  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
 	}
     }
 
