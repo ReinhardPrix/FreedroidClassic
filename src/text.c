@@ -180,52 +180,6 @@ AddInfluBurntText( void )
 } // void AddInfluBurntText
 
 /*-----------------------------------------------------------------
- * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
- * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt
- * 	Sicherheitsabfrage, ob die schrift nicht durch
- * 	Kontrastzerst"orung vernichtet wird
- * 
- * sets only, if color != 0 and other then old color
- * 
- *
- *-----------------------------------------------------------------*/
-void
-SetTextColor (unsigned char bg, unsigned char fg)
-{
-
-  return;
-
-}				/* SetTextcolor */
-
-/* ====================================================================== 
-   Diese Funktion soll die momentane Farbsituation des Textes wiedergeben.
-	Dazu werden zwei Pointer "ubergeben, damit sie auch ver"andert werden.
-		
-	Grund f"ur die Funktion: so sparen wir zwei weitere globale Variablen
-   ---------------------------------------------------------------------- */
-void
-GetTextColor (unsigned int *bg, unsigned int *fg)
-{
-  *bg = CurrentFontBG;
-  *fg = CurrentFontFG;
-}
-
-/*@Function============================================================
-@Desc: SetTextCursor(x, y): Setzt Cursor fuer folgende Textausgaben
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetTextCursor (int x, int y)
-{
-  MyCursorX = x;
-  MyCursorY = y;
-
-  return;
-}
-
-/*-----------------------------------------------------------------
  *  scrolls a given text down inside the given rect
  *
  * returns : 0  if end of text was scolled out
@@ -523,7 +477,7 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREENLEN, height, ne_bpp, 0, 0, 0, 0);
+  store = SDL_CreateRGBSurface(0, SCREENLEN, height, screen_bpp, 0, 0, 0, 0);
   Set_Rect (store_rect, x0, y0, SCREENLEN, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 

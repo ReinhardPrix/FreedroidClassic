@@ -33,10 +33,6 @@
 #ifndef _defs_h
 #define _defs_h
 
-#ifndef _colodefs_h
-#include "colodefs.h"
-#endif
-
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)
@@ -47,6 +43,8 @@
 
 #define Copy_Rect(src, dst) do {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; } while(0)
+
+#define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
 
 #define Wait4Fire() do { while (!SpacePressed() && !EscapePressed()); while(SpacePressed() || EscapePressed());} while(0)
 
@@ -86,17 +84,22 @@ enum
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
 
-#define NE_DROID_BLOCK_FILE	"droids.png"
-#define NE_BULLET_BLOCK_FILE 	"bullet.png"
-#define NE_BLAST_BLOCK_FILE 	"blast.png"
-#define NE_DIGIT_BLOCK_FILE     "digits.png"
+#define MAP_BLOCK_FILE          "map_blocks.png"
+#define DROID_BLOCK_FILE	"droids.png"
+#define BULLET_BLOCK_FILE 	"bullet.png"
+#define BLAST_BLOCK_FILE 	"blast.png"
+#define DIGIT_BLOCK_FILE        "digits.png"
 
-#define NE_CONSOLEN_PIC_FILE    "console_fg.png" 
-#define NE_BANNER_BLOCK_FILE    "banner.png"
-#define NE_TITLE_PIC_FILE       "title.jpg"
-#define NE_CONSOLE_BG_PIC1_FILE "console_bg1.jpg"
-#define NE_CONSOLE_BG_PIC2_FILE "console_bg2.jpg"
-#define NE_CREDITS_PIC_FILE     "credits.jpg"
+
+#define BANNER_BLOCK_FILE       "banner.png"
+#define TITLE_PIC_FILE          "title.jpg"
+#define CONSOLE_PIC_FILE        "console_fg.png" 
+#define CONSOLE_BG_PIC1_FILE    "console_bg1.jpg"
+#define CONSOLE_BG_PIC2_FILE    "console_bg2.jpg"
+#define CREDITS_PIC_FILE        "credits.jpg"
+
+#define SHIP_ON_PIC_FILE        "ship_on.png"
+#define SHIP_OFF_PIC_FILE       "ship_off.png"
 
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
@@ -112,14 +115,11 @@ enum
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
-#define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
 
-#define INITIAL_DIGIT_LENGTH (8*2)
-#define INITIAL_DIGIT_HEIGHT (9*2)
-#define INITIAL_DIGIT_POS_X 5*2
-#define INITIAL_DIGIT_POS_Y 12*2
-#define DIGITNUMBER 22
-#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
+#define INITIAL_DIGIT_WIDTH 16
+#define INITIAL_DIGIT_HEIGHT 18
+
+#define DIGITNUMBER 10
 
 #define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
 #define SCREENLEN		(320*SCALE_FACTOR)
@@ -151,10 +151,8 @@ enum
 
 
 /* Menu in Konsole */
-#define MENUITEMHEIGHT 		77
+#define MENUITEMHEIGHT 		4*77
 #define MENUITEMLENGTH 		50*2
-#define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
-
 
 #define BULLET_BULLET_COLLISION_DIST (10.0/64.0)
 #define BULLET_COLL_DIST2     0.0244140625
@@ -216,12 +214,10 @@ enum _sounds
 #define OK		0
 
 /* Ship-Elevator Picture */
-#define BULLETSPEEDINFLUENCE 	2
 
 #define DIRECTIONS 		8
 
 #define ALLSHIPS 		4
-
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 
@@ -260,6 +256,8 @@ enum _directions
 
 #define NUM_MAP_BLOCKS		51  // total number of map-blocks 
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
+
+#define ALLALERTCOLORS 		3
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */

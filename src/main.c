@@ -70,8 +70,6 @@ main (int argc, char *const argv[])
 
   joy_sensitivity = 1;
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
-  mouse_control = TRUE;
-
 
   now = SDL_GetTicks();
   InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
@@ -123,6 +121,7 @@ main (int argc, char *const argv[])
 	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
+
 
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 

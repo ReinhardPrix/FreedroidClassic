@@ -388,8 +388,6 @@ Cheatmenu (void)
 	} /* switch (getchar_raw()) */
     } /* while (!Weiter) */
 
-  InitBars = TRUE;
-
   ClearGraphMem ();
   SDL_Flip (ne_screen);
 
@@ -503,7 +501,7 @@ EscapeMenu (void)
 		  else
 		    sprintf (GameConfig.Theme_SubPath, "classic_theme/");
 
-		  ReInitPictures();
+		  InitPictures();
 		  
 		  //--------------------
 		  // Now we have loaded a new theme with new images!!  It might however be the
@@ -1065,7 +1063,7 @@ Credits_Menu (void)
   
   Copy_Rect (Full_Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
-  DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
+  DisplayImage ( find_file(CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
   MakeGridOnScreen (&screen);
 
 

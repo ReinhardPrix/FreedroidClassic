@@ -621,8 +621,6 @@ InitNewMission ( char *MissionName )
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
-#define LIFTS_ON_INDICATION_STRING "Lifts On file to use for this mission: "
-#define LIFTS_OFF_INDICATION_STRING "Lifts Off file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 #define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
 #define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
@@ -645,7 +643,6 @@ InitNewMission ( char *MissionName )
   Activate_Conservative_Frame_Computation();
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
-  PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
 
@@ -719,15 +716,6 @@ InitNewMission ( char *MissionName )
       Terminate (ERR);
     }
   printf_SDL (ne_screen, -1, -1, ".");
-  //--------------------
-  // Now its time to get the lifts on/off picturec file name from the mission file and
-  // assemble an appropriate crew out of it
-  //
-  ship_on_filename = 
-    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_ON_INDICATION_STRING , "\n" ) ;
-  ship_off_filename = 
-    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_OFF_INDICATION_STRING , "\n" ) ;
-
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission
   //
@@ -810,11 +798,6 @@ InitNewMission ( char *MissionName )
     curShip.AllLevels[i]->empty = FALSE;
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
 
-  if (ship_off_pic) SDL_FreeSurface (ship_off_pic);
-  if (ship_on_pic) SDL_FreeSurface (ship_on_pic);
-  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
-  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
-
   printf_SDL (ne_screen, -1, -1, " ok\n");
   SetCurrentFont (oldfont);
   //--------------------
@@ -827,9 +810,6 @@ InitNewMission ( char *MissionName )
   /* Den Banner fuer das Spiel anzeigen */
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  SetTextColor (FONT_WHITE, FONT_RED);
-  InitBars = TRUE;
 
   // Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
@@ -909,7 +889,7 @@ InitFreedroid (int argc, char *const argv[])
 
   Init_Video ();
 
-  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE)); // show title pic
+  DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, FALSE)); // show title pic
   SDL_Flip(ne_screen);
 
   Init_Audio ();

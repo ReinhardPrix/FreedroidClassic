@@ -30,7 +30,6 @@
  *
  */
 
-#include "colodefs.h"
 #include "ship.h"
 
 // this defines our "Userfenster"
@@ -157,8 +156,6 @@ char *Weaponnames[] = {
   "error"
 };
 
-
-// Robotnummern                 001     123     139     247     249     296     302     329     420     476     493     516     571     598     614     615     629     711     742     751     821     834     883     999
 
 Druidspec Druidmap;
 

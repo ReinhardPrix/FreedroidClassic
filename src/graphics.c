@@ -40,11 +40,12 @@
 #include "proto.h"
 #include "map.h"
 #include "text.h"
-#include "colodefs.h"
 #include "SDL_rotozoom.h"
 
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
+SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block);
+
 
 /* XPM */
 static const char *arrow[] = {
@@ -89,13 +90,6 @@ static const char *arrow[] = {
   "                                ",
   "0,0"
 };
-
-void Load_MapBlock_Surfaces( void );
-void Load_Enemy_Surfaces( void ) ;
-void Load_Influencer_Surfaces( void ) ;
-void Load_Digit_Surfaces( void ) ;
-void Load_Bullet_Surfaces( void ) ;
-void Load_Blast_Surfaces( void ) ;
 
 
 /* ----------------------------------------------------------------------
@@ -362,82 +356,6 @@ void DisplayImage( char *datafile )
   SDL_FreeSurface(image);
 }
 
-
-/*
- * replace every occurance of color src by dst in Surface surf
- */
-void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
-{
-  int i, j;
-    
-  for (i=0; i < surf->w; i++)
-    for (j=0; j < surf->h; i++)
-      ; /* ok, I'll do that later ; */
-
-  return;
-}
-
-/*
-----------------------------------------------------------------------
-@Desc: This function initializes ALL the graphics again, propably after 
-they have been destroyed by resizing operations.
-This is done via freeing the old structures and starting the classical
-allocations routine again.
-
-@Ret: TRUE/FALSE, same as InitPictures() returns
-
-----------------------------------------------------------------------
-*/
-int
-ReInitPictures (void)
-{
-  int i;
-  int j;
-
-  for ( j=0 ; j < NUM_COLORS ; j++ )
-    {
-      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] );
-	}
-    }
-
-  for ( j=0 ; j < DROID_PHASES ; j++ )
-    {
-      SDL_FreeSurface( InfluencerSurfacePointer[j] ); 
-      SDL_FreeSurface( EnemySurfacePointer[j] ); 
-    }
-
-  for ( j=0 ; j < DIGITNUMBER ; j++ )
-    {
-      SDL_FreeSurface( InfluDigitSurfacePointer[j] ); 
-      SDL_FreeSurface( EnemyDigitSurfacePointer[j] ); 
-    }
-
-  for ( j=0 ; j < ALLBLASTTYPES ; j++ )
-    {
-      for ( i = 0 ; i < Blastmap[j].phases ; i++ )
-	{
-	  SDL_FreeSurface( Blastmap[j].SurfacePointer[i] );
-	}
-    }
-
-  for ( j=0 ; j < Number_Of_Bullet_Types ; j++ )
-    {
-      for ( i = 0 ; i < Bulletmap[j].phases ; i++ )
-	{
-	  SDL_FreeSurface( Bulletmap[j].SurfacePointer[i] );
-	}
-    }
-
-  SDL_FreeSurface( ship_off_pic );
-  SDL_FreeSurface( ship_on_pic );
-
-  // return ( OK );
-  return (InitPictures());
-} // int ReInitPictures(void)
-
-
 /*----------------------------------------------------------------------
  * This function resizes all blocks and structures involved in assembling
  * the combat picture to a new scale.  The new scale is relative to the
@@ -592,310 +510,6 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 }; // void LoadThemeConfigurationFile ( void )
 
-/*
-----------------------------------------------------------------------
-This function loads the Blast image and decodes it into the multiple
-small Blast surfaces.
-----------------------------------------------------------------------
-*/
-void 
-Load_Blast_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int j;
-  char *fpath;
-
-  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
-    {
-      for ( j=0 ; j < Blastmap[i].phases ; j++ )
-	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( Blastmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=j*(Block_Height+2);
-	  Source.y=i*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
-	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
-    }
-
-  SDL_FreeSurface( tmp_surf );
-
-}; // void Load_Blast_Surfaces( void )
-
-
-/*
-----------------------------------------------------------------------
-This function loads the Blast image and decodes it into the multiple
-small Blast surfaces.
-----------------------------------------------------------------------
-*/
-void 
-Load_Bullet_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int j;
-  char *fpath;
-
-  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
-    {
-      for ( j=0 ; j < Bulletmap[i].phases ; j++ )
-	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=j*(Block_Height+2);
-	  Source.y=i*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
-	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
-    }
-
-  SDL_FreeSurface( tmp_surf );
-
-}; // void Load_Bullet_Surfaces( void )
-
-
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-void 
-Load_Enemy_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  char *fpath;
-
-  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( i=0 ; i < DROID_PHASES ; i++ )
-    {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      EnemySurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( EnemySurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      Source.x=i*(Block_Height+2);
-      Source.y=1*(Block_Width+2);
-      Source.w=Block_Width;
-      Source.h=Block_Height;
-      Target.x=0;
-      Target.y=0;
-      Target.w=Block_Width;
-      Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , EnemySurfacePointer[i] , &Target );
-      SDL_SetAlpha( EnemySurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-    }
-
-  SDL_FreeSurface( tmp_surf );
-
-}; // void LoadEnemySurfaces( void )
-
-
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-void 
-Load_Influencer_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  char *fpath;
-
-  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-
-  Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
-  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
-
-  for ( i=0 ; i < DROID_PHASES ; i++ )
-    {
-      InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); 
-
-      // Now we can copy the image Information
-      Source.x=i*(Block_Height+2);
-      Source.y=0*(Block_Width+2);
-      Source.w=Block_Width;
-      Source.h=Block_Height;
-      Target.x=0;
-      Target.y=0;
-      Target.w=Block_Width;
-      Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluencerSurfacePointer[i], 0, SDL_ALPHA_OPAQUE);
-    }
-
-  SDL_FreeSurface (tmp_surf);
-  SDL_FreeSurface (Whole_Image);
-
-  return;
-
-}; // void Load_Influencer_Surfaces( void )
-
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-void 
-Load_Digit_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  char *fpath;
-
-  fpath = find_file ( NE_DIGIT_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-  for ( i=0 ; i < DIGITNUMBER ; i++ )
-    {
-      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha ( tmp_surf );
-      // Now we can copy the image Information
-      Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2); // first line
-      Source.w=INITIAL_DIGIT_LENGTH;
-      Source.h=INITIAL_DIGIT_HEIGHT;
-      Target.x=0;
-      Target.y=0;
-      Target.w=INITIAL_DIGIT_LENGTH;
-      Target.h=INITIAL_DIGIT_HEIGHT;
-      SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluDigitSurfacePointer[i], 0, SDL_ALPHA_OPAQUE);
-    }
-
-  for ( i=0 ; i < DIGITNUMBER ; i++ )
-    {
-      EnemyDigitSurfacePointer[i] = SDL_DisplayFormatAlpha (tmp_surf); // now we have an alpha-surf of right size
-      // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);  // first line
-      Source.w=INITIAL_DIGIT_LENGTH;
-      Source.h=INITIAL_DIGIT_HEIGHT;
-      Target.x=0;
-      Target.y=0;
-      Target.w=INITIAL_DIGIT_LENGTH;
-      Target.h=INITIAL_DIGIT_HEIGHT;
-      SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );      
-    }
-
-  SDL_FreeSurface( tmp_surf );
-
-}; // void Load_Digit_Surfaces( void )
-
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-void
-Load_MapBlock_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int color;
-  char *fpath;
-
-  char *fname = "map_blocks.png";
-
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-  
-  if ( (fpath = find_file ( fname, GRAPHICS_DIR, TRUE)) == NULL)
-    {
-      DebugPrintf (0, "\n*****************************************************************");
-      DebugPrintf (0, "\nERROR: could not find graphics-file %s in search-path", fname);
-      DebugPrintf (0, "\n*****************************************************************");
-      Terminate(ERR);
-    }
-  for ( color = 0 ; color < NUM_COLORS ; color ++ )
-    {
-      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-      
-      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=i*(Block_Height+2);
-	  Source.y=color*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
-	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
-	  OrigMapBlockSurfacePointer[color][i] = MapBlockSurfacePointer[ color ][i];
-	  // unzoomed original map-blocks
-	  SDL_FreeSurface( tmp_surf );
-	}
-      SDL_FreeSurface( Whole_Image );
-    }
-}; // void Load_MapBlock_Surfaces( void )
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
@@ -909,20 +523,27 @@ Load_MapBlock_Surfaces( void )
 int
 InitPictures (void)
 {
-  SDL_Surface *tmp2;
-  BFont_Info *oldfont;
   char *fpath;
+  int line, col;
+  BFont_Info *oldfont;
+  SDL_Rect StdBlock, DigitBlock;
+  SDL_Surface *tmp_surf;
 
-  oldfont = GetCurrentFont ();
-
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-
-  Load_Fonts ();
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which
   // could box the influencer out of the ship....
   Activate_Conservative_Frame_Computation();
+
+  oldfont = GetCurrentFont ();
+
+  // Important: Global variable containing the _actual_ block-sizes
+  Block_Width = INITIAL_BLOCK_WIDTH;
+  Block_Height = INITIAL_BLOCK_HEIGHT;
+
+  Set_Rect (StdBlock, 0, 0, Block_Width, Block_Height);
+  Set_Rect (DigitBlock, 0,0,INITIAL_DIGIT_WIDTH, INITIAL_DIGIT_HEIGHT);
+
+  Load_Fonts ();
 
   SetCurrentFont (FPS_Display_BFont);
   printf_SDL (ne_screen, User_Rect.x + 50, SCREENHEIGHT - 100, "Loading Theme config ...");
@@ -933,123 +554,165 @@ InitPictures (void)
 
   SDL_SetCursor( init_system_cursor( arrow ) );
 
-  /* 
-     create the internal storage for all our blocks 
-  */
-
-  tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
-  if (tmp2 == NULL) 
-    {
-      DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
-      return (FALSE);
-    }
-  ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
-  SDL_FreeSurface( tmp2 );
-  if (ne_static == NULL) 
-    {
-      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
-      return (FALSE);
-    }
-
-  if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      return (FALSE);
-    }
-
-  /* 
-   * and now read in the blocks from various files into ne_blocks
-   * and initialise the block-coordinates 
-   */
-  //************************************************************
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
-
-  Load_MapBlock_Surfaces();
+  //---------- get Map blocks
+  fpath = find_file (MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  Load_Block (fpath, 0, 0, NULL);	/* init function */
+  for (line = 0; line < NUM_COLORS; line ++)
+    for (col = 0; col < NUM_MAP_BLOCKS; col ++)
+      {
+	FreeIfUsed (MapBlockSurfacePointer[line][col]);
+	MapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &StdBlock);
+	OrigMapBlockSurfacePointer[line][col] = MapBlockSurfacePointer[line][col];
+      }
   printf_SDL (ne_screen, -1, -1, ".");
-
-  Load_Influencer_Surfaces();
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  Load_Enemy_Surfaces();
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  Load_Bullet_Surfaces();
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  Load_Blast_Surfaces();
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-  Load_Digit_Surfaces();
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
-  ne_rahmen_block = ne_get_rahmen_block (fpath);
-  printf_SDL (ne_screen, -1, -1, ".");
-  
-  fpath = find_file (NE_CONSOLEN_PIC_FILE, GRAPHICS_DIR, FALSE);
-  ne_console_surface= IMG_Load (fpath); 
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  fpath = find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE);
-  tmp2 = IMG_Load (fpath);
-  ne_console_bg_pic1 = SDL_DisplayFormat (tmp2);
-  SDL_FreeSurface (tmp2);
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  fpath = find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE);
-  tmp2 = IMG_Load (fpath);
-  ne_console_bg_pic2 = SDL_DisplayFormat (tmp2);
-  SDL_FreeSurface (tmp2);
-  printf_SDL (ne_screen, -1, -1, ".");
-
-  // the very first time this can't be done here, because we first need to read
-  // the mission data. Nevertheless we need this here, in case the tile-set is changed
-  if (ship_off_filename)
+  //---------- get Droid-model  blocks
+  fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  Load_Block (fpath, 0, 0, NULL);
+  for (col = 0; col < DROID_PHASES; col ++) 
     {
-      ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
-      ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
-      printf_SDL (ne_screen, -1, -1, ".");
+      FreeIfUsed (InfluencerSurfacePointer[col]);
+      FreeIfUsed (EnemySurfacePointer[col]);
+      InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &StdBlock);
+      /* Influence pics are only used in _internal_ blits ==> clear per-surf alpha */
+      SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0); 
+      EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &StdBlock);
     }
+  // now create the local influ-pic storage by reading a  dummy-block 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, screen_bpp, 0, 0, 0, 0);
+  Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
+  //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
 
+  printf_SDL (ne_screen, -1, -1, ".");
+  //---------- get Bullet blocks
+  fpath = find_file (BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  Load_Block (fpath, 0, 0, NULL);
+  for (line = 0; line < Number_Of_Bullet_Types; line ++)
+    for (col = 0; col < Bulletmap[line].phases; col ++)
+      {
+	FreeIfUsed (Bulletmap[line].SurfacePointer[col]);
+	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock);
+      }
+  printf_SDL (ne_screen, -1, -1, ".");
+
+  //---------- get Blast blocks
+  fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  Load_Block (fpath, 0, 0, NULL);	
+  for (line = 0; line <  ALLBLASTTYPES; line ++)
+    for (col = 0; col < Blastmap[line].phases; col ++)
+      {
+	FreeIfUsed (Blastmap[line].SurfacePointer[col]);
+	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock);
+      }
+  printf_SDL (ne_screen, -1, -1, ".");
+  //---------- get Digit blocks
+  fpath = find_file (DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  Load_Block (fpath, 0, 0, NULL);
+  for (col = 0; col < 10; col++)
+    {
+      FreeIfUsed (InfluDigitSurfacePointer[col]);
+      InfluDigitSurfacePointer[col] = Load_Block (NULL, 0, col, &DigitBlock);
+      FreeIfUsed (EnemyDigitSurfacePointer[col]);
+      EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &DigitBlock);
+    }
+  printf_SDL (ne_screen, -1, -1, ".");
+
+  //---------- get Takeover pics
+  GetTakeoverGraphics ();
+  printf_SDL (ne_screen, -1, -1, ".");
+  //---------- get Banner
+  fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
+  FreeIfUsed (banner_pic);
+  banner_pic = Load_Block (fpath, 0, 0, NULL);
+  printf_SDL (ne_screen, -1, -1, ".");
+  //---------- get Console pictures
+  fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
+  FreeIfUsed (console_pic);
+  console_pic = Load_Block (fpath, 0, 0, NULL);
+  fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE);
+  FreeIfUsed (console_bg_pic1);
+  console_bg_pic1 = Load_Block (fpath, 0, 0, NULL);
+  fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, FALSE);
+  FreeIfUsed (console_bg_pic2);
+  console_bg_pic2 = Load_Block (fpath, 0, 0, NULL);
+
+
+  ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, TRUE));
+  ship_off_pic= IMG_Load (find_file (SHIP_OFF_PIC_FILE, GRAPHICS_DIR, TRUE));
+  printf_SDL (ne_screen, -1, -1, ".");
 
   arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, FALSE) );
   arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, FALSE) );
   arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, FALSE) );
   arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, FALSE) );
-
-
-  GetTakeoverGraphics();
   printf_SDL (ne_screen, -1, -1, " ok\n");
   
   SetCurrentFont (oldfont);
 
   return (TRUE);
-}  // InitPictures
+}				// InitPictures
 
-void PlusDrawEnergyBar (void);
 
-/*@Function============================================================
-@Desc: 
 
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetColors (int FirstCol, int PalAnz, char *PalPtr)
+/*------------------------------------------------------------
+ * General block-reading routine: get block from pic-file
+ * 
+ * fpath: full pathname of picture-file; if NULL: use previous SDL-surf
+ * line, col: block-position in pic-file to read block from
+ * block: dimension of blocks to consider: if NULL: copy whole pic
+ *
+ *------------------------------------------------------------*/
+SDL_Surface *
+Load_Block (char *fpath, int line, int col, SDL_Rect * block)
 {
-  char *MyPalPtr;
-  int i;
+  static SDL_Surface *pic = NULL;
+  SDL_Surface *tmp;
+  SDL_Rect src, dim;
+  SDL_Surface *ret;
+  int usealpha;
 
-  MyPalPtr = PalPtr;
+  if (!fpath && !pic)		/* we need some info.. */
+    return (NULL);
 
-  for (i = FirstCol; i < FirstCol + PalAnz; i++)
+  if (fpath)
     {
-      SetPalCol(i, MyPalPtr[0], MyPalPtr[1], MyPalPtr[2]);
-      MyPalPtr += 3;
+      if (pic)
+	free (pic);
+      pic = IMG_Load (fpath);
     }
-}				// void SetColors(...)
+
+  if (!block)
+    {
+      Set_Rect (dim, 0, 0, pic->w, pic->h);
+    }
+  else
+    {
+      Set_Rect (dim, 0, 0, block->w, block->h);
+    }
+
+  if (pic->format->Amask != 0)
+    usealpha = TRUE;
+  else
+    usealpha = FALSE;
+
+  if (usealpha)
+    SDL_SetAlpha (pic, 0, 0);	/* clear per-surf alpha for internal blit */
+  tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, screen_bpp, 0, 0, 0, 0);
+  if (usealpha)
+    ret = SDL_DisplayFormatAlpha (tmp);
+  else
+    ret = SDL_DisplayFormat (tmp);
+  SDL_FreeSurface (tmp);
+
+  Set_Rect (src, col * (dim.w + 2), line * (dim.h + 2), dim.w, dim.h);
+  SDL_BlitSurface (pic, &src, ret, NULL);
+  if (usealpha)
+    SDL_SetAlpha (ret, SDL_SRCALPHA | SDL_RLEACCEL, SDL_ALPHA_OPAQUE);
+
+  return (ret);
+
+}				/* Load_Block() */
+
 
 /*-----------------------------------------------------------------
  * Initialise the Video display and graphics engine
@@ -1110,7 +773,7 @@ Init_Video (void)
    * once this is up and running, we'll provide others modes
    * as well.
    */
-  ne_bpp = 16; /* start with the simplest */
+  screen_bpp = 16; /* start with the simplest */
 
   #define SCALE_FACTOR 2
 
@@ -1125,13 +788,6 @@ Init_Video (void)
   SDL_ShowCursor (SDL_DISABLE);
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
-  /* RGB of transparent color in our pics */
-  ne_transp_rgb.rot   = 199; 
-  ne_transp_rgb.gruen =  43; 
-  ne_transp_rgb.blau  =  43; 
-  /* and corresponding key: */
-  ne_transp_key = SDL_MapRGB(ne_screen->format, ne_transp_rgb.rot,
-			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
@@ -1139,77 +795,6 @@ Init_Video (void)
   return;
 
 } /* InitVideo () */
-
-/* *********************************************************************** */
-
-void
-LadeZeichensatz (char *Zeichensatzname)
-{
-  char *fpath;
-/*
-  Diese Prozedur laedt einen Zeichensatz in den Standardzeichensatzbereich
-  und verwendet dazu das BIOS.
-
-  Parameter sind ein Zeiger auf den Zeichensatznamen
-  Returnwert: keiner
-*/
-
-  /* lokale Variablen der Funktion */
-  unsigned char *Zeichensatzpointer;
-  FILE *CharDateiHandle;
-  int i, j, k;
-
-  DebugPrintf (1, "\nLadeZeichensatz() called... is that not obsolete?\n");
-
-  /* Speicher fuer die zu ladende Datei reservieren */
-  Zeichensatzpointer = MyMalloc (256 * 8 + 10);
-
-  /* Datei in den Speicher laden */
-  fpath = find_file (Zeichensatzname, GRAPHICS_DIR, FALSE);
-  if ((CharDateiHandle = fopen (fpath, "rb")) == NULL)
-    {
-      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname):  Konnte die Datei %s nicht oeffnen !\n",
-	 Zeichensatzname);
-      getchar ();
-      Terminate (-1);
-    }
-  fread (Zeichensatzpointer, 1, 30000, CharDateiHandle);
-  if (fclose (CharDateiHandle) == EOF)
-    {
-      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname): Konnte die Datei %s nicht schlie3en !\n",
-	 Zeichensatzname);
-      getchar ();
-      Terminate (-1);
-    }
-
-  /* Eventuell Report erstatten das der Zeichensatz installiert ist */
-#ifdef REPORTDEBUG
-  DebugPrintf
-    ("\nvoid LadeZeichensatz(char* Zeichensatzname): Der Zeichensatz ist installiert ! ");
-#endif
-
-  if (Data70Pointer)
-    {
-      DebugPrintf (2, " Der Zeichensatz war schon installiert !.\n");
-      getchar ();
-      Terminate (-1);
-    }
-  Data70Pointer = malloc (256 * 8 * 8 + 10);
-  for (i = 0; i < 256; i++)
-    {
-      for (j = 0; j < 8; j++)
-	{
-	  for (k = 0; k < 8; k++)
-	    {
-	      if (((int) Zeichensatzpointer[i * 8 + j]) & (1 << (7 - k)))
-		Data70Pointer[i * 8 * 8 + j * 8 + k] = DATA70FONTCOLOR;
-	      else
-		Data70Pointer[i * 8 * 8 + j * 8 + k] = DATA70BGCOLOR;
-	    }
-	}
-    }
-}  // void LadeZeichensatz(char* Zeichensatzname)
-
 
 /*@Function============================================================
 @Desc: 
@@ -1233,41 +818,10 @@ ClearGraphMem ( void )
 } // ClearGraphMem( void )
 
 
-/*@Function============================================================
-@Desc: This function sets a selected colorregister to a specified
-		RGB value
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
-	   unsigned char blau)
-{
-  SDL_Color ThisOneColor;
-
-  ThisOneColor.r=rot;
-  ThisOneColor.g=gruen;
-  ThisOneColor.b=blau;
-  ThisOneColor.unused=0;
-
-  return;
-
-  // DebugPrintf (2, "\nvoid SetPalCol(...): Real function called.");
-  // vga_setpalette (palpos, rot, gruen, blau);
-
-  SDL_SetColors( ne_screen , &ThisOneColor, palpos, 1 );
-  // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
-
-  // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
-  // DebugPrintf (2, "\nvoid SetPalCol(...): Usual end of function reached.");
-}				// void SetPalCol(...)
-
-
-/*
+/*----------------------------------------------------------------------
  * Return the pixel value at (x, y)
  * NOTE: The surface must be locked before calling this!
- */
+ *----------------------------------------------------------------------*/
 Uint32 
 getpixel(SDL_Surface *surface, int x, int y)
 {
@@ -1342,23 +896,14 @@ Load_Fonts (void)
 {
   char *fpath;
 
+  // make sure this function is only called once, even if we do ReInit():
+  if (Para_BFont) 
+    return (OK);
+
   fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, FALSE);
   if ( ( Para_BFont = LoadFont (fpath) ) == NULL )
     {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , PARA_FONT_FILE );
+      DebugPrintf (0, "ERROR: font file named %s was not found.\n", PARA_FONT_FILE );
       Terminate(ERR);
     } else
       DebugPrintf(1, "\nSDL Para Font initialisation successful.\n");
@@ -1368,24 +913,10 @@ Sorry...\n\
   fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, FALSE);
   if ( ( FPS_Display_BFont = LoadFont (fpath) ) == NULL )
     {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , FPS_FONT_FILE );
+      DebugPrintf (0, "ERROR: font file named %s was not found.\n", FPS_FONT_FILE);
       Terminate(ERR);
     } else
       DebugPrintf(1, "\nSDL FPS Display Font initialisation successful.\n");
-
 
   /* choose a font for highscore displaying... */
   Highscore_BFont = Para_BFont;
@@ -1425,7 +956,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
     }
   
   // produce the tiles
-  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, ne_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, screen_bpp, 0, 0, 0, 0);
   tmp2 = SDL_DisplayFormat (tmp);
   free(tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);

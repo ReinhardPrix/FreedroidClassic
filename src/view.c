@@ -42,7 +42,6 @@
 #include "global.h"
 #include "map.h"
 #include "proto.h"
-#include "colodefs.h"
 
 #include "SDL_rotozoom.h"
 
@@ -50,86 +49,6 @@ SDL_Color Flash_Light = {11, 11, 11};
 SDL_Color Flash_Dark  = {230, 230, 230};
 
 #define BLINK_LEN 1.0   // length of one blink cycle at low energy (in s)
-
-void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
-		   int SBreite);
-int Cent (int);
-
-char *Affected;
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-Cent (int Val)
-{
-  Val = Val - (Val % Block_Width) + Block_Width / 2;
-  return Val;
-}
-
-/*@Function============================================================
-@Desc: There is more than one approach to the problem of disruptor flashes.
-       (*) One solution is to just completely fill the visible screen white and
-           black altenatingly.
-       (*) The other solution is to start in the center and then recursively
-           proceed through the passable tiles and using this method fill 
-           exactly the whole room where you're currently in.  That is perhaps
-           the more sophisticated method.  Right now however, it's disabled.
-@Ret: 
-* $Function----------------------------------------------------------*/
-void
-RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
-{
-  int i;
-  static int num;
-
-  LY = LY;
-  LX = LX;
-  num++;
-
-//      gotoxy(1,1);
-//      printf(" RFF: X=%d Y=%d.\n",LX,LY);
-//      getchar();
-
-  // Dieses Feld als Wirkungsbereich kenntzeichnen
-  Affected[LY / Block_Height * CurLevel->xlen + LX / Block_Width] = TRUE;
-
-  // Dieses Feld anf"ullen
-  for (i = LY / 4 - ((LY / 4) % 8); i < (LY / 4 - ((LY / 4) % 8) + 8); i++)
-    {
-      memset (Parameter_Screen + i * SBreite + LX / 4 - ((LX / 4) % 8), Color, 8);
-    }
-  i -= 4;
-
-  // Feld rechts davon anf"ullen
-  if ((*(Parameter_Screen + i * SBreite + LX / 4 + 8) != Color) &&
-      (IsPassable (Cent (LX + Block_Width), Cent (LY), CENTER) == CENTER))
-    RecFlashFill (LX + Block_Width, LY, Color, Parameter_Screen, SBreite);
-
-  // Feld links davon anf"ullen
-  if (LX > Block_Width)
-    {
-      if ((*(Parameter_Screen + i * SBreite + LX / 4 - 8) != Color) &&
-	  (IsPassable (Cent (LX - Block_Width), Cent (LY), CENTER) == CENTER))
-	RecFlashFill (LX - Block_Width, LY, Color, Parameter_Screen, SBreite);
-    }
-
-  // Feld oben davon anf"ullen
-  if ((i > 8) && (LY > Block_Height))
-    {
-      if ((*(Parameter_Screen + (i - 8) * SBreite + LX / 4) != Color) &&
-	  (IsPassable (Cent (LX), Cent (LY - Block_Height), CENTER) == CENTER))
-	RecFlashFill (LX, LY - Block_Height, Color, Parameter_Screen, SBreite);
-    }
-
-  // Feld unten davon anf"ullen
-  if ((*(Parameter_Screen + (i + 8) * SBreite + LX / 4) != Color) &&
-      (IsPassable (Cent (LX), Cent (LY + Block_Height), CENTER) == CENTER))
-    RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
-}
 
 /*
 -----------------------------------------------------------------
@@ -163,20 +82,11 @@ Assemble_Combat_Picture (int mask)
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
-  // Why not blit the WHOLE map?  Lets try it!
-  // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
-  // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
-  // 
   // Recently there were complaints about garbage outside the ship.  This was because
   // outside the ship, nothing was blittet.  Now the blitting starts at -5 tiles outside
   // the ship and ends +5 tiles outside the other end of the ship.  That should do it.
   //
 
-  SDL_SetColorKey (ne_screen, 0, 0);
-  // SDL_SetAlpha( ne_screen , 0 , SDL_ALPHA_OPAQUE ); 
-  // SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE ); 
-
-                         
   SDL_SetClipRect (ne_screen , &User_Rect);
 
   for (line = -5; line < CurLevel->ylen + 5; line++)
@@ -189,22 +99,11 @@ Assemble_Combat_Picture (int mask)
 		+ ( -Me.pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = USER_FENSTER_CENTER_Y
 		+ ( -Me.pos.y+line-0.5 )*Block_Height;
-	      // SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick,
-	      // ne_screen, &TargetRectangle);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
  			       ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
-
-  /*
-  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      Terminate(ERR);
-    }
-  */
 
   if (mask & ONLY_SHOW_MAP) 
     {
@@ -307,7 +206,6 @@ PutInfluence ( int x, int y)
   Text_Rect.h=User_Rect.h/2;
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
-
 
   // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Me.pic, NULL);
@@ -767,5 +665,110 @@ Sorry...\n\
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
 }; // void ShowRobotPicture ( ... )
+
+
+
+/*-----------------------------------------------------------------
+@Desc: This function updates the top status bar.
+To save framerate on slow machines however it will only work
+if it thinks that work needs to be done. 
+You can however force update if you say so with a flag.
+
+BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
+
+BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
+text.
+
+BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+
+-----------------------------------------------------------------*/
+void
+DisplayBanner (const char* left, const char* right,  int flags )
+{
+  SDL_Rect TargetRectangle;
+  char dummy[80];
+  char left_box [LEFT_TEXT_LEN + 10];
+  char right_box[RIGHT_TEXT_LEN + 10];
+  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
+  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
+  int left_len, right_len;   /* the actualy string-lens */
+
+  // --------------------
+  // At first the text is prepared.  This can't hurt.
+  // we will decide whether to dispaly it or not later...
+  //
+
+  if (left == NULL)       /* Left-DEFAULT: Mode */
+    left = InfluenceModeNames[Me.status];
+
+  if ( right == NULL )  /* Right-DEFAULT: Score */
+    {
+      sprintf ( dummy , "%ld" , ShowScore );
+      right = dummy;
+    }
+
+  // Now fill in the text
+  left_len = strlen (left);
+  if( left_len > LEFT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Left Infoline!!",left);
+      left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
+    }
+  right_len = strlen (right);
+  if( right_len > RIGHT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Right Infoline!!", right);
+      right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
+    }
+  
+  /* Now prepare the left/right text-boxes */
+  memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
+  memset (right_box, ' ', RIGHT_TEXT_LEN);  
+  
+  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
+  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
+  
+  left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
+  right_box[RIGHT_TEXT_LEN] = '\0';
+  
+  // --------------------
+  // No we see if the screen need an update...
+
+  if ( BannerIsDestroyed || 
+       (flags & BANNER_FORCE_UPDATE ) || 
+       (strcmp( left_box , previous_left_box )) || 
+       (strcmp( right_box , previous_right_box )) )
+    {
+      // Redraw the whole background of the top status bar
+      TargetRectangle.x=0;
+      TargetRectangle.y=0;
+      SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
+      SDL_BlitSurface( banner_pic, NULL, ne_screen , &TargetRectangle );
+
+      // Now the text should be ready and its
+      // time to display it...
+      if ( (strcmp( left_box , previous_left_box )) || 
+	   (strcmp( right_box , previous_right_box )) ||
+	   ( flags & BANNER_FORCE_UPDATE ) )
+	{
+	  PrintStringFont ( ne_screen, Para_BFont,
+			    LEFT_INFO_X , LEFT_INFO_Y , left_box );
+	  strcpy( previous_left_box , left_box );
+	  PrintStringFont ( ne_screen, Para_BFont,
+			    RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+	  strcpy( previous_right_box , right_box );
+	}
+
+      // finally update the whole top status box
+      if ( !(flags & BANNER_NO_SDL_UPDATE ) )
+	SDL_UpdateRect( ne_screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
+      BannerIsDestroyed=FALSE;
+      return;
+    } /* if */
+
+} /* DisplayBanner() */
+
 
 #undef _view_c

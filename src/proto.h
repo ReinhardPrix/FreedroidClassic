@@ -65,7 +65,6 @@ EXTERN void InitInfluPositionHistory( void );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
-// EXTERN void Move_Influencers_Friends ( void );
 EXTERN void MoveInfluence (void);
 EXTERN void AdjustSpeed (void);
 EXTERN void CheckInfluenceWallCollisions (void);
@@ -108,25 +107,7 @@ EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
 EXTERN void SetUserfenster (int color );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
-
-
-/* blocks.c */
-#undef EXTERN
-#ifdef _blocks_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-
-EXTERN SDL_Rect *ne_get_blocks (char *picfile, int num_blocks,
-				int blocks_per_line, int source_line,
-				int target_line);
-
-EXTERN SDL_Rect *ne_get_digit_blocks (char *picfile, int num_blocks,
-				int blocks_per_line, int source_line,
-				int target_line);
-
-EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile);
+EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
 /* graphics.c */
 #undef EXTERN
@@ -140,19 +121,13 @@ EXTERN void GetRGBA ( SDL_Surface* surface, int x, int y, Uint8 *r, Uint8 *g, Ui
 
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
-EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );
 EXTERN void SetCombatScaleTo(float);
-EXTERN int ReInitPictures (void);
 EXTERN int InitPictures (void);
-EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
-EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
-		       unsigned char gruen, unsigned char blau);
+
 EXTERN void Init_Video (void);
-EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void ClearGraphMem ( void );
-EXTERN void Flimmern (int type);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
@@ -193,7 +168,6 @@ EXTERN int TranslateMap (Level Lev);
 EXTERN void Init_Audio(void);
 EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
-// EXTERN void Switch_Background_Music_To (int);
 EXTERN void Switch_Background_Music_To ( char * filename_raw );
 EXTERN void Play_Sound (int);
 EXTERN void StartSound (int);
@@ -319,7 +293,6 @@ EXTERN int NoDirectionPressed (void);
 
 EXTERN void InitiateMenu (bool with_droids);
 EXTERN void QuitGameMenu (void);
-EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
 
@@ -347,7 +320,6 @@ EXTERN int Get_Average_FPS ( void );
 EXTERN float Frame_Time (void);
 EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);
-EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
@@ -380,7 +352,6 @@ EXTERN int ClassOfDruid (int druidtype);
 EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
 EXTERN void EnterKonsole (void);
-EXTERN void AlleLevelsGleichFaerben (void);
 EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
@@ -397,37 +368,17 @@ void PaintConsoleMenu (int flag);
 #define EXTERN extern
 #endif
 
-EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );
 EXTERN void AddInfluBurntText( void );
 EXTERN void AddStandingAndAimingText ( int Enum );
-EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
-EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
-
-EXTERN void SetTextCursor (int x, int y);
-EXTERN void SetLineLength (int);
-
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
-
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *Text, SDL_Rect *rect , int SecondsMinimumDuration );
 EXTERN bool linebreak_needed (char *textpos , const SDL_Rect *clip);
-EXTERN char *PreviousLine (char *textstart, char *text);
-EXTERN char *NextLine (char *text);
 EXTERN char *GetString (int MaxLen, int echo);
 EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
 EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
-
-
-/* rahmen.c */
-#undef EXTERN
-#ifdef _rahmen_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
 /* takeover.c */
 #undef EXTERN

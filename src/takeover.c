@@ -589,8 +589,7 @@ GetTakeoverGraphics (void)
 
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
-  if (to_blocks)   /* this happens when we do theme-switching */
-    free(to_blocks);
+  FreeIfUsed(to_blocks);   /* this happens when we do theme-switching */
 
   TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
   to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted

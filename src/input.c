@@ -784,17 +784,9 @@ keyboard_update(void)
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  if (mouse_control)
-	    {
-	      //
-	      // Since the new mouse cursor does have it's tip at the top left corner
-	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
-	      // cursor, we need to correct the given axis a little (16 pixels) bit.
-	      //
-	      input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
-	      input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
-	      last_mouse_event = SDL_GetTicks ();
-	    }
+	  input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
+	  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
+	  last_mouse_event = SDL_GetTicks ();
 	  break;
 	  
 	  /* Mouse control */

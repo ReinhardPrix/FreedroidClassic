@@ -27,5 +27,11 @@
 #define _ship_h
 
 
+#define WAIT_ELEVATOR		9	/* warte, bevor Lift weitergeht */
+// #define MENUITEMPOSX 10
+// #define MENUITEMPOSY 85
+#define MENUITEMPOSX USERFENSTERPOSX + 10
+#define MENUITEMPOSY USERFENSTERPOSY + 35
+#define MENUTEXT_X	(132 + USERFENSTERPOSX + 5 )
 
 #endif

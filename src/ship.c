@@ -197,8 +197,6 @@ EnterLift (void)
 
   // UnfadeLevel ();
 
-  InitBars = TRUE;
-
   while (SpacePressed ()) ;
 
   Me.status = MOBILE;
@@ -387,7 +385,7 @@ PaintConsoleMenu (int flag)
     {
       ClearGraphMem ();
       SDL_SetClipRect ( ne_screen , NULL );
-      SDL_BlitSurface( ne_console_bg_pic1 , NULL , ne_screen , NULL );
+      SDL_BlitSurface( console_bg_pic1 , NULL , ne_screen , NULL );
 
       DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
       
@@ -403,10 +401,10 @@ PaintConsoleMenu (int flag)
   SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
   SourceRectangle.y=0;
   SourceRectangle.w=MENUITEMLENGTH;
-  SourceRectangle.h=USERFENSTERHOEHE;
+  SourceRectangle.h=MENUITEMHEIGHT;
   TargetRectangle.x=MENUITEMPOSX;
   TargetRectangle.y=MENUITEMPOSY;
-  SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
+  SDL_BlitSurface( console_pic , &SourceRectangle , ne_screen , &TargetRectangle );
 
   SDL_Flip (ne_screen);
 
@@ -630,7 +628,7 @@ show_droid_info (int droidtype, int page)
 
   lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
 
-  SDL_BlitSurface (ne_console_bg_pic2, NULL, ne_screen, NULL);
+  SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
   sprintf (DroidName, "  Unit type %s - %s", 
