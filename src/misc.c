@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/06 09:31:37  jprix
+ * Cheatmenu() repaired, brought more structure to the svgalib videomode calls.
+ *
  * Revision 1.7  1997/06/05 09:24:15  jprix
  * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
  *
@@ -157,102 +160,108 @@ int curLevel=LNum;
 		* Ausgabe einer Gesamtrobotliste
 	**********************************************************************/
 void Cheatmenu(void){
-	char CTaste=' ';
-	int Weiter=0;
-	int LNum,X,Y,i,RN,dummy;
-
-	gotoxy(1,1);
-	printf("*******************************\n");
-	printf(" ----  C H E A T M E N U  ----\n");
-	printf("-------------------------------\n\n");
-	printf(" a. Armageddon (alle Robots sprengen)\n");
-	printf(" l. Robotliste von einem Deck\n");
-	printf(" g. Gesamtrobotliste\n");
-	printf(" r. Robotvernichtung dieses Deck\n");
-	printf(" t. Teleportation\n");
-	printf(" w. Neuer Wirt\n\n");
-	printf(" i. Invinciblemode ");
- 	if (InvincibleMode) printf("aus\n"); else printf("ein\n");
-	printf(" v. Volle Energie\n");
-	printf(" b. Blinkenergie\n");
-	printf(" c. Conceptview auf %d\n",!Conceptview);
-	printf(" m. Map von Deck xy\n");
+  char CTaste=' ';
+  int Weiter=0;
+  int LNum,X,Y,i,RN,dummy;
+  
+  Set_SVGALIB_Video_OFF();
+  
+  gotoxy(1,1);
+  printf("*******************************\n");
+  printf(" ----  C H E A T M E N U  ----\n");
+  printf("-------------------------------\n\n");
+  printf(" a. Armageddon (alle Robots sprengen)\n");
+  printf(" l. Robotliste von einem Deck\n");
+  printf(" g. Gesamtrobotliste\n");
+  printf(" r. Robotvernichtung dieses Deck\n");
+  printf(" t. Teleportation\n");
+  printf(" w. Neuer Wirt\n\n");
+  printf(" i. Invinciblemode ");
+  if (InvincibleMode) printf("aus\n"); else printf("ein\n");
+  printf(" v. Volle Energie\n");
+  printf(" b. Blinkenergie\n");
+  printf(" c. Conceptview auf %d\n",!Conceptview);
+  printf(" m. Map von Deck xy\n");
 	
-	printf("\n <SPACE> RESUME game\n");
+  printf("\n <SPACE> RESUME game\n");
 
-	while (!Weiter) {
-		CTaste=getchar();
-		switch (CTaste) {
-			case 'a': Weiter=1; Armageddon(); break;
-			case 'l': {
-				gotoxy(1,1);
-				printf("NR.\tID\tX\tY\tENERGY.\n");
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					if (Feindesliste[i].levelnum==CurLevel->levelnum)
-						printf("%d.\t%s\t%d\t%d\t%d.\n",i,
-							Druidmap[Feindesliste[i].type].druidname,
-							Feindesliste[i].pos.x,
-							Feindesliste[i].pos.y,
-							Feindesliste[i].energy);
-				}
-				while (!SpacePressed) JoystickControl();
-				Weiter=1;
-				break;
-			}
-			case '3': Weiter=1; break;
-			case 'r': {
-				Weiter=1;
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					if (Feindesliste[i].levelnum==CurLevel->levelnum) Feindesliste[i].energy=0;
-				}
-				break;
-			}
-			case 'g': {
-				Weiter=1;
-				gotoxy(1,1);
-				printf("Nr.\tLev.\tID\tEnergy\n");
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					printf("%d\t%d\t%s\t%d\n",i,Feindesliste[i].levelnum,Druidmap[Feindesliste[i].type].druidname,Feindesliste[i].energy);
-					if ((i%22)==0) {
-						printf(" --- MORE --- \n");
-						getchar();
-					}
-				}
-				break;
-			}
-			case 't': {
-				Weiter=1;
-				printf(" Bitte Levelnummer, Grobwert X und Grobwert Y :");
-				scanf("%d %d %d",&LNum,&X,&Y);
-				Teleport(LNum,X,Y);
-				break;
-			}
-			case 'w': {
-				Weiter=1;
-				printf(" Nummer (nicht der Name):");
-				scanf("%d",&Me.type);
-				Me.energy=Druidmap[Me.type].maxenergy;
-				Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
-				RedrawInfluenceNumber();
-				break;
-			}
-			case 'i': Weiter=1; InvincibleMode = !InvincibleMode; break;
-			case 'v': Weiter=1; Me.energy=Druidmap[Me.type].maxenergy; Me.health=Me.energy; break;
-			case 'b': Weiter=1; Me.energy=1; break; 
-			case 'c': Conceptview=!Conceptview; Weiter=1; break;
-			case 'm':
-				printf("\nLevelnum:");
-				scanf("%d", &LNum);
-				ShowDeckMap(curShip.AllLevels[LNum]);
-				break;
-				
-			case ' ': Weiter=1; break;
-		}
+  while (!Weiter) {
+    CTaste=getchar();
+    switch (CTaste) {
+    case 'a': Weiter=1; Armageddon(); break;
+    case 'l': {
+      gotoxy(1,1);
+      printf("NR.\tID\tX\tY\tENERGY.\n");
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	if (Feindesliste[i].levelnum==CurLevel->levelnum)
+	  printf("%d.\t%s\t%d\t%d\t%d.\n",i,
+		 Druidmap[Feindesliste[i].type].druidname,
+		 Feindesliste[i].pos.x,
+		 Feindesliste[i].pos.y,
+		 Feindesliste[i].energy);
+      }
+      while (!SpacePressed) JoystickControl();
+      Weiter=1;
+      break;
+    }
+    case '3': Weiter=1; break;
+    case 'r': {
+      Weiter=1;
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	if (Feindesliste[i].levelnum==CurLevel->levelnum) Feindesliste[i].energy=0;
+      }
+      break;
+    }
+    case 'g': {
+      Weiter=1;
+      gotoxy(1,1);
+      printf("Nr.\tLev.\tID\tEnergy\n");
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	printf("%d\t%d\t%s\t%d\n",i,Feindesliste[i].levelnum,Druidmap[Feindesliste[i].type].druidname,Feindesliste[i].energy);
+	if ((i%22)==0) {
+	  printf(" --- MORE --- \n");
+	  getchar();
 	}
-	ClearGraphMem(RealScreen);
-	DisplayRahmen(RealScreen);
-	InitBars=TRUE;
-}
+      }
+      break;
+    }
+    case 't': {
+      Weiter=1;
+      printf(" Bitte Levelnummer, Grobwert X und Grobwert Y :");
+      scanf("%d %d %d",&LNum,&X,&Y);
+      Teleport(LNum,X,Y);
+      break;
+    }
+    case 'w': {
+      Weiter=1;
+      printf(" Nummer (nicht der Name):");
+      scanf("%d",&Me.type);
+      Me.energy=Druidmap[Me.type].maxenergy;
+      Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+      RedrawInfluenceNumber();
+      break;
+    }
+    case 'i': Weiter=1; InvincibleMode = !InvincibleMode; break;
+    case 'v': Weiter=1; Me.energy=Druidmap[Me.type].maxenergy; Me.health=Me.energy; break;
+    case 'b': Weiter=1; Me.energy=1; break; 
+    case 'c': Conceptview=!Conceptview; Weiter=1; break;
+    case 'm':
+      printf("\nLevelnum:");
+      scanf("%d", &LNum);
+      ShowDeckMap(curShip.AllLevels[LNum]);
+      break;
+      
+    case ' ': Weiter=1; break;
+    }
+  }
+  
+  Set_SVGALIB_Video_ON();
+  
+  //	ClearGraphMem(RealScreen);
+  //	DisplayRahmen(RealScreen);
+	
+  InitBars=TRUE;
+} // void Cheatmenu(void)
 
 
 /*@Function============================================================

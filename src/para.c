@@ -66,7 +66,6 @@
 
 int AutoTerminationTime=60;
 int SetDebugPos=FALSE;
-int vgamode;
 int ThisMessageTime;
 
 int card = 0;
@@ -622,36 +621,10 @@ void InitParaplus(void)
 
   printf("void InitParaplus(void) wurde echt aufgerufen....\n");
 
-  printf("    Die SVGALIB wird nun initialisiert.... nach einem Tastendruck gehts los! \n");
-  getchar();
-  vga_init();
-  vgamode=vga_getdefaultmode();
-  if ((vgamode == -1) || (vga_getmodeinfo(vgamode)->bytesperpixel != 1))
-    vgamode = G320x200x256;
-  
-  if (!vga_hasmode(vgamode)) {
-    printf("Mode not available.\n");
-    exit(1);
-  }
-
-  vga_setmode(vgamode);
-  gl_setcontextvga(vgamode);
-  gl_enableclipping();
+  Set_SVGALIB_Video_ON(); 
 
   signal(SIGALRM,timeout);
 
-  printf("    Die Tastatur wird nun fuer die svgalib initialisiert.... nach einem Tastendruck gehts los!\n");
-  getchar();
-  if (keyboard_init()) {
-    printf("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
-    exit(1);
-  }
-
-  /* Translate to 4 keypad cursor keys, and unify enter key. */
-  keyboard_translatekeys(TRANSLATE_CURSORKEYS | TRANSLATE_KEYPADENTER |
-			 TRANSLATE_DIAGONAL);
-  /* (TRANSLATE_DIAGONAL seems to give problems.) Michael: No doesn't...
-     but might not do what you expect.. */
 
   printf("\nvoid InitParaplus(void): An alarm signal will be issued in %d seconds, terminating the program for safety.", 
 	 AutoTerminationTime);
@@ -662,9 +635,6 @@ void InitParaplus(void)
 #ifdef PARADROID_SOUND_SUPPORT_ON
   Init_YIFF_Sound_Server();
 #endif
-
-  /* Zuerst den Videomodus setzen */
-  //  SetVideoMode(0x13);
 
   /* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */
   // #ifdef NOJUNKWHILEINIT
@@ -1162,6 +1132,9 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
+ * Revision 1.20  1997/06/06 09:31:37  jprix
+ * Cheatmenu() repaired, brought more structure to the svgalib videomode calls.
+ *
  * Revision 1.19  1997/06/05 23:47:38  jprix
  * added some doku.  cleaned out some old doku and old code, that was allready commented out.
  *
