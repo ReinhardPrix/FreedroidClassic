@@ -55,11 +55,13 @@
 //#define KON_BG_COLOR  FONT_WHITE
 #define KON_TEXT_COLOR	FONT_YELLOW
 
-#define EL_BG_COLOR		EL_STARTCOLOR	/* Hintergrund im Elevator-Bild */
-#define EL_FIRSTCOLOR	EL_STARTCOLOR + 1	/* the color of level 0 */
-#define EL_LASTCOLOR		EL_STARTCOLOR +25
+#define EL_BG_COLOR		191 	/* Hintergrund im Elevator-Bild */
+#define EL_FIRST_LEVEL_COLOR	EL_BG_COLOR + 1	/* the color of level 0 */
+#define EL_LAST_LEVEL_COLOR	EL_FIRST_LEVEL_COLOR + MAX_LEVELS
 
-#define EL_FIRST_ELEVATOR_COLOR		209
+#define EL_FIRST_ROW_COLOR	221
+#define EL_LAST_ROW_COLOR	EL_FIRST_ROW_COLOR + MAX_LIFTROWS
+
 
 #define WAIT_ELEVATOR		9	/* warte, bevor Lift weitergeht */
 // #define MENUITEMPOSX 10
