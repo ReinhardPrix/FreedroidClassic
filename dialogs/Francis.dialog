@@ -33,8 +33,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -193,8 +195,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="Thanks for the help.  I'll be going now."
-OptionSample="Tux_Ill_Be_Back_0.wav"
-PositionX=394  PositionY=625  
+OptionSample="Francis/Tux_thanks_for_the_help.wav"
+PositionX=529  PositionY=533  
 Subtitle="I am glad if I could help you along.  Also you should be careful around here.  Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=1
