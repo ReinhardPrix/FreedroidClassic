@@ -74,9 +74,310 @@ enum
     SET_LEVEL_COMMENT, 
     ADD_NEW_LEVEL , 
     SET_LEVEL_INTERFACE_POSITION , 
+    EDIT_LEVEL_DIMENSIONS,
     QUIT_LEVEL_EDITOR_POSITION 
 };
 
+enum
+  {
+    INSERTREMOVE_COLUMN_VERY_WEST = 1,
+    INSERTREMOVE_COLUMN_WESTERN_INTERFACE,
+    INSERTREMOVE_COLUMN_EASTERN_INTERFACE,
+    INSERTREMOVE_COLUMN_VERY_EAST,
+    INSERTREMOVE_LINE_VERY_NORTH,
+    INSERTREMOVE_LINE_NORTHERN_INTERFACE,
+    INSERTREMOVE_LINE_SOUTHERN_INTERFACE,
+    INSERTREMOVE_LINE_VERY_SOUTH,
+    DUMMY_NO_REACTION1,
+    DUMMY_NO_REACTION2,
+    BACK_TO_LE_MAIN_MENU
+  };
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertLineVerySouth ( Level CurLevel )
+{
+
+  //--------------------
+  // The enlargement of levels in y direction is limited by a constant
+  // defined in defs.h.  This is carefully checked or no operation at
+  // all will be performed.
+  //
+  if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
+    {
+      CurLevel->ylen++;
+      // In case of enlargement, we need to do more:
+      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+      // We don't want to fill the new area with junk, do we? So we make it floor tiles
+      memset( CurLevel->map[ CurLevel->ylen-1 ] , FLOOR , CurLevel->xlen );
+    }
+
+}; // void InsertLineVerySouth ( Level CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertColumnVeryEast ( Level CurLevel )
+{
+  int i;
+  char* OldMapPointer;
+
+  CurLevel->xlen++;
+  // In case of enlargement, we need to do more:
+  for ( i = 0 ; i < CurLevel->ylen ; i++ )
+    {
+      OldMapPointer=CurLevel->map[i];
+      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+      // We don't want to fill the new area with junk, do we? So we make it floor tiles
+      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = FLOOR;  
+    }
+
+}; // void InsertColumnVeryEast ( Level CurLevel )
+      
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertColumnEasternInterface( Level CurLevel )
+{
+  int i;
+
+  //--------------------
+  // First a sanity check:  If there's no eastern threshold, this
+  // must be a mistake and will just be ignored...
+  //
+  if ( CurLevel -> jump_threshold_east <= 0 ) return;
+
+  //--------------------
+  // We use available methods to add a column, even if in the wrong
+  // place for now.
+  //
+  InsertColumnVeryEast ( CurLevel );
+
+  //--------------------
+  // Now the new memory and everything is done.  All we
+  // need to do is move the information to the east
+  //
+  for ( i = 0 ; i < CurLevel->ylen ; i ++ )
+    {
+      //--------------------
+      // REMEMBER:  WE MUST NO USE MEMCPY HERE, CAUSE THE AREAS IN QUESTION
+      // MIGHT (EVEN WILL) OVERLAP!!  THAT MUST NOT BE THE CASE WITH MEMCPY!!
+      //
+      memmove ( & ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] ) ,
+		& ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 2 ] ) ,
+		CurLevel->jump_threshold_east );
+      CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] = FLOOR ;
+    }
+
+}; // void InsertColumnEasternInterface( CurLevel );
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveColumnEasternInterface( Level CurLevel )
+{
+  int i;
+
+  //--------------------
+  // First a sanity check:  If there's no eastern threshold, this
+  // must be a mistake and will just be ignored...
+  //
+  if ( CurLevel -> jump_threshold_east <= 0 ) return;
+
+  //--------------------
+  // Now the new memory and everything is done.  All we
+  // need to do is move the information to the east
+  //
+  for ( i = 0 ; i < CurLevel->ylen ; i ++ )
+    {
+      //--------------------
+      // REMEMBER:  WE MUST NO USE MEMCPY HERE, CAUSE THE AREAS IN QUESTION
+      // MIGHT (EVEN WILL) OVERLAP!!  THAT MUST NOT BE THE CASE WITH MEMCPY!!
+      //
+      memmove ( & ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] ) ,
+		& ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 0 ] ) ,
+		CurLevel->jump_threshold_east - 0 );
+      // CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] = FLOOR ;
+    }
+
+  CurLevel -> xlen --;
+
+}; // void InsertColumnEasternInterface( CurLevel );
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertColumnWesternInterface( Level CurLevel )
+{
+  int BackupOfEasternInterface;
+
+  //--------------------
+  // First a sanity check:  If there's no western threshold, this
+  // must be a mistake and will just be ignored...
+  //
+  if ( CurLevel -> jump_threshold_west <= 0 ) return;
+
+  //--------------------
+  // Again we exploit existing code, namely the insertion procedure
+  // for the eastern interface.  We shortly change the interface, use
+  // that code from the eastern interface and restore the eastern interface.
+  //
+  BackupOfEasternInterface = CurLevel->jump_threshold_east;
+  CurLevel->jump_threshold_east = CurLevel->xlen - CurLevel->jump_threshold_west ;
+  InsertColumnEasternInterface ( CurLevel );
+  CurLevel->jump_threshold_east = BackupOfEasternInterface ;
+
+}; // void InsertColumnWesternInterface( Level CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveColumnWesternInterface( Level CurLevel )
+{
+  int BackupOfEasternInterface;
+
+  //--------------------
+  // First a sanity check:  If there's no western threshold, this
+  // must be a mistake and will just be ignored...
+  //
+  if ( CurLevel -> jump_threshold_west <= 0 ) return;
+
+  //--------------------
+  // Again we exploit existing code, namely the insertion procedure
+  // for the eastern interface.  We shortly change the interface, use
+  // that code from the eastern interface and restore the eastern interface.
+  //
+  BackupOfEasternInterface = CurLevel->jump_threshold_east;
+  CurLevel->jump_threshold_east = CurLevel->xlen - CurLevel->jump_threshold_west - 1;
+  RemoveColumnEasternInterface ( CurLevel );
+  CurLevel->jump_threshold_east = BackupOfEasternInterface ;
+
+}; // void RemoveColumnWesternInterface( Level CurLevel )
+
+/* ----------------------------------------------------------------------
+ * This a a menu interface to allow to edit the level dimensions in a
+ * convenient way, i.e. so that little stupid copying work or things like
+ * that have to be done and more time can be spent creating game material.
+ * ---------------------------------------------------------------------- */
+void
+EditLevelDimensions ( void )
+{
+  char* MenuTexts[ 20 ];
+  char Options [ 20 ] [1000];
+  int MenuPosition = 1 ;
+  int Weiter = FALSE ;
+
+  while ( !Weiter )
+    {
+
+      InitiateMenu( NULL );
+      
+      MenuTexts[ 0 ] = "Insert/Remove column to the very west" ;
+      MenuTexts[ 1 ] = "Insert/Remove column just east of western Interface" ;
+      MenuTexts[ 2 ] = "Insert/Remove column just west of eastern Interface" ;
+      MenuTexts[ 3 ] = "Insert/Remove column to the very east" ;
+
+      MenuTexts[ 4 ] = "Insert/Remove line to the very north" ;
+      MenuTexts[ 5 ] = "Insert/Remove line just south of northern Interface" ;
+      MenuTexts[ 6 ] = "Insert/Remove line just north of southern Interface" ;
+      MenuTexts[ 7 ] = "Insert/Remove line to the very south" ;
+      
+      sprintf( Options [ 0 ] , "Current level size in X: %d." , CurLevel->xlen );
+      MenuTexts[ 8 ] = Options [ 0 ];
+      sprintf( Options [ 1 ] , "Current level size in Y: %d." , CurLevel->ylen  );
+      MenuTexts[ 9 ] = Options [ 1 ] ;
+
+      MenuTexts[ 10 ] = "Back To Level Editor Main Menu" ;
+      MenuTexts[ 11 ] = "" ;
+      
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      
+      while (EnterPressed() || SpacePressed() );
+      
+      switch (MenuPosition) 
+	{
+	case INSERTREMOVE_COLUMN_VERY_EAST:
+	  if ( RightPressed() )
+	    {
+	      InsertColumnVeryEast( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+	      // allocation of new memory or things like that are not nescessary
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case INSERTREMOVE_COLUMN_EASTERN_INTERFACE:
+	  if ( RightPressed() )
+	    {
+	      InsertColumnEasternInterface( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveColumnEasternInterface( CurLevel );
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case INSERTREMOVE_COLUMN_WESTERN_INTERFACE:
+	  if ( RightPressed() )
+	    {
+	      InsertColumnWesternInterface( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveColumnWesternInterface( CurLevel );
+	      while (LeftPressed());
+	    }
+	  break;
+	  
+	case INSERTREMOVE_LINE_VERY_SOUTH:
+	  if ( RightPressed() )
+	    {
+	      InsertLineVerySouth ( CurLevel );
+	      while (RightPressed());
+	    }
+	  
+	  if ( LeftPressed() )
+	    {
+	      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+	      // allocation of new memory or things like that are not nescessary.
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case (-1):
+	case BACK_TO_LE_MAIN_MENU:
+	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
+	  GetDoors ( CurLevel );
+	  GetRefreshes ( CurLevel );
+	  GetTeleports ( CurLevel );
+	  GetAutoguns ( CurLevel );
+	  Weiter=!Weiter;
+	  break;
+
+	default: 
+	  break;
+
+	}
+
+    } // while (!Weiter)
+    
+}; // void EditLevelDimensions ( void )
+  
 /* ----------------------------------------------------------------------
  *
  *
@@ -89,8 +390,8 @@ DoLevelEditorMainMenu ( Level CurLevel )
   int Weiter = FALSE ;
   int MenuPosition=1;
   int Done=FALSE;
-  int i;
-  char* OldMapPointer;
+  // int i;
+  // char* OldMapPointer;
 
   while (!Weiter)
     {
@@ -101,7 +402,7 @@ DoLevelEditorMainMenu ( Level CurLevel )
       sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , CurLevel->levelnum );
       MenuTexts[ 1 ] = Options [ 0 ];
       MenuTexts[ 2 ] = "Change tile set" ;
-      sprintf( Options [ 1 ] , "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+      sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , CurLevel->xlen , CurLevel->ylen );
       MenuTexts[ 3 ] = Options [ 1 ];
       sprintf( Options [ 2 ] , "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
       MenuTexts[ 4 ] = Options [ 2 ] ;
@@ -113,8 +414,9 @@ DoLevelEditorMainMenu ( Level CurLevel )
       MenuTexts[ 7 ] = Options [ 5 ] ;
       MenuTexts[ 8 ] = "Add completely new level" ; 
       MenuTexts[ 9 ] = "Set Level Interfaces" ;
-      MenuTexts[ 10 ] = "Quit Level Editor" ;
-      MenuTexts[ 11 ] = "" ;
+      MenuTexts[ 10 ] = "Edit Level Dimensions" ;
+      MenuTexts[ 11 ] = "Quit Level Editor" ;
+      MenuTexts[ 12 ] = "" ;
 	  
 
 
@@ -181,8 +483,13 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	  break;
 	case SET_LEVEL_INTERFACE_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
+	  // Weiter=!Weiter;
 	  SetLevelInterfaces ( );
+	  break;
+	case EDIT_LEVEL_DIMENSIONS:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  // Weiter=!Weiter;
+	  EditLevelDimensions ( );
 	  break;
 	case QUIT_LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
@@ -232,7 +539,9 @@ DoLevelEditorMainMenu ( Level CurLevel )
 		}
 	      Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
 	      break;
+
 	    case CHANGE_SIZE_X:
+	      /*
 	      if ( RightPressed() )
 		{
 		  CurLevel->xlen++;
@@ -253,9 +562,12 @@ DoLevelEditorMainMenu ( Level CurLevel )
 		  // allocation of new memory or things like that are not nescessary.
 		  while (LeftPressed());
 		}
+	      */
 	      break;
 	      
 	    case CHANGE_SIZE_Y:
+	      
+	      /*
 	      if ( RightPressed() )
 		{
 		  
@@ -281,6 +593,8 @@ DoLevelEditorMainMenu ( Level CurLevel )
 		  // allocation of new memory or things like that are not nescessary.
 		  while (LeftPressed());
 		}
+	      */
+
 	      break;
 	      
 	    }
