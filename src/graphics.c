@@ -262,7 +262,7 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
   SDL_LockSurface( ne_screen );
   for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++) 
     {
-      for ( x = Grid_Rectangle->x ; x < Grid_Rectangle->w ; x++ ) 
+      for ( x = Grid_Rectangle->x ; x < (Grid_Rectangle->x + Grid_Rectangle->w) ; x++ ) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {
