@@ -37,19 +37,20 @@
 #include "SDL_rotozoom.h"
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This is a wrapper for the SDL_Flip function, that will use either the
+ * OpenGL buffer-swapping or the classic SDL flipper, depending on the
+ * current output method, like OpenGL or not.
  * ---------------------------------------------------------------------- */
 int 
 our_SDL_flip_wrapper ( SDL_Surface *screen )
 {
-  if ( use_open_gl )
-    SDL_GL_SwapBuffers( ); 
-  else
-    return ( SDL_Flip ( Screen ) ) ;
-
-  return ( 0 );
-}; // int SDL_Flip ( SDL_Surface *screen )
+    if ( use_open_gl )
+	SDL_GL_SwapBuffers( ); 
+    else
+	return ( SDL_Flip ( screen ) ) ;
+    
+    return ( 0 );
+}; // int our_SDL_flip_wrapper ( SDL_Surface *screen )
 
 /* ----------------------------------------------------------------------
  * Here comes our SDL wrapper, that will either do a normal SDL blit or,
