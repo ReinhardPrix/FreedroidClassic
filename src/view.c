@@ -1104,7 +1104,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	  if ( ! ( mask & OMIT_TUX ) ) 
 	    {
 	      if ( Me [ 0 ] . energy > 0 )
-		PutInfluence ( -1 , -1 , 0 ); // this blits player 0 
+		blit_tux ( -1 , -1 , 0 ); // this blits player 0 
 	    }
 	  break;
 	case BLITTING_TYPE_ENEMY:
@@ -1434,7 +1434,7 @@ Suspicious phase encountered!",
   //
   if ( tmp [ part_index ] [ our_phase ] [ rotation_index ] . surface == NULL )
     {
-      sprintf ( constructed_filename , "tux_motion_parts/iso_%s_%02d_%04d.png" , part_string , rotation_index , our_phase + 1 );
+      sprintf ( constructed_filename , "tux_motion_parts/sword_motion/iso_%s_%02d_%04d.png" , part_string , rotation_index , our_phase + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( tmp [ part_index ] [ our_phase ] [ rotation_index ] ) ) ;
     }
@@ -1650,7 +1650,7 @@ iso_put_tux ( int x , int y , int PlayerNum )
  * the blit.
  * ----------------------------------------------------------------- */
 void
-PutInfluence ( int x , int y , int PlayerNum )
+blit_tux ( int x , int y , int PlayerNum )
 {
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
@@ -1662,7 +1662,7 @@ PutInfluence ( int x , int y , int PlayerNum )
   Text_Rect.w=User_Rect.w/2 - Block_Width/3;
   Text_Rect.h=User_Rect.h/2;
 
-  DebugPrintf ( 2 , "\nvoid PutInfluence(void): real function call confirmed." ) ;
+  DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
 
   if ( x == -1 ) 
     {
@@ -1760,9 +1760,9 @@ PutInfluence ( int x , int y , int PlayerNum )
 		   UserCenter_y - Block_Height/2 , &Text_Rect );
     }
 
-  DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
+  DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
 
-}; // void PutInfluence( int x , int y )
+}; // void blit_tux( int x , int y )
 
 /* ----------------------------------------------------------------------
  * If the corresponding configuration flag is enabled, enemies might 'say'

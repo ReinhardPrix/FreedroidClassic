@@ -1065,7 +1065,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
+      blit_tux ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
 
       //--------------------
       //

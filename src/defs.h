@@ -98,7 +98,7 @@ enum
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 68
-#define NUMBER_OF_OBSTACLE_TYPES 113
+#define NUMBER_OF_OBSTACLE_TYPES 116
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 
 #define ITEM_DROP_PERCENTAGE 20
@@ -1036,8 +1036,14 @@ enum
   ISO_E_SOFA , 
   ISO_S_SOFA , 
   ISO_W_SOFA , 
-  ISO_N_SOFA 
+  ISO_N_SOFA ,
 
+  //--------------------
+  // Here we insert a few trees generated with the LSystem python script.  wow!
+  //
+  ISO_TREE_1 = 113  ,
+  ISO_TREE_2 ,
+  ISO_TREE_3 
 };
 
 enum

@@ -593,10 +593,10 @@ Freedroid was unable to close an offset file.\nThis is a very strange occasion!"
   offset_data = ReadAndMallocAndTerminateFile( offset_file_name , END_OF_OFFSET_FILE_STRING ) ;
 
   ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETX_STRING , "%d" , 
-		       & ( our_iso_image -> offset_x ) , offset_data + 30000 );
+		       & ( our_iso_image -> offset_x ) , offset_data + 1000 );
 
   ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETY_STRING , "%d" , 
-		       & ( our_iso_image -> offset_y ) , offset_data + 30000 );
+		       & ( our_iso_image -> offset_y ) , offset_data + 1000 );
   free ( offset_data );
   
 }; // void get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image )
@@ -701,14 +701,11 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-
       sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
 		( ModelMultiplier [ ModelNr ] * i ) + 1 );
       DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-
       get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] ) ) ;
-      
     }    
 
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
@@ -1325,7 +1322,7 @@ load_all_obstacles ( void )
       //--------------------
       // At first we construct the file name of the single tile file we are about to load...
       //
-      strcpy ( ConstructedFileName , "iso_obstacle_" );
+      strcpy ( ConstructedFileName , "obstacles/iso_obstacle_" );
       sprintf ( NumberBuffer , "%04d" , i );
       strcat ( ConstructedFileName , NumberBuffer );
       strcat ( ConstructedFileName , ".png" );
@@ -1710,6 +1707,19 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_W_SOFA ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_W_SOFA ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_W_SOFA ] . is_smashable = TRUE ;
+
+  obstacle_map [ ISO_TREE_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_TREE_1 ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_TREE_1 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_1 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TREE_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_TREE_2 ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_TREE_2 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_2 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TREE_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_3 ] . is_smashable = FALSE ;
 
 }; // void load_all_obstacles ( void )
 

@@ -867,7 +867,7 @@ ShowPlayground ()
   else
     FillRect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
-  PutInfluence (xoffs + DruidStart[YourColor].x,
+  blit_tux (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y, 0 );
 
   if (AllEnemys[DroidNum].Status != OUT)

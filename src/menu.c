@@ -2670,7 +2670,7 @@ Show_Mission_Log_Menu (void)
 		    -1 , -1 , Mission_Window_Pointer );
 
       // Highlight currently selected option with an influencer before it
-      PutInfluence( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 , 0 );
+      blit_tux( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 , 0 );
 
       // If the user pressed up or down, the cursor within
       // the level editor menu has to be moved, which is done here:
