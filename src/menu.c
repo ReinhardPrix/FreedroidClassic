@@ -2099,7 +2099,6 @@ I need to know that for saving. Abort.\n");
 	  if ( cnt < 10 ) 
 	    {
 	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
-	      // MenuTexts[ cnt ] = eps[cnt]->d_name;
 	    }
 	}
 
@@ -2122,8 +2121,6 @@ I need to know that for saving. Abort.\n");
 
 
   SDL_Flip( Screen );
-  // while ( !SpacePressed() );
-  // while (  SpacePressed() );
 
   return ( OK );
 }; // int Load_Existing_Hero_Menu ( void )
@@ -2292,7 +2289,6 @@ Multi_Player_Menu (void)
       CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
       LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "We are sorry, but multi player mode");
       LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "is not operational yet.");
-      // LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
       LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "We'd like to see this functional in");
       LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "version 1.0, but we won't make any");
       LeftPutString ( Screen , 8*FontHeight(Menu_BFont), "promises, since we've never done any");

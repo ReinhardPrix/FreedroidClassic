@@ -770,6 +770,9 @@ FireBullet (void)
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
   CurBullet->was_reflected = FALSE;
+  CurBullet->reflect_other_bullets = ItemMap[ Me.weapon_item.type ].item_gun_bullet_reflect_other_bullets;
+  CurBullet->pass_through_explosions = ItemMap[ Me.weapon_item.type ].item_gun_bullet_pass_through_explosions;
+  CurBullet->pass_through_hit_bodies = ItemMap[ Me.weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me.to_hit;

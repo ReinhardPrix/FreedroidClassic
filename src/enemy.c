@@ -945,6 +945,12 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   NewBullet->miss_hit_influencer = FALSE;
   NewBullet->to_hit = Druidmap [ ThisRobot->type ].to_hit ;
   NewBullet->was_reflected = FALSE;
+  NewBullet->pass_through_explosions = 
+    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_explosions;
+  NewBullet->reflect_other_bullets = 
+    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_reflect_other_bullets;
+  NewBullet->pass_through_hit_bodies = 
+    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
   
   // start all bullets in the center of the shooter first...
   NewBullet->pos.x = ThisRobot->pos.x;

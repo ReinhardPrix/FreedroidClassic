@@ -1296,15 +1296,15 @@ ManageInventoryScreen ( void )
       else if ( CursorIsInArmourRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in armour rect!" );
-	  if ( Druidmap[ Me.type ].armour_item.type > 0 )
+	  if ( Me.armour_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].armour_item.type ].picture_number ;
-	      Druidmap[ Me.type ].armour_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me.armour_item.type ].picture_number ;
+	      Me.armour_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInSpecialRect( CurPos.x , CurPos.y ) )
@@ -1478,7 +1478,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToArmourSlot ( );
-		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].armour_item ) );
+		  DropHeldItemToSlot ( & ( Me.armour_item ) );
 		}
 	    }
 	  else

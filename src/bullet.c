@@ -388,7 +388,7 @@ GetDirection (point robo, point bul)
 
 /*@Function============================================================
 @Desc: CheckBulletCollisions(int num)
-			checkt Collisions des Bullets Num mit Hintergrund && Druids
+checkt Collisions des Bullets Num mit Hintergrund && Druids
 
 @Ret: void
 @Int:
@@ -559,7 +559,15 @@ CheckBulletCollisions (int num)
 		      
 		      // We might also start a little bullet-blast even after the
 		      // collision of the bullet with an enemy (not in Paradroid)
-		      DeleteBullet( num , TRUE ); // we want a bullet-explosion
+		      
+		      //--------------------
+		      // If the blade can pass through dead and not dead bodies, it will so
+		      // so and create a small explosion passing by.  But if it can't, it should
+		      // be completely deleted of course, with the same small explosion as well
+		      //
+		      if ( CurBullet->pass_through_hit_bodies )
+			StartBlast ( CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST );
+		      else DeleteBullet( num , TRUE ); // we want a bullet-explosion
 		      
 		      Enemy_Post_Bullethit_Behaviour( i );
 		      
@@ -567,8 +575,8 @@ CheckBulletCollisions (int num)
 			{
 			  FBTZaehler++;
 			}
-		      CurBullet->type = OUT;
-		      CurBullet->mine = FALSE;
+		      // CurBullet->type = OUT;
+		      // CurBullet->mine = FALSE;
 		      // break;		/* Schleife beenden */
 		      return;
 		    }
@@ -593,35 +601,39 @@ CheckBulletCollisions (int num)
 	  if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
 	  // it seems like we have a collision of two bullets!
 	  // both will be deleted and replaced by blasts..
-	  DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
+	  DebugPrintf ( 1 , "\nBullet-Bullet-Collision detected..." );
 	  
 	  //CurBullet->type=OUT;
 	  //AllBullets[num].type=OUT;
 
-	  if ( CurBullet->was_reflected )
+	  if ( CurBullet->reflect_other_bullets )
 	    {
-	      /********
-	      StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	      StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
-	      DeleteBullet( num , TRUE ); // we want a bullet-explosion
-	      */
-	    }
-	  else
-	    {
-	      CurBullet->speed.x = - CurBullet->speed.x;
-	      CurBullet->speed.y = - CurBullet->speed.y;
-	      CurBullet->was_reflected = TRUE;
+	      if ( AllBullets[ i ].was_reflected )
+		{
+		  // well, if it has been reflected once, we don't do any more
+		  // reflections after that...
+		}
+	      else
+		{
+		  AllBullets[i].speed.x = - AllBullets[i].speed.x;
+		  AllBullets[i].speed.y = - AllBullets[i].speed.y;
+		  AllBullets[i].was_reflected = TRUE;
+		}
 	    }
 
-	  if ( AllBullets[ i ].was_reflected )
+	  if ( AllBullets[ i ].reflect_other_bullets )
 	    {
-
-	    }
-	  else
-	    {
-	      AllBullets[i].speed.x = - AllBullets[i].speed.x;
-	      AllBullets[i].speed.y = - AllBullets[i].speed.y;
-	      AllBullets[i].was_reflected = TRUE;
+	      if ( CurBullet->was_reflected )
+		{
+		  // well, if it has been reflected once, we don't do any more
+		  // reflections after that...
+		}
+	      else
+		{
+		  CurBullet->speed.x = - CurBullet->speed.x;
+		  CurBullet->speed.y = - CurBullet->speed.y;
+		  CurBullet->was_reflected = TRUE;
+		}
 	    }
 
 	}
@@ -660,10 +672,10 @@ CheckBlastCollisions (int num)
       if (abs (AllBullets[i].pos.x - CurBlast->PX) < Blast_Radius)
 	if (abs (AllBullets[i].pos.y - CurBlast->PY) < Blast_Radius)
 	  {
-	    /* KILL Bullet silently */
-	    //AllBullets[i].type = OUT;
-	    //AllBullets[i].mine = FALSE;
-	    DeleteBullet( i , TRUE ); // we want a bullet-explosion
+	    if ( ! AllBullets[i].pass_through_explosions )
+	      {
+		DeleteBullet( i , TRUE ); // we want a bullet-explosion
+	      }
 	  }
 
     }				/* for */

@@ -252,6 +252,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -429,6 +432,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -458,6 +464,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -487,6 +496,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -516,6 +528,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -545,6 +560,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -574,6 +592,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -671,6 +692,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -700,6 +724,9 @@ Item as gun: bullet_lifetime=-1
 Item as gun: offset for melee weapon=0
 Item as gun: modifier for starting angle=0
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -731,6 +758,9 @@ I**tem as gun: offset for melee weapon=0.85
 Item as gun: offset for melee weapon=1.05
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=35 plus duration modifier=10
@@ -777,6 +807,9 @@ Item as gun: bullet_lifetime=0.50
 Item as gun: offset for melee weapon=1.2
 Item as gun: modifier for starting angle=-40
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
@@ -806,6 +839,9 @@ Item as gun: bullet_lifetime=0.20
 Item as gun: offset for melee weapon=0.85
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -836,6 +872,9 @@ Item as gun: bullet_lifetime=0.20
 Item as gun: offset for melee weapon=0.85
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=20 plus duration modifier=10
@@ -916,6 +955,9 @@ Item as gun: bullet_lifetime=1.50
 Item as gun: offset for melee weapon=1.5
 Item as gun: modifier for starting angle=-40
 Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
@@ -963,6 +1005,9 @@ I**tem as gun: offset for melee weapon=0.85
 Item as gun: offset for melee weapon=0.85
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -993,6 +1038,9 @@ I**tem as gun: offset for melee weapon=0.85
 Item as gun: offset for melee weapon=0.85
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
@@ -1023,6 +1071,9 @@ I**tem as gun: offset for melee weapon=0.85
 Item as gun: offset for melee weapon=0.85
 Item as gun: modifier for starting angle=-60
 Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
