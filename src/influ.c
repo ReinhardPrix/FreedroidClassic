@@ -340,6 +340,7 @@ void AnimateInfluence(void) {
        entsprechend zurueck
 
 NEW: This functions HAS to take into account the current framerate!
+     
 
 @Ret: void
 @Int:
@@ -347,7 +348,8 @@ NEW: This functions HAS to take into account the current framerate!
 void BounceInfluencer(void)
 {
   int sign;
-  int SX=Me.speed.x, SY=Me.speed.y;
+  float SX=Me.speed.x*Frame_Time();
+  float SY=Me.speed.y*Frame_Time();
   finepoint lastpos;
   int res;		/* Ergebnis aus DruidPassable() */
   int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
