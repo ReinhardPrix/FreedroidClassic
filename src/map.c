@@ -2667,7 +2667,7 @@ file you use.",
       else
 	{
 	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
-The item specification of an item in ReturnOfTux.droids should contain an \n\
+The droid specification of a droid in ReturnOfTux.droids should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
 This indicated a corrupted freedroid.ruleset file with an error at least in\n\
 the item specification section.",
@@ -2700,7 +2700,24 @@ the dialog section name for one special force droid/character.",
       strcpy ( AllEnemys[ FreeAllEnemysPosition ].short_description_text , ShortDescription );
       free ( ShortDescription );
 
-      
+      YesNoString = ReadAndMallocStringFromData ( SearchPointer , "attack_run_only_when_direct_line=\"" , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  AllEnemys[ FreeAllEnemysPosition ] . attack_run_only_when_direct_line = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  AllEnemys[ FreeAllEnemysPosition ] . attack_run_only_when_direct_line = FALSE;
+	}
+      else
+	{
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
+The droid specification of a droid in ReturnOfTux.droids should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;

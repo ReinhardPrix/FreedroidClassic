@@ -2247,9 +2247,20 @@ ProcessAttackStateMachine ( int enemynum )
 		}
 	      else
 		{
-		  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+		  if ( ThisRobot -> attack_run_only_when_direct_line )
+		    {
+		      if ( DirectLineWalkable( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x , ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) )
+			{
+			  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+			  // not in this case.. SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+			}
+		    }
+		  else
+		    {
+		      ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+		      SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+		    }
 		  ThisRobot -> persuing_given_course = FALSE ;
-		  SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
 
 		  //--------------------
 		  // We'll launch the attack cry of this bot...
