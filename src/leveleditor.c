@@ -93,6 +93,32 @@ enum
  *
  * ---------------------------------------------------------------------- */
 void
+close_all_chests_on_level ( int l_num ) 
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      switch ( curShip . AllLevels [ l_num ] -> obstacle_list [ i ] . type )
+	{
+	case ISO_H_CHEST_OPEN:
+	  curShip . AllLevels [ l_num ] -> obstacle_list [ i ] . type = ISO_H_CHEST_CLOSED ;
+	  break;
+	case ISO_V_CHEST_OPEN:
+	  curShip . AllLevels [ l_num ] -> obstacle_list [ i ] . type = ISO_V_CHEST_CLOSED ;
+	  break;
+	default:
+	  break;
+	}
+    }
+
+}; // void close_all_chests_on_level ( int l_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y )
 {
   int i;
@@ -1094,6 +1120,7 @@ enum
 	  break;
 	case SAVE_LEVEL_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
+	  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
 	  SaveShip("Testship.shp");
 	  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 	  SDL_Flip ( Screen );
@@ -3403,6 +3430,7 @@ LevelEditor(void)
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
+		  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
 		  SaveShip("Testship.shp");
 
 		  // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
