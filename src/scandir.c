@@ -14,8 +14,11 @@
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
    write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+   Boston, MA 02111-1307, USA.  
+*/
+#include "config.h"
 
+#if ! HAVE_DIRENT_H
 
 #include "scandir.h"
 
@@ -101,3 +104,6 @@ alphasort (const void *a, const void *b)
   return strcmp ((*(const struct dirent **) a)->d_name,
 		 (*(const struct dirent **) b)->d_name);
 }
+
+
+#endif /* ! HAVE_DIRENT_H */

@@ -243,7 +243,7 @@ PaintConsoleMenu (int menu_pos)
   strcat (MenuText, "\nDeck : ");
   strcat (MenuText, CurLevel->Levelname );
   strcat (MenuText, "\n\nAlert: ");
-  strcat (MenuText, Alertcolor[Alert]);
+  strcat (MenuText, Alertcolor[AlertLevel]);
 
   DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect , TEXT_STRETCH );
 

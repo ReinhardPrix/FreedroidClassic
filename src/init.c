@@ -42,8 +42,30 @@
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
-extern int feenableexcept (int TheExceptionFlags );
+
+
+/* ----------------------------------------------------------------------
+ * The following function is NOT 'standard' C but rather a GNU extention
+ * to the C standards.  We *DON'T* want to use such things, but in this
+ * case it helps debugging purposes of floating point operations just so
+ * much, that it's really worth using it (in development versions, not in
+ * releases).  But to avoid warnings from GCC (which we always set to not
+ * allow gnu extentions to the C standard by default), we declare the
+ * prototype of this function here.  If you don't use GCC or this 
+ * function should give you portability problems, it's ABSOLUTELY SAFE
+ * to just remove all instances of it, since it really only helps 
+ * debugging.  Proper documentation can be found in the GNU C Library,
+ * section about 'Arithmethic', subsection on floating point control
+ * functions.
+ * ---------------------------------------------------------------------- */
+#if defined __APPLE_CC__
+/* turn off these function-call on OS X, where there are not present */
+int feenableexcept (int excepts) { return 0;}
+int fedisableexcept (int TheExceptionFlags ) { return 0; }
+#else
+extern int feenableexcept (int excepts);
 extern int fedisableexcept (int TheExceptionFlags );
+#endif
 
 /* ----------------------------------------------------------------------
  *

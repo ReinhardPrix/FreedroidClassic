@@ -2589,8 +2589,8 @@ Connect_To_Existing_Server_Menu (void)
  * have to specify a sorting function of a certain kind.  And this is just
  * the sorting function that seems appropriate for our little program.
  * ---------------------------------------------------------------------- */
-static int
-one (const struct dirent *unused)
+int
+one (struct dirent *unused)
 {
     if ( strstr ( unused->d_name , "savegame" ) != NULL )
     {
