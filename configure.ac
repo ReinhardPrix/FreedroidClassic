@@ -44,34 +44,54 @@ CFLAGS="$CFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 
 
-AC_CHECK_LIB([SDL], [SDL_Init],, 
-	AC_MSG_ERROR([SDL library needed for Freedroid!
-see http://www.libsdl.org/]))
+AC_CHECK_LIB([SDL], [SDL_Init],, AC_MSG_ERROR([
+--------------------------------------------------
+SDL library needed for Freedroid!
+see http://www.libsdl.org/
+--------------------------------------------------]))
 
 
-AC_CHECK_LIB([jpeg], [jpeg_start_compress],,
-	AC_MSG_ERROR([libjpeg needed to run Freedroid!
-see http://www.ijg.org/]))
+AC_CHECK_LIB([jpeg], [jpeg_start_compress],,AC_MSG_ERROR([
+--------------------------------------------------
+libjpeg needed to run Freedroid!
+see http://www.ijg.org/
+--------------------------------------------------]))
 
-AC_CHECK_LIB([z], [compress],,
-	AC_MSG_ERROR([zlib is needed to run Freedroid!
-see http://www.gzip.org/zlib/]))
+AC_CHECK_LIB([z], [compress],, AC_MSG_ERROR([
+--------------------------------------------------
+zlib is needed to run Freedroid!
+see http://www.gzip.org/zlib/
+--------------------------------------------------]))
 
-AC_CHECK_LIB([png], [png_read_png],,
-	AC_MSG_ERROR([libpng needed to run Freedroid
-see http://www.libpng.org/pub/png/libpng.html]))
 
-AC_CHECK_LIB([SDL_image], [IMG_LoadJPG_RW],,
-	AC_MSG_ERROR([SDL_image library needed for Freedroid!
-see http://www.libsdl.org/]))
+AC_CHECK_LIB([png], [png_read_png],, AC_MSG_ERROR([
+--------------------------------------------------
+libpng needed to run Freedroid
+see http://www.libpng.org/pub/png/libpng.html
+--------------------------------------------------]))
+
+AC_CHECK_LIB([SDL_image], [IMG_LoadJPG_RW],, AC_MSG_ERROR([
+--------------------------------------------------
+SDL_image library needed for Freedroid!
+see http://www.libsdl.org/
+--------------------------------------------------]))
 
 
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
-AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio],,
-	AC_MSG_WARN([libSDL_mixer not found!
+AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio],, AC_MSG_WARN([
+--------------------------------------------------
+libSDL_mixer not found!
 you need the SDL_mixer library if you want sound!
 (see see http://www.libsdl.org/)
---> compiling without sound support]))
+--> compiling without sound support
+--------------------------------------------------]))
+
+AC_CHECK_LIB([vorbis], [ov_openA],, AC_MSG_WARN([
+--------------------------------------------------
+libvorbis not found!
+You need the Vorbis libs installed if you want
+Freedroid to be able to play Ogg files (e.g. the Intro theme)
+--------------------------------------------------]))
 
 
 # Checks for header files.
