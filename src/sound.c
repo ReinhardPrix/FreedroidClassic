@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 59
+#define ALL_SOUNDS 47
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -57,13 +57,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "EnterElevator_Sound_0.wav",
    "Got_Hit_Sound_0.wav",
    "Enemy_Got_Hit_Sound_0.wav",
-   "TakeoverSetCapsule_Sound_0.wav",
    "Menu_Item_Selected_Sound_1.wav",
    "Menu_Item_Deselected_Sound_0.wav",
    "Move_Menu_Position_Sound_0.wav",
-   "Takeover_Game_Won_Sound_0.wav",
-   "Takeover_Game_Deadlock_Sound_0.wav",
-   "Takeover_Game_Lost_Sound_0.wav",
    "Fire_Bullet_Pulse_Sound_0.wav",
    "Fire_Bullet_Single_Pulse_Sound_0.wav",
    "Fire_Bullet_Military_Sound_0.wav",
@@ -95,18 +91,33 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Not_Enough_Power_Sound_0.wav",
    "Not_Enough_Dist_Sound_0.wav",
    "Not_Enough_Mana_0.wav",
-   "Influencer_Scream_Sound_0.wav",
-   "Influencer_Scream_Sound_1.wav",
-   "Influencer_Scream_Sound_2.wav",
-   "Influencer_Scream_Sound_3.wav",
-   "Influencer_Scream_Sound_4.wav",
    "Spell_ForceToEnergy_Sound_0.wav",
    "Spell_DetectItems_Sound_0.wav",
-   "No_Ammo_Sound_0.wav",
-   "bot_sounds/123_death_sound.wav",
-   "bot_sounds/247_death_sound.wav",
-   "bot_sounds/302_death_sound.wav"
+   "No_Ammo_Sound_0.wav"
 };
+
+#ifdef HAVE_LIBSDL_MIXER
+Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
+#endif
+
+//--------------------
+// We'll use a new sound concept now:  Don't load all the sound samples
+// we might be using again and again at game startup (which would require
+// that we know all the sound sample file names in advance and hard-code
+// them into the game) but rather use a dynamic cache, i.e. sounds are
+// loaded once they are first needed and then either droped again (like 
+// in Play...Once() or they are kept and cached and when next time a call
+// comes in, we use the sample from the dynamic cache.
+// The gain is shorter startup time and less hard-coding and maybe more
+// efficiency.
+//
+#define MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE 100
+#ifdef HAVE_LIBSDL_MIXER
+Mix_Chunk *dynamic_WAV_cache[ MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE ];
+char* sound_names_in_dynamic_wav_chache [ MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE ];
+#endif
+
+
 
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
@@ -118,8 +129,9 @@ char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
 };
 
 #define MAX_SOUND_CHANNELS 5000
-
 char SoundChannelList[ MAX_SOUND_CHANNELS ];
+
+
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk* List_Of_Sustained_Release_WAV_Files[ MAX_SOUND_CHANNELS ];
 Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
@@ -137,6 +149,8 @@ enum
 
 char NewMusicTargetFileName[5000];
 int BackgroundMusicStateMachineState = NOTHING_PLAYING_AT_ALL ;
+
+void play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) ;
 
 //----------------------------------------------------------------------
 // We want to know in certain cases if a channel has finished playback
@@ -206,31 +220,6 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
   char Temp_Filename[5000];
   char* fpath;
 #endif
-
-  //--------------------
-  // Some voice samples need to be played rather fast, but still
-  // they are a bit config-file dependent, so we check for some
-  // special file names we know and handle these differenty...
-  //
-  if ( ! strcmp ( "../effects/bot_sounds/123_death_sound.wav" , SoundSampleFileName ) )
-    {
-      PlaySound ( DEATH_SOUND_123 );
-      DebugPrintf ( 1 , "\nPrematurely caught 123 death sound for safe playing..." );
-      return;
-    }
-  if ( ! strcmp ( "../effects/bot_sounds/247_death_sound.wav" , SoundSampleFileName ) )
-    {
-      PlaySound ( DEATH_SOUND_247 );
-      DebugPrintf ( 1 , "\nPrematurely caught 247 death sound for safe playing..." );
-      return;
-    }
-  if ( ! strcmp ( "../effects/bot_sounds/302_death_sound.wav" , SoundSampleFileName ) )
-    {
-      PlaySound ( DEATH_SOUND_302 );
-      DebugPrintf ( 1 , "\nPrematurely caught 302 death sound for safe playing..." );
-      return;
-    }
-
 
   //--------------------
   // In case the same sample is played again and again in a very
@@ -907,7 +896,8 @@ play_death_sound_for_bot ( enemy* ThisRobot )
   //
   strcpy ( filename , "../effects/bot_sounds/" );
   strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name );
-  PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
+  // PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
+  play_sample_using_WAV_cache( filename , FALSE , FALSE );
 
 }; // void play_death_sound_for_bot ( enemy* ThisRobot )
 
@@ -1300,25 +1290,24 @@ Influencer_Scream_Sound (void)
   switch( MyRandom( 4 ) )
     {
     case 0 :
-      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_0.wav", FALSE , FALSE );
       break;
     case 1 :
-      PlaySound ( INFLUENCER_SCREAM_SOUND_1 );
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_1.wav", FALSE , FALSE );
       break;
     case 2 :
-      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_2.wav", FALSE , FALSE );
       break;
     case 3 :
-      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
       break;
     case 4 :
-      PlaySound ( INFLUENCER_SCREAM_SOUND_4 );
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_4.wav", FALSE , FALSE );
       break;
     default:
       break;
     }
 }; // void Influencer_Scream_Sound (void)
-
 
 /*@Function============================================================
 @Desc: 
@@ -1556,64 +1545,30 @@ Fire_Bullet_Sound (int BulletType)
     }
 }; // void FireBulletSound(void)
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * For the takeover game, there are 4 main sounds.  We handle them from
+ * the cache, even if that might also be possible as 'once_needed' type
+ * sound samples...
+ * ---------------------------------------------------------------------- */
 void
 Takeover_Set_Capsule_Sound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound (TAKEOVER_SET_CAPSULE_SOUND);
-
+  play_sample_using_WAV_cache( "TakeoverSetCapsule_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Set_Capsule_Sound ( void )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 Takeover_Game_Won_Sound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( TAKEOVER_GAME_WON_SOUND );
-
+  play_sample_using_WAV_cache( "Takeover_Game_Won_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Won_Sound ( void ) 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 Takeover_Game_Deadlock_Sound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( TAKEOVER_GAME_DEADLOCK_SOUND );
-
+  play_sample_using_WAV_cache( "Takeover_Game_Deadlock_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Deadlock_Sound ( void )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 Takeover_Game_Lost_Sound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( TAKEOVER_GAME_LOST_SOUND );
+  play_sample_using_WAV_cache( "Takeover_Game_Lost_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Lost_Sound ( void )
 
 
@@ -1703,7 +1658,148 @@ BulletReflectedSound (void)
 
 }; // void DruidBlastSound (void)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+//----------------------------------------------------------------------
+// This function should play a sound sample, that is NOT needed within
+// the action part of the game but only in menus or dialogs and can 
+// therefore be loaded and dumped on demand while the other sound samples
+// for the action parts of the game will be kept in memory all the time.
+// ----------------------------------------------------------------------
+void
+play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
+{
+#ifdef HAVE_LIBSDL_MIXER
+  int Newest_Sound_Channel=0;
+  char Temp_Filename[5000];
+  char* fpath;
+  static int next_free_position_in_cache = 0 ;
+  int index_of_sample_to_be_played = 0 ;
+  int sound_must_be_loaded = TRUE ;
+  int i;
 
+  //--------------------
+  // In case sound has been disabled, we don't do anything here...
+  //
+  if ( !sound_on ) return;
+  
+  //--------------------
+  // First we go take a look if maybe the sound sample file name in question
+  // has been given to this function (at least) once before.  Then we can
+  // assume, that the corresponding sound sample is already loaded and still
+  // in the cache and just need to play it and then we can safely return
+  // immediately, without setting up any callbacks or the like, like the
+  // PlayOnceNeededSoundSample function has to.
+  //
+  for ( i = 0 ; i < MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE ; i ++ )
+    {
+      if ( i >= next_free_position_in_cache )
+	{
+	  sound_must_be_loaded = TRUE ;
+	  break;
+	}
 
+      if ( ! strcmp ( sound_names_in_dynamic_wav_chache [ i ] , SoundSampleFileName ) )
+	{
+	  sound_must_be_loaded = FALSE ;
+	  index_of_sample_to_be_played = i ;
+	  DebugPrintf( 0 , "\nFound the sound sample '%s' already in the cache!  Good.", SoundSampleFileName ) ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // So if the sound sample isn't in the cache and therefore must still be loaded,
+  // we do so here before any playing takes place...
+  //
+  if ( sound_must_be_loaded )
+    {
+      //----------------------------------------------------------------------
+      // So now we know, that the sound sample in question has not yet ever been
+      // used before.  We must load it, play it and keep it in cache memory.
+      //----------------------------------------------------------------------
+      
+      //--------------------
+      // Now we try to load the requested sound file into memory...
+      //
+      dynamic_WAV_cache[ next_free_position_in_cache ] = NULL ;
+      strcpy ( Temp_Filename , "speeches/" );
+      strcat ( Temp_Filename , SoundSampleFileName );
+      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+      dynamic_WAV_cache[ next_free_position_in_cache ] = Mix_LoadWAV( fpath );
+      if ( dynamic_WAV_cache [ next_free_position_in_cache ]  == NULL )
+	{
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
+This should not happen for samples that are supposed to be cached...",
+				     NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+	  //--------------------
+	  // If the sample couldn't be loaded, we just quit, not marking anything
+	  // as loaded and inside the cache and also not trying to play anything...
+	  //
+	  return;
+	}
+  
+      //--------------------
+      // Hoping, that this will not take up too much processor speed, we'll
+      // now change the volume of the sound sample in question to what is normal
+      // for sound effects right now...
+      //
+      Mix_VolumeChunk( dynamic_WAV_cache [ next_free_position_in_cache ] , 
+		       (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
+
+      //--------------------
+      // We note the position of the sound file to be played
+      //
+      index_of_sample_to_be_played = next_free_position_in_cache ;
+
+      //--------------------
+      // Now we store the corresponding file name as well.
+      //
+      sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] = MyMalloc ( strlen ( SoundSampleFileName ) + 1 );
+      strcpy ( sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] , SoundSampleFileName );
+      DebugPrintf ( -3 , "\nSuccessfully added sample '%s' to sound cache at new position %d." ,
+		   sound_names_in_dynamic_wav_chache [ next_free_position_in_cache ] , next_free_position_in_cache );
+
+      //--------------------
+      // Now we increase the 'next_sample' index and are done.
+      //
+      next_free_position_in_cache ++ ;
+      if ( next_free_position_in_cache >= MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE )
+	{
+	  fprintf( stderr, "\n\nnext_free_position_in_cache: %d,\n" , next_free_position_in_cache );
+	  GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+ALERT!  Ran out of space in the dynamic wav sample cache!  Cache size too small?",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+    }
+  
+  //--------------------
+  // Now we try to play the sound file that has just been successfully
+  // loaded into memory or has resided in memory already for some time...
+  //
+  // In case of an error, we will of course print an error message
+  // and quit...
+  //
+  Newest_Sound_Channel = Mix_PlayChannel( -1 , dynamic_WAV_cache [ index_of_sample_to_be_played ] , 0 );
+  if ( Newest_Sound_Channel <= -1 )
+    {
+      fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
+      GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+The SDL mixer was unable to play a certain sound sample file, that was supposed to be cached for later.\n",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+    } // if ( ... = -1
+  else
+    {
+      // SoundChannelList[ Newest_Sound_Channel ] = 1;
+      DebugPrintf( 1 , "\nSuccessfully playing the 'to be cached' file %s.", SoundSampleFileName ) ;
+    }
+
+#endif // HAVE_LIBSDL_MIXER
+
+}; // void play_sample_using_WAV_cache(...)
 
 #undef _sound_c

@@ -96,8 +96,8 @@ GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int In
 {
 
   // rp: suppress all non-essential warnings if debug_level > 0
-  if ( !IsFatal && !InformDevelopers && (debug_level<=0) )
-    return;
+  // if ( !IsFatal && !InformDevelopers && (debug_level<=0) )
+  // return;
 
   fprintf (stderr, "\n----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n" );

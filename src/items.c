@@ -767,7 +767,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	} // inner switch
       break;
     case 1:
-      switch ( MyRandom ( 12 ) )
+      switch ( MyRandom ( 14 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_WHEELS ;
@@ -821,10 +821,18 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_type = ITEM_BOOTS ;
 	  drop_item_multiplicity =  1 ;
 	  break;
+	case 13:
+	  drop_item_type = ITEM_SMALL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 14:
+	  drop_item_type = ITEM_SMALL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
 	} // inner switch
       break;
     case 2:
-      switch ( MyRandom ( 11 ) )
+      switch ( MyRandom ( 15 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_TRIPEDAL ;
@@ -874,10 +882,26 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 	  drop_item_multiplicity =  20 + MyRandom ( 9 ) ;
 	  break;
+	case 12:
+	  drop_item_type = ITEM_SMALL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 13:
+	  drop_item_type = ITEM_SMALL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 14:
+	  drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 15:
+	  drop_item_type = ITEM_MEDIUM_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
 	} // inner switch
       break;
     case 3:
-      switch ( MyRandom ( 11 ) )
+      switch ( MyRandom ( 15 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_COMPOSITE_BOW ;
@@ -926,6 +950,22 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 11:
 	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 	  drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
+	  break;
+	case 12:
+	  drop_item_type = ITEM_SMALL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 13:
+	  drop_item_type = ITEM_SMALL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 14:
+	  drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
+	  break;
+	case 15:
+	  drop_item_type = ITEM_MEDIUM_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	} // inner switch
       break;
