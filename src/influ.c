@@ -459,6 +459,8 @@ MoveInfluence ( int PlayerNum )
       accel = TUX_ACCEL_WITHOUT_DRIVE_ITEM * Frame_Time( ) ;
     }
 
+  // accel *= 20.0 ; // we give the Tux unlimited acceleration...
+
   //--------------------
   // We store the influencers position for the history record and so that others
   // can follow his trail.
@@ -675,7 +677,7 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence ( int PlayerNum )
 {
-#define TOTAL_SWING_TIME 0.35
+#define TOTAL_SWING_TIME 0.55
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
 

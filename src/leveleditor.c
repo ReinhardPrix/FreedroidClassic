@@ -37,7 +37,7 @@
 
 #include "SDL_rotozoom.h"
 
-void ShowWaypoints( int PrintConnectionList );
+void ShowWaypoints( int PrintConnectionList , int maks );
 void LevelEditor(void);
 Level CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
@@ -2072,7 +2072,7 @@ Unable to load the level editor waypoint dot cursor.",
  * freedroid.  It marks all waypoints with a cross.
  * ---------------------------------------------------------------------- */
 void 
-ShowWaypoints( int PrintConnectionList )
+ShowWaypoints( int PrintConnectionList , int mask )
 {
   int wp;
   int i;
@@ -2111,9 +2111,14 @@ Unable to load the level editor waypoint cursor.",
 
       if ( EditLevel->AllWaypoints[wp].x == 0) continue;
 
-      blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
-				       EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
-				       EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
+      if ( mask && ZOOM_OUT )
+	blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor ) , 
+						EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
+						EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
+      else
+	blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
+					 EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
+					 EditLevel -> AllWaypoints [ wp ] . y + 0.5 ) ;
       
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
@@ -2194,8 +2199,17 @@ ShowMapLabels( int mask )
   for (LabelNr=0; LabelNr<MAXWAYPOINTS; LabelNr++)
     {
       if ( EditLevel->labels[LabelNr].pos.x == (-1) ) continue;
-      blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
-				       EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
+
+      if ( ! ( mask && ZOOM_OUT ) )
+	{
+	  blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+					   EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
+	}
+      else
+	{
+	  blit_zoomed_iso_image_to_map_position ( & ( map_label_indicator ) , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+						  EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
+	}
     }
 
 }; // void ShowMapLabels( void );
@@ -3112,7 +3126,7 @@ LevelEditor(void)
 
 	  Highlight_Current_Block();
 
-	  ShowWaypoints( FALSE );
+	  ShowWaypoints( FALSE , ZOOM_OUT * GameConfig . zoom_is_on );
 	  ShowMapLabels( ZOOM_OUT * GameConfig . zoom_is_on );
 	  
 	  SetCurrentFont ( FPS_Display_BFont ) ;
