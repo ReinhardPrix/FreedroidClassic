@@ -833,19 +833,28 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.5  1993/05/28 20:58:07  prix
- * Mon May 24 14:55:57 1993: General Note hinzugefuegt
- * Mon May 24 19:26:54 1993: Videomodus zuruecksetzen nach Beendung des Programms
- * Mon May 24 20:00:50 1993: AdjustSpeed rewritten to new data-structs
- * Mon May 24 20:06:35 1993: init of Druidmap
- * Tue May 25 07:22:49 1993: added init of Me
- * Tue May 25 14:15:28 1993: Wallchecks wiederbeleben (Anfang)
- * Tue May 25 14:24:13 1993: CheckWall respektiert nun offene Tueren als passierbar
- * Tue May 25 14:27:58 1993: Offsne Tueren werden jetzt als durchgaenglich behandelt
- * Tue May 25 14:30:30 1993: CalculateCL hinausgeworfen
- * Tue May 25 14:43:31 1993: Bullet auf Absolutkoordinaten umstellen (Alpha)
- * Thu May 27 09:36:45 1993: maxspeed verringert ->test
- * Fri May 28 16:49:47 1993: further adopts to new structs
+ * Revision 1.6  1993/05/31 20:06:20  prix
+ * Fri May 28 18:29:23 1993: heavy changes to new struct support
+ * Fri May 28 18:47:01 1993: No Shield On/Off toggle possible at the moment !
+ * Fri May 28 18:57:29 1993: ACHTUNG: DrawShieldToInfluence deaktiviert: geht so nicht !
+ * Fri May 28 19:01:43 1993: Umstellungen auf neue structs
+ * Fri May 28 19:39:47 1993: Shieldcolors-init auskommentiert
+ * Fri May 28 21:22:29 1993: added init of phases -var in druid-structs
+ * Fri May 28 21:44:46 1993: beginning to kill grob/fein-pos from Blasts
+ * Sun May 30 10:20:58 1993: LoadMap routine aktiviert
+ * Sun May 30 10:23:15 1993: CurLevel is now a pointer !: some changes necessary
+ * Sun May 30 10:46:40 1993: anpassung an map als char *
+ * Sun May 30 13:33:02 1993: added moving and support for vertical doors
+ * Sun May 30 13:34:56 1993: NotPassable an vertical doors angepasst
+ * Sun May 30 14:05:15 1993: inaktive Bullets und Blasts nun OUT, nicht 0. Nicht in PX !
+ * Sun May 30 14:07:20 1993: BULLET/BLAST-ANZAHL to ALL-BULLETS/BLASTS
+ * Sun May 30 15:52:00 1993: No Energy level
+ * Sun May 30 16:14:15 1993: Mauern "reflektieren" jetzt den 001
+ * Sun May 30 16:21:17 1993: NotPassable(): gets coordinates as argument now
+ * Sun May 30 17:20:14 1993: Reibung verbessert: x und y gesondert
+ * Sun May 30 20:33:54 1993: written InitPictures()
+ * Mon May 31 14:01:31 1993: ShowBlock Aufrufe zum debuggen
+ * Mon May 31 14:34:37 1993: InfluenceBlockPointer killed
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
