@@ -3812,15 +3812,17 @@ init_obstacle_data( void )
   obstacle_map[ ISO_TABLE_OVAL_2 ] . block_area_parm_1 = 1.1;
   obstacle_map[ ISO_TABLE_OVAL_2 ] . block_area_parm_2 = 1.3;
   obstacle_map[ ISO_TABLE_OVAL_2 ] . filename = "iso_tables_0007.png";
+
   
   obstacle_map[ ISO_TABLE_GLASS_1 ] . block_area_parm_1 = 1.1;
   obstacle_map[ ISO_TABLE_GLASS_1 ] . block_area_parm_2 = 1.3;
   obstacle_map[ ISO_TABLE_GLASS_1 ] . filename = "iso_tables_0008.png";
+  obstacle_map[ ISO_TABLE_GLASS_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS; 
   obstacle_map[ ISO_TABLE_GLASS_2 ] . block_area_parm_1 = 1.1;
   obstacle_map[ ISO_TABLE_GLASS_2 ] . block_area_parm_2 = 1.3;
   obstacle_map[ ISO_TABLE_GLASS_2 ] . filename = "iso_tables_0009.png";
-  
-  
+  obstacle_map[ ISO_TABLE_GLASS_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS; 
+    
   
   obstacle_map [ ISO_BLOOD_8 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BLOOD_8 ] . block_area_parm_1 = 1.0 ;
