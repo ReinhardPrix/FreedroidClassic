@@ -777,6 +777,7 @@ ShowCurrentTextWindow ( void )
 	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
 	    }
 	}
+
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
 	{
 	  // We don't describe enemys that are not on this level...
@@ -832,9 +833,10 @@ ShowCurrentTextWindow ( void )
 			  i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
 
+
   CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
 		      i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
-  
+
 }; // void ShowCurrentTextWindow ( void )
 
 

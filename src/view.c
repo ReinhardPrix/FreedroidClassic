@@ -597,93 +597,7 @@ MapBlockIsVisible ( int col , int line )
  * will be handled later...
  * ---------------------------------------------------------------------- */
 void
-ShowPureMapBlocksAroundTux ( int mask )
-{
-  int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
-  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-  SDL_Rect TargetRectangle;
-
-  //--------------------
-  // We select the following area to be the map excerpt, that can be
-  // visible at most.  This is nescessare now that the Freedroid RPG is
-  // going to have larger levels and we don't want to do 100x100 cyles
-  // for nothing each frame.
-  //
-  if ( Block_Width == INITIAL_BLOCK_WIDTH )
-    {
-      LineStart = Me [ 0 ] . pos . y - 7 ;
-      LineEnd = Me [ 0 ] . pos . y + 7 ;
-      ColStart = Me [ 0 ] . pos . x - 7 ;
-      ColEnd = Me [ 0 ] . pos . x + 7 ;
-    }
-  else
-    {
-      LineStart = -5 ;
-      LineEnd = DisplayLevel->ylen + 5 ;
-      ColStart = -5 ;
-      ColEnd = DisplayLevel->xlen + 5 ;
-    }
-                         
-  SDL_SetClipRect (Screen , &User_Rect);
-
-  for (line = LineStart; line < LineEnd; line++)
-    {
-      for (col = ColStart; col < ColEnd; col++)
-	{
-	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
-	    {
-	      
-	      TargetRectangle.x = UserCenter_x 
-		+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
-	      TargetRectangle.y = UserCenter_y
-		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
-	      
-	      if ( ( !RespectVisibilityOnMap ) || MapBlockIsVisible ( col , line ) )
-		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
-				 Screen, &TargetRectangle);
-	      else
-		{
-		  TargetRectangle.w = Block_Width;
-		  TargetRectangle.h = Block_Height;
-		  SDL_FillRect ( Screen , & TargetRectangle , 0 );
-		}
-
-	      //--------------------
-	      // Maybe this was called from the level editor or from some
-	      // other context requireing to add a grid to all map tiles
-	      // that are in the interface area connecting two levels together
-	      //
-	      if ( mask & SHOW_GRID )
-		{
-		  if ( ( ( line ) < curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_north ) ||
-		       ( ( col ) <  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_west ) ||
-		       ( ( line ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen - 1 -
-			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_south ) ||
-		       ( ( col ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen - 1 -
-			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_east ) )
-		    {
-		      TargetRectangle.x = UserCenter_x 
-			+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
-		      TargetRectangle.y = UserCenter_y
-			+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
-		      TargetRectangle.w = Block_Width;
-		      TargetRectangle.h = Block_Height;
-		      MakeGridOnScreen ( &TargetRectangle );
-		    }
-		}
-      
-	    }			// if !INVISIBLE_BRICK 
-	}			// for(col) 
-    }				// for(line) 
-}; // void ShowPureMapBlocksAroundTux ( int mask )
-
-/* ----------------------------------------------------------------------
- * This function should assemble the pure floor tiles that will be visible
- * around the Tux or in the console map view.  Big map inserts and all that
- * will be handled later...
- * ---------------------------------------------------------------------- */
-void
-isometric_show_all_floor_tiles_around_tux ( int mask )
+isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 {
   int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -693,10 +607,10 @@ isometric_show_all_floor_tiles_around_tux ( int mask )
   // Maybe we should be using a more elegant function here, that will automatically
   // compute the right amount of squares to blit in each direction from the known amount
   // of pixel one floor tile takes...  But that must follow later...
-  LineStart = Me [ 0 ] . pos . y - 7 ;
-  LineEnd = Me [ 0 ] . pos . y + 7 ;
-  ColStart = Me [ 0 ] . pos . x - 7 ;
-  ColEnd = Me [ 0 ] . pos . x + 7 ;
+  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
 
                      
   SDL_SetClipRect (Screen , &User_Rect);
@@ -713,7 +627,290 @@ isometric_show_all_floor_tiles_around_tux ( int mask )
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
-}; // void isometric_show_all_floor_tiles_around_tux ( int mask )
+}; // void isometric_show_floor_around_tux_without_doublebuffering ( int mask )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+fill_whole_double_buffer_with_floor ( SDL_Surface *buffer_surface_1 )
+{
+  int LineStart, LineEnd, line, ColStart, ColEnd, col, MapBrick ;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect target_rectangle;
+
+  //--------------------
+  // Maybe we should be using a more elegant function here, that will automatically
+  // compute the right amount of squares to blit in each direction from the known amount
+  // of pixel one floor tile takes...  But that must follow later...
+  LineStart = rintf ( Me [ 0 ] . pos . y )  - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = rintf ( Me [ 0 ] . pos . y ) + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = rintf ( Me [ 0 ] . pos . x ) - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = rintf ( Me [ 0 ] . pos . x ) + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for (col = ColStart; col < ColEnd; col++)
+	{
+	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+	    {
+	      
+	      // blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % 5 ] , 
+	      // ((float)col)+0.5 , ((float)line) +0.5 );
+
+	      target_rectangle . x = 
+		FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_width -
+		iso_floor_tile_width / 2 -
+		( line - LineStart ) * iso_floor_tile_width / 2 +
+		( col - ColStart ) * iso_floor_tile_width / 2 ;
+
+	      target_rectangle . y = 
+		0 -
+		iso_floor_tile_height / 2 +
+		( line - LineStart ) * iso_floor_tile_height / 2 +
+		( col - ColStart ) * iso_floor_tile_height / 2 ;
+
+	      SDL_BlitSurface( floor_iso_images [ MapBrick % 5 ] . surface , NULL , buffer_surface_1, &target_rectangle );
+	      
+	    }			// if !INVISIBLE_BRICK 
+	}			// for(col) 
+    }				// for(line) 
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+fill_in_line_or_column ( SDL_Surface *to_buffer , int line_shift , int col_shift )
+{
+  int LineStart, LineEnd, line, ColStart, ColEnd, col, MapBrick ;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect target_rectangle;
+
+  //--------------------
+  // Maybe we should be using a more elegant function here, that will automatically
+  // compute the right amount of squares to blit in each direction from the known amount
+  // of pixel one floor tile takes...  But that must follow later...
+  LineStart = rintf ( Me [ 0 ] . pos . y )  - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = rintf ( Me [ 0 ] . pos . y ) + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = rintf ( Me [ 0 ] . pos . x ) - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = rintf ( Me [ 0 ] . pos . x ) + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+
+  if ( col_shift == 1 )
+    ColStart = ColEnd - 1 ;
+  if ( col_shift == -1 )
+    ColEnd = 1 ;
+  if ( line_shift == 1 )
+    LineStart = LineEnd - 1 ;
+  if ( line_shift == -1 )
+    LineEnd = 1 ;
+
+  for (line = LineStart; line < LineEnd; line++)
+    {
+      for ( col = ColStart ; col < ColEnd ; col ++ )
+	{
+	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+	    {
+	      
+	      // blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % 5 ] , 
+	      // ((float)col)+0.5 , ((float)line) +0.5 );
+
+	      target_rectangle . x = 
+		FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_width -
+		iso_floor_tile_width / 2 -
+		( line - LineStart ) * iso_floor_tile_width / 2 +
+		( col - ColStart ) * iso_floor_tile_width / 2 ;
+
+	      target_rectangle . y = 
+		0 -
+		iso_floor_tile_height / 2 +
+		( line - LineStart ) * iso_floor_tile_height / 2 +
+		( col - ColStart ) * iso_floor_tile_height / 2 ;
+
+	      SDL_BlitSurface( floor_iso_images [ MapBrick % 5 ] . surface , NULL , to_buffer, &target_rectangle );
+	      
+	    }			// if !INVISIBLE_BRICK 
+	}			// for(col) 
+    }				// for(line) 
+  
+}; // void fill_in_line_or_column ( ... )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+shift_buffers ( SDL_Surface *from_buffer , SDL_Surface *to_buffer, int line_shift , int col_shift )
+{
+  SDL_Rect source_rect;
+  SDL_Rect dest_rect;
+
+  source_rect . w = from_buffer -> w - iso_floor_tile_width;
+  source_rect . h = from_buffer -> h - iso_floor_tile_height;
+
+  DebugPrintf ( 0 , "\nShift Buffers: line_shift=%d col_shift=%d." , line_shift , col_shift );
+
+  if ( col_shift == 1 ) 
+    {
+      source_rect . x = 0 + iso_floor_tile_width / 2 ;
+      source_rect . y = 0 + iso_floor_tile_height / 2 ; 
+      dest_rect . x = 0 ;
+      dest_rect . y = 0 ; 
+      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
+      fill_in_line_or_column ( to_buffer , 0 , col_shift );
+    }
+  else if ( col_shift == -1 )
+    {
+      source_rect . x = 0 ;
+      source_rect . y = 0 ; 
+      dest_rect . x = 0 + iso_floor_tile_width / 2 ;
+      dest_rect . y = 0 + iso_floor_tile_height / 2 ; 
+      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
+      fill_in_line_or_column ( to_buffer , 0 , col_shift );
+    }
+  if ( line_shift == 1 ) 
+    {
+      source_rect . x = 0 ;
+      source_rect . y = 0 + iso_floor_tile_height / 2 ; 
+      dest_rect . x = iso_floor_tile_width / 2 ;
+      dest_rect . y = 0 ; 
+      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
+      fill_in_line_or_column ( to_buffer , line_shift , 0 );
+    }
+  else if ( line_shift == -1 )
+    {
+      source_rect . x = iso_floor_tile_width / 2 ;
+      source_rect . y = 0 ; 
+      dest_rect . x = 0 ;
+      dest_rect . y = 0 + iso_floor_tile_height / 2 ; 
+      SDL_BlitSurface ( from_buffer , &( source_rect ) , to_buffer , &( dest_rect) );
+      fill_in_line_or_column ( to_buffer , line_shift , 0 );
+    }
+
+
+
+  //--------------------
+  // We can recycle some of the graphics we've assembled already...
+  //
+
+}; // void shift_buffers ( SDL_Surface *from_buffer , SDL_Surface *to_buffer, int line_shift , int col_shift )
+
+/* ----------------------------------------------------------------------
+ * This function should assemble the pure floor tiles that will be visible
+ * around the Tux or in the console map view.  Big map inserts and all that
+ * will be handled later...
+ * ---------------------------------------------------------------------- */
+void
+isometric_show_floor_around_tux_with_doublebuffering ( int mask )
+{
+  static int first_call = TRUE;
+  int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect TargetRectangle;
+  SDL_Surface *tmp;
+  static SDL_Surface *buffer_surface_1;
+  static SDL_Surface *buffer_surface_2;
+  static SDL_Surface *current_buffer;
+  SDL_Rect target_rectangle;
+  SDL_Rect source_rectangle;
+  static int previous_line_start = ( - 10 ) ;
+  static int previous_col_start = ( - 10 ) ;
+  static int previous_level = ( - 10 ) ;
+
+  //--------------------
+  // Upon the first call to this function, we need to allocate the surfaces we
+  // will be using later.
+  //
+  if ( first_call )
+    {
+      first_call = FALSE ;
+      tmp = SDL_CreateRGBSurface( 0 , 2 * FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_width , 2 * FLOOR_TILES_VISIBLE_AROUND_TUX * iso_floor_tile_height , vid_bpp , 0 , 0 , 0 , 0 ) ;
+      buffer_surface_1 = SDL_DisplayFormat ( tmp ) ;
+      buffer_surface_2 = SDL_DisplayFormat ( tmp ) ;
+      SDL_FreeSurface ( tmp );
+
+      SDL_SetColorKey ( buffer_surface_1 , 0 , 0 ); // this should clear any color key in the dest surface
+      SDL_SetAlpha ( buffer_surface_1 , 0 , SDL_ALPHA_OPAQUE );
+
+    }
+
+  //--------------------
+  // Now if we have a severe change of position (like after a teleport or at
+  // game startup too :) , then we need to redraw the whole area.  This will
+  // be done here.
+  //
+  LineStart = rintf ( Me [ 0 ] . pos . y )  - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = rintf ( Me [ 0 ] . pos . x ) - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+
+  if ( ( abs ( LineStart - previous_line_start ) > 1 ) ||
+       ( abs ( ColStart - previous_col_start ) > 1 ) ||
+       ( Me [ 0 ] . pos . z != previous_level ) )
+    {
+      previous_line_start = LineStart ;
+      previous_col_start = ColStart ;
+      previous_level = Me [ 0 ] . pos . z ;
+      fill_whole_double_buffer_with_floor ( buffer_surface_1 );
+      current_buffer = buffer_surface_1;
+      DebugPrintf ( 0 , "\nAssembled completely new double-buffer!" );
+    }
+  else if ( ( LineStart != previous_line_start ) ||
+	    ( ColStart != previous_col_start ) )
+    {
+      if ( current_buffer == buffer_surface_1 )
+	{
+	  shift_buffers ( buffer_surface_1 , buffer_surface_2 , LineStart - previous_line_start , ColStart - previous_col_start );
+	  current_buffer = buffer_surface_2 ;
+	  DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 2." );
+	}
+      else
+	{
+	  shift_buffers ( buffer_surface_2 , buffer_surface_1 , LineStart - previous_line_start , ColStart - previous_col_start );
+	  current_buffer = buffer_surface_1 ;
+	  DebugPrintf ( 0 , "\nShift of double-buffers has occured.  New buffer is 1." );
+	}
+
+      //--------------------
+      // Of course we must mark the shift as handled now...
+      //
+      previous_line_start = LineStart ;
+      previous_col_start = ColStart ;
+
+    }
+  else
+    {
+      //--------------------
+      // No changes needed...
+      //
+    }
+
+  //--------------------
+  // So the floor has been drawn inside of the buffering surface...
+  // That means that we can now cut out the right rectangle and blit it 
+  // to the screen...
+  //
+  source_rectangle . x = buffer_surface_1 -> w / 2 - SCREEN_WIDTH / 2 
+     + 
+     ( Me [ 0 ] . pos . x - rintf ( Me [ 0 ] . pos . x ) ) * iso_floor_tile_width / 2 -
+     ( Me [ 0 ] . pos . y - rintf ( Me [ 0 ] . pos . y ) ) * iso_floor_tile_width / 2 ;
+  source_rectangle . y = buffer_surface_1 -> h / 2 - SCREEN_HEIGHT / 2 
+    + 
+    ( Me [ 0 ] . pos . x - rintf ( Me [ 0 ] . pos . x ) ) * iso_floor_tile_height / 2 +
+    ( Me [ 0 ] . pos . y - rintf ( Me [ 0 ] . pos . y ) ) * iso_floor_tile_height / 2 ;
+  source_rectangle . w = SCREEN_WIDTH ;
+  source_rectangle . h = SCREEN_HEIGHT ; 
+
+  target_rectangle . x = 0 ;
+  target_rectangle . y = 0 ;
+  target_rectangle . w = SCREEN_WIDTH ;
+  target_rectangle . h = SCREEN_HEIGHT ; 
+
+  SDL_SetClipRect (Screen , &User_Rect);
+
+  SDL_BlitSurface ( current_buffer , & ( source_rectangle ) , Screen , & ( target_rectangle ) );
+
+}; // void isometric_show_floor_around_tux_with_doublebuffering ( int mask )
 
 /* ----------------------------------------------------------------------
  * This function should blit all the map inserts that are currently visible
@@ -843,10 +1040,10 @@ insert_obstacles_into_blitting_list ( void )
   // going to have larger levels and we don't want to do 100x100 cyles
   // for nothing each frame.
   //
-  LineStart = Me [ 0 ] . pos . y - 7 ;
-  LineEnd = Me [ 0 ] . pos . y + 7 ;
-  ColStart = Me [ 0 ] . pos . x - 7 ;
-  ColEnd = Me [ 0 ] . pos . x + 7 ;
+  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
   if ( LineStart < 0 ) LineStart = 0 ;
   if ( ColStart < 0 ) ColStart = 0 ;
   if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
@@ -1022,7 +1219,7 @@ insert_enemies_into_blitting_list ( void )
       if ( AllEnemys [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
       enemy_norm = AllEnemys [ i ] . pos . x + AllEnemys [ i ] . pos . y ;
       
-      if ( abs ( enemy_norm - tux_norm ) > 7 + 7 ) continue;
+      if ( abs ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
 
       insert_one_enemy_into_blitting_list ( i );
     }
@@ -1092,10 +1289,10 @@ show_obstacles_around_tux ( void )
   // going to have larger levels and we don't want to do 100x100 cyles
   // for nothing each frame.
   //
-  LineStart = Me [ 0 ] . pos . y - 7 ;
-  LineEnd = Me [ 0 ] . pos . y + 7 ;
-  ColStart = Me [ 0 ] . pos . x - 7 ;
-  ColEnd = Me [ 0 ] . pos . x + 7 ;
+  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
   if ( LineStart < 0 ) LineStart = 0 ;
   if ( ColStart < 0 ) ColStart = 0 ;
   if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
@@ -1220,7 +1417,7 @@ AssembleCombatPicture (int mask)
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
-  isometric_show_all_floor_tiles_around_tux ( mask );
+  isometric_show_floor_around_tux_without_doublebuffering ( mask );
 
   if ( mask & SHOW_ITEMS )
     {
@@ -1706,6 +1903,8 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 #define ENEMY_ENERGY_BAR_OFFSET_X 0
 #define ENEMY_ENERGY_BAR_OFFSET_Y (-20)
 #define ENEMY_ENERGY_BAR_LENGTH 65
+
+  return;
 
   //--------------------
   // If the enemy is dead already, there's nothing to do here...
