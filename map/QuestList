@@ -258,14 +258,14 @@ Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to kill all hostile droids this first level : -1
+Mission target is to kill all hostile droids this first level : 7
 Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : 50
-Mission target is to reach X-Pos : 50
-Mission target is to reach Y-Pos : 50
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 Mission diary entry="Spencer has revealed the information from the data cube evaluation to me.  It seems there is an old military research facility near the colony.  If we can activate the disruptor shield, there is a good chance that the bots will wander off and leave the colony alone."
 Mission diary entry="There, I've founda and entered the base."

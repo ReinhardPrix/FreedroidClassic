@@ -1,3 +1,5 @@
+% -*- mode: fill -*-
+
  * ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2002, 2003 the Freedroid dev team
@@ -245,12 +247,15 @@ SpecialForce: Type=883 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 ----------------------------------------------------------------------
 
 ** Beginning of new Level **
+
 Level=7
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 139
 
-SpecialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Spe***cialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SpecialForce: Type=883 X=11 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Disruptor Shield Base Defender" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 
