@@ -46,7 +46,7 @@
 
 int currently_selected_mission = (-1) ;
 SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ; 
-SDL_Rect mission_description_rect = { 134 , 86 , 280 , 420 } ; 
+SDL_Rect mission_description_rect = { 134 , 86 , 280 , 320 } ; 
 
 char complete_mission_display_text [ 50000 ];
 
@@ -252,6 +252,7 @@ void
 quest_browser_display_mission_list ( int list_type )
 {
     int mis_num ;
+    int something_was_displayed = FALSE ;
 
     strcpy ( complete_mission_display_text , "" );
 
@@ -267,12 +268,14 @@ quest_browser_display_mission_list ( int list_type )
 	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete == FALSE ) )
 	{
 	    quest_browser_append_mission_info ( mis_num );
+	    something_was_displayed = TRUE ;
 	}
 
 	if ( ( list_type == QUEST_BROWSER_SHOW_DONE_MISSIONS ) &&
 	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete != FALSE ) )
 	{
 	    quest_browser_append_mission_info ( mis_num );
+	    something_was_displayed = TRUE ;
 	}
 
     }
@@ -280,7 +283,30 @@ quest_browser_display_mission_list ( int list_type )
     SetTextCursor ( mission_description_rect . x , 
 		    mission_description_rect . y );
 
-    DisplayText( complete_mission_display_text , -1 , -1 , &mission_description_rect );	    
+    if ( something_was_displayed )
+    {
+	DisplayText( complete_mission_display_text , -1 , -1 , &mission_description_rect );	    
+    }
+    else
+    {
+	switch ( list_type )
+	{
+	    case QUEST_BROWSER_SHOW_OPEN_MISSIONS:
+		DisplayText( "No open quests yet." , -1 , -1 , &mission_description_rect );
+		break;
+	    case QUEST_BROWSER_SHOW_DONE_MISSIONS:
+		DisplayText( "No completed quests yet." , -1 , -1 , &mission_description_rect );
+		break;
+	    case QUEST_BROWSER_SHOW_NOTES:
+		DisplayText( "No notes yet." , -1 , -1 , &mission_description_rect );
+		break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
+Illegal quest browser status encountered.",
+					   PLEASE_INFORM, IS_FATAL );
+		break;
+	}
+    }
     
 }; // void quest_browser_display_mission_list ( void )
 
