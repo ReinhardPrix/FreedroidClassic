@@ -140,6 +140,11 @@ char *Classname[] = {
   "Command Cyborg",
   "Peaceful Human",
   "Cold MS Force",
+  "Weapons & Armour supplier",
+  "Resistance Founder",
+  "Town Healer",
+  "Former MS Prefered Person",
+  "Town Elder",
   NULL
 };
 

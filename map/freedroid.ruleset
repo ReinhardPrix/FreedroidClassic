@@ -2776,7 +2776,7 @@ This is a dark Apprentice of the evil MS Super-Corporation.
 Droidname: CHA
 Droid portrait file name (without extension) to use="CHA"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 16
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2815,7 +2815,7 @@ This is Dr. Chanra, a leading scientist in the field of artificial intelligence 
 Droidname: STO
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 12
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2854,7 +2854,7 @@ This is Mr. Stone, a sales representative of the United Machines Corporation.
 Droidname: SOR
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 15
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2893,7 +2893,7 @@ This is Mr. Stone, a sales representative of the United Machines Corporation.
 Droidname: HEA
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 14
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
@@ -2932,7 +2932,7 @@ This is the healer within the small startup town.
 Droidname: RMS
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
-Class of this droid: 10
+Class of this droid: 13
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
 Maximum mana of this droid: 100.1
