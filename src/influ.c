@@ -188,9 +188,9 @@ void
 MoveInfluence (void)
 {
   float accel = Druidmap[Me.type].accel;
+  float planned_step_x;
+  float planned_step_y;
   static float TransferCounter = 0;
-  /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
-  static int counter = -1;
   int i;
 
  
@@ -204,12 +204,9 @@ MoveInfluence (void)
   Me.Position_History[0].x=Me.pos.x;
   Me.Position_History[0].y=Me.pos.y;
 
-  counter++;
-  counter %= BREMSDREHUNG;	/* Wird mal vom Druid abhaengen */
-
   PermanentLoseEnergy ();	/* influ permanently loses energy */
 
-  /* Checken, ob Influencer noch OK */
+  // check, if the influencer is still ok
   if (Me.energy <= 0)
     {
       if (Me.type != DRUID001)
@@ -293,10 +290,35 @@ MoveInfluence (void)
 
   AdjustSpeed ();  // If the influ is faster than allowed for his type, slow him
 
-  // Move influence according to current speed
-  Me.pos.x += Me.speed.x * Frame_Time ();
-  Me.pos.y += Me.speed.y * Frame_Time ();
+  //--------------------
+  // Now we move influence according to current speed.  But there has been a problem
+  // reported from people, that the influencer would (*very* rarely) jump throught walls
+  // and even out of the ship.  This has *never* occured on my fast machine.  Therefore
+  // I assume that the problem is related to sometimes very low framerates on these machines.
+  // So, we do a sanity check not to make steps too big.
+  //
+  // So what do we do?  We allow a maximum step of exactly that, what the 302 (with a speed
+  // of 7) could get when the framerate is as low as 20 FPS.  This should be sufficient to
+  // prevent the influencer from *ever* leaving the ship.  I hope this really does work.
+  //
+  // And on machines with FPS << 20, it will certainly alter the game behaviour, so people
+  // should really start using a pentium or better machine.
+  //
+  // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
+  planned_step_x = Me.speed.x * Frame_Time ();
+  planned_step_y = Me.speed.y * Frame_Time ();
+  if ( fabsf(planned_step_x) >= 7.0/20 )
+    {
+      planned_step_x = copysignf( 7.0/20 , planned_step_x );
+    }
+  if ( fabsf(planned_step_y) >= 7.0/20 )
+    {
+      planned_step_y = copysignf( 7.0/20 , planned_step_y );
+    }
+  Me.pos.x += planned_step_x;
+  Me.pos.y += planned_step_y;
 
+  //--------------------
   // Check it the influ is on a special field like a lift, a console or a refresh
   ActSpecialField ( Me.pos.x , Me.pos.y );
 

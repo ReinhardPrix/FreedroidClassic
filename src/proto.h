@@ -142,8 +142,6 @@ EXTERN int InitPictures (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
-EXTERN void TransparentLadeLBMBild (char *LBMDateiname, unsigned char *Screen,
-				    int LoadPal);
 EXTERN void Init_Video (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void LevelGrauFaerben (void);
