@@ -1928,6 +1928,7 @@ enum
     SAVE_LEVEL_POSITION=1, 
     CHANGE_LEVEL_POSITION, 
     CHANGE_LIGHT_RADIUS_BONUS, 
+    CHANGE_MINIMAL_LIGHT_ON_LEVEL, 
     CHANGE_SIZE_X, 
     SET_LEVEL_NAME , 
     SET_BACKGROUND_SONG_NAME , 
@@ -1945,12 +1946,14 @@ enum
 
       InitiateMenu( -1 );
       
-      i=0;
+      i = 0 ;
       MenuTexts[ i ] = "Save whole ship to 'Testship.shp'" ; i++;
       sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
       MenuTexts[ i ] = Options [ 0 ]; i++;
       sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
       MenuTexts[ i ] = Options [ 1 ]; i++;
+      sprintf( Options [ 6 ] , "Minimal light value: %d" , EditLevel -> minimum_light_value );
+      MenuTexts[ i ] = Options [ 6 ]; i++;
       sprintf( Options [ 2 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
       MenuTexts[ i ] = Options [ 2 ]; i++;
       sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
@@ -1993,6 +1996,9 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
 	case CHANGE_LIGHT_RADIUS_BONUS: 
+	  while (EnterPressed() || SpacePressed() ) ;
+	  break;
+	case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
 	case SET_LEVEL_NAME:
@@ -2083,7 +2089,21 @@ enum
 		  EditLevel -> light_radius_bonus --;
 		  while (LeftPressed());
 		}
-	      Teleport ( EditLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE , FALSE ); 
+	      Teleport ( EditLevel -> levelnum , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
+	      break;
+
+	    case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
+	      if ( RightPressed() )
+		{
+		  EditLevel -> minimum_light_value ++;
+		  while (RightPressed());
+		}
+	      if ( LeftPressed() )
+		{
+		  EditLevel -> minimum_light_value --;
+		  while (LeftPressed());
+		}
+	      Teleport ( EditLevel -> levelnum , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
 	      break;
 
 	    case CHANGE_SIZE_X:
@@ -3600,7 +3620,23 @@ RecFillMap ( Level EditLevel , int BlockY , int BlockX , int SpecialMapValue )
 {
   int SourceAreaTileType = EditLevel->map[BlockY][BlockX] . floor_value ;
 
-  EditLevel->map[BlockY][BlockX]  . floor_value = SpecialMapValue ;
+  //--------------------
+  // First some security against writing out of bounds...
+  //
+  if ( ( BlockX < 0 ) || ( BlockY < 0 ) || ( BlockX >= EditLevel->xlen ) || ( BlockY >= EditLevel->ylen ) )
+      return;
+
+  //--------------------
+  // Now some security against filling what doesn't need to be
+  // filled any more.
+  //
+  if ( EditLevel -> map [ BlockY ] [ BlockX ] . floor_value == SpecialMapValue )
+      return;
+
+  //--------------------
+  // Now we can actually safely start the real recusive filling...
+  //
+  EditLevel -> map [ BlockY ] [ BlockX ] . floor_value = SpecialMapValue ;
 
   if ( BlockX > 0 )
     {

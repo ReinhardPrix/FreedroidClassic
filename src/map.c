@@ -323,9 +323,13 @@ void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
   sscanf ( DataPointer , "Levelnumber: %u \n\
  xlen of this level: %u \n\
  ylen of this level: %u \n\
- light radius bonus of this level: %u \n" , 
-	  &(loadlevel->levelnum), &(loadlevel->xlen),
-	  &(loadlevel->ylen), &( loadlevel -> light_radius_bonus ));
+ light radius bonus of this level: %u \n\
+ minimal light on this level: %u\n" , 
+	   &( loadlevel -> levelnum ), 
+	   &( loadlevel -> xlen ),
+	   &( loadlevel -> ylen ), 
+	   &( loadlevel -> light_radius_bonus ),
+	   &( loadlevel -> minimum_light_value) );
 
   DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
   DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
@@ -1668,6 +1672,7 @@ EncodeLevelForSaving(Level Lev)
 xlen of this level: %d\n\
 ylen of this level: %d\n\
 light radius bonus of this level: %d\n\
+minimal light on this level: %d\n\
 jump threshold north: %d\n\
 jump threshold south: %d\n\
 jump threshold east: %d\n\
@@ -1676,16 +1681,17 @@ jump target north: %d\n\
 jump target south: %d\n\
 jump target east: %d\n\
 jump target west: %d\n",
-	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
-	  Lev->jump_threshold_north, 
-	  Lev->jump_threshold_south, 
-	  Lev->jump_threshold_east, 
-	  Lev->jump_threshold_west, 
-	  Lev->jump_target_north, 
-	  Lev->jump_target_south, 
-	  Lev->jump_target_east, 
-	  Lev->jump_target_west
-	  );
+	  Lev -> levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
+	  Lev -> minimum_light_value, 
+	  Lev -> jump_threshold_north, 
+	  Lev -> jump_threshold_south, 
+	  Lev -> jump_threshold_east, 
+	  Lev -> jump_threshold_west, 
+	  Lev -> jump_target_north, 
+	  Lev -> jump_target_south, 
+	  Lev -> jump_target_east, 
+	  Lev -> jump_target_west
+      );
   strcpy(LevelMem, linebuf);
   strcat(LevelMem, LEVEL_NAME_STRING );
   strcat(LevelMem, Lev->Levelname );

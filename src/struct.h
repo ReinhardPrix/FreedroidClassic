@@ -954,42 +954,43 @@ map_tile, *Map_tile;
 
 typedef struct
 {
-  int levelnum;	/* Number of this level */
-  int xlen;		/* X dimension */
-  int ylen;
-  int light_radius_bonus;
-  char *Levelname;		/* Name of this level */
-  char *Background_Song_Name;
-  char *Level_Enter_Comment;
-  map_statement StatementList [ MAX_STATEMENTS_PER_LEVEL ];
-  char *obstacle_name_list [ MAX_OBSTACLE_NAMES_PER_LEVEL ];
-  map_tile *map [ MAX_MAP_LINES ];	// this is a vector of pointers
-  int jump_threshold_north;
-  int jump_threshold_south;
-  int jump_threshold_east;
-  int jump_threshold_west;
-  int jump_target_north;
-  int jump_target_south;
-  int jump_target_east;
-  int jump_target_west;
+    int levelnum;
+    int xlen;
+    int ylen;
+    int light_radius_bonus;
+    int minimum_light_value;
+    char *Levelname;
+    char *Background_Song_Name;
+    char *Level_Enter_Comment;
+    map_statement StatementList [ MAX_STATEMENTS_PER_LEVEL ];
+    char *obstacle_name_list [ MAX_OBSTACLE_NAMES_PER_LEVEL ];
+    map_tile *map [ MAX_MAP_LINES ];	// this is a vector of pointers
+    int jump_threshold_north;
+    int jump_threshold_south;
+    int jump_threshold_east;
+    int jump_threshold_west;
+    int jump_target_north;
+    int jump_target_south;
+    int jump_target_east;
+    int jump_target_west;
 
-  obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
+    obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
 
-  //--------------------
-  // Now the list of indices that need to be known every
-  // frame...
-  //
-  int refresh_obstacle_indices [ MAX_REFRESHES_ON_LEVEL ] ;
-  int teleporter_obstacle_indices [ MAX_TELEPORTERS_ON_LEVEL ] ;
-  int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
-  int autogun_obstacle_indices [ MAX_AUTOGUNS_ON_LEVEL ] ;
-
-  map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
-  int num_waypoints;
-  waypoint AllWaypoints[MAXWAYPOINTS];
-  item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
-  item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
-  item ChestItemList [ MAX_ITEMS_PER_LEVEL ] ;
+    //--------------------
+    // Now the list of indices that need to be known every
+    // frame...
+    //
+    int refresh_obstacle_indices [ MAX_REFRESHES_ON_LEVEL ] ;
+    int teleporter_obstacle_indices [ MAX_TELEPORTERS_ON_LEVEL ] ;
+    int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
+    int autogun_obstacle_indices [ MAX_AUTOGUNS_ON_LEVEL ] ;
+    
+    map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
+    int num_waypoints;
+    waypoint AllWaypoints[MAXWAYPOINTS];
+    item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
+    item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
+    item ChestItemList [ MAX_ITEMS_PER_LEVEL ] ;
 }
 level, *Level;
 

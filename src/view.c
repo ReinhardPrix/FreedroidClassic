@@ -1463,7 +1463,7 @@ update_light_list ( int player_num )
 	//
 	light_sources [ next_light_emitter_index ] . x = AllEnemys [ i ] . pos . x ;
 	light_sources [ next_light_emitter_index ] . y = AllEnemys [ i ] . pos . y ;
-	light_source_strengthes [ next_light_emitter_index ] = 1 ;
+	light_source_strengthes [ next_light_emitter_index ] = -4 ;
 	next_light_emitter_index ++ ;
     }
     
@@ -1490,7 +1490,12 @@ get_light_strength ( moderately_finepoint target_pos )
 	// sources, then we can stop immediately.
 	//
 	if ( light_source_strengthes [ i ] == 0 )
-	    return ( final_darkness );
+	{
+	    if ( final_darkness < -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )
+		return ( final_darkness );
+	    else
+		return ( -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value );
+	}
 
 	//--------------------
 	// We could of course use a maximum function to find out the proper light at
@@ -1509,8 +1514,11 @@ get_light_strength ( moderately_finepoint target_pos )
 		- light_source_strengthes [ i ] ;
     }
     
-    return ( final_darkness );
-
+    if ( final_darkness < -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )
+	return ( final_darkness );
+    else
+	return ( -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value );
+    
 }; // int get_light_strength ( moderately_finepoint target_pos )
 
 /* ----------------------------------------------------------------------
