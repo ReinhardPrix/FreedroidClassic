@@ -1344,4 +1344,45 @@ CheckForTriggeredEventsAndStatements ( void )
 
 }; // CheckForTriggeredEventsAndStatements (void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int 
+InstallItem( int InventoryIndex )
+{
+  //--------------------
+  // We need not do anything and return an ERROR if the item does not
+  // exist at all or if the item cannot be installed in influencer
+  //
+  if ( Me.Inventory[ InventoryIndex ].type == (-1) ) return ( ERR ) ;
+  if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].item_can_be_installed_in_influ == FALSE ) return ( ERR ) ;
+  
+  //--------------------
+  // Now we know that the item exists and that it is of a type, that can
+  // be installed in the influencer too, so we install it in the influencer
+  //
+
+  // Now we see if this item invokes a change of laser in the influence device
+  if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation != (-1) ) 
+    {
+      Druidmap[ DRUID001 ].gun = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation;
+    }
+
+  // Now we see if this item invokes a change of drive type in the influence device
+  if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Drive_Type_After_Installation != (-1) ) 
+    {
+      Druidmap[ DRUID001 ].drive = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Drive_Type_After_Installation;
+    }
+
+  //--------------------
+  // Now that the item has been installed in influs system, it can be deleted from
+  // inventory
+  //
+  Me.Inventory[ InventoryIndex ].type = (-1);
+
+  return ( OK );
+
+};  // void InstallItem( int IventoryIndex )
+
 #undef _misc_c

@@ -205,6 +205,8 @@ typedef struct
   char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
+  int New_Laser_Type_After_Installation;
+  int New_Drive_Type_After_Installation;
   double energy_gain_uppon_application_in_combat;
   double item_weight;
   int picture_number;

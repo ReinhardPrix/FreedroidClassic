@@ -355,15 +355,23 @@ Sorry...\n\
 	  Terminate( ERR );
 	}
 
-      // Now we read in the recharging time for this bullettype(=weapontype)
+      // Now we read in the new laser type after installing this item
+      ReadValueFromString( ItemPointer ,  "Item installation changes weapon into new value=" , "%d" , 
+			   &ItemMap[ItemIndex].New_Laser_Type_After_Installation , EndOfItemData );
+
+      // Now we read in the new drive type after installing this item
+      ReadValueFromString( ItemPointer ,  "Item installation changes drive into new value=" , "%d" , 
+			   &ItemMap[ItemIndex].New_Drive_Type_After_Installation , EndOfItemData );
+
+      // Now we read in the energy and health the influ gains (upon drinking this potion)
       ReadValueFromString( ItemPointer ,  "Energy gain on application in combat=" , "%lf" , 
 			   &ItemMap[ItemIndex].energy_gain_uppon_application_in_combat , EndOfItemData );
 
-      // Now we read in the recharging time for this bullettype(=weapontype)
+      // Now we read in the weight of this item
       ReadValueFromString( ItemPointer ,  "Item weight=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_weight , EndOfItemData );
 
-      // Now we read in the maximal speed this type of bullet can go.
+      // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
 
