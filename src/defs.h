@@ -761,6 +761,8 @@ enum _enemy_combat_state_machine_states
   HUNTING_TUX, 
   // BACK_OFF_AFTER_GETTING_HIT, 
   SEEK_BETTER_POSITION,
+  FIGHT_ON_TUX_SIDE,
+  RELENTLESS_FIRE_TO_GIVEN_POSITION
 };
 
 //--------------------

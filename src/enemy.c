@@ -613,8 +613,9 @@ PersueGivenCourse ( int EnemyNum )
   // Now we can see if we are perhaps already there?
   // then it might be time to set a new waypoint.
   //
-  ThisRobot->TextVisibleTime = 0;
-  ThisRobot->TextToBeDisplayed = "Persuing given course!!";
+
+  // ThisRobot->TextVisibleTime = 0;
+  // ThisRobot->TextToBeDisplayed = "Persuing given course!!";
 
 }; // void PersueGivenCourse ( int EnemyNum )
 
@@ -1409,10 +1410,42 @@ DistanceToTux ( Enemy ThisRobot )
 }; // float DistanceToTux ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+int
+EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_target )
+{
+  int j;
+
+  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+    {
+      if ( AllEnemys[ j ].Status == OUT ) continue;
+      if ( AllEnemys[ j ].is_friendly ) continue;
+      if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
+      if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
+				AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
+				ThisRobot -> pos . z ) != TRUE ) continue;
+      
+      if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
+		  ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
+		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
+		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > 6 ) continue;
+
+      // At this point we have found our target
+      vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
+      vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
+      DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
+      return ( TRUE );
+    }
+  return ( FALSE );
+
+}; // int EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
  * determine the distance vector to the target of this shot.  The target
  * depends of course on wheter it's a friendly device or a hostile device.
  * ---------------------------------------------------------------------- */
-void
+int
 DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
   int j;
@@ -1467,7 +1500,10 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
   if ( vect_to_target->x == 0) vect_to_target->x = 0.1;
   if ( vect_to_target->y == 0) vect_to_target->y = 0.1;
 
-}; // void DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
+  if ( j < Number_Of_Droids_On_Ship - 1 ) return ( TRUE );
+  else return ( FALSE );
+
+}; // int DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
 
 /* ----------------------------------------------------------------------
  * In some of the movement functions for enemy droids, we consider making
@@ -1718,22 +1754,19 @@ ProcessAttackStateMachine (int enemynum)
   float dist2;
   Enemy ThisRobot = & AllEnemys[ enemynum ] ;
   int TargetPlayer;
+  int TargetIsEnemy;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
   // need to move anything for this reason or for that
   //
-
   // ignore robots on other levels 
   // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
   if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
-
   // ignore dead robots as well...
   if ( ThisRobot -> Status == OUT ) return;
-
   // ignore paralyzed robots as well...
   if ( ThisRobot -> paralysation_duration_left != 0 ) return;
-
   // ignore robots, that don't have any weapon
   if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
 
@@ -1741,10 +1774,25 @@ ProcessAttackStateMachine (int enemynum)
   // More for debugging purposes, we print out the current state of the
   // robot as his in-game text.
   //
-  if ( ThisRobot -> combat_state == UNAWARE_OF_TUX ) ThisRobot->TextToBeDisplayed = "state:  Unaware of Tux." ;
-  if ( ThisRobot -> combat_state == STOP_AND_EYE_TUX ) ThisRobot->TextToBeDisplayed = "state:  Stop and Eye Tux." ;
-  if ( ThisRobot -> combat_state == MAKE_ATTACK_RUN ) ThisRobot->TextToBeDisplayed = "state:  Make Attack Run." ;
-  ThisRobot->TextVisibleTime = 0 ; 
+  switch ( ThisRobot -> combat_state )
+    {
+    case UNAWARE_OF_TUX:
+      ThisRobot->TextToBeDisplayed = "state:  Unaware of Tux." ;
+      break;
+    case STOP_AND_EYE_TUX:
+      ThisRobot->TextToBeDisplayed = "state:  Stop and Eye Tux." ;
+      break;
+    case MAKE_ATTACK_RUN:
+      ThisRobot->TextToBeDisplayed = "state:  Make Attack Run." ;
+      break;
+    case FIGHT_ON_TUX_SIDE:
+      ThisRobot->TextToBeDisplayed = "state:  Fight On Tux Side." ;
+      break;
+    default:
+      ThisRobot->TextToBeDisplayed = "state:  UNHANDLED!!" ;
+      break;
+    }      
+      ThisRobot->TextVisibleTime = 0 ; 
 
   //--------------------
   // If some special command was given, like 
@@ -1752,25 +1800,22 @@ ProcessAttackStateMachine (int enemynum)
   // NO MATTER WHOS IN THE LINE OF FIRE, HOW FAR WE ARE AWAY OR ANYTHING, JUST BLUNTLY
   // DO THAT.
   //
-  if ( ThisRobot->AdvancedCommand == 1 )
-    {
-      if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
-      vect_to_target.x = ThisRobot->Parameter1 - ThisRobot->pos.x;
-      vect_to_target.y = ThisRobot->Parameter2 - ThisRobot->pos.y;
-      RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
-      return;
-    }
+  if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
 
   //--------------------
   // determine the distance vector to the target of this shot.  The target
   // depends of course on wheter it's a friendly device or a hostile device.
   //
-  DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
+  TargetIsEnemy = DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
+
+  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.x  ) < 6 ) )
+    ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+
   // vect_to_target.x = 1;
   // vect_to_target.y = 1;
 
-  // dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
-  dist2 = DistanceToTux ( ThisRobot );
+  dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
+  // dist2 = DistanceToTux ( ThisRobot );
 
   //====================
   //
@@ -1790,7 +1835,7 @@ ProcessAttackStateMachine (int enemynum)
       // does not even see Tux now, there's nothing more to do here...
       // Not even the combat state will change.
       //
-      if ( dist2 > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
+      if ( DistanceToTux( ThisRobot ) > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
 
       //--------------------
       // But if the Tux is now within range of vision, then it will be
@@ -1833,7 +1878,7 @@ ProcessAttackStateMachine (int enemynum)
       if ( ThisRobot -> state_timeout < 0 ) 
 	{
 	  
-	  if ( ( dist2 > Druidmap [ ThisRobot->type ] . range_of_vision ) )
+	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) )
 	    {
 	      ThisRobot -> combat_state = UNAWARE_OF_TUX ;
 	      ThisRobot -> persuing_given_course = FALSE ;
@@ -1844,7 +1889,7 @@ ProcessAttackStateMachine (int enemynum)
 		{
 		  //--------------------
 		  // No dramatic changes here...
-		  ThisRobot -> state_timeout = 1.0 ; 
+		  ThisRobot -> state_timeout = 2.0 ; 
 		}
 	      else
 		{
@@ -1854,15 +1899,40 @@ ProcessAttackStateMachine (int enemynum)
 	    }
 	}
 
+      // if ( TargetIsEnemy ) ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+
       //--------------------
       // Anyway, while in this state no more attacking is nescessary, so
       // we can return outright...
       //
       return;
     }
+  else if ( ThisRobot -> combat_state == RELENTLESS_FIRE_TO_GIVEN_POSITION )
+    {
+      if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
+      vect_to_target.x = ThisRobot->Parameter1 - ThisRobot->pos.x;
+      vect_to_target.y = ThisRobot->Parameter2 - ThisRobot->pos.y;
+      RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
+      return;
+    }
+  else if ( ThisRobot -> combat_state == MAKE_ATTACK_RUN )
+    {
+      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+    }
+  else if ( ThisRobot -> combat_state == FIGHT_ON_TUX_SIDE )
+    {
+      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+
+      if ( ! EnemyOfTuxCloseToThisRobot ( ThisRobot , & vect_to_target ) ) 
+	{
+	  ThisRobot -> combat_state = UNAWARE_OF_TUX ;
+	  return;
+	}
+    }
   else
     {
       MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+      return;
     }
 
   //--------------------
@@ -1879,7 +1949,7 @@ ProcessAttackStateMachine (int enemynum)
        ( ThisRobot->is_friendly == FALSE ) ) 
     return; 
 
-  if ( ThisRobot -> is_friendly ) return; 
+  // if ( ThisRobot -> is_friendly ) return; 
 
   //--------------------
   // For melee weapons, we can't just stand anywhere and try to
@@ -1904,15 +1974,6 @@ ProcessAttackStateMachine (int enemynum)
   
   if ( ThisRobot->firewait ) return;
 
-  /*  
-  if ( ( MyRandom ( AGGRESSIONMAX ) >= Druidmap[ThisRobot->type].aggression ) &&
-       ( ThisRobot->is_friendly == FALSE ) )
-    {
-      ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
-      return;
-    }
-  */
-  
   RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
 }; // void AttackInfluence ( int enemynum )

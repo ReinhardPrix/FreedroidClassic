@@ -783,6 +783,9 @@ PlayGreetingSound ( int SoundCode )
     case 7:
       PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_7.wav" , FALSE );
       break;
+    case 8:
+      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_8.wav" , FALSE );
+      break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
       Terminate( ERR );
