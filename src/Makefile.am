@@ -30,7 +30,7 @@ ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
 
 
 if WIN32
-INCLUDES	= -I/usr/i586-mingw32msvc @GTK_CFLAGS@
+INCLUDES	= -I/usr/i586-mingw32msvc -I/usr/include/glib-1.2 -I/usr/lib/glib/include
 LDADD           = -lgtk -lgdk
 else
 LDADD           = @GTK_LIBS@

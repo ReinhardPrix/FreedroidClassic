@@ -28,11 +28,17 @@
 
 #define DIALOG_EDITOR
 
+#ifdef __WIN32__
+#define NATIVE_WIN32
+#endif
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
 #ifdef __WIN32__
+#include "gdkconfig.h"
+#include <gdk/gdkdrawable.h>
 #include <gdk/gdkcompat.h>
 #endif
 
@@ -3418,7 +3424,7 @@ gui_create_top_menu_line ( void )
 static gint
 expose_event (GtkWidget *widget, GdkEventExpose *event)
 {
-  gdk_draw_pixmap(widget->window,
+  gdk_draw_pixmap (widget->window,
                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
                   surface,
                   event->area.x, event->area.y,
