@@ -735,7 +735,7 @@ getchar_raw (void)
 {
   SDL_Event event;
 
-  keyboard_update ();   /* treat all pending keyboard-events */
+  //  keyboard_update ();   /* treat all pending keyboard-events */
 
   while (1)
     {
