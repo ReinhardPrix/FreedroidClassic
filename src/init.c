@@ -799,7 +799,8 @@ InitNewMission ( char *MissionName )
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   Draw_Framerate=TRUE;
-  Draw_Energy=FALSE;
+  // Draw_Energy=FALSE;
+  Draw_Energy=TRUE;
   RealScore = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...

@@ -220,8 +220,11 @@ Takeover (int enemynum)
 	      PreTakeEnergy = Me.energy;
 	    }
 
-	  Me.energy = AllEnemys[enemynum].energy;
-	  Me.health = Druidmap[OpponentType].maxenergy;
+	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
+	  // Me.energy = AllEnemys[enemynum].energy;
+	  Me.energy += AllEnemys[enemynum].energy;
+	  // Me.health = Druidmap[OpponentType].maxenergy;
+	  Me.health += Druidmap[OpponentType].maxenergy;
 
 	  Me.type = AllEnemys[enemynum].type;
 	  RealScore += Druidmap[OpponentType].score;

@@ -158,6 +158,7 @@ typedef struct
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+  int CompletelyFixed;          // set this flat to make the robot entirely immobile
 }
 enemy, *Enemy;
 

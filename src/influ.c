@@ -370,10 +370,19 @@ AnimateInfluence (void)
    * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
    */
 
+  if (Me.type != DRUID001)
+    {
+      Me.phase +=
+	(Me.energy / (Druidmap[Me.type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+	ENEMYPHASES * 3;
+    }
+  else
+    {
+      Me.phase +=
+	(Me.energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+	ENEMYPHASES * 3;
+    }
 
-  Me.phase +=
-    (Me.energy / (Druidmap[Me.type].maxenergy)) * Frame_Time () *
-    ENEMYPHASES * 3;
   if (((int) rintf (Me.phase)) >= ENEMYPHASES)
     {
       Me.phase = 0;
