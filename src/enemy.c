@@ -952,27 +952,27 @@ DropEnemyTreasure ( Enemy ThisRobot )
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
     {
       if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
-	DropItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+	DropItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
     {
       if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
-	DropItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+	DropItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
     {
       if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
-	DropItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+	DropItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
     {
       if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
-	DropItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+	DropItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] )
     {
       if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
-	DropItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
+	DropItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
 
   DropRandomItem( ThisRobot -> pos . x , ThisRobot -> pos . y , Druidmap [ ThisRobot -> type ] . monster_level , FALSE , FALSE , FALSE );

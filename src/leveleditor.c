@@ -205,6 +205,7 @@ ItemDropFromLevelEditor( void )
   item temp_item;
   int row_len = 5 ;
   int line_len = 8 ; 
+  int our_multiplicity = 1 ;
   int item_group = 0 ; 
 
   while ( GPressed() );
@@ -262,7 +263,12 @@ ItemDropFromLevelEditor( void )
       NewItemCode=0;
     }
   
-  DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );
+
+  if ( ItemMap [ NewItemCode ] . item_group_together_in_inventory )
+    {
+      our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100 );
+    }
+  DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 , our_multiplicity );
 
   while ( SpacePressed() );
 
