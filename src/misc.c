@@ -613,12 +613,9 @@ OptionsMenu (void)
 
       // Wait until the user does SOMETHING
 
-      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() ) 
-	{
-	  keyboard_update();
-	}
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !EscapePressed() ) ;
 
-      // 
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
@@ -633,6 +630,7 @@ OptionsMenu (void)
 	    case SINGLE_PLAYER_POSITION:
 	      while (EnterPressed() || SpacePressed() );
 	      SinglePlayerMenu();
+	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case QUIT_POSITION:
 	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
@@ -640,7 +638,7 @@ OptionsMenu (void)
 	      break;
 	    default: 
 	      break;
-	    }
+	    } 
 	  // Weiter=!Weiter;
 	}
       if (UpPressed()) 
@@ -661,10 +659,6 @@ OptionsMenu (void)
   Update_SDL_Screen();
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;
-
-  vga_clear ();
-  
-  // keyboard_init (); /* return to raw keyboard mode */
 
   return;
 } // OptionsMenu
