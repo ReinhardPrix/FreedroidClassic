@@ -289,14 +289,14 @@ GetView (void)
 }				/* GetView */
 
 
-/*@Function============================================================
-@Desc:  	Diese Prozedur gibt den momentan intern sichtbaren Kartenausschnitt in
-			Textform	am Bildschirm aus
-
-		   Parameter: keine
-
-@Ret: 	void
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Diese Prozedur gibt den momentan intern sichtbaren 
+ * 	  Kartenausschnitt in Textform	am Bildschirm aus
+ *
+ * Parameter: keine
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 DisplayView (void)
 {
@@ -547,84 +547,27 @@ GetConceptInternFenster (void)
   return;
 }
 
-/*@Function============================================================
-@Desc: 	Diese Funktion malt den Influencer an die Position die das Zentrum
-    des angezeigten Bildausschnittes sein wird.
-
-    Parameter : die momentane Phase der Drehung des 001 : Darstellphase
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * Desc: Diese Funktion malt den Influencer an die Position die
+ *    das Zentrum des angezeigten Bildausschnittes sein wird.
+ * 
+ * Param: die momentane Phase der Drehung des 001 : Darstellphase
+ *
+ *-----------------------------------------------------------------*/
 void
 PutInfluence (void)
 {
-  // MODIFIED FOR THE PORT!!!!!!!!!!!!!!!!!
-
-  //
-  // ACHTUNG!! FUER DEN PORT HAB ICH DIE HALBE FUNKTION ABGESCHALTET!!!
-  // SONST GIBTS NACH CA. 10 BILDERN DEN ERSTEN SEGMENTATION FAULT!!!!
-  //
-
-  unsigned char *target;
   unsigned char *source;	/* the druid-block to copy */
-  int i, j;
-  static int BeamDelay = 1;
 
   DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
 
-
   source = Influencepointer + ((int) rintf (Me.phase)) * BLOCKMEM;
 
+  PutObject (Me.pos.x, Me.pos.y, source, FALSE);
 
-  // PORT
-  // PutObject(Me.pos.x, Me.pos.y, source, FALSE);
-  // return;
-  // PORT
-
-  BeamLine = 0;
-
-  if (BeamLine > BLOCKBREITE / 2)
-    {
-      BeamLine--;
-      return;
-    }
-
-  if (!BeamLine)
-    {
-      PutObject (Me.pos.x, Me.pos.y, source, FALSE);
-    }
-  else
-    {
-      for (i = 0; i < BLOCKHOEHE; i++)
-	{
-	  // memcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
-	  for (j = 0; j < (BLOCKBREITE / 2 + 1 - BeamLine) * 2; j++)
-	    {
-	      if (*(source + BLOCKHOEHE * i + BeamLine + j) !=
-		  TRANSPARENTCOLOR)
-		*(target + BLOCKBREITE * INTERNBREITE * i + BeamLine + j) =
-		  *(source + BLOCKHOEHE * i + BeamLine + j);
-	    }
-	}
-
-      for (i = 0; i < BLOCKHOEHE; i++)
-	{
-	  *(target + BLOCKBREITE * INTERNBREITE * i + BeamLine - 1) =
-	    BULLETCOLOR;
-	  *(target + BLOCKBREITE * INTERNBREITE * i + BLOCKBREITE / 2 +
-	    (BLOCKBREITE / 2 - BeamLine + 1)) = BULLETCOLOR;
-	}
-      if (BeamDelay)
-	BeamDelay--;
-      else
-	{
-	  BeamLine--;
-	  BeamDelay = 1;
-	}
-    }
   DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
-}				// void PutInfluence(void)
+
+} /* PutInfluence() */
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
@@ -821,17 +764,16 @@ PutBlast (int BlastNummer)
   PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
 }				// void PutBlast(int BlastNummer)
 
-/*@Function============================================================
-@Desc: PutObject: Puts object with center-coordinates x/y and the
-			imagepointer to the InternWindow
-
-		check: ON: Bullet-Collsion wird gecheckt
-		
-		can be used for Influencer, Enemys, Bullets and Blasts 
-
-@Ret: int: TRUE/FALSE: BulletCollision 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: PutObject: Puts object with center-coordinates x/y and the
+ *	imagepointer to the InternWindow
+ *
+ * check: ON: Bullet-Collsion wird gecheckt
+ *	can be used for Influencer, Enemys, Bullets and Blasts 
+ *
+ * @Ret: int: TRUE/FALSE: BulletCollision 
+ *
+ *-----------------------------------------------------------------*/
 int
 PutObject (int x, int y, unsigned char *pic, int check)
 {
@@ -875,10 +817,8 @@ PutObject (int x, int y, unsigned char *pic, int check)
       (target >
        InternWindow + INTERNBREITE * INTERNHOEHE * BLOCKMEM - BLOCKMEM))
     {
-      gotoxy (1, 1);
       DebugPrintf ("Memory violation by PutObject !!!");
-      getchar ();
-      return FALSE;
+      Terminate(-1);
     }
 
   source = pic;
@@ -893,7 +833,7 @@ PutObject (int x, int y, unsigned char *pic, int check)
     ("\nint PutObject(...): usual end of function reached.\n");
 
   return (Return_Value);
-} // int PutObject(...)
+} /* PutObject() */
 
 
 /*@Function============================================================
@@ -1069,16 +1009,10 @@ void
 SetUserfenster (int color, unsigned char *screen)
 {
   int row;
-  int x0 = USERFENSTERPOSX;
-  int x1 = x0 + USERFENSTERBREITE;
-  int y0 = USERFENSTERPOSY;
-  int y1 = y0 + USERFENSTERHOEHE;
 
   if (screen == RealScreen)
-    {
-      for (row = y0; row < y1; row++)
-	gl_hline (x0, row, x1, color);
-    }
+    gl_fillbox (USERFENSTERPOSX, USERFENSTERPOSY, 
+		USERFENSTERBREITE, USERFENSTERHOEHE, color);
   else
     {
       for (row = 0; row < USERFENSTERHOEHE; row++)
