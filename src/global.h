@@ -128,6 +128,10 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+
+EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
+EXTERN itemspec ItemMap[ ALL_ITEMS ];
+
 EXTERN double Conveyor_Belt_Speed;
 EXTERN long Total_Frames_Passed_In_Mission;
 EXTERN int Number_Of_Droids_On_Ship;
