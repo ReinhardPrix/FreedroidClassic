@@ -306,7 +306,6 @@ InitNewGame (void)
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearGraphMem();
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  SetInfoline (NULL,NULL);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 

@@ -228,11 +228,13 @@ CheckBulletCollisions (int num)
 
   switch (CurBullet->type)
     {
+      // --------------------
       // Never do any collision checking if the bullet is OUT already...
     case OUT:
       return;
       break;
       
+      // --------------------
       // Next we handle the case that the bullet is of type FLASH
     case FLASH:
       // if the flash is over, just delete it and return
@@ -268,16 +270,25 @@ CheckBulletCollisions (int num)
       
       return;
       break;
+
+      // --------------------
+      // If its a "normal" Bullet, several checks have to be
+      // done, one for collisions with background, 
+      // one for collision with influencer
+      // some for collisions with enemys
+      // and some for collisions with other bullets
+      // and some for collisions with blast
+      //
     default:
       
-      /* Kollision der Bullets mit dem Hintergrund feststellen */
+      // Check for collision with background
       if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
 	{
 	  DeleteBullet (num);
-	  return;			/* Bullet ist hin */
+	  return;			
 	}
       
-      /* Influence getroffen ?? */
+      // check for collision with influencer
       xdist = Me.pos.x - CurBullet->pos.x;
       ydist = Me.pos.y - CurBullet->pos.y;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
@@ -294,7 +305,7 @@ CheckBulletCollisions (int num)
 	  return;			/* Bullet ist hin */
 	}
       
-      /* Alle Enemys checken */
+      // check for collision with enemys
       for (i = 0; i < NumEnemys; i++)
 	{
 	  if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
@@ -312,11 +323,26 @@ CheckBulletCollisions (int num)
 		}
 	      CurBullet->type = OUT;
 	      CurBullet->mine = FALSE;
-	      break;		/* Schleife beenden */
+	      // break;		/* Schleife beenden */
+	      return;
 	    }			/* if getroffen */
-	  
-	}				/* for Feindesliste */
-      return;
+	}  /* for Feindesliste */
+
+      // check for collisions with other bullets
+      for (i = 0; i < MAXBULLETS; i++)
+	{
+	  if (i == num) continue;  // never check for collision with youself.. ;)
+	  if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
+	  if ( abs(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
+	  if ( abs(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
+	  // it seems like we have a collision of two bullets!
+	  // both will be deleted and replaced by blasts..
+	  printf("\nBullet-Bullet-Collision detected...");
+	  CurBullet->type=OUT;
+	  AllBullets[num].type=OUT;
+	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
+	  StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
+	}
       break;
     } // switch ( Bullet-Type )
 } /* CheckBulletCollisions */

@@ -142,23 +142,81 @@ void
 DisplayRahmen ( int flags )
 {
   SDL_Rect TargetRectangle;
+  char dummy[80];
+  char left_box [LEFT_TEXT_LEN + 10];
+  char right_box[RIGHT_TEXT_LEN + 10];
+  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
+  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
+  int left_len, right_len;   /* the actualy string-lens */
+  char *left;
+  char *right;
 
-  if ( RahmenIsDestroyed || (flags & RAHMEN_FORCE_UPDATE ) )
+
+  // --------------------
+  // At first the text is prepared.  This can't hurt.
+  // we will decide whether to dispaly it or not later...
+  //
+  left = InfluenceModeNames[Me.status];
+  right =  ltoa (ShowScore, dummy, 10);
+  
+  // Now fill in the text
+  left_len = strlen (left);
+  if( left_len > LEFT_TEXT_LEN )
     {
+      printf ("\nWarning: String %s too long for Left Infoline!!",left);
+      left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
+    }
+  right_len = strlen (right);
+  if( right_len > RIGHT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Right Infoline!!", right);
+      right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
+    }
+  
+  /* Now prepare the left/right text-boxes */
+  memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
+  memset (right_box, ' ', RIGHT_TEXT_LEN);  
+  
+  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
+  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
+  
+  left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
+  right_box[RIGHT_TEXT_LEN] = '\0';
+  
+  // --------------------
+  // No we see if the screen need an update...
+
+  if ( RahmenIsDestroyed || 
+       (flags & RAHMEN_FORCE_UPDATE ) || 
+       (strcmp( left_box , previous_left_box )) || 
+       (strcmp( right_box , previous_right_box )) )
+    {
+      // Redraw the whole background of the top status bar
       TargetRectangle.x=0;
       TargetRectangle.y=0;
       SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
       SDL_BlitSurface( ne_blocks , ne_rahmen_block , ne_screen , &TargetRectangle );
-      RahmenIsDestroyed = FALSE;
-      printf("\nHad to redraw the top bar completely...");
-    }
 
-  // The following instruction only does something to the screen
-  // IF the screen has changed.  Therefore it can be called allways
-  // without loss of framerate.
-  if ( ! (flags & RAHMEN_DONT_TOUCH_TEXT ) ) SetInfoline( NULL , NULL );
-  
-  return;
+      // Now the text should be ready and its
+      // time to display it...
+      if ( (strcmp( left_box , previous_left_box )) || 
+	   (strcmp( right_box , previous_right_box )) )
+	{
+	  PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
+	  strcpy( previous_left_box , left_box );
+	  PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+	  strcpy( previous_right_box , right_box );
+	  printf("\nHad to update top status line box...");
+	}
+
+      // finally update the whole top status box
+      printf("\nHad to update whole top status line box...");
+      SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
+      RahmenIsDestroyed=FALSE;
+      return;
+    }
 
 } /* DisplayRahmen() */
 
@@ -173,7 +231,7 @@ DisplayRahmen ( int flags )
  * 
  *-----------------------------------------------------------------*/
 void
-SetInfoline (const char *left, const char *right)
+SetInfoline (const char *left, const char *right )
 {
   char dummy[80];
   char left_box [LEFT_TEXT_LEN + 10];
@@ -194,12 +252,14 @@ SetInfoline (const char *left, const char *right)
     {
       printf ("\nWarning: String %s too long for Left Infoline!!",left);
       left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
     }
   right_len = strlen (right);
   if( right_len > RIGHT_TEXT_LEN )
     {
       printf ("\nWarning: String %s too long for Right Infoline!!", right);
       right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
+      Terminate(ERR);
     }
 
   /* Now prepare the left/right text-boxes */
@@ -219,14 +279,15 @@ SetInfoline (const char *left, const char *right)
   SDL_SetClipRect( ne_screen , NULL );
   // Now the text should be ready and its
   // time to display it...
-  if ( (strcmp( left_box , previous_left_box )) || (strcmp( right_box , previous_right_box )) )
+  if ( (strcmp( left_box , previous_left_box )) || 
+       (strcmp( right_box , previous_right_box )) )
     {
       DisplayRahmen( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
       PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
-      SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
+      // SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
       strcpy( previous_left_box , left_box );
       PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-      SDL_UpdateRect( ne_screen, RIGHT_INFO_X, RIGHT_INFO_Y, FontHeight(Menu_BFont)*4, FontHeight(Menu_BFont) );
+      // SDL_UpdateRect( ne_screen, RIGHT_INFO_X, RIGHT_INFO_Y, FontHeight(Menu_BFont)*4, FontHeight(Menu_BFont) );
       strcpy( previous_right_box , right_box );
       printf("\nHad to update top status line box...");
     }

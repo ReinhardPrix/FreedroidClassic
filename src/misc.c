@@ -574,8 +574,9 @@ enum
   int MenuPosition=1;
 
 
- DebugPrintf("\nvoid EscapeMenu(void): real function call confirmed."); 
+  Me.status=MENU;
 
+  DebugPrintf("\nvoid EscapeMenu(void): real function call confirmed."); 
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -594,6 +595,7 @@ enum
 
       SDL_SetClipRect( ne_screen, NULL );
 
+      DisplayRahmen( 0 );
       Assemble_Combat_Picture ( 0 );
 
       MakeGridOnScreen();
@@ -674,6 +676,11 @@ enum
 	  while (DownPressed());
 	}
     }
+
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  RahmenIsDestroyed=TRUE;
+  Me.status=MOBILE;
 
   return;
 

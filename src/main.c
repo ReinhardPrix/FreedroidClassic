@@ -202,6 +202,12 @@ Activate_Conservative_Frame_Computation(void)
   // SkipAFewFrames=212;
   // SkipAFewFrames=22;
   SkipAFewFrames=3;
+
+  // Now we are in some form of pause.  It can't
+  // hurt to have the top status bar redrawn after that,
+  // so we set this variable...
+  RahmenIsDestroyed=TRUE;
+
 } // void Activate_Conservative_Frame_Computation(void)
 
 /*-----------------------------------------------------------------
@@ -328,7 +334,6 @@ main (int argc, char *const argv[])
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
 	  DisplayRahmen( 0 );
-	  SetInfoline (NULL, NULL); /* put up default infos: MODE  -- SCORE */
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
@@ -525,24 +530,24 @@ Pause (void)
 
   while ( Pause )
     {
-      usleep (30000);
+      // usleep(10);
       AnimateInfluence ();
       AnimateRefresh ();
       RotateBulletColor ();
       AnimateEnemys ();
+      DisplayRahmen(0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-
+      
       if (CPressed ())
 	{
 	  Me.status = CHEESE;
-	  SetInfoline (NULL, NULL);
+	  DisplayRahmen( 0 );
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
 	  while ( SpacePressed() ); /* then wait for Space released */
 	  
 	  Me.status = PAUSE;       /* return to normal PAUSE */
-	  SetInfoline (NULL, NULL);
 	} /* if (CPressed) */
 
       if ( SpacePressed() )

@@ -123,6 +123,7 @@ char *InfluenceModeNames[] = {
   "Cheese",
   "Elevator",
   "Briefing",
+  "Menu",
   NULL
 };
 

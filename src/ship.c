@@ -75,7 +75,7 @@ EnterElevator (void)
    * by turning off transfer mode as soon as the influ enters the elevator */
   Me.status= ELEVATOR;
 
-  SetInfoline (NULL, NULL);
+  // SetInfoline (NULL, NULL);
   curLevel = CurLevel->levelnum;
 
   if ((curElev = GetCurrentElevator ()) == -1)
@@ -194,7 +194,6 @@ EnterElevator (void)
   LeaveElevatorSound ();
   ClearGraphMem ( );
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  SetInfoline (NULL,NULL);
 
   UnfadeLevel ();
 
@@ -232,7 +231,7 @@ ShowElevators (void)
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );      
-  SetInfoline (NULL, NULL);
+  // SetInfoline (NULL, NULL);
 
   tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
   SourceRectangle.x=0;
@@ -382,7 +381,7 @@ EnterKonsole (void)
   Me.status = MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
-  SetInfoline (NULL, NULL);
+  // SetInfoline (NULL, NULL);
 
   while (SpacePressed ());
 
@@ -414,7 +413,7 @@ PaintConsoleMenu (void)
   ClearGraphMem ();
 
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  SetInfoline (NULL, NULL);
+  // SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
   // SetUserfenster (KON_BG_COLOR, Outline320x200);

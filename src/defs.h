@@ -114,6 +114,7 @@ enum
 #define DRUIDRADIUSX		(10*2)
 #define DRUIDRADIUSY		(10*2)
 #define DRUIDRADIUSXY	        (7*2)
+#define BULLET_BULLET_COLLISION_DIST 10
 
 /* Dimension eines Blasts */
 #define BLASTRADIUS		((BLOCKBREITE/3)*2)
@@ -403,7 +404,8 @@ enum _status
   PAUSE,
   CHEESE,
   ELEVATOR,
-  BRIEFING
+  BRIEFING,
+  MENU
 };
 
 

@@ -282,7 +282,7 @@ Takeover (int enemynum)
 	  usleep (30000);
 	  waiter--;
 	  RollToColors ();
-	  SetInfoline( message, NULL);	/* eigene Message anzeigen */
+	  SetInfoline( message, NULL );	
 	  ShowPlayground ();
 	} /* WHILE waiter */
 
@@ -418,7 +418,7 @@ PlayGame (void)
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
-	  SetInfoline (count_text, NULL);
+	  SetInfoline (count_text, NULL );
 
 	  RollToColors ();
 	  if (countdown == 0)
