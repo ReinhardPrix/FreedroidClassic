@@ -1249,12 +1249,6 @@ PutMouseMoveCursor ( void )
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
     {
-      /*
-      TargetRectangle . x = UserCenter_x - 
-	( Me[0].pos.x - Me [ 0 ] . mouse_move_target . x ) * Block_Width  - Block_Width  / 2  ;
-      TargetRectangle . y = UserCenter_y - 
-	( Me[0].pos.y - Me [ 0 ] . mouse_move_target . y ) * Block_Height - Block_Height / 2 ;
-      */
       TargetRectangle . x = - Block_Width  / 2 +
 	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
       TargetRectangle . y = - Block_Height  / 2 +
@@ -1288,8 +1282,7 @@ void
 iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotation_index )
 {
 #define ALL_TUX_PARTS 10
-#define ALL_TUX_PHASES 15
-  static iso_image tmp [ ALL_TUX_PARTS ] [ ALL_TUX_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
+  static iso_image tmp [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
   static int first_call = TRUE;
   char* fpath;
   char constructed_filename[5000];
@@ -1305,7 +1298,7 @@ iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotat
       first_call = FALSE;
       for ( i = 0 ; i < ALL_TUX_PARTS ; i ++ )
 	{
-	  for ( j = 0 ; j < ALL_TUX_PHASES ; j ++ )
+	  for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
 	    {
 	      for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 		{
@@ -1379,8 +1372,24 @@ Resolving part string to index failed!",
   our_phase = (int) Me [ PlayerNum ] . phase ;
   if ( ( part_index == 8 ) || ( part_index == 2 ) )
     {
-      our_phase = (int) fabsf ( Me [ PlayerNum ] . walk_cycle_phase ) % 25 ;
+      our_phase = (int) Me [ PlayerNum ] . walk_cycle_phase ;
       // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
+    }
+
+  if ( ( our_phase < 0 ) || ( our_phase >= TUX_TOTAL_PHASES ) )
+    {
+      fprintf ( stderr , "Suspicious phase encountered: %d " , our_phase );
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+Suspicious phase encountered!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  if ( ( part_index != 8 ) && ( part_index != 2 ) && ( our_phase >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES ) )
+    {
+      fprintf ( stderr , "Suspicious phase encountered: %d " , our_phase );
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+Suspicious phase encountered!",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -1390,7 +1399,7 @@ Resolving part string to index failed!",
   //
   if ( tmp [ part_index ] [ our_phase ] [ rotation_index ] . surface == NULL )
     {
-      sprintf ( constructed_filename , "tux_motion_parts/iso_%s_%02d_%04d.png" , part_string , rotation_index , (int) our_phase + 1 );
+      sprintf ( constructed_filename , "tux_motion_parts/iso_%s_%02d_%04d.png" , part_string , rotation_index , our_phase + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( tmp [ part_index ] [ our_phase ] [ rotation_index ] ) ) ;
     }
@@ -1401,8 +1410,7 @@ Resolving part string to index failed!",
     }
   else
     {
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
-Unable to load tux part!",
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "Unable to load tux part!",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
@@ -1489,13 +1497,20 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
   switch ( rotation_index )
     {
     case 0:
-    case 8:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      break;
+    case 8:
+      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       break;
 
     case 9:
@@ -1529,12 +1544,10 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       break;
 
     default:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "sword" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      fprintf ( stderr , "Suspicious rotation index: %d " , rotation_index );
+      GiveStandardErrorMessage ( "iso_put_all_tux_parts_in_direction (...)" , "\
+Suspicious rotation index encountered!",
+				 PLEASE_INFORM, IS_FATAL );
       break;
     }
 

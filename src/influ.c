@@ -675,15 +675,23 @@ AnimateInfluence ( int PlayerNum )
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
 
+  //--------------------
+  // First we handle the case of just getting hit...
+  //
   if ( Me [ PlayerNum ] .got_hit_time != (-1) )
     {
-      Me [ PlayerNum ] .phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
-	( Me [ PlayerNum ] .got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
-      if ( Me [ PlayerNum ] .got_hit_time > TOTAL_STUNNED_TIME ) Me [ PlayerNum ] .got_hit_time = (-1) ;
+      Me [ PlayerNum ] . phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
+	( Me [ PlayerNum ] . got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
+      if ( Me [ PlayerNum ] . got_hit_time > TOTAL_STUNNED_TIME ) Me [ PlayerNum ] .got_hit_time = (-1) ;
 
       Me [ PlayerNum ] . walk_cycle_phase = 17 ;
     }
-  else if ( Me [ PlayerNum ] .weapon_swing_time == (-1) )
+
+  //--------------------
+  // Now we handle the case of nothing going on and the Tux just standing around...
+  // or moving to some place.
+  //
+  else if ( Me [ PlayerNum ] . weapon_swing_time == (-1) )
     {
       Me [ PlayerNum ] .phase = ( (int) ( Me [ PlayerNum ] .MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
 
@@ -696,19 +704,24 @@ AnimateInfluence ( int PlayerNum )
 	  Me [ PlayerNum ] . walk_cycle_phase += Frame_Time() * 8.0 * my_speed ;
 	  if ( Me [ PlayerNum ] . walk_cycle_phase > 25.0 ) Me [ PlayerNum ] . walk_cycle_phase = 15.0 ;
 	}
+
     }
+
+  //--------------------
+  // Now we handle the case of a weapon swing just going on...
+  //
   else
     {
-      Me [ PlayerNum ] .phase = ( TUX_BREATHE_PHASES + ( Me [ PlayerNum ] .weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
+      Me [ PlayerNum ] . phase = ( TUX_BREATHE_PHASES + ( Me [ PlayerNum ] .weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
       if ( Me [ PlayerNum ] .weapon_swing_time > TOTAL_SWING_TIME ) Me [ PlayerNum ] .weapon_swing_time = (-1) ;
       if (((int) (Me [ PlayerNum ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
 	{
 	  Me [ PlayerNum ] .phase = 0;
 	}
-      // Me [ PlayerNum ] . walk_cycle_phase = Me [ PlayerNum ] . phase ;
       Me [ PlayerNum ] . walk_cycle_phase = 17 ;
     }
 
+  
   if (((int) (Me [ PlayerNum ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
     {
       Me [ PlayerNum ] .phase = 0;
@@ -1512,7 +1525,7 @@ PerformTuxAttackRaw ( int PlayerNum )
   Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x ;
   Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y ;
   Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z; 
-  Me [ PlayerNum ] . mouse_move_target_is_enemy = FALSE ;
+  Me [ PlayerNum ] . mouse_move_target_is_enemy = -1 ;
 
   //--------------------
   // But if the currently used weapon is a melee weapon, the tux no longer
