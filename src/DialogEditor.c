@@ -152,7 +152,7 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "ExecuteSubdialog:", 24 , '\0' } ,
     { "EverybodyBecomesHostile",  25 , '\0' } ,
     { "MakeTuxTownGuardMember",  26 , '\0' } ,
-    { "IncreaseSpellcastingSkill", 27 , '\0' } 
+    { "IncreaseHackingSkill", 27 , '\0' } 
   };
 
 typedef struct
