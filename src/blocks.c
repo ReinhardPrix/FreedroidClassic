@@ -2416,31 +2416,31 @@ init_obstacle_data( void )
   
   
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.00 ;
-  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_1 = 0.80 ;
-  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_1 = 0.80 ;
-  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_1 = 0.80 ;
-  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.2 ;
-  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 1.00 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_2 = 0.80 ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_2 = 0.80 ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_2 = 0.80 ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_vision_too = FALSE ;
 
@@ -2752,18 +2752,18 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_GREY_WALL_END_W ] . filename = "iso_walls_0005.png" ;
   obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_N ] . filename = "iso_walls_0006.png" ;
   obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_GREY_WALL_END_E ] . filename = "iso_walls_0007.png" ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
