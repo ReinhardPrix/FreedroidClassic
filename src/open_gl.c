@@ -2058,6 +2058,7 @@ blit_special_background ( int background_code )
     SDL_Rect src_rect;
     int i;
     char *fpath;
+
     static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = 
 	{ 
 	    INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
@@ -2088,8 +2089,8 @@ blit_special_background ( int background_code )
 	    MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 25
 	    CHAT_BACKGROUND_IMAGE_FILE ,        // 26
 	    CHAT_BACKGROUND_IMAGE_FILE ,        // 27
-	    TO_BG_FILE 
-	};        // 28
+	    TO_BG_FILE                          // 28
+	};
 
     SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = 
 	{ 
@@ -2097,8 +2098,8 @@ blit_special_background ( int background_code )
 	    { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
 	    { CHARACTERRECT_X , 0 , 0 , 0 } , // 2
 	    { 0 , 0 , 0 , 0 } ,               // 3
-	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 4 
-	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 5
+	    { 0 , 0 , 0 , 0 } ,               // 4 
+	    { 0 , 0 , 0 , 0 } ,               // 5
 	    { 0 , 0 , 0 , 0 } ,               // 6
 	    { 0 , 0 , 0 , 0 } ,               // 7
 	    { 0 , 0 , 0 , 0 } ,               // 8
@@ -2115,7 +2116,7 @@ blit_special_background ( int background_code )
 	    { 0 , 0 , 0 , 0 } ,               // 18
 	    { 0 , 0 , 0 , 0 } ,               // 19
 	    { 0 , 0 , 0 , 0 } ,               // 20
-	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 21
+	    { 0 , 0 , 0 , 0 } ,               // 21
 	    { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , // 22
 	    { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } , // 23 
 	    { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } , // 24
@@ -2128,6 +2129,39 @@ blit_special_background ( int background_code )
 	    { 0 , 0 , 0 , 0 }                 // 28
 	} ;
   
+    int need_scaling [ ALL_KNOWN_BACKGROUNDS ] = 
+	{
+	    FALSE , // 0
+	    FALSE , // 1
+	    FALSE , // 2
+	    FALSE , // 3
+	    TRUE  , // 4
+	    TRUE  , // 5
+	    FALSE , // 6
+	    FALSE , // 7
+	    FALSE , // 8
+	    FALSE , // 9
+	    FALSE , // 10
+	    FALSE , // 11
+	    FALSE , // 12
+	    FALSE , // 13
+	    FALSE , // 14
+	    FALSE , // 15
+	    FALSE , // 16
+	    FALSE , // 17
+	    FALSE , // 18
+	    FALSE , // 19
+	    FALSE , // 20
+	    TRUE  , // 21
+	    FALSE , // 22
+	    FALSE , // 23
+	    FALSE , // 24
+	    FALSE , // 25
+	    TRUE  , // 26
+	    TRUE  , // 27
+	    FALSE   // 28
+	};
+	    
     //--------------------
     // On the first function call, we load all the surfaces we will need, and
     // in case of OpenGL output method, we also make textures from them...
@@ -2189,8 +2223,7 @@ blit_special_background ( int background_code )
     //
     if ( use_open_gl )
     {
-	if ( ( our_background_rects [ background_code ] . w == SCREEN_WIDTH ) &&
-	     ( our_background_rects [ background_code ] . h == SCREEN_HEIGHT ) )
+	if ( need_scaling [ background_code ] )
 	{
 	    blit_open_gl_texture_to_full_screen ( 
 		our_backgrounds [ background_code ] , 

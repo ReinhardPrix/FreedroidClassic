@@ -173,13 +173,18 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_POS_X , HELMET_RECT_POS_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_POS_X  , ARMOUR_POS_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } } ,
 
-    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , SCREEN_HEIGHT-20-130-20 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , SCREEN_HEIGHT-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233*SCREEN_WIDTH/640 , SCREEN_HEIGHT*(480-20-130-20)/480 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233*SCREEN_WIDTH/640 , SCREEN_HEIGHT*(480-20)/480 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
 
+    //--------------------
+    // These two buttons are for the scrolling text during the
+    // title display, the credits menu and the level editor 
+    // keyboard explanation...
+    //
     { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { SCREEN_WIDTH - 65 , 10 , 73 , 98 } } ,
     { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { SCREEN_WIDTH - 65 , SCREEN_HEIGHT-10-98 , 73 , 98 } } ,
 
@@ -188,8 +193,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 311 , 47 , 47 } } ,
 
-    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335*SCREEN_WIDTH/640 , 6*SCREEN_HEIGHT/480   , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335*SCREEN_WIDTH/640 , 270*SCREEN_HEIGHT/480 , 160 ,  20 } } ,
     
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } } ,

@@ -450,58 +450,62 @@ DisplaySubtitle( char* SubtitleText , int subtitle_background )
 }; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * During the Chat with a friendly droid or human, there is a window with
+ * the full text transcript of the conversation so far.  This function is
+ * here to display said text window and it's content, scrolled to the
+ * position desired by the player himself.
  * ---------------------------------------------------------------------- */
 void
 display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update )
 {
-  SDL_Rect Subtitle_Window;
-  int lines_needed ;
-  int protocol_offset ;
+    SDL_Rect Subtitle_Window;
+    int lines_needed ;
+    int protocol_offset ;
+    
+#define AVERAGE_LINES_IN_PROTOCOL_WINDOW 9*SCREEN_HEIGHT/480
 
-  if ( ! GameConfig . show_subtitles_in_dialogs ) return;
-
-  //--------------------
-  // First we define our subtitle window.  We formerly had a small
-  // narrow subtitle window of a format like this:
-  //
-  Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
-  Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
-  Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
-  Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
-
-  //--------------------
-  // First we need to know where to begin with our little display.
-  //
-  lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
-  DebugPrintf ( 1 , "\nLines needed: %d. " , lines_needed );
-
-  if ( lines_needed <= 9 ) protocol_offset = 0 ;
-  else
-    protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) 
-      * ( lines_needed - 9 + chat_protocol_scroll_override_from_user ) * 1.04 ;
-
-  //--------------------
-  // Now we need to clear this window, cause there might still be some
-  // garbage from the previous subtitle in there...
-  //
-  // blit_special_background ( CHAT_DIALOG_BACKGROUND_EXCERPT_CODE ) ;
-  PrepareMultipleChoiceDialog ( ChatDroid , FALSE );
-
-  //--------------------
-  // Now we can display the text and update the screen...
-  //
-  SDL_SetClipRect( Screen, NULL );
-  Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
-  Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
-  Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
-  Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
-  DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
-  ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
-  ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
-  if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
-
+    if ( ! GameConfig . show_subtitles_in_dialogs ) return;
+    
+    //--------------------
+    // First we define our subtitle window.  We formerly had a small
+    // narrow subtitle window of a format like this:
+    //
+    Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
+    Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
+    Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
+    Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
+    
+    //--------------------
+    // First we need to know where to begin with our little display.
+    //
+    lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
+    DebugPrintf ( 1 , "\nLines needed: %d. " , lines_needed );
+    
+    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) protocol_offset = 0 ;
+    else
+	protocol_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) 
+	    * ( lines_needed - AVERAGE_LINES_IN_PROTOCOL_WINDOW + chat_protocol_scroll_override_from_user ) * 1.04 ;
+    
+    //--------------------
+    // Now we need to clear this window, cause there might still be some
+    // garbage from the previous subtitle in there...
+    //
+    // blit_special_background ( CHAT_DIALOG_BACKGROUND_EXCERPT_CODE ) ;
+    PrepareMultipleChoiceDialog ( ChatDroid , FALSE );
+    
+    //--------------------
+    // Now we can display the text and update the screen...
+    //
+    SDL_SetClipRect( Screen, NULL );
+    Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
+    Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
+    Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
+    Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
+    DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
+    ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
+    ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
+    if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+    
 }; // void display_current_chat_protocol ( int background_picture_code , int with_update )
 
 /* ----------------------------------------------------------------------
