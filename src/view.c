@@ -203,19 +203,21 @@ ShowInventoryMessages( void )
 
   for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
     {
-      // In case the mission does not exist at all, we need not do anything more...
-      // if ( Me.Inventory[ SlotNum ].MissionExistsAtAll != TRUE ) continue;
-
-      // In case the mission was not yet assigned, we need not do anything more...
-      // if ( Me.Inventory[ SlotNum ].MissionWasAssigned != TRUE ) continue;
-
-      // In case the message is rather old, we need not do anything more...
-      // if ( Me.Inventory[ SlotNum ].MissionLastStatusChangeTime > 1000 ) continue;
+      // In case the item does not exist at all, we need not do anything more...
+      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
+	{
+	  DisplayText( "\n--- Slot empty ---" , -1 , -1 , &User_Rect );
+	  continue;
+	}
 
       sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
       DisplayText( InventoryText , -1 , -1 , &User_Rect );
 
     }
+
+  DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &User_Rect );
+
+
 }; // void ShowInventoryMessages();
 
 /*

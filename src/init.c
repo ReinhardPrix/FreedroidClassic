@@ -113,9 +113,7 @@ Get_General_Game_Constants ( void* DataPointer )
  * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
  * it only receives a pointer to the start of the bullet section from
  * the calling function.
- * 
  ----------------------------------------------------------------------*/
-
 void 
 Get_Bullet_Data ( char* DataPointer )
 {
@@ -233,6 +231,43 @@ Get_Bullet_Data ( char* DataPointer )
 
   DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
 } // void Get_Bullet_Data ( char* DataPointer );
+
+/*----------------------------------------------------------------------
+ * This function reads in all the item data from the freedroid.ruleset file,
+ * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
+ * it only receives a pointer to the start of the bullet section from
+ * the calling function.
+ ----------------------------------------------------------------------*/
+void 
+Get_Item_Data ( char* DataPointer )
+{
+  char *ItemPointer;
+  char *EndOfItemData;
+  int i;
+  int ItemIndex=0;
+
+  double bullet_speed_calibrator;
+  double bullet_damage_calibrator;
+
+#define ITEM_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
+#define ITEM_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
+#define NEW_ITEM_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
+
+#define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
+#define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
+#define ITEM_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
+  // #define ITEM_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
+#define ITEM_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
+#define ITEM_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
+
+#define ITEM_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
+#define ITEM_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
+
+  ItemPointer = LocateStringInData ( DataPointer , ITEM_SECTION_BEGIN_STRING );
+  EndOfItemData = LocateStringInData ( DataPointer , ITEM_SECTION_END_STRING );
+
+
+}; // void Get_Item_Data ( char* DataPointer );
 
 
 /* ----------------------------------------------------------------------
@@ -647,6 +682,8 @@ Init_Game_Data ( char * Datafilename )
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_GAME_DAT_STRING ) ;
 
   Get_General_Game_Constants( Data );
+
+  Get_Item_Data ( Data );
 
   Get_Robot_Data ( Data );
 
@@ -1286,23 +1323,7 @@ InitNewMissionList ( char *MissionName )
 	  AssignMission( MissionTargetIndex );
 	}
     }
-  /*
-  //--------------------
-  // Delete all bullets and blasts.  We need to do this AFTER the map has been
-  // read in, since DeleteBullet calls StartBlast which accesses the map, which
-  // should have been allocated at his point.
-  //
-  for (i = 0; i < MAXBULLETS; i++)
-    {
-      DeleteBullet ( i );
-    }
-  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
-  for (i = 0; i < MAXBLASTS; i++)
-    {
-      DeleteBlast( i );
-    }
-  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
-  */
+
 
 }; // void InitNewMissionList ( char* MissionName )
 
@@ -1388,10 +1409,18 @@ InitFreedroid (void)
       AllItems[ i ].pos.y = 7;
       AllItems[ i ].type = ( -1 ) ;
     }
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Me.Inventory[ i ].type = (-1);
+    }
 
   AllItems[ 0 ].pos.x = 7;
   AllItems[ 0 ].pos.y = 7;
   AllItems[ 0 ].type = 0 ;
+
+  AllItems[ 1 ].pos.x = 6;
+  AllItems[ 1 ].pos.y = 7;
+  AllItems[ 1 ].type = 1 ;
 
 
   Init_Video ();

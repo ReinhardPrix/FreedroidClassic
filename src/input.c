@@ -161,6 +161,11 @@ void
 ReactToSpecialKeys(void)
 {
   int i;
+  int InvPos;
+  static int IPressed_LastFrame;
+
+  
+ 
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -197,9 +202,26 @@ ReactToSpecialKeys(void)
 	       ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) )
 	    break;
 	}
+      //--------------------
+      // In case we found an item on the floor, we remove it from the floor
+      // and add it to influs inventory
+      //
       if ( i < MAX_ITEMS_PER_LEVEL )
 	{
-	  AllItems[ i ].type = (-1);
+	  // find a free position in the inventory
+	  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
+	    {
+	      if ( AllItems[ InvPos ].type == (-1) ) break;
+	    }
+	  if ( InvPos == MAX_ITEMS_IN_INVENTORY ) 
+	    {
+
+	    }
+	  else
+	    {
+	      Me.Inventory[ InvPos-1 ].type = AllItems[ i ].type;
+	      AllItems[ i ].type = (-1);
+	    }
 	}
     }
 
@@ -208,8 +230,17 @@ ReactToSpecialKeys(void)
   //
   if ( IPressed() )
     {
-      GameConfig.Inventory_Visible_Time = 0;
-      GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
+      if ( !IPressed_LastFrame ) 
+	{
+	  GameConfig.Inventory_Visible_Time = 0;
+	  GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
+	}
+
+      IPressed_LastFrame = TRUE;
+    }
+  else
+    {
+      IPressed_LastFrame = FALSE;
     }
 
   if ( GPressed () )
