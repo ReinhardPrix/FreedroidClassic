@@ -323,6 +323,7 @@ typedef struct
     int is_smashable;
     int result_type_after_smashing_once;
     int drop_random_treasure;
+    int can_be_looted;  // is this where treasure could be hidden?
     
     //--------------------
     // Some obstacles will emitt light.  Specify light strength here.

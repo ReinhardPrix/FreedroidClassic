@@ -2452,6 +2452,7 @@ init_obstacle_data( void )
 	obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
 	obstacle_map [ i ] . block_area_parm_2 = 1.2 ; // standard_wall_thickness ;
 	obstacle_map [ i ] . is_smashable = FALSE ;
+	obstacle_map [ i ] . can_be_looted = FALSE ;  // is this where treasure could be hidden?
 	obstacle_map [ i ] . result_type_after_smashing_once = (-1) ;
 	obstacle_map [ i ] . drop_random_treasure = FALSE ;
 	obstacle_map [ i ] . needs_pre_put = FALSE ;
@@ -2506,8 +2507,8 @@ init_obstacle_data( void )
     obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_short_name = "Glass wall";
     obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_long_description = "A wall, made out of glass.";
     
-    obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_1 = standard_wall_thickness ;
-    obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_2 = 1.2 ;
+    obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_1 = 1.2 ;
+    obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . filename = "iso_walls_0021.png" ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
@@ -2519,8 +2520,8 @@ init_obstacle_data( void )
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . filename = "iso_walls_0022.png" ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
-    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . block_area_parm_1 = standard_wall_thickness ;
-    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . block_area_parm_2 = 1.2 ;
+    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . block_area_parm_1 = 1.2 ;
+    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . filename = "iso_walls_0023.png" ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
@@ -2530,8 +2531,8 @@ init_obstacle_data( void )
     obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . filename = "iso_walls_0024.png" ;
     obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
-    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . block_area_parm_1 = standard_wall_thickness ;
-    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . block_area_parm_2 = 1.2 ;
+    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . block_area_parm_1 = 1.2 ;
+    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . filename = "iso_walls_0025.png" ;
     obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
@@ -2542,8 +2543,8 @@ init_obstacle_data( void )
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . filename = "iso_walls_0026.png" ;
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
-    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . block_area_parm_1 = standard_wall_thickness ;
-    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . block_area_parm_2 = 1.2 ;
+    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . block_area_parm_1 = 1.2 ;
+    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . filename = "iso_walls_0027.png" ;
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
@@ -2553,8 +2554,8 @@ init_obstacle_data( void )
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . filename = "iso_walls_0028.png" ;
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
-    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . block_area_parm_1 = standard_wall_thickness ;
-    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . block_area_parm_2 = 1.2 ;
+    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . block_area_parm_1 = 1.2 ;
+    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . filename = "iso_walls_0029.png" ;
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
@@ -2744,24 +2745,28 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . filename = "iso_container_0004.png" ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . filename = "iso_container_0002.png" ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . filename = "iso_container_0003.png" ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . filename = "iso_container_0001.png" ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
@@ -3071,21 +3076,25 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_DESK ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_N_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_DESK ] . filename = "iso_tables_0001.png";
+  obstacle_map [ ISO_N_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_E_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_E_DESK ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_E_DESK ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_E_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_E_DESK ] . filename = "iso_tables_0002.png" ;
+  obstacle_map [ ISO_E_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_S_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_S_DESK ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_S_DESK ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_S_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_S_DESK ] . filename = "iso_tables_0003.png";
+  obstacle_map [ ISO_S_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_W_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_W_DESK ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_W_DESK ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_W_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_DESK ] . filename = "iso_tables_0004.png";
+  obstacle_map [ ISO_W_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_N_SCHOOL_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_SCHOOL_CHAIR ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_N_SCHOOL_CHAIR ] . block_area_parm_2 = 0.4 ;
@@ -3756,11 +3765,13 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_1 = 3.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . filename = "iso_library_furniture_0001.png" ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_1 = 1.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_2 = 3.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . filename = "iso_library_furniture_0002.png" ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   for ( i = ISO_OUTER_WALL_N1 ; i <= ISO_OUTER_WALL_CORNER_4 ; i++) 
   {
@@ -4020,37 +4031,38 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
+  obstacle_map [ ISO_SHELF_FULL_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_FULL_H ] . filename = "iso_obstacle_0092.png" ;
-
-  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
-  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
-  obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
-  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_1 = 2.3 ;
-  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_2 = 1.1 ;
-  obstacle_map [ ISO_SHELF_FULL_H ] . filename = "iso_obstacle_0092.png" ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHELF_EMPTY_V ] . filename = "iso_obstacle_0093.png" ;
+  obstacle_map [ ISO_SHELF_EMPTY_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . filename = "iso_obstacle_0094.png" ;
+  obstacle_map [ ISO_SHELF_EMPTY_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . filename = "iso_obstacle_0095.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . filename = "iso_obstacle_0096.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . filename = "iso_obstacle_0097.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . filename = "iso_obstacle_0098.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   obstacle_map [ ISO_SIGN_1 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SIGN_1 ] . block_area_parm_2 = 1.1 ;
