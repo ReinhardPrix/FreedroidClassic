@@ -39,6 +39,96 @@
 #include "items.h"
 
 /* ----------------------------------------------------------------------
+ * This function looks through the inventory list and returns the index
+ * of the first inventory item that is marked as 'held in hand'.
+ * If no such item is found, an index of (-1) is returned.
+ * ---------------------------------------------------------------------- */
+int
+GetHeldItemInventoryIndex( void )
+{
+  int InvPos;
+
+  // --------------------
+  // First we find out the inventory index of the item we want to
+  // drop
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+    }
+  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+    {
+      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      InvPos = ( -1 ) ;
+    }
+  else
+    {
+      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+    }
+  return ( InvPos );
+}; // int GetHeldItemInventoryIndex( void )
+
+/* ----------------------------------------------------------------------
+ * This function generates a pointer to the (hopefully one and only) item
+ * that is currently marked as held in hand.  If no such item can be 
+ * found, the returned pointer will be NULL.
+ * ---------------------------------------------------------------------- */
+item* GetHeldItemPointer( void )
+{
+  int InvIndex;
+
+  InvIndex = GetHeldItemInventoryIndex(  );
+
+  if ( InvIndex != (-1) )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
+      return ( & ( Me.Inventory[ InvIndex ] ) );
+    } 
+  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].weapon_item ) );
+    }
+  else if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].drive_item ) );
+    }
+  else if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].shield_item ) );
+    }
+  else if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].armour_item ) );
+    }
+  else if ( Druidmap[ Me.type ].special_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].special_item ) );
+    }
+  else if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].aux1_item ) );
+    }
+  else if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].aux2_item ) );
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
+      return ( NULL );
+    }
+
+  
+}; // item* GetHeldItemPointer( void )
+
+/* ----------------------------------------------------------------------
  * This function DELETES an item from the source location.
  * ---------------------------------------------------------------------- */
 void
@@ -108,36 +198,6 @@ ApplyItemFromInventory( int ItemNum )
   Me.Inventory[ ItemNum ].type = (-1);
 
 }; // void ApplyItemFromInventory( int ItemNum )
-
-/* ----------------------------------------------------------------------
- * This function looks through the inventory list and returns the index
- * of the first inventory item that is marked as 'held in hand'.
- * If no such item is found, an index of (-1) is returned.
- * ---------------------------------------------------------------------- */
-int
-GetHeldItemInventoryIndex( void )
-{
-  int InvPos;
-
-  // --------------------
-  // First we find out the inventory index of the item we want to
-  // drop
-  //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
-    {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
-    }
-  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
-    {
-      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
-      InvPos = ( -1 ) ;
-    }
-  else
-    {
-      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
-    }
-  return ( InvPos );
-}; // int GetHeldItemInventoryIndex( void )
 
 int
 Inv_Pos_Is_Free( int x , int y )
@@ -553,149 +613,187 @@ DropHeldItemToTheFloor ( void )
 void
 DropHeldItemToWeaponSlot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
-
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
+  
   // Now the item is installed into the weapon slot of the influencer
   
   // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
-  CopyItem( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].weapon_item) );
+  CopyItem( DropItemPointer , &(Druidmap[ DRUID001 ].weapon_item) );
   Druidmap[ DRUID001 ].weapon_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  // Me.Inventory[ InvPos ].type = ( -1 );
-  // Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
-  DeleteItem( &Me.Inventory[ InvPos ] );
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].weapon_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToWeaponSlot ( void )
 
 void
 DropHeldItemToDriveSlot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
-  // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].drive_item = Me.Inventory[ InvPos ].type;
-  CopyItem( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].drive_item) );
+  // Now the item is installed into the drive slot of the influencer
+  CopyItem( DropItemPointer , &(Druidmap[ DRUID001 ].drive_item) );
+  Druidmap[ DRUID001 ].drive_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].drive_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToDriveSlot ( void )
 
 void
 DropHeldItemToArmourSlot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
   // Now the item is installed into the weapon slot of the influencer
   // Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
-  CopyItem ( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].armour_item) );
+  CopyItem ( DropItemPointer , &(Druidmap[ DRUID001 ].armour_item) );
+  Druidmap[ DRUID001 ].armour_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].armour_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToArmourSlot ( void )
 
 void
 DropHeldItemToShieldSlot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
   // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].shield_item = Me.Inventory[ InvPos ].type;
-  CopyItem ( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].shield_item) );
+  CopyItem ( DropItemPointer , &(Druidmap[ DRUID001 ].shield_item) );
+  Druidmap[ DRUID001 ].shield_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].shield_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToShieldSlot ( void )
 
 void
 DropHeldItemToSpecialSlot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
   // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].special_item = Me.Inventory[ InvPos ].type;
-  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].special_item) );
+  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].special_item) );
+  Druidmap[ DRUID001 ].special_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].special_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToShieldSlot ( void )
 
 void
 DropHeldItemToAux1Slot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
   // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].aux1_item = Me.Inventory[ InvPos ].type;
-  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].aux1_item) );
+  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux1_item) );
+  Druidmap[ DRUID001 ].aux1_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].aux1_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToAux1Slot ( void )
 
 void
 DropHeldItemToAux2Slot ( void )
 {
-  int InvPos;
+  item* DropItemPointer;
 
-  InvPos = GetHeldItemInventoryIndex( );
+  // --------------------
+  // First we find out which item we want to drop into the weapon slot
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
 
   // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].aux2_item = Me.Inventory[ InvPos ].type;
-  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].aux2_item) );
+  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux2_item) );
+  Druidmap[ DRUID001 ].aux2_item.currently_held_in_hand = FALSE;
 
-  // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Now the item is removed from the source location and no longer held in hand as well, 
+  // but of course only if it is not the same as the original item
+  if ( DropItemPointer != &(Druidmap[ DRUID001 ].aux2_item) )
+    DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToAux2Slot ( void )
-
-item* GetHeldItemPointer( void )
-{
-  int InvIndex;
-
-  InvIndex = GetHeldItemInventoryIndex(  );
-
-  if ( InvIndex != (-1) )
-    {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
-      return ( & ( Me.Inventory[ InvIndex ] ) );
-    } 
-  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand )
-    {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Druidmap[ Me.type ].weapon_item ) );
-    }
-  else
-    {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
-      return ( NULL );
-    }
-
-  
-}; // item* GetHeldItemPointer( void )
 
 /* ----------------------------------------------------------------------
  * This function looks for a free inventory index.  Since there are more
@@ -769,7 +867,7 @@ DropHeldItemToInventory( void )
   DropItemPointer = GetHeldItemPointer(  );
   if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      DebugPrintf( 0 , "\nvoid DropHeldItemToInventory ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
   
@@ -886,16 +984,100 @@ ManageInventoryScreen ( void )
 	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].weapon_item.type ].picture_number ;
 	      Druidmap[ Me.type ].weapon_item.currently_held_in_hand = TRUE;
 	    }
-	  else
+	}
+      else if ( CursorIsInDriveRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in drive rect!" );
+	  if ( Druidmap[ Me.type ].drive_item.type > 0 )
 	    {
-	      // Nothing grabbed, so we need not do anything more here..
-	      Item_Held_In_Hand = ( -1 );
-	      DebugPrintf( 0 , "\nGrabbing in WEAPON rect FAILED!" );
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].drive_item.type ].picture_number ;
+	      Druidmap[ Me.type ].drive_item.currently_held_in_hand = TRUE;
 	    }
+	}
+      else if ( CursorIsInShieldRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in shield rect!" );
+	  if ( Druidmap[ Me.type ].shield_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].shield_item.type ].picture_number ;
+	      Druidmap[ Me.type ].shield_item.currently_held_in_hand = TRUE;
+	    }
+	}
+      else if ( CursorIsInArmourRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in armour rect!" );
+	  if ( Druidmap[ Me.type ].armour_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].armour_item.type ].picture_number ;
+	      Druidmap[ Me.type ].armour_item.currently_held_in_hand = TRUE;
+	    }
+	}
+      else if ( CursorIsInSpecialRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in special rect!" );
+	  if ( Druidmap[ Me.type ].special_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].special_item.type ].picture_number ;
+	      Druidmap[ Me.type ].special_item.currently_held_in_hand = TRUE;
+	    }
+	}
+      else if ( CursorIsInAux1Rect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
+	  if ( Druidmap[ Me.type ].aux1_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].aux1_item.type ].picture_number ;
+	      Druidmap[ Me.type ].aux1_item.currently_held_in_hand = TRUE;
+	    }
+	}
+      else if ( CursorIsInAux2Rect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
+	  if ( Druidmap[ Me.type ].aux2_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].aux2_item.type ].picture_number ;
+	      Druidmap[ Me.type ].aux2_item.currently_held_in_hand = TRUE;
+	    }
+	}
+      else
+	{
+	  // Nothing grabbed, so we need not do anything more here..
+	  Item_Held_In_Hand = ( -1 );
+	  DebugPrintf( 0 , "\nGrabbing in WEAPON rect FAILED!" );
 	}
       goto NoMoreGrabbing;
     }
-
+  
   //--------------------
   // Now the OTHER CASE:  If the user now no longer presses the mouse button and it WAS pressed before,
   // the the user has 'released' the item directly under the mouse button
@@ -961,7 +1143,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the drive rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot ) )
 	    {
 	      DropHeldItemToDriveSlot ( );
 	      Item_Held_In_Hand = ( -1 );
@@ -980,7 +1163,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the armour rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot ) )
 	    {
 	      DropHeldItemToArmourSlot ( );
 	      Item_Held_In_Hand = ( -1 );
@@ -999,7 +1183,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot ) )
 	    {
 	      DropHeldItemToShieldSlot ( );
 	      Item_Held_In_Hand = ( -1 );
@@ -1018,7 +1203,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot ) )
 	    {
 	      DropHeldItemToSpecialSlot ( );
 	      Item_Held_In_Hand = ( -1 );
@@ -1037,7 +1223,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the aux1 rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
 	      DropHeldItemToAux1Slot ( );
 	      Item_Held_In_Hand = ( -1 );
@@ -1056,7 +1243,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the aux2 rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
 	      DropHeldItemToAux2Slot ( );
 	      Item_Held_In_Hand = ( -1 );

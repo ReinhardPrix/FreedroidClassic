@@ -756,11 +756,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
 Weapon item=3
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -786,12 +786,12 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -817,12 +817,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -848,12 +848,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -879,12 +879,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=8
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -910,12 +910,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -941,12 +941,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=11
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -972,12 +972,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=7
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1003,12 +1003,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1035,11 +1035,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
 Weapon item=16
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1065,12 +1065,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1096,12 +1096,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1127,12 +1127,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1158,12 +1158,12 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1190,11 +1190,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 2
 Drive item=9
 Weapon item=12
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1221,11 +1221,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
 Weapon item=16
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1252,11 +1252,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=10
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1283,11 +1283,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 3
 Drive item=9
 Weapon item=14
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1314,11 +1314,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 3
 Drive item=9
 Weapon item=14
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1345,11 +1345,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=9
 Weapon item=16
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1376,11 +1376,11 @@ Sensor 3 of this droid : 2
 Armament of this droid : 1
 Drive item=11
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1407,11 +1407,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
 Weapon item=16
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1438,11 +1438,11 @@ Sensor 3 of this droid : 0
 Armament of this droid : 4
 Drive item=7
 Weapon item=13
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1469,11 +1469,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=11
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1498,12 +1498,12 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=9
-Weapon item=0
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1531,11 +1531,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1562,11 +1562,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1593,11 +1593,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1624,11 +1624,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1655,11 +1655,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1686,11 +1686,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1717,11 +1717,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1748,11 +1748,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1779,11 +1779,11 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
 Weapon item=15
-Shield item=0
-Armour item=0
-Aux1 item=0
-Aux2 item=0
-Special item=0
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0

@@ -241,37 +241,37 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	} 
       else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].weapon_item.type )
+	  if ( Druidmap [ Me.type ].weapon_item.type > 0 )
 	    GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].weapon_item) );
 	}
       else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].drive_item.type )
+	  if ( Druidmap [ Me.type ].drive_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].drive_item) );
 	}
       else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].shield_item.type )
+	   if ( Druidmap [ Me.type ].shield_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].shield_item) );
 	}
       else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].armour_item.type )
+	   if ( Druidmap [ Me.type ].armour_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].armour_item) );
 	}
       else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].aux1_item.type )
+	   if ( Druidmap [ Me.type ].aux1_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux1_item) );
 	}
       else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].aux2_item.type )
+	   if ( Druidmap [ Me.type ].aux2_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux2_item) );
 	}
       else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
 	{
-	   if ( Druidmap [ Me.type ].special_item.type )
+	   if ( Druidmap [ Me.type ].special_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].special_item) );
 	}
 
