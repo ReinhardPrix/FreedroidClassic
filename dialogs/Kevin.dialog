@@ -32,7 +32,9 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
+
 This is Kevin, a most formidable hacker and teacher of hacking skills.
+
 
 
 END OF AUTORS NOTES
@@ -124,6 +126,7 @@ New Option Nr=99  OptionText="I'll be off then"
 OptionSample="Tux_Goodbye_0.wav"
 PositionX=462  PositionY=221  
 ChangeOption=99 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
