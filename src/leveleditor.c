@@ -4571,7 +4571,7 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-		  SaveShip("Testship.shp");
+		  SaveShip("../map/Asteroid.maps");
 
 		  // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		  // our_SDL_flip_wrapper ( Screen );

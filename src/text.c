@@ -252,6 +252,22 @@ cookie to be set in FreedroidRPG.",
     }
 
   //--------------------
+  // Maybe the cookie string received still has the ':' attached at
+  // the end.  In this case we first remove the ':'.
+  //
+  if ( strlen ( CookieString ) > 1 )
+  {
+      DebugPrintf ( 1 , "\nLast character of cookie text received: %c." , 
+		    CookieString [ strlen ( CookieString ) - 1 ] );
+      if ( CookieString [ strlen ( CookieString ) - 1 ] == ':' )
+      {
+	  CookieString [ strlen ( CookieString ) - 1 ] = 0 ;
+	  DebugPrintf ( 1 , "\nRemoving trailing ':' character from cookie text..." , 
+			CookieString [ strlen ( CookieString ) - 1 ] );
+      }
+  }
+
+  //--------------------
   // Check if maybe the cookie has already been set.  In this case we would
   // not have to do anything...
   //
@@ -1102,23 +1118,25 @@ TextConditionIsTrue ( char* ConditionString )
     }
   else if ( CountStringOccurences ( ConditionString , "CookieIsPlanted" ) )
     {
-      DebugPrintf ( 0 , "\nCondition String identified as question for cookie planted." );
+      DebugPrintf ( -4 , "\nCondition String identified as question for cookie planted." );
 
       CookieText = 
 	ReadAndMallocStringFromData ( ConditionString , "CookieIsPlanted:" , ":" ) ;
-      DebugPrintf ( 0 , "\nCookieText mentioned: '%s'." , CookieText );
+      DebugPrintf ( -4 , "\nCookieText mentioned: '%s'." , CookieText );
 
       for ( i = 0 ; i < MAX_COOKIES ; i ++ )
-	{
+      {
+	  DebugPrintf ( -4 , "\nCookie entry to compare to: %s." , Me [ 0 ] . cookie_list [ i ] );
 	  if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
 	  if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
-	    return ( TRUE );
+	      return ( TRUE );
 	  //--------------------
-	  // Now some extra safety, cause the ':' termination character might still be on the cookie!
+	  // Now some extra safety, cause the ':' termination character might still be on 
+	  // the cookie or on the comparison string
 	  //
 	  if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= ( ( int ) strlen ( CookieText ) ) ) 
-	    return ( TRUE ); 
-	}
+	      return ( TRUE ); 
+      }
 
       free ( CookieText );
 
