@@ -52,8 +52,6 @@ void duplicate_all_obstacles_in_area ( Level source_level ,
 				       float target_start_x , float target_start_y );
 obstacle* add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
 
-// EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
-
 waypoint *SrcWp;
 int OriginWaypoint = (-1);
 
@@ -449,6 +447,416 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ * Is this tile a 'full' grass tile, i.e. a grass tile with ABSOLUTELY
+ * NO SAND on it?
+ * ---------------------------------------------------------------------- */
+int
+is_full_grass_tile ( map_tile* this_tile )
+{
+
+    switch ( this_tile -> floor_value )
+    {
+	case ISO_FLOOR_SAND_WITH_GRASS_1:
+	case ISO_FLOOR_SAND_WITH_GRASS_2:
+	case ISO_FLOOR_SAND_WITH_GRASS_3:
+	case ISO_FLOOR_SAND_WITH_GRASS_4:
+	    return ( TRUE );
+	    break;
+
+	default:
+	    return ( FALSE );
+	    break;
+    }
+
+}; // int is_full_grass_tile ( map_tile* this_tile )
+
+/* ----------------------------------------------------------------------
+ * Is this tile 'some' grass tile, i.e. a grass tile with JUST ANY BIT
+ * OF GRASS ON IT?
+ * ---------------------------------------------------------------------- */
+int
+is_some_grass_tile ( map_tile* this_tile )
+{
+
+    if ( this_tile -> floor_value < ISO_FLOOR_SAND_WITH_GRASS_1 )
+	return ( FALSE );
+    if ( this_tile -> floor_value > ISO_FLOOR_SAND_WITH_GRASS_29 )
+	return ( FALSE );
+
+
+    switch ( this_tile -> floor_value )
+    {
+	case ISO_WATER:
+	case ISO_COMPLETELY_DARK:
+	case ISO_RED_WAREHOUSE_FLOOR:
+	    return ( FALSE );
+	    break;
+	default:
+	    break;
+    }
+
+    return ( TRUE );
+
+}; // int is_full_grass_tile ( map_tile* this_tile )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+fix_corners_in_this_grass_tile ( level* EditLevel , int x , int y ) 
+{
+    map_tile* this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+    int north_grass = 0 ;
+    int south_grass = 0 ;
+    int east_grass = 0 ;
+    int west_grass = 0 ;
+
+    if ( is_full_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) )
+	north_grass = TRUE ;
+    if ( is_full_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) )
+	south_grass = TRUE ;
+    if ( is_full_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) )
+	east_grass = TRUE ;
+    if ( is_full_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) )
+	west_grass = TRUE ;
+
+    //--------------------
+    // Upper left corner:
+    //
+    if ( north_grass && west_grass 
+	 && ( EditLevel -> map [ y     ] [ x + 1 ] . floor_value == ISO_FLOOR_SAND )
+	 && ( EditLevel -> map [ y + 1 ] [ x     ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_15 ;
+	DebugPrintf ( -4 , "\nFixed a north-west corner in the grass tiles." );
+    }
+
+    //--------------------
+    // Upper right corner
+    //
+    if ( north_grass && east_grass 
+	 && ( EditLevel -> map [ y     ] [ x - 1 ] . floor_value == ISO_FLOOR_SAND )
+	 && ( EditLevel -> map [ y + 1 ] [ x     ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_16 ;
+	DebugPrintf ( -4 , "\nFixed a north-east corner in the grass tiles." );
+    }
+    
+    //--------------------
+    // Lower left corner:
+    //
+    if ( south_grass && west_grass 
+	 && ( EditLevel -> map [ y     ] [ x + 1 ] . floor_value == ISO_FLOOR_SAND )
+	 && ( EditLevel -> map [ y - 1 ] [ x     ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_14 ;
+	DebugPrintf ( -4 , "\nFixed a south-west corner in the grass tiles." );
+    }
+
+    //--------------------
+    // Lower right corner
+    //
+    if ( south_grass && east_grass 
+	 && ( EditLevel -> map [ y     ] [ x - 1 ] . floor_value == ISO_FLOOR_SAND )
+	 && ( EditLevel -> map [ y - 1 ] [ x     ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_17 ;
+	DebugPrintf ( -4 , "\nFixed a south-east corner in the grass tiles." );
+    }
+    
+}; // void fix_corners_in_this_grass_tile ( EditLevel , x , y ) 
+
+/* ----------------------------------------------------------------------
+ * Now we fix those grass tiles, that have only very little contact to
+ * pure sand tiles, i.e. only 1/8 of the area is grass.
+ * ---------------------------------------------------------------------- */
+void
+fix_anticorners_in_this_grass_tile ( level* EditLevel , int x , int y ) 
+{
+    map_tile* this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+    int north_grass = 0 ;
+    int south_grass = 0 ;
+    int east_grass = 0 ;
+    int west_grass = 0 ;
+
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) )
+	north_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) )
+	south_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) )
+	east_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) )
+	west_grass = TRUE ;
+
+    //--------------------
+    // Upper left corner:
+    //
+    if ( north_grass && west_grass 
+	 && ( EditLevel -> map [ y - 1 ] [ x - 1 ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_21 ;
+	DebugPrintf ( -4 , "\nFixed a north-west anticorner in the grass tiles." );
+    }
+
+    //--------------------
+    // Upper right corner
+    //
+    if ( north_grass && east_grass 
+	 && ( EditLevel -> map [ y - 1 ] [ x + 1 ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_20 ;
+	DebugPrintf ( -4 , "\nFixed a north-east anticorner in the grass tiles." );
+    }
+    
+    //--------------------
+    // Lower left corner:
+    //
+    if ( south_grass && west_grass 
+	 && ( EditLevel -> map [ y + 1 ] [ x - 1 ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_18 ;
+	DebugPrintf ( -4 , "\nFixed a south-west anticorner in the grass tiles." );
+    }
+
+    //--------------------
+    // Lower right corner
+    //
+    if ( south_grass && east_grass 
+	 && ( EditLevel -> map [ y + 1 ] [ x + 1 ] . floor_value == ISO_FLOOR_SAND ) )
+    {
+	this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_19 ;
+	DebugPrintf ( -4 , "\nFixed a south-east anticorner in the grass tiles." );
+    }
+    
+}; // void fix_anticorners_in_this_grass_tile ( EditLevel , x , y ) 
+
+/* ----------------------------------------------------------------------
+ * Now we fix those grass tiles, that have only very little contact to
+ * pure sand tiles, i.e. only 1/8 of the area is grass.
+ * ---------------------------------------------------------------------- */
+void
+fix_halfpieces_in_this_grass_tile ( level* EditLevel , int x , int y ) 
+{
+    map_tile* this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+    int north_grass = 0 ;
+    int south_grass = 0 ;
+    int east_grass = 0 ;
+    int west_grass = 0 ;
+
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) )
+	north_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) )
+	south_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) )
+	east_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) )
+	west_grass = TRUE ;
+
+    //--------------------
+    // Fix sand on the west:
+    //
+    if ( east_grass && !west_grass )
+    {
+	if ( MyRandom ( 100 ) < 50 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_6 ;
+	else
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_7 ;
+	DebugPrintf ( -4 , "\nFixed east-grass tiles." );
+    }
+
+    //--------------------
+    // Fix sand on the east:
+    //
+    if ( !east_grass && west_grass )
+    {
+	if ( MyRandom ( 100 ) < 50 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_9 ;
+	else
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_8 ;
+	DebugPrintf ( -4 , "\nFixed a west-grass tiles." );
+    }
+    
+    //--------------------
+    // Fix sand on the north:
+    //
+    if ( south_grass && !north_grass )
+    {
+	if ( MyRandom ( 100 ) < 50 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_13 ;
+	else
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_12 ;
+	DebugPrintf ( -4 , "\nFixed a south-west anticorner in the grass tiles." );
+    }
+
+    //--------------------
+    // Fix sand on the south:
+    //
+    if ( !south_grass && north_grass )
+    {
+	if ( MyRandom ( 100 ) < 50 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_11 ;
+	else
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_10 ;
+	DebugPrintf ( -4 , "\nFixed a south-east anticorner in the grass tiles." );
+    }
+    
+}; // void fix_halfpieces_in_this_grass_tile ( EditLevel , x , y ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+fix_isolated_grass_tile ( level* EditLevel , int x , int y  )
+{
+    map_tile* this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+    int north_grass = 0 ;
+    int south_grass = 0 ;
+    int east_grass = 0 ;
+    int west_grass = 0 ;
+    int our_rand ;
+
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) )
+	north_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) )
+	south_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) )
+	east_grass = TRUE ;
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) )
+	west_grass = TRUE ;
+
+    if ( !north_grass && !south_grass && !east_grass && !west_grass )
+    {
+	DebugPrintf ( -4 , "\nFixed an isolated grass tile." );
+	our_rand = MyRandom ( 100 );
+	if ( our_rand < 33 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_22 ;
+	else if ( our_rand < 66 )
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_23 ;
+	else
+	    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_24 ;
+    }
+
+}; // void fix_isolated_grass_tile ( EditLevel , x , y ) 
+
+/* ----------------------------------------------------------------------
+ * When planting grass tiles, taking care of the smooth borders for these
+ * grass tiles can be a tedious job.  A short function might help to 
+ * beautify the grass.  If focuses on replacing 'full' grass tiles with 
+ * proper full and part-full grass tiles.
+ * ---------------------------------------------------------------------- */
+void
+beautify_grass_tiles_on_level ( level* EditLevel )
+{
+    int x ;
+    int y ;
+    int our_rand;
+    map_tile* this_tile;
+    
+    DebugPrintf ( -4 , "\nbeautify_grass_tiles_on_level (...): process started..." );
+
+    //--------------------
+    // First we fix the pure corner pieces, cutting away quit some grass
+    // 
+    for ( x = 1 ; x < EditLevel -> xlen - 1 ; x ++ )
+    {
+	for ( y = 1 ; y < EditLevel -> ylen - 1 ; y ++ )
+	{
+	    this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+
+	    if ( is_full_grass_tile ( this_tile ) )
+	    {
+		fix_corners_in_this_grass_tile ( EditLevel , x , y ) ;
+		DebugPrintf ( 1 , "\nbeautify_grass_tiles_on_level (...): found a grass tile." );
+	    }
+	}
+    }
+
+    //--------------------
+    // Now we fix the anticorner pieces, cutting away much less grass
+    // 
+    for ( x = 1 ; x < EditLevel -> xlen - 1 ; x ++ )
+    {
+	for ( y = 1 ; y < EditLevel -> ylen - 1 ; y ++ )
+	{
+	    this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+
+	    if ( is_full_grass_tile ( this_tile ) )
+	    {
+		fix_anticorners_in_this_grass_tile ( EditLevel , x , y ) ;
+		DebugPrintf ( 1 , "\nbeautify_grass_tiles_on_level (...): found a grass tile." );
+	    }
+	}
+    }
+
+    //--------------------
+    // Now we fix the halftile pieces, cutting away much less grass
+    // 
+    for ( x = 1 ; x < EditLevel -> xlen - 1 ; x ++ )
+    {
+	for ( y = 1 ; y < EditLevel -> ylen - 1 ; y ++ )
+	{
+	    this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+
+	    if ( is_full_grass_tile ( this_tile ) )
+	    {
+		fix_halfpieces_in_this_grass_tile ( EditLevel , x , y ) ;
+		DebugPrintf ( 1 , "\nbeautify_grass_tiles_on_level (...): found a grass tile." );
+	    }
+	}
+    }
+
+    //--------------------
+    // Finally we randomize the full grass tiles
+    // 
+    for ( x = 1 ; x < EditLevel -> xlen - 1 ; x ++ )
+    {
+	for ( y = 1 ; y < EditLevel -> ylen - 1 ; y ++ )
+	{
+	    this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+
+	    if ( is_full_grass_tile ( this_tile ) )
+	    {
+		our_rand = MyRandom ( 106 ) ;
+		if ( our_rand < 25 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_1 ;
+		else if ( our_rand < 50 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_2 ;
+		else if ( our_rand < 75 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_3 ;
+		else if ( our_rand < 100 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_4 ;
+		else if ( our_rand < 102 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_25 ;
+		else if ( our_rand < 104 )
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_26 ;
+		else 
+		    this_tile -> floor_value = ISO_FLOOR_SAND_WITH_GRASS_27 ;
+	    }
+	}
+    }
+
+    //--------------------
+    // Finally we randomize the full grass tiles
+    // 
+    for ( x = 1 ; x < EditLevel -> xlen - 1 ; x ++ )
+    {
+	for ( y = 1 ; y < EditLevel -> ylen - 1 ; y ++ )
+	{
+	    this_tile = & ( EditLevel -> map [ y ] [ x ] ) ;
+
+	    if ( is_full_grass_tile ( this_tile ) )
+	    {
+		fix_isolated_grass_tile ( EditLevel , x , y ) ;
+		DebugPrintf ( 1 , "\nbeautify_grass_tiles_on_level (...): found a grass tile." );
+	    }
+	}
+    }
+
+}; // void beautify_grass_tiles_on_level ( void )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -813,8 +1221,8 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 int
 level_editor_item_drop_index ( int row_len , int line_len )
 {
-    if ( (GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X > 55 ) && ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X < 55 + 64 * line_len ) &&
-	 (GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y > 32 ) && ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y < 32 + 66 * row_len ) )
+    if ( ( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X > 55 ) && ( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X < 55 + 64 * line_len ) &&
+	 ( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y > 32 ) && ( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y < 32 + 66 * row_len ) )
 	{
 	    return ( ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 55 ) / 64 + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 32 ) / 66 * line_len ) ;
 	}
@@ -1207,179 +1615,6 @@ ShowLevelEditorTopMenu( int Highlight )
     }
     
 }; // void ShowLevelEditorTopMenu( void )
-
-/*
-void
-ShowLevelEditorTopMenu( int Highlight )
-{
-    int i;
-    SDL_Rect TargetRectangle;
-    int selected_index = FirstBlock;
-    SDL_Surface *tmp = NULL;
-    float zoom_factor;
-
-    blit_special_background ( LEVEL_EDITOR_BANNER_CODE + GameConfig . level_editor_edit_mode );
-
-    //--------------------
-    // Time to fill something into the top selection banner, so that the
-    // user can really has something to select from there.  But this must be
-    // done differently, depending on whether we show the menu for the floor
-    // edit mode or for the obstacle edit mode.
-    //
-    if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_SELECTION_FLOOR )
-    {
-	for ( i = 0 ; i < 9 ; i ++ )
-	{
-	    if ( selected_index >= ALL_ISOMETRIC_FLOOR_TILES ) continue;
-	    
-	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-	    
-	    if ( use_open_gl )
-	    {
-		blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5 ) ;
-	    }
-	  else
-	    {
-		//--------------------
-		// We create a scaled version of the floor tile in question
-		//
-		tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
-		
-		//--------------------
-		// Now we can show and free the scaled verion of the floor tile again.
-		//
-		our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-		SDL_FreeSurface ( tmp );
-	    }
-	    
-	    if ( selected_index == Highlight ) 
-		HighlightRectangle ( Screen , TargetRectangle );
-	    
-	    // if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
-	    selected_index ++ ;
-	}
-    }
-    else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
-    {
-	for ( i = 0 ; i < 9 ; i ++ )
-	{
-	    if ( selected_index >= NUMBER_OF_OBSTACLE_TYPES ) continue ;
-	    
-	    
-	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-	    
-	    //--------------------
-	    // We find the proper zoom_factor, so that the obstacle in question will
-	    // fit into one tile in the level editor top status selection row.
-	    //
-	    if ( use_open_gl )
-	    {
-		zoom_factor = min ( 
-		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . original_image_width ) ,
-		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . original_image_height ) );
-	    }
-	    else
-	    {
-		zoom_factor = min ( 
-		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
-		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
-	    }
-	    
-	  if ( use_open_gl )
-	  {
-	      blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ selected_index ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
-	  }
-	  else
-	  {
-	      //--------------------
-	      // We create a scaled version of the obstacle in question
-	      //
-	      tmp = zoomSurface ( obstacle_map [ selected_index ] . image . surface , zoom_factor , zoom_factor , FALSE );
-	      
-	      //--------------------
-	      // Now we can show and free the scaled verion of the floor tile again.
-	      //
-	      our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-	      SDL_FreeSurface ( tmp );
-	  }
-	  
-	  if ( selected_index == Highlight ) 
-	      HighlightRectangle ( Screen , TargetRectangle );
-	  
-	  if ( selected_index < NUMBER_OF_OBSTACLE_TYPES -1 ) selected_index ++ ;
-	}
-    }
-    else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_WALLS )
-    {
-	for ( i = 0 ; i < 9 ; i ++ )
-	{
-	    if ( selected_index >= number_of_walls ) continue ;
-	    
-	    TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-	    TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	    TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
-	    TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
-	    
-	    //--------------------
-	    // We find the proper zoom_factor, so that the obstacle in question will
-	    // fit into one tile in the level editor top status selection row.
-	    //
-	    if ( use_open_gl )
-	    {
-		zoom_factor = min ( 
-		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_width ) ,
-		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . original_image_height ) );
-	    }
-	    else
-	    {
-		zoom_factor = min ( 
-		    ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->w ) ,
-		    ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ selected_index ] ] . image . surface->h ) );
-	    }
-	    
-	    if ( use_open_gl )
-	    {
-		blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
-	    }
-	    else
-	    {
-		//--------------------
-		// We create a scaled version of the obstacle in question
-		//
-		tmp = zoomSurface ( obstacle_map [ wall_indices [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
-		
-		//--------------------
-		// Now we can show and free the scaled verion of the floor tile again.
-		//
-		our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-		SDL_FreeSurface ( tmp );
-	    }
-	    
-	    if ( selected_index == Highlight ) 
-		HighlightRectangle ( Screen , TargetRectangle );
-	    
-	    if ( selected_index < number_of_walls -1 ) selected_index ++ ;
-	}
-    }
-    else
-    {
-	GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , "\
-Unhandled level editor edit mode received.",
-				   PLEASE_INFORM , IS_FATAL );
-    }
-    
-    ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
-    ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
-    
-}; // void ShowLevelEditorTopMenu( void )
-
-*/
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints east of this
@@ -4426,6 +4661,17 @@ LevelEditor(void)
 	    {
 	      ItemDropFromLevelEditor(  );
 	    }
+
+	  //--------------------
+	  // From the level editor, it should also be possible to drop new goods
+	  // at some location via the 'G' key. (G like in Goods.)
+	  //
+	  if ( BPressed () )
+	  {
+	      if ( CtrlWasPressed() )
+		  beautify_grass_tiles_on_level ( EditLevel );
+	      while ( BPressed() ) SDL_Delay ( 1 ) ;
+	  }
 
 	  //--------------------
 	  // The FKEY can be used to toggle between 'floor' and 'obstacle' edit modes
