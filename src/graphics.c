@@ -538,14 +538,14 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 #define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
 #define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
-  ReadValueFromString (Data, DIGIT_ONE_POSITION_X_STRING, "%d", &FirstDigit_Rect.x);
-  ReadValueFromString (Data, DIGIT_ONE_POSITION_Y_STRING, "%d", &FirstDigit_Rect.y);
+  ReadValueFromString (Data, DIGIT_ONE_POSITION_X_STRING, "%hd", &FirstDigit_Rect.x);
+  ReadValueFromString (Data, DIGIT_ONE_POSITION_Y_STRING, "%hd", &FirstDigit_Rect.y);
 
-  ReadValueFromString (Data, DIGIT_TWO_POSITION_X_STRING, "%d", &SecondDigit_Rect.x);
-  ReadValueFromString (Data, DIGIT_TWO_POSITION_Y_STRING, "%d", &SecondDigit_Rect.y);
+  ReadValueFromString (Data, DIGIT_TWO_POSITION_X_STRING, "%hd", &SecondDigit_Rect.x);
+  ReadValueFromString (Data, DIGIT_TWO_POSITION_Y_STRING, "%hd", &SecondDigit_Rect.y);
 
-  ReadValueFromString (Data, DIGIT_THREE_POSITION_X_STRING, "%d", &ThirdDigit_Rect.x);
-  ReadValueFromString (Data, DIGIT_THREE_POSITION_Y_STRING, "%d", &ThirdDigit_Rect.y);
+  ReadValueFromString (Data, DIGIT_THREE_POSITION_X_STRING, "%hd", &ThirdDigit_Rect.x);
+  ReadValueFromString (Data, DIGIT_THREE_POSITION_Y_STRING, "%hd", &ThirdDigit_Rect.y);
 
   free (Data);
 

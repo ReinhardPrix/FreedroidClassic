@@ -549,8 +549,12 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 
 /*----------------------------------------------------------------------
-  find label in data and read stuff after label into dst using the FormatString
-----------------------------------------------------------------------*/
+ *  find label in data and read stuff after label into dst using the FormatString
+ *
+ * NOTE!!: be sure dst is large enough for data read by FormatString, or
+ * sscanf will crash!!
+ *
+ *----------------------------------------------------------------------*/
 void
 ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 {
