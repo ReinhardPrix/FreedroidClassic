@@ -947,6 +947,30 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
+  else if ( ( Me[0].weapon_item.type == ITEM_DAGGER ) ||
+	    ( Me[0].weapon_item.type == ITEM_SCIMITAR ) ||
+	    ( Me[0].weapon_item.type == ITEM_FALCHION ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 11 , i ) ;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[11][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
+	}
+    }
+  else if ( ( Me[0].weapon_item.type == ITEM_LONG_SWORD ) ||
+	    ( Me[0].weapon_item.type == ITEM_CLAYMORE ) ||
+	    ( Me[0].weapon_item.type == ITEM_SABER ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 12 , i ) ;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[12][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
+	}
+    }
   else if ( ItemMap [ Me[0].weapon_item.type ].item_gun_angle_change == 0 )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )

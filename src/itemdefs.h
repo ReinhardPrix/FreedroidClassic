@@ -75,6 +75,9 @@
 #define ITEM_SCIMITAR 34     // low sword
 #define ITEM_SABER 35        // medium sword
 #define ITEM_FALCHION 36     // good sword
+#define ITEM_LONG_SWORD 24  // 
+#define ITEM_CLAYMORE 26  // 
+
 
 #define ITEM_CAP 20
 #define ITEM_SMALL_HELM 50
