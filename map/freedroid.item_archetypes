@@ -1000,7 +1000,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=35 plus duration modifier=10
-File or directory name for inventory image="inventory_image_20.png"
+File or directory name for inventory image="laser_sword_red/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=350
 Item description text="In an age of high tech guns and lasers, this modified sword still reigns supreme."
@@ -1078,7 +1078,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
-File or directory name for inventory image="inventory_image_20.png"
+File or directory name for inventory image="laser_sword_red/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=450
 Item description text=" This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
@@ -1429,7 +1429,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_20.png"
+File or directory name for inventory image="laser_sword_red/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=240
 Item description text="This saber is poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
