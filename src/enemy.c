@@ -1394,12 +1394,26 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	{
 	  //--------------------
 	  // For now, we just damage the Tux according to this enemys 'damage' value.  We
-	  // don't fuss around whether this is a hit/miss yet, even if the Tux is close at
-	  // all or not or has armour or not.  In later releases, a more complex ruleset,
-	  // taking into account position, armour, maybe even bocks with the shield, should
+	  // don't fuss around whether the Tux is close at all or not.  
+	  // In later releases, a more complex ruleset,
+	  // taking into account position, maybe even bocks with the shield, should
 	  // be implemented here.
 	  //
-	  Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
+	  if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
+	    {
+	      //--------------------
+	      // If the bot hit, we reduce the energy of the Tux and maybe there
+	      // should also be some kind of scream of the Tux?
+	      //
+	      Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
+	      Influencer_Scream_Sound ( );
+	    }
+	  else
+	    {
+	      //--------------------
+	      // If the bot missed, we do nothing...
+	      //
+	    }
 	}
 
       //--------------------

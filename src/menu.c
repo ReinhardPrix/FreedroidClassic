@@ -1965,7 +1965,7 @@ PrepareNewHero (void)
   Me[0].special_item.suffix_code = ( -1 ) ;
 
   Me[0].character_class = WAR_BOT;
-  Me[0].base_vitality = 10;
+  Me[0].base_vitality = 20;
   Me[0].base_strength = 10;
   Me[0].base_dexterity = 15;
   Me[0].base_magic = 40;
