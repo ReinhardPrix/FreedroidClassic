@@ -733,7 +733,7 @@ AttackInfluence (int enemynum)
       if ( MyRandom (AGGRESSIONMAX)  >=
  	  Druidmap[ThisRobot->type].aggression )
 	{
-	  ThisRobot->firewait += drand48()*10; //MyRandom (Druidmap[ThisRobot->type].firewait);
+	  ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
 	  return;
 	}
 

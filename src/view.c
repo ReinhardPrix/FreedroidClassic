@@ -218,7 +218,7 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
-  if ( Draw_Framerate )
+  if ( GameConfig.Draw_Framerate )
     {
       TimeSinceLastFPSUpdate += Frame_Time();
       if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
@@ -236,11 +236,18 @@ Assemble_Combat_Picture (int mask)
 		       "Joy: %d %d" , joy_ax_values.x, joy_ax_values.y);
     }
 
-  if ( Draw_Energy )
+  if ( GameConfig.Draw_Energy )
     {
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
+    }
+
+  if ( GameConfig.Draw_Position )
+    {
+      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "GPS: X=%d Y=%d" , (int) (Me.pos.x) , (int) (Me.pos.y) );
     }
 
   if ( Me.mission.MustLiveTime != (-1) )

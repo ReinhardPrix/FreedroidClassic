@@ -670,9 +670,9 @@ enum
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Show Framerate: %s", Draw_Framerate? "ON" : "OFF");
+		       "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "Show Energy: %s", Draw_Energy? "ON" : "OFF");
+		       "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
 		       "Back");
 
@@ -754,11 +754,11 @@ enum
 	      break;
 	    case TOGGLE_FRAMERATE:
 	      while (EnterPressed() || SpacePressed() );
-	      Draw_Framerate=!Draw_Framerate;
+	      GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
 	      break;
 	    case SHOW_ENERGY:
 	      while (EnterPressed() || SpacePressed() );
-	      Draw_Energy=!Draw_Energy;
+	      GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
 	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );

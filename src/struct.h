@@ -60,6 +60,9 @@ color, *Color;
 typedef struct
 {
   float WantedTextVisibleTime;
+  int Draw_Framerate;
+  int Draw_Energy;
+  int Draw_Position;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

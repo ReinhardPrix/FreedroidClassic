@@ -869,9 +869,10 @@ InitNewMission ( char *MissionName )
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
-  Draw_Framerate=TRUE;
-  // Draw_Energy=FALSE;
-  Draw_Energy=TRUE;
+  GameConfig.Draw_Framerate=TRUE;
+  // GameConfig.Draw_Energy=FALSE;
+  GameConfig.Draw_Energy=TRUE;
+  GameConfig.Draw_Position=TRUE;
   RealScore = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...
@@ -1391,8 +1392,10 @@ InitFreedroid (void)
   Overall_Average=0.041;
   SkipAFewFrames = 0;
   Me.TextVisibleTime = 0;
-  GameConfig.WantedTextVisibleTime = 5;
   Me.TextToBeDisplayed = "Hello, I'm 001.";
+
+  GameConfig.WantedTextVisibleTime = 5;
+  GameConfig.Draw_Framerate=FALSE;
 
   Init_Video ();
 
@@ -1421,7 +1424,6 @@ InitFreedroid (void)
    */
   highscores = NULL;
 
-  Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
   MinMessageTime = 55;

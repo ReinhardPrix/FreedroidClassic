@@ -300,6 +300,8 @@ enum _directions
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */
 #define MAXBLASTS		100	/* max. possible Blasts visible */
 #define AGGRESSIONMAX  		100
+#define ROBOT_MAX_WAIT_BETWEEN_SHOTS 5  // how long shoud each droid wait at most until
+                                        // is considers fireing again?
 
 /* Map-related defines:
 	WARNING leave them here, they are required in struct.h

@@ -8,6 +8,8 @@ Outstanding release-critical bugs (priority: high)
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
        rp: might be related to framerate, I have ~40 fps ?!
+       jp: --> couldn't reproduce this with 20 fps on Irenes maching
+               perhaps it was due to the "level gray"-change delay?!?
 
 - (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5) 
   then also had some ghost bullets coming from nowhere on other
@@ -17,7 +19,7 @@ Outstanding release-critical bugs (priority: high)
 
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
-  containing the different phases of the console before any new release can be shipped.
+  containing the different phases of the console, or end users must be tolerant.
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
        to make sure all the constants are in the right range for slow machines
@@ -29,10 +31,6 @@ Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - (rp) Joystick shooting should determine direction more precisely
        (difficult to shoot "straight")
-
-- (jp) level-empty switch to grey is too slow and causes a "jump"
-       this should only be a shift of a vector (ne_screen) and not take any
-       time at all!!
 
 - (rp) missing "takeover announcement" of droid opponent
 
@@ -222,14 +220,13 @@ Resolved bugs
 - (rp) adapt Takeover game to the new engine
   (DONE)
 
-
-- Colors sind allgemein ein wenig verdreht seit SDL Port
-  (wird automatisch behoben mit dem Umstieg auf TrueColor mode,
-   wo es dann ohnehin keine Farbpalette mehr gibt...)
-- (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
-- level 11: console rechts unten ist verkehrt
-  (wird leicht zu beheben sein, sobald das Abspeichern von maps aus
-  dem neuen MapEditor funktioniert.)
+- DONE Colors sind allgemein ein wenig verdreht seit SDL Port
+       (wird automatisch behoben mit dem Umstieg auf TrueColor mode,
+       wo es dann ohnehin keine Farbpalette mehr gibt...)
+- DONE need to allow waypoint ON a refresh for ex. (-> level 5!)
+- DONE level 11: console rechts unten ist verkehrt
+       (wird leicht zu beheben sein, sobald das Abspeichern von maps aus
+       dem neuen MapEditor funktioniert.)
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
