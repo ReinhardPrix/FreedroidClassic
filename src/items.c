@@ -2826,12 +2826,12 @@ ShowQuickInventory ( void )
     //
     for ( i = 0 ; i < 9 ; i ++ )
     {
-	PutCharFont ( Screen , FPS_Display_BFont , 130 + i * 43 - 9 , GameConfig.screen_height - 16 , '1' + i );
+	PutCharFont ( Screen , FPS_Display_BFont , ( 130 + i * 43 - 9 ) * GameConfig.screen_width / 640 , GameConfig.screen_height - 16 , '1' + i );
 	if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
 	     ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
 	     ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
 	{
-	    TargetRect.x = 130 + i * 43 ;
+	    TargetRect.x = ( 130 + i * 43 ) * GameConfig.screen_width / 640 ;
 	    TargetRect.y = GameConfig . screen_height - 32 ;
 	    
 	    our_SDL_blit_surface_wrapper ( ItemMap [ Me [ 0 ] . Inventory [ Index ] . type ] . inv_image . Surface , 
