@@ -236,7 +236,7 @@ int zoomSurfaceY(SDL_Surface * src, SDL_Surface * dst)
      */
     csx = 0;
     csax = sax;
-    for (x = 0; x < dst->w; x++) {
+    for ( x = 0; x < ( ( Uint32 ) dst -> w ) ; x ++ ) {
 	csx += sx;
 	*csax = (csx >> 16);
 	csx &= 0xffff;
@@ -244,7 +244,7 @@ int zoomSurfaceY(SDL_Surface * src, SDL_Surface * dst)
     }
     csy = 0;
     csay = say;
-    for (y = 0; y < dst->h; y++) {
+    for ( y = 0; y < ( ( Uint32 ) dst -> h ) ; y++ ) {
 	csy += sy;
 	*csay = (csy >> 16);
 	csy &= 0xffff;
@@ -253,13 +253,13 @@ int zoomSurfaceY(SDL_Surface * src, SDL_Surface * dst)
 
     csx = 0;
     csax = sax;
-    for (x = 0; x < dst->w; x++) {
+    for (x = 0; x < ( ( Uint32 ) dst -> w ) ; x++ ) {
 	csx += (*csax);
 	csax++;
     }
     csy = 0;
     csay = say;
-    for (y = 0; y < dst->h; y++) {
+    for ( y = 0; y < ( ( Uint32 ) dst -> h ) ; y++ ) {
 	csy += (*csay);
 	csay++;
     }
@@ -275,10 +275,10 @@ int zoomSurfaceY(SDL_Surface * src, SDL_Surface * dst)
      * Draw 
      */
     csay = say;
-    for (y = 0; y < dst->h; y++) {
+    for (y = 0; y < ( ( Uint32 ) dst -> h ) ; y++ ) {
 	csax = sax;
 	sp = csp;
-	for (x = 0; x < dst->w; x++) {
+	for ( x = 0; x < ( ( Uint32 ) dst -> w ) ; x++ ) {
 	    /*
 	     * Draw 
 	     */

@@ -942,7 +942,7 @@ TextConditionIsTrue ( char* ConditionString )
 	  //--------------------
 	  // Now some extra safety, cause the ':' termination character might still be on the cookie!
 	  //
-	  if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= strlen ( CookieText ) ) 
+	  if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) >= ( ( int ) strlen ( CookieText ) ) ) 
 	    return ( TRUE ); 
 	}
 
@@ -2043,7 +2043,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 
   if ( MaxLen > 60 ) MaxLen = 60;
 
-  if ( strlen ( DefaultString ) >= MaxLen -1 ) DefaultString [ MaxLen - 1 ] = 0 ;
+  if ( ( ( int ) strlen ( DefaultString ) ) >= MaxLen -1 ) DefaultString [ MaxLen - 1 ] = 0 ;
 
   //--------------------
   // We prepare a new string, mostly empty...
@@ -2128,7 +2128,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	  // the end of the current input string or the rest of the string is being
 	  // moved and the new character inserted at the end.
 	  //
-	  if ( curpos == strlen ( input ) )
+	  if ( curpos == ( ( int ) strlen ( input ) ) )
 	    {
 	      input[curpos] = (char) key;   
 	      curpos ++;
@@ -2136,7 +2136,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	    }
 	  else
 	    {
-	      if ( strlen ( input ) == MaxLen - 1 ) input [ MaxLen - 2 ] = 0 ;
+	      if ( ( ( int ) strlen ( input ) ) == MaxLen - 1 ) input [ MaxLen - 2 ] = 0 ;
 	      for ( i = strlen ( input ) ; i >= curpos ; i -- )
 		{
 		  input [ i+1 ] = input [ i ] ;
@@ -2152,7 +2152,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	}
       else if ( key == SDLK_RIGHT )
 	{
-	  if ( curpos < strlen ( input ) ) curpos ++;
+	  if ( curpos < ( ( int ) strlen ( input ) ) ) curpos ++;
 	  // input[curpos] = '.';
 	}
       else if (key == SDLK_BACKSPACE)
@@ -2243,8 +2243,8 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
     }
   else
     {
-      for (i=0; i < strlen(tmp); i++)
-	MyCursorX += CharWidth (GetCurrentFont(), tmp[i]);
+      for ( i = 0 ; i < ( ( int ) strlen ( tmp ) ) ; i ++ )
+	MyCursorX += CharWidth ( GetCurrentFont ( ) , tmp [ i ] );
       MyCursorY = y;
     }
 

@@ -1225,7 +1225,7 @@ CopyNetworkAllEnemysToAllEnemys ( void )
 void
 SendTextMessageToClient ( int PlayerNum , char* message )
 {
-  int CommunicationResult;
+  unsigned int CommunicationResult;
   int len;
   network_command LocalCommandBuffer;
 
@@ -1313,7 +1313,7 @@ SendFullMeUpdateToClient ( int PlayerNum )
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending Full Me Update returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < ( 2 * (int) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullMeUpdateToClient(...)" , "\
@@ -1366,7 +1366,7 @@ SendFullPlayerEngramToClient ( int PlayerNum )
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( (int) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
@@ -1421,7 +1421,7 @@ SendEnemySwapSignalToClient ( int PlayerNum , int First , int Second )
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Enemy swap signal returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendEnemySwapSignalToClient(...)" , "\
@@ -1474,7 +1474,7 @@ SendFullBulletEngramToClient ( int PlayerNum )
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full BulletEngram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullBulletEngramToClient(...)" , "\
@@ -1521,13 +1521,13 @@ SendFullBlastEngramToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full blast engram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullBlastEngramToClient(...)" , "\
@@ -1574,13 +1574,13 @@ SendFullItemEngramToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full item engram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
@@ -1710,13 +1710,13 @@ SendItemUpdateToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending item update engram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
@@ -1763,13 +1763,13 @@ SendFullEnemyEngramToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
@@ -1831,13 +1831,13 @@ SendBulletUpdateEngramToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendBulletUpdateEngramToClient(...)" , "\
@@ -1898,13 +1898,13 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendEnemyUpdateEngramToClient(...)" , "\
@@ -1948,13 +1948,13 @@ SendEnemyDeletionRequestToClient ( int PlayerNum )
 
   CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending Delete All Enemys Request to Client returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendEnemyDeletionRequestToClient(...)" , "\
@@ -2128,7 +2128,7 @@ Read_Command_Buffer_From_Server ( void )
 	  DebugPrintf ( 0 , "\n\nReading command code failed.... Terminating... " );
 	  Terminate ( ERR );
 	}
-      if ( len < sizeof ( CommandFromServer [ 0 ] . command_code ) ) 
+      if ( len < ( ( int ) sizeof ( CommandFromServer [ 0 ] . command_code ) ) ) 
 	{
 	  DebugPrintf ( 0 , "\n\nReading command:  command code did not completely come over... " );
 	  Terminate ( ERR );
@@ -2146,7 +2146,7 @@ Read_Command_Buffer_From_Server ( void )
 	  DebugPrintf ( 0 , "\n\nReading command data buffer length failed.... Terminating... " );
 	  Terminate ( ERR );
 	}
-      if ( len < sizeof ( CommandFromServer [ 0 ] . data_chunk_length ) ) 
+      if ( len < ( ( int ) sizeof ( CommandFromServer [ 0 ] . data_chunk_length ) ) ) 
 	{
 	  DebugPrintf ( 0 , "\n\nReading command:  data buffer length info did not completely come over... " );
 	  Terminate ( ERR );
@@ -2674,7 +2674,7 @@ Read_Command_Buffer_From_Player_No ( int PlayerNum )
 	  DebugPrintf ( 0 , "\n\nReading command code failed.... Terminating... " );
 	  Terminate ( ERR );
 	}
-      if ( len < sizeof ( CommandFromPlayer [ PlayerNum ] . command_code ) ) 
+      if ( len < ( ( int ) sizeof ( CommandFromPlayer [ PlayerNum ] . command_code ) ) ) 
 	{
 	  DebugPrintf ( 0 , "\n\nReading command:  command code did not completely come over... " );
 	  Terminate ( ERR );
@@ -2689,7 +2689,7 @@ Read_Command_Buffer_From_Player_No ( int PlayerNum )
 	  DebugPrintf ( 0 , "\n\nReading command data buffer length failed.... Terminating... " );
 	  Terminate ( ERR );
 	}
-      if ( len < sizeof ( CommandFromPlayer [ PlayerNum ] . data_chunk_length ) ) 
+      if ( len < ( ( int ) sizeof ( CommandFromPlayer [ PlayerNum ] . data_chunk_length ) ) ) 
 	{
 	  DebugPrintf ( 0 , "\n\nReading command:  data buffer length info did not completely come over... " );
 	  Terminate ( ERR );
@@ -2914,13 +2914,13 @@ SendTextMessageToServer ( char* message )
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending TCP message returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendTextMessageToServer(...)" , "\
@@ -2962,13 +2962,13 @@ SendPlayerNameToServer ( void )
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending character name to server returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendPlayerNameToServer(...)" , "\
@@ -3010,13 +3010,13 @@ SendPlayerKeyboardEventToServer ( SDL_Event event )
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending keyboard event to server returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendPlayerKeyboardEventToServer(...)" , "\
@@ -3058,13 +3058,13 @@ SendPlayerMouseButtonEventToServer ( SDL_Event event )
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending mouse button event to server returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendPlayerMouseButtonEventToServer(...)" , "\
@@ -3111,13 +3111,13 @@ SendPlayerItemDropToServer ( int PositionCode , float x , float y )
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending item drop engram to server returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendPlayerItemDropToServer(...)" , "\
@@ -3165,13 +3165,13 @@ SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int
 
   CommunicationResult = SDLNet_TCP_Send ( sock , 
 					  & ( LocalCommandBuffer ) , 
-					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+					  2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length ); 
 
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( 0 , "\nSending item move engram to server returned : %d . " , CommunicationResult );
-  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+  if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
       GiveStandardErrorMessage ( "SendPlayerItemMoveToServer(...)" , "\

@@ -1524,7 +1524,7 @@ EncodeLevelForSaving(Level Lev)
 {
   char *LevelMem;
   int i, j;
-  int MemAmount = 0 ;		// the size of the level-data 
+  unsigned int MemAmount = 0 ;		// the size of the level-data 
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		// number of Waypoints 
   char linebuf[5000];		// Buffer 
@@ -1650,7 +1650,7 @@ jump target west: %d\n",
   // the target or was it at least sufficient? 
   // If not, we're in trouble...
   //
-  if( strlen(LevelMem) >= MemAmount) 
+  if ( strlen ( LevelMem ) >= MemAmount ) 
     {
       printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
       Terminate(ERR);
