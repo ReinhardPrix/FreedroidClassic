@@ -258,7 +258,7 @@ Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 Rotation model number=0
 Sound number=0 
 Base list price=0
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 1
@@ -278,7 +278,7 @@ Picture number=27
 Rotation model number=0
 Sound number=5
 Base list price=50
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Will not give you the same boost as a full energy capsule, but does an adequate job."
 ** End of new item specification subsection **
 
 // Item No. 2
@@ -298,7 +298,7 @@ Picture number=0
 Rotation model number=0
 Sound number=5 
 Base list price=150
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The best money can buy- usually used on the lowest energy situations."
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -333,7 +333,7 @@ Picture number=14
 Rotation model number=0
 Sound number=7
 Base list price=350
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The twin laser is small, but does its job. A somewhat cheap weapon but effective."
 ** End of new item specification subsection **
 
 // Item No. 4
@@ -353,7 +353,7 @@ Picture number=3
 Rotation model number=0
 Sound number=4
 Base list price=900
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 5
@@ -375,7 +375,7 @@ Picture number=4
 Rotation model number=0
 Sound number=1 
 Base list price=200
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 6
@@ -395,7 +395,7 @@ Picture number=1
 Rotation model number=0
 Sound number=2 
 Base list price=1
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 7
@@ -417,7 +417,7 @@ Picture number=5
 Rotation model number=0
 Sound number=6
 Base list price=100
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 8
@@ -439,7 +439,7 @@ Picture number=8
 Rotation model number=0
 Sound number=4 
 Base list price=250
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 9
@@ -461,7 +461,7 @@ Picture number=10
 Rotation model number=0
 Sound number=4 
 Base list price=300
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 10
@@ -483,7 +483,7 @@ Picture number=11
 Rotation model number=0
 Sound number=0 
 Base list price=65
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 11
@@ -505,7 +505,7 @@ Picture number=4
 Rotation model number=0
 Sound number=0 
 Base list price=450
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 12
@@ -540,7 +540,7 @@ Picture number=14
 Rotation model number=0
 Sound number=7
 Base list price=600
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="In the superior class of the laser family, the laser rifle is best known for its consistency in tight situations."
 ** End of new item specification subsection **
 
 // Item No. 13
@@ -575,7 +575,7 @@ Picture number=14
 Rotation model number=0
 Sound number=7
 Base list price=1200
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Use the high power shots in this weapon to wipe out a decent amount of enemies."
 ** End of new item specification subsection **
 
 // Item No. 14
@@ -610,7 +610,7 @@ Picture number=13
 Rotation model number=0
 Sound number=0 
 Base list price=2500
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=" This weapons name speaks for itself-more of a brute force weapon than most, it is best used on high defense enemies."
 ** End of new item specification subsection **
 
 // Item No. 15
@@ -645,7 +645,7 @@ Picture number=14
 Rotation model number=0
 Sound number=7
 Base list price=800
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Think of the laser rifle with twice the power, the twin laser has made a name for itself with its high power."
 ** End of new item specification subsection **
 
 // Item No. 16
@@ -680,7 +680,7 @@ Picture number=2
 Rotation model number=0
 Sound number=7
 Base list price=250
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
 ** End of new item specification subsection **
 
 // Item No. 17
@@ -715,7 +715,7 @@ Picture number=12
 Rotation model number=0
 Sound number=7
 Base list price=5000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This bad boy has been known to blow away enemies with a single blast. A dangerous weapon that you dont want to be on the receiving end of."
 ** End of new item specification subsection **
 
 // Item No. 18
@@ -735,7 +735,7 @@ Picture number=23
 Rotation model number=0
 Sound number=5
 Base list price=12500
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Defense is acquired at a high level with this durable piece of armor."
 ** End of new item specification subsection **
 
 // Item No. 19
@@ -755,7 +755,7 @@ Picture number=24
 Rotation model number=0
 Sound number=0 
 Base list price=30
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Your run of the mill shield, nothing special. Low priced and does its job."
 ** End of new item specification subsection **
 
 // Item No. 20
@@ -775,7 +775,7 @@ Picture number=16
 Rotation model number=0
 Sound number=0 
 Base list price=25
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A simple cover for your head. Dont expect to be incognito"
 ** End of new item specification subsection **
 
 // Item No. 21
@@ -795,7 +795,7 @@ Picture number=17
 Rotation model number=0
 Sound number=0 
 Base list price=0
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 22
@@ -830,7 +830,7 @@ Picture number=18
 Rotation model number=0
 Sound number=7
 Base list price=100
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A basic laser, has good uses in certain situations."
 ** End of new item specification subsection **
 
 // Item No. 23
@@ -865,7 +865,7 @@ Picture number=18
 Rotation model number=0
 Sound number=7
 Base list price=40
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
 ** End of new item specification subsection **
 
 // Item No. 24
@@ -902,7 +902,7 @@ Picture number=20
 Rotation model number=0
 Sound number=0 
 Base list price=350
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="In an age of high tech guns and lasers, this modified sword still reigns supreme."
 ** End of new item specification subsection **
 
 // Item No. 25
@@ -922,7 +922,7 @@ Picture number=15
 Rotation model number=0
 Sound number=5
 Base list price=40
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Does a decent job of protection."
 ** End of new item specification subsection **
 
 // Item No. 26
@@ -957,7 +957,7 @@ Picture number=20
 Rotation model number=0
 Sound number=0 
 Base list price=450
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=" This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
 ** End of new item specification subsection **
 
 // Item No. 27
@@ -992,7 +992,7 @@ Picture number=19
 Rotation model number=0
 Sound number=0 
 Base list price=120
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ** End of new item specification subsection **
 
 // Item No. 28
@@ -1028,7 +1028,7 @@ Picture number=25
 Rotation model number=0
 Sound number=0 
 Base list price=120
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A nice handy weapon, a good swing every now and then will prove useful in critical hits."
 ** End of new item specification subsection **
 
 // Item No. 29
@@ -1048,7 +1048,7 @@ Picture number=39
 Rotation model number=0
 Sound number=5
 Base list price=75
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A light garment that is basically more for looks than defense."
 ** End of new item specification subsection **
 
 // Item No. 30
@@ -1068,7 +1068,7 @@ Picture number=40
 Rotation model number=0
 Sound number=5
 Base list price=200
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Very strong for its size, does a good job of absorbing basic blows."
 ** End of new item specification subsection **
 
 // Item No. 31
@@ -1088,7 +1088,7 @@ Picture number=26
 Rotation model number=0
 Sound number=5
 Base list price=300
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Tough as nails and able to withstand medium, and some high end blows."
 ** End of new item specification subsection **
 
 // Item No. 32
@@ -1123,7 +1123,7 @@ Picture number=14
 Rotation model number=0
 Sound number=0 
 Base list price=450
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A melee weapon that requires skill and coordination to use. A fine handler can control one of the finest weapons ever made."
 ** End of new item specification subsection **
 
 // Item No. 33
@@ -1143,7 +1143,7 @@ Picture number=43
 Rotation model number=0
 Sound number=7
 Base list price=250
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Better than a buckler, but only a bit more effective."
 ** End of new item specification subsection **
 
 // Item No. 34
@@ -1179,7 +1179,7 @@ Picture number=21
 Rotation model number=0
 Sound number=0 
 Base list price=120
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A reliable weapon whose destructive history is well known over the years."
 ** End of new item specification subsection **
 
 // Item No. 35
@@ -1215,7 +1215,7 @@ Picture number=20
 Rotation model number=0
 Sound number=0 
 Base list price=240
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This saber is poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
 ** End of new item specification subsection **
 
 // Item No. 36
@@ -1251,7 +1251,7 @@ Picture number=21
 Rotation model number=0
 Sound number=0 
 Base list price=310
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A short, but sharp and very dangerous sword. Has many uses other than offensive if used correctly."
 ** End of new item specification subsection **
 
 // Item No. 37
@@ -1286,7 +1286,7 @@ Picture number=28
 Rotation model number=0
 Sound number=0 
 Base list price=60
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
 ** End of new item specification subsection **
 
 // Item No. 38
@@ -1321,7 +1321,7 @@ Picture number=19
 Rotation model number=0
 Sound number=0 
 Base list price=50
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal&but then again they didnt have the extra laser edge to depend on. "
 ** End of new item specification subsection **
 
 // Item No. 39
@@ -1356,7 +1356,7 @@ Picture number=31
 Rotation model number=0
 Sound number=0 
 Base list price=50
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="More of a weapon for those with skill, as this is not known for a brute attack but more of a balanced one."
 ** End of new item specification subsection **
 
 // Item No. 40
@@ -1391,7 +1391,7 @@ Picture number=19
 Rotation model number=0
 Sound number=0 
 Base list price=80
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The power of an axe combined with modern technology is a force to be reckoned with. This easily acquired but much talked about weapon has a storied past."
 ** End of new item specification subsection **
 
 // Item No. 41
@@ -1411,7 +1411,7 @@ Picture number=30
 Rotation model number=0
 Sound number=5
 Base list price=50
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 42
@@ -1431,7 +1431,7 @@ Picture number=29
 Rotation model number=0
 Sound number=5 
 Base list price=150
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 43
@@ -1451,7 +1451,7 @@ Picture number=6
 Rotation model number=0
 Sound number=0 
 Base list price=90
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
 ** End of new item specification subsection **
 
 // Item No. 44
@@ -1471,7 +1471,7 @@ Picture number=32
 Rotation model number=0
 Sound number=5 
 Base list price=1000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 45
@@ -1491,7 +1491,7 @@ Picture number=33
 Rotation model number=0
 Sound number=5 
 Base list price=1000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Teleporting takes on a whole new face with this book-use it wisely."
 ** End of new item specification subsection **
 
 // Item No. 46
@@ -1511,7 +1511,7 @@ Picture number=33
 Rotation model number=0
 Sound number=5 
 Base list price=1000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The destructive magic of this book is best used in tight situations, when the enemies have an upper hand."
 ** End of new item specification subsection **
 
 // Item No. 47
@@ -1531,7 +1531,7 @@ Picture number=33
 Rotation model number=0
 Sound number=5 
 Base list price=1000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Another damaging book, this one having a similar effect to dropping a house on an enemy."
 ** End of new item specification subsection **
 
 // Item No. 48
@@ -1551,7 +1551,7 @@ Picture number=34
 Rotation model number=0
 Sound number=5
 Base list price=100
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Regain a good amount of energy with this handy item."
 ** End of new item specification subsection **
 
 // Item No. 49
@@ -1571,7 +1571,7 @@ Picture number=35
 Rotation model number=0
 Sound number=5
 Base list price=100
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 50
@@ -1591,7 +1591,7 @@ Picture number=36
 Rotation model number=0
 Sound number=0 
 Base list price=75
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A rather useful helmet, has a few defense issues here and there but mainly is worth the wear."
 ** End of new item specification subsection **
 
 // Item No. 51
@@ -1611,7 +1611,7 @@ Picture number=41
 Rotation model number=0
 Sound number=0 
 Base list price=0
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 52
@@ -1631,7 +1631,7 @@ Picture number=42
 Rotation model number=0
 Sound number=0 
 Base list price=0
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 53
@@ -1651,7 +1651,7 @@ Picture number=36
 Rotation model number=0
 Sound number=0 
 Base list price=175
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Now this is head protection. Feel safe with sturdy iron protecting your head. Not as comfortable as other hats&
 ** End of new item specification subsection **
 
 // Item No. 54
@@ -1671,7 +1671,7 @@ Picture number=38
 Rotation model number=0
 Sound number=0 
 Base list price=275
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Top of the line head gear, manages to protect against a myriad of close range and long range attacks."
 ** End of new item specification subsection **
 
 // Item No. 55
@@ -1691,7 +1691,7 @@ Picture number=37
 Rotation model number=0
 Sound number=0 
 Base list price=375
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Used by select fighter this helmet is very hard to penetrate. Can be counted on for a long amount of time, and if taken care of can be used frequently."
 ** End of new item specification subsection **
 
 // Item No. 56
@@ -1711,7 +1711,7 @@ Picture number=44
 Rotation model number=0
 Sound number=7
 Base list price=450
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="A powerful shield in the medium size, not as compact as a small shield but also not as protective as a large one."
 ** End of new item specification subsection **
 
 // Item No. 57
@@ -1731,7 +1731,7 @@ Picture number=45
 Rotation model number=0
 Sound number=4
 Base list price=9000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 58
@@ -1751,7 +1751,7 @@ Picture number=46
 Rotation model number=0
 Sound number=4
 Base list price=9000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 59
@@ -1771,7 +1771,7 @@ Picture number=47
 Rotation model number=0
 Sound number=4
 Base list price=9000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 60
@@ -1806,7 +1806,7 @@ Picture number=12
 Rotation model number=0
 Sound number=7
 Base list price=5000
-Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
