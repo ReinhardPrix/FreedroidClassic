@@ -180,16 +180,12 @@ Maximum number of Random Droids=4
 Minimum number of Random Droids=4
 Allowed Type of Random Droid for this level: 821
 
-S**pecialForce: Type=821 X=15 Y=3 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-S**pecialForce: Type=821 X=13 Y=5 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-S**pecialForce: Type=821 X=16 Y=8 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-S**pecialForce: Type=821 X=31 Y=8 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0
-S**pecialForce: Type=821 X=4 Y=9 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-S**pecialForce: Type=821 X=16 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-S**pecialForce: Type=821 X=14 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-S**pecialForce: Type=420 X=15 Y=32.5 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
 SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis -- Researcher "
 SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard"
+
+SpecialForce: Type=124 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="InTempleBot1StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=124 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot1StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=124 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot2StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Basic Temple Bot"
 
 ** End of this levels droid data **
 

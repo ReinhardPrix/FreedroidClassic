@@ -1749,8 +1749,8 @@ CreateNewMapLevel( void )
   //
   for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-      NewLevel -> AllWaypoints [ i ] . x = -1 ;
-      NewLevel -> AllWaypoints [ i ] . y = -1 ;
+      NewLevel -> AllWaypoints [ i ] . x = 0 ;
+      NewLevel -> AllWaypoints [ i ] . y = 0 ;
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
 	{

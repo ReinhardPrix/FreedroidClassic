@@ -2099,6 +2099,12 @@ DecodeLoadedLeveldata ( char *data )
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
+      if ( ( loadlevel->AllWaypoints[i].x == 255 ) && ( loadlevel->AllWaypoints[i].y == 255 ) )
+	{
+	  loadlevel->AllWaypoints[i].x=0;
+	  loadlevel->AllWaypoints[i].y=0;
+	}
+
       ThisLinePointer = strstr ( ThisLine , "connections: " ) +strlen("connections: ");
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
