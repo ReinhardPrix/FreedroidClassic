@@ -198,3 +198,127 @@ DisplayBlock (int x, int y,
 
 }				/* DisplayBlock */
 
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBreite)
+{
+  int i, j;
+  unsigned char *source = MapBlocks + BLOCKBREITE * BLOCKHOEHE * BlockN;
+  unsigned char *target = Parameter_Screen + LY * SBreite + LX;
+
+  if (Parameter_Screen == RealScreen)
+    target=Outline320x200 + LY * SBreite + LX;
+
+  //DebugPrintf("\nvoid SmallBlock(...): Function call confirmed.");
+  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
+    return;
+
+  Lock_SDL_Screen();
+
+  for (i = 0; i < 8; i++)
+    {
+      for (j = 0; j < 8; j++)
+	{
+	  *target = *source;
+	  target++;
+	  if (Parameter_Screen == RealScreen)
+	    {
+#ifdef DRAW_TO_SCREEN_VARIABLE
+	      putpixel (screen, LX + i, LY + j, *source );
+#else
+	      *target=*source;
+#endif
+	    }
+	  source += 4;
+	  //Screen[LX+j+(LY+i)*SBreite]=
+	  //MapBlocks[BlockN*BLOCKBREITE*BLOCKHOEHE+j*4+i*BLOCKBREITE*4];
+	}
+      target += SBreite - 8;
+      source += 4 * BLOCKBREITE - 4 * 8;
+    }
+
+  Unlock_SDL_Screen();
+
+  //DebugPrintf("\nvoid SmallBlock(...): Usual end of function reached.");
+}				// void SmallBlock(...)
+
+/*-----------------------------------------------------------------
+ * @Desc: setzt Block *block (len*height) an angegebener
+ *	Bildschirmposition x/y in den angeg. Bildschirm
+ *	-beachtet dabei TRANSPARENTCOLOR 
+ *						
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void
+DisplayMergeBlock (int x, int y, unsigned char *block,
+		   int len, int height, unsigned char *Parameter_screen)
+{
+  int row, col;
+  unsigned char *Screenpos;
+  unsigned char *source = block;
+
+  Screenpos = Parameter_screen + x + y * SCREENBREITE;
+
+  if (Parameter_screen == NULL)
+    {
+      return;
+    }
+
+
+  if (Parameter_screen == RealScreen)
+    {
+      Screenpos = Outline320x200 + x + y * SCREENBREITE;
+    }
+
+
+  /* PORT: we do as Johannes did in DisplayBlock(): */
+  /*
+  if (Parameter_screen == RealScreen)
+    {
+
+      Lock_SDL_Screen();
+
+      for (col = 0; col < height; col++)
+	{
+	  for (row = 0; row < len; row++)
+	    {
+	      // SDL vga_setcolor (*source);
+	      if (*source != TRANSPARENTCOLOR)
+		// putpixel (screen, x + row, y + col, *source );
+		putpixel (screen, x + row, y + col, *source );
+	      source++;
+	    } // for row 
+	} // for col 
+
+      Unlock_SDL_Screen();
+
+      SDL_UpdateRect(screen, x, y, len, height);
+    }
+else
+    */
+
+    for (row = 0; row < height; row++)
+      {
+	for (col = 0; col < len; col++)
+	  {
+	    if (*source != TRANSPARENTCOLOR)
+	      *Screenpos++ = *source++;
+	    else
+	      {
+		Screenpos++;
+		source++;
+	      }
+	  }			/* for (col) */
+	Screenpos += SCREENBREITE - len;
+      }				/* for (row) */
+
+  return;
+
+}				/* DisplayMergeBlock */
+
