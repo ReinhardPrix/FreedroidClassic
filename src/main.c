@@ -124,10 +124,10 @@ main (int argc, char * argv[])
    *  this function exits program when error, so we don't need to 
    *  check its success  (dunno if that's good design?)
    */
-  sound_on = TRUE;	 /* default value, can be overridden by command-line */
-  use_open_gl = FALSE;	 /* default value, can be overridden by command-line */
-  debug_level = -1;       /* -1: shut up all debug ... 0=no debug 1=first debug level (at the moment=all) */
-  fullscreen_on = TRUE; /* use X11-window or full screen */
+  sound_on = TRUE;	 // default value, can be overridden by command-line 
+  use_open_gl = TRUE;	 // default value, can be overridden by command-line 
+  debug_level = -1;      // -1: shut up all debug ... 0=no debug 1=first debug level (at the moment=all) 
+  fullscreen_on = TRUE;  // use X11-window or full screen 
   joy_sensitivity = 1;
   mouse_control = TRUE;
   classic_user_rect = FALSE;

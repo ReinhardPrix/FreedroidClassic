@@ -1013,18 +1013,18 @@ under the terms of the GNU General Public License.\n\
 For more information about these matters, see the file named COPYING.\n";
 
 
-char usage_string[] =
-  "Usage: freedroid [-v|--version] \n\
-                    [-q|--nosound] \n\
-                    [-s|--sound] \n\
-                    [-f|--fullscreen] [-w|--window]\n\
-                    [-j|--sensitivity]\n\
-                    [-d|--debug=LEVEL]\n\
+char usage_string[] ="\
+Usage: freedroid [-v|--version] \n\
+                 [-s|--sound] [-q|--nosound] \n\
+                 [-o|--open_gl] [-n|--no_open_gl]\n\
+                 [-f|--fullscreen] [-w|--window]\n\
+                 [-j|--sensitivity]\n\
+                 [-d|--debug=LEVEL]\n\
 \n\
 Please report bugs either by entering them into the bug-tracking\n\
 system on our sourceforge-website via this link:\n\n\
 http://sourceforge.net/projects/freedroid/\n\n\
-Or even better, report them by sending e-mail to:\n\n\
+or EVEN BETTER, report them by sending e-mail to:\n\n\
 freedroid-discussion@lists.sourceforge.net\n\n\
 Thanks a lot in advance, the Freedroid dev team.\n\n";
 
@@ -1069,8 +1069,8 @@ ParseCommandLine (int argc, char *const argv[])
 
 	case 'h':
 	case '?':
-	  printf (usage_string);
-	  exit (0);
+	  printf ( usage_string );
+	  exit ( 0 );
 	  break;
 
 	case 'o':
