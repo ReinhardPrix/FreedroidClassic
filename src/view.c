@@ -418,6 +418,8 @@ GetConceptInternFenster (void)
 
   char* OutputPointer=InternWindow;
 
+  Terminate(ERR);
+
   // Darstellen der blo"sen Deckkarte 
   for (i = 0; i < CurLevel->ylen; i++)
     {
@@ -479,19 +481,17 @@ GetConceptInternFenster (void)
 	    }
 
 	  // Das ganze Fenster entweder schwarz oder weiss f"arben
-	  Affected = MyMalloc (CurLevel->xlen * CurLevel->ylen + 100);
+	  Affected = MyMalloc ((CurLevel->xlen+100) * (CurLevel->ylen + 100));
 	  memset (Affected, CurLevel->xlen * CurLevel->ylen, FALSE);
 
 	  if ( (AllBullets[i].time_in_frames % 2) == 1)
 	    {
-//                                      FlashWindow(0);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
 			    FLASHCOLOR1, OutputPointer,
 			    INTERNBREITE * BLOCKBREITE);
 	    }
 	  if ( (AllBullets[i].time_in_frames % 2) == 0)
 	    {
-//                                      FlashWindow(15);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
 			    FLASHCOLOR2, OutputPointer,
 			    INTERNBREITE * BLOCKBREITE);
@@ -507,11 +507,10 @@ GetConceptInternFenster (void)
 	      if (Feindesliste[j].levelnum != CurLevel->levelnum)
 		continue;
 	      if (Affected
-		  [((int) rintf (Feindesliste[j].pos.x)) / BLOCKBREITE +
-		   ((int) rintf (Feindesliste[j].pos.y)) / BLOCKHOEHE *
-		   CurLevel->xlen]
-		  && (!Druidmap[((int) rintf (Feindesliste[j].type))].
-		      flashimmune))
+		  [(int)(((int) (rintf (Feindesliste[j].pos.x)) / BLOCKBREITE) +
+		   ((int) (rintf (Feindesliste[j].pos.y)) / BLOCKHOEHE) *
+		   CurLevel->xlen )]
+		  && (!Druidmap[ Feindesliste[j].type ].flashimmune))
 		{
 		  Feindesliste[j].energy -= Bulletmap[FLASH].damage / 2;
 		}
@@ -638,7 +637,6 @@ PutEnemy (int Enum)
 void
 PutBullet (int BulletNummer)
 {
-  int i;
   Bullet CurBullet = &AllBullets[BulletNummer];
   unsigned char *bulletpic;
 
@@ -658,42 +656,9 @@ PutBullet (int BulletNummer)
    */
   if (CurBullet->type == FLASH)
     {
-
-      /*
-       * Wenn der FLASH vorbei ist, l"oschen und fertig
-       */
-
-      if ( CurBullet->time_in_frames > FLASH_DURATION_IN_FRAMES )
-	{
-	  CurBullet->time_in_frames = 0;
-	  CurBullet->time_in_seconds = 0;
-	  CurBullet->type = OUT;
-	  CurBullet->mine = FALSE;
-	  return;
-	}
-
-      /*
-       * Alle sichtbaren enemys, die nicht immun sind besch"adigen
-       * Auch den Influencer wenn er nicht immun ist besch"adigen
-       */
-
-      for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-	{
-	  if ((Feindesliste[i].onscreen) &
-	      (!Druidmap[Feindesliste[i].type].flashimmune))
-	    {
-	      Feindesliste[i].energy -= Bulletmap[FLASH].damage / 2;
-	    }
-	}
-
-      if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
-	Me.energy -= Bulletmap[FLASH].damage / 2;
-
-
-      /*
-       * Das ganze Fenster entweder schwarz oder weiss f"arben
-       */
-
+      // Now the whole window will be filled with either white
+      // or black each frame until the flash is over.  (Flash 
+      // deletion after some time is done in CheckBulletCollisions.)
       if ( (CurBullet->time_in_frames % 2) == 1)
 	{
 	  FlashWindow (0);
@@ -704,9 +669,7 @@ PutBullet (int BulletNummer)
 	  FlashWindow (15);
 	  return;
 	}
-
-
-    }
+    } // if type == FLASH
 
 
   if (PutObject (CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE)
@@ -722,7 +685,7 @@ PutBullet (int BulletNummer)
   DebugPrintf
     ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
-}				/* PutBullet */
+}	/* PutBullet */
 
 /*@Function============================================================
 @Desc:  PutBlast: setzt das Blast BlastNummer ins InternWindow

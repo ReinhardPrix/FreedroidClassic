@@ -226,72 +226,113 @@ CheckBulletCollisions (int num)
   Bullet CurBullet = &AllBullets[num];
   static int FBTZaehler = 0;
 
-  if (CurBullet->type == FLASH)
-    return;
-  if (CurBullet->type == OUT)
-    return;
-
-  /* Kollision der Bullets mit dem Hintergrund feststellen */
-  if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
+  switch (CurBullet->type)
     {
-      DeleteBullet (num);
-      return;			/* Bullet ist hin */
-    }
-
-  /* Influence getroffen ?? */
-  xdist = Me.pos.x - CurBullet->pos.x;
-  ydist = Me.pos.y - CurBullet->pos.y;
-  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
-    {
-      GotHitSound ();
-
-      if (!InvincibleMode)
-	Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
-
-      // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
-      // ATTENTION!  These instructions belong here and must not be moved up.
-      CurBullet->type = OUT;
-      CurBullet->mine = FALSE;
-      return;			/* Bullet ist hin */
-    }
-
-  /* Alle Enemys checken */
-  for (i = 0; i < NumEnemys; i++)
-    {
-      if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
-	continue;
-
-      xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
-      ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
-
-      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+      // Never do any collision checking if the bullet is OUT already...
+    case OUT:
+      return;
+      break;
+      
+      // Next we handle the case that the bullet is of type FLASH
+    case FLASH:
+      // if the flash is over, just delete it and return
+      if ( CurBullet->time_in_frames > FLASH_DURATION_IN_FRAMES )
 	{
-	  Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
-	  if (!CurBullet->mine)
-	    {
-	      FBTZaehler++;
-	    }
+	  CurBullet->time_in_frames = 0;
+	  CurBullet->time_in_seconds = 0;
 	  CurBullet->type = OUT;
 	  CurBullet->mine = FALSE;
-	  break;		/* Schleife beenden */
-	}			/* if getroffen */
-
-    }				/* for Feindesliste */
-
-}				/* CheckBulletCollisions */
-
+	  return;
+	}
+      
+      // if the flash is not yet over, do some checking for who gets
+      // hurt by it.  
+      // Two different methode for doing this are available:
+      // The first but less elegant Method is just to check for
+      // flash immunity, for distance and visiblity.
+      // The second and more elegant method is to recursively fill
+      // out the room where the flash-maker is in and to hurt all
+      // robots in there except of course for those immune.
+      
+      for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+	{
+	  if ((Feindesliste[i].onscreen) &
+	      (!Druidmap[Feindesliste[i].type].flashimmune))
+	    {
+	      Feindesliste[i].energy -= Bulletmap[FLASH].damage / 2;
+	    }
+	}
+      
+      if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
+	Me.energy -= Bulletmap[FLASH].damage / 2;
+      
+      return;
+      break;
+    default:
+      
+      /* Kollision der Bullets mit dem Hintergrund feststellen */
+      if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
+	{
+	  DeleteBullet (num);
+	  return;			/* Bullet ist hin */
+	}
+      
+      /* Influence getroffen ?? */
+      xdist = Me.pos.x - CurBullet->pos.x;
+      ydist = Me.pos.y - CurBullet->pos.y;
+      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	{
+	  GotHitSound ();
+	  
+	  if (!InvincibleMode)
+	    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
+	  
+	  // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
+	  // ATTENTION!  These instructions belong here and must not be moved up.
+	  CurBullet->type = OUT;
+	  CurBullet->mine = FALSE;
+	  return;			/* Bullet ist hin */
+	}
+      
+      /* Alle Enemys checken */
+      for (i = 0; i < NumEnemys; i++)
+	{
+	  if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
+	    continue;
+	  
+	  xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
+	  ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
+	  
+	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	    {
+	      Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
+	      if (!CurBullet->mine)
+		{
+		  FBTZaehler++;
+		}
+	      CurBullet->type = OUT;
+	      CurBullet->mine = FALSE;
+	      break;		/* Schleife beenden */
+	    }			/* if getroffen */
+	  
+	}				/* for Feindesliste */
+      return;
+      break;
+    } // switch ( Bullet-Type )
+} /* CheckBulletCollisions */
+  
 /*@Function============================================================
-@Desc: CheckBlastCollsions(int num)
-checkt Collisionen des Blasts num mit Bullets und Druids
-UND reagiert darauf
-
-LastBlastHit: Diese Variable dient dazu, doppelte Messages zu unter-
-dr"ucken. Blasts schaden mehrere Phasen lang. Der Z"ahler LastBlastHit
-gibt den Zeitabstand zur letzten Verletzung durch Blasts an.
-Er wird in der Hauptschleife erh"oht.
-@Ret: void 
-@Int:
-* $Function----------------------------------------------------------*/
+  @Desc: CheckBlastCollsions(int num)
+  checkt Collisionen des Blasts num mit Bullets und Druids
+  UND reagiert darauf
+  
+  LastBlastHit: Diese Variable dient dazu, doppelte Messages zu unter-
+  dr"ucken. Blasts schaden mehrere Phasen lang. Der Z"ahler LastBlastHit
+  gibt den Zeitabstand zur letzten Verletzung durch Blasts an.
+  Er wird in der Hauptschleife erh"oht.
+  @Ret: void 
+  @Int:
+  * $Function----------------------------------------------------------*/
 void
 CheckBlastCollisions (int num)
 {
