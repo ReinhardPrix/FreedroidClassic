@@ -904,7 +904,7 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
   int i;
   int action_number;
 
-  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+  if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 			   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
@@ -1079,7 +1079,7 @@ ShowCurrentTextWindow ( void )
   // black rectangle in the top status banner.
   //
 
-  if ( CursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
+  if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
     {
       // DebugPrintf( 2  , "\nCursor is in userfenster... --> see if hovering over an item...");
 

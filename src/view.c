@@ -3147,7 +3147,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 void
 PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask , int highlight )
 {
-  int phase = AllEnemys[Enum].phase;
+  int phase = AllEnemys [ Enum ] . phase;
   int RotationModel;
   int RotationIndex;
   float darkness ;
@@ -3431,16 +3431,6 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		}
 	    }
 	}
-      
-	  
-
-
-
-
-
-
-
-
 
 
       TargetRectangle . x = 

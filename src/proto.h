@@ -132,6 +132,8 @@ EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 EXTERN int get_light_strength ( moderately_finepoint target_pos );
 EXTERN void clear_all_loaded_tux_images ( int with_free );
+EXTERN int set_rotation_index_for_this_robot ( enemy* ThisRobot );
+EXTERN int set_rotation_model_for_this_robot ( enemy* ThisRobot );
 
 // open_gl.c 
 #undef EXTERN
@@ -361,8 +363,8 @@ EXTERN item* GetHeldItemPointer( void );
 EXTERN Item FindPointerToPositionCode ( int PositionCode , int player_num ) ;
 EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
-EXTERN int CursorIsInUserRect( int x , int y );
-EXTERN int CursorIsInInvRect( int x , int y );
+EXTERN int MouseCursorIsInUserRect( int x , int y );
+EXTERN int MouseCursorIsInInvRect( int x , int y );
 EXTERN int GetHeldItemCode ( void );
 EXTERN int GetInventorySquare_x( int x );
 EXTERN int GetInventorySquare_y( int x );
@@ -516,6 +518,7 @@ EXTERN int GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle
 EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
+EXTERN int CursorIsInRect ( SDL_Rect* our_rect , int x , int y );
 EXTERN int CursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );

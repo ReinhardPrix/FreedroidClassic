@@ -1740,28 +1740,28 @@ Tux invenrtory.  Something must have gone awry...",
  * i.e. combat rectangle or not.
  * ---------------------------------------------------------------------- */
 int 
-CursorIsInUserRect( int x , int y )
+MouseCursorIsInUserRect( int x , int y )
 {
   if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
   if ( x < User_Rect.x ) return ( FALSE );
   if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
   if ( y < User_Rect.y ) return ( FALSE );
   return ( TRUE );
-}; // int CursorIsInUserRect( int x , int y )
+}; // int MouseCursorIsInUserRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the user
  * i.e. combat rectangle or not.
  * ---------------------------------------------------------------------- */
 int 
-CursorIsInInvRect( int x , int y )
+MouseCursorIsInInvRect( int x , int y )
 {
   if ( x > InventoryRect.x + InventoryRect.w ) return ( FALSE );
   if ( x < InventoryRect.x ) return ( FALSE );
   if ( y > InventoryRect.y + InventoryRect.h ) return ( FALSE );
   if ( y < InventoryRect.y ) return ( FALSE );
   return ( TRUE );
-}; // int CursorIsInInvRect( int x , int y )
+}; // int MouseCursorIsInInvRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
@@ -2620,7 +2620,7 @@ ManageInventoryScreen ( void )
 	      Me [ 0 ] . aux2_item . currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
+      else if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in user rect!" );
 	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
@@ -2681,7 +2681,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the user_rect, i.e. the combat window, then
       // the item should be dropped onto the players current location
       //
-      if ( CursorIsInUserRect ( CurPos.x , CurPos.y ) )
+      if ( MouseCursorIsInUserRect ( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the floor of the combat window!" );
 	  Item_Held_In_Hand = ( -1 );

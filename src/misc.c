@@ -192,6 +192,30 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
  * inventory screen toggle button or not.
  * ---------------------------------------------------------------------- */
 int
+CursorIsInRect ( SDL_Rect* our_rect , int x , int y )
+{
+  //--------------------
+  // Now we can start to check if the mouse cursor really is on that
+  // rectangle or not.
+  //
+  if ( x > our_rect -> x + our_rect -> w ) return ( FALSE );
+  if ( x < our_rect -> x ) return ( FALSE );
+  if ( y > our_rect -> y + our_rect -> h ) return ( FALSE );
+  if ( y < our_rect -> y ) return ( FALSE );
+
+  //--------------------
+  // So since the cursor is not outside of this rectangle, it must
+  // we inside, and so we'll return this answer.
+  //
+  return ( TRUE );
+
+}; // int CursorIsInRect( SDL_rect* our_rect , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * inventory screen toggle button or not.
+ * ---------------------------------------------------------------------- */
+int
 CursorIsOnButton( int ButtonIndex , int x , int y )
 {
   //--------------------
@@ -206,23 +230,13 @@ button index given exceeds the number of buttons defined in freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  //--------------------
-  // Now that we know we have been given a valid button index,
-  // we can start to check if the mouse cursor really is on that
-  // rectangle or not.
-  //
-  if ( x > AllMousePressButtons[ ButtonIndex ] . button_rect . x + 
-       AllMousePressButtons[ ButtonIndex ] . button_rect . w  ) return ( FALSE );
-  if ( x < AllMousePressButtons[ ButtonIndex ] . button_rect . x ) return ( FALSE );
-  if ( y > AllMousePressButtons[ ButtonIndex ] . button_rect . y + 
-       AllMousePressButtons[ ButtonIndex ] . button_rect . h ) return ( FALSE );
   if ( y < AllMousePressButtons[ ButtonIndex ] . button_rect . y ) return ( FALSE );
 
   //--------------------
   // So since the cursor is not outside of this rectangle, it must
   // we inside, and so we'll return this answer.
   //
-  return ( TRUE );
+  return ( CursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
 
 }; // int CursorIsOnButton( int ButtonIndex , int x , int y )
 

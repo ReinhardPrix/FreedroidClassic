@@ -195,7 +195,7 @@ closed_chest_below_mouse_cursor ( int player_num )
   int i;
   int obst_index ;
 
-  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
+  if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
 							       (float) ServerThinksInputAxisX ( player_num ) , 
@@ -246,7 +246,7 @@ smashable_barred_below_mouse_cursor ( int player_num )
   int i;
   int obst_index ;
 
-  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+  if ( MouseCursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 			   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
@@ -2236,66 +2236,94 @@ CheckInfluenceEnemyCollision (void)
 /* ----------------------------------------------------------------------
  * This function checks if there is some living droid below the current
  * mouse cursor and returns the index number of this droid in the array.
+ * 
+ * Earlier we did this by computing the map location the mouse was pointing
+ * to and using that for the computation of the distance to droid coordinates.
+ * The problem with this method is, that some droids are very 'high' in
+ * the sense that the graphics (e.g. 302 body) is very far away from the
+ * 'foot' point, where the droid is in X-Y coordinates on the map.  Therefore
+ * some correction has to be done to fix this.  We can't use the map position
+ * of the mouse any more... except maybe to exclude some bots from the start.
+ *
  * ---------------------------------------------------------------------- */
 int 
 GetLivingDroidBelowMouseCursor ( int player_num )
 {
-  int i;
-  float Mouse_Blocks_X, Mouse_Blocks_Y;
-  int TargetFound = (-1);
-  float DistanceFound = 1000;
-  float CurrentDistance;
-  enemy* this_bot;
+    int i;
+    float Mouse_Blocks_X, Mouse_Blocks_Y;
+    int TargetFound = (-1);
+    // float DistanceFound = 1000;
+    // float CurrentDistance;
+    enemy* this_bot;
+    SDL_Rect enemy_screen_rectangle;
+    int RotationModel, RotationIndex;
+    iso_image* our_iso_image ;
 
-  Mouse_Blocks_X = translate_pixel_to_map_location ( player_num , 
-						     (float) ServerThinksInputAxisX ( player_num ) , 
-						     (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-  Mouse_Blocks_Y = translate_pixel_to_map_location ( player_num , 
-						     (float) ServerThinksInputAxisX ( player_num ) , 
-						     (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-
-  //--------------------
-  // We make sure the first and last but indices for the current 
-  // level are at least halfway correct...
-  //
-  occasionally_update_first_and_last_bot_indices ( );
-
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-  // for (i = 0; i < Number_Of_Droids_On_Ship; i++)
-  for ( i  = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
-	i <=  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
+    Mouse_Blocks_X = translate_pixel_to_map_location ( player_num , 
+						       (float) ServerThinksInputAxisX ( player_num ) , 
+						       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+    Mouse_Blocks_Y = translate_pixel_to_map_location ( player_num , 
+						       (float) ServerThinksInputAxisX ( player_num ) , 
+						       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+    
+    //--------------------
+    // We make sure the first and last but indices for the current 
+    // level are at least halfway correct...
+    //
+    occasionally_update_first_and_last_bot_indices ( );
+    
+    // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    // for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+    for ( i  = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
+	  i <=  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
     {
-      this_bot = & ( AllEnemys [ i ] );
+	this_bot = & ( AllEnemys [ i ] );
+	
+	if ( this_bot -> Status == OUT)
+	    continue;
+	if ( this_bot -> pos . z != Me [ player_num ] . pos . z )
+	    continue;
+	if ( fabsf ( this_bot -> pos . x - ( Mouse_Blocks_X ) ) >= 5.0 )
+	    continue;
+	if ( fabsf ( this_bot -> pos . y - ( Mouse_Blocks_Y ) ) >= 5.0 )
+	    continue;
+	
+	//--------------------
+	// We properly set the direction this robot is facing.
+	//
+	RotationIndex = set_rotation_index_for_this_robot ( this_bot ) ;
+	
+	//--------------------
+	// We properly set the rotation model number for this robot, i.e.
+	// which shape (like 302, 247 or proffa) to use for drawing this bot.
+	//
+	RotationModel = set_rotation_model_for_this_robot ( this_bot ) ;
 
-      if ( this_bot -> Status == OUT)
-	continue;
-      if ( this_bot -> pos . z != Me [ player_num ] . pos . z )
-	continue;
-      if ( fabsf ( this_bot -> pos . x - ( Mouse_Blocks_X ) ) >= DROID_SELECTION_TOLERANCE )
-	continue;
-      if ( fabsf ( this_bot -> pos . y - ( Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
-	continue;
+	our_iso_image = & ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) this_bot -> animation_phase ] ) ;
 
-      CurrentDistance = 
-	( this_bot -> pos . x - Mouse_Blocks_X ) *
-	( this_bot -> pos . x - Mouse_Blocks_X ) +
-	( this_bot -> pos . y - Mouse_Blocks_Y ) *
-	( this_bot -> pos . y - Mouse_Blocks_Y ) ;
+	enemy_screen_rectangle . x = 
+	    translate_map_point_to_screen_pixel ( this_bot -> pos . x , this_bot -> pos . y , TRUE ) + 
+	    our_iso_image -> offset_x ;
+	enemy_screen_rectangle . y = 
+	    translate_map_point_to_screen_pixel ( this_bot -> pos . x , this_bot -> pos . y , FALSE ) +
+	    our_iso_image -> offset_y ;
+	enemy_screen_rectangle . w = our_iso_image -> original_image_width ;
+	enemy_screen_rectangle . h = our_iso_image -> original_image_height ;
 
-      if ( CurrentDistance < DistanceFound )
+	if ( CursorIsInRect ( & ( enemy_screen_rectangle ) , ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
+			      ServerThinksInputAxisY ( player_num ) + User_Rect . h / 2 + User_Rect . y ) )
 	{
-	  DistanceFound = CurrentDistance ;
-	  TargetFound = i;
+	    TargetFound = i;
 	}      
 
     }
-
-  //--------------------
-  // It seems that we were unable to locate a living droid under the mouse 
-  // cursor.  So we return, giving this very same message.
-  //
-  return ( TargetFound );
-
+    
+    //--------------------
+    // It seems that we were unable to locate a living droid under the mouse 
+    // cursor.  So we return, giving this very same message.
+    //
+    return ( TargetFound );
+    
 }; // int GetLivingDroidBelowMouseCursor ( int player_num )
 
 
@@ -2481,7 +2509,7 @@ ButtonPressWasNotMeantAsFire( player_num )
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
        ( GameConfig.Inventory_Visible || GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && 
-       ! CursorIsInUserRect( User_Rect.x + User_Rect.w/2 + ServerThinksInputAxisX ( player_num ) , User_Rect.y + User_Rect.h/2 + ServerThinksInputAxisY ( player_num ) ) )
+       ! MouseCursorIsInUserRect( User_Rect.x + User_Rect.w/2 + ServerThinksInputAxisX ( player_num ) , User_Rect.y + User_Rect.h/2 + ServerThinksInputAxisY ( player_num ) ) )
     { 
       DebugPrintf( 0 , "\nCursor outside user-rect:\n  User_Rect.x=%d, User_Rect.w=%d, User_Rect.y=%d, User_Rect.h=%d." ,
 		   User_Rect.x , User_Rect.w , User_Rect.y , User_Rect.h );
