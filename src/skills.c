@@ -372,7 +372,9 @@ ShowSkillsScreen ( void )
   // It might be the case, that the character has some points to distribute upon the character
   // stats.  Then of course, we must display the plus button instead of all character 'now' values
   //
-  if ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) )
+  if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
+       axis_is_active &&
+       ! MouseButtonPressedPreviousFrame )
     Me.readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y );
 
 

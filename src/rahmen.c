@@ -345,6 +345,7 @@ void
 ShowCurrentSkill( void )
 {
   SDL_Rect Target_Rect;
+  static int Mouse_Button_Pressed_Previous_Frame = FALSE;
 
   if ( Me.status == BRIEFING ) return;
   if ( GameConfig.Inventory_Visible ) return;
@@ -355,6 +356,21 @@ ShowCurrentSkill( void )
   Target_Rect.h = CURRENT_SKILL_RECT_H ;
 
   SDL_BlitSurface ( SkillIconSurfacePointer[ Me.readied_skill ] , NULL , Screen , &Target_Rect );
+
+
+  //--------------------
+  // Here we also check for possible mouse clicks on the skill icon.  In this
+  // case we activate or deactivate the skill screen.
+  //
+  if ( ( GetMousePos_x()+16 >= CURRENT_SKILL_RECT_X ) &&
+       ( GetMousePos_x()+16 <= CURRENT_SKILL_RECT_X + CURRENT_SKILL_RECT_W ) &&
+       ( GetMousePos_y()+16 >= CURRENT_SKILL_RECT_Y ) &&
+       ( GetMousePos_y()+16 <= CURRENT_SKILL_RECT_Y + CURRENT_SKILL_RECT_H ) &&
+       axis_is_active &&
+       !Mouse_Button_Pressed_Previous_Frame )
+    GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
+
+  Mouse_Button_Pressed_Previous_Frame = axis_is_active;
 
 }; // void ShowCurrentSkill ( void )
 
