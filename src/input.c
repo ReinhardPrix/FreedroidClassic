@@ -414,6 +414,19 @@ ReactToSpecialKeys(void)
     }
 
   //--------------------
+  // We assign the Space key to turn off all windows and quest log
+  // and also when the Tux is dead, there shouldn't be any windows any more.
+  //
+  if ( ( SpacePressed( ) && !axis_is_active ) ||
+       ( Me[0].energy <= 0 ) )
+    {
+      GameConfig.Mission_Log_Visible = FALSE ; 
+      GameConfig.SkillScreen_Visible = FALSE ;
+      GameConfig.CharacterScreen_Visible = FALSE ;
+      GameConfig.Inventory_Visible = FALSE ;
+    }
+
+  //--------------------
   // We assign the T key to taking an item from the floor
   //
   if ( TPressed() )

@@ -481,6 +481,7 @@ typedef struct
   
   int readied_skill; // which skill does the influencer currently have readied?
   int SkillLevel[ NUMBER_OF_SKILLS ];
+  int base_skill_level [ NUMBER_OF_SKILLS ];
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
