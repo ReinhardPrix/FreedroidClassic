@@ -58,6 +58,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>

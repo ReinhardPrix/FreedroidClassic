@@ -514,7 +514,7 @@ Debriefing (void)
 	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
 
-	  GreatScoreName = GetString (18, 2);
+	  GreatScoreName = GetString (10, 2);
 	  GreatScore = RealScore;
 	}
       else if (RealScore < LowestScoreOfDay)
@@ -527,7 +527,7 @@ Debriefing (void)
 	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
 	  // free (LowestName);
-	  LowestName = GetString (18, 2);
+	  LowestName = GetString (10, 2);
 	  LowestScoreOfDay = RealScore;
 	}
       else if (RealScore > HighestScoreOfDay)
@@ -541,7 +541,7 @@ Debriefing (void)
 	  // free (HighestName);
 	  // SwapScreen();
 	  PrepareScaledSurface(TRUE);
-	  HighestName = GetString (18, 2);
+	  HighestName = GetString (10, 2);
 	  HighestScoreOfDay = RealScore;
 	}
       free (Scoretext);

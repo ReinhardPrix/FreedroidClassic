@@ -634,6 +634,8 @@ FensterVoll (void)
  *
  *     values of echo > 2 are ignored and treated like echo=0
  *
+ *  NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
+ * 
  * @Ret: char *: String wird HIER reserviert !!! 
  *       (dont forget to free it !)
  * 
@@ -642,6 +644,8 @@ char *
 GetString (int MaxLen, int echo)
 {
   char *input;		/* Pointer auf eingegebenen String */
+  char *clear_str;     /* string used to clear echo-arear with DisplayText */
+  int key;             /* last 'character' entered */
   int curpos;		/* zaehlt eingeg. Zeichen mit */
   int finished;
   int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
@@ -651,18 +655,19 @@ GetString (int MaxLen, int echo)
   TextOutY = MyCursorY;
 
   /* Speicher fuer Eingabe reservieren */
-  if ((input = MyMalloc (MaxLen + 10)) == NULL)
-    {
-      DebugPrintf ("\nNo Memory left !!");
-      Terminate (-1);
-    }
+  input     = MyMalloc (MaxLen + 5);
+  clear_str = MyMalloc (MaxLen + 5);
 
+  memset (clear_str, ' ', MaxLen);
+  clear_str[MaxLen] = 0;
+  
   finished = FALSE;
   curpos = 0;
-  input[0] = '\0'; 
   
   while ( !finished  )
     {
+      input[curpos] = '\0';  /* terminate current input-string correctly for echo */
+
       if (echo == 1)		/* echo to stdout */
 	{
 	  if (curpos>0) 
@@ -671,22 +676,22 @@ GetString (int MaxLen, int echo)
 	}
       else if (echo == 2)   	/* or use graphics-text */
 	{
-	  DisplayText (input, TextOutX, TextOutY, RealScreen, TRUE);
+	  DisplayText (clear_str, TextOutX, TextOutY, RealScreen, FALSE);
+	  DisplayText (input,     TextOutX, TextOutY, RealScreen, TRUE);
 	  PrepareScaledSurface(TRUE);
 	} /* if echo */
 
-      input[curpos] = (char) getchar_raw (); 	/* read char from raw kbd */
-      if (input[curpos] == '\r')  		/* return pressed */
-	finished = TRUE;
-      else
-	curpos ++;
-
-      if (curpos == MaxLen) 
+      key = getchar_raw ();  
+      
+      if (key == SDLK_RETURN) 
 	finished = TRUE;
 
-      input[curpos] = '\0'; 	/* terminate string. this must be inside */
-				/* the loop for DisplayText() ! */
+      else if (isprint (key) && (curpos < MaxLen) )  
+	input[curpos ++] = key;   /* printable characters are entered in string */
 
+      else if (key == SDLK_BACKSPACE)
+	if (curpos > 0) curpos --;
+      
     } /* while(!finished) */
 
   return (input);

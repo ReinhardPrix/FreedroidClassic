@@ -1312,8 +1312,9 @@ MyMalloc (long Mamount)
   if ((Mptr = malloc ((size_t) Mamount)) == NULL)
     {
       printf (" MyMalloc(%ld) did not succeed!\n", Mamount);
-      getchar ();
+      exit (-1);
     }
+
   return Mptr;
 }				// void* MyMalloc(long Mamount)
 

@@ -461,6 +461,11 @@ PlayGame (void)
 
   while (countdown--)
     {
+
+      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
+
+      prev_count_tick += count_tick_len;
+      
       RollToColors ();
 
       ProcessCapsules ();	/* count down the lifetime of the capsules */
@@ -544,27 +549,26 @@ EnemyMovements (void)
 	      (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
 	      (ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET))
 	    {
-
 	      NumCapsules[ENEMY]--;
+	      Takeover_Set_Capsule_Sound ();
 	      ToPlayground[OpponentColor][0][row] = VERSTAERKER;
 	      ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
 	      CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
 	      row = -1;		/* For the next capsule: startpos */
 	    }
-	  Takeover_Set_Capsule_Sound ();
-	}			/* if MyRandom */
+	} /* if MyRandom */
 
       break;
 
     default:
       break;
 
-    }				/* switch action */
+    }	/* switch action */
 
   CapsuleCurRow[OpponentColor] = row + 1;
 
   return;
-}				/* EnemyMovements */
+}	/* EnemyMovements */
 
 /*@Function============================================================
 @Desc: 
