@@ -46,6 +46,7 @@
 
 extern int TimerFlag;
 
+unsigned char *ToPlaygroundBlock;
 unsigned char *ToGroundBlocks;
 unsigned char *ToColumnBlock;
 unsigned char *ToLeaderBlock;
@@ -56,23 +57,23 @@ unsigned char *ToGameBlocks;
 /* Class seperation of the blocks */
 int BlockClass[TO_BLOCKS] = {
 	CONNECTOR,		/* KABEL */
-	NON_CONNECTOR,	/* KABELENDE */
+	NON_CONNECTOR,		/* KABELENDE */
 	CONNECTOR,		/* VERSTAERKER */
 	CONNECTOR,		/* FARBTAUSCHER */
 	CONNECTOR,		/* VERZWEIGUNG_O */
-	NON_CONNECTOR,	/* VERZWEIGUNG_M */
+	NON_CONNECTOR,		/* VERZWEIGUNG_M */
 	CONNECTOR,		/* VERZWEIGUNG_U */
-	NON_CONNECTOR,	/* GATTER_O */
+	NON_CONNECTOR,		/* GATTER_O */
 	CONNECTOR,		/* GATTER_M */
-	NON_CONNECTOR,	/* GATTER_U */
-	NON_CONNECTOR	/* LEER */
+	NON_CONNECTOR,		/* GATTER_U */
+	NON_CONNECTOR		/* LEER */
 };
 
 /* Probability of the various elements */
 #define MAX_PROB		100
 int ElementProb[TO_ELEMENTS] = {
 	100,		/* EL_KABEL */
-	2,			/* EL_KABELENDE */
+	2,		/* EL_KABELENDE */
 	5,		/* EL_VERSTAERKER */
 	5,		/* EL_FARBTAUSCHER: only on last layer */
 	5,		/* EL_VERZWEIGUNG */
@@ -115,7 +116,7 @@ int OpponentType;			/* The druid-type of your opponent */
 
 /* the display  column */
 int DisplayColumn[NUM_LINES] = {
-	GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT
+GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT
 };
 	
 
@@ -160,8 +161,8 @@ void InitTakeover(void)
 @Desc: int Takeover(int enemynum): plays the takeover-game against
 							a druid 
 
-@Ret: TRUE: user has won
-		FALSE: user has lost
+@Ret: 	TRUE: user has won
+	FALSE: user has lost
 @Int:
 * $Function----------------------------------------------------------*/
 int Takeover(int enemynum)
@@ -192,8 +193,6 @@ int Takeover(int enemynum)
     JoystickControl();
     keyboard_update();
   }
-
-  Load_PCX_Image( TAKEOVERBACKGROUNDBILD_PCX , RealScreen , FALSE );
 
   while( !FinishTakeover ) {
 	
@@ -227,39 +226,45 @@ int Takeover(int enemynum)
     printf("\nvoid Takeover(int enemynum): PlayGames ist wieder zurueckgekehrt.");
 	
     /* Ausgang beurteilen und returnen */
-    if( LeaderColor == YourColor ) {
-      if( Me.type == DRUID001 ) {
-	RejectEnergy = Me.energy;
-	PreTakeEnergy = Me.energy;
-      }
-      Me.energy=(int)(
-		      ((long)STARTENERGIE * Feindesliste[enemynum].energy)
-		      / Druidmap[OpponentType].maxenergy);
-      Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
-      
-      Me.type = Feindesliste[enemynum].type;
+    if (InvincibleMode || (LeaderColor == YourColor) ) 
+      {
+	if (Me.type == DRUID001) 
+	  {
+	    RejectEnergy = Me.energy;
+	    PreTakeEnergy = Me.energy;
+	  }
+	Me.energy=(int)(
+			((long)STARTENERGIE * Feindesliste[enemynum].energy)
+			/ Druidmap[OpponentType].maxenergy);
+	Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+	Me.type = Feindesliste[enemynum].type;
+	RealScore += Druidmap[OpponentType].score;
+	if( LeaderColor != YourColor )  /* only won because of InvincibleMode */
+	  message = "You cheat";
+	else  /* won the proper way */
+	  message = "Complete";
 
-      RealScore += Druidmap[OpponentType].score;
-
-      message = "Complete";
-      FinishTakeover = TRUE;
-    }
-		
-    if( LeaderColor == OpponentColor ) {
-      if( Me.type != DRUID001 ) {
-	message = "Rejected";
-	Me.type = DRUID001;
-	Me.energy = RejectEnergy;
-      } else {
-	message = "Burnt Out";
-	Me.energy = 0;
-      }
-      FinishTakeover = TRUE;
-    }
-		
-    if( LeaderColor == REMIS ) { 
+	FinishTakeover = TRUE;
+      } /* LeaderColor == YourColor */
+    else if (LeaderColor == OpponentColor)
+      {
+	if( Me.type != DRUID001 ) 
+	  {
+	    message = "Rejected";
+	    Me.type = DRUID001;
+	    Me.energy = RejectEnergy;
+	  } 
+	else 
+	  {
+	    message = "Burnt Out";
+	    Me.energy = 0;
+	  }
+	FinishTakeover = TRUE;
+      } /* LeadColor == OpponentColor */
+    else 
+      {
       message = "Deadlock";
-    }
+      } /* LeadColor == REMIS */
 
     RedrawInfluenceNumber();
 		
@@ -270,11 +275,8 @@ int Takeover(int enemynum)
     /* Wait a turn */
     waiter = WAIT_AFTER_GAME;
     while( waiter != 0 ) {
-      // PORT if( TimerFlag ) {
-      // PORT TimerFlag = FALSE;
       usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
 
-      
       waiter--;
       RollToColors();
       SetInfoline();
@@ -282,8 +284,6 @@ int Takeover(int enemynum)
       
       ShowPlayground();
       printf("\nvoid Takeover(int EnemyNum): Mitten in der Endschleife.");
-				
-      // PORT } /* if TimerFlag */
     } /* while waiter */			
   } /* while !FinishTakeover */
 
@@ -593,16 +593,23 @@ int GetTakeoverGraphics(void)
   unsigned char *tmp;
   int i, j;
   int curx, cury;
-	
+
+  /* Get Playground background image */
+/*    Load_PCX_Image (PLAYGROUND_FILE_PCX, InternalScreen, FALSE); */
+
+/*    ToPlaygroundBlock = (unsigned char*) MyMalloc (USERFENSTERHOEHE*USERFENSTERBREITE + 10); */
+/*    IsolateBlock (InternalScreen, ToPlaygroundBlock, 0, 0, USERFENSTERBREITE, */
+/*  		USERFENSTERHOEHE); */
+  
   /* Get the elements */	
-  Load_PCX_Image( ELEMENTS_FILE_PCX , InternalScreen , FALSE );
+  Load_PCX_Image (ELEMENTS_FILE_PCX, InternalScreen, FALSE );
   
   curx = 0;
   cury = 0;		/* readpos in pic */
 	
   /* Get the fill-blocks */
   FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
-  IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  IsolateBlock (InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
   curx += FILLBLOCKLEN+1;
   
   IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
@@ -679,7 +686,8 @@ int GetTakeoverGraphics(void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void ShowPlayground(void)
+void 
+ShowPlayground (void)
 {
   int i, j;
   int color, opponent;
@@ -694,179 +702,189 @@ void ShowPlayground(void)
   printf("\nvoid ShowPlayground(void): Funktion echt aufgerufen.");
 	
 
-  if( WorkBlock == NULL ) {
-    WorkBlock = MyMalloc(BLOCKMEM+10);
-  }
+  if( WorkBlock == NULL ) 
+    {
+      WorkBlock = MyMalloc(BLOCKMEM+10);
+    }
 	
   UpdateInfoline();
 
+  /* Display the Playground */
+  /*  DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ToPlaygroundBlock,
+		USERFENSTERBREITE, USERFENSTERHOEHE, RealScreen);
+  */
   /* Linke Saeule */
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
   cury = USERFENSTERPOSY + LEFT_OFFS_Y;
-
 				
-	if( YourColor == GELB ) opponent = YOU;
-	else opponent = ENEMY;
+  if( YourColor == GELB ) opponent = YOU;
+  else opponent = ENEMY;
 	
-	if( NumCapsules[opponent] > 0 ) caps_row = CapsuleCurRow[GELB];
-	else caps_row = -1;
+  if( NumCapsules[opponent] > 0 ) caps_row = CapsuleCurRow[GELB];
+  else caps_row = -1;
 
-	caps_x = CurCapsuleStart[GELB].x;
-	caps_y =	CurCapsuleStart[GELB].y + caps_row*(CAPSULE_HEIGHT+1);
+  caps_x = CurCapsuleStart[GELB].x;
+  caps_y = CurCapsuleStart[GELB].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-	DisplayBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,	GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,	GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
  	
-	cury += GROUNDBLOCKHEIGHT;
-	tmp = ToGroundBlocks + GELB_MITTE*GROUNDBLOCKMEM;
-	for( i=0; i<12 ; i++, cury += GROUNDBLOCKHEIGHT) {
-		DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
-		if( (caps_row == i) || (i==11 && caps_row == 12) )
-			DisplayBlock(caps_x, caps_y,
-						CapsuleBlocks,
-						CAPSULE_LEN, CAPSULE_HEIGHT,
-						RealScreen);
-	} /* for */
+  cury += GROUNDBLOCKHEIGHT;
+  tmp = ToGroundBlocks + GELB_MITTE*GROUNDBLOCKMEM;
+  for (i=0; i<12 ; i++, cury += GROUNDBLOCKHEIGHT) 
+    {
+      DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+      if ( (caps_row == i) || (i==11 && caps_row == 12) )
+	{
+	  DisplayBlock (caps_x, caps_y,
+			CapsuleBlocks,
+			CAPSULE_LEN, CAPSULE_HEIGHT,
+			RealScreen);
+	} /* if */
+    } /* for i=1 to 12 */
 
-	DisplayBlock(curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
-	/* Mittlere Saeule */
-	curx = USERFENSTERPOSX + MID_OFFS_X;
-	cury = USERFENSTERPOSY + MID_OFFS_Y;
+  /* Mittlere Saeule */
+  curx = USERFENSTERPOSX + MID_OFFS_X;
+  cury = USERFENSTERPOSY + MID_OFFS_Y;
 
-	DisplayMergeBlock(curx, cury, ToLeaderBlock, LEADERBLOCKLEN, LEADERBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock (curx, cury, ToLeaderBlock,
+		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, RealScreen);
 
-	cury += LEADERBLOCKHEIGHT;
-	for( i=0; i<12; i++, cury += COLUMNBLOCKHEIGHT)
-		DisplayMergeBlock(curx, cury,ToColumnBlock,COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT,RealScreen);
+  cury += LEADERBLOCKHEIGHT;
+  for( i=0; i<12; i++, cury += COLUMNBLOCKHEIGHT)
+    DisplayMergeBlock (curx, cury, ToColumnBlock,
+		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, RealScreen);
 
-	/* rechte Saeule */
-	curx = USERFENSTERPOSX + RIGHT_OFFS_X;
-	cury = USERFENSTERPOSY + RIGHT_OFFS_Y;
+  /* rechte Saeule */
+  curx = USERFENSTERPOSX + RIGHT_OFFS_X;
+  cury = USERFENSTERPOSY + RIGHT_OFFS_Y;
+  
+  if( opponent == YOU ) opponent = ENEMY;
+  else opponent = YOU;
+  
+  if( NumCapsules[opponent] > 0 ) caps_row = CapsuleCurRow[VIOLETT];
+  else caps_row = -1;
 
-	if( opponent == YOU ) opponent = ENEMY;
-	else opponent = YOU;
-
-	if( NumCapsules[opponent] > 0 ) caps_row = CapsuleCurRow[VIOLETT];
-	else caps_row = -1;
-
-	caps_x = CurCapsuleStart[VIOLETT].x;
-	caps_y =	CurCapsuleStart[VIOLETT].y + caps_row*(CAPSULE_HEIGHT+1);
+  caps_x = CurCapsuleStart[VIOLETT].x;
+  caps_y = CurCapsuleStart[VIOLETT].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-	DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 							
-	cury += GROUNDBLOCKHEIGHT;
+  cury += GROUNDBLOCKHEIGHT;
 	
-	tmp = ToGroundBlocks+VIOLETT_MITTE*GROUNDBLOCKMEM;
-	for( i=0; i<12; i++, cury += GROUNDBLOCKHEIGHT ) {
-		DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
-		if( (caps_row == i) || (i==11 && caps_row == 12) ) 	
-			DisplayBlock(caps_x, caps_y,
-							CapsuleBlocks + CAPSULE_MEM,
-							CAPSULE_LEN, CAPSULE_HEIGHT,
-							RealScreen);
-	} /* for */
+  tmp = ToGroundBlocks+VIOLETT_MITTE*GROUNDBLOCKMEM;
+  for( i=0; i<12; i++, cury += GROUNDBLOCKHEIGHT ) {
+    DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+    if( (caps_row == i) || (i==11 && caps_row == 12) ) 	
+      DisplayBlock(caps_x, caps_y,
+		   CapsuleBlocks + CAPSULE_MEM,
+		   CAPSULE_LEN, CAPSULE_HEIGHT,
+		   RealScreen);
+  } /* for */
+  
+  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
-	DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
-
-	/* Fill the Leader-LED with its color */
-	DisplayBlock(LEADERLEDX, LEADERLEDY,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  /* Fill the Leader-LED with its color */
+  DisplayBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
+		FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 		
-	DisplayBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  DisplayBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
-	
-	/* Fill the Display Column with its colors */
-	for( i=0; i<NUM_LINES; i++) 			
-		 DisplayBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  
+  /* Fill the Display Column with its colors */
+  for( i=0; i<NUM_LINES; i++) 			
+    DisplayBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
-	/* Show the yellow playground */
-	for( i=0; i<NUM_LAYERS-1; i++ )
-		for( j=0; j<NUM_LINES; j++ ) {
-			DisplayBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
-		}
+  /* Show the yellow playground */
+  for( i=0; i<NUM_LAYERS-1; i++ )
+    for( j=0; j<NUM_LINES; j++ ) {
+      DisplayBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
+    }
 
-	/* Show the violett playground */
-	curx = PlaygroundStart[VIOLETT].x- TO_BLOCKLEN;
-	
-	for( i=0; i<NUM_LAYERS-1; i++, curx -= TO_BLOCKLEN ) {
-		cury = PlaygroundStart[VIOLETT].y;		
-		for( j=0; j<NUM_LINES; j++, cury += TO_BLOCKHEIGHT ) {
-			DisplayBlock(curx, cury, 
-				ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
-				TO_BLOCKLEN, TO_BLOCKHEIGHT,
-				RealScreen);
-		} /* for lines */
-	} /* for layers */
-
-
-	/* Show the capsules left for each player */
-
-	for( opponent = 0;  opponent < 2; opponent++) {
-		if( opponent == YOU ) color = YourColor;
-		else color = OpponentColor;
-
-		for( i=0; i<MAX_CAPSULES; i++ ) {
-			if( i < NumCapsules[opponent]-1 )
-				DisplayBlock(
-					LeftCapsulesStart[color].x,
-					LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
-					CapsuleBlocks+ color*CAPSULE_MEM,
-					CAPSULE_LEN, CAPSULE_HEIGHT,
-					RealScreen);
-			else
-				DisplayBlock(
-					LeftCapsulesStart[color].x,
-					LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
-					CapsuleBlocks + TO_COLORS*CAPSULE_MEM,
-					CAPSULE_LEN, CAPSULE_HEIGHT,
-					RealScreen);
+  /* Show the violett playground */
+  curx = PlaygroundStart[VIOLETT].x- TO_BLOCKLEN;
+  
+  for( i=0; i<NUM_LAYERS-1; i++, curx -= TO_BLOCKLEN ) {
+    cury = PlaygroundStart[VIOLETT].y;		
+    for( j=0; j<NUM_LINES; j++, cury += TO_BLOCKHEIGHT ) {
+      DisplayBlock(curx, cury, 
+		   ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
+		   TO_BLOCKLEN, TO_BLOCKHEIGHT,
+		   RealScreen);
+    } /* for lines */
+  } /* for layers */
 
 
-		} /* for capsules */
-
-	} /* for opponent */
-
-	
-	/* Display the two opponents */
-	if( OpponentType == -1 ) Enemypic = NULL;
-	else
-		Enemypic = FeindZusammenstellen(Druidmap[OpponentType].druidname,0);
-		
-	if( YourColor == GELB )  {
-		LeftDruid = Influencepointer;
-		RightDruid = Enemypic;
-	} else {
-		LeftDruid = Enemypic;
-		RightDruid = Influencepointer;
-	}
-
-	/* Show Druid - pictures, but not transparently !! */
-
-	memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
-
-	if( LeftDruid != NULL )
-		CopyMergeBlock(WorkBlock, LeftDruid, BLOCKMEM);
-		
- 	DisplayBlock(
-		DruidStart[GELB].x, DruidStart[GELB].y ,
-		WorkBlock,
-		BLOCKBREITE, BLOCKHOEHE-5,
-		RealScreen);
-
-	memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
-	
-	if( RightDruid != NULL )
-		CopyMergeBlock(WorkBlock, RightDruid, BLOCKMEM);
-		
+  /* Show the capsules left for each player */
+  
+  for( opponent = 0;  opponent < 2; opponent++) {
+    if( opponent == YOU ) color = YourColor;
+    else color = OpponentColor;
+    
+    for( i=0; i<MAX_CAPSULES; i++ ) {
+      if( i < NumCapsules[opponent]-1 )
 	DisplayBlock(
-		DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
-		WorkBlock,
-		BLOCKBREITE, BLOCKHOEHE-5,
-		RealScreen);
+		     LeftCapsulesStart[color].x,
+		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
+		     CapsuleBlocks+ color*CAPSULE_MEM,
+		     CAPSULE_LEN, CAPSULE_HEIGHT,
+		     RealScreen);
+      else
+	DisplayBlock(
+		     LeftCapsulesStart[color].x,
+		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
+		     CapsuleBlocks + TO_COLORS*CAPSULE_MEM,
+		     CAPSULE_LEN, CAPSULE_HEIGHT,
+		     RealScreen);
+      
 
-	printf("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
+    } /* for capsules */
+    
+  } /* for opponent */
+
+	
+  /* Display the two opponents */
+  if( OpponentType == -1 ) Enemypic = NULL;
+  else
+    Enemypic = FeindZusammenstellen(Druidmap[OpponentType].druidname,0);
+  
+  if( YourColor == GELB )  {
+    LeftDruid = Influencepointer;
+    RightDruid = Enemypic;
+  } else {
+    LeftDruid = Enemypic;
+    RightDruid = Influencepointer;
+  }
+
+  /* Show Druid - pictures, but not transparently !! */
+  
+  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
+  
+  if( LeftDruid != NULL )
+    CopyMergeBlock(WorkBlock, LeftDruid, BLOCKMEM);
+		
+  DisplayBlock(
+	       DruidStart[GELB].x, DruidStart[GELB].y ,
+	       WorkBlock,
+	       BLOCKBREITE, BLOCKHOEHE-5,
+	       RealScreen);
+
+  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
+	
+  if( RightDruid != NULL )
+    CopyMergeBlock(WorkBlock, RightDruid, BLOCKMEM);
+		
+  DisplayBlock(
+	       DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
+	       WorkBlock,
+	       BLOCKBREITE, BLOCKHOEHE-5,
+	       RealScreen);
+
+  printf("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
 	
 
-} // void ShowPlayground(void)
+} /* ShowPlayground */
 
 
 /*@Function============================================================

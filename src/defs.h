@@ -114,8 +114,7 @@
 #define CONSOLENBILD_PCX           "../graphics/console.pcx"
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.pcx"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.pcx"
-#define TAKEOVERBACKGROUNDBILD_PCX "../graphics/TakeoverBackground.pcx"
-#define PLAYGROUND_FILE_PCX    	   "../graphics/to_ground.pcx"	// graphics - files 
+/* Takeover-game graphics elements: */
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
 
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
@@ -126,11 +125,11 @@
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
-#define RETRACEWARTEPERIODE 5
-#define SCREENBREITE 320
-#define SCREENHOEHE 200
-#define SCREENLEN				320
-#define SCREENHEIGHT			200
+#define RETRACEWARTEPERIODE 	5
+#define SCREENBREITE 		320
+#define SCREENHOEHE 		200
+#define SCREENLEN		320
+#define SCREENHEIGHT		200
 
 /* Dimensionen von Bloecken und Bildern */
 
@@ -139,33 +138,33 @@
 #define RAHMENHOEHE		32
 
 /* Menu in Konsole */
-#define MENUITEMHEIGHT 77
-#define MENUITEMLENGTH 50
-#define MENUITEMMEM (MENUITEMLENGTH * MENUITEMHEIGHT)
+#define MENUITEMHEIGHT 		77
+#define MENUITEMLENGTH 		50
+#define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
 /* Ship-Elevator Picture */
-#define NUM_EL_BLOCKS	17
+#define NUM_EL_BLOCKS		17
 
 #define EL_BLOCK_LEN		8
-#define EL_BLOCK_HEIGHT	8
-#define EL_BLOCK_MEM 	EL_BLOCK_LEN * EL_BLOCK_HEIGHT
+#define EL_BLOCK_HEIGHT		8
+#define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT
 
 #define ELEVATOR_LEN		38
-#define ELEVATOR_HEIGHT	12
+#define ELEVATOR_HEIGHT		12
 
 /* Konstanten die die Ausmasse von maps und Arrays beeinflussen */
-#define BLOCKBREITE 32
-#define BLOCKHOEHE 32
-#define BLOCKMEM  BLOCKBREITE*BLOCKHOEHE
+#define BLOCKBREITE 		32
+#define BLOCKHOEHE 		32
+#define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
 
 
-#define VIEWBREITE 9
-#define VIEWHOEHE 4
+#define VIEWBREITE 		9
+#define VIEWHOEHE 		4
 
-#define INTERNBREITE 13
-#define INTERNHOEHE 7
+#define INTERNBREITE 		13
+#define INTERNHOEHE 		7
 
-/* Diese Konstanten geben die Groeáe des unsichtbaren Bereiches links,rechts
+/* Diese Konstanten geben die Groesse des unsichtbaren Bereiches links,rechts
 	und oberhalb des Userfensters an. */
 // #define USERFENSTERLINKS ((INTERNBREITE-VIEWBREITE)*BLOCKBREITE/2) // (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
 // #define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
@@ -174,32 +173,32 @@
 //#define USERFENSTERBREITE ((INTERNBREITE-1)*BLOCKBREITE-20)  /* (288-32) */
 //#define USERFENSTERHOEHE ((INTERNHOEHE-1)*BLOCKHOEHE)     /* 112 */
 
-#define USERFENSTERHOEHE 		VIEWHOEHE*BLOCKHOEHE
-#define USERFENSTERBREITE 		VIEWBREITE*BLOCKBREITE
+#define USERFENSTERHOEHE 	VIEWHOEHE*BLOCKHOEHE
+#define USERFENSTERBREITE 	VIEWBREITE*BLOCKBREITE
 
-#define USERFENSTERPOSX ( (SCREENBREITE-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY ( (SCREENHOEHE-USERFENSTERHOEHE) )
+#define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
+#define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
 
-//#define USERFENSTEROBEN 		BLOCKHOEHE+BLOCKHOEHE/2
-//#define USERFENSTERLINKS 		1*BLOCKBREITE
+//#define USERFENSTEROBEN 	BLOCKHOEHE+BLOCKHOEHE/2
+//#define USERFENSTERLINKS 	1*BLOCKBREITE
 
-#define BULLETSPEEDINFLUENCE 2
+#define BULLETSPEEDINFLUENCE 	2
 
-#define DIRECTIONS 8
+#define DIRECTIONS 		8
 
-#define ALLCLASSNAMES 11
-#define ALLSHIPS 4
+#define ALLCLASSNAMES 		11
+#define ALLSHIPS 		4
 
-#define NUMBEROFS 5+12*BLOCKBREITE
-#define ENEMYPHASES 8
+#define NUMBEROFS 		5+12*BLOCKBREITE
+#define ENEMYPHASES 		8
 
 #define WAIT_LEVELEMPTY		18		/* warte bevor Graufaerben */
 #define WAIT_AFTER_KILLED	45		/* warte, bevor Spiel aus */
-#define WAIT_SHIPEMPTY	20
+#define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	5		/* warte, bevor in Transfermode schalten */
 
 /* Soundblasterkonstanten */
-#define SBCHANNELS 7
+#define SBCHANNELS 		7
 
 /* Nummern der Schilder */
 enum _shields {

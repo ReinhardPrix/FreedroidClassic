@@ -40,52 +40,52 @@
 #define GAME_COUNTDOWN		100		/* Zeit fuer das Spiel */
 #define CAPSULE_COUNTDOWN	 40		/* 1/10 sec. Lebensdauer einer Kapsel */
 
-#define WAIT_MOVEMENT			0			/* 1/18 sekunden Bewegungsgeschw. */
-#define WAIT_COLOR_ROTATION	2			/* 1/18 sekunden aktive-Kabel */
-#define WAIT_AFTER_GAME			2*18		/* Wait after a deadlock */
+#define WAIT_MOVEMENT		0		/* 1/18 sekunden Bewegungsgeschw. */
+#define WAIT_COLOR_ROTATION	2		/* 1/18 sekunden aktive-Kabel */
+#define WAIT_AFTER_GAME		2*18		/* Wait after a deadlock */
 
 /* Position of Leader-Led */
-#define LEADERLEDX		151
+#define LEADERLEDX		USERFENSTERPOSX + 141
 #define LEADERLEDY		83
 
 /* Start-pos of Led-column */
-#define LEDCOLUMNX		151		/* the startpos of the LED-column */
+#define LEDCOLUMNX		USERFENSTERPOSX + 141 
 #define LEDCOLUMNY		99
 
 /* Dimensions of a capsule */
 #define CAPSULE_LEN		7
-#define CAPSULE_HEIGHT	7
+#define CAPSULE_HEIGHT		7
 #define CAPSULE_MEM		CAPSULE_HEIGHT*CAPSULE_LEN
 
 /* Positions of Druid-pictures */
-#define GELB_DRUID_X			45 + USERFENSTERPOSX
-#define GELB_DRUID_Y			0 + USERFENSTERPOSY
+#define GELB_DRUID_X		45 + USERFENSTERPOSX
+#define GELB_DRUID_Y		0 + USERFENSTERPOSY
 #define VIOLETT_DRUID_X		225+ USERFENSTERPOSX
 #define VIOLETT_DRUID_Y		GELB_DRUID_Y
 
 /* Left-Capsules positions */
-#define GELB_LEFT_CAPSULES_X		0 + USERFENSTERPOSX
-#define GELB_LEFT_CAPSULES_Y		27 + USERFENSTERPOSY
+#define GELB_LEFT_CAPSULES_X	0   + USERFENSTERPOSX
+#define GELB_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
 #define VIOLETT_LEFT_CAPSULES_X	288 + USERFENSTERPOSX
-#define VIOLETT_LEFT_CAPSULES_Y	27	+ USERFENSTERPOSY
+#define VIOLETT_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
 
 /* start-pos of Current Capsule */
-#define GELB_CUR_CAPSULE_X			31 + USERFENSTERPOSX
-#define GELB_CUR_CAPSULE_Y			19 + USERFENSTERPOSY
-#define VIOLETT_CUR_CAPSULE_X		260+ USERFENSTERPOSX
-#define VIOLETT_CUR_CAPSULE_Y		19 + USERFENSTERPOSY
+#define GELB_CUR_CAPSULE_X	31  + USERFENSTERPOSX
+#define GELB_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
+#define VIOLETT_CUR_CAPSULE_X	260 + USERFENSTERPOSX
+#define VIOLETT_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
 
-#define MAX_CAPSULES			13		/* a 999 has 13 !!! */
+#define MAX_CAPSULES		13	/* a 999 has 13 !!! */
 
 /* Start-Pos of playground */
-#define GELB_PLAYGROUND_X			38 + USERFENSTERPOSX
-#define GELB_PLAYGROUND_Y			26 + USERFENSTERPOSY
-#define VIOLETT_PLAYGROUND_X		260 + USERFENSTERPOSX
-#define VIOLETT_PLAYGROUND_Y		26 + USERFENSTERPOSY
+#define GELB_PLAYGROUND_X	38  + USERFENSTERPOSX
+#define GELB_PLAYGROUND_Y	26  + USERFENSTERPOSY
+#define VIOLETT_PLAYGROUND_X	260 + USERFENSTERPOSX
+#define VIOLETT_PLAYGROUND_Y	26  + USERFENSTERPOSY
 
 /* Dimensions of the fill-blocks (in led-column */
 #define FILLBLOCKLEN		16		
-#define FILLBLOCKHEIGHT  7
+#define FILLBLOCKHEIGHT  	7
 #define FILLBLOCKMEM		FILLBLOCKLEN*FILLBLOCKHEIGHT
 
 /* Dimensions of ground-, column- und leader blocks */
@@ -102,10 +102,10 @@
 #define LEFT_OFFS_X		15		/* Offset der linken "Saeule" */
 #define LEFT_OFFS_Y		15
 
-#define MID_OFFS_X		134	/* -- mittleren -- */
+#define MID_OFFS_X		134		/* -- mittleren -- */
 #define MID_OFFS_Y		8
 
-#define RIGHT_OFFS_X		260	/* -- rechten --- */
+#define RIGHT_OFFS_X		260		/* -- rechten --- */
 #define RIGHT_OFFS_Y		15
 
 enum _groundblocks {
@@ -118,10 +118,10 @@ enum _groundblocks {
 };
 
 /* Dimensions of the game-blocks */
-#define TO_BLOCKS			11			/* anzahl versch. Game- blocks */
+#define TO_BLOCKS		11		/* anzahl versch. Game- blocks */
 #define TO_ELEMENTS		 6
-#define TO_BLOCKLEN		32			/* dimension of a Game- block */
-#define TO_BLOCKHEIGHT	 8
+#define TO_BLOCKLEN		32		/* dimension of a Game- block */
+#define TO_BLOCKHEIGHT	 	8
 #define TO_BLOCKMEM 		TO_BLOCKLEN*TO_BLOCKHEIGHT
 
 /* the flag of an active Elements (has to be added to Element) */
@@ -174,12 +174,12 @@ enum to_blocks {
 
 
 /* there are two classes of blocks: connectors and non-connectors */
-#define CONNECTOR			0
-#define NON_CONNECTOR  	1
+#define CONNECTOR		0
+#define NON_CONNECTOR  		1
 
 
-#define NUM_LAYERS		4			/* dimension of the playground */
-#define NUM_LINES			12
+#define NUM_LAYERS		4		/* dimension of the playground */
+#define NUM_LINES		12
 
 /* the playground type */
 typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES]; 
