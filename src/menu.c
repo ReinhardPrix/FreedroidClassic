@@ -97,7 +97,7 @@ Cheatmenu (void)
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  font = Para_BFont;
+  font =  FPS_Display_BFont;
 
 
   SetCurrentFont (font);  /* not the ideal one, but there's currently */
