@@ -47,6 +47,8 @@
 
 #define FRICTION_CONSTANT (0.02)
 
+#define BEST_MELEE_DISTANCE_IN_SQUARES (0.8)
+
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
 
@@ -219,6 +221,50 @@ MoveInfluence ( int PlayerNum )
   //
   if ( Me [ PlayerNum ] . drive_item . type != (-1) )
     {
+
+      //--------------------
+      // As a preparation for the later operations, we see if there is
+      // a living droid set as a target, and if yes, we correct the move
+      // target to something suiting that new droids position.
+      //
+      if ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) )
+	{
+	  //--------------------
+	  // If the position is close already, we hold the position.
+	  // Otherwise we select some position suitably close.
+	  //
+	  if ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
+	       ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z != 
+		 Me [ PlayerNum ] . pos . z ) )
+	    {
+	      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
+	    }
+	  else
+	    {
+	      Me [ PlayerNum ] . mouse_move_target . x = 
+		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x ;
+	      Me [ PlayerNum ] . mouse_move_target . y = 
+		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y ;
+	    }
+
+
+	  RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+	  RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+
+	  //--------------------
+	  // Now we stop one square before crashing into our target...
+	  //
+	  if ( fabsf( RemainingWay . x ) > BEST_MELEE_DISTANCE_IN_SQUARES )
+	    {
+	      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - copysignf ( fabsf ( RemainingWay . x ) - BEST_MELEE_DISTANCE_IN_SQUARES , RemainingWay . x ) ;
+	    }
+
+	  if ( fabsf( RemainingWay . y ) > BEST_MELEE_DISTANCE_IN_SQUARES )
+	    {
+	      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - copysignf ( fabsf ( RemainingWay . y ) - BEST_MELEE_DISTANCE_IN_SQUARES , RemainingWay . y ) ;
+	    }
+
+	}
       
       //--------------------
       // Now maybe there isn't any mouse move target present or mouse move
@@ -275,40 +321,6 @@ MoveInfluence ( int PlayerNum )
 	      Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
 	    }
 	    
-
-
-	  /*
-
-	  //--------------------
-	  // In case we are close to the target already, we delete our current speed, so
-	  // that previous accelerations do not fire us far beyond our intended target.
-	  //
-	  if ( ( fabsf ( RemainingWay.y ) <= 1.0 ) && ( fabsf ( RemainingWay.x ) <= 1.0 ) )
-	    {
-	      // Me [ PlayerNum ] . speed . x = 0 ;
-	      // Me [ PlayerNum ] . speed . y = 0 ;
-	      InfluenceFrictionWithAir ( PlayerNum ) ; 
-	      InfluenceFrictionWithAir ( PlayerNum ) ; 
-	      // InfluenceFrictionWithAir ( PlayerNum ) ; 
-	    }
-
-	  //--------------------
-	  // If we are not there already, we might add some extra speed in the
-	  // right directions..
-	  //
-	  if ( fabsf ( RemainingWay.x ) > 0.1 ) 
-	    {
-	      if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
-	      else Me [ PlayerNum ] .speed.x += accel;
-	    }
-	  if ( fabsf ( RemainingWay.y ) > 0.1 ) 
-	    {
-	      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
-	      else Me [ PlayerNum ] .speed.y += accel;
-	    }
-
-	  */
-	  
 	  //--------------------
 	  // In case we have reached our target, we can remove this mouse_move_target again,
 	  // but also if we have been thrown onto a different level, we cancel our current
@@ -320,6 +332,8 @@ MoveInfluence ( int PlayerNum )
 	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
 	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
 	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
+
+	      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
 	    }
 
 	}
@@ -966,6 +980,46 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
 }; // int LivingDroidBelowMouseCursor ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
+ * This function checks if there is some living droid below the current
+ * mouse cursor and returns the index number of this droid in the array.
+ * ---------------------------------------------------------------------- */
+int 
+GetLivingDroidBelowMouseCursor ( int PlayerNum )
+{
+  int i;
+  float Mouse_Blocks_X, Mouse_Blocks_Y;
+
+  Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
+  Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
+
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+    {
+      if (AllEnemys[i].Status == OUT)
+	continue;
+      if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
+	continue;
+      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.5 )
+	continue;
+      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.5 )
+	continue;
+      
+      //--------------------
+      // So this must be a possible target for the next weapon swing.  Yes, there
+      // is some living droid beneath the mouse cursor.
+      //
+      return ( i );
+    }
+
+  //--------------------
+  // It seems that we were unable to locate a living droid under the mouse 
+  // cursor.  So we return, giving this very same message.
+  //
+  return ( -1 );
+
+}; // int GetLivingDroidBelowMouseCursor ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * This function fires a bullet from the influencer in some direction, or
  * at least it TRIES to fire a bullet from the influencer, cause maybe
  * the influencer can't fire for this reason or another right now...
@@ -1042,6 +1096,12 @@ FireBullet ( int PlayerNum )
 	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
       Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
 
+      //--------------------
+      // We assign the target robot of the coming attack operation.
+      // In case of no robot, we should get (-1), which is also serving us well.
+      //
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( PlayerNum ) ;
+      
       return;
     }
 
