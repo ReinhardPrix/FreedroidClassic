@@ -901,7 +901,7 @@ RefreshInfluencer (void)
 
   if (Me.energy < Me.health)
     {
-      Me.energy += REFRESH_ENERGY * Frame_Time () * 2;
+      Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
       RealScore -= REFRESH_ENERGY * Frame_Time () * 10;
       if (Me.energy > Me.health)
 	Me.energy = Me.health;

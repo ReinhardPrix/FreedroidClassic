@@ -402,7 +402,7 @@ EnterKonsole (void)
 
   /* Initialisierung der Konsole */
 
-  InterruptInfolineUpdate = FALSE;
+  // InterruptInfolineUpdate = FALSE;
   ClearGraphMem (RealScreen);
   KillTastaturPuffer ();
 
