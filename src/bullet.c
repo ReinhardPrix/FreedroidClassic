@@ -578,55 +578,74 @@ enemy_spray_blood ( Enemy CurEnemy )
 void
 handle_flash_effects ( bullet* CurBullet )
 {
-  int i;
+    int i;
 
-  //--------------------
-  // if the flash is over, just delete it and return
-  if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
+    //--------------------
+    // if the flash is over, just delete it and return
+    if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
     {
-      CurBullet->time_in_frames = 0;
-      CurBullet->time_in_seconds = 0;
-      CurBullet->type = OUT;
-      CurBullet->mine = FALSE;
-      return;
+	CurBullet->time_in_frames = 0;
+	CurBullet->time_in_seconds = 0;
+	CurBullet->type = OUT;
+	CurBullet->mine = FALSE;
+	return;
     }
-  
-  //--------------------
-  // if the flash is not yet over, do some checking for who gets
-  // hurt by it.  
-  //
-  // Two different methode for doing this are available:
-  // The first but less elegant Method is just to check for
-  // flash immunity, for distance and visiblity.
-  //
-  // The second and more elegant method is to recursively fill
-  // out the room where the flash-maker is in and to hurt all
-  // robots in there except of course for those immune.
-  //
-  if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
-  
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    
+    //--------------------
+    // if the flash is not yet over, do some checking for who gets
+    // hurt by it.  
+    //
+    // Two different methode for doing this are available:
+    // The first but less elegant Method is just to check for
+    // flash immunity, for distance and visiblity.
+    //
+    // The second and more elegant method is to recursively fill
+    // out the room where the flash-maker is in and to hurt all
+    // robots in there except of course for those immune.
+    //
+    if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
+    
+    //--------------------
+    // We make sure that the first and last index numbers for each
+    // level are halfway correct...
+    //
+    occasionally_update_first_and_last_bot_indices ( );
+
+    for ( i  = first_index_of_bot_on_level [ CurBullet -> pos . z ] ; 
+	  i <=  last_index_of_bot_on_level [ CurBullet -> pos . z ] ; i++ )
     {
-      if ( IsVisible ( & AllEnemys[i].pos , 0 ) &
-	   (!Druidmap[AllEnemys[i].type].flashimmune) ) // WARNING:  PLAYER 0 here wrong
+	//--------------------
+	// Bots on other levels need not be affected by the flash
+	// weapon on this level...
+	//
+	if ( AllEnemys [ i ] . pos . z != CurBullet -> pos . z ) continue ;
+	if ( AllEnemys [ i ] . type == (-1) ) continue ;
+	
+	//--------------------
+	// The flash weapon will only take effect, if there is a direct
+	// line of sigh between the bullet (the firing bot that is...)
+	// and the target bot.
+	//
+	if ( IsVisible ( & AllEnemys [ i ] . pos , 0 ) &&
+	     ( ! Druidmap [ AllEnemys [ i ] . type ] . flashimmune ) ) 
 	{
-	  // ITEMS AllEnemys[i].energy -= Bulletmap[FLASH].damage;
-	  AllEnemys[i].energy -= CurBullet->damage;
-	  // Since the enemy just got hit, it might as well say so :)
-	  EnemyHitByBulletText( i );
+	    AllEnemys [ i ] . energy -= CurBullet -> damage ;
 
-	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
-
+	    //--------------------
+	    // Since the enemy just got hit, it might as well say so 
+	    // and also spray some blood all around... :)
+	    //
+	    EnemyHitByBulletText( i );
+	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+	    
 	}
     }
-  
-  if (!InvincibleMode && !Druidmap[Me[0].type].flashimmune)
+    
+    if ( ( ! InvincibleMode ) && ( ! Druidmap [ Me [ 0 ] . type ] . flashimmune ) )
     {
-      // ITEMS Me[0].energy -= Bulletmap[FLASH].damage ;
-      Me[0].energy -= CurBullet->damage ;
+	Me [ 0 ] . energy -= CurBullet->damage ;
     }
-
+    
 }; // handle_flash_effects ( bullet* CurBullet )
 
 /* ----------------------------------------------------------------------

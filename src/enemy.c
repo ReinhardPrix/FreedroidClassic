@@ -488,53 +488,62 @@ ShuffleEnemys ( int LevelNum )
 
 /* ----------------------------------------------------------------------
  *
+ * There are some rather time-consuming functions and loops dealing with
+ * the enemies on one level.  However, stepping through *all* the bots
+ * in *all* the game can be rather cumbersome, especially if repeated so
+ * often.  Therefore it might be sensible to keep some information on
+ * where inside the AllEnemys array the bots of one particular level are
+ * located.  
+ * 
+ * Bots don't change level very much, so it should also be sufficient to
+ * update this list of array locations only now and then.
  *
  * ---------------------------------------------------------------------- */
 void
 occasionally_update_first_and_last_bot_indices ( void )
 {
-  static int first_call = TRUE ;
-  static int last_update_ticks ;
-  int current_ticks;
-  int level_num;
-  int i;
-
-  if ( first_call )
+    static int first_call = TRUE ;
+    static int last_update_ticks ;
+    int current_ticks;
+    int level_num;
+    int i;
+    
+    if ( first_call )
     {
-      first_call = FALSE ;
-      last_update_ticks = SDL_GetTicks() - 1000 ;
+	first_call = FALSE ;
+	last_update_ticks = SDL_GetTicks() - 1000 ;
     }
-  
-  current_ticks = SDL_GetTicks();
-
-  if ( current_ticks - last_update_ticks >= 1000 )
+    
+    current_ticks = SDL_GetTicks();
+    
+    if ( current_ticks - last_update_ticks >= 1000 )
     {
-      last_update_ticks = current_ticks ;
-      DebugPrintf ( 2 , "\nNow updating the first and last indices of bots from each level." );
-      
-      for ( level_num = 0 ; level_num < MAX_LEVELS ; level_num ++ )
+	last_update_ticks = current_ticks ;
+	DebugPrintf ( 2 , "\nNow updating the first and last indices of bots from each level." );
+	
+	for ( level_num = 0 ; level_num < MAX_LEVELS ; level_num ++ )
 	{
-	  //--------------------
-	  // Some entries, that will be overridden shortly...
-	  first_index_of_bot_on_level [ level_num ] = MAX_ENEMYS_ON_SHIP - 2 ;
-	  last_index_of_bot_on_level [ level_num ] = 0 ;
-
-	  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+	    //--------------------
+	    // Some entries, that will be overridden shortly...
+	    first_index_of_bot_on_level [ level_num ] = MAX_ENEMYS_ON_SHIP - 2 ;
+	    last_index_of_bot_on_level [ level_num ] = 0 ;
+	    
+	    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
 	    {
-	      if ( AllEnemys [ i ] . type == (-1) ) continue ;
-	      if ( AllEnemys [ i ] . pos . z != level_num ) continue ;
-	      
-	      if ( first_index_of_bot_on_level [ level_num ] >= i )
-		first_index_of_bot_on_level [ level_num ] = i ;
-	      if ( last_index_of_bot_on_level [ level_num ] <= i )
-		last_index_of_bot_on_level [ level_num ] = i ;
+		if ( AllEnemys [ i ] . type == (-1) ) continue ;
+		if ( AllEnemys [ i ] . pos . z != level_num ) continue ;
+		
+		if ( first_index_of_bot_on_level [ level_num ] >= i )
+		    first_index_of_bot_on_level [ level_num ] = i ;
+		if ( last_index_of_bot_on_level [ level_num ] <= i )
+		    last_index_of_bot_on_level [ level_num ] = i ;
 	    }
-
-	  DebugPrintf ( 2 , "\nFirst index on lv. %d is %d, last index is %d. " , level_num , 
-			first_index_of_bot_on_level [ level_num ] , last_index_of_bot_on_level [ level_num ] );
+	    
+	    DebugPrintf ( 2 , "\nFirst index on lv. %d is %d, last index is %d. " , level_num , 
+			  first_index_of_bot_on_level [ level_num ] , last_index_of_bot_on_level [ level_num ] );
 	}
     }
-
+    
 }; // occasionally_update_first_and_last_bot_indices ( void )
 
 /* ----------------------------------------------------------------------

@@ -149,7 +149,7 @@ ShowMissionCompletitionMessages( void )
   // therefore we display it in-game:
   //
   SDL_SetClipRect( Screen , NULL );
-  DisplayText( "See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
+  DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
 
   for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
     {
