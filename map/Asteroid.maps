@@ -9564,7 +9564,7 @@ end_of_level
 Levelnumber: 9
 xlen of this level: 90
 ylen of this level: 90
-light radius bonus of this level: -3
+light radius bonus of this level: 13
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -17173,27 +17173,27 @@ Nr.=121 x=  17 y=  31 rnd=0	 connections:  104 120 102
 Nr.=122 x=  24 y=  37 rnd=0	 connections:  120 123
 Nr.=123 x=  21 y=  39 rnd=0	 connections:  122 124 110
 Nr.=124 x=  18 y=  41 rnd=0	 connections:  123 110 109 106
-Nr.=125 x=  70 y=  52 rnd=0	 connections:  126
-Nr.=126 x=  70 y=  47 rnd=0	 connections:  127
-Nr.=127 x=  74 y=  47 rnd=0	 connections:  128
-Nr.=128 x=  74 y=  44 rnd=0	 connections:  129
-Nr.=129 x=  59 y=  44 rnd=0	 connections:  130
-Nr.=130 x=  59 y=  48 rnd=0	 connections:  131
-Nr.=131 x=  70 y=  48 rnd=0	 connections:  125
-Nr.=132 x=  57 y=  46 rnd=0	 connections:  133
-Nr.=133 x=  57 y=  48 rnd=0	 connections:  132
-Nr.=134 x=  60 y=  41 rnd=0	 connections:  140
-Nr.=135 x=  63 y=  41 rnd=0	 connections:  138
-Nr.=136 x=  66 y=  41 rnd=0	 connections:  141
-Nr.=137 x=  69 y=  41 rnd=0	 connections:  143
-Nr.=138 x=  62 y=  43 rnd=0	 connections:  139
-Nr.=139 x=  62 y=  40 rnd=0	 connections:  135
-Nr.=140 x=  59 y=  43 rnd=0	 connections:  134
-Nr.=141 x=  65 y=  43 rnd=0	 connections:  142
-Nr.=142 x=  65 y=  40 rnd=0	 connections:  136
-Nr.=143 x=  70 y=  43 rnd=0	 connections:  144
-Nr.=144 x=  68 y=  43 rnd=0	 connections:  145
-Nr.=145 x=  68 y=  40 rnd=0	 connections:  137
+Nr.=125 x=  70 y=  52 rnd=1	 connections:  126
+Nr.=126 x=  70 y=  47 rnd=1	 connections:  127
+Nr.=127 x=  74 y=  47 rnd=1	 connections:  128
+Nr.=128 x=  74 y=  44 rnd=1	 connections:  129
+Nr.=129 x=  59 y=  44 rnd=1	 connections:  130
+Nr.=130 x=  59 y=  48 rnd=1	 connections:  131
+Nr.=131 x=  70 y=  48 rnd=1	 connections:  125
+Nr.=132 x=  57 y=  46 rnd=1	 connections:  133
+Nr.=133 x=  57 y=  48 rnd=1	 connections:  132
+Nr.=134 x=  60 y=  41 rnd=1	 connections:  140
+Nr.=135 x=  63 y=  41 rnd=1	 connections:  138
+Nr.=136 x=  66 y=  41 rnd=1	 connections:  141
+Nr.=137 x=  69 y=  41 rnd=1	 connections:  143
+Nr.=138 x=  62 y=  43 rnd=1	 connections:  139
+Nr.=139 x=  62 y=  40 rnd=1	 connections:  135
+Nr.=140 x=  59 y=  43 rnd=1	 connections:  134
+Nr.=141 x=  65 y=  43 rnd=1	 connections:  142
+Nr.=142 x=  65 y=  40 rnd=1	 connections:  136
+Nr.=143 x=  70 y=  43 rnd=1	 connections:  144
+Nr.=144 x=  68 y=  43 rnd=1	 connections:  145
+Nr.=145 x=  68 y=  40 rnd=1	 connections:  137
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 18
