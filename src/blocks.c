@@ -1520,6 +1520,22 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_2 = 0.5 ;
 
+  obstacle_map [ ISO_CONSOLE_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = 0.25 ;
+
+  obstacle_map [ ISO_CONSOLE_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = 0.25 ;
+
+  obstacle_map [ ISO_CONSOLE_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_2 = 0.8 ;
+
+  obstacle_map [ ISO_CONSOLE_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_2 = 0.8 ;
+
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 
 /* ---------------------------------------------------------------------- 
