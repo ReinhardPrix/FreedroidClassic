@@ -1183,7 +1183,7 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
     // Maybe there was an ON-GOTO-CONDITION specified for this option.
     // Then of course we have to jump to the new location!!!
     //
-    while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+    if ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
     {
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
 	if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
@@ -1191,19 +1191,14 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	    DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
 			 ChatRoster [ MenuSelection ] . on_goto_first_target );
 	    MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
-	    
-	    ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-	    return ;
 	}
 	else
 	{
 	    DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
 			 ChatRoster [ MenuSelection ] . on_goto_second_target );
 	    MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
-	    
-	    ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-	    return ;
 	}
+	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
     }
     
 }; // void ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
