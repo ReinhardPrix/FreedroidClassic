@@ -9,10 +9,46 @@
  * $Author$
  *
  * $Log$
- * Revision 1.5  1993/05/28 20:53:58  prix
- * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
- * Tue May 25 07:19:29 1993: killed KRIT(geht nicht). some extern decl. in #extern clause
- * Thu May 27 09:41:35 1993: SpeedX, SpeedY now macros -> Me.speed.x...
+ * Revision 1.6  1994/06/19 16:20:13  prix
+ * Fri May 28 16:56:52 1993: killed further vars
+ * Fri May 28 17:12:45 1993: moved Macros to defs.h
+ * Fri May 28 17:38:17 1993: added Gunmap[]
+ * Fri May 28 19:47:14 1993: made BlockPointers far
+ * Sun May 30 10:49:04 1993: CurLevel is now a pointer (Level statt level!)
+ * Sun May 30 14:09:37 1993: new def-names for declarations
+ * Mon May 31 14:32:30 1993: Describe Changes:
+ * Mon May 31 14:32:49 1993: MapBlockPointer not void* but char* !!
+ * Mon May 31 14:42:26 1993: Blast/Bullet types now blast/bullet !
+ * Mon May 31 17:56:41 1993: added ScreenPointer
+ * Mon May 31 20:00:59 1993: char pointers unsigned
+ * Sat Jul 24 07:37:41 1993: Digitpointer eingefuehrt
+ * Sat Jul 24 11:09:19 1993: Influencepointer eingefuehrt
+ * Sat Jul 24 14:07:04 1993: Enemypointer eingewfuehrt
+ * Sat Jul 24 14:40:20 1993: Feindesliste hinzugefuegt
+ * Sun Jul 25 15:52:51 1993: sicherheit
+ * Wed Jul 28 16:41:46 1993: JoyXYB
+ * Wed Jul 28 16:43:05 1993: GameAdapterPresent = 1
+ * Wed Jul 28 17:36:56 1993: Joy* Variable nicht global
+ * Fri Jul 30 07:26:38 1993: Added Agression
+ * Sat Jul 31 07:43:42 1993: Transfercolor und Mobilecolor sing global
+ * Sat Jul 31 17:58:33 1993: Me ist kein gewoehnlicher "druid" sondern ein"influence_t"
+ * Sat Jul 31 18:01:38 1993: Enemy ist kei "druid" sondern ein "enemy"
+ * Sat Jul 31 19:08:01 1993: added GameAdapterPresent (again)
+ * Fri Aug 06 15:30:57 1993: added CurShip
+ * Tue Aug 10 10:23:33 1993: LevelColorArray hinzugefuegt
+ * Tue Aug 10 12:40:54 1993: LevelColorArray ist jetzt ein char*
+ * Wed Aug 11 08:41:50 1993: Space Released hinzugefuegt
+ * Wed Sep 15 14:04:21 1993: parafont hat einen eigenen Abschnitt
+ * Sat Sep 18 11:28:12 1993: ADDED Pointer: RahmenPicture for the Rahmen-Bild
+ * Tue Sep 21 06:08:36 1993: MyCursorX,Y
+ * Tue Sep 21 14:37:01 1993: some fontvariables added
+ * Sat Sep 25 10:18:13 1993: added LeftInfo and RightInfo
+ * Sat Sep 25 15:53:44 1993: added ElevatorPicture
+ * Tue Oct 05 13:54:16 1993: added ElevatorRaster[][]: for rastering the el.-picture
+ * Tue Oct 05 15:22:18 1993: renamed MapBlockPointer to MapBlocks[]
+ * Thu Oct 07 20:17:26 1993: added ElevatorColors[][]
+ * Sun Oct 17 08:44:27 1993: PulsExterntionOn eingefuehrt
+ * Sat May 21 17:27:25 1994: MessageBar hinzugef"ugt
  *
  * Revision 1.5  1993/05/28  20:53:58  prix
  * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
