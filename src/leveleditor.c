@@ -2795,6 +2795,7 @@ LevelEditor(void)
 	    ShowGenericButtonFromList ( GO_LEVEL_EAST_BUTTON );
 	  if ( EditLevel -> jump_target_west >= 0 )
 	    ShowGenericButtonFromList ( GO_LEVEL_WEST_BUTTON );
+	  ShowGenericButtonFromList ( EXPORT_THIS_LEVEL_BUTTON );
 
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
@@ -3007,6 +3008,10 @@ LevelEditor(void)
 		    new_y = 4;
 		  if ( EditLevel -> jump_target_west >= 0 ) 
 		    Teleport ( EditLevel -> jump_target_west , new_x , new_y , 0 , TRUE , FALSE );
+		}
+	      else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  ExportLevelInterface ( Me [ 0 ] . pos . z );
 		}
 	      else
 		{

@@ -125,6 +125,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
     { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
+    { NULL , "mouse_buttons/ExportThisLevelButton.png"           , { 0 , 480-40 , 160 ,  20 } } ,
 
     { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
     { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
