@@ -934,9 +934,10 @@ Droid_Talk_Options_Menu (void)
 	      while (UpPressed());
 	      key_pressed = TRUE;
 	    }
-	  if (DownPressed()) 
+	  if (DownPressed() || WheelDownPressed() ) 
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
+	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
 	      while (DownPressed());
 	      key_pressed = TRUE;
