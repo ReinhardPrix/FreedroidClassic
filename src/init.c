@@ -49,6 +49,70 @@ void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
 char* NextMissionName;
 
+/*@Function============================================================
+@Desc: This function loads all the constant variables of the game from
+       a dat file, that should be optimally human readable.
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void
+Get_General_Game_Constants ( void* DataPointer )
+{
+  char *ConstantPointer;
+  char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
+                       // interchanging of the order of appearance of parameters in the game.dat file
+
+#define CONSTANTS_SECTION_BEGIN_STRING "*** Start of General Game Constants Section: ***"
+#define CONSTANTS_SECTION_END_STRING "*** End of General Game Constants Section: ***"
+#define COLLISION_LOSE_ENERGY_CALIBRATOR_STRING "Energy-Loss-factor for Collisions of Influ with hostile robots="
+
+  if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
+    {
+      DebugPrintf(1, "\n\nBegin of General Game Constants Section string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf (2, "\n\nBegin of General Game Constants Section found. Good.");  
+      // fflush(stdout);
+    }
+  
+  if ( ( strstr ( DataPointer , CONSTANTS_SECTION_END_STRING ) ) == NULL)
+    {
+      DebugPrintf(1, "\n\nEnd of General Game Constants Section string not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf (2, "\n\nEnd of General Game Constants Section found. Good.");  
+      fflush(stdout);
+    }
+  
+  DebugPrintf (2, "\n\nStarting to read contents of General Game Constants section\n\n");
+
+  // Now we read in the speed calibration factor for all bullets
+  if ( (ValuePointer = strstr ( DataPointer, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING )) == NULL )
+    {
+      DebugPrintf(1, "\nERROR! NO COLLISION LOSE ENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( COLLISION_LOSE_ENERGY_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &collision_lose_energy_calibrator );
+      DebugPrintf( 0 , "%f" , collision_lose_energy_calibrator );
+      // getchar();
+    }
+
+
+} // 
+
+/*----------------------------------------------------------------------
+ *
+ *
+ *
+ ----------------------------------------------------------------------*/
+
 void 
 Get_Bullet_Data ( char* DataPointer )
 {
@@ -951,6 +1015,8 @@ Init_Game_Data ( char * Datafilename )
     }
 
   // printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+
+  Get_General_Game_Constants( Data );
 
   Get_Robot_Data ( Data );
 

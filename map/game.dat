@@ -20,6 +20,14 @@ That will not cause any problems.
 
 ----------------------------------------------------------------------
 
+*** Start of General Game Constants Section: ***
+
+Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
+
+*** End of General Game Constants Section: ***
+
+----------------------------------------------------------------------
+
 *** Start of Bullet Data Section: ***
 
 Common factor for all bullet's speed values: 1.0

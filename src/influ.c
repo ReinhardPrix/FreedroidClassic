@@ -47,7 +47,7 @@
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
-void BounceLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
+void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 long MyAbs (long);
@@ -833,9 +833,13 @@ CheckInfluenceEnemyCollision (void)
 	      else if (ydist)
 		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
 
-	      // move the influencer a little bit out of the enemy
-	      Me.pos.x += Me.speed.x * Frame_Time ();
-	      Me.pos.y += Me.speed.y * Frame_Time ();
+	      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
+	      Me.pos.x += copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
+	      Me.pos.y += copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	      AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
+	      AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	      // Me.pos.x += Me.speed.x * Frame_Time ();
+	      // Me.pos.y += Me.speed.y * Frame_Time ();
 
 	      // there might be walls close too, so lets check again for collisions with them
 	      CheckInfluenceWallCollisions ();
@@ -858,7 +862,7 @@ CheckInfluenceEnemyCollision (void)
 	      EnemyInfluCollisionText ( i );
 
 	    }
-	  BounceLoseEnergy (i);	/* someone loses energy ! */
+	  InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
 
 	}
       else
@@ -1065,14 +1069,15 @@ RefreshInfluencer (void)
 }				/* RefreshInfluence */
 
 /*@Function============================================================
-@Desc: BounceLoseEnergy(): influ-enemy collisions are sucking someones
-       energy, depending on colliding types
+@Desc: influ-enemy collisions are sucking someones
+       energy, depending no longer on classes of the colliding parties,
+       but on their weights
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void
-BounceLoseEnergy (int enemynum)
+InfluEnemyCollisionLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
 
@@ -1082,19 +1087,26 @@ BounceLoseEnergy (int enemynum)
     {
       if (InvincibleMode)
 	return;
+      
+      /* This old code used class difference to determine collision damage.
+	 But now we use Weight-Difference. 
       Me.energy -=
 	(Druidmap[enemytype].class -
 	 Druidmap[Me.type].class) * BOUNCE_LOSE_FACT;
+      */
+      Me.energy -=
+	(Druidmap[enemytype].weight -
+	 Druidmap[Me.type].weight ) * collision_lose_energy_calibrator * 0.01 ;
     }
   else
     AllEnemys[enemynum].energy -=
-      (Druidmap[Me.type].class -
-       Druidmap[enemytype].class) * BOUNCE_LOSE_FACT;
+      (Druidmap[Me.type].weight -
+       Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
 
   //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
 
   return;
-}				// void BounceLoseEnergy(int enemynum)
+}; // void InfluEnemyCollisionLoseEnergy(int enemynum)
 
 /*@Function============================================================
 @Desc: PermanentLoseEnergy(): In the classic paradroid game, the influencer
