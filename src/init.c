@@ -69,6 +69,8 @@ Get_General_Game_Constants ( void* DataPointer )
 #define DRUID_RADIUS_X_SPECIFICATION_STRING "'Radius' of droids in x direction="
 #define DRUID_RADIUS_Y_SPECIFICATION_STRING "'Radius' of droids in x direction="
 #define BLAST_DAMAGE_SPECIFICATION_STRING "Amount of damage done by contact to a blast per second of time="
+#define TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING "Time for the doors to move by one subphase of their movement="
+
 
   if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -155,6 +157,19 @@ Get_General_Game_Constants ( void* DataPointer )
       ValuePointer += strlen ( BLAST_DAMAGE_SPECIFICATION_STRING );
       sscanf ( ValuePointer , "%lf" , &Blast_Damage_Per_Second );
       DebugPrintf( 1 , "\nBlast_Damage_Per_Second now reads:  %f" , Blast_Damage_Per_Second );
+    }
+
+  // Now we read in the time is takes for the door to move one phase 
+  if ( ( ValuePointer = strstr ( DataPointer, TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO DOOR MOVEMENT SPEED SPECIFICATION ENTRY FOUND! TERMINATING!" );
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING );
+      sscanf ( ValuePointer , "%lf" , &Time_For_Each_Phase_Of_Door_Movement );
+      DebugPrintf( 1 , "\nTime_For_Each_Phase_Of_Door_Movement now reads:  %f" , Time_For_Each_Phase_Of_Door_Movement );
     }
 
 

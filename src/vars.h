@@ -92,7 +92,7 @@ char *InfluenceModeNames[] = {
 };
 
 
-char *Classname[ALLCLASSNAMES] = {
+char *Classname[] = {
   "Influence device",
   "Disposal robot",
   "Servant robot",

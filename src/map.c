@@ -1538,7 +1538,7 @@ MoveLevelDoors (void)
   // This prevents animation going too quick.
   // The constant should be replaced by a variable, that can be
   // set from within the theme, but that may be done later...
-  if ( LevelDoorsNotMovedTime < 0.15 ) return;
+  if ( LevelDoorsNotMovedTime < Time_For_Each_Phase_Of_Door_Movement ) return;
   LevelDoorsNotMovedTime=0;
 
 

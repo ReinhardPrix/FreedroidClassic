@@ -166,9 +166,6 @@ enum
 // #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
 // #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
-/* Dimension eines Blasts */
-// #define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )
-
 // **********************************************************************
 //
 //
@@ -238,19 +235,17 @@ enum _sounds
 #define ELEVATOR_LEN		38
 #define ELEVATOR_HEIGHT		12
 
-
 #define BULLETSPEEDINFLUENCE 	2
 
 #define DIRECTIONS 		8
 
-#define ALLCLASSNAMES 		11
 #define ALLSHIPS 		4
 
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
-#define WAIT_AFTER_KILLED	1  // time to wait and still display pictures after the destruction of 
+#define WAIT_AFTER_KILLED	1.5  // time to wait and still display pictures after the destruction of 
                                    // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
@@ -418,16 +413,7 @@ enum _status
   MENU
 };
 
-
-// #define BLASTDAMAGE		45
-#define BLASTPHASES_PER_SECOND  15
-
 #define DECKCOMPLETEBONUS 500
-
-/* Tastaturgeschwindigkeiten */
-#define TYPEMATIC_SLOW 127
-#define TYPEMATIC_FAST 0
-#define TYPEMATIC_TAKEOVER 92	/* For the takeover-game */
 
 #define OUT TERMINATED		/* Type fuer inaktive Dinge */
 

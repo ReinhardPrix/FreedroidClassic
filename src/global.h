@@ -55,7 +55,7 @@ EXTERN float FPSover100;
 EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
 EXTERN char *Decknames[];
-EXTERN char *Classname[ALLCLASSNAMES];
+EXTERN char *Classname[];
 EXTERN char *Classes[];
 EXTERN char *Height[];
 EXTERN char *Weight[];
@@ -130,6 +130,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+EXTERN double Time_For_Each_Phase_Of_Door_Movement;
 EXTERN double Blast_Damage_Per_Second;
 EXTERN double Blast_Radius;
 EXTERN double Druid_Radius_X;
