@@ -3254,6 +3254,13 @@ CreateNewMapLevel( void )
 	NewLevel -> obstacle_name_list [ i ] = NULL ;
     }
     //--------------------
+    // Now we initialize the obstacle description list with 'empty' values
+    //
+    for ( i = 0 ; i < MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ; i ++ )
+    {
+	NewLevel -> obstacle_description_list [ i ] = NULL ;
+    }
+    //--------------------
     // First we initialize the floor with 'empty' values
     //
     for ( i = 0 ; i < NewLevel -> ylen ; i ++ )
@@ -4427,6 +4434,87 @@ The label just entered did already exist on this map!  Deleting old entry in fav
     
 }; // void give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle )
 
+/* ----------------------------------------------------------------------
+ * This function should assign a new individual obstacle description to a 
+ * single instance of a given obstacle type on a given level.  
+ *
+ * New indices must be found and the user must be queried for his input 
+ * about the desired description text for the obstacle.
+ *
+ * ---------------------------------------------------------------------- */
+void
+give_new_description_to_obstacle ( Level EditLevel , obstacle* our_obstacle , char* predefined_description )
+{
+    int i;
+    int free_index=(-1);
+    
+    //--------------------
+    // If the obstacle already has a name, we can use that index for the 
+    // new name now.
+    //
+    if ( our_obstacle -> name_index >= 0 )
+	free_index = our_obstacle -> name_index ;
+    else
+    {
+	//--------------------
+	// Else we must find a free index in the list of obstacle names for this level
+	//
+	for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+	{
+	    if ( EditLevel -> obstacle_description_list [ i ] == NULL )
+	    {
+		free_index = i ;
+		break;
+	    }
+	}
+	if ( free_index < 0 ) 
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Ran out of obstacle description positions on this map level!",
+				       PLEASE_INFORM , IS_WARNING_ONLY );
+	    return;
+	}
+    }
+    
+    //--------------------
+    // Maybe we must query the user for the desired new name.
+    // On the other hand, it might be that a name has been
+    // supplied as an argument.  That depends on whether the
+    // argument string is NULL or not.
+    //
+    if ( EditLevel -> obstacle_description_list [ free_index ] == NULL )
+	EditLevel -> obstacle_description_list [ free_index ] = "" ;
+    if ( predefined_description == NULL )
+    {
+	EditLevel -> obstacle_description_list [ free_index ] = 
+	    GetEditableStringInPopupWindow ( 1000 , "\n\
+Please enter new description text for this obstacle: \n\n" ,
+					     EditLevel -> obstacle_description_list [ free_index ] );
+    }
+    else
+    {
+	EditLevel -> obstacle_description_list [ free_index ] = MyMalloc ( 10000 );
+	strncpy ( EditLevel -> obstacle_description_list [ free_index ] , predefined_description , 9900 ) ;
+    }
+    
+    //--------------------
+    // We must select the right index as the name of this obstacle.
+    //
+    our_obstacle -> description_index = free_index ;
+    
+    //--------------------
+    // But if the given name was empty, then we remove everything again
+    // and RETURN
+    //
+    if ( strlen ( EditLevel -> obstacle_description_list [ free_index ] ) == 0 )
+    {
+	EditLevel -> obstacle_description_list [ free_index ] = NULL ;
+	our_obstacle -> description_index = (-1);
+	return;
+    }
+    
+}; // void give_new_description_to_obstacle ( EditLevel , level_editor_marked_obstacle )
+
 
 /* ----------------------------------------------------------------------
  * In an effort to reduce the massive size of the level editor main
@@ -4518,6 +4606,14 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    if ( level_editor_marked_obstacle != NULL )
 	    {
 		give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
+		while ( SpacePressed() );
+	    }
+	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_DESCRIPTION_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    if ( level_editor_marked_obstacle != NULL )
+	    {
+		give_new_description_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
 		while ( SpacePressed() );
 	    }
 	}
@@ -4674,6 +4770,7 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     
     ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
+    ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_DESCRIPTION_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_ESC_BUTTON );

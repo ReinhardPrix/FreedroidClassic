@@ -99,21 +99,18 @@ show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , 
 }; // void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )
 
 /* ----------------------------------------------------------------------
- * In some cases it will be nescessary to inform the user of something in
- * a big important style.  Then a popup window is suitable, with a mouse
- * button to confirm and make it go away again.
+ *
+ *
  * ---------------------------------------------------------------------- */
 void
-GiveMouseAlertWindow( char* WindowText )
+show_backgrounded_text_rectangle ( char* text , int x , int y , int w , int h )
 {
     SDL_Rect TargetRect;
 
-    Activate_Conservative_Frame_Computation();
-  
-    TargetRect . w = 440 ; 
-    TargetRect . h = 340 ; 
-    TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
-    TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
+    TargetRect . w = w ; 
+    TargetRect . h = h ; 
+    TargetRect . x = x ; 
+    TargetRect . y = y ; 
     our_SDL_fill_rect_wrapper ( Screen , &TargetRect , 
 				SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
     
@@ -124,8 +121,26 @@ GiveMouseAlertWindow( char* WindowText )
     TargetRect . y += IN_WINDOW_TEXT_OFFSET;
     
     SetCurrentFont ( FPS_Display_BFont );
-    DisplayText ( WindowText, TargetRect . x, TargetRect . y , &TargetRect , 1.0 )  ;
+    DisplayText ( text , TargetRect . x, TargetRect . y , &TargetRect , 1.0 )  ;
     
+}; // void show_backgrounded_text_rectangle ( char* text , int x , int y , int w , int h )
+
+/* ----------------------------------------------------------------------
+ * In some cases it will be nescessary to inform the user of something in
+ * a big important style.  Then a popup window is suitable, with a mouse
+ * button to confirm and make it go away again.
+ * ---------------------------------------------------------------------- */
+void
+GiveMouseAlertWindow( char* WindowText )
+{
+
+    Activate_Conservative_Frame_Computation();
+  
+    show_backgrounded_text_rectangle ( WindowText , 
+				       ( 640 - 440 ) / 2 , 
+				       ( 480 - 340 ) / 2 , 
+				       440 , 340 );
+
     our_SDL_flip_wrapper ( Screen );
     
     while ( !EnterPressed()  && !SpacePressed() ) ;
@@ -901,9 +916,9 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 char *
 GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* DefaultString )
 {
-    char *input;		// pointer to the string entered by the user
+    char *input;      // pointer to the string entered by the user
     int key;          // last 'character' entered 
-    int curpos;		// counts the characters entered so far
+    int curpos;	      // counts the characters entered so far
     int finished;
     int x0, y0;
     SDL_Rect TargetRect;
@@ -913,7 +928,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
     
 #define EDIT_WINDOW_TEXT_OFFSET 15
     
-    if ( MaxLen > 60 ) MaxLen = 60;
+    // if ( MaxLen > 60 ) MaxLen = 60;
     
     if ( ( ( int ) strlen ( DefaultString ) ) >= MaxLen -1 ) DefaultString [ MaxLen - 1 ] = 0 ;
     
@@ -970,7 +985,11 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	
 	DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect , TEXT_STRETCH )  ;
 	
-	PutString (Screen, x0, y0, input);
+
+	// PutString (Screen, x0, y0, input);
+	TargetRect . y = x0 ;
+	TargetRect . y = y0 ;
+	DisplayText ( input , TargetRect . x, TargetRect . y , &TargetRect , TEXT_STRETCH )  ; 
 	
 	//--------------------
 	// We position the cursor right on its real location
@@ -1043,9 +1062,9 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	
     } // while ( ! finished ) 
     
-    DebugPrintf ( 1, "\n\nchar *GetString(..):  The final string is: '%s'.\n\n\n" , input );
+    DebugPrintf ( 1, "\n%s():  The final string is: '%s'." , __FUNCTION__ , input );
     
-    return (input);
+    return ( input );
     
 }; // char* GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle )
 

@@ -433,6 +433,7 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 	loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
 	loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
 	loadlevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
+	loadlevel -> obstacle_list [ i ] . description_index = ( -1 ) ;
     }
     
     //--------------------
@@ -464,6 +465,8 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 			     & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
 	ReadValueFromString( obstacle_Pointer , OBSTACLE_LABEL_INDEX_STRING , "%d" , 
 			     & ( loadlevel -> obstacle_list [ i ] . name_index ) , obstacle_SectionEnd );
+	ReadValueFromString( obstacle_Pointer , OBSTACLE_DESCRIPTION_INDEX_STRING , "%d" , 
+			     & ( loadlevel -> obstacle_list [ i ] . description_index ) , obstacle_SectionEnd );
 	
 	// DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
 	// loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
@@ -540,8 +543,13 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
 }; // void DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Every map level in a FreedroidRPG 'ship' can have up to 
+ * MAX_OBSTACLE_NAMES_PER_LEVEL obstacles, that have a label attached to
+ * them.  Such obstacle labels are very useful when modifying obstacles
+ * from within game events and triggers.  The obstacle labels are stored
+ * in a small subsection of the whole level data.  This function decodes
+ * this small subsection and loads all the obstacle data into the ship
+ * struct.
  * ---------------------------------------------------------------------- */
 void
 decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
@@ -601,6 +609,75 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
     
     
 }; // void decode_obstacle_names_of_this_level ( loadlevel , DataPointer )
+
+/* ----------------------------------------------------------------------
+ * Every map level in a FreedroidRPG 'ship' can have up to 
+ * MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL obstacles, that have a label 
+ * attached to them.  
+ * Such obstacle labels are very useful when modifying obstacles
+ * from within game events and triggers.  
+ *
+ * The obstacle labels are stored in a small subsection of the whole 
+ * level data.  This function decodes this small subsection and loads all 
+ * the obstacle data into the ship struct.
+ * ---------------------------------------------------------------------- */
+void
+decode_obstacle_descriptions_of_this_level ( Level loadlevel , char* DataPointer )
+{
+    int i;
+    char PreservedLetter;
+    char* obstacle_descriptionPointer;
+    char* obstacle_descriptionSectionBegin;
+    char* obstacle_descriptionSectionEnd;
+    int NumberOfobstacle_descriptionsInThisLevel;
+    int target_index;
+
+    //--------------------
+    // At first we set all the obstacle description pointers to NULL in order to
+    // mark them as unused.
+    //
+    for ( i = 0 ; i < MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ; i ++ )
+    {
+	loadlevel -> obstacle_description_list [ i ] = NULL ;
+    }
+    
+    //--------------------
+    // Now we look for the beginning and end of the obstacle descriptions section
+    //
+    obstacle_descriptionSectionBegin = LocateStringInData( DataPointer , OBSTACLE_DESCRIPTION_BEGIN_STRING );
+    obstacle_descriptionSectionEnd = LocateStringInData( DataPointer , OBSTACLE_DESCRIPTION_END_STRING );
+    
+    //--------------------
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    //
+    PreservedLetter = obstacle_descriptionSectionEnd [ 0 ] ;
+    obstacle_descriptionSectionEnd [ 0 ] = 0 ;
+    NumberOfobstacle_descriptionsInThisLevel = CountStringOccurences ( obstacle_descriptionSectionBegin , OBSTACLE_DESCRIPTION_ANNOUNCE_STRING ) ;
+    DebugPrintf( 1 , "\nNumber of obstacle descriptions found in this level : %d." , NumberOfobstacle_descriptionsInThisLevel );
+    
+    //--------------------
+    // Now we decode all the map label information
+    //
+    obstacle_descriptionPointer=obstacle_descriptionSectionBegin;
+    for ( i = 0 ; i < NumberOfobstacle_descriptionsInThisLevel ; i ++ )
+    {
+	obstacle_descriptionPointer = strstr ( obstacle_descriptionPointer + 1 , INDEX_OF_OBSTACLE_DESCRIPTION );
+	ReadValueFromString( obstacle_descriptionPointer , INDEX_OF_OBSTACLE_DESCRIPTION , "%d" , 
+			     &(target_index) , obstacle_descriptionSectionEnd );
+	
+	loadlevel -> obstacle_description_list [ target_index ] = 
+	    ReadAndMallocStringFromData ( obstacle_descriptionPointer , OBSTACLE_DESCRIPTION_ANNOUNCE_STRING , "\"" );
+	
+	DebugPrintf( 1 , "\nobstacle_description_index=%d obstacle_description=\"%s\"" , target_index ,
+		     loadlevel -> obstacle_description_list [ target_index ] );
+    }
+    
+    //--------------------
+    // Now we repair the damage done to the loaded level data
+    //
+    obstacle_descriptionSectionEnd [ 0 ] = PreservedLetter;
+    
+}; // void decode_obstacle_descriptions_of_this_level ( loadlevel , DataPointer )
 
 /* ----------------------------------------------------------------------
  *
@@ -1095,7 +1172,7 @@ ActSpecialField ( int PlayerNum )
  * it's time already).
  * ---------------------------------------------------------------------- */
 void
-AnimateRefresh (void)
+AnimateRefresh ( void )
 {
     static float InnerWaitCounter = 0;
     int i;
@@ -1140,7 +1217,7 @@ Error:  A refresh index pointing not to a refresh obstacles found.",
  * it's time already).
  * ---------------------------------------------------------------------- */
 void
-AnimateTeleports (void)
+AnimateTeleports ( void )
 {
     static float InnerWaitCounter = 0;
     int i;
@@ -1150,7 +1227,7 @@ AnimateTeleports (void)
     
     InnerWaitCounter += Frame_Time () * 10;
     
-    for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
+    for ( i = 0 ; i < MAX_TELEPORTERS_ON_LEVEL ; i ++ )
     {
 	if ( TeleportLevel -> teleporter_obstacle_indices [ i ] <= ( -1 ) ) break;
 	
@@ -1176,7 +1253,7 @@ Error:  A teleporter index pointing not to a teleporter obstacle found.",
 	
     }	// for
     
-    DebugPrintf (2, "\nvoid AnimateTeleports(void):  end of function reached.");
+    DebugPrintf ( 2 , "\n%s():  end of function reached." , __FUNCTION__ );
     
 }; // void AnimateTeleports ( void )
 
@@ -1328,35 +1405,49 @@ encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
 {
     int i;
     char linebuf[5000];	  
+    char* running_pointer = LevelMem ;
     
     //--------------------
     // Now we write out a marker.  This marker is not really
     // vital for reading in the file again, but it adds clearness to the files structure.
     //
-    strcat(LevelMem, OBSTACLE_DATA_BEGIN_STRING);
-    strcat(LevelMem, "\n");
+    strcat(running_pointer, OBSTACLE_DATA_BEGIN_STRING);
+    strcat(running_pointer, "\n");
     
     for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
 	if ( Lev -> obstacle_list [ i ] . type == (-1) ) continue;
 	
-	strcat( LevelMem , OBSTACLE_TYPE_STRING );
+	strcat( running_pointer , OBSTACLE_TYPE_STRING );
 	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . type );
-	strcat( LevelMem , linebuf );
+	strcat( running_pointer , linebuf );
 	
-	strcat( LevelMem , OBSTACLE_X_POSITION_STRING );
+	strcat( running_pointer , OBSTACLE_X_POSITION_STRING );
 	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . x );
-	strcat( LevelMem , linebuf );
+	strcat( running_pointer , linebuf );
 	
-	strcat( LevelMem , OBSTACLE_Y_POSITION_STRING );
+	strcat( running_pointer , OBSTACLE_Y_POSITION_STRING );
 	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
-	strcat( LevelMem , linebuf );
+	strcat( running_pointer , linebuf );
 	
-	strcat( LevelMem , OBSTACLE_LABEL_INDEX_STRING );
+	strcat( running_pointer , OBSTACLE_LABEL_INDEX_STRING );
 	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . name_index );
-	strcat( LevelMem , linebuf );
+	strcat( running_pointer , linebuf );
 	
-	strcat( LevelMem , "\n" );
+	strcat( running_pointer , OBSTACLE_DESCRIPTION_INDEX_STRING );
+	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . description_index );
+	strcat( running_pointer , linebuf );
+	
+	strcat( running_pointer , "\n" );
+
+	//--------------------
+	// We can increase our running pointer a bit.  That way, we don't
+	// append to a very very long string every time, but to a shorter
+	// string every time, which might mean speed gains over strcatting
+	// to LevelMeme (i.e. the beginning of the save very long string)
+	// every time.
+	//
+	running_pointer = LevelMem + strlen ( LevelMem ) - 1 ;
     }
     
     //--------------------
@@ -1412,8 +1503,13 @@ EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 }; // void EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Every map level in a FreedroidRPG 'ship' can have up to 
+ * MAX_OBSTACLE_NAMES_PER_LEVEL obstacles, that have a label attached to
+ * them.  Such obstacle labels are very useful when modifying obstacles
+ * from within game events and triggers.  The obstacle labels are stored
+ * in a small subsection of the whole level data.  This function encodes
+ * this small subsection and puts all the obstacle data into a human
+ * readable text string for saving with the map file.
  * ---------------------------------------------------------------------- */
 void
 encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
@@ -1425,8 +1521,8 @@ encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
     // Now we write out a marker at the end of the map data.  This marker is not really
     // vital for reading in the file again, but it adds clearness to the files structure.
     //
-    strcat(LevelMem, OBSTACLE_LABEL_BEGIN_STRING);
-    strcat(LevelMem, "\n");
+    strcat ( LevelMem , OBSTACLE_LABEL_BEGIN_STRING );
+    strcat ( LevelMem , "\n");
     
     for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
     {
@@ -1445,10 +1541,63 @@ encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
     // Now we write out a marker at the end of the map data.  This marker is not really
     // vital for reading in the file again, but it adds clearness to the files structure.
     //
-    strcat(LevelMem, OBSTACLE_LABEL_END_STRING);
-    strcat(LevelMem, "\n\n");
+    strcat ( LevelMem , OBSTACLE_LABEL_END_STRING );
+    strcat ( LevelMem , "\n\n");
     
 }; // void encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
+
+/* ----------------------------------------------------------------------
+ * Every map level in a FreedroidRPG 'ship' can have up to 
+ * MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL obstacles, that have a label 
+ * attached to them.  
+ * These obstacle descriptions will be displayed, if present, instead of
+ * the default generic obstacle-type specific obstacle explanation.
+ * For examply, traffic signs with the same obstacle type being used in
+ * multiple places shouldn't read 'this is a traffic sign' all the time,
+ * but should have individual route names even though the obstacle type
+ * is the same every time.  That's what such individual obstacle 
+ * descriptions are for.
+ *
+ * The obstacle descriptions are stored in a small subsection of the 
+ * whole level data.  This function encodes this small subsection and 
+ * puts all the obstacle data into a human readable text string for 
+ * saving with the map file.
+ *
+ * ---------------------------------------------------------------------- */
+void
+encode_obstacle_descriptions_of_this_level ( char* LevelMem , Level Lev )
+{
+    int i;
+    char linebuf[5000];	  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat ( LevelMem , OBSTACLE_DESCRIPTION_BEGIN_STRING );
+    strcat ( LevelMem , "\n" );
+    
+    for ( i = 0 ; i < MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ; i ++ )
+    {
+	if ( Lev -> obstacle_description_list [ i ] == NULL ) continue;
+	
+	strcat( LevelMem , INDEX_OF_OBSTACLE_DESCRIPTION );
+	sprintf( linebuf , "%d " , i );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , OBSTACLE_DESCRIPTION_ANNOUNCE_STRING );
+	strcat( LevelMem , Lev -> obstacle_description_list [ i ] );
+	strcat( LevelMem , "\"\n" );
+    }
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat ( LevelMem , OBSTACLE_DESCRIPTION_END_STRING );
+    strcat ( LevelMem , "\n\n" );
+    
+}; // void encode_obstacle_descriptions_of_this_level ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
  * This function adds the statement data of this level to the chunk of 
@@ -1686,41 +1835,42 @@ EncodeChestItemSectionOfThisLevel ( char* LevelMem , Level Lev )
 char *
 EncodeLevelForSaving(Level Lev)
 {
-  char *LevelMem;
-  int i, j;
-  unsigned int MemAmount = 0 ;		// the size of the level-data 
-  int xlen = Lev->xlen, ylen = Lev->ylen;
-  int anz_wp;		// number of Waypoints 
-  char linebuf[5000];		// Buffer 
-  waypoint *this_wp;
-  Uint16 HumanReadableMapLine[10000];
-  
-  // Get the number of waypoints 
-  anz_wp = 0;
-  while( Lev->AllWaypoints[anz_wp++].x != 0 );
-  anz_wp -- ;		// we counted one too much 
-		
-  // estimate the amount of memory needed 
-  MemAmount = (xlen+1) * (ylen+1); 	// Map-memory 
-  MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
-  MemAmount += 500000;		// add some safety buffer for dimension-strings and marker strings...
-  
-  //--------------------
-  // We allocate some memory, such that we should be able to fill
-  // all the data for the level into it.  If this estimate is wrong,
-  // we'll simply panic further below...
-  //
-  if ( ( LevelMem = (char*) MyMalloc ( MemAmount ) ) == NULL ) 
+    char *LevelMem;
+    int i, j;
+    unsigned int MemAmount = 0 ;		// the size of the level-data 
+    int xlen = Lev->xlen, ylen = Lev->ylen;
+    int anz_wp;		// number of Waypoints 
+    char linebuf[5000];		// Buffer 
+    waypoint *this_wp;
+    Uint16 HumanReadableMapLine[10000];
+    
+    // Get the number of waypoints 
+    anz_wp = 0;
+    while( Lev->AllWaypoints[anz_wp++].x != 0 );
+    anz_wp -- ;		// we counted one too much 
+    
+    // estimate the amount of memory needed 
+    MemAmount = (xlen+1) * (ylen+1); 	// Map-memory 
+    MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
+    MemAmount += 1000000;  // add some safety buffer for dimension-strings and marker strings...
+    
+    //--------------------
+    // We allocate some memory, such that we should be able to fill
+    // all the data for the level into it.  If this estimate is wrong,
+    // we'll simply panic further below...
+    //
+    if ( ( LevelMem = (char*) MyMalloc ( MemAmount ) ) == NULL ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-				 "Did not get any more memory." ,
-				 PLEASE_INFORM, IS_FATAL );
-      return ( NULL ) ;
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Did not get any more memory." ,
+				   PLEASE_INFORM, IS_FATAL );
+	return ( NULL ) ;
     }
-
-  // Write the data to memory:
-  // Here the levelnumber and general information about the level is written
-  sprintf(linebuf, "Levelnumber: %d\n\
+    
+    //--------------------
+    // Write the data to memory:
+    // Here the levelnumber and general information about the level is written
+    sprintf( linebuf , "Levelnumber: %d\n\
 xlen of this level: %d\n\
 ylen of this level: %d\n\
 light radius bonus of this level: %d\n\
@@ -1734,111 +1884,115 @@ jump target north: %d\n\
 jump target south: %d\n\
 jump target east: %d\n\
 jump target west: %d\n",
-	  Lev -> levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
-	  Lev -> minimum_light_value, 
-	  Lev -> infinite_running_on_this_level,
-	  Lev -> jump_threshold_north, 
-	  Lev -> jump_threshold_south, 
-	  Lev -> jump_threshold_east, 
-	  Lev -> jump_threshold_west, 
-	  Lev -> jump_target_north, 
-	  Lev -> jump_target_south, 
-	  Lev -> jump_target_east, 
-	  Lev -> jump_target_west
-      );
-  strcpy(LevelMem, linebuf);
-  strcat(LevelMem, LEVEL_NAME_STRING );
-  strcat(LevelMem, Lev->Levelname );
-  strcat(LevelMem, "\n" );
-  strcat(LevelMem, LEVEL_ENTER_COMMENT_STRING );
-  strcat(LevelMem, Lev->Level_Enter_Comment );
-  strcat(LevelMem, "\n" );
-  strcat(LevelMem, BACKGROUND_SONG_NAME_STRING );
-  strcat(LevelMem, Lev->Background_Song_Name );
-  // strcat(LevelMem, Decknames[Lev->levelnum] ); 
-  strcat(LevelMem, "\n" );
-  
-  // Now the beginning of the actual map data is marked:
-  strcat(LevelMem, MAP_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  // Now in the loop each line of map data should be saved as a whole
-  for( i = 0 ; i < ylen ; i++ ) {
-
-    // But before we can write this line of the map to the disk, we need to
-    // convert is back to human readable format.
-    TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
-    strncat( LevelMem, (char*) HumanReadableMapLine , xlen * 4 * 2 ); // We need FOUR , no EIGHT chars per map tile
+	     Lev -> levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
+	     Lev -> minimum_light_value, 
+	     Lev -> infinite_running_on_this_level,
+	     Lev -> jump_threshold_north, 
+	     Lev -> jump_threshold_south, 
+	     Lev -> jump_threshold_east, 
+	     Lev -> jump_threshold_west, 
+	     Lev -> jump_target_north, 
+	     Lev -> jump_target_south, 
+	     Lev -> jump_target_east, 
+	     Lev -> jump_target_west
+	);
+    strcpy(LevelMem, linebuf);
+    strcat(LevelMem, LEVEL_NAME_STRING );
+    strcat(LevelMem, Lev->Levelname );
+    strcat(LevelMem, "\n" );
+    strcat(LevelMem, LEVEL_ENTER_COMMENT_STRING );
+    strcat(LevelMem, Lev->Level_Enter_Comment );
+    strcat(LevelMem, "\n" );
+    strcat(LevelMem, BACKGROUND_SONG_NAME_STRING );
+    strcat(LevelMem, Lev->Background_Song_Name );
+    strcat(LevelMem, "\n" );
+    
+    // Now the beginning of the actual map data is marked:
+    strcat(LevelMem, MAP_BEGIN_STRING);
     strcat(LevelMem, "\n");
-  }
-
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  strcat(LevelMem, MAP_END_STRING);
-  strcat(LevelMem, "\n");
-
-  encode_obstacles_of_this_level ( LevelMem , Lev );
-
-  EncodeMapLabelsOfThisLevel ( LevelMem , Lev );
-
-  encode_obstacle_names_of_this_level ( LevelMem , Lev );
-
-  EncodeStatementsOfThisLevel ( LevelMem , Lev );
-
-  EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
-
-  EncodeChestItemSectionOfThisLevel ( LevelMem , Lev ) ;
-
-  // --------------------  
-  // The next thing we must do is write the waypoints of this level also
-  // to disk.
-
-  // There might be LEADING -1 entries in front of other connection entries.
-  // This is unwanted and shall be corrected here.
-  CheckWaypointIntegrity( Lev );
-
-  strcat( LevelMem , WP_SECTION_BEGIN_STRING );
-  strcat( LevelMem , "\n" );
-  
-  for ( i = 0 ; i < Lev -> num_waypoints ; i++ )
+    
+    // Now in the loop each line of map data should be saved as a whole
+    for ( i = 0 ; i < ylen ; i++ ) 
     {
-      sprintf(linebuf, "Nr.=%3d x=%4d y=%4d rnd=%1d" , i , 
-	      Lev -> AllWaypoints [ i ] . x , Lev -> AllWaypoints [ i ] . y ,
-	      Lev -> AllWaypoints [ i ] . suppress_random_spawn );
-      strcat( LevelMem, linebuf );
-      strcat( LevelMem, "\t ");
-      strcat (LevelMem, CONNECTION_STRING);
+	//--------------------
+	// But before we can write this line of the map to the disk, we need to
+	// convert is back to human readable format.
+	//
+	TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
+	strncat( LevelMem, (char*) HumanReadableMapLine , xlen * 4 * 2 ); // We need FOUR , no EIGHT chars per map tile
+	strcat(LevelMem, "\n");
+    }
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    strcat(LevelMem, MAP_END_STRING);
+    strcat(LevelMem, "\n");
+    
+    encode_obstacles_of_this_level ( LevelMem , Lev );
+    
+    EncodeMapLabelsOfThisLevel ( LevelMem , Lev );
+    
+    encode_obstacle_names_of_this_level ( LevelMem , Lev );
 
-      this_wp = &Lev->AllWaypoints[i];
-      for ( j = 0 ; j < this_wp -> num_connections ; j++ ) 
+    encode_obstacle_descriptions_of_this_level ( LevelMem , Lev );
+    
+    EncodeStatementsOfThisLevel ( LevelMem , Lev );
+    
+    EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
+    
+    EncodeChestItemSectionOfThisLevel ( LevelMem , Lev ) ;
+    
+    // --------------------  
+    // The next thing we must do is write the waypoints of this level also
+    // to disk.
+    
+    // There might be LEADING -1 entries in front of other connection entries.
+    // This is unwanted and shall be corrected here.
+    CheckWaypointIntegrity( Lev );
+    
+    strcat( LevelMem , WP_SECTION_BEGIN_STRING );
+    strcat( LevelMem , "\n" );
+    
+    for ( i = 0 ; i < Lev -> num_waypoints ; i++ )
+    {
+	sprintf(linebuf, "Nr.=%3d x=%4d y=%4d rnd=%1d" , i , 
+		Lev -> AllWaypoints [ i ] . x , Lev -> AllWaypoints [ i ] . y ,
+		Lev -> AllWaypoints [ i ] . suppress_random_spawn );
+	strcat( LevelMem, linebuf );
+	strcat( LevelMem, "\t ");
+	strcat (LevelMem, CONNECTION_STRING);
+	
+	this_wp = &Lev->AllWaypoints[i];
+	for ( j = 0 ; j < this_wp -> num_connections ; j++ ) 
 	{
-	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
-	  strcat(LevelMem, linebuf);
+	    sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	    strcat(LevelMem, linebuf);
 	} // for connections 
-      strcat(LevelMem, "\n");
+	strcat(LevelMem, "\n");
     } // for waypoints 
-  
-  strcat(LevelMem, LEVEL_END_STRING);
-  strcat(LevelMem, "\n----------------------------------------------------------------------\n");
-  
-  //--------------------
-  // So we're done now.  Did the estimate for the amount of memory hit
-  // the target or was it at least sufficient? 
-  // If not, we're in trouble...
-  //
-  if ( strlen ( LevelMem ) >= MemAmount ) 
+    
+    strcat(LevelMem, LEVEL_END_STRING);
+    strcat(LevelMem, "\n----------------------------------------------------------------------\n");
+    
+    //--------------------
+    // So we're done now.  Did the estimate for the amount of memory hit
+    // the target or was it at least sufficient? 
+    // If not, we're in trouble...
+    //
+    if ( strlen ( LevelMem ) >= MemAmount ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-				 "Estimate of needed memory was wrong!  How stupid!" ,
-				 PLEASE_INFORM, IS_FATAL );
-      return ( NULL ) ;
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Estimate of needed memory was wrong!  How stupid!" ,
+				   PLEASE_INFORM, IS_FATAL );
+	return ( NULL ) ;
     } 
-  
-  //--------------------
-  // all ok : 
-  //
-  return LevelMem;
-  
+    
+    //--------------------
+    // all ok : 
+    //
+    return LevelMem;
+    
 }; // char *EncodeLevelForSaving ( Level Lev )
 
 
@@ -1850,43 +2004,43 @@ jump target west: %d\n",
 int 
 SaveShip(char *filename)
 {
-  char *LevelMem;	 // linear memory for one Level 
-  char *MapHeaderString;
-  FILE *ShipFile;        // to this file we will save all the ship data...
-  int level_anz;
-  int array_i, array_num;
-  int i;
-
-  DebugPrintf ( 2 , "\nint SaveShip(char *shipname): real function call confirmed." );
-  
-  ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
-
-  //--------------------
-  // We count the levels 
-  //
-  level_anz = 0;
-  while(curShip.AllLevels[level_anz++]);
-  level_anz --;
-  
-  //--------------------
-  // We open the shipo file 
-  //
-  if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
+    char *LevelMem;	 // linear memory for one Level 
+    char *MapHeaderString;
+    FILE *ShipFile;        // to this file we will save all the ship data...
+    int level_anz;
+    int array_i, array_num;
+    int i;
+    
+    DebugPrintf ( 2 , "\nint SaveShip(char *shipname): real function call confirmed." );
+    
+    ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
+    
+    //--------------------
+    // We count the levels 
+    //
+    level_anz = 0;
+    while( curShip . AllLevels[ level_anz ++ ] );
+    level_anz --;
+    
+    //--------------------
+    // We open the ship file 
+    //
+    if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "Error opening ship file." ,
-				 PLEASE_INFORM, IS_FATAL );
-      return ERR;
+	GiveStandardErrorMessage ( __FUNCTION__  , "Error opening ship file." ,
+				   PLEASE_INFORM, IS_FATAL );
+	return ERR;
     }
-  
-  //--------------------
-  // Now that the file is opend for writing, we can start writing.  And the first thing
-  // we will write to the file will be a fine header, indicating what this file is about
-  // and things like that...
-  //
-  MapHeaderString="\n\
+    
+    //--------------------
+    // Now that the file is opend for writing, we can start writing.  And the first thing
+    // we will write to the file will be a fine header, indicating what this file is about
+    // and things like that...
+    //
+    MapHeaderString="\n\
 ----------------------------------------------------------------------\n\
  *\n\
- *   Copyright (c) 2002, 2003 Johannes Prix\n\
+ *   Copyright (c) 2002, 2003, 2004 Freedroid dev team\n\
  *\n\
  *\n\
  *  This file is part of Freedroid\n\
@@ -1916,79 +2070,79 @@ send a short notice (not too large files attached) to the freedroid project.\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n";
-  fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
-
-  // Now we write the area name back into the file
-  fwrite ( AREA_NAME_STRING , strlen( AREA_NAME_STRING ), sizeof(char), ShipFile);  
-  fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);  
-  fwrite( "\"\n\n  ", strlen( "\"\n\n  " ) , sizeof(char) , ShipFile );
-
-  //--------------------
-  // Now we can save all the levels...
-  //
-  DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
-  for( i = 0 ; i < level_anz ; i++ ) 
+    fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
+    
+    // Now we write the area name back into the file
+    fwrite ( AREA_NAME_STRING , strlen( AREA_NAME_STRING ), sizeof(char), ShipFile);  
+    fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);  
+    fwrite( "\"\n\n  ", strlen( "\"\n\n  " ) , sizeof(char) , ShipFile );
+    
+    //--------------------
+    // Now we can save all the levels...
+    //
+    DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
+    for( i = 0 ; i < level_anz ; i++ ) 
     {
-      //--------------------
-      // What the heck does this do?
-      // Do we really need this?  Why?
-      //
-      array_i =-1;
-      array_num = -1;
-      while( curShip.AllLevels[++array_i] != NULL) 
+	//--------------------
+	// What the heck does this do?
+	// Do we really need this?  Why?
+	//
+	array_i =-1;
+	array_num = -1;
+	while( curShip.AllLevels[++array_i] != NULL) 
 	{
-	  if( curShip.AllLevels[array_i]->levelnum == i)
+	    if( curShip.AllLevels[array_i]->levelnum == i)
 	    {
-	      if( array_num != -1 ) 
+		if( array_num != -1 ) 
 		{
-		  GiveStandardErrorMessage ( __FUNCTION__  , "Two identical levelnumbers found!" ,
-					     PLEASE_INFORM, IS_FATAL );
-		  return ERR;
+		    GiveStandardErrorMessage ( __FUNCTION__  , "Two identical levelnumbers found!" ,
+					       PLEASE_INFORM, IS_FATAL );
+		    return ERR;
 		} 
-	      else array_num = array_i;
+		else array_num = array_i;
 	    }
 	} // while 
-      if ( array_num == -1 ) 
+	if ( array_num == -1 ) 
 	{
-	  GiveStandardErrorMessage ( __FUNCTION__  , "Levelnumber is missing!" ,
-				     PLEASE_INFORM, IS_FATAL );
-	  level_anz ++;
-	  continue;
+	    GiveStandardErrorMessage ( __FUNCTION__  , "Levelnumber is missing!" ,
+				       PLEASE_INFORM, IS_FATAL );
+	    level_anz ++;
+	    continue;
 	}
+	
+	//--------------------
+	// Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
+	// then this string is wirtten to the file.  easy. simple.
+	//
+	LevelMem = EncodeLevelForSaving ( curShip . AllLevels [ array_num ] ) ;
+	fwrite ( LevelMem , strlen ( LevelMem ) , sizeof(char) , ShipFile );
+	free ( LevelMem );
+	ShowSaveLoadGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) , TRUE ); 
+    }
     
-      //--------------------
-      // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
-      // then this string is wirtten to the file.  easy. simple.
-      //
-      LevelMem = EncodeLevelForSaving ( curShip . AllLevels [ array_num ] ) ;
-      fwrite( LevelMem , strlen ( LevelMem ) , sizeof(char) , ShipFile );
-      free(LevelMem);
-      ShowSaveLoadGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) , TRUE ); 
-    }
-
-  //--------------------
-  // Now we are almost done writing.  Everything that is missing is
-  // the termination string for the ship file.  This termination string
-  // is needed later for the ship loading functions to find the end of
-  // the data and to be able to terminate the long file-string with a
-  // null character at the right position.
-  //
-  fwrite( END_OF_SHIP_DATA_STRING , strlen( END_OF_SHIP_DATA_STRING ) , sizeof(char) , ShipFile );
-  fwrite( "\n\n  ", strlen( "\n\n  " ) , sizeof(char) , ShipFile );
-
-  DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
-
-  if ( fclose ( ShipFile ) == EOF ) 
+    //--------------------
+    // Now we are almost done writing.  Everything that is missing is
+    // the termination string for the ship file.  This termination string
+    // is needed later for the ship loading functions to find the end of
+    // the data and to be able to terminate the long file-string with a
+    // null character at the right position.
+    //
+    fwrite( END_OF_SHIP_DATA_STRING , strlen( END_OF_SHIP_DATA_STRING ) , sizeof(char) , ShipFile );
+    fwrite( "\n\n  ", strlen( "\n\n  " ) , sizeof(char) , ShipFile );
+    
+    DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
+    
+    if ( fclose ( ShipFile ) == EOF ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "Closing of ship file failed!" ,
-				 PLEASE_INFORM, IS_FATAL );
-      return ERR;
+	GiveStandardErrorMessage ( __FUNCTION__  , "Closing of ship file failed!" ,
+				   PLEASE_INFORM, IS_FATAL );
+	return ERR;
     }
-  
-  DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
-  
-  return OK;
-
+    
+    DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
+    
+    return OK;
+    
 }; // int SaveShip ( char* filename )
 
 void
@@ -2167,148 +2321,150 @@ DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
 Level
 DecodeLoadedLeveldata ( char *data )
 {
-  Level loadlevel;
-  char *pos;
-  char *map_begin, *wp_begin;
-  char *WaypointPointer;
-  int i;
-  int nr, x, y, wp_rnd;
-  int k;
-  int connection;
-  char *this_line;
-  char* DataPointer;
-  char* level_end;
-  int res;
-
-  //--------------------
-  // Get the memory for one level 
-  //
-  loadlevel = (Level) MyMalloc (sizeof (level));
-
-  DebugPrintf (2, "\n-----------------------------------------------------------------");
-  DebugPrintf (2, "\nStarting to process information for another level:\n");
-
-  //--------------------
-  // Read Header Data: levelnum and x/ylen 
-  //
-  DataPointer = strstr( data , "Levelnumber:" );
-  if ( DataPointer == NULL )
+    Level loadlevel;
+    char *pos;
+    char *map_begin, *wp_begin;
+    char *WaypointPointer;
+    int i;
+    int nr, x, y, wp_rnd;
+    int k;
+    int connection;
+    char *this_line;
+    char* DataPointer;
+    char* level_end;
+    int res;
+    
+    //--------------------
+    // Get the memory for one level 
+    //
+    loadlevel = (Level) MyMalloc (sizeof (level));
+    
+    DebugPrintf (2, "\n-----------------------------------------------------------------");
+    DebugPrintf (2, "\nStarting to process information for another level:\n");
+    
+    //--------------------
+    // Read Header Data: levelnum and x/ylen 
+    //
+    DataPointer = strstr( data , "Levelnumber:" );
+    if ( DataPointer == NULL )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "No levelnumber entry found!",
-				 PLEASE_INFORM, IS_FATAL );
+	GiveStandardErrorMessage ( __FUNCTION__  , "No levelnumber entry found!",
+				   PLEASE_INFORM, IS_FATAL );
     }
+    
+    DecodeInterfaceDataForThisLevel ( loadlevel , DataPointer );
+    
+    DecodeDimensionsOfThisLevel ( loadlevel , DataPointer );
+    
+    loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
+    loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
+    loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
+    
+    decode_obstacles_of_this_level ( loadlevel , DataPointer );
+    
+    DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
+    
+    decode_obstacle_names_of_this_level ( loadlevel , DataPointer );
+    
+    decode_obstacle_descriptions_of_this_level ( loadlevel , DataPointer );
 
-  DecodeInterfaceDataForThisLevel ( loadlevel , DataPointer );
-
-  DecodeDimensionsOfThisLevel ( loadlevel , DataPointer );
-
-  loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
-  loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
-  loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
-
-  decode_obstacles_of_this_level ( loadlevel , DataPointer );
-
-  DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
-
-  decode_obstacle_names_of_this_level ( loadlevel , DataPointer );
-
-  //--------------------
-  // Next we extract the statments of the influencer on this level WITHOUT destroying
-  // or damaging the data in the process!
-  //
-  DecodeStatementsOfThisLevel ( loadlevel , DataPointer );
-
-  DecodeItemSectionOfThisLevel ( loadlevel , data );
-
-  DecodeChestItemSectionOfThisLevel ( loadlevel , data );
-
-  //--------------------
-  // find the map data
-  // NOTE, that we here only set up a pointer to the map data
-  // as they are stored in the file.  This is NOT the same format
-  // as the map data stored internally for the game, but rather
-  // an easily human readable format with acceptable ascii 
-  // characters.  The transformation into game-usable data is
-  // done in a later step outside of this function!
-  //
-  if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
-    return NULL;
-
-  /* set position to Waypoint-Data */
-  if ((wp_begin = strstr (data, WP_SECTION_BEGIN_STRING)) == NULL)
-    return NULL;
-
-  /* now scan the map */
-  strtok (map_begin, "\n");	/* init strtok to map-begin */
-
-  /* read MapData */
-  for (i = 0; i < loadlevel->ylen; i++)
-    if ( ( (char*)loadlevel -> map[i] = strtok ( NULL, "\n") ) == NULL)
-      return NULL;
-
-  /* Get Waypoints */
-  WaypointPointer = wp_begin;
-
-  DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
-
-  level_end = LocateStringInData ( wp_begin , LEVEL_END_STRING ) ;
-  
-  //--------------------
-  // We decode the waypoint data from the data file into the waypoint
-  // structs...
-  strtok (wp_begin, "\n");
-
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    //--------------------
+    // Next we extract the statments of the influencer on this level WITHOUT destroying
+    // or damaging the data in the process!
+    //
+    DecodeStatementsOfThisLevel ( loadlevel , DataPointer );
+    
+    DecodeItemSectionOfThisLevel ( loadlevel , data );
+    
+    DecodeChestItemSectionOfThisLevel ( loadlevel , data );
+    
+    //--------------------
+    // find the map data
+    // NOTE, that we here only set up a pointer to the map data
+    // as they are stored in the file.  This is NOT the same format
+    // as the map data stored internally for the game, but rather
+    // an easily human readable format with acceptable ascii 
+    // characters.  The transformation into game-usable data is
+    // done in a later step outside of this function!
+    //
+    if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
+	return NULL;
+    
+    /* set position to Waypoint-Data */
+    if ((wp_begin = strstr (data, WP_SECTION_BEGIN_STRING)) == NULL)
+	return NULL;
+    
+    /* now scan the map */
+    strtok (map_begin, "\n");	/* init strtok to map-begin */
+    
+    /* read MapData */
+    for (i = 0; i < loadlevel->ylen; i++)
+	if ( ( (char*)loadlevel -> map[i] = strtok ( NULL, "\n") ) == NULL)
+	    return NULL;
+    
+    /* Get Waypoints */
+    WaypointPointer = wp_begin;
+    
+    DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
+    
+    level_end = LocateStringInData ( wp_begin , LEVEL_END_STRING ) ;
+    
+    //--------------------
+    // We decode the waypoint data from the data file into the waypoint
+    // structs...
+    strtok (wp_begin, "\n");
+    
+    for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-      if ( (this_line = strtok (NULL, "\n")) == NULL)
-	return (NULL);
-      if (this_line == level_end)
+	if ( (this_line = strtok (NULL, "\n")) == NULL)
+	    return (NULL);
+	if (this_line == level_end)
 	{
-	  loadlevel->num_waypoints = i;
-	  break;
+	    loadlevel->num_waypoints = i;
+	    break;
 	}
-      wp_rnd = 0 ;
-      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d   rnd=%d" , &nr , &x , &y , &wp_rnd );
-
-      // completely ignore x=0/y=0 entries, which are considered non-waypoints!!
-      if ( x == 0 && y == 0 )
-	continue;
-      
-      loadlevel -> AllWaypoints [ i ] . x = x;
-      loadlevel -> AllWaypoints [ i ] . y = y;
-      // loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
-      loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = wp_rnd ;
-
-      pos = strstr (this_line, CONNECTION_STRING);
-      pos += strlen (CONNECTION_STRING);	// skip connection-string
-      pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
-
-
-      for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
+	wp_rnd = 0 ;
+	sscanf( this_line , "Nr.=%d \t x=%d \t y=%d   rnd=%d" , &nr , &x , &y , &wp_rnd );
+	
+	// completely ignore x=0/y=0 entries, which are considered non-waypoints!!
+	if ( x == 0 && y == 0 )
+	    continue;
+	
+	loadlevel -> AllWaypoints [ i ] . x = x;
+	loadlevel -> AllWaypoints [ i ] . y = y;
+	// loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
+	loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = wp_rnd ;
+	
+	pos = strstr (this_line, CONNECTION_STRING);
+	pos += strlen (CONNECTION_STRING);	// skip connection-string
+	pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
+	
+	
+	for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
 	{
-	  if (*pos == '\0')
-	    break;
-	  res = sscanf( pos , "%d" , &connection );
-	  if ( (connection == -1) || (res == 0) || (res == EOF) )
-	    break;
-	  loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection;
-
-	  pos += strcspn (pos, WHITE_SPACE); // skip last token
-	  pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
-
+	    if (*pos == '\0')
+		break;
+	    res = sscanf( pos , "%d" , &connection );
+	    if ( (connection == -1) || (res == 0) || (res == EOF) )
+		break;
+	    loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection;
+	    
+	    pos += strcspn (pos, WHITE_SPACE); // skip last token
+	    pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
+	    
 	} // for k < MAX_WP_CONNECTIONS
-
-      loadlevel -> AllWaypoints [ i ] . num_connections = k;
-
+	
+	loadlevel -> AllWaypoints [ i ] . num_connections = k;
+	
     } // for i < MAXWAYPOINTS
-
-  //not quite finished yet: the old waypoint treatment has probably lead to 
-  // "holes" (0/0) in the waypoint-list, and we had to keep all of the in
-  // but now let's get rid of them!
-  PurifyWaypointList (loadlevel);
-
-  return (loadlevel);
-
+    
+    //not quite finished yet: the old waypoint treatment has probably lead to 
+    // "holes" (0/0) in the waypoint-list, and we had to keep all of the in
+    // but now let's get rid of them!
+    PurifyWaypointList (loadlevel);
+    
+    return (loadlevel);
+    
 }; // Level DecodeLoadedLeveldata (char *data)
 
 /* ----------------------------------------------------------------------

@@ -96,6 +96,11 @@
 #define OBSTACLE_LABEL_ANNOUNCE_STRING "obstacle_label_name=\""
 #define INDEX_OF_OBSTACLE_NAME "obstacle_label.index="
 
+#define OBSTACLE_DESCRIPTION_BEGIN_STRING "Start of pure obstacle description information for this level"
+#define OBSTACLE_DESCRIPTION_END_STRING "End of pure obstacle description information for this level"
+#define INDEX_OF_OBSTACLE_DESCRIPTION "obstacle_description.index="
+#define OBSTACLE_DESCRIPTION_ANNOUNCE_STRING "obstacle_description_text=\""
+
 #define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
 #define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
 #define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
@@ -110,16 +115,9 @@
 #define OBSTACLE_X_POSITION_STRING "ob_x="
 #define OBSTACLE_Y_POSITION_STRING "ob_y="
 #define OBSTACLE_LABEL_INDEX_STRING "ob_na="
+#define OBSTACLE_DESCRIPTION_INDEX_STRING "ob_de="
 
 
-
-
-#define OUTER_REFRESH_COUNTER 2
-#define INNER_REFRESH_COUNTER 4
-#define INNER_PHASES		4
-
-#define MAX_TYPES_ON_LEVEL		30
-#define CREW_LINE_LEN			MAX_TYPES_ON_LEVEL * 3 + 20
 
 //--------------------
 // Distance, where door opens 

@@ -966,6 +966,7 @@ typedef struct
     int type;
     moderately_finepoint pos;
     int name_index;
+    int description_index;
 }
 obstacle, *Obstacle;
 
@@ -989,6 +990,7 @@ typedef struct
     char *Level_Enter_Comment;
     map_statement StatementList [ MAX_STATEMENTS_PER_LEVEL ];
     char *obstacle_name_list [ MAX_OBSTACLE_NAMES_PER_LEVEL ];
+    char *obstacle_description_list [ MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ];
     map_tile *map [ MAX_MAP_LINES ];	// this is a vector of pointers
     int jump_threshold_north;
     int jump_threshold_south;

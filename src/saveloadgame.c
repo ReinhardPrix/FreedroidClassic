@@ -466,30 +466,30 @@ freedroid-discussion@lists.sourceforge.net\n\
 int 
 DeleteGame( void )
 {
-  char filename[1000];
+    char filename[1000];
 
-  if (!ConfigDir)
-    return (OK);
-
-  //--------------------
-  // First we save the full ship information, same as with the level editor
-  //
-  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
-
-  remove ( filename ) ;
-
-  //--------------------
-  // First, we must determine the savedgame data file name
-  //
-  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
-
-  remove ( filename );
-
-  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
-
-  remove ( filename );
-
-  return ( OK );
+    if (!ConfigDir)
+	return (OK);
+    
+    //--------------------
+    // First we save the full ship information, same as with the level editor
+    //
+    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
+    
+    remove ( filename ) ;
+    
+    //--------------------
+    // First, we must determine the savedgame data file name
+    //
+    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
+    
+    remove ( filename );
+    
+    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
+    
+    remove ( filename );
+    
+    return ( OK );
 
 }; // int DeleteGame( void )
 

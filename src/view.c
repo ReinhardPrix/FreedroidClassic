@@ -226,27 +226,29 @@ Error loading flag image.",
 void
 DisplayItemImageAtMouseCursor( int ItemImageCode )
 {
-  SDL_Rect TargetRect;
+    SDL_Rect TargetRect;
 
-  if ( ItemImageCode == (-1) )
+    if ( ItemImageCode == (-1) )
     {
-      DebugPrintf( 2 , "\nCurrently no (-1 code) item held in hand.");
-      return;
+	DebugPrintf( 2 , "\nCurrently no (-1 code) item held in hand.");
+	return;
     }
+    
+    //--------------------
+    // We define the target location for the item.  This will be the current
+    // mouse cursor position of course, but -16 for the crosshair center, 
+    // which is somewhat (16) to the lower right of the cursor top left 
+    // corner.
+    //
+    // And then of course we also have to take into account the size of the
+    // item, wich is also not always the same.
+    //
+    TargetRect.x = GetMousePos_x()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
+    TargetRect.y = GetMousePos_y()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
+    
+    our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , 
+				  NULL , Screen , &TargetRect );
 
-  //--------------------
-  // We define the target location for the item.  This will be the current
-  // mouse cursor position of course, but -16 for the crosshair center, 
-  // which is somewhat (16) to the lower right of the cursor top left 
-  // corner.
-  //
-  // And then of course we also have to take into account the size of the
-  // item, wich is also not always the same.
-  //
-  TargetRect.x = GetMousePos_x()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
-  TargetRect.y = GetMousePos_y()  - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
-
-  our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
 
 /* ----------------------------------------------------------------------
@@ -674,38 +676,38 @@ void
 blit_one_obstacle_highlighted ( obstacle* our_obstacle )
 {
 
-  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an obstacle type given, that exceeds the number of\n\
  obstacle types allowed and loaded in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-
+				   PLEASE_INFORM, IS_FATAL );
+	
     }
-
-  //--------------------
-  // Maybe the children friendly version is desired.  Then the blood on the floor
-  // will not be blitted to the screen.
-  //
-  if ( ( ! GameConfig . show_blood ) && 
-       ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
-       ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
-    return;
-
-  if ( use_open_gl )
+    
+    //--------------------
+    // Maybe the children friendly version is desired.  Then the blood on the floor
+    // will not be blitted to the screen.
+    //
+    if ( ( ! GameConfig . show_blood ) && 
+	 ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
+	 ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
+	return;
+    
+    if ( use_open_gl )
     {
-      blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-					     our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE, FALSE ) ;
+	blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+					       our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE, FALSE ) ;
     }
-  else
+    else
     {
-      DebugPrintf ( 0 , "\nNormal in-game SDL highlight invoked for marked obstacle!" );
-      blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-				       our_obstacle -> pos . x , our_obstacle -> pos . y );
-      blit_outline_of_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						  our_obstacle -> pos . x , our_obstacle -> pos . y );
+	DebugPrintf ( 0 , "\nNormal in-game SDL highlight invoked for marked obstacle!" );
+	blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+					 our_obstacle -> pos . x , our_obstacle -> pos . y );
+	blit_outline_of_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						    our_obstacle -> pos . x , our_obstacle -> pos . y );
     }
-
+    
 }; // blit_one_obstacle_highlighted ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
@@ -715,68 +717,68 @@ There was an obstacle type given, that exceeds the number of\n\
 void
 blit_one_obstacle_zoomed ( obstacle* our_obstacle )
 {
-  iso_image tmp;
-  // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
-  // our_obstacle -> pos . x , our_obstacle -> pos . y );
-
-  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    iso_image tmp;
+    // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
+    // our_obstacle -> pos . x , our_obstacle -> pos . y );
+    
+    if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an obstacle type given, that exceeds the number of\n\
  obstacle types allowed and loaded in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
+    
+    if ( ! use_open_gl )
+	make_sure_zoomed_surface_is_there ( & ( obstacle_map [ our_obstacle -> type ] . image ) );
 
-  if ( ! use_open_gl )
-    make_sure_zoomed_surface_is_there ( & ( obstacle_map [ our_obstacle -> type ] . image ) );
-
-  //--------------------
-  // We blit the obstacle in question, but if we're in the level editor and this
-  // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
-  // it just so.
-  //
-  if ( our_obstacle == level_editor_marked_obstacle )
+    //--------------------
+    // We blit the obstacle in question, but if we're in the level editor and this
+    // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
+    // it just so.
+    //
+    if ( our_obstacle == level_editor_marked_obstacle )
     {
-
-      if ( use_open_gl )
+	
+	if ( use_open_gl )
 	{
-	  blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
-							our_obstacle -> pos . x , our_obstacle -> pos . y , 
-							1.0 , 1.0, 1.0 , 0.25, FALSE );
+	    blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
+							  our_obstacle -> pos . x , our_obstacle -> pos . y , 
+							  1.0 , 1.0, 1.0 , 0.25, FALSE );
 	}
-      else
+	else
 	{
-	  DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
-	  tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
-	  tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
-	  tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
-	  tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
-	  tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
-	  tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
-	  tmp . zoomed_out_surface = NULL ;
-	  // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Gmask = 0x0FFFFFFFF ;
-	  // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
-	  blit_zoomed_iso_image_to_map_position ( & ( tmp ) , 
-						  our_obstacle -> pos . x , our_obstacle -> pos . y );
-	  SDL_FreeSurface ( tmp . surface );
-	  SDL_FreeSurface ( tmp . zoomed_out_surface );
-	  // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
-	  // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
-	  // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
-	  // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	    DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+	    tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	    tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+	    tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+	    tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+	    tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+	    tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+	    tmp . zoomed_out_surface = NULL ;
+	    // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Gmask = 0x0FFFFFFFF ;
+	    // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	    blit_zoomed_iso_image_to_map_position ( & ( tmp ) , 
+						    our_obstacle -> pos . x , our_obstacle -> pos . y );
+	    SDL_FreeSurface ( tmp . surface );
+	    SDL_FreeSurface ( tmp . zoomed_out_surface );
+	    // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	    // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
+	    // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
+	    // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
 	}
     }
-  else
+    else
     {
-      if ( use_open_gl )
+	if ( use_open_gl )
 	{
-	  blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
-							our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0, 1.0 , 0.25, obstacle_map[our_obstacle->type].transparent  );
+	    blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
+							  our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0, 1.0 , 0.25, obstacle_map[our_obstacle->type].transparent  );
 	}
-      else
+	else
 	{
-	  blit_zoomed_iso_image_to_map_position ( & ( obstacle_map [ our_obstacle -> type ] . image ) , 
-						  our_obstacle -> pos . x , our_obstacle -> pos . y );
+	    blit_zoomed_iso_image_to_map_position ( & ( obstacle_map [ our_obstacle -> type ] . image ) , 
+						    our_obstacle -> pos . x , our_obstacle -> pos . y );
 	}
     }
 }; // blit_one_obstacle_zoomed ( obstacle* our_obstacle )
@@ -788,72 +790,72 @@ There was an obstacle type given, that exceeds the number of\n\
 void
 insert_obstacles_into_blitting_list ( int mask )
 {
-  int i;
-  level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
-  int LineStart, LineEnd, ColStart, ColEnd , line, col;
-  obstacle* OurObstacle;
-
-  //--------------------
-  // There are literally THOUSANDS of obstacles on some levels.
-  // Therefore we will not blit each and every one of them, but only those
-  // that are glued to one of the map tiles in the local area...
-  // That should give us some better performance...
-  //
-
-  //--------------------
-  // We select the following area to be the map excerpt, that can be
-  // visible at most.  This is nescessare now that the Freedroid RPG is
-  // going to have larger levels and we don't want to do 100x100 cyles
-  // for nothing each frame.
-  //
-  if ( mask & ZOOM_OUT )
+    int i;
+    level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
+    int LineStart, LineEnd, ColStart, ColEnd , line, col;
+    obstacle* OurObstacle;
+    
+    //--------------------
+    // There are literally THOUSANDS of obstacles on some levels.
+    // Therefore we will not blit each and every one of them, but only those
+    // that are glued to one of the map tiles in the local area...
+    // That should give us some better performance...
+    //
+    
+    //--------------------
+    // We select the following area to be the map excerpt, that can be
+    // visible at most.  This is nescessare now that the Freedroid RPG is
+    // going to have larger levels and we don't want to do 100x100 cyles
+    // for nothing each frame.
+    //
+    if ( mask & ZOOM_OUT )
     {
-      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
     }
-  else
+    else
     {
-      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
     }
-  if ( LineStart < 0 ) LineStart = 0 ;
-  if ( ColStart < 0 ) ColStart = 0 ;
-  if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
-  if ( ColEnd >= obstacle_level -> xlen ) ColEnd = obstacle_level -> xlen - 1 ;
-
-  for (line = LineStart; line < LineEnd; line++)
+    if ( LineStart < 0 ) LineStart = 0 ;
+    if ( ColStart < 0 ) ColStart = 0 ;
+    if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
+    if ( ColEnd >= obstacle_level -> xlen ) ColEnd = obstacle_level -> xlen - 1 ;
+    
+    for (line = LineStart; line < LineEnd; line++)
     {
-      for (col = ColStart; col < ColEnd; col++)
+	for (col = ColStart; col < ColEnd; col++)
 	{
-	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
 	    {
-	      if ( obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] != (-1) )
+		if ( obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] != (-1) )
 		{
-		  if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST )
+		    if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST )
 		    {
-		      GiveStandardErrorMessage ( __FUNCTION__  , "\
+			GiveStandardErrorMessage ( __FUNCTION__  , "\
 The blitting list size was exceeded!",
-						 PLEASE_INFORM, IS_FATAL );
+						   PLEASE_INFORM, IS_FATAL );
 		    }
-
-		  //--------------------
-		  // Now we have to insert this obstacle.  We do this of course respecting
-		  // the blitting order, as always...
-		  //
-		  OurObstacle = & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ;
-		  insert_new_element_into_blitting_list ( OurObstacle -> pos . x + OurObstacle -> pos . y , 
-							  BLITTING_TYPE_OBSTACLE , OurObstacle , obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ) ;
+		    
+		    //--------------------
+		    // Now we have to insert this obstacle.  We do this of course respecting
+		    // the blitting order, as always...
+		    //
+		    OurObstacle = & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ;
+		    insert_new_element_into_blitting_list ( OurObstacle -> pos . x + OurObstacle -> pos . y , 
+							    BLITTING_TYPE_OBSTACLE , OurObstacle , obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ) ;
 		}
-	      else
-		break;
+		else
+		    break;
 	    }
 	}
     }
-
+    
 }; // void insert_obstacles_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -962,16 +964,16 @@ insert_one_enemy_into_blitting_list ( int enemy_num )
 void
 insert_one_thrown_item_into_blitting_list ( int item_num )
 {
-  float item_norm;
-  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  Item CurItem = &ItemLevel -> ItemList [ item_num ] ;
-
-  item_norm = CurItem -> pos . x + CurItem -> pos . y ;
-
-  insert_new_element_into_blitting_list ( item_norm , BLITTING_TYPE_THROWN_ITEM , CurItem , item_num );
-
-  // fprintf ( stderr , "\nOne thrown item now inserted into blitting list. " );
-
+    float item_norm;
+    Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    Item CurItem = &ItemLevel -> ItemList [ item_num ] ;
+    
+    item_norm = CurItem -> pos . x + CurItem -> pos . y ;
+    
+    insert_new_element_into_blitting_list ( item_norm , BLITTING_TYPE_THROWN_ITEM , CurItem , item_num );
+    
+    // fprintf ( stderr , "\nOne thrown item now inserted into blitting list. " );
+    
 }; // void insert_one_item_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------
@@ -981,11 +983,11 @@ insert_one_thrown_item_into_blitting_list ( int item_num )
 void
 insert_one_bullet_into_blitting_list ( int bullet_num )
 {
-  float bullet_norm = AllBullets [ bullet_num ] . pos . x + AllBullets [ bullet_num ] . pos . y ;
-
-  insert_new_element_into_blitting_list ( bullet_norm , BLITTING_TYPE_BULLET , 
-					  & ( AllBullets [ bullet_num ] ) , bullet_num );
-
+    float bullet_norm = AllBullets [ bullet_num ] . pos . x + AllBullets [ bullet_num ] . pos . y ;
+    
+    insert_new_element_into_blitting_list ( bullet_norm , BLITTING_TYPE_BULLET , 
+					    & ( AllBullets [ bullet_num ] ) , bullet_num );
+    
 }; // void insert_one_bullet_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------
@@ -995,11 +997,11 @@ insert_one_bullet_into_blitting_list ( int bullet_num )
 void
 insert_one_blast_into_blitting_list ( int blast_num )
 {
-  float blast_norm = AllBlasts [ blast_num ] . pos . x + AllBlasts [ blast_num ] . pos . y ;
-
-  insert_new_element_into_blitting_list ( blast_norm , BLITTING_TYPE_BLAST , 
-					  & ( AllBlasts [ blast_num ] ) , blast_num );
-
+    float blast_norm = AllBlasts [ blast_num ] . pos . x + AllBlasts [ blast_num ] . pos . y ;
+    
+    insert_new_element_into_blitting_list ( blast_norm , BLITTING_TYPE_BLAST , 
+					    & ( AllBlasts [ blast_num ] ) , blast_num );
+    
 }; // void insert_one_blast_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------
@@ -1199,14 +1201,14 @@ insert_bullets_into_blitting_list ( void )
 void
 insert_blasts_into_blitting_list ( void )
 {
-  int i;
-
-  for ( i = 0 ; i < MAXBLASTS ; i ++ )
+    int i;
+    
+    for ( i = 0 ; i < MAXBLASTS ; i ++ )
     {
-      if (AllBlasts[i].type != OUT)
-	insert_one_blast_into_blitting_list ( i );
+	if ( AllBlasts [ i ] . type != OUT )
+	    insert_one_blast_into_blitting_list ( i );
     }
-      
+    
 }; // void insert_enemies_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -1216,17 +1218,17 @@ insert_blasts_into_blitting_list ( void )
 void
 insert_thrown_items_into_blitting_list ( void )
 {
-  int i;
-  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  Item CurItem = &ItemLevel -> ItemList [ 0 ] ;
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    int i;
+    Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    Item CurItem = &ItemLevel -> ItemList [ 0 ] ;
+    
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurItem -> throw_time > 0 )
-	insert_one_thrown_item_into_blitting_list ( i );
-      CurItem ++ ;
+	if ( CurItem -> throw_time > 0 )
+	    insert_one_thrown_item_into_blitting_list ( i );
+	CurItem ++ ;
     }
-      
+    
 }; // void insert_enemies_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -1478,24 +1480,60 @@ The blitting list contained an illegal blitting object type.",
 void 
 show_obstacle_labels ( int mask )
 {
-  int i;
-  Level EditLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  if ( ! ( mask & SHOW_OBSTACLE_NAMES ) ) return;
-
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    int i;
+    Level EditLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    
+    if ( ! ( mask & SHOW_OBSTACLE_NAMES ) ) return;
+    
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      if ( EditLevel -> obstacle_list [ i ] . name_index >= 0 )
+	if ( EditLevel -> obstacle_list [ i ] . name_index >= 0 )
 	{
-	  show_backgrounded_label_at_map_position ( EditLevel -> obstacle_name_list [ EditLevel -> obstacle_list [ i ] . name_index ]  ,
-						    0 , EditLevel -> obstacle_list [ i ] . pos . x , 
-						    EditLevel -> obstacle_list [ i ] . pos . y ,
-						    mask & ZOOM_OUT );
+	    show_backgrounded_label_at_map_position ( EditLevel -> obstacle_name_list [ EditLevel -> obstacle_list [ i ] . name_index ]  ,
+						      0 , EditLevel -> obstacle_list [ i ] . pos . x , 
+						      EditLevel -> obstacle_list [ i ] . pos . y ,
+						      mask & ZOOM_OUT );
 	}
     }
 
-  // show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 , mask & ZOOM_OUT );
-
+    //--------------------
+    // Now that the obstacles labels are all displayed, we can start to 
+    // display the obstacle descriptions.  Since those are larger and would
+    // clutter up the screen pretty much if we drew them all, we'll just
+    // confine ourselves to the currently marked obstacle and blit the
+    // description of that one.
+    //
+    if ( level_editor_marked_obstacle != NULL )
+    {
+	if ( level_editor_marked_obstacle -> description_index >= 0 )
+	{
+	    //--------------------
+	    // We do some extra security checks against non-present descriptions
+	    //
+	    if ( EditLevel -> obstacle_description_list [ level_editor_marked_obstacle -> description_index ] == NULL )
+	    {
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
+WARNING!  Null string for description found.  Deleting description index in question.",
+					   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+		level_editor_marked_obstacle -> description_index = (-1) ;
+		return;
+	    }
+	    
+	    show_backgrounded_text_rectangle ( EditLevel -> obstacle_description_list [ level_editor_marked_obstacle -> description_index ]  , 
+					       translate_map_point_to_screen_pixel ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y , TRUE ) ,
+					       translate_map_point_to_screen_pixel ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y , FALSE ) ,
+					       320 , 240 ) ;
+	    /*
+	    show_backgrounded_label_at_map_position ( EditLevel -> obstacle_description_list [ level_editor_marked_obstacle -> description_index ]  ,
+						      0 , level_editor_marked_obstacle -> pos . x , 
+						      level_editor_marked_obstacle -> pos . y ,
+						      mask & ZOOM_OUT );
+	    */
+	}
+    }
+    
+    // show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 , mask & ZOOM_OUT );
+    
 }; // void show_obstacle_labels ( int mask )
 
 /* ----------------------------------------------------------------------
@@ -1708,81 +1746,81 @@ get_light_strength ( moderately_finepoint target_pos )
 void
 blit_classic_SDL_light_radius( void )
 {
-  static int first_call = TRUE ;
-  int i, j ;
-  char* fpath;
-  char constructed_file_name[2000];
-  int our_height, our_width, our_max_height, our_max_width;
-  int light_strength;
-  moderately_finepoint target_pos;
-  static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
-  static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
-  static SDL_Rect target_rectangle;
-  int chunk_size_x;
-  int chunk_size_y;
-  int window_offset_x;
-  SDL_Surface* tmp;
-
-  //--------------------
-  // If the darkenss chunks have not yet been loaded, we load them...
-  //
-  if ( first_call )
+    static int first_call = TRUE ;
+    int i, j ;
+    char* fpath;
+    char constructed_file_name[2000];
+    int our_height, our_width, our_max_height, our_max_width;
+    int light_strength;
+    moderately_finepoint target_pos;
+    static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+    static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+    static SDL_Rect target_rectangle;
+    int chunk_size_x;
+    int chunk_size_y;
+    int window_offset_x;
+    SDL_Surface* tmp;
+    
+    //--------------------
+    // If the darkenss chunks have not yet been loaded, we load them...
+    //
+    if ( first_call )
     {
-      first_call = FALSE;
-      for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
+	first_call = FALSE;
+	for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
 	{
-	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
-	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) , TRUE ) ;
-	  tmp = light_radius_chunk [ i ] . surface ;
-	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
-	  SDL_FreeSurface ( tmp ) ;
+	    sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
+	    fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) , TRUE ) ;
+	    tmp = light_radius_chunk [ i ] . surface ;
+	    light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
+	    SDL_FreeSurface ( tmp ) ;
 	}
-
-      pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
-      pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
-
-      chunk_size_x = 26 /2 + 1 ;
-      chunk_size_y = 14 /2 ; 
-
-      for ( i = 0 ; i < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; i ++ )
+	
+	pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
+	pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
+	
+	chunk_size_x = 26 /2 + 1 ;
+	chunk_size_y = 14 /2 ; 
+	
+	for ( i = 0 ; i < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; i ++ )
 	{
-	  for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
+	    for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
 	    {
-	      pos_x_grid [ i ] [ j ] = pos_x_grid [ 0 ] [ 0 ] + ( i - j ) * chunk_size_x ;
-	      pos_y_grid [ i ] [ j ] = pos_y_grid [ 0 ] [ 0 ] + ( i + j ) * chunk_size_y ;
+		pos_x_grid [ i ] [ j ] = pos_x_grid [ 0 ] [ 0 ] + ( i - j ) * chunk_size_x ;
+		pos_y_grid [ i ] [ j ] = pos_y_grid [ 0 ] [ 0 ] + ( i + j ) * chunk_size_y ;
 	    }
 	}
-
+	
     }
-
-  //--------------------
-  // Now it's time to apply the light radius
-  //
-  our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
-  our_max_height = our_max_width;
-
-  window_offset_x = - ( GameConfig . screen_width / 2 ) + UserCenter_x ;
-
-  for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
+    
+    //--------------------
+    // Now it's time to apply the light radius
+    //
+    our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
+    our_max_height = our_max_width;
+    
+    window_offset_x = - ( GameConfig . screen_width / 2 ) + UserCenter_x ;
+    
+    for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
     {
-      for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
+	for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
 	{
-	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
-	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
-
-	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
-	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
-	  light_strength = get_light_strength ( target_pos ) ;
-
-	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
-	  if ( light_strength <= 0 ) continue ;
-
-	  // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
-	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
-	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
-
-	  our_SDL_blit_surface_wrapper( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
+	    if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	    if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	    
+	    target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
+	    target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
+	    light_strength = get_light_strength ( target_pos ) ;
+	    
+	    if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
+	    if ( light_strength <= 0 ) continue ;
+	    
+	    // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
+	    target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
+	    target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
+	    
+	    our_SDL_blit_surface_wrapper( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
 	}
     }
 }; // void blit_classic_SDL_light_radius( void )
@@ -2197,68 +2235,68 @@ AssembleCombatPicture ( int mask )
 void
 PutMouseMoveCursor ( void )
 {
-  SDL_Rect TargetRectangle;
-
-  if ( ( Me [ 0 ] . mouse_move_target . x == (-1) ) &&
-       ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) ) )
-    {
-      return;
-    }
-
-  if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
-    {
-      TargetRectangle . x = 
-	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
-      TargetRectangle . y = 
-	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
-    }
-  else
-    {
-      // translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
-
-      TargetRectangle . x = 
-	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
-					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , TRUE );
-      TargetRectangle . y = 
-	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
-					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
-    }
-
-  if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
-    {
-      if ( use_open_gl )
-	{
-	  TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
-	  TargetRectangle . y -= MouseCursorImageList [ 0 ] . original_image_height / 2 ;
-	  blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 0 ] , 
-						    TargetRectangle . x , TargetRectangle . y , TRUE );
-	}
-      else
-	{
-	  TargetRectangle . x -= MouseCursorImageList [ 0 ] . surface -> w / 2 ;
-	  TargetRectangle . y -= MouseCursorImageList [ 0 ] . surface -> h / 2 ;
-	  our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 0 ] . surface , NULL , Screen , &TargetRectangle);
-	}
-    }
-  else
-    {
-      if ( use_open_gl )
-	{
-	  TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
-	  TargetRectangle . y -= MouseCursorImageList [ 1 ] . original_image_height / 2 ;
-	  blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 1 ] , 
-						    TargetRectangle . x , TargetRectangle . y , TRUE );
-	}
-      else
-	{
-	  TargetRectangle . x -= MouseCursorImageList [ 1 ] . surface -> w / 2 ;
-	  TargetRectangle . y -= MouseCursorImageList [ 1 ] . surface -> h / 2 ;
-	  our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 1 ] . surface , NULL , Screen , &TargetRectangle);
-	}
-    }
-
-}; // void PutMouseMoveCursor ( void )
+    SDL_Rect TargetRectangle;
     
+    if ( ( Me [ 0 ] . mouse_move_target . x == (-1) ) &&
+	 ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) ) )
+    {
+	return;
+    }
+    
+    if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
+    {
+	TargetRectangle . x = 
+	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
+	TargetRectangle . y = 
+	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
+    }
+    else
+    {
+	// translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+	
+	TargetRectangle . x = 
+	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , TRUE );
+	TargetRectangle . y = 
+	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
+    }
+    
+    if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
+    {
+	if ( use_open_gl )
+	{
+	    TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
+	    TargetRectangle . y -= MouseCursorImageList [ 0 ] . original_image_height / 2 ;
+	    blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 0 ] , 
+						      TargetRectangle . x , TargetRectangle . y , TRUE );
+	}
+	else
+	{
+	    TargetRectangle . x -= MouseCursorImageList [ 0 ] . surface -> w / 2 ;
+	    TargetRectangle . y -= MouseCursorImageList [ 0 ] . surface -> h / 2 ;
+	    our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 0 ] . surface , NULL , Screen , &TargetRectangle);
+	}
+    }
+    else
+    {
+	if ( use_open_gl )
+	{
+	    TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
+	    TargetRectangle . y -= MouseCursorImageList [ 1 ] . original_image_height / 2 ;
+	    blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 1 ] , 
+						      TargetRectangle . x , TargetRectangle . y , TRUE );
+	}
+	else
+	{
+	    TargetRectangle . x -= MouseCursorImageList [ 1 ] . surface -> w / 2 ;
+	    TargetRectangle . y -= MouseCursorImageList [ 1 ] . surface -> h / 2 ;
+	    our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 1 ] . surface , NULL , Screen , &TargetRectangle);
+	}
+    }
+    
+}; // void PutMouseMoveCursor ( void )
+
 /* ----------------------------------------------------------------------
  *
  *
@@ -3103,11 +3141,11 @@ iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 void
 iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ player_num ] . drive_item . type == (-1) )
-    iso_put_tux_part ( PART_GROUP_FEET , "iso_feet" , x , y , player_num , rotation_index );
-  else
-    iso_put_tux_part ( PART_GROUP_FEET , "iso_boots1" , x , y , player_num , rotation_index );
-
+    if ( Me [ player_num ] . drive_item . type == (-1) )
+	iso_put_tux_part ( PART_GROUP_FEET , "iso_feet" , x , y , player_num , rotation_index );
+    else
+	iso_put_tux_part ( PART_GROUP_FEET , "iso_boots1" , x , y , player_num , rotation_index );
+    
 }; // void iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
@@ -3117,21 +3155,21 @@ iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
 void
 iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ player_num ] . weapon_item . type != (-1) )
+    if ( Me [ player_num ] . weapon_item . type != (-1) )
     {
-      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 )
 	{
-	  if ( Me [ player_num ] . weapon_item . type == ITEM_MACE )
-	    iso_put_tux_part ( PART_GROUP_WEAPON , "iso_mace" , x , y , player_num , rotation_index );
-	  else
-	    iso_put_tux_part ( PART_GROUP_WEAPON , "iso_sword" , x , y , player_num , rotation_index );
+	    if ( Me [ player_num ] . weapon_item . type == ITEM_MACE )
+		iso_put_tux_part ( PART_GROUP_WEAPON , "iso_mace" , x , y , player_num , rotation_index );
+	    else
+		iso_put_tux_part ( PART_GROUP_WEAPON , "iso_sword" , x , y , player_num , rotation_index );
 	}
-      else
+	else
 	{
-	  iso_put_tux_part ( PART_GROUP_WEAPON , "iso_gun1" , x , y , player_num , rotation_index );
+	    iso_put_tux_part ( PART_GROUP_WEAPON , "iso_gun1" , x , y , player_num , rotation_index );
 	}
     }
-
+    
 }; // void iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
@@ -3695,55 +3733,57 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
     //
     Percentage = ( AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
     
-	if ( use_open_gl ) {
-
-    #ifdef HAVE_LIBGL
-      // draw cool bars here
-      x = TargetRectangle . x ;
-      y = TargetRectangle . y ;
-      w = TargetRectangle . w ;
-      h = TargetRectangle . h ;
- 
-      if ( AllEnemys [ Enum ] . is_friendly ) 
-		c1.g = 255;
-      else
+    if ( use_open_gl ) {
+	
+#ifdef HAVE_LIBGL
+	// draw cool bars here
+	x = TargetRectangle . x ;
+	y = TargetRectangle . y ;
+	w = TargetRectangle . w ;
+	h = TargetRectangle . h ;
+	
+	if ( AllEnemys [ Enum ] . is_friendly ) 
+	    c1.g = 255;
+	else
 	    c1.r = 255;
-
-	  // tweak as needed, this alters the transparency
-	  c1.a = 140 ;
-	  drawIsoEnergyBar( Z_DIR, x,y,1, 5,5,w,Percentage ,&c1, &c2 ) ;
-
-    #endif
-	  
-    } else {
-	  //sdl stuff here
-
-      FillRect . x = TargetRectangle . x ;
-      FillRect . y = TargetRectangle . y - ENEMY_ENERGY_BAR_WIDTH - ENEMY_ENERGY_BAR_OFFSET_Y ;
-      FillRect . h = ENEMY_ENERGY_BAR_WIDTH ; 
-      FillRect . w = Percentage * TargetRectangle . w ;
-    
-      //--------------------
-      // If the enemy is friendly, then we needn't display his health, right?
-      // Or better yet, we might show a green energy bar instead.  That's even
-      // better!
-      if ( AllEnemys [ Enum ] . is_friendly ) 
+	
+	// tweak as needed, this alters the transparency
+	c1.a = 140 ;
+	drawIsoEnergyBar( Z_DIR, x,y,1, 5,5,w,Percentage ,&c1, &c2 ) ;
+	
+#endif
+	
+    } 
+    else 
+    {
+	//sdl stuff here
+	
+	FillRect . x = TargetRectangle . x ;
+	FillRect . y = TargetRectangle . y - ENEMY_ENERGY_BAR_WIDTH - ENEMY_ENERGY_BAR_OFFSET_Y ;
+	FillRect . h = ENEMY_ENERGY_BAR_WIDTH ; 
+	FillRect . w = Percentage * TargetRectangle . w ;
+	
+	//--------------------
+	// If the enemy is friendly, then we needn't display his health, right?
+	// Or better yet, we might show a green energy bar instead.  That's even
+	// better!
+	if ( AllEnemys [ Enum ] . is_friendly ) 
 	    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
-      else
+	else
 	    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
-    
-      //--------------------
-      // Now after the energy bar has been drawn, we can start to draw the
-      // empty part of the energy bar (but only of course, if there is some
-      // empty part at all!  (Otherwise we get indefinately large energy
-      // bars...
-      FillRect . x += (Percentage * TargetRectangle . w) ;
-      FillRect . w = (1-Percentage) * TargetRectangle . w ;
-
-      if ( Percentage < 1.0 )
-	  our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
+	
+	//--------------------
+	// Now after the energy bar has been drawn, we can start to draw the
+	// empty part of the energy bar (but only of course, if there is some
+	// empty part at all!  (Otherwise we get indefinately large energy
+	// bars...
+	FillRect . x += (Percentage * TargetRectangle . w) ;
+	FillRect . w = (1-Percentage) * TargetRectangle . w ;
+	
+	if ( Percentage < 1.0 )
+	    our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
     }
-
+    
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 
 /* ----------------------------------------------------------------------
@@ -3753,58 +3793,58 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 int
 set_rotation_index_for_this_robot ( enemy* ThisRobot ) 
 {
-  int RotationIndex;
+    int RotationIndex;
 
-  //--------------------
-  // By now the angle the robot is facing is determined, so we just need to
-  // translate this angle into an index within the image series, i.e. into 
-  // a 'phase' of rotation. 
-  //
-  RotationIndex = ( ( ThisRobot -> current_angle - 45.0 + 360.0 + 360 / 
-		      ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+    //--------------------
+    // By now the angle the robot is facing is determined, so we just need to
+    // translate this angle into an index within the image series, i.e. into 
+    // a 'phase' of rotation. 
+    //
+    RotationIndex = ( ( ThisRobot -> current_angle - 45.0 + 360.0 + 360 / 
+			( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
 
-  //--------------------
-  // But it might happen, that the angle of rotation is 'out of scale' i.e.
-  // it's more than 360 degree or less than 0 degree.  Therefore, we need to
-  // be especially careful to generate only proper indices for our arrays.
-  // Some would say, we identify the remainder classes with integers in the
-  // range [ 0 - (rotation_angles-1) ], which is what's happening here.
-  //
-  while ( RotationIndex < 0  ) 
-    RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ;
-  while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) 
-    RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; 
-
-  //--------------------
-  // Now to prevent some jittering in some cases, where the droid uses an angle that is
-  // right at the borderline between two possible 8-way directions, we introduce some
-  // enforced consistency onto the droid...
-  //
-  if ( RotationIndex == ThisRobot -> previous_phase )
+    //--------------------
+    // But it might happen, that the angle of rotation is 'out of scale' i.e.
+    // it's more than 360 degree or less than 0 degree.  Therefore, we need to
+    // be especially careful to generate only proper indices for our arrays.
+    // Some would say, we identify the remainder classes with integers in the
+    // range [ 0 - (rotation_angles-1) ], which is what's happening here.
+    //
+    while ( RotationIndex < 0  ) 
+	RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ;
+    while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) 
+	RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; 
+    
+    //--------------------
+    // Now to prevent some jittering in some cases, where the droid uses an angle that is
+    // right at the borderline between two possible 8-way directions, we introduce some
+    // enforced consistency onto the droid...
+    //
+    if ( RotationIndex == ThisRobot -> previous_phase )
     {
-      ThisRobot -> last_phase_change += Frame_Time ();
+	ThisRobot -> last_phase_change += Frame_Time ();
     }
-  else
+    else
     {
-      if ( ThisRobot -> last_phase_change >= 0.33 )
+	if ( ThisRobot -> last_phase_change >= 0.33 )
 	{
-	  ThisRobot -> last_phase_change = 0.0 ;
-	  ThisRobot -> previous_phase = RotationIndex ;
+	    ThisRobot -> last_phase_change = 0.0 ;
+	    ThisRobot -> previous_phase = RotationIndex ;
 	}
-      else
+	else
 	{
-	  //--------------------
-	  // In this case we don't permit to use a new 8-way direction now...
-	  //
-	  RotationIndex = ThisRobot -> previous_phase ;
-	  ThisRobot -> last_phase_change += Frame_Time ();
+	    //--------------------
+	    // In this case we don't permit to use a new 8-way direction now...
+	    //
+	    RotationIndex = ThisRobot -> previous_phase ;
+	    ThisRobot -> last_phase_change += Frame_Time ();
 	}
     }
-
-  // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
-
-  return ( RotationIndex );
-
+    
+    // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
+    
+    return ( RotationIndex );
+  
 }; // int set_rotation_index_for_this_robot ( enemy* ThisRobot ) 
 
 /* ----------------------------------------------------------------------
@@ -3814,20 +3854,20 @@ set_rotation_index_for_this_robot ( enemy* ThisRobot )
 int
 set_rotation_model_for_this_robot ( enemy* ThisRobot ) 
 {
-  int RotationModel = Druidmap [ ThisRobot -> type ] . individual_shape_nr ;
-  
-  //--------------------
-  // A sanity check for roation model to use can never hurt...
-  //
-  if ( ( RotationModel < 0 ) || ( RotationModel >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    int RotationModel = Druidmap [ ThisRobot -> type ] . individual_shape_nr ;
+    
+    //--------------------
+    // A sanity check for roation model to use can never hurt...
+    //
+    if ( ( RotationModel < 0 ) || ( RotationModel >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a rotation model type given, that exceeds the number of rotation models allowed and loaded in Freedroid.",
-				     PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  return ( RotationModel );
-
+    
+    return ( RotationModel );
+    
 }; // int set_rotation_model_for_this_robot ( enemy* ThisRobot ) 
 
 /* ----------------------------------------------------------------------
