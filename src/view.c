@@ -2696,12 +2696,19 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   else
     our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
 
+  //--------------------
+  // Now after the energy bar has been drawn, we can start to draw the
+  // empty part of the energy bar (but only of course, if there is some
+  // empty part at all!  (Otherwise we get indefinately large energy
+  // bars...
+  //
   FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
   FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
   FillRect . h = 7 ; 
   FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
   
-  our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
+  if ( Percentage < ENEMY_ENERGY_BAR_LENGTH )
+    our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
 
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 

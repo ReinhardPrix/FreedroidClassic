@@ -335,8 +335,9 @@ Takeover (int enemynum)
 	    {
 	      // AllEnemys[enemynum].Status = OUT;
 	      // AllEnemys[enemynum].energy = -1.0; 
-	      AllEnemys[enemynum].energy = 100.0; 
-	      AllEnemys[enemynum]. is_friendly = TRUE ;
+	      // AllEnemys [ enemynum ] . energy =  100.0; 
+	      AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
+	      AllEnemys [ enemynum ] . is_friendly = TRUE ;
 	      OpponentType = -1;	/* dont display enemy any more */
 	    }
 	  else
@@ -353,8 +354,7 @@ Takeover (int enemynum)
 
   ClearGraphMem();
 
-  // SwitchBackgroundMusicTo (COMBAT_BACKGROUND_MUSIC_SOUND);
-  SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
+  SwitchBackgroundMusicTo ( CurLevel -> Background_Song_Name );
 
   if (LeaderColor == YourColor)
     return TRUE;
