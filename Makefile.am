@@ -9,7 +9,7 @@ dist-hook:
 
 bundle_contents = FreeDroid.app/Contents
 FreeDroid_bundle: src/freedroid
-        mkdir -p $(bundle_contents)/MacOS
-        mkdir -p $(bundle_contents)/Resources
-        echo "FreeDroid Classic " > $(bundle_contents)/PkgInfo
-        $(INSTALL_PROGRAM) $< $(bundle_contents)/MacOS/
+	mkdir -p $(bundle_contents)/MacOS
+	mkdir -p $(bundle_contents)/Resources
+	echo "FreeDroid Classic " > $(bundle_contents)/PkgInfo
+	$(INSTALL_PROGRAM) $< $(bundle_contents)/MacOS/
