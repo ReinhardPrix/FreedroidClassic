@@ -227,6 +227,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_open_quests.png"                  , { 473 , 97  , 153 ,  38 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_done_quests.png"                  , { 478 , 149 , 153 ,  38 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_notes.png"                        , { 478 , 203 , 153 ,  38 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 183 , 8   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 183 , 450 , 160 ,  20 } , TRUE , TRUE } ,
 
   }; // mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 

@@ -600,6 +600,8 @@ enum
     QUEST_BROWSER_OPEN_QUESTS_BUTTON,
     QUEST_BROWSER_DONE_QUESTS_BUTTON,
     QUEST_BROWSER_NOTES_BUTTON,
+    QUEST_BROWSER_SCROLL_UP_BUTTON,
+    QUEST_BROWSER_SCROLL_DOWN_BUTTON,
 
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
