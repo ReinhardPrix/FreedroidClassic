@@ -317,6 +317,7 @@ Switch_Background_Music_To(int Tune)
   if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedSoundSampleFilenames[ Tune ], 
 				 &BackgroundMusic_sndobj_attrib ) )
     {
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
       // Can't get sound object attributes.
       fprintf( stderr, "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n", 
 	       ExpandedSoundSampleFilenames[ Tune ] );
@@ -422,6 +423,8 @@ int Init_YIFF_Sound_Server(void){
   
   int i;
 
+  DebugPrintf("\nint Init_YIFF_Sound_Server(void): real function call confirmed.\n");
+
   // Because the yiff does not nescessarily have the same origin for relative paths as paradroid does,
   // is is nescessary to first translate our path names to absolute pathnames.  This is done here:
 
@@ -447,128 +450,11 @@ int Init_YIFF_Sound_Server(void){
       Terminate(ERR);
     }
 
-  // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
-  // therefore a yiff server will be started even if none is running!!  great!!
-  /* TEST
-    con = YOpenConnection(
-  			"yiff",
-  			CON_ARG
-  			);
-
-  // Attention!! First channel is to be opend now!
-  if(con == NULL) {
-    // Failed to connect to the Y server. 
-    fprintf(
-	      stderr,
-	      "%s: Cannot connect to YIFF server for first channel.\n",
-	      CON_ARG
-	      );
-      Terminate(ERR);
-    }
-
-  // Attention!! Second channel is to be opend now!
-  con2 = YOpenConnection(
-			 NULL,
-			 CON_ARG
-			 );
-  if(con2 == NULL) {
-    // Failed to connect to the Y server. 
-    fprintf( stderr, "%s: Cannot connect the YIFF server for second channel.\n", CON_ARG );
-      Terminate(ERR);
-
-    }
-
-  */
-
   // The connection to the sound server should now be established...
   // Printing debug message and going on...
 
-  printf("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
-
-  // Load the Firesound
-
-  //  if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) ) {
-    // Can't get sound object attributes.
-  //    fprintf( stderr, "\nvoid Init_YIFF_Sound_Server(void): %s: Error: Missing or corrupt.\n", 
-  //	     FireSoundSampleFilename );
-  //    Terminate(ERR);
-  //  }
-
-  //  
-  //  if ((SoundDateihandle=fopen(FireSoundSampleFilename,"rb")) == NULL) {
-  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",FireSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //	
-  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
-  //
-  //  if( (FireSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
-  //    FireSoundSampleLength=stbuf.st_size;
-  //    printf("\nint Init_OSS(void): Out of Memory?");
-  //    printf("\nFree: %lu", coreleft() );
-  //    getchar();
-  //    Terminate(-1);
-  //  }
-  //
-  //  fread(FireSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
-  //  SampleLaenge=stbuf.st_size;
-  //
-  //  if (fclose(SoundDateihandle) == EOF) {
-  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",FireSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //
-  //  // Load the Collisionsound
-  //
-  //  if ((SoundDateihandle=fopen(CollisionSoundSampleFilename,"rb")) == NULL) {
-  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",CollisionSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //	
-  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
-  //
-  //  if( (CollisionSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
-  //    CollisionSoundSampleLength=stbuf.st_size;
-  //    printf("\nint Init_OSS(void): Out of Memory?");
-  //    printf("\nFree: %lu", coreleft() );
-  //    getchar();
-  //    Terminate(-1);
-  //  }
-  //	
-  //  fread(CollisionSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
-  //  SampleLaenge=stbuf.st_size;
-  //
-  //  if (fclose(SoundDateihandle) == EOF) {
-  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",CollisionSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //
-  //  // Load the Blastsound
-  //
-  //  if ((SoundDateihandle=fopen(BlastSoundSampleFilename,"rb")) == NULL) {
-  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",BlastSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //	
-  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
-  //
-  //  if( (BlastSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
-  //    BlastSoundSampleLength=stbuf.st_size;
-  //    printf("\nint Init_OSS(void): Out of Memory?");
-  //    printf("\nFree: %lu", coreleft() );
-  //    getchar();
-  //    Terminate(-1);
-  //  }
-  //	
-  //  fread(BlastSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
-  //  SampleLaenge=stbuf.st_size;
-  //
-  //  if (fclose(SoundDateihandle) == EOF) {
-  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",BlastSoundSampleFilename);
-  //    getchar(); Terminate(-1);
-  //  }
-  //
-  //
+  DebugPrintf("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
+  DebugPrintf("\nint Init_YIFF_Sound_Server(void): end of function reached.\n");
 
 #endif
   return(OK);

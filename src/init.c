@@ -345,12 +345,13 @@ void InitNewGame(void)
 * $Function----------------------------------------------------------*/
 void InitParaplus(void) {
 
-  printf("void InitParaplus(void) wurde echt aufgerufen....\n");
+  DebugPrintf("\nvoid InitParaplus(void) wurde echt aufgerufen....\n");
 
   Set_SVGALIB_Video_ON(); 
   
-  if ( sound_on ) Init_YIFF_Sound_Server();
+  // if ( sound_on ) Init_YIFF_Sound_Server();
 
+  Init_YIFF_Sound_Server();
 
   // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
 
