@@ -365,7 +365,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 int
 ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 			    unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
-			    int background_code , void* MenuFont )
+			    int background_code , void* MenuFont , enemy* ChatDroid )
 {
   int MenuSelection = (-1) ;
   char* FilteredChatMenuTexts[ MAX_ANSWERS_PER_PERSON ] ;
@@ -401,7 +401,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   // Now we do the usual menu selection, using only the activated chat alternatives...
   //
   MenuSelection = ChatDoMenuSelection( InitialText , FilteredChatMenuTexts , 
-				       FirstItem , background_code , MenuFont );
+				       FirstItem , background_code , MenuFont , ChatDroid );
 
   //--------------------
   // Now that we have an answer, we must transpose it back to the original array
@@ -474,7 +474,7 @@ Warning.  Received empty or nearly empty string!",
   //--------------------
   // Now we estimate how many lines that must have meant...
   //
-  for ( i = 0 ; i < 10 ; i ++ )
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
       if ( MyCursorY == TestPosition ) 
 	{
@@ -499,20 +499,39 @@ Warning.  Received empty or nearly empty string!",
 }; // int GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window )
 
 /* ----------------------------------------------------------------------
+ *
  * This function performs a menu for the player to select from, using the
  * keyboard or mouse wheel.
+ *
+ * Some complaints have been made about earlier versions of this menu
+ * reacting very slow and sluggish AND also backgrounds not appearing when
+ * using OpenGL output method.  These concerns have been addressed in the
+ * following manner:
+ *
+ * 1. There is STILL a loop with the graphics being completely redrawn,
+ *    because buffering the graphics seems to cause said above OpenGL pixel
+ *    operation problems.
+ * 2. The loop mentioned in 1. has been fitted with an inner wait loop, 
+ *    that will wait until the mouse cursor (or some other event) has made
+ *    redrawing the scene nescessary, while still polling the mouse and
+ *    keyboard input.
+ *
+ * The rest of the menu is made particularly unclear by the fact that there
+ * can be some multi-line options too and also there is scrolling up and
+ * down possible, when there are more menu options than fit onto one
+ * dialog options secection window for the player to click from.
+ *
  * ---------------------------------------------------------------------- */
 int
-ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem , int background_to_use , void* MenuFont )
+ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , int background_to_use , void* MenuFont , enemy* ChatDroid )
 {
   int h = FontHeight (GetCurrentFont());
   int i , j ;
   static int menu_position_to_remember = 1;
   int NumberOfOptionsGiven;
 #define ITEM_DIST 50
-  int MenuPosX[20] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
-  int MenuPosY[20] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
-      90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
+  int MenuPosX [ MAX_ANSWERS_PER_PERSON ] ;
+  int MenuPosY [ MAX_ANSWERS_PER_PERSON ] ;
   int MenuOptionLineRequirement [ MAX_ANSWERS_PER_PERSON ] ;
   SDL_Rect Choice_Window;
   SDL_Rect HighlightRect;
@@ -526,8 +545,18 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int ThisOptionEnd;
   int mouse_wheel_has_turned = FALSE ;
   int mouse_now_over_different_item = FALSE ;
+  int cursors_menu_position = - 1000 ;
 
   DebugPrintf ( -100, "\nINSIDE:  First Item now: %d." , FirstItem );
+
+  //--------------------
+  // First we initialize the menu positions
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      MenuPosX [ i ] = 260 ; 
+      MenuPosY [ i ] =  90 + i * ITEM_DIST ; 
+    }
 
   //--------------------
   // Now we set some viable choice window and we compute the maximum number of lines
@@ -551,7 +580,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   // been given for the menu
   //
   DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: %d \n" , FirstItem ) ; 
-  for ( i = 0 ; i < 10 ; i ++ )
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
       DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
       DebugPrintf ( MENU_SELECTION_DEBUG , MenuTexts [ i ] ) ; 
@@ -561,7 +590,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 
       if ( strlen( MenuTexts[ i ] ) == 0 ) break;
     }
-  NumberOfOptionsGiven = i;
+  NumberOfOptionsGiven = i ;
 
   //--------------------
   // At first we find out how many lines, i.e. what height each of the menu
@@ -607,15 +636,22 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
+
+
+
+
   OptionOffset = 0 ;
   while ( 1 )
     {
 
-      RestoreMenuBackground ( 0 );
+      if ( ! use_open_gl ) 
+	RestoreMenuBackground ( 0 );
+      else 
+	PrepareMultipleChoiceDialog ( ChatDroid );
 
       //--------------------
       // Now that we have a new choice window, we should automatically compute the right
-      // positions for the various chat alternatives.
+      // positions for the various chat options, that the player can click on.
       //
       // BUT THIS TIME WE WILL TAKE INTO ACCOUNT THE GIVEN OPTION OFFSET!!!
       //
@@ -645,7 +681,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       // onto the screen
       //
       SpaceUsedSoFar = 0 ;
-      for ( i = OptionOffset ; i < 10 ; i ++ )
+      for ( i = OptionOffset ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
 	{
 	  //--------------------
 	  // If all has been displayed already, we quit blitting...
@@ -731,6 +767,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	      while (DownPressed());
 	    }
 
+
+
+
+
 	  //--------------------
 	  // Maybe the mouse is now hovering over a different menu item, that it
 	  // was over (and than was therefore selected) before.  Then of course
@@ -738,9 +778,33 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  //
 	  MenuLineOfMouseCursor = 
 	    MouseCursorIsOverMenuItem ( MenuPosY [ OptionOffset ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
-	  if ( ( MenuLineOfMouseCursor >= 1 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
+	  if ( MenuLineOfMouseCursor < 1 ) MenuLineOfMouseCursor = 1 ;
+
+	  cursors_menu_position = 1 ;
+
+	  ThisOptionEnd = MenuPosY [ 0 ] ;
+	  for ( i = OptionOffset ; i <= LastOptionVisible ; i ++ )
 	    {
-	      if ( MenuLineOfMouseCursor != menu_position_to_remember )
+	      
+	      ThisOptionEnd += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+	      
+	      if ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y < ThisOptionEnd )
+		{
+		  cursors_menu_position = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
+		  break;
+		}
+	    }
+
+	  
+	  if ( cursors_menu_position > LastOptionVisible ) 
+	    cursors_menu_position = LastOptionVisible ;
+
+	  if ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle )
+	    {
+	      //--------------------
+	      // Maybe there are some double-lines?!
+	      //
+	      if ( cursors_menu_position != menu_position_to_remember )
 		{
 		  mouse_now_over_different_item = TRUE ;
 		  DebugPrintf ( 1 , "\nChatDoMenuSelection:  mouse now over different item, therefore new main cycle..." );
@@ -858,12 +922,14 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       //
       MenuLineOfMouseCursor = 
 	MouseCursorIsOverMenuItem ( MenuPosY [ 0 ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+      if ( MenuLineOfMouseCursor < 1 ) MenuLineOfMouseCursor = 1 ;
 
       //--------------------
       // If the mouse cursor was on one of the possible lines, than we can try to translate
       // it into a real menu position
       //
       if ( ( MenuLineOfMouseCursor >= 0 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
+	   // ( MenuLineOfMouseCursor <= LastOptionVisible - OptionOffset ) )
 	{
 	  ThisOptionEnd = MenuPosY [ 0 ] ;
 	  for ( i = OptionOffset ; i <= LastOptionVisible ; i ++ )
@@ -877,10 +943,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 		  break;
 		}
 	    }
-
-	  /*
-      menu_position_to_remember = MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
-	  */
 	}
 
       if ( menu_position_to_remember < OptionOffset + 1 ) menu_position_to_remember = OptionOffset + 1 ;
@@ -893,7 +955,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   our_SDL_flip_wrapper( Screen );
   return ( -1 );
 
-}; // int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
+}; // int ChatDoMenuSelection( char* InitialText , char* MenuTexts[] , asdfasd .... )
 
 /* ----------------------------------------------------------------------
  * This function prepares the screen for the big Escape menu and 

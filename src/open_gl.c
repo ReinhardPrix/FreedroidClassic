@@ -1202,6 +1202,8 @@ RestoreMenuBackground ( int backup_slot )
 {
   if ( use_open_gl )
     {
+      return;
+
 #ifdef HAVE_LIBGL
       glRasterPos2i( 0 , 479 ) ; 
       glDrawPixels( 640, 478, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground [ backup_slot ] );

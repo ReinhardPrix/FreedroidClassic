@@ -489,8 +489,8 @@ EXTERN void RestoreMenuBackground ( int backup_slot );
 EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont );
 EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 				       unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
-				       int background_code , void* MenuFont );
-EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont );
+				       int background_code , void* MenuFont , enemy* ChatDroid );
+EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont , enemy* ChatDroid );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
 EXTERN void InitiateMenu( int background_code );
@@ -631,6 +631,7 @@ EXTERN void InitChatRosterForNewDialogue( void );
 EXTERN void Get_Item_Data ( char* DataPointer );
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void *MyMalloc (long);
+EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid );
 
 // rahmen.c 
 #undef EXTERN

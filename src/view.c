@@ -129,17 +129,6 @@ enum
     BLITTING_TYPE_THROWN_ITEM = 6
   };
 
-//
-// POSSIBLY OUTDATED AND UNUSED FUNCTION
-// PLEASE CHECK FOR REMOVAL POSSIBLE
-//
-int
-Cent (int Val)
-{
-  Val = Val - (Val % Block_Width) + Block_Width / 2;
-  return Val;
-}
-
 /* ----------------------------------------------------------------------
  * This function should display the automap data, that was collected so
  * far, by the tux.

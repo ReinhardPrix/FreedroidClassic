@@ -1206,7 +1206,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 
   PrepareMultipleChoiceDialog ( ChatDroid );
 
-  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+  Chat_Window . x = 242 ; Chat_Window . y = 100 ; Chat_Window . w = 380; Chat_Window . h = 314 ;
 
   //--------------------
   // We load the option texts into the dialog options variable..
@@ -1248,7 +1248,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  ChatDroid -> has_greeted_influencer = TRUE ;
 	}
       else
-	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont );
+	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
 
       //--------------------
       // We do some correction of the menu selection variable:
@@ -2117,7 +2117,9 @@ GetString (int MaxLen, int echo)
   while ( !finished  )
     {
       if ( use_open_gl )
-	RestoreMenuBackground ( 0 );
+	{
+	  RestoreMenuBackground ( 0 );
+	}
       else
 	{
 	  Copy_Rect( store_rect, tmp_rect);
