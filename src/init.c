@@ -255,8 +255,8 @@ Get_Bullet_Data ( char* DataPointer )
     {
       i=sizeof(bulletspec);
       Bulletmap = MyMalloc ( i * (Number_Of_Bullet_Types + 1) + 1 );
-      DebugPrintf (0, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
-      DebugPrintf (0, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+      DebugPrintf (1, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
+      DebugPrintf (1, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
       // getchar();
     }
 
@@ -266,7 +266,7 @@ Get_Bullet_Data ( char* DataPointer )
   BulletPointer=DataPointer;
   while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
     {
-      DebugPrintf (0, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
+      DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
       BulletPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the recharging time for this bullettype(=weapontype)
@@ -279,7 +279,7 @@ Get_Bullet_Data ( char* DataPointer )
 	{
 	  ValuePointer += strlen ( BULLET_RECHARGE_TIME_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].recharging_time );
-	  DebugPrintf( 0 , "\nrecharging time now reads: %f. " , Bulletmap[BulletIndex].recharging_time );
+	  DebugPrintf( 1 , "\nrecharging time now reads: %f. " , Bulletmap[BulletIndex].recharging_time );
 	}
 
       // Now we read in the maximal speed this type of bullet can go.
@@ -292,7 +292,7 @@ Get_Bullet_Data ( char* DataPointer )
 	{
 	  ValuePointer += strlen ( BULLET_SPEED_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%lf" , &Bulletmap[BulletIndex].speed );
-	  DebugPrintf( 0 , "\nbullet speed now reads: %f. " , Bulletmap[BulletIndex].speed );
+	  DebugPrintf( 1 , "\nbullet speed now reads: %f. " , Bulletmap[BulletIndex].speed );
 	}
 
       // Now we read in the damage this bullet can do
@@ -305,7 +305,7 @@ Get_Bullet_Data ( char* DataPointer )
 	{
 	  ValuePointer += strlen ( BULLET_DAMAGE_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].damage );
-	  DebugPrintf( 0 , "\nbullet damage now reads: %d. " , Bulletmap[BulletIndex].damage );
+	  DebugPrintf( 1 , "\nbullet damage now reads: %d. " , Bulletmap[BulletIndex].damage );
 	}
 
       // Now we read in the number of phases that are designed for this bullet type
@@ -318,7 +318,7 @@ Get_Bullet_Data ( char* DataPointer )
 	{
 	  ValuePointer += strlen ( BULLET_NUMBER_OF_PHASES_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].phases );
-	  DebugPrintf( 0 , "\nbullet phases now reads: %d. " , Bulletmap[BulletIndex].phases );
+	  DebugPrintf( 1 , "\nbullet phases now reads: %d. " , Bulletmap[BulletIndex].phases );
 	}
 
       // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
@@ -331,7 +331,7 @@ Get_Bullet_Data ( char* DataPointer )
 	{
 	  ValuePointer += strlen ( BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Bulletmap[BulletIndex].blast );
-	  DebugPrintf( 0 , "\nbullet causes blast of type : %d. " , Bulletmap[BulletIndex].blast );
+	  DebugPrintf( 1 , "\nbullet causes blast of type : %d. " , Bulletmap[BulletIndex].blast );
 	}
 
       BulletIndex++;
@@ -342,7 +342,7 @@ Get_Bullet_Data ( char* DataPointer )
   // we now read in the general calibration contants and after that
   // the start to apply them right now, so they also take effect.
   
-  DebugPrintf (0, "\n\nStarting to read bullet calibration section\n\n");
+  DebugPrintf (1, "\n\nStarting to read bullet calibration section\n\n");
   // Now we read in the speed calibration factor for all bullets
   if ( (ValuePointer = strstr ( DataPointer, BULLET_SPEED_CALIBRATOR_STRING )) == NULL )
     {
@@ -377,7 +377,7 @@ Get_Bullet_Data ( char* DataPointer )
       Bulletmap[i].damage *= bullet_damage_calibrator;
     }
 
-  DebugPrintf (0, "\n\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
+  DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
 } // void Get_Bullet_Data ( char* DataPointer );
 
 
@@ -1983,11 +1983,11 @@ InitFreedroid (void)
 
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
-  GameConfig.All_Texts_Switch=FALSE;
-  GameConfig.Enemy_Hit_Text=TRUE;
+  GameConfig.All_Texts_Switch=TRUE;
+  GameConfig.Enemy_Hit_Text=FALSE;
   GameConfig.Enemy_Bump_Text=TRUE;
   GameConfig.Enemy_Aim_Text=TRUE;
-  GameConfig.Influencer_Refresh_Text=TRUE;
+  GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Theme_SubPath="lanzz_theme/";
 

@@ -363,8 +363,7 @@ LoadThemeConfigurationFile(void)
 
   filename = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
-  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ) called.");
-  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , filename );
+  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , filename );
 
   // Read the whole theme data to memory 
   if ((DataFile = fopen (filename, "r")) == NULL)
@@ -374,7 +373,7 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\nOpening theme config file succeeded...");
+      DebugPrintf ( 1 , "\nOpening theme config file succeeded...");
     }
 
   if (fstat (fileno (DataFile), &stbuf) == EOF)
@@ -384,7 +383,7 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 2 , "\nfstating theme config file succeeded...");
+      DebugPrintf ( 1 , "\nfstating theme config file succeeded...");
     }
 
   if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
@@ -395,7 +394,7 @@ LoadThemeConfigurationFile(void)
 
   fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
 
-  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
+  DebugPrintf (1, "\nReading theme data file succeeded... Adding a 0 at the end of read data....");
 
   if ( (ReadPointer = strstr( Data , END_OF_THEME_DATA_STRING ) ) == NULL )
     {
@@ -433,10 +432,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nNumber of phases for blast one string found. Good.");  
+      DebugPrintf ( 2 , "\n\nNumber of phases for blast one string found. Good.");  
       ReadPointer += strlen ( BLAST_ONE_NUMBER_OF_PHASES_STRING );
       sscanf ( ReadPointer , "%d" , &Blastmap[0].phases );
-      DebugPrintf( 0 , "\nBlastmap[0].phases now reads:  %d" , Blastmap[0].phases );
+      DebugPrintf( 1 , "\nBlastmap[0].phases now reads:  %d" , Blastmap[0].phases );
       // getchar();
     }
   
@@ -447,10 +446,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nNumber of phases for blast two string found. Good.");  
+      DebugPrintf ( 2 , "\n\nNumber of phases for blast two string found. Good.");  
       ReadPointer += strlen ( BLAST_TWO_NUMBER_OF_PHASES_STRING );
       sscanf ( ReadPointer , "%d" , &Blastmap[1].phases );
-      DebugPrintf( 0 , "\nBlastmap[1].phases now reads:  %d" , Blastmap[1].phases );
+      DebugPrintf( 1 , "\nBlastmap[1].phases now reads:  %d" , Blastmap[1].phases );
       // getchar();
     }
 
@@ -464,10 +463,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nTotal amount of time for blast one string found. Good.");  
+      DebugPrintf ( 2 , "\n\nTotal amount of time for blast one string found. Good.");  
       ReadPointer += strlen ( BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING );
       sscanf ( ReadPointer , "%lf" , &Blastmap[0].total_animation_time );
-      DebugPrintf( 0 , "\nBlastmap[0].total_animation_time now reads:  %f" , Blastmap[0].total_animation_time );
+      DebugPrintf( 1 , "\nBlastmap[0].total_animation_time now reads:  %f" , Blastmap[0].total_animation_time );
       // getchar();
     }
   
@@ -478,10 +477,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nTotal amount of time for blast two string found. Good.");  
+      DebugPrintf ( 2 , "\n\nTotal amount of time for blast two string found. Good.");  
       ReadPointer += strlen ( BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING );
       sscanf ( ReadPointer , "%lf" , &Blastmap[1].total_animation_time );
-      DebugPrintf( 0 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
+      DebugPrintf( 1 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
       // getchar();
     }
   
@@ -497,10 +496,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit one position x string found. Good.");  
+      DebugPrintf ( 2 , "\n\nDigit one position x string found. Good.");  
       ReadPointer += strlen ( DIGIT_ONE_POSITION_X_STRING );
       sscanf ( ReadPointer , "%d" , &First_Digit_Pos_X );
-      DebugPrintf( 0 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_X );
+      DebugPrintf( 1 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_X );
       // getchar();
     }
   if ( ( ReadPointer = strstr ( Data , DIGIT_ONE_POSITION_Y_STRING ) ) == NULL )
@@ -510,10 +509,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit one position y string found. Good.");  
+      DebugPrintf ( 2 , "\n\nDigit one position y string found. Good.");  
       ReadPointer += strlen ( DIGIT_ONE_POSITION_Y_STRING );
       sscanf ( ReadPointer , "%d" , &First_Digit_Pos_Y );
-      DebugPrintf( 0 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_Y );
+      DebugPrintf( 1 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_Y );
       // getchar();
     }
   
@@ -524,10 +523,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit two position x string found. Good.");  
+      DebugPrintf ( 2 , "\nDigit two position x string found. Good.");  
       ReadPointer += strlen ( DIGIT_TWO_POSITION_X_STRING );
       sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_X );
-      DebugPrintf( 0 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_X );
+      DebugPrintf( 1 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_X );
       // getchar();
     }
   if ( ( ReadPointer = strstr ( Data , DIGIT_TWO_POSITION_Y_STRING ) ) == NULL )
@@ -537,10 +536,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit two position y string found. Good.");  
+      DebugPrintf ( 2 , "\n\nDigit two position y string found. Good.");  
       ReadPointer += strlen ( DIGIT_TWO_POSITION_Y_STRING );
       sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_Y );
-      DebugPrintf( 0 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
+      DebugPrintf( 1 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
       // getchar();
     }
 
@@ -551,10 +550,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit three position x string found. Good.");  
+      DebugPrintf ( 2 , "\n\nDigit three position x string found. Good.");  
       ReadPointer += strlen ( DIGIT_THREE_POSITION_X_STRING );
       sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_X );
-      DebugPrintf( 0 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_X );
+      DebugPrintf( 1 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_X );
       // getchar();
     }
   if ( ( ReadPointer = strstr ( Data , DIGIT_THREE_POSITION_Y_STRING ) ) == NULL )
@@ -564,10 +563,10 @@ LoadThemeConfigurationFile(void)
     }
   else
     {
-      DebugPrintf ( 0 , "\n\nDigit three position y string found. Good.");  
+      DebugPrintf ( 2 , "\n\nDigit three position y string found. Good.");  
       ReadPointer += strlen ( DIGIT_THREE_POSITION_Y_STRING );
       sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_Y );
-      DebugPrintf( 0 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_Y );
+      DebugPrintf( 1 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_Y );
       // getchar();
     }
   

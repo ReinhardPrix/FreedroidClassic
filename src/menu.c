@@ -381,10 +381,11 @@ enum
   int Weiter = 0;
   int MenuPosition=1;
 
-
   Me.status=MENU;
 
   DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
+
+  SDL_SetClipRect( ne_screen , NULL );
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.

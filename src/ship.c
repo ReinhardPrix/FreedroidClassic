@@ -273,6 +273,8 @@ EnterKonsole (void)
 
   Me.status = CONSOLE;
 
+  SetCurrentFont( Para_BFont );
+
   Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
 
   while (SpacePressed ());  /* wait for user to release Space */
