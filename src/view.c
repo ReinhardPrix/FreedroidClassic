@@ -107,6 +107,22 @@ Assemble_Combat_Picture (int mask)
     }				// for(line) 
 
 
+
+
+
+
+  // if we don't use Fullscreen mode, we have to clear the text-background manually
+  // for the info-line text:
+
+  TxtRect.x = Full_User_Rect.x;
+  TxtRect.y = Full_User_Rect.y+Full_User_Rect.h - FontHeight (FPS_Display_BFont);
+  TxtRect.h = FontHeight (FPS_Display_BFont);
+  TxtRect.w = Full_User_Rect.w;
+  SDL_SetClipRect (ne_screen, &TxtRect);
+  if (!GameConfig.FullUserRect)
+    SDL_FillRect(ne_screen, &TxtRect, 0);
+
+
   if ( GameConfig.Draw_Position )
     {
       PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
@@ -115,70 +131,56 @@ Assemble_Combat_Picture (int mask)
 		       CurLevel->levelnum );
     }
 
-  if (mask & ONLY_SHOW_MAP) 
+
+  if (!(mask & ONLY_SHOW_MAP) )
     {
-      // in case we only draw the map, we are done here.  But
-      // of course we must check if we should update the screen too.
-      if ( mask & DO_SCREEN_UPDATE ) 
-	SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
-      return;
-    }
-
-  // At this point we know that now only the map is to be drawn.
-  // so we start drawing the rest of the INTERIOR of the combat window:
-
-  for (i = 0; i < NumEnemys ; i++)
-    PutEnemy (i , -1 , -1 );
-
-  if (Me.energy > 0)
-    PutInfluence ( -1 , -1 );
-
-  for (i = 0; i < (MAXBULLETS); i++)
-    if (AllBullets[i].type != OUT)
-      PutBullet (i);
-
-  for (i = 0; i < (MAXBLASTS); i++)
-    if (AllBlasts[i].type != OUT)
-      PutBlast (i);
-
-  TxtRect.x = Full_User_Rect.x;
-  TxtRect.y = Full_User_Rect.y+Full_User_Rect.h - FontHeight (FPS_Display_BFont);
-  TxtRect.h = FontHeight (FPS_Display_BFont);
-  TxtRect.w = Full_User_Rect.w;
-
-  SDL_SetClipRect (ne_screen, &TxtRect);
-
-  // if we don't use Fullscreen mode, we have to clear the text-background manually
-  // for the info-line text:
-  if (!GameConfig.FullUserRect)
-    SDL_FillRect(ne_screen, &TxtRect, 0);
-
-  if ( GameConfig.Draw_Framerate )
-    {
-      TimeSinceLastFPSUpdate += Frame_Time();
-      if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+      if ( GameConfig.Draw_Framerate )
 	{
-	  FPS_Displayed=(int)(1.0/Frame_Time());
-	  TimeSinceLastFPSUpdate=0;
+	  TimeSinceLastFPSUpdate += Frame_Time();
+	  if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+	    {
+	      FPS_Displayed=(int)(1.0/Frame_Time());
+	      TimeSinceLastFPSUpdate=0;
+	    }
+	  
+	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			   "FPS: %d " , FPS_Displayed );
 	}
 
-      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "FPS: %d " , FPS_Displayed );
-    }
+      if ( GameConfig.Draw_Energy )
+	{
+	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			   "Energy: %d " , (int) (Me.energy) );
+	}
 
-  if ( GameConfig.Draw_Energy )
-    {
-      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Energy: %d " , (int) (Me.energy) );
+      SDL_SetClipRect (ne_screen, &User_Rect);
+
+      for (i = 0; i < NumEnemys ; i++)
+	PutEnemy (i , -1 , -1 );
+
+      if (Me.energy > 0)
+	PutInfluence ( -1 , -1 );
+
+      for (i = 0; i < (MAXBULLETS); i++)
+	if (AllBullets[i].type != OUT)
+	  PutBullet (i);
+
+      for (i = 0; i < (MAXBLASTS); i++)
+	if (AllBlasts[i].type != OUT)
+	  PutBlast (i);
+
     }
 
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
 
   if ( mask & DO_SCREEN_UPDATE )
-    SDL_UpdateRect (ne_screen, Full_User_Rect.x, Full_User_Rect.y, Full_User_Rect.w, Full_User_Rect.h);
+    {
+      SDL_UpdateRect (ne_screen, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
+      SDL_UpdateRect (ne_screen, TxtRect.x, TxtRect.y, TxtRect.w, TxtRect.h);
+    }
 
   return;
 

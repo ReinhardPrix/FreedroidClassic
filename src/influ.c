@@ -687,8 +687,12 @@ ExplodeInfluencer (void)
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].PX = Me.pos.x - Droid_Radius / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].PY = Me.pos.y - Droid_Radius / 2 + MyRandom (10)*0.05;
-      AllBlasts[counter].phase = i;
+      AllBlasts[counter].phase = 0.2*i;
     }
+
+  DruidBlastSound (); 
+  usleep(500);
+  DruidBlastSound (); 
 
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 }				/* ExplodeInfluencer */

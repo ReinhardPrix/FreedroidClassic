@@ -1073,7 +1073,7 @@ ThouArtVictorious(void)
 void
 ThouArtDefeated (void)
 {
-  Uint32 now;
+  Uint32 now, delay;
 
   Me.status = TERMINATED;
   SDL_ShowCursor (SDL_DISABLE);
@@ -1082,7 +1082,7 @@ ThouArtDefeated (void)
 
   now = SDL_GetTicks();
 
-  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )
+  while ( (delay=SDL_GetTicks() - now) < WAIT_AFTER_KILLED)
     {
       // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPSover1
       FPSover1 *= 2.0;
@@ -1090,6 +1090,8 @@ ThouArtDefeated (void)
       StartTakingTimeForFPSCalculation();
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
+      if ( (delay < WAIT_AFTER_KILLED/4) && (delay % 100 < 10))
+	DruidBlastSound ();
       MoveBullets ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
@@ -1113,8 +1115,10 @@ ThouArtDefeated (void)
   DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
+  
+  now = SDL_GetTicks ();
 
-  usleep(1000*SHOW_WAIT);
+  while (SDL_GetTicks() - now < SHOW_WAIT) usleep(50);
 
   UpdateHighscores ();
 

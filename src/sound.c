@@ -136,6 +136,8 @@ Continuing with sound disabled\n");
   else 
     DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
   
+  if (Mix_AllocateChannels(20) != 20)
+    DebugPrintf (0, "\nWARNING: could not get all 20 mixer-channels I asked for...\n");
 
   // Now that the audio channel is opend, its time to load all the
   // WAV files into memory, something we NEVER did while using the yiff,
@@ -183,15 +185,6 @@ Continuing with sound disabled\n");
   // configuration.
   //
   Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-
-  //--------------------
-  // Since we don't want some sounds to be omitted due to lack of mixing
-  // channels, we select to have some at our disposal.  The SDL will do this
-  // for a small increase in memory appetite as the price.  Whether this will
-  // really resolve the problem however is unsure.
-  //
-  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels(200) );
-  //
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);
@@ -377,7 +370,7 @@ Play_Sound (int Tune)
   Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
   if ( Newest_Sound_Channel == -1 )
     {
-      DebugPrintf (1, "WARNING: Could not play sound-sample: %s Error: %s\n\
+      DebugPrintf (0, "WARNING: Could not play sound-sample: %s Error: %s\n\
 This usually just means that too many samples where played at the same time\n",
 		   SoundSampleFilenames[ Tune ] , Mix_GetError() );
     } // if ( ... = -1

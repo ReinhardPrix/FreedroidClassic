@@ -863,6 +863,8 @@ ClearGraphMem ( void )
 
   // Now we fill the screen with black color...
   SDL_FillRect( ne_screen , NULL , 0 );
+
+  return;
 } // ClearGraphMem( void )
 
 

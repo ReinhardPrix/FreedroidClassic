@@ -83,7 +83,9 @@ main (int argc, char *const argv[])
       while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!(SpacePressed()||MouseLeftPressed())) );
 
       ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE |BANNER_NO_SDL_UPDATE);
+      SDL_Flip(ne_screen);
+
       GameOver = FALSE;
 
       SDL_SetCursor (crosshair_cursor); // default cursor is a crosshair

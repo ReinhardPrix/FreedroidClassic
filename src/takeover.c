@@ -168,6 +168,8 @@ Takeover (int enemynum)
   while ( !(SpacePressed() || MouseLeftPressed()) );
   while ( (SpacePressed() || MouseLeftPressed()) );
 
+  SDL_BlitSurface (console_bg_pic1, NULL, ne_screen, NULL);
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   while (!FinishTakeover)
     {
@@ -664,7 +666,7 @@ ShowPlayground ()
   xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
   yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*128)/2;
 
-  SDL_SetColorKey (ne_screen, 0, 0);
+  //  SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
   Fill_Rect (User_Rect, to_bg_color);
