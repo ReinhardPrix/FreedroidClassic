@@ -135,7 +135,7 @@ MoveBullets (void)
   //--------------------
   // We move all the bullets
   //
-  for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
+  for ( CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
       //--------------------
       // We need not move any bullets, that are OUT already...
@@ -144,8 +144,30 @@ MoveBullets (void)
 	continue;
       if ( CurBullet -> time_to_hide_still > 0 )
 	continue;
+      if ( ! IsActiveLevel ( CurBullet -> pos . z ) )
+	{
+	  if ( Me [ 0 ] . energy > 0 )
+	    {
+	      GiveStandardErrorMessage ( "MoveBullets(...)" , "\
+Non-OUT bullet found 'stale' outside the active levels.\n\
+This is quite normal, if the Tux has just died and the 'present'\n\
+level is therefore not 'active' any more, but in this case it happend\n\
+while the Tux still had some energy in him.  Very suspicios!!",
+					 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	      continue;
+	    }
+	}
 
       move_this_bullet_and_check_its_collisions ( i );
+
+      //--------------------
+      // WARNING!  The bullet collision check might have deleted the bullet, so 
+      //           maybe there's nothing sensible at the end of that 'CurBullet'
+      //           pointer any more at this point.  So we check AGAIN for 'OUT'
+      //           bullets, before we proceed with the safety out-of-map checks...
+      //
+      if ( CurBullet -> type == OUT )
+	continue;
 
       //--------------------
       // Maybe the bullet has a limited lifetime.  In that case we check if the
@@ -172,25 +194,21 @@ MoveBullets (void)
       // cause a SEGFAULT directly afterwards, when the map is queried.
       // Therefore we introduce some extra security here...
       //
-      BulletLevel = curShip.AllLevels[ CurBullet->pos.z ];
+      BulletLevel = curShip.AllLevels [ CurBullet -> pos.z ];
       if ( ( map_x < 0 ) || ( map_x >= BulletLevel->xlen ) ||
 	   ( map_y < 0 ) || ( map_y >= BulletLevel->ylen ) )
 	{
-	  if ( 1 <= debug_level )
-	    {
-	      GiveStandardErrorMessage ( "MoveBullets(...)" , "\
+	  GiveStandardErrorMessage ( "MoveBullets(...)" , "\
 A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 This is an idication for an error of some form, but might also be due\n\
 to short occasions of very low frame rates sometimes or it might be due\n\
-to a melee weapon swing active when the swing robot was destroyed, which\n\
-swapped him outside and the bullet thereby also outside.\n\
-\n\
-This problem is not severe, so this is a warning message only.",
-					 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-	    }
+to a shot right through a gate between two levels.\n\
+However:  This problem is not severe, so this is a warning message only.",
+				     NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	  DebugPrintf ( -1000 , "\nBullet ouside of map: pos.x=%f, pos.y=%f, pos.z=%d, type=%d." ,
+			CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z , CurBullet -> type );
 	  DeleteBullet ( i , FALSE );
 	  return;
-	  
 	  Terminate(ERR);
 	}
       
@@ -205,7 +223,7 @@ This problem is not severe, so this is a warning message only.",
 void 
 DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
 {
-  Bullet CurBullet = &AllBullets[ Bulletnumber ];
+  Bullet CurBullet = & ( AllBullets [ Bulletnumber ] ) ;
   int i;
 
   //--------------------
@@ -222,12 +240,12 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   if ( CurBullet->Surfaces_were_generated ) 
     {
       DebugPrintf( 1 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
-      for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
+      for ( i = 0 ; i < Bulletmap [ CurBullet->type ] . phases ; i++ )
 	{
-	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );
-	  CurBullet->SurfacePointer[i] = NULL;
+	  SDL_FreeSurface( CurBullet -> SurfacePointer [ i ] );
+	  CurBullet -> SurfacePointer [ i ] = NULL;
 	}
-      CurBullet->Surfaces_were_generated = FALSE;
+      CurBullet -> Surfaces_were_generated = FALSE;
     }
 
   //--------------------
@@ -241,6 +259,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   CurBullet->phase = 0;
   CurBullet->pos.x = 0;
   CurBullet->pos.y = 0;
+  CurBullet->pos.z = -1;
   CurBullet->angle = 0;
 
 }; // void DeleteBullet( int Bulletnumber , int StartBlast )

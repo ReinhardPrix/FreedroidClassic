@@ -549,6 +549,7 @@ EXTERN int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z
 EXTERN int CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot , int ExceptTux ) ;
 EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
 EXTERN int find_free_bullet_index ( void );
+EXTERN int IsActiveLevel ( int levelnum ) ;
 
 // ship.c 
 #undef EXTERN

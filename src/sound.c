@@ -1122,13 +1122,15 @@ Influencer_Scream_Sound (void)
   switch( MyRandom( 4 ) )
     {
     case 0 :
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_0.wav", FALSE , FALSE );
+      // the 0 sound is bad.  we use the 3 for now
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
       break;
     case 1 :
       play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_1.wav", FALSE , FALSE );
       break;
     case 2 :
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_2.wav", FALSE , FALSE );
+      // the 2 sound is bad.  we use the 3 for now
+      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
       break;
     case 3 :
       play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );

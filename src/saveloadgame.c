@@ -706,7 +706,10 @@ This indicates a serious bug in this installation of Freedroid.",
     }
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
-      AllBullets[ i ].Surfaces_were_generated = FALSE;
+      //--------------------
+      // This might mean a slight memory loss, but I guess we can live with that...
+      //
+      AllBullets [ i ] . Surfaces_were_generated = FALSE;
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
   

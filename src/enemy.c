@@ -1347,9 +1347,9 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
   
   // start all bullets in the center of the shooter first...
-  NewBullet->pos.x = ThisRobot->pos.x;
-  NewBullet->pos.y = ThisRobot->pos.y;
-  NewBullet->pos.z = ThisRobot->pos.z;
+  NewBullet -> pos.x = ThisRobot -> pos.x;
+  NewBullet -> pos.y = ThisRobot -> pos.y;
+  NewBullet -> pos.z = ThisRobot -> pos.z;
   
   // fire bullets so, that they don't hit the shooter...
   if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
@@ -1433,7 +1433,6 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       //
       Fire_Bullet_Sound ( guntype );
     }
-
 
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
