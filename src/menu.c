@@ -400,7 +400,7 @@ Repair_Items( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , -1 );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 );
       return;
     }
 
@@ -526,7 +526,7 @@ Sell_Items( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , MenuTexts , -1 );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , MenuTexts, 1);
       return;
     }
 
