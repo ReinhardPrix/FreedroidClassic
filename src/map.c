@@ -3249,6 +3249,22 @@ int
 IsVisible ( GPS objpos , int PlayerNum )
 {
 
+  //--------------------
+  // For the purpose of visibility checking, we might as well exclude objects
+  // that are too far away to ever be visible and thereby save some checks of
+  // longer lines on the map, that wouldn't be nescessary or helpful anyway.
+  //
+  if ( ( fabsf ( Me [ PlayerNum ] . pos . x - objpos -> x ) > 6.5 ) ||
+       ( fabsf ( Me [ PlayerNum ] . pos . y - objpos -> y ) > 6.5 ) )
+    return ( FALSE );
+
+  //--------------------
+  // So if the object in question is close enough to be visible, we'll do the
+  // actual check and see if the line of sight is free or blocked, a rather
+  // time-consuming and often re-iterated process.  (Maybe some do-it-every-
+  // -10th-frame-only code could be added here later... and in the meantime
+  // old values could be used from a stored flag?!
+  //
   return ( DirectLineWalkable( objpos -> x , objpos -> y , 
 			       Me [ PlayerNum ] . pos . x , Me [ PlayerNum ] . pos . y , 
 			       objpos -> z ) )  ;
