@@ -1956,36 +1956,6 @@ Unable to load the level editor floor cursor.",
 
   blit_iso_image_to_map_position ( level_editor_cursor , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
 
-  /*
-
-  //--------------------
-  // At first we draw all the four lines that make up the 
-  // cursor in the level editor
-  //
-  SDL_LockSurface( Screen );
-  for (i=0; i<Block_Width; i++)
-    {
-      // This draws a (double) line at the upper border of the current block
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
-
-      // This draws a line at the lower border of the current block
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
-      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
-
-      // This draws a line at the left border of the current block
-      putpixel( Screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( Screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-
-      // This draws a line at the right border of the current block
-      putpixel( Screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( Screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me[0].pos.x)-Me[0].pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me[0].pos.y)-Me[0].pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-
-    }
-  SDL_UnlockSurface( Screen );
-
-  */
-
   //--------------------
   // Now we print out the codepanel information about this tile
   // just in case it is really a codepanel.
@@ -2012,20 +1982,45 @@ ShowWaypoints( int PrintConnectionList )
   char ConnectionText[5000];
   char TextAddition[1000];
   Level EditLevel;
+  static iso_image level_editor_waypoint_cursor = { NULL , 0 , 0 } ;
+  char* fpath;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
 #define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
+  //--------------------
+  // Maybe, if the level editor floor cursor has not yet been loaded,
+  // we need to load it.
+  //
+  if ( level_editor_waypoint_cursor . surface == NULL )
+    {
+      fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor ) ) ;
+      if ( level_editor_waypoint_cursor . surface == NULL )
+	{
+	  GiveStandardErrorMessage ( "ShowWaypoints( int PrintConnectionList )" , "\
+Unable to load the level editor waypoint cursor.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+    }
+
+
   BlockX=rintf(Me[0].pos.x);
   BlockY=rintf(Me[0].pos.y);
 	  
-  SDL_LockSurface( Screen );
+  // SDL_LockSurface( Screen );
 
   for (wp=0; wp<MAXWAYPOINTS; wp++)
     {
 
       if ( EditLevel->AllWaypoints[wp].x == 0) continue;
+
+      blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
+				       EditLevel -> AllWaypoints [ wp ] . x + 0.5 , 
+				       EditLevel->AllWaypoints [ wp ] . y + 0.5 ) ;
+
+      /*
 
       //--------------------
       // Draw the cross in the middle of the middle of the tile
@@ -2056,7 +2051,7 @@ ShowWaypoints( int PrintConnectionList )
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
 	}
-
+      */
       
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
@@ -2093,17 +2088,19 @@ ShowWaypoints( int PrintConnectionList )
 		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
 		      SDL_LockSurface( Screen );
 		    }
-		      
+	
+		  /*
 		  DrawLineBetweenTiles( EditLevel->AllWaypoints[wp].x , EditLevel->AllWaypoints[wp].y , 
 					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x , 
 					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y ,
 					color );
+		  */
 		}
 	    }
 	}
 	      
     }
-  SDL_UnlockSurface( Screen );
+  // SDL_UnlockSurface( Screen );
 
 } // void ShowWaypoints( int PrintConnectionList );
 
