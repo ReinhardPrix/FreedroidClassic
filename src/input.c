@@ -693,8 +693,13 @@ keyboard_update(void)
 	      if (event.button.button == SDL_BUTTON_LEFT)
 		{
 		  CurrentlySpacePressed = TRUE;
-		  input_axis.x = event.button.x - USER_FENSTER_CENTER_X; 
-		  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y; 
+		  //
+		  // Since the new mouse cursor does have it's tip at the top left corner
+		  // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
+		  // cursor, we need to correct the given axis a little (16 pixels) bit.
+		  //
+		  input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
+		  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 
 		}
 	      if (event.button.button == SDL_BUTTON_RIGHT)
 		CurrentlyMouseRightPressed = TRUE;
@@ -1202,6 +1207,9 @@ MouseRightPressed(void)
   keyboard_update();
   return CurrentlyMouseRightPressed;
 }
+
+
+
 
 
 #undef _intput_c

@@ -43,12 +43,100 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+/* XPM */
+static const char *arrow[] = {
+  /* width height num_colors chars_per_pixel */
+  "    32    32        3            1",
+  /* colors */
+  "X c #000000",
+  ". c #ffffff",
+  "  c None",
+  /* pixels */
+  "                                ",
+  "                                ",
+  "               XXXX             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               XXXX             ",
+  "                                ",
+  "   XXXXXXXXXXX      XXXXXXXXXX  ",
+  "   X.........X      X........X  ",
+  "   X.........X      X........X  ",
+  "   XXXXXXXXXXX      XXXXXXXXXX  ",
+  "                                ",
+  "               XXXX             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               X..X             ",
+  "               XXXX             ",
+  "                                ",
+  "                                ",
+  "0,0"
+};
+
 void Load_MapBlock_Surfaces( void );
 void Load_Enemy_Surfaces( void ) ;
 void Load_Influencer_Surfaces( void ) ;
 void Load_Digit_Surfaces( void ) ;
 void Load_Bullet_Surfaces( void ) ;
 void Load_Blast_Surfaces( void ) ;
+
+/*
+----------------------------------------------------------------------
+This function was taken directly from the example in the SDL docu.
+Even there they say they have stolen if from the mailing list.
+Anyway it should create a new mouse cursor from an XPM.
+The XPM is defined above and not read in from disk or something.
+----------------------------------------------------------------------
+*/
+
+
+static SDL_Cursor *init_system_cursor(const char *image[])
+{
+  int i, row, col;
+  Uint8 data[4*32];
+  Uint8 mask[4*32];
+  int hot_x, hot_y;
+
+  i = -1;
+  for ( row=0; row<32; ++row ) {
+    for ( col=0; col<32; ++col ) {
+      if ( col % 8 ) {
+        data[i] <<= 1;
+        mask[i] <<= 1;
+      } else {
+        ++i;
+        data[i] = mask[i] = 0;
+      }
+      switch (image[4+row][col]) {
+        case 'X':
+          data[i] |= 0x01;
+          mask[i] |= 0x01;
+          break;
+        case '.':
+          mask[i] |= 0x01;
+          break;
+        case ' ':
+          break;
+      }
+    }
+  }
+  sscanf(image[4+row], "%d,%d", &hot_x, &hot_y);
+  return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
+};
 
 /*
 ----------------------------------------------------------------------
@@ -817,11 +905,12 @@ InitPictures (void)
   // commands will do the right thing...
   LoadThemeConfigurationFile();
 
+  SDL_SetCursor( init_system_cursor( arrow ) );
+
+
   /* 
      create the internal storage for all our blocks 
   */
-  //tmp = SDL_CreateRGBSurface( 0 , NUM_MAP_BLOCKS*Block_Width,
-  //		      18*Block_Height, ne_bpp, 0, 0, 0, 0);
 
   tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
   if (tmp2 == NULL) 

@@ -35,26 +35,15 @@ THESE ITEMS HAVE FIRST PRIORITY:
    e. split up state machines for fireing and movement
    f. movement to new waypoint immediately if threatened by enemy fire
 
-DONE Add additional map tiles:  teleporters with multiple phases of animation
-
 7. Add additional map tiles:  destroyed console left/right/up/down 
    but only a dummy and leave the details to the creative people
 
 8. Add additional map tiles:  autoshooting gun left/right/up/down
    but only a dummy and leave the details to the creative people
 
-9. Analyze the lift data file:  Think of how it works and write some more
-   documentation and perhaps make it a bit better human-readable.
-
 10. Remove all german from the code
 
-DONE Allow for more than one 'phase' of the bullet, especially now that there
-     is only one native picture anyway
-
 12. Enable mod files as well for the background music
-
-13. Put number of phases for each bullet type into the theme's configuration file,
-    instead of into the general game.dat file.
 
 *  Add code to animate the autoshooting gun
 
@@ -87,8 +76,6 @@ THESE ITEMS ARE OF SECOND PRIORITY:
     a. external game dat file, 
     b. droids files and 
     c. mission files.
-
--1. Write doku on how to control the game
 
 THESE ITEMS ARE OF THIRD PRIORITY:
 ----------------------------------

@@ -8,6 +8,8 @@ Outstanding release-critical bugs (priority: high)
 - (rp) improve keyboard-repeat in takeover
 - (rp) fix small mouse-shooting inconsistencies
 - (rp/jp) put a crosshair mouse-cursor
+  jp: --> done via taking and modifieing the example from the SDL doku
+          the current cursor is defines via pixel-map contants in the code, haha.
 
 - bullet to top-right seems to be "offset" to top with respect to
   displayed bullet-pic (which is positioned correctly), i.e. 
@@ -23,8 +25,9 @@ Outstanding release-critical bugs (priority: high)
                perhaps it was due to the "level gray"-change delay?!?
        rp: nope. Recently reproduced: jumped across a wall inside
            level after a melee
-       jp: --> damn!
-
+       jp: --> damn! --> introduces extra security, that will prevent
+           this hopefully, but alter game behaviour if framerate drops under 20 fps.
+           
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
   containing the different phases of the console, or end users must be tolerant.
@@ -71,14 +74,12 @@ Wishlist
 
 - save highscores to disk
 
-- (rp?) mouse-support (should be good with touchstick on laptop!)
-
-
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
-
 
 Resolved bugs
 -------------
+- DONE mouse-support (should be good with touchstick on laptop!)
+
 - DONE Before any release the levelcolor changing procedure must be rearranged to work
        well together with the combat screen resizing code
   ---> Done.
