@@ -658,6 +658,84 @@ ShowPureMapBlocksAroundTux ( int mask )
     }				// for(line) 
 }; // void ShowPureMapBlocksAroundTux ( int mask )
 
+/* ----------------------------------------------------------------------
+ * This function should blit all the map inserts that are currently visible
+ * around the Tux.
+ * ---------------------------------------------------------------------- */
+void
+ShowBigMapInsertsAroundTux ( int mask )
+{
+  int xlen;
+  int ylen;
+  int MapInsertNr;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect TargetRectangle;
+  float ResizeFactor;
+  SDL_Surface *TempRescaledInsert = NULL ;
+
+  //--------------------
+  // Now we draw the list of big graphics inserts for this level
+  //
+  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+    {
+      if ( DisplayLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue;
+      if ( ( DisplayLevel->MapInsertList [ MapInsertNr ] . type < ( -1 ) ) ||
+	   ( DisplayLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS ) )
+	{
+	  fprintf ( stderr , "\n\nDisplayLevel->MapInsertList [ MapInsertNr ] . type: %d.\n" ,
+		    DisplayLevel->MapInsertList [ MapInsertNr ] . type );
+	  GiveStandardErrorMessage ( "AssembleCombatPicture(...)" , "\
+There is a map insert on this level, that is of an illegal type.\n\
+This indicates a severe error in the map insert handling of Freedroid.",
+				     PLEASE_INFORM , IS_FATAL );
+	}
+
+      TargetRectangle.x = UserCenter_x 
+	+ ( - Me [ 0 ] . pos . x + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x - 0.5 ) * Block_Width;
+      TargetRectangle.y = UserCenter_y
+	+ ( - Me [ 0 ] . pos . y + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y - 0.5 ) * Block_Height;
+
+      //--------------------
+      // But before we blit the big map insert, we see if the insert is visible at all.
+      // To determine this, we use the rule that if one corner of the map insert is visible,
+      // the whole map insert should be visible.
+      //
+      xlen = AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . map_insert_size_in_blocks . x - 1;
+      ylen = AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . map_insert_size_in_blocks . y - 1;
+      if ( ( RespectVisibilityOnMap ) && 
+	   ( ! (
+		MapBlockIsVisible ( DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x , 
+				    DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y ) ||
+		MapBlockIsVisible ( xlen + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x , 
+				    DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y ) ||
+		MapBlockIsVisible ( DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x , 
+				    ylen + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y ) ||
+		MapBlockIsVisible ( xlen + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x , 
+				    ylen + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y ) ) )
+	   )
+	continue;
+
+      //--------------------
+      // Now at this point we know, that this map insert is really visible, so we 
+      // can really blit it to the screen now...
+      //
+      if ( Block_Width != INITIAL_BLOCK_WIDTH )
+	{
+	  ResizeFactor = (float)Block_Width / INITIAL_BLOCK_WIDTH  ;
+	  TempRescaledInsert =	      
+	    zoomSurface ( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , 
+			  ResizeFactor , ResizeFactor , 0 );
+	  SDL_BlitSurface( TempRescaledInsert , NULL , Screen , &TargetRectangle );
+	  SDL_FreeSurface( TempRescaledInsert );
+	}
+      else
+	{
+	  SDL_BlitSurface( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , NULL ,
+			   Screen, &TargetRectangle);
+	}
+    }
+}; // void ShowBigMapInsertsAroundTux ( int mask )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -682,55 +760,13 @@ AssembleCombatPicture (int mask)
 {
   int i;
   int PlayerNum;
-  int MapInsertNr;
-  float ResizeFactor;
-  SDL_Rect TargetRectangle;
-  SDL_Surface *TempRescaledInsert = NULL ;
-  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
   ShowPureMapBlocksAroundTux ( mask );
 
-
-  //--------------------
-  // Now we draw the list of big graphics inserts for this level
-  //
-  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
-    {
-      if ( DisplayLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue;
-      if ( ( DisplayLevel->MapInsertList [ MapInsertNr ] . type < ( -1 ) ) ||
-	   ( DisplayLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS ) )
-	{
-	  fprintf ( stderr , "\n\nDisplayLevel->MapInsertList [ MapInsertNr ] . type: %d.\n" ,
-		    DisplayLevel->MapInsertList [ MapInsertNr ] . type );
-	  GiveStandardErrorMessage ( "AssembleCombatPicture(...)" , "\
-There is a map insert on this level, that is of an illegal type.\n\
-This indicates a severe error in the map insert handling of Freedroid.",
-				     PLEASE_INFORM , IS_FATAL );
-	}
-
-      TargetRectangle.x = UserCenter_x 
-	+ ( - Me [ 0 ] . pos . x + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x - 0.5 ) * Block_Width;
-      TargetRectangle.y = UserCenter_y
-	+ ( - Me [ 0 ] . pos . y + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y - 0.5 ) * Block_Height;
-
-      if ( Block_Width != INITIAL_BLOCK_WIDTH )
-	{
-	  ResizeFactor = (float)Block_Width / INITIAL_BLOCK_WIDTH  ;
-	  TempRescaledInsert =	      
-	    zoomSurface ( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , 
-			  ResizeFactor , ResizeFactor , 0 );
-	  SDL_BlitSurface( TempRescaledInsert , NULL , Screen , &TargetRectangle );
-	  SDL_FreeSurface( TempRescaledInsert );
-	}
-      else
-	{
-	  SDL_BlitSurface( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , NULL ,
-			   Screen, &TargetRectangle);
-	}
-    }
+  ShowBigMapInsertsAroundTux ( mask );
 
 
   if (mask & ONLY_SHOW_MAP) 
