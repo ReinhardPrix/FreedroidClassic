@@ -94,7 +94,7 @@ FillInItemProperties( item* ThisItem )
  *
  * ---------------------------------------------------------------------- */
 void
-DropItemAt( int ItemType , int x , int y )
+DropItemAt( int ItemType , float x , float y )
 {
   int i;
 
@@ -138,7 +138,7 @@ DropItemAt( int ItemType , int x , int y )
  *
  * ---------------------------------------------------------------------- */
 void
-DropRandomItem( int x , int y )
+DropRandomItem( float x , float y )
 {
   int Rand;
 

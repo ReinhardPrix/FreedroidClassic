@@ -247,7 +247,7 @@ EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem );
 EXTERN void FillInItemProperties( item* ThisItem );
 EXTERN void DamageAllEquipment( void );
-EXTERN void DropItemAt( int ItemType , int x , int y );
+EXTERN void DropItemAt( int ItemType , float x , float y );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
@@ -273,7 +273,7 @@ EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
-EXTERN void DropRandomItem( int x , int y );
+EXTERN void DropRandomItem( float x , float y );
 
 // character.c
 #undef EXTERN
