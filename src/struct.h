@@ -462,7 +462,7 @@ typedef struct
   
   int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
   int double_ranged_damage;   // does this Tux do double ranged weapon damage?
-  int spell_level_bonus;      // does this Tux get any bonus to his spell levels?
+  // int spell_level_bonus;      // does this Tux get any bonus to his spell levels?
 
   float maxenergy; // current top limit for the influencers energy
   float maxmana;   // current top limit for the influencers magic power
