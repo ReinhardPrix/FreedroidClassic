@@ -131,6 +131,9 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 void
 DisplayRahmen (unsigned char *Parameter_Screen)
 {
+#ifdef NEW_ENGINE
+  return;
+#endif
   DisplayMergeBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
 
   return;
@@ -155,6 +158,9 @@ SetInfoline (const char *left, const char *right)
   char right_box[RIGHT_TEXT_LEN + 10];
   int left_len, right_len;   /* the actualy string-lens */
 
+#ifdef NEW_ENGINE
+  return;
+#endif
   if (left == NULL)       /* Left-DEFAULT: Mode */
     left = InfluenceModeNames[Me.status];
 

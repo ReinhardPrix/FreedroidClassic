@@ -203,7 +203,9 @@ InitPictures (void)
   SDL_Surface *tmp;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
 
-  /* create the internal storage for all our blocks */
+  /* 
+     create the internal storage for all our blocks 
+  */
   tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*BLOCK_WIDTH,
 			     10*BLOCK_HEIGHT, ne_bpp, 0, 0, 0, 0);
   if (tmp == NULL)
@@ -211,6 +213,8 @@ InitPictures (void)
       printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
+
+
   /* 
    * convert this to display format for fast blitting 
    */
@@ -256,7 +260,9 @@ InitPictures (void)
 
 
 
-  /* TEST: show those successively on the screen */
+  /* 
+     TEST: show those successively on the screen 
+  */
   
   SDL_SaveBMP (ne_blocks, "../graphics/debug.bmp");
 
@@ -270,7 +276,7 @@ InitPictures (void)
       }
 
 
-  Terminate(OK);
+  // Terminate(OK);
   
   return (TRUE);
 }
@@ -357,6 +363,9 @@ InitPictures (void)
 void
 ClearVGAScreen (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#endif
 
   memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
 
