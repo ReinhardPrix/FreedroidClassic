@@ -442,7 +442,7 @@ Levelnumber: 3
 xlen of this level: 31
 ylen of this level: 13
 color of this level: 2
-Name of this level=quarterd
+Name of this level=Computer storage
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10   8  10  10  10   8  10  10  10  10   9 
  33  33  33  33  33  33   7  10  10  10  10   3  15  14  14  15  15  14  15  15  14  11   0   0   0  27   0  25  25  16  11 
@@ -566,7 +566,7 @@ Levelnumber: 4
 xlen of this level: 32
 ylen of this level: 13
 color of this level: 3
-Name of this level=repairs
+Name of this level=Robot OS evaluation
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -574,7 +574,7 @@ beginning_of_map
   4  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
  11  23   0   0  27   0   0  32   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
  11  23   0   0  11   0   0   0   0   0   7  18  18  10  10   9   0   0   0   0   0   0   0   0   0   0   0   7  10  10  10   6 
- 11  23   0   0  11   0   0  34   0   0  11   0   0   0  24  11  34   0   0   0   0   0  34   0   0   0   0  27   0   0  24  11 
+ 11  23   0   0  11   0   0  34   0   0  11   0   0   0  24  11  34   0   0   0   0   0  34   0   0   0   0  27   0  34  24  11 
  11  23   0  12  11   0   0  16   0   0  11   0   0   0  24  11   0   0   0   0   0   0   0   0   0   0   0   1  10  10  10   6 
   4  10  10  10   6   0   0   0   0   0  11  12  12   0  24  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
  11   0   0   0  27   0   0   0   0   0   1  10  10  10  10   3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -690,7 +690,7 @@ Levelnumber: 5
 xlen of this level: 38
 ylen of this level: 15
 color of this level: 4
-Name of this level=staterooms
+Name of this level=Robot construction facility
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
