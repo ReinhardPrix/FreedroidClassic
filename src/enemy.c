@@ -2034,11 +2034,16 @@ ProcessAttackStateMachine ( int enemynum )
       ThisRobot->AdvancedCommand = 0;
     }
 
-  if ( ThisRobot -> will_rush_tux )
+  if ( ThisRobot -> will_rush_tux ) 
     {
-      ThisRobot -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
-      ThisRobot -> will_rush_tux = FALSE ;
+      if ( sqrt ( powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) +
+		  powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) ) < 4 )
+	{
+	  ThisRobot -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
+	  ThisRobot -> will_rush_tux = FALSE ;
+	}
     }
+
 
   //--------------------
   // determine the distance vector to the target of this shot.  The target
