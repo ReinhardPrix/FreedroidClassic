@@ -41,6 +41,7 @@
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
 #define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
 #define ALLBULLETS_RAW_DATA_STRING "\nNow the raw AllBullets data:\n"
+#define DROID001_RAW_DATA_STRING "\nNow the raw DROID001 data:\n"
 #define END_OF_SAVEDGAME_DATA_STRING "\nEnd of saved game data file.\n"
 #define LEVELNUM_EXPL_STRING "\nExplicit number of the level the influ currently is in="
 
@@ -162,6 +163,9 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
 	   sizeof(char), SaveGameFile );  
   fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );  
+  // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
+  // sizeof(char), SaveGameFile );  
+  fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
 
   // --------------------
   // Now we write the enemy raw data start string out to the file and of course
@@ -272,6 +276,10 @@ I need to know that for loading. Abort.\n");
 				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
   memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
+  InfluencerRawDataPointer += sizeof ( influence_t );
+  memcpy( & ( Druidmap[ DRUID001 ] ) , InfluencerRawDataPointer , sizeof ( druidspec ) );
+  Druidmap [ DRUID001 ].druidname = "001";
+  Druidmap [ DRUID001 ].portrait_filename_without_ext = "001";
 
   //--------------------
   // Now we decode the enemy information.

@@ -71,6 +71,31 @@ New item: type=3  X=15.000000  Y=3.000000  AC=0  DoDamage=35  MaxDur=12  CurDur=
 New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
 New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=18  CurDur=9.000000 
 New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  MaxDur=16  CurDur=10.000000 
+New item: type=1  X=12.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=2  X=13.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=3  X=14.000000  Y=1.000000  AC=0  DoDamage=34  MaxDur=13  CurDur=10.000000 
+New item: type=4  X=15.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=5  X=16.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=15  CurDur=13.000000 
+New item: type=6  X=17.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=7  X=18.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=13  CurDur=8.000000 
+New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=16  CurDur=8.000000 
+New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=20  CurDur=12.000000 
+New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=12  CurDur=9.000000 
+New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  MaxDur=18  CurDur=17.000000 
+New item: type=12  X=23.000000  Y=1.000000  AC=0  DoDamage=41  MaxDur=15  CurDur=12.000000 
+New item: type=13  X=24.000000  Y=1.000000  AC=0  DoDamage=86  MaxDur=10  CurDur=8.000000 
+New item: type=14  X=24.000000  Y=2.000000  AC=0  DoDamage=51  MaxDur=13  CurDur=10.000000 
+New item: type=15  X=24.000000  Y=3.000000  AC=0  DoDamage=65  MaxDur=10  CurDur=8.000000 
+New item: type=16  X=24.000000  Y=4.000000  AC=0  DoDamage=48  MaxDur=16  CurDur=14.000000 
+New item: type=17  X=24.000000  Y=5.000000  AC=0  DoDamage=91  MaxDur=19  CurDur=11.000000 
+New item: type=18  X=24.000000  Y=6.000000  AC=25  DoDamage=0  MaxDur=41  CurDur=38.000000 
+New item: type=19  X=24.000000  Y=7.000000  AC=23  DoDamage=0  MaxDur=33  CurDur=24.000000 
+New item: type=20  X=24.000000  Y=8.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=21  X=25.000000  Y=8.000000  AC=0  DoDamage=0  MaxDur=-1  CurDur=1.000000 
+New item: type=22  X=26.000000  Y=8.000000  AC=0  DoDamage=13  MaxDur=14  CurDur=12.000000 
+New item: type=23  X=27.000000  Y=8.000000  AC=0  DoDamage=11  MaxDur=13  CurDur=11.000000 
+New item: type=24  X=28.000000  Y=8.000000  AC=0  DoDamage=113  MaxDur=13  CurDur=12.000000 
+New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  MaxDur=16  CurDur=13.000000 
 End of pure items information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
