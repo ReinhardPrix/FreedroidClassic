@@ -1,13 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all menu functions and their subfunctions for Freedroid
- *	 
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -28,6 +22,13 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all menu functions and their subfunctions for Freedroid
+ *	 
+ *----------------------------------------------------------------------*/
+
 #define _menu_c
 
 #include "system.h"

@@ -1,14 +1,7 @@
 /* 
- *  _Definitions_ of global variables
- * This file should only be included in main.c, and 
- * the variable _declarations_ should be made in global.h under _main_c
  *
- */
-
-/* 
- *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -30,6 +23,13 @@
  *
  */
 
+
+/* 
+ *  _Definitions_ of global variables
+ * This file should only be included in main.c, and 
+ * the variable _declarations_ should be made in global.h under _main_c
+ *
+ */
 
 // this defines our "Userfenster"
 SDL_Rect User_Rect = {0, 0, 0, 0};

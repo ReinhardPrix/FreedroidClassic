@@ -1,14 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all features, movement, fireing, collision and extras of the
- *	influencer are done in here.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -29,6 +22,14 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all features, movement, fireing, collision and extras of the
+ *	influencer are done in here.
+ *
+ *----------------------------------------------------------------------*/
+
 #define _influ_c
 
 #include "system.h"

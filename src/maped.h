@@ -6,8 +6,8 @@
 
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -47,7 +47,30 @@
 #define OK	0
 #define ERR -1
 
+
+
+/* Datei Defines */
+#define LEVELNAME_LEN			8
+#define SHIPNAME_LEN				8
+
+#define MAX_COLORLEN			20
+
 #define EXT		0xff
+
+/* Cursorbewegungen */
+#define CUR_UP				EXT + 72
+#define CUR_DOWN			EXT + 80
+#define CUR_RIGHT			EXT + 77
+#define CUR_LEFT			EXT + 75
+
+#define DELETE				EXT + 83
+#define BACKSPACE			8
+
+#define PAGE_UP			EXT + 73
+#define PAGE_DOWN			EXT + 81
+
+#define HOME				EXT + 71
+#define END					EXT + 79
 
 #define CTRL_UP			EXT + 141
 #define CTRL_DOWN			EXT + 145
@@ -80,7 +103,18 @@
 
 #define EXIT						ESC
 
+
+
+/* Sprunggroesse bei Ctrl-cursor: */
 #define JUMP		5	
+
+
+/* Parameter zum Aussehen */
+
+/* Bildschirm- Groessen */
+#define SCREEN_WIDTH		80
+#define SCREEN_HEIGHT	43
+
 
 #define MENULINE_X	1
 #define MENULINE_Y	49

@@ -1,12 +1,7 @@
 /* 
- * system.h: here we include all system-wide includes
- *           and take into account the AC-defined conditionals
- */
-
-/* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -27,6 +22,12 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* 
+ * system.h: here we include all system-wide includes
+ *           and take into account the AC-defined conditionals
+ */
+
 
 
 /* 

@@ -1,16 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: All map-related functions, which also includes loading of decks 
- * and whole ships, starting the lifts and consoles if close to the 
- * paradroid, refreshes as well as determining the map brick that contains
- * specified coordinates are done in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -31,6 +22,16 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: All map-related functions, which also includes loading of decks 
+ * and whole ships, starting the lifts and consoles if close to the 
+ * paradroid, refreshes as well as determining the map brick that contains
+ * specified coordinates are done in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 #define _map_c
 
 #include "system.h"

@@ -1,18 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all the functions managing the things one gets to see.
- *	That includes assembling of enemys, assembling the currently
- *	relevant porting of the map (the bricks I mean), drawing all visible
- *	elements like bullets, blasts, enemys or influencer in a nonvisible
- *	place in memory at first, and finally drawing them to the visible
- *	screen for the user.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -33,6 +22,18 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all the functions managing the things one gets to see.
+ *	That includes assembling of enemys, assembling the currently
+ *	relevant porting of the map (the bricks I mean), drawing all visible
+ *	elements like bullets, blasts, enemys or influencer in a nonvisible
+ *	place in memory at first, and finally drawing them to the visible
+ *	screen for the user.
+ *
+ *----------------------------------------------------------------------*/
+
 #define _view_c
 
 #include "system.h"

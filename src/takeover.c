@@ -1,14 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: Everything that has to do with the takeover game of Paradroid
- * 	is contained in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -29,6 +22,14 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: Everything that has to do with the takeover game of Paradroid
+ * 	is contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 #define _takeover_c
 
 #include "system.h"

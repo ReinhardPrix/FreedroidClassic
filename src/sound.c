@@ -1,13 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc:  all functions dealing with sound are contained in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -28,6 +22,13 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc:  all functions dealing with sound are contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 #ifndef _sound_c
 #define _sound_c
 #endif

@@ -1,13 +1,7 @@
-/*----------------------------------------------------------------------
- *
- * Desc: the paraplus initialisation routines
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -28,6 +22,13 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: the paraplus initialisation routines
+ *
+ *----------------------------------------------------------------------*/
+
 #define _init_c
 
 #include "system.h"
@@ -496,10 +497,10 @@ timeout (int sig)
   Terminate (0);
 }				/* timeout */
 
-char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
+char copyright[] = "\nCopyright (C) 2003 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
-You may redistribute copies of Freedroid\n\
-under the terms of the GNU General Public License.\n\
+You may redistribute copies of Freedroid under the terms of the\n\
+GNU General Public License.\n\
 For more information about these matters, see the file named COPYING.\n";
 
 

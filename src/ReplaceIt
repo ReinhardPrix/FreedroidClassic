@@ -1,9 +1,0 @@
-
-gawk -f ReplaceIt.awk *.c
-gawk -f ReplaceIt.awk *.h
-rm *.c
-rm *.h
-mmv "*.c.modif" "#1.c"
-mmv "*.h.modif" "#1.h"
-echo "All replacements done and original files modified accordingly..."
-
