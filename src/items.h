@@ -28,6 +28,8 @@
  * screen.
  * ---------------------------------------------------------------------- */
 
+#define INVENTORY_RECT_Y 256
+#define INVENTORY_RECT_X 16
 
 #define UPPER_BANNER_TEXT_RECT_X 160
 #define UPPER_BANNER_TEXT_RECT_Y 1
@@ -53,20 +55,30 @@
 #define RIGHT_WHOLE_FORCE_RECT_X ( SCREENLEN - LEFT_WHOLE_FORCE_RECT_X - WHOLE_FORCE_RECT_W )
 #define FORCE_RECT_COLOR ( 0 * 64 * 64 + 64 * 0 + 63 )
 
+#define WEAPON_RECT_WIDTH 64
+#define WEAPON_RECT_HEIGHT 64
+#define WEAPON_RECT_X 16
+#define WEAPON_RECT_Y 97
+
 #define ARMOUR_RECT_WIDTH 64
 #define ARMOUR_RECT_HEIGHT 64
-#define ARMOUR_POS_X 22
-#define ARMOUR_POS_Y 81
+#define ARMOUR_POS_X 128
+#define ARMOUR_POS_Y 96
 
 #define SHIELD_RECT_WIDTH 64
 #define SHIELD_RECT_HEIGHT 64
 #define SHIELD_POS_X 240
-#define SHIELD_POS_Y 16
+#define SHIELD_POS_Y 97
+
+#define DRIVE_RECT_WIDTH 64
+#define DRIVE_RECT_HEIGHT 64
+#define DRIVE_RECT_X 241
+#define DRIVE_RECT_Y 180
 
 #define SPECIAL_RECT_WIDTH 32
 #define SPECIAL_RECT_HEIGHT 32
-#define SPECIAL_POS_X 93
-#define SPECIAL_POS_Y 29
+#define SPECIAL_POS_X 240
+#define SPECIAL_POS_Y 16
 
 #define AUX1_RECT_WIDTH 32
 #define AUX1_RECT_HEIGHT 32

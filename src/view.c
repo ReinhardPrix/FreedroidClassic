@@ -1102,8 +1102,8 @@ ShowInventoryScreen( void )
   //--------------------
   // Now we display the item in the influencer drive slot
   //
-  TargetRect.x = InventoryRect.x + 240;
-  TargetRect.y = InventoryRect.y + 93;
+  TargetRect.x = InventoryRect.x + DRIVE_RECT_X;
+  TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
   if ( ( ! Me.drive_item.currently_held_in_hand ) && ( Me.drive_item.type != (-1) ) )
     {
       SDL_BlitSurface( ItemImageList[ ItemMap[ Me.drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
@@ -1112,8 +1112,8 @@ ShowInventoryScreen( void )
   //--------------------
   // Now we display the item in the influencer weapon slot
   //
-  TargetRect.x = InventoryRect.x + 20;
-  TargetRect.y = InventoryRect.y + 10;
+  TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
+  TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
   if ( ( ! Me.weapon_item.currently_held_in_hand ) && ( Me.weapon_item.type != (-1) ) )
     {
       SDL_BlitSurface( ItemImageList[ ItemMap[ Me.weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
@@ -1191,15 +1191,15 @@ ShowInventoryScreen( void )
 	{
 	  for ( j = 0 ; j < ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].inv_size.x ; j++ )
 	    {
-	      TargetRect.x = 16 + 32 * ( Me.Inventory[ SlotNum ].inventory_position.x + j );
-	      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * ( Me.Inventory[ SlotNum ].inventory_position.y + i );
+	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me.Inventory[ SlotNum ].inventory_position.x + j );
+	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me.Inventory[ SlotNum ].inventory_position.y + i );
 	    
 	      SDL_BlitSurface( TransparentPlateImage , NULL , Screen , &TargetRect );
 	    }
 	}
 
-      TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
+      TargetRect.x = INVENTORY_RECT_X + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
+      TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
       
       SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
 

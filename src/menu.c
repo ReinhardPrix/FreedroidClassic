@@ -1955,10 +1955,24 @@ enum
   MenuTexts[8]="";
   MenuTexts[9]="";
 
+  //--------------------
+  // Now we add some safety, against 'none present' items
+  //
+  Me.weapon_item.type = ( -1 ) ;
+  Me.drive_item.type = ( -1 ) ;
+  Me.armour_item.type = ( -1 ) ;
+  Me.shield_item.type = ( -1 ) ;
+  Me.aux1_item.type = ( -1 ) ;
+  Me.aux2_item.type = ( -1 ) ;
+  Me.special_item.type = ( -1 ) ;
+
   while (!Weiter)
     {
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
 
+      //--------------------
+      // Now let's see what the user has pressed...
+      //
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -2399,15 +2413,6 @@ Show_Mission_Details ( int MissionNumber )
       printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
       if ( Me.AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me.AllMissions[ MissionNumber ].KillClass] ); 
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
-
-      
-      //      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
-      //LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
-      //LeftPutString ( Screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
-      //LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "So the mission is:");
-      //LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      //LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
-      //LeftPutString ( Screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
       SDL_Flip( Screen );
 
