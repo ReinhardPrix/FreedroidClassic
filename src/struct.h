@@ -237,6 +237,7 @@ typedef struct
   double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
   double item_gun_speed;			/* speed of the bullet */
   int base_item_gun_damage; //	damage done by this bullettype 
+  int item_gun_damage_modifier; // modifier to the damage done by this bullettype 
   int item_gun_blast;			/* which blast does this bullet create */
   int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
   int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
@@ -269,6 +270,7 @@ typedef struct
   int prefix_code;
   int suffix_code;
   int ac_bonus;    // how much is ac increased by this item worn
+  int damage; // how much damage does this item
   float max_duration;     // the maximum item durability reachable for this item
   float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;

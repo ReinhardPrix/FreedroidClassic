@@ -142,7 +142,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   //
   if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
     {
-      sprintf( linebuf , "Damage=%d" , ItemMap[ CurItem->type ].item_gun_damage );
+      sprintf( linebuf , "Damage=%d" , CurItem->damage );
       strcat( ItemDescText , linebuf );
     }
 

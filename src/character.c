@@ -258,7 +258,7 @@ UpdateAllCharacterStats ( void )
   //
   if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
     {
-      Me.Damage = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_damage + 
+      Me.Damage = Druidmap[ DRUID001 ].weapon_item.damage + 
 	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
     }
   else
