@@ -966,18 +966,22 @@ ApplyItem( item* CurItem )
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
       Me [ 0 ] . SkillLevel [ 3 ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
     {
       Me [ 0 ] . SkillLevel [ 1 ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
     {
       Me [ 0 ] . SkillLevel [ 2 ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
     {
       Me [ 0 ] . SkillLevel [ 4 ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
     }
 
   if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
