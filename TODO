@@ -4,7 +4,9 @@ Bugs
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- (rp) stabilise Highscore list..., ..., ....
+- (rp) stabilise Highscore list
+- (rp) improve keyboard-repeat in takeover
+- (rp) fix small mouse-shooting inconsistencies
 
 - (jp) Collision with robo can still kick you out of level..
        jp: --> absolutely not on my machine!!!!!
@@ -31,10 +33,6 @@ Outstanding normal bugs (priority: normal)
        the comments as in the choice of some old variable names, which are from 
        historical origin, long before I started using the internet at all.
 
-- (rp?) The space for droids in the takeover game is a bit scarce.  The bottom tends to
-        get chopped off.  Takeover should be rearranged to display the droids without
-        chopped off parts indepentend of which theme is loaded.
-
 - (rp) missing "takeover announcement" of droid opponent
 
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
@@ -43,8 +41,6 @@ Outstanding normal bugs (priority: normal)
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
 - (jp) some missing "color rotations": bullets, takeover-mode 
-
-- (rp) put some proper Highscore-list
 
 - Walls are too "sticky", would be better playable if one could "slide"
   (jp:)  That has been completely resolved, at least for my machine!!
@@ -244,3 +240,7 @@ Resolved bugs
 
 - (rp) sensitivity in takeover-game too high (single steps difficult)
   (is BETTER NOW)
+
+- (rp?) The space for droids in the takeover game is a bit scarce.  The bottom tends to
+        get chopped off.  Takeover should be rearranged to display the droids without
+        chopped off parts indepentend of which theme is loaded.
