@@ -52,6 +52,7 @@
 
 //#define KON_TEXT_RGB 63,63,63
 #define KON_BG_COLOR		96
+//#define KON_BG_COLOR	FONT_WHITE
 #define KON_TEXT_COLOR	FONT_YELLOW
 
 #define EL_BG_COLOR		EL_STARTCOLOR			/* Hintergrund im Elevator-Bild */
@@ -61,8 +62,11 @@
 #define EL_FIRST_ELEVATOR_COLOR		209
 
 #define WAIT_ELEVATOR		9		/* warte, bevor Lift weitergeht */
-#define MENUITEMPOSX 10
-#define MENUITEMPOSY 85
+// #define MENUITEMPOSX 10
+// #define MENUITEMPOSY 85
+#define MENUITEMPOSX USERFENSTERPOSX
+#define MENUITEMPOSY USERFENSTERPOSY
+
 
 #define MENUTEXT_X	100
 

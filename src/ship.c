@@ -437,9 +437,9 @@ void PaintConsoleMenu(void){
 
   /* Darstellung des oberen Rahmen mit Inhalt */
   //   SetInfoline();
-  //	strcpy(LeftInfo, "Console");
+  // strcpy(LeftInfo, "Console");
   DisplayRahmen(InternalScreen);
-  SetTextColor(RAHMEN_BG_COLOR,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
+  SetTextColor( RAHMEN_BG_COLOR,FONT_RED );  /* BG: Rahmenwei"s FG: FONT_RED */
   SayLeftInfo(LeftInfo,InternalScreen);
   SayRightInfo(RightInfo,InternalScreen);
 	
@@ -478,7 +478,7 @@ void PaintConsoleMenu(void){
    */
   
   DisplayBlock(
-	       MENUITEMPOSX, MENUITEMPOSY + BLOCKHOEHE,
+	       MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE -4 ,
 	       MenuItemPointer,
 	       MENUITEMLENGTH, MENUITEMHEIGHT,
 	       InternalScreen);
@@ -486,7 +486,7 @@ void PaintConsoleMenu(void){
   DebugPrintf("\nvoid PaintConsoleMenu(void): Now the Influence will be drawn to the menu....");
 
   DisplayMergeBlock(
-		    MENUITEMPOSX+15, MENUITEMPOSY,
+		    MENUITEMPOSX+10, MENUITEMPOSY+FONTHOEHE,
 		    Influencepointer + BLOCKMEM * ((int)rintf(Me.phase)),
 		    BLOCKBREITE, BLOCKHOEHE,
 		    InternalScreen);
@@ -519,8 +519,6 @@ void GreatDruidShow(void){
     JoystickControl();
     keyboard_update();
   }
-
-  // PORT KillTastaturPuffer();	// Vorbeugung gegen vorzeigiges Verlassen
 
   SetUserfenster(KON_BG_COLOR, InternalScreen);
   SetTextColor(KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
@@ -555,11 +553,6 @@ void GreatDruidShow(void){
       DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
       ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
 
-      // PORT if (!GameAdapterPresent) while (!kbhit());
- 		   
-      // Eingabe behandeln
-      //PORT JoystickControl();
-
       if (UpPressed()) {
 	Infodroid--;
 	// Einem zu schnellen Weiterbl"attern vorbeugen
@@ -593,8 +586,10 @@ void GreatDruidShow(void){
 	return;
       }
       KillTastaturPuffer();
+      while ( !LeftPressed() && !UpPressed() && !DownPressed() && !RightPressed() && !SpacePressed())
+	JoystickControl();
     }
-    while (LeftPressed() || UpPressed() || DownPressed() || RightPressed())
+    while (LeftPressed() || UpPressed() || DownPressed() || RightPressed() || SpacePressed())
       JoystickControl();
 
     /*
@@ -603,7 +598,16 @@ void GreatDruidShow(void){
      */
     
     ClearUserFenster();
-				
+    strcpy(InfoText,"Unit type ");
+    strcat(InfoText,Druidmap[Infodroid].druidname);
+    strcat(InfoText," - ");
+    strcat(InfoText,Classname[Druidmap[Infodroid].class]);
+      
+    SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
+		  USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
+    DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
+    
     strcpy(InfoText,"Entry : ");
     strcat(InfoText,Entry[Infodroid]);
     strcat(InfoText,"\nClass : ");
@@ -647,6 +651,15 @@ void GreatDruidShow(void){
      */
 
     ClearUserFenster();
+    strcpy(InfoText,"Unit type ");
+    strcat(InfoText,Druidmap[Infodroid].druidname);
+    strcat(InfoText," - ");
+    strcat(InfoText,Classname[Druidmap[Infodroid].class]);
+      
+    SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
+		  USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
+    DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
     
     strcpy(InfoText,"Armamant : ");
     strcat(InfoText,Weaponnames[Armament[Infodroid]]);
@@ -687,6 +700,15 @@ void GreatDruidShow(void){
      */
 	
     ClearUserFenster();
+    strcpy(InfoText,"Unit type ");
+    strcat(InfoText,Druidmap[Infodroid].druidname);
+    strcat(InfoText," - ");
+    strcat(InfoText,Classname[Druidmap[Infodroid].class]);
+      
+    SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
+		  USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
+    DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
     
     strcpy(InfoText,"Notes: ");
     strcat(InfoText,Druidmap[Infodroid].notes);
@@ -945,14 +967,16 @@ int ShipEmpty(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-int NoKeyPressed(void){
-	if (SpacePressed()) return (FALSE);
-	if (LeftPressed()) return (FALSE);
-	if (RightPressed()) return (FALSE);
-	if (UpPressed()) return (FALSE);
-	if (DownPressed()) return (FALSE);
-	return (TRUE);
-}
+int 
+NoKeyPressed(void)
+{
+  if (SpacePressed()) return (FALSE);
+  if (LeftPressed()) return (FALSE);
+  if (RightPressed()) return (FALSE);
+  if (UpPressed()) return (FALSE);
+  if (DownPressed()) return (FALSE);
+  return (TRUE);
+} // int NoKeyPressed(void)
 
 
 /*@Function============================================================
@@ -967,7 +991,8 @@ void ClearUserFenster(void){
   printf("\nvoid ClearUserFenster(void): Real function called.");
 
   for (i=USERFENSTERPOSY;i<(USERFENSTERPOSY+USERFENSTERHOEHE);i++){
-    memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
+    gl_hline(USERFENSTERPOSX,i,USERFENSTERPOSX+USERFENSTERBREITE,KON_BG_COLOR);
+    // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
   }
 
   printf("\nvoid ClearUserFenster(void): End of function reached.");
