@@ -1,3 +1,9 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: Everything that has to do with the takeover game of Paradroid
+ * 	is contained in this file.
+ *
+ *----------------------------------------------------------------------*/
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -23,12 +29,6 @@
  *
  */
 
-/*----------------------------------------------------------------------
- *
- * Desc: Everything that has to do with the takeover game of Paradroid
- * 	is contained in this file.
- *
- *----------------------------------------------------------------------*/
 #include <config.h>
 
 #define _takeover_c
@@ -200,7 +200,7 @@ Takeover (int enemynum)
   while( !FinishTakeover ) {
 	
     /* Userfenster faerben */
-    SetUserfenster(TO_BG_COLOR, RealScreen);
+    //    SetUserfenster(TO_BG_COLOR, RealScreen);
 	
     /* Init Color-column and Capsule-Number for each opponenet and your color */
     for( row=0; row<NUM_LINES; row++) {
@@ -515,72 +515,71 @@ void RollToColors(void)
     rotate_waiter = WAIT_COLOR_ROTATION;
   }
   printf("\nvoid RollToColors(void): Funktionsende ordnungsgemaess erreicht....");	
-} // void RollToColors(void) 
+} 
 
-/*@Function============================================================
-@Desc: void EnemyMovements():		animiert Gegner beim Uebernehm-Spiel
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void  
-EnemyMovements(void)
+/*-----------------------------------------------------------------
+ * @Desc: animiert Gegner beim Uebernehm-Spiel
+ * 
+ * @Ret: void
+ * @Int:
+ *-----------------------------------------------------------------*/
+void
+EnemyMovements (void)
 {
   static int Actions = 3;
   static int MoveProbability = 100;
   static int TurnProbability = 10;
   static int SetProbability = 80;
-  
+
   int action;
   static int direction=1;		/* start with this direction */
   int row = CapsuleCurRow[OpponentColor] -1;
-  
+
   if( NumCapsules[ENEMY] == 0 ) return;
-  
+	
+	
   action = MyRandom(Actions);
-  switch(action) {
-    
-  case 0:	/* Move along */
-    if( MyRandom(100) <= MoveProbability ) {
-      row += direction;
-      if( row > NUM_LINES-1 ) row = 0;
-      if( row < 0 ) row = NUM_LINES-1;
-    }
-    break;
-    
-  case 1: /* Turn around */
-    if( MyRandom(100) <= TurnProbability ) {
-      direction *= -1;
-    }
-    break;
-    
-  case 2:	/* Try to set  capsule */
-    if( MyRandom(100) <= SetProbability ) {
-      if( (row >= 0) &&
-	  (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
-	  (ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET) ) {
-	
-	NumCapsules[ENEMY] --;
-	ToPlayground[OpponentColor][0][row] = VERSTAERKER;
-	ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
-	CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
-	row = -1;	/* For the next capsule: startpos */
-	Takeover_Set_Capsule_Sound();
-	
-      } /* if */
-    } /* if MyRandom */
-    
-    break;
-    
-  default:
-    break;
-    
-  } /* switch action */
-  
+  switch(action) 
+    {
+    case 0:	/* Move along */
+      if( MyRandom(100) <= MoveProbability ) {
+	row += direction;
+	if( row > NUM_LINES-1 ) row = 0;
+	if( row < 0 ) row = NUM_LINES-1;
+      }
+      break;
+
+    case 1: /* Turn around */
+      if( MyRandom(100) <= TurnProbability ) {
+	direction *= -1;
+      }
+      break;
+
+    case 2:	/* Try to set  capsule */
+      if( MyRandom(100) <= SetProbability ) {
+	if( (row >= 0) &&
+	    (ToPlayground[OpponentColor][0][row] != KABELENDE) &&
+	    (ToPlayground[OpponentColor][0][row] < ACTIVE_OFFSET) ) {
+	  
+	  NumCapsules[ENEMY] --;
+	  ToPlayground[OpponentColor][0][row] = VERSTAERKER;
+	  ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
+	  CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
+	  row = -1;	/* For the next capsule: startpos */
+	  Takeover_Set_Capsule_Sound();
+	} /* if */
+      } /* if MyRandom */
+
+      break;
+
+    default:
+      break;
+      
+    } /* switch action */
+
   CapsuleCurRow[OpponentColor] = row+1;
-  
+
   return;
-  
 } /* EnemyMovements */
 
 /*@Function============================================================
@@ -701,18 +700,11 @@ ShowPlayground (void)
   static unsigned char *WorkBlock = NULL;
 
   printf("\nvoid ShowPlayground(void): Funktion echt aufgerufen.");
-	
 
   if (WorkBlock == NULL) WorkBlock = MyMalloc(BLOCKMEM+10);
-
 	
   UpdateInfoline();
 
-  /* Display the Playground */
-  /*  DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ToPlaygroundBlock,
-		USERFENSTERBREITE, USERFENSTERHOEHE, RealScreen);
-  */
-  /* Linke Saeule */
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
   cury = USERFENSTERPOSY + LEFT_OFFS_Y;
 				
@@ -725,23 +717,23 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[GELB].x;
   caps_y = CurCapsuleStart[GELB].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,	GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,	GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
  	
   cury += GROUNDBLOCKHEIGHT;
   tmp = ToGroundBlocks + GELB_MITTE*GROUNDBLOCKMEM;
   for (i=0; i<12 ; i++, cury += GROUNDBLOCKHEIGHT) 
     {
-      DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+      DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
       if ( (caps_row == i) || (i==11 && caps_row == 12) )
 	{
-	  DisplayBlock (caps_x, caps_y,
+	  DisplayMergeBlock (caps_x, caps_y,
 			CapsuleBlocks,
 			CAPSULE_LEN, CAPSULE_HEIGHT,
 			RealScreen);
 	} /* if */
     } /* for i=1 to 12 */
 
-  DisplayBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Mittlere Saeule */
   curx = USERFENSTERPOSX + MID_OFFS_X;
@@ -768,37 +760,37 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[VIOLETT].x;
   caps_y = CurCapsuleStart[VIOLETT].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 							
   cury += GROUNDBLOCKHEIGHT;
 	
   tmp = ToGroundBlocks+VIOLETT_MITTE*GROUNDBLOCKMEM;
   for( i=0; i<12; i++, cury += GROUNDBLOCKHEIGHT ) {
-    DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+    DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
     if( (caps_row == i) || (i==11 && caps_row == 12) ) 	
-      DisplayBlock(caps_x, caps_y,
+      DisplayMergeBlock(caps_x, caps_y,
 		   CapsuleBlocks + CAPSULE_MEM,
 		   CAPSULE_LEN, CAPSULE_HEIGHT,
 		   RealScreen);
   } /* for */
   
-  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Fill the Leader-LED with its color */
-  DisplayBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
+  DisplayMergeBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
 		FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 		
-  DisplayBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  DisplayMergeBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   
   /* Fill the Display Column with its colors */
   for( i=0; i<NUM_LINES; i++) 			
-    DisplayBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+    DisplayMergeBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   /* Show the yellow playground */
   for( i=0; i<NUM_LAYERS-1; i++ )
     for( j=0; j<NUM_LINES; j++ ) {
-      DisplayBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
+      DisplayMergeBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
     }
 
   /* Show the violett playground */
@@ -807,7 +799,7 @@ ShowPlayground (void)
   for( i=0; i<NUM_LAYERS-1; i++, curx -= TO_BLOCKLEN ) {
     cury = PlaygroundStart[VIOLETT].y;		
     for( j=0; j<NUM_LINES; j++, cury += TO_BLOCKHEIGHT ) {
-      DisplayBlock(curx, cury, 
+      DisplayMergeBlock(curx, cury, 
 		   ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
 		   TO_BLOCKLEN, TO_BLOCKHEIGHT,
 		   RealScreen);
@@ -823,14 +815,14 @@ ShowPlayground (void)
     
     for( i=0; i<MAX_CAPSULES; i++ ) {
       if( i < NumCapsules[opponent]-1 )
-	DisplayBlock(
+	DisplayMergeBlock(
 		     LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks+ color*CAPSULE_MEM,
 		     CAPSULE_LEN, CAPSULE_HEIGHT,
 		     RealScreen);
       else
-	DisplayBlock(
+	DisplayMergeBlock(
 		     LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks + TO_COLORS*CAPSULE_MEM,
@@ -856,14 +848,14 @@ ShowPlayground (void)
     RightDruid = Influencepointer;
   }
 
-  /* Show Druid - pictures, but not transparently !! */
+  /* Show Druid - pictures */
   
-  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
+  /*  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM); */
   
   if( LeftDruid != NULL )
     CopyMergeBlock(WorkBlock, LeftDruid, BLOCKMEM);
 		
-  DisplayBlock(
+  DisplayMergeBlock(
 	       DruidStart[GELB].x, DruidStart[GELB].y ,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
@@ -874,7 +866,7 @@ ShowPlayground (void)
   if( RightDruid != NULL )
     CopyMergeBlock(WorkBlock, RightDruid, BLOCKMEM);
 		
-  DisplayBlock(
+  DisplayMergeBlock(
 	       DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
