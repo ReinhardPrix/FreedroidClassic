@@ -55,6 +55,7 @@ void FlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
+void PutRadialBlueSparks( float PosX, float PosY , float Radius );
 
 char *Affected;
 EXTERN int MyCursorX;
@@ -395,6 +396,20 @@ ShowItemAlarm( void )
 
 }; // void ShowItemAlarm( void )
 
+/* ----------------------------------------------------------------------
+ * Now it's time to blit all the spell effects.
+ * ---------------------------------------------------------------------- */
+void
+PutMiscellaneousSpellEffects ( void )
+{
+  long Ticks;
+
+  Ticks = SDL_GetTicks ( );
+
+  PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
+
+}; // void PutMiscellaneousSpellEffects ( void )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -541,13 +556,15 @@ AssembleCombatPicture (int mask)
   if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
       //--------------------
-      // At this point we know that now only the map is to be drawn.
+      // At this point we know that now NOT ONLY the map is to be drawn.
       // so we start drawing the rest of the INTERIOR of the combat window:
       
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
 	  PutItem( i );
 	}
+
+      PutMiscellaneousSpellEffects ( );
       
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	PutEnemy (i , -1 , -1 );
@@ -555,7 +572,7 @@ AssembleCombatPicture (int mask)
       PutMouseMoveCursor ( );
 
       //--------------------
-      // Now we blit all the player tuxes...
+      // Now we blit all the player Tuxes...
       //
       for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
 	{
@@ -1434,6 +1451,94 @@ PutItem( int ItemNumber )
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
 
   SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
+
+}; // void PutItem( int ItemNumber );
+
+/* ----------------------------------------------------------------------
+ * This function draws an item into the combat window.
+ * The only given parameter is the number of the item within
+ * the AllItems array.
+ * ---------------------------------------------------------------------- */
+void
+PutRadialBlueSparks( float PosX, float PosY , float Radius )
+{
+  SDL_Rect TargetRectangle;
+  static SDL_Surface* SparkPrototypeSurface=NULL;
+  SDL_Surface* tmp_surf;
+  char* fpath;
+  int NumberOfPicturesToUse;
+  int i;
+  float Angle;
+  moderately_finepoint Displacement;
+
+  //--------------------
+  // We do some sanity check against too small a radius
+  // given as parameter.  This can be loosened later.
+  //
+  if ( Radius <= 1.0 ) return;
+
+  //--------------------
+  // Now if we do not yet have all the prototype images in memory,
+  // we need to load them now and for once...
+  //
+  if ( SparkPrototypeSurface == NULL )
+    {
+      fpath = find_file ( "blue_sparks_0.png" , GRAPHICS_DIR, FALSE );
+
+      tmp_surf = IMG_Load( fpath );
+      if ( tmp_surf == NULL )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid wanted to load a certain image file into memory, but the SDL\n\
+function used for this did non succeed.\n\
+\n\
+There file name used as parameter was: %s.\n\
+\n\
+This indicates that there is a file missing in your Freedroid RPG installation.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem\n\
+it could not resolve.\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	  Terminate(ERR);
+	}
+      // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
+
+      SparkPrototypeSurface = SDL_DisplayFormatAlpha ( tmp_surf );
+
+      SDL_FreeSurface( tmp_surf );
+    }
+
+  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface -> w;
+  NumberOfPicturesToUse += 3 ; // we want some overlap
+
+  //--------------------
+  // Now we blit all the pictures we like to use...in this case using
+  // multiple dynamic rotations (oh god!)...
+  //
+  for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
+    {
+      Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
+      
+      Displacement . x = 0 ; Displacement . y = - Radius * Block_Height ;
+
+      RotateVectorByAngle ( &Displacement , Angle );
+
+      tmp_surf = 
+	rotozoomSurface( SparkPrototypeSurface , Angle , 1.0 , FALSE );
+
+      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( (tmp_surf -> w) / 2 );
+      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( (tmp_surf -> h) / 2 );
+      
+      SDL_BlitSurface( tmp_surf , NULL , Screen , &TargetRectangle);
+
+      SDL_FreeSurface ( tmp_surf );
+    }
+
+  // DebugPrintf ( 0 , "\nSparks drawn!! " );
 
 }; // void PutItem( int ItemNumber );
 
