@@ -1075,6 +1075,8 @@ Level_Editor(void)
   int Done=FALSE;
   int Weiter=FALSE;
   int MenuPosition=1;
+  int i,j,k;
+  finepoint TargetCandidate;
 
   enum
     { SAVE_LEVEL_POSITION=1, SET_LEVEL_NAME_POSITION=2, BACK_TO_LEVEL_EDITING=3, QUIT_LEVEL_EDITOR_POSITION=4 };
@@ -1118,8 +1120,86 @@ Level_Editor(void)
 	      Me.pos.y+=1;
 	      while (DownPressed());
 	    }
-	  
-	  // If the level editor pressed some editing keys, insert the
+
+	  // If the person using the level editor pressed w, the waypoint is
+	  // toggled on the current square.  That means either removed or added.
+	  // And in case of removal, also the connections must be removed.
+	  if (WPressed())
+	    {
+	      // find out if there is a waypoint on the current square
+	      for (i=0 ; i < MAXWAYPOINTS ; i++)
+		{
+		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+		}
+	      
+	      // if its waypoint already, this waypoint must be deleted.
+	      if ( i != MAXWAYPOINTS )
+		{
+		  // Eliminate the waypoint itself
+		  CurLevel->AllWaypoints[i].x = 0;
+		  CurLevel->AllWaypoints[i].y = 0;
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+
+		  
+		  // Eliminate all connections pointing to this waypoint
+		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
+		    {
+		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+			if ( CurLevel->AllWaypoints[j].connections[k] == i )
+			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
+		    }
+		}
+	      else // if its not a waypoint already, it must be made into one
+		{
+		  // seek a free position
+		  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+		    {
+		      if ( CurLevel->AllWaypoints[i].x == 0 ) break;
+		    }
+		  if ( i == MAXWAYPOINTS )
+		    {
+		      printf("\n\nSorry, no free waypoint available.  Using the first one.");
+		      i = 0;
+		    }
+
+		  // Now make the new entry into the waypoint list
+		  CurLevel->AllWaypoints[i].x = BlockX;
+		  CurLevel->AllWaypoints[i].y = BlockY;
+
+		  // delete all old connection information from the new waypoint
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+
+		  /*
+		  // add standard connections to visible other waypoints
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+		    {
+		      for ( j = 0 ; j < MAXWAYPOINTS ; j++ )
+			{
+			  if ( j==i ) continue; // a connection to yourself is not wanted
+
+			  TargetCandidate.x=CurLevel->AllWaypoints[j].x;
+			  TargetCandidate.y=CurLevel->AllWaypoints[j].y;
+			  if ( IsVisible( & TargetCandidate ) )
+			    {
+			      CurLevel->AllWaypoints[i].connections[k] = j;
+			      break;
+			    }
+			}
+		    }
+		  */
+
+
+		}
+
+	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
+
+	      while ( WPressed() );
+	    }
+
+	  // If the person using the level editor pressed some editing keys, insert the
 	  // corresponding map tile.  This is done here:
 	  if (KP1Pressed()) 
 	    {

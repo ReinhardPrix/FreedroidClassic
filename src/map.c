@@ -1600,7 +1600,7 @@ IsPassable (float x, float y, int Checkpos)
 
 /*@Function============================================================
 @Desc: 	IsVisible(): determines wether object on x/y is visible to
-						the 001 or not
+	the 001 or not
 @Ret: TRUE/FALSE
 @Int:
 * $Function----------------------------------------------------------*/
