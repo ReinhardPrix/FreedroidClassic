@@ -1639,6 +1639,14 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
   float EnhancementFactor;
 
   //--------------------
+  // First some sanity checks.. one can never now...
+  //
+  if ( Area.x < 0 ) Area.x = 0;
+  if ( Area.x + Area.w >= Surface->w ) Area.w = Surface->w - Area.x - 1;
+  if ( Area.y < 0 ) Area.y = 0;
+  if ( Area.y + Area.h >= Surface->h ) Area.h = Surface->h - Area.y - 1;
+
+  //--------------------
   // Now we start to process through the whole surface and examine each
   // pixel.
   //

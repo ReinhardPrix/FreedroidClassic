@@ -359,6 +359,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int MenuPosY[20] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
       90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
   SDL_Rect Choice_Window;
+  SDL_Rect HighlightRect;
 
   //--------------------
   // This is the old (before Bastians redesign) choice window:
@@ -422,7 +423,13 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       // We highlight the currently selected option with an 
       // influencer to the left and right of it.
       //
-      PutInfluence( MenuPosX[ MenuPosition -1 ] , MenuPosY[ MenuPosition -1 ] + (h/2) , 0 );
+      // PutInfluence( MenuPosX[ MenuPosition -1 ] , MenuPosY[ MenuPosition -1 ] + (h/2) , 0 );
+      //
+      HighlightRect.x = MenuPosX[ MenuPosition -1 ] - 0 * h ;
+      HighlightRect.y = MenuPosY[ MenuPosition -1 ] ;
+      HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 0 * h ;
+      HighlightRect.h = h;		    
+      HighlightRectangle ( Screen , HighlightRect );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{
