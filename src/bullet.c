@@ -115,7 +115,7 @@ DeleteBullet (int Bulletnumber)
   // if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
   if ( CurBullet->Surfaces_were_generated ) 
     {
-      DebugPrintf( 0 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
+      DebugPrintf( 1 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
       for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
 	{
 	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );

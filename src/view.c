@@ -683,7 +683,7 @@ PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
-  SDL_Surface *tmp;
+  // SDL_Surface *tmp;
   int PhaseOfBullet;
   int i;
 
@@ -744,7 +744,7 @@ PutBullet (int BulletNummer)
 	  CurBullet->SurfacePointer[i] = 
 	    rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle , 1.0 , FALSE );
 	}
-      DebugPrintf( 0 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
+      DebugPrintf( 1 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
       CurBullet->Surfaces_were_generated=TRUE;
     }
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
@@ -754,7 +754,7 @@ PutBullet (int BulletNummer)
   SDL_FreeSurface( tmp );
 #endif
 
-  DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
+  DebugPrintf ( 1 , "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
 }; // void PutBullet (int Bulletnumber )
 
