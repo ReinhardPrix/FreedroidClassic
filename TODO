@@ -19,6 +19,11 @@ Preparing "final" release 1.0.0:
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
 - decrease CPU usage in menu and maybe console(?)
+  (done in menus)
+
+- implement the 'Alert' feature of the original version
+
+- add "white noise" sound to the ThouArtDefeated() ceremony
 
 - acoustic "countdown" in takeover game might be useful!
   --> implemented now, but need better sounds and allow
@@ -29,7 +34,7 @@ Outstanding release-critical bugs (priority: high)
 - force "release key" instead of waiting for it
   (is it worth it?)
 
--  Collision with robo can still kick you out of level.. ??
+- Collision with robo can still kick you out of level.. ??
    --> (rp) check on slow machine if this is still an issue...
            
 Outstanding normal bugs (priority: normal)
