@@ -1,7 +1,7 @@
 Welcome to
 
-   F R E E D R O I D :  README
-   ---------------------------------
+    FREEDROID :  R E A D M E
+   --------------------------
 
 A Linux game by Johannes Prix and Reinhard Prix, inpired by 
 Andrew Braybrook's classic Paradroid on the good old Commodore C64.
@@ -10,11 +10,6 @@ Introduction
 ============
 This is a nice clone of the classic game "Paradroid" on Commodore 64
 with some improvements and extensions to the classic version.
-
-Getting started
-===============
-Just 'cd' to the directory 'freeparadroidplus' and type 'para'.
-If that doesn't help, read the file TROUBLESHOOTING. 
 
 The Game
 ========
@@ -27,7 +22,6 @@ by creating connections in a short subgame of electric circuits.
 
 Input Devices
 =============
-
 Currently, the only way to control the white robot is via keyboard, using
 the cursor keys and the space key.  Cursors are for moving aroung and aiming.
 Space bar is for fireing (with direction) or for changing to transfer mode,
@@ -36,10 +30,10 @@ a prerequisite for seizing control over an enemy druid.
 The Level Editor
 ================
 There was a level editor with the MS-DOS Version of this game, which we
-programmed back in 1992-1994, but it has not been ported to Linux and there
-are some minor modifications in map encoding.  It might well happen, that 
-from some point on this editor will be supplied too with the package, but
-then on the other hand maybe not.
+programmed back in 1992-1994.  For the Linux version there is a level editor
+integrated into the game.  You can access it via the menu.  You can also
+save the levels you have created, although the saved levels are currently
+damaged, sorry.
 
 Saving
 ======
@@ -49,11 +43,8 @@ havn't designed another ship yet...
 
 Contact
 =======
-In case of problems, read the documentation as good a possible, and if that
-doesn't help, mail to johannes.prix@kfunigraz.ac.at, that's me.  And I usually
-reply rather promptly.
+In case of problems, read the documentation or mail to johannes.prix@kfunigraz.ac.at, 
+that's me.  And I usually reply rather promptly.
 
-And Now Have Fun!
-=================
-
-
+And Now Have Fun with Freedroid!
+================================
