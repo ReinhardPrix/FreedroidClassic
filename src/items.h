@@ -106,5 +106,5 @@
 
 #define AUX2_RECT_WIDTH 64
 #define AUX2_RECT_HEIGHT 64
-#define AUX2_POS_X 16
-#define AUX2_POS_Y 180
+#define AUX2_POS_X 47
+#define AUX2_POS_Y 210
