@@ -525,7 +525,7 @@ ShowCombatScreenTexts ( int mask )
     {
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me[0].pos.x) , (int) rintf(Me[0].pos.y) , DisplayLevel->levelnum );
+		       "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
     }
 
   if ( Me[0].AllMissions[0].MustLiveTime != (-1) )

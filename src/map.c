@@ -852,6 +852,42 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	      //--------------------
+	      // Now we add the old blocks and make them into some obstacles, some
+	      // classical columns mostly I think this will be....
+	      // ... unless of course .b makes something out of them :)
+	      //
+	    case BLOCK1:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BLOCK2:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BLOCK3:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_3 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BLOCK4:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_4 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+	    case BLOCK5:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	      break;
+
 	    default:
 	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{
