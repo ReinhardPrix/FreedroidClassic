@@ -485,7 +485,7 @@ Get_Robot_Data ( void* DataPointer )
     }
   
 
-  printf("\n\nThat must have been the last robot.  We're reading the robot data.");
+  printf("\n\nThat must have been the last robot.  We're done reading the robot data.");
   printf("\n\nApplying the calibration factors to all droids...");
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
@@ -499,7 +499,7 @@ Get_Robot_Data ( void* DataPointer )
     }
 
 
-} // int Init_Game_Data ( void )
+} // int Get_Robot_Data ( void )
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -1061,6 +1061,8 @@ InitFreedroid (void)
   
   Init_Joy ();
 
+  Init_Game_Data( MAP_DIR "game.dat" );  // load the default ruleset. This can be overwritten from the mission file.
+
   // The default should be, that no rescaling of the
   // combat window at all is done.
   CurrentCombatScaleFactor = 1;
@@ -1143,8 +1145,8 @@ Title ( char *MissionBriefingPointer )
 
   PrepareScaledSurface(TRUE);
 
-  while (!SpacePressed ());
-  while (SpacePressed());
+  // while (!SpacePressed ());
+  // while (SpacePressed());
 
   Me.status=BRIEFING;
 

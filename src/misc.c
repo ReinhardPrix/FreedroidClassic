@@ -704,7 +704,7 @@ PutMessages (void)
 	{
 	  DebugPrintf
 	    ("\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
-	  getchar ();
+	  Terminate(ERR);
 	}
       printf ("%d. '%s' %d\n", i, LQueue->MessageText,
 	      LQueue->MessageCreated);
@@ -812,7 +812,6 @@ CreateMessageBar (char *MText)
     {
       DebugPrintf
 	("\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
-      getchar ();
       Terminate (ERR);
     }
 
@@ -822,7 +821,6 @@ CreateMessageBar (char *MText)
       {
 	DebugPrintf
 	  ("\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
-	getchar ();
 	Terminate (ERR);
       }
 

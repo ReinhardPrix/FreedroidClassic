@@ -81,7 +81,8 @@ main (int argc, char *const argv[])
   while (!QuitProgram)
     {
 
-      InitNewMission ( STANDARD_MISSION );
+      MissionSelectMenu ( );
+      // InitNewMission ( STANDARD_MISSION );
       // InitNewMission ( NEW_MISSION );
 
       GameOver = FALSE;

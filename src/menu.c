@@ -350,6 +350,122 @@ Cheatmenu (void)
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
+MissionSelectMenu (void)
+{
+#define FIRST_MIS_SELECT_ITEM_POS_X (1.5*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+enum
+  { 
+    CLASSIC_PARADROID_MISSION_POSITION=1, 
+    NEW_MISSION_POSITION
+  };
+
+  int Weiter = 0;
+  int MenuPosition=1;
+
+
+  Me.status=MENU;
+
+  DebugPrintf("\nvoid MissionSelectMenu(void): real function call confirmed."); 
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  SetCurrentFont( Para_BFont );
+  
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+
+      // InitiateMenu();
+      
+      DisplayImage ( NE_TITLE_PIC_FILE );
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      SetCurrentFont ( Menu_BFont );
+      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classical Paradroid");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "New Episode");
+
+      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+
+	    case CLASSIC_PARADROID_MISSION_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      InitNewMission ( STANDARD_MISSION );
+	      // New_Game_Requested=FALSE;
+	      // Single_Player_Menu();
+	      Weiter = TRUE;   
+	      break;
+	    case NEW_MISSION_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      InitNewMission ( NEW_MISSION );
+	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < NEW_MISSION_POSITION ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+
+  ClearGraphMem();
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  BannerIsDestroyed=TRUE;
+  Me.status=MOBILE;
+
+  return;
+
+} // MissionSelectMenu
+
+/*@Function============================================================
+@Desc: This function provides a the big escape menu from where you can
+       get into different submenus.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
 EscapeMenu (void)
 {
 #define FIRST_MENU_ITEM_POS_X (2*Block_Width)
