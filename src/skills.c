@@ -581,7 +581,14 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    if ( AllEnemys [ index_of_droid_below_mouse_cursor ] . is_friendly )
 		ChatWithFriendlyDroid( & ( AllEnemys [ index_of_droid_below_mouse_cursor ] ) );
 	    else
-		Takeover ( index_of_droid_below_mouse_cursor ) ;
+	    {
+		//--------------------
+		// Only droids can be hacked.  Humans can't be 
+		// hacked.
+		//
+		if ( ! ( Druidmap [ AllEnemys [ index_of_droid_below_mouse_cursor ] . type ] . is_human ) )
+		    Takeover ( index_of_droid_below_mouse_cursor ) ;
+	    }
 	    break;
 	case SPELL_LOOT_CHEST_OR_DEAD_BODY:
 	    //--------------------

@@ -3978,9 +3978,22 @@ handle_player_talk_command ( int player_num )
 	//
 	if ( ! this_enemy -> is_friendly )
 	{
-	    sprintf ( game_message_text , "You try to hack %s." , Druidmap [ this_enemy -> type ] . druidname );
-	    append_new_game_message ( game_message_text );
-	    Takeover ( our_enemy_index );
+	    if ( ! ( Druidmap [ this_enemy -> type ] . is_human ) )
+	    {
+		sprintf ( game_message_text , "You try to hack %s." , Druidmap [ this_enemy -> type ] . druidname );
+		append_new_game_message ( game_message_text );
+		Takeover ( our_enemy_index );
+	    }
+	    else
+	    {
+		//--------------------
+		// Maybe some message, that the angry human will not
+		// listen to you or something, including disabling global
+		// talk mode (to avoid message repetition)?
+		//
+		// ...
+		//
+	    }
 	    return;
 	}
 
