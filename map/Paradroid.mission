@@ -83,42 +83,6 @@ Possible Start Point : Level=5 XPos=3 YPos=1
 Possible Start Point : Level=6 XPos=2 YPos=1
 Possible Start Point : Level=7 XPos=2 YPos=1
 
-
-*** Begin of Mission Target ***
-
-+++
-+++ Now we define the mission target
-+++ For the classical paradroid mission, this target is defined as
-+++ to eliminate all other droids.  Thats rather simple.
-+++
-Mission target is to kill all droids : 1
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : -1
-Mission target is to become class : -1
-Mission target is to become type : -1
-Mission target is to overtake a droid with marker : -1
-Mission target is to reach level : -1
-Mission target is to reach X-Pos : -1
-Mission target is to reach Y-Pos : -1
-Mission target is to live for how many seconds : -1
-
-*** End of Mission Target ***
-
-----------------------------------------------------------------------
-
-** Start of Mission Event Section **
-
-For the classical paradroid mission, we do not need any real events,
-and so, I've planted none.
-NOTE:  DO NOT REMOVE THE WHOLE EVENT SECTION! Freedroid does check for
-the existance of this section.  If may contain 0 triggers and 0 actions,
-but the section itself must be present.
-
-** End of Mission Event Section **
-
-----------------------------------------------------------------------
-
-
 ** Start of Mission Briefing Text Section **
 
 The title picture in the graphics subdirectory for this mission is : title.jpg

@@ -57,8 +57,7 @@ Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
 Amount of damage done by contact to a blast per second of time=45.0
 
-'Radius' of droids in x direction=0.3
-'Radius' of droids in y direction=0.3
+Droid radius: 0.3
 
 Time for the doors to move by one subphase of their movement=0.05
 
