@@ -257,7 +257,7 @@ Minimum number of Random Droids=4
 Allowed Type of Random Droid for this level: 821
 
 SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis -- Researcher " attack_run_only_when_direct_line="no"
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard" attack_run_only_when_direct_line="no"
+Sp**ecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard" attack_run_only_when_direct_line="no"
 SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DarwinStartGameSquare" RushTux="no" DialogSectionToUse="Darwin" ShortLabel="Darwin -- Hunter" attack_run_only_when_direct_line="no"
 SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MelfisStartGameSquare" RushTux="no" DialogSectionToUse="Melfis" ShortLabel="Melfis -- Hunting Apprentice" attack_run_only_when_direct_line="no"
 
