@@ -108,7 +108,6 @@ EXTERN void PutBullet (int);
 EXTERN void PutItem (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
-EXTERN void SetUserfenster (int color );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 
 
@@ -153,7 +152,6 @@ EXTERN void Init_Video (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
-EXTERN void Flimmern (int type);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
@@ -459,6 +457,7 @@ EXTERN void AnimateCurrents (void);
 
 EXTERN void ClearPlayground (void);
 EXTERN int IsActive (int color, int row);
+EXTERN void ShowOpponent (void);
 
 #undef EXTERN
 #ifdef _highscore_c

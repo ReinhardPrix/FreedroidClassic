@@ -50,7 +50,7 @@
 
 #include "SDL_rotozoom.h"
 
-void FlashWindow (int Flashcolor);
+void FlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
@@ -58,6 +58,9 @@ int Cent (int);
 char *Affected;
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
+
+SDL_Color flashcolor1 = {100, 100, 100};
+SDL_Color flashcolor2 = {0, 0, 0};
 
 //
 // POSSIBLY OUTDATED AND UNUSED FUNCTION
@@ -812,7 +815,6 @@ PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
-  // SDL_Surface *tmp;
   int PhaseOfBullet;
   int i;
 
@@ -830,12 +832,12 @@ PutBullet (int BulletNummer)
       // deletion after some time is done in CheckBulletCollisions.)
       if ( (CurBullet->time_in_frames % 2) == 1)
 	{
-	  FlashWindow (0);
+	  FlashWindow (flashcolor1);
 	  return;
 	}
       if ( (CurBullet->time_in_frames % 2) == 0)
 	{
-	  FlashWindow (0x0FFFFFFFF);
+	  FlashWindow (flashcolor2);
 	  return;
 	}
     } // if type == FLASH
@@ -947,27 +949,11 @@ PutBlast (int BlastNummer)
  * the only parameter to the function.
  * ---------------------------------------------------------------------- */
 void
-FlashWindow (int Flashcolor)
+FlashWindow (SDL_Color Flashcolor)
 {
-  SetUserfenster( Flashcolor );
+  Fill_Rect( User_Rect, Flashcolor);
 }; // void FlashWindow(int Flashcolor)
 
-/* ----------------------------------------------------------------------
- * This function fills the whole combat window with the one color
- * given as the only parameter to the function.  For this purpose
- * a fast SDL basic function is used.
- * ---------------------------------------------------------------------- */
-void
-SetUserfenster (int color)
-{
-  SDL_Rect tmp;
-
-  Set_Rect (tmp, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
-
-  SDL_FillRect( ne_screen , &tmp, color );
-
-  return;
-}; // void SetUserFenster( int color ) 
 
 /* -----------------------------------------------------------------
  * Fill given rectangle with given RBG color

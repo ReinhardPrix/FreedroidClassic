@@ -156,11 +156,11 @@ Takeover (int enemynum)
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
-  Fill_Rect (User_Rect, to_bg_color);
+  //  Fill_Rect (User_Rect, to_bg_color);
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
-  //  SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,Mobilecolor.blau);
+  ShowOpponent();
 
   while (!FinishTakeover)
     {
@@ -1258,5 +1258,16 @@ AnimateCurrents (void)
   return;
 }
 
+/*-----------------------------------------------------------------
+ *
+ * "Takeover announcement": show the opponent's picture and some stats
+ *
+ *-----------------------------------------------------------------*/
+void
+ShowOpponent (void)
+{
+
+  return;
+}
 
 #undef _takeover_c
