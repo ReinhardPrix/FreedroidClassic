@@ -90,9 +90,11 @@ SDL_Rect SkillScreenRect;
 void
 CreateTeleportal ( gps PortalTarget )
 {
-  if ( Me [ 0 ] . mana >= 3 )
+  int SpellCost = ManaCostTable [ 4 ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= 3;
+      Me[0].mana -= SpellCost;
 
       if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] == FLOOR )
 	{
@@ -112,9 +114,11 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-  if ( Me [ 0 ] . mana >= 3 )
+  int SpellCost = ManaCostTable [ 4 ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= 3;
+      Me[0].mana -= SpellCost;
 
       Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
       Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
@@ -136,9 +140,11 @@ TeleportHome ( void )
 void
 ForceExplosionCircle ( gps ExpCenter )
 {
-  if ( Me[0].mana >= 3 )
+  int SpellCost = ManaCostTable [ 1 ][ Me[ 0 ].SkillLevel [ 1 ] ] ;
+
+  if ( Me[0].mana >= SpellCost )
     {
-      Me[0].mana -= 3;
+      Me[0].mana -= SpellCost;
       StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
       StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
       StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST );
@@ -164,10 +170,11 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
   moderately_finepoint step;
+  int SpellCost = ManaCostTable [ 2 ][ Me[ 0 ].SkillLevel [ 2 ] ] ;
 
-  if ( Me[0].mana >= 5 )
+  if ( Me[0].mana >= SpellCost )
     {
-      Me[0].mana -= 5;
+      Me[0].mana -= SpellCost;
       step.x = ( TargetVector.x * 0.25 ) / Block_Width;
       step.y = ( TargetVector.y * 0.25 ) / Block_Height;
 
@@ -189,11 +196,12 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 void
 ForceToEnergyConversion ( void )
 {
+  int SpellCost = ManaCostTable [ 3 ][ Me[ 0 ].SkillLevel [ 3 ] ] ;
 
-  if ( Me[0].mana >= 10 )
+  if ( Me[0].mana >= SpellCost )
     {
-      Me[0].mana   -= 10;
-      Me[0].energy += 10;
+      Me[0].mana   -= SpellCost;
+      Me[0].energy += 10 ; // * SpellLevel
     }
   else
     {
