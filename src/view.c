@@ -880,6 +880,25 @@ PutBlast (int BlastNummer)
   if (CurBlast->type == OUT)
     return;
 
+  // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
+  if ( CurBlast->type >= ALLBLASTTYPES ) 
+    {
+      fprintf (stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The PutBlast function should blit a blast of a type that does not\n\
+exist at all.  THIS IS A SEVERE INTERNAL BUG IN FREEDROID.  IF YOU EVER\n\
+ENCOUNTER THIS MESSAGE, PLEASE CONTACT THE DEVELOPERS AND TELL THEM\n\
+ABOUT THIS ERROR MESSAGE!! THANKS A LOT.
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      Terminate( ERR );
+    };
+
   
   TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
   TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;

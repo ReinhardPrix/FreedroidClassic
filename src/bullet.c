@@ -334,14 +334,42 @@ StartBlast (float x, float y, int type)
 void
 ExplodeBlasts (void)
 {
-  int i;
+  int i, map_x, map_y;
   Blast CurBlast = AllBlasts;
 
   for (i = 0; i < MAXBLASTS; i++, CurBlast++)
     if (CurBlast->type != OUT)
       {
+	
+	//--------------------
+	// But maybe the bullet is also outside the map already, which would
+	// cause a SEGFAULT directly afterwards, when the map is queried.
+	// Therefore we introduce some extra security here...
+	//
+	map_x= (int) rintf( CurBlast->PX );
+	map_y= (int) rintf( CurBlast->PY );
+	if ( ( map_x < 0 ) || ( map_x >= CurLevel->xlen ) ||
+	     ( map_y < 0 ) || ( map_y >= CurLevel->ylen ) )
+	  {
+	    fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A BLAST WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
+This is an idication for a severe error in Freedroid.\n\
+\n\
+Please report the problem to the Freedroid developers.
+\n\
+Sorry for interrupting your game, but Freedroid will terminate now\n\
+to draw attention to the internal problem that indicates an error\n\
+in the code.  Please tell the developers about the problem detected\n\
+from the function MoveBullets().  Sorry for destroying your game...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	    Terminate(ERR);
+	  }
 
-	/* Druidblasts sind gefaehrlich !! */
+	// Druid blasts are dangerous...
 	if (CurBlast->type == DRUIDBLAST)
 	  CheckBlastCollisions (i);
 
