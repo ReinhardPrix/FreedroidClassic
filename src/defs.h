@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.12  1997/06/07 09:26:01  jprix
+ * Framerates are now calculated and displayed. Average FPS over 1, 10 and 100 Frames are now globally available.
+ *
  * Revision 1.11  1997/06/06 13:29:33  rprix
  * ALL_DRUID_TYPES set to 24 (was 25 which is one too much!)
  *
@@ -16,7 +19,7 @@
  * added some doku.  cleaned out some old doku and old code, that was allready commented out.
  *
  * Revision 1.9  1997/06/05 09:24:15  jprix
- * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ * yiff server access introduced to the project. (This version was not compilable without YIFF. SORRY!)
  *
  * Revision 1.8  2002/04/08 19:19:09  rp
  * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.

@@ -143,7 +143,9 @@ void Cheatmenu(void){
   int Weiter=0;
   int LNum,X,Y,i,RN,dummy;
   int X0=20, Y0=5;   // startpos for gl_- text writing
-  keyboard_close();  // return to normal keyboard operation
+
+  // return to normal keyboard operation
+  keyboard_close();  
 
   //  gotoxy(1,1);
   //  vgamode = vga_getcurrentmode();

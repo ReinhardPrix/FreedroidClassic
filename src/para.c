@@ -72,6 +72,17 @@ int card = 0;
 int device = 0;
 void* handle;
 
+struct timeval now, oneframetimestamp, tenframetimestamp, onehundredframetimestamp, differenz;
+
+long oneframedelay=0;
+long tenframedelay=0;
+long onehundredframedelay=0;
+// float oneframedelay, tenframedelay, onehundredframedelay;
+float FPSover1=10;
+float FPSover10=10;
+float FPSover100=10;
+int framenr=0;
+
 int TestSound(void);
 void CalibratedDelay(long);
 void Debriefing(void);
@@ -295,10 +306,6 @@ int main(void)
 {
   int i;
 
-  // Use ALSA?  No, thanks.
-  // TestSound();
-  // exit(0);
-
   GameOver = FALSE;
   QuitProgram = FALSE;
   Conceptview = FALSE;
@@ -327,26 +334,24 @@ int main(void)
 
     while (!GameOver && !QuitProgram) {
 
-      // Here are some things, that were previously done by some periodic interrupt function
+      framenr++; // This ensures, that 0 is never an encountered framenr, therefore count to 100 here
+      // take the time now for calculating the frame rate (DO NOT MOVE THIS COMMAND PLEASE!)
+      gettimeofday(&oneframetimestamp,NULL);
+      if (  framenr %  10 == 1) gettimeofday(&tenframetimestamp,NULL); 
+      if (  framenr % 100 == 1) gettimeofday(&onehundredframetimestamp,NULL);
 
+      // Here are some things, that were previously done by some periodic interrupt function
       ThisMessageTime++;
-		
       if (Me.firewait > 0) Me.firewait--;
-      	
       if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
       if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
-      	
       if ( CurLevel->empty > 2) CurLevel->empty--;
-      
       if(RealScore > ShowScore) ShowScore++;
       if(RealScore < ShowScore) ShowScore--;
-      
-      
       if (InterruptInfolineUpdate) {
       	UpdateInfoline();
       	SetInfoline();
       }
-      
       // This is the end of the things, that were previously done by periodic interrupt
 
 	
@@ -356,7 +361,7 @@ int main(void)
 
       DisplayRahmen(RealScreen);
 
-      CalibratedDelay(20000);  //  This should cause a little delay to make the game more playable
+      // CalibratedDelay(20000);  //  This should cause a little delay to make the game more playable
 
       if(keyboard_keypressed(SCANCODE_Q)) {
 	printf("\n*****************************************************");
@@ -402,10 +407,10 @@ int main(void)
 	KillTastaturPuffer();
       } // if SCANCODE_P...
       // } /* if while () */
-      
+
       //PORT	if( !TimerFlag ) continue;		/* the clock - timing */
       //PORT	else TimerFlag = FALSE;
-      
+
       if( ShipEmptyCounter == 1) GameOver = TRUE;
 
       LastBlastHit++;
@@ -414,29 +419,29 @@ int main(void)
        * Hier wird die Statuszeile ausgegeben
        *
        */
-      
+
       /* Die Tueren im Level auf und zu bewegen */
       MoveLevelDoors();
-      
+
       /* Refreshes Animieren */
       AnimateRefresh();
-	
+
       for (i=0;i<NumEnemys;i++) {
 	if (Feindesliste[i].warten > 0) Feindesliste[i].warten--;
 	if (Feindesliste[i].firewait > 0) Feindesliste[i].firewait--;
       }
-	
-	    		
+
+
       /* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
       MoveBullets();
-	
+
       /* Blasts in der Explosionsphase weiterbewegen */
       ExplodeBlasts();
-	
-	
+
+
       /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
       GetView();
-	
+
       GetInternFenster();
       PutInternFenster();
 
@@ -447,22 +452,22 @@ int main(void)
       UpdateInfoline();
       for (i=0;i<MAXBULLETS;i++) CheckBulletCollisions(i);
       PutMessages();
-      
+
       printf("\nvoid main(void): PutMessages() ist zumindest ohne Probleme wieder zurueckgekehrt.");
-  
+
       /* Wenn vorhanden: Joystick einlesen */
       JoystickControl();
 
       /* Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern */
       MoveInfluence();
-	
+
 
       MoveEnemys();			/* Auch die Feinde bewegen */
 
-	
+
       /* Bei animierten Influencer die Phasen weiterzaehlen */
       AnimateInfluence();
-	
+
       /* Bei den Feinden auch Phasen weiterzaehlen */
 
       AnimateEnemys();
@@ -471,25 +476,51 @@ int main(void)
       printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
       printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
       Reibung();
-	
+
       /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
       printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
       printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
       Me.pos.x+=SpeedX;
       Me.pos.y+=SpeedY;
       AdjustSpeed();
-	
+
       /* Testen ob der Weg nicht durch Mauern verstellt ist */
       BounceInfluencer();
       InfluenceEnemyCollision();
-	
+
       RotateBulletColor();
-      
+
       if( CurLevel->empty == 2) {
 	LevelGrauFaerben();
 	CurLevel->empty = TRUE;
       } /* if */
-      
+
+      // calculate the framerate:
+      gettimeofday(&now,NULL);
+
+      oneframedelay=(now.tv_usec-oneframetimestamp.tv_usec)+(now.tv_sec-oneframetimestamp.tv_sec)*1000000; 
+      if (framenr % 10 == 0) 
+	tenframedelay=((now.tv_usec-tenframetimestamp.tv_usec))+(now.tv_sec-tenframetimestamp.tv_sec)*1000000;
+      if ((framenr % 100) == 0) {
+	onehundredframedelay=(now.tv_sec-onehundredframetimestamp.tv_sec)*1000000+
+	  (now.tv_usec-onehundredframetimestamp.tv_usec);
+	framenr=0;
+      }
+
+      FPSover1  =1000000*  1 / (float)oneframedelay;
+      FPSover10 =1000000* 10 / (float)tenframedelay;
+      FPSover100=1000000*100 / (float)onehundredframedelay;
+      // gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
+      // gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay,FPSover10);
+      gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
+      // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec,now.tv_usec);
+      // gl_printf(-1,-1,"sec : %d usec : %d \n",onehundredframetimestamp.tv_sec,onehundredframetimestamp.tv_usec);
+      // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec-onehundredframetimestamp.tv_sec,now.tv_usec-onehundredframetimestamp.tv_usec);
+      //      gl_printf(-1,-1,"sec : %d \n",onehundredframedelay);
+      // gl_printf(-1,-1,"sec : %d \n",framenr % 100);
+
+      // gl_printf(-1,-1,"%f\n",oneframetimestamp);
+      //      gl_printf(-1,-1,ltoa((long)onehundredframedelay,Dummystring,10));
     } /* while !GameOver */
   } /* while !QuitProgram */
   Terminate(0);
@@ -521,91 +552,91 @@ void InitNewGame(void)
   KillQueue();
   InsertMessage(" Hello. Good Game And Good Luck To The.");
 	
-	/* Alle Bullets und Blasts loeschen */
-	for (i=0; i<MAXBULLETS; i++) {
-		AllBullets[i].type = OUT;
-		AllBullets[i].mine = FALSE;
-	}
+  /* Alle Bullets und Blasts loeschen */
+  for (i=0; i<MAXBULLETS; i++) {
+    AllBullets[i].type = OUT;
+    AllBullets[i].mine = FALSE;
+  }
 
-	for (i=0; i<MAXBLASTS; i++) {
-		AllBlasts[i].phase = OUT;
-		AllBlasts[i].type = OUT;
-	}
+  for (i=0; i<MAXBLASTS; i++) {
+    AllBlasts[i].phase = OUT;
+    AllBlasts[i].type = OUT;
+  }
 
-	/* Alle Levels wieder aktivieren */
-	for(i=0; i<curShip.LevelsOnShip; i++ )
-		curShip.AllLevels[i]->empty =FALSE;
+  /* Alle Levels wieder aktivieren */
+  for(i=0; i<curShip.LevelsOnShip; i++ )
+    curShip.AllLevels[i]->empty =FALSE;
 
 
-	i=MyRandom(4);
-	switch(i) {
-		case 0: {
-			Me.pos.x = 120;
-			Me.pos.y =  48;
-			CurLevel = curShip.AllLevels[4];
-			break;
-		}
-		case 1: {
-			Me.pos.x = 120;
-			Me.pos.y =  48;
-			CurLevel = curShip.AllLevels[5];
-			break;
-		}
-		case 2: {
-			Me.pos.x = 120;
-			Me.pos.y =  48;
-			CurLevel = curShip.AllLevels[6];
-			break;
-		}
-		case 3: {
-			Me.pos.x = 120;
-			Me.pos.y =  48;
-			CurLevel = curShip.AllLevels[7];
-			break;
-		}
-	}
+  i=MyRandom(4);
+  switch(i) {
+  case 0: {
+    Me.pos.x = 120;
+    Me.pos.y =  48;
+    CurLevel = curShip.AllLevels[4];
+    break;
+  }
+  case 1: {
+    Me.pos.x = 120;
+    Me.pos.y =  48;
+    CurLevel = curShip.AllLevels[5];
+    break;
+  }
+  case 2: {
+    Me.pos.x = 120;
+    Me.pos.y =  48;
+    CurLevel = curShip.AllLevels[6];
+    break;
+  }
+  case 3: {
+    Me.pos.x = 120;
+    Me.pos.y =  48;
+    CurLevel = curShip.AllLevels[7];
+    break;
+  }
+  }
 
-	/* Alertcolor auf Gruen zurueckschalten */
-	Alert = 0;
+  /* Alertcolor auf Gruen zurueckschalten */
+  Alert = 0;
 	
-	/* Enemys initialisieren */
-	if( GetCrew(SHIPNAME) == ERR ) Terminate(-1);
+  /* Enemys initialisieren */
+  if( GetCrew(SHIPNAME) == ERR ) Terminate(-1);
 
-	/* Influ initialisieren */
-	Me.type = DRUID001;
-	Me.speed.x = 0;
-	Me.speed.y = 0;
-	Me.energy = STARTENERGIE;
-	Me.health = Me.energy;		/* start with max. health */
-	Me.autofire = FALSE;
-	Me.status = MOBILE;
-	RedrawInfluenceNumber();
+  /* Influ initialisieren */
+  Me.type = DRUID001;
+  Me.speed.x = 0;
+  Me.speed.y = 0;
+  Me.energy = STARTENERGIE;
+  Me.health = Me.energy;		/* start with max. health */
+  Me.autofire = FALSE;
+  Me.status = MOBILE;
+  RedrawInfluenceNumber();
 	
 
-	/* Introduction und Title */
+  /* Introduction und Title */
 #ifdef TITLE_EIN
-	Title();
+  Title();
 #endif
 	
-	/* Farben des aktuellen Levels einstellen */
- 	SetLevelColor(CurLevel->color);
+  /* Farben des aktuellen Levels einstellen */
+  SetLevelColor(CurLevel->color);
 	
-	LeftInfo[0] = '\0';
-	RightInfo[0] = '\0';
+  LeftInfo[0] = '\0';
+  RightInfo[0] = '\0';
 	
-	/* Den Rahmen fuer das Spiel anzeigen */
-	ClearVGAScreen();
-	DisplayRahmen(RealScreen);
-	// DisplayRahmen(NULL);
+  /* Den Rahmen fuer das Spiel anzeigen */
+  ClearVGAScreen();
+  DisplayRahmen(RealScreen);
+  // DisplayRahmen(NULL);
 
-	SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
+  SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
 
-	SetTextColor(FONT_WHITE,FONT_RED);
-//	InitPalette();
+  SetTextColor(FONT_WHITE,FONT_RED);
+  //	InitPalette();
 #ifdef NOJUNKWHILEINIT
-	Monitorsignalunterbrechung(0);
+  Monitorsignalunterbrechung(0);
 #endif
-	InitBars=TRUE;
+  InitBars=TRUE;
 
 } /* InitNewGame */
 
@@ -682,7 +713,7 @@ void InitParaplus(void)
 
   MinMessageTime=55;
   MaxMessageTime=850;
-/* Farbwerte fuer die Funktion SetColors */
+  /* Farbwerte fuer die Funktion SetColors */
   Transfercolor.gruen=13;
   Transfercolor.blau=13;
   Transfercolor.rot=63;
@@ -812,58 +843,58 @@ void InitParaplus(void)
 * $Function----------------------------------------------------------*/
 int InitPictures(void) {
 
-	int i;
-	char *druidpics;
-	char *tmp;
-	int druidmem;
-	int picts;
+  int i;
+  char *druidpics;
+  char *tmp;
+  int druidmem;
+  int picts;
 
-	/* First read the map blocks */
-	GetMapBlocks();
+  /* First read the map blocks */
+  GetMapBlocks();
 
-	/* Get the enemy-blocks */
-	GetBlocks(ENEMYBILD, 0, 0);
-	Enemypointer = GetBlocks(NULL, 0, ENEMYPHASES);
+  /* Get the enemy-blocks */
+  GetBlocks(ENEMYBILD, 0, 0);
+  Enemypointer = GetBlocks(NULL, 0, ENEMYPHASES);
 
-	/* Get the influence-blocks */
-	GetBlocks(INFLUENCEBILD, 0, 0);
-	Influencepointer = GetBlocks(NULL, 0, ENEMYPHASES);
+  /* Get the influence-blocks */
+  GetBlocks(INFLUENCEBILD, 0, 0);
+  Influencepointer = GetBlocks(NULL, 0, ENEMYPHASES);
 	
-	/* the same game for the bullets */
-	GetBlocks(BULLETBILD, 0, 0);
-	for (i=0; i<ALLBULLETTYPES; i++) {
-		Bulletmap[i].picpointer = GetBlocks(NULL, i, Bulletmap[i].phases);
-	}
+  /* the same game for the bullets */
+  GetBlocks(BULLETBILD, 0, 0);
+  for (i=0; i<ALLBULLETTYPES; i++) {
+    Bulletmap[i].picpointer = GetBlocks(NULL, i, Bulletmap[i].phases);
+  }
 		
 
-	/* ...and the blasts */
-	GetBlocks(BLASTBILD, 0, 0);
-	for (i=0; i<ALLBLASTTYPES; i++) {
-		Blastmap[i].picpointer = GetBlocks(NULL, i, Blastmap[i].phases);
-	}
+  /* ...and the blasts */
+  GetBlocks(BLASTBILD, 0, 0);
+  for (i=0; i<ALLBLASTTYPES; i++) {
+    Blastmap[i].picpointer = GetBlocks(NULL, i, Blastmap[i].phases);
+  }
 
-	/* Get the Frame */
-	LadeLBMBild(RAHMENBILD1,InternalScreen,FALSE); 
-	RahmenPicture = (unsigned char *)MyMalloc(RAHMENBREITE*RAHMENHOEHE+10);
-	IsolateBlock(InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE, RAHMENHOEHE);
+  /* Get the Frame */
+  LadeLBMBild(RAHMENBILD1,InternalScreen,FALSE); 
+  RahmenPicture = (unsigned char *)MyMalloc(RAHMENBREITE*RAHMENHOEHE+10);
+  IsolateBlock(InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE, RAHMENHOEHE);
 
-	/* get the Elevator-Blocks */
-	ElevatorBlocks = (unsigned char*)MyMalloc(NUM_EL_BLOCKS*EL_BLOCK_MEM+100);
-	LadeLBMBild(EL_BLOCKS_FILE,InternalScreen,FALSE);
-	for( i=0; i<NUM_EL_BLOCKS; i++)
-		IsolateBlock(
-			InternalScreen, 
-			ElevatorBlocks+i*EL_BLOCK_MEM,
-			1+i*(EL_BLOCK_LEN+1), 1,
-			EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
+  /* get the Elevator-Blocks */
+  ElevatorBlocks = (unsigned char*)MyMalloc(NUM_EL_BLOCKS*EL_BLOCK_MEM+100);
+  LadeLBMBild(EL_BLOCKS_FILE,InternalScreen,FALSE);
+  for( i=0; i<NUM_EL_BLOCKS; i++)
+    IsolateBlock(
+		 InternalScreen, 
+		 ElevatorBlocks+i*EL_BLOCK_MEM,
+		 1+i*(EL_BLOCK_LEN+1), 1,
+		 EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
 		
 
-	/* get Menublocks */
-	LadeLBMBild(CONSOLENBILD,InternalScreen,FALSE);
-	MenuItemPointer=MyMalloc(MENUITEMMEM);
-	IsolateBlock(InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH, MENUITEMHEIGHT);	
+  /* get Menublocks */
+  LadeLBMBild(CONSOLENBILD,InternalScreen,FALSE);
+  MenuItemPointer=MyMalloc(MENUITEMMEM);
+  IsolateBlock(InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH, MENUITEMHEIGHT);	
 
-	return TRUE;
+  return TRUE;
 }
 
 
@@ -912,16 +943,16 @@ void Title(void)
 
   SetTextColor(FONT_BLACK, FONT_RED);
 	
-// *		Auskommentiert zu Testzwecken
-// *
-   ScrollText(TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-   ScrollText(TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-   ScrollText(TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  // *		Auskommentiert zu Testzwecken
+  // *
+  ScrollText(TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText(TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText(TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
-   SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
+  SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
 
-	SetTypematicRate(TYPEMATIC_SLOW);
-   InterruptInfolineUpdate=OldUpdateStatus;
+  SetTypematicRate(TYPEMATIC_SLOW);
+  InterruptInfolineUpdate=OldUpdateStatus;
 }
 
 /*@Function============================================================
@@ -932,11 +963,11 @@ void Title(void)
 * $Function----------------------------------------------------------*/
 
 int NoDirectionPressed(){
-	if (DownPressed()) return (0);
-   if (UpPressed()) return (0);
-   if (LeftPressed()) return (0);
-   if (RightPressed()) return (0);
-	return (1);
+  if (DownPressed()) return (0);
+  if (UpPressed()) return (0);
+  if (LeftPressed()) return (0);
+  if (RightPressed()) return (0);
+  return (1);
 }
 
 /*@Function============================================================
@@ -985,13 +1016,13 @@ void ThouArtDefeated(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void ThouArtVictorious(void){
-	ShipEmptyCounter = WAIT_SHIPEMPTY;
-	GameOver = TRUE;				  /*  */
+  ShipEmptyCounter = WAIT_SHIPEMPTY;
+  GameOver = TRUE;				  /*  */
 	
-	KillTastaturPuffer();
-	ClearUserFenster();
-	printf(" BRAVO ! Sie haben es geschafft ! ");
-	getchar();
+  KillTastaturPuffer();
+  ClearUserFenster();
+  printf(" BRAVO ! Sie haben es geschafft ! ");
+  getchar();
 }
 
 /* **********************************************************************
@@ -1090,32 +1121,32 @@ void Debriefing(void){
 	scrollen.
 	**********************************************************************/
 void ShowHighscoreList(void){
-	int j,k;
-	int Rankcounter=0;
-	HallElement* SaveHallptr=Hallptr;
+  int j,k;
+  int Rankcounter=0;
+  HallElement* SaveHallptr=Hallptr;
 
-	if (!PlusExtentionsOn) {
-		printf(" Dies ist die aktuelle Highsoreliste:\n\n");
-		printf(" Highest Score: %d :",HighestScoreOfDay);
-		printf("%s\n",HighestName);
-		printf(" Great Score: %d :",GreatScore);
-		printf("%s\n",GreatScoreName);
-		printf(" Lowest Score: %d :",LowestScoreOfDay);
-		printf("%s\n",LowestName);
-		getchar();
-	} else {
-		printf(" This is today's Hall of Fame:\n\n");
-		printf("\tRank\tName\tScore\n");
-		while (Hallptr->NextPlayer != NULL) {
-			printf("\t%d\t",Rankcounter);
-			printf("%s",Hallptr->PlayerName);
-			printf("\t%d\n",Hallptr->PlayerScore);
-			Hallptr=Hallptr->NextPlayer;
-			Rankcounter++;
-		}
-		getchar();
-	}
-	Hallptr=SaveHallptr;
+  if (!PlusExtentionsOn) {
+    printf(" Dies ist die aktuelle Highsoreliste:\n\n");
+    printf(" Highest Score: %d :",HighestScoreOfDay);
+    printf("%s\n",HighestName);
+    printf(" Great Score: %d :",GreatScore);
+    printf("%s\n",GreatScoreName);
+    printf(" Lowest Score: %d :",LowestScoreOfDay);
+    printf("%s\n",LowestName);
+    getchar();
+  } else {
+    printf(" This is today's Hall of Fame:\n\n");
+    printf("\tRank\tName\tScore\n");
+    while (Hallptr->NextPlayer != NULL) {
+      printf("\t%d\t",Rankcounter);
+      printf("%s",Hallptr->PlayerName);
+      printf("\t%d\n",Hallptr->PlayerScore);
+      Hallptr=Hallptr->NextPlayer;
+      Rankcounter++;
+    }
+    getchar();
+  }
+  Hallptr=SaveHallptr;
 }
 
 
@@ -1132,6 +1163,9 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
+ * Revision 1.21  1997/06/07 09:26:01  jprix
+ * Framerates are now calculated and displayed. Average FPS over 1, 10 and 100 Frames are now globally available.
+ *
  * Revision 1.20  1997/06/06 09:31:37  jprix
  * Cheatmenu() repaired, brought more structure to the svgalib videomode calls.
  *

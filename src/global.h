@@ -9,6 +9,9 @@
 #else
 #define EXTERN extern
 
+EXTERN float FPSover1;
+EXTERN float FPSover10;
+EXTERN float FPSover100;
 EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
 EXTERN char *Decknames[];
@@ -169,6 +172,9 @@ EXTERN unsigned char *ShieldBlocks;
  * $Author$
  *
  * $Log$
+ * Revision 1.11  1997/06/07 09:26:01  jprix
+ * Framerates are now calculated and displayed. Average FPS over 1, 10 and 100 Frames are now globally available.
+ *
  * Revision 1.10  1997/06/05 09:24:15  jprix
  * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
  *
