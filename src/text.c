@@ -948,7 +948,7 @@ DisplayChar (unsigned char c)
       Terminate(ERR);
     }
 
-  PutChar (Screen, MyCursorX, MyCursorY, c);
+  PutChar ( Screen, MyCursorX, MyCursorY, c);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.

@@ -1094,7 +1094,7 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , TO_HIT_STRING , "%d" , 
 			   &Druidmap[RobotIndex].to_hit , EndOfDataPointer );
 
-      // Now we read in the greeting sound type of this droid type
+      // Now we read in the modifier, that increases/decreases the chance of this robot getting hit
       ReadValueFromString( RobotPointer , GETTING_HIT_MODIFIER_STRING , "%d" , 
 			   &Druidmap[RobotIndex].getting_hit_modifier , EndOfDataPointer );
 
