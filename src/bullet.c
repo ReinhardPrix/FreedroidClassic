@@ -502,10 +502,17 @@ CheckBulletCollisions (int num)
 		    }
 		  else
 		    {
-		      // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
+
 		      Me.TextVisibleTime = 0;
 		      Me.TextToBeDisplayed = "Ouch!";
 		      Me.energy -= CurBullet->damage;	// loose some energy
+
+		      //--------------------
+		      // As the new rule, the influencer after getting hit, must completely
+		      // start anew to recover his weapon from the previous shot
+		      //
+		      Me.firewait = ItemMap[ Druidmap [ Me.type ].weapon_item.type ].item_gun_recharging_time;
+
 		      // GotHitSound ();
 		      Influencer_Scream_Sound ( );
 		    }

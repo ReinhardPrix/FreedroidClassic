@@ -345,8 +345,8 @@ typedef struct
   finepoint pos;		/* current position in level levelnum */
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
-  double mana;                  // current mana level */
-  double firewait;		/* counter after fire */
+  double mana;                  // current mana level 
+  double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			/* the current phase of animation */
   int autofire;			/* Status of the Firecontrolautomatics */
   int vneut;			/* Status of Velocityneutralizer for the gun */
@@ -359,10 +359,11 @@ typedef struct
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
   int PointsToDistribute; // these are the points that are available to distribute upon the character stats
-  float Damage; // the current damage the influencer does
+  float Base_Damage; // the current damage the influencer does
+  float Damage_Modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
-  float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
-  float RechargeTime; // the actual minimum time to wait for the influencer between shots
+  // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
+  // float RechargeTime; // the actual minimum time to wait for the influencer between shots
   float to_hit;
   int exp_level; // which 'experience level' is the influencer currenly at?
   long ExpRequired; // how much experience required for the next level?

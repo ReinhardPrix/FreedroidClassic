@@ -270,6 +270,7 @@ UpdateAllCharacterStats ( void )
     {
       Me.exp_level ++ ;
       Me.PointsToDistribute += 5;
+      Me.energy = Druidmap [ Me.type ].maxenergy ;
     }
 
 
@@ -286,12 +287,14 @@ UpdateAllCharacterStats ( void )
   //
   if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
     {
-      Me.Damage = Druidmap[ DRUID001 ].weapon_item.damage + 
+      Me.Base_Damage = Druidmap[ DRUID001 ].weapon_item.damage + 
+	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
+      Me.Damage_Modifier = Druidmap[ DRUID001 ].weapon_item.damage_modifier + 
 	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
     }
   else
     {
-      Me.Damage = 0;
+      Me.Base_Damage = 0;
     }
 
   //--------------------
@@ -317,9 +320,9 @@ UpdateAllCharacterStats ( void )
   // Now we compute the current recharging time for the weapon for each shot
   // And also the current recharge time modifier to be applied.
   // 
-  Me.RechargeTimeModifier = 100 - ( Me.Dexterity - 15 ) * RECHARGE_SPEED_PERCENT_PER_DEX_POINT;
-  Me.RechargeTime = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_recharging_time * 
-    0.01 * Me.RechargeTimeModifier;
+  // Me.RechargeTimeModifier = 100 - ( Me.Dexterity - 15 ) * RECHARGE_SPEED_PERCENT_PER_DEX_POINT;
+  // Me.RechargeTime = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_recharging_time * 
+  // 0.01 * Me.RechargeTimeModifier;
   //--------------------
   // Now we compute the current to-hit chance of the influencer
   // 
@@ -445,7 +448,7 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me.mana );
   DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Me.Damage );
+  sprintf( CharText , "%d-%d", (int) Me.Base_Damage , (int) Me.Base_Damage + (int) Me.Damage_Modifier );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
   // sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );
