@@ -3000,51 +3000,58 @@ iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 void
 iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
 {
-  //--------------------
-  // In case of no shielditem present at all, it's clear that we'll just
-  // display the empty shieldarm.
-  //
-  if ( Me [ player_num ] . shield_item . type == (-1) )
+    //--------------------
+    // In case of no shielditem present at all, it's clear that we'll just
+    // display the empty shieldarm.
+    //
+    if ( Me [ player_num ] . shield_item . type == (-1) )
     {
-      iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
-      return;
+	iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
+	return;
     }
-
-  //--------------------
-  // If there is no weapon item present, we just need to blit the shield, cause
-  // it's 'sword motion class' then.
-  //
-
-  if ( Me [ player_num ] . weapon_item . type != (-1) )
+    
+    //--------------------
+    // If there is no weapon item present, we just need to blit the shield, cause
+    // it's 'sword motion class' then.
+    //
+    
+    if ( Me [ player_num ] . weapon_item . type != (-1) )
     {
-      //--------------------
-      // In case of a weapon item present, we need to look up the weapon item motion class
-      // and then decide which shield to use.
-      //
-      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
+	//--------------------
+	// In case of a weapon item present, we need to look up the weapon item motion class
+	// and then decide which shield to use.
+	//
+	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
 	{
-	  iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
-	  return;
+	    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_shieldarm" , x , y , player_num , rotation_index );
+	    return;
 	}
     }
-
-  //--------------------
-  // Now at this point we know, that a 'sword motion class' item is present, and that
-  // we therefore need to blit the shield details.
-  //
-  if ( Me [ player_num ] . shield_item . type == ITEM_BUCKLER )
-    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_buckler" , x , y , player_num , rotation_index );
-  else if ( Me [ player_num ] . shield_item . type == ITEM_SMALL_SHIELD )
-    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_small_shield" , x , y , player_num , rotation_index );
-  else if ( Me [ player_num ] . shield_item . type == ITEM_STANDARD_SHIELD )
-    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_standard_shield" , x , y , player_num , rotation_index );
-  else if ( Me [ player_num ] . shield_item . type == ITEM_LARGE_SHIELD )
-    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_large_shield" , x , y , player_num , rotation_index );
-  else
+    
+    //--------------------
+    // Now at this point we know, that a 'sword motion class' item is present, and that
+    // we therefore need to blit the shield details.
+    //
+    switch ( Me [ player_num ] . shield_item . type )
     {
-      fprintf ( stderr , "Shield item code: %d " , Me [ player_num ] . shield_item . type ) ;
-      GiveStandardErrorMessage ( __FUNCTION__  , "This shield type is not yet rendered for Tux." ,
-				 PLEASE_INFORM, IS_FATAL );
+	case ITEM_BUCKLER:
+	    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_buckler" , x , y , player_num , rotation_index );
+	    break;
+	case ITEM_SMALL_SHIELD:
+	case ITEM_MEDIUM_SHIELD:
+	    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_small_shield" , x , y , player_num , rotation_index );
+	    break;
+	case ITEM_STANDARD_SHIELD:
+	    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_standard_shield" , x , y , player_num , rotation_index );
+	    break;
+	case ITEM_LARGE_SHIELD:
+	    iso_put_tux_part ( PART_GROUP_SHIELD , "iso_large_shield" , x , y , player_num , rotation_index );
+	    break;
+	default:
+	    fprintf ( stderr , "Shield item code: %d " , Me [ player_num ] . shield_item . type ) ;
+	    GiveStandardErrorMessage ( __FUNCTION__  , "This shield type is not yet rendered for Tux." ,
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
     }
 
 }; // void iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
