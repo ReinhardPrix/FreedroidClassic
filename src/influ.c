@@ -1854,7 +1854,7 @@ MoveInfluence ( int player_num )
   if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
        ( ! ServerThinksNoDirectionPressed ( player_num ) ) && 
        ( Me [ player_num ] . status == WEAPON ) )
-    AnalyzePlayersMouseClick ( player_num );
+      AnalyzePlayersMouseClick ( player_num );
 
   if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
     no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
@@ -3012,85 +3012,89 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 void
 check_for_droids_to_attack_or_talk_with ( int player_num ) 
 {
-  int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+    int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
 
-  //--------------------
-  // Now the new mouse move: If there is 
-  //
-  // * NO enemy below the mouse cursor, 
-  // * NO box below the mouse cursor
-  // * AND also shift was NOT pressed
-  //
-  // a move to that location, not a fire command, 
-  // so only new target will be set and return without attack motion.
-  //
-  if ( index_of_droid_below_mouse_cursor == (-1) )
+    //--------------------
+    // Now the new mouse move: If there is 
+    //
+    // * NO enemy below the mouse cursor, 
+    // * NO box below the mouse cursor
+    // * AND also shift was NOT pressed
+    //
+    // a move to that location, not a fire command, 
+    // so only new target will be set and return without attack motion.
+    //
+    if ( index_of_droid_below_mouse_cursor == (-1) && (!APressed()) )
     {
-      Me [ player_num ] . mouse_move_target . x = 
-	translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-      Me [ player_num ] . mouse_move_target . y = 
-	translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-      Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-
-      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
-
-      // clear_out_intermediate_points ( player_num ) ;
-
-      set_up_intermediate_course_for_tux ( player_num ) ;
-
-      return; // no attack motion since no target given!!
+	Me [ player_num ] . mouse_move_target . x = 
+	    translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	Me [ player_num ] . mouse_move_target . y = 
+	    translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	
+	Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	
+	// clear_out_intermediate_points ( player_num ) ;
+	
+	set_up_intermediate_course_for_tux ( player_num ) ;
+	
+	return; // no attack motion since no target given!!
     }
-
-  if ( index_of_droid_below_mouse_cursor != (-1) )
+    else if ( APressed() )
     {
-      //--------------------
-      // We assign the target robot of the coming attack operation.
-      // In case of no robot, we should get (-1), which is also serving us well.
-      //
-      Me [ player_num ] . mouse_move_target_is_enemy = index_of_droid_below_mouse_cursor ;
-
-      //--------------------
-      // If the click was onto a friendly droid, we initiate talk, no matter if the
-      // TAKEOVER skill was actiavted or if the TRANSFERMODE state of the tux was 
-      // present.  Left click should do this, other methods for talking are depreciated.
-      //
-      // However, we do not want an accidential mouse move while button is held down
-      // to always initiate talk.  This should require a true click.  Therefore we
-      // check if the button has been released just before it came to this check.
-      //
-      if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) 
+	tux_wants_to_attack_now ( player_num ) ;
+    }
+    
+    if ( index_of_droid_below_mouse_cursor != (-1) )
+    {
+	//--------------------
+	// We assign the target robot of the coming attack operation.
+	// In case of no robot, we should get (-1), which is also serving us well.
+	//
+	Me [ player_num ] . mouse_move_target_is_enemy = index_of_droid_below_mouse_cursor ;
+	
+	//--------------------
+	// If the click was onto a friendly droid, we initiate talk, no matter if the
+	// TAKEOVER skill was actiavted or if the TRANSFERMODE state of the tux was 
+	// present.  Left click should do this, other methods for talking are depreciated.
+	//
+	// However, we do not want an accidential mouse move while button is held down
+	// to always initiate talk.  This should require a true click.  Therefore we
+	// check if the button has been released just before it came to this check.
+	//
+	if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) 
 	{
-
-	  if ( no_left_button_press_in_previous_analyze_mouse_click )
+	    
+	    if ( no_left_button_press_in_previous_analyze_mouse_click )
 	    {
-	      ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] ) ) ;
-	  
-	      //--------------------
-	      // and then we deactivate this mouse_move_target_is_enemy to prevent
-	      // immediate recurrence of the very same chat.
-	      //
-	      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+		ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] ) ) ;
+		
+		//--------------------
+		// and then we deactivate this mouse_move_target_is_enemy to prevent
+		// immediate recurrence of the very same chat.
+		//
+		Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
 	    }
-
-	  return ;
+	    
+	    return ;
 	}
-
-      if ( Me [ 0 ] . weapon_item . type >= 0 )
+	
+	if ( Me [ 0 ] . weapon_item . type >= 0 )
 	{
-	  if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
-	       ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-					AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
-					AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
-		 > BEST_MELEE_DISTANCE+0.1 ) )
-	    return;
+	    if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
+		 ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+					  AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
+					  AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
+		   > BEST_MELEE_DISTANCE+0.1 ) )
+		return;
 	}
-      else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-				       AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
-				       AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
-		> BEST_MELEE_DISTANCE+0.1 )
-	return;
-
-      tux_wants_to_attack_now ( player_num ) ;
+	else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+					 AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
+					 AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
+		  > BEST_MELEE_DISTANCE+0.1 )
+	    return;
+	
+	tux_wants_to_attack_now ( player_num ) ;
     }
 }; // void check_for_droids_to_attack ( int player_num ) 
 
@@ -3113,8 +3117,6 @@ AnalyzePlayersMouseClick ( int player_num )
   check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
   check_for_barrels_to_smash ( player_num , smashable_barred_below_mouse_cursor ( player_num ) ) ;
-
-  // get_floor_item_index_under_mouse_cursor ( 0 );
 
   check_for_droids_to_attack_or_talk_with ( player_num ) ;
 
