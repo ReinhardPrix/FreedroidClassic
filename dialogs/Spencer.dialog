@@ -33,9 +33,6 @@ BEGIN OF AUTORS NOTES
 This character is "SPENCER", one of the most important characters of old town.
 His most important features are, that he can check through for quests done and maybe bring you into the Town Guard.
 
-
-
-
 END OF AUTORS NOTES
 
 
@@ -351,11 +348,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=28  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=788  PositionY=112  
-Subtitle="Ok.  Your list of achievements is long enough.  You can join us.  You are now one of us."
+Subtitle="Ok.  Your list of achievements is long enough.  You can join us.  So I hereby declare you a member of the town guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But now that you are in the guard, know this:  There is only one rule for us guards:  We stick together.  We survive together or we die together.  But we'll do it together."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now you might want to inspect the guard house.  Tell Tybalt to open the door for you."
+Subtitle="And now you might want to inspect the guard house.  Tell Tybalt to open the door for you.  Lukas at the arms counter shall give you your armour."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I hope you will continue to prove yourself a worthy member of the guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
