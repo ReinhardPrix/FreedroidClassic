@@ -653,72 +653,74 @@ int
 CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
 					     Enemy ExceptedRobot ) 
 {
-  float LargerDistance;
-  int Steps;
-  int i, j;
-  moderately_finepoint step;
-  moderately_finepoint CheckPosition;
-  enemy* this_enemy;
-  static int first_call = TRUE ;
-  static float steps_per_square;
-
-  //--------------------
-  // Upon the very first function call, we calibrate the density of steps, so that 
-  // we cannot miss out a droid by stepping right over it.
-  //
-  if ( first_call )
+    float LargerDistance;
+    int Steps;
+    int i, j;
+    moderately_finepoint step;
+    moderately_finepoint CheckPosition;
+    enemy* this_enemy;
+    static int first_call = TRUE ;
+    static float steps_per_square;
+    
+    //--------------------
+    // Upon the very first function call, we calibrate the density of steps, so that 
+    // we cannot miss out a droid by stepping right over it.
+    //
+    if ( first_call )
     {
-      first_call = FALSE ;
-      steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
+	first_call = FALSE ;
+	steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
+	DebugPrintf ( 1 , "\n%s(): number of steps per square: %f." , __FUNCTION__ , steps_per_square );
     }
-
-  // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
-  // fflush(stdout);
-
-  if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
-  else LargerDistance = fabsf ( y1 - y2 );
-
-  Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
-  // if ( Steps == 0 ) return TRUE;
-
-  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  step.x = ( x2 - x1 ) / ((float)Steps) ;
-  step.y = ( y2 - y1 ) / ((float)Steps) ;
-
-  // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
-
-  // We start from position (x1, y1)
-  CheckPosition . x = x1;
-  CheckPosition . y = y1;
-
-  for ( i = 0 ; i < Steps + 1 ; i++ )
+    
+    // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+    // fflush(stdout);
+    
+    if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
+    else LargerDistance = fabsf ( y1 - y2 );
+    
+    Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
+    // if ( Steps == 0 ) return TRUE;
+    
+    // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+    step.x = ( x2 - x1 ) / ((float)Steps) ;
+    step.y = ( y2 - y1 ) / ((float)Steps) ;
+    
+    // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
+    
+    // We start from position (x1, y1)
+    CheckPosition . x = x1;
+    CheckPosition . y = y1;
+    
+    for ( i = 0 ; i < Steps + 1 ; i++ )
     {
-      // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
-      // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
-      for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
-	    j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
+	// for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	// for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
+	      j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
 	{
-	  this_enemy = & ( AllEnemys [ j ] ) ;
-	  if ( this_enemy -> pos.z != OurLevel ) continue;
-	  if ( this_enemy -> Status == OUT ) continue;
-	  if ( this_enemy -> energy <= 0 ) continue;
-	  if ( this_enemy -> pure_wait > 0 ) continue;
-	  if ( this_enemy == ExceptedRobot ) continue;
-
-	  // so it seems that we need to test this one!!
-	  if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
-	       ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
+	    this_enemy = & ( AllEnemys [ j ] ) ;
+	    if ( this_enemy -> pos.z != OurLevel ) continue;
+	    if ( this_enemy -> Status == OUT ) continue;
+	    if ( this_enemy -> energy <= 0 ) continue;
+	    if ( this_enemy -> pure_wait > 0 ) continue;
+	    if ( this_enemy == ExceptedRobot ) continue;
+	    
+	    // so it seems that we need to test this one!!
+	    if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
+		 ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
 	    {
-	      // DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
-	      return FALSE;
+		// DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
+		return FALSE;
 	    }
 	}
-
-      CheckPosition . x += step . x;
-      CheckPosition . y += step . y;
+	
+	CheckPosition . x += step . x;
+	CheckPosition . y += step . y;
     }
+    
+    return TRUE;
 
-  return TRUE;
 }; // CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , ExceptedDroid )
 
 

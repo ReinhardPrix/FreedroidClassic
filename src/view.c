@@ -2158,7 +2158,10 @@ AssembleCombatPicture ( int mask )
     }
 
     if ( mask & USE_OWN_MOUSE_CURSOR )
-	blit_our_own_mouse_cursor();
+    {
+	blit_our_own_mouse_cursor ();
+	blit_mouse_cursor_corona ();
+    }
     
     //--------------------
     // At this point we are done with the drawing procedure

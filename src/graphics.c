@@ -319,6 +319,94 @@ Error loading flag image.",
 }; // void blit_our_own_mouse_cursor ( void )
 
 /* ----------------------------------------------------------------------
+ * When the system mouse cursor is now shown, we need to blit our own 
+ * mouse cursor instead.  That is good, because that we we can even use
+ * many colors and maybe also some small animation in a controlled way.
+ * ---------------------------------------------------------------------- */
+void
+blit_mouse_cursor_corona ( void )
+{
+    static int first_call = TRUE ;
+    int i;
+    static iso_image mouse_cursor_coronas [ 16 ] ;
+    char constructed_filename[2000];
+    char* fpath;
+
+    //--------------------
+    // On the first function call ever, we load the surfaces for the
+    // flags into memory.
+    //
+    if ( first_call )
+    {
+	for ( i = 0 ; i < 3 ; i ++ )
+	{
+	    sprintf ( constructed_filename , "mouse_cursor_corona_%04d.png" , i );
+	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( mouse_cursor_coronas [ i ] ) , FALSE ) ;
+	    if ( mouse_cursor_coronas [ i ] . surface == NULL ) 
+	    {
+		fprintf ( stderr , "\nFull path used: %s." , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error loading flag image.",
+					   PLEASE_INFORM, IS_FATAL );
+	    }
+	    if ( use_open_gl )
+	    {
+		DebugPrintf ( 1 , "\n%s(): Texture made from mouse cursor corona surface..." );
+		make_texture_out_of_surface ( & ( mouse_cursor_coronas [ i ] ) ) ;
+	    }
+	}
+
+	first_call = FALSE ;
+    }
+
+    /*
+    //--------------------
+    // We can now blit the mouse cursor...
+    //
+    if ( use_open_gl )
+    {
+	switch ( global_ingame_mode )
+	{
+	    case GLOBAL_INGAME_MODE_IDENTIFY :
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 1 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_NORMAL:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    default:
+		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
+			      global_ingame_mode );
+		GiveStandardErrorMessage ( __FUNCTION__  , 
+					   "Illegal global ingame mode encountered!" ,
+					   PLEASE_INFORM, IS_FATAL );
+		break;
+	}
+    }
+    else
+    {
+	blit_iso_image_to_map_position ( mouse_cursors [ 0 ] , 
+					 GetMousePos_x () , GetMousePos_x () );
+    }
+    */
+
+
+    if ( use_open_gl )
+    {
+	blit_open_gl_texture_to_screen_position ( mouse_cursor_coronas [ 1 ] , 
+						  GetMousePos_x () , GetMousePos_y () , TRUE );
+    }
+    else
+    {
+	blit_iso_image_to_map_position ( mouse_cursor_coronas [ 0 ] , 
+					 GetMousePos_x () , GetMousePos_x () );
+    }
+
+}; // void blit_mouse_cursor_corona ( void )
+
+/* ----------------------------------------------------------------------
  * Occasionally it might come in handly to have the whole image fading
  * out when something time-consuming is happening, which is not displayed.
  * This function is intended to provide a mechanism for this using the
