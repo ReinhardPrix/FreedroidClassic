@@ -79,20 +79,20 @@ Get_General_Game_Constants (char *data)
   ReadValueFromString (data, ALERT_BONUS_PER_SEC_STRING, "%f", &AlertBonusPerSec);
 
   // Now we read in the speed calibration factor for all bullets
-  ReadValueFromString (data, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING, "%lf", 
+  ReadValueFromString (data, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING, "%f", 
 		       &collision_lose_energy_calibrator);
 
   // Now we read in the blast radius
-  ReadValueFromString( data , BLAST_RADIUS_SPECIFICATION_STRING , "%lf" , &Blast_Radius);
+  ReadValueFromString( data , BLAST_RADIUS_SPECIFICATION_STRING , "%f" , &Blast_Radius);
 
   // Now we read in the druid 'radius' in x direction
-  ReadValueFromString( data , DROID_RADIUS_SPECIFICATION_STRING , "%lf" , &Droid_Radius);
+  ReadValueFromString( data , DROID_RADIUS_SPECIFICATION_STRING , "%f" , &Droid_Radius);
 
   // Now we read in the blast damage amount per 'second' of contact with the blast
-  ReadValueFromString( data ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%lf" , &Blast_Damage_Per_Second);
+  ReadValueFromString( data ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%f" , &Blast_Damage_Per_Second);
 
   // Now we read in the time is takes for the door to move one phase 
-  ReadValueFromString( data ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%lf" , 
+  ReadValueFromString( data ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%f" , 
 		       &Time_For_Each_Phase_Of_Door_Movement);
 
   DebugPrintf(2 , "\nvoid Get_General_Game_Constants ( void* data ): end of function reached." );
@@ -116,8 +116,8 @@ Get_Bullet_Data ( char* DataPointer )
   int i, size;
   int BulletIndex=0;
 
-  double bullet_speed_calibrator;
-  double bullet_damage_calibrator;
+  float bullet_speed_calibrator;
+  float bullet_damage_calibrator;
 
 #define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
 #define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
@@ -172,11 +172,11 @@ Get_Bullet_Data ( char* DataPointer )
       BulletPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the recharging time for this bullettype(=weapontype)
-      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%f" , 
 			   &Bulletmap[BulletIndex].recharging_time);
 
       // Now we read in the maximal speed this type of bullet can go.
-      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%f" , 
 			   &Bulletmap[BulletIndex].speed);
 
       // Now we read in the damage this bullet can do
@@ -203,11 +203,11 @@ Get_Bullet_Data ( char* DataPointer )
   DebugPrintf (1, "\n\nStarting to read bullet calibration section\n\n");
 
   // Now we read in the speed calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%f" , 
 		       &bullet_speed_calibrator);
 
   // Now we read in the damage calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%f" , 
 		       &bullet_damage_calibrator);
 
   //--------------------
@@ -238,12 +238,12 @@ Get_Robot_Data ( void* DataPointer )
   char *EndOfDataPointer;
   int i, size;
 
-  double maxspeed_calibrator;
-  double acceleration_calibrator;
-  double maxenergy_calibrator;
-  double energyloss_calibrator;
-  double aggression_calibrator;
-  double score_calibrator;
+  float maxspeed_calibrator;
+  float acceleration_calibrator;
+  float maxenergy_calibrator;
+  float energyloss_calibrator;
+  float aggression_calibrator;
+  float score_calibrator;
 
 #define MAXSPEED_CALIBRATOR_STRING "Common factor for all droids maxspeed values: "
 #define ACCELERATION_CALIBRATOR_STRING "Common factor for all droids acceleration values: "
@@ -285,27 +285,27 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf (2, "\n\nStarting to read robot calibration section\n\n");
 
   // Now we read in the speed calibration factor for all droids
-  ReadValueFromString( RobotPointer , MAXSPEED_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , MAXSPEED_CALIBRATOR_STRING , "%f" , 
 		       &maxspeed_calibrator);
 
   // Now we read in the acceleration calibration factor for all droids
-  ReadValueFromString( RobotPointer , ACCELERATION_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , ACCELERATION_CALIBRATOR_STRING , "%f" , 
 		       &acceleration_calibrator);
 
   // Now we read in the maxenergy calibration factor for all droids
-  ReadValueFromString( RobotPointer , MAXENERGY_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , MAXENERGY_CALIBRATOR_STRING , "%f" , 
 		       &maxenergy_calibrator);
 
   // Now we read in the energy_loss calibration factor for all droids
-  ReadValueFromString( RobotPointer , ENERGYLOSS_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , ENERGYLOSS_CALIBRATOR_STRING , "%f" , 
 		       &energyloss_calibrator);
 
   // Now we read in the aggression calibration factor for all droids
-  ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%f" , 
 		       &aggression_calibrator);
 
   // Now we read in the score calibration factor for all droids
-  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%lf" , 
+  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%f" , 
 		       &score_calibrator);
 
   DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
@@ -348,7 +348,7 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString (RobotPointer, DROIDNAME_BEGIN_STRING, "%s", Druidmap[RobotIndex].druidname);
 
       // Now we read in the maximal speed this droid can go. 
-      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%f" , 
 			   &Druidmap[RobotIndex].maxspeed);
 
       // Now we read in the class of this droid.
@@ -356,15 +356,15 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].class);
 
       // Now we read in the maximal acceleration this droid can go. 
-      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%f" , 
 			   &Druidmap[RobotIndex].accel);
 
       // Now we read in the maximal energy this droid can store. 
-      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%f" , 
 			   &Druidmap[RobotIndex].maxenergy);
 
       // Now we read in the lose_health rate.
-      ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%f" , 
 			   &Druidmap[RobotIndex].lose_health);
 
       // Now we read in the class of this droid.
@@ -458,6 +458,15 @@ Init_Game_Data ( char * Datafilename )
   Get_Robot_Data ( Data );
 
   Get_Bullet_Data ( Data );
+
+  //--------------------
+  // Now we read in the total time amount for the blast animations
+#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the animation of blast one :"
+#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the animation of blast one :"
+
+  ReadValueFromString (Data, BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING, "%f", &Blastmap[0].total_animation_time);
+  ReadValueFromString (Data, BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING, "%f", &Blastmap[1].total_animation_time);
+
 
   free ( Data ); 
   
@@ -848,7 +857,9 @@ InitNewMission ( char *MissionName )
   Me.status = MOBILE;
   Me.phase = 0;
   Me.timer = 0.0;  // set clock to 0
-  
+
+  RealScore = 0.0;
+
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
 
   free (MainMissionPointer);
@@ -896,6 +907,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.FullUserRect = FALSE;
   GameConfig.UseFullscreen = FALSE;
   GameConfig.TakeoverActivates = FALSE;  // not the purist's choice but more practical ;)
+  GameConfig.ShowDecals = FALSE;
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -1095,6 +1107,7 @@ ThouArtDefeated (void)
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();
+      MoveEnemys ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
     }

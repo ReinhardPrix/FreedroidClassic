@@ -561,15 +561,16 @@ MoveThisEnemy( int EnemyNum )
   //
 
   // ignore robots on other levels, except, it it's following influ's trail
-  if ( (ThisRobot->status == OUT) || (ThisRobot->levelnum != CurLevel->levelnum) )
+  if ( (ThisRobot->status == OUT) || (ThisRobot->status == TERMINATED) || 
+       (ThisRobot->levelnum != CurLevel->levelnum) )
     return;
 
   // Now check if the robot is still alive
   // if the robot just got killed, initiate the
   // explosion and all that...
-  if ( ThisRobot->energy <= 0)
+  if ( ThisRobot->energy <= 0 && (ThisRobot->status != TERMINATED) )
     {
-      ThisRobot->status = OUT;
+      ThisRobot->status = TERMINATED;
       RealScore += Druidmap[ ThisRobot->type ].score;
 
       DeathCount += ThisRobot->type * ThisRobot->type;   // quadratic "importance", max=529
@@ -779,7 +780,8 @@ CheckEnemyEnemyCollision (int enemynum)
   for (i = 0; i < NumEnemys ; i++)
     {
       // check only collisions of LIVING enemys on this level
-      if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != curlev)
+      if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED) 
+	   || AllEnemys[i].levelnum != curlev)
 	continue;
       // dont check yourself...
       if (i == enemynum)

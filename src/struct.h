@@ -77,16 +77,13 @@ typedef struct
   float Current_BG_Music_Volume;
   float Current_Sound_FX_Volume;
   float Current_Gamma_Correction;
-  int StandardEnemyMessages_On_Off;
-  int StandardInfluencerMessages_On_Off;
-  int Mouse_Input_Permitted;
   char Theme_Name[100];  // name of graphics-theme : dirname = graphics/TNAME_theme/
   bool FullUserRect;   // use "full" or "classic" (=small) User_Rect
   bool UseFullscreen;	/* toggle for use of fullscreen vs. X11-window */
   bool TakeoverActivates; // toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
+  bool ShowDecals;        // show dead droids-ashes...
 }
-configuration_for_freedroid , *Configuration_for_freedroid;
-
+config_t;
 
 
 typedef struct
@@ -98,8 +95,8 @@ point, *Point;
 
 typedef struct
 {
-  double x;
-  double y;
+  float x;
+  float y;
 }
 finepoint, *Finepoint;
 
@@ -115,19 +112,19 @@ grob_point, *grob_Point;
 
 typedef struct
 {
-  double x;
-  double y;
+  float x;
+  float y;
   int z;
 } gps, *GPS;
 
 typedef struct
 {
   char druidname[20];
-  double maxspeed;		/* the maximum of speed it can go */
+  float maxspeed;		/* the maximum of speed it can go */
   int class;
-  double accel;			/* its acceleration */
-  double maxenergy;		/* the maximum energy the batteries can carry */
-  double lose_health;		/* the energy/time the duid loses under influence-control */
+  float accel;			/* its acceleration */
+  float maxenergy;		/* the maximum energy the batteries can carry */
+  float lose_health;		/* the energy/time the duid loses under influence-control */
   int gun;			/* Which gun does this druid use */
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
@@ -150,10 +147,10 @@ typedef struct
   int status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   finepoint pos;		/* current position in level levelnum */
-  double health;		/* the max. possible energy in the moment */
-  double energy;		/* current energy */
-  double firewait;		/* counter after fire */
-  double phase;			/* the current phase of animation */
+  float health;		/* the max. possible energy in the moment */
+  float energy;		/* current energy */
+  float firewait;		/* counter after fire */
+  float phase;			/* the current phase of animation */
   float timer;
   float LastCrysoundTime;
   float LastTransferSoundTime;
@@ -170,14 +167,14 @@ typedef struct
   int levelnum;			/* Level in dem sich enemy befindet */
   finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;		/* current speed  */
-  double energy;		/* gibt die Energie dieses Robots an */
-  double phase;		        /* gibt die Phase an in der der Feind gedreht ist */
+  float energy;		/* gibt die Energie dieses Robots an */
+  float phase;		        /* gibt die Phase an in der der Feind gedreht ist */
   int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   int status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  double warten;		// time till the droid will start to move again
+  float warten;		// time till the droid will start to move again
   byte passable;		/* Zeit (counter), in der druid passable ist */
-  double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
+  float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
@@ -187,11 +184,11 @@ enemy, *Enemy;
 
 typedef struct
 {
-  double recharging_time;       // time until the next shot can be made, measures in seconds
-  double speed;			/* speed of the bullet */
+  float recharging_time;       // time until the next shot can be made, measures in seconds
+  float speed;			/* speed of the bullet */
   int damage;			/* damage done by this bullettype */
   int phases;			/* how many phases in motion to show */
-  double phase_changes_per_second; // how many different phases to display every second
+  float phase_changes_per_second; // how many different phases to display every second
   int blast;			/* which blast does this bullet create */
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                           // the bullet images of this bullet
@@ -220,7 +217,7 @@ typedef struct
   int phases;
   unsigned char *picpointer;
   SDL_Rect *block;     /* the coordinates of the blocks in ne_blocks */
-  double total_animation_time;
+  float total_animation_time;
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                            // the blast images of this blast type
 }
@@ -228,10 +225,10 @@ blastspec, *Blastspec;
 
 typedef struct
 {
-  double PX;			/* PosX */
-  double PY;			/* PosY */
+  float PX;			/* PosX */
+  float PY;			/* PosY */
   int type;
-  double phase;
+  float phase;
   int MessageWasDone;
   bool mine;
 }

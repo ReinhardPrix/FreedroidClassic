@@ -64,6 +64,7 @@ char *InfluenceModeNames[] = {
   "Menu",
   "Victory",
   "Activate",
+  "-- OUT --",
   NULL
 };
 

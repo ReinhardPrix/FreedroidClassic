@@ -334,7 +334,7 @@ Cheatmenu (void)
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &num);
 	  free (input);
-	  Me.energy = (double) num;
+	  Me.energy = (float) num;
 	  if (Me.energy > Me.health) Me.health = Me.energy;
 	  break;
 
@@ -902,11 +902,14 @@ Options_Menu (void)
 
 enum
   { 
-    DROID_TALK = 1,
-    TAKEOVER_IS_ACTIVATE,
-    GRAPHICS_SOUND_OPTIONS,
-    ON_SCREEN_DISPLAYS,
-    BACK };
+
+    POS_GRAPHICS_SOUND_OPTIONS = 1,
+    POS_ON_SCREEN_DISPLAYS,
+    POS_DROID_TALK,
+    POS_SHOW_DECALS,
+    POS_TAKEOVER_IS_ACTIVATE,
+    BACK 
+};
 
   while (!finished)
     {
@@ -920,16 +923,18 @@ enum
       pos = 0;
 
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
-		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
 		   "Graphics & Sound" );
 
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
 		   "On-Screen Displays" );
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Show Decals : %s", GameConfig.ShowDecals ? "ON" : "OFF");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
 
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
 		   "Back");
@@ -953,16 +958,19 @@ enum
 	      key = TRUE;
 	      switch (MenuPosition) 
 		{
-		case DROID_TALK:
+		case POS_DROID_TALK:
 		  GameConfig.Droid_Talk = !GameConfig.Droid_Talk;
 		  break;
-		case TAKEOVER_IS_ACTIVATE:
+		case POS_SHOW_DECALS:
+		  GameConfig.ShowDecals = !GameConfig.ShowDecals;
+		  break;
+		case POS_TAKEOVER_IS_ACTIVATE:
 		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
 		  break;
-		case GRAPHICS_SOUND_OPTIONS:
+		case POS_GRAPHICS_SOUND_OPTIONS:
 		  GraphicsSound_Options_Menu();
 		  break;
-		case ON_SCREEN_DISPLAYS:
+		case POS_ON_SCREEN_DISPLAYS:
 		  On_Screen_Display_Options_Menu();
 		  break;
 		case BACK:

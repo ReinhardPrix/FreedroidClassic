@@ -37,33 +37,7 @@
 #include "global.h"
 #include "proto.h"
 
-// these are needed for stat()
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-// The definition of the message structure can stay here,
-// because its only needed in this module.
-typedef struct
-{
-  void *NextMessage;
-  int MessageCreated;
-  char *MessageText;
-}
-message, Message;
-#define MESPOSX 0
-#define MESPOSY 64
-#define MESHOEHE 8
-#define MESBARBREITE 320
-#define MAX_MESSAGE_LEN 100
-#define MESBAR_MEM MESBARBREITE*MESHOEHE+1000
-
-void CreateMessageBar (char *MText);
-void AdvanceQueue (void);
-
-unsigned char *MessageBar;
-message *Queue = NULL;
-// int ThisMessageTime=0;               /* Counter fuer Message-Timing */
+int read_variable (char *data, char *var_name, char *fmt, void *var);
 
 char *homedir = NULL;
 char ConfigDir[255]="\0";
@@ -95,6 +69,61 @@ int sign (float x)
     return (-1);
 }
 
+
+// ----------------------------------------------------------------------
+// we need our own value-parser for the config-file, as ReadValueFromString()
+// terminates game with error-msg if string is not found...
+// returns ERR if not found or could not be read, OK if found&read
+// ----------------------------------------------------------------------
+int
+read_variable (char *data, char *var_name, char *fmt, void *var)
+{
+  char *found = NULL;
+  int ret;
+
+  if ( (found = strstr(data, var_name)) == NULL)
+    {
+      DebugPrintf (1, "WARNING: variable %s was not found!\n", var_name);
+      return (ERR);
+    }
+
+  found += strlen (var_name);
+  
+  // skip whitespace,tab, =, : 
+  found += strspn(found, " \t=:");
+
+  ret = sscanf (found, fmt, var);
+  if ( (ret == 0) && (ret == EOF) )
+    {
+      DebugPrintf (0, "WARNING: Variable %s was not readable using the format '%s'\n",
+		   var_name, fmt);
+      return (ERR);
+    }
+
+  return (OK);
+
+} // read_variable
+
+
+// ----------------------------------------------------------------------
+// Game-config maker-strings for config-file:
+
+#define VERSION_STRING               "Freedroid Version"
+#define DRAW_FRAMERATE               "Draw_Framerate"
+#define DRAW_ENERGY                  "Draw_Energy"
+#define DRAW_POSITION                "Draw_Position"
+#define DRAW_DEATHCOUNT              "Draw_DeathCount"
+#define DROID_TALK                   "Droid_Talk"
+#define WANTED_TEXT_VISIBLE_TIME     "WantedTextVisibleTime"
+#define CURRENT_BG_MUSIC_VOLUME      "Current_BG_Music_Volume"
+#define CURRENT_SOUND_FX_VOLUME      "Current_Sound_FX_Volume"
+#define CURRENT_GAMMA_CORRECTION     "Current_Gamma_Correction"
+#define THEME_NAME                   "Theme_Name"
+#define FULL_USER_RECT               "FullUserRect"
+#define USE_FULLSCREEN               "UseFullscreen"
+#define TAKEOVER_ACTIVATES           "TakeoverActivates"
+#define SHOW_DECALS                  "ShowDecals"
+
 /*----------------------------------------------------------------------
  * LoadGameConfig(): load saved options from config-file
  *
@@ -106,9 +135,11 @@ int
 LoadGameConfig (void)
 {
   char fname[255];
-  FILE *config;
-  
+  FILE *fp;
+  char *data;
+  off_t size, read_size;
   struct stat statbuf;
+  char version_string[100];
 
   // first we need the user's homedir for loading/saving stuff
   if ( (homedir = getenv("HOME")) == NULL )
@@ -132,17 +163,58 @@ Cannot Load or Save settings.\n");
   }
 
   sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "r")) == NULL)
+  
+  if ( stat (fname, &statbuf) == -1 )
+    {
+      DebugPrintf (0, "Couldn't stat config-file: %s\n", fname);
+      return (ERR);
+    }
+  size = statbuf.st_size;
+
+  if( (fp = fopen (fname, "r")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
       return (ERR);
     }
   
-  // Now read the actual data
-  // ok, this is neither very portable nor very flexible, we just want that working...
-  fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+  // Now read the raw data
+  data = MyMalloc (size+10);
+  read_size = fread ( data, 1, size, fp);
+  data [read_size] = '\0';  // properly terminate as string!
 
-  fclose (config);
+  DebugPrintf (2, "Wanted to read %d bytes, got %d bytes\n", size, read_size);
+  if ( read_size != size )
+    {
+      DebugPrintf (0, "WARNING: error in reading config-file %s\n Giving up...", fname);
+      fclose (fp);
+      free (data);
+      return (ERR);
+    }
+  fclose (fp);
+
+  if ( read_variable (data, VERSION_STRING, "%s", version_string) == ERR)
+    {
+      DebugPrintf (0, "Version string could not be read in config-file...\n");
+      free (data);
+      return (ERR);
+    }
+  
+  read_variable (data, DRAW_FRAMERATE,           "%d", &GameConfig.Draw_Framerate);
+  read_variable (data, DRAW_ENERGY,              "%d", &GameConfig.Draw_Energy);
+  read_variable (data, DRAW_POSITION,            "%d", &GameConfig.Draw_Position);
+  read_variable (data, DRAW_DEATHCOUNT,          "%d", &GameConfig.Draw_DeathCount);
+  read_variable (data, DROID_TALK,               "%d", &GameConfig.Droid_Talk);
+  read_variable (data, WANTED_TEXT_VISIBLE_TIME, "%f", &GameConfig.WantedTextVisibleTime);
+  read_variable (data, CURRENT_BG_MUSIC_VOLUME,  "%f", &GameConfig.Current_BG_Music_Volume);
+  read_variable (data, CURRENT_SOUND_FX_VOLUME,  "%f", &GameConfig.Current_Sound_FX_Volume);
+  read_variable (data, CURRENT_GAMMA_CORRECTION, "%f", &GameConfig.Current_Gamma_Correction);
+  read_variable (data, THEME_NAME,               "%s", &GameConfig.Theme_Name);
+  read_variable (data, FULL_USER_RECT,           "%d", &GameConfig.FullUserRect);
+  read_variable (data, USE_FULLSCREEN,           "%d", &GameConfig.UseFullscreen);
+  read_variable (data, TAKEOVER_ACTIVATES,       "%d", &GameConfig.TakeoverActivates);
+  read_variable (data, SHOW_DECALS,              "%d", &GameConfig.ShowDecals);
+
+  free (data);
 
   return (OK);
 
@@ -156,22 +228,36 @@ int
 SaveGameConfig (void)
 {
   char fname[255];
-  FILE *config;
+  FILE *fp;
   
   if ( ConfigDir[0] == '\0')
     return (ERR);
   
   sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "w")) == NULL)
+  if( (fp = fopen (fname, "w")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
       return (ERR);
     }
   
-  // Now write the actual data
-  fwrite ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+  // Now write the actual data, line by line
+  fprintf (fp, "%s = %s\n", VERSION_STRING, VERSION);
+  fprintf (fp, "%s = %d\n", DRAW_FRAMERATE, GameConfig.Draw_Framerate);
+  fprintf (fp, "%s = %d\n", DRAW_ENERGY, GameConfig.Draw_Energy);
+  fprintf (fp, "%s = %d\n", DRAW_POSITION, GameConfig.Draw_Position);
+  fprintf (fp, "%s = %d\n", DRAW_DEATHCOUNT, GameConfig.Draw_DeathCount);
+  fprintf (fp, "%s = %d\n", DROID_TALK, GameConfig.Droid_Talk);
+  fprintf (fp, "%s = %f\n", WANTED_TEXT_VISIBLE_TIME, GameConfig.WantedTextVisibleTime);
+  fprintf (fp, "%s = %f\n", CURRENT_BG_MUSIC_VOLUME, GameConfig.Current_BG_Music_Volume);
+  fprintf (fp, "%s = %f\n", CURRENT_SOUND_FX_VOLUME, GameConfig.Current_Sound_FX_Volume);
+  fprintf (fp, "%s = %f\n", CURRENT_GAMMA_CORRECTION, GameConfig.Current_Gamma_Correction);
+  fprintf (fp, "%s = %s\n", THEME_NAME, GameConfig.Theme_Name);
+  fprintf (fp, "%s = %d\n", FULL_USER_RECT, GameConfig.FullUserRect);
+  fprintf (fp, "%s = %d\n", USE_FULLSCREEN, GameConfig.UseFullscreen);
+  fprintf (fp, "%s = %d\n", TAKEOVER_ACTIVATES, GameConfig.TakeoverActivates);
+  fprintf (fp, "%s = %d\n", SHOW_DECALS, GameConfig.ShowDecals);
 
-  fclose (config);
+  fclose (fp);
   return (OK);
   
 } // SaveGameConfig()
@@ -934,34 +1020,6 @@ Terminate (int ExitCode)
   exit (ExitCode);
   return;
 }  // void Terminate(int ExitCode)
-
-
-/*@Function============================================================
-@Desc: This functin deletes the currently displayed message and
-       advances to the next message.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-AdvanceQueue (void)
-{
-  message *tmp;
-
-  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
-
-  if (Queue == NULL)
-    return;
-
-  if (Queue->MessageText)
-    free (Queue->MessageText);
-  tmp = Queue;
-
-  Queue = Queue->NextMessage;
-
-  free (tmp);
-
-  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
-} // void AdvanceQueue(void)
 
 
 /*@Function============================================================

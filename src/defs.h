@@ -42,7 +42,7 @@
 #define INIT_ONLY 0x04
 
 #define DROID_ROTATION_TIME 3.0
-
+#define NUM_DECAL_PICS    2
 
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)
 #define UserCenter_y (User_Rect.y + User_Rect.h/2)
@@ -419,12 +419,11 @@ enum _status
   BRIEFING,
   MENU,
   VICTORY,
-  ACTIVATE
+  ACTIVATE,
+  OUT
 };
 
 #define DECKCOMPLETEBONUS 500
-
-#define OUT TERMINATED		/* Type fuer inaktive Dinge */
 
 /* Konstanten die die Kartenwerte anschaulich machen */
 enum

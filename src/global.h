@@ -112,13 +112,13 @@ EXTERN int stop_influencer;     /* for bullet debugging: stop where u are */
 #else
 #define EXTERN extern
 #endif
-EXTERN double Time_For_Each_Phase_Of_Door_Movement;
-EXTERN double Blast_Damage_Per_Second;
-EXTERN double Blast_Radius;
-EXTERN double Droid_Radius;
+EXTERN float Time_For_Each_Phase_Of_Door_Movement;
+EXTERN float Blast_Damage_Per_Second;
+EXTERN float Blast_Radius;
+EXTERN float Droid_Radius;
 EXTERN float LevelDoorsNotMovedTime;
-EXTERN double collision_lose_energy_calibrator;
-EXTERN configuration_for_freedroid GameConfig;
+EXTERN float collision_lose_energy_calibrator;
+EXTERN config_t GameConfig;
 EXTERN float CurrentCombatScaleFactor;
 EXTERN BFont_Info *Menu_BFont;
 EXTERN BFont_Info *Para_BFont;
@@ -182,6 +182,8 @@ EXTERN Uint32 TransparentPixel;           // pixel-value of our transparent colo
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_Surface *pic999;
 EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];
+
+EXTERN SDL_Surface *Decal_pics[NUM_DECAL_PICS];
 
 EXTERN SDL_Surface *takeover_bg_pic;
 EXTERN SDL_Surface *console_pic;

@@ -271,7 +271,7 @@ void
 CheckBulletCollisions (int num)
 {
   int level = CurLevel->levelnum;
-  double xdist, ydist;
+  float xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
   static int FBTZaehler = 0;
   finepoint step;
@@ -386,7 +386,8 @@ CheckBulletCollisions (int num)
 	      // check for collision with enemys
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != level)
+	      if (AllEnemys[i].status == OUT || AllEnemys[i].status == TERMINATED || 
+		  AllEnemys[i].levelnum != level)
 		continue;
 	  
 	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;

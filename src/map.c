@@ -245,6 +245,7 @@ LoadShip (char *filename)
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
+  char *Buffer;
   int i;
 
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
@@ -254,9 +255,12 @@ LoadShip (char *filename)
   ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
   //--------------------
-  // Now we read the shipname information from the loaded data
+  // Now we read the Area-name from the loaded data
   //
-  ReadValueFromString(ShipData, AREA_NAME_STRING, "%s", curShip.AreaName);
+  Buffer = ReadAndMallocStringFromData (ShipData, AREA_NAME_STRING, "\"");
+  strncpy (curShip.AreaName, Buffer, 99);
+  curShip.AreaName[99]='\0';
+  free (Buffer);
 
   //--------------------
   // Now we count the number of levels and remember their start-addresses.
@@ -1720,8 +1724,8 @@ IsVisible (Finepoint objpos)
   float a_len;			/* Lenght of a */
   int i;
   finepoint testpos;
-  double influ_x = Me.pos.x;
-  double influ_y = Me.pos.y;
+  float influ_x = Me.pos.x;
+  float influ_y = Me.pos.y;
 
   DebugPrintf (2, "\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 

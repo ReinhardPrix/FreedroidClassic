@@ -474,16 +474,6 @@ LoadThemeConfigurationFile(void)
   ReadValueFromString (Data, BLAST_TWO_NUMBER_OF_PHASES_STRING, "%d", &Blastmap[1].phases);
 
   //--------------------
-  // Now we read in the total time amount for each animation
-  //
-#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
-#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
-
-  ReadValueFromString (Data, BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING, "%lf", &Blastmap[0].total_animation_time);
-
-  ReadValueFromString (Data, BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING, "%lf", &Blastmap[1].total_animation_time);
-
-  //--------------------
   // Next we read in the number of phases that are to be used for each bullet type
   ReadPointer = Data ;
   while ( ( ReadPointer = strstr ( ReadPointer , "For Bullettype Nr.=" ) ) != NULL )
@@ -515,7 +505,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 	  Terminate(ERR);
 	}
       ReadValueFromString (ReadPointer, "we will use number of phases=", "%d", &Bulletmap[BulletIndex].phases);
-      ReadValueFromString (ReadPointer, "and number of phase changes per second=", "%lf", 
+      ReadValueFromString (ReadPointer, "and number of phase changes per second=", "%f", 
 			   &Bulletmap[BulletIndex].phase_changes_per_second);
       ReadPointer++;
     }
@@ -714,6 +704,21 @@ InitPictures (void)
       strcat( fname , ".png" );
       fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
       pic999 = Load_Block (fpath, 0, 0, NULL, 0);
+
+      // get the Ashes pics
+      strcpy (fname, "Ashes.png");
+      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, WARNONLY);
+      if (!fpath)
+	{ 
+	  DebugPrintf (0, "WARNING: deactivated display of droid-decals\n");
+	  GameConfig.ShowDecals = FALSE;
+      }
+      else
+	{
+	  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
+	  Decal_pics[0] = Load_Block (NULL, 0, 0, &StdBlock, 0);
+	  Decal_pics[1] = Load_Block (NULL, 0, 1, &StdBlock, 0);
+	}
 
     } // if first_call
   

@@ -156,7 +156,7 @@ MoveInfluence (void)
 	}
       else
 	{
-	  Me.status = OUT;
+	  Me.status = TERMINATED;
 	  ThouArtDefeated ();
 	  DebugPrintf (2, "\nvoid MoveInfluence(void):  Alternate end of function reached.");
 	  return;
@@ -319,8 +319,8 @@ void
 CheckInfluenceWallCollisions (void)
 {
   int sign;
-  double SX = Me.speed.x * Frame_Time ();
-  double SY = Me.speed.y * Frame_Time ();
+  float SX = Me.speed.x * Frame_Time ();
+  float SY = Me.speed.y * Frame_Time ();
   finepoint lastpos;
   int res; 
   int NumberOfShifts=0;
@@ -605,7 +605,7 @@ CheckInfluenceWallCollisions (void)
 void
 AdjustSpeed (void)
 {
-  double maxspeed = Druidmap[Me.type].maxspeed;
+  float maxspeed = Druidmap[Me.type].maxspeed;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
   if (Me.speed.x < (-maxspeed))
@@ -667,7 +667,7 @@ ExplodeInfluencer (void)
   int i;
   int counter;
 
-  Me.status = OUT;
+  Me.status = TERMINATED;
 
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
@@ -719,7 +719,7 @@ CheckInfluenceEnemyCollision (void)
       /* ignore enemy that are not on this level or dead */
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (AllEnemys[i].status == OUT)
+      if (AllEnemys[i].status == OUT || AllEnemys[i].status == TERMINATED)
 	continue;
 
       xdist = Me.pos.x - AllEnemys[i].pos.x;
@@ -806,8 +806,8 @@ FireBullet (void)
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
   int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
-  double BulletSpeed = Bulletmap[guntype].speed;
-  double speed_norm;
+  float BulletSpeed = Bulletmap[guntype].speed;
+  float speed_norm;
   finepoint speed;
   int max_val;
 

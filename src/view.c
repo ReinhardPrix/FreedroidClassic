@@ -100,10 +100,6 @@ Assemble_Combat_Picture (int mask)
     }				// for(line) 
 
 
-
-
-
-
   // if we don't use Fullscreen mode, we have to clear the text-background manually
   // for the info-line text:
 
@@ -316,39 +312,42 @@ PutEnemy (int Enum , int x , int y)
 {
   const char *druidname;	/* the number-name of the Enemy */
   int phase;
+  enemy *droid;
 
   SDL_Rect TargetRectangle;
 
-  DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+  droid = &AllEnemys[Enum];
 
-  /* if enemy is on other level, return */
-  if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
-    {
-      DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return;
-    }
+  if ((droid->status == OUT) || (droid->levelnum != CurLevel->levelnum) )
+    return;
 
-  // if this enemy is dead, we need not do anything more here
-  if (AllEnemys[Enum].status == OUT)
-    {
-      DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
-      return;
-    }
-
-  // if the enemy is out of signt, we need not do anything more here
+  // if the enemy is out of sight, we need not do anything more here
   if ((!show_all_droids) && (!IsVisible (&AllEnemys[Enum].pos)) )
     {
       DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
     }
 
-  DebugPrintf (3, "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
+  // if it's just a dead-enemy, put some decals if that feature is activated
+  if (droid->status == TERMINATED)
+    {
+      if (!GameConfig.ShowDecals)
+	return;
+
+      TargetRectangle.x = USER_FENSTER_CENTER_X + 
+	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
+      TargetRectangle.y = USER_FENSTER_CENTER_Y + 
+	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
+      SDL_BlitSurface( Decal_pics[0], NULL , ne_screen, &TargetRectangle);
+      return;
+    }
+
 
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)
-  if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
+  if ( droid->type >= Number_Of_Droid_Types )
     {
-      fprintf(stderr, "\n\
+      DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
