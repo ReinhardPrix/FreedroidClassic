@@ -109,7 +109,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/LeaveElevatorSound3.wav",
   "/../sound/EnterElevatorSound2.wav",
   "/../sound/ThouArtDefeatedSound2.wav",
-  "/../sound/GotHitSound.wav"
+  "/../sound/Got_Hit_Sound_1.wav"
 };
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
