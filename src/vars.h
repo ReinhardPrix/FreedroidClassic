@@ -202,7 +202,7 @@ char *Classes[] = {
 
 //    NAME                      DEX-DEX   STR-STR   VIT-VIT     MAG-MAG    
 //    ALLATT-   HP - HP   MANA-MANA     TOHIT-   AC/DA-   FIR-FIR   
-//    ELE-ELE   FOR-FOR    Light Alvl PRICE-FACTOR
+//    ELE-ELE   DIS-DIS    Light Alvl PRICE-FACTOR
 item_bonus PrefixList[] = {
     { "Cheap "                  ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  
       0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 
@@ -304,7 +304,7 @@ item_bonus PrefixList[] = {
 
 //    NAME                      DEX-DEX   STR-STR   VIT-VIT      MAG-MAG  
 // ALLATT-    HP - HP   MANA-MANA  TOHIT-    AC/DA-   FIR-FIR   
-// ELE-ELE   FOR-FOR   DUMMY Alvl PRICE-FACTOR
+// ELE-ELE   DIS-DIS   DUMMY Alvl PRICE-FACTOR
 item_bonus SuffixList[] = {
   { " of Dexterity"           ,  1 ,  1 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
@@ -320,7 +320,7 @@ item_bonus SuffixList[] = {
     00 , 00 , 00 , 00 ,  0 ,  0 ,  2.0 }, 
   { " of Consistency"         ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   1 ,   1 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
-    05 , 10 , 00 , 00 ,  0 ,  0 ,  2.0 }, 
+    00 , 00 , 07 , 07 ,  0 ,  0 ,  2.0 }, 
   { " of Dexterity"           ,  2 ,  2 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
     00 , 00 , 00 , 00 ,  0 ,  0 ,  3.0 }, 
@@ -335,7 +335,7 @@ item_bonus SuffixList[] = {
     00 , 00 , 00 , 00 ,  0 ,  0 ,  3.0 }, 
   { " of Completeness"         ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   1 ,   1 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
-    15 , 20 , 00 , 00 ,  0 ,  0 ,  5.0 }, 
+    00 , 00 , 15 , 10 ,  0 ,  0 ,  5.0 }, 
   { " of Dexterity"           ,  3 ,  2 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
     00 , 00 , 00 , 00 ,  0 ,  0 ,  4.0 }, 
@@ -350,7 +350,7 @@ item_bonus SuffixList[] = {
     00 , 00 , 00 , 00 ,  0 ,  0 ,  4.0 }, 
   { " of Compactness"         ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   1 ,   1 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
-    25 , 30 , 00 , 00 ,  0 ,  0 , 10.0 }, 
+    00 , 00 , 25 , 15 ,  0 ,  0 , 10.0 }, 
   { " of Dexterity"           ,  4 ,  2 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
     00 , 00 , 00 , 00 ,  0 ,  0 ,  5.0 }, 
@@ -377,7 +377,7 @@ item_bonus SuffixList[] = {
     00 , 00 , 00 , 00 ,  0 ,  0 ,  7.0 }, 
   { " of Continuity"         ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   1 ,   1 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 
-    35 , 40 , 00 , 00 ,  0 ,  0 , 15.0 }, 
+    00 , 00 , 35 , 20 ,  0 ,  0 , 15.0 }, 
   { " of the Fighter"         ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  -4 ,  -4 ,  
     0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  2 , 0 ,  2 , 00 , 00 , 00 , 
     00 , 00 , 00 , 00 ,  0 ,  0 ,  8.0 }, 

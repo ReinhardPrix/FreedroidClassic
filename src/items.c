@@ -479,7 +479,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 
   ThisItem -> bonus_to_resist_fire = 0;
   ThisItem -> bonus_to_resist_electricity = 0;
-  ThisItem -> bonus_to_resist_force = 0;
+  ThisItem -> bonus_to_resist_disruptor = 0;
 
   ThisItem->throw_time = 0 ; 
 
@@ -512,8 +512,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
       ThisItem->bonus_to_resist_electricity += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_electricity ) ;
-      ThisItem->bonus_to_resist_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_force +
-	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_force ) ;
+      ThisItem->bonus_to_resist_disruptor += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_disruptor +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_disruptor ) ;
 
       ThisItem->is_identified = FALSE;
     }
@@ -544,8 +544,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_fire ) ;
       ThisItem->bonus_to_resist_electricity += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_electricity +
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_electricity ) ;
-      ThisItem->bonus_to_resist_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_force +
-	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_force ) ;
+      ThisItem->bonus_to_resist_disruptor += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_disruptor +
+	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_disruptor ) ;
 
       ThisItem->is_identified = FALSE;
     }

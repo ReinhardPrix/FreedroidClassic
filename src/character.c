@@ -420,7 +420,7 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
 	Me [ 0 ] . Vitality  += BonusItem -> bonus_to_vit ;
 	
-	Me [ 0 ] . resist_force       += BonusItem -> bonus_to_resist_force ;
+	Me [ 0 ] . resist_disruptor   += BonusItem -> bonus_to_resist_disruptor ;
 	Me [ 0 ] . resist_fire        += BonusItem -> bonus_to_resist_fire ;
 	Me [ 0 ] . resist_electricity += BonusItem -> bonus_to_resist_electricity ;
 
@@ -717,6 +717,7 @@ UpdateAllCharacterStats ( int PlayerNum )
     // SECONDARY stats due to 'magical' items and spells and the like
     //
     Me [ PlayerNum ] . light_bonus_from_tux = 0 ;
+    Me [ PlayerNum ] . resist_disruptor = 0 ;
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . armour_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . weapon_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . drive_item );
@@ -724,6 +725,13 @@ UpdateAllCharacterStats ( int PlayerNum )
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . special_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . aux1_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . aux2_item );
+
+    //--------------------
+    // There also should be an upper limit to disruptor protection,
+    // so that negative values can be avoided and also such that
+    // disruptor bots don't become completely useless...
+    //
+    if ( Me [ PlayerNum ] . resist_disruptor > 85 ) Me [ PlayerNum ] . resist_disruptor = 85 ;
 
     //--------------------
     // Now that the defence stat is computed, we can compute the chance, that
@@ -741,224 +749,225 @@ UpdateAllCharacterStats ( int PlayerNum )
 void 
 ShowCharacterScreen ( void )
 {
-  char CharText[1000];
-  static int MouseButtonPressedPreviousFrame = FALSE;
-  point CurPos;
-
-  DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
-
-  //--------------------
-  // If the log is not set to visible right now, we do not need to 
-  // do anything more, but to restore the usual user rectangle size
-  // back to normal and to return...
-  //
-  if ( GameConfig.CharacterScreen_Visible == FALSE ) return;
-
-  // --------------------
-  // We will need the current mouse position on several spots...
-  //
-  CurPos.x = GetMousePos_x() ;
-  CurPos.y = GetMousePos_y() ;
-
-  //--------------------
-  // We define the right side of the user screen as the rectangle
-  // for our inventory screen.
-  //
-  CharacterRect.x = CHARACTERRECT_X;
-  CharacterRect.y = 0; 
-  CharacterRect.w = CHARACTERRECT_W;
-  CharacterRect.h = CHARACTERRECT_H;
-
-  blit_special_background ( CHARACTER_SCREEN_BACKGROUND_CODE );
-
-  //--------------------
-  // Now we can start to fill in the character values:
-  // Name, Class, Level, Exp, Strength, Dex, ...
-  //
-  DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
-
-  if ( Me [ 0 ] . is_town_guard_member )
-    DisplayText( "Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
-  else
-    DisplayText( "Novice" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
-
-  /*
-  switch ( Me[0].character_class )
-    {
-    case WAR_BOT:
+    char CharText[1000];
+    static int MouseButtonPressedPreviousFrame = FALSE;
+    point CurPos;
+    
+    DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
+    
+    //--------------------
+    // If the log is not set to visible right now, we do not need to 
+    // do anything more, but to restore the usual user rectangle size
+    // back to normal and to return...
+    //
+    if ( GameConfig.CharacterScreen_Visible == FALSE ) return;
+    
+    // --------------------
+    // We will need the current mouse position on several spots...
+    //
+    CurPos.x = GetMousePos_x() ;
+    CurPos.y = GetMousePos_y() ;
+    
+    //--------------------
+    // We define the right side of the user screen as the rectangle
+    // for our inventory screen.
+    //
+    CharacterRect.x = CHARACTERRECT_X;
+    CharacterRect.y = 0; 
+    CharacterRect.w = CHARACTERRECT_W;
+    CharacterRect.h = CHARACTERRECT_H;
+    
+    blit_special_background ( CHARACTER_SCREEN_BACKGROUND_CODE );
+    
+    //--------------------
+    // Now we can start to fill in the character values:
+    // Name, Class, Level, Exp, Strength, Dex, ...
+    //
+    DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+    
+    if ( Me [ 0 ] . is_town_guard_member )
+	DisplayText( "Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+    else
+	DisplayText( "Novice" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+    
+    /*
+      switch ( Me[0].character_class )
+      {
+      case WAR_BOT:
       DisplayText( "War Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
       break;
-    case SNIPER_BOT:
+      case SNIPER_BOT:
       DisplayText( "Sniper Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
       break;
-    case MIND_BOT:
+      case MIND_BOT:
       DisplayText( "Mind Bot" , CLASS_X + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
       break;
-    default:
+      default:
       DebugPrintf( 0 , "\n\nILLEGAL CHARACTER CLASS FOUND!!! ERROR!!! TERMINATING....." );
       Terminate( ERR );
       break;
-    }
-  */
+      }
+    */
+    
+    sprintf( CharText , "%4d", Me[0].exp_level );
+    DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
+    
+    // Me[0].Experience = RealScore;
+    sprintf( CharText , "%6ld", Me[0].Experience ); // this should be the real score, sooner or later
+    DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%6ld", Me[0].ExpRequired ); 
+    DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%6ld", Me[0].Gold ); 
+    DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect );
+    
+    SetCurrentFont( FPS_Display_BFont) ;
+    sprintf( CharText , "%d", Me[0].base_strength );
+    DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
+    sprintf( CharText , "%d", Me[0].Strength );
+    if ( Me[0].Strength != Me[0].base_strength ) SetCurrentFont( Red_BFont) ;
+    DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
+    
+    SetCurrentFont( FPS_Display_BFont) ;
+    sprintf( CharText , "%d", Me[0].base_magic );
+    DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
+    sprintf( CharText , "%d", Me[0].Magic );
+    if ( Me[0].Magic != Me[0].base_magic ) SetCurrentFont( Red_BFont) ;
+    DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
+    
+    SetCurrentFont( FPS_Display_BFont) ;
+    sprintf( CharText , "%d", Me[0].base_dexterity );
+    DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
+    sprintf( CharText , "%d", Me[0].Dexterity );
+    if ( Me[0].Dexterity != Me[0].base_dexterity ) SetCurrentFont( Red_BFont) ;
+    DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
+    
+    SetCurrentFont( FPS_Display_BFont) ;
+    sprintf( CharText , "%d", Me[0].base_vitality );
+    DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
+    sprintf( CharText , "%d", Me[0].Vitality );
+    if ( Me[0].Vitality != Me[0].base_vitality ) SetCurrentFont( Red_BFont) ;
+    DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
+    
+    SetCurrentFont( FPS_Display_BFont) ;
+    sprintf( CharText , "%d", Me[0].points_to_distribute );
+    DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d", (int) Me[0].maxenergy );
+    DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d", (int) Me[0].energy );
+    DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d", (int) Me[0].maxmana );
+    DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d", (int) Me[0].mana );
+    DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
+    DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
+    
+    // sprintf( CharText , "%d", (int) Me[0].RechargeTimeModifier );
+    sprintf( CharText , "%d", (int) Me[0].to_hit );
+    strcat( CharText , "%" );
+    DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%d", (int) Me[0].AC );
+    DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
+    DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%3d", (int) Me [ 0 ] . max_running_power );
+    DisplayText( CharText , 223 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%3d", (int) Me [ 0 ] . running_power );
+    DisplayText( CharText , 269 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
+    
+    sprintf( CharText , "%3d", (int) Me [ 0 ] . resist_disruptor );
+    DisplayText( CharText , 269 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect );
+    
+    //--------------------
+    // Now we print out the current skill levels in hacking skill, 
+    // spellcasting, melee combat, ranged weapon combat and repairing things
+    //
+    DisplayText( AllSkillTexts [ Me [ 0 ] . melee_weapon_skill ] , 
+		 MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect );
+    DisplayText( AllSkillTexts [ Me [ 0 ] . ranged_weapon_skill ] , 
+		 RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect );
+    DisplayText( AllSkillTexts [ Me [ 0 ] . spellcasting_skill ] , 
+		 SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect );
+    DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
+		 HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect );
+    /*
+      if ( Me [ 0 ] . repair_skill ) 
+      DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+      else
+      DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+    */
 
-  sprintf( CharText , "%4d", Me[0].exp_level );
-  DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
-
-  // Me[0].Experience = RealScore;
-  sprintf( CharText , "%6ld", Me[0].Experience ); // this should be the real score, sooner or later
-  DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%6ld", Me[0].ExpRequired ); 
-  DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%6ld", Me[0].Gold ); 
-  DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect );
-
-  SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].base_strength );
-  DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me[0].Strength );
-  if ( Me[0].Strength != Me[0].base_strength ) SetCurrentFont( Red_BFont) ;
-  DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
-
-  SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].base_magic );
-  DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me[0].Magic );
-  if ( Me[0].Magic != Me[0].base_magic ) SetCurrentFont( Red_BFont) ;
-  DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
-
-  SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].base_dexterity );
-  DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me[0].Dexterity );
-  if ( Me[0].Dexterity != Me[0].base_dexterity ) SetCurrentFont( Red_BFont) ;
-  DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
-
-  SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].base_vitality );
-  DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
-  sprintf( CharText , "%d", Me[0].Vitality );
-  if ( Me[0].Vitality != Me[0].base_vitality ) SetCurrentFont( Red_BFont) ;
-  DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
-
-  SetCurrentFont( FPS_Display_BFont) ;
-  sprintf( CharText , "%d", Me[0].points_to_distribute );
-  DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d", (int) Me[0].maxenergy );
-  DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d", (int) Me[0].energy );
-  DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d", (int) Me[0].maxmana );
-  DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d", (int) Me[0].mana );
-  DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
-  DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
-
-  // sprintf( CharText , "%d", (int) Me[0].RechargeTimeModifier );
-  sprintf( CharText , "%d", (int) Me[0].to_hit );
-  strcat( CharText , "%" );
-  DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%d", (int) Me[0].AC );
-  DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
-  DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%3d", (int) Me [ 0 ] . max_running_power );
-  DisplayText( CharText , 223 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
-
-  sprintf( CharText , "%3d", (int) Me [ 0 ] . running_power );
-  DisplayText( CharText , 269 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
-
-  //--------------------
-  // Now we print out the current skill levels in hacking skill, 
-  // spellcasting, melee combat, ranged weapon combat and repairing things
-  //
-  DisplayText( AllSkillTexts [ Me [ 0 ] . melee_weapon_skill ] , 
-	       MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect );
-  DisplayText( AllSkillTexts [ Me [ 0 ] . ranged_weapon_skill ] , 
-	       RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect );
-  DisplayText( AllSkillTexts [ Me [ 0 ] . spellcasting_skill ] , 
-	       SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect );
-  DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
-	       HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect );
-  /*
-  if ( Me [ 0 ] . repair_skill ) 
-    DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
-  else
-    DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
-  */
-
-
-
-  //--------------------
-  // It might be the case, that the character has some points to distribute upon the character
-  // stats.  Then of course, we must display the plus button instead of all character 'now' values
-  //
-  // Me[0].points_to_distribute = 5;
-  if ( Me[0].points_to_distribute > 0 )
+    //--------------------
+    // It might be the case, that the character has some points to distribute upon the character
+    // stats.  Then of course, we must display the plus button instead of all character 'now' values
+    //
+    // Me[0].points_to_distribute = 5;
+    if ( Me[0].points_to_distribute > 0 )
     {
-      ShowGenericButtonFromList ( MORE_STR_BUTTON );
-      ShowGenericButtonFromList ( MORE_DEX_BUTTON );
-      ShowGenericButtonFromList ( MORE_VIT_BUTTON );
-      ShowGenericButtonFromList ( MORE_MAG_BUTTON );
-
-      if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	ShowGenericButtonFromList ( MORE_STR_BUTTON );
+	ShowGenericButtonFromList ( MORE_DEX_BUTTON );
+	ShowGenericButtonFromList ( MORE_VIT_BUTTON );
+	ShowGenericButtonFromList ( MORE_MAG_BUTTON );
+	
+	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me[0].base_strength++;
-	  Me[0].points_to_distribute--;
+	    Me[0].base_strength++;
+	    Me[0].points_to_distribute--;
 	}
-      if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me[0].base_dexterity++;
-	  Me[0].points_to_distribute--;
+	    Me[0].base_dexterity++;
+	    Me[0].points_to_distribute--;
 	}
-      if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me[0].base_magic++;
-	  Me[0].points_to_distribute--;
-	  Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
+	    Me[0].base_magic++;
+	    Me[0].points_to_distribute--;
+	    Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	}
-      if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me[0].base_vitality++;
-	  Me[0].points_to_distribute--;
-	  // Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
-	  // Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
-	  Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
-	  Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
+	    Me[0].base_vitality++;
+	    Me[0].points_to_distribute--;
+	    // Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
+	    // Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ PlayerNum ] . character_class ];	  
+	    Me[0].health += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
+	    Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
 	}
-
-      //--------------------
-      // It might happen that the last str point was just spent.  Then we can
-      // automatically close the character window for convenience of the player.
-      //
-      if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
+	
+	//--------------------
+	// It might happen that the last str point was just spent.  Then we can
+	// automatically close the character window for convenience of the player.
+	//
+	if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
-
-  //--------------------
-  // Finally, we want the part of the screen we have been editing to become
-  // visible and therefore we must updated it here, since it is currently not
-  // contained within the user rectangle that also gets updated every frame.
-  //
-  // our_SDL_update_rect_wrapper( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
-
-
-  //--------------------
-  // We want to know, if the button was pressed the previous frame when we
-  // are in the next frame and back in this function.  Therefore we store
-  // the current button situation, so that we can conclude on button just
-  // pressed later.
-  //
-  MouseButtonPressedPreviousFrame = axis_is_active;
+    
+    //--------------------
+    // Finally, we want the part of the screen we have been editing to become
+    // visible and therefore we must updated it here, since it is currently not
+    // contained within the user rectangle that also gets updated every frame.
+    //
+    // our_SDL_update_rect_wrapper( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
+    
+    
+    //--------------------
+    // We want to know, if the button was pressed the previous frame when we
+    // are in the next frame and back in this function.  Therefore we store
+    // the current button situation, so that we can conclude on button just
+    // pressed later.
+    //
+    MouseButtonPressedPreviousFrame = axis_is_active;
 
 }; // ShowCharacterScreen ( void )
 

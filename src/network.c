@@ -84,7 +84,7 @@ typedef struct
   int bonus_to_ac_or_damage; // this is a percentage
   int bonus_to_resist_fire;  // this is a percentage
   int bonus_to_resist_electricity; // this is a percentage
-  int bonus_to_resist_force; // this is a percentage
+  int bonus_to_resist_disruptor; // this is a percentage
 
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item

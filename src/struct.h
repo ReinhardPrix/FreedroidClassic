@@ -363,8 +363,8 @@ typedef struct
     int modifier_to_bonus_to_resist_fire;  // this is a percentage
     int base_bonus_to_resist_electricity; // this is a percentage
     int modifier_to_bonus_to_resist_electricity; // this is a percentage
-    int base_bonus_to_resist_force; // this is a percentage
-    int modifier_to_bonus_to_resist_force; // this is a percentage
+    int base_bonus_to_resist_disruptor; // this is a percentage
+    int modifier_to_bonus_to_resist_disruptor; // this is a percentage
     // int freezing_time_in_seconds;
     int light_bonus_value;
     int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
@@ -465,7 +465,7 @@ typedef struct
     int bonus_to_ac_or_damage;       // this is a percentage
     int bonus_to_resist_fire;        // this is a percentage
     int bonus_to_resist_electricity; // this is a percentage
-    int bonus_to_resist_force;       // this is a percentage
+    int bonus_to_resist_disruptor;       // this is a percentage
 
     int ac_bonus;                    // how much is ac increased by this item worn
     int damage;                      // how much damage does this item
@@ -592,7 +592,7 @@ typedef struct
     float AC; // the current Armour Class of the influencer
     float to_hit;            // percentage chance, that Tux will hit a random lv 1 bot
     int lv_1_bot_will_hit_percentage; // percentage chance that a random lv 1 bot will hit
-    int resist_force;        // percentage to reduce from force damage
+    int resist_disruptor;        // percentage to reduce from discruptor aka. "flash" damage
     int resist_fire;         // percentage to reduce from fire damage
     int resist_electricity;  // percentage to reduce from electricity damage
     

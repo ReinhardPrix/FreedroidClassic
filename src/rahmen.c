@@ -322,8 +322,8 @@ exist really (i.e. has a type = (-1) ).",
 	    
 	    if ( CurItem->bonus_to_vit )
 	    {
-		if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+		if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
 		sprintf( linebuf , "%d to Vitality" , CurItem->bonus_to_vit );
 		strcat( ItemDescText , linebuf );
@@ -395,6 +395,34 @@ exist really (i.e. has a type = (-1) ).",
 		    strcat( ItemDescText , linebuf );
 		}
 	    }
+
+	    if ( CurItem -> bonus_to_resist_disruptor )
+	    {
+		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
+		AppendToLine = TRUE;
+		sprintf( linebuf , "+%d to resist disruptor" , CurItem->bonus_to_resist_disruptor );
+		strcat( ItemDescText , linebuf );
+	    }
+
+	    if ( CurItem -> bonus_to_resist_fire )
+	    {
+		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
+		AppendToLine = TRUE;
+		sprintf( linebuf , "+%d to resist fire" , CurItem->bonus_to_resist_fire );
+		strcat( ItemDescText , linebuf );
+	    }
+	    
+	    if ( CurItem -> bonus_to_resist_electricity )
+	    {
+		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
+		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
+		AppendToLine = TRUE;
+		sprintf( linebuf , "+%d to resist electricity" , CurItem->bonus_to_resist_electricity );
+		strcat( ItemDescText , linebuf );
+	    }
+	    
 	    
 	    //--------------------
 	    // Maybe this item will give some bonus to the light radius?

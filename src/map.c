@@ -1566,7 +1566,7 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
-  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_force );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_resist_disruptor );
   strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
@@ -2014,7 +2014,7 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_resist_fire ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
-		       &( TargetItem -> bonus_to_resist_force ) , ItemsSectionEnd );
+		       &( TargetItem -> bonus_to_resist_disruptor ) , ItemsSectionEnd );
   // Now we see if the item is identified...
   ReadValueFromString( ItemPointer , ITEM_IS_IDENTIFIED_STRING , "%d" , 
 		       &( TargetItem -> is_identified ) , ItemsSectionEnd );

@@ -641,10 +641,11 @@ handle_flash_effects ( bullet* CurBullet )
 	}
     }
     
-    if ( ! Druidmap [ Me [ 0 ] . type ] . flashimmune )
-    {
-	Me [ 0 ] . energy -= CurBullet->damage ;
-    }
+    //--------------------
+    // We do some damage to the Tux, depending on the current
+    // disruptor resistance that the Tux might have...
+    //
+    Me [ 0 ] . energy -= CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ;
     
 }; // handle_flash_effects ( bullet* CurBullet )
 
@@ -956,41 +957,41 @@ check_bullet_bullet_collisions ( bullet* CurBullet , int num )
 void
 CheckBulletCollisions (int num)
 {
-  Bullet CurBullet = &AllBullets[num];
+    Bullet CurBullet = &AllBullets[num];
 
-  switch ( CurBullet -> type )
+    switch ( CurBullet -> type )
     {
-    case OUT:
-      // --------------------
-      // Never do any collision checking if the bullet is OUT already...
-      return;
-      break;
-      
-    case FLASH:
-      // --------------------
-      // Next we handle the case that the bullet is of type FLASH
-      handle_flash_effects ( CurBullet );
-      return;
-      break;
-
-    default:
-      // --------------------
-      // If its a "normal" Bullet, several checks have to be
-      // done, one for collisions with background, 
-      // one for collision with influencer
-      // some for collisions with enemys
-      // and some for collisions with other bullets
-      // and some for collisions with blast
-      //
-      check_bullet_background_collisions ( CurBullet , num );
-      check_bullet_player_collisions ( CurBullet , num );
-      check_bullet_enemy_collisions ( CurBullet , num );
-      check_bullet_bullet_collisions ( CurBullet , num );
-
-      break;
+	case OUT:
+	    // --------------------
+	    // Never do any collision checking if the bullet is OUT already...
+	    return;
+	    break;
+	    
+	case FLASH:
+	    // --------------------
+	    // Next we handle the case that the bullet is of type FLASH
+	    handle_flash_effects ( CurBullet );
+	    return;
+	    break;
+	    
+	default:
+	    // --------------------
+	    // If its a "normal" Bullet, several checks have to be
+	    // done, one for collisions with background, 
+	    // one for collision with influencer
+	    // some for collisions with enemys
+	    // and some for collisions with other bullets
+	    // and some for collisions with blast
+	    //
+	    check_bullet_background_collisions ( CurBullet , num );
+	    check_bullet_player_collisions ( CurBullet , num );
+	    check_bullet_enemy_collisions ( CurBullet , num );
+	    check_bullet_bullet_collisions ( CurBullet , num );
+	    
+	    break;
     } // switch ( Bullet-Type )
 }; // CheckBulletCollisions( ... )
-  
+
 /* ----------------------------------------------------------------------
  * This function checks for collisions of blasts with bullets and druids
  * and delivers damage to the hit objects according to how long they have
