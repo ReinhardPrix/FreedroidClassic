@@ -403,19 +403,6 @@ ShuffleEnemys ( int LevelNum )
 
     } // for (MAX_ENEMYS_ON_SHIP) 
 
-  /* leave the enemys alone for some time.... */
-
-  /* we shortly remove the influencer, so that it does not interfere with the movement */
-  influ_coord.x = Me[0].pos.x;
-  influ_coord.y = Me[0].pos.y;
-  Me[0].pos.x = Me[0].pos.y = 0;
-
-  for (i = 0; i < 30; i++)     MoveEnemys ();
-
-  /* now we can put the influencer back in */
-  Me[0].pos.x = influ_coord.x;
-  Me[0].pos.y = influ_coord.y;
-
 }; // void ShuffleEnemys ( void ) 
 
 /* ----------------------------------------------------------------------
