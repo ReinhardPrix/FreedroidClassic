@@ -54,7 +54,7 @@
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
 void limit_tux_speed_to_a_maximum ( int player_num );
-void set_up_intermediate_course_for_tux ( int player_num );
+int set_up_intermediate_course_for_tux ( int player_num );
 void clear_out_intermediate_points ( int player_num );
 void check_for_chests_to_open ( int player_num , int chest_index ) ;
 void check_for_barrels_to_smash ( int player_num , int index_of_barrel_below_mouse_cursor ) ;
@@ -1320,19 +1320,19 @@ MoveTuxAccordingToHisSpeed ( int player_num )
 void
 update_intermediate_tux_waypoints ( int player_num )
 {
-  if ( tux_can_walk_this_line ( player_num , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
-				Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y ) )
+    if ( tux_can_walk_this_line ( player_num , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+				  Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y ) )
     {
-      Me [ player_num ] . next_intermediate_point [ 0 ] . x =
-	Me [ player_num ] . mouse_move_target . x ;
-      Me [ player_num ] . next_intermediate_point [ 0 ] . y =
-	Me [ player_num ] . mouse_move_target . y ;
-
-      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nThis point can be reached directly, so no need to set up waypoints..." );
+	Me [ player_num ] . next_intermediate_point [ 0 ] . x =
+	    Me [ player_num ] . mouse_move_target . x ;
+	Me [ player_num ] . next_intermediate_point [ 0 ] . y =
+	    Me [ player_num ] . mouse_move_target . y ;
+	
+	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nThis point can be reached directly, so no need to set up waypoints..." );
     }
-  else
+    else
     {
-      // find_new_intermediate_point ( player_num );
+	// find_new_intermediate_point ( player_num );
     }
 
 }; // void update_intermediate_tux_waypoints ( int player_num )
@@ -1349,104 +1349,104 @@ update_intermediate_tux_waypoints ( int player_num )
 int
 move_tux_thowards_raw_position ( int player_num , float x , float y )
 {
-  moderately_finepoint RemainingWay;
-  moderately_finepoint planned_step;
-  float length;
-
-  // DebugPrintf ( -1000 , "\nmove_tux_thowards_raw_position: player_num = %d." , player_num );
-
-  //--------------------
-  // We do not move any players, who's statuses are 'OUT'.
-  //
-  if ( Me [ player_num ] . status == OUT ) return ( FALSE ) ;
-
-  //--------------------
-  // Now for a change, we try to implement some movement code,
-  // that doesn't rely on any acceleration any more, but just
-  // gives full speed immediately
-  //
-
-  RemainingWay . x = - Me [ player_num ] . pos . x + x ;
-  RemainingWay . y = - Me [ player_num ] . pos . y + y ;
-
-  length = vect_len ( RemainingWay );
-
-  //--------------------
-  // Maybe the remaining way is VERY!! small!  Then we must not do
-  // a division at all.  We also need not do any movement, so the
-  // speed can be eliminated and we're done here.
-  //
-  if ( length < 0.05 )
+    moderately_finepoint RemainingWay;
+    moderately_finepoint planned_step;
+    float length;
+    
+    // DebugPrintf ( -1000 , "\nmove_tux_thowards_raw_position: player_num = %d." , player_num );
+    
+    //--------------------
+    // We do not move any players, who's statuses are 'OUT'.
+    //
+    if ( Me [ player_num ] . status == OUT ) return ( FALSE ) ;
+    
+    //--------------------
+    // Now for a change, we try to implement some movement code,
+    // that doesn't rely on any acceleration any more, but just
+    // gives full speed immediately
+    //
+    
+    RemainingWay . x = - Me [ player_num ] . pos . x + x ;
+    RemainingWay . y = - Me [ player_num ] . pos . y + y ;
+    
+    length = vect_len ( RemainingWay );
+    
+    //--------------------
+    // Maybe the remaining way is VERY!! small!  Then we must not do
+    // a division at all.  We also need not do any movement, so the
+    // speed can be eliminated and we're done here.
+    //
+    if ( length < 0.05 )
     {
-      Me [ player_num ] . speed . x = 0 ;
-      Me [ player_num ] . speed . y = 0 ;
-      return ( TRUE ) ;
+	Me [ player_num ] . speed . x = 0 ;
+	Me [ player_num ] . speed . y = 0 ;
+	return ( TRUE ) ;
     }
-
-  //--------------------
-  // Now depending on whether the running key is pressed or not,
-  // we have the Tux go on running speed or on walking speed.
-  //
-  if ( Me [ player_num ] . running_power <= 0 ) 
-  {
-      //--------------------
-      // Maybe only occasionally, with some randomness involved
-      // going to the running power limit might do some good to
-      // the max running power, so some implicit 'training' effect
-      //
-      if ( ! Me [ player_num ] . running_must_rest )
-      {
-	  Me [ player_num ] . running_power_bonus ++ ;
-      }
-
-      Me [ player_num ] . running_must_rest = TRUE ;
-  }
-
-  if ( LeftCtrlPressed() && ( ! Me [ player_num ] . running_must_rest ) )
+    
+    //--------------------
+    // Now depending on whether the running key is pressed or not,
+    // we have the Tux go on running speed or on walking speed.
+    //
+    if ( Me [ player_num ] . running_power <= 0 ) 
+    {
+	//--------------------
+	// Maybe only occasionally, with some randomness involved
+	// going to the running power limit might do some good to
+	// the max running power, so some implicit 'training' effect
+	//
+	if ( ! Me [ player_num ] . running_must_rest )
+	{
+	    Me [ player_num ] . running_power_bonus ++ ;
+	}
+	
+	Me [ player_num ] . running_must_rest = TRUE ;
+    }
+    
+    if ( LeftCtrlPressed() && ( ! Me [ player_num ] . running_must_rest ) )
     { 
-      planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
-      planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
-      // DebugPrintf ( -2 , "\nNow running..." );
+	planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
+	planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
+	// DebugPrintf ( -2 , "\nNow running..." );
     }
-  else
+    else
     {
-      planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
-      planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
-      // DebugPrintf ( -2 , "\nNow walking..." );
+	planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
+	planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
+	// DebugPrintf ( -2 , "\nNow walking..." );
     }
-
-  //--------------------
-  // Now that the speed is set, we can start to make the step
-  //
-  Me [ player_num ] . speed . x = planned_step . x ;
-  Me [ player_num ] . speed . y = planned_step . y ;
-
-  //--------------------
-  // If speed is so high, that we might step over the target,
-  // we reduce the speed.
-  //
-  if ( ( Frame_Time() > 0.001 ) && ( length > 0.05 ) )
+    
+    //--------------------
+    // Now that the speed is set, we can start to make the step
+    //
+    Me [ player_num ] . speed . x = planned_step . x ;
+    Me [ player_num ] . speed . y = planned_step . y ;
+    
+    //--------------------
+    // If speed is so high, that we might step over the target,
+    // we reduce the speed.
+    //
+    if ( ( Frame_Time() > 0.001 ) && ( length > 0.05 ) )
     {
-      if ( fabsf ( planned_step . x * Frame_Time() ) >= fabsf ( RemainingWay .x  ) )
-	Me [ player_num ] . speed . x = RemainingWay . x / Frame_Time() ;
-      if ( fabsf ( planned_step . y * Frame_Time() ) >= fabsf ( RemainingWay .y  ) )
-	Me [ player_num ] . speed . y = RemainingWay . y / Frame_Time() ;
+	if ( fabsf ( planned_step . x * Frame_Time() ) >= fabsf ( RemainingWay .x  ) )
+	    Me [ player_num ] . speed . x = RemainingWay . x / Frame_Time() ;
+	if ( fabsf ( planned_step . y * Frame_Time() ) >= fabsf ( RemainingWay .y  ) )
+	    Me [ player_num ] . speed . y = RemainingWay . y / Frame_Time() ;
     }
-
-  //--------------------
-  // In case we have reached our target, we can remove this mouse_move_target again,
-  // but also if we have been thrown onto a different level, we cancel our current
-  // mouse move target...
-  //
-  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
-	 ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
-       ( Me [ player_num ] . mouse_move_target . z != Me [ player_num ] . pos . z ) )
+    
+    //--------------------
+    // In case we have reached our target, we can remove this mouse_move_target again,
+    // but also if we have been thrown onto a different level, we cancel our current
+    // mouse move target...
+    //
+    if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
+	   ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
+	 ( Me [ player_num ] . mouse_move_target . z != Me [ player_num ] . pos . z ) )
     {
-      return ( TRUE );
+	return ( TRUE );
     }
-
-  return ( FALSE );
-
+    
+    return ( FALSE );
+    
 }; // int move_tux_thowards_raw_position ( int player_num , float x , float y )
 
 /* ----------------------------------------------------------------------
@@ -1821,7 +1821,7 @@ clear_out_intermediate_points ( int player_num )
  * so good that the Tux has better chances of walking to the final mouse
  * move target.
  * ---------------------------------------------------------------------- */
-void
+int
 set_up_intermediate_course_for_tux ( int player_num )
 {
     int i;
@@ -1843,7 +1843,7 @@ set_up_intermediate_course_for_tux ( int player_num )
 	 ( fabsf ( Me [ player_num ] . mouse_move_target . y - last_given_course_target . y ) < 0.3 ) )
     {
 	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF REDUNDANCY!" );
-	return;
+	return ( FALSE ) ;
     }
     
     //--------------------
@@ -1855,7 +1855,7 @@ set_up_intermediate_course_for_tux ( int player_num )
 			Me [ player_num ] . mouse_move_target . z ) )
     {
 	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
-	return;
+	return ( FALSE ) ;
     }
     
     //--------------------
@@ -1867,7 +1867,7 @@ set_up_intermediate_course_for_tux ( int player_num )
 			Me [ player_num ] . pos . z ) )
     {
 	DebugPrintf ( 0 , "\nSkipping recursion because of passability reasons from current position..." );
-	return;
+	return ( FALSE ) ;
     }
     
     //--------------------
@@ -1992,6 +1992,8 @@ set_up_intermediate_course_for_tux ( int player_num )
 		  "\nFinal value of bad_luck_in_4_directions_counter after recursion: %d. " , 
 		  bad_luck_in_4_directions_counter );
     
+    return ( TRUE ) ;
+
 }; // void set_up_intermediate_course_for_tux ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -2044,8 +2046,27 @@ move_tux_thowards_intermediate_point ( int player_num )
 					       PLEASE_INFORM, IS_FATAL );
 		}
 		our_obstacle = & ( PlayerLevel -> obstacle_list [ obstacle_index ] ) ;
-		EnterChest ( our_obstacle -> pos );
-		while ( SpacePressed() );
+
+		//--------------------
+		// Now if the obstacle in question is still too far away or
+		// if it's blocked by a wall, we'll simply skip the operation
+		// and also say so.
+		//
+		if ( ( fabsf ( Me [ 0 ] . pos . x - our_obstacle -> pos . x ) >= 1.0 ) ||
+		     ( fabsf ( Me [ 0 ] . pos . y - our_obstacle -> pos . y ) >= 1.0 ) )
+		{
+		    append_new_game_message ( "Looting failed:  unable to reach loot target." );
+		}
+		else
+		{
+		    EnterChest ( our_obstacle -> pos );
+		    while ( SpacePressed() );
+		}
+		//--------------------
+		// In any case, when having reached the end of the way with such
+		// a combo target, the action is finished for now, so we can unset
+		// it right here.
+		//
 		Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
 		break;
 	    case COMBO_ACTION_OPEN_CHEST:
@@ -2165,12 +2186,20 @@ adapt_global_mode_for_player ( int player_num )
 
     if ( ( RightPressed ( ) && ( ! right_pressed_previous_frame) ) || MouseWheelDownPressed ( ) )
     {
+
+	//--------------------
+	// Now we cut down on the available major modes for the game,
+	// until those are implemented properly.
+	//
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_EXAMINE )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
+	    // global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+
+
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_REPAIR )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_UNLOCK )	
@@ -2188,8 +2217,14 @@ adapt_global_mode_for_player ( int player_num )
 
     if ( ( LeftPressed ( ) && ( ! left_pressed_previous_frame ) ) || MouseWheelUpPressed ( ) )
     {
+
+	//--------------------
+	// Now we cut down on the available major modes for the game,
+	// until those are implemented properly.
+	//
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_PICKPOCKET ;
+	    // global_ingame_mode = GLOBAL_INGAME_MODE_PICKPOCKET ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_PICKPOCKET )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_ATTACK ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_ATTACK )	
@@ -3737,7 +3772,8 @@ handle_player_loot_command ( int player_num )
     obstacle* our_obstacle;
     char game_message_text[ 2000 ] ;
     Level our_level;
-
+    int way_find_attempts;
+    moderately_finepoint offset_vector;
     our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
@@ -3749,20 +3785,82 @@ handle_player_loot_command ( int player_num )
     }
     our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
 
-    sprintf ( game_message_text , "Looting %s (obs type %d)." , 
-	      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , our_obstacle -> type );
-    append_new_game_message ( game_message_text );
+    if ( obstacle_map [ our_obstacle -> type ] . can_be_looted )
+    {
+	sprintf ( game_message_text , "Looting %s (obs type %d)." , 
+		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name , our_obstacle -> type );
+	append_new_game_message ( game_message_text );
 
-    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ obstacle_index ] . pos . x ;
-    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ obstacle_index ] . pos . y ;
-    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-    Me [ player_num ] . mouse_move_target . y += 0.8 ;
-    set_up_intermediate_course_for_tux ( player_num ) ;
-    
-    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
-    Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
-		    
+	
+	offset_vector . x = 0 ; 
+	offset_vector . y = 0 ; 
+	if ( fabsf ( Me [ player_num ] . pos . x - our_obstacle -> pos . x ) >
+	     fabsf ( Me [ player_num ] . pos . y - our_obstacle -> pos . y ) )
+	{
+	    if ( Me [ player_num ] . pos . x > our_obstacle -> pos . x ) 
+		offset_vector . x = 0.8 ;
+	    else
+		offset_vector . x = -0.8 ;
+	}
+	else
+	{
+	    if ( Me [ player_num ] . pos . y > our_obstacle -> pos . y ) 
+		offset_vector . y = 0.8 ;
+	    else
+		offset_vector . y = -0.8 ;
+	}
+
+	for ( way_find_attempts = 0 ; way_find_attempts < 4 ; way_find_attempts ++ )
+	{
+	    Me [ player_num ] . mouse_move_target . x = 
+		our_level -> obstacle_list [ obstacle_index ] . pos . x ;
+	    Me [ player_num ] . mouse_move_target . y = 
+		our_level -> obstacle_list [ obstacle_index ] . pos . y ;
+	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+
+	    Me [ player_num ] . mouse_move_target . x += offset_vector . x ;
+	    Me [ player_num ] . mouse_move_target . y += offset_vector . y ;
+	    
+	    if ( way_find_attempts == 0 )
+		RotateVectorByAngle ( & offset_vector , 90 ) ;
+	    else if ( way_find_attempts == 1 )
+		RotateVectorByAngle ( & offset_vector , -180 ) ;
+	    else
+		RotateVectorByAngle ( & offset_vector , -90 ) ;
+
+	    if ( set_up_intermediate_course_for_tux ( player_num ) ) 
+	    {
+		DebugPrintf ( -4 , "\n%s(): found suitable way on attempt %d." , __FUNCTION__ , 
+			      way_find_attempts );
+		break;
+	    }
+	}
+	
+	Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
+	Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
+    }
+    else
+    {
+	//--------------------
+	// We do a case separation:  Crates and barrels get a separate
+	// message on how to loot them.
+	//
+	switch ( our_obstacle -> type )
+	{
+	    case ISO_BARREL_1:
+	    case ISO_BARREL_2:
+	    case ISO_BARREL_3:
+	    case ISO_BARREL_4:
+		sprintf ( game_message_text , "In order to loot that, I'll have to smash it." );
+		break;
+	    default:
+		sprintf ( game_message_text , "That's not a container, so no way to loot it." );
+		break;
+	}
+	append_new_game_message ( game_message_text );
+    }
+
 }; // void handle_player_loot_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------

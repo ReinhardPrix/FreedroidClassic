@@ -4159,7 +4159,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , TRUE );
 	TargetRectangle . y = 
 	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , FALSE ) ;
-	    - ENEMY_ENERGY_BAR_OFFSET_Y ;
+	// - ENEMY_ENERGY_BAR_OFFSET_Y ;
 	  
 	if ( use_open_gl )
 	{
