@@ -1278,7 +1278,7 @@ GetCrew (char *filename)
 	  printf("\nGetCrew:  Unterminated deroid section encountered!!\n\nTerminating....");
 	  Terminate(ERR);
 	}
-      EndOfThisDroidSectionPointer[0]=0;
+      // EndOfThisDroidSectionPointer[0]=0;
       GetThisLevelsDroids( DroidSectionPointer );
       DroidSectionPointer = EndOfThisDroidSectionPointer+2; // Move past the inserted String terminator
     }
@@ -1302,12 +1302,20 @@ GetCrew (char *filename)
   return (OK);
 } /* GetCrew () */
 
-
+/*
+----------------------------------------------------------------------
+This function receives a pointer to the already read in crew section
+in a already read in droids file and decodes all the contents of that
+droid section to fill the AllEnemys array with droid types accoriding
+to the specifications made in the file.
+----------------------------------------------------------------------
+*/
 void
 GetThisLevelsDroids( char* SectionPointer )
 {
   int OurLevelNumber;
   char* SearchPointer;
+  char* EndOfThisLevelData;
   int MaxRand;
   int MinRand;
   int RealNumberOfRandomDroids;
@@ -1318,51 +1326,29 @@ GetThisLevelsDroids( char* SectionPointer )
   int FreeAllEnemysPosition;
 
 #define DROIDS_LEVEL_INDICATION_STRING "Level="
+#define DROIDS_LEVEL_END_INDICATION_STRING "** End of this levels droid data **"
 #define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
+
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
+  EndOfThisLevelData = LocateStringInData ( SectionPointer , DROIDS_LEVEL_END_INDICATION_STRING );
+  EndOfThisLevelData[0]=0;
+
   // Now we read in the level number for this level
-  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_LEVEL_INDICATION_STRING )) == NULL )
-    {
-      printf("\nERROR in GetThisLevelsDroids: NO DROIDS LEVEL INDICATION STRING FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      SearchPointer += strlen ( DROIDS_LEVEL_INDICATION_STRING );
-      sscanf ( SearchPointer , "%d" , &OurLevelNumber );
-      // printf("\nLevel number for the droids of this level found!  It reads: %d" , OurLevelNumber );
-    }
+  ReadValueFromString( SectionPointer , DROIDS_LEVEL_INDICATION_STRING , "%d" , &OurLevelNumber , 
+		       EndOfThisLevelData );
 
   // Now we read in the maximal number of random droids for this level
-  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING )) == NULL )
-    {
-      printf("\nERROR in GetThisLevelsDroids: NO DROIDS MAXIMUM RANDOM NUMBER FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      SearchPointer += strlen ( DROIDS_MAXRAND_INDICATION_STRING );
-      sscanf ( SearchPointer , "%d" , &MaxRand );
-      // printf("\nMaximum number of random droids for this level found!  It reads: %d" , MaxRand );
-    }
+  ReadValueFromString( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING , "%d" , &MaxRand , 
+		       EndOfThisLevelData );
 
   // Now we read in the minimal number of random droids for this level
-  if ( ( SearchPointer = strstr ( SectionPointer , DROIDS_MINRAND_INDICATION_STRING )) == NULL )
-    {
-      printf("\nERROR in GetThisLevelsDroids: NO DROIDS MINIMUM RANDOM NUMBER FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      SearchPointer += strlen ( DROIDS_MINRAND_INDICATION_STRING );
-      sscanf ( SearchPointer , "%d" , &MinRand );
-      // printf("\nMaximum number of random droids for this level found!  It reads: %d" , MinRand );
-    }
+  ReadValueFromString( SectionPointer , DROIDS_MINRAND_INDICATION_STRING , "%d" , &MinRand , 
+		       EndOfThisLevelData );
 
   DifferentRandomTypes=0;
   SearchPointer = SectionPointer;
@@ -1405,14 +1391,13 @@ Sorry...\n\
 	}
       else
 	{
-	  // printf("\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
+	  DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
 	}
       ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
       DifferentRandomTypes++;
-
     }
-  // printf("\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
-
+  DebugPrintf( 1 , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
+  
   //--------------------
   // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
   // the allowed types.  The number of different allowed types found is also available.
@@ -1446,8 +1431,7 @@ Sorry...\n\
       SearchPointer += strlen ( SPECIAL_FORCE_INDICATION_STRING );
       strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
       TypeIndicationString[3]=0;
-      // printf("\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
-      // fflush(stdout);
+      DebugPrintf( 1 , "\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
 
       // Now that we have got a type indication string, we only need to translate it
       // into a number corresponding to that droid in the droid list
@@ -1481,7 +1465,8 @@ Sorry...\n\
 	}
       else
 	{
-	  // printf("\nSpecial force's Type indication string %s translated to type Nr.%d." , TypeIndicationString , ListIndex );
+	  DebugPrintf( 1 , "\nSpecial force's Type indication string %s translated to type Nr.%d." , 
+		       TypeIndicationString , ListIndex );
 	}
 
       for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
@@ -1494,85 +1479,20 @@ Sorry...\n\
 	  Terminate(ERR);
 	}
 
-      SearchPointer = strstr ( SearchPointer , "X=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  X= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "X=" );
-      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.x );
-      // printf("\nX= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.x );
-      
-      SearchPointer = strstr ( SearchPointer , "Y=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Y= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Y=" );
-      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.y );
-      // printf("\nY= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.y );
-      
-      SearchPointer = strstr ( SearchPointer , "Fixed=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Fixed= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Fixed=" );
-      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
-      // printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
-      
-      SearchPointer = strstr ( SearchPointer , "Marker=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Marker= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Marker=" );
-      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].Marker );
-      // printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].Marker );
-      
-      SearchPointer = strstr ( SearchPointer , "AdvancedCommand=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  AdvancedCommand= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "AdvancedCommand=" );
-      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand );
-      // printf("\nAdvancedCommand entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand );
-      
-      SearchPointer = strstr ( SearchPointer , "Parameter1=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Parameter1= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Parameter1=" );
-      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].Parameter1 );
-      // printf("\nParameter2 entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].Parameter1 );
-      
-      SearchPointer = strstr ( SearchPointer , "Parameter2=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Parameter2= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Parameter2=" );
-      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
-      // printf("\nParameter2 entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
-      
-      SearchPointer = strstr ( SearchPointer , "Friendly=" );
-      if ( SearchPointer == NULL )
-	{
-	  printf("\nERROR reading .droids file:  Friendly= string not found for special force...Terminating...");
-	  Terminate(ERR);
-	}
-      SearchPointer += strlen ( "Friendly=" );
-      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].Friendly );
-      // printf("\nFriendly entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].Friendly );
+      ReadValueFromString ( SearchPointer ,"X=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.x , EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Y=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.y , EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Fixed=","%d", &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Marker=","%d", &AllEnemys[ FreeAllEnemysPosition ].Marker , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"AdvancedCommand=","%d", &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Parameter1=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter1 , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Parameter2=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter2 , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].Friendly , 
+			    EndOfThisLevelData );
       
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
@@ -1580,7 +1500,6 @@ Sorry...\n\
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
 
     } // while Special force droid found...
-
 
   NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
   // getchar();
