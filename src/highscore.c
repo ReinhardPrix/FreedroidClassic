@@ -104,10 +104,9 @@ update_highscores (void)
 
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
-  ShowRobotPicture (User_Rect.x + User_Rect.w/2 -70, User_Rect.y + 130, DRUID999);
-  DisplayText ("Great Score !", User_Rect.x + User_Rect.w/2 -90, User_Rect.y + 100, &User_Rect);
-  DisplayText ("Enter your name: ", User_Rect.x + User_Rect.w/2 -160, User_Rect.y + 320, 
-	       &User_Rect);
+  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+  DisplayText ("Great Score !",  UserCenter_x -90, UserCenter_y - 100, &User_Rect);
+  DisplayText ("Enter your name: ",  UserCenter_x -160, UserCenter_y + 100, &User_Rect);
   SDL_Flip (ne_screen);
 
   tmp_name = GetString (MAX_NAME_LEN, 2);

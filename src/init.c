@@ -1356,9 +1356,10 @@ ThouArtDefeated (void)
 
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
   MakeGridOnScreen (&User_Rect);
-  ShowRobotPicture (User_Rect.x + User_Rect.w/2 -70, User_Rect.y + 130, DRUID999);
-  DisplayText ("Transmission", User_Rect.x + User_Rect.w/2 -90, User_Rect.y + 100, &User_Rect);
-  DisplayText ("Terminated", User_Rect.x + User_Rect.w/2 -90, User_Rect.y + 320, &User_Rect);
+
+  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+  DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);
+  DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
   SDL_Flip (ne_screen);
   now=SDL_GetTicks();
   while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );

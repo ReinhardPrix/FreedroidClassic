@@ -235,8 +235,8 @@ ShowLifts (int level, int liftrow)
   SDL_Rect src, dst;
   int i;
   SDL_Color lift_bg_color = {0,0,0};  /* black... */
-  int xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*300)/2;
-  int yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*180)/2;
+  int xoffs = (User_Rect.w - 578)/2;
+  int yoffs = (User_Rect.h - 211)/2;
 
   ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
   ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
