@@ -498,7 +498,11 @@ Title (void)
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
+  // STRANGE!! This command will be silently ignored by SDL?
+  // WHY?? DONT KNOW!!!
   Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+
+  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
