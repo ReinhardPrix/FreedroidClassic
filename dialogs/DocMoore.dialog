@@ -30,10 +30,13 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
 
+
 END OF AUTORS NOTES
+
 
 Beginning of new chat dialog for character="XXXXX"
 
@@ -106,6 +109,7 @@ ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="GiveItem:79"
 DoSomethingExtra="PlantCookie:BrainEnlargementAntidodeGiven:"
+DoSomethingExtra="OpenQuestDiaryEntry:M0E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
