@@ -1945,12 +1945,10 @@ PrepareStartOfNewCharacter ( void )
   Me[0].drive_item.currently_held_in_hand = FALSE;
   Me[0].aux1_item.currently_held_in_hand = FALSE;
   Me[0].aux2_item.currently_held_in_hand = FALSE;
+  Item_Held_In_Hand = ( -1 );
 
   FillInItemProperties ( & ( Me[0].weapon_item ) , TRUE , 0 );
   FillInItemProperties ( & ( Me[0].drive_item ) , TRUE , 0 );
-
-
-  Item_Held_In_Hand = ( -1 );
 
   DebugPrintf ( 0 , "\nPrepareStartOfNewCharacter:  Shuffling droids on all %d levels!" , curShip.num_levels );
   for ( i = 0 ; i < curShip.num_levels ; i ++ )
@@ -2248,22 +2246,6 @@ ThouArtDefeated (void)
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
   DebugPrintf (1, "\n\n DefeatedDone \n\n");
 }; // void ThouArtDefeated(void)
-
-/* ----------------------------------------------------------------------
- * This is an old function, that was used in the classical paradroid in
- * order to detect a completely cleared ship, but only after some seconds.
- * Maybe that could be removed from the code already, since we have the
- * CheckIfMissionIsComplete function.
- * ---------------------------------------------------------------------- */
-void
-ThouArtVictorious (void)
-{
-  ShipEmptyCounter = WAIT_SHIPEMPTY;
-  GameOver = TRUE;
-
-  ClearUserFenster ();
-  getchar_raw ();
-}
 
 /*----------------------------------------------------------------------
  * This function checks, if the influencer has succeeded in his given 

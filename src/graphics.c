@@ -892,21 +892,6 @@ void DisplayImage( char *datafile )
 
 }; // void DisplayImage( char *datafile )
 
-
-/*
- * replace every occurance of color src by dst in Surface surf
- */
-void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
-{
-  int i, j;
-    
-  for (i=0; i < surf->w; i++)
-    for (j=0; j < surf->h; i++)
-      ; /* ok, I'll do that later ; */
-
-  return;
-}; // void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
-
 /* ----------------------------------------------------------------------
  * This function initializes ALL the graphics again, propably after 
  * they have been destroyed by resizing operations.
@@ -1419,20 +1404,7 @@ InitVideo (void)
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
 
-  return;
-
 }; // InitVideo () 
-
-/* ----------------------------------------------------------------------
- * This function changes the level color to grey.  It is used mainly
- * after a level has been cleared of all other robots, as it was the
- * case in the classical paradroid game.
- * ---------------------------------------------------------------------- */
-void
-LevelGrauFaerben (void)
-{
-  CurLevel->color = PD_DARK;
-}; // void LevelGrauFaerben (void)
 
 /* ----------------------------------------------------------------------
  * This function fills all the screen or the freedroid window with a 

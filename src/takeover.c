@@ -221,7 +221,7 @@ Takeover (int enemynum)
       OpponentType = AllEnemys[enemynum].type;
       // NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
       NumCapsules[YOU] = 3 + Me [ 0 ] . hacking_skill ;
-      NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
+      NumCapsules[ENEMY] = 4 + Druidmap [ OpponentType ] . class ;
 
       InventPlayground ();
 

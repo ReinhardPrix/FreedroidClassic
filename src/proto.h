@@ -34,7 +34,6 @@
 #else
 #define EXTERN extern
 #endif
-EXTERN int ShipEmptyCounter;
 
 // init.c
 #undef EXTERN
@@ -51,7 +50,6 @@ EXTERN void ClearAutomapData( void );
 EXTERN void InitFreedroid (void);
 EXTERN void PrepareStartOfNewCharacter ( void ) ;
 EXTERN void ThouArtDefeated (void);
-EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);
 EXTERN void GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename );
 EXTERN void PlayATitleFile ( char* Filename );
@@ -152,18 +150,12 @@ EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
-EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );
 EXTERN void SetCombatScaleTo(float);
 EXTERN int ReInitPictures (void);
 EXTERN int InitPictures (void);
-EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
-EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
-		       unsigned char gruen, unsigned char blau);
 EXTERN void InitVideo (void);
-EXTERN void LadeZeichensatz (char *Zeichensatzname);
-EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
@@ -195,7 +187,6 @@ EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
-EXTERN int GetCurrentLift (void);
 EXTERN void ActSpecialField ( int PlayerNum ) ;
 
 EXTERN void CountNumberOfDroidsOnShip ( void );
@@ -204,8 +195,7 @@ EXTERN int SaveShip(char *filename);
 EXTERN void GetAllAnimatedMapTiles (Level Lev);
 EXTERN int GetCrew (char *shipname);
 
-EXTERN void AnimateRefresh (void);
-EXTERN void AnimateConsumer (void);
+EXTERN void AnimateCyclingMapTiles (void);
 EXTERN void MoveLevelDoors ( int PlayerNum ) ;
 EXTERN void WorkLevelGuns ( int PlayerNum ) ;
 EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
@@ -292,18 +282,9 @@ EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
 EXTERN int CursorIsInUserRect( int x , int y );
 EXTERN int CursorIsInInvRect( int x , int y );
-EXTERN int CursorIsInWeaponRect( int x , int y );
-EXTERN int CursorIsInDriveRect( int x , int y );
-EXTERN int CursorIsInShieldRect( int x , int y );
-EXTERN int CursorIsInAux1Rect( int x , int y );
-EXTERN int CursorIsInAux2Rect( int x , int y );
-EXTERN int CursorIsInSpecialRect( int x , int y );
-EXTERN int CursorIsInArmourRect( int x , int y );
 EXTERN int GetHeldItemCode ( void );
 EXTERN int GetInventorySquare_x( int x );
 EXTERN int GetInventorySquare_y( int x );
-EXTERN void DropHeldItemToWeaponSlot ( void );
-EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
 EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum ) ;
@@ -418,9 +399,7 @@ EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_
 EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
-EXTERN void HealerMenu ( void );
 EXTERN void InitiateMenu( char* BackgroundToUse );
-EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
 EXTERN void Credits_Menu (void);
@@ -480,7 +459,6 @@ EXTERN void MoveEnemys (void);
 EXTERN void AttackInfluence (int enemynum);
 EXTERN void AnimateEnemys (void);
 EXTERN void ClearEnemys (void);
-EXTERN int ClassOfDruid (int druidtype);
 EXTERN void SwapEnemys ( int First , int Second ) ;
 
 // ship.c 
@@ -501,7 +479,6 @@ EXTERN void AlleLevelsGleichFaerben (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
 void ShowDroidInfo (int droidtype, int page , char ShowArrows );
-void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int menu_pos);
 
 // text.c 
@@ -516,7 +493,6 @@ EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels 
 EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );
 EXTERN void DisplayBigScreenMessage( void );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
-// EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void ChatWithFriendlyDroid( Enemy ChatDroid );
 EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );

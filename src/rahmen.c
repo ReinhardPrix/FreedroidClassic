@@ -26,10 +26,6 @@
  * This file contains all functions to update and draw the top status 
  * displays with status etc...
  * ---------------------------------------------------------------------- */
-/*
- * This file has been checked for remains of german comments in the code
- * I you still find some, please just kill it mercilessly.
- */
 
 #define _rahmen_c
 
@@ -708,37 +704,37 @@ ShowCurrentTextWindow ( void )
 	      GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
 	    }
 	} 
-      else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  if ( Me[0].weapon_item.type > 0 )
 	    GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
 	}
-      else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  if ( Me[0].drive_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
 	}
-      else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].shield_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].shield_item) , FALSE );
 	}
-      else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].armour_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
 	}
-      else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].aux1_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
 	}
-      else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].aux2_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
 	}
-      else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].special_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );

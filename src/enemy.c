@@ -1931,25 +1931,4 @@ AnimateEnemys (void)
     }
 }; // void AnimateEnemys ( void )
 
-/* ----------------------------------------------------------------------
- * This function returns the class a robot belongs to.
- * ---------------------------------------------------------------------- */
-int
-ClassOfDruid (int druidtype)
-{
-  /*
-    This does not work with characters being used also as droid digits.
-
-    char classnumber[2];
-
-    classnumber[0] = Druidmap[druidtype].druidname[0];	// first digit is class 
-    classnumber[1] = '\0';
-  
-    return (atoi (classnumber));
-  */
-
-  return ( Druidmap [ druidtype ] . class ) ;
-
-}; // ClassOfDruid 
-
 #undef _enemy_c

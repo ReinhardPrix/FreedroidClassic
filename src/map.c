@@ -3609,5 +3609,16 @@ IsVisible ( GPS objpos , int PlayerNum )
   return TRUE;
 }; // int IsVisible( Point objpos )
 
+/* ----------------------------------------------------------------------
+ * This function moves all periodically changing map tiles...
+ * ---------------------------------------------------------------------- */
+void
+AnimateCyclingMapTiles (void)
+{
+  AnimateRefresh();
+  AnimateConsumer();
+  AnimateTeleports();
+}; // void AnimateCyclingMapTiles (void)
+
 
 #undef _map_c

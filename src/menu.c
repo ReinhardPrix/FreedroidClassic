@@ -1788,6 +1788,7 @@ I need to know that for saving. Abort.\n");
 	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
 	  GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
+	  Item_Held_In_Hand = ( -1 );
 	  return ( TRUE );
 	}
     }

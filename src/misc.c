@@ -127,7 +127,15 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
 
     { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
-    { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } 
+    { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
+
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_POS_X  , SHIELD_POS_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_POS_X    , AUX1_POS_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_POS_X    , AUX2_POS_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SPECIAL_POS_X , SPECIAL_POS_Y , SPECIAL_RECT_WIDTH , SPECIAL_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_POS_X  , ARMOUR_POS_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -712,7 +720,7 @@ Pause (void)
     {
       SetNewBigScreenMessage( " Pause " );
       AnimateInfluence ( 0 );
-      AnimateRefresh ();
+      AnimateCyclingMapTiles ();
       AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
       AssembleCombatPicture ( DO_SCREEN_UPDATE );

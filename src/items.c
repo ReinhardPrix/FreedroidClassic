@@ -1363,186 +1363,6 @@ CursorIsInInvRect( int x , int y )
 }; // int CursorIsInInvRect( int x , int y )
 
 /* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the weapon slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInWeaponRect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= WEAPON_RECT_X ) && ( CurPos.x <= WEAPON_RECT_X + WEAPON_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + WEAPON_RECT_Y ) && 
-	   ( CurPos.y <= User_Rect.y + WEAPON_RECT_Y + WEAPON_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-
-  return( FALSE );
-
-}; // int CursorIsInWeaponRect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the drive slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInDriveRect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= DRIVE_RECT_X ) && ( CurPos.x <= DRIVE_RECT_X + DRIVE_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + DRIVE_RECT_Y ) && 
-	   ( CurPos.y <= User_Rect.y + DRIVE_RECT_Y + DRIVE_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInDriveRect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the armour slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInArmourRect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= ARMOUR_POS_X ) && ( CurPos.x <= ARMOUR_POS_X + ARMOUR_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + ARMOUR_POS_Y ) && 
-	   ( CurPos.y <= User_Rect.y + ARMOUR_POS_Y + ARMOUR_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInArmourRect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the shield slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInShieldRect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= SHIELD_POS_X ) && ( CurPos.x <= SHIELD_POS_X + SHIELD_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + SHIELD_POS_Y ) && 
-	   ( CurPos.y <= User_Rect.y + SHIELD_POS_Y + SHIELD_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInShieldRect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the armour slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInSpecialRect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= SPECIAL_POS_X ) && ( CurPos.x <= SPECIAL_POS_X + SPECIAL_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + SPECIAL_POS_Y ) && 
-	   ( CurPos.y <= User_Rect.y + SPECIAL_POS_Y + SPECIAL_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInSpecialRect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the aux1 slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInAux1Rect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= AUX1_POS_X ) && ( CurPos.x <= AUX1_POS_X + AUX1_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		   "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + AUX1_POS_Y ) && 
-	   ( CurPos.y <= User_Rect.y + AUX1_POS_Y + AUX1_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		       "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInAux1Rect( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the small
- * rectangle defining the aux2 slot in the inventory screen.
- * ---------------------------------------------------------------------- */
-int 
-CursorIsInAux2Rect( int x , int y )
-{
-  point CurPos;
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= AUX2_POS_X ) && ( CurPos.x <= AUX2_POS_X + AUX2_RECT_WIDTH ) )
-    {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		   "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + AUX2_POS_Y ) && 
-	   ( CurPos.y <= User_Rect.y + AUX2_POS_Y + AUX2_RECT_HEIGHT ) )
-	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
-		       "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
-	  return( TRUE );
-	}
-    }
-  return( FALSE );
-}; // int CursorIsInAux2Rect( int x , int y )
-
-/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
  * where the inventory of the player is usually located or not.
  * ---------------------------------------------------------------------- */
@@ -2231,7 +2051,7 @@ ManageInventoryScreen ( void )
 	      Me[0].Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInWeaponRect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in weapons rect!" );
 	  if ( Me[0].weapon_item.type > 0 )
@@ -2245,7 +2065,7 @@ ManageInventoryScreen ( void )
 	      Me[0].weapon_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInDriveRect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in drive rect!" );
 	  if ( Me[0].drive_item.type > 0 )
@@ -2259,7 +2079,7 @@ ManageInventoryScreen ( void )
 	      Me[0].drive_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInShieldRect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in shield rect!" );
 	  if ( Me[0].shield_item.type > 0 )
@@ -2273,7 +2093,7 @@ ManageInventoryScreen ( void )
 	      Me[0].shield_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInArmourRect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in armour rect!" );
 	  if ( Me[0].armour_item.type > 0 )
@@ -2287,7 +2107,7 @@ ManageInventoryScreen ( void )
 	      Me[0].armour_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInSpecialRect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in special rect!" );
 	  if ( Me[0].special_item.type > 0 )
@@ -2301,7 +2121,7 @@ ManageInventoryScreen ( void )
 	      Me[0].special_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInAux1Rect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
 	  if ( Me[0].aux1_item.type > 0 )
@@ -2315,9 +2135,9 @@ ManageInventoryScreen ( void )
 	      Me[0].aux1_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsInAux2Rect( CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
+	  DebugPrintf( 0 , "\nGrabbing in aux2 rect!" );
 	  if ( Me[0].aux2_item.type > 0 )
 	    {
 	      //--------------------
@@ -2412,7 +2232,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the weapons rect, i.e. the small box top left, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the weapons rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2436,7 +2256,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the drive rect, i.e. the small box to the right, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( DRIVE_RECT_BUTTON, CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the drive rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2460,7 +2280,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the armour rect, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the armour rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2484,7 +2304,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the shield rect, i.e. the small box to the top right, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2508,9 +2328,9 @@ ManageInventoryScreen ( void )
       // If the cursor is in the special rect, i.e. the small box to the top left, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
+	  DebugPrintf( 0 , "\nItem dropped onto the special rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot ) )
@@ -2532,7 +2352,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the aux1 rect, i.e. the small box to the left middle, then
       // the item should be dropped onto the players current aux1 slot
       //
-      if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the aux1 rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2556,7 +2376,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the aux2 rect, i.e. the small box to the left middle, then
       // the item should be dropped onto the players current aux1 slot
       //
-      if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the aux2 rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2659,43 +2479,43 @@ ManageInventoryScreen ( void )
 		  HomeMadeItemRepair ( & ( Me[0].Inventory[ Grabbed_InvPos ] ) ) ;
 		}
 	    }
-	  else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the weapons rectangle!" );
 	      if ( Me [ 0 ] . weapon_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . weapon_item ) );
 	    }
-	  else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the drive rectangle!" );
 	      if ( Me [ 0 ] . drive_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . drive_item ) );
 	    }
-	  else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the shield rectangle!" );
 	      if ( Me [ 0 ] . shield_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . shield_item ) );
 	    }
-	  else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the armour rectangle!" );
 	      if ( Me [ 0 ] . armour_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . armour_item ) );
 	    }
-	  else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the special rectangle!" );
 	      if ( Me [ 0 ] . special_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . special_item ) );
 	    }
-	  else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the Aux1 rectangle!" );
 	      if ( Me [ 0 ] . aux1_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . aux1_item ) );
 	    }
-	  else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the Aux2 rectangle!" );
 	      if ( Me [ 0 ] . aux2_item . type != (-1) )
