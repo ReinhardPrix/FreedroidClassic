@@ -7,6 +7,8 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
+- (rp) mouse actions lead to "glitches" in display..
+
 - (rp) sometimes droids get created in "piles", i.e. on top of each other...
 
 - after using flash-bullet: there seems to be a "hanging flash"
