@@ -49,6 +49,7 @@
 
 #define BEST_MELEE_DISTANCE_IN_SQUARES (0.8)
 #define DISTANCE_TOLERANCE (0.2)
+#define FORCE_FIRE_DISTANCE (0.7)
 
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
@@ -958,9 +959,9 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.5 )
+      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.8 )
 	continue;
-      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.5 )
+      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.8 )
 	continue;
       
 
@@ -1057,9 +1058,6 @@ FireBullet ( int PlayerNum )
 
   DebugPrintf ( 2 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
 
-  // If the currently overtaken droid doesn't have a weapon at all, just return
-  // if ( Me [ PlayerNum ] .weapon_item.type == (-1) ) return;
-
   // If the influencer is holding something from the inventory
   // menu via the mouse, also just return
   // if ( Item_Held_In_Hand != (-1) ) return;
@@ -1094,15 +1092,20 @@ FireBullet ( int PlayerNum )
   if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return;
 
   //--------------------
-  // NOW THE NEW MOUSE MOVE:  IF THERE IS NO ENEMY BELOW THE MOUSE CURSOR, WE INTERPRET
-  // NOT THE FIREING INTENTION ANY MORE, BUT RATHER THE (MOUSE-)MOVE INTENTION TO THAT
-  // LOCATION, SO THAT MOVING NO LONGER STRICTLY REQUIRED KEYBOARD USAGE.
+  // Now the new mouse move:  If there is no enemy below the mouse cursor, we interpret
+  // a move to that location, not a fire command.
   //
-  if ( ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
-       ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
-	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width * 1.5  ) || ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * 1.5 ) ) &&
-	   ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
-       )
+  // Also if the target is pretty close, we interpret a fireing command.
+  //
+  if ( 
+      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
+
+      ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
+	( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  * FORCE_FIRE_DISTANCE  ) || 
+	  ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * FORCE_FIRE_DISTANCE  ) ) &&
+	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+
+      )
     {
       //--------------------
       // Later, we will add the new mouse move intention at this point
@@ -1119,7 +1122,24 @@ FireBullet ( int PlayerNum )
       //
       Me [ PlayerNum ] . mouse_move_target_is_enemy = GetLivingDroidBelowMouseCursor ( PlayerNum ) ;
       
-      return;
+      //--------------------
+      // It would be tempting to return now, but perhaps the player is just targeting and fighting a robot.
+      // Then of course we must not return, but execute the stroke!!
+      //
+      if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
+	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x - 
+		     Me [ PlayerNum ] . pos . x ) < BEST_MELEE_DISTANCE_IN_SQUARES ) &&
+	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y - 
+		     Me [ PlayerNum ] . pos . y ) < BEST_MELEE_DISTANCE_IN_SQUARES ) )
+	{
+	  // don't return, but do the attack...
+	  //
+	}
+      else
+	{
+	  return;
+	}
+
     }
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
