@@ -113,7 +113,7 @@ enum _sounds {
 #define PALBILD_PCX                "../graphics/palbild.pcx"
 #define BLOCKBILD1_PCX             "../graphics/block.pcx"
 #define BLOCKBILD2_PCX             ""
-#define TITELBILD1_PCX             "../graphics/title4.pcx"
+#define TITELBILD1_PCX             "../graphics/newtitle.pcx"
 #define RAHMENBILD1_PCX            "../graphics/rahmen.pcx"
 #define PARAPLUSRAHMENBILD_PCX     "../graphics/plusrah1.pcx"
 #define BLASTBILD_PCX              "../graphics/blast.pcx"
