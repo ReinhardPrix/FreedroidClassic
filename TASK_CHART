@@ -11,30 +11,11 @@ jp
 
 The list of things I'm going to work on next:
 
-IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringen:
-    * Escape Menu itself: DONE
-    * Options Menu:  IN PROGRESS...
-    * Single Player Menu:  NOT DONE YET
-    * Multi Player Menu: NOT DONE YET
-    * Level Editor: NOT DONE YET
-    * Highscore list: NOT DONE YET
-
-(DONE) Get console up and running again with the new engine
-    * Make ShowElevators run again
-    * Make Druidshow run again
-    * Make ShowDeckMap run again
-
-(DONE) read more about libraries that can scale and zoom surfaces
-
-(DONE) Code fuer Zoom schreiben
-
 (?)  delete that old InternWindow crap from all our code!!
 
 (?)  delete that old RealScreen crap from all the code!!
 
 (?)  delete old INTERNBREITE and INTERNHOEHE crap
-
-(DONE)  add scaling and zooming of freedroid screen
 
 (?)  Ein dat file verwenden fuer die Anfangstexte
 
@@ -45,8 +26,6 @@ IN PROGRESS.. Das EscapeMenu und seine Untermenues wieder voll zum laufen bringe
 (?)  Ein dat file verwenden fuer die Blastdaten und die Blastbildfilenamen 
 
 (?)  write dokumentation about the new format for levels and maps.
-
-(DONE)  get the Paradroid font working in a PNG file for BFont 
 
 (?)  Read more about SDL_net &&  Add networking support
 

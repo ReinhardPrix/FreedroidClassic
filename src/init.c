@@ -346,6 +346,9 @@ InitFreedroid (void)
 {
   struct timeval timestamp;
 
+  Overall_Average=0.041;
+  SkipAFewFrames = 0;
+
   Init_Video ();
 
   Init_Audio ();

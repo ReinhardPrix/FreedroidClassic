@@ -79,136 +79,8 @@ int card = 0;
 int device = 0;
 void *handle;
 
-struct timeval now, oneframetimestamp, tenframetimestamp,
-  onehundredframetimestamp, differenz;
-
-long oneframedelay = 0;
-long tenframedelay = 0;
-long onehundredframedelay = 0;
-// float oneframedelay, tenframedelay, onehundredframedelay;
-float FPSover1 = 10;
-float FPSover10 = 10;
-float FPSover100 = 10;
-Uint32 Now_SDL_Ticks;
-Uint32 One_Frame_SDL_Ticks;
-Uint32 Ten_Frame_SDL_Ticks;
-Uint32 Onehundred_Frame_SDL_Ticks;
-int framenr = 0;
-int SkipAFewFrames = 0;
-long Overall_Frames_Displayed=0;
-float Overall_Average=0.041;
-
-int TestSound (void);
-void CalibratedDelay (long);
 void Debriefing (void);
-void Pause (void);
 void UpdateCountersForThisFrame (void);
-
-
-
-/*@Function============================================================
-@Desc: 
-
- * This function is the key to independence of the framerate for various game elements.
- * It returns the average time needed to draw one frame.
- * Other functions use this to calculate new positions of moving objects, etc..
- *
- * BEWARE!  Using the average over 1 frame (the previous frame that is) is no good.
- * The sound server tends to case moderate distortions in the frame rate, which seems
- * not to matter too much on my system at least, when using overalls over 10 frames.
-
- * Also there is of course a serious problem when some interuption occurs, like e.g.
- * the options menu is called or the debug menu is called or the console or the elevator
- * is entered or a takeover game takes place.
-
- * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
- * which instructs Rate_To_Be_Returned to return only the overall default framerate since
- * no better substitute exists at this moment.
-
- * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
- * which can be conveniently called from eveywhere.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-float
-Frame_Time (void)
-{
-  float Rate_To_Be_Returned;
-  
-  if ( SkipAFewFrames ) 
-    {
-      Rate_To_Be_Returned = Overall_Average;
-      return Rate_To_Be_Returned;
-    }
-
-
-  // Rate_To_Be_Returned = (1.0 / FPSover10);
-  /*
-  if ( Overall_Frames_Displayed < 100 )
-    {
-      Rate_To_Be_Returned = (1.0 / FPSover10);
-      return Rate_To_Be_Returned;
-    }
-  */
-
-  // Rate_To_Be_Returned = (1.0 / FPSover100);
-  // Rate_To_Be_Returned = (1.0 / FPSover10);
-  Rate_To_Be_Returned = (1.0 / FPSover1);
-
-  // if (FPSover10 > 20)
-  /* if (FPSover100 > 20)
-    {
-      Rate_To_Be_Returned = (1.0 / FPSover100);
-    }
-  else
-    {
-      Rate_To_Be_Returned = (1.0 / 20.0);
-    }
-  */
-
-  return Rate_To_Be_Returned;
-
-} // float Frame_Time(void)
-
-/*@Function============================================================
-@Desc: 
-
- * This function is the key to independence of the framerate for various game elements.
- * It returns the average time needed to draw one frame.
- * Other functions use this to calculate new positions of moving objects, etc..
- *
- * BEWARE!  Using the average over 1 frame (the previous frame that is) is no good.
- * The sound server tends to case moderate distortions in the frame rate, which seems
- * not to matter too much on my system at least, when using overalls over 10 frames.
-
- * Also there is of course a serious problem when some interuption occurs, like e.g.
- * the options menu is called or the debug menu is called or the console or the elevator
- * is entered or a takeover game takes place.
-
- * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
- * which instructs Rate_To_Be_Returned to return only the overall default framerate since
- * no better substitute exists at this moment.
-
- * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
- * which can be conveniently called from eveywhere.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void 
-Activate_Conservative_Frame_Computation(void)
-{
-  // SkipAFewFrames=212;
-  // SkipAFewFrames=22;
-  SkipAFewFrames=3;
-
-  // Now we are in some form of pause.  It can't
-  // hurt to have the top status bar redrawn after that,
-  // so we set this variable...
-  RahmenIsDestroyed=TRUE;
-
-} // void Activate_Conservative_Frame_Computation(void)
 
 /*-----------------------------------------------------------------
  * @Desc: the heart of the Game 
@@ -253,35 +125,8 @@ main (int argc, char *const argv[])
 
       while (!GameOver && !QuitProgram)
 	{
-	  /* This ensures, that 0 is never an encountered framenr,
-	   * therefore count to 100 here
-	   * Take the time now for calculating the frame rate
-	   * (DO NOT MOVE THIS COMMAND PLEASE!) */
-	  framenr++;
 
-#ifdef USE_SDL_FRAMERATE
-	  One_Frame_SDL_Ticks=SDL_GetTicks();
-	  if (framenr % 10 == 1)
-	    Ten_Frame_SDL_Ticks=SDL_GetTicks();
-	  if (framenr % 100 == 1)
-	    {
-	      Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
-	      // printf("\n%f",1/Frame_Time());
-	      // printf("Me.pos.x: %g Me.pos.y: %g Me.speed.x: %g Me.speed.y: %g \n",
-	      //Me.pos.x, Me.pos.y, Me.speed.x, Me.speed.y );
-	      //printf("Me.maxspeed.x: %g \n",
-	      //	     Druidmap[Me.type].maxspeed );
-	    }
-#else
-	  gettimeofday (&oneframetimestamp, NULL);
-	  if (framenr % 10 == 1)
-	    gettimeofday (&tenframetimestamp, NULL);
-	  if (framenr % 100 == 1)
-	    {
-	      gettimeofday (&onehundredframetimestamp, NULL);
-	      printf("\n%f",1/Frame_Time());
-	    }
-#endif
+	  StartTakingTimeForFPSCalculation();
 
 	  UpdateCountersForThisFrame ();
 
@@ -419,57 +264,7 @@ main (int argc, char *const argv[])
 	      CurLevel->empty = TRUE;
 	    }			/* if */
 
-	  // In the following paragraph the framerate calculation is done.
-	  // There are basically two ways to do this:
-	  // The first way is to use SDL_GetTicks(), a function measuring milliseconds
-	  // since the initialisation of the SDL.
-	  // The second way is to use gettimeofday, a standard ANSI C function I guess,
-	  // defined in time.h or so.
-	  // 
-	  // I have arranged for a definition set in defs.h to switch between the two
-	  // methods of ramerate calculation.  THIS MIGHT INDEED MAKE SENSE, SINCE THERE
-	  // ARE SOME UNEXPLAINED FRAMERATE PHENOMENA WHICH HAVE TO TO WITH KEYBOARD
-	  // SPACE KEY, SO PLEASE DO NOT ERASE EITHER METHOD.  PLEASE ASK JP FIRST.
-	  //
-
-#ifdef USE_SDL_FRAMERATE
-
-	  Now_SDL_Ticks=SDL_GetTicks();
-	  oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
-	  tenframedelay=Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
-	  onehundredframedelay=Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
-
-	  FPSover1 = 1000 * 1 / (float) oneframedelay;
-	  FPSover10 = 1000 * 10 / (float) tenframedelay;
-	  FPSover100 = 1000 * 100 / (float) onehundredframedelay;
-
-#else
-
-	  gettimeofday (&now, NULL);
-
-	  oneframedelay =
-	    (now.tv_usec - oneframetimestamp.tv_usec) + (now.tv_sec -
-							 oneframetimestamp.
-							 tv_sec) * 1000000;
-	  if (framenr % 10 == 0)
-	    tenframedelay =
-	      ((now.tv_usec - tenframetimestamp.tv_usec)) + (now.tv_sec -
-							     tenframetimestamp.
-							     tv_sec) *
-	      1000000;
-	  if ((framenr % 100) == 0)
-	    {
-	      onehundredframedelay =
-		(now.tv_sec - onehundredframetimestamp.tv_sec) * 1000000 +
-		(now.tv_usec - onehundredframetimestamp.tv_usec);
-	      framenr = 0;
-	    }
-
-	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
-	  FPSover10 = 1000000 * 10 / (float) tenframedelay;
-	  FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
-
-#endif
+	  ComputeFPSForThisFrame();
 
 	} /* while !GameOver */
     } /* while !QuitProgram */
@@ -545,60 +340,6 @@ ThouArtVictorious (void)
 }
 
 /*-----------------------------------------------------------------
- * Desc: realise Pause-Mode: the game process is halted,
- * 	while the graphics and animations are not.  This mode 
- *	can further be toggled from PAUSE to CHEESE, which is
- * 	a feature from the original program that should probably
- * 	allow for better screenshots.
- *
- *      We have incorporated the "CHEESE" feature for completeness.
- *
- *-----------------------------------------------------------------*/
-void
-Pause (void)
-{
-  int Pause = TRUE;
-
-  Activate_Conservative_Frame_Computation();
-
-  Me.status = PAUSE;
-  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-
-  while ( Pause )
-    {
-      // usleep(10);
-      AnimateInfluence ();
-      AnimateRefresh ();
-      RotateBulletColor ();
-      AnimateEnemys ();
-      DisplayRahmen(0);
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-      
-      if (CPressed ())
-	{
-	  Me.status = CHEESE;
-	  DisplayRahmen( 0 );
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-
-	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
-	  while ( SpacePressed() ); /* then wait for Space released */
-	  
-	  Me.status = PAUSE;       /* return to normal PAUSE */
-	} /* if (CPressed) */
-
-      if ( SpacePressed() )
-	{
-	  Pause = FALSE;
-	  while ( SpacePressed() );  /* wait for release */
-	}
-
-    } /* while (Pause) */
-
-  return;
-
-} /* Pause () */
-
-/*-----------------------------------------------------------------
  * 
  * 
  * 
@@ -606,6 +347,8 @@ Pause (void)
 void
 UpdateCountersForThisFrame (void)
 {
+  static long Overall_Frames_Displayed=0;
+
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
   Overall_Frames_Displayed++;

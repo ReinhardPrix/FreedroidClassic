@@ -35,8 +35,6 @@
 #define EXTERN extern
 #endif
 
-EXTERN float Frame_Time (void);
-EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;
@@ -338,6 +336,11 @@ EXTERN int NoDirectionPressed (void);
 #define EXTERN extern
 #endif
 
+EXTERN void Pause (void);
+EXTERN void ComputeFPSForThisFrame(void);
+EXTERN void StartTakingTimeForFPSCalculation(void);
+EXTERN float Frame_Time (void);
+EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN void DebugPrintf (char *);
 EXTERN void DebugPrintfInt (int);
 EXTERN void DebugPrintfFloat (float);
