@@ -1510,8 +1510,23 @@ iso_put_tux_shieldarm ( int x , int y , int PlayerNum , int rotation_index )
   if ( Me [ PlayerNum ] . shield_item . type == (-1) )
     iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
   else
-    iso_put_tux_part ( "shield1" , x , y , PlayerNum , rotation_index );
-
+    {
+      if ( Me [ PlayerNum ] . weapon_item . type == (-1) )
+	{
+	  iso_put_tux_part ( "shield1" , x , y , PlayerNum , rotation_index );
+	}
+      else
+	{
+	  if ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change > 0 )
+	    {
+	      iso_put_tux_part ( "shield1" , x , y , PlayerNum , rotation_index );
+	    }
+	  else
+	    {
+	      iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
+	    }
+	}
+    }
 }; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
 
 /* ----------------------------------------------------------------------

@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = freedroidRPG DialogEditor
+## bin_PROGRAMS = freedroidRPG DialogEditor
+bin_PROGRAMS = freedroidRPG
 
 freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c saveloadgame.c \
 	leveleditor.c blocks.c  graphics.c  map.c   init.c  ship.c \
