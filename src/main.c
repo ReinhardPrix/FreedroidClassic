@@ -833,24 +833,34 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.11  1993/08/24 20:28:38  prix
- * Wed Aug 04 12:27:11 1993: exported all influencer-functions to influence.c
- * Wed Aug 04 12:39:45 1993: ausgemistet
- * Wed Aug 04 12:50:33 1993: removed call to RotateShieldColors
- * Wed Aug 04 12:57:27 1993: removed WallReflectShots
- * Sun Aug 08 12:57:06 1993: AlleLevelsgleichFaerben hinyugefuegt
- * Sun Aug 08 13:15:01 1993: Levelfaerbeprozeduren disloziert
- * Sun Aug 08 21:05:48 1993: changed Feindesliste to new struct enem
- * Mon Aug 09 17:19:37 1993: call to ShuffleEnemys in  InitGlobalVars()
- * Mon Aug 09 19:01:45 1993: more enemys
- * Tue Aug 10 08:19:14 1993: DRUIDBAST
- * Tue Aug 10 10:15:15 1993: InitLevelColorTable aktiviert
- * Tue Aug 10 20:08:56 1993: kein EnemysGetroffen() meht
- * Tue Aug 10 20:15:39 1993: No InfluenceGetroffen mehr
- * Fri Aug 13 14:20:03 1993: Toene aus beim Programmende
- * Sat Aug 21 14:58:13 1993: Call to new LoadShip
- * Tue Aug 24 09:52:22 1993:  call Animate Refresh
- * Tue Aug 24 10:25:48 1993: randomize()
+ * Revision 1.12  1993/10/02 16:26:11  prix
+ * Tue Aug 24 16:43:23 1993: call InitEnemys
+ * Sun Aug 29 11:07:46 1993: added clock timing
+ * Wed Sep 15 10:35:10 1993: Timerinterrupt entlastet
+ * Wed Sep 15 14:45:10 1993: IntroMSG1 initialisiert
+ * Fri Sep 17 15:49:44 1993: call to InitTakeover();
+ * Sat Sep 18 10:41:53 1993: Load Enemy-Blocks in InitPictures, not in GetEnemyBox()
+ * Sat Sep 18 10:46:53 1993: Init of enemy/influence pictures consistently in InitPictures
+ * Sat Sep 18 11:32:25 1993: Rahmenpicture now in Mem: RahmenPicture
+ * Sun Sep 19 07:31:07 1993: Bessere Werte f"ur die Schu"stypen
+ * Sun Sep 19 07:34:26 1993: Bessere Werte f"ur die energy
+ * Sun Sep 19 07:50:47 1993: Font wird getestet.
+ * Sun Sep 19 07:52:43 1993: Schrift wird auch initialisiert
+ * Sun Sep 19 08:43:44 1993: fade colors desaktiviert
+ * Tue Sep 21 05:59:02 1993: laengere Intromessage
+ * Tue Sep 21 06:06:45 1993: Starttext wird gescrollt
+ * Tue Sep 21 14:17:11 1993: ClearScreen eingefuehrt
+ * Thu Sep 23 11:01:57 1993: parameters of ScrollText are a little different now
+ * Thu Sep 23 11:05:46 1993: including paratext.h now
+ * Thu Sep 23 14:13:57 1993: RealScreen and InternalScreen now used here
+ * Sat Sep 25 10:17:15 1993: written UpdateInfoline
+ * Sat Sep 25 10:24:14 1993: added InfluenceModeNames
+ * Sat Sep 25 10:25:27 1993: written SetInfoline()
+ * Sat Sep 25 15:56:32 1993: ElevatorPicture is loaded only one time !!
+ * Wed Sep 29 16:16:30 1993: MenuItems werden grafisch angezeigt
+ * Thu Sep 30 13:56:36 1993: No pic-Pointer in Druimap any more
+ * Fri Oct 01 19:42:24 1993: InitNewGameWritten
+ * Sat Oct 02 12:24:28 1993: call to GetCrew() now in InitNewGame()
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
