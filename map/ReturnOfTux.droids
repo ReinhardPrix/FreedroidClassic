@@ -238,6 +238,8 @@ SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="329RoadTroll3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Road Troll Bot"
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="329RoadTroll4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Road Troll Bot"
 
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="420LoneWolf1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+
 
 ** End of this levels droid data **
 
@@ -290,6 +292,25 @@ S**pecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=
 S**pecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="883"
 S**pecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="751"
 ** End of this levels droid data **
+
+** Beginning of new Level **
+Level=22
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+
+
+
+** End of this levels droid data **
+
+
+
 
 //----------------------------------------------------------------------
 // This marker must mark the very end of this file.
