@@ -223,6 +223,8 @@ Subtitle="Now take this as a reward.  And you can be sure that I'll vote for you
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Thanks man!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="GiveItem:76" 
+DoSomethingExtra="GiveItem:76" 
 
 ----------------------------------------------------------------------
 
@@ -558,6 +560,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Should you take that junk again, I won't feel responsible for what happens to you any more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0 ; // this enables some learning option
+DoSomethingExtra="GiveItem:79" 
 
 ----------------------------------------------------------------------
 

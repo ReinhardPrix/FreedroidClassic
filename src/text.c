@@ -646,6 +646,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
   int TempValue;
   char WorkString[5000];
   char *TempMessage;
+  item NewItem;
 
   if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
     {
@@ -720,6 +721,25 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       SetNewBigScreenMessage( "condensators learned!" );
     }
 
+  else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked giving an item to the Tux. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "GiveItem:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...item to give is: %d." , TempValue );
+      NewItem.type = TempValue  ;
+      NewItem.prefix_code = (-1);
+      NewItem.suffix_code = (-1);
+      FillInItemProperties ( &NewItem , TRUE , 0 );
+      //--------------------
+      // Either we put the new item directly into inventory or we issue a warning
+      // that there is no room and then drop the item to the floor directly under 
+      // the current Tux position.  That can't fail, right?
+      //
+      if ( !TryToIntegrateItemIntoInventory ( & NewItem , 1 ) )
+	DropItemToTheFloor ( &NewItem , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , Me [ 0 ] . pos. z ) ;
+      
+    }
   else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked execution of action with label: %s. Doing it... " ,
@@ -1361,6 +1381,16 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 
   //--------------------
   // Now we prepare the dialog with Doc Moore, the old town medic...
+  //
+  if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
+       ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 2 ] = TRUE ; // we allow to give the crystals...
+      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 3 ] = TRUE ; // we allow to report no success yet...
+    }
+
+  //--------------------
+  // Now we prepare the dialog with Bender, the strong man who ate brain enlargement pills...
   //
   if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
        ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
