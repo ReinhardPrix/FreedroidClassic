@@ -806,6 +806,9 @@ keyboard_update(void)
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = TRUE;
 
+	  if (event.button.button == SDL_BUTTON_MIDDLE)  // we just map middle->Escape
+	    CurrentlyEscapePressed = TRUE;
+
 	  // wheel events are immediately released, so we rather
 	  // count the number of not yet read-out events
 	  if (event.button.button == SDL_BUTTON_WHEELUP)
@@ -826,6 +829,9 @@ keyboard_update(void)
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = FALSE;
+
+	  if (event.button.button == SDL_BUTTON_MIDDLE)  // we just map middle->Escape
+	    CurrentlyEscapePressed = FALSE;
 
 	  break;
 
