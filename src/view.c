@@ -873,8 +873,8 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:54:32  rp
- * Initial revision
+ * Revision 1.2  1993/05/22 21:49:22  rp
+ * Sat May 22 17:48:39 1993: written junk
  *
  * Revision 1.6  1993/09/22  14:27:14  prix
  * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
