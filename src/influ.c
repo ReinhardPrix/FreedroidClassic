@@ -1045,8 +1045,10 @@ FireBullet (void)
   // If the influencer has pressed fire with the mouse cursor
   // and is in the inventory screen and inventory screen is 
   // active, then also just return
-  if ( GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
-
+  //
+  // And for the character screen, do a similar thing
+  if ( axis_is_active && GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
+  if ( axis_is_active && GameConfig.CharacterScreen_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
 
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
