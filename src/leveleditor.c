@@ -4126,7 +4126,7 @@ LevelEditor(void)
       Weiter=FALSE;
       OldTicks = SDL_GetTicks ( ) ;
       main_menu_requested = FALSE ;
-      while ( ( ! EscapePressed() ) && ( !Done ) && ( ! main_menu_requested ) )
+      while ( ( !Done ) && ( ! main_menu_requested ) )
 	{
 	  //--------------------
 	  // Even the level editor might be fast or slow or too slow, so we'd like to 
@@ -4710,15 +4710,28 @@ LevelEditor(void)
 		}
 	    }
 
-	  if (QPressed())
+	  if ( QPressed ( ) )
 	    {
 	      Terminate(0);
 	    }
 
+	  if ( EscapePressed() )
+	  {
+	      if ( level_editor_mouse_move_mode )
+	      {
+		  level_editor_mouse_move_mode = FALSE ;
+		  while ( EscapePressed() ) ;
+	      }
+	      else
+	      {
+		  main_menu_requested = TRUE ;
+	      }
+	  }
+
 	  LeftMousePressedPreviousFrame = axis_is_active; 
 	  RightMousePressedPreviousFrame = MouseRightPressed() ;
 
-	} // while (!EscapePressed())
+	} // while ( ... )
       while( EscapePressed() );
 
       //--------------------
