@@ -1176,8 +1176,10 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 {
   int TurningDone = FALSE;
   float AngleInBetween;
-  float WaitBeforeTurningTime = 0.4 ;
-  float WaitAfterTurningTime = 0.4 ;
+  // float WaitBeforeTurningTime = 0.4 ;
+  // float WaitAfterTurningTime = 0.4 ;
+  float WaitBeforeTurningTime = 0.1 ;
+  float WaitAfterTurningTime = 0.1 ;
   int TurningStartTime;
   float OldAngle;
   float RightAngle;

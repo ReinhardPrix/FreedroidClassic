@@ -1600,7 +1600,7 @@ void
 HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 {
   if ( use_open_gl )
-    GL_HighlightRectangle (Surface, Area , 255 , 255 , 255 );
+    GL_HighlightRectangle (Surface, Area , 255 , 255 , 255 , 100 );
   else
     SDL_HighlightRectangle ( Surface , Area );
 

@@ -914,7 +914,10 @@ ShowCurrentTextWindow ( void )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   if ( strlen( ItemDescText ) > 1 )
     {
-      // our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
+      if ( use_open_gl ) 
+	GL_HighlightRectangle ( Screen , Banner_Text_Rect , 0 , 0 , 0 , 160 );
+      else
+	our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
 
   if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )

@@ -1265,7 +1265,7 @@ PutPixel_open_gl ( int x, int y, Uint32 pixel)
  *
  * ---------------------------------------------------------------------- */
 void
-GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r , unsigned char g , unsigned char b )
+GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r , unsigned char g , unsigned char b , unsigned char alpha )
 {
 #ifdef HAVE_LIBGL
   SDL_Rect* dstrect = & Area ;
@@ -1276,7 +1276,9 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
   glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
 
   // glColor4ub( 255 , 255 , 255 , 200 );
-  glColor4ub( r , g , b , 150 );
+  // glColor4ub( r , g , b , 150 );
+  // glColor4ub( r , g , b , 80 );
+  glColor4ub( r , g , b , alpha );
   if ( dstrect == NULL )
     {
       glBegin(GL_QUADS);
