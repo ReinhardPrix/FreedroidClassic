@@ -121,7 +121,7 @@ typedef struct
 } 
 known_do_extra, *Known_do_extra;
 
-#define ALL_KNOWN_EXTRAS 28
+#define ALL_KNOWN_EXTRAS 29
 
 known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
   {
@@ -152,7 +152,8 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "ExecuteSubdialog:", 24 , '\0' } ,
     { "EverybodyBecomesHostile",  25 , '\0' } ,
     { "MakeTuxTownGuardMember",  26 , '\0' } ,
-    { "IncreaseHackingSkill", 27 , '\0' } 
+    { "IncreaseHackingSkill", 27 , '\0' } ,
+    { "ForceBotRespawnOnLevel:" , 28 , '\0' } , 
   };
 
 typedef struct

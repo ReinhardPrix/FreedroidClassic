@@ -760,6 +760,14 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       sprintf ( WorkString , "%d bucks given" , TempValue );
       SetNewBigScreenMessage ( WorkString );
     }
+  else if ( CountStringOccurences ( ExtraCommandString , "ForceBotRespawnOnLevel:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked forcing bot respawn on level --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "ForceBotRespawnOnLevel:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Level to respawn bots on is: %d." , TempValue );
+      respawn_level ( TempValue );
+    }
   else if ( CountStringOccurences ( ExtraCommandString , "AddGold:" ) )
     {
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding gold. --> have to decode... " );
