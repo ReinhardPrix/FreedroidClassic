@@ -132,9 +132,9 @@ TakeScreenshot(void)
   char *Screenshoot_Filename;
 
   Screenshoot_Filename=malloc(100);
-  printf("\n\nScreenshoot function called.\n\n");
+  DebugPrintf (1, "\n\nScreenshoot function called.\n\n");
   sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
-  printf("\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
+  DebugPrintf(1, "\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
   SDL_SaveBMP( ne_screen , Screenshoot_Filename );
   Number_Of_Screenshot++;
   free(Screenshoot_Filename);
@@ -156,7 +156,7 @@ MakeGridOnScreen(void)
 {
   int x,y;
 
-  DebugPrintf("\nvoid MakeGridOnScreen(...): real function call confirmed.");
+  DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
   SDL_LockSurface( ne_screen );
   for (y=0; y<SCREENHOEHE; y++) 
     {
@@ -170,7 +170,7 @@ MakeGridOnScreen(void)
     }
   
   SDL_UnlockSurface( ne_screen );
-  DebugPrintf("\nvoid MakeGridOnScreen(...): end of function reached.");
+  DebugPrintf (2, "\nvoid MakeGridOnScreen(...): end of function reached.");
 } // void MakeGridOnSchreen(void)
 
 
@@ -355,7 +355,7 @@ InitPictures (void)
   tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
     {
-      printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());
+      DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
 
@@ -365,14 +365,14 @@ InitPictures (void)
   ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
   if (ne_blocks == NULL) 
     {
-      printf ("\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
 
   ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
   if (ne_static == NULL) 
     {
-      printf ("\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
   SDL_FreeSurface (tmp); /* and free the old one */
@@ -510,7 +510,7 @@ Init_Video (void)
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
     } else
-      printf("\nSDL Video initialisation successful.\n");
+      DebugPrintf(1, "\nSDL Video initialisation successful.\n");
 
   // Now SDL_TIMER is initialized here:
 
@@ -519,7 +519,7 @@ Init_Video (void)
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
     } else
-      printf("\nSDL Timer initialisation successful.\n");
+      DebugPrintf(1, "\nSDL Timer initialisation successful.\n");
 
   /* clean up on exit */
   atexit (SDL_Quit);
@@ -545,7 +545,7 @@ Sorry...\n\
 \n" , MENU_FONT_FILE );
         Terminate(ERR);
   } else
-  printf("\nSDL Menu Font initialisation successful.\n");
+  DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
 
   if ( ( Para_BFont = LoadFont (PARA_FONT_FILE) ) == NULL )
     {
@@ -565,7 +565,7 @@ Sorry...\n\
 \n" , PARA_FONT_FILE );
       Terminate(ERR);
     } else
-      printf("\nSDL Para Font initialisation successful.\n");
+      DebugPrintf(1, "\nSDL Para Font initialisation successful.\n");
 
   if ( ( FPS_Display_BFont = LoadFont ( FPS_FONT_FILE) ) == NULL )
     {
@@ -585,7 +585,7 @@ Sorry...\n\
 \n" , FPS_FONT_FILE );
       Terminate(ERR);
     } else
-      printf("\nSDL FPS Display Font initialisation successful.\n");
+      DebugPrintf(1, "\nSDL FPS Display Font initialisation successful.\n");
 
   //  SetCurrentFont(Menu_BFont);
 
@@ -670,7 +670,7 @@ LadeZeichensatz (char *Zeichensatzname)
   FILE *CharDateiHandle;
   int i, j, k;
 
-  printf ("\nLadeZeichensatz() called... is that not obsolete?\n");
+  DebugPrintf (1, "\nLadeZeichensatz() called... is that not obsolete?\n");
 
   /* Speicher fuer die zu ladende Datei reservieren */
   Zeichensatzpointer = MyMalloc (256 * 8 + 10);
@@ -678,8 +678,7 @@ LadeZeichensatz (char *Zeichensatzname)
   /* Datei in den Speicher laden */
   if ((CharDateiHandle = fopen (Zeichensatzname, "rb")) == NULL)
     {
-      printf
-	("\nvoid LadeZeichensatz(char* Zeichensatzname):  Konnte die Datei %s nicht oeffnen !\n",
+      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname):  Konnte die Datei %s nicht oeffnen !\n",
 	 Zeichensatzname);
       getchar ();
       Terminate (-1);
@@ -687,8 +686,7 @@ LadeZeichensatz (char *Zeichensatzname)
   fread (Zeichensatzpointer, 1, 30000, CharDateiHandle);
   if (fclose (CharDateiHandle) == EOF)
     {
-      printf
-	("\nvoid LadeZeichensatz(char* Zeichensatzname): Konnte die Datei %s nicht schlie3en !\n",
+      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname): Konnte die Datei %s nicht schlie3en !\n",
 	 Zeichensatzname);
       getchar ();
       Terminate (-1);
@@ -702,7 +700,7 @@ LadeZeichensatz (char *Zeichensatzname)
 
   if (Data70Pointer)
     {
-      DebugPrintf (" Der Zeichensatz war schon installiert !.\n");
+      DebugPrintf (2, " Der Zeichensatz war schon installiert !.\n");
       getchar ();
       Terminate (-1);
     }
@@ -777,14 +775,14 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 
   return;
 
-  // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
+  // DebugPrintf (2, "\nvoid SetPalCol(...): Real function called.");
   // vga_setpalette (palpos, rot, gruen, blau);
 
   SDL_SetColors( ne_screen , &ThisOneColor, palpos, 1 );
   // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
 
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
-  // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
+  // DebugPrintf (2, "\nvoid SetPalCol(...): Usual end of function reached.");
 }				// void SetPalCol(...)
 
 #undef _graphics_c

@@ -235,8 +235,8 @@ Cheatmenu (void)
 
 	  if ( i == Number_Of_Droid_Types )
 	    {
-	      printf_SDL (ne_screen, -1, -1,
-			  "\nUnrecognized robot-type: %s\n", input);
+	      printf_SDL (ne_screen, x0, y0+20,
+			  "Unrecognized robot-type: %s", input);
 	      getchar_raw ();
 	      ClearGraphMem();
 	    }
@@ -245,7 +245,7 @@ Cheatmenu (void)
 	      Me.type = i;
 	      Me.energy = Druidmap[Me.type].maxenergy;
 	      Me.health = Me.energy;
-	      printf_SDL (ne_screen, -1, -1, "\nYou are now a %s. Have fun!\n", input);
+	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();
 	    }
 	  free (input);
@@ -325,7 +325,10 @@ Cheatmenu (void)
     } /* while (!Weiter) */
 
   InitBars = TRUE;
-  
+
+  ClearGraphMem ();
+  SDL_Flip (ne_screen);
+
   keyboard_update (); /* treat all pending keyboard events */
   /* 
    * when changing windows etc, sometimes a key-release event gets 
@@ -360,7 +363,7 @@ enum
 
   Me.status=MENU;
 
-  DebugPrintf("\nvoid MissionSelectMenu(void): real function call confirmed."); 
+  DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -480,7 +483,7 @@ enum
 
   Me.status=MENU;
 
-  DebugPrintf("\nvoid EscapeMenu(void): real function call confirmed."); 
+  DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -561,7 +564,7 @@ enum
 	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case QUIT_POSITION:
-	      DebugPrintf("\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
+	      DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
 	      Terminate(0);
 	      break;
 	    default: 

@@ -111,7 +111,7 @@ AutoFireBullet (void)
       LDist = LXDist * LXDist + LYDist * LYDist;
       if (LDist <= 0)
 	{
-	  DebugPrintf (" ERROR determination of LDist !!.");
+	  DebugPrintf (2, " ERROR determination of LDist !!.");
 	  getchar ();
 	  Terminate (-1);
 	}
@@ -230,7 +230,7 @@ MoveInfluence (void)
   static int counter = -1;
   int i;
 
-  DebugPrintf ("\nvoid MoveInfluence(void):  Real function call confirmed.");
+  DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
   for (i=0; i<10; i++)
     {
@@ -262,8 +262,7 @@ MoveInfluence (void)
 	{
 	  Me.status = OUT;
 	  ThouArtDefeated ();
-	  DebugPrintf
-	    ("\nvoid MoveInfluence(void):  Alternate end of function reached.");
+	  DebugPrintf (2, "\nvoid MoveInfluence(void):  Alternate end of function reached.");
 	  return;
 	}
     }
@@ -321,7 +320,7 @@ MoveInfluence (void)
 
   AnimateInfluence ();	// move the "phase" of influencers rotation
 
-  DebugPrintf ("\nvoid MoveInfluence(void):  Usual end of function reached.");
+  DebugPrintf (2, "\nvoid MoveInfluence(void):  Usual end of function reached.");
 
 } /* MoveInfluence */
 
@@ -499,7 +498,7 @@ CheckInfluenceWallCollisions (void)
       if ( ! ( ( DruidPassable(lastpos.x , lastpos.y + Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ||
 	       ( DruidPassable(lastpos.x , lastpos.y - Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ) )
 	{
-	  // printf("\nNorth-south-Axis seems to be free.");
+	  DebugPrintf(1, "\nNorth-south-Axis seems to be free.");
 	  NorthSouthAxisBlocked = FALSE;
 	}
       else
@@ -510,7 +509,6 @@ CheckInfluenceWallCollisions (void)
       if ( ( DruidPassable(lastpos.x + Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
 	   ( DruidPassable(lastpos.x - Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
 	{
-	  // printf("\nEast-west-Axis seems to be free.");
 	  EastWestAxisBlocked = FALSE;
 	}
       else 
@@ -524,9 +522,6 @@ CheckInfluenceWallCollisions (void)
 
       if ( NorthSouthAxisBlocked )
 	{
-	  // printf("\nNS-Axis seems NOT to be free.");
-	  // printf("\nCorrection movement and position in this direction...");
-
 	  // NorthSouthCorrectionDone=TRUE;
 	  Me.pos.y = lastpos.y;
 	  Me.speed.y = 0;
@@ -538,15 +533,11 @@ CheckInfluenceWallCollisions (void)
 	    {
 	      Me.pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me.pos.x) - Me.pos.x ));
 	      H_Door_Sliding_Active = TRUE;
-	      // printf("\nDOOR SLIDING ACTIVATED!!!");
 	    }
 	}
 
       if ( EastWestAxisBlocked )
 	{
-	  // printf("\nEW-Axis seems NOT to be free.");
-	  // printf("\nCorrection movement and position in this direction...");
-
 	  // EastWestCorrectionDone=TRUE;
 	  if ( !H_Door_Sliding_Active ) Me.pos.x = lastpos.x;
 	  Me.speed.x = 0;
@@ -587,7 +578,7 @@ CheckInfluenceWallCollisions (void)
 	{
 	  Me.pos.x=Me.Position_History[2].x;
 	  Me.pos.y=Me.Position_History[2].y;
-	  printf("\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
+	  DebugPrintf(1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
 	}
 
     }
@@ -724,7 +715,7 @@ CheckInfluenceWallCollisions (void)
       break;
 
     default:
-      DebugPrintf ("Illegal return value from DruidPassable() ");
+      DebugPrintf (2, "Illegal return value from DruidPassable() ");
       Terminate (-1);
       break;
 
@@ -819,8 +810,7 @@ ExplodeInfluencer (void)
 
   Me.status = OUT;
 
-  DebugPrintf
-    ("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
+  DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
   /* ein paar versetze Explosionen */
   for (i = 0; i < 10; i++)
@@ -831,7 +821,7 @@ ExplodeInfluencer (void)
       counter -= 1;
       if (counter >= MAXBLASTS)
 	{
-	  printf("\n\nWent out of blasts in ExplodeInfluencer...\n\n");
+	  DebugPrintf(1, "\n\nWent out of blasts in ExplodeInfluencer...\n\n");
 	  Terminate(ERR);
 	}
       AllBlasts[counter].type = DRUIDBLAST;
@@ -842,8 +832,7 @@ ExplodeInfluencer (void)
       AllBlasts[counter].phase = i;
     }
 
-  DebugPrintf
-    ("\nvoid ExplodeInfluencer(void): Usual end of function reached.");
+  DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 }				/* ExplodeInfluencer */
 
 /*@Function============================================================

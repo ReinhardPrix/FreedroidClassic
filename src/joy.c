@@ -42,19 +42,19 @@ void Init_Joy (void)
       fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n",SDL_GetError());
       Terminate(ERR);
     } else
-      printf("\nSDL Joystick initialisation successful.\n");
+      DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
 
 
-  printf (" %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
+  DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
 
   if (num_joy > 0)
     joy = SDL_JoystickOpen (0);
 
   if (joy)
     {
-      printf ("Identifier: %s\n", SDL_JoystickName (0));
-      printf("Number of Axes: %d\n", num_joy_axes = SDL_JoystickNumAxes(joy));
-      printf("Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
+      DebugPrintf (1, "Identifier: %s\n", SDL_JoystickName (0));
+      DebugPrintf (1, "Number of Axes: %d\n", num_joy_axes = SDL_JoystickNumAxes(joy));
+      DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
 
       /* aktivate Joystick event handling */
       SDL_JoystickEventState (SDL_ENABLE); 

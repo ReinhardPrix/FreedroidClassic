@@ -7,6 +7,7 @@
 #include "BFont.h"
 #include "system.h"
 
+
 /* Current font */
 BFont_Info *CurrentFont;
 
@@ -157,7 +158,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 
 	  color_key = GetPixel (surface, 0, surface->h - 1);
 
-	  printf ("looking...\n");
+	  //	  printf ("looking...\n");
 	  for (x = 0; x < Font->Surface->w; x++)
 	    {
 	      for (y = 0; y < Font->Surface->h; y++)
@@ -180,7 +181,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 		    }
 		}
 	    }
-	  printf ("unlooking...\n");
+	  //	  printf ("unlooking...\n");
 	  if (SDL_MUSTLOCK (surface))
 	    SDL_UnlockSurface (surface);
 	  if (SDL_MUSTLOCK (Font->Surface))

@@ -159,7 +159,7 @@ Assemble_Combat_Picture (int mask)
   SDL_Rect TargetRectangle;
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
-  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
+  DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
   // Why not blit the WHOLE map?  Lets try it!
   // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
@@ -269,7 +269,7 @@ Assemble_Combat_Picture (int mask)
       SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
-  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): end of function reached.");
+  DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
 
   return;
 
@@ -291,7 +291,7 @@ PutInfluence ( int x, int y)
 {
   SDL_Rect TargetRectangle;
 
-  DebugPrintf ("\nvoid PutInfluence(void): real function call confirmed.");
+  DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
   if ( x == -1 ) 
     {
@@ -353,7 +353,7 @@ PutInfluence ( int x, int y)
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
-  DebugPrintf ("\nvoid PutInfluence(void): enf of function reached.");
+  DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
 
 } /* PutInfluence() */
 
@@ -372,35 +372,30 @@ PutEnemy (int Enum , int x , int y)
   int phase;
   SDL_Rect TargetRectangle;
 
-  DebugPrintf
-    ("\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+  DebugPrintf (2, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
   /* if enemy is on other level, return */
   if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
     {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      DebugPrintf (2, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
     }
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
     {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
+      DebugPrintf (2, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
 
   // if the enemy is out of signt, we need not do anything more here
   if (!IsVisible (&AllEnemys[Enum].pos))
     {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
+      DebugPrintf (2, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
     }
 
-  DebugPrintf
-    ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
+  DebugPrintf (2, "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
 
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)
@@ -492,7 +487,7 @@ Sorry...\n\
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
-  DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
+  DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }	// void PutEnemy(int Enum , int x , int y) 
 
@@ -509,8 +504,7 @@ PutBullet (int BulletNummer)
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
 
-  DebugPrintf
-    ("\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
+  DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
 #if BULLETOFF == 1
   return;
@@ -547,8 +541,7 @@ PutBullet (int BulletNummer)
   TargetRectangle.y=USER_FENSTER_CENTER_Y-(Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
   SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
-  DebugPrintf
-    ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
+  DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
 }	/* PutBullet */
 
@@ -594,7 +587,7 @@ PutObject (int x, int y, unsigned char *pic, int check)
 
   printf("\nint PutObject(...): real function call confirmed.\n");
 
-  DebugPrintf("\nint PutObject(...): usual end of function reached.\n");
+  DebugPrintf (2, "\nint PutObject(...): usual end of function reached.\n");
 
   return (Return_Value);
 } /* PutObject() */
@@ -688,7 +681,7 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   SDL_Rect TargetRectangle;
   char ImageFilename[100] = GRAPHICS_DIR;
 
-  DebugPrintf ("\nvoid ShowRobotPicture(...): Function call confirmed.");
+  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   strcat( ImageFilename , Druidmap[Number].druidname );
   strcat( ImageFilename , ".jpg" );
@@ -734,8 +727,7 @@ Sorry...\n\
   
   SDL_FreeSurface(tmp);
 
-  DebugPrintf
-    ("\nvoid ShowRobotPicture(...): Usual end of function reached.");
+  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
 }				// void ShowRobotPicture(...)
 
 #undef _view_c

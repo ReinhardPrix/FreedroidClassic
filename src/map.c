@@ -163,8 +163,7 @@ ActSpecialField (float x, float y)
   unsigned char MapBrick;
   float cx, cy;			/* tmp: NullPunkt im Blockzentrum */
 
-  DebugPrintf
-    ("\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
+  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
 
   MapBrick = GetMapBrick (CurLevel, x, y);
 
@@ -190,8 +189,7 @@ ActSpecialField (float x, float y)
       if (Me.status == TRANSFERMODE)
 	{
 	  EnterKonsole ();
-	  DebugPrintf
-	    ("\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
 	}
       break;
 
@@ -207,8 +205,7 @@ ActSpecialField (float x, float y)
       break;
     }				/* switch */
 
-  DebugPrintf
-    ("\nvoid ActSpecialField(int x, int y):  end of function reached.");
+  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
 
 } /* ActSpecialField */
 
@@ -226,7 +223,7 @@ AnimateRefresh (void)
   int i, j;
   int x, y;
 
-  DebugPrintf ("\nvoid AnimateRefresh(void):  real function call confirmed.");
+  DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 10;
 
@@ -254,7 +251,7 @@ AnimateRefresh (void)
 
     }				/* for */
 
-  DebugPrintf ("\nvoid AnimateRefresh(void):  end of function reached.");
+  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
 }				/* AnimateRefresh */
 
@@ -278,21 +275,20 @@ LoadShip (char *filename)
   /* Read the whole ship-data to memory */
   if ((ShipFile = fopen (filename, "r")) == NULL)
     {
-      // DebugPrintf ("\nint LoadShip(char *shipname): Error opening file.... ");
-      printf ("\n\nint LoadShip(char *filename): Error opening file....Terminating.... ");
+      // DebugPrintf (2, "\nint LoadShip(char *shipname): Error opening file.... ");
+      DebugPrintf (1, "\n\nint LoadShip(char *filename): Error opening file....Terminating.... ");
       Terminate(ERR);
     }
 
   if (fstat (fileno (ShipFile), &stbuf) == EOF)
     {
-      DebugPrintf
-	("\nint LoadShip(char* filename): Error fstat-ing File....");
+      DebugPrintf (2, "\nint LoadShip(char* filename): Error fstat-ing File....");
       return ERR;
     }
 
   if ((ShipData = (char *) malloc (stbuf.st_size + 10)) == NULL)
     {
-      DebugPrintf ("\nint LoadShip(char *filename): Out of Memory? ");
+      DebugPrintf (2, "\nint LoadShip(char *filename): Out of Memory? ");
       getchar ();
       return ERR;
     }
@@ -440,7 +436,7 @@ char *StructToMem(Level Lev)
   
   /* allocate some memory */
   if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
-    printf("\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
+    DebugPrintf(1, "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
     Terminate(ERR);
     return NULL;
   }
@@ -523,7 +519,7 @@ int SaveShip(char *shipname)
   int array_i, array_num;
   int i;
 
-  DebugPrintf("\nint SaveShip(char *shipname): real function call confirmed.");
+  DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
   
   /* Get the complete filename */
   strcpy(filename, shipname);
@@ -534,7 +530,7 @@ int SaveShip(char *shipname)
   while(curShip.AllLevels[level_anz++]);
   level_anz --;
   
-  DebugPrintf("\nint SaveShip(char *shipname): now opening the ship file...");
+  DebugPrintf (2, "\nint SaveShip(char *shipname): now opening the ship file...");
 
   /* open file */
   if( (ShipFile = fopen(filename, "w")) == NULL) {
@@ -545,7 +541,7 @@ int SaveShip(char *shipname)
   
   /* Save all Levels */
   
-  DebugPrintf("\nint SaveShip(char *shipname): now saving levels...");
+  DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
 
   for( i=0; i<level_anz; i++) 
     {
@@ -583,7 +579,7 @@ int SaveShip(char *shipname)
       free(LevelMem);
     }
   
-  DebugPrintf("\nint SaveShip(char *shipname): now closing ship file...");
+  DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
 
   if( fclose(ShipFile) == EOF) 
     {
@@ -592,7 +588,7 @@ int SaveShip(char *shipname)
       return ERR;
     }
   
-  DebugPrintf("\nint SaveShip(char *shipname): end of function reached.");
+  DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
   
   return OK;
 } /* SaveShip */
@@ -631,8 +627,8 @@ LevelToStruct (char *data)
 
   loadlevel->empty = FALSE;
 
-  DebugPrintf("\n----------------------------------------------------------------------\n\
-Starting to process information for another level:\n");
+  DebugPrintf (2, "\n-----------------------------------------------------------------");
+  DebugPrintf (2, "Starting to process information for another level:\n");
 
   /* Read Header Data: levelnum and x/ylen */
   sscanf (data, "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
@@ -849,7 +845,7 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
   int col;
   int i;
 
-  printf("\n\nTranslating mapline into human readable format...");
+  DebugPrintf (1,"\n\nTranslating mapline into human readable format...");
   
   // Now in the game and in the level editor, it might have happend that some open
   // doors occur.  The make life easier for the saving routine, these doors should
@@ -964,7 +960,7 @@ TranslateMap (Level Lev)
   int environs;			// encodes the "Wall-environment" of a "+"
   int NewBlock = KREUZ;		// Neuen "Eck-Block" in den wir KREUZ verwandeln
 
-  DebugPrintf("\n\nStarting to translate the map from human readable disk format into game-engine format.");
+  DebugPrintf (2, "\n\nStarting to translate the map from human readable disk format into game-engine format.");
 
   /* first round: transpose all ascii-mapdata to internal numbers for map */
   for (row = 0; row < ydim; row++)
@@ -1057,9 +1053,8 @@ TranslateMap (Level Lev)
 	      NewBlock = KREUZ;
 	      break;
 	    default:
-	      DebugPrintf ("\nMap-panic. TranslateMap() is messed up!\n");
-	      DebugPrintf
-		("\nint TranslateMap(Level Lev): end of function reached.");
+	      DebugPrintf (2, "\nMap-panic. TranslateMap() is messed up!\n");
+	      DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
 	      return (ERR);
 	      break;
 	    }			// switch(environs)
@@ -1067,7 +1062,7 @@ TranslateMap (Level Lev)
 	}			/* for(col) */
     }				/* for(row) */
 
-  DebugPrintf ("\nint TranslateMap(Level Lev): end of function reached.");
+  DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
 }				// int Translate Map(Level lev)
 
@@ -1098,7 +1093,7 @@ GetLiftConnections (char *shipname)
     }
   else 
     {
-      DebugPrintf("\n\nLift file successfully opened.");
+      DebugPrintf (2, "\n\nLift file successfully opened.");
     }
 
   for (i = 0; i < MAX_LIFTS; i++)
@@ -1160,7 +1155,7 @@ GetCrew (char *filename)
   //
   if (( DroidsFile = fopen ( filename , "r")) == NULL)
     {
-      DebugPrintf ("\nint GetCrew( ... ): Error opening file.... ");
+      DebugPrintf (2, "\nint GetCrew( ... ): Error opening file.... ");
       Terminate(ERR);
     }
   else
@@ -1181,13 +1176,13 @@ GetCrew (char *filename)
 
   if (( MainDroidsFilePointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
     {
-      DebugPrintf ("\nint GetCrew ( char * constantsname ) : Out of Memory? ");
+      DebugPrintf (2, "\nint GetCrew ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
     }
 
   fread ( MainDroidsFilePointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DroidsFile);
 
-  DebugPrintf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
 
   if ( ( EndOfDroidsFilePointer = strstr( MainDroidsFilePointer , END_OF_DROID_DATA_STRING ) ) == NULL )
     {
@@ -1210,7 +1205,7 @@ GetCrew (char *filename)
     }
   else
     {
-      DebugPrintf("\n\nDroids file closed successfully.");
+      DebugPrintf (2, "\n\nDroids file closed successfully.");
       // fflush(stdout);
     }
 
@@ -1223,7 +1218,7 @@ GetCrew (char *filename)
   while ( ( DroidSectionPointer = strstr ( DroidSectionPointer, DROIDS_LEVEL_DESCRIPTION_START_STRING )) != NULL )
     {
       DroidSectionPointer+=strlen( DROIDS_LEVEL_DESCRIPTION_START_STRING );
-      DebugPrintf("\nFound another levels droids description starting point entry!");
+      DebugPrintf (2, "\nFound another levels droids description starting point entry!");
       EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
       if ( EndOfThisDroidSectionPointer == NULL )
 	{
@@ -2009,7 +2004,7 @@ IsVisible (Finepoint objpos)
   double influ_x = Me.pos.x;
   double influ_y = Me.pos.y;
 
-  DebugPrintf ("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
+  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;
@@ -2034,12 +2029,11 @@ IsVisible (Finepoint objpos)
 
       if (IsPassable (testpos.x, testpos.y, LIGHT) != CENTER)
 	{
-	  DebugPrintf
-	    ("\nint IsVisible(Point objpos): Funktionsende erreicht.");
+	  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	  return FALSE;
 	}
     }
-  DebugPrintf ("\nint IsVisible(Point objpos): Funktionsende erreicht.");
+  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 
   return TRUE;
 }				// int IsVisible(Point objpos)

@@ -390,9 +390,9 @@ GetString (int MaxLen, int echo)
       
     } /* while(!finished) */
 
-  DebugPrintf("\n\nchar *GetString(..):  The final string is:\n");
-  DebugPrintf( input );
-  DebugPrintf("\n\n");
+  DebugPrintf (2, "\n\nchar *GetString(..):  The final string is:\n");
+  DebugPrintf (2,  input );
+  DebugPrintf (2, "\n\n");
 
 
   return (input);

@@ -330,64 +330,23 @@ Activate_Conservative_Frame_Computation(void)
 @Ret: none
 * $Function----------------------------------------------------------*/
 void
-DebugPrintf (char *Print_String)
+DebugPrintf (int db_level, char *fmt, ...)
 {
-  static int first_time = TRUE;
-  FILE *debugfile;
+  va_list args;
+  char *tmp;
+  va_start (args, fmt);
 
-  if (debug_level == 0) return;
-
-  if (first_time)		/* make sure the first call deletes previous log-file */
+  if (db_level <= debug_level)
     {
-      debugfile = fopen ("DEBUG.OUT", "w");
-      first_time = FALSE;
+      tmp = (char *) MyMalloc (1000 + 1);
+      vsprintf (tmp, fmt, args);
+      fprintf (stderr, tmp);
+
+      free (tmp);
     }
-  else
-    debugfile = fopen ("DEBUG.OUT", "a");
 
-  fprintf (debugfile, Print_String);
-  fclose (debugfile);
-};
-
-/*@Function============================================================
-@Desc: This function is used for debugging purposes.  It writes the
-       given float either into a file, on the screen, or simply does
-       nothing according to currently set debug level.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-DebugPrintfFloat (float Print_Float)
-{
-  FILE *debugfile;
-
-  if (debug_level == 0) return;
-
-  debugfile = fopen ("DEBUG.OUT", "a");
-
-  fprintf (debugfile, "%f", Print_Float);
-  fclose (debugfile);
-};
-
-/*@Function============================================================
-@Desc: This function is used for debugging purposes.  It writes the
-       given int either into a file, on the screen, or simply does
-       nothing according to currently set debug level.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-DebugPrintfInt (int Print_Int)
-{
-  FILE *debugfile;
-
-  if (debug_level == 0) return;
-
-  debugfile = fopen ("DEBUG.OUT", "a");
-
-  fprintf (debugfile, "%d", Print_Int);
-  fclose (debugfile);
-};
+  va_end (args);
+}
 
 /*@Function============================================================
 @Desc: This function is used to generate an integer in range of all
@@ -585,14 +544,13 @@ InsertNewMessage (void)
   static int counter = 0;
   char testmessage[100];
 
-  DebugPrintf
-    ("\nvoid InsertNewMessage(void): real function call confirmed...");
+  DebugPrintf (2, "\nvoid InsertNewMessage(void): real function call confirmed...");
 
   counter++;
   sprintf (testmessage, "Das ist die %d .te Message !!", counter);
   InsertMessage (testmessage);
 
-  DebugPrintf ("\nvoid InsertNewMessage(void): end of function reached...");
+  DebugPrintf (2, "\nvoid InsertNewMessage(void): end of function reached...");
   return;
 }				// void InsertNewMessage(void)
 
@@ -605,7 +563,7 @@ InsertNewMessage (void)
 void
 Terminate (int ExitCode)
 {
-  DebugPrintf ("\nvoid Terminate(int ExitStatus) was called....");
+  DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
   printf("\n----------------------------------------------------------------------");
   printf("\nTermination of Freedroid initiated...");
   // printf("\nUnallocation all resouces...");
@@ -649,7 +607,7 @@ AdvanceQueue (void)
 {
   message *tmp;
 
-  DebugPrintf ("\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
+  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
 
   if (Queue == NULL)
     return;
@@ -662,8 +620,7 @@ AdvanceQueue (void)
 
   free (tmp);
 
-  DebugPrintf
-    ("\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
+  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
 } // void AdvanceQueue(void)
 
 
@@ -686,7 +643,7 @@ PutMessages (void)
   if (!PlusExtentionsOn)
     return;
 
-  DebugPrintf ("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
+  DebugPrintf (2, "\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
 
   if (!Queue)
     return;			// nothing to be done
@@ -699,13 +656,12 @@ PutMessages (void)
 
   LQueue = Queue;
   i = 0;
-  DebugPrintf ("\nvoid PutMessages(void): This is the Queue of Messages:\n");
+  DebugPrintf (2, "\nvoid PutMessages(void): This is the Queue of Messages:\n");
   while (LQueue != NULL)
     {
       if ((LQueue->MessageText) == NULL)
 	{
-	  DebugPrintf
-	    ("\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
+	  DebugPrintf (2, "\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
 	  Terminate(ERR);
 	}
       printf ("%d. '%s' %d\n", i, LQueue->MessageText,
@@ -713,7 +669,7 @@ PutMessages (void)
       i++;
       LQueue = LQueue->NextMessage;
     }
-  DebugPrintf (" NULL reached !\n");
+  DebugPrintf (2, " NULL reached !\n");
 
   // if the message is very old, it can be deleted...
   if (Working && (ThisMessageTime > MaxMessageTime))
@@ -781,14 +737,12 @@ CreateMessageBar (char *MText)
   char Worktext[42];
   int i, j;
 
-  DebugPrintf
-    ("\nvoid CreateMessageBar(char* MText): real function call confirmed.");
+  DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): real function call confirmed.");
 
   // check for too long message
   if (strlen (MText) > 40)
     {
-      DebugPrintf
-	("\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
+      DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
       Terminate (ERR);
     }
 
@@ -796,8 +750,7 @@ CreateMessageBar (char *MText)
   if (MessageBar == NULL)
     if ((MessageBar = MyMalloc (MESBAR_MEM)) == NULL)
       {
-	DebugPrintf
-	  ("\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
+	DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
 	Terminate (ERR);
       }
 
@@ -816,8 +769,7 @@ CreateMessageBar (char *MText)
 	}
     }
 
-  DebugPrintf
-    ("\nvoid CreateMessageBar(char* MText): end of function reached.");
+  DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): end of function reached.");
 } // void CreateMessageBar(char* MText)
 
 /*@Function============================================================
@@ -832,8 +784,7 @@ InsertMessage (char *MText)
 {
   message *LQueue = Queue;
 
-  DebugPrintf
-    ("\nvoid InsertMessage(char* MText): real function call confirmed...");
+  DebugPrintf (2, "\nvoid InsertMessage(char* MText): real function call confirmed...");
 
   if (LQueue)
     {

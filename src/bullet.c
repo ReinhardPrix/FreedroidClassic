@@ -208,7 +208,7 @@ GetDirection (point robo, point bul)
     return 3;
   if ((robo.x == bul.x) && (robo.y == bul.y))
     {
-      DebugPrintf (" Center hit directy!");
+      DebugPrintf (2, " Center hit directy!");
       getchar ();
     }
   return 0;
@@ -341,7 +341,7 @@ CheckBulletCollisions (int num)
 	  if ( abs(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
 	  // it seems like we have a collision of two bullets!
 	  // both will be deleted and replaced by blasts..
-	  printf("\nBullet-Bullet-Collision detected...");
+	  DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
 	  CurBullet->type=OUT;
 	  AllBullets[num].type=OUT;
 	  StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
@@ -403,7 +403,6 @@ CheckBlastCollisions (int num)
 	  {
 	    /* drag energy of enemy */
 	    AllEnemys[i].energy -= BLASTDAMAGE * Frame_Time ();
-	    // printf (" Robot hit by Blast %d.\n", RHBZaehler++);
 	  }
 
       if (AllEnemys[i].energy < 0)

@@ -136,7 +136,7 @@ InitTakeover (void)
 {
   if (GetTakeoverGraphics () != OK)
     {
-      DebugPrintf ("Error !");
+      DebugPrintf (2, "Error !");
       Terminate (-1);
     }
 

@@ -56,7 +56,7 @@ EnterLift (void)
   int curLevel;
   int curLift, upLift, downLift, liftrow;
 
-  DebugPrintf ("\nvoid EnterLiftator(void): Function call confirmed.");
+  DebugPrintf (2, "\nvoid EnterLiftator(void): Function call confirmed.");
 
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu. */
@@ -188,7 +188,7 @@ EnterLift (void)
 
   Me.status = MOBILE;
 
-  DebugPrintf ("\nvoid EnterLift(void): Usual end of function reached.");
+  DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
 }	/* EnterLift */
 
 /*-----------------------------------------------------------------
@@ -428,7 +428,7 @@ GreatDruidShow (void)
   char PassOn = 0;
   SDL_Rect Droid_Text_Rect;
 
-  DebugPrintf ("\nvoid GreadDruidShow(void): Function call confirmed.");
+  DebugPrintf (2, "\nvoid GreadDruidShow(void): Function call confirmed.");
 
   /* Warte, bis User Space auslaesst */
   while (SpacePressed ()) ;
@@ -550,8 +550,7 @@ GreatDruidShow (void)
 	  if (SpacePressed ())
 	    {
 	      while (SpacePressed ()) ;
-	      DebugPrintf
-		("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
+	      DebugPrintf (2, "\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
 	      return;
 	    }
 	}
@@ -650,7 +649,7 @@ GreatDruidShow (void)
 	}
     }				/* for */
 
-  DebugPrintf ("\nvoid GreadDruidShow(void): End of function reached.");
+  DebugPrintf (2, "\nvoid GreadDruidShow(void): End of function reached.");
 }				/* GreatDruidShow() */
 
 

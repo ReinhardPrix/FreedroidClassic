@@ -43,7 +43,6 @@
 
 
 #define NOSTRAIGHTDIR 255
-#undef ENEMYPHASEDEBUG
 
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
@@ -83,8 +82,6 @@ InitEnemys (void)
   int i;
   int type;
 
-  // printf("\nNumEnemys ist jetzt: %d " ,NumEnemys );
-  // fflush(stdout);
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       type = AllEnemys[i].type;
@@ -170,8 +167,8 @@ ShuffleEnemys (void)
 	wp = nth_enemy;
       else
 	{
-	  printf ("\nNumber of waypoints found: %d." , wp_num );
-	  printf ("\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
+	  DebugPrintf (1, "\nNumber of waypoints found: %d." , wp_num );
+	  DebugPrintf (1, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
 	  Terminate (ERR);
 	}
 
@@ -276,10 +273,6 @@ MoveEnemys (void)
        Restweg.x = nextwp_pos.x - AllEnemys[i].pos.x;
        Restweg.y = nextwp_pos.y - AllEnemys[i].pos.y;
 
-       // printf("\n Restweg.x: %g Restweg.y: %g ", Restweg.x, Restweg.y );
-       // printf("\n NextWP.x: %g NextWP.y: %g ", nextwp_pos.x , nextwp_pos.y );
-
-
        // --------------------
        // As long a the distance from the current position of the enemy
        // to its next wp is large, movement is rather sinple:
@@ -297,7 +290,6 @@ MoveEnemys (void)
 	   // to do some fine tuning, and then of course set the next waypoint.
 	   AllEnemys[i].pos.x = nextwp_pos.x;
 	   AllEnemys[i].speed.x = 0;
-	   // printf("\n Final Destination in x reached.");
 	 }
 
 
@@ -312,7 +304,6 @@ MoveEnemys (void)
 	   // AllEnemys[i].pos.y += (nextwp_pos.y-AllEnemys[i].pos.y)*Frame_Time();
 	   AllEnemys[i].pos.y = nextwp_pos.y;
 	   AllEnemys[i].speed.y = 0;
-	   // printf("\n Final Destination in y reached.");
 	 }
 
 
@@ -326,7 +317,7 @@ MoveEnemys (void)
 	   AllEnemys[i].warten = MyRandom (ENEMYMAXWAIT);
 
 	   /* suche moegliche Verbindung von hier */
-	   DebugPrintf ("/* suche moegliche Verbindung von hier */\n");
+	   DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
 	   /* but only if there are connections possible */
 	   for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
 	     if ( WpList[nextwp].connections[j] != -1 )
@@ -336,7 +327,7 @@ MoveEnemys (void)
 		      connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
 	   else
 	     {
-	       printf ("\nWeird waypoint %d has no connections!\n", nextwp);
+	       DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
 	       // Terminate(ERR);
 	     }
 
@@ -402,8 +393,7 @@ AttackInfluence (int enemynum)
 	}
       if (j == MAXBULLETS)
 	{
-	  DebugPrintf
-	    ("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+	  DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
 	  Terminate (ERR);
 	}
 
@@ -501,8 +491,7 @@ AttackInfluence (int enemynum)
 	}
       if (j == MAXBULLETS)
 	{
-	  DebugPrintf
-	    ("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+	  DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
 	  Terminate (ERR);
 	}
 
@@ -668,7 +657,6 @@ AnimateEnemys (void)
     {
       if (AllEnemys[i].type == DRUID598)
 	{
-	  //   printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
 	  //   AllEnemys[i].feindrehcode,
 	  //   Druidmap[AllEnemys[i].type].maxenergy,
 	  //   AllEnemys[i].energy,
@@ -690,13 +678,11 @@ AnimateEnemys (void)
 
       if (AllEnemys[i].feindphase >= ENEMYPHASES)
 	{
-#ifdef ENEMYPHASEDEBUG
 	  if (AllEnemys[i].type == DRUID598)
 	    {
-	      printf (" Broke at: %d ", AllEnemys[i].feindphase);
-	      getchar ();
+	      DebugPrintf (0, " Broke at: %d ", AllEnemys[i].feindphase);
+	      //	      getchar ();
 	    }
-#endif
 	  AllEnemys[i].feindphase = 0;
 	}
     }

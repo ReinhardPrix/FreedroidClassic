@@ -73,7 +73,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
   int barcol = 0;
   int i;
 
-  DebugPrintf ("\nvoid DrawBar(...):  real function call confirmed.");
+  DebugPrintf (2, "\nvoid DrawBar(...):  real function call confirmed.");
 
   if (Wert < 0)
     Wert = 0;
@@ -93,7 +93,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
   if (Wert == AllBars[BarCode].oldval)
     {
-      DebugPrintf ("\nvoid DrawBar(...):  end of function reached.");
+      DebugPrintf (2, "\nvoid DrawBar(...):  end of function reached.");
       return;
     }
 
@@ -117,7 +117,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
   AllBars[BarCode].oldval = Wert;
 
-  DebugPrintf ("\nvoid DrawBar(...):  end of function reached.");
+  DebugPrintf (2, "\nvoid DrawBar(...):  end of function reached.");
 
 } // void DrawBar(...)
 
