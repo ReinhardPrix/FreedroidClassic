@@ -199,8 +199,8 @@
 //
 #define ARMOUR_RECT_WIDTH 66
 #define ARMOUR_RECT_HEIGHT 92
-#define ARMOUR_POS_X 129
-#define ARMOUR_POS_Y 90
+#define ARMOUR_RECT_X 129
+#define ARMOUR_RECT_Y 90
 
 //--------------------
 // The shield rectangle is obviously for the shields, but not only
@@ -210,8 +210,8 @@
 //
 #define SHIELD_RECT_WIDTH 67
 #define SHIELD_RECT_HEIGHT 112
-#define SHIELD_POS_X 237
-#define SHIELD_POS_Y 116
+#define SHIELD_RECT_X 237
+#define SHIELD_RECT_Y 116
 
 //--------------------
 // The 'drive' rectangle is actually for the footwear.
@@ -226,8 +226,8 @@
 //
 #define HELMET_RECT_WIDTH 64
 #define HELMET_RECT_HEIGHT 64
-#define HELMET_RECT_POS_X 22
-#define HELMET_RECT_POS_Y 26
+#define HELMET_RECT_X 22
+#define HELMET_RECT_Y 26
 
 //--------------------
 // Now these are the 'bracelet' rectangles, where you could put
@@ -238,12 +238,12 @@
 //
 #define AUX1_RECT_WIDTH 64
 #define AUX1_RECT_HEIGHT 64
-#define AUX1_POS_X 32
-#define AUX1_POS_Y 25
+#define AUX1_RECT_X 32
+#define AUX1_RECT_Y 25
 #define AUX2_RECT_WIDTH 64
 #define AUX2_RECT_HEIGHT 64
-#define AUX2_POS_X 47
-#define AUX2_POS_Y 210
+#define AUX2_RECT_X 47
+#define AUX2_RECT_Y 210
 
 #endif
 // Nothing more from here on 

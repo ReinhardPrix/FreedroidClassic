@@ -169,11 +169,11 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_POS_X  , SHIELD_POS_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_POS_X    , AUX1_POS_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_POS_X    , AUX2_POS_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_POS_X , HELMET_RECT_POS_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_POS_X  , ARMOUR_POS_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_RECT_X  , SHIELD_RECT_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_RECT_X    , AUX1_RECT_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_RECT_X    , AUX2_RECT_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_X , HELMET_RECT_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_RECT_X  , ARMOUR_RECT_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } , FALSE } ,
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE } ,

@@ -1122,44 +1122,74 @@ prepare_text_window_content ( char* ItemDescText )
 	else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].weapon_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].weapon_item ) , FALSE );
+		best_banner_pos_x = WEAPON_RECT_X + 30 + WEAPON_RECT_WIDTH ;
+		best_banner_pos_y = WEAPON_RECT_Y - 30 ;
+	    }
 	}
 	else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].drive_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].drive_item) , FALSE );
+		best_banner_pos_x = DRIVE_RECT_X + 30 + DRIVE_RECT_WIDTH ;
+		best_banner_pos_y = DRIVE_RECT_Y - 30 ;
+	    }
 	}
 	else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me [ 0 ] . shield_item . type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . shield_item ) , FALSE );
+		best_banner_pos_x = SHIELD_RECT_X + 30 + SHIELD_RECT_WIDTH ;
+		best_banner_pos_y = SHIELD_RECT_Y - 30 ;
+	    }
 	    else if ( Me [ 0 ] . weapon_item . type > 0 )
 	    {
 		if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 		{
 		    GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . weapon_item ) , FALSE );
+		    best_banner_pos_x = SHIELD_RECT_X + 30 + SHIELD_RECT_WIDTH ;
+		    best_banner_pos_y = SHIELD_RECT_Y - 30 ;
 		}
 	    }
 	}
 	else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].armour_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
+		best_banner_pos_x = ARMOUR_RECT_X + 30 + ARMOUR_RECT_WIDTH ;
+		best_banner_pos_y = ARMOUR_RECT_Y - 30 ;
+	    }
 	}
 	else if ( MouseCursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].special_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
+		best_banner_pos_x = HELMET_RECT_X + 30 + HELMET_RECT_WIDTH ;
+		best_banner_pos_y = HELMET_RECT_Y - 30 ;
+	    }
 	}
 	else if ( MouseCursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].aux1_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].aux1_item) , FALSE );
+		best_banner_pos_x = AUX1_RECT_X + 30 + AUX1_RECT_WIDTH ;
+		best_banner_pos_y = AUX1_RECT_Y - 30 ;
+	    }
 	}
 	else if ( MouseCursorIsOnButton ( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	    if ( Me[0].aux2_item.type > 0 )
+	    {
 		GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
+		best_banner_pos_x = AUX2_RECT_X + 30 + AUX2_RECT_WIDTH ;
+		best_banner_pos_y = AUX2_RECT_Y - 30 ;
+	    }
 	}
 	
     } // if nothing is 'held in hand' && inventory-screen visible
