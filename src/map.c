@@ -1905,7 +1905,7 @@ recode_floor_tiles_of_this_level ( Level our_level )
 	      break;
 
 	    case CAVE_WITH_WAY_TILE:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND ;
+	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_DOT ;
 	      break;
 
 	    case CAVE_WITH_GRASS_1:

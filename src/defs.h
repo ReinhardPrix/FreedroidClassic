@@ -949,7 +949,7 @@ enum
   ISO_FLOOR_SAND_WITH_GRASS_2 = 7 ,
   ISO_FLOOR_SAND_WITH_GRASS_3 = 8 ,
   ISO_FLOOR_SAND_WITH_GRASS_4 = 9 ,
-  ISO_FLOOR_SAND_WITH_WAY = 10 ,
+  ISO_FLOOR_SAND_WITH_DOT = 10 ,
   ISO_FLOOR_PARQUET = 11 ,
   ALL_ISOMETRIC_FLOOR_TILES = 12 // this is always the last entry.  It's used to count the number of floor tiles.
 };
