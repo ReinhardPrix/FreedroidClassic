@@ -249,6 +249,13 @@ Level_Editor(void)
   char* OldMapPointer;
   char linebuf[10000];
   int MapInsertNr;
+  char* MenuTexts[ 10 ];
+  char Options0[1000];
+  char Options1[1000];
+  char Options2[1000];
+  char Options3[1000];
+  char Options4[1000];
+  char Options5[1000];
 
   char VanishingMessage[10000]="Hello";
   float VanishingMessageDisplayTime = 0;
@@ -836,70 +843,51 @@ Level_Editor(void)
 
 	  InitiateMenu( NULL );
 
-	  // Highlight currently selected option with an influencer before it
-	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 , 0 );
+	  MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
+	  sprintf( Options0 , "Current: %d.  Level Up/Down" , CurLevel->levelnum );
+	  MenuTexts[ 1 ] = Options0;
+	  MenuTexts[ 2 ] = "Change tile set" ;
+	  sprintf( Options1 , "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+	  MenuTexts[ 3 ] = Options1;
+	  sprintf( Options2 , "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
+	  MenuTexts[ 4 ] = Options2;
+	  sprintf( Options3 , "Level name: %s" , CurLevel->Levelname );
+	  MenuTexts[ 5 ] = Options3;
+	  sprintf( Options4 , "Background music file name: %s" , CurLevel->Background_Song_Name );
+	  MenuTexts[ 6 ] = Options4;
+	  sprintf( Options5 , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+	  MenuTexts[ 7 ] = Options5;
+	  MenuTexts[ 8 ] = "Quit Level Editor" ;
+	  MenuTexts[ 9 ] = "" ; 
 
-	  DisplayText ( "Save whole ship to 'Testship.shp'" , User_Rect.x , 4*FontHeight(Menu_BFont), &Editor_Window );
+	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
 
-	  sprintf( linebuf, "Current: %d.  Level Up/Down" , CurLevel->levelnum );
-	  DisplayText ( linebuf , User_Rect.x , 5*FontHeight(Menu_BFont), &Editor_Window );
+	  while (EnterPressed() || SpacePressed() );
 
-	  DisplayText ( "Change tile set" , User_Rect.x , 6*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
-	  DisplayText ( linebuf , User_Rect.x , 7*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
-	  DisplayText ( linebuf , User_Rect.x , 8*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Level name: %s" , CurLevel->Levelname );
-	  DisplayText ( linebuf , User_Rect.x , 9*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Background music file name: %s" , CurLevel->Background_Song_Name );
-	  DisplayText ( linebuf , User_Rect.x , 10*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  DisplayText ( linebuf , User_Rect.x , 11*FontHeight(Menu_BFont), &Editor_Window );
-
-	  sprintf( linebuf, "Quit Level Editor" );
-	  DisplayText ( linebuf , User_Rect.x , 12*FontHeight(Menu_BFont), &Editor_Window );
-
-	  SDL_Flip ( Screen );
-	  
-	  // Wait until the user does SOMETHING
-	  
-	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() && !LeftPressed() && !RightPressed())  
-	    keyboard_update();
-	  
-	  if ( EscapePressed() )
+	  switch (MenuPosition) 
 	    {
-	      while (EscapePressed());
+	      
+	    case (-1):
+	      while ( EscapePressed() );
 	      Weiter=!Weiter;
-	    }
-	  
-	  if (EnterPressed() || SpacePressed() ) 
-	    {
-	      MenuItemSelectedSound();
-	      while (EnterPressed() || SpacePressed() );
-	      switch (MenuPosition) 
-		{
-		  
-		case SAVE_LEVEL_POSITION:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  SaveShip("Testship.shp");
-		  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  SDL_Flip ( Screen );
-		  while (!EnterPressed() && !SpacePressed() ) ;
-		  while (EnterPressed() || SpacePressed() ) ;
-		  // Weiter=!Weiter;
-		  break;
-		case CHANGE_LEVEL_POSITION: 
-		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
-		  while (EnterPressed() || SpacePressed() ) ;
-		  break;
-		case CHANGE_TILE_SET_POSITION: 
-		  while (EnterPressed() || SpacePressed() ) ;
-		  break;
+	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+	      break;
+	    case SAVE_LEVEL_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      SaveShip("Testship.shp");
+	      CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+	      SDL_Flip ( Screen );
+	      while (!EnterPressed() && !SpacePressed() ) ;
+	      while (EnterPressed() || SpacePressed() ) ;
+	      // Weiter=!Weiter;
+	      break;
+	    case CHANGE_LEVEL_POSITION: 
+	      // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
+	      while (EnterPressed() || SpacePressed() ) ;
+	      break;
+	    case CHANGE_TILE_SET_POSITION: 
+	      while (EnterPressed() || SpacePressed() ) ;
+	      break;
 		case SET_LEVEL_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
@@ -932,7 +920,6 @@ Level_Editor(void)
 		  break;
 
 		} // switch
-	    } // if EnterPressed or SpacePressed
 
 	  // If the user of the level editor pressed left or right, that should have
 	  // an effect IF he/she is a the change level menu point
@@ -1023,6 +1010,7 @@ Level_Editor(void)
 
 	  // If the user pressed up or down, the cursor within
 	  // the level editor menu has to be moved, which is done here:
+	  /*
 	  if (UpPressed()) 
 	    {
 	      if (MenuPosition > 1) MenuPosition--;
@@ -1035,6 +1023,8 @@ Level_Editor(void)
 	      MoveMenuPositionSound();
 	      while (DownPressed());
 	    }
+	  */
+
 
 	}
       

@@ -122,13 +122,13 @@ TryToRepairItem( item* RepairItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 , NULL );
+      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 , NULL );
+      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -177,13 +177,13 @@ TryToIdentifyItem( item* IdentifyItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM IDENTIFIED! " , MenuTexts , 1 , NULL );
+      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM IDENTIFIED! " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL );
+      MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -232,7 +232,7 @@ TryToSellItem( item* SellItem )
 
   while ( 1 )
     {
-      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 , NULL );
+      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -288,7 +288,7 @@ TryToBuyItem( item* BuyItem )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 , NULL );
+      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
@@ -302,7 +302,7 @@ TryToBuyItem( item* BuyItem )
 		{
 		  GiveItemDescription( linebuf , BuyItem , TRUE );
 		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL );
+		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
 		  switch (MenuPosition) 
 		    {
 		    case (-1):
@@ -514,7 +514,7 @@ Repair_Items( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , NULL );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
@@ -662,7 +662,7 @@ Identify_Items ( void )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , NULL );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , NULL , NULL );
       return;
     }
 
@@ -791,7 +791,7 @@ Sell_Items( int ForHealer )
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , 
-			MenuTexts, 1 , NULL );
+			MenuTexts, 1 , NULL , NULL );
       return;
     }
 
@@ -880,7 +880,7 @@ MouseCursorIsOverMenuItem( first_menu_item_pos_y )
  * keyboard only, currently, sorry.
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse )
+DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
@@ -913,7 +913,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   // Now that the possible font-changing background assembling is
   // done, we can finally set the right font for the menu itself.
   //
-  SetCurrentFont ( Menu_BFont );
+  if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
+  else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
   while ( 1 )
@@ -1047,7 +1048,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1132,7 +1133,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1200,13 +1201,11 @@ InitiateMenu( char* BackgroundToUse )
   SDL_SetClipRect( Screen, NULL );
 }; // void InitiateMenu(void)
 
-/*@Function============================================================
-@Desc: This function provides a convenient cheat menu, so that any 
-       tester does not have to play all through the game again and again
-       to see if a bug in a certain position has been removed or not.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides a convenient cheat menu, so that any 
+ * tester does not have to play all through the game again and again
+ * to see if a bug in a certain position has been removed or not.
+ * ---------------------------------------------------------------------- */
 extern int CurrentlyCPressed; 	/* the key that brought as in here */
 				/* we need to make sure it is set as released */
 				/* before we leave ...*/
@@ -1658,7 +1657,7 @@ enum
       MenuTexts[8]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1756,7 +1755,7 @@ enum
       MenuTexts[8]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1883,7 +1882,7 @@ New_GraphicsSound_Options_Menu (void)
       MenuTexts[4]=Options4;
       MenuTexts[5]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2035,7 +2034,7 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[2]=Options2;
       MenuTexts[3]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2120,7 +2119,7 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2203,7 +2202,7 @@ enum
   while ( !Weiter )
     {
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2351,7 +2350,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
 
       //--------------------
       // Now let's see what the user has pressed...
@@ -2614,7 +2613,7 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 
-      MenuPosition = DoMenuSelection( "The first 10 characters: " , MenuTexts , 1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "The first 10 characters: " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
@@ -2669,7 +2668,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2749,7 +2748,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
       switch (MenuPosition) 
 	{
