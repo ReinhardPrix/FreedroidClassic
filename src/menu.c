@@ -2570,6 +2570,7 @@ Credits_Menu (void)
                                       Johannes Prix\n\n\
                                       Reinhard Prix\n\n\n\
    ADDITIONAL PROGRAMMING:\n\n\
+                                      Simon Newton\n\n\
                                       Leslie Viljonen\n\n\n\
    PROFILING AND TESTING:\n\n\
                                       Ryan 'simcop2387' Voots\n\n\n\
@@ -2577,11 +2578,13 @@ Credits_Menu (void)
                                       Bastian Salmela\n\n\n\
    ADDITIONAL ARTWORK:\n\n\
                                       Johannes Prix\n\n\
+                                      Simon Newton\n\n\
                                       Lukas Huber\n\n\n\
    STORY AND CHARACTERS:\n\n\
                                       Johannes Prix\n\n\n\
    LEVEL DESIGN:\n\n\
-                                      Johannes Prix\n\n\n\
+                                      Johannes Prix\n\n\
+                                      Simon Newton\n\n\n\
    OGG COMPOSERS:\n\n\
                                       \"The Beginning\"\n\
                                         by 4t thieves\n\
