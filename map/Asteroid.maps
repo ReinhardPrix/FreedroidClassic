@@ -47,7 +47,7 @@ jump target east: 9
 jump target west: 10
 Name of this level=maintenance
 Comment of the Influencer on entering this level="This must be the Old Town.
-Name of background song for this level=THEGREATBATH.MOD
+Name of background song for this level=Bleostrada.ogg
 beginning_of_map
   4   4   4   4   4   4   4   4  15  15  15  15  15   7   7   7   7   7   7   7  25   4  15   7   7   7   7   7   7   7  15   6   6   6   4   6   6  16   6   4   6  16  16  16  16   7   7   7   7   8   8   7   8   8   8   8   8   8   8   8   8   8   8   8   7   7   7   7   7   7   7  24  20   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4  15  15   7   7   7   7   7   7  25   4   4   7   7   7   7   7  15  15  15  15  15  16  15  15  16  15  16  15   4   4   4   4  16  16  16  16   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7  16  16  16  16  16  16  20  20   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
@@ -8849,7 +8849,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8860,14 +8860,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -9209,7 +9209,7 @@ ob_type=1 ob_x=38.00 ob_y=31.50 ob_na=-1
 ob_type=1 ob_x=38.00 ob_y=32.50 ob_na=-1 
 ob_type=6 ob_x=38.50 ob_y=33.00 ob_na=-1 
 ob_type=6 ob_x=39.50 ob_y=33.00 ob_na=-1 
-ob_type=19 ob_x=69.50 ob_y=12.50 ob_na=-1 
+ob_type=20 ob_x=69.50 ob_y=12.50 ob_na=-1 
 ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=0 
 ob_type=2 ob_x=50.50 ob_y=26.00 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=30.00 ob_na=-1 
@@ -9340,7 +9340,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=22 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -9538,7 +9538,7 @@ ob_type=2 ob_x=75.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=76.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=22 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
