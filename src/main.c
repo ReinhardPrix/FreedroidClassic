@@ -41,35 +41,12 @@
 #include "ship.h"
 
 
-// Die folgenden Schalter schalten Debugmeldungen in gewissen speziellen */
-// Funktionen aus oder ein
-#undef DEBUG_MYRANDOM
-
 /* Schalter fuer die bedingte Kompilierung */
-#undef DREHSCHUESSE
-#undef SCHUSSDEBUG
-#undef INFLUNCECLPOSDEBUG
-#undef INFLUENCEWALLDEBUG
-#undef DEBUGREPORT
-#undef BULLETSPEEDUPONRICHTUNG
-
-#undef SAYJOYPOS
-#undef SPEICHERSPAREN
-
-#define TITLE_EIN
 
 #define MOVEENEMYSOFF 		FALSE
 #define ANIMATEENEMYSOFF 	FALSE
-#define INFLUENCEGETROFFENOFF 	FALSE
 
-#define FENSTEROFF 		FALSE
 #define ENERGIEBALKENOFF 	TRUE
-#define USEINTSOFF 		FALSE
-
-/* Scroll- Fenster */
-#define SCROLLSTARTX		USERFENSTERPOSX
-#define SCROLLSTARTY		SCREENHOEHE
-#define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
@@ -118,7 +95,6 @@ main (int argc, char *const argv[])
   while (!QuitProgram)
     {
 
-      /* InitNewGame */
       InitNewGame ();
 
       GameOver = FALSE;
@@ -130,56 +106,7 @@ main (int argc, char *const argv[])
 
 	  UpdateCountersForThisFrame ();
 
-	  if ( QPressed() ) /* user asked for quit */
-	    Terminate (OK);
-	  if ( DPressed() )
-	    Me.energy = 0;
-
-	  // To debug the Debriefing() I added a function to add or subtract
-	  // a thousand points of score via numerical keyboard functions.
-	  // Activate this if you want to test that.  
-
-	  if ( KP0Pressed() )
-	    {
-	      while (KP0Pressed());
-	      RealScore-=1000;
-	    }
-	  if ( KP1Pressed() )
-	    {
-	      while (KP1Pressed());
-	      RealScore+=1000;
-	    }
-
-
-	  if ( CPressed() && Alt_Was_Pressed()
-	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
-	    Cheatmenu ();
-	  if ( EscapePressed() )
-	    EscapeMenu ();
-	  if ( PPressed () )
-	    Pause ();
-
-	  if ( OPressed () )
-	    {
-	      if (CurrentCombatScaleFactor > 0.5 )
-		CurrentCombatScaleFactor -= 0.5;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (OPressed());
-	    }
-	  if ( IPressed () )
-	    {
-	      CurrentCombatScaleFactor += 0.5;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (IPressed());
-	    }
-
-	  if ( UPressed () )
-	    {
-	      InitNewGame();
-	      while (UPressed());
-	    }
-
-
+	  ReactToSpecialKeys();
 
 	  if (ShipEmptyCounter == 1)
 	    GameOver = TRUE;
@@ -224,17 +151,7 @@ main (int argc, char *const argv[])
 
 	  AnimateEnemys ();	// Bei den Feinden auch Phasen weiterzaehlen 
 
-	  /* Raeder bremsen die Fahrt des Influencers erheblich */
-	  DebugPrintf ("\nvoid main: Me.speed.x ist jetzt: ");
-	  DebugPrintfFloat (Me.speed.x);
-	  DebugPrintf ("\nvoid main: Me.speed.y ist jetzt: ");
-	  DebugPrintfFloat (Me.speed.y);
-
 	  InfluenceFrictionWithAir ();
-
-	  DebugPrintf ("\nvoid main: Me.speed.x nach REIBUNG ist jetzt: ");
-	  DebugPrintfFloat (Me.speed.x);
-
 
 	  /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
 	  Me.pos.x += Me.speed.x * Frame_Time ();

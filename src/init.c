@@ -40,13 +40,9 @@
 #include "ship.h"
 
 
-#define FENSTEROFF 		FALSE
-#define USEINTSOFF 		FALSE
-
 /* Scroll- Fenster */
 #define SCROLLSTARTX		USERFENSTERPOSX
 #define SCROLLSTARTY		SCREENHOEHE
-#define CHARSPERLINE		((int)(USERFENSTERBREITE/FontHeight(Menu_BFont))*2)
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would

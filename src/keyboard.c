@@ -90,6 +90,60 @@ int CurrentlyKP9Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
+void 
+ReactToSpecialKeys(void)
+{
+	  if ( QPressed() ) /* user asked for quit */
+	    Terminate (OK);
+	  if ( DPressed() )
+	    Me.energy = 0;
+
+	  // To debug the Debriefing() I added a function to add or subtract
+	  // a thousand points of score via numerical keyboard functions.
+	  // Activate this if you want to test that.  
+
+	  if ( KP0Pressed() )
+	    {
+	      while (KP0Pressed());
+	      RealScore-=1000;
+	    }
+	  if ( KP1Pressed() )
+	    {
+	      while (KP1Pressed());
+	      RealScore+=1000;
+	    }
+
+
+	  if ( CPressed() && Alt_Was_Pressed()
+	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
+	    Cheatmenu ();
+	  if ( EscapePressed() )
+	    EscapeMenu ();
+	  if ( PPressed () )
+	    Pause ();
+
+	  if ( OPressed () )
+	    {
+	      if (CurrentCombatScaleFactor > 0.5 )
+		CurrentCombatScaleFactor -= 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (OPressed());
+	    }
+	  if ( IPressed () )
+	    {
+	      CurrentCombatScaleFactor += 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (IPressed());
+	    }
+
+	  if ( UPressed () )
+	    {
+	      InitNewGame();
+	      while (UPressed());
+	    }
+
+} // void ReactToSpecialKeys(void)
+
 int
 Shift_Was_Pressed(void)
 {

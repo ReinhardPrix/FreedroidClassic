@@ -275,6 +275,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #define EXTERN extern
 #endif
 
+EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
 EXTERN int Ctrl_Was_Pressed(void);
 EXTERN int Alt_Was_Pressed(void);
