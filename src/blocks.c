@@ -803,8 +803,40 @@ Freedroid received a rotation model number that does not exist!",
 	{
 	  for ( j = 0 ; j < last_death_animation_image [ ModelNr ] ; j ++ )
 	    {
-	      sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
+	      // sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+	      // ( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
+	      if ( j + 1 <= last_walk_animation_image [ ModelNr ] )
+		{
+		  sprintf ( ConstructedFileName , "droids/%s/walk_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 );
+		}
+	      else if ( j + 1 <= last_attack_animation_image [ ModelNr ] )
+		{
+		  sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
+		}
+	      else if ( j + 1 <= last_gethit_animation_image [ ModelNr ] )
+		{
+		  sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
+		}
+	      else if ( j + 1 <= last_death_animation_image [ ModelNr ] )
+		{
+		  sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
+		}
+	      else
+		{
+		  fprintf ( stderr , "\n\nModelNr=%d.\nj=%d.\n" , ModelNr , j );
+      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+Freedroid received a rotation model number that does not exist!",
+				 PLEASE_INFORM, IS_FATAL );
+		}
+
+	      // sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+	      // ( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
+
+
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
@@ -848,7 +880,7 @@ LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
   if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
     {
       fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
-      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+      GiveStandardErrorMessage ( "LoadAndPrepareGreenEnemyRotationModelNr(...)" , "\
 Freedroid received a rotation model number that does not exist!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -911,7 +943,7 @@ LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
   if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
     {
       fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
-      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+      GiveStandardErrorMessage ( "LoadAndPrepareBlueEnemyRotationModelNr(...)" , "\
 Freedroid received a rotation model number that does not exist!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -975,7 +1007,7 @@ LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
   if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
     {
       fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
-      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+      GiveStandardErrorMessage ( "LoadAndPrepareRedEnemyRotationModelNr(...)" , "\
 Freedroid received a rotation model number that does not exist!",
 				 PLEASE_INFORM, IS_FATAL );
     }
