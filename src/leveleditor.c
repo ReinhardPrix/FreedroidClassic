@@ -476,7 +476,11 @@ Level_Editor(void)
 	      SDL_Flip( Screen );
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
-	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
+	      if ( NewItemCode >= Number_Of_Item_Types ) 
+		{
+		  NewItemCode=0;
+		  
+		}
 
 	      // DropSpecificItemAtPosition( rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , NewItemCode );
 	      DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );

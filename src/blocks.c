@@ -173,6 +173,12 @@ Load_Item_Surfaces( void )
   ItemImageList[ 33 ].inv_size.y = 2;
   ItemImageList[ 34 ].inv_size.x = 2;
   ItemImageList[ 34 ].inv_size.y = 2;
+  ItemImageList[ 35 ].inv_size.x = 2;
+  ItemImageList[ 35 ].inv_size.y = 2;
+  ItemImageList[ 36 ].inv_size.x = 2;
+  ItemImageList[ 36 ].inv_size.y = 2;
+  ItemImageList[ 37 ].inv_size.x = 2;
+  ItemImageList[ 37 ].inv_size.y = 2;
 
   fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
