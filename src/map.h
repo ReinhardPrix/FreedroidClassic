@@ -82,17 +82,7 @@
 // This is old and should go out, but that must be done from at home, 
 // cause here I can't check if the code is still running without it
 //
-#define WAYPOINT_CHAR		'x'
 #define NO_WAYPOINT  		-1
-
-//--------------------
-// This is old and should go out, but that must be done from at home, 
-// cause here I can't check if the code is still running without it
-//
-#define FILENAME_LEN	128
-#define SHIP_EXT	".shp"
-#define ELEVEXT		".elv"
-#define CREWEXT		".crw"
 
 //--------------------
 // This should go to the map.c file, where the other marker stings are stored as well
