@@ -757,6 +757,53 @@ There was an obstacle type given, that exceeds the number of\n\
  * in the parameter
  * ---------------------------------------------------------------------- */
 void
+blit_one_obstacle_highlighted ( obstacle* our_obstacle )
+{
+  iso_image tmp;
+
+  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    {
+      GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
+There was an obstacle type given, that exceeds the number of\n\
+ obstacle types allowed and loaded in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+
+    }
+
+  //--------------------
+  // Maybe the children friendly version is desired.  Then the blood on the floor
+  // will not be blitted to the screen.
+  //
+  if ( ( ! GameConfig . show_blood ) && 
+       ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
+       ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
+    return;
+
+  if ( use_open_gl )
+    {
+      blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+					     our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE ) ;
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+      tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+      tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+      tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+      tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+      tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+      blit_iso_image_to_map_position ( tmp , our_obstacle -> pos . x , our_obstacle -> pos . y );
+      SDL_FreeSurface ( tmp . surface );
+    }
+
+}; // blit_one_obstacle_highlighted ( obstacle* our_obstacle )
+
+/* ----------------------------------------------------------------------
+ * This function should blit an obstacle, that is given via it's address
+ * in the parameter
+ * ---------------------------------------------------------------------- */
+void
 blit_one_obstacle_zoomed ( obstacle* our_obstacle )
 {
   iso_image tmp;
@@ -890,7 +937,7 @@ The blitting list size was exceeded!",
 		  //
 		  OurObstacle = & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ;
 		  insert_new_element_into_blitting_list ( OurObstacle -> pos . x + OurObstacle -> pos . y , 
-							  BLITTING_TYPE_OBSTACLE , OurObstacle , -1 );
+							  BLITTING_TYPE_OBSTACLE , OurObstacle , obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ) ;
 		}
 	      else
 		break;
@@ -1219,12 +1266,14 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 {
   int i;
   int enemy_under_cursor = -1;
+  int barrel_under_cursor = -1;
 
   //--------------------
   // We memorize which 'enemy' is currently under the mouse target, so that we
   // can properly highlight this enemy...
   //
   enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
+  barrel_under_cursor = smashable_barred_below_mouse_cursor ( 0 ) ;
 
   //--------------------
   // Now it's time to blit all the elements from the list...
@@ -1242,7 +1291,12 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	      if ( mask & ZOOM_OUT )
 		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
 	      else
-		blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		{
+		  if ( blitting_list [ i ] . code_number == barrel_under_cursor ) 
+		    blit_one_obstacle_highlighted ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		  else
+		    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		}
 	    }
 	  break;
 	case BLITTING_TYPE_TUX:

@@ -235,8 +235,9 @@ closed_chest_below_mouse_cursor ( int player_num )
 }; // int closed_chest_below_mouse_cursor ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function checks if there is a smashable barrel under the mouse
+ * cursor and if this is so, then the obstacle index of that barrel will
+ * be returned.  Else -1 is returned for no barrel.
  * ---------------------------------------------------------------------- */
 int
 smashable_barred_below_mouse_cursor ( int player_num ) 
