@@ -116,8 +116,8 @@ label.pos.x=37 label.pos.y=27 label.label_name="RMSStartGameSquare"
 label.pos.x=28 label.pos.y=20 label.label_name="ChandraStartGameSquare"
 label.pos.x=27 label.pos.y=12 label.label_name="PendragonStartGameSquare"
 label.pos.x=24 label.pos.y=17 label.label_name="614StartGameSquare1"
-label.pos.x=29 label.pos.y=42 label.label_name="614StartGameSquare2"
 label.pos.x=32 label.pos.y=42 label.label_name="614StartGameSquare3"
+label.pos.x=29 label.pos.y=41 label.label_name="614StartGameSquare2"
 End of pure map label information for this level
 Start of pure statement information for this level
 PosX=5 PosY=11 Statement="This must be the entrance to the teleporter room.  I think GNU will open the door."
@@ -156,9 +156,9 @@ End of pure items information for this level
 wp
 Nr.=  0 x=  29 y=  42	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  1 x=  32 y=  42	 connections:    0  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=  36 y=  36	 connections:   42  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  30 y=  12	 connections:    7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=  4 x=  32 y=  36	 connections:   42  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=  4 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  5 x=  20 y=  12	 connections:    6   7  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  6 x=  24 y=  12	 connections:    7   5   9  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  7 x=  27 y=  12	 connections:    6   5   3  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -196,15 +196,15 @@ Nr.= 38 x=  47 y=  27	 connections:   40  39  41  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 39 x=  46 y=  26	 connections:   40  38  37  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 40 x=  46 y=  27	 connections:   37  39  41  38  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 41 x=  46 y=  28	 connections:   40  38  37  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 42 x=  39 y=  36	 connections:    4  46  43  44  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 42 x=  39 y=  36	 connections:    2  46  43  44  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 43 x=  40 y=  35	 connections:   46  45  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 44 x=  40 y=  37	 connections:   46  42  45  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 45 x=  41 y=  36	 connections:   46  43  44  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 46 x=  40 y=  36	 connections:   42  45  44  43  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 47 x=  48 y=  20	 connections:   17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 48 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 49 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 50 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 49 x=  29 y=  41	 connections:   50  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 50 x=  32 y=  41	 connections:   49  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 51 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 52 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 53 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1658,17 +1658,17 @@ Name of background song for this level=NOWHERE.MOD
 beginning_of_map
  10  10  10  10  10   9  33  33  33  33  10   8  10  10  10   8  10  10  10   8  10  10   9  33  33  33 
  14  14  14  15  12  11  33   7  10   9   0  11   0  25   0  11   0  25   0  27   0   0  11  33  33  33 
- 14  14  14   0   0   1  10   3  34   1   0  11   0   0   0  11   0   0   0  11   0  26  11  33  33  33 
+ 14  14  14   0   0   1  10   3  35   1   0  11   0   0   0  11   0   0   0  11   0  26  11  33  33  33 
   0   0   0   0   0   0   0  16  17  16  10   2  10  18  10   2  10  18  10   2  10  10   2  10  10   9 
-  0   0   0   0   0   0  34  17  34  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
+  0   0   0   0   0   0  35  17  35  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
   0   0   0   0   0   0   0  16  17  16   0   0   0   0   0   0   0   0   0   0   0   0   0  32   0  11 
-  0   0   0   0   0   7  10   9  34   7   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
+  0   0   0   0   0   7  10   9  35   7   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
   0   0   0   0   0   1  10   2   8   3  10   8  10  18  10   8  10  18  10   8  10  10   8  10  10   3 
   0   0   0   0   0   0  17   0  11  33   0  11   0   0   0  11   0   0   0  11   0  24  11  33  33  33 
   0   0   0   0   0   0   0   0   4  10   0  11   0  26   0  11   0  26   0  27   0   0  11  33  33  33 
-  0   0   0   0   0   0   0   0  11  34  10   2  10  10  10   2  10  10  10   2  10  10   3  33  33  33 
+  0   0   0   0   0   0   0   0  11  35  10   2  10  10  10   2  10  10  10   2  10  10   3  33  33  33 
   0   0   0   0   0   0   0   0  27   0  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
-  0   0   0   0   0   0   0   0  11  34  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+  0   0   0   0   0   0   0   0  11  35  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
   0   0   0   0   0   0   0   0   4  10  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
   0   0   0   0   0   0  16  12  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  10  10  10   9   0   0   0   7   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 

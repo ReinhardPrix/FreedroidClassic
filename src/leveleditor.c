@@ -2419,13 +2419,27 @@ EditMapLabelData ( Level EditLevel )
     }
   else
     {
-      DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
-      
+      DisplayText ( "\nOverwriting existing map label list entry...\n" , -1 , -1 , &User_Rect );
     }
-  EditLevel -> labels [ i ] . label_name = NewCommentOnThisSquare;
-  EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x );
-  EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y );
-  
+
+  //--------------------
+  // At this point, we've got our new index for a good map label list
+  // position we can use.  But we'll only fill in something if the string
+  // given wasn't empty.  Otherwise, the old label is to be deleted.
+  // 
+  if ( strlen ( NewCommentOnThisSquare ) )
+    {
+      EditLevel -> labels [ i ] . label_name = NewCommentOnThisSquare;
+      EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x );
+      EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y );
+    }
+  else
+    {
+      EditLevel -> labels [ i ] . label_name = "NoLabelHere" ;
+      EditLevel -> labels [ i ] . pos . x = (-1) ;
+      EditLevel -> labels [ i ] . pos . y = (-1) ;
+    }
+
   SDL_Flip ( Screen );
   getchar_raw();
   

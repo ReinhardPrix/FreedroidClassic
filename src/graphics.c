@@ -886,6 +886,7 @@ void DisplayImage( char *datafile )
   SDL_BlitSurface(image, NULL, Screen, NULL);
 
   SDL_FreeSurface(image);
+
 }; // void DisplayImage( char *datafile )
 
 
