@@ -537,6 +537,7 @@ EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 EXTERN void LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename );
 EXTERN void delete_one_dialog_option ( int i , int FirstInitialisation );
 EXTERN void InitChatRosterForNewDialogue( void );
+EXTERN void Get_Item_Data ( char* DataPointer );
 
 // rahmen.c 
 #undef EXTERN

@@ -25,35 +25,6 @@
 #ifndef _text_h
 #define _text_h
 
-#define MAX_DIALOGUE_OPTIONS_IN_ROSTER 100
-#define MAX_REPLIES_PER_OPTION 100
-#define MAX_SUBTITLES_N_SAMPLES_PER_DIALOGUE_OPTION 20
-#define MAX_EXTRAS_PER_OPTION 10
-#define CHAT_DEBUG_LEVEL 1
-
-typedef struct
-{
-  int position_x;
-  int position_y;
-  char* option_text;
-  char* option_sample_file_name;
-
-  char* reply_sample_list[ MAX_REPLIES_PER_OPTION ] ;
-  char* reply_subtitle_list[ MAX_REPLIES_PER_OPTION ];
-
-  char* extra_list[ MAX_EXTRAS_PER_OPTION ];
-
-  char* on_goto_condition;
-  int on_goto_first_target;
-  int on_goto_second_target;
-  int always_execute_this_option_prior_to_dialog_start;
-
-  int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
-  int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
-}
-dialogue_option, *Dialogue_option;
-
-
 /* Font Dimensionen */
 #define FONTBREITE 8
 #define FONTHOEHE 12

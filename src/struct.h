@@ -302,6 +302,9 @@ typedef struct
 
 typedef struct
 {
+  int position_x;
+  int position_y;
+
   char* item_name;
   // char* item_class;  // class of the item, e.g. weapon, drive, shield, other
   char* item_description;
@@ -329,13 +332,13 @@ typedef struct
   // How good is the item as weapon???
   double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
   int    item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
-  int    item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
-  int    item_gun_blast;			/* which blast does this bullet create */
+  int    item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
+  int    item_gun_blast;			// which blast does this bullet create 
   double item_gun_speed; // how fast should a bullet move straightforward?
   int    base_item_gun_damage; //	damage done by this bullettype 
   int    item_gun_damage_modifier; // modifier to the damage done by this bullettype 
   double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
-  int    item_gun_bullet_can_be_reflected; // can bullets of this type be reflected by other bullets?
+  // int    item_gun_bullet_can_be_reflected; // can bullets of this type be reflected by other bullets?
   int    item_gun_bullet_reflect_other_bullets; // can this 'bullet' reflect other bullets
   int    item_gun_bullet_pass_through_explosions; // can this 'bullet' reflect other bullets
   int    item_gun_bullet_pass_through_hit_bodies; // does this bullet go through hit bodies (e.g. like a laser sword)
@@ -877,5 +880,29 @@ typedef struct
   int num_level_rects[MAX_LEVELS];  /* how many rects has a level */
 }
 ship, *Ship;
+
+typedef struct
+{
+  int position_x;
+  int position_y;
+  char* option_text;
+  char* option_sample_file_name;
+
+  char* reply_sample_list[ MAX_REPLIES_PER_OPTION ] ;
+  char* reply_subtitle_list[ MAX_REPLIES_PER_OPTION ];
+
+  char* extra_list[ MAX_EXTRAS_PER_OPTION ];
+
+  char* on_goto_condition;
+  int on_goto_first_target;
+  int on_goto_second_target;
+  int always_execute_this_option_prior_to_dialog_start;
+
+  int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
+  int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
+}
+dialogue_option, *Dialogue_option;
+
+
 
 #endif

@@ -139,10 +139,17 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 #define EXTERN extern
 #endif
 
+//--------------------
+// These two guys must be declared manually in text_public.c !!!@
+//
+EXTERN int Number_Of_Item_Types;
+EXTERN itemspec* ItemMap;
+
+
+
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
-EXTERN itemspec* ItemMap;
 
 EXTERN SDL_Surface* MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
 EXTERN SDL_Surface* SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
@@ -193,7 +200,6 @@ EXTERN SDL_Rect InventoryRect;
 #else
 #define EXTERN extern
 #endif
-EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
@@ -258,6 +264,13 @@ EXTERN unsigned char *Robotptr;
 
 #undef EXTERN
 #ifdef _text_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+#undef EXTERN
+#ifdef _text_public_c
 #define EXTERN
 #else
 #define EXTERN extern
