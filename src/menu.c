@@ -93,62 +93,62 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 void
 print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_pos_y , int background_code , void* MenuFont ) 
 {
-  char open_gl_string [ 2000 ];
-  int h = FontHeight ( GetCurrentFont ( ) );
-  int i;
-
-  //--------------------
-  // We need to prepare the background for the menu, so that
-  // it can be accessed with proper speed later...
-  //
-  InitiateMenu( background_code );
-
-  //--------------------
-  // Maybe if this is the very first startup menu, we should also print
-  // out some status variables like whether using OpenGL or not DIRECTLY
-  // ON THE MENU SCREEN...
-  //
-  if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
+    char open_gl_string [ 2000 ];
+    int h = FontHeight ( GetCurrentFont ( ) );
+    int i;
+    
+    //--------------------
+    // We need to prepare the background for the menu, so that
+    // it can be accessed with proper speed later...
+    //
+    InitiateMenu ( background_code );
+    
+    //--------------------
+    // Maybe if this is the very first startup menu, we should also print
+    // out some status variables like whether using OpenGL or not DIRECTLY
+    // ON THE MENU SCREEN...
+    //
+    if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
-      SetCurrentFont ( FPS_Display_BFont );
-      RightPutString( Screen , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
-      // printf ("\n%s %s  \n", PACKAGE, VERSION);
-      sprintf ( open_gl_string , "OpenGL support compiled: " );
+	SetCurrentFont ( FPS_Display_BFont );
+	RightPutString( Screen , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
+	// printf ("\n%s %s  \n", PACKAGE, VERSION);
+	sprintf ( open_gl_string , "OpenGL support compiled: " );
 #ifdef HAVE_LIBGL
-      strcat ( open_gl_string , " YES " ) ;
-#else
-      strcat ( open_gl_string , " NO " ) ;
-#endif
-      LeftPutString( Screen , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
-      sprintf ( open_gl_string , "OpenGL output active: " );
-      if ( use_open_gl )
 	strcat ( open_gl_string , " YES " ) ;
-      else
+#else
 	strcat ( open_gl_string , " NO " ) ;
-      LeftPutString( Screen , GameConfig . screen_height - FontHeight ( GetCurrentFont() ) , open_gl_string );
+#endif
+	LeftPutString( Screen , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
+	sprintf ( open_gl_string , "OpenGL output active: " );
+	if ( use_open_gl )
+	    strcat ( open_gl_string , " YES " ) ;
+	else
+	    strcat ( open_gl_string , " NO " ) ;
+	LeftPutString( Screen , GameConfig . screen_height - FontHeight ( GetCurrentFont() ) , open_gl_string );
     }
-
-  //--------------------
-  // Now that the possible font-changing small info printing is
-  // done, we can finally set the right font for the menu itself.
-  //
-  if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
-  else SetCurrentFont ( (BFont_Info*) MenuFont );
-  h = FontHeight ( GetCurrentFont() );
-
-  if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
-       ( GameConfig . menu_mode == MENU_MODE_FAST ) )
+    
+    //--------------------
+    // Now that the possible font-changing small info printing is
+    // done, we can finally set the right font for the menu itself.
+    //
+    if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
+    else SetCurrentFont ( (BFont_Info*) MenuFont );
+    h = FontHeight ( GetCurrentFont() );
+    
+    if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
+	 ( GameConfig . menu_mode == MENU_MODE_FAST ) )
     {
-      for ( i = 0 ; TRUE ; i ++ )
+	for ( i = 0 ; TRUE ; i ++ )
 	{
-	  if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-	  CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+	    if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+	    CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+	    CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
-      if ( strlen( InitialText ) > 0 ) 
-	DisplayText ( InitialText , 50 , 50 , NULL );
+	if ( strlen( InitialText ) > 0 ) 
+	    DisplayText ( InitialText , 50 , 50 , NULL );
     }
-  
+    
 }; // void print_menu_text ( ... )
 
 /* ----------------------------------------------------------------------
@@ -166,9 +166,11 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     int first_menu_item_pos_y;
     
     //--------------------
-    // At first we show the mouse cursor...
+    // At first we hide the system mouse cursor, because we want to use
+    // our own creation in the menus too...
     //
-    SDL_ShowCursor( SDL_ENABLE );
+    // SDL_ShowCursor( SDL_ENABLE );
+    make_sure_system_mouse_cursor_is_turned_off();
     
     //--------------------
     // We set the given font, if appropriate, and set the font height variable...
@@ -260,6 +262,12 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 		DisplayText ( InitialText , 50 , 50 , NULL );
 	}
 	
+	//--------------------
+	// Now the mouse cursor must be brought to the screen
+	//
+	make_sure_system_mouse_cursor_is_turned_off();
+	blit_our_own_mouse_cursor();
+
 	//--------------------
 	// Image should be ready now, so we can show it...
 	//
@@ -546,6 +554,9 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     int mouse_wheel_has_turned = FALSE ;
     int mouse_now_over_different_item = FALSE ;
     int cursors_menu_position = - 1000 ;
+    int mouse_has_moved = FALSE ;
+    int old_mouse_x = (-1) ;
+    int old_mouse_y = (-1) ;
 #if __WIN32__
     int win32_iterations = 0 ;
 #endif
@@ -569,10 +580,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     DebugPrintf ( 1 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
     
     //--------------------
-    // We make sure the mouse cursor is visible, so that the user can
-    // see where he's clicking...
+    // We don't need the system mouse cursor, as we do have our own for
+    // the same purpose.
     //
-    SDL_ShowCursor( SDL_ENABLE );
+    make_sure_system_mouse_cursor_is_turned_off();
     
     if ( FirstItem != (-1) ) menu_position_to_remember = FirstItem;
     
@@ -733,6 +744,12 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
 	  
 	  //--------------------
+	  // Now the mouse cursor must be brought to the screen
+	  //
+	  make_sure_system_mouse_cursor_is_turned_off();
+	  blit_our_own_mouse_cursor();
+
+	  //--------------------
 	  // Now everything should become visible!
 	  //
 	  our_SDL_flip_wrapper( Screen );
@@ -748,9 +765,26 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       //
       mouse_wheel_has_turned = FALSE ;
       mouse_now_over_different_item = FALSE ;
+      mouse_has_moved = FALSE ;
       
-      while ( !mouse_now_over_different_item && !mouse_wheel_has_turned && !EscapePressed() && !EnterPressed() && !axis_is_active && !RightPressed() && !LeftPressed() && !UpPressed() && !DownPressed() )
+      while ( !mouse_has_moved && !mouse_now_over_different_item && !mouse_wheel_has_turned && !EscapePressed() && !EnterPressed() && !axis_is_active && !RightPressed() && !LeftPressed() && !UpPressed() && !DownPressed() )
       {
+
+	  if ( GetMousePos_x() != old_mouse_x )
+	  {
+	      old_mouse_x = GetMousePos_x();
+	      old_mouse_y = GetMousePos_y();
+	      mouse_has_moved = TRUE ;
+	  }
+	  else if ( GetMousePos_y() != old_mouse_y )
+	  {
+	      old_mouse_x = GetMousePos_x();
+	      old_mouse_y = GetMousePos_y();
+	      mouse_has_moved = TRUE ;
+	  }
+	  else
+	      mouse_has_moved = FALSE ;
+
 	  //--------------------
 	  // The MOUSE WHEEL cannot be queried like anything else, since querying it
 	  // DOES CHANGE THE STATUS ITSELF, so we can only ask for this once and we
@@ -999,26 +1033,26 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 void 
 InitiateMenu( int background_code )
 {
-  //--------------------
-  // Here comes the standard initializer for all the menus and submenus
-  // of the big escape menu.  This prepares the screen, so that we can
-  // write on it further down.
-  //
-  SDL_SetClipRect( Screen, NULL );
-
-  if ( background_code == ( -1 ) )
+    //--------------------
+    // Here comes the standard initializer for all the menus and submenus
+    // of the big escape menu.  This prepares the screen, so that we can
+    // write on it further down.
+    //
+    SDL_SetClipRect( Screen, NULL );
+    
+    if ( background_code == ( -1 ) )
     {
-      DisplayBanner ( ) ;
-      AssembleCombatPicture ( 0 );
-      MakeGridOnScreen( NULL );
+	DisplayBanner ( ) ;
+	AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR );
+	MakeGridOnScreen( NULL );
     }
-  else
+    else
     {
-      // DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
-      blit_special_background ( background_code ) ;
+	// DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
+	blit_special_background ( background_code ) ;
     }
-
-  SDL_SetClipRect( Screen, NULL );
+    
+    SDL_SetClipRect( Screen, NULL );
 }; // void InitiateMenu(void)
 
 // extern int CurrentlyCPressed; 	/* the key that brought as in here */
@@ -2241,74 +2275,74 @@ Droid_Talk_Options_Menu (void)
 void
 Options_Menu (void)
 {
-  int can_continue = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-enum
-  { 
-    GRAPHICS_OPTIONS=1, 
-    SOUND_OPTIONS,
-    DROID_TALK_OPTIONS,
-    ON_SCREEN_DISPLAYS,
-    PERFORMANCE_TWEAKS_OPTIONS,
-    SAVE_OPTIONS, 
-    LEAVE_OPTIONS_MENU 
-  };
-
-  MenuTexts[0]="Graphics Options";
-  MenuTexts[1]="Sound Options";
-  MenuTexts[2]="Droid Talk";
-  MenuTexts[3]="On-Screen Displays";
-  MenuTexts[4]="Performance Tweaks";
-  MenuTexts[5]="Save Options";
-  MenuTexts[6]="Back";
-  MenuTexts[7]="";
-
-  while ( !can_continue )
+    int can_continue = 0;
+    int MenuPosition=1;
+    char* MenuTexts[10];
+    enum
+	{ 
+	    GRAPHICS_OPTIONS=1, 
+	    SOUND_OPTIONS,
+	    DROID_TALK_OPTIONS,
+	    ON_SCREEN_DISPLAYS,
+	    PERFORMANCE_TWEAKS_OPTIONS,
+	    SAVE_OPTIONS, 
+	    LEAVE_OPTIONS_MENU 
+	};
+    
+    MenuTexts[0]="Graphics Options";
+    MenuTexts[1]="Sound Options";
+    MenuTexts[2]="Droid Talk";
+    MenuTexts[3]="On-Screen Displays";
+    MenuTexts[4]="Performance Tweaks";
+    MenuTexts[5]="Save Options";
+    MenuTexts[6]="Back";
+    MenuTexts[7]="";
+    
+    while ( !can_continue )
     {
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
-
-      switch (MenuPosition) 
+	
+	MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
+	
+	switch (MenuPosition) 
 	{
-	case (-1):
-	  can_continue=!can_continue;
-	  break;
-	case GRAPHICS_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Graphics_Options_Menu();
-	  break;
-	case SOUND_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Sound_Options_Menu();
-	  break;
-	case DROID_TALK_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Droid_Talk_Options_Menu();
-	  break;
-	case ON_SCREEN_DISPLAYS:
-	  while (EnterPressed() || SpacePressed() );
-	  On_Screen_Display_Options_Menu();
-	  break;
-	case PERFORMANCE_TWEAKS_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  PerformanceTweaksOptionsMenu();
-	  break;
-	case SAVE_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  break;
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  can_continue=TRUE;
-	  break;
-	default: 
-	  break;
+	    case (-1):
+		can_continue=!can_continue;
+		break;
+	    case GRAPHICS_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		Graphics_Options_Menu();
+		break;
+	    case SOUND_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		Sound_Options_Menu();
+		break;
+	    case DROID_TALK_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		Droid_Talk_Options_Menu();
+		break;
+	    case ON_SCREEN_DISPLAYS:
+		while (EnterPressed() || SpacePressed() );
+		On_Screen_Display_Options_Menu();
+		break;
+	    case PERFORMANCE_TWEAKS_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		PerformanceTweaksOptionsMenu();
+		break;
+	    case SAVE_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		break;
+	    case LEAVE_OPTIONS_MENU:
+		while (EnterPressed() || SpacePressed() );
+		can_continue=TRUE;
+		break;
+	    default: 
+		break;
 	} 
     }
-
-  ClearGraphMem ();
-  DisplayBanner ( );
-
+    
+    ClearGraphMem ();
+    DisplayBanner ( );
+    
 } // Options_Menu
 
 /* ----------------------------------------------------------------------

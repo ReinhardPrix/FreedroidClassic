@@ -908,7 +908,7 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
     //
     SetCurrentFont( FPS_Display_BFont );
     
-    AssembleCombatPicture ( 0 ) ;
+    AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR ) ;
     blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
     our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
 				   Screen , &Droid_Image_Window );
@@ -1343,7 +1343,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
 	StartTakingTimeForFPSCalculation();       
 	
-	AssembleCombatPicture ( SHOW_ITEMS ); 
+	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	
 	our_SDL_flip_wrapper ( Screen );
 	
@@ -1407,7 +1407,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
 	StartTakingTimeForFPSCalculation();       
 	
-	AssembleCombatPicture ( SHOW_ITEMS ); 
+	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	our_SDL_flip_wrapper ( Screen );
 	
 	OldAngle = ChatDroid -> current_angle;
@@ -1438,7 +1438,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
 	StartTakingTimeForFPSCalculation();       
 	
-	AssembleCombatPicture ( SHOW_ITEMS ); 
+	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )

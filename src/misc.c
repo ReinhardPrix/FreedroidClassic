@@ -1623,7 +1623,7 @@ This indicates an error in the map system of Freedroid.",
     
     if ( with_sound_and_fading ) 
     {
-	AssembleCombatPicture ( SHOW_ITEMS ); 
+	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	our_SDL_flip_wrapper ( Screen );
 	fade_in_using_gamma_ramp ();
     }
