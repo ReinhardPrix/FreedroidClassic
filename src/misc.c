@@ -1237,7 +1237,7 @@ ExecuteEvent ( int EventNumber )
   // Do nothing in case of the empty action (-1) given.
   if ( EventNumber == (-1) ) return;
 
-  // Does the trigger include a change of a map tile?
+  // Does the action include a change of a map tile?
   if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
     {
       //YES.  So we need to check, if the location has been supplied fully first.
@@ -1254,6 +1254,14 @@ ExecuteEvent ( int EventNumber )
 	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
 	  GetDoors( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
 	}
+    }
+
+  // Does the action include a teleport of the influencer to some other location?
+  if ( AllTriggeredActions[ EventNumber ].TeleportTarget.x != (-1) )
+    {
+      Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
+		 AllTriggeredActions[ EventNumber ].TeleportTarget.x ,
+		 AllTriggeredActions[ EventNumber ].TeleportTarget.y );
     }
 
   // Does the defined action assign the influencer a mission?

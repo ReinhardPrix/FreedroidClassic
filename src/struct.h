@@ -161,6 +161,10 @@ typedef struct
   int ChangeMapTo;
   int ChangeMapLevel;
 
+  // Maybe the triggered event teleports the influencer somewhere
+  point TeleportTarget;
+  int TeleportTargetLevel;
+
   // Maybe the triggered action consists of a mission assignment
   int AssignWhichMission;
 
