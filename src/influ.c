@@ -61,6 +61,136 @@ int NoInfluBulletOnWay (void);
 
 /* ----------------------------------------------------------------------
  *
+ *
+ * ---------------------------------------------------------------------- */
+int
+find_free_floor_items_index ( int levelnum ) 
+{
+  int i;
+  Level DropLevel = curShip . AllLevels [ levelnum ] ;
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) return ( i ) ;
+    }
+
+  GiveStandardErrorMessage ( "find_free_floor_items_index(...)" , "FreedroidRPG failed to find a free items index for an item it wanted to put on the floor.\nThis case means that there are too many items on the floor of this level for the current game engine.\nA constant needs to be raised or the engine improved.",
+			     PLEASE_INFORM, IS_FATAL );
+
+  return ( 0 ) ;
+  
+}; // int find_free_floor_items_index ( int levelnum ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+throw_out_all_chest_content ( int obst_index )
+{
+  Level chest_level;
+  int i;
+  int j;
+  moderately_finepoint throw_out_offset_vector = { 0 , 0.9 } ;
+
+  chest_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+  DebugPrintf ( 0 , "\nthrow_out_all_chest_content: call confimed." );
+
+  //--------------------
+  // First some check if the given obstacle is really a closed chest.
+  //
+  switch ( chest_level -> obstacle_list [ obst_index ] . type )
+    {
+    case ISO_H_CHEST_CLOSED:
+    case ISO_V_CHEST_CLOSED:
+      // all is ok in this case.  it's really a chest.  fine.
+      break;
+    default: 
+      // no chest handed as the chest obstacle!  Clearly a severe error.!
+      GiveStandardErrorMessage ( "throw_out_all_chest_content(...)" , "Obstacle given to empty is not really a chest!" ,
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    }
+
+  //--------------------
+  // Now we can throw out all the items from inside the chest and maybe
+  // (later) also play a 'chest opening' sound.
+  //
+  for ( i = 0 ; i < MAX_CHEST_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( chest_level -> ChestItemList [ i ] . type == (-1) ) continue;
+      if ( fabsf ( chest_level -> obstacle_list [ obst_index ] . pos . x - chest_level -> ChestItemList [ i ] . pos . x ) > 0.1 ) continue ;
+      if ( fabsf ( chest_level -> obstacle_list [ obst_index ] . pos . y - chest_level -> ChestItemList [ i ] . pos . y ) > 0.1 ) continue ;
+      
+      //--------------------
+      // So this item is one of the right one and will now get thrown out of the chest:
+      // 
+      // First we find a free items index on this level.
+      //
+      DebugPrintf ( 0 , "\nOne item now thrown out of the chest..." );
+      j = find_free_floor_items_index ( Me [ 0 ] . pos . z ) ;
+      MoveItem ( & ( chest_level -> ChestItemList [ i ] ) , & ( chest_level -> ItemList [ j ] ) ) ;
+
+      chest_level -> ItemList [ j ] . pos . x += throw_out_offset_vector . x ;
+      chest_level -> ItemList [ j ] . pos . y += throw_out_offset_vector . y ;
+      RotateVectorByAngle ( & throw_out_offset_vector , 45 );
+    }
+
+}; // void throw_out_all_chest_content ( int obst_index )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+closed_chest_below_mouse_cursor ( int player_num ) 
+{
+  finepoint MapPositionOfMouse;
+  int i;
+  int obst_index ;
+
+  if ( CursorIsInUserRect( GetMousePos_x()+16 , GetMousePos_y()+16 ) && ( CurLevel != NULL ) )
+    {
+      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
+							       (float) ServerThinksInputAxisX ( player_num ) , 
+							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+
+      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	{
+	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
+	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
+
+	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
+
+	  if ( obst_index == (-1) ) continue;
+
+	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+	    {
+	    case ISO_H_CHEST_CLOSED:
+	    case ISO_V_CHEST_CLOSED:
+	      // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
+	      // strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
+	      return ( obst_index ) ;
+	      break;
+		
+	    default: 
+	      break;
+	    }
+	}
+    }
+
+  return ( -1 ) ;
+
+}; // int closed_chest_below_mouse_cursor ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
  * 
  * ---------------------------------------------------------------------- */
 void
@@ -1826,10 +1956,32 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
 void
 AnalyzePlayersMouseClick ( int player_num )
 {
+  int chest_index ;
 
   DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
 
   if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+
+  //--------------------
+  // A chest, that has been clicked on, will be opened and the content thrown out...
+  //
+  chest_index = closed_chest_below_mouse_cursor ( player_num ) ;
+  if ( chest_index != (-1) )
+    {
+      if ( fabsf ( Me [ player_num ] . pos . x - curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . pos . x ) +
+	   fabsf ( Me [ player_num ] . pos . y - curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
+	{
+	  throw_out_all_chest_content ( chest_index ) ;
+
+	  if ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type == ISO_H_CHEST_CLOSED )
+	    curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
+	  if ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
+	    curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
+	}
+    }
+
+
+
 
   //--------------------
   // Now the new mouse move: If there is 

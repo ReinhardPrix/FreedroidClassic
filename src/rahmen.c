@@ -634,7 +634,6 @@ ShowCurrentTextWindow ( void )
   char* LongTextPointer;
   int InterLineDistance;
   int StringLength;
-  int obst_index;
 
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
@@ -787,30 +786,11 @@ ShowCurrentTextWindow ( void )
       // Maybe the cursor in the user rect is hovering right over a closed chest.
       // In this case we say so in the top status banner.
       //
-      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+      if ( closed_chest_below_mouse_cursor ( 0 ) != (-1) )
 	{
-	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
-	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
-	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) break;
-
-	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
-
-	  if ( obst_index == (-1) ) continue;
-
-	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
-	    {
-	    case ISO_H_CHEST_CLOSED:
-	    case ISO_V_CHEST_CLOSED:
-	      // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
-	      strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
-	      break;
-		
-	    default: 
-	      break;
-	    }
-
+	  strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ); 
 	}
+
 
 
 

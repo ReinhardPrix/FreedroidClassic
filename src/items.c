@@ -1571,16 +1571,7 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
   // We therefore find a free position in the item list of this level
   // where we can add the item later.
   //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) break;
-    }
-  if ( i >= MAX_ITEMS_PER_LEVEL )
-    {
-      DebugPrintf ( 0 , "\n No free position to drop item!!! " ) ;
-      i = 0 ;
-      Terminate( ERR );
-    }
+  i = find_free_floor_items_index ( levelnum ) ;
 
   //--------------------
   // Now we enter the item into the item list of this level

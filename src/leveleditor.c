@@ -1943,7 +1943,7 @@ CreateNewMapLevel( void )
   //--------------------
   // Now we initialize the chest items arrays with 'empty' information
   //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+  for ( i = 0 ; i < MAX_CHEST_ITEMS_PER_LEVEL ; i ++ )
     {
       NewLevel->ChestItemList[ i ].pos.x = ( -1 ) ;
       NewLevel->ChestItemList[ i ].pos.y = ( -1 ) ;
@@ -1989,6 +1989,7 @@ CreateNewMapLevel( void )
 
   //--------------------
   return NewLevel;
+
 }; // Level CreateNewMapLevel( void )
 
 /* ----------------------------------------------------------------------

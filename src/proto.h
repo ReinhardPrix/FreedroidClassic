@@ -61,6 +61,8 @@ EXTERN void PlayATitleFile ( char* Filename );
 #else
 #define EXTERN extern
 #endif
+EXTERN int find_free_floor_items_index ( int levelnum ) ;
+EXTERN int closed_chest_below_mouse_cursor ( int player_num ) ;
 EXTERN void tux_wants_to_attack_now ( int player_num ) ;
 EXTERN void PerformTuxAttackRaw ( int player_num ) ;
 EXTERN void CheckForJumpThresholds ( int player_num );
@@ -284,6 +286,7 @@ EXTERN void Play_Spell_DetectItems_Sound( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void MoveItem( item* SourceItem , item* DestItem );
 EXTERN void silently_unhold_all_items ( void );
 EXTERN int CountItemtypeInInventory( int Itemtype , int player_num );
 EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int player_num );
