@@ -64,10 +64,12 @@ SaveGame( void )
   // get home-directory to save in
   if ( (homedir = getenv("HOME")) == NULL ) 
     {
-      DebugPrintf (0, "ERROR: Environment does not contain HOME variable... \n\
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
+      Terminate( ERR );
       return (ERR);
     }
+
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
