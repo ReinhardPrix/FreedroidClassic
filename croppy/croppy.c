@@ -638,6 +638,7 @@ write_offset_file ( )
     {
       DebugPrintf ( 0 , "\nCROPPY ERROR:  Unrecognized image format received... terminating in order to prevent accidents..." , 
 		    default_center_x , default_center_y );
+      Terminate ( ERR );
     }
   //--------------------
   // Maybe some extra information was passed via the command line, which overrides
