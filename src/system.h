@@ -1,12 +1,7 @@
 /* 
- * system.h: here we include all system-wide includes
- *           and take into account the AC-defined conditionals
- */
-
-/* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
  *
  *  This file is part of Freedroid
@@ -28,6 +23,12 @@
  *
  */
 
+/* 
+ * system.h: here we include all system-wide includes
+ *           and take into account the AC-defined conditionals
+ */
+
+
 
 /* 
  * well, for the time being we actually don't care too much about the 
@@ -38,28 +39,58 @@
 
 #include <stdio.h>
 #include <math.h>
+
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
+#ifdef HAVE_TIME_H
 #include <time.h>
+#else 
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
+#endif
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
+#endif
 
 #include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
 
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
+#else
+#include "mac-osx/getopt.h"
+#endif
 
+#ifdef HAVE_SYS_SOUNDCARD_H
 #include <sys/soundcard.h>
+#endif
+#ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
+#endif
+
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+
 #include <errno.h>
 #include <stdarg.h>
 #include <ctype.h>
+
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 
 #include "SDL.h"
 #include "SDL_image.h"
