@@ -98,6 +98,8 @@ char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
     "iso_grass_floor_0026.png" , 
     "iso_grass_floor_0027.png" , 
     "iso_grass_floor_0028.png" ,
+
+    "iso_miscellanous_floor_9.png" ,
     "iso_miscellanous_floor_10.png" ,
     "iso_miscellanous_floor_11.png" ,
     "iso_miscellanous_floor_12.png" ,
