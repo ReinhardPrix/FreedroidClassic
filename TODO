@@ -7,8 +7,6 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- (rp) mouse actions lead to "glitches" in display..
-
 - (rp) sometimes droids get created in "piles", i.e. on top of each other...
 
 - after using flash-bullet: there seems to be a "hanging flash"
@@ -24,6 +22,12 @@ Outstanding release-critical bugs (priority: high)
    --> (rp) check on slow machine if this is still an issue...
 
 - missing 711 ...
+
+
+- (rp) mouse actions lead to "glitches" in display..
+      --> ONLY seems to happen with ATI's 3D driver, not with standard radeon...
+        so probably it's not our fault at all!
+
            
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
