@@ -127,7 +127,10 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
     RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
 }
 
-
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 ShowMissionCompletitionMessages( void )
 {
@@ -174,6 +177,46 @@ ShowMissionCompletitionMessages( void )
 
     }
 };
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+ShowInventoryMessages( void )
+{
+  int SlotNum;
+  char InventoryText[2000];
+
+  //--------------------
+  // If the log is not set to visible right now, we do not need to 
+  // do anything more
+  //
+  if ( GameConfig.Inventory_Visible == FALSE ) return;
+  if ( GameConfig.Inventory_Visible_Time >= GameConfig.Inventory_Visible_Max_Time ) return;
+
+  //--------------------
+  // At this point we know, that the quest log is desired and
+  // therefore we display it in-game:
+  //
+  DisplayText( "See inventory: \n" , User_Rect.x , User_Rect.y , &User_Rect );
+
+  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
+    {
+      // In case the mission does not exist at all, we need not do anything more...
+      // if ( Me.Inventory[ SlotNum ].MissionExistsAtAll != TRUE ) continue;
+
+      // In case the mission was not yet assigned, we need not do anything more...
+      // if ( Me.Inventory[ SlotNum ].MissionWasAssigned != TRUE ) continue;
+
+      // In case the message is rather old, we need not do anything more...
+      // if ( Me.Inventory[ SlotNum ].MissionLastStatusChangeTime > 1000 ) continue;
+
+      sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
+      DisplayText( InventoryText , -1 , -1 , &User_Rect );
+
+    }
+}; // void ShowInventoryMessages();
 
 /*
 -----------------------------------------------------------------
@@ -323,6 +366,7 @@ Assemble_Combat_Picture (int mask)
     }
 
   ShowMissionCompletitionMessages();
+  ShowInventoryMessages();
 
 
   //--------------------
@@ -835,18 +879,12 @@ PutItem( int ItemNumber )
   Item CurItem = &AllItems[ ItemNumber ];
   SDL_Rect TargetRectangle;
   
-  ItemNumber=0;
-  CurItem->pos.x = 1;
-  CurItem->pos.y = 1;
-  CurItem->type = 0 ;
+  if ( CurItem->type == ( -1 ) ) return;
 
-  // TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
-  // TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
   TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
-  // SDL_BlitSurface( ne_blocks, 
-  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
-  SDL_BlitSurface( ItemMap[ CurItem->type].SurfacePointer , NULL , ne_screen , &TargetRectangle);
+
+  SDL_BlitSurface( ItemMap[ CurItem->type ].SurfacePointer , NULL , ne_screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------

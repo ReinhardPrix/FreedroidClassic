@@ -153,7 +153,10 @@ void Init_Joy (void)
   return;
 }
 
-
+/* ----------------------------------------------------------------------
+ * This function does the reactions to keypresses of the player other
+ * than pressing cursor keys.
+ * ---------------------------------------------------------------------- */
 void 
 ReactToSpecialKeys(void)
 {
@@ -181,6 +184,32 @@ ReactToSpecialKeys(void)
     {
       GameConfig.Mission_Log_Visible_Time = 0;
       GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
+    }
+
+  //--------------------
+  // We assign the T key to taking an item from the floor
+  //
+  if ( TPressed() )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	{
+	  if ( ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) &&
+	       ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) )
+	    break;
+	}
+      if ( i < MAX_ITEMS_PER_LEVEL )
+	{
+	  AllItems[ i ].type = (-1);
+	}
+    }
+
+  //--------------------
+  // We assign the I key to turn on/off the inventory log 
+  //
+  if ( IPressed() )
+    {
+      GameConfig.Inventory_Visible_Time = 0;
+      GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
     }
 
   if ( GPressed () )
