@@ -38,7 +38,7 @@
 #define ITEM_TAKE_DIST (1.2)
 
 enum
-  {
+{
     WEAPON_SLOT = 0 ,
     SHIELD_SLOT , 
     SPECIAL_SLOT , 
@@ -47,7 +47,7 @@ enum
     AUX2_SLOT , 
     DRIVE_SLOT ,
     FIRST_INV_SLOT 
-  };
+};
 
 /*
  *
@@ -64,36 +64,36 @@ enum
 void
 silently_unhold_all_items ( void )
 {
-  int i;
-  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  //--------------------
-  // At first we disable the picture at the mouse cursor location.  This
-  // really is the picture only, nothing else so far.
-  //
-  Item_Held_In_Hand = ( -1 ); // ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
-
-  //--------------------
-  // Now we remove all 'currently held' markers from all
-  // items in inventory and in slots and also from all items on the floor.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    int i;
+    Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    
+    //--------------------
+    // At first we disable the picture at the mouse cursor location.  This
+    // really is the picture only, nothing else so far.
+    //
+    Item_Held_In_Hand = ( -1 ); // ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
+    
+    //--------------------
+    // Now we remove all 'currently held' markers from all
+    // items in inventory and in slots and also from all items on the floor.
+    //
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      ItemLevel -> ItemList [ i ] . currently_held_in_hand = FALSE ;
+	ItemLevel -> ItemList [ i ] . currently_held_in_hand = FALSE ;
     }
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Me [ 0 ] . Inventory [ i ] . currently_held_in_hand = FALSE ;
+	Me [ 0 ] . Inventory [ i ] . currently_held_in_hand = FALSE ;
     }
-
-  Me [ 0 ] . weapon_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . drive_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . armour_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . shield_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . special_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . aux1_item . currently_held_in_hand = FALSE ;
-  Me [ 0 ] . aux2_item . currently_held_in_hand = FALSE ;
+    
+    Me [ 0 ] . weapon_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . drive_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . armour_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . shield_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . special_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . aux1_item . currently_held_in_hand = FALSE ;
+    Me [ 0 ] . aux2_item . currently_held_in_hand = FALSE ;
 
 }; // void silently_unhold_all_items ( void )
 
@@ -118,64 +118,64 @@ silently_unhold_all_items ( void )
 int
 GetPositionCode ( Item ItemPointer ) 
 {
-  int InvIndex;
-  int levelnum;
-
-  if ( & ( Me [ 0 ] . weapon_item ) == ItemPointer )
-   {
-      return WEAPON_SLOT ;
-   }
- else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
-   {
-      return SHIELD_SLOT;
-   }
- else if ( & ( Me [ 0 ] . armour_item ) == ItemPointer )
-   {
-      return ARMOUR_SLOT;
-   }
- else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
-   {
-      return SPECIAL_SLOT;
-   }
- else if ( & ( Me [ 0 ] . aux1_item ) == ItemPointer )
-   {
-      return AUX1_SLOT;
-   }
- else if ( & ( Me [ 0 ] . aux2_item ) == ItemPointer )
-   {
-      return AUX2_SLOT;
-   }
- else if ( & ( Me [ 0 ] . drive_item ) == ItemPointer )
-   {
-      return DRIVE_SLOT;
-   }
- else
-   {
-     for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_IN_INVENTORY ; InvIndex ++ )
-       {
-	 if ( & ( Me [ 0 ] . Inventory [ InvIndex ] ) == ItemPointer )
-	   {
-	     DebugPrintf ( 0 , "\nPosition code taken from Inv Item Nr. %d. " , InvIndex );
-	     return ( InvIndex + FIRST_INV_SLOT ) ;
-	   }
-       }
-     for ( levelnum = 0 ; levelnum < curShip.num_levels ; levelnum ++ )
-       {
-	 for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_PER_LEVEL ; InvIndex ++ )
-	   {
-	     if ( & ( curShip . AllLevels [ levelnum ] -> ItemList [ InvIndex ] ) ==  ItemPointer )
-	       {
-		 DebugPrintf ( 0 , "\nPosition code taken from Level Item Nr. %d. " , InvIndex );
-		 return ( InvIndex + FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY ) ;
-	       }
-	   }
-       }
-   }
-
-  DebugPrintf ( 0 , "\nERROR! Unidentifiable pointer given to int GetPositionCode ( Item ). Terminating... " ) ;
-  Terminate ( ERR ) ;
-
- return ( 0 ) ;
+    int InvIndex;
+    int levelnum;
+    
+    if ( & ( Me [ 0 ] . weapon_item ) == ItemPointer )
+    {
+	return WEAPON_SLOT ;
+    }
+    else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
+    {
+	return SHIELD_SLOT;
+    }
+    else if ( & ( Me [ 0 ] . armour_item ) == ItemPointer )
+    {
+	return ARMOUR_SLOT;
+    }
+    else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
+    {
+	return SPECIAL_SLOT;
+    }
+    else if ( & ( Me [ 0 ] . aux1_item ) == ItemPointer )
+    {
+	return AUX1_SLOT;
+    }
+    else if ( & ( Me [ 0 ] . aux2_item ) == ItemPointer )
+    {
+	return AUX2_SLOT;
+    }
+    else if ( & ( Me [ 0 ] . drive_item ) == ItemPointer )
+    {
+	return DRIVE_SLOT;
+    }
+    else
+    {
+	for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_IN_INVENTORY ; InvIndex ++ )
+	{
+	    if ( & ( Me [ 0 ] . Inventory [ InvIndex ] ) == ItemPointer )
+	    {
+		DebugPrintf ( 0 , "\nPosition code taken from Inv Item Nr. %d. " , InvIndex );
+		return ( InvIndex + FIRST_INV_SLOT ) ;
+	    }
+	}
+	for ( levelnum = 0 ; levelnum < curShip.num_levels ; levelnum ++ )
+	{
+	    for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_PER_LEVEL ; InvIndex ++ )
+	    {
+		if ( & ( curShip . AllLevels [ levelnum ] -> ItemList [ InvIndex ] ) ==  ItemPointer )
+		{
+		    DebugPrintf ( 0 , "\nPosition code taken from Level Item Nr. %d. " , InvIndex );
+		    return ( InvIndex + FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY ) ;
+		}
+	    }
+	}
+    }
+    
+    DebugPrintf ( 0 , "\nERROR! Unidentifiable pointer given to int GetPositionCode ( Item ). Terminating... " ) ;
+    Terminate ( ERR ) ;
+    
+    return ( 0 ) ;
 
 }; // int GetPositionCode ( Item ItemPointer ) 
 
@@ -187,26 +187,26 @@ GetPositionCode ( Item ItemPointer )
 void
 HomeMadeItemRepair ( Item RepairItem ) 
 {
-  //--------------------
-  // At this point we know, that we have just selected an item
-  // for home-made repair.
-  //
-  if ( RepairItem->max_duration == (-1) )
+    //--------------------
+    // At this point we know, that we have just selected an item
+    // for home-made repair.
+    //
+    if ( RepairItem->max_duration == (-1) )
     {
-      PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
     }
-  else
+    else
     {
-      if ( RepairItem -> max_duration <= 3 ) 
+	if ( RepairItem -> max_duration <= 3 ) 
 	{
-	  PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Too_Fragile_0.wav" , FALSE , FALSE );
+	    PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Too_Fragile_0.wav" , FALSE , FALSE );
 	}
-      else
+	else
 	{
-	  RepairItem->max_duration *= 0.5 ;
-	  RepairItem->current_duration = RepairItem->max_duration;
-	  // Play_Shop_ItemRepairedSound( );
-	  PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
+	    RepairItem->max_duration *= 0.5 ;
+	    RepairItem->current_duration = RepairItem->max_duration;
+	    // Play_Shop_ItemRepairedSound( );
+	    PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
 	}
     }
 }; // void HomeMadeItemRepair ( Item RepairItem ) 
@@ -219,59 +219,60 @@ HomeMadeItemRepair ( Item RepairItem )
 Item
 FindPointerToPositionCode ( int SlotCode , int PlayerNum ) 
 {
-  DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
-  switch ( SlotCode )
+
+    DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
+    switch ( SlotCode )
     {
-    case WEAPON_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from weapon slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . weapon_item ) ) ;
-      break;
-    case SPECIAL_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
-		    Me [ PlayerNum ] . special_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . special_item ) ) ;
-      break;
-    case SHIELD_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
-		    Me [ PlayerNum ] . shield_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
-      break;
-    case ARMOUR_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from armour slot. " , 
-		    Me [ PlayerNum ] . armour_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . armour_item ) ) ;
-      break;
-    case AUX1_SLOT:
-      return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
-      break;
-    case AUX2_SLOT:
-      return ( & ( Me [ PlayerNum ] . aux2_item ) ) ;
-      break;
-    case DRIVE_SLOT:
-      return ( & ( Me [ PlayerNum ] . drive_item ) ) ;
-      break;
-    default:
-      if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY )
-	{
-	  DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's directly from inventory. " , 
-			Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] . type ) ;
-	  return ( & ( Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] ) ) ;
-	}
-      else if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY + MAX_ITEMS_PER_LEVEL )
-	{
-	  DebugPrintf ( 0 , "\nPosition code to find indicated level item Nr. %d. " , SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY );
-	  return ( & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ItemList [ SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY ] ) ) ;
-	}
-      else 
-	{
-	  DebugPrintf ( 0 , "\nERROR! Unidentifiable item slot code given to Item FindPointerToPositionCode ( int , int ). Terminating... " ) ;
-	  Terminate ( ERR ) ;
-	}
-   }
-
-  return NULL ;
-
+	case WEAPON_SLOT:
+	    DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from weapon slot. " , 
+			  Me [ PlayerNum ] . weapon_item . type ) ;
+	    return ( & ( Me [ PlayerNum ] . weapon_item ) ) ;
+	    break;
+	case SPECIAL_SLOT:
+	    DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
+			  Me [ PlayerNum ] . special_item . type ) ;
+	    return ( & ( Me [ PlayerNum ] . special_item ) ) ;
+	    break;
+	case SHIELD_SLOT:
+	    DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
+			  Me [ PlayerNum ] . shield_item . type ) ;
+	    return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
+	    break;
+	case ARMOUR_SLOT:
+	    DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from armour slot. " , 
+			  Me [ PlayerNum ] . armour_item . type ) ;
+	    return ( & ( Me [ PlayerNum ] . armour_item ) ) ;
+	    break;
+	case AUX1_SLOT:
+	    return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
+	    break;
+	case AUX2_SLOT:
+	    return ( & ( Me [ PlayerNum ] . aux2_item ) ) ;
+	    break;
+	case DRIVE_SLOT:
+	    return ( & ( Me [ PlayerNum ] . drive_item ) ) ;
+	    break;
+	default:
+	    if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY )
+	    {
+		DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's directly from inventory. " , 
+			      Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] . type ) ;
+		return ( & ( Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] ) ) ;
+	    }
+	    else if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY + MAX_ITEMS_PER_LEVEL )
+	    {
+		DebugPrintf ( 0 , "\nPosition code to find indicated level item Nr. %d. " , SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY );
+		return ( & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ItemList [ SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY ] ) ) ;
+	    }
+	    else 
+	    {
+		DebugPrintf ( 0 , "\nERROR! Unidentifiable item slot code given to Item FindPointerToPositionCode ( int , int ). Terminating... " ) ;
+		Terminate ( ERR ) ;
+	    }
+    }
+    
+    return NULL ;
+    
 }; // Item FindPointerToPositionCode ( PositionCode , PlayerNum ) 
 
 /* ----------------------------------------------------------------------
@@ -284,39 +285,39 @@ FindPointerToPositionCode ( int SlotCode , int PlayerNum )
 long
 calculate_item_buy_price ( item* BuyItem )
 {
-  float PrefixMultiplier = 1;
-  float SuffixMultiplier = 1;
-  float Multiplicity = BuyItem->multiplicity ;
-
-  //--------------------
-  // Maybe the item is magical in one way or the other.  Then we have to
-  // multiply a factor to the price, no matter whether repairing or buying
-  // or selling the item.
-  //
-  if ( BuyItem -> prefix_code != (-1) )
+    float PrefixMultiplier = 1;
+    float SuffixMultiplier = 1;
+    float Multiplicity = BuyItem->multiplicity ;
+    
+    //--------------------
+    // Maybe the item is magical in one way or the other.  Then we have to
+    // multiply a factor to the price, no matter whether repairing or buying
+    // or selling the item.
+    //
+    if ( BuyItem -> prefix_code != (-1) )
     {
-      PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
+	PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
     }
-  if ( BuyItem -> suffix_code != (-1) )
-    SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
-
-
-  //--------------------
-  // If the item is destructible, we take the current duration into
-  // account, and reduce the item value accordingly...
-  //
-  if ( BuyItem->max_duration != (-1 ) )
+    if ( BuyItem -> suffix_code != (-1) )
+	SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
+    
+    
+    //--------------------
+    // If the item is destructible, we take the current duration into
+    // account, and reduce the item value accordingly...
+    //
+    if ( BuyItem->max_duration != (-1 ) )
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
-	       ( BuyItem->current_duration ) / BuyItem->max_duration ); 
+	return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+		 ( BuyItem->current_duration ) / BuyItem->max_duration ); 
     }
-  else
+    else
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+	return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
     }
-
-  return 0; // just to make compilers happy (no warnings...)
-
+    
+    return 0; // just to make compilers happy (no warnings...)
+    
 }; // long calculate_item_buy_price ( item* BuyItem )
 
 /* ----------------------------------------------------------------------
@@ -329,46 +330,46 @@ calculate_item_buy_price ( item* BuyItem )
 long
 calculate_item_sell_price ( item* BuyItem )
 {
-  float PrefixMultiplier = 1;
-  float SuffixMultiplier = 1;
-  float Multiplicity = BuyItem -> multiplicity ;
-
-  //--------------------
-  // Maybe the item is magical in one way or the other.  Then we have to
-  // multiply a factor to the price, no matter whether repairing or buying
-  // or selling the item.
-  //
-  if ( BuyItem -> prefix_code != (-1) )
+    float PrefixMultiplier = 1;
+    float SuffixMultiplier = 1;
+    float Multiplicity = BuyItem -> multiplicity ;
+    
+    //--------------------
+    // Maybe the item is magical in one way or the other.  Then we have to
+    // multiply a factor to the price, no matter whether repairing or buying
+    // or selling the item.
+    //
+    if ( BuyItem -> prefix_code != (-1) )
     {
-      PrefixMultiplier = PrefixList [ BuyItem -> prefix_code ] . price_factor;
+	PrefixMultiplier = PrefixList [ BuyItem -> prefix_code ] . price_factor;
     }
-  if ( BuyItem -> suffix_code != (-1) )
-    SuffixMultiplier = SuffixList [ BuyItem -> suffix_code ] . price_factor;
-
-  //--------------------
-  // When selling an item, you don't get the full value of the item, but
-  // instead, only half of the original list price, cause it's a used good.
-  //
+    if ( BuyItem -> suffix_code != (-1) )
+	SuffixMultiplier = SuffixList [ BuyItem -> suffix_code ] . price_factor;
+    
+    //--------------------
+    // When selling an item, you don't get the full value of the item, but
+    // instead, only half of the original list price, cause it's a used good.
+    //
 #define SELL_PRICE_FACTOR (0.5)
-  PrefixMultiplier *= SELL_PRICE_FACTOR ;
-
-
-  //--------------------
-  // If the item is destructible, we take the current duration into
-  // account, and reduce the item value accordingly...
-  //
-  if ( BuyItem->max_duration != (-1 ) )
+    PrefixMultiplier *= SELL_PRICE_FACTOR ;
+    
+    
+    //--------------------
+    // If the item is destructible, we take the current duration into
+    // account, and reduce the item value accordingly...
+    //
+    if ( BuyItem->max_duration != (-1 ) )
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier *
-	       ( BuyItem -> current_duration ) / BuyItem -> max_duration ); 
+	return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier *
+		 ( BuyItem -> current_duration ) / BuyItem -> max_duration ); 
     }
-  else
+    else
     {
-      return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier );
+	return ( Multiplicity * ItemMap [ BuyItem->type ] . base_list_price * SuffixMultiplier * PrefixMultiplier );
     }
-
-  return 0; // just to make compilers happy (no warnings...)
-
+    
+    return 0; // just to make compilers happy (no warnings...)
+    
 }; // long calculate_item_sell_price ( item* BuyItem )
 
 /* ----------------------------------------------------------------------
@@ -381,43 +382,43 @@ calculate_item_sell_price ( item* BuyItem )
 long
 calculate_item_repair_price ( item* repair_item )
 {
-  float PrefixMultiplier = 1;
-  float SuffixMultiplier = 1;
-  float Multiplicity = repair_item->multiplicity ;
-
-  //--------------------
-  // Maybe the item is magical in one way or the other.  Then we have to
-  // multiply a factor to the price, no matter whether repairing or buying
-  // or selling the item.
-  //
-  if ( repair_item -> prefix_code != (-1) )
+    float PrefixMultiplier = 1;
+    float SuffixMultiplier = 1;
+    float Multiplicity = repair_item->multiplicity ;
+    
+    //--------------------
+    // Maybe the item is magical in one way or the other.  Then we have to
+    // multiply a factor to the price, no matter whether repairing or buying
+    // or selling the item.
+    //
+    if ( repair_item -> prefix_code != (-1) )
     {
-      PrefixMultiplier = PrefixList [ repair_item -> prefix_code ] . price_factor;
+	PrefixMultiplier = PrefixList [ repair_item -> prefix_code ] . price_factor;
     }
-  if ( repair_item -> suffix_code != (-1) )
-    SuffixMultiplier = SuffixList [ repair_item -> suffix_code ] . price_factor;
-
-  //--------------------
-  // For repair, it's not the full 'buy' cost...
-  //
+    if ( repair_item -> suffix_code != (-1) )
+	SuffixMultiplier = SuffixList [ repair_item -> suffix_code ] . price_factor;
+    
+    //--------------------
+    // For repair, it's not the full 'buy' cost...
+    //
 #define REPAIR_PRICE_FACTOR (0.5)
-  PrefixMultiplier *= REPAIR_PRICE_FACTOR ;
-
-  //--------------------
-  // This is the price of the DAMAGE in the item, haha
-  // This can only be requested for repair items
-  //
-  if ( repair_item->max_duration != (-1 ) )
+    PrefixMultiplier *= REPAIR_PRICE_FACTOR ;
+    
+    //--------------------
+    // This is the price of the DAMAGE in the item, haha
+    // This can only be requested for repair items
+    //
+    if ( repair_item->max_duration != (-1 ) )
     {
-      return ( Multiplicity * ItemMap [ repair_item->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
-	       ( repair_item -> max_duration - repair_item -> current_duration ) / repair_item -> max_duration ); 
+	return ( Multiplicity * ItemMap [ repair_item->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+		 ( repair_item -> max_duration - repair_item -> current_duration ) / repair_item -> max_duration ); 
     }
-  else
+    else
     {
-      DebugPrintf( 0 , "\n\nERROR!! CALCULATING REPAIR PRICE FOR INDESTRUCTIBLE ITEM!! \n\n Terminating..." );
-      Terminate( ERR );
+	DebugPrintf( 0 , "\n\nERROR!! CALCULATING REPAIR PRICE FOR INDESTRUCTIBLE ITEM!! \n\n Terminating..." );
+	Terminate( ERR );
     }
-  return 0;
+    return 0;
 }; // long calculate_item_repair_price ( item* repair_item )
 
 
@@ -1311,34 +1312,34 @@ void
 DamageItem( item* CurItem )
 {
   
-  return;
+    return;
   
-  //--------------------
-  // If the item mentioned as parameter exists and if it is of 
-  // a destructable sort, then we apply the usual damage to it
-  // (which is currently a bit high)
-  //
-  if ( ( CurItem->type != (-1) ) &&
-       ( CurItem->max_duration != (-1) ) )
+    //--------------------
+    // If the item mentioned as parameter exists and if it is of 
+    // a destructable sort, then we apply the usual damage to it
+    // (which is currently a bit high)
+    //
+    if ( ( CurItem->type != (-1) ) &&
+	 ( CurItem->max_duration != (-1) ) )
     {
-      if ( ! CurItem->damage ) 
-	CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
-      else
+	if ( ! CurItem->damage ) 
+	    CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
+	else
 	{
-	  CurItem->current_duration -= 0.0003 * MyRandom( 100 ) ;
-	  DebugPrintf ( 1 , "\nDamaged item seems to be a weapon... lower damage done." );
+	    CurItem->current_duration -= 0.0003 * MyRandom( 100 ) ;
+	    DebugPrintf ( 1 , "\nDamaged item seems to be a weapon... lower damage done." );
 	}
-
-      //--------------------
-      // If the item has gone over it's threshhold of duration, it finally
-      // breaks and vaporizes
-      //
-      if ( rintf( CurItem->current_duration ) <= 0 )
+	
+	//--------------------
+	// If the item has gone over it's threshhold of duration, it finally
+	// breaks and vaporizes
+	//
+	if ( rintf( CurItem->current_duration ) <= 0 )
 	{
-	  DeleteItem( CurItem );
+	    DeleteItem( CurItem );
 	}
     }
-
+    
 }; // void DamageItem( item* CurItem )
 
 /* ----------------------------------------------------------------------
@@ -1349,13 +1350,13 @@ void
 DamageAllEquipment( int PlayerNum )
 {
 
-  // DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
-  DamageItem ( & ( Me [ PlayerNum ] . armour_item  ) );
-  DamageItem ( & ( Me [ PlayerNum ] . shield_item  ) );
-  DamageItem ( & ( Me [ PlayerNum ] . drive_item   ) );
-  DamageItem ( & ( Me [ PlayerNum ] . special_item ) );
-  DamageItem ( & ( Me [ PlayerNum ] . aux1_item    ) );
-  DamageItem ( & ( Me [ PlayerNum ] . aux2_item    ) );
+    // DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
+    DamageItem ( & ( Me [ PlayerNum ] . armour_item  ) );
+    DamageItem ( & ( Me [ PlayerNum ] . shield_item  ) );
+    DamageItem ( & ( Me [ PlayerNum ] . drive_item   ) );
+    DamageItem ( & ( Me [ PlayerNum ] . special_item ) );
+    DamageItem ( & ( Me [ PlayerNum ] . aux1_item    ) );
+    DamageItem ( & ( Me [ PlayerNum ] . aux2_item    ) );
 
 }; // void DamageAllEquipment( void )
 
@@ -1372,47 +1373,47 @@ DamageAllEquipment( int PlayerNum )
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
-  int i;
-  int SourceCode, DestCode;
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    int i;
+    int SourceCode, DestCode;
+    
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurLevel->ItemList [ i ] . type == ( -1 ) ) break;
+	if ( CurLevel->ItemList [ i ] . type == ( -1 ) ) break;
     }
-  if ( i >= MAX_ITEMS_PER_LEVEL )
+    if ( i >= MAX_ITEMS_PER_LEVEL )
     {
-      DebugPrintf( 0 , "\n No free position to drop item!!! ");
-      i = 0 ;
-      Terminate( ERR );
+	DebugPrintf( 0 , "\n No free position to drop item!!! ");
+	i = 0 ;
+	Terminate( ERR );
     }
-
-  // --------------------
-  // Now we enter the item into the item list of this level
-  //
-  CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) , FALSE );
-
-  CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
-  CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
-  CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
-  
-  Item_Held_In_Hand = CurLevel -> ItemList [ i ] . type ;
-
-  DeleteItem ( SourceItem ) ;
-
-  //--------------------
-  // And of course we shouldn't forget to tell the server about this 
-  // movement as well....
-  //
-  if ( ClientMode && ! ServerMode ) 
+    
+    // --------------------
+    // Now we enter the item into the item list of this level
+    //
+    CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) , FALSE );
+    
+    CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
+    CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
+    CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+    
+    Item_Held_In_Hand = CurLevel -> ItemList [ i ] . type ;
+    
+    DeleteItem ( SourceItem ) ;
+    
+    //--------------------
+    // And of course we shouldn't forget to tell the server about this 
+    // movement as well....
+    //
+    if ( ClientMode && ! ServerMode ) 
     {
-      SourceCode = GetPositionCode ( SourceItem ) ;
-      DestCode = GetPositionCode ( & ( CurLevel -> ItemList [ i ] ) ) ;
-      SendPlayerItemMoveToServer ( SourceCode , DestCode , -1 , -1 ) ;
+	SourceCode = GetPositionCode ( SourceItem ) ;
+	DestCode = GetPositionCode ( & ( CurLevel -> ItemList [ i ] ) ) ;
+	SendPlayerItemMoveToServer ( SourceCode , DestCode , -1 , -1 ) ;
     }
-  
-  // The original item will be overwritten anyway when the new item
-  // replaces the old one afterwards.
-
+    
+    // The original item will be overwritten anyway when the new item
+    // replaces the old one afterwards.
+    
 }; // void MakeHeldFloorItemOutOf( item* SourceItem )
 
 /* ----------------------------------------------------------------------
@@ -1423,21 +1424,21 @@ MakeHeldFloorItemOutOf( item* SourceItem )
 int
 GetHeldItemInventoryIndex( void )
 {
-  int InvPos;
-
-  // --------------------
-  // First we find out the inventory index of the item we want to
-  // drop
-  //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    int InvPos;
+    
+    // --------------------
+    // First we find out the inventory index of the item we want to
+    // drop
+    //
+    for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
     {
-      if ( Me[0].Inventory[ InvPos ].currently_held_in_hand && ( Me[0].Inventory[ InvPos ].type > 0 ) ) 
+	if ( Me[0].Inventory[ InvPos ].currently_held_in_hand && ( Me[0].Inventory[ InvPos ].type > 0 ) ) 
 	{
-	  return ( InvPos );
+	    return ( InvPos );
 	}
     }
-
-  return ( -1 );
+    
+    return ( -1 );
 }; // int GetHeldItemInventoryIndex( void )
 
 /* ----------------------------------------------------------------------
@@ -1448,81 +1449,81 @@ GetHeldItemInventoryIndex( void )
 item* 
 GetHeldItemPointer( void )
 {
-  int InvIndex;
-  int i;
-
-  //--------------------
-  // We must not access the levels item array, if the level was not yet
-  // initialized!!! Or a SEGFAULT will occur!!!  Therefore we check for
-  // ininitialized level first.!
-  //
-  if ( CurLevel == NULL ) 
+    int InvIndex;
+    int i;
+    
+    //--------------------
+    // We must not access the levels item array, if the level was not yet
+    // initialized!!! Or a SEGFAULT will occur!!!  Therefore we check for
+    // ininitialized level first.!
+    //
+    if ( CurLevel == NULL ) 
     {
-      DebugPrintf ( 0 , "\nERROR IN GetHeldItemPointer : CurLevel not yet initialized... " ) ;
-      return ( NULL );
+	DebugPrintf ( 0 , "\nERROR IN GetHeldItemPointer : CurLevel not yet initialized... " ) ;
+	return ( NULL );
     }
-
-  InvIndex = GetHeldItemInventoryIndex(  );
-
-  if ( InvIndex != (-1) )
+    
+    InvIndex = GetHeldItemInventoryIndex(  );
+    
+    if ( InvIndex != (-1) )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
-      return ( & ( Me[0].Inventory[ InvIndex ] ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
+	return ( & ( Me[0].Inventory[ InvIndex ] ) );
     } 
-  else if ( Me[0].weapon_item.currently_held_in_hand > 0 )
+    else if ( Me[0].weapon_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].weapon_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].weapon_item ) );
     }
-  else if ( Me[0].drive_item.currently_held_in_hand > 0 )
+    else if ( Me[0].drive_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].drive_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].drive_item ) );
     }
-  else if ( Me[0].shield_item.currently_held_in_hand > 0 )
+    else if ( Me[0].shield_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].shield_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].shield_item ) );
     }
-  else if ( Me[0].armour_item.currently_held_in_hand > 0 )
+    else if ( Me[0].armour_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].armour_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].armour_item ) );
     }
-  else if ( Me[0].special_item.currently_held_in_hand > 0 )
+    else if ( Me[0].special_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].special_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].special_item ) );
     }
-  else if ( Me[0].aux1_item.currently_held_in_hand > 0 )
+    else if ( Me[0].aux1_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].aux1_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].aux1_item ) );
     }
-  else if ( Me[0].aux2_item.currently_held_in_hand > 0 )
+    else if ( Me[0].aux2_item.currently_held_in_hand > 0 )
     {
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me[0].aux2_item ) );
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+	return ( & ( Me[0].aux2_item ) );
     }
-  else
+    else
     {
-      // --------------------
-      // Not that we find that no item is held in hand in the entire inventory 
-      // and all the slots, we go and look if one of the items on this levels
-      // map is perhaps held in hand, but if that also fails, then no item at
-      // all was held in hand.
-      //
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	// --------------------
+	// Not that we find that no item is held in hand in the entire inventory 
+	// and all the slots, we go and look if one of the items on this levels
+	// map is perhaps held in hand, but if that also fails, then no item at
+	// all was held in hand.
+	//
+	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
-	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
-	  if ( ! CurLevel->ItemList[ i ].currently_held_in_hand ) continue;
-	  return ( & (CurLevel->ItemList[ i ] ) );
+	    if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+	    if ( ! CurLevel->ItemList[ i ].currently_held_in_hand ) continue;
+	    return ( & (CurLevel->ItemList[ i ] ) );
 	}
-
-      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
-      return ( NULL );
+	
+	// DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
+	return ( NULL );
     }
-  
+    
 }; // item* GetHeldItemPointer( void )
 
 /* ----------------------------------------------------------------------
@@ -1532,9 +1533,9 @@ void
 DeleteItem ( item* Item )
 {
 
-  Item->type = -1 ;
-  Item->currently_held_in_hand = FALSE;
-
+    Item->type = -1 ;
+    Item->currently_held_in_hand = FALSE;
+    
 }; // void DeleteItem( item* Item )
 
 /* ----------------------------------------------------------------------
@@ -1546,12 +1547,12 @@ void
 CopyItem( item* SourceItem , item* DestItem , int MakeSound )
 {
 
-  memcpy ( DestItem, SourceItem, sizeof ( item ));
-
-  if ( MakeSound ) 
+    memcpy ( DestItem, SourceItem, sizeof ( item ));
+    
+    if ( MakeSound ) 
     {
-      // PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
-      play_item_sound( SourceItem -> type );
+	// PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
+	play_item_sound( SourceItem -> type );
     }
 
 }; // void MoveItem( item* SourceItem , item* DestItem )
@@ -1565,10 +1566,10 @@ void
 CopyItemWithoutHeldProperty ( item* SourceItem , item* DestItem , int MakeSound ) 
 {
 
-  int temp = DestItem -> currently_held_in_hand ;
-  CopyItem ( SourceItem , DestItem , MakeSound );
-  DestItem -> currently_held_in_hand = temp;
-
+    int temp = DestItem -> currently_held_in_hand ;
+    CopyItem ( SourceItem , DestItem , MakeSound );
+    DestItem -> currently_held_in_hand = temp;
+    
 }; // void CopyItemWithoutHeldProperty ( item* SourceItem , item* DestItem , int MakeSound ) 
 
 /* ----------------------------------------------------------------------
@@ -1580,10 +1581,10 @@ void
 MoveItem( item* SourceItem , item* DestItem )
 {
 
-  memcpy ( DestItem, SourceItem, sizeof ( item ));
-  
-  SourceItem->type = (-1) ;
-
+    memcpy ( DestItem, SourceItem, sizeof ( item ));
+    
+    SourceItem->type = (-1) ;
+    
 }; // void MoveItem( item* SourceItem , item* DestItem )
 
 /* ----------------------------------------------------------------------
@@ -1593,24 +1594,24 @@ MoveItem( item* SourceItem , item* DestItem )
 void
 Quick_ApplyItem( int ItemKey )
 {
-  int FoundItemNr;
-
-  DebugPrintf( 0 , "\nvoid Quick_ApplyItem( ... ): function call confirmed.");
-  
-  //--------------------
-  // At first we find out which item occupies the given position, and 
-  // we return immediately of course, if there is nothing at all at that
-  // given location.
-  //
-  FoundItemNr = GetInventoryItemAt ( ItemKey -1 , INVENTORY_GRID_HEIGHT -1 );
-  if ( FoundItemNr == (-1) ) return;
-
-  //--------------------
-  // Now that we have found the discusses item, we can just apply
-  // it...
-  //
-
-  ApplyItem ( & ( Me[0].Inventory[ FoundItemNr ] ) );
+    int FoundItemNr;
+    
+    DebugPrintf( 0 , "\nvoid Quick_ApplyItem( ... ): function call confirmed.");
+    
+    //--------------------
+    // At first we find out which item occupies the given position, and 
+    // we return immediately of course, if there is nothing at all at that
+    // given location.
+    //
+    FoundItemNr = GetInventoryItemAt ( ItemKey -1 , INVENTORY_GRID_HEIGHT -1 );
+    if ( FoundItemNr == (-1) ) return;
+    
+    //--------------------
+    // Now that we have found the discusses item, we can just apply
+    // it...
+    //
+    
+    ApplyItem ( & ( Me[0].Inventory[ FoundItemNr ] ) );
 
 }; // void Quick_ApplyItem( item* CurItem )
 
@@ -2012,28 +2013,29 @@ ApplyItem( item* CurItem )
 int
 Inv_Pos_Is_Free( int x , int y )
 {
-  int i;
-  int item_width;
-  int item_height;
-  
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
+    int i;
+    int item_width;
+    int item_height;
+    
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
     {
-      if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
-      if ( Me[0].Inventory[ i ].currently_held_in_hand ) continue;
-
-      // for ( item_height = 0 ; item_height < ItemSizeTable[ Me[0].Inventory[ i ].type ].y ; item_height ++ )
-      for ( item_height = 0 ; item_height < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . y ; item_height ++ )
+	if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
+	if ( Me[0].Inventory[ i ].currently_held_in_hand ) continue;
+	
+	// for ( item_height = 0 ; item_height < ItemSizeTable[ Me[0].Inventory[ i ].type ].y ; item_height ++ )
+	for ( item_height = 0 ; item_height < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . y ; item_height ++ )
 	{
-	  for ( item_width = 0 ; item_width < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . x ; item_width ++ )
+	    for ( item_width = 0 ; item_width < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . x ; item_width ++ )
 	    {
-	      if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
-		   ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
-		return ( FALSE );
+		if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
+		     ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
+		    return ( FALSE );
 	    }
 	}
     }
-  return ( TRUE );
+    return ( TRUE );
+
 }; // int Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y )
 
 /* ----------------------------------------------------------------------
@@ -2047,27 +2049,27 @@ Inv_Pos_Is_Free( int x , int y )
 int 
 GetInventoryItemAt ( int x , int y )
 {
-  int i;
-  int item_width;
-  int item_height;
-  
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
+    int i;
+    int item_width;
+    int item_height;
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
     {
-      if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
-
-      for ( item_height = 0 ; item_height < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . y ; item_height ++ )
+	if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
+	
+	for ( item_height = 0 ; item_height < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . y ; item_height ++ )
 	{
-	  for ( item_width = 0 ; item_width < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . x ; item_width ++ )
+	    for ( item_width = 0 ; item_width < ItemMap [ Me [ 0 ] . Inventory [ i ] . type ] . inv_image . inv_size . x ; item_width ++ )
 	    {
-	      if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
-		   ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
+		if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
+		     ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
 		{
-		  return ( i );
+		    return ( i );
 		}
 	    }
 	}
     }
-  return ( -1 ); // Nothing found at this grabbing location!!
+    return ( -1 ); // Nothing found at this grabbing location!!
 
 }; // int GetInventoryItemAt ( int x , int y )
 
@@ -2085,14 +2087,15 @@ GetInventoryItemAt ( int x , int y )
 int
 CountItemtypeInInventory( int Itemtype , int PlayerNum )
 {
-  int i;
-  int NumberOfItemsFound = 0 ;
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    int i;
+    int NumberOfItemsFound = 0 ;
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) NumberOfItemsFound++;
+	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) NumberOfItemsFound++;
     }
-  return NumberOfItemsFound;
+    return NumberOfItemsFound;
+
 }; // int CountItemtypeInInventory( int Itemtype , int PlayerNum )
 
 /* ----------------------------------------------------------------------
@@ -2102,24 +2105,24 @@ CountItemtypeInInventory( int Itemtype , int PlayerNum )
 int
 FindFirstInventoryIndexWithItemType ( int Itemtype , int PlayerNum )
 {
-  int i;
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    int i;
+    
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) return ( i );
+	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) return ( i );
     }
-  
-  //--------------------
-  // Severe error:  Item type NOT found in inventory!!!
-  //
-  fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    
+    //--------------------
+    // Severe error:  Item type NOT found in inventory!!!
+    //
+    fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to locate in inventory, but inventory\n\
 did not contain this item type at all!  This indicates a severe bug in Freedroid.",
-			     PLEASE_INFORM, IS_FATAL );
-
-  return ( -1 );
-  
+			       PLEASE_INFORM, IS_FATAL );
+    
+    return ( -1 );
+    
 }; // int FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 )
 
 /* ----------------------------------------------------------------------
@@ -2131,11 +2134,11 @@ did not contain this item type at all!  This indicates a severe bug in Freedroid
 void
 DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
 {
-  int i;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    int i;
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
-	DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
+	    DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
     }
 }; // void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
 
@@ -2146,28 +2149,28 @@ DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
 void
 DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum )
 {
-  int i;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    int i;
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
+	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
 	{
-	  if ( Me [ PlayerNum ] . Inventory [ i ] . multiplicity > 1 )  
-	    Me [ PlayerNum ] . Inventory [ i ] . multiplicity--;
-	  else DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
-	  return;
+	    if ( Me [ PlayerNum ] . Inventory [ i ] . multiplicity > 1 )  
+		Me [ PlayerNum ] . Inventory [ i ] . multiplicity--;
+	    else DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+	    return;
 	}
     }
-
-  //--------------------
-  // This point must never be reached or a severe error has occured...
-  //
-  fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    
+    //--------------------
+    // This point must never be reached or a severe error has occured...
+    //
+    fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 One single item of all the items of a given type in the Tux inventory\n\
 should be removed, but there was not even one such item ever found in\n\
 Tux invenrtory.  Something must have gone awry...",
-			     PLEASE_INFORM, IS_FATAL );
-
+			       PLEASE_INFORM, IS_FATAL );
+    
 }; // void DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum )
 
 /* ----------------------------------------------------------------------
@@ -2177,11 +2180,11 @@ Tux invenrtory.  Something must have gone awry...",
 int 
 MouseCursorIsInUserRect( int x , int y )
 {
-  if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
-  if ( x < User_Rect.x ) return ( FALSE );
-  if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
-  if ( y < User_Rect.y ) return ( FALSE );
-  return ( TRUE );
+    if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
+    if ( x < User_Rect.x ) return ( FALSE );
+    if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
+    if ( y < User_Rect.y ) return ( FALSE );
+    return ( TRUE );
 }; // int MouseCursorIsInUserRect( int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -2191,11 +2194,11 @@ MouseCursorIsInUserRect( int x , int y )
 int 
 MouseCursorIsInInvRect( int x , int y )
 {
-  if ( x > InventoryRect.x + InventoryRect.w ) return ( FALSE );
-  if ( x < InventoryRect.x ) return ( FALSE );
-  if ( y > InventoryRect.y + InventoryRect.h ) return ( FALSE );
-  if ( y < InventoryRect.y ) return ( FALSE );
-  return ( TRUE );
+    if ( x > InventoryRect.x + InventoryRect.w ) return ( FALSE );
+    if ( x < InventoryRect.x ) return ( FALSE );
+    if ( y > InventoryRect.y + InventoryRect.h ) return ( FALSE );
+    if ( y < InventoryRect.y ) return ( FALSE );
+    return ( TRUE );
 }; // int MouseCursorIsInInvRect( int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -2205,22 +2208,22 @@ MouseCursorIsInInvRect( int x , int y )
 int 
 MouseCursorIsInInventoryGrid( int x , int y )
 {
-  point CurPos;
+    point CurPos;
 
-  CurPos.x = x ;
-  CurPos.y = y ;
-
-  if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INVENTORY_SUBSQUARE_WIDTH ) )
+    CurPos.x = x ;
+    CurPos.y = y ;
+    
+    if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INVENTORY_SUBSQUARE_WIDTH ) )
     {
-      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
-      if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
-	   ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * INVENTORY_GRID_HEIGHT ) )
+	DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
+	if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
+	     ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * INVENTORY_GRID_HEIGHT ) )
 	{
-	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
-	  return( TRUE );
+	    DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
+	    return( TRUE );
 	}
     }
-  return( FALSE );
+    return( FALSE );
 }; // int MouseCursorIsInInventoryGrid( int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -2230,7 +2233,7 @@ MouseCursorIsInInventoryGrid( int x , int y )
 int
 GetInventorySquare_x( int x )
 {
-  return ( ( x - INVENTORY_RECT_X ) / INVENTORY_SUBSQUARE_WIDTH );
+    return ( ( x - INVENTORY_RECT_X ) / INVENTORY_SUBSQUARE_WIDTH );
 }; // int GetInventorySquare_x( x )
 
 /* ----------------------------------------------------------------------
@@ -2240,7 +2243,7 @@ GetInventorySquare_x( int x )
 int
 GetInventorySquare_y( int y )
 {
-  return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / INVENTORY_SUBSQUARE_WIDTH );
+    return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / INVENTORY_SUBSQUARE_WIDTH );
 }; // int GetInventorySquare_y( y )
 
 /* ----------------------------------------------------------------------
@@ -2252,25 +2255,25 @@ GetInventorySquare_y( int y )
 int
 GetHeldItemCode ( void )
 {
-  item* ItemPointer;
+    item* ItemPointer;
 
-  ItemPointer = GetHeldItemPointer( );
-
-  if ( ItemPointer != NULL )
+    ItemPointer = GetHeldItemPointer( );
+    
+    if ( ItemPointer != NULL )
     {
-      return ( ItemPointer->type );
+	return ( ItemPointer->type );
     }
-
-  //--------------------
-  // If we ever reach this point, that means that the held items code
-  // could not be correctly computed, which should mean a reason to
-  // terminate immediately with severe error
-  //
-
-  // DebugPrintf( 2 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
-  // Terminate( ERR );
-  return ( -1 );
-  
+    
+    //--------------------
+    // If we ever reach this point, that means that the held items code
+    // could not be correctly computed, which should mean a reason to
+    // terminate immediately with severe error
+    //
+    
+    // DebugPrintf( 2 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
+    // Terminate( ERR );
+    return ( -1 );
+    
 }; // int GetHeldItemCode ( void )
 
 /* ----------------------------------------------------------------------
@@ -2281,31 +2284,31 @@ GetHeldItemCode ( void )
 int 
 ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 {
-  int item_height;
-  int item_width;
-
-  //--------------------
-  // Perhaps the item reaches even outside the inventory grid.  Then of course
-  // it does not fit and we need/should not even test the details...
-  //
-  if ( ItemMap [ ItemType ] . inv_image . inv_size . x - 1 + InvPos_x >= 
-       INVENTORY_GRID_WIDTH  ) return ( FALSE );
-  if ( ItemMap [ ItemType ] . inv_image . inv_size . y - 1 + InvPos_y >= 
-       INVENTORY_GRID_HEIGHT ) return ( FALSE );
-
-  // --------------------
-  // Now that we know, that the desired position is at least inside the inventory
-  // grid, we can start to test for the details of the available inventory space
-  //
-  for ( item_height = 0 ; item_height < ItemMap[ ItemType ] . inv_image . inv_size . y ; item_height ++ )
+    int item_height;
+    int item_width;
+    
+    //--------------------
+    // Perhaps the item reaches even outside the inventory grid.  Then of course
+    // it does not fit and we need/should not even test the details...
+    //
+    if ( ItemMap [ ItemType ] . inv_image . inv_size . x - 1 + InvPos_x >= 
+	 INVENTORY_GRID_WIDTH  ) return ( FALSE );
+    if ( ItemMap [ ItemType ] . inv_image . inv_size . y - 1 + InvPos_y >= 
+	 INVENTORY_GRID_HEIGHT ) return ( FALSE );
+    
+    // --------------------
+    // Now that we know, that the desired position is at least inside the inventory
+    // grid, we can start to test for the details of the available inventory space
+    //
+    for ( item_height = 0 ; item_height < ItemMap[ ItemType ] . inv_image . inv_size . y ; item_height ++ )
     {
-      for ( item_width = 0 ; item_width < ItemMap [ ItemType ] . inv_image . inv_size . x ; item_width ++ )
+	for ( item_width = 0 ; item_width < ItemMap [ ItemType ] . inv_image . inv_size . x ; item_width ++ )
 	{
-	  if ( ! Inv_Pos_Is_Free( InvPos_x + item_width , InvPos_y + item_height ) ) return ( FALSE );
+	    if ( ! Inv_Pos_Is_Free( InvPos_x + item_width , InvPos_y + item_height ) ) return ( FALSE );
 	}
     }
-  return ( TRUE );
-
+    return ( TRUE );
+    
 }; // int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
 /* ---------------------------------------------------------------------- 
@@ -2319,39 +2322,39 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 void 
 DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
 {
-  int i;
-  Level DropLevel = curShip . AllLevels [ levelnum ] ;
-
-  // --------------------
-  // Now we want to drop the item to the floor.
-  // We therefore find a free position in the item list of this level
-  // where we can add the item later.
-  //
-  i = find_free_floor_items_index ( levelnum ) ;
-
-  //--------------------
-  // Now we enter the item into the item list of this level
-  //
-  CopyItem( DropItemPointer , & ( DropLevel -> ItemList [ i ] ) , TRUE ) ;
-  // DropLevel->ItemList[ i ].pos.x = Me[0].pos.x;
-  // DropLevel->ItemList[ i ].pos.y = Me[0].pos.y;
-  DropLevel -> ItemList [ i ] . pos . x = x ; 
-  DropLevel -> ItemList [ i ] . pos . y = y ; 
-  DropLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
-  DropLevel -> ItemList [ i ] . throw_time = 0.01; // something > 0 
-  // DropLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
-  
-  // Me[0].Inventory[ InvPos ].type = ( -1 );
-  DeleteItem ( DropItemPointer ) ;
-
-  
-  if ( ClientMode && ! ServerMode ) 
+    int i;
+    Level DropLevel = curShip . AllLevels [ levelnum ] ;
+    
+    // --------------------
+    // Now we want to drop the item to the floor.
+    // We therefore find a free position in the item list of this level
+    // where we can add the item later.
+    //
+    i = find_free_floor_items_index ( levelnum ) ;
+    
+    //--------------------
+    // Now we enter the item into the item list of this level
+    //
+    CopyItem( DropItemPointer , & ( DropLevel -> ItemList [ i ] ) , TRUE ) ;
+    // DropLevel->ItemList[ i ].pos.x = Me[0].pos.x;
+    // DropLevel->ItemList[ i ].pos.y = Me[0].pos.y;
+    DropLevel -> ItemList [ i ] . pos . x = x ; 
+    DropLevel -> ItemList [ i ] . pos . y = y ; 
+    DropLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
+    DropLevel -> ItemList [ i ] . throw_time = 0.01; // something > 0 
+    // DropLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
+    
+    // Me[0].Inventory[ InvPos ].type = ( -1 );
+    DeleteItem ( DropItemPointer ) ;
+    
+    
+    if ( ClientMode && ! ServerMode ) 
     {
-      SendPlayerItemDropToServer ( GetPositionCode ( DropItemPointer )  , 
-				   DropLevel -> ItemList [ i ] . pos . x ,
-				   DropLevel -> ItemList [ i ] . pos . y ) ;
+	SendPlayerItemDropToServer ( GetPositionCode ( DropItemPointer )  , 
+				     DropLevel -> ItemList [ i ] . pos . x ,
+				     DropLevel -> ItemList [ i ] . pos . y ) ;
     }
-
+    
 }; // void DropItemToTheFloor ( void )
 
 /* ---------------------------------------------------------------------- 
@@ -2365,30 +2368,30 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
 void 
 DropHeldItemToTheFloor ( void )
 {
-  item* DropItemPointer;
-  float x , y ;
-
-  // --------------------
-  // First we find out which item we want to drop onto the floor
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
+    item* DropItemPointer;
+    float x , y ;
+    
+    // --------------------
+    // First we find out which item we want to drop onto the floor
+    //
+    DropItemPointer = GetHeldItemPointer(  );
+    if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
+	DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
+	return;
     } 
-
-  x = translate_pixel_to_map_location ( 0 , 
-					ServerThinksInputAxisX ( 0 ) , 
-					ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  y = translate_pixel_to_map_location ( 0 , 
-					ServerThinksInputAxisX ( 0 ) , 
-					ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
-
-  timeout_from_item_drop = 0.4 ;
-
+    
+    x = translate_pixel_to_map_location ( 0 , 
+					  ServerThinksInputAxisX ( 0 ) , 
+					  ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+    y = translate_pixel_to_map_location ( 0 , 
+					  ServerThinksInputAxisX ( 0 ) , 
+					  ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+    
+    DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
+    
+    timeout_from_item_drop = 0.4 ;
+    
 }; // void DropHeldItemToTheFloor ( void )
 
 /* ----------------------------------------------------------------------
@@ -2427,20 +2430,20 @@ ItemUsageRequirementsMet( item* UseItem , int MakeSound )
 int 
 HeldItemUsageRequirementsMet( void )
 {
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to check
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
+    item* DropItemPointer;
+    
+    // --------------------
+    // First we find out which item we want to check
+    //
+    DropItemPointer = GetHeldItemPointer(  );
+    if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid HeldItemUsageRequirementsMet ( void ) : No item in inventory seems to be currently held in hand...");
-      return ( FALSE ) ;
+	DebugPrintf( 0 , "\nvoid HeldItemUsageRequirementsMet ( void ) : No item in inventory seems to be currently held in hand...");
+	return ( FALSE ) ;
     } 
-  
-  return ( ItemUsageRequirementsMet ( DropItemPointer , TRUE ) );
-};
+    
+    return ( ItemUsageRequirementsMet ( DropItemPointer , TRUE ) );
+}; // int HeldItemUsageRequirementsMet( void )
 
 /* ----------------------------------------------------------------------
  * This function installs an item into a slot.  The given parameter is 
@@ -2450,58 +2453,58 @@ HeldItemUsageRequirementsMet( void )
 void
 DropHeldItemToSlot ( item* SlotItem )
 {
-  item* DropItemPointer;
-  int SourcePositionCode , DestPositionCode;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
+    item* DropItemPointer;
+    int SourcePositionCode , DestPositionCode;
+    
+    // --------------------
+    // First we find out which item we want to drop into the weapon slot
+    //
+    DropItemPointer = GetHeldItemPointer(  );
+    if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
+	DebugPrintf( 0 , "\nvoid DropHeldItemToSlot ( void ) : No item in inventory seems to be currently held in hand...");
+	return;
     } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( SlotItem->type != (-1) ) &&
-       ( SlotItem->currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( SlotItem );
-
-  //--------------------
-  // Now the item is installed into the weapon slot of the influencer
-  //
-  CopyItem( DropItemPointer , SlotItem , TRUE );
-  SlotItem->currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != SlotItem )
+    
+    //--------------------
+    // If there is an old item in the slot, we make a held item on the
+    // floor out of it and also set the HeldItemType accordingly, so that
+    // after the new item was placed successfully, the old item will
+    // be out of all inventory slots, but still in the hand of the 
+    // player and ready to be put somewhere else
+    //
+    // But this may only be done of course, if the 'old item' is not
+    // the item we want to put there itself!!!!  HAHAHAHA!!!!
+    //
+    if ( ( SlotItem->type != (-1) ) &&
+	 ( SlotItem->currently_held_in_hand == FALSE ) )
+	MakeHeldFloorItemOutOf( SlotItem );
+    
+    //--------------------
+    // Now the item is installed into the weapon slot of the influencer
+    //
+    CopyItem( DropItemPointer , SlotItem , TRUE );
+    SlotItem->currently_held_in_hand = FALSE;
+    
+    // Now the item is removed from the source location and no longer held in hand as well, 
+    // but of course only if it is not the same as the original item
+    if ( DropItemPointer != SlotItem )
     {
-
-      DeleteItem( DropItemPointer );
-
-      //--------------------
-      // Now we inform the server of our performed move....
-      //
-      if ( ClientMode && ! ServerMode ) 
+	
+	DeleteItem( DropItemPointer );
+	
+	//--------------------
+	// Now we inform the server of our performed move....
+	//
+	if ( ClientMode && ! ServerMode ) 
 	{
-	  SourcePositionCode = GetPositionCode ( DropItemPointer );
-	  DestPositionCode = GetPositionCode ( SlotItem  ) ;
-	  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , -1 , -1  ) ;
+	    SourcePositionCode = GetPositionCode ( DropItemPointer );
+	    DestPositionCode = GetPositionCode ( SlotItem  ) ;
+	    SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , -1 , -1  ) ;
 	}
-
+	
     }
-
+    
 }; // void DropHeldItemToSlot ( item* SlotItem )
 
 /* ----------------------------------------------------------------------
@@ -2514,30 +2517,30 @@ DropHeldItemToSlot ( item* SlotItem )
 int 
 GetFreeInventoryIndex( void )
 {
-  int InvPos;
-
-  // --------------------
-  // We find out the first free inventory index:
-  //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos ++ )
+    int InvPos;
+    
+    // --------------------
+    // We find out the first free inventory index:
+    //
+    for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos ++ )
     {
-      if ( Me[0].Inventory[ InvPos ].type == (-1) ) 
+	if ( Me [ 0 ] . Inventory [ InvPos ] .type == (-1) ) 
 	{
-	  return ( InvPos );
+	    return ( InvPos );
 	}
     }
 
-  // --------------------
-  // If this point is reached, the severe error mentioned above has
-  // occured, an error message must be printed out and the program
-  // must be terminated.
-  //
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    // --------------------
+    // If this point is reached, the severe error mentioned above has
+    // occured, an error message must be printed out and the program
+    // must be terminated.
+    //
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 A FREE INVENTORY INDEX POSITION COULD NOT BE FOUND.\n\
 This is an internal error, that must never happen unless there are\n\
 severe bugs in the inventory system.",
-				 PLEASE_INFORM, IS_FATAL );
-  return ( -1 ) ; // just to make compilers happy.
+			       PLEASE_INFORM, IS_FATAL );
+    return ( -1 ) ; // just to make compilers happy.
 }; // int GetFreeInventoryIndex( void )
 
 /* ----------------------------------------------------------------------
@@ -2549,176 +2552,176 @@ severe bugs in the inventory system.",
 void 
 DropHeldItemToInventory( void )
 {
-  point CurPos;
-  item* DropItemPointer;
-  int FreeInvIndex;
-  int i;
-  int SourcePositionCode, DestPositionCode ;
-  // item Temp;
-
-  FreeInvIndex = GetFreeInventoryIndex( );
-
-  // --------------------
-  // First we find out which item we want to drop into the inventory
-  //
-  DropItemPointer = GetHeldItemPointer (  );
-  if ( DropItemPointer == NULL )
+    point CurPos;
+    item* DropItemPointer;
+    int FreeInvIndex;
+    int i;
+    int SourcePositionCode, DestPositionCode ;
+    // item Temp;
+    
+    FreeInvIndex = GetFreeInventoryIndex( );
+    
+    // --------------------
+    // First we find out which item we want to drop into the inventory
+    //
+    DropItemPointer = GetHeldItemPointer (  );
+    if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToInventory ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
+	DebugPrintf( 0 , "\nvoid DropHeldItemToInventory ( void ) : No item in inventory seems to be currently held in hand...");
+	return;
     } 
-
-  // --------------------
-  // Now we want to drop the item to the right location again.
-  // Therefore we need to find out the right position, which of course
-  // depends as well on current mouse cursor location as well as the
-  // size of the dropped item.
-  //
-  CurPos.x = GetMousePos_x()  - 
-    ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . x - 1 ) ) ;
-  CurPos.y = GetMousePos_y()  - 
-    ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . y - 1 ) ) ;
-
-  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
-			       GetInventorySquare_y ( CurPos.y ) ) )
+    
+    // --------------------
+    // Now we want to drop the item to the right location again.
+    // Therefore we need to find out the right position, which of course
+    // depends as well on current mouse cursor location as well as the
+    // size of the dropped item.
+    //
+    CurPos.x = GetMousePos_x()  - 
+	( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . x - 1 ) ) ;
+    CurPos.y = GetMousePos_y()  - 
+	( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . y - 1 ) ) ;
+    
+    if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
+				 GetInventorySquare_y ( CurPos.y ) ) )
     {
-      CopyItem( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
-      DeleteItem( DropItemPointer );
-      Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-      Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-      Me [ 0 ] . Inventory [ FreeInvIndex ] . currently_held_in_hand = FALSE;
-
-      // --------------------
-      // Now that we know that the item could be dropped directly to inventory 
-      // without swapping any paces, we can as well make the item
-      // 'not held in hand' immediately and return
-      //
-      DropItemPointer->currently_held_in_hand = FALSE ;
-      Item_Held_In_Hand = ( -1 );
-
-      //--------------------
-      // Now we inform the server of our performed move....
-      //
-      if ( ClientMode && ! ServerMode ) 
+	CopyItem( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
+	DeleteItem( DropItemPointer );
+	Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+	Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+	Me [ 0 ] . Inventory [ FreeInvIndex ] . currently_held_in_hand = FALSE;
+	
+	// --------------------
+	// Now that we know that the item could be dropped directly to inventory 
+	// without swapping any paces, we can as well make the item
+	// 'not held in hand' immediately and return
+	//
+	DropItemPointer->currently_held_in_hand = FALSE ;
+	Item_Held_In_Hand = ( -1 );
+	
+	//--------------------
+	// Now we inform the server of our performed move....
+	//
+	if ( ClientMode && ! ServerMode ) 
 	{
-	  SourcePositionCode = GetPositionCode ( DropItemPointer );
-	  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
-	  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
-				       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
-				       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+	    SourcePositionCode = GetPositionCode ( DropItemPointer );
+	    DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
+	    SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+					 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+					 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
 	}
-      return;
+	return;
     }
-  else
+    else
     {
-      //--------------------
-      // So the item could not be placed into inventory directly, but maybe
-      // it can be placed there if we swap our dropitem with some other item.
-      // Let's test this opportunity here.
-      //
-      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i ++ )
+	//--------------------
+	// So the item could not be placed into inventory directly, but maybe
+	// it can be placed there if we swap our dropitem with some other item.
+	// Let's test this opportunity here.
+	//
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i ++ )
 	{
-	  //--------------------
-	  // So we make a copy of each of the items we remove in order to 
-	  // try to create new space for the drop item.  After that, we can
-	  // remove it.
-	  //
-	  // CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Temp ) , FALSE );
-	  //
-	  CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ]  ) , FALSE );
-	  
-	  //--------------------
-	  // FIRST: Security check against segfaults:  It might happen that we 
-	  // delete the Dropitem itself while trying several items as candidates
-	  // for removal.  This would cause testing dropability with a -1 item
-	  // type and a SEGFAULT would result...
-	  //
-	  if ( & ( Me[0].Inventory[ i ] ) == DropItemPointer ) continue;
-
-	  Me [ 0 ] . Inventory [ i ] . type = ( -1 ) ;
-
-	  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
-				       GetInventorySquare_y ( CurPos.y ) ) )
+	    //--------------------
+	    // So we make a copy of each of the items we remove in order to 
+	    // try to create new space for the drop item.  After that, we can
+	    // remove it.
+	    //
+	    // CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Temp ) , FALSE );
+	    //
+	    CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ]  ) , FALSE );
+	    
+	    //--------------------
+	    // FIRST: Security check against segfaults:  It might happen that we 
+	    // delete the Dropitem itself while trying several items as candidates
+	    // for removal.  This would cause testing dropability with a -1 item
+	    // type and a SEGFAULT would result...
+	    //
+	    if ( & ( Me[0].Inventory[ i ] ) == DropItemPointer ) continue;
+	    
+	    Me [ 0 ] . Inventory [ i ] . type = ( -1 ) ;
+	    
+	    if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
+					 GetInventorySquare_y ( CurPos.y ) ) )
 	    {
-	      //--------------------
-	      // So if with the removed item Nr. i putting of the DropItem is 
-	      // suddenly possible, then we make a held item on the floor out
-	      // of it.  The other removed item can stay removed, since it will
-	      // be overwritten anyway and a copy is now on the floor.
-	      //
-	      Item_Held_In_Hand = Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] . type ;
-	      
-	      // THIS FAR EVERYTHING WORKS FINE!!!
-
-	      //--------------------
-	      // Now we inform the server of our performed move....
-	      //
-	      // WARNING!!  In this case here, the temporarily disabled item does not get
-	      // restored!!  Therefore we have to inform the server, that now there is an 
-	      // additional item move, namely the disabling of the one item.  This must
-	      // be done FIRST!
-	      //
-	      if ( ClientMode && ! ServerMode ) 
+		//--------------------
+		// So if with the removed item Nr. i putting of the DropItem is 
+		// suddenly possible, then we make a held item on the floor out
+		// of it.  The other removed item can stay removed, since it will
+		// be overwritten anyway and a copy is now on the floor.
+		//
+		Item_Held_In_Hand = Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] . type ;
+		
+		// THIS FAR EVERYTHING WORKS FINE!!!
+		
+		//--------------------
+		// Now we inform the server of our performed move....
+		//
+		// WARNING!!  In this case here, the temporarily disabled item does not get
+		// restored!!  Therefore we have to inform the server, that now there is an 
+		// additional item move, namely the disabling of the one item.  This must
+		// be done FIRST!
+		//
+		if ( ClientMode && ! ServerMode ) 
 		{
-
-		  SourcePositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ i ] ) ) ;
-		  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) ) ;
-		  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
-					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
-					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+		    
+		    SourcePositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ i ] ) ) ;
+		    DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) ) ;
+		    SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+						 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+						 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
 		}
-
-	      MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] ) ) ;
-	      Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] . currently_held_in_hand = TRUE ;
-
-	      //--------------------
-	      // Otherwise we just need to add the new item for the inventory
-	      // grid as usual
-	      //
-	      CopyItem ( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
-	      DeleteItem ( DropItemPointer );
-	      Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-	      Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-	      Me [ 0 ] . Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
-
-	      // And of course the item is no longer held in hand as well
-	      DropItemPointer->currently_held_in_hand = FALSE ;
-
-	      //--------------------
-	      // Now we inform the server of the second part of our performed move....
-	      //
-	      if ( ClientMode && ! ServerMode ) 
+		
+		MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] ) ) ;
+		Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] . currently_held_in_hand = TRUE ;
+		
+		//--------------------
+		// Otherwise we just need to add the new item for the inventory
+		// grid as usual
+		//
+		CopyItem ( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
+		DeleteItem ( DropItemPointer );
+		Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+		Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+		Me [ 0 ] . Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+		
+		// And of course the item is no longer held in hand as well
+		DropItemPointer->currently_held_in_hand = FALSE ;
+		
+		//--------------------
+		// Now we inform the server of the second part of our performed move....
+		//
+		if ( ClientMode && ! ServerMode ) 
 		{
-
-		  SourcePositionCode = GetPositionCode ( DropItemPointer );
-		  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
-		  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
-					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
-					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+		    
+		    SourcePositionCode = GetPositionCode ( DropItemPointer );
+		    DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
+		    SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+						 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+						 Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
 		}
-
-	      return;
+		
+		return;
 	    }
-
-
-	  //--------------------
-	  // But if even the removal of one item was not enough, so that the new
-	  // item would fit into the inventory, then of course we should re-add the
-	  // removed item to the inventory, so that no other items get lost.
-	  //
-	  CopyItem ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
-	  // CopyItemWithoutHeldProperty ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
-
+	    
+	    
+	    //--------------------
+	    // But if even the removal of one item was not enough, so that the new
+	    // item would fit into the inventory, then of course we should re-add the
+	    // removed item to the inventory, so that no other items get lost.
+	    //
+	    CopyItem ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
+	    // CopyItemWithoutHeldProperty ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
+	    
 	} // for: try all items if removal is the solution
     } // if not immediately place findable
-
-  // --------------------
-  // So at this point we know, that even the removal of other items was not the 
-  // solution.  So the item cannot be put into inventory, even at best attampts
-  // to do so.  What a pitty.
-  //
-  Item_Held_In_Hand = GetHeldItemCode ( ) ;
-
+    
+    // --------------------
+    // So at this point we know, that even the removal of other items was not the 
+    // solution.  So the item cannot be put into inventory, even at best attampts
+    // to do so.  What a pitty.
+    //
+    Item_Held_In_Hand = GetHeldItemCode ( ) ;
+    
 }; // void DropHeldItemToInventory( void )
 
 /* ----------------------------------------------------------------------
@@ -2728,36 +2731,36 @@ DropHeldItemToInventory( void )
 void
 ShowQuickInventory ( void )
 {
-  int i;
-  SDL_Rect TargetRect;
-  int Index;
-
-  if ( ! GameConfig . show_quick_inventory ) return;
-
-  //--------------------
-  // We must not blit something right over the active character screen or the
-  // active skill screen of course.  That would be irritating.
-  //
-  if ( ( GameConfig.SkillScreen_Visible ) || ( GameConfig.CharacterScreen_Visible ) ) return;
-
-  //--------------------
-  // Now we can blit all the objects in the quick inventory, but of course only
-  // those small objects, that have a 1x1 inventory grid size, so that they really
-  // can be drawn from the 'belt' that is actually the quick inventory.
-  //
-  for ( i = 0 ; i < 9 ; i ++ )
+    int i;
+    SDL_Rect TargetRect;
+    int Index;
+    
+    if ( ! GameConfig . show_quick_inventory ) return;
+    
+    //--------------------
+    // We must not blit something right over the active character screen or the
+    // active skill screen of course.  That would be irritating.
+    //
+    if ( ( GameConfig.SkillScreen_Visible ) || ( GameConfig.CharacterScreen_Visible ) ) return;
+    
+    //--------------------
+    // Now we can blit all the objects in the quick inventory, but of course only
+    // those small objects, that have a 1x1 inventory grid size, so that they really
+    // can be drawn from the 'belt' that is actually the quick inventory.
+    //
+    for ( i = 0 ; i < 9 ; i ++ )
     {
-      PutCharFont ( Screen , FPS_Display_BFont , GameConfig . screen_width - INVENTORY_SUBSQUARE_WIDTH , 100 + i * 32 , '1' + i );
-      if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
-	   ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
-	   ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
+	PutCharFont ( Screen , FPS_Display_BFont , GameConfig . screen_width - INVENTORY_SUBSQUARE_WIDTH , 100 + i * 32 , '1' + i );
+	if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
+	     ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
+	     ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
 	{
-	  TargetRect.x = GameConfig . screen_width - 32 ;
-	  TargetRect.y = 100 + i * 32 ;
-      
-	  our_SDL_blit_surface_wrapper ( ItemMap [ Me [ 0 ] . Inventory [ Index ] . type ] . inv_image . Surface , 
-					 NULL , Screen , &TargetRect );
-	  
+	    TargetRect.x = GameConfig . screen_width - 32 ;
+	    TargetRect.y = 100 + i * 32 ;
+	    
+	    our_SDL_blit_surface_wrapper ( ItemMap [ Me [ 0 ] . Inventory [ Index ] . type ] . inv_image . Surface , 
+					   NULL , Screen , &TargetRect );
+	    
 	}
     }
 }; // void ShowQuickInventory ( void )
@@ -3600,36 +3603,37 @@ ManageInventoryScreen ( void )
 void
 raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , point Inv_Loc )
 {
-  char TempText[1000];
-  int SourceCode , DestCode ;
-
-  // We announce that we have taken the item
-  Me[0].TextVisibleTime = 0;
-  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
-  Me[0].TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
-  strcpy ( Me[0].TextToBeDisplayed , TempText );
-  
-  // We add the new item to the inventory
-  CopyItem( ItemPointer , TargetPointer , FALSE );
-  TargetPointer -> inventory_position . x = Inv_Loc . x ;
-  TargetPointer -> inventory_position.y = Inv_Loc . y ;
-  
-  // We make the sound of an item being taken
-  // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-  play_item_sound( ItemPointer -> type );
-  
-  DeleteItem( ItemPointer );
-  
-  //--------------------
-  // And of course we shouldn't forget to tell the server about this 
-  // movement as well....
-  //
-  if ( ClientMode && ! ServerMode ) 
+    char TempText[1000];
+    int SourceCode , DestCode ;
+    
+    // We announce that we have taken the item
+    Me [ 0 ] . TextVisibleTime = 0;
+    sprintf ( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
+    Me [ 0 ] . TextToBeDisplayed = MyMalloc ( strlen( TempText ) + 1 );
+    strcpy ( Me [ 0 ] . TextToBeDisplayed , TempText );
+    
+    // We add the new item to the inventory
+    CopyItem( ItemPointer , TargetPointer , FALSE );
+    TargetPointer -> inventory_position . x = Inv_Loc . x ;
+    TargetPointer -> inventory_position.y = Inv_Loc . y ;
+    
+    // We make the sound of an item being taken
+    // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+    play_item_sound( ItemPointer -> type );
+    
+    DeleteItem( ItemPointer );
+    
+    //--------------------
+    // And of course we shouldn't forget to tell the server about this 
+    // movement as well....
+    //
+    if ( ClientMode && ! ServerMode ) 
     {
-      SourceCode = GetPositionCode ( ItemPointer ) ;
-      DestCode = GetPositionCode ( TargetPointer ) ;
-      SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
+	SourceCode = GetPositionCode ( ItemPointer ) ;
+	DestCode = GetPositionCode ( TargetPointer ) ;
+	SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
     }
+
 }; // void move_picked_up_item_to_entry ( ItemPointer , TargetPointer )
 
 /* ----------------------------------------------------------------------
@@ -3638,44 +3642,44 @@ raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , poi
 int
 place_item_on_this_position_if_you_can ( item* ItemPointer , point Inv_Loc , int InvPos )
 {
-  int item_height;
-  int item_width;
-
-  for ( item_height = 0 ; item_height < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y ; item_height ++ )
+    int item_height;
+    int item_width;
+    
+    for ( item_height = 0 ; item_height < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y ; item_height ++ )
     {
-      for ( item_width = 0 ; item_width < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . x ; item_width ++ )
+	for ( item_width = 0 ; item_width < ItemMap [ ItemPointer -> type ] . inv_image . inv_size . x ; item_width ++ )
 	{
-	  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
-	  if ( !Inv_Pos_Is_Free( Inv_Loc . x + item_width , 
-				 Inv_Loc . y + item_height ) )
+	    DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
+	    if ( !Inv_Pos_Is_Free( Inv_Loc . x + item_width , 
+				   Inv_Loc . y + item_height ) )
 	    {
-	      Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = -1;
-	      Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = -1;
-	      // goto This_Is_No_Possible_Location;
-	      return ( FALSE ) ;
+		Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = -1;
+		Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = -1;
+		// goto This_Is_No_Possible_Location;
+		return ( FALSE ) ;
 	    }
 	}
     }
-  // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
-  
-  // At this point we know we have reached a position where we can plant this item.
-  Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = Inv_Loc . x ;
-  Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = Inv_Loc . y ;
-  DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
-  
-  //--------------------
-  if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
+    // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
+    
+    // At this point we know we have reached a position where we can plant this item.
+    Me [ 0 ] . Inventory [ InvPos ] . inventory_position . x = Inv_Loc . x ;
+    Me [ 0 ] . Inventory [ InvPos ] . inventory_position . y = Inv_Loc . y ;
+    DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
+    
+    //--------------------
+    if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
     {
-      Me [ 0 ] . TextVisibleTime = 0;
-      Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
-      CantCarrySound();
-      // can't take any more items,
+	Me [ 0 ] . TextVisibleTime = 0;
+	Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
+	CantCarrySound();
+	// can't take any more items,
     }
-  else
+    else
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+	raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
     }
-  return ( TRUE );
+    return ( TRUE );
 }; // int place_item_on_this_position_if_you_can ( ... )
 
 /* ----------------------------------------------------------------------
@@ -3689,161 +3693,156 @@ place_item_on_this_position_if_you_can ( item* ItemPointer , point Inv_Loc , int
 void 
 AddFloorItemDirectlyToInventory( item* ItemPointer )
 {
-  int InvPos;
-  point Inv_Loc = { -1 , -1 } ;
-  int TargetItemIndex;
-
-  //--------------------
-  // In case we found an item on the floor, we remove it from the floor
-  // and add it to influs inventory
-  //
-  if ( ItemPointer == NULL ) return;
-
-  //--------------------
-  // In the special case of money, we add the amount of money to our
-  // money counter and eliminate the item on the floor.
-  //
-  if ( ItemPointer->type == ITEM_MONEY )
+    int InvPos;
+    point Inv_Loc = { -1 , -1 } ;
+    int TargetItemIndex;
+    
+    //--------------------
+    // In case we found an item on the floor, we remove it from the floor
+    // and add it to influs inventory
+    //
+    if ( ItemPointer == NULL ) return;
+    
+    //--------------------
+    // In the special case of money, we add the amount of money to our
+    // money counter and eliminate the item on the floor.
+    //
+    if ( ItemPointer->type == ITEM_MONEY )
     {
-      // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-      play_item_sound( ItemPointer -> type );
-      Me [ 0 ] . Gold += ItemPointer->gold_amount;
-      DeleteItem( ItemPointer );
-      return;
+	play_item_sound( ItemPointer -> type );
+	Me [ 0 ] . Gold += ItemPointer->gold_amount;
+	DeleteItem( ItemPointer );
+	return;
     }
-  
-  //--------------------
-  // In the special case, that this is an item, that groups together with others
-  // of the same type AND we also have as item of this type already in inventory,
-  // then we just need to manipulate multiplicity a bit and we're done.  Very easy.
-  //
-  if ( ItemMap [ ItemPointer->type ] . item_group_together_in_inventory )
+    
+    //--------------------
+    // In the special case, that this is an item, that groups together with others
+    // of the same type AND we also have as item of this type already in inventory,
+    // then we just need to manipulate multiplicity a bit and we're done.  Very easy.
+    //
+    if ( ItemMap [ ItemPointer->type ] . item_group_together_in_inventory )
     {
-      if ( CountItemtypeInInventory ( ItemPointer->type , PLAYER_NR_0 ) )
+	if ( CountItemtypeInInventory ( ItemPointer->type , PLAYER_NR_0 ) )
 	{
-	  TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
-	  Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
-	  // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	  play_item_sound ( ItemPointer -> type );
-	  DeleteItem( ItemPointer );
-	  return;
+	    TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
+	    Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
+	    play_item_sound ( ItemPointer -> type );
+	    DeleteItem( ItemPointer );
+	    return;
 	}
     }
-  
-  //--------------------
-  // Maybe the item is of a kind that can be equipped right now.  Then
-  // we decide to directly drop it to the corresponding slot.
-  //
-  if ( ( Me [ 0 ] . weapon_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_weapon_slot ) )
+    
+    //--------------------
+    // Maybe the item is of a kind that can be equipped right now.  Then
+    // we decide to directly drop it to the corresponding slot.
+    //
+    if ( ( Me [ 0 ] . weapon_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_weapon_slot ) )
     {
-      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  //--------------------
-	  // Now we're picking up a weapon while no weapon is equipped.  But still
-	  // it might be a 2-handed weapon while there is some shield equipped.  Well,
-	  // when that is the case, we refuse to put it directly to the proper slot, 
-	  // otherwise we do it.
-	  //
-	  if ( Me [ 0 ] . shield_item . type == (-1) )
+	    //--------------------
+	    // Now we're picking up a weapon while no weapon is equipped.  But still
+	    // it might be a 2-handed weapon while there is some shield equipped.  Well,
+	    // when that is the case, we refuse to put it directly to the proper slot, 
+	    // otherwise we do it.
+	    //
+	    if ( Me [ 0 ] . shield_item . type == (-1) )
 	    {
-	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-	      return;
+		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+		return;
 	    }
-	  //--------------------
-	  // So now we know that some shield item is equipped.  Let's be careful:  2-handed
-	  // weapons will be rejected from direct addition to the slot.
-	  //
-	  if ( ! ItemMap [ ItemPointer -> type ] . item_gun_requires_both_hands )
+	    //--------------------
+	    // So now we know that some shield item is equipped.  Let's be careful:  2-handed
+	    // weapons will be rejected from direct addition to the slot.
+	    //
+	    if ( ! ItemMap [ ItemPointer -> type ] . item_gun_requires_both_hands )
 	    {
-	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-	      return;
+		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+		return;
 	    }
 	}
     }
-  if ( ( Me [ 0 ] . shield_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_shield_slot ) )
+    if ( ( Me [ 0 ] . shield_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_shield_slot ) )
     {
-      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  //--------------------
-	  // Auto-equipping shields can be done.  But only if there isn't a 2-handed
-	  // weapon equipped already.  Well, in case of no weapon present it's easy:
-	  //
-	  if ( Me [ 0 ] . weapon_item . type == (-1) )
+	    //--------------------
+	    // Auto-equipping shields can be done.  But only if there isn't a 2-handed
+	    // weapon equipped already.  Well, in case of no weapon present it's easy:
+	    //
+	    if ( Me [ 0 ] . weapon_item . type == (-1) )
 	    {
-	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-	      return;
+		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+		return;
 	    }
-	  //--------------------
-	  // But now we know, that there is some weapon present.  We need to be careful:
-	  // it might be a 2-handed weapon.
-	  // 
-	  if ( ! ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+	    //--------------------
+	    // But now we know, that there is some weapon present.  We need to be careful:
+	    // it might be a 2-handed weapon.
+	    // 
+	    if ( ! ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 	    {
-	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-	      return;
+		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+		return;
 	    }
 	}
     }
-  if ( ( Me [ 0 ] . armour_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_armour_slot ) )
+    if ( ( Me [ 0 ] . armour_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_armour_slot ) )
     {
-      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
-	  return;
+	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
+	    return;
 	}
     }
-  if ( ( Me [ 0 ] . drive_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_drive_slot ) )
+    if ( ( Me [ 0 ] . drive_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_drive_slot ) )
     {
-      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
-	  return;
+	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
+	    return;
 	}
     }
-  if ( ( Me [ 0 ] . special_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_special_slot ) )
+    if ( ( Me [ 0 ] . special_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_special_slot ) )
     {
-      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
-	  return;
+	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
+	    return;
 	}
     }
-  
-  
-  // find a free position in the inventory list
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
+    
+    // find a free position in the inventory list
+    for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
     {
-      if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
+	if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
     }
-  if ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 )
+    if ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-				 "Ran out of inventory positions.  This doesn't mean inventory is simpy full.\nIt means that FreedroidRPG is wasting inventory positions due to internal bugs.",
-				 PLEASE_INFORM, IS_FATAL );
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Ran out of inventory positions.  This doesn't mean inventory is simpy full.\nIt means that FreedroidRPG is wasting inventory positions due to internal bugs.",
+				   PLEASE_INFORM, IS_FATAL );
     }
-  
-  // find enough free squares in the inventory to fit
-  for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y + 1 ; Inv_Loc.y ++ )
+    
+    // find enough free squares in the inventory to fit
+    for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y + 1 ; Inv_Loc.y ++ )
     {
-      for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
+	for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
 	{
-	  if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
+	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
 	}
     }
-
-
-  if ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) )
+    
+    if ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) )
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "I can't carry any more.";
-      CantCarrySound();
+	Me [ 0 ] . TextVisibleTime = 0;
+	Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
+	CantCarrySound();
     }
-  else
+    else
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+	raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
     }
-      
-  
+    
 }; // void AddFloorItemDirectlyToInventory( item* ItemPointer )
 
 #undef _items_c
