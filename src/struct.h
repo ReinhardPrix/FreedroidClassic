@@ -101,6 +101,7 @@ typedef struct
   int terminate_on_missing_speech_sample;
   int show_subtitles_in_dialogs;
   char freedroid_version_string[500];
+  int show_digits_of_droids;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

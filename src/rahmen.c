@@ -571,7 +571,7 @@ ShowCurrentHealthAndForceLevel( void )
       // Just to make sure, that we really achieved, that the thing is not reassembled
       // every frame, we print out a message.
       //
-      DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
+      // DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
     }
 
 

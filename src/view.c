@@ -1142,32 +1142,32 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
 	}
       else
 	{
-	  SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
-	  
-	  if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
-	    {
-	      // In case of low energy, do the fading effect...
-	      alpha_value = (int) ( ( 256 - alpha_offset ) * 
-				    fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
-				    ( alpha_offset ) );
-	      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-		SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+	  //--------------------
+	  // Only if the robot is dead already, we can print
+	  // out the explosion dust like in the classic ball shaped version.
+	  //
+	  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
 	}
-	  else
-	    {
-	      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-		SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	    }
-	}
-      
     }
   else
     {
-      //--------------------
-      // Only if the robot is dead already, we can print
-      // out the explosion dust like in the classic ball shaped version.
-      //
-      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+      
+      SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+      
+      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
+	{
+	  // In case of low energy, do the fading effect...
+	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
+				fabsf( 0.5 * Me[0].MissionTimeElapsed - floor( 0.5 * Me[0].MissionTimeElapsed ) - 0.5 ) + 
+				( alpha_offset ) );
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+	}
+      else
+	{
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
     }
 
 }; // void PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
@@ -1254,7 +1254,8 @@ Sorry...\n\
   //--------------------
   // Now the numbers should be blittet.
   //
-  BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
+  if ( GameConfig.show_digits_of_droids )
+    BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
 
   PrintCommentOfThisEnemy ( Enum , x , y );
 

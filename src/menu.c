@@ -1194,14 +1194,12 @@ New_GraphicsSound_Options_Menu (void)
 
 }; // void New_GraphicsSound_Options_Menu (void)
 
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
 void
 On_Screen_Display_Options_Menu (void)
 {
@@ -1210,6 +1208,7 @@ On_Screen_Display_Options_Menu (void)
   char Options0[1000];
   char Options1[1000];
   char Options2[1000];
+  char Options3[1000];
   char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
   enum
@@ -1217,6 +1216,7 @@ On_Screen_Display_Options_Menu (void)
       SHOW_POSITION=1, 
       SHOW_FRAMERATE, 
       SHOW_ENERGY,
+      SHOW_DROID_DIGITS,
       LEAVE_OPTIONS_MENU 
     };
 
@@ -1232,10 +1232,12 @@ On_Screen_Display_Options_Menu (void)
       sprintf( Options0 , "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF" );
       sprintf( Options1 , "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF" );
       sprintf( Options2 , "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
+      sprintf( Options3 , "Show Droid Digits: %s", GameConfig.show_digits_of_droids? "ON" : "OFF" );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
-      MenuTexts[3]="Back";
+      MenuTexts[3]=Options3;
+      MenuTexts[4]="Back";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1255,6 +1257,10 @@ On_Screen_Display_Options_Menu (void)
 	case SHOW_ENERGY:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+	  break;
+	case SHOW_DROID_DIGITS:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . show_digits_of_droids = ! GameConfig . show_digits_of_droids;
 	  break;
 	case LEAVE_OPTIONS_MENU:
 	  while (EnterPressed() || SpacePressed() );

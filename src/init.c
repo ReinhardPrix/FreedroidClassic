@@ -2000,6 +2000,7 @@ Reset_GameConfig_To_Default_Values ( void )
 
   GameConfig.terminate_on_missing_speech_sample = FALSE ;
   GameConfig.show_subtitles_in_dialogs = TRUE ;
+  GameConfig.show_digits_of_droids = FALSE ;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
