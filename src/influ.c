@@ -425,17 +425,15 @@ MoveTuxAccordingToHisSpeed ( PlayerNum )
 }; // void MoveTuxAccordingToHisSpeed ( PlayerNum )
 
 /* ----------------------------------------------------------------------
- * This function moves the influencer, adjusts his speed according to
- * keys pressed and also adjusts his status and current "phase" of his 
- * rotation.
+ *
+ *
  * ---------------------------------------------------------------------- */
 void
-MoveInfluence ( int PlayerNum )
+move_tux_thowards_mouse_move_target ( int PlayerNum )
 {
-  float accel;
   moderately_finepoint RemainingWay;
   moderately_finepoint MinimalWayAtThisSpeed;
-  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
+  float accel;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -453,6 +451,69 @@ MoveInfluence ( int PlayerNum )
     }
 
   // accel *= 20.0 ; // we give the Tux unlimited acceleration...
+
+  //--------------------
+  // Let's do some mathematics:  We compute how far we have to go still
+  // and we also compute how far we will inevitably go even if we pull the breakes
+  // or even better use the usual friction with air to stop our motion immediately.
+  // Once we know that, we can simply decide if we still have to build up speed or
+  // if it's time to slow down again and so finally we will slide to a stop exactly
+  // at the place where we intend to be.  So:  Mathematics is always helpful. :)
+  //
+  RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+  RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+  
+  MinimalWayAtThisSpeed . x = Me [ PlayerNum ] . speed . x / log ( FRICTION_CONSTANT ) ;
+  MinimalWayAtThisSpeed . y = Me [ PlayerNum ] . speed . y / log ( FRICTION_CONSTANT ) ;
+  
+  if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
+    {
+      if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
+      else Me [ PlayerNum ] .speed.x += accel;
+    }
+  else
+    {
+      Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
+      if ( fabsf ( Me [ PlayerNum ] . speed . x ) < 0.3 ) Me [ PlayerNum ] . speed . x = 0 ;
+    }
+  if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
+    {
+      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
+      else Me [ PlayerNum ] .speed.y += accel;
+    }
+  else
+    {
+      Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
+      if ( fabsf ( Me [ PlayerNum ] . speed . y ) < 0.3 ) Me [ PlayerNum ] . speed . y = 0 ;
+    }
+  
+  //--------------------
+  // In case we have reached our target, we can remove this mouse_move_target again,
+  // but also if we have been thrown onto a different level, we cancel our current
+  // mouse move target...
+  //
+  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
+	 ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
+       ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
+    {
+      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
+      
+      // Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
+    }
+
+}; // void move_tux_thowards_mouse_move_target ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * This function moves the influencer, adjusts his speed according to
+ * keys pressed and also adjusts his status and current "phase" of his 
+ * rotation.
+ * ---------------------------------------------------------------------- */
+void
+MoveInfluence ( int PlayerNum )
+{
+  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
   // We store the influencers position for the history record and so that others
@@ -481,54 +542,7 @@ MoveInfluence ( int PlayerNum )
   //
   if ( Me [ PlayerNum ] . mouse_move_target . x != ( -1 ) )
     {
-      //--------------------
-      // Let's do some mathematics:  We compute how far we have to go still
-      // and we also compute how far we will inevitably go even if we pull the breakes
-      // or even better use the usual friction with air to stop our motion immediately.
-      // Once we know that, we can simply decide if we still have to build up speed or
-      // if it's time to slow down again and so finally we will slide to a stop exactly
-      // at the place where we intend to be.  So:  Mathematics is always helpful. :)
-      //
-      RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
-      RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
-      
-      MinimalWayAtThisSpeed . x = Me [ PlayerNum ] . speed . x / log ( FRICTION_CONSTANT ) ;
-      MinimalWayAtThisSpeed . y = Me [ PlayerNum ] . speed . y / log ( FRICTION_CONSTANT ) ;
-      
-      if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
-	{
-	  if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
-	  else Me [ PlayerNum ] .speed.x += accel;
-	}
-      else
-	{
-	  Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-	}
-      if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
-	{
-	  if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
-	  else Me [ PlayerNum ] .speed.y += accel;
-	}
-      else
-	{
-	  Me [ PlayerNum ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-	}
-      
-      //--------------------
-      // In case we have reached our target, we can remove this mouse_move_target again,
-      // but also if we have been thrown onto a different level, we cancel our current
-      // mouse move target...
-      //
-      if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
-	     ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
-	   ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
-	{
-	  Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
-	  Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
-	  Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
-	  
-	  // Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
-	}
+      move_tux_thowards_mouse_move_target ( PlayerNum );
     }
   
   //--------------------
@@ -889,6 +903,10 @@ AdjustTuxSpeed ( int PlayerNum )
       maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
     }
 
+  //--------------------
+  // First we adjust the speed, so that the Tux can never go too fast
+  // in any direction.
+  //
   if (Me [ PlayerNum ] .speed.x > maxspeed)
     Me [ PlayerNum ] .speed.x = maxspeed;
   if (Me [ PlayerNum ] .speed.x < (-maxspeed))
@@ -898,6 +916,7 @@ AdjustTuxSpeed ( int PlayerNum )
     Me [ PlayerNum ] .speed.y = maxspeed;
   if (Me [ PlayerNum ] .speed.y < (-maxspeed))
     Me [ PlayerNum ] .speed.y = (-maxspeed);
+
 
 }; // void AdjustSpeed ( int PlayerNum ) 
 
@@ -917,6 +936,9 @@ InfluenceFrictionWithAir ( int PlayerNum )
     {
       Me [ PlayerNum ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
     }
+
+  if ( fabsf ( Me [ PlayerNum ] . speed . x ) < 0.3 ) Me [ PlayerNum ] . speed . x = 0 ;
+  if ( fabsf ( Me [ PlayerNum ] . speed . y ) < 0.3 ) Me [ PlayerNum ] . speed . y = 0 ;
 
 }; // InfluenceFrictionWithAir ( int PlayerNum )
 
