@@ -193,6 +193,7 @@ Takeover ( int enemynum )
     while ( !Finished )
     {
 	ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
+	ShowGenericButtonFromList ( TAKEOVER_HELP_BUTTON ) ;
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
@@ -209,6 +210,10 @@ Takeover ( int enemynum )
 	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed ) 
 	{
 	    Finished = TRUE;
+	}
+	else if ( MouseCursorIsOnButton( TAKEOVER_HELP_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed ) 
+	{
+	    PlayATitleFile ( "TakeoverInstructions.title" );
 	}
 	WasPressed = axis_is_active; 
 	

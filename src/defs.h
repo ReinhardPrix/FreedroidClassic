@@ -618,6 +618,8 @@ enum
     QUEST_BROWSER_ITEM_SHORT_BUTTON,
     QUEST_BROWSER_ITEM_LONG_BUTTON,
 
+    TAKEOVER_HELP_BUTTON,
+
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
     // automatically counts the number of buttons defined.  Other buttons
