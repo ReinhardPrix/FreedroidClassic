@@ -92,10 +92,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Item_Armour_Put_Sound_0.wav",
    "Item_Wheels_Put_Sound_0.wav",
    "Item_Range_Weapon_Put_Sound_0.wav",
-   "First_Contact_Sound_0.wav",
-   "First_Contact_Sound_1.wav",
-   "First_Contact_Sound_2.wav",
-   "First_Contact_Sound_3.wav",
+   "bot_sounds/First_Contact_Sound_0.wav",
+   "bot_sounds/First_Contact_Sound_1.wav",
+   "bot_sounds/First_Contact_Sound_2.wav",
+   "bot_sounds/First_Contact_Sound_3.wav",
    "Not_Enough_Power_Sound_0.wav",
    "Not_Enough_Dist_Sound_0.wav",
    "Not_Enough_Mana_0.wav",
@@ -781,19 +781,19 @@ PlayGreetingSound ( int SoundCode )
       PlaySound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
       break;
     case 4:
-      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_4.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE );
       break;
     case 5:
-      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_5.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE );
       break;
     case 6:
-      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_6.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE );
       break;
     case 7:
-      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_7.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE );
       break;
     case 8:
-      PlayOnceNeededSoundSample ( "../effects/First_Contact_Sound_8.wav" , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");

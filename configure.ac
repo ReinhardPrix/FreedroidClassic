@@ -102,6 +102,7 @@ AC_CONFIG_FILES([Makefile
                 sound/Makefile 
 		sound/speeches/Makefile
 		sound/effects/Makefile 
+		sound/effects/bot_sounds/Makefile 
 		sound/music/Makefile
 		graphics/Makefile
 		graphics/lanzz_theme/Makefile 
