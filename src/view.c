@@ -621,42 +621,6 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
   return;
 }
 
-/*@Function============================================================
-@Desc: This function displays a robot picture.  This does NOT mean a
-       robot picture like in combat but this means a finely renderd
-       artwork by bastian, that is displayed in the console if info
-       about a robot is requested.  The only parameters to this 
-       function are the position on the screen where to blit the 
-       picture and the number of the robot in the Druidmap *NOT*
-       in AllEnemys!!
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-ShowRobotPicture (int PosX, int PosY, int droid_type, int frame_num)
-{
-  SDL_Rect target;
-  SDL_Rect src;
-
-  // sanity check
-  if (frame_num > droid_pics[droid_type].num_frames)
-    {
-      DebugPrintf (0, "ERROR: cannot display nonexisting frame %d for droid %s!\n", 
-		   frame_num, Druidmap[droid_type].druidname);
-      // continue and hope for the best...?
-      return;
-    }
-    
-  Copy_Rect (Droid_Pic_Rect, src);
-  src.x += frame_num * src.w;
-  
-  SDL_SetClipRect( ne_screen , NULL );
-  Set_Rect (target, PosX, PosY, 0, 0);
-  SDL_BlitSurface( droid_pics[droid_type].pics, &src, ne_screen , &target);
-
-  return;
-}; // void ShowRobotPicture ( ... )
-
 /*-----------------------------------------------------------------
 @Desc: This function updates the top status bar.
 To save framerate on slow machines however it will only work

@@ -290,7 +290,7 @@ EXTERN void EnterKonsole (void);
 EXTERN int LevelEmpty (void);
 void GreatDruidShow (void);
 EXTERN void show_droid_info (int droidtype, int page, int flags);
-EXTERN void show_droid_animated (SDL_Rect dst, int droid_type, float cycle_time, int flags);
+EXTERN void show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags);
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int pos,int flag);
 

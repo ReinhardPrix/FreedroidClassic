@@ -45,6 +45,7 @@
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block);
+SDL_RWops *load_raw_pic (char *fpath);
 
 /* XPM */
 static const char *crosshair_xpm[] = {
@@ -574,7 +575,6 @@ InitPictures (void)
   SDL_Rect StdBlock, DigitBlock;
   SDL_Surface *tmp_surf;
   char fname[500];
-  Uint32 start_time;
 
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which
@@ -698,32 +698,17 @@ InitPictures (void)
 	{
 	  // first check if we find a file with rotation-frames: first try .png
 	  strcpy( fname, Druidmap[i].druidname );
-	  strcat( fname , "_rot.png" );
+	  strcat( fname , ".jpg" );
 	  fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
 	  // then try with .jpg
 	  if (!fpath)
 	    {
 	      strcpy( fname, Druidmap[i].druidname );
-	      strcat( fname , "_rot.jpg" );
+	      strcat( fname , ".png" );
 	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
 	    }
-	  // if no rotations found, fall back to simple front-view, only .png
-	  if (!fpath)
-	    {
-	      strcpy( fname, Druidmap[i].druidname );
-	      strcat( fname , ".png" );
-	      DebugPrintf (2, "No rotation-frames file found for droid %s. Fallback to single pic\n",fname);
-	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
-	    }
-	  else
-	    DebugPrintf (0, "Found rotation-frames file for droid %s!\n", fname);
 
-	  start_time = SDL_GetTicks();
-	  droid_pics[i].pics = Load_Block (fpath, 0, 0, NULL);
-	  DebugPrintf (0, "Loading of %s rotation-pics took %dl ms\n", fname, (SDL_GetTicks()-start_time) );
-	  DebugPrintf (0, "Estimated Memory consumption: %.2f kB\n", 
-		       1.0*(droid_pics[i].pics->pitch*droid_pics[i].pics->h)/1024.0);
-	  droid_pics[i].num_frames = droid_pics[i].pics->w / Droid_Pic_Rect.w;
+	  packed_portraits[i] = load_raw_pic (fpath);
 	}
     }
   
@@ -736,6 +721,46 @@ InitPictures (void)
   return (TRUE);
 }				// InitPictures
 
+// load a pic into memory and return the SDL_RWops pointer to it
+SDL_RWops *load_raw_pic (char *fpath)
+{
+    struct stat statbuf;
+    FILE *fp;
+    off_t size;
+    void *mem;
+
+    // sanity check
+    if (!fpath)
+      {
+	DebugPrintf (0, "ERROR: load_raw_pic() called with NULL argument!\n");
+	Terminate (ERR);
+      }
+    if (stat(fpath, &statbuf) == -1) 
+      {
+	DebugPrintf (0, "ERROR: Couldn't stat file %s. Giving up\n", fpath);
+	Terminate (ERR);
+      }
+
+    fp = fopen (fpath, "rb");
+    if (!fp)
+      {
+	DebugPrintf (0, "ERROR: could not open file %s. Giving up\n", fpath);
+	Terminate (ERR);
+      }
+
+    size = statbuf.st_size;
+    mem = MyMalloc (size);
+    if (fread (mem, 1, size, fp) != size)
+      {
+	DebugPrintf (0, "ERROR reading file %s. Giving up...\n", fpath);
+	Terminate (ERR);
+      }
+    fclose (fp);
+    
+
+    return (SDL_RWFromMem(mem, size) );
+
+}
 
 
 /*------------------------------------------------------------

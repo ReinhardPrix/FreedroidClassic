@@ -124,6 +124,7 @@ UpdateHighscores (void)
   struct tm *timeinfo;
   time_t tsec;
   float score;
+  SDL_Rect dst;
 
   score = RealScore;
 
@@ -160,11 +161,14 @@ UpdateHighscores (void)
 
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
-  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999, 0);
+  Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
+  show_droid_portrait (dst, DRUID999, 0.0, RESET|UPDATE);
+
   DisplayText ("Great Score !",  UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Enter your name: ",  UserCenter_x -160, UserCenter_y + 100, &User_Rect);
   SDL_Flip (ne_screen);
 
+  SDL_SetClipRect (ne_screen, NULL);
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);

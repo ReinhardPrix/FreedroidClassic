@@ -561,14 +561,14 @@ GreatDruidShow (void)
   page = 0;
 
   show_droid_info (droidtype, page, 0);
-  show_droid_animated (Cons_Droid_Rect, droidtype, 1.0, UPDATE);
+  show_droid_portrait (Cons_Droid_Rect, droidtype, 1.0, UPDATE);
 
   SpacePressedR();
   MouseLeftPressedR();
 
   while (!finished)
     {
-      show_droid_animated (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
+      show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
       usleep(50);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
@@ -576,7 +576,7 @@ GreatDruidShow (void)
       if (key)
 	{
 	  show_droid_info (droidtype, page, UPDATE_ONLY);
-	  show_droid_animated (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, UPDATE);
+	  show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, UPDATE);
 	  key = FALSE;
 	}
 
@@ -672,8 +672,6 @@ show_droid_info (int droidtype, int page, int flags)
 
   sprintf (DroidName, "  Unit type %s - %s", Druidmap[droidtype].druidname, 
 	   Classname[Druidmap[droidtype].class]);
-
-  //  ShowRobotPicture (Cons_Droid_Rect.x, Cons_Droid_Rect.y, droidtype, 0);
 
   switch (page)
     {
@@ -780,45 +778,70 @@ Sensors  1: %s\n\
 // an animation. The target-rect dst is only updated when a new frame is set
 // if flags & RESET: to restart a fresh animation at frame 0 
 // if flags & UPDATE: force a blit of droid-pic
-// cycle_time is the time in seconds for a full animation-cycle
+//
+// cycle_time is the time in seconds for a full animation-cycle,
+// if cycle_time == 0 : display static pic, using only first frame
+// 
 //----------------------------------------------------------------------
 void
-show_droid_animated (SDL_Rect dst, int droid_type, float cycle_time, int flags)
+show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 {
   static SDL_Surface *background = NULL;  
+  static SDL_Surface *droid_pics = NULL;
   static int frame_num = 0;
+  static int last_droid_type = -1;
   static Uint32 last_frame_time = 0;
-  static SDL_Rect frame_rect;
+  static SDL_Rect src_rect;
   SDL_Surface *tmp;
   Uint32 frame_duration;
   bool need_new_frame = FALSE;
   int num_frames;
 
-  num_frames = droid_pics[droid_type].num_frames;
-  // sanity check
-  if ( num_frames == 0)
-    {
-      DebugPrintf (0, "ERROR: droid %s has zero frames in rotation!!\n",
-		   Druidmap[droid_type].druidname);
-      // continue and hope for the best
-      return;
-    }
+  SDL_SetClipRect (ne_screen, &dst);
 
-  if (!background || (flags&RESET))
+  if (!background) // first call
     {
       tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, screen_bpp, 0, 0, 0, 0);
       background = SDL_DisplayFormat (tmp);
       SDL_FreeSurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, background, NULL);
-      Copy_Rect (Droid_Pic_Rect, frame_rect);
+      Copy_Rect (Portrait_Rect, src_rect);
     }
 
+  if (flags & RESET)
+    SDL_BlitSurface (ne_screen, &dst, background, NULL);
 
-  SDL_SetClipRect (ne_screen, &dst);
+  if ( (droid_type != last_droid_type) || (droid_pics == NULL))
+    { // we need to unpack the droid-pics into our local storage
+      if (droid_pics) SDL_FreeSurface (droid_pics);
+      droid_pics = NULL;
+      tmp = IMG_Load_RW (packed_portraits[droid_type], 0);
+      // important: return seek-position to beginning of RWops for next operation to succeed!
+      SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
+      if (!tmp)
+	{
+	  DebugPrintf (0, "ERROR: failed to unpack droid-portraits of droid-type %d\n", droid_type);
+	  return; // ok, so no pic but we continue ;)
+	}
+      droid_pics = SDL_DisplayFormatAlpha (tmp);
+      SDL_FreeSurface (tmp);
+
+      last_droid_type = droid_type;
+    }
+
+  num_frames = droid_pics->w / Portrait_Rect.w;
+  // sanity check
+  if ( num_frames == 0)
+    {
+      DebugPrintf (0, "WARNING: width of droid-pic %s is less than the standard %d\n",
+		   Druidmap[droid_type].druidname, Portrait_Rect.w);
+      num_frames = 1;       // continue and hope for the best
+    }
 
   frame_duration = SDL_GetTicks() - last_frame_time;
-  if(frame_duration >= 1000.0*cycle_time/droid_pics[droid_type].num_frames ) 
-    {
+
+  if (frame_duration >= 1000.0*cycle_time/num_frames)
+    { 
       need_new_frame = TRUE;
       last_frame_time += frame_duration;
       frame_num ++;
@@ -827,18 +850,19 @@ show_droid_animated (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   if (frame_num >= num_frames)
     frame_num = 0;
 
+  if (cycle_time == 0.0)
+    frame_num = 0;
 
   if ( (flags & (RESET|UPDATE)) || need_new_frame)
     {
-      frame_rect.x = frame_num*Droid_Pic_Rect.w;
+      src_rect.x = frame_num*src_rect.w;
       
       SDL_BlitSurface (background, NULL, ne_screen, &dst);
-      SDL_BlitSurface (droid_pics[droid_type].pics, &frame_rect, ne_screen, &dst);
+      SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
       SDL_UpdateRects (ne_screen, 1, &dst);
     }
 
-  SDL_SetClipRect (ne_screen, NULL);
      
   return;
 

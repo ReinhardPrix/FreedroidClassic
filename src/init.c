@@ -1063,6 +1063,7 @@ void
 ThouArtDefeated (void)
 {
   Uint32 now, delay;
+  SDL_Rect dst;
 
   Me.status = TERMINATED;
   SDL_ShowCursor (SDL_DISABLE);
@@ -1094,7 +1095,8 @@ ThouArtDefeated (void)
   Assemble_Combat_Picture (DO_SCREEN_UPDATE);
   MakeGridOnScreen (&User_Rect);
 
-  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999, 0);
+  Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
+  show_droid_portrait (dst, DRUID999, 0.0, RESET|UPDATE);
   ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);

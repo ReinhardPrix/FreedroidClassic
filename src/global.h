@@ -42,7 +42,7 @@ EXTERN const SDL_Rect Full_User_Rect;
 
 EXTERN const SDL_Rect Full_Screen_Rect;
 EXTERN const SDL_Rect Menu_Rect;
-EXTERN const SDL_Rect Droid_Pic_Rect;
+EXTERN const SDL_Rect Portrait_Rect;
 EXTERN const SDL_Rect Cons_Droid_Rect;
 
 EXTERN float LastRefreshSound;
@@ -172,9 +172,10 @@ EXTERN int Third_Digit_Pos_X;
 EXTERN int Third_Digit_Pos_Y;
 EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN int screen_bpp; 			/* bits per pixel */
+EXTERN Uint32 TransparentRGB;           // RGB value of our transparent color
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
-EXTERN droid_anim_t droid_pics[NUM_DROIDS];
+EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];
 
 EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *console_bg_pic1;

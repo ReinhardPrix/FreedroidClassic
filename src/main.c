@@ -80,10 +80,10 @@ main (int argc, char *const argv[])
       if (FirePressedR()) ;
       
       show_droid_info (Me.type, -3, 0);  // show unit-intro page
-      show_droid_animated (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, RESET);
+      show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, RESET);
       now=SDL_GetTicks();
       while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR())) 
-	show_droid_animated (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
+	show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
 
       ClearGraphMem();
       DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE |BANNER_NO_SDL_UPDATE);

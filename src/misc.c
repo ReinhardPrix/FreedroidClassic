@@ -1016,7 +1016,7 @@ MyMalloc (long Mamount)
 
   if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
     {
-      printf (" MyMalloc(%ld) did not succeed!\n", Mamount);
+      DebugPrintf (0, " MyMalloc(%ld) did not succeed!\n", Mamount);
       Terminate(ERR);
     }
 
