@@ -97,7 +97,7 @@ AutoFireBullet (void)
     return;
   Me.firewait = Bulletmap[Druidmap[Me.type].gun].WaitNextTime;
 
-  // Nummer der Schu"szieles herausfinden
+  // find out the number of the shots target
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       if (AllEnemys[i].Status == OUT)
@@ -137,7 +137,7 @@ AutoFireBullet (void)
   xdist = AllEnemys[TargetNum].pos.x - Me.pos.x;
   ydist = AllEnemys[TargetNum].pos.y - Me.pos.y;
 
-  // Sicherheit gegen Divisionen durch Null !!!!
+  // some protection against division by zero
   if (xdist == 0)
     xdist = 2;
   if (ydist == 0)
@@ -151,14 +151,14 @@ AutoFireBullet (void)
   if (ydist == -1)
     ydist = 2;
 
-  /* Einen bulleteintragg suchen, der noch nicht belegt ist */
+  // find a bullet entry, that isn't used yet...
   for (j = 0; j < MAXBULLETS - 1; j++)
     {
       if (AllBullets[j].type == OUT)
 	break;
     }
 
-  /* Schussrichtung festlegen */
+  // determine the direction of the shot
   if (abs (xdist) > abs (ydist))
     {
       AllBullets[j].speed.x = Bulletmap[guntype].speed;
@@ -181,7 +181,7 @@ AutoFireBullet (void)
 	}
     }
 
-  /* Schussphase festlegen ( ->phase=Schussbild ) */
+  // determine the phase (i.e. the picture) of the shot
   AllBullets[j].phase = NOSTRAIGHTDIR;
   if ((abs (xdist) * 2 / 3) / abs (ydist))
     AllBullets[j].phase = RECHTS;
@@ -200,19 +200,19 @@ AutoFireBullet (void)
   if (AllBullets[j].speed.y == 0)
     AllBullets[j].phase = RECHTS;
 
-  /* Bullets im Zentrum des Schuetzen starten */
+  // start the bullet in the center of the droid fireing
   AllBullets[j].pos.x = Me.pos.x;
   AllBullets[j].pos.y = Me.pos.y;
 
-  /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
+  // fire bullet so, that the shooter doesn't hit himself
   AllBullets[j].pos.x += AllBullets[j].speed.x;
   AllBullets[j].pos.y += AllBullets[j].speed.y;
   AllBullets[j].pos.x += Me.speed.x;
   AllBullets[j].pos.y += Me.speed.y;
 
-  /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+  // set the type of bullet according to the gun used by the shooter
   AllBullets[j].type = guntype;
-}				// void AutoFireBullet(void)
+} // void AutoFireBullet(void)
 
 
 /*@Function============================================================
@@ -360,10 +360,6 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence (void)
 {
-  static unsigned char Palwert = 0;
-  static int blinkwaiter = 0;
-  static int Crywait = 1;
-  static int Overtaketunewait = 2;
 
   /*
    * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
