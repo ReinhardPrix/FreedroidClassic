@@ -297,7 +297,8 @@ GreatDruidShow (void)
 	
 	// PutPasswordButtonsAndPassword ( PasswordIndex );
 	// PutSecurityButtonsAndClearance ( ClearanceIndex );
-	
+
+	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
 	
 	if (SpacePressed() || EscapePressed() || axis_is_active )

@@ -193,6 +193,7 @@ Takeover ( int enemynum )
     while ( !Finished )
     {
 	ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
+	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
