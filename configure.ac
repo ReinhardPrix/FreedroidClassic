@@ -9,13 +9,14 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 
-AM_INIT_AUTOMAKE(freedroid, 0.8.2)
+AM_INIT_AUTOMAKE(freedroid, 0.8.3)
 
 AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
 #AC_PROG_AWK
 AC_PROG_CC
+AC_PROG_MAKE_SET
 
 # we don't want optimisation for the moment, as that makes 
 # debugging a bit more confusing
@@ -91,8 +92,9 @@ you need the SDL_mixer library if you want sound!
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
 
 
-AC_CONFIG_FILES([Makefile src/Makefile map/Makefile 
-		graphics/Makefile sound/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile 
+		graphics/Makefile graphics/default_theme/Makefile
+		graphics/lanzz_theme/Makefile])
 
 AC_OUTPUT
 
