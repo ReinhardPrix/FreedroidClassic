@@ -93,6 +93,11 @@
 #define Y_POSITION_OF_LABEL_STRING "label.pos.y="
 #define LABEL_ITSELF_ANNOUNCE_STRING "label.label_name=\""
 
+#define OBSTACLE_LABEL_BEGIN_STRING "Start of pure obstacle label information for this level"
+#define OBSTACLE_LABEL_END_STRING "End of pure obstacle label information for this level"
+#define OBSTACLE_LABEL_ANNOUNCE_STRING "obstacle_label_name=\""
+#define INDEX_OF_OBSTACLE_NAME "obstacle_label.index="
+
 #define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
 #define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
 #define CODEPANEL_CODE_ANNOUNCE_STRING "Secret Code=\""
@@ -112,7 +117,7 @@
 #define OBSTACLE_TYPE_STRING "ob_type="
 #define OBSTACLE_X_POSITION_STRING "ob_x="
 #define OBSTACLE_Y_POSITION_STRING "ob_y="
-
+#define OBSTACLE_LABEL_INDEX_STRING "ob_na="
 
 void
 TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
@@ -441,6 +446,8 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 			   & ( loadlevel -> obstacle_list [ i ] . pos . x ) , obstacle_SectionEnd );
       ReadValueFromString( obstacle_Pointer , OBSTACLE_Y_POSITION_STRING , "%f" , 
 			   & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
+      ReadValueFromString( obstacle_Pointer , OBSTACLE_LABEL_INDEX_STRING , "%d" , 
+			   & ( loadlevel -> obstacle_list [ i ] . name_index ) , obstacle_SectionEnd );
 
       // DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
       // loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
@@ -524,6 +531,12 @@ void
 decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
 {
   int i;
+  char PreservedLetter;
+  char* obstacle_namePointer;
+  char* obstacle_nameSectionBegin;
+  char* obstacle_nameSectionEnd;
+  int NumberOfobstacle_namesInThisLevel;
+  int target_index;
 
   //--------------------
   // At first we set all the obstacle name pointers to NULL in order to
@@ -533,6 +546,43 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
     {
       loadlevel -> obstacle_name_list [ i ] = NULL ;
     }
+
+  //--------------------
+  // Now we look for the beginning and end of the map labels section
+  //
+  obstacle_nameSectionBegin = LocateStringInData( DataPointer , OBSTACLE_LABEL_BEGIN_STRING );
+  obstacle_nameSectionEnd = LocateStringInData( DataPointer , OBSTACLE_LABEL_END_STRING );
+
+  //--------------------
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  //
+  PreservedLetter=obstacle_nameSectionEnd[0];
+  obstacle_nameSectionEnd[0]=0;
+  NumberOfobstacle_namesInThisLevel = CountStringOccurences ( obstacle_nameSectionBegin , OBSTACLE_LABEL_ANNOUNCE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of obstacle labels found in this level : %d." , NumberOfobstacle_namesInThisLevel );
+
+  //--------------------
+  // Now we decode all the map label information
+  //
+  obstacle_namePointer=obstacle_nameSectionBegin;
+  for ( i = 0 ; i < NumberOfobstacle_namesInThisLevel ; i ++ )
+    {
+      obstacle_namePointer = strstr ( obstacle_namePointer + 1 , INDEX_OF_OBSTACLE_NAME );
+      ReadValueFromString( obstacle_namePointer , INDEX_OF_OBSTACLE_NAME , "%d" , 
+			   &(target_index) , obstacle_nameSectionEnd );
+
+      loadlevel -> obstacle_name_list [ target_index ] = 
+	ReadAndMallocStringFromData ( obstacle_namePointer , OBSTACLE_LABEL_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 1 , "\nobstacle_name_index=%d obstacle_label_name=\"%s\"" , target_index ,
+		   loadlevel -> obstacle_name_list [ target_index ] );
+    }
+
+  //--------------------
+  // Now we repair the damage done to the loaded level data
+  //
+  obstacle_nameSectionEnd [ 0 ] = PreservedLetter;
+  
 
 }; // void decode_obstacle_names_of_this_level ( loadlevel , DataPointer )
 
@@ -1943,6 +1993,10 @@ encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
       sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
       strcat( LevelMem , linebuf );
 
+      strcat( LevelMem , OBSTACLE_LABEL_INDEX_STRING );
+      sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . name_index );
+      strcat( LevelMem , linebuf );
+
       strcat( LevelMem , "\n" );
     }
   
@@ -1997,7 +2051,46 @@ EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
   strcat(LevelMem, "\n");
   
 }; // void EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
-		
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, OBSTACLE_LABEL_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+    {
+      if ( Lev -> obstacle_name_list [ i ] == NULL ) continue;
+
+      strcat( LevelMem , INDEX_OF_OBSTACLE_NAME );
+      sprintf( linebuf , "%d " , i );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , OBSTACLE_LABEL_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev -> obstacle_name_list [ i ] );
+      strcat( LevelMem , "\"\n" );
+    }
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, OBSTACLE_LABEL_END_STRING);
+  strcat(LevelMem, "\n\n");
+  
+}; // void encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
+
 /* ----------------------------------------------------------------------
  * This function adds the statement data of this level to the chunk of 
  * data that will be written out to a file later.
@@ -2037,7 +2130,7 @@ EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
   // vital for reading in the file again, but it adds clearness to the files structure.
   //
   strcat(LevelMem, STATEMENT_END_STRING);
-  strcat(LevelMem, "\n");
+  strcat(LevelMem, "\n\n");
   
 }; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 
@@ -2078,7 +2171,7 @@ EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
     }
 
   strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
+  strcat(LevelMem, "\n\n");
   
 }; // void EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
 
@@ -2354,6 +2447,8 @@ jump target west: %d\n",
   encode_obstacles_of_this_level ( LevelMem , Lev );
 
   EncodeMapLabelsOfThisLevel ( LevelMem , Lev );
+
+  encode_obstacle_names_of_this_level ( LevelMem , Lev );
 
   EncodeStatementsOfThisLevel ( LevelMem , Lev );
 
