@@ -1826,6 +1826,8 @@ AnimateInfluence ( int player_num )
 #define TOTAL_SWING_TIME 0.55
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
+#define STEP_TIME (0.28)
+  static float step_countdown = 0;
 
   //--------------------
   // First we handle the case of just getting hit...
@@ -1845,7 +1847,7 @@ AnimateInfluence ( int player_num )
   //
   else if ( Me [ player_num ] . weapon_swing_time == (-1) )
     {
-      Me [ player_num ] .phase = ( (int) ( Me [ player_num ] .MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
+      Me [ player_num ] . phase = ( (int) ( Me [ player_num ] . MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
 
       if ( fabsf ( Me [ player_num ] . speed . x ) + fabsf ( Me [ player_num ] . speed . y ) < 0.3 )
 	Me [ player_num ] . walk_cycle_phase = 17 ;
@@ -1856,7 +1858,16 @@ AnimateInfluence ( int player_num )
 	  if ( my_speed <= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
 	    Me [ player_num ] . walk_cycle_phase += Frame_Time() * 10.0 * my_speed ;
 	  else
-	    Me [ player_num ] . walk_cycle_phase += Frame_Time() * 3.0 * my_speed ;
+	    {
+	      Me [ player_num ] . walk_cycle_phase += Frame_Time() * 3.0 * my_speed ;
+
+	      step_countdown += Frame_Time() ;
+	      if ( step_countdown > STEP_TIME )
+		{
+		  play_sample_using_WAV_cache( "../effects/tux_footstep.wav" , FALSE , FALSE );
+		  step_countdown -= STEP_TIME ;
+		}
+	    }
 
 	  if ( Me [ player_num ] . walk_cycle_phase > 25.0 ) Me [ player_num ] . walk_cycle_phase = 15.0 ;
 	}

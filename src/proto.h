@@ -324,6 +324,7 @@ EXTERN void Play_Spell_DetectItems_Sound( void );
 EXTERN void play_melee_weapon_hit_something_sound ( void );
 EXTERN void play_melee_weapon_missed_sound ( void );
 EXTERN void play_open_chest_sound ( void );
+EXTERN void play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) ;
 
 // items.c
 #undef EXTERN
