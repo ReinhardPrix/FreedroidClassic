@@ -534,7 +534,7 @@ ShowCurrentHealthAndForceLevel( void )
       //--------------------
       // We generate a new fresh empty speed-o-meter in the working copy
       SDL_FreeSurface ( SpeedOMeterWorkingCopy );
-      SpeedOMeterWorkingCopy = SDL_DisplayFormat ( SpeedMeterImage );
+      SpeedOMeterWorkingCopy = SDL_DisplayFormatAlpha ( SpeedMeterImage );
       SDL_SetColorKey ( SpeedOMeterWorkingCopy , SDL_SRCCOLORKEY, 
 			SDL_MapRGB ( SpeedOMeterWorkingCopy -> format , 255, 0, 255 ) ); 
       
