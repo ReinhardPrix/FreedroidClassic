@@ -113,29 +113,18 @@ unsigned char *FireSoundSamplePointer;
 
 
 #if HAVE_LIBY2
+
 // The following Lines define several channels for sound output to the yiff sound server!!!
 // Background Music Cannel 
 YConnection *BackgroundMusic_con;
 YEventSoundObjectAttributes BackgroundMusic_sndobj_attrib;
 YID BackgroundMusic_play_id;
-YEvent BackgroundMusic_event;
-// Cannel 1
-YConnection *con;
-YEventSoundObjectAttributes sndobj_attrib;
 YID play_id;
 YEvent event;
-// Cannel 2
-YConnection *con2;
-YEventSoundObjectAttributes sndobj_attrib2;
-YID play_id2;
-YEvent event2;
-// Now some YIDs one for each Sound Played
-YID BlastSoundSampleYID;
-YID FireSoundSampleYID;
-YID CollisionSoundSampleYID;
-YID BackgroundMusicSampleYID;
-#endif /* HAVE_LIBY2 */
 // The above Lines define several channels for sound output to the yiff sound server!!!
+
+#endif /* HAVE_LIBY2 */
+
 
 void ExitProc() {
   if (handle != -1) {
@@ -148,19 +137,13 @@ unsigned char* ptr;
 unsigned char v = 128;
 int SampleLaenge;
 
-// void MakeSound(tune* ThisTune);
-long FragmentRoundUp(long FormerLength);
 
-long FragmentRoundUp(long FormerLength){
-  long NewLength;
+/*@Function============================================================
+@Desc: 
 
-  NewLength=FormerLength/(8*1024);
-  NewLength=(NewLength+1)*(8*1024);
-  return NewLength;
-} // long FragmentRoundUp
-
-
-
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
 void YIFF_Server_Check_Events(void){
 
   // This function can and should only be compiled on machines, that have the YIFF sound
@@ -170,7 +153,7 @@ void YIFF_Server_Check_Events(void){
   if(YGetNextEvent( BackgroundMusic_con , &event , False ) > 0)
     {
       // Sound object stopped playing? 
-      if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
+      if( (event.type == YSoundObjectKill) )
 	{
 	  // Our play has stopped. 
 	  DebugPrintf("Done playing.\n");
@@ -179,10 +162,7 @@ void YIFF_Server_Check_Events(void){
       else if(event.type == YDisconnect)
 	{
 	  // Got disconnected.
-	  printf(
-		 "Y server disconnected us, reason %i.\n",
-		 event.disconnect.reason
-		 );
+	  printf( "Y server disconnected us, reason %i.\n" , event.disconnect.reason );
 	  Terminate(ERR);
 	}
       // Server shutdown? 
@@ -194,6 +174,7 @@ void YIFF_Server_Check_Events(void){
 	}
       else
 	{
+	  
 	  // Some other Y event, ignore. 
 	}
     }
@@ -201,6 +182,18 @@ void YIFF_Server_Check_Events(void){
 #endif /* HAVE_LIBY2 */
 } // void YIFF_Server_Check_Events(void)
 
+
+/*@Function============================================================
+  @Desc: When accessing the yiff sound server, we need to supply absolute path
+  names or relativ ones from some freely configurable directorys in yiffconfig.
+  Of course we will take the secure path and supply absolute pathnames, for we
+  do NOT know how the yiff is configured on each system.
+  Therefore it is nescessary to expand relative pathnames into absolute ones.
+  This function is supposed to do this. 
+
+  @Ret: 
+  @Int:
+  * $Function----------------------------------------------------------*/
 char *ExpandFilename(char *LocalFilename){
   char *tmp;
 
@@ -215,6 +208,12 @@ char *ExpandFilename(char *LocalFilename){
 } // char *ExpandFilename(char *LocalFilename){
 
 
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
 void YIFF_Server_Close_Connections(void){
 
   // This function can and should only be compiled on machines, that have the YIFF sound
