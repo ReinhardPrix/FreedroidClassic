@@ -550,7 +550,6 @@ Title (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  //  LadeLBMBild(TITELBILD1_PCX,RealScreen,FALSE);  /* Titelbild laden */
   Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
 
   PrepareScaledSurface(TRUE);

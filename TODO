@@ -6,7 +6,9 @@ Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 
 - (rp) SegFault caused by entering Highscore list?! also after/in takeover ?! 
-==> tritt das wirklich immer noch auf??
+==> tritt das wirklich immer noch auf?? -- (jp:) Ich habs seit der letzten Umstellung
+    des einen Cast operators (der die Ints scheinbar fix als maximal 4 bytes voraussetzt,
+    was knapp ist) nicht mehr beobachtet.
 
 
 Outstanding normal bugs (priority: normal)
