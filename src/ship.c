@@ -892,7 +892,7 @@ void
 AlertLevelWarning (void)
 {
   static Uint32 last_siren = 0;
-  static Uint32 last_blink = 0;
+  //  static Uint32 last_blink = 0;
   int i, posx, posy;
   int cur_alert = 0;
   

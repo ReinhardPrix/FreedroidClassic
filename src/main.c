@@ -54,7 +54,7 @@ void UpdateCountersForThisFrame (void);
  *
  *-----------------------------------------------------------------*/
 int
-main (int argc, char *const argv[])
+main (int argc, char * argv[])
 {
   int i;
   Uint32 now;

@@ -551,7 +551,8 @@ LevelToStruct (char *data)
   int connection;
   char* DataPointer;
   int res;
-
+  int tmp;
+  
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
 
@@ -608,7 +609,8 @@ LevelToStruct (char *data)
 	{
 	  if (pos == NULL)
 	    return (NULL);
-	  res = sscanf (pos, "%d", (int*)(loadlevel->map[i]+k));
+	  res = sscanf (pos, "%d", &tmp);
+          *(loadlevel->map[i]+k) = (char)tmp;
 	  if ( (res == 0) || (res == EOF) )
 	    return (NULL);
 	  pos = strtok (NULL, " \t");
@@ -963,6 +965,8 @@ GetLiftConnections (char *filename)
   char* EndOfLiftConnectionData;
   Lift CurLift;
 
+  int x,y,w,h;
+
 #define END_OF_LIFT_DATA_STRING "*** End of elevator specification file ***"
 #define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
 #define START_OF_LIFT_RECTANGLE_DATA_STRING "*** Beginning of elevator rectangles ***"
@@ -997,10 +1001,16 @@ GetLiftConnections (char *filename)
       ReadValueFromString (EntryPointer, "Elevator Number=", "%d", &ElevatorIndex);
       EntryPointer ++;
 
-      ReadValueFromString (EntryPointer, "ElRowX=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].x);
-      ReadValueFromString (EntryPointer, "ElRowY=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].y);
-      ReadValueFromString (EntryPointer, "ElRowW=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].w);
-      ReadValueFromString (EntryPointer, "ElRowH=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].h);
+      ReadValueFromString (EntryPointer, "ElRowX=", "%d", &x);
+      ReadValueFromString (EntryPointer, "ElRowY=", "%d", &y);
+      ReadValueFromString (EntryPointer, "ElRowW=", "%d", &w);
+      ReadValueFromString (EntryPointer, "ElRowH=", "%d", &h);
+      
+      curShip.LiftRow_Rect[ElevatorIndex].x = x;
+      curShip.LiftRow_Rect[ElevatorIndex].y = y;
+      curShip.LiftRow_Rect[ElevatorIndex].w = w;
+      curShip.LiftRow_Rect[ElevatorIndex].h = h;
+
     }
 
   //--------------------
@@ -1021,10 +1031,15 @@ GetLiftConnections (char *filename)
       
       curShip.num_level_rects[ DeckIndex ] ++; // count the number of rects for this deck one up
 
-      ReadValueFromString (EntryPointer, "DeckX=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].x);
-      ReadValueFromString (EntryPointer, "DeckY=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].y);
-      ReadValueFromString (EntryPointer, "DeckW=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].w);
-      ReadValueFromString (EntryPointer, "DeckH=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].h);
+      ReadValueFromString (EntryPointer, "DeckX=", "%d", &x);
+      ReadValueFromString (EntryPointer, "DeckY=", "%d", &y);
+      ReadValueFromString (EntryPointer, "DeckW=", "%d", &w);
+      ReadValueFromString (EntryPointer, "DeckH=", "%d", &h);
+
+      curShip.Level_Rects[DeckIndex][RectIndex].x = x;
+      curShip.Level_Rects[DeckIndex][RectIndex].y = y;
+      curShip.Level_Rects[DeckIndex][RectIndex].w = w;
+      curShip.Level_Rects[DeckIndex][RectIndex].h = h;
     }
 
   //--------------------

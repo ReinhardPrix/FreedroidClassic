@@ -129,7 +129,14 @@ enum _alertnames {
 // the root "DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
 #ifndef DATADIR
+
+// FIXME: why does MacOSX need this?? does ".." not work??
+#ifdef MACOSX
+#define DATADIR "/usr/local/share/freedroid"   // our local fallback
+#else
 #define DATADIR ".."   // our local fallback
+#endif
+
 #endif
 
 #define GRAPHICS_DIR		"graphics/"

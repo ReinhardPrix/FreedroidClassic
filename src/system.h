@@ -53,7 +53,10 @@
 
 #include <getopt.h>
 
+#ifndef MACOSX 
 #include <sys/soundcard.h>
+#endif
+
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <errno.h>

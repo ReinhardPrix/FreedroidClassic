@@ -364,8 +364,6 @@ enum
 		  Copy_Rect (Classic_User_Rect, User_Rect);
 		  new_tnum = 0;
 		  reload_theme = TRUE;
-		  InitiateMenu (TRUE);
-		  SDL_Flip (ne_screen);
 		  break;
 
 
@@ -471,9 +469,9 @@ enum
 	      AllThemes.cur_tnum = new_tnum;
 	      strcpy (GameConfig.Theme_Name, AllThemes.theme_name[AllThemes.cur_tnum]);
 	      InitPictures();
-	      InitiateMenu (TRUE);
 	    }
 	  reload_theme = FALSE;
+	  InitiateMenu (TRUE);
 	}
       if (toggle_window)
 	{
