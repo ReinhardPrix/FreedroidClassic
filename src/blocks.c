@@ -69,8 +69,8 @@ void
 make_sure_automap_surface_is_there ( obstacle_spec* our_obstacle_spec )
 {
     our_obstacle_spec -> automap_version = 
-	zoomSurface ( our_obstacle_spec -> image . surface , ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) ,
-		      ( 1.0 / AUTOMAP_ZOOM_OUT_FACT ) , FALSE );
+	zoomSurface ( our_obstacle_spec -> image . surface , ( 1.0 * AUTOMAP_SANITY_FACTOR / AUTOMAP_ZOOM_OUT_FACT ) ,
+		      ( 1.0 * AUTOMAP_SANITY_FACTOR / AUTOMAP_ZOOM_OUT_FACT ) , FALSE );
     if ( ! our_obstacle_spec -> automap_version )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\

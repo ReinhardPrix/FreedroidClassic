@@ -164,14 +164,13 @@ clear_automap_texture_completely ( void )
 	pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
     }
 
-    glEnable ( GL_TEXTURE_2D );
+    // glEnable ( GL_TEXTURE_2D );
     glBindTexture ( GL_TEXTURE_2D , *automap_texture );
     glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
 		      0 , 
 		      0 , 
 		      AUTOMAP_TEXTURE_WIDTH ,
 		      AUTOMAP_TEXTURE_HEIGHT , 
-		      // GL_RGBA, 
 		      GL_BGRA, 
 		      GL_UNSIGNED_BYTE, 
 		      pure_surface -> pixels );
@@ -402,8 +401,8 @@ automap_update_texture_for_square ( int x , int y )
 	    glEnable ( GL_TEXTURE_2D );
 	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
 	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
-			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
-			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
+			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
+			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> h ,
 			      GL_BGRA, 
@@ -563,7 +562,7 @@ local_update_of_automap_texture ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-show_automap_data_ogl ( void )
+show_automap_data_ogl ( float scale_factor )
 {
     iso_image local_iso_image;
     static iso_image tux_on_the_map_iso_image = UNLOADED_ISO_IMAGE ;
@@ -600,19 +599,22 @@ show_automap_data_ogl ( void )
     local_iso_image . texture_height = AUTOMAP_TEXTURE_HEIGHT ;
     local_iso_image . original_image_width = AUTOMAP_TEXTURE_WIDTH ;
     local_iso_image . original_image_height = AUTOMAP_TEXTURE_HEIGHT ;
+
     blit_semitransparent_open_gl_texture_to_screen_position ( 
 	local_iso_image , 
-	- ( AUTOMAP_TEXTURE_WIDTH / 2 ) 
+	- ( AUTOMAP_TEXTURE_WIDTH * scale_factor / 2 ) 
 	+ GameConfig . screen_width / 2 
 	- GameConfig . automap_manual_shift_x 
 	- ( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * 
-	  ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
+	  ( iso_floor_tile_width * scale_factor * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
 
 	// + ( AUTOMAP_TEXTURE_HEIGHT / 2 ) 
 	+ GameConfig . screen_height / 2 
 	- GameConfig . automap_manual_shift_y 
 	- ( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * 
-          ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) );
+          ( iso_floor_tile_height * scale_factor * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
+	scale_factor );
+
 
     //--------------------
     // Now that the map has been blitted, it's time to add some icon for the
@@ -633,14 +635,16 @@ show_automap_data_ogl ( void )
     //
     blit_semitransparent_open_gl_texture_to_screen_position ( 
 	tux_on_the_map_iso_image , 
-	+ ( tux_on_the_map_iso_image . original_image_width / 2 ) 
+	- ( tux_on_the_map_iso_image . original_image_width / 2 ) 
 	+ ( GameConfig . screen_width / 2 ) 
 	- GameConfig . automap_manual_shift_x ,
 
 	- ( tux_on_the_map_iso_image . original_image_height / 2 )
 	+ ( GameConfig . screen_height / 2 ) 
-	+ 50 
-	- GameConfig . automap_manual_shift_y );
+	+ 50 * scale_factor 
+	- GameConfig . automap_manual_shift_y , 1.0 );
+
+
 
 }; // void show_automap_data_ogl ( void )
 

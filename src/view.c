@@ -2044,7 +2044,7 @@ AssembleCombatPicture (int mask)
     if ( ! use_open_gl )
 	show_automap_data_sdl ( ) ;
     else
-	show_automap_data_ogl ( ) ;
+	show_automap_data_ogl ( 1/AUTOMAP_SANITY_FACTOR ) ;
     
     ShowCombatScreenTexts ( mask );
     

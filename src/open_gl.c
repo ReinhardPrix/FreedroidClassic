@@ -1373,7 +1373,7 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl
  *
  * ---------------------------------------------------------------------- */
 void
-blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) 
+blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , float scale_factor ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1411,9 +1411,9 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; 
+    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * scale_factor ; 
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ;
+    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * scale_factor ;
     
     if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;

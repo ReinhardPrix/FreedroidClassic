@@ -202,8 +202,6 @@ EXTERN SDL_Rect InventoryRect;
 EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 2000 ] ;
 #ifdef HAVE_LIBGL
 EXTERN GLuint *automap_texture;  // this is to store an open_gl texture...
-#define AUTOMAP_TEXTURE_WIDTH 2048
-#define AUTOMAP_TEXTURE_HEIGHT 1024
 #endif
 
 #undef EXTERN
