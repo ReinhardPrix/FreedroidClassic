@@ -1470,6 +1470,7 @@ ApplyItem( item* CurItem )
     else if ( CurItem->type == ITEM_MAP_MAKER_SIMPLE )
     {
 	Me [ 0 ] . map_maker_is_present = TRUE ;
+	GameConfig . Automap_Visible = TRUE ;
 	Play_Spell_ForceToEnergy_Sound( );
     }
     else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
