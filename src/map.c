@@ -870,10 +870,19 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
       blast_start_pos . y = target_obstacle -> pos . y ;
 
       //--------------------
-      // Now we delete the obstacle in question.  For this we got a standard function to
+      // Now we really smash the obstacle, i.e. we can set it's type to the debirs that has
+      // been configured for this obstacle type.  In if there is nothing configured (i.e. -1 set)
+      // then we'll just delete the obstacle in question entirely.  For this we got a standard function to
       // safely do it and not make some errors into the glue structure or obstacles lists...
       //
-      delete_obstacle ( BoxLevel , target_obstacle );
+      if ( obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once == (-1) )
+      {
+	  delete_obstacle ( BoxLevel , target_obstacle );
+      }
+      else
+      {
+	  target_obstacle -> type = obstacle_map [ target_obstacle -> type ] . result_type_after_smashing_once ;
+      }
 
       //--------------------
       // Now that the obstacle is removed AND ONLY NOW that the obstacle is

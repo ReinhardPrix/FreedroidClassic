@@ -2149,6 +2149,7 @@ init_obstacle_data( void )
       obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
       obstacle_map [ i ] . block_area_parm_2 = 1.2 ; // standard_wall_thickness ;
       obstacle_map [ i ] . is_smashable = FALSE ;
+      obstacle_map [ i ] . result_type_after_smashing_once = (-1) ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
       obstacle_map [ i ] . transparent = FALSE ;
@@ -2798,14 +2799,28 @@ init_obstacle_data( void )
     obstacle_map [ i ] . transparent = TRUE ;
   }
 
+  //--------------------
+  // Brick walls are smashable.  When you smash them, there should be
+  // first a cracked brick wall, then when smashing again, there will
+  // be only some rubble left, and that should be *passable*.
+  //
+  // UPDATE: But maybe this wall shouldn't be smashable, since it isn't cracked...
+  //         If thas should be different, it can be changes easily below by setting
+  //         the smashable property to the desired value.
+  //
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_H ] . filename = "iso_brick_wall_0001.png" ;
+  obstacle_map [ ISO_BRICK_WALL_H ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_BRICK_WALL_H ] . result_type_after_smashing_once = ISO_BRICK_WALL_CRACKED_1 ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_V ] . filename = "iso_brick_wall_0002.png" ;
+  obstacle_map [ ISO_BRICK_WALL_V ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_BRICK_WALL_V ] . result_type_after_smashing_once = ISO_BRICK_WALL_CRACKED_2 ;
+
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_parm_2 = 1.2 ;
@@ -2849,14 +2864,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . filename = "iso_brick_wall_0011.png" ;
 
+  //--------------------
+  // Brick walls are smashable.  When you smash them, there should be
+  // first a cracked brick wall, then when smashing again, there will
+  // be only some rubble left, and that should be *passable*.
+  //
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . filename = "iso_brick_wall_0012.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . result_type_after_smashing_once = ISO_BRICK_WALL_RUBBLE_1 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . filename = "iso_brick_wall_0013.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . result_type_after_smashing_once = ISO_BRICK_WALL_RUBBLE_2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . is_smashable = TRUE ;
   
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_type = COLLISION_TYPE_NONE  ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_1 = 1.2 ;

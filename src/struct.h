@@ -305,6 +305,7 @@ typedef struct
     // and maybe they will even occasionally drop some treasure too...
     //
     int is_smashable;
+    int result_type_after_smashing_once;
     int drop_random_treasure;
 
     //--------------------
