@@ -41,13 +41,13 @@
 
 #define COL_SPEED		3	
 
-#define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
-                          // within a range of eight metres"
-
 void ProcessAttackStateMachine (int enemynum);
 
 /* ----------------------------------------------------------------------
- *
+ * In the very beginning of each game, it is not enough to just place the
+ * bots onto the right locations.  They must also be integrated into the
+ * waypoint system, i.e. current waypoint and next waypoint initialized.
+ * This is what this function is supposed to do.
  * ---------------------------------------------------------------------- */
 void
 TeleportToClosestWaypoint ( Enemy ThisRobot )

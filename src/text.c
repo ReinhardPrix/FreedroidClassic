@@ -1252,6 +1252,8 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	{
 	  MenuSelection = 1 ;
 	  ChatDroid -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	  ChatDroid -> persuing_given_course = FALSE ;
+	  ChatDroid -> has_greeted_influencer = TRUE ;
 	}
       else
 	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
