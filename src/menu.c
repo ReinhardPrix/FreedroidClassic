@@ -43,7 +43,7 @@ void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
-void Show_Mission_Instructions_Menu (void);
+void Show_Mission_Log_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
 
@@ -436,12 +436,12 @@ enum
 	    {
 
 	    case CLASSIC_PARADROID_MISSION_POSITION:
-	      InitNewMission ( STANDARD_MISSION );
+	      InitNewMissionList ( STANDARD_MISSION );
 	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   
 	      break;
 	    case NEW_MISSION_POSITION:
-	      InitNewMission ( NEW_MISSION );
+	      InitNewMissionList ( NEW_MISSION );
 	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
@@ -455,7 +455,7 @@ enum
 		}
 	      else
 		{
-		  InitNewMission ( Previous_Mission_Name );
+		  InitNewMissionList ( Previous_Mission_Name );
 		  Weiter = TRUE;   /* jp forgot this... ;) */
 		}
 	      break;
@@ -1305,7 +1305,7 @@ Single_Player_Menu (void)
 
       CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "New Game");
       CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
-      CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
+      CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Show Mission Log");
       CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Back");
 
       SDL_Flip( ne_screen );
@@ -1331,7 +1331,7 @@ Single_Player_Menu (void)
 	    case NEW_GAME_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
 	      New_Game_Requested=TRUE;
-	      InitNewMission( STANDARD_MISSION );
+	      InitNewMissionList ( STANDARD_MISSION );
 	      Weiter=!Weiter;
 	      break;
 	    case SHOW_HISCORE_POSITION: 
@@ -1340,7 +1340,7 @@ Single_Player_Menu (void)
 	      break;
 	    case SHOW_MISSION_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
-	      Show_Mission_Instructions_Menu();
+	      Show_Mission_Log_Menu();
 	      break;
 	    case BACK_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
@@ -1442,17 +1442,17 @@ Credits_Menu (void)
 } // Credits_Menu
 
 /*@Function============================================================
-@Desc: This function provides the mission instructions.  It is a 
-       submenu of the single player menu.
+@Desc: This function provides the details of a mission that has been
+       assigned to the player or has been solved perhaps too
 
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Show_Mission_Instructions_Menu (void)
+Show_Mission_Details ( int MissionNumber )
 {
   int Weiter = 0;
-
-  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+  // int i;
+  // SDL_Rect* Mission_Window_Pointer=&User_Rect;
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
@@ -1461,42 +1461,42 @@ Show_Mission_Instructions_Menu (void)
 
       InitiateMenu();
 
-      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
-      
+      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
+
       printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      if ( Me.AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
       else printf_SDL( ne_screen , -1 , -1 , "NO" );
 
       printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me.mission.KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      if ( Me.AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
       else printf_SDL( ne_screen , -1 , -1 , "NO" );
       printf_SDL ( ne_screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me.mission.MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachLevel ); 
+      if ( Me.AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachLevel ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me.mission.MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustReachPoint.x ); 
+      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustReachPoint.x ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE" );
       printf_SDL ( ne_screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachPoint.y );
+      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachPoint.y );
       else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me.mission.MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.mission.MustLiveTime ); 
+      if ( Me.AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.AllMissions[ MissionNumber ].MustLiveTime ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE" );
       printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me.mission.MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
+      if ( Me.AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustBeClass );
       else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me.mission.MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustBeType ); 
+      if ( Me.AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustBeType ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE" );
       printf_SDL ( ne_screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me.mission.MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
+      if ( Me.AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
       else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me.mission.KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.mission.KillClass] ); 
+      if ( Me.AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.AllMissions[ MissionNumber ].KillClass] ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       
@@ -1520,7 +1520,86 @@ Show_Mission_Instructions_Menu (void)
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
-} // ShowMissionInstructionsMenu
+  
+
+}; // void Show_Mission_Details (void)
+
+/*@Function============================================================
+@Desc: This function provides an overview over the missions currently
+       assigned to the player
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
+Show_Mission_Log_Menu (void)
+{
+  int Weiter = 0;
+  int i;
+  SDL_Rect* Mission_Window_Pointer=&User_Rect;
+
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+
+  while (!Weiter)
+    {
+
+      InitiateMenu();
+
+      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION LOG");
+      
+      DisplayText ( " " , 1 , 3*FontHeight( Menu_BFont ) , Mission_Window_Pointer );
+
+      DisplayText ( "This is the record of all missions you have been assigned:\n\n" , 
+		    -1 , -1 , Mission_Window_Pointer );
+
+      for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
+	{
+
+	  if ( Me.AllMissions[i].MissionExistsAtAll != TRUE ) continue;
+
+	  DisplayText ( "\nMission status: " , 
+			-1 , -1 , Mission_Window_Pointer );
+
+	  if ( Me.AllMissions[i].MissionIsComplete == TRUE )
+	    {
+	      DisplayText ( "SOLVED: " , -1 , -1 , Mission_Window_Pointer );
+	    }
+	  else if ( Me.AllMissions[i].MissionWasFailed == TRUE )
+	    {
+	      DisplayText ( "FAILED: " , -1 , -1 , Mission_Window_Pointer );
+	    }
+	  else if ( Me.AllMissions[i].MissionWasAssigned == TRUE ) 
+	    {
+	      DisplayText ( "ASSIGNED: " , -1 , -1 , Mission_Window_Pointer );
+	    }
+	  else
+	    {
+	      DisplayText ( "UNASSIGNED: " , -1 , -1 , Mission_Window_Pointer );
+	    }
+
+	  DisplayText ( Me.AllMissions[i].MissionName , 
+			-1 , -1 , Mission_Window_Pointer );
+
+	}
+
+      DisplayText ( "\n--- Currently no more missions beyond that ---" , 
+		    -1 , -1 , Mission_Window_Pointer );
+
+
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+      while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	{
+	  Weiter=!Weiter;
+	}
+    } // end of while loop
+
+
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+} // void Show_Mission_Log_Menu ( void )
 
 /*@Function============================================================
 @Desc: This function is used by the Level Editor integrated into 

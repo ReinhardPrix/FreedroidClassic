@@ -84,13 +84,15 @@ Possible Start Point : Level=6 XPos=2 YPos=1
 Possible Start Point : Level=7 XPos=2 YPos=1
 
 
-*** Begin of Mission Target ***
+** Start of this mission target subsection **
 
 +++
 +++ Now we define the mission target
 +++ For the classical paradroid mission, this target is defined as
 +++ to eliminate all other droids.  Thats rather simple.
 +++
+Mission Name="Classic Paradroid Mission"
+Assign this mission to influencer automatically at start : 1
 Mission target is to kill all droids : 1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
@@ -102,7 +104,7 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 
-*** End of Mission Target ***
+** End of this mission target subsection **
 
 ----------------------------------------------------------------------
 

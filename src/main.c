@@ -130,9 +130,9 @@ main (int argc, char *const argv[])
 	    {
 	      LevelGrauFaerben ();
 	      CurLevel->empty = TRUE;
-	    }			/* if */
+	    }		    
 
-	  CheckIfMissionIsComplete ();
+	  CheckIfMissionIsComplete (); 
 
 	  ComputeFPSForThisFrame();
 
@@ -156,6 +156,25 @@ UpdateCountersForThisFrame (void)
   static long Overall_Frames_Displayed=0;
   int i;
 
+
+  /*
+  int MissNum;
+  for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME ; MissNum ++ )
+    {
+
+      if ( Me.AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
+
+      if ( Me.AllMissions[ MissNum ].MissionIsComplete ) 
+	Me.AllMissions[ MissNum ].MissionLastStatusChangeTime += Frame_Time();
+
+      if ( Me.AllMissions[ MissNum ].MissionWasFailed ) 
+	Me.AllMissions[ MissNum ].MissionLastStatusChangeTime += Frame_Time();
+
+    }
+  */
+
+
+  GameConfig.Mission_Log_Visible_Time += Frame_Time();
 
   // if (ShipEmptyCounter == 1) GameOver = TRUE;
 

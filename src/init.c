@@ -257,13 +257,17 @@ Get_Mission_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING "Action is change map there to new value="
 #define EVENT_ACTION_INFLUENCER_SAY_SOMETHING "Action is Influencer saying something="
 #define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer saying the following text=\""
-#define EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING "ACTION INDEX NUMBER TO USE="
+  // #define EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING "ACTION INDEX NUMBER TO USE="
+#define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
+#define ACTION_LABEL_INDICATION_STRING "Action label for this action=\""
 
 #define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
 #define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
 #define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
-#define EVENT_TRIGGER_WHICH_ACTION_STRING "Event Action to be triggered by this trigger="
+  // #define EVENT_TRIGGER_WHICH_ACTION_STRING "Event Action to be triggered by this trigger="
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
+#define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
+
 
   // Delete all events and event triggers
   for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
@@ -278,11 +282,13 @@ Get_Mission_Events ( char* EventSectionPointer )
       
       // And now of course which event to trigger!!!!
       // Thats propably the most important information at all!!!
-      AllEventTriggers[i].EventNumber=-1;
+      // AllEventTriggers[i].EventNumber=-1;
+      AllEventTriggers[i].TargetActionLabel="none";
     }
-  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS ; i++ )
+  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
     {
       // Maybe the triggered event consists of the influencer saying something
+      AllTriggeredActions[i].ActionLabel="";
       AllTriggeredActions[i].InfluencerSaySomething=-1;
       AllTriggeredActions[i].InfluencerSayText="";
       // Maybe the triggered event consists of the map beeing changed at some tile
@@ -291,6 +297,7 @@ Get_Mission_Events ( char* EventSectionPointer )
       AllTriggeredActions[i].ChangeMapLocation.x=-1;
       AllTriggeredActions[i].ChangeMapLocation.y=-1;
       AllTriggeredActions[i].ChangeMapTo=-1;
+      AllTriggeredActions[i].AssignWhichMission=-1;
       // Maybe the triggered event consists of ??????
     }
 
@@ -315,8 +322,11 @@ Get_Mission_Events ( char* EventSectionPointer )
 
       // FIRST OF ALL, WE NEED TO KNOW AT WHICH INDEX WE MUST MODIFY OUR STRUTURE.
       // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
-      ReadValueFromString( EventPointer , EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING , "%d" , 
-			   &EventActionNumber , EndOfEvent );
+      // ReadValueFromString( EventPointer , EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING , "%d" , 
+      // &EventActionNumber , EndOfEvent );
+
+      AllTriggeredActions[ EventActionNumber].ActionLabel =
+	ReadAndMallocStringFromData ( EventPointer , ACTION_LABEL_INDICATION_STRING , "\"" ) ;
 
       // Now we read in the map changing position in x and y coordinates
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_X_STRING , "%d" , 
@@ -340,6 +350,11 @@ Get_Mission_Events ( char* EventSectionPointer )
       AllTriggeredActions[ EventActionNumber].InfluencerSayText =
 	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_INFLUENCER_SAY_TEXT , "\"" ) ;
 
+      // Now we read in the new mission to assign to the influencer on that event 
+      ReadValueFromString( EventPointer , EVENT_ACTION_ASSIGN_WHICH_MISSION , "%d" , 
+			   &AllTriggeredActions[ EventActionNumber ].AssignWhichMission , EndOfEvent );
+
+      EventActionNumber++;
     } // While Event action begin string found...
 
 
@@ -381,8 +396,10 @@ Get_Mission_Events ( char* EventSectionPointer )
 			   &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution , EndOfEvent );
 
       // Now we read in the action to be invoked by this trigger
-      ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
-			   &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
+      // ReadValueFromString( EventPointer , EVENT_TRIGGER_WHICH_ACTION_STRING , "%d" , 
+      // &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
+      AllEventTriggers[ EventTriggerNumber ].TargetActionLabel = 
+	ReadAndMallocStringFromData ( EventPointer , TRIGGER_WHICH_TARGET_LABEL , "\"" ) ;
 
       EventTriggerNumber++;
     } // While Event trigger begin string found...
@@ -444,6 +461,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
+#define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
@@ -573,6 +591,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].AdvancedBehaviour , EndOfDataPointer );
+
+      // Now we read in the IsHumand flag of this droid type
+      ReadValueFromString( RobotPointer , IS_HUMAN_SPECIFICATION_STRING , "%d" , 
+			   &Druidmap[RobotIndex].IsHuman , EndOfDataPointer );
 
       // Now we read in if the droid tends to go to call for reinforcements
       ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 
@@ -770,6 +792,23 @@ parse_command_line (int argc, char *const argv[])
 }				/* parse_command_line */
 
 
+void 
+AssignMission( int MissNum )
+{
+  int j;
+
+  Mission_Status_Change_Sound ( );
+  GameConfig.Mission_Log_Visible = TRUE;
+  GameConfig.Mission_Log_Visible_Time = 0;
+  Me.AllMissions[ MissNum ].MissionWasAssigned = TRUE;
+  
+  for ( j = 0 ; j < MAX_MISSION_TRIGGERED_ACTIONS ; j ++ )
+    {
+      ExecuteEvent( Me.AllMissions[ MissNum ].ListOfActionsToBeTriggeredAtAssignment[ j ] );
+    }
+
+}; // void AssignMission( int MissNum );
+
 /*-----------------------------------------------------------------
  * @Desc: Startwerte fuer neues Spiel einstellen 
  * 
@@ -777,7 +816,7 @@ parse_command_line (int argc, char *const argv[])
  *
  *-----------------------------------------------------------------*/
 void
-InitNewMission ( char *MissionName )
+InitNewMissionList ( char *MissionName )
 {
   char *fpath;
   int i;
@@ -787,6 +826,7 @@ InitNewMission ( char *MissionName )
   char *StartPointPointer;
   char *MissionTargetPointer;
   char *EndOfMissionTargetPointer;
+  char *NextEventPointer;
   char* Liftname;
   char* Crewname;
   char* GameDataName;
@@ -796,6 +836,9 @@ InitNewMission ( char *MissionName )
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
+  int MissionTargetIndex;
+  int NumberOfEventsToTriggerAtThisAssignment;
+  int ActionNr;
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
@@ -810,6 +853,13 @@ InitNewMission ( char *MissionName )
 #define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
 #define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
 #define MISSION_START_POINT_STRING "Possible Start Point : "
+
+#define MISSION_TARGET_SUBSECTION_START_STRING "** Start of this mission target subsection **"
+#define MISSION_TARGET_SUBSECTION_END_STRING "** End of this mission target subsection **"
+
+#define MISSION_TARGET_NAME_INITIALIZER "Mission Name=\""
+
+#define MISSION_AUTOMATICALLY_ASSIGN_STRING "Assign this mission to influencer automatically at start : "
 #define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
 #define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
 #define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droids with marker : "
@@ -820,7 +870,11 @@ InitNewMission ( char *MissionName )
 #define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
 #define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
 #define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake a droid with marker : "
-#define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
+
+#define MISSION_ASSIGNMENT_TRIGGERED_ACTION_STRING "On mission assignment immediately trigger action Nr. : "
+#define MISSION_COMPLETE_TRIGGERED_ACTION_STRING "On mission completition immediately trigger action Nr. : "
+
+  // #define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
   //--------------------
@@ -875,12 +929,11 @@ InitNewMission ( char *MissionName )
   //For that, we must get it into memory first.
   //The procedure is the same as with LoadShip
 
-  /* Read the whole mission data to memory */
+  // Read the whole mission data to memory 
 
   fpath = find_file (MissionName, MAP_DIR, FALSE);
 
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
-  EndOfMissionTargetPointer = LocateStringInData ( MainMissionPointer , END_OF_MISSION_TARGET_STRING ) ;
 
   //--------------------
   // Now the mission file is read into memory.  That means we can start to decode the details given
@@ -1020,41 +1073,100 @@ InitNewMission ( char *MissionName )
   // Several different targets may be specified simultaneously
   //
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // jp seems to have forgotten to initialise MissionTargetPointer here...
-  // we propose this temporary fix to make it run:
-  MissionTargetPointer = StartPointPointer;
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
-		       &Me.mission.KillAll , EndOfMissionTargetPointer );
+  MissionTargetPointer = MainMissionPointer;
+  MissionTargetIndex = 0;
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_CLASS_STRING , "%d" , 
-		       &Me.mission.KillClass , EndOfMissionTargetPointer );
+  while ( ( MissionTargetPointer = strstr( MissionTargetPointer , MISSION_TARGET_SUBSECTION_START_STRING ) ) != NULL )
+    {
+      EndOfMissionTargetPointer = LocateStringInData ( MissionTargetPointer , MISSION_TARGET_SUBSECTION_END_STRING ) ;
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
-		       &Me.mission.KillOne , EndOfMissionTargetPointer );
+      Me.AllMissions[ MissionTargetIndex ].MissionExistsAtAll = TRUE;
+      Me.AllMissions[ MissionTargetIndex ].MissionIsComplete = FALSE;
+      Me.AllMissions[ MissionTargetIndex ].MissionWasFailed = FALSE;
+      Me.AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
-		       &Me.mission.MustBeClass , EndOfMissionTargetPointer );
+      Me.AllMissions[ MissionTargetIndex ].MissionName = 
+	ReadAndMallocStringFromData ( MissionTargetPointer , MISSION_TARGET_NAME_INITIALIZER , "\"" ) ;
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_TYPE_STRING , "%d" , 
-		       &Me.mission.MustBeType , EndOfMissionTargetPointer );
+      //--------------------
+      // No we read in if this mission should be assigned to the influencer
+      // automatically at the game start and without the influencer having to apply
+      // for the mission first.
+      //
+      // The assignment however will take at the end of this mission list initialisation function,
+      // cause we need the rest of the mission target data and the events to properly 'assign' the mission.
+      // 
+      ReadValueFromString( MissionTargetPointer , MISSION_AUTOMATICALLY_ASSIGN_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart , 
+			   EndOfMissionTargetPointer );
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_ONE_STRING , "%d" , 
-		       &Me.mission.MustBeOne , EndOfMissionTargetPointer );
+      //--------------------
+      // From here on we read the details of the mission target, i.e. what the
+      // influencer has to do, so that the mission can be thought of as completed
+      //
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].KillAll , EndOfMissionTargetPointer );
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_X_STRING , "%d" , 
-		       &Me.mission.MustReachPoint.x , EndOfMissionTargetPointer );
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_CLASS_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].KillClass , EndOfMissionTargetPointer );
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_Y_STRING , "%d" , 
-		       &Me.mission.MustReachPoint.y , EndOfMissionTargetPointer );
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].KillOne , EndOfMissionTargetPointer );
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_LEVEL_STRING , "%d" , 
-		       &Me.mission.MustReachLevel , EndOfMissionTargetPointer );
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustBeClass , EndOfMissionTargetPointer );
 
-  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
-		       &Me.mission.MustLiveTime , EndOfMissionTargetPointer );
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_TYPE_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustBeType , EndOfMissionTargetPointer );
+
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_ONE_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustBeOne , EndOfMissionTargetPointer );
+      
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_X_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustReachPoint.x , EndOfMissionTargetPointer );
+
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_Y_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustReachPoint.y , EndOfMissionTargetPointer );
+
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_LEVEL_STRING , "%d" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustReachLevel , EndOfMissionTargetPointer );
+
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
+			   &Me.AllMissions[ MissionTargetIndex ].MustLiveTime , EndOfMissionTargetPointer );
+
+      //--------------------
+      // At this point we have read in the target values.  Now it is time to
+      // read in the events, that need to be triggered immediately after the mission has been
+      // assigned and immediately after the mission has been completed.
+      //
+      // But first we initialize all the actions to be triggered with -1
+      //
+      for ( ActionNr = 0 ; ActionNr < MAX_MISSION_TRIGGERED_ACTIONS; ActionNr ++ )
+	{
+	  Me.AllMissions[ MissionTargetIndex ].ListOfActionsToBeTriggeredAtAssignment[ ActionNr ] = (-1) ;
+	}
+
+      NextEventPointer = MissionTargetPointer;
+      NumberOfEventsToTriggerAtThisAssignment = 0;
+      while ( ( NextEventPointer = strstr( NextEventPointer , MISSION_ASSIGNMENT_TRIGGERED_ACTION_STRING ) ) != NULL )
+	{
+
+	  ReadValueFromString( NextEventPointer , MISSION_ASSIGNMENT_TRIGGERED_ACTION_STRING , "%d" ,
+			       &Me.AllMissions[ MissionTargetIndex ].ListOfActionsToBeTriggeredAtAssignment[ NumberOfEventsToTriggerAtThisAssignment ] ,
+			       EndOfMissionTargetPointer );
+
+
+	  NumberOfEventsToTriggerAtThisAssignment ++;
+	  NextEventPointer ++;
+	}
+      printf("\n\nDetected %d events to be triggered at his assignment." , NumberOfEventsToTriggerAtThisAssignment );
+      MissionTargetPointer = EndOfMissionTargetPointer; // to avoid double entering the same target
+      MissionTargetIndex++; // to avoid overwriting the same entry again
+    }
+
+  printf("\n\nNUMBER OF MISSION TARGETS FOUND: %d.\n\n" , MissionTargetIndex );
+  fflush( stdout );
 
   //--------------------
   // After the mission targets have been successfully loaded now,
@@ -1064,19 +1176,18 @@ InitNewMission ( char *MissionName )
   NextMissionName =
     ReadAndMallocStringFromData ( MainMissionPointer , NEXT_MISSION_NAME_STRING , "\n" ) ;
 
-  /* Reactivate the light on alle Levels, that might have been dark */
+  // Reactivate the light on alle Levels, that might have been dark 
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
 
-  /* Den Banner fuer das Spiel anzeigen */
+  // show the banner for the game
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
 
-  // Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
 
   // Now that the briefing and all that is done,
@@ -1094,21 +1205,21 @@ InitNewMission ( char *MissionName )
   Me.Current_Victim_Resistance_Factor=1;
   Me.FramesOnThisLevel=0;
 
-  /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
-  // SetLevelColor (CurLevel->color); 
-
-  /* set correct Influ color */
-  // SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-  // Mobilecolor.blau);
-
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
-  DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
-  fflush(stdout);
-  
-  return;
+  //--------------------
+  // Now we start those missions, that are to be assigned automatically to the
+  // player at game start
+  //
+  for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    {
+      if ( Me.AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
+	{
+	  AssignMission( MissionTargetIndex );
+	}
+    }
 
-} /* InitNewGame */
+}; // void InitNewMissionList ( char* MissionName )
 
 /*-----------------------------------------------------------------
  * @Desc: This function initializes the whole Freedroid game.
@@ -1162,6 +1273,7 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
+  GameConfig.Mission_Log_Visible_Max_Time = 5;
   // GameConfig.Theme_SubPath="default_theme/";
   GameConfig.Theme_SubPath="lanzz_theme/";
   User_Rect.x=0;
@@ -1390,6 +1502,12 @@ void
 CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
+  int MissNum;
+  static int CheckMissionGrid; // We do not need to check for mission completed EVERY frame
+                               // It will be enough to do it now and then..., e.g. every 50th frame
+
+  CheckMissionGrid++;
+  if ( ( CheckMissionGrid % 50 ) != 0 ) return;
 
   //--------------------
   // We set up a cheat code, so that one can easily 'complete' a mission
@@ -1398,128 +1516,186 @@ CheckIfMissionIsComplete (void)
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
     {
       EndTitle();
-      InitNewMission ( NextMissionName);
+      InitNewMissionList ( NextMissionName);
     }
-
-
   #define MIS_COMPLETE_DEBUG 3
 
-  if ( Me.mission.KillOne != (-1) )
+
+  for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME ; MissNum ++ )
     {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+
+      //--------------------
+      // We need not do anything, if the mission has already failed or if
+      // the mission is already completed or if the mission does not exist
+      // at all or if the mission was not assigned yet
+      //
+      if ( Me.AllMissions[ MissNum ].MissionIsComplete == TRUE ) continue;
+      if ( Me.AllMissions[ MissNum ].MissionWasFailed == TRUE ) continue;
+      if ( Me.AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
+      if ( Me.AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+
+      //--------------------
+      // Continue if the Mission target KillOne is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].KillOne != (-1) )
 	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
-	       ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
+	  //	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
 	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
-	      // fflush(stdout);
-	      return;
+	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		   ( AllEnemys[Robot_Counter].Marker == Me.AllMissions[ MissNum ].KillOne ) )
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
+		  goto CheckNextMission;
+		}
 	    }
 	}
-    }
 
-  if ( Me.mission.KillAll != (-1) )
-    {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+      //--------------------
+      // Continue if the Mission target KillAll is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].KillAll != (-1) )
 	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Friendly == FALSE ) )
+	  //	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
 	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
-	      fflush(stdout);
-	      return;
+	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && ( AllEnemys[Robot_Counter].Friendly == FALSE ) )
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nThere are some robots still alive, and you should kill them all...");
+		  fflush(stdout);
+		  goto CheckNextMission;
+		}
 	    }
 	}
-    }
 
-  if ( Me.mission.KillClass != (-1) )
-    {
-      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+      //--------------------
+      // Continue if the Mission target KillClass is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].KillClass != (-1) )
 	{
-	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
-	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
+	  // for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	  for ( Robot_Counter=0 ; Robot_Counter < Number_Of_Droids_On_Ship ; Robot_Counter++ )
 	    {
-	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
-			   Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
-			   AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
-	      return;
+	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		   ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.AllMissions[ MissNum ].KillClass ) ) 
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+				Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
+				AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+		  goto CheckNextMission;
+		}
 	    }
 	}
-    }
-
-  if ( Me.mission.MustBeClass != (-1) )
-    {
-      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
-      if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) 
+      
+      //--------------------
+      // Continue if the Mission target MustBeClass is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustBeClass != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.class does not match...");
-	  return;
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
+	  if ( Druidmap[Me.type].class != Me.AllMissions[ MissNum ].MustBeClass ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.class does not match...");
+	      continue;
+	    }
 	}
-    }
+      
 
-  if ( Me.mission.MustBeType != (-1) )
-    {
-      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
-      if ( Me.type != Me.mission.MustBeType ) 
+      //--------------------
+      // Continue if the Mission target MustBeClass is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustBeType != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type does not match...");
-	  return;
+	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type is now: %d.", Me.type );
+	  if ( Me.type != Me.AllMissions[ MissNum ].MustBeType ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nMe.type does not match...");
+	      continue;
+	    }
 	}
-    }
+      
 
-  if ( Me.mission.MustReachLevel != (-1) )
-    {
-      if ( CurLevel->levelnum != Me.mission.MustReachLevel ) 
+      //--------------------
+      // Continue if the Mission target MustReachLevel is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustReachLevel != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nLevel number does not match...");
-	  return;
+	  if ( CurLevel->levelnum != Me.AllMissions[ MissNum ].MustReachLevel ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nLevel number does not match...");
+	      continue;
+	    }
 	}
-    }
-
-  if ( Me.mission.MustReachPoint.x != (-1) )
-    {
-      if ( Me.pos.x != Me.mission.MustReachPoint.x ) 
+      
+      //--------------------
+      // Continue if the Mission target MustReachPoint.x is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustReachPoint.x != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nX coordinate does not match...");
-	  return;
+	  if ( Me.pos.x != Me.AllMissions[ MissNum ].MustReachPoint.x ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nX coordinate does not match...");
+	      continue;
+	    }
 	}
-    }
-
-  if ( Me.mission.MustReachPoint.y != (-1) )
-    {
-      if ( Me.pos.y != Me.mission.MustReachPoint.y ) 
+      
+      //--------------------
+      // Continue if the Mission target MustReachPoint.y is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustReachPoint.y != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nY coordinate does not match..."); 
-	  return;
+	  if ( Me.pos.y != Me.AllMissions[ MissNum ].MustReachPoint.y ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nY coordinate does not match..."); 
+	      continue;
+	    }
 	}
-    }
-
-  if ( Me.mission.MustLiveTime != (-1) )
-    {
-      if ( Me.MissionTimeElapsed < Me.mission.MustLiveTime ) 
+      
+      //--------------------
+      // Continue if the Mission target MustLiveTime is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustLiveTime != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nTime Limit not yet reached...");
-	  return;
+	  if ( Me.MissionTimeElapsed < Me.AllMissions[ MissNum ].MustLiveTime ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nTime Limit not yet reached...");
+	      continue;
+	    }
 	}
-    }
-
-  if ( Me.mission.MustBeOne != (-1) )
-    {
-      if ( Me.Marker != Me.mission.MustBeOne ) 
+      
+      //--------------------
+      // Continue if the Mission target MustBeOne is given but not fullfilled
+      //
+      if ( Me.AllMissions[ MissNum ].MustBeOne != (-1) )
 	{
-	  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nYou're not yet one of the marked ones...");
-	  return;
+	  if ( Me.Marker != Me.AllMissions[ MissNum ].MustBeOne ) 
+	    {
+	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nYou're not yet one of the marked ones...");
+	      continue;
+	    }
 	}
-    }
 
-
-  EndTitle();
-  // GameOver=TRUE;
-
-  InitNewMission ( NextMissionName);
+      //--------------------
+      // AT THIS POINT WE KNOW THAT ALL OF THE GIVEN TARGETS FOR THIS MISSION ARE FULLFILLED
+      // We therefore mark the mission as completed
+      //
+      GameConfig.Mission_Log_Visible_Time = 0;
+      GameConfig.Mission_Log_Visible = TRUE;
+      Me.AllMissions[ MissNum ].MissionIsComplete = TRUE;
+      Mission_Status_Change_Sound ( );
+      
+    CheckNextMission: // this is a label for goto jumps.  Please don't remove it.
+    } // for AllMissions
+      
+  /*
+    EndTitle();
+    // GameOver=TRUE;
+    InitNewMissionList ( NextMissionName);
+  */
   
-} // void CheckIfMissionIsComplete
+}; // void CheckIfMissionIsComplete
 
 
 

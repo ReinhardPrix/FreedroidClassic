@@ -1306,6 +1306,20 @@ GetCrew (char *filename)
 #define DROIDS_LEVEL_DESCRIPTION_START_STRING "** Beginning of new Level **"
 #define DROIDS_LEVEL_DESCRIPTION_END_STRING "** End of this levels droid data **"
 
+
+  //--------------------
+  // There can be two cases:  Either the droids records must be read and initialized
+  // from scratch or they need not be modified in any way
+  //
+  // Which is the case?  ---  This can be controlled from the mission file by 
+  // specifying either 
+
+  if ( strcmp ( filename , "none" ) == 0 ) 
+    {
+      DebugPrintf( 0 , "\nint GetCrew( char* filename ): none received as parameter --> not reseting crew file." );
+      return (OK);
+    }
+
   /* Clear Enemy - Array */
   ClearEnemys ();
 
@@ -1358,6 +1372,143 @@ GetCrew (char *filename)
   return (OK);
 } /* GetCrew () */
 
+
+/*-----------------------------------------------------------------
+ * Friendly droids have a list of keywords they understand and to
+ * which they answer something, that is a question for the influencer,
+ * which the influencer shall answer one way or the other (2 options
+ * at most for now) and this function initializes these structures
+ * in the Enemylist which contain the triggers of such question,
+ * the questions themselves, the possible answers and the possible
+ * ansers of the robot to that again plus perhaps some events 
+ * that are triggered this way or some missions that are assigned
+ * this way.
+ *-----------------------------------------------------------------*/
+void 
+GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
+{
+
+#define FRIENDLY_DROID_DECISION_REQUEST_LIST_START_STRING "Start of Decision-Request List for this friendly droid"
+#define FRIENDLY_DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
+
+#define REQUEST_TRIGGER_START_STRING "RequestTrigger=\""
+#define REQUEST_TEXT_START_STRING "RequestText=\""
+#define ANSWER_YES_START_STRING "AnswerYes=\""
+#define ANSWER_NO_START_STRING "AnswerNo=\""
+#define RESPONSE_YES_START_STRING "ResponseYes=\""
+#define RESPONSE_NO_START_STRING "ResponseNo=\""
+#define ACTION_TRIGGER_START_STRING "LabelOfActionInConfirmationCase=\""
+
+  char* RequestListStart;
+  char* RequestListEnd;
+  char* NextDecisionEntry;
+
+  char* TempSearchArea;
+  int DecisionNr = 0;
+  int j;
+
+  //--------------------
+  // Before we do anything else, we must make sure, that all the pointers
+  // are initialized or we might compare the entered text with some forbidden
+  // memory the uninitialized pointer points to.  So we must prevent this
+  // and do some dummy initialisation.
+  //
+  for ( j = 0 ; j < MAX_REQUESTS_PER_DROID ; j++ )
+    {
+      AllEnemys[ RobotNum ].RequestList[ j ].RequestTrigger = "";
+      AllEnemys[ RobotNum ].RequestList[ j ].RequestText = "";
+      AllEnemys[ RobotNum ].RequestList[ j ].AnswerYes = "";
+      AllEnemys[ RobotNum ].RequestList[ j ].AnswerNo = "";
+      AllEnemys[ RobotNum ].RequestList[ j ].ResponseYes = "";
+      AllEnemys[ RobotNum ].RequestList[ j ].ResponseNo = "";
+    }
+
+  //--------------------
+  // No we can start to read in the details of this robots requests and all that...
+  //
+
+  RequestListStart = LocateStringInData( SearchPointer , FRIENDLY_DROID_DECISION_REQUEST_LIST_START_STRING );
+  RequestListEnd = LocateStringInData( SearchPointer , FRIENDLY_DROID_DECISION_REQUEST_LIST_END_STRING );
+
+  TempSearchArea = MyMalloc( RequestListEnd - RequestListStart + 1 ); // First we allocate enough memory
+  strncpy ( TempSearchArea , RequestListStart , RequestListEnd-RequestListStart ); // this copys the relevant part
+  TempSearchArea[ RequestListEnd - RequestListStart ] = 0; // This shall terminate the string
+
+  NextDecisionEntry = TempSearchArea;
+  
+  while ( ( NextDecisionEntry = strstr( NextDecisionEntry , REQUEST_TRIGGER_START_STRING  ) ) != NULL )
+    {
+
+      //--------------------
+      // At first we check against writing beyond the scope of the array containing
+      // the questions and answers for the communication with this friendly droid
+      //
+      if ( DecisionNr >= MAX_CHAT_KEYWORDS_PER_DROID )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+The function reading and interpreting the friendly droids question-answer list\n\
+stumbled into something:\n\
+\n\
+The number of Decisions and Answers specified for one of the droids is bigger\n\
+than the array containing all these Decision and answers defined in the source.\n\
+\n\
+If you receive this error, just increase the constant MAX_CHAT_KEYWORDS_PER_DROIS\n\
+in the source code, then recompile the game and all will be fine.\n\
+\n\
+But for now Freedroid will terminate to draw attention to the droid file reading\n\
+problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+	}
+
+
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestTrigger = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TRIGGER_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestText = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TEXT_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerYes = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , ANSWER_YES_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerNo = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , ANSWER_NO_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseYes = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , RESPONSE_YES_START_STRING , "\"" );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseNo = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , RESPONSE_NO_START_STRING , "\"" );
+      // ReadValueFromString( NextDecisionEntry , "Action is mission assignment=" , "%d" , 
+      // &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger , EndOfLiftRectangleSection );
+      AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger = 
+	ReadAndMallocStringFromData ( NextDecisionEntry , ACTION_TRIGGER_START_STRING , "\"" );
+
+      DebugPrintf( 0 , "\n\nRequest trigger entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestTrigger );
+      DebugPrintf( 0 , "RequestText entry for this request : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestText );
+      DebugPrintf( 0 , "Answer 'yes' entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerYes );
+      DebugPrintf( 0 , "Answer 'no' entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerNo );
+      DebugPrintf( 0 , "Response to 'yes' entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseYes );
+      DebugPrintf( 0 , "Response to 'no' entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ResponseNo );
+      DebugPrintf( 0 , "Action trigger entry found : %s \n" , 
+		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger );
+
+
+
+      // Not that this entry has been read, we move all indexes up by one
+      DecisionNr++;
+      NextDecisionEntry++;
+    }
+
+  free ( TempSearchArea );
+
+}; // void GetThisRobotsDecisionRequestList( char* SearchPointer, int RobotNum );
 
 /*-----------------------------------------------------------------
  * Friendly droids have a list of keywords they understand and they
@@ -1468,6 +1619,10 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
+
+#define DROID_DECISION_REQUEST_LIST_START_STRING "Start of Decision-Request List for this friendly droid"
+#define DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
+
 
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -1643,6 +1798,7 @@ Sorry...\n\
       if ( AllEnemys[ FreeAllEnemysPosition ].Friendly )
 	{
 	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
+	  GetThisRobotsDecisionRequestList( SearchPointer , FreeAllEnemysPosition );
 	}
 
     } // while Special force droid found...

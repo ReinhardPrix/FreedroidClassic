@@ -115,7 +115,7 @@ enum
 #define INITIAL_DIGIT_HEIGHT (9*2)
 #define INITIAL_DIGIT_POS_X 5*2
 #define INITIAL_DIGIT_POS_Y 12*2
-#define DIGITNUMBER 22
+#define DIGITNUMBER (22+26)
 #define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
 
 #define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
@@ -217,7 +217,8 @@ enum _sounds
   FIRE_BULLET_EXTERMINATOR_SOUND,
   FIRE_BULLET_LASER_RIFLE_SOUND,
   CRY_SOUND,
-  TRANSFER_SOUND
+  TRANSFER_SOUND,
+  MISSION_STATUS_CHANGE_SOUND
 };
 
 // The sounds when the influencers energy is low or when he is in transfer mode
@@ -304,8 +305,11 @@ enum _directions
 #define MAX_WP_CONNECTIONS 	12
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
+#define MAX_REQUESTS_PER_DROID 5
 #define MAX_CHAT_KEYWORDS_PER_DROID 30
 #define MAX_INFLU_POSITION_HISTORY 10000
+#define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
+#define MAX_MISSION_TRIGGERED_ACTIONS 10
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */
@@ -315,7 +319,7 @@ enum _directions
 					/* corresponds to a reserved palette range !*/
 #define MAX_LEVEL_RECTS         20   // how many rects compose a level
 #define MAX_EVENT_TRIGGERS      20   // how many event triggers at most to allow
-#define MAX_TRIGGERED_ACTIONS   20   // how many triggerable actions to allow at most
+#define MAX_TRIGGERED_ACTIONS_IN_GAME   20   // how many triggerable actions to allow at most
 
 
 #define MAXWAYPOINTS 		100

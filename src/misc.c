@@ -1160,19 +1160,71 @@ MyMalloc (long Mamount)
 }				// void* MyMalloc(long Mamount)
 
 /*@Function============================================================
-@Desc: This function checks for triggered events.  Those events are
-       usually entered via the mission file and read into the apropriate
-       structures via the InitNewMission function.  Here we check, whether
-       the nescessary conditions for an event are satisfied, and in case that
-       they are, we order the apropriate event to be executed.
+@Desc: 
+
+@Ret: 
+* $Function----------------------------------------------------------*/
+void 
+ExecuteActionWithLabel ( char* ActionLabel )
+{
+  int i;
+
+  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
+  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event labeld : %s" , ActionLabel );
+
+  // In case of 'none' as action label, we don't do anything and return;
+  if ( strcmp ( ActionLabel , "none" ) == 0 ) return;
+
+  //--------------------
+  // Now we find out which index the desired action has
+  //
+  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
+    {
+      if ( strcmp ( AllTriggeredActions[ i ].ActionLabel , ActionLabel ) == 0 ) break;
+    }
+
+  if ( i >= MAX_TRIGGERED_ACTIONS_IN_GAME )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'void ExecuteActionWithLabel ( char* ActionLabel ):\n\
+\n\
+The label that should reference an action for later execution could not\n\
+be identified as valid reference to an existing action.\n\
+\n\
+The label, that caused this problem was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , ActionLabel );
+      Terminate(ERR);
+    }
+
+  ExecuteEvent( i );
+
+}; // void ExecuteActionWithLabel ( char* ActionLabel )
+
+/*@Function============================================================
+@Desc: 
 
 @Ret: 
 * $Function----------------------------------------------------------*/
 void 
 ExecuteEvent ( int EventNumber )
 {
-  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
-  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
+  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
+  // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
+
+  // Do nothing in case of the empty action (-1) given.
+  if ( EventNumber == (-1) ) return;
 
   // Does the trigger include a change of a map tile?
   if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
@@ -1192,6 +1244,12 @@ ExecuteEvent ( int EventNumber )
 	}
     }
 
+  // Does the defined action assign the influencer a mission?
+  if ( AllTriggeredActions[ EventNumber ].AssignWhichMission != (-1) )
+    {
+      AssignMission( AllTriggeredActions[ EventNumber ].AssignWhichMission );
+    }
+
   // Does the defined action make the influencer say something?
   if ( AllTriggeredActions[ EventNumber ].InfluencerSaySomething != -1 )
     {
@@ -1199,8 +1257,6 @@ ExecuteEvent ( int EventNumber )
       Me.TextVisibleTime=0;
       Me.TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
-
-
 }; // void ExecuteEvent ( int EventNumber )
 
 /*@Function============================================================
@@ -1219,7 +1275,8 @@ CheckForTriggeredEvents ( void )
 
   for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
     {
-      if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
+      // if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
+      if ( strcmp (AllEventTriggers[i].TargetActionLabel , "none" ) == 0 ) continue;  // thats a sure sign this event doesn't need attention
 
       // --------------------
       // So at this point we know, that the event trigger is somehow meaningful. 
@@ -1242,11 +1299,13 @@ CheckForTriggeredEvents ( void )
 	}
 
       // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
-      ExecuteEvent( AllEventTriggers[i].EventNumber );
+      // ExecuteEvent( AllEventTriggers[i].EventNumber );
+      ExecuteActionWithLabel ( AllEventTriggers[i].TargetActionLabel );
 
       if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
 	{
-	  AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
+	  // AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
+	  AllEventTriggers[i].TargetActionLabel = "none"; // That should prevent the event from being executed again.
 	}
     }
 
