@@ -558,21 +558,21 @@ InitPictures (void)
      create the internal storage for all our blocks 
   */
 
-  tmp = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, vid_bpp, 0, 0, 0, 0);
   if (tmp == NULL) 
     {
-      DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
+      DebugPrintf (1, "\nCould not create static_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-  ne_static = SDL_DisplayFormat(tmp);  /* the second surface is copied !*/
+  static_blocks = SDL_DisplayFormat(tmp);  /* the second surface is copied !*/
   SDL_FreeSurface( tmp );
-  if (ne_static == NULL) 
+  if (static_blocks == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
 
-  if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+  if (SDL_SetColorKey(static_blocks, SDL_SRCCOLORKEY, transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
@@ -580,8 +580,7 @@ InitPictures (void)
     }
 
   /* 
-   * and now read in the blocks from various files into ne_blocks
-   * and initialise the block-coordinates 
+   * and now read in the blocks from various files 
    */
 
   Load_MapBlock_Surfaces();
@@ -616,10 +615,8 @@ InitPictures (void)
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)
-  fpath = find_file (NE_CONSOLEN_PIC_FILE, GRAPHICS_DIR, FALSE);
-  ne_console_surface= IMG_Load (fpath); 
-
-  // ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
+  fpath = find_file (NE_CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
+  console_pic = IMG_Load (fpath); 
 
   GetTakeoverGraphics();
   
@@ -774,7 +771,7 @@ Sorry...\n\
    * once this is up and running, we'll provide others modes
    * as well.
    */
-  ne_bpp = 16; /* start with the simplest */
+  vid_bpp = 16; /* start with the simplest */
 
   #define SCALE_FACTOR 2
 
@@ -788,14 +785,14 @@ Sorry...\n\
   if (!mouse_control)  /* hide mouse pointer if not needed */
     SDL_ShowCursor (SDL_DISABLE);
 
-  ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
+  vid_info = SDL_GetVideoInfo (); /* info about current video mode */
   /* RGB of transparent color in our pics */
-  ne_transp_rgb.rot   = 199; 
-  ne_transp_rgb.gruen =  43; 
-  ne_transp_rgb.blau  =  43; 
+  transp_rgb.rot   = 199; 
+  transp_rgb.gruen =  43; 
+  transp_rgb.blau  =  43; 
   /* and corresponding key: */
-  ne_transp_key = SDL_MapRGB(Screen->format, ne_transp_rgb.rot,
-			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
+  transp_key = SDL_MapRGB(Screen->format, transp_rgb.rot,
+			     transp_rgb.gruen, transp_rgb.blau);
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
@@ -933,8 +930,6 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
   // vga_setpalette (palpos, rot, gruen, blau);
 
   SDL_SetColors( Screen , &ThisOneColor, palpos, 1 );
-  // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
-
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf (2, "\nvoid SetPalCol(...): Usual end of function reached.");
 }				// void SetPalCol(...)

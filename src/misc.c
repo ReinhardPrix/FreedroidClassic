@@ -902,8 +902,7 @@ Terminate (int ExitCode)
   // printf("\nUnallocation all resouces...");
 
   // free the allocated surfaces...
-  // SDL_FreeSurface( ne_blocks );
-  // SDL_FreeSurface( ne_static );
+  // SDL_FreeSurface( static_blocks );
 
   // free the mixer channels...
   // Mix_CloseAudio();
