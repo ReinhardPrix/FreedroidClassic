@@ -881,7 +881,7 @@ Credits_Menu (void)
 
       InitiateMenu();
       
-      DisplayImage ( NE_TITLE_PIC_FILE );
+      DisplayImage ( NE_CREDITS_PIC_FILE );
 
       CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
       LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");

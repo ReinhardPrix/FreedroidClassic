@@ -89,6 +89,7 @@ enum
 #define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.gif"
 #define NE_BANNER_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.gif"
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
+#define NE_CREDITS_PIC_FILE     GRAPHICS_DIR "ne_credits.jpg"
 #define SHIP_OFF_PIC		GRAPHICS_DIR "ship_off.bmp"
 #define SHIP_ON_PIC		GRAPHICS_DIR "ship_on.bmp"
 
