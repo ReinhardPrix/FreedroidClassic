@@ -20,6 +20,22 @@ That will not cause any problems.
 
 *** Start of Robot Data Section: *** 
 
+This is the header part of the robot data section:
+Here we have some constants which allow you to multiply a
+factor to ALL robot's values simultanously.  If you want to
+modify only ONE PARTICULAR droid, please seek that droid 
+value in the detailed description of each robot further below
+and make your modifiactions there.
+
+Common factor for all droids maxspeed values: 0.7
+Common factor for all droids acceleration values: 0.5
+Common factor for all droids maximum energy values: 1.0
+Common factor for all droids energyloss values: 0.3
+Common factor for all droids aggression values: 1.0
+Common factor for all droids score values: 1.0
+
+Now we come to the description of all the droids:
+
 ** Start of new Robot: ** 
 Droidname: 001
 Maximum speed of this droid: 5.1
@@ -70,6 +86,18 @@ Score gained for destroying one of this type: 50
 
 ** Start of new Robot: ** 
 Droidname: 249
+Maximum speed of this droid: 3.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+
+** Start of new Robot: ** 
+Droidname: 296
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1

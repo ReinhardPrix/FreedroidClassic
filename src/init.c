@@ -61,6 +61,23 @@ Get_Robot_Data ( void* DataPointer )
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
   int StringLength;
+  int i;
+
+  double maxspeed_calibrator;
+  double acceleration_calibrator;
+  double maxenergy_calibrator;
+  double energyloss_calibrator;
+  double aggression_calibrator;
+  double score_calibrator;
+
+#define MAXSPEED_CALIBRATOR_STRING "Common factor for all droids maxspeed values: "
+#define ACCELERATION_CALIBRATOR_STRING "Common factor for all droids acceleration values: "
+#define MAXENERGY_CALIBRATOR_STRING "Common factor for all droids maximum energy values: "
+#define ENERGYLOSS_CALIBRATOR_STRING "Common factor for all droids energyloss values: "
+#define AGGRESSION_CALIBRATOR_STRING "Common factor for all droids aggression values: "
+#define SCORE_CALIBRATOR_STRING "Common factor for all droids score values: "
+
+
 #define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
 #define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
 #define DROIDNAME_BEGIN_STRING "Droidname: "
@@ -73,6 +90,8 @@ Get_Robot_Data ( void* DataPointer )
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
 #define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
 #define SCORE_BEGIN_STRING "Score gained for destroying one of this type: "
+
+
   if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
     {
       printf("\n\nBegin of Robot Data Section not found...\n\nTerminating...\n\n");
@@ -80,10 +99,95 @@ Get_Robot_Data ( void* DataPointer )
     }
   else
     {
-      printf("\n\nBegin of Robot Data Section found. Good.  Starting to read Robot data...\n\n");
-      fflush(stdout);
+      printf("\n\nBegin of Robot Data Section found. Good.");  
+      // fflush(stdout);
+    }
+  
+  printf("\n\nStarting to read robot calibration section\n\n");
+
+  // Now we read in the speed calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, MAXSPEED_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MAXSPEED CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( MAXSPEED_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &maxspeed_calibrator );
+      printf("\nDroid maximum speed calibrator found!  It reads: %f" , maxspeed_calibrator );
     }
 
+  // Now we read in the acceleration calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, ACCELERATION_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO ACCELERATION CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( ACCELERATION_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &acceleration_calibrator );
+      printf("\nDroid acceleration calibrator found!  It reads: %f" , acceleration_calibrator );
+    }
+
+  // Now we read in the maxenergy calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, MAXENERGY_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MAXENERGY CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( MAXENERGY_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &maxenergy_calibrator );
+      printf("\nDroid maximum energy calibrator found!  It reads: %f" , maxenergy_calibrator );
+    }
+
+  // Now we read in the energy_loss calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, ENERGYLOSS_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO ENERGYLOSS CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( ENERGYLOSS_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &energyloss_calibrator );
+      printf("\nDroid energy loss calibrator found!  It reads: %f" , energyloss_calibrator );
+    }
+
+  // Now we read in the aggression calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, AGGRESSION_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO AGGRESSION CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( AGGRESSION_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &aggression_calibrator );
+      printf("\nDroid aggression calibrator found!  It reads: %f" , aggression_calibrator );
+    }
+
+  // Now we read in the score calibration factor for all droids
+  if ( (ValuePointer = strstr ( RobotPointer, SCORE_CALIBRATOR_STRING )) == NULL )
+    {
+      printf("\nERROR! NO SCORE CALIBRATOR ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( SCORE_CALIBRATOR_STRING );
+      sscanf ( ValuePointer , "%lf" , &score_calibrator );
+      printf("\nDroid score calibrator found!  It reads: %f" , score_calibrator );
+    }
+
+
+  printf("\n\nStarting to read Robot data...\n\n");
+  //--------------------
+  //Now we start to read the values for each robot:
+  //Of which parts is it composed, which stats does it have?
   while ( (RobotPointer = strstr ( RobotPointer, NEW_ROBOT_BEGIN_STRING )) != NULL)
     {
       printf("\n\nFound another Robot specification entry!  Lets add that to the others!");
@@ -231,7 +335,18 @@ Get_Robot_Data ( void* DataPointer )
     }
   
 
-  printf("\n\nThat must have been the last robot.  We're done here.");
+  printf("\n\nThat must have been the last robot.  We're reading the robot data.");
+  printf("\n\nApplying the calibration factors to all droids...");
+
+  for ( i=0; i<ALLDRUIDTYPES; i++ ) 
+    {
+      Druidmap[i].maxspeed *= maxspeed_calibrator;
+      Druidmap[i].accel *= acceleration_calibrator;
+      Druidmap[i].maxenergy *= maxenergy_calibrator;
+      Druidmap[i].lose_health *= energyloss_calibrator;
+      Druidmap[i].aggression *= aggression_calibrator;
+      Druidmap[i].score *= score_calibrator;
+    }
 
 
 } // int Init_Game_Data ( void )

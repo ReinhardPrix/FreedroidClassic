@@ -270,13 +270,13 @@ FCU AllFCUs[] = {
 };
 
 
-#define ROBOT_SPEED_CALIBRATOR (1)
+// #define ROBOT_SPEED_CALIBRATOR (1)
 // ((40) /64.0)
 #define ROBOT_ACCEL_CALIBRATOR (10.0/64.0)
 #define LOSE_HEALTH_CALIBRATOR 0.2
 druidspec Druidmap[ALLDRUIDTYPES];
 
-#define BULLET_SPEED_CALIBRATOR (ROBOT_SPEED_CALIBRATOR)
+#define BULLET_SPEED_CALIBRATOR (1)
 bulletspec Bulletmap[ALLBULLETTYPES] = {
 /*  
   speed                                      blast                 oneshotonly
