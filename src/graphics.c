@@ -32,28 +32,11 @@
 
 #define _graphics_c
 
-
-#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <string.h>
-
-#include <sys/mman.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/shm.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include <sys/msg.h>
-#include <errno.h>
-
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
 #include <vga.h>
 #include <vgagl.h>
 #include <vgakeyboard.h>
@@ -68,13 +51,110 @@
 
 extern int TimerFlag;
 
+unsigned char* MemSearch(unsigned char* , unsigned char * , unsigned char * );
+
+
+
+void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
+{
+  // MODIFIED FOR THE PORT!!!!
+  // Variables used by the function
+  char* BodyPtr;
+  long BytesWritten=0;
+  FILE* BildDateihandle;
+  char* BildDateiPointer;
+  struct stat stbuf;
+  int i;
+  int y;
+
+  unsigned char* BeginningOfScreen;
+	
+  BeginningOfScreen=Screen;
+
+  /* *******************  ILBM-Bild laden und anzeigen  ******************** */
+
+  /* Speicher fuer die Bildbearbeitung reservieren */
+
+  if ((BildDateihandle=fopen(PCX_Filename,"rb")) == NULL) {
+    printf("\nLadeLBM: Konnte die Datei %s nicht oeffnen !",PCX_Filename);
+    getchar(); Terminate(-1);
+  }
+	
+  if( fstat(fileno(BildDateihandle), &stbuf) == EOF) Terminate(-1);
+
+  if( (BildDateiPointer = (char*) MyMalloc((size_t)stbuf.st_size + 10)) == NULL) {
+    printf("\nOut of Memory in LadeLBMBild()");
+    getchar();
+    Terminate(-1);
+  }
+
+	
+  /* File von Diskette in den reservierten Speicher laden */
+
+  fread(BildDateiPointer, 1, (size_t)stbuf.st_size, BildDateihandle);	
+  if (fclose(BildDateihandle) == EOF) {
+    printf("\nLadeLBM: Konnte die Datei %s nicht schlieáen !",PCX_Filename);
+    getchar(); Terminate(-1);
+  }
+	
+
+  // First Part: Decode the Body of the LBM-File
+  BodyPtr=(char *)MemSearch(
+			    (unsigned char*)BildDateiPointer,
+			    (unsigned char*)(BildDateiPointer + (int)stbuf.st_size),
+			    (unsigned char*)"BODY");		
+  BodyPtr+=strlen("BODY")+4;
+
+	
+  while(BytesWritten < 63999)
+    {
+      if (*BodyPtr < 0)
+	{
+	  memset(Screen,BodyPtr[1],abs(BodyPtr[0])+1);
+	  BytesWritten+=abs(BodyPtr[0])+1;
+	  Screen+=abs(BodyPtr[0])+1;
+	  BodyPtr+=2;
+	} else {
+	  memcpy(Screen,BodyPtr+1,BodyPtr[0]+1);
+	  BytesWritten+=BodyPtr[0]+1;
+	  Screen+=BodyPtr[0]+1;
+	  BodyPtr+=BodyPtr[0]+2;
+	}
+    }
+
+
+  if( LoadPal ) {			
+    // Second Part: Decode the Color-Information		
+    BodyPtr=(char*)MemSearch(
+			     (unsigned char*)BildDateiPointer,
+			     (unsigned char*)(BildDateiPointer + (int)stbuf.st_size),
+			     (unsigned char*)"CMAP");    
+    BodyPtr+=strlen("CMAP")+4;
+    for(i=0;i<(256*3);i++)
+      {
+	BodyPtr[i]=BodyPtr[i]>>2;
+      }
+    SetColors(0,255,BodyPtr);
+  } /* if LoadPal */
+
+  free(BildDateiPointer);
+  printf("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",PCX_Filename);
+
+  for (y=0;y<199;y++) {
+    vga_drawscanline(y,BeginningOfScreen);
+    BeginningOfScreen+=320;
+  }
+
+  printf("\nLadeLBM: Die Datei %s sollte nun erfolgreich geladen worden sein!",PCX_Filename);
+} // LadeLBMBild 
+
 
 /*@Function============================================================
 @Desc: 	int InitPictures(void):
-				get the pics for: druids, bullets, blasts
+get the pics for: druids, bullets, blasts
 				
-				reads all blocks and puts the right pointers into
-				the various structs
+reads all blocks and puts the right pointers into
+the various structs
 
 @Ret: FALSE: ERROR  	TRUE: OK
 @Int:
@@ -235,24 +315,6 @@ void SetColors(int FirstCol, int PalAnz, char* PalPtr)
   int i;
 
   MyPalPtr=PalPtr;
-  // IM ZUGE DES PORTS MUESSEN DIE FOLGENDEN ANWEISUNGEN RAUS:
-  //
-  //unsigned int PalOfs,PalSeg;
-  //	PalOfs=FP_OFF(PalPtr);
-  //	PalSeg=FP_SEG(PalPtr);
-  //	asm{
-  //		push es
-  //		mov ax,1012h
-  //	mov bx,FirstCol
-  //	mov cx,PalAnz
-  //	mov dx,PalSeg
-  //	mov es,dx
-  //	mov dx,PalOfs
-  //	int 10h
-  //	pop es
-  // }
-
-  // IM ZUGE DES PORTS KOMMEN DAFUER DIE FOLGENDEN ANWEISUNGEN:
 
   for (i=FirstCol; i<FirstCol+PalAnz; i++) {
     vga_setpalette(i,MyPalPtr[0],MyPalPtr[1],MyPalPtr[2]);
@@ -325,7 +387,7 @@ void SetLevelColor(int ColorEntry){
 /*@Function============================================================
 @Desc: LadeLBMBild(char*,unsigned char*,int):
 
-Diese Prozedur ist fuer das laden ganzer IFF/ILBM-Bilder zust„ndig. Zuerst
+Diese Prozedur ist fuer das laden ganzer IFF/ILBM-Bilder zustaendig. Zuerst
 wird ausreichend Speicher reserviert, dann die Bilddatei in den Speicher
 geladen. Das decodiieren der eigentlichen Bilddaten uebernimmt dann eine
 Assemblerroutine. Erst wenn das Bild fertig im Bildschirmspeicher steht

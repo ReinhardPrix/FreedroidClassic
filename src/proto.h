@@ -165,6 +165,7 @@ EXTERN void SetPalCol2(unsigned int palpos, color Farbwert);
 EXTERN int InitLevelColorTable(void);
 EXTERN int InitPalette(void);
 EXTERN void SetLevelColor(int);
+EXTERN void Load_PCX_Image(char* , unsigned char* , int);
 EXTERN void LadeLBMBild(char* LBMDateiname,unsigned char* Screen,int LoadPal);
 EXTERN void TransparentLadeLBMBild(char* LBMDateiname,unsigned char* Screen,int LoadPal);
 EXTERN void Set_SVGALIB_Video_ON(void);

@@ -15,6 +15,25 @@
 #endif
 
 typedef struct {
+  char signature;
+  char version;
+  char encoding;
+  char bytes_per_pixel;
+  unsigned short int xmin;
+  unsigned short int ymin;
+  unsigned short int xmax;
+  unsigned short int ymax;
+  unsigned short int vres;
+  unsigned short int hres;
+  char palette[48];
+  char reserved;
+  char color_layers;
+  unsigned short int bytes_per_line;
+  unsigned short int palette_type;
+  char unused[58];
+} PCX_Header;
+
+typedef struct {
   long PlayerScore;
   void* NextPlayer;
   char* PlayerName;
@@ -204,6 +223,10 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.17  1997/06/09 16:22:07  jprix
+ * Original images partly overwritten by old versions corrected.
+ * Started Load_PCX_Image(..) function.
+ *
  * Revision 1.16  1997/06/09 13:01:29  jprix
  * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
  *
