@@ -66,7 +66,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
   DebugPrintf( 1 , "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   fflush(stdout);
 
-  if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
   Steps=LargerDistance * 4 ;   // We check four times on each map tile...
@@ -862,23 +862,40 @@ AttackInfluence (int enemynum)
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
 
-  // ignore friendly robots as well...
-  if ( ThisRobot->Friendly == TRUE ) return;
+  //--------------------
+  // determine the distance vector to the target of this shot.  The target
+  // depends of course on wheter it's a friendly device or a hostile device.
+  if ( ThisRobot->Friendly == TRUE )
+    {
+      // Since it's a friendly device in this case, it will aim at the (closest?) of
+      // the MS bots.
+      for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+	{
+	  if ( AllEnemys[ j ].Status == OUT ) continue;
+	  if ( AllEnemys[ j ].Friendly ) continue;
+	  if ( AllEnemys[ j ].levelnum != ThisRobot->levelnum ) continue;
+	  if ( DirectLineWalkable( ThisRobot->pos.x , ThisRobot->pos.y , AllEnemys[j].pos.x , AllEnemys[j].pos.y ) != 
+	       TRUE ) continue;
 
-  /* Ermittlung des Abstandsvektors zum Influencer */
-  xdist = Me.pos.x - ThisRobot->pos.x;
-  ydist = Me.pos.y - ThisRobot->pos.y;
+	  // At this point we have found our target
+	  xdist = AllEnemys[j].pos.x - ThisRobot->pos.x;
+	  ydist = AllEnemys[j].pos.y - ThisRobot->pos.y;
+	  break;
+	}
+      // Maybe we havn't found a single target.  Then we don't attack anything of course.
+      if ( j == Number_Of_Droids_On_Ship ) return; 
+    }
+  else
+    {
+      xdist = Me.pos.x - ThisRobot->pos.x;
+      ydist = Me.pos.y - ThisRobot->pos.y;
+    }
 
+  // Add some security against division by zero
   if (xdist == 0) xdist = 0.01;
   if (ydist == 0) ydist = 0.01;
 
-  /* Sicherheit gegen Division durch 0 */
-  //  if (fabsf (xdist) < 2)
-  //    xdist = 2;
-  //  if (abs (ydist) < 2)
-  //    ydist = 2;
-
-  /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
+  // if odds are good, make a shot at your target
   guntype = Druidmap[ThisRobot->type].gun;
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
@@ -966,14 +983,20 @@ AttackInfluence (int enemynum)
   // From here on, it's classical Paradroid robot behaviour concerning fireing....
   //
 
-  /* Only fire, if the influencer is in range.... */
-  if ((dist2 < FIREDIST2) &&
-      (!ThisRobot->firewait) &&
-      IsVisible (&ThisRobot->pos))
-    {
+  if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
-      if ( MyRandom (AGGRESSIONMAX)  >=
- 	  Druidmap[ThisRobot->type].aggression )
+  if ( ThisRobot->firewait ) return;
+  
+  if ( !IsVisible ( &ThisRobot->pos ) && ( ThisRobot->Friendly == FALSE ) ) return;
+
+  // Only fire, if the target is in range (applies only to MS machines) .... 
+  //  if ((dist2 < FIREDIST2) &&
+  // (!ThisRobot->firewait) &&
+  // IsVisible (&ThisRobot->pos))
+  // {
+
+      if ( ( MyRandom (AGGRESSIONMAX) >= Druidmap[ThisRobot->type].aggression ) &&
+	   ( ThisRobot->Friendly == FALSE ) )
 	{
 	  ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
 	  return;
@@ -995,7 +1018,7 @@ AttackInfluence (int enemynum)
 	}
 
       // determine the direction of the shot, so that it will go into the direction of
-      // the influencer
+      // the target
 
       if (fabsf (xdist) > fabsf (ydist))
 	{
@@ -1042,10 +1065,10 @@ AttackInfluence (int enemynum)
 
       ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
 
-      /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+      /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
-    }	/* if */
+      //}	/* if */
 
 }   /* AttackInfluence */
 
