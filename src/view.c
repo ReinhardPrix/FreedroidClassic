@@ -1336,7 +1336,7 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 			blit_open_gl_texture_to_map_position ( 
 			    obstacle_map [ our_obstacle -> type ] . shadow_image , 
 			    our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			    0.5 , 0.5, 0.5 , FALSE, TRUE );
+			    1.0 , 1.0, 1.0 , FALSE, TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS );
 			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
 		    }
 		}
