@@ -1,3 +1,13 @@
+
+THIS FILE IS NO LONGER MAINTAINED!
+
+	THE DETAILED CHANGELOG IS AVAILABLE IN THE NEWS SECTION OF THE PROJECT
+	HOME PAGE AT:  http://freedroid.sourceforge.net
+
+	THERE IS ALSO AN ARCHIVE OF THE CVSLOG MAILING LIST AVAILABLE VIA OUR
+	SOURCEFORGE PROJECT PAGE:  http://sourceforge.net/mail/?group_id=54521
+
+
 2002-06-09  rprix  <rprix@users.sourceforge.net>
 
 	* menu.c, view.c, global.h, graphics.c, influ.c, input.c, main.c:

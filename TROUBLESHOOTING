@@ -1,13 +1,24 @@
 
 Welcome to
 
-   F R E E D R O I D :  Troubleshooting secion
-   ---------------------------------
+   F R E E D R O I D   (R P G) :  Troubleshooting secion
+   -----------------------------------------------------
 
 Q: My program responds with 'svgalib: Cannot get I/O permission.' and exits.
-A: You need to be logged in as root to play or you must set the permissions
-   of the executable to suid root.
+A: You are playing an ancient version of Freedroid, that used the SVGALIG for
+   graphics output.  To play this ancient version, you need to be logged in as 
+   root to play or you must set the permissions of the executable to suid root.
+   This is no longer the case with more recent (e.g. those from 2003 or later)
+   versions.
+
+Q: I get bad performance (FPS very low!) with the game.
+A: On very old hardware (like my 166Mhz Pentium 1 MMX machine) this is normal and
+   can't be helped, cause FreedroidRPG has certain hardware requirements to give
+   enjoyable game performance.  We hope to resolve these performance problems by
+   switching to OpenGL based rendering in future versions of FreedroidRPG.
 
 If you experience other difficulies and problems, send mail to 
-johannes.prix@kfunigraz.ac.at.
+freedroid-discussion@lists.sourceforge.net.
+
+
 
