@@ -41,7 +41,8 @@
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
 #define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
 #define ALLBULLETS_RAW_DATA_STRING "\nNow the raw AllBullets data:\n"
-#define END_OF_SAVEDGAME_DATA_STRING "End of saved game data file."
+#define END_OF_SAVEDGAME_DATA_STRING "\nEnd of saved game data file.\n"
+#define LEVELNUM_EXPL_STRING "\nExplicit number of the level the influ currently is in="
 
 #define SAVEDGAME_EXT ".savegame"
 
@@ -54,6 +55,7 @@ SaveGame( void )
   char *SaveGameHeaderString;
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
+  char linebuf[10000];
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
 
@@ -139,6 +141,13 @@ If you have questions concerning Freedroid, please send mail to:\n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n";
   fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);  
+
+  //--------------------
+  // Since no other information than the dynamic pointer CurLevel is available
+  // to tell the current level number, we must write out that information explicitly
+  //
+  fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);  
+  sprintf( linebuf , "%d\n", CurLevel->levelnum );
 
   // --------------------
   // Now we write the influencer raw data start string out to the file and of course
@@ -257,10 +266,16 @@ LoadGame( void )
   // set to acceptable values before an accident (SEGFAULT) occurs!
   //
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
-  Me.TextToBeDisplayed = NULL;
+  Me.TextToBeDisplayed = "";
   for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      AllEnemys[ i ].TextToBeDisplayed = NULL ;
+      AllEnemys[ i ].TextToBeDisplayed = "" ;
+      AllEnemys[ i ].TextVisibleTime = 0;
+    }
+
+  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    {
+      AllBullets[ i ].Surfaces_were_generated = FALSE;
     }
 
 

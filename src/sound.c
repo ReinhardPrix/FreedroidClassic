@@ -810,7 +810,7 @@ Takeover_Game_Won_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_WON_SOUND );
-}				// void FireBulletSound(void)
+}; // void FireBulletSound(void)
 
 /*@Function============================================================
 @Desc: 
