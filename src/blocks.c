@@ -365,7 +365,7 @@ Load_Enemy_Surfaces( void )
   //
   for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
     {
-      BlueEnemySurfacePointer [ i ] = CreateBlueColorFilteredSurface ( EnemySurfacePointer [ i ] );
+      BlueEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_BLUE );
     }
 
 }; // void LoadEnemySurfaces( void )

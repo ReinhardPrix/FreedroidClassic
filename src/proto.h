@@ -150,7 +150,7 @@ EXTERN void Load_Blast_Surfaces (void);
 #endif
 
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
-EXTERN SDL_Surface* CreateBlueColorFilteredSurface ( SDL_Surface* FirstSurface );
+EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);

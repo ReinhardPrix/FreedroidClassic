@@ -190,6 +190,10 @@ enum
 enum
 { ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 , ONLY_SHOW_MAP_AND_TEXT = 4 };
 
+// The color filters are:
+enum
+{ FILTER_BLUE = 1 , FILTER_GREEN = 2 , FILTER_RED = 3 };
+
 
 //--------------------
 // Constants for Paths and names of Data-files

@@ -349,7 +349,7 @@ Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* Secon
  * color filter will be applied.
  * ---------------------------------------------------------------------- */
 SDL_Surface* 
-CreateBlueColorFilteredSurface ( SDL_Surface* FirstSurface )
+CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType )
 {
   SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
   int x , y ; // for processing through the surface...
@@ -382,11 +382,30 @@ CreateBlueColorFilteredSurface ( SDL_Surface* FirstSurface )
 
 	  alpha3 = GetAlphaComponent ( FirstSurface , x , y ); 
 
-	  red =  0;
-	  green = 0;
-	  blue =  ( GetBlueComponent ( FirstSurface , x , y ) + 
-		    GetRedComponent ( FirstSurface , x , y ) + 
-		    GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
+	  if ( FilterType == FILTER_BLUE )
+	    {
+	      red =  0;
+	      green = 0;
+	      blue =  ( GetBlueComponent ( FirstSurface , x , y ) + 
+			GetRedComponent ( FirstSurface , x , y ) + 
+			GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
+	    }
+	  else if ( FilterType == FILTER_GREEN )
+	    {
+	      red =  0;
+	      blue = 0;
+	      green =  ( GetBlueComponent ( FirstSurface , x , y ) + 
+			 GetRedComponent ( FirstSurface , x , y ) + 
+			 GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
+	    } 
+	  else if ( FilterType == FILTER_RED )
+	    {
+	      green =  0;
+	      blue = 0;
+	      red =  ( GetBlueComponent ( FirstSurface , x , y ) + 
+		       GetRedComponent ( FirstSurface , x , y ) + 
+		       GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
+	    } 
 
 	  putpixel ( ThirdSurface , x , y , 
 		     SDL_MapRGBA ( ThirdSurface -> format , red , green , blue , alpha3 ) ) ;
