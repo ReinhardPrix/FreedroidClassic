@@ -82,36 +82,23 @@ ShowSaveLoadGameProgressMeter( int Percentage , int IsSavegame )
 void
 LoadAndShowThumbnail ( char* CoreFilename )
 {
-  char Saved_Games_Dir[1000];
-  char* homedir = NULL ;
   char filename[1000];
   SDL_Surface* NewThumbnail;
   SDL_Rect TargetRectangle;
 
+  if (!ConfigDir)
+    return;
+
   DebugPrintf ( 2 , "\nTrying to load thumbnail for character '%s'. " , CoreFilename );
-
-  //--------------------
-  // get home-directory to save in
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      // return (ERR);
-    }
-
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
 
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
-
   
+  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
 
   NewThumbnail = our_IMG_load_wrapper ( filename );
   if ( NewThumbnail == NULL ) return;
-
 
   // TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
   TargetRectangle.x = 10 ;
@@ -131,32 +118,22 @@ I need to know that for saving. Abort.\n");
 void
 LoadAndShowStats ( char* CoreFilename )
 {
-  char Saved_Games_Dir[1000];
-  char* homedir = NULL ;
   char filename[1000];
   struct stat FileInfoBuffer;
   char InfoString[5000];
   struct tm *LocalTimeSplitup;
   long int FileSize;
 
+  if (!ConfigDir)
+    return;
+
   DebugPrintf ( 2 , "\nTrying to get file stats for character '%s'. " , CoreFilename );
-
-  //--------------------
-  // get home-directory to save in
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      // return (ERR);
-    }
-
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
 
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVEDGAME_EXT );
+
+  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVEDGAME_EXT );
 
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
@@ -190,7 +167,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   //--------------------
   // The saved ship must exist.  On not, it's a sever error!
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , ".shp" );
+  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , ".shp" );
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
       fprintf( stderr, "\n\nfilename: %s. \n" , filename );
@@ -206,7 +183,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   //--------------------
   // A thumbnail may not yet exist.  We won't make much fuss if it doesn't.
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
   if ( ! stat ( filename , & ( FileInfoBuffer) ) )
     {
         FileSize += FileInfoBuffer.st_size;
@@ -227,28 +204,17 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
 void
 SaveThumbnailOfGame ( void )
 {
-  char Saved_Games_Dir[1000];
-  char* homedir = NULL ;
   char filename[1000];
   SDL_Surface* NewThumbnail;
   SDL_Surface* FullView;
 
-  //--------------------
-  // get home-directory to save in
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      // return (ERR);
-    }
-
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+  if (!ConfigDir)
+    return;
 
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVE_GAME_THUMBNAIL_EXT );
+  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SAVE_GAME_THUMBNAIL_EXT );
 
   AssembleCombatPicture ( SHOW_ITEMS );
 
@@ -299,10 +265,11 @@ SaveGame( void )
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
   char linebuf[10000];
-  char Saved_Games_Dir[1000];
-  char* homedir = NULL ;
   char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
+
+  if (!ConfigDir)
+    return (OK);
 
   //--------------------
   // Saving might take a while, therefore we activate the conservative
@@ -348,24 +315,8 @@ SaveGame( void )
 	   (int) MAX_ENEMYS_ON_SHIP );
 
   //--------------------
-  // get home-directory to save in
-  //
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( -1000 , "ERROR: Environment does not contain HOME variable... \n\
-Heh, what strange operating system is this?  -->  will try c:/temp instead...");
-      // Terminate( ERR );
-      // return (ERR);
-      homedir = "C:/temp" ;
-    }
-
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
-
-  //--------------------
-  // First we save the full ship information, same as with the level editor
-  //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT );
-  if ( SaveShip ( filename ) != OK )
+  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT );
+  if ( SaveShip( filename ) != OK )
     {
       GiveStandardErrorMessage ( "SaveGame(...)" , "\
 The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!\n\
@@ -383,7 +334,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   //--------------------
   // First, we must determine the save game file name
   //
-  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, ".savegame");
+  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, ".savegame");
   
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
 
@@ -511,42 +462,26 @@ freedroid-discussion@lists.sourceforge.net\n\
 int 
 DeleteGame( void )
 {
-  char Saved_Games_Dir[1000];
-  char* homedir = NULL ;
   char filename[1000];
 
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf (0, "\n----------------------------------------------------------------------\n\
-ERROR: Environment does not contain HOME variable... \n\
-I need to know that for loading.  Giving up loading of games....\n\
-Freedroid will not be terminated now, but continue running.\n\
-The game however could NOT be saved.\n\
-----------------------------------------------------------------------\n");
-      return (ERR);
-    }
-
-  //--------------------
-  // Now we generate the right directory for saving from the home
-  // directory.
-  //
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+  if (!ConfigDir)
+    return (OK);
 
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT);
+  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
 
   remove ( filename ) ;
 
   //--------------------
   // First, we must determine the savedgame data file name
   //
-  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVEDGAME_EXT);
+  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
 
   remove ( filename );
 
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
+  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
 
   remove ( filename );
 
@@ -560,9 +495,7 @@ The game however could NOT be saved.\n\
 int 
 LoadGame( void )
 {
-  char Saved_Games_Dir[1000];
   char version_check_string[1000];
-  char* homedir = NULL ;
   char *LoadGameData;
   char filename[1000];
   unsigned char* InfluencerRawDataPointer;
@@ -572,8 +505,13 @@ LoadGame( void )
   int current_geographics_levelnum;
   FILE *DataFile;
 
+  if (!ConfigDir)
+    {
+      DebugPrintf (0, "No Config-directory, cannot load any games\n");
+      return (OK);
+    }
+
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
 
   //--------------------
   // Loading might take a while, therefore we activate the conservative
@@ -585,37 +523,15 @@ LoadGame( void )
   ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
 
   //--------------------
-  // Before we decode the details of the old game, we load the map
-  // information for the old game.  This is not very difficult, since
-  // we have very old and proven functions to do it.
-  //
-
-  // get home-directory to load from
-  if ( ( homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( -1000 , "ERROR: Environment does not contain HOME variable... \n\
-Heh, what strange operating system is this?  -->  will try c:/temp instead...");
-      // Terminate( ERR );
-      // return (ERR);
-      homedir = "C:/temp" ;
-    }
-
-  //--------------------
-  // Now we generate the right directory for saved games from the home
-  // directory.
-  //
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
-
-  //--------------------
   // First we load the full ship information, same as with the level editor
-  //
-  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT);
+
+  sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
 
   //--------------------
   // Maybe there isn't any saved game by that name.  This case must be checked for
   // and handled...
   //
-  if ((DataFile = fopen ( filename , "r")) == NULL)
+  if ((DataFile = fopen ( filename , "r")) == NULL )
     {
       GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
       /*
@@ -638,7 +554,7 @@ This indicates a serious bug in this installation of Freedroid.",
   //--------------------
   // Now we must determine the savedgame data file name
   //
-  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVEDGAME_EXT);
+  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
 

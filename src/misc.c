@@ -335,7 +335,7 @@ Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
 char *homedir = NULL;
-char ConfigDir[255]="\0";
+char *ConfigDir = NULL;
 
 /* -----------------------------------------------------------------
  * find a given filename in subdir relative to FD_DATADIR, 
@@ -1190,51 +1190,12 @@ LoadGameConfig (void)
 {
   char fname[5000];
   FILE *config;
-  
-  struct stat statbuf;
 
-  // first we need the user's homedir for loading/saving stuff
-  if ( (homedir = getenv("HOME")) == NULL )
+  if (!ConfigDir)
     {
-      DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
-Cannot Load or Save settings.\n");
-      homedir = ".";
+      DebugPrintf (1, "No useable config-dir. No config-loading possible\n");
+      return (OK);
     }
-
-  sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
-  
-  if (stat(ConfigDir, &statbuf) == -1) 
-    {
-      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
-You seem not to have the directory %s in your home directory.\n\
-This directory is used by freedroid to store saved games and your personal settings.\n\
-So I'll try to create it now...\n\
-----------------------------------------------------------------------\n", ConfigDir);
-#if __WIN32__
-    _mkdir (ConfigDir);
-    DebugPrintf (1, "ok\n");
-    return (OK);
-#else
-    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
-      {
-	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
-WARNING: Failed to create config-dir: %s. Giving up...\n\
-You settings will not be loaded but the default values will be used instead...\n\
-----------------------------------------------------------------------\n", ConfigDir);
-	return (ERR);
-      }
-      else
-	{
-	  // --------------------
-	  // Since we've just created the config dir, there CANT be any useful
-	  // config information in there yet.  So we can do nothing sensible but return here.
-	  //
-	  DebugPrintf ( 1 , "ok\n" );
-	  return (OK); 
-	}
-#endif
-    }
-
 
   sprintf (fname, "%s/config", ConfigDir);
   if( (config = fopen (fname, "r")) == NULL)

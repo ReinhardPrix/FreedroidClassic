@@ -1411,7 +1411,7 @@ set_video_mode_for_open_gl ( void )
       Terminate(ERR);
     }
   
-  // open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( );
   
   //--------------------
   // We need OpenGL double buffering, so we request it.  If we
@@ -1426,7 +1426,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				 PLEASE_INFORM, IS_FATAL );
     }
   
-  // open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( );
 
   //--------------------
   // Now we start setting up the proper OpenGL flags to pass to the
@@ -1494,7 +1494,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
     }
   else
     {
-      open_gl_check_error_status ( );
+      //      open_gl_check_error_status ( );
       SDL_GL_GetAttribute( SDL_GL_BUFFER_SIZE , & buffer_size);
       SDL_GL_GetAttribute( SDL_GL_RED_SIZE , & red_size);
       SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE , & green_size);
@@ -1505,7 +1505,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 	       buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
     }
   
-  open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( );
   
   //--------------------
   // Since we want to use openGl, it might be good to check the OpenGL vendor string

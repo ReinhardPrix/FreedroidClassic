@@ -89,6 +89,8 @@ EXTERN SDL_Rect Full_User_Rect;
 EXTERN SDL_Rect Cons_Rect;
 EXTERN SDL_Rect Cons_Text_Rect;
 
+EXTERN char *homedir;
+EXTERN char *ConfigDir;
 
 EXTERN const SDL_Rect Menu_Rect;
 

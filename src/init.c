@@ -1768,6 +1768,7 @@ InitFreedroid ( void )
   struct timeval timestamp;
 #endif
   int i;
+  struct stat statbuf;
 
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
@@ -1833,6 +1834,48 @@ InitFreedroid ( void )
   InventorySize.y = INVENTORY_GRID_HEIGHT ;
 
   ResetGameConfigToDefaultValues ();
+  
+#if __WIN32__
+  homedir = ".";
+#else
+  // first we need the user's homedir for loading/saving stuff
+  if ( (homedir = getenv("HOME")) == NULL )
+    {
+      DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
+I will try to use local directory instead\n");
+      homedir = ".";
+    }
+#endif
+
+  ConfigDir = MyMalloc( strlen (homedir) + 20 );
+  sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
+  
+  if (stat(ConfigDir, &statbuf) == -1) 
+    {
+      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+You seem not to have the directory %s in your home directory.\n\
+This directory is used by freedroid to store saved games and your personal settings.\n\
+So I'll try to create it now...\n\
+----------------------------------------------------------------------\n", ConfigDir);
+#if __WIN32__
+    _mkdir (ConfigDir);
+    DebugPrintf (1, "ok\n");
+#else
+    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+      {
+	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+WARNING: Failed to create config-dir: %s. Giving up...\n\
+I will not be able to load or save games or configurations\n\
+----------------------------------------------------------------------\n", ConfigDir);
+	free(ConfigDir);
+	ConfigDir = NULL;
+      }
+      else
+	{
+	  DebugPrintf ( 1 , "ok\n" );
+	}
+#endif
+    }
 
   //Load user config file if it exists...
   LoadGameConfig ();

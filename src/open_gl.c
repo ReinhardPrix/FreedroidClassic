@@ -471,13 +471,13 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
   next_texture_index_to_use ++ ;
   if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
     {
-      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
-Ran out of initialized texture positions to use for new textures.",
+      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , 
+"Ran out of initialized texture positions to use for new textures.",
 				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
-      DebugPrintf ( -1000 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+      DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
     }
 
   //--------------------
@@ -541,6 +541,8 @@ Ran out of initialized texture positions to use for new textures.",
 void
 open_gl_check_error_status ( void )
 {
+
+  return;
 #ifdef HAVE_LIBGL
   
   switch ( glGetError( ) )
@@ -550,39 +552,34 @@ open_gl_check_error_status ( void )
       // All is well.  No messages need to be generated...
       break;
     case GL_INVALID_ENUM:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_INVALID_ENUM received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
+				 
       break;
     case GL_INVALID_VALUE:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_INVALID_VALUE received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
+
       break;
     case GL_INVALID_OPERATION:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_INVALID_OPERATION received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_STACK_OVERFLOW:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_STACK_OVERFLOW received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_STACK_OVERFLOW received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_STACK_UNDERFLOW:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_STACK_UNDERFLOW received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_STACK_UNDERFLOW received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_OUT_OF_MEMORY:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Error code GL_OUT_OF_MEMORY received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
       break;
     default:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
-Unhandled error code received!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+"Unhandled error code received!", PLEASE_INFORM, IS_FATAL );
       break;
     }
 #endif

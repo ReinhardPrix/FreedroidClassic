@@ -2351,13 +2351,18 @@ Load_Existing_Hero_Menu ( void )
   // First we must find the home directory of the user.  From there on
   // we can then construct the full directory path of the saved games directory.
   //
-  if ( (homedir = getenv("HOME")) == NULL ) 
+
+#if __WIN32__
+  homedir = ".";
+#else
+  // first we need the user's homedir for loading/saving stuff
+  if ( (homedir = getenv("HOME")) == NULL )
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      return (ERR);
+      return ( ERR );
     }
+#endif
 
   //--------------------
   // Now we generate the right directory for loading from the home
