@@ -111,6 +111,7 @@ typedef struct
   int omit_obstacles_in_level_editor;
   int omit_enemies_in_level_editor;
   int level_editor_edit_mode;
+  int zoom_is_on;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -251,6 +252,7 @@ typedef struct
   SDL_Surface* surface;
   int offset_x;
   int offset_y;
+  SDL_Surface* zoomed_out_surface;
 }
 iso_image, *Iso_image;
 

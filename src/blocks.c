@@ -48,6 +48,20 @@ char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
+{
+  if ( our_iso_image -> zoomed_out_surface == NULL )
+    {
+      our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / FIXED_ZOOM_OUT_FACT ) ,
+							  ( 1.0 / FIXED_ZOOM_OUT_FACT ) , FALSE );
+    }
+}; // void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
+
+/* ----------------------------------------------------------------------
  * This function loads the Blast image and decodes it into the multiple
  * small Blast surfaces.
  * ---------------------------------------------------------------------- */
@@ -467,7 +481,28 @@ blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float p
 
   SDL_BlitSurface( our_iso_image . surface , NULL , Screen, &target_rectangle );
 
-};
+}; // void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y )
+{
+  SDL_Rect target_rectangle;
+
+  target_rectangle . x = 
+    translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    our_iso_image -> offset_x / FIXED_ZOOM_OUT_FACT ;
+  target_rectangle . y = 
+    translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE ) +
+    our_iso_image -> offset_y / FIXED_ZOOM_OUT_FACT ;
+
+  make_sure_zoomed_surface_is_there ( our_iso_image );
+  SDL_BlitSurface( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
+
+}; // void blit_zoomed_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
 
 /* ----------------------------------------------------------------------
  *
@@ -477,7 +512,6 @@ void
 blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer , 
 					   iso_image our_iso_image , float pos_x , float pos_y )
 {
-
   SDL_Rect target_rectangle;
 
   target_rectangle . x = 
@@ -500,8 +534,6 @@ iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos
 					     float shift_pixels_x , float shift_pixels_y )
 {
   SDL_Rect target_rectangle;
-
-
 
   target_rectangle . x = 
     translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
@@ -612,6 +644,7 @@ This error indicates some installation problem with freedroid.",
     }
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
   our_iso_image -> surface = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+  our_iso_image -> zoomed_out_surface = NULL ;
   SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
   //--------------------
   // Some test here...

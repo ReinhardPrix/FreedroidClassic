@@ -3318,7 +3318,7 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES );
+	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on );
 
 	  Highlight_Current_Block();
 
@@ -3483,8 +3483,16 @@ LevelEditor(void)
 	  // If the person using the level editor decides he/she wants a different
 	  // scale for the editing process, he/she may say so by using the O/I keys.
 	  //
-	  if ( OPressed () ) ZoomOut();
-	  if ( IPressed () ) ZoomIn();
+	  if ( OPressed () ) 
+	    {
+	      GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
+	      while ( OPressed() );
+	      // ZoomOut();
+	    }
+	  if ( IPressed () ) 
+	    {
+	      // ZoomIn();
+	    }
 
 	  if ( XPressed () )
 	    {
@@ -3636,11 +3644,13 @@ LevelEditor(void)
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
-		  ZoomIn();
+		  GameConfig . zoom_is_on = FALSE ;
+		  // ZoomIn();
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
-		  ZoomOut();
+		  GameConfig . zoom_is_on = TRUE ;
+		  // ZoomOut();
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{

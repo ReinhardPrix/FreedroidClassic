@@ -58,7 +58,7 @@ EXTERN int MyCursorY;
 SDL_Color flashcolor1 = {100, 100, 100};
 SDL_Color flashcolor2 = {0, 0, 0};
 
-#define MAX_ELEMENTS_IN_BLITTING_LIST 300
+#define MAX_ELEMENTS_IN_BLITTING_LIST 3000
 
 typedef struct
 {
@@ -608,26 +608,53 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
   // Maybe we should be using a more elegant function here, that will automatically
   // compute the right amount of squares to blit in each direction from the known amount
   // of pixel one floor tile takes...  But that must follow later...
-  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-
+  if ( mask & ZOOM_OUT )
+    {
+      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+    }
+  else
+    {
+      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+    }
                      
   SDL_SetClipRect (Screen , &User_Rect);
 
-  for (line = LineStart; line < LineEnd; line++)
+  if ( mask & ZOOM_OUT )
     {
-      for (col = ColStart; col < ColEnd; col++)
+      for (line = LineStart; line < LineEnd; line++)
 	{
-	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+	  for (col = ColStart; col < ColEnd; col++)
 	    {
-	      blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-					       ((float)col)+0.5 , ((float)line) +0.5 );
-
-	    }			// if !INVISIBLE_BRICK 
-	}			// for(col) 
-    }				// for(line) 
+	      if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+		{
+		  blit_zoomed_iso_image_to_map_position ( & ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] ) , 
+							  ((float)col)+0.5 , ((float)line) +0.5 );
+		  
+		}	// if !INVISIBLE_BRICK 
+	    }		// for(col) 
+	}		// for(line) 
+    }
+  else
+    {
+      for (line = LineStart; line < LineEnd; line++)
+	{
+	  for (col = ColStart; col < ColEnd; col++)
+	    {
+	      if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
+		{
+		  blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
+						   ((float)col)+0.5 , ((float)line) +0.5 );
+		  
+		}	// if !INVISIBLE_BRICK 
+	    }		// for(col) 
+	}		// for(line) 
+    }
 }; // void isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 
 /* ----------------------------------------------------------------------
@@ -682,11 +709,65 @@ There was an obstacle type given, that exceeds the number of\n\
 }; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
+ * This function should blit an obstacle, that is given via it's address
+ * in the parameter
+ * ---------------------------------------------------------------------- */
+void
+blit_one_obstacle_zoomed ( obstacle* our_obstacle )
+{
+  Uint32 temp_Rmask;
+  Uint32 temp_Bmask;
+  iso_image tmp;
+  // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
+  // our_obstacle -> pos . x , our_obstacle -> pos . y );
+
+  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    {
+      GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
+There was an obstacle type given, that exceeds the number of\n\
+ obstacle types allowed and loaded in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  make_sure_zoomed_surface_is_there ( & ( obstacle_map [ our_obstacle -> type ] . image ) );
+
+  //--------------------
+  // We blit the obstacle in question, but if we're in the level editor and this
+  // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
+  // it just so.
+  //
+  if ( our_obstacle == level_editor_marked_obstacle )
+    {
+      DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+      tmp . surface = SDL_DisplayFormatAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+      tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+      tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+      tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+      tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+      tmp . zoomed_out_surface = NULL ;
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Gmask = 0x0FFFFFFFF ;
+      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      blit_zoomed_iso_image_to_map_position ( & ( tmp ) , 
+					      our_obstacle -> pos . x , our_obstacle -> pos . y );
+      SDL_FreeSurface ( tmp . surface );
+      SDL_FreeSurface ( tmp . zoomed_out_surface );
+      // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
+      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
+      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+    }
+  else
+    blit_zoomed_iso_image_to_map_position ( & ( obstacle_map [ our_obstacle -> type ] . image ) , 
+					    our_obstacle -> pos . x , our_obstacle -> pos . y );
+}; // blit_one_obstacle_zoomed ( obstacle* our_obstacle )
+
+/* ----------------------------------------------------------------------
  * In order for the obstacles to be blitted, they must first be inserted
  * into the correctly ordered list of objects to be blitted this frame.
  * ---------------------------------------------------------------------- */
 void
-insert_obstacles_into_blitting_list ( void )
+insert_obstacles_into_blitting_list ( int mask )
 {
   int i;
   level* obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ];
@@ -706,10 +787,20 @@ insert_obstacles_into_blitting_list ( void )
   // going to have larger levels and we don't want to do 100x100 cyles
   // for nothing each frame.
   //
-  LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-  ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+  if ( mask & ZOOM_OUT )
+    {
+      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+    }
+  else
+    {
+      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+    }
   if ( LineStart < 0 ) LineStart = 0 ;
   if ( ColStart < 0 ) ColStart = 0 ;
   if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
@@ -939,7 +1030,7 @@ insert_blasts_into_blitting_list ( void )
  * having the right order.
  * ---------------------------------------------------------------------- */
 void
-set_up_ordered_blitting_list ( void )
+set_up_ordered_blitting_list ( int mask )
 {
   //--------------------
   // First we need to clear out the blitting list.  We do this using
@@ -952,7 +1043,7 @@ set_up_ordered_blitting_list ( void )
   // Now we can start to fill in the obstacles around the
   // tux...
   //
-  insert_obstacles_into_blitting_list ();
+  insert_obstacles_into_blitting_list ( mask );
 
   insert_tux_into_blitting_list ();
 
@@ -980,7 +1071,12 @@ blit_all_objects_according_to_blitting_list ( int mask )
 	{
 	case BLITTING_TYPE_OBSTACLE:
 	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
-	    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	    {
+	      if ( mask & ZOOM_OUT )
+		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	      else
+		blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	    }
 	  break;
 	case BLITTING_TYPE_TUX:
 	  if ( ! ( mask & OMIT_TUX ) ) 
@@ -1079,7 +1175,7 @@ AssembleCombatPicture (int mask)
       
   PutMouseMoveCursor ( );
 
-  set_up_ordered_blitting_list ();
+  set_up_ordered_blitting_list ( mask );
 
   blit_all_objects_according_to_blitting_list ( mask );
 

@@ -1624,6 +1624,7 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . omit_tux_in_level_editor = TRUE ;
   GameConfig . omit_obstacles_in_level_editor = FALSE ;
   GameConfig . omit_enemies_in_level_editor = TRUE ;
+  GameConfig . zoom_is_on = FALSE ;
 
 }; // void Reset_GameConfig_To_Default_Values ( void )
 

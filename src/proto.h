@@ -79,6 +79,8 @@ EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
+EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
+EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 EXTERN float translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) ;
 
 // bullet.c 
@@ -127,6 +129,7 @@ EXTERN void ShowInventoryScreen ( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image );
 EXTERN void Load_Item_Surfaces (void);
 EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
 EXTERN void Load_Skill_Level_Button_Surfaces( void );

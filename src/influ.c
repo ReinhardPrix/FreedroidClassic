@@ -593,8 +593,7 @@ MoveInfluence ( int PlayerNum )
   //
   if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
        ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) && 
-       ( Me [ PlayerNum ] . status == WEAPON ) && 
-       ( NoInfluBulletOnWay ( ) ) )
+       ( Me [ PlayerNum ] . status == WEAPON ) )
     AnalyzePlayersMouseClick ( PlayerNum );
 
   //--------------------
@@ -1641,6 +1640,23 @@ translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int gi
       return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ;
     }
 }; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+
+/* ----------------------------------------------------------------------
+ *
+ * 
+ * ---------------------------------------------------------------------- */
+int
+translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+{
+  if ( give_x )
+    {
+      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / (2 * FIXED_ZOOM_OUT_FACT) ) ; 
+    }
+  else
+    {
+      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / ( 2 * FIXED_ZOOM_OUT_FACT ) ) ) ;
+    }
+}; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
 /* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
