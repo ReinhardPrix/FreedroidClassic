@@ -1324,8 +1324,8 @@ ShowInventoryScreen( void )
   static SDL_Surface *TransparentPlateImage = NULL;
   SDL_Surface *tmp;
   char *fpath;
-  char fname[]="inventory.png";
-  char fname2[]="TransparentPlate.png";
+  char fname[]=INVENTORY_SCREEN_BACKGROUND_FILE;
+  char fname2[]=INVENTORY_SQUARE_OCCUPIED_FILE;
   SDL_Rect TargetRect;
   int SlotNum;
   int i , j ;

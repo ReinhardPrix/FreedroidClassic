@@ -175,7 +175,6 @@
 //--------------------
 // Highscore related defines 
 // 
-#define HS_BACKGROUND_FILE     "transfer.jpg"
 #define HS_EMPTY_ENTRY  "--- empty ---"
 #define MAX_NAME_LEN 	15     /* max len of highscore name entry */
 #define MAX_HIGHSCORES  10     /* only keep Top10 */
@@ -211,16 +210,22 @@ enum
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
 #define SKILL_LEVEL_BUTTON_FILE "skill_buttons.png"
-#define SHOP_BACKGROUND_IMAGE   "shoppe.jpg"
+#define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
 
-#define NE_CONSOLE_PIC_FILE    "console_fg.png" 
-#define NE_BANNER_BLOCK_FILE    "banner.png"
-#define NE_TITLE_PIC_FILE       "title.jpg"
-#define NE_CONSOLE_BG_PIC1_FILE "console_bg1.jpg"
-#define NE_CONSOLE_BG_PIC2_FILE "console_bg2.jpg"
-#define NE_CREDITS_PIC_FILE     "credits.jpg"
+#define NE_CONSOLE_PIC_FILE     "backgrounds/console_fg.png" 
+#define NE_BANNER_BLOCK_FILE    "backgrounds/banner.png"
+#define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
+#define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
+#define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
+#define NE_CREDITS_PIC_FILE     "backgrounds/credits.jpg"
+#define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
+#define HS_BACKGROUND_FILE     "backgrounds/transfer.jpg"  
 
-#define FREEDROID_LOADING_PICTURE_NAME "startup1.jpg"
+#define CHARACTER_SCREEN_BACKGROUND_FILE "backgrounds/character.png" 
+#define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
+#define INVENTORY_SCREEN_BACKGROUND_FILE "backgrounds/inventory.png"
+#define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
+
 
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"

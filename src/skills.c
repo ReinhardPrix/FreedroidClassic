@@ -418,7 +418,7 @@ ShowSkillsScreen ( void )
   if ( SkillScreenImage == NULL )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
-      fpath = find_file ( "SkillScreen.png" , GRAPHICS_DIR, FALSE);
+      fpath = find_file ( SKILL_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
       SkillScreenImage = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );

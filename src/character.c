@@ -720,7 +720,7 @@ ShowCharacterScreen ( void )
   if ( CharacterScreenImage == NULL )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
-      fpath = find_file ( "character.png" , GRAPHICS_DIR, FALSE);
+      fpath = find_file ( CHARACTER_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
       CharacterScreenImage = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
