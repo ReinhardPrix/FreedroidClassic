@@ -2681,99 +2681,309 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
   RotationModel = set_rotation_model_for_this_robot ( ThisRobot ) ;
 
   //--------------------
-  // First we check if the robot is still alive.  If it isn't, 
-  // then we can use the explosion dust from the classic ball-shaped
-  // version.
+  // If the robot is dead and doesn't have a dead image, then we need not
+  // do anything else here...
   //
-  if ( ( phase != DROID_PHASES ) || 
-       ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] > 0 ) )
-    {
-      
-      //--------------------
-      // Maybe the rotation model we're going to use now isn't yet loaded. 
-      // Now in this case, we must load it immediately, or a segfault may
-      // result...
-      //
-      LoadAndPrepareEnemyRotationModelNr ( RotationModel );
+  if ( ( phase == DROID_PHASES ) &&
+       ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] <= 0 ) )
+    return;
 
-      
-      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+  //--------------------
+  // Maybe the rotation model we're going to use now isn't yet loaded. 
+  // Now in this case, we must load it immediately, or a segfault may
+  // result...
+  //
+  LoadAndPrepareEnemyRotationModelNr ( RotationModel );
+
+  /*
+  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+    {
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						 ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 ) ;
+	}
+      else
 	{
 	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 	  blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
-      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+    }
+  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+    {
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						 ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 ) ;
+	}
+      else
 	{
 	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 	  blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
-
 	}
-      else if ( AllEnemys[Enum].frozen != 0 ) 
+      
+    }
+  else if ( AllEnemys[Enum].frozen != 0 ) 
+    {
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						 ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 ) ;
+	}
+      else
 	{
 	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 	  blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
+    }
+  else
+    {
+      
+*/
+
+
+  //--------------------
+  // Maybe we don't have an enemy here that would really stick to the 
+  // exact size of a block but be somewhat bigger or smaller instead.
+  // In this case, we'll just adapt the given target rectangle a little
+  // bit, cause this rectangle assumes exactly the same size as a map 
+  // block and has the origin shifted accordingly.
+  //
+  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+    {
+      if ( use_open_gl )
+	{
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_width ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_height ) / 2 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_width ;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_height ;
+	}
+      else
+	{
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
+	}
+    }
+  
+  //--------------------
+  // Maybe the enemy is desired e.g. for the takeover game, so a pixel position on
+  // the screen is given and we blit the enemy to that position, not taking into 
+  // account any map coordinates or stuff like that...
+  //
+  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+    {
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_screen_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] , TargetRectangle . x , TargetRectangle . y , TRUE );
+	  if ( GameConfig . enemy_energy_bars_visible )
+	    PutEnemyEnergyBar ( Enum , TargetRectangle );
+	}
+      else
+	{
+	  our_SDL_blit_surface_wrapper ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle );
+	  if ( GameConfig . enemy_energy_bars_visible )
+	    PutEnemyEnergyBar ( Enum , TargetRectangle );
+	}
+      return;
+    }
+
+  //--------------------
+  // But here we know, that the enemy is desired inside the game, so we need to
+  // taking into account map coordinates and all that stuff...
+  //
+  else
+    {
+      
+      if ( mask & ZOOM_OUT )
+	{
+	  blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , ThisRobot -> pos . x , ThisRobot -> pos . y );
+	  
+	}
       else
 	{
 
 	  //--------------------
-	  // Maybe we don't have an enemy here that would really stick to the 
-	  // exact size of a block but be somewhat bigger or smaller instead.
-	  // In this case, we'll just adapt the given target rectangle a little
-	  // bit, cause this rectangle assumes exactly the same size as a map 
-	  // block and has the origin shifted accordingly.
+	  // Maybe we've got to do with some old bots, that don't have any movement
+	  // animation phases yet, until Basse will provide them at some later point.
+	  // This case must be handles separatedly...
 	  //
-	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+	  if ( last_death_animation_image [ RotationModel ] - first_walk_animation_image [ RotationModel ] == 0 )
 	    {
-	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
-	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
-	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
-	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
-	    }
-
-	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
-	    {
-	      our_SDL_blit_surface_wrapper ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle );
-	      if ( GameConfig . enemy_energy_bars_visible )
-		PutEnemyEnergyBar ( Enum , TargetRectangle );
-	      return;
-	    }
-	  else
-	    {
-	      if ( mask & ZOOM_OUT )
-		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , ThisRobot -> pos . x , ThisRobot -> pos . y );
-	      else
+	      if ( use_open_gl )
 		{
-		  if ( last_death_animation_image [ RotationModel ] - first_walk_animation_image [ RotationModel ] == 0 )
+
+		  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 		    {
-		      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 ) ;
+		    }
+		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 ) ;
+		    }
+		  else if ( AllEnemys[Enum].frozen != 0 ) 
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 ) ;
+		    }
+		  else
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 ) ;
+		    }		  
+
+		}
+	      else // no open_gl
+		{
+
+		  //--------------------
+		  // First we catch the case of dead bots, then we can separate the
+		  // right color filter type, provided that the droid is still alive...
+		  //
+		  if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status ==  OUT ) )
+		    {
+		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+
+		    }
+		  else if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
+		    {
+		      LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    {
+		      LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else if ( AllEnemys[Enum].frozen != 0 ) 
+		    {
+		      LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 		  else
 		    {
 		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
+
+		  // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+
 		}
+	    }
+	  //--------------------
+	  // So here we got some animation phases, not only one image.  That's cool,
+	  // especially when using OpenGL for graphics output, since then we can have
+	  // fine color-filteres animation without extra effort.  With SDL output, the
+	  // color-filteres surfaces must be reduced to the first cycle image.
+	  //
+	  else
+	    {
+	      if ( use_open_gl )
+		{
+		  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 ) ;
+		    }
+		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 ) ;
+		    }
+		  else if ( AllEnemys[Enum].frozen != 0 ) 
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+							     ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 ) ;
+		    }
+		  else
+		    {
+		      blit_open_gl_texture_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 ) ;
+		    }
+		}
+	      else // no OpenGL
+		{
 
-	      TargetRectangle . x = 
-		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
-	      TargetRectangle . y = 
-		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE )
-		- ENEMY_ENERGY_BAR_OFFSET_Y ;
+		  //--------------------
+		  // First we catch the case of a dead bot (no color filteres SDL surfaces
+		  // availabe for that case).  In the other cases, we use the prepared color-
+		  // filtered stuff...
+		  // 
+		  if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status == OUT ) )
+		    {
+		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
+		    {
+		      LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    {
+		      LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else if ( AllEnemys[Enum].frozen != 0 ) 
+		    {
+		      LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
+		      blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+						       ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
+		  else
+		    {
+		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    }
 
-	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
-	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 1 ;
-	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
-	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
-
-
-	      if ( GameConfig . enemy_energy_bars_visible )
-		PutEnemyEnergyBar ( Enum , TargetRectangle );
-	      return;
+		}
 	    }
 	}
+      
+	  
+
+
+
+
+
+
+
+
+
+
+      TargetRectangle . x = 
+	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+      TargetRectangle . y = 
+	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE )
+	- ENEMY_ENERGY_BAR_OFFSET_Y ;
+      
+      if ( use_open_gl )
+	{
+	  //--------------------
+	  // Newly, we also make textures out of all enemy surfaces...
+	  // This will prove to be very handy for purposes of color filtered
+	  // output and such things...
+	  //
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_width ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_height ) / 1 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_width ;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . original_image_height ;
+	}
+      else
+	{
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 1 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
+	}
+      
+      if ( GameConfig . enemy_energy_bars_visible )
+	PutEnemyEnergyBar ( Enum , TargetRectangle );
+      return;
     }
   
 }; // void PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
@@ -3096,8 +3306,16 @@ function used for this did not succeed.",
       PrerotationIndex = rintf ( ( Angle  ) * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
       if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
 
-      TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> w ) / 2 );
-      TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> h ) / 2 );
+      if ( use_open_gl )
+	{
+	  TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_width ) / 2 );
+	  TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_height ) / 2 );
+	}
+      else
+	{
+	  TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> w ) / 2 );
+	  TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> h ) / 2 );
+	}
 
       if ( use_open_gl )
 	{

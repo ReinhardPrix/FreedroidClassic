@@ -1048,10 +1048,8 @@ ShowSkillsScreen ( void )
   //
   blit_special_background ( SKILL_SCREEN_BACKGROUND_CODE );
 
-
   if ( GameConfig.skill_explanation_screen_visible )
     ShowSkillsExplanationScreen( );
-
 
   //--------------------
   // According to the page in the spell book currently opened,
@@ -1078,7 +1076,17 @@ ShowSkillsScreen ( void )
       if ( SkillOfThisSlot < 0 ) continue;
 
       LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
-      our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , NULL , Screen , &ButtonRect );
+
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_screen_position ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
+						    ButtonRect . x , ButtonRect . y , TRUE );
+	}
+      else
+	{
+	  our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , 
+					 NULL , Screen , &ButtonRect );
+	}
 
       //--------------------
       // First we write the name of the skill to the screen

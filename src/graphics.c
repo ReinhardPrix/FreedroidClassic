@@ -561,7 +561,7 @@ CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType )
   float alpha3 ;
 
   //--------------------
-  // First we check for null surfaces given...
+  // First we check for NULL surfaces given...
   //
   if ( FirstSurface == NULL )
     {
@@ -1342,47 +1342,14 @@ InitTimer (void)
 
 }; // void InitTimer (void)
 
-/* -----------------------------------------------------------------
- * This funciton initialises the video display and opens up a 
- * window for graphics display.
- * -----------------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if the availability of OpenGL libraries (at compile
+ * time) and request of OpenGL graphics output are compatible with each
+ * other...  If not, we just disable OpenGL output method...
+ * ---------------------------------------------------------------------- */
 void
-InitVideo (void)
+check_open_gl_libraries_present ( void )
 {
-  const SDL_VideoInfo *vid_info;
-  //  SDL_Rect **vid_modes;
-  char vid_driver[81];
-  Uint32 video_flags = 0 ;  // flags for SDL video mode 
-  int video_mode_ok_check_result ;
-  char *fpath;
-  int buffer_size , depth_size, red_size, green_size, blue_size, alpha_size ;
-
-  //--------------------
-  // Initialize the SDL library 
-  //
-  if ( SDL_Init ( SDL_INIT_VIDEO ) == -1 ) 
-    {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
-    } 
-  else
-    DebugPrintf( 1, "\nSDL Video initialisation successful.\n");
-
-  /* clean up on exit */
-  atexit (SDL_Quit);
-
-  vid_info = SDL_GetVideoInfo (); /* just curious */
-  if ( !vid_info )
-    {
-      fprintf(stderr, "Could not obtain video info via SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
-    }
-
-  SDL_VideoDriverName (vid_driver, 80);
-
-  vid_bpp = 16; /* start with the simplest */
-  
-
   //--------------------
   // Here we introduce some warning output in case open_gl output is
   // requested while the game was compiled without having the GL libs...
@@ -1416,120 +1383,217 @@ InitVideo (void)
       use_open_gl = FALSE ;
 #endif
     }
+}; // void check_open_gl_libraries_present ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+set_video_mode_for_open_gl ( void )
+{
+#ifdef HAVE_LIBGL
+
+  const SDL_VideoInfo *vid_info;
+  //  SDL_Rect **vid_modes;
+  Uint32 video_flags = 0 ;  // flags for SDL video mode 
+  int video_mode_ok_check_result ;
+  int buffer_size , depth_size, red_size, green_size, blue_size, alpha_size ;
+
+  //--------------------
+  // We query the available video configuration on this system.
+  //
+  vid_info = SDL_GetVideoInfo (); 
+  if ( !vid_info )
+    {
+      fprintf(stderr, "Could not obtain video info via SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    }
+  
+  open_gl_check_error_status ( );
+  
+  //--------------------
+  // We need OpenGL double buffering, so we request it.  If we
+  // can't get it, something must be wrong, maybe an extremely bad 
+  // card/driver is present or some bad emulation.  Anyway, we'll
+  // break off...
+  //
+  if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
+    {
+      GiveStandardErrorMessage ( "InitVideo(...)" , "\
+Unable to set SDL_GL_DOUBLEBUFFER attribute!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  
+  open_gl_check_error_status ( );
+
+  //--------------------
+  // Now we start setting up the proper OpenGL flags to pass to the
+  // SDL for creating the initial output window...
+  //
+  video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
+  // video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
+  // video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
+  video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
+  if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
+  if ( vid_info->hw_available )
+    video_flags |= SDL_HWSURFACE;
+  else
+    video_flags |= SDL_SWSURFACE;
+  if ( vid_info->blit_hw )
+    video_flags |= SDL_HWACCEL;
+  //--------------------
+  // We have 24 bit (or 32 bit) color depth in some of the graphics used,
+  // like e.g. backgrounds produced by Basse, so we try to get close to
+  // a target color depth of 24, or 32.
+  //
+  vid_bpp = 32; 
+  
+  //--------------------
+  // First we check to see if the mode we wish to set is really supported.  If it
+  // isn't supported, then we cancel the whole operation...
+  //
+  video_mode_ok_check_result = SDL_VideoModeOK( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+  switch ( video_mode_ok_check_result )
+    {
+    case 0:
+      GiveStandardErrorMessage ( "InitVideo(...)" , "\
+SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT COLOR DEPTH!\nBreaking off...",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    default:
+      DebugPrintf ( -4 , "\nTesting if color depth %d bits is available... " , vid_bpp );
+      if ( video_mode_ok_check_result == vid_bpp )
+	{
+	  DebugPrintf ( -4 , "YES." );
+	}
+      else
+	{
+	  DebugPrintf ( -4 , "NO! \nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
+	  /*
+	    GiveStandardErrorMessage ( "InitVideo(...)" , "\
+	    SDL reported, that the video mode mentioned \nabove is not supported UNDER THE COLOR DEPTH MENTIONED ABOVE!\n\
+	    We'll be using the alternate color depth given above instead...",
+	    PLEASE_INFORM, IS_WARNING_ONLY );
+	  */
+	  vid_bpp = video_mode_ok_check_result ;
+	}
+    }
+  
+  //--------------------
+  // Now that we know which mode to go for, we can give it a try and get the
+  // output surface we want.  Of course, some extra checking will be done, so
+  // that we know that the surface we're expecting is really there...
+  //
+  Screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+  if ( !Screen )
+    {
+      fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
+      Terminate ( ERR ) ;
+    }
+  else
+    {
+      open_gl_check_error_status ( );
+      SDL_GL_GetAttribute( SDL_GL_BUFFER_SIZE , & buffer_size);
+      SDL_GL_GetAttribute( SDL_GL_RED_SIZE , & red_size);
+      SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE , & green_size);
+      SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE , & blue_size);
+      SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE , & alpha_size);
+      SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE , & depth_size);
+      fprintf( stderr , "\n\nvideo mode set (bpp=%d RGBA=%d%d%d%d depth=%d)" ,
+	       buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
+    }
+  
+  open_gl_check_error_status ( );
+  
+  //--------------------
+  // Since we want to use openGl, it might be good to check the OpenGL vendor string
+  // provided by the graphics driver.  Let's see...
+  //
+  fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
+  fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
+  open_gl_check_error_status ( );
+  fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
+  open_gl_check_error_status ( );
+  fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
+  open_gl_check_error_status ( );
+  // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
+  open_gl_check_error_status ( );
+  fprintf( stderr , "\n\n" );
+  
+  initialzize_our_default_open_gl_parameters ( );
+  
+  open_gl_check_error_status ( );
+  
+  //--------------------
+  // Maybe resize the window to standard size?
+  //
+  // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+  
+#endif // HAVE_LIBGL
+
+}; // void set_video_mode_for_open_gl ( void )
+
+/* -----------------------------------------------------------------
+ * This funciton initialises the video display and opens up a 
+ * window for graphics display.
+ * -----------------------------------------------------------------*/
+void
+InitVideo (void)
+{
+  const SDL_VideoInfo *vid_info;
+  //  SDL_Rect **vid_modes;
+  char vid_driver[81];
+  Uint32 video_flags = 0 ;  // flags for SDL video mode 
+  char *fpath;
+  char window_title_string[200];
+
+  //--------------------
+  // Initialize the SDL library 
+  //
+  if ( SDL_Init ( SDL_INIT_VIDEO ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } 
+  else
+    {
+      DebugPrintf( 1, "\nSDL Video initialisation successful.\n");
+      //--------------------
+      // So the video library could be initialized.  So it should also be
+      // cleaned up and closed once we're done and quit FreedroidRPG.
+      //
+      atexit (SDL_Quit);
+    }
+
+  //--------------------
+  // Let's get some info about the whole system here.  Is this a windows or x11 or
+  // mac or whatever graphical environment?
+  //
+  // NOTE:  This has got NOTHING to do with OpenGL and OpenGL venour or the like yet...
+  //
+  if ( SDL_VideoDriverName ( vid_driver , 80 ) )
+    {
+      DebugPrintf ( -4 , "\nVideo system type: %s." , vid_driver );
+    }
+  else
+    {
+      fprintf(stderr, "Video driver seems not to exist or initialisation failure!\nError code: %s\n",SDL_GetError());
+      Terminate(ERR);
+    }
+
+  //--------------------
+  // We check if the program has been compiled with OpenGL libraries present
+  // and take care of the case OpenGL output requested when compiled without
+  // those libs...
+  //
+  check_open_gl_libraries_present();
+
 
   if ( use_open_gl )
     {
 
-#ifdef HAVE_LIBGL
-
-      /* the flags to pass to SDL_SetVideoMode */
-      video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
-      video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
-      video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
-      video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
-      if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
-      
-      /* This checks to see if surfaces can be stored in memory */
-      if ( vid_info->hw_available )
-	video_flags |= SDL_HWSURFACE;
-      else
-	video_flags |= SDL_SWSURFACE;
-      
-      /* This checks if hardware blits can be done */
-      if ( vid_info->blit_hw )
-	video_flags |= SDL_HWACCEL;
-      
-      open_gl_check_error_status ( );
-
-      /* Sets up OpenGL double buffering */
-      if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
-	{
-	  GiveStandardErrorMessage ( "InitVideo(...)" , "\
-Unable to set SDL_GL_DOUBLEBUFFER attribute!",
-				     PLEASE_INFORM, IS_FATAL );
-	}
-
-      open_gl_check_error_status ( );
-
-      //--------------------
-      // First we check to see if the mode we wish to set is really supported.  If it
-      // isn't supported, then we cancel the whole operation...
-      //
-      video_mode_ok_check_result = SDL_VideoModeOK( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
-      switch ( video_mode_ok_check_result )
-	{
-	case 0:
-	  GiveStandardErrorMessage ( "InitVideo(...)" , "\
-SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT COLOR DEPTH!\nBreaking off...",
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
-	default:
-	  DebugPrintf ( -4 , "\nTesting if color depth %d bits is available... " , vid_bpp );
-	  if ( video_mode_ok_check_result == vid_bpp )
-	    {
-	      DebugPrintf ( -4 , "YES." );
-	    }
-	  else
-	    {
-	      DebugPrintf ( -4 , "NO! \nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
-	      /*
-	      GiveStandardErrorMessage ( "InitVideo(...)" , "\
-SDL reported, that the video mode mentioned \nabove is not supported UNDER THE COLOR DEPTH MENTIONED ABOVE!\n\
-We'll be using the alternate color depth given above instead...",
-					 PLEASE_INFORM, IS_WARNING_ONLY );
-	      */
-	      vid_bpp = video_mode_ok_check_result ;
-	    }
-	}
-
-      //--------------------
-      // Now that we know which mode to go for, we can give it a try and get the
-      // output surface we want.  Of course, some extra checking will be done, so
-      // that we know that the surface we're expecting is really there...
-      //
-      Screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
-      if ( !Screen )
-	{
-	  fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
-	  Terminate ( ERR ) ;
-	}
-      else
-	{
-	  SDL_GL_GetAttribute( SDL_GL_BUFFER_SIZE , & buffer_size);
-	  SDL_GL_GetAttribute( SDL_GL_RED_SIZE , & red_size);
-	  SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE , & green_size);
-	  SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE , & blue_size);
-	  SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE , & alpha_size);
-	  SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE , & depth_size);
-	  fprintf( stderr , "\n\nvideo mode set (bpp=%d RGBA=%d%d%d%d depth=%d)" ,
-		   buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
-	}
-      
-      open_gl_check_error_status ( );
-
-      //--------------------
-      // Since we want to use openGl, it might be good to check the OpenGL vendor string
-      // provided by the graphics driver.  Let's see...
-      //
-      fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
-      fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
-      fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
-      fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
-      // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
-      fprintf( stderr , "\n\n" );
-
-      /* initialize OpenGL */
-      initGL( );
-      
-      open_gl_check_error_status ( );
-
-      /* resize the initial window */
-      // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-      /* Enable Texture Mapping ( NEW ) */
-      // glEnable( GL_TEXTURE_2D );
-
-#endif
+      set_video_mode_for_open_gl();
 
     }
   else
@@ -1553,13 +1617,26 @@ We'll be using the alternate color depth given above instead...",
     }
 
   //--------------------
+  // We query the available video configuration on this system.
+  //
+  vid_info = SDL_GetVideoInfo (); 
+  if ( !vid_info )
+    {
+      fprintf(stderr, "Could not obtain video info via SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    }
+  
+  vid_bpp = 32; /* start with the simplest */
+
+  //--------------------
   // End of possibly open-gl dependant initialisation stuff...
   //
+  sprintf ( window_title_string , "FreedroidRPG %s" , VERSION );
   if ( vid_info->wm_available )  /* if there's a window-manager */
     {
-      SDL_WM_SetCaption ("FreedroidRPG", "");
-      fpath = find_file (ICON_FILE, GRAPHICS_DIR, FALSE);
-      SDL_WM_SetIcon( our_IMG_load_wrapper (fpath), NULL);
+      SDL_WM_SetCaption ( window_title_string , "" );
+      fpath = find_file ( ICON_FILE , GRAPHICS_DIR , FALSE );
+      SDL_WM_SetIcon( our_IMG_load_wrapper ( fpath ) , NULL );
     }
 
   InitOurBFonts ( );

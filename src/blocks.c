@@ -406,7 +406,7 @@ LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
   // Maybe this spell/skill icon surface has already been loaded, i.e. it's not
   // NULL any more.  Then we needn't do anything here.
   //
-  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface ) return;
+  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface || SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . texture_has_been_created ) return;
 
   //--------------------
   // Now it's time to assemble the file name to get the image from
@@ -815,7 +815,13 @@ Freedroid received a rotation model number that does not exist!",
 	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
-	  
+
+	  //--------------------
+	  // Newly, we also make textures out of all enemy surfaces...
+	  // This will prove to be very handy for purposes of color filtered
+	  // output and such things...
+	  //
+	  make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
 	}
       //--------------------
       // But if we have an animation, maybe not complete animation but at least walkcycle 
@@ -915,6 +921,14 @@ Freedroid received a rotation model number that does not exist!",
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) , TRUE ) ;
+
+	      //--------------------
+	      // Newly, we also make textures out of all enemy surfaces...
+	      // This will prove to be very handy for purposes of color filtered
+	      // output and such things...
+	      //
+	      make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
+
 	    }
 	}
     }    
@@ -968,18 +982,26 @@ Freedroid received a rotation model number that does not exist!",
   EnemyFullyPrepared [ ModelNr ] = TRUE;
   Activate_Conservative_Frame_Computation();
 
+
   //--------------------
   // Now that we have our enemy surfaces ready, we can create some modified
   // copies of those surfaces but this a color filter applied to them...
   //
-  for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+  // But of course, this only needs to be done, if there is no OpenGL present
+  // on this machine, cause OpenGL can do that color filtering on the fly
+  // anyway, so no need to waste memory for this...
+  //
+  if ( ! use_open_gl )
     {
-      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . surface = 
-	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_GREEN );
-      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_x = 
-	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_x ;
-      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_y = 
-	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_y ;
+      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+	{
+	  GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . surface = 
+	    CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_GREEN );
+	  GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_x = 
+	    enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_x ;
+	  GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_y = 
+	    enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_y ;
+	}
     }
 }; // void LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
   

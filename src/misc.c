@@ -1337,7 +1337,11 @@ Closing all players connections to this server...\n\
   // printf("\nAnd now the final step...\n\n");
   printf("Thank you for playing Freedroid.\n\n");
   SDL_Quit();
+
+  // raise ( SIGSEGV );
+
   exit (ExitCode);
+
   return;
 }; // void Terminate ( int ExitCode )
 

@@ -157,13 +157,7 @@ EXTERN void prepare_open_gl_for_blending_textures( void );
 EXTERN void GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r , unsigned char g , unsigned char b , unsigned char alpha );
 EXTERN void ShowInventoryScreenBackground ( void );
 EXTERN void show_character_screen_background ( void );
-
-#ifdef HAVE_LIBGL
-EXTERN int initGL( GLvoid );
-#else
-EXTERN int initGL( void );
-#endif
-
+EXTERN int initialzize_our_default_open_gl_parameters ( void ) ;
 EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r , float g , float b ) ;
 EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
 EXTERN void blit_special_background ( int background_code );

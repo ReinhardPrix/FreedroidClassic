@@ -423,6 +423,8 @@ make_texture_out_of_surface ( iso_image* our_image )
 
 #ifdef HAVE_LIBGL
 
+  if ( ! use_open_gl ) return;
+
   SDL_Surface* right_sized_image ;
 
   //--------------------
@@ -436,7 +438,7 @@ make_texture_out_of_surface ( iso_image* our_image )
 Texture has been created already according to flag...\n\
 hmmm... either the surface has been freed and the pointer moved cleanly to NULL\n\
 (which is good for bug detection) or something is not right here...",
-				 PLEASE_INFORM, IS_WARNING_ONLY );
+				 PLEASE_INFORM, IS_FATAL ); // WARNING_ONLY );
       return;
     }
 
@@ -462,7 +464,7 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
   // We must not call glGenTextures more than once in all of Freedroid,
   // according to the nehe docu and also confirmed instances of textures
   // getting overwritten.  So all the gentexture stuff is now in the
-  // initGL function and we'll use stuff from there.
+  // initialzize_our_default_open_gl_parameters function and we'll use stuff from there.
   //
   // glGenTextures( 1, & our_image -> texture );
   //
@@ -474,6 +476,10 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
       GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
 Ran out of initialized texture positions to use for new textures.",
 				 PLEASE_INFORM, IS_FATAL );
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
     }
 
   //--------------------
@@ -587,16 +593,9 @@ Unhandled error code received!",
 /* ----------------------------------------------------------------------
  * Initialize the OpenGL interface.
  * ---------------------------------------------------------------------- */
-#ifdef HAVE_LIBGL
-int 
-initGL( GLvoid )
+int
+initialzize_our_default_open_gl_parameters ( void )
 {
-#else
-int 
-initGL( void )
-{
-#endif
-
 
 #ifdef HAVE_LIBGL
 
@@ -661,7 +660,7 @@ initGL( void )
 
   return( TRUE );
 
-}; // int initGL( GLvoid )
+}; // int initialzize_our_default_open_gl_parameters ( void )
 
 /* ----------------------------------------------------------------------
  *
