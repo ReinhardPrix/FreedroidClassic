@@ -48,6 +48,7 @@ void duplicate_all_obstacles_in_area ( Level source_level ,
 				       Level target_level ,
 				       float target_start_x , float target_start_y );
 obstacle* add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
+void give_new_description_to_obstacle ( Level EditLevel , obstacle* our_obstacle , char* predefined_description );
 
 waypoint *SrcWp;
 int OriginWaypoint = (-1);
@@ -2765,6 +2766,60 @@ delete_all_obstacles_in_area ( Level TargetLevel , float start_x , float start_y
 }; // void delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , TargetLevel->ylen-AreaHeight , AreaWidth , AreaHeight )
 
 /* ----------------------------------------------------------------------
+ * After exporting a level, there might be some old corpses of 
+ * descriptions that were deleted when the target level was partly cleared
+ * out and overwritten with the new obstacles that brought their own new
+ * obstacle descriptions.
+ *
+ * In this function, we try to clean out those old corpses to avoid 
+ * cluttering in the map file.
+ * ---------------------------------------------------------------------- */
+void
+eliminate_dead_obstacle_descriptions ( Level target_level )
+{
+    int i;
+    int is_in_use;
+    int desc_index;
+
+    //--------------------
+    // We proceed through the list of known descriptions.  Some of them
+    // might not be in use, but still hold a non-null content string.
+    // Such instances will be eliminated.
+    //
+    for ( desc_index = 0 ; desc_index < MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ; desc_index ++ )
+    {
+	//--------------------
+	// Maybe the description in question is an empty index anyway.
+	// Then of course there is no need to eliminate anything and
+	// we can proceed right away.
+	//
+	if ( target_level -> obstacle_description_list [ desc_index ] == NULL ) continue;
+
+	//--------------------
+	// So now we've encountered some string.  Let's see if it's really
+	// in use.  For that, we need to proceed through all the obstacles
+	// of this level and see if one of them has a description index 
+	// pointing to this description string.
+	//
+	is_in_use = FALSE ;
+	for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+	{
+	    if ( target_level -> obstacle_list [ i ] . description_index == desc_index )
+	    {
+		DebugPrintf ( -4 , "\nThis descriptions seems to be in use still." );
+		is_in_use = TRUE ;
+		break;
+	    }
+	}
+	
+	if ( is_in_use ) continue;
+	target_level -> obstacle_description_list [ desc_index ] = NULL ;
+	DebugPrintf ( -4 , "\nNOTE:  dead description found.  Eliminated." );
+    }
+	
+}; // void eliminate_dead_obstacle_descriptions ( Level target_level )
+
+/* ----------------------------------------------------------------------
  * This function should allow for conveninet duplication of obstacles from
  * one map to the other.  It assumes, that the target area has been cleaned
  * out of obstacles already.
@@ -2806,11 +2861,27 @@ duplicate_all_obstacles_in_area ( Level source_level ,
 	    DebugPrintf ( -1 , "\nNOTE:  obstacle name was exported:  %s." ,
 			  source_level -> obstacle_name_list [ source_level -> obstacle_list [ i ] . name_index ] );
 	}
+
+	//--------------------
+	// Maybe the source obstacle had a description attached to it?  Then
+	// We should also duplicate the obstacle description.  Otherwise it
+	// might get overwritten when exporting in the other direction.
+	//
+	if ( source_level -> obstacle_list [ i ] . description_index != (-1) )
+	{
+	    give_new_description_to_obstacle ( 
+		target_level , new_obstacle , 
+		source_level -> obstacle_description_list [ source_level -> obstacle_list [ i ] . description_index ] );
+	    DebugPrintf ( -1 , "\nNOTE:  obstacle description was exported:  %s." ,
+			  source_level -> obstacle_description_list [ source_level -> obstacle_list [ i ] . description_index ] );
+	}
 	
 	//delete_obstacle ( source_level , & ( source_level -> obstacle_list [ i ] ) );
 	// i--; // this is so that this obstacle will be processed AGAIN, since deleting might
 	// // have moved a different obstacle to this list position.
     }
+
+    eliminate_dead_obstacle_descriptions ( target_level );
     
 }; // void duplicate_all_obstacles_in_area ( ... )
 

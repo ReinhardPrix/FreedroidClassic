@@ -2127,8 +2127,15 @@ move_tux_thowards_intermediate_point ( int player_num )
 }; // void move_tux_thowards_intermediate_point ( int player_num )
 
 /* ---------------------------------------------------------------------- 
- *
- *
+ * When the player has rolled the mouse wheel up or down, we change the
+ * global mode of the game, i.e. switch to examine mode or loot mode or
+ * the like.  The rolling of game mode can also be controlled with cursor
+ * keys left and right.
+ * After the mode is applied, it will be reset automatically to 'normal'
+ * mode again.  The mode switching from mouse wheel/cursor action is done
+ * in here.  Some global modes are currently not reachable via mouse
+ * wheel action, simply because there implementation is far from finished
+ * and we can't do everything at once and maybe not within one release.
  * ---------------------------------------------------------------------- */
 void
 adapt_global_mode_for_player ( int player_num )
@@ -3365,10 +3372,13 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
 }; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
 /* ----------------------------------------------------------------------
- * Maybe there is a chest underneath the mouse cursor?  Well, this 
- * function checks if that is really so, taking into account not only the
- * floor position of the mouse cursor (which would lead to rather 
- * unintuitive clicking areas) but rather the full chest graphics.
+ * When the player has left-clicked into the game area (i.e. the isometric
+ * display of the game world), we need to check if maybe the click was
+ * targeted on a chest, that can be opened.
+ *
+ * This function checks if that really was the case, taking into account 
+ * not only the floor position of the mouse cursor (which would lead to 
+ * rather unintuitive clicking areas) but rather the full chest graphics.
  * ---------------------------------------------------------------------- */
 void
 check_for_chests_to_open ( int player_num , int chest_index ) 
@@ -3455,7 +3465,11 @@ check_for_chests_to_open ( int player_num , int chest_index )
 }; // void check_for_chests_to_open ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- * Maybe there is a chest underneath the mouse cursor?  Well, this 
+ * When the player has left-clicked into the game area (i.e. the isometric
+ * display of the game world), we need to check if maybe the click was
+ * targeted on a barrel or crate that can be smashed.
+ *
+ * This 
  * function checks if that is really so, taking into account not only the
  * floor position of the mouse cursor (which would lead to rather 
  * unintuitive clicking areas) but rather the full chest graphics.
@@ -3586,8 +3600,11 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 }; // void check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the player has left-clicked into the game area (i.e. the isometric
+ * display of the game world), we need to check if maybe the click was
+ * targeted on a droid.  
+ * In case that was so, we need to start a dialog or maybe launch an 
+ * attack movement.
  * ---------------------------------------------------------------------- */
 void
 check_for_droids_to_attack_or_talk_with ( int player_num ) 
