@@ -53,6 +53,9 @@ void
 PrepareScaledSurface(int With_Screen_Update)
 {
 #ifdef NEW_ENGINE
+
+  SDL_Flip( ne_screen );
+
   return;
 #else
   int bpp;

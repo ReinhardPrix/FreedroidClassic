@@ -100,6 +100,7 @@ enum _sounds
 #define NE_BULLET_BLOCK_FILE 	"../graphics/bullet.bmp"
 #define NE_BLAST_BLOCK_FILE 	"../graphics/blast.bmp"
 #define NE_FRAME_FILE		"../graphics/rahmen.bmp"
+#define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"
@@ -111,7 +112,7 @@ enum _sounds
 #define INFLUENCEBILD_PCX          "../graphics/influ.bmp"
 #define DIGITBILD_PCX              "../graphics/digits.bmp"
 #define ENEMYBILD_PCX              "../graphics/enemy.bmp"
-#define SEITENANSICHTBILD_PCX      "../graphics/ship.bmp"
+#define SEITENANSICHTBILD_PCX      "../graphics/ship.bm"
 #define EL_BLOCKS_FILE_PCX         "../graphics/ship2.bmp"
 #define FONTBILD_PCX               "../graphics/parafont.bmp"
 #define CONSOLENBILD_PCX           "../graphics/console.bmp"

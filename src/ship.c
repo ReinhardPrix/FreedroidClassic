@@ -217,10 +217,59 @@ EnterElevator (void)
  *
  *
  *-----------------------------------------------------------------*/
+#ifdef NEW_ENGINE
 void
 ShowElevators (void)
 {
   int curLevel = CurLevel->levelnum;
+  SDL_Surface *tmp;
+  SDL_Rect SourceRectangle;
+  SDL_Rect TargetRectangle;
+
+  DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
+
+  /* Zuerst Screen loeschen (InternalScreen) */
+  //  ClearGraphMem (RealScreen);
+  
+  /* Userfenster faerben */
+  SetUserfenster (EL_BG_COLOR, Outline320x200);
+  DisplayRahmen (Outline320x200);	// Rahmen dazu 
+  SetInfoline (NULL, NULL);
+
+  //DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ElevatorPicture, 
+  //USERFENSTERBREITE, USERFENSTERHOEHE, Outline320x200);
+
+  tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
+  SourceRectangle.x=0;
+  SourceRectangle.y=0;
+  SourceRectangle.w=USERFENSTERBREITE;
+  SourceRectangle.h=USERFENSTERHOEHE;
+  TargetRectangle.x=USERFENSTERPOSX;
+  TargetRectangle.y=USERFENSTERPOSY;
+  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+  
+
+  AlleLevelsGleichFaerben ();
+  AlleElevatorsGleichFaerben ();
+
+  HilightLevel (curLevel);
+
+  PrepareScaledSurface( TRUE );
+
+  SDL_FreeSurface(tmp);
+
+  DebugPrintf("\nvoid ShowElevators(void): end of function reached.");
+
+  return;
+
+} /* ShowElevators() */
+#else
+void
+ShowElevators (void)
+{
+  int curLevel = CurLevel->levelnum;
+
+  DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
 
   /* Zuerst Screen loeschen (InternalScreen) */
   //  ClearGraphMem (RealScreen);
@@ -240,10 +289,12 @@ ShowElevators (void)
 
   PrepareScaledSurface(TRUE);
 
+  DebugPrintf("\nvoid ShowElevators(void): end of function reached.");
+
   return;
 
 } /* ShowElevators() */
-
+#endif
 
 /*@Function============================================================
 @Desc: EnterKonsole(): does all konsole- duties
