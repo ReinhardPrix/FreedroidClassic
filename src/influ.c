@@ -285,17 +285,6 @@ MoveInfluence (void)
   // We store the influencers position for the history record and so that others
   // can follow his trail.
   //
-  /*
-  for ( i = 0 ; i < (MAX_INFLU_POSITION_HISTORY-1) ; i++ )
-    {
-      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].x = 
-	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].x;
-      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].y = 
-	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].y;
-    }
-  Me.Position_History[0].x=Me.pos.x;
-  Me.Position_History[0].y=Me.pos.y;
-  */
   CurrentZeroRingIndex++;
   CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
   Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me.pos.x;
@@ -325,7 +314,7 @@ MoveInfluence (void)
 	}
     }
 
-  /* Time passed before entering Transfermode ?? */
+  // Time passed before entering Transfermode ??
   if ( TransferCounter >= WAIT_TRANSFERMODE )
     {
       Me.status = TRANSFERMODE;
@@ -414,6 +403,27 @@ MoveInfluence (void)
   if ( fabsf(planned_step_y) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
+    }
+  //--------------------
+  // Now if the influencer is on some form of conveyor belt, we adjust the planned step
+  // accoringly
+  //
+  switch ( CurLevel->map[ (int) rintf(Me.pos.y) ] [ (int) rintf( Me. pos.x ) ] )
+    {
+    case CONVEY_L:
+      planned_step_x+=10*Frame_Time();
+      break;
+    case CONVEY_D:
+      planned_step_y+=10*Frame_Time();
+      break;
+    case CONVEY_R:
+      planned_step_x-=10*Frame_Time();
+      break;
+    case CONVEY_U:
+      planned_step_y-=10*Frame_Time();
+      break;
+    default:
+      break;
     }
   Me.pos.x += planned_step_x;
   Me.pos.y += planned_step_y;
