@@ -47,7 +47,7 @@ EXTERN void set_up_texture_for_automap ( void );
 EXTERN void show_automap_data_ogl ( void );
 EXTERN void show_automap_data_sdl ( void );
 EXTERN void insert_old_map_info_into_texture ( void );
-
+EXTERN void full_update_of_automap_texture ( void );
 
 // init.c
 #undef EXTERN

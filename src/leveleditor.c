@@ -4686,7 +4686,7 @@ LevelEditor(void)
 	  if ( TabPressed () )
 	  {
 	      GameConfig . Automap_Visible = ! GameConfig . Automap_Visible ;
-	      
+	      full_update_of_automap_texture ( );
 	      while ( TabPressed() );
 	  }
 
