@@ -90,6 +90,8 @@ main (int argc, char *const argv[])
       while ( (!GameOver && !QuitProgram) || ServerMode )
 	{
 
+	  CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
+
 	  if ( ServerMode ) AcceptConnectionsFromClients ( ) ;
 
 	  if ( ServerMode ) ListenToAllRemoteClients ( ) ; 
@@ -162,11 +164,14 @@ main (int argc, char *const argv[])
 	  CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
 	                                // he should be put into the next one already, to link them smoothly
 
+
+	  /*
 	  if (CurLevel->empty == 2)
 	    {
 	      LevelGrauFaerben ();
 	      CurLevel->empty = TRUE;
 	    }		    
+	  */
 
 	  CheckIfMissionIsComplete (); 
 
@@ -189,6 +194,7 @@ UpdateCountersForThisFrame ( int PlayerNum )
 {
   static long Overall_Frames_Displayed=0;
   int i;
+  Level UpdateLevel = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -223,8 +229,8 @@ UpdateCountersForThisFrame ( int PlayerNum )
 
       if (ShipEmptyCounter > 1)
 	ShipEmptyCounter--;
-      if (CurLevel->empty > 2)
-	CurLevel->empty--;
+      if ( UpdateLevel->empty > 2)
+	UpdateLevel->empty--;
 
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	{

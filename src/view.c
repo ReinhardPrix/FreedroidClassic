@@ -419,7 +419,7 @@ AssembleCombatPicture (int mask)
 {
   int MapBrick;
   int line, col;
-  int i;
+  int i, LineStart, LineEnd, ColStart, ColEnd ;
   int PlayerNum;
   int minutes;
   int seconds;
@@ -447,12 +447,22 @@ AssembleCombatPicture (int mask)
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
+  //--------------------
+  // We select the following area to be the map excerpt, that can be
+  // visible at most.  This is nescessare now that the Freedroid RPG is
+  // going to have larger levels and we don't want to do 100x100 cyles
+  // for nothing each frame.
+  //
+  LineStart = Me [ 0 ] . pos . y - 7 ;
+  LineEnd = Me [ 0 ] . pos . y + 7 ;
+  ColStart = Me [ 0 ] . pos . x - 7 ;
+  ColEnd = Me [ 0 ] . pos . x + 7 ;
                          
   SDL_SetClipRect (Screen , &User_Rect);
 
-  for (line = -5; line < DisplayLevel->ylen + 5; line++)
+  for (line = LineStart; line < LineEnd; line++)
     {
-      for (col = -5; col < DisplayLevel->xlen + 5; col++)
+      for (col = ColStart; col < ColEnd; col++)
 	{
 	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {

@@ -187,6 +187,7 @@ EXTERN void LoadAndShowStats ( char* CoreFilename );
 #else
 #define EXTERN extern
 #endif
+EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
 EXTERN void AnimateTeleports (void);

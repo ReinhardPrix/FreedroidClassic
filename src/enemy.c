@@ -1001,6 +1001,48 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 }; // void InitiateDeathOfEnemy ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+TeleportToClosestWaypoint ( Enemy ThisRobot )
+{
+  int i;
+  float BestDistance = 10000;
+  float NewDistance;
+  Level ThisLevel = curShip . AllLevels [ ThisRobot->pos.z ] ;
+  int BestWaypoint = ( -1 );
+
+  DebugPrintf ( 0 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
+  ThisRobot->AdvancedCommand = 0 ;
+  
+  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+    {
+      if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
+      
+      NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
+			   ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
+			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
+			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
+
+      if ( NewDistance <= BestDistance )
+	{
+	  BestDistance = NewDistance;
+	  BestWaypoint = i ;
+	}
+
+    }
+
+  //--------------------
+  // Now we have found a global minimum.  So we 'teleport' there.
+  //
+  ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
+  ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
+  ThisRobot -> nextwaypoint = BestWaypoint ;
+  ThisRobot -> lastwaypoint = BestWaypoint ;
+
+}; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
  * This function moves a single enemy.  It is used by MoveEnemys().
  * ---------------------------------------------------------------------- */
 void 
@@ -1026,7 +1068,6 @@ MoveThisEnemy( int EnemyNum )
   if ( ThisRobot->energy <= 1)
     {
       InitiateDeathOfEnemy ( ThisRobot );
-
       return;	// this one's down, so we can move on to the next
     }
   
@@ -1041,6 +1082,7 @@ MoveThisEnemy( int EnemyNum )
   //
   if ( ThisRobot->warten > 0) return;
 
+  if ( ThisRobot->AdvancedCommand == 2 ) TeleportToClosestWaypoint ( ThisRobot );
   //--------------------
   // Now check for collisions of this enemy with his colleagues
   //

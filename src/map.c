@@ -101,10 +101,90 @@
 #define POSITION_Y_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosY="
 #define BIG_MAP_INSERT_TYPE_STRING "BigGraphicsInsertType="
 
+#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
+
+/* ----------------------------------------------------------------------
+ * Now that we plan not to use hard-coded and explicitly human written 
+ * coordinates any more, we need to use some labels instead.  But there
+ * should be a function to conveniently resolve a given label within a
+ * given map.  That's what this function is supposed to do.
+ * ---------------------------------------------------------------------- */
+void
+ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelNum )
+{
+  Level ResolveLevel = curShip . AllLevels [ LevelNum ] ;
+  int i;
+  
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( ResolveLevel->labels [ i ] . pos . x == (-1) ) continue;
+      
+      if ( !strcmp ( ResolveLevel->labels [ i ] . label_name , MapLabel ) )
+	{
+	  PositionPointer->x = ResolveLevel->labels [ i ] . pos . x ;
+	  PositionPointer->y = ResolveLevel->labels [ i ] . pos . y ;
+	  PositionPointer->level = LevelNum ;
+	  DebugPrintf ( 0 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
+			MapLabel , PositionPointer->x , PositionPointer->y , PositionPointer->level );
+	  return;
+	}
+    }
+
+  PositionPointer->x = -1;
+  PositionPointer->y = -1;
+  PositionPointer->level = -1 ;
+  DebugPrintf ( 0 , "\nResolving map label '%s' failed on level %d." ,
+		MapLabel , LevelNum );
+}; // void ResolveMapLabel ( char* MapLabel , grob_point* PositionPointer )
+
+/* ----------------------------------------------------------------------
+ * This is the ultimate function to resolve a given label within a
+ * given SHIP.
+ * ---------------------------------------------------------------------- */
+void
+ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer )
+{
+  int i ;
+
+  //--------------------
+  // We empty the given target pointer, so that we can tell
+  // a successful resolve later...
+  //
+  PositionPointer->x = -1;
+  PositionPointer->y = -1;
+  
+  //--------------------
+  // Now we check each level of the ship, if it maybe contains this
+  // label...
+  //
+  for ( i = 0 ; i < curShip.num_levels ; i ++ )
+    {
+      ResolveMapLabelOnLevel ( MapLabel , PositionPointer , i );
+      
+      if ( PositionPointer->x != ( -1 ) ) return;
+    }
+
+  DebugPrintf ( 0 , "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Resolving map label '%s' failed on the complete ship!\n\
+This is a severe error in the game data of Freedroid.\n\
+\n\
+Please inform the developers about the problem, best by sending e-mail\n\
+to freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot in advance and sorry if this interrupts a major game of yours.\n\
+But for now Freedroid will terminate to draw attention to the internal game\n\
+data problem it could not resolve...\n\
+----------------------------------------------------------------------\n" ,
+		MapLabel );
+  Terminate ( ERR );
+
+}; // void ResolveMapLabelOnShip ( char* MapLabel , grob_point* PositionPointer , int LevelNum )
 
 /* ----------------------------------------------------------------------
  *
@@ -442,6 +522,7 @@ CollectAutomapData ( void )
   gps ObjPos;
   static int TimePassed;
   int level = Me [ 0 ] . pos . z ;
+  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   ObjPos . z = Me [ 0 ] . pos . z ;
 
@@ -456,11 +537,11 @@ CollectAutomapData ( void )
   //--------------------
   // Now we do the actual checking for visible wall components.
   //
-  for ( y = 0 ; y < CurLevel->ylen ; y ++ )
+  for ( y = 0 ; y < AutomapLevel->ylen ; y ++ )
     {
-      for ( x = 0 ; x < CurLevel->xlen ; x ++ )
+      for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
 	{
-	  if ( IsWallBlock( CurLevel->map[y][x] ) ) 
+	  if ( IsWallBlock( AutomapLevel->map[y][x] ) ) 
 	    {
 	      //--------------------
 	      // First we check, if there are some right sides of walls visible
@@ -513,6 +594,7 @@ void
 SmashBox ( float x , float y )
 {
   int map_x, map_y;
+  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   map_x=(int)rintf(x);
   map_y=(int)rintf(y);
@@ -521,14 +603,14 @@ SmashBox ( float x , float y )
   // first we see if there are any destructible map tiles, that need to
   // be destructed this way...
   //
-  switch ( CurLevel->map[ map_y ][ map_x ] )
+  switch ( BoxLevel->map[ map_y ][ map_x ] )
     { 
     case BOX_4:
     case BOX_3:
     case BOX_2:
     case BOX_1:
-      CurLevel->map[ map_y ][ map_x ] = FLOOR;
-      StartBlast( map_x , map_y , CurLevel->levelnum , DRUIDBLAST );
+      BoxLevel->map[ map_y ][ map_x ] = FLOOR;
+      StartBlast( map_x , map_y , BoxLevel->levelnum , DRUIDBLAST );
       DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
       break;
     default:
@@ -605,48 +687,6 @@ Sorry...\n\
 }; // int GetMapBrick( ... ) 
  
 /* ---------------------------------------------------------------------- 
- * This function finds the lift number what corresponds to the current
- * position of the influencer.
- *
- * A return value of  (-1) means: No lift connected to here found !!
- * Other return values contain the number of the lift in AllLifts[],
- * that has a connection to this square.
- *
- * ---------------------------------------------------------------------- */
-int
-GetCurrentLift (void)
-{
-  int i;
-  int curlev = CurLevel->levelnum;
-  int gx, gy;
-
-  gx = rintf(Me[0].pos.x);
-  gy = rintf(Me[0].pos.y);
-
-  DebugPrintf( 1 , "\nint GetCurrentLift( void ): curlev=%d gx=%d gy=%d" , curlev, gx, gy );
-  DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
-  for (i = 0; i < curShip.num_lifts+1; i++)
-    {
-      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
-    }
-
-  for (i = 0; i < curShip.num_lifts+1; i++) // we check for one more than present, so the last reached
-                                            // will really mean: NONE FOUND.
-    {
-      if (curShip.AllLifts[i].level != curlev)
-	continue;
-      if ((curShip.AllLifts[i].x == gx) &&
-	  (curShip.AllLifts[i].y == gy))
-	break;
-    }
-
-  if (i == curShip.num_lifts+1)	// none found
-    return -1;
-  else
-    return i;
-}; // int GetCurrentLift ( void )
-
-/* ---------------------------------------------------------------------- 
  * This function checks if something special has to be done, cause the
  * Influencer or tux has stepped on some special fields like a lifts or
  * a console or a refresh or something like that.
@@ -680,14 +720,12 @@ ActSpecialField ( int PlayerNum )
       Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 , FALSE );
     }
 
-
   SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
   MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
 
   switch (MapBrick)
     {
-
       /*
     case LIFT:
       if ( ! ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
@@ -781,6 +819,7 @@ AnimateRefresh (void)
   static float InnerWaitCounter = 0;
   int i;
   int x, y;
+  Level RefreshLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
@@ -788,12 +827,12 @@ AnimateRefresh (void)
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     {
-      x = CurLevel->refreshes[i].x;
-      y = CurLevel->refreshes[i].y;
+      x = RefreshLevel->refreshes[i].x;
+      y = RefreshLevel->refreshes[i].y;
       if (x == 0 || y == 0)
 	break;
 
-      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
+      RefreshLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
 
     }				/* for */
 
@@ -811,6 +850,7 @@ AnimateConsumer (void)
   static float InnerWaitCounter = 0;
   int i;
   int x, y;
+  Level ConsumerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   DebugPrintf (2, "\nvoid AnimateConsumer(void):  real function call confirmed.");
 
@@ -818,12 +858,12 @@ AnimateConsumer (void)
 
   for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
     {
-      x = CurLevel->consumers[i].x;
-      y = CurLevel->consumers[i].y;
+      x = ConsumerLevel->consumers[i].x;
+      y = ConsumerLevel->consumers[i].y;
       if (x == 0 || y == 0)
 	break;
 
-      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
+      ConsumerLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
 
     }				/* for */
 
@@ -2509,7 +2549,10 @@ GetCrew (char *filename)
       EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
       if ( EndOfThisDroidSectionPointer == NULL )
 	{
-	  DebugPrintf( 0 , "\n----------------------------------------------------------------------\nGetCrew:  Unterminated droid section encountered!!\n\nTerminating....\n----------------------------------------------------------------------\n");
+	  DebugPrintf( 0 , "\n\
+----------------------------------------------------------------------\n\
+GetCrew:  Unterminated droid section encountered!!\n\nTerminating....\n\
+----------------------------------------------------------------------\n");
 	  Terminate(ERR);
 	}
       // EndOfThisDroidSectionPointer[0]=0;
@@ -2528,6 +2571,104 @@ GetCrew (char *filename)
 
   return (OK);
 }; // int GetCrew ( ... ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+GetThisLevelsSpecialForces ( char* SearchPointer , int OurLevelNumber , int FreeAllEnemysPosition , char* EndOfThisLevelData )
+{
+  char TypeIndicationString[1000];
+  int ListIndex;
+  char* StartMapLabel;
+  location StartupLocation;
+
+  while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
+    {
+      SearchPointer += strlen ( SPECIAL_FORCE_INDICATION_STRING );
+      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
+      TypeIndicationString[3]=0;
+      DebugPrintf( 1 , "\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
+
+      // Now that we have got a type indication string, we only need to translate it
+      // into a number corresponding to that droid in the droid list
+      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
+	{
+	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
+	}
+      if ( ListIndex == Number_Of_Droid_Types )
+	{
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+The function reading and interpreting the crew file stunbled into something:\n\
+\n\
+It was unable to assign the SPECIAL FORCE droid type identification string '%s' found \n\
+in the entry of the droid types allowed for level %d to an entry in\n\
+the List of droids obtained from the gama data specification\n\
+file you use.  \n\
+\n\
+Please check that this type really is spelled correctly, that it consists of\n\
+only three characters and that it really has a corresponding entry in the\n\
+game data file with all droid type specifications.\n\
+\n\
+But for now Freedroid will terminate to draw attention to the sound problem\n\
+it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , TypeIndicationString , OurLevelNumber );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  DebugPrintf( 1 , "\nSpecial force's Type indication string %s translated to type Nr.%d." , 
+		       TypeIndicationString , ListIndex );
+	}
+
+      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
+	{
+	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	}
+      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
+	{
+	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
+	  Terminate(ERR);
+	}
+
+      ReadValueFromString ( SearchPointer ,"X=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.x , EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Y=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.y , EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Fixed=","%d", &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Marker=","%d", &AllEnemys[ FreeAllEnemysPosition ].Marker , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"AdvancedCommand=","%d", &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Parameter1=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter1 , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Parameter2=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter2 , 
+			    EndOfThisLevelData );
+      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].is_friendly , 
+			    EndOfThisLevelData );
+
+      StartMapLabel = 
+	ReadAndMallocStringFromData ( SearchPointer , "StartUpAtLabel=\"" , "\"" ) ;
+
+      ResolveMapLabelOnShip ( StartMapLabel , &StartupLocation );
+      AllEnemys[ FreeAllEnemysPosition ].pos.x = StartupLocation.x;
+      AllEnemys[ FreeAllEnemysPosition ].pos.y = StartupLocation.y;
+
+      AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
+      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
+      AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
+
+    } // while Special force droid found...
+
+  NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
+
+}; // void GetThisLevelsSpecialForces ( char* SearchPointer )
 
 /* ----------------------------------------------------------------------
  * This function receives a pointer to the already read in crew section
@@ -2555,11 +2696,6 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
-#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
-
-#define DROID_DECISION_REQUEST_LIST_START_STRING "Start of Decision-Request List for this friendly droid"
-#define DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
-
 
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -2652,98 +2788,12 @@ Sorry...\n\
 
     }  // while (enemy-limit of this level not reached) 
 
-
   SearchPointer=SectionPointer;
-  while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
-    {
-      SearchPointer += strlen ( SPECIAL_FORCE_INDICATION_STRING );
-      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
-      TypeIndicationString[3]=0;
-      DebugPrintf( 1 , "\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
 
-      // Now that we have got a type indication string, we only need to translate it
-      // into a number corresponding to that droid in the droid list
-      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
-	{
-	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
-	}
-      if ( ListIndex == Number_Of_Droid_Types )
-	{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
-The function reading and interpreting the crew file stunbled into something:\n\
-\n\
-It was unable to assign the SPECIAL FORCE droid type identification string '%s' found \n\
-in the entry of the droid types allowed for level %d to an entry in\n\
-the List of droids obtained from the gama data specification\n\
-file you use.  \n\
-\n\
-Please check that this type really is spelled correctly, that it consists of\n\
-only three characters and that it really has a corresponding entry in the\n\
-game data file with all droid type specifications.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the sound problem\n\
-it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , TypeIndicationString , OurLevelNumber );
-	  Terminate(ERR);
-	}
-      else
-	{
-	  DebugPrintf( 1 , "\nSpecial force's Type indication string %s translated to type Nr.%d." , 
-		       TypeIndicationString , ListIndex );
-	}
+  GetThisLevelsSpecialForces ( SearchPointer , OurLevelNumber , FreeAllEnemysPosition , EndOfThisLevelData );
 
-      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
-	{
-	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
-	}
-      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
-	{
-	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
-	  Terminate(ERR);
-	}
 
-      ReadValueFromString ( SearchPointer ,"X=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.x , EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Y=","%lf", &AllEnemys[ FreeAllEnemysPosition ].pos.y , EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Fixed=","%d", &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Marker=","%d", &AllEnemys[ FreeAllEnemysPosition ].Marker , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"AdvancedCommand=","%d", &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Parameter1=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter1 , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Parameter2=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter2 , 
-			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].is_friendly , 
-			    EndOfThisLevelData );
 
-      AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
-      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
-      AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
-
-      //--------------------
-      // AT THIS POINT WE KNOW WHETHER THE DROID IS FRIENDLY OR NOT
-      // In case of a friendly droid, we need to check out the question-response list for
-      // this droid and read it into the appropriate data structures in AllEnemys too
-      //
-      /*
-      if ( AllEnemys[ FreeAllEnemysPosition ].is_friendly )
-	{
-	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
-	  GetThisRobotsDecisionRequestList( SearchPointer , FreeAllEnemysPosition );
-	}
-      */
-
-    } // while Special force droid found...
-
-  NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
-  // getchar();
 }; // void GetThisLevelsDroids( char* SectionPointer )
 
 /* ---------------------------------------------------------------------- 

@@ -1586,19 +1586,18 @@ InitNewMissionList ( char *MissionName )
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EventSectionPointer;
-  char *StartPointPointer;
   // char *MissionTargetPointer;
   char* Liftname;
   char* Crewname;
   char* GameDataName;
   char* Shipname;
   int NumberOfStartPoints=0;
-  int RealStartPoint=0;
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
   int MissionTargetIndex = 0;
   int PlayerNum;
+  location StartPosition;
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
@@ -1774,6 +1773,8 @@ InitNewMissionList ( char *MissionName )
     }
   DebugPrintf (1, "\nFound %d different starting points for the mission in the mission file.", NumberOfStartPoints );
 
+  /*
+
   //--------------------
   // Now that we know how many different starting points there are, we can randomly select
   // one of them and read then in this one starting point into the right structures...
@@ -1795,6 +1796,13 @@ InitNewMissionList ( char *MissionName )
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me[0].pos.y=StartingYPos;
+  */
+
+
+  ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
+  Me [ 0 ] . pos . x = StartPosition . x ;
+  Me [ 0 ] . pos . y = StartPosition . y ;
+  Me [ 0 ] . pos . z = StartPosition . level ;
 
   Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
   Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
@@ -1831,7 +1839,7 @@ InitNewMissionList ( char *MissionName )
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   InitBars = TRUE;
 
-  SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
+  SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ->Background_Song_Name );
 
   //--------------------
   // Now that the briefing and all that is done,
