@@ -61,10 +61,8 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
-#include <vga.h>
-// #include <vgagl.h>
-#include <vgakeyboard.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -158,12 +156,15 @@ Frame_Time (void)
 
 
   // Rate_To_Be_Returned = (1.0 / FPSover10);
+  /*
   if ( Overall_Frames_Displayed < 100 )
     {
       Rate_To_Be_Returned = (1.0 / FPSover10);
       return Rate_To_Be_Returned;
     }
-  else Rate_To_Be_Returned = (1.0 / FPSover100);
+  */
+
+  Rate_To_Be_Returned = (1.0 / FPSover100);
 
   // if (FPSover10 > 20)
   /* if (FPSover100 > 20)

@@ -37,7 +37,6 @@
 #undef MODSCHASEIN
 #undef NOJUNKWHILEINIT
 
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -45,11 +44,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <signal.h>
-#include <time.h>
-// #include <vga.h>
-// #include <vgagl.h>
-// #include <vgakeyboard.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <getopt.h>
 
 #include "defs.h"
@@ -635,7 +631,7 @@ Title (void)
 #endif
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
-  Load_PCX_Image (TITELBILD1_PCX, RealScreen, TRUE);	/* Titelbild laden */
+  Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
 
   PrepareScaledSurface();
 

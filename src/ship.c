@@ -267,6 +267,8 @@ ShowElevators (void)
 
   HilightLevel (curLevel);
 
+  PrepareScaledSurface();
+
   DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
   return;
 } /* ShowElevators() */
