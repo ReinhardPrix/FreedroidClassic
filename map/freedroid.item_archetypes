@@ -1771,8 +1771,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 43
 ** Start of new item specification subsection **
 Item name="Small Shield"
-Position_X=347
-Position_Y=37
+Position_X=336
+Position_Y=91
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="shield"
@@ -2301,7 +2301,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=45
 Dexterity minimum required to wear/wield this item=30
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
+Item as defensive item: base_ac_bonus=24
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=35 plus duration modifier=20
 File or directory name for inventory image="large_shield/inv_image.png"
@@ -3930,24 +3930,24 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 97
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Position_X=244
-Position_Y=166
+Item name="Medium Shield"
+Position_X=347
+Position_Y=37
 Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
-Items of this type collect together in inventory="yes"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="shield"
+Item uses rotation series with prefix="small_shield"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item as defensive item: base_ac_bonus=17
+Item as defensive item: ac_bonus_modifier=4
+Base item duration=30 plus duration modifier=8
+File or directory name for inventory image="small_shield/inv_image.png"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Base list price=330
+Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
