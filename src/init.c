@@ -1640,7 +1640,7 @@ GetQuestList ( char* QuestListFilename )
 	  NumberOfEventsToTriggerAtThisAssignment ++;
 	  NextEventPointer ++;
 	}
-      DebugPrintf ( 0 , "\nDetected %d events to be triggered at this assignment." , 
+      DebugPrintf ( 1 , "\nDetected %d events to be triggered at this assignment." , 
 		    NumberOfEventsToTriggerAtThisAssignment ) ;
 
       //--------------------
@@ -1667,7 +1667,7 @@ GetQuestList ( char* QuestListFilename )
 	  NumberOfEventsToTriggerAtThisCompletition ++;
 	  NextEventPointer ++;
 	}
-      DebugPrintf ( 0 , "\nDetected %d events to be triggered at this mission completition." , 
+      DebugPrintf ( 1 , "\nDetected %d events to be triggered at this mission completition." , 
 		    NumberOfEventsToTriggerAtThisCompletition );
 
       //--------------------
@@ -2278,7 +2278,7 @@ CheckIfMissionIsComplete (void)
   int MissNum;
   int ActionNum;
   static int CheckMissionGrid; 
-#define MIS_COMPLETE_DEBUG 0
+#define MIS_COMPLETE_DEBUG 1
   
   //--------------------
   // We do not need to check for mission completed EVERY frame
@@ -2300,7 +2300,7 @@ CheckIfMissionIsComplete (void)
       if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
       if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
 
-      DebugPrintf ( 0 , "\nSomething was assigned at all..... MissNum = %d " , MissNum );
+      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nSomething was assigned at all..... MissNum = %d " , MissNum );
 
       //--------------------
       // Continue if the Mission target KillOne is given but not fullfilled

@@ -80,6 +80,7 @@ CheckForJumpThresholds ( int PlayerNum )
   float JumpStartThreshold;
 
 #define SHUFFLE_WHEN_CROSSING TRUE
+#define LEVEL_JUMP_DEBUG 1
 
   //--------------------
   // First we check for the northern threshold
@@ -92,8 +93,8 @@ CheckForJumpThresholds ( int PlayerNum )
 
       JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_north ; 
 
-      DebugPrintf ( 0 , "\nJUMP TO THE NORTH CONSIDERED!!" );
-      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH CONSIDERED!!" );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
 
       if ( JumpTarget <= -1 ) return;
 
@@ -120,10 +121,10 @@ CheckForJumpThresholds ( int PlayerNum )
 
       JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_south ; 
 
-      DebugPrintf ( 0 , "\nJUMP TO THE SOUTH CONSIDERED!!" );
-      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-      DebugPrintf ( 0 , "\nCurrent Level Y-len: %d. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> ylen );
-      DebugPrintf ( 0 , "\nCurrent Y-pos: %f. " , Me [ PlayerNum ] . pos . y );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH CONSIDERED!!" );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level Y-len: %d. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> ylen );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Y-pos: %f. " , Me [ PlayerNum ] . pos . y );
 
       if ( JumpTarget <= -1 ) return;
 
@@ -148,10 +149,10 @@ CheckForJumpThresholds ( int PlayerNum )
 
       JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_east ; 
 
-      DebugPrintf ( 0 , "\nJUMP TO THE EAST CONSIDERED!!" );
-      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-      DebugPrintf ( 0 , "\nCurrent Level X-len: %d. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> xlen );
-      DebugPrintf ( 0 , "\nCurrent X-pos: %f. " , Me [ PlayerNum ] . pos . x );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST CONSIDERED!!" );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level X-len: %d. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> xlen );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent X-pos: %f. " , Me [ PlayerNum ] . pos . x );
 
       if ( JumpTarget <= -1 ) return;
 
@@ -174,8 +175,8 @@ CheckForJumpThresholds ( int PlayerNum )
 
       JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_west ; 
 
-      DebugPrintf ( 0 , "\nJUMP TO THE WEST CONSIDERED!!" );
-      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE WEST CONSIDERED!!" );
+      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
 
       if ( JumpTarget <= -1 ) return;
 

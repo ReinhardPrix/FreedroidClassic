@@ -485,11 +485,10 @@ ShowCombatScreenTexts ( int mask )
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
-      /*
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Axis: %d %d" , input_axis.x, input_axis.y);
-      */
+
+      // PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
+      // User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+      // "Axis: %d %d" , input_axis.x, input_axis.y);
     }
 
   if ( GameConfig.Draw_Energy )
@@ -497,9 +496,9 @@ ShowCombatScreenTexts ( int mask )
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me[0].energy) );
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
-		       "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
+      // PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+      // User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
+      // "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
     }
 
   if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )

@@ -413,6 +413,23 @@ SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 ----------------------------------------------------------------------
 
 ** Beginning of new Level **
+Level=17
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+
+** End of this levels droid data **
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+** Beginning of new Level **
 Level=20
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
@@ -517,10 +534,10 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
-SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
-SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
-SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
+SpecialForce: Type=615 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
+SpecialForce: Type=629 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
+SpecialForce: Type=711 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Master Arena Lurker"
 
 ** End of this levels droid data **
 
