@@ -1148,8 +1148,7 @@ Cheatmenu (void)
 
 	case 't': /* Teleportation */
 	  ClearGraphMem ();
-	  printf_SDL (Screen, x0, y0, "Enter Level, X, Y: ");
-	  input = GetString (40, 2);
+	  input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "\nEnter Level, X, Y\n(and please don't forget the commas...)\n> " );
 	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
@@ -1158,8 +1157,7 @@ Cheatmenu (void)
 
 	case 'r': /* change to new robot type */
 	  ClearGraphMem ();
-	  printf_SDL (Screen, x0, y0, "Type number of new robot: ");
-	  input = GetString (40, 2);
+	  input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Type number of new robot: ");
 	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  for (i = 0; i < Number_Of_Droid_Types ; i++)
 	    if (!strcmp (Druidmap[i].druidname, input))
@@ -1189,9 +1187,9 @@ Cheatmenu (void)
 
 	case 'e': /* complete heal */
 	  ClearGraphMem();
-	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
-	  printf_SDL (Screen, -1, -1, "Enter your new energy: ");
-	  input = GetString (40, 2);
+	  // printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
+	  // printf_SDL (Screen, -1, -1, "Enter your new energy: ");
+	  input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Enter your new energy: " );
 	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d", &num);
 	  free (input);
@@ -1212,8 +1210,7 @@ Cheatmenu (void)
 	  break;
 
 	case 'm': /* Show deck map in Concept view */
-	  printf_SDL (Screen, -1, -1, "\nLevelnum: ");
-	  input = GetString (40, 2);
+	  input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Levelnum: " );
 	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d", &LNum);
 	  free (input);
@@ -2101,12 +2098,11 @@ Get_Server_Name ( void )
   char* Temp;
   InitiateMenu(  NE_TITLE_PIC_BACKGROUND_CODE );
 
-  DisplayText ( "\n\
+  Temp = GetString( 140 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
  Please enter name of server to connect to:\n\
  You can give an empty string for the local host.\n\
- \n      " , 50 , 50 , NULL );
-
-  Temp = GetString( 140 , FALSE );
+ > " );
+  
   if ( Temp == NULL )
     {
       strcpy ( ServerName , "NoSeverNameGiven" );
@@ -2128,10 +2124,10 @@ Get_New_Character_Name ( void )
   char* Temp;
   InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
-  DisplayText ( "\n     Enter the name\n     for the new hero:\n   > " ,
-		50 , 50 , NULL );
-
-  Temp = GetString ( 20 , FALSE );
+  Temp = GetString ( 20 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
+     Please enter a name\n\
+     for the new hero: \n\
+     > " );
 
   //--------------------
   // In case 'Escape has been pressed inside GetString, then a NULL pointer
@@ -2769,8 +2765,7 @@ Credits_Menu (void)
                                       Bastian Salmela\n\n\n\
    ADDITIONAL ARTWORK:\n\n\
                                       Johannes Prix\n\n\
-                                      Simon Newton\n\n\
-                                      Lukas Huber\n\n\n\
+                                      Simon Newton\n\n\n\
    STORY AND CHARACTERS:\n\n\
                                       Johannes Prix\n\n\n\
    LEVEL DESIGN:\n\n\

@@ -2076,7 +2076,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
  * 
  * ----------------------------------------------------------------- */
 char *
-GetString (int MaxLen, int echo)
+GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead_promt )
 {
   char *input;		// pointer to the string entered by the user
   int key;          // last 'character' entered 
@@ -2092,9 +2092,10 @@ GetString (int MaxLen, int echo)
       return NULL;
     }
 
+  height = FontHeight (GetCurrentFont());
+
   x0 = MyCursorX;
   y0 = MyCursorY;
-  height = FontHeight (GetCurrentFont());
   
   if ( use_open_gl )
     StoreMenuBackground ( 0 );
@@ -2118,7 +2119,8 @@ GetString (int MaxLen, int echo)
     {
       if ( use_open_gl )
 	{
-	  RestoreMenuBackground ( 0 );
+	  // RestoreMenuBackground ( 0 );
+	  blit_special_background ( background_code );
 	}
       else
 	{
@@ -2126,7 +2128,13 @@ GetString (int MaxLen, int echo)
 	  our_SDL_blit_surface_wrapper (store, NULL, Screen, &tmp_rect);
 	}
 
-      PutString (Screen, x0, y0, input);
+      DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
+
+      x0 = MyCursorX;
+      y0 = MyCursorY;
+
+      PutString ( Screen, x0, y0, input);
+      // PutString ( Screen, -1 , -1 , input);
       our_SDL_flip_wrapper (Screen);
       
       key = getchar_raw ();  
