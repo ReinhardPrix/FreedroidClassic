@@ -20,14 +20,16 @@ freedroid \- a free Paradroid clone
 .B ]
 .SH DESCRIPTION
 .B Freedroid
-is a faithful remake of the classic C64 home computer game Paradroid written by Andrew Braybrook.
+is a remake of the classic C64 home computer game Paradroid by Andrew Braybrook, including
+also various extensions.
 .\" While the original in-game graphics and game screen size from the C64 version are still the
 .\" default, we have also chosen to offer an additional theme with improved graphics, 
 .\" additional background music and also animated 3d versions of the droids in the game.
 
 The player takes control of the so-called 001 influence device and must clear a freighter
 of robots by either shooting them or seizing control over them.
-Seizing control is done in a small subgame of placing logical circuits.
+Seizing control is done in a small logic subgame, in which you have to connect more
+electrical connections within 10 seconds than your opponent.
 .\" 
 .\" 
 .\" 
@@ -39,14 +41,12 @@ Seizing control is done in a small subgame of placing logical circuits.
 Prints out Freedroid version information.
 .TP 8
 .B -q \fRor\fB --nosound
-This option will suppress all sound output.  
+Suppress all sound output.  
 Very useful if you don't have your sound card configured yet or
 don't have any sound hardware at all.
 .TP 8
 .B -f \fRor\fB --fullscreen
-This instructs Freedroid to work in full screen mode, which is the default mode of operation.  
-Please note that it is strongly recommended that your X Window system is configured to feature
-a move with 640x480 screen resolution, but it will also work if this is not the case.
+Work in full screen mode.
 Note that fullscreen or window mode can also be toggled from within the game via the options
 menu.
 .TP 8
@@ -54,10 +54,10 @@ menu.
 Start Freedroid in a window rather than using full screen mode.
 .TP 8
 .B -j \fRor\fB --sensitivity
-This option can be used to control joystick sensitivity.
+Control joystick sensitivity. Value must lie in between [0:32]. Default is 1.
 .TP 8
 .B -d LEVEL \fRor\fB --debug=LEVEL
-This option can be used to control debug output of the game.  Debug output will be printed to
+Control debug output of the game.  Debug output will be printed to
 stderr, i.e. in most cases to the console you started Freedroid from.  The variable LEVEL
 controls how much debug output you would like to have.  LEVEL 0 is the default and means (almost)
 no debug output.  LEVEL 1 prints the most important debug messages and LEVEL 2 or LEVEL 3 print
@@ -153,7 +153,7 @@ Freedroid can now be considered pretty stable.  However we're sure that there ar
 .\" 
 .\" 
 .\" 
-.SH AUTHOR
+.SH AUTHORS
 Johannes Prix, 
 Reinhard Prix,
 Bastian Salmela, 

@@ -2,9 +2,10 @@
 
 Release TODO
 ============
-- write some Changelog summary vs 0.8.4
-- write a HappyPenguin announcement
-- update INSTALL-instructions, README, News etc..
+(done) - write some Changelog summary vs 0.8.4
+(done)- write a HappyPenguin announcement
+(done)- update INSTALL-instructions, README, News etc..
+
 - produce the .tar.gz archive and test it
 - playtest on all possible machines
 - ? produce binary .tgz, rpm's and .deb packages? (later)

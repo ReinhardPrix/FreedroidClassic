@@ -1,58 +1,23 @@
 Project webpage:  http://sourceforge.net/projects/freedroid/
 
-Welcome to
 
     FREEDROID :  R E A D M E
    --------------------------
-
-A Linux game by Johannes Prix and Reinhard Prix, inpired by 
-Andrew Braybrook's classic Paradroid on the good old Commodore C64.
+This is a clone of the classic game "Paradroid" on Commodore 64
+with some improvements and extensions to the original version.
 
 Installation & Compilation
 --------------------------
 !! Please see the file INSTALL for instructions !!
 
-
-Introduction
-============
-This is a clone of the classic game "Paradroid" on Commodore 64
-with some improvements and extensions to the classic version.
-
-The Game
-========
-In this game, you control a robot, depicted by a small white ball with a
-few numbers within an interstellar spaceship consisting of several decks
-connected by elevators.
-The aim of the game is to destroy all enemy robots, depicted by small black
-balls with a few numbers, by either shooting them or seizing control over them
-by creating connections in a short subgame of electric circuits.
-
-Input Devices
-=============
-Currently, the only way to control the white robot is via keyboard, using
-the cursor keys and the space key.  Cursors are for moving aroung and aiming.
-Space bar is for fireing (with direction) or for changing to transfer mode,
-a prerequisite for seizing control over an enemy druid.
-
-The Level Editor
-================
-There was a level editor with the MS-DOS Version of this game, which we
-programmed back in 1992-1994.  For the Linux version there is a level editor
-integrated into the game.  You can access it via the menu.  You can also
-save the levels you have created, although the saved levels are currently
-damaged, sorry.
-
-Saving
-======
-No, saving is not possible.  Not now and not in the near future.  Sorry.
-But I think that would also take away much of the game difficulty, and we
-havn't designed another ship yet...
+Game Instructions
+--------------------
+see `man freedroid` for more detailed info about FreeDroid...
 
 Contact
-=======
-In case of problems, read the documentation or mail to 
+-------
+In case of problems, read the documentation or email us via the project's 
+mailing-list: freedroid-discussion@lists.sourceforge.net 
 
-johannesprix@kfunigraz.ac.at and/or r.prix@maths.soton.ac.uk 
+Have Fun with Freedroid!
 
-And Now Have Fun with Freedroid!
-================================

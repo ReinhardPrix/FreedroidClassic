@@ -623,7 +623,6 @@
 
 	* src/ship.c, src/vars.h, graphics/console_fg.png, src/defs.h, src/global.h
 	console is beginning to take shape again... but not finished yet.
-	# I have to do some proper work now ... ;)
 
 	* src/view.c:
 	haha, ShowRobotPicture() didn't give a damn about its coordinate argument !!

@@ -2,11 +2,10 @@
 
 Freedroid Installation 
 ======================
-
 [ 0) if you have downloaded your source from the cvs-archive 
    you have to start by typing `./autogen.sh']
 
-1) autogen will run `./configure' - you don't need to
+1) type `./configure'
 2) type `make' to compile the package
 
 3)a) type `make install'. By default this will try to install in 
@@ -18,9 +17,6 @@ ALTERNATIVELY:
 
 3)b) you can run the game locally by typing: 
    `cd src' followed by `./freedroid'
-
-If you don't have sound or SDL-sound installed, you might have to run
-freedroid with the command-line option `-q'.
 
 Have fun!
 Reinhard
