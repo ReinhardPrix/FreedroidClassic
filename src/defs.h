@@ -40,8 +40,12 @@
 //--------------------
 // Some technical definitions...
 //
+#ifndef TRUE
 #define TRUE (1==1)
+#endif
+#ifndef FALSE
 #define FALSE (1==0)
+#endif
 
 #define ERR 	-1
 #define OK		0
@@ -205,6 +209,7 @@ enum
 #define GRAPHICS_DIR		"graphics/"
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
+#define DIALOG_DIR		"dialogs/"
 
 #define BALL_SHAPED_DROIDS_FILE	"droids.png"
 #define TUX_MOTIONS_FILE        "tux_motions.png"
