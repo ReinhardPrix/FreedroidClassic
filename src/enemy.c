@@ -1043,7 +1043,7 @@ AttackInfluence (int enemynum)
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
       memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
       AllBullets[j].miss_hit_influencer = FALSE;
-      AllBullets[j].to_hit = 40;
+      AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
 
       // Now we set the damage of this bullet to the correct value
       AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
@@ -1227,7 +1227,7 @@ AttackInfluence (int enemynum)
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
       memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
       AllBullets[j].miss_hit_influencer = FALSE;
-      AllBullets[j].to_hit = 40;
+      AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
 
 }   /* AttackInfluence */
 

@@ -43,7 +43,7 @@ void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
-int DoMenuSelection( char* InitialText , char* MenuTexts[10] );
+int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem );
 EXTERN void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
@@ -57,16 +57,67 @@ EXTERN char Previous_Mission_Name[1000];
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 void 
+TryToRepairItem( item* RepairItem )
+{
+  int MenuPosition;
+
+#define ANSWER_YES 1
+#define ANSWER_NO 2
+
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+  while ( SpacePressed() || EnterPressed() );
+
+  if ( CalculateItemPrice ( RepairItem ) > Me.Gold ) return;
+
+  while ( 1 )
+    {
+      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 );
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  return;
+	  break;
+	case ANSWER_YES:
+	  while (EnterPressed() || SpacePressed() );
+	  RepairItem->current_duration = RepairItem->max_duration;
+	  Me.Gold -= CalculateItemPrice ( RepairItem );
+	  return;
+	  break;
+	case ANSWER_NO:
+	  while (EnterPressed() || SpacePressed() );
+	  return;
+	  break;
+	}
+    }
+}; // void TryToRepairItem( item* RepairItem )
+
+/* ----------------------------------------------------------------------
+ * This function tries to buy the item given as parameter.  Currently
+ * is just drops the item to the floor under the influencer and will
+ * reduce influencers money.
+ * ---------------------------------------------------------------------- */
+void 
 TryToBuyItem( item* BuyItem )
 {
   int x, y;
   int MenuPosition;
   int FreeIndex;
-  char* MenuTexts[ 10 ];
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
 
+  char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
@@ -92,7 +143,7 @@ TryToBuyItem( item* BuyItem )
 	    {
 	      while ( 1 )
 		{
-		  MenuPosition = DoMenuSelection( " Wanna buy? " , MenuTexts );
+		  MenuPosition = DoMenuSelection( " Wanna buy? " , MenuTexts , 1 );
 		  switch (MenuPosition) 
 		    {
 		    case (-1):
@@ -207,17 +258,158 @@ Buy_Basic_Items( void )
 
 
 /* ----------------------------------------------------------------------
+ * This is the menu, where you can buy basic items.
+ * ---------------------------------------------------------------------- */
+void
+Repair_Items( void )
+{
+#define BASIC_ITEMS_NUMBER 10
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+  item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  int Pointer_Index=0;
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+
+  //--------------------
+  // First we clean out the new Repair_Pointer_List
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Repair_Pointer_List[ i ] = NULL;
+    }
+
+  //--------------------
+  // Now we start to fill the Repair_Pointer_List
+  //
+  if ( Druidmap [ Me.type ] . weapon_item.current_duration < Druidmap [ Me.type ] . weapon_item.max_duration ) 
+    {
+      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. weapon_item );
+      Pointer_Index ++;
+    }
+  if ( Druidmap [ Me.type ] . drive_item.current_duration < Druidmap [ Me.type ] . drive_item.max_duration ) 
+    {
+      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. drive_item );
+      Pointer_Index ++;
+    }
+  if ( Druidmap [ Me.type ] . armour_item.current_duration < Druidmap [ Me.type ] . armour_item.max_duration ) 
+    {
+      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. armour_item );
+      Pointer_Index ++;
+    }
+  if ( Druidmap [ Me.type ] . shield_item.current_duration < Druidmap [ Me.type ] . shield_item.max_duration ) 
+    {
+      Repair_Pointer_List [ Pointer_Index ] = & ( Druidmap [ Me.type ]. shield_item );
+      Pointer_Index ++;
+    }
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me.Inventory [ i ].type == (-1) ) continue;
+      if ( Me.Inventory [ i ].current_duration < Me.Inventory [ i ] .max_duration ) 
+	{
+	  Repair_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+	  Pointer_Index ++;
+	}
+    }
+
+  if ( Pointer_Index == 0 )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , -1 );
+      return;
+    }
+
+
+  while ( !SpacePressed() && !EscapePressed() )
+    {
+      InitiateMenu();
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      DisplayText( " I COULD REPAIR THESE ITEMS                YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Repair_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
+	{
+	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , Repair_Pointer_List [ i + MenuInListPosition ] , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	  sprintf( DescriptionText , "%4ld" , CalculateItemPrice ( Repair_Pointer_List[ i + MenuInListPosition] ) );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	}
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
+	  else 
+	    {
+	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}      
+    } // while not space pressed...
+
+  if ( SpacePressed() ) TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+
+  while ( SpacePressed() || EscapePressed() );
+
+}; // void Repair_Items( void )
+
+
+/* ----------------------------------------------------------------------
  * 
  *
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* InitialText , char* MenuTexts[10] )
+DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
+
+  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
 
   //--------------------
   // First thing we do is find out how may options we have
@@ -345,7 +537,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
@@ -364,6 +556,7 @@ enum
 	  break;
 	case REPAIR_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
+	  Repair_Items();
 	  break;
 	case LEAVE_BUYSELLMENU:
 	  Weiter = !Weiter;
@@ -879,7 +1072,7 @@ enum
       MenuTexts[7]="Save Game";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
@@ -1201,7 +1394,7 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[2]=Options2;
       MenuTexts[3]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
@@ -1286,7 +1479,7 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
@@ -1372,7 +1565,7 @@ enum
 
   while ( !Weiter )
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
@@ -1439,7 +1632,7 @@ Single_Player_Menu (void)
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 );
 
       switch (MenuPosition) 
 	{
