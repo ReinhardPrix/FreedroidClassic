@@ -222,6 +222,7 @@ EXTERN void Influencer_Scream_Sound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void Not_Enough_Power_Sound( void );
 EXTERN void Not_Enough_Dist_Sound( void );
+EXTERN void Not_Enough_Mana_Sound( void );
 EXTERN void CrySound (void);
 EXTERN void CantCarrySound (void);
 EXTERN void ItemTakenSound (void);

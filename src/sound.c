@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 57
+#define ALL_SOUNDS 58
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -98,6 +98,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "First_Contact_Sound_1.wav",
    "Not_Enough_Power_Sound_0.wav",
    "Not_Enough_Dist_Sound_0.wav",
+   "Not_Enough_Mana_0.wav",
    "Influencer_Scream_Sound_0.wav",
    "Influencer_Scream_Sound_1.wav",
    "Influencer_Scream_Sound_2.wav",
@@ -400,6 +401,18 @@ Not_Enough_Dist_Sound ( void )
 {
   Play_Sound ( NOT_ENOUGH_DIST_SOUND );
 }
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Not_Enough_Mana_Sound ( void )
+{
+  Play_Sound ( NOT_ENOUGH_FORCE_SOUND );
+};
 
 /*@Function============================================================
 @Desc: 

@@ -54,12 +54,12 @@ int Shieldcolors[INITIAL_BLOCK_WIDTH];
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
 int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
-  {  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , 
-  {  8 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } ,  
-  {  7 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } ,  
-  {  7 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } ,  
-  {  10,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } ,  
-  {  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } 
+  {  0   ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , 
+  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
+  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
+  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
+  {  7   ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
+  {  100 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } 
 };
 
 influence_t Me[ MAX_PLAYERS ] = {

@@ -108,6 +108,7 @@ CreateTeleportal ( gps PortalTarget )
     {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
     }
 }; // void CreateTeleportal ( gps PortalTarget )
 
@@ -136,6 +137,7 @@ TeleportHome ( void )
     {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
     }
 }; // void CreateTeleportal ( gps PortalTarget )
 
@@ -164,6 +166,7 @@ ForceExplosionCircle ( gps ExpCenter )
     {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
     }
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
@@ -192,7 +195,11 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
     {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
     }
+
+
+
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
@@ -215,6 +222,7 @@ ForceToEnergyConversion ( void )
     {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
     }
 
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
