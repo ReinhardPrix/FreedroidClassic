@@ -35,37 +35,39 @@ directly form the following example.
 --------------------------------------------------
 
 *** Start of Mission File ***
-Mission Name: Classical Paradroid Mission
+Mission Name: Corporate takeover
 Physics ('game.dat') file to use for this mission: game.dat
 Ship file to use for this mission: new_ship_1.maps
 Lift file to use for this mission: new_ship_1.elevators
 Crew file to use for this mission: new_ship_1.crew
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
-In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.
+It's the the year 2400.  
 
-  However not all is yet lost:
-A small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.
+All of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.
 
- Press Space Bar to launch
+This came to be as follows:  
 
+Since 2200 military and police forces were mostly automatized.  Also interstellar traffic is mainly relying on droid control units.
+By 2310 almost all the droids were running a MegaSoft Operating System.  
+By new year 2400 it turned out that this proprietary OS was a trojan horse and from then on only responded to MS instruction signals.
+So, military and police forces are suddenly under MS control.  Interstellar traffic, also mainly controlled by droids, now depends upon MS allowance.
+Droids are roaming the streets and announcing the new rule.  
+Any resistance is met with utter violence.  
 
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.
+THE FACILITY:
 
-       Press space bar to skip instructions
+On a large asteroid in a secret research facility of the government, different operating systems and kernels were tested.
+After taking control of the governmental database, the MS learned of the facility and sees it as a potential threat to its security.  It has ruled that the facility be destroyed and all personel there be killed.
+A military battle cruiser has been dispatched to carry out this command.
 
+The scientists have no means to attack or flee.  However they have not completly given up hope.
 
-* End of Mission Briefing Text Subsection *
-* New Mission Briefing Text Subsection *
-An Influence Device can transmitt data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. 
+They have activated the asteroids defence system to protect them from direct bombardment.   They have retreated to the innermost bunker and barred all exists.  It is clear, that the scientists barricades will not last very long against the force of battle droids that will be beamed down soon.  They are piecing together a new prototype influence device.
 
+Meanwhile the battle cruiser has arrived and beamed down a contingent of battle droids to destroy all human personal.  The new 'influence device' has now booted the latest Linux 28.32.199 kernel and reports all systems up and running.
 
-
-Press space bar to skip instructions
-
-
+Press Space Bar to skip controls explanation
 
 * End of Mission Briefing Text Subsection *
 * New Mission Briefing Text Subsection *
@@ -80,7 +82,7 @@ Use cursor keys to move around.  The speed you can go depends on the druid you c
 If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
 
 
-If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red color.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
+If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
 If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
 If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
 
@@ -88,11 +90,9 @@ The P key causes the game to pause.
 The S key causes a screenshot to be taken.
 The Escape key causes the menu to pop up.
 
-Watch out for energy refreshing fields and elevators.
-
 Elevators are also entered via transfer mode if you stand still on the elevaor.
 
-    Press Fire to Play
+Press Fire to Play
 
 
 

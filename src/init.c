@@ -840,7 +840,7 @@ InitNewMission ( char *MissionName )
     }
   else
     {
-      BriefingSectionPointer += strlen ( MISSION_BRIEFING_BEGIN_STRING );
+      BriefingSectionPointer += strlen ( MISSION_BRIEFING_BEGIN_STRING ) +1;
       printf("\nMission Briefing begin BIG section found!");
     }
 

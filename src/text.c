@@ -135,8 +135,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
-  int speed = +2;
-  int maxspeed = 4;
+  int speed = +4;
+  int maxspeed = 8;
 
   // printf("\nScrollTest should be starting to scroll now...");
 

@@ -5,6 +5,12 @@ Bugs
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 
+- Our game lacks the "takeover announcement", i.e. in the original game after initiating
+  takeover, takeover game does not immediately start but the opposing units are displayed
+  first with their picutres and some text 'this is the unit that you currently control',
+  'this is the unit that you wish to control'.  That should be added before the takeover
+  game.  The SLD_Paradroid for example HAS implemented that!
+
 - (rp) SegFault caused by entering Highscore list?! also after/in takeover ?! 
 ==> tritt das wirklich immer noch auf?? -- (jp:) Ich habs seit der letzten Umstellung
     des einen Cast operators (der die Ints scheinbar fix als maximal 4 bytes voraussetzt,
