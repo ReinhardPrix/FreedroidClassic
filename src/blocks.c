@@ -705,7 +705,7 @@ Freedroid received a rotation model number that does not exist!",
 		( ModelMultiplier [ ModelNr ] * i ) + 1 );
       DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
     }    
 
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
@@ -765,7 +765,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_GREEN );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_GREEN );
     }
 }; // void LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
   
@@ -825,7 +825,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_BLUE );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_BLUE );
     }
 }; // void LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
   
@@ -885,7 +885,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_RED );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_RED );
     }
 }; // void LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
   
@@ -908,7 +908,7 @@ Load_Enemy_Surfaces( void )
     {
       for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
 	{
-	  enemy_iso_images [ j ] [ i ] . surface = NULL ;
+	  enemy_iso_images [ j ] [ i ] [ 0 ] . surface = NULL ;
 	}
     }
 

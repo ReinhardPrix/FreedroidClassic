@@ -1986,10 +1986,10 @@ There was a rotation model type given, that exceeds the number of rotation model
       // {
       if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
 	{
-	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
-	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 2 ;
-	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
-	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
 	  // }
 	}
 
@@ -2013,7 +2013,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 	{
 	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
 	    {
-	      SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
+	      SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle);
 	      if ( GameConfig . enemy_energy_bars_visible )
 		PutEnemyEnergyBar ( Enum , TargetRectangle );
 	      return;
@@ -2021,9 +2021,9 @@ There was a rotation model type given, that exceeds the number of rotation model
 	  else
 	    {
 	      if ( mask & ZOOM_OUT )
-		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] ) , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	      else
-		blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 
 	      TargetRectangle . x = 
 		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
@@ -2031,10 +2031,10 @@ There was a rotation model type given, that exceeds the number of rotation model
 		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE )
 		- ENEMY_ENERGY_BAR_OFFSET_Y ;
 
-	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
-	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 1 ;
-	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
-	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
+	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
+	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 1 ;
+	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
+	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
 
 
 	      if ( GameConfig . enemy_energy_bars_visible )
