@@ -287,29 +287,29 @@ enum _directions
 
 /* Maximale Anzahl von ... */
 
-#define BLOCKANZAHL 43
+#define BLOCKANZAHL 		43
 
 #define ALLDRUIDTYPES		24	/* number of druid-models that exist */
 #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
 #define MAXBULLETS		10	/* maximum possible Bullets in the air */
-#define MAXBLASTS			5	/* max. possible Blasts visible */
-#define AGGRESSIONMAX  100
+#define MAXBLASTS		5	/* max. possible Blasts visible */
+#define AGGRESSIONMAX  		100
 
 /* Map-related defines:
 	WARNING leave them here, they are required in struct.h
 */
-#define MAX_WP_CONNECTIONS 4
-#define MAXMAPLINES 50
-#define ALLLEVELS			18
-#define MAX_LEVELS_ON_SHIP		20
+#define MAX_WP_CONNECTIONS 	4
+#define MAXMAPLINES 		50
+#define ALLLEVELS		18
+#define MAX_LEVELS_ON_SHIP	20
 
-#define MAX_ENEMYS_ON_SHIP		1000
+#define MAX_ENEMYS_ON_SHIP	1000
 
 #define ALLELEVATORS		30
-#define MAXWAYPOINTS 30
-#define MAX_DOORS_ON_LEVEL 20
+#define MAXWAYPOINTS 		30
+#define MAX_DOORS_ON_LEVEL 	20
 #define MAX_REFRESHES_ON_LEVEL	10
 
 /* Macros */
@@ -322,6 +322,19 @@ enum _directions
 #define CLGrobY ((Me.pos.y+BLOCKHOEHE/2) / BLOCKHOEHE)
 #define CLFeinX ((Me.pos.x+BLOCKBREITE/2) % BLOCKHOEHE)
 #define CLGrobX ((Me.pos.x+BLOCKBREITE/2) / BLOCKHOEHE)
+
+
+/* 
+ * these macros are a bit of a hack, as they will work correctly only
+ * as long as BLOCKBREITE = BLOCKHOEHE
+ * but the handling of the grob/fein coordinates should be changed anyway
+ * in the longer term...
+ */
+#define Grob2Fein(grob) 	\
+ ((grob)* BLOCKBREITE + BLOCKBREITE / 2)
+
+#define Fein2Grob(fein)		\
+  ((int)(fein) / BLOCKBREITE)
 
 #define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
 
