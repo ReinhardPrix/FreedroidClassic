@@ -2242,109 +2242,71 @@ make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , ch
 void
 iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int player_num , int rotation_index )
 {
-  int i;
-  int our_phase = 0 ;
-  int motion_class;
-
-  //--------------------
-  // Now we find out which weapon class to use in this case.
-  //
-  motion_class = get_motion_class ( player_num ) ;
-
-  //--------------------
-  // Now we need to resolve the part_string given as parameter
-  //
-  if ( strlen ( part_string ) == 0 )
+    int i;
+    int our_phase = 0 ;
+    int motion_class;
+    
+    //--------------------
+    // Now we find out which weapon class to use in this case.
+    //
+    motion_class = get_motion_class ( player_num ) ;
+    
+    //--------------------
+    // Now we need to resolve the part_string given as parameter
+    //
+    if ( strlen ( part_string ) == 0 )
     {
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
+	GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
 Empty part string received!",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // Now we determine the phase to use.  This is not all the same
-  // phase any more for all tux parts now that we've introduced a walk cycle.
-  //
-  our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
-
-  //--------------------
-  // Depending on our current tux image update policy, we check for images of
-  // Tux parts to be loaded and either load everything for the current Tux or
-  // load just what is needed in this very instant.
-  //
-  if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE )
+    
+    //--------------------
+    // Now we determine the phase to use.  This is not all the same
+    // phase any more for all tux parts now that we've introduced a walk cycle.
+    //
+    our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
+    
+    //--------------------
+    // If some part string given is unlike the part string we were using so
+    // far, then we'll need to free that old part and (later) load the new
+    // part.
+    //
+    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
     {
-      //--------------------
-      // If some part string given is unlike the part string we were using so
-      // far, then we'll need to free that old part and (later) load the new
-      // part.
-      //
-      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	if ( strcmp ( previous_part_strings [ tux_part_group ] , part_string ) ) 
 	{
-	  if ( strcmp ( previous_part_strings [ tux_part_group ] , part_string ) ) 
-	    {
-	      // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
-	      // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
-	      free_one_loaded_tux_image_series ( tux_part_group );
-	      
-	      make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
-	    }
+	    // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
+	    // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
+	    free_one_loaded_tux_image_series ( tux_part_group );
+	    
+	    make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
 	}
     }
-  else if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_CONTINUOUSLY )
+    
+    //--------------------
+    // Now everything should be loaded correctly and we just need to blit the Tux.  Anything
+    // that isn't loaded yet should be considered a serious bug and a reason to terminate 
+    // immediately...
+    //
+    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
     {
-      //--------------------
-      // If some part string given is unlike the part string we were using 
-      // FOR THIS TUX PART so far, then we'll need to free that old part and 
-      // load the new part.
-      //
-      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+	if ( x == (-1) )
 	{
-	  if ( strcmp ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string ) ) 
-	    {
-	      // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
-	      // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
-	      // free_one_loaded_tux_image_series ( tux_part_group );
-	      free_single_tux_image ( tux_part_group , our_phase , rotation_index );
-	      
-	      // make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
-	      make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
-	    }
+	    blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+					     Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
+	}
+	else
+	{
+	    blit_iso_image_to_screen_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+						x , y );
 	}
     }
-  else
+    else
     {
-      GiveStandardErrorMessage ( "iso_put_tux_part(...)" , "Unhandled update policy encountered!", 
-				 PLEASE_INFORM, IS_FATAL );
+	GiveStandardErrorMessage ( "iso_put_tux_part(...)" , "Unable to load tux part!", PLEASE_INFORM, IS_FATAL );
     }
-
-  // make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
-
-  
-
-  //--------------------
-  // Now everything should be loaded correctly and we just need to blit the Tux.  Anything
-  // that isn't loaded yet should be considered a serious bug and a reason to terminate 
-  // immediately...
-  //
-  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
-    {
-      if ( x == (-1) )
-	{
-	  blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
-					   Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
-	}
-      else
-	{
-	  blit_iso_image_to_screen_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
-					      x , y );
-	}
-    }
-  else
-    {
-      GiveStandardErrorMessage ( "iso_put_tux_part(...)" , "Unable to load tux part!", PLEASE_INFORM, IS_FATAL );
-    }
-
+    
 }; // void iso_put_tux_part ( char* part_string , int x , int y , int player_num )
 
 /* ----------------------------------------------------------------------
