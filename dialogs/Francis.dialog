@@ -30,18 +30,8 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-
-
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
-
-
-
 
 END OF AUTORS NOTES
 
@@ -65,6 +55,8 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=244  PositionY=51  
 Subtitle="Maybe it is possible to leave this planet somehow.  But you'll have to talk to our leader.  He's in the town to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'm afraid, no one of the youngsters in town believed what I've told them about you.  You'll have to deal with that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -73,7 +65,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="Where am I?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Do you not remember?  The MS imprisoned you here seven month ago, shortly before they took over the government."
+Subtitle="Do you not remember?  You put yourself into a stasis field 80 years ago, to be awakend when times are dire."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I guess that applies to our present situation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=18 ChangeToValue=1
 ChangeOption=2 ChangeToValue=0
@@ -106,9 +100,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=395  PositionY=395  
 Subtitle="For the start, there should be a weapon in one of the chests around here.  But you might find some among the bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also there is an arms dealer in the village to the south, so if you got some money, you might spend it there..."
+Subtitle="I'm afraid most of the stuff is just from some rpg convention that took place here some time ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just follow the path leading south.  You cannot miss it."
+Subtitle="Security measures in the gear have been deactivated, but it's still toys more or less, some of them are a bit tuned, but that's it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -142,9 +136,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="Why are you helping me?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=244  PositionY=141  
-Subtitle="Because you needed help.  And because I hate the MS.  Not at first, but now."
+Subtitle="Because you needed help.  And because you told me to."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And since the MS imprisoned you here, maybe it's also an unjust ruling, so I disabled the stasis generators now."
+Subtitle="I was one of those you instructed to awaken you in case of a major crisis.  You know, you were a folk hero back in the good old days."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I wonder why none of the others has made it here before.  Maybe they are all dead by now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -152,26 +148,32 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=17  OptionText="What became of MS Software company after that?"
+New Option Nr=17  OptionText="What became of the government and leading companies?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=393  PositionY=296  
-Subtitle="Well, at first we thought they would get the problem under control again.  After all, it's not the first time something like that occured."
+Subtitle="Well, at first we thought they would get the problem under control again.  After all, it's not the first time something bot problem happend."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But we waited and waited and they promised to fix it and we waited and millions were slaughtered while we could just stand and watch."
+Subtitle="But we waited and waited and they promised to fix it and we waited and millions were slaughtered while the problem seemed to increase at exponential speed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But after some time it became clear that the MS itself was out of control.  It's unclear what was really going on.  But most of them are dead."
+Subtitle="Then it became clear that the UltiaSys bot company itself was out of control.  It's unclear what was really going on.  But most of them are dead."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Many who survived and fled to this place were killed by the angry mob after that.  Another sorry mistake."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They might have held some valuable information.  Now we might never learn what was going on."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText="What has happend since then?"
+New Option Nr=18  OptionText="What has happend in those last 80 years?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=248  PositionY=306  
-Subtitle="During your time in stasis, the MS took over the government.  The few existing rebels were quickly executed."
+Subtitle="Oh, nothing much fundamental.  We've seen more technological advancement of course, but it was peaceful until some month ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="So they had the galaxy under control.  But then it happened:  Their machines went completely out of control and attacked everyone.  That's what we call the 'Great Assault'."
+Subtitle="It is generally believed, that there was a big accident somehow.  But we never learned the real truth, before complete caos broke out when robots started attacking humans."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We call it today 'The Great Assault'.  It almost led to the extinction of our race.  Now we're slowly trying to rebuild our existence."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=1
 ChangeOption=17 ChangeToValue=1
@@ -182,14 +184,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText="How could they just overtake the government?  What about police and military?"
+New Option Nr=19  OptionText="How could the bots attack?  What about police and military?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=389  PositionY=185  
-Subtitle="It was all much simpler for them than you think.  Their OS was running virtually everywhere.  But it contained a backdoor."
+Subtitle="Police and military have been fully automatized for quite some time.  Those bots are the worst of all.  Each of them killed humans in the thousands."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And since it was running on all police and military bots, they immediately had those under control and used the bots to crush any resistance."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="There was nothing we could do.  But this was not so clear to everyone.  Some rebelled and were executed swiftly."
+Subtitle="They are almost impossible to defeat.  The situation becomes worse given our neo-lithic weapons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -200,6 +200,8 @@ New Option Nr=99  OptionText="Thanks for the help.  I'll be going now."
 OptionSample="Francis/Tux_thanks_for_the_help.wav"
 PositionX=551  PositionY=367  
 Subtitle="I am glad if I could help you along.  Also you should be careful around here.  Best head straight for our town."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The path from this house should lead you directly to it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
