@@ -424,7 +424,7 @@ make_texture_out_of_surface ( iso_image* our_image )
     SDL_Surface* right_sized_image ;
     
 #ifdef HAVE_LIBGL
-    
+
     if ( ! use_open_gl ) return;
     
     //--------------------
@@ -786,21 +786,41 @@ clear_screen( void ) {
 }; // void clear_screen ( void )
 
 /* ----------------------------------------------------------------------
- * Initialize the OpenGL interface.
+ * This function does the first part of the OpenGL parameter 
+ * initialisation.  We've made this chunk of code into a separate function
+ * such that the frequent issues with OpenGL drivers can be attributed to
+ * a particular spot in the code more easily.
  * ---------------------------------------------------------------------- */
-int
-initialzize_our_default_open_gl_parameters ( void )
+void
+safely_set_open_gl_viewport_and_matrix_mode ( void )
 {
+
 #ifdef HAVE_LIBGL
-    //--------------------
-    // Set up the screne, viewport matrix, coordinate system and all that...
-    //
+
     glViewport ( 0 , 0 , GameConfig . screen_width , GameConfig . screen_height );
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glOrtho( 0.0f , GameConfig . screen_width , GameConfig . screen_height , 0.0f , -1.0f , 1.0f );
     glMatrixMode ( GL_MODELVIEW );
-    
+
+    open_gl_check_error_status ( __FUNCTION__ );
+
+#endif
+
+}; // void safely_set_open_gl_viewport_and_matrix_mode ( void )
+
+/* ----------------------------------------------------------------------
+ * This function does the second part of the OpenGL parameter 
+ * initialisation.  We've made this chunk of code into a separate function
+ * such that the frequent issues with OpenGL drivers can be attributed to
+ * a particular spot in the code more easily.
+ * ---------------------------------------------------------------------- */
+void
+safely_set_some_open_gl_flags_and_shade_model ( void )
+{
+
+#ifdef HAVE_LIBGL
+
     //--------------------
     // We turn off a lot of stuff for faster blitting.  All this can
     // be turned on again later anyway as needed.  
@@ -828,6 +848,34 @@ initialzize_our_default_open_gl_parameters ( void )
     //
     glEnable( GL_ALPHA_TEST );  
     glAlphaFunc ( GL_GREATER , 0.5 ) ;
+
+    open_gl_check_error_status ( __FUNCTION__ );
+
+#endif
+
+}; // void safely_set_some_open_gl_flags_and_shade_model ( void )
+
+/* ----------------------------------------------------------------------
+ * Initialize the OpenGL interface.
+ * ---------------------------------------------------------------------- */
+int
+safely_initialize_our_default_open_gl_parameters ( void )
+{
+#ifdef HAVE_LIBGL
+    //--------------------
+    // Set up the screne, viewport matrix, coordinate system and all that...
+    //
+    safely_set_open_gl_viewport_and_matrix_mode ();
+    
+    //--------------------
+    // We turn off a lot of stuff for faster blitting.  All this can
+    // be turned on again later anyway as needed.  
+    //
+    // (Well, yes, the above is true, but function call overhead might
+    //  be enourmous!  So don't change too much inside of quick loops
+    //  if it can be avoided.)
+    //
+    safely_set_some_open_gl_flags_and_shade_model ();
     
     //--------------------
     // NeHe docu reveals, that it can happen (and it does happen) that textures
@@ -848,11 +896,13 @@ initialzize_our_default_open_gl_parameters ( void )
     //
     next_texture_index_to_use = 1 ;
     
+    open_gl_check_error_status ( __FUNCTION__ );
+    
 #endif
     
     return( TRUE );
 
-}; // int initialzize_our_default_open_gl_parameters ( void )
+}; // int safely_initialize_our_default_open_gl_parameters ( void )
 
 /* ----------------------------------------------------------------------
  * 

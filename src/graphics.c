@@ -1448,7 +1448,7 @@ A font file for the BFont library was not found.",
 	}
     }
 
-}; // InitOutBFonts ( void )
+}; // InitOurBFonts ( void )
 
 /* -----------------------------------------------------------------
  * This funciton initialises the timer subsystem.
@@ -1456,16 +1456,16 @@ A font file for the BFont library was not found.",
 void
 InitTimer (void)
 {
-  //--------------------
-  // Now SDL_TIMER is initialized here:
-  //
-  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+    //--------------------
+    // Now SDL_TIMER is initialized here:
+    //
+    if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
     {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
+	fprintf(stderr, "Couldn't initialize SDL: %s\n" , SDL_GetError ( ) ) ;
+	Terminate(ERR);
     } 
-  else
-    DebugPrintf(1, "\nSDL Timer initialisation successful.\n");
+    else
+	DebugPrintf( 1 , "\nSDL Timer initialisation successful.\n");
 
 }; // void InitTimer (void)
 
@@ -1477,18 +1477,18 @@ InitTimer (void)
 void
 check_open_gl_libraries_present ( void )
 {
-  //--------------------
-  // Here we introduce some warning output in case open_gl output is
-  // requested while the game was compiled without having the GL libs...
-  //
-  // The solution in this case is to force open_gl switch off again and
-  // to (forcefully) print out a warning message about this!
-  //
-  if ( use_open_gl )
+    //--------------------
+    // Here we introduce some warning output in case open_gl output is
+    // requested while the game was compiled without having the GL libs...
+    //
+    // The solution in this case is to force open_gl switch off again and
+    // to (forcefully) print out a warning message about this!
+    //
+    if ( use_open_gl )
     {
 #ifndef HAVE_LIBGL
-      DebugPrintf ( -100 , 
-"\n**********************************************************************\
+	DebugPrintf ( -100 , 
+		      "\n**********************************************************************\
 \n*\
 \n*  W  A  R  N  I  N  G    !  !  ! \
 \n*\
@@ -1507,42 +1507,74 @@ check_open_gl_libraries_present ( void )
 \n*\
 \n***********************************************************************\
 \n" );
-      use_open_gl = FALSE ;
+	use_open_gl = FALSE ;
 #endif
     }
 }; // void check_open_gl_libraries_present ( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function should display the driver info obtained from the OpenGL
+ * libraries.  This should be in a function of it's own (like now) to 
+ * make sure that the OpenGL error checks in the video mode set functions
+ * and that seem to be occuring so frequently are not coming from this 
+ * chunk of code.
  * ---------------------------------------------------------------------- */
 void
-set_video_mode_for_open_gl ( void )
+safely_show_open_gl_driver_info ( void )
 {
 #ifdef HAVE_LIBGL
-    const SDL_VideoInfo *vid_info;
-    Uint32 video_flags = 0 ;  // flags for SDL video mode 
-    int video_mode_ok_check_result ;
-    int buffer_size , depth_size, red_size, green_size, blue_size, alpha_size ;
-
     //--------------------
-    // We query the available video configuration on this system.
+    // Since we want to use openGl, it might be good to check the OpenGL vendor string
+    // provided by the graphics driver.  Let's see...
     //
-    vid_info = SDL_GetVideoInfo (); 
+    fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
+    fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
+    open_gl_check_error_status ( __FUNCTION__ );
+    fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
+    open_gl_check_error_status ( __FUNCTION__ );
+    fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
+    open_gl_check_error_status ( __FUNCTION__ );
+    // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
+    // open_gl_check_error_status ( __FUNCTION__ );
+    fprintf( stderr , "\n\n" );
+#endif
+}; // void safely_show_open_gl_driver_info ( void )
+
+/* ----------------------------------------------------------------------
+ * This function gets the video info from OpenGL.  We do this
+ * in a separate function, so that eventual errors (and bug reports) from
+ * the OpenGL error checking can be attributed to a source more easily.
+ * ---------------------------------------------------------------------- */
+SDL_VideoInfo*
+safely_get_SDL_video_info ( void )
+{
+
+    SDL_VideoInfo *vid_info;
+
+    vid_info = (SDL_VideoInfo*) SDL_GetVideoInfo (); 
     if ( !vid_info )
     {
-	fprintf(stderr, "Could not obtain video info via SDL: %s\n",SDL_GetError());
+	fprintf(stderr, "Could not obtain video info via SDL: %s\n", SDL_GetError ( ) );
 	Terminate(ERR);
     }
     
-    //  open_gl_check_error_status ( __FUNCTION__ );
+    open_gl_check_error_status ( __FUNCTION__ );
+
+    return ( vid_info );
+
+}; // SDL_VideoInfo *safely_get_SDL_video_info ( void )
+
+/* ----------------------------------------------------------------------
+ * This function sets the OpenGL double buffering attribute.  We do this
+ * in a separate function, so that eventual errors (and bug reports) from
+ * the OpenGL error checking can be attributed to a source more easily.
+ * ---------------------------------------------------------------------- */
+void
+safely_set_double_buffering_attribute ( void )
+{
     
-    //--------------------
-    // We need OpenGL double buffering, so we request it.  If we
-    // can't get it, something must be wrong, maybe an extremely bad 
-    // card/driver is present or some bad emulation.  Anyway, we'll
-    // break off...
-    //
+#ifdef HAVE_LIBGL
+
     if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -1550,8 +1582,42 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				   PLEASE_INFORM, IS_FATAL );
     }
     
-    //  open_gl_check_error_status ( __FUNCTION__ );
+    open_gl_check_error_status ( __FUNCTION__ );
+
+#endif
     
+}; // void safely_set_double_buffering_attribute ( void )
+
+/* ----------------------------------------------------------------------
+ * This function is supposed to set the video mode in the case that 
+ * OpenGL is used for graphics output.  The function is highly split up
+ * into subfunctions now, so that the OpenGL error checking will be more
+ * precise.  Typically it's in here that most problems occur when there
+ * is a peculiar OpenGL driver used, mostly under the Windows operating
+ * system.
+ * ---------------------------------------------------------------------- */
+void
+set_video_mode_for_open_gl ( void )
+{
+#ifdef HAVE_LIBGL
+    SDL_VideoInfo *vid_info;
+    Uint32 video_flags = 0 ;  // flags for SDL video mode 
+    int video_mode_ok_check_result ;
+    int buffer_size , depth_size, red_size, green_size, blue_size, alpha_size ;
+
+    //--------------------
+    // We query the available video configuration on this system.
+    //
+    vid_info = safely_get_SDL_video_info ();
+
+    //--------------------
+    // We need OpenGL double buffering, so we request it.  If we
+    // can't get it, something must be wrong, maybe an extremely bad 
+    // card/driver is present or some bad emulation.  Anyway, we'll
+    // break off...
+    //
+    safely_set_double_buffering_attribute();
+
     //--------------------
     // Now we start setting up the proper OpenGL flags to pass to the
     // SDL for creating the initial output window...
@@ -1636,26 +1702,11 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 		 buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
     }
     
-    //  open_gl_check_error_status ( __FUNCTION__ );
+    open_gl_check_error_status ( __FUNCTION__ );
     
-    //--------------------
-    // Since we want to use openGl, it might be good to check the OpenGL vendor string
-    // provided by the graphics driver.  Let's see...
-    //
-    fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
-    fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
-    open_gl_check_error_status ( __FUNCTION__ );
-    fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
-    open_gl_check_error_status ( __FUNCTION__ );
-    fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
-    open_gl_check_error_status ( __FUNCTION__ );
-    // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
-    open_gl_check_error_status ( __FUNCTION__ );
-    fprintf( stderr , "\n\n" );
+    safely_show_open_gl_driver_info ( );
     
-    initialzize_our_default_open_gl_parameters ( );
-    
-    open_gl_check_error_status ( __FUNCTION__ );
+    safely_initialize_our_default_open_gl_parameters ( );
     
     //--------------------
     // Maybe resize the window to standard size?
