@@ -203,6 +203,7 @@ ShuffleEnemys (void)
   int nth_enemy;
   int wp, num_wp;
   bool used_wp[MAXWAYPOINTS];
+  bool warned = FALSE;
 
   num_wp = CurLevel->num_waypoints;
 
@@ -219,10 +220,18 @@ ShuffleEnemys (void)
       nth_enemy++;
       if (nth_enemy > num_wp)
 	{
-	  DebugPrintf (0, "\nERROR: Less waypoints (%d) than enemys on level %d? !", 
-		       num_wp, CurLevel->levelnum );
-	  Terminate (ERR);
+	  if (!warned)
+	    {
+	      DebugPrintf (0, "\nWARNING: Less waypoints (%d) than enemys on level %d? !\n", 
+			   num_wp, CurLevel->levelnum );
+	      DebugPrintf (0, "...cannot insert all droids on this level!\n");
+	    }
+	  
+	  warned = TRUE;
+	  AllEnemys[i].status = OUT;
+	  continue;
 	}
+
       do { wp = MyRandom(num_wp-1);} while(used_wp[wp]);
 
       used_wp[wp] = TRUE;

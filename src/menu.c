@@ -38,6 +38,9 @@
 #include "proto.h"
 #include "map.h"
 
+#define HIGHLIGHTCOLOR 255
+#define HIGHLIGHTCOLOR2 100
+#define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
 void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
@@ -47,6 +50,8 @@ void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
 void LevelEditor(void);
 bool LevelEditMenu (void);
+void DeleteWaypoint (level *level, int num); 
+void CreateWaypoint (level *level, int BlockX, int BlockY);
 
 #define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
@@ -514,6 +519,7 @@ EscapeMenu (void)
 
 		case LEVEL_EDITOR:
 		  LevelEditor();
+		  finished = TRUE;
 		  break;
 
 		case HIGHSCORES:
@@ -1092,7 +1098,6 @@ void
 Highlight_Current_Block(void)
 {
   int i;
-#define HIGHLIGHTCOLOR 255
 
   SDL_LockSurface( ne_screen );
 
@@ -1171,9 +1176,8 @@ Show_Waypoints(void)
   int x;
   int y;
   int BlockX, BlockY;
-  int color;
   waypoint *this_wp;
-#define ACTIVE_WP_COLOR 0x0FFFFFFFF
+
 
   BlockX=rintf(Me.pos.x);
   BlockY=rintf(Me.pos.y);
@@ -1222,9 +1226,10 @@ Show_Waypoints(void)
 	    DrawLineBetweenTiles( this_wp->x , this_wp->y , 
 				  CurLevel->AllWaypoints[this_wp->connections[i]].x , 
 				  CurLevel->AllWaypoints[this_wp->connections[i]].y ,
-				  color );
+				  HIGHLIGHTCOLOR );
 	  }
     }
+
   SDL_UnlockSurface( ne_screen );
 
   return;
@@ -1238,9 +1243,6 @@ Show_Waypoints(void)
        escape enter a further submenu where you can save the level,
        change level name and quit from level editing.
 
-       NOTE: SAVING CURRENTLY DOES NOT WORK!  DONT WORK TOO MUCH WITH
-             THIS IF YOU CANT SAVE YOUR LEVELS LATER!!!
-
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void 
@@ -1249,11 +1251,12 @@ LevelEditor(void)
   int BlockX=rintf(Me.pos.x);
   int BlockY=rintf(Me.pos.y);
   int Done=FALSE;
-  int i,j,k;
+  int i,k;
   int SpecialMapValue;
   int OriginWaypoint = (-1);
   char* NumericInputString;
   SDL_Rect rect;
+  waypoint *SrcWp;
 
   int KeymapOffset = 15;
   
@@ -1272,6 +1275,14 @@ LevelEditor(void)
       Highlight_Current_Block();
       Show_Waypoints();
 
+      // show line between a selected connection-origin and the current block
+      if (OriginWaypoint != (-1) )
+	DrawLineBetweenTiles( BlockX, BlockY, 
+			      CurLevel->AllWaypoints[OriginWaypoint].x, 
+			      CurLevel->AllWaypoints[OriginWaypoint].y,
+			      HIGHLIGHTCOLOR2 );
+
+      
       PrintStringFont (ne_screen, FPS_Display_BFont, Full_User_Rect.x+Full_User_Rect.w/3 , 
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(FPS_Display_BFont), 
 		       "Press F1 for keymap");
@@ -1315,7 +1326,7 @@ LevelEditor(void)
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
 
 	  SDL_Flip ( ne_screen );
-	  Wait4Fire();
+	  while (!FirePressedR() || !EscapePressedR()) usleep(50);
 	}
       
       //--------------------
@@ -1351,119 +1362,76 @@ LevelEditor(void)
 	  SetCombatScaleTo (CurrentCombatScaleFactor);
 	}
       
-      // If the person using the level editor pressed w, the waypoint is
-      // toggled on the current square.  That means either removed or added.
+      // toggle waypoint on current square.  That means either removed or added.
       // And in case of removal, also the connections must be removed.
       if (KeyIsPressedR('p'))
 	{
 	  // find out if there is a waypoint on the current square
-	  for (i=0 ; i < MAXWAYPOINTS ; i++)
+	  for (i=0 ; i < CurLevel->num_waypoints; i++)
 	    {
 	      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
 		   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
 	    }
 	  
 	  // if its waypoint already, this waypoint must be deleted.
-	  if ( i != MAXWAYPOINTS )
-	    {
-	      // Eliminate the waypoint itself
-		  CurLevel->AllWaypoints[i].x = 0;
-		  CurLevel->AllWaypoints[i].y = 0;
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-		  
-		  
-		  // Eliminate all connections pointing to this waypoint
-		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
-		    {
-		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-			if ( CurLevel->AllWaypoints[j].connections[k] == i )
-			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
-		    }
-	    }
+	  if (i < CurLevel->num_waypoints)
+	    DeleteWaypoint (CurLevel, i); 
 	  else // if its not a waypoint already, it must be made into one
-	    {
-	      // seek a free position
-	      for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-		{
-		  if ( CurLevel->AllWaypoints[i].x == 0 ) 
-		    {
-		      DebugPrintf( 0 , "\nFree waypoint entry found.  Index == %d." , i );
-		      break;
-		    }
-		}
-	      if ( i == MAXWAYPOINTS )
-		{
-		  printf("\n\nSorry, no free waypoint available.  Using the first one.");
-		  i = 0;
-		}
-	      
-	      // Now make the new entry into the waypoint list
-	      CurLevel->AllWaypoints[i].x = BlockX;
-	      CurLevel->AllWaypoints[i].y = BlockY;
-	      
-	      // delete all old connection information from the new waypoint
-	      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-		CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-	      
-	    }
+	    CreateWaypoint (CurLevel, BlockX, BlockY);
 
-	}
+	} // if 'p' pressed (toggle waypoint)
 
-      // If the person using the level editor presses C that indicated he/she wants
-      // a connection between waypoints.  If this is the first selected waypoint, its
+      // create a connection between waypoints.  If this is the first selected waypoint, its
       // an origin and the second "C"-pressed waypoint will be used a target.
       // If origin and destination are the same, the operation is cancelled.
       if (KeyIsPressedR ('c'))
 	{
 	  // Determine which waypoint is currently targeted
-	  for (i=0 ; i < MAXWAYPOINTS ; i++)
+	  for (i=0 ; i < CurLevel->num_waypoints ; i++)
 	    {
 	      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
 		   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
 	    }
 	  
-	  if ( i == MAXWAYPOINTS )
-	    {
-	      printf("\n\nSorry, don't know which waypoint you mean.");
-	    }
+	  if ( i == CurLevel->num_waypoints )
+	    DebugPrintf(0, "\nSorry, no waypoint here to connect...\n");
 	  else
 	    {
-	      printf("\n\nYou specified waypoint nr. %d.",i);
-	      if ( OriginWaypoint== (-1) )
+
+	      if ( OriginWaypoint == (-1) )
 		{
-		  printf("\nIt has been marked as the origin of the next connection.");
 		  OriginWaypoint = i;
+		  SrcWp = &(CurLevel->AllWaypoints[OriginWaypoint]);
+		  if (SrcWp->num_connections < MAX_WP_CONNECTIONS)
+		    DebugPrintf (0, "\nWaypoint nr. %d. selected as origin\n", i);
+		  else
+		    {
+		      DebugPrintf (0, "\nSorry, maximal number of waypoint-connections (%d) reached!\n",
+				   MAX_WP_CONNECTIONS);
+		      DebugPrintf (0, "Operation not possible\n");
+		      OriginWaypoint = (-1);
+		      SrcWp = NULL;
+		    }
 		}
 	      else
 		{
 		  if ( OriginWaypoint == i )
 		    {
-		      printf("\n\nOrigin==Target --> Connection Operation cancelled.");
+		      DebugPrintf(0, "\nOrigin==Target --> Connection Operation cancelled.\n");
 		      OriginWaypoint = (-1);
+		      SrcWp = NULL;
 		    }
 		  else
 		    {
-		      printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
-		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-			{
-			  if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
-			}
-		      if ( k == MAX_WP_CONNECTIONS ) 
-			{
-			  printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
-			}
-		      else
-			{
-			  CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
-			  printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
-			}
+		      DebugPrintf(0, "\nTarget-waypoint %d selected\n Connection established!\n", i );
+		      SrcWp->connections[SrcWp->num_connections] = i;
+		      SrcWp->num_connections ++;
 		      OriginWaypoint = (-1);
+		      SrcWp = NULL;
 		    }
 		}
 	    }
 
-	  fflush(stdout);
 	}
       
       // If the person using the level editor pressed some editing keys, insert the
@@ -1544,6 +1512,8 @@ LevelEditor(void)
 	Done = LevelEditMenu();
       
     } // while (!Done)
+
+  ShuffleEnemys ();  // now make sure droids get redestributed correctly!
 
   Copy_Rect (rect, User_Rect);
 
@@ -1639,7 +1609,7 @@ LevelEditMenu (void)
 		  SaveShip("Testship");
 		  CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
 		  SDL_Flip ( ne_screen );
-		  Wait4Fire();
+		  while ( !FirePressedR() && !EscapePressedR() ) usleep(50);
 		}
 	      break;
 	    case SET_LEVEL_NAME:
@@ -1796,5 +1766,75 @@ LevelEditMenu (void)
 
   return (Done);
 } // LevelEditMenu
+
+// delete given waypoint num (and all its connections) on level Lev
+void
+DeleteWaypoint (level *Lev, int num)
+{
+  int i, j;
+  waypoint *WpList, *ThisWp;
+  int wpmax;
+
+  WpList = Lev->AllWaypoints;
+  wpmax = Lev->num_waypoints - 1;
+  
+  // is this the last one? then just delete
+  if (num == wpmax)
+    WpList[num].num_connections = 0;
+  else // otherwise shift down all higher waypoints
+    memcpy (&WpList[num], &WpList[num+1], (wpmax - num) * sizeof(waypoint) );
+
+  // now there's one less:
+  Lev->num_waypoints --;
+  wpmax --;
+
+  // now adjust the remaining wp-list to the changes:
+  ThisWp = WpList;
+  for (i=0; i < Lev->num_waypoints; i++, ThisWp++)
+    for (j=0; j < ThisWp->num_connections; j++)
+      {
+	// eliminate all references to this waypoint
+	if (ThisWp->connections[j] == num)
+	  {
+	    // move all connections after this one down
+	    memcpy (&(ThisWp->connections[j]), &(ThisWp->connections[j+1]), 
+		    (ThisWp->num_connections-1 - j)*sizeof(int));
+	    ThisWp->num_connections --;
+	    j --;  // just to be sure... check the next connection as well...(they have been shifted!)
+	    continue;
+	  }
+	// adjust all connections to the shifted waypoint-numbers
+	else if (ThisWp->connections[j] > num)
+	  ThisWp->connections[j] --;
+	
+      } // for j < num_connections
+
+} // DeleteWaypoint()
+
+
+// create a new empty waypoint on position x/y
+void
+CreateWaypoint (level *Lev, int x, int y)
+{
+  int num;
+
+  if (Lev->num_waypoints == MAXWAYPOINTS)
+    {
+      DebugPrintf (0, "WARNING: maximal number of waypoints (%d) reached on this level!!\n",
+		   MAXWAYPOINTS);
+      DebugPrintf (0, "... cannot insert any more, sorry!\n");
+      return;
+    }
+
+  num = Lev->num_waypoints;
+  Lev->num_waypoints ++;
+
+  Lev->AllWaypoints[num].x = x;
+  Lev->AllWaypoints[num].y = y;
+  Lev->AllWaypoints[num].num_connections = 0;
+
+  return;
+} // CreateWaypoint()
+
 
 #undef _menu_c

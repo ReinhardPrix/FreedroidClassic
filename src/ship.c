@@ -396,7 +396,7 @@ EnterKonsole (void)
 	      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
 	      ShowLifts (CurLevel->levelnum, -1);
 
-	      while (! (FirePressedR() || EscapePressed() || MouseRightPressedR() ))
+	      while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
 		usleep(50);
 	      PaintConsoleMenu(pos, 0);
 	      break;
