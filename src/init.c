@@ -2042,6 +2042,8 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig.show_subtitles_in_dialogs = TRUE ;
   GameConfig.show_digits_of_droids = FALSE ;
 
+  GameConfig.enemy_energy_bars_visible = TRUE ;
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------

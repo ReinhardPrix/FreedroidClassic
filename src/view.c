@@ -1264,6 +1264,58 @@ PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
 }; // void PutBallShapedDroidBody ( int Enum , SDL_Rect TargetRectangle );
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
+{
+  int Percentage;
+  SDL_Rect FillRect;
+  static Uint32 FullColor ;
+  static Uint32 EmptyColor ;
+#define ENEMY_ENERGY_BAR_OFFSET_X 0
+#define ENEMY_ENERGY_BAR_OFFSET_Y -20
+#define ENEMY_ENERGY_BAR_LENGTH 60
+
+  //--------------------
+  // If the enemy is dead already, there's nothing to do here...
+  //
+  if ( AllEnemys [ Enum ] . Status == OUT ) return;
+
+  //--------------------
+  // If the enemy is friendly, then we needn't display his health, right?
+  //
+  if ( AllEnemys [ Enum ] . is_friendly ) return;
+
+  //--------------------
+  // Now we need to find the right colors to fill our bars with...
+  //
+  FullColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ) ; 
+  EmptyColor = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
+
+  //--------------------
+  // Now we fill our bars...
+  //
+  Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ; 
+  
+  FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
+  FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
+  FillRect . h = 7 ; 
+  FillRect . w = Percentage ;
+
+  SDL_FillRect ( Screen , &FillRect , FullColor ) ;
+
+  FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
+  FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
+  FillRect . h = 7 ; 
+  FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
+  
+  SDL_FillRect ( Screen , &FillRect , EmptyColor ) ;
+
+}; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
+
+/* ----------------------------------------------------------------------
  * This function is here to blit the 'body' of a droid to the screen, 
  * but the 'body' in the new and more modern sense with the 3d models
  * in various rotated forms as they are provided by Bastian.
@@ -1416,6 +1468,13 @@ There was a droid type on this level, that does not really exist.",
 
   // PutBallShapedDroidBody ( Enum , TargetRectangle );
   PutIndividuallyShapedDroidBody ( Enum , TargetRectangle );
+
+  if ( GameConfig . enemy_energy_bars_visible )
+    {
+      TargetRectangle.x = UpperLeftBlitCorner.x ;
+      TargetRectangle.y = UpperLeftBlitCorner.y ;
+      PutEnemyEnergyBar ( Enum , TargetRectangle );
+    }
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)

@@ -103,6 +103,7 @@ typedef struct
   char freedroid_version_string[500];
   int show_digits_of_droids;
   int skill_explanation_screen_visible;
+  int enemy_energy_bars_visible;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

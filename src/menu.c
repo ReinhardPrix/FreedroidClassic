@@ -1484,13 +1484,14 @@ On_Screen_Display_Options_Menu (void)
   char Options1[1000];
   char Options2[1000];
   char Options3[1000];
-  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
+  char Options4[1000];
+  char* MenuTexts[10];
   enum
     { 
       SHOW_POSITION=1, 
       SHOW_FRAMERATE, 
-      SHOW_ENERGY,
+      SHOW_TUX_ENERGY,
+      SHOW_ENEMY_ENERGY_BARS,
       SHOW_DROID_DIGITS,
       LEAVE_OPTIONS_MENU 
     };
@@ -1506,13 +1507,16 @@ On_Screen_Display_Options_Menu (void)
 
       sprintf( Options0 , "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF" );
       sprintf( Options1 , "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF" );
-      sprintf( Options2 , "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
-      sprintf( Options3 , "Show Droid Digits: %s", GameConfig.show_digits_of_droids? "ON" : "OFF" );
+      sprintf( Options2 , "Show Tux Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
+      sprintf( Options3 , "Show Enemy Energy Bars: %s", GameConfig.enemy_energy_bars_visible? "ON" : "OFF" );
+      sprintf( Options4 , "Show Droid Digits: %s", GameConfig.show_digits_of_droids? "ON" : "OFF" );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
-      MenuTexts[4]="Back";
+      MenuTexts[4]=Options4;
+      MenuTexts[5]="Back";
+      MenuTexts[6]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1529,9 +1533,13 @@ On_Screen_Display_Options_Menu (void)
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
 	  break;
-	case SHOW_ENERGY:
+	case SHOW_TUX_ENERGY:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+	  break;
+	case SHOW_ENEMY_ENERGY_BARS:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . enemy_energy_bars_visible = ! GameConfig . enemy_energy_bars_visible ;
 	  break;
 	case SHOW_DROID_DIGITS:
 	  while (EnterPressed() || SpacePressed() );
