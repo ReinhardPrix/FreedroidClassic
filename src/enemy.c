@@ -44,6 +44,9 @@
 void ProcessAttackStateMachine ( int enemynum );
 void AnimateEnemys ( void );
 
+int first_index_of_bot_on_level [ MAX_LEVELS ] ;
+int last_index_of_bot_on_level [ MAX_LEVELS ] ;
+
 /* ----------------------------------------------------------------------
  * In the very beginning of each game, it is not enough to just place the
  * bots onto the right locations.  They must also be integrated into the
@@ -469,6 +472,57 @@ ShuffleEnemys ( int LevelNum )
 }; // void ShuffleEnemys ( void ) 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+occasionally_update_first_and_last_bot_indices ( void )
+{
+  static int first_call = TRUE ;
+  static int last_update_ticks ;
+  int current_ticks;
+  int level_num;
+  int i;
+
+  if ( first_call )
+    {
+      first_call = FALSE ;
+      last_update_ticks = SDL_GetTicks() - 1000 ;
+    }
+  
+  current_ticks = SDL_GetTicks();
+
+  if ( current_ticks - last_update_ticks >= 1000 )
+    {
+      last_update_ticks = current_ticks ;
+      DebugPrintf ( 2 , "\nNow updating the first and last indices of bots from each level." );
+      
+      for ( level_num = 0 ; level_num < MAX_LEVELS ; level_num ++ )
+	{
+	  //--------------------
+	  // Some entries, that will be overridden shortly...
+	  first_index_of_bot_on_level [ level_num ] = MAX_ENEMYS_ON_SHIP - 2 ;
+	  last_index_of_bot_on_level [ level_num ] = 0 ;
+
+	  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+	    {
+	      if ( AllEnemys [ i ] . type == (-1) ) continue ;
+	      if ( AllEnemys [ i ] . pos . z != level_num ) continue ;
+	      
+	      if ( first_index_of_bot_on_level [ level_num ] >= i )
+		first_index_of_bot_on_level [ level_num ] = i ;
+	      if ( last_index_of_bot_on_level [ level_num ] <= i )
+		last_index_of_bot_on_level [ level_num ] = i ;
+	    }
+
+	  DebugPrintf ( 2 , "\nFirst index on lv. %d is %d, last index is %d. " , level_num , 
+			first_index_of_bot_on_level [ level_num ] , last_index_of_bot_on_level [ level_num ] );
+	}
+    }
+
+}; // occasionally_update_first_and_last_bot_indices ( void )
+
+/* ----------------------------------------------------------------------
  * This function checks if the connection between two points is free of
  * droids.  
  *
@@ -476,13 +530,16 @@ ShuffleEnemys ( int LevelNum )
  *
  * ---------------------------------------------------------------------- */
 int 
-CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot , int ExceptTux ) 
+CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
+			   Enemy ExceptedRobot , int ExceptTux ) 
 {
   float LargerDistance;
   int Steps;
   int i, j;
   moderately_finepoint step;
   moderately_finepoint CheckPosition;
+
+  occasionally_update_first_and_last_bot_indices();
 
   // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   // fflush(stdout);
@@ -506,7 +563,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   for ( i = 0 ; i < Steps + 1 ; i++ )
     {
       // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
-      for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+      // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+      for ( j = first_index_of_bot_on_level [ OurLevel ] ; j <= last_index_of_bot_on_level [ OurLevel ] ; j ++ )
 	{
 	  if ( AllEnemys[j].pos.z != OurLevel ) continue;
 	  if ( AllEnemys[j].Status == OUT ) continue;
@@ -1398,7 +1456,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
       if ( ThisRobot -> is_friendly )
 	{
-	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID DETECTED!  --> hurting enemies..." );
+	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILD-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
 	  for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
 	    {
 	      if ( target_robot -> Status == OUT ) continue ;
@@ -1406,7 +1464,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	      if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
 	      if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
 	      if ( target_robot == ThisRobot ) continue;
-	      DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID DETECTED!  APPLYING DAMAGE!" );
+	      DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID: NOW APPLYING DAMAGE!" );
 	      target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
 	    }
 	}
@@ -1605,91 +1663,107 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
 }; // int EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
- * determine the distance vector to the target of this shot.  The target
- * depends of course on wheter it's a friendly device or a hostile device.
+ *
+ *
  * ---------------------------------------------------------------------- */
 int
-DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_target )
+update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
-  int j = 0 ;
-  int TargetPlayerNum;
+  int j;
   float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
 
-  if ( ThisRobot->is_friendly == TRUE )
+  //--------------------
+  // We set some default values, in case there isn't anything attackable
+  // found below...
+  //
+  vect_to_target -> x = -1000;
+  vect_to_target -> y = -1000;
+  
+  //--------------------
+  // Since it's a friendly device in this case, it will aim at the (closest?) of
+  // the MS bots.
+  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
     {
-
-      //--------------------
-      // We set some default values, in case there isn't anything attackable
-      // found below...
-      //
-      vect_to_target -> x = -1000;
-      vect_to_target -> y = -1000;
-
-      //--------------------
-      // Since it's a friendly device in this case, it will aim at the (closest?) of
-      // the MS bots.
-      for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
-	{
-	  if ( AllEnemys[ j ].Status == OUT ) continue;
-	  if ( AllEnemys[ j ].is_friendly ) continue;
-	  if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
-	  /*
-	    This is MUCH TOO COSTLY!!!
-
-	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
-				    AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
-				    ThisRobot -> pos . z ) != TRUE ) continue;
-	  */
-
-	  if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
-		      ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
-		      ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
-		      ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
-
-	  // At this point we have found our target
-	  vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
-	  vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
-	  DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
-	  DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
-	  break;
-	}
-
-
+      if ( AllEnemys[ j ].Status == OUT ) continue;
+      if ( AllEnemys[ j ].is_friendly ) continue;
+      if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
       /*
-      //--------------------
-      // Maybe we havn't found a single target.  Then we don't attack anything of course.
-      // But the target will be set to the Tux.
-      //
-      if ( j >= Number_Of_Droids_On_Ship ) 
-	{
-	  ThisRobot->firewait = 1.0 ;
-	  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
-	  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
-	  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
-	  return; 
-	}
+	This is MUCH TOO COSTLY!!!
+	
+	if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
+	AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
+	ThisRobot -> pos . z ) != TRUE ) continue;
       */
-
       
-
+      if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
+		  ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
+		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
+		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
+      
+      // At this point we have found our target
+      vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
+      vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
+      DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
+      DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
+      break;
     }
-  else
-    {
-
-      TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
-      vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
-      vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
-
-    }
-
-  // Add some security against division by zero
-  if ( vect_to_target->x == 0) vect_to_target->x = 0.1;
-  if ( vect_to_target->y == 0) vect_to_target->y = 0.1;
+  
+  
+  /*
+  //--------------------
+  // Maybe we havn't found a single target.  Then we don't attack anything of course.
+  // But the target will be set to the Tux.
+  //
+  if ( j >= Number_Of_Droids_On_Ship ) 
+  {
+  ThisRobot->firewait = 1.0 ;
+  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
+  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
+  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
+  return; 
+  }
+  */
 
   if ( j < Number_Of_Droids_On_Ship - 1 ) return ( TRUE );
   else return ( FALSE );
 
-}; // int DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
+}; // int update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
+{
+  int TargetPlayerNum;
+
+  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
+  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
+  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
+
+  return ( TRUE ) ;
+
+}; // int update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+give_occasionally_updated_vector_to_shot_target ( enemy* ThisRobot , moderately_finepoint* vect_to_target ) 
+{
+
+  if ( ThisRobot->is_friendly == TRUE )
+    {
+      return ( update_vector_to_shot_target_for_friend ( ThisRobot , vect_to_target ) );
+    }
+  else
+    {
+      return ( update_vector_to_shot_target_for_enemy ( ThisRobot , vect_to_target ) );
+    }
+
+}; // int give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) 
 
 /* ----------------------------------------------------------------------
  * In some of the movement functions for enemy droids, we consider making
@@ -2079,7 +2153,7 @@ ProcessAttackStateMachine ( int enemynum )
   // determine the distance vector to the target of this shot.  The target
   // depends of course on wheter it's a friendly device or a hostile device.
   //
-  TargetIsEnemy = DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
+  TargetIsEnemy = give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) ;
 
   //--------------------
   // A friendly bot *MIGHT* help the tux in combat.  But this state must
@@ -2317,6 +2391,7 @@ ProcessAttackStateMachine ( int enemynum )
     }
   else
     {
+      DebugPrintf ( -1000 , "\nWARNING:  Unidentified combat_state encountered: code=%d!" , ThisRobot -> combat_state );
       MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
       return;
     }
