@@ -106,7 +106,7 @@ New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=379  PositionY=357  
 ChangeOption=9 ChangeToValue=0
-OnCondition="PointsToDistributeAtLeast:10" JumpToOption=11 ElseGoto=10
+OnCondition="PointsToDistributeAtLeast:5" JumpToOption=11 ElseGoto=10
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -135,7 +135,7 @@ ReplySample="PEN_Hold_It_Too_0.wav"
 Subtitle="Now, you've already improved a lot.  Come back when you want to learn more."
 ReplySample="PEN_Now_Youve_Already_0.wav"
 ChangeOption=11 ChangeToValue=0
-DoSomethingExtra="SubtractPointsToDistribute:10"
+DoSomethingExtra="SubtractPointsToDistribute:5"
 DoSomethingExtra="SubtractGold:100"
 DoSomethingExtra="IncreaseMeleeWeaponSkill"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
