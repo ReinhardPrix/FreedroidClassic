@@ -48,47 +48,45 @@ extern itemspec* ItemMap;
  * need to do this always in the code.
  * ---------------------------------------------------------------------- */
 void *
-MyMalloc (long Mamount)
+MyMalloc ( long Mamount )
 {
-  void *Mptr = NULL;
+    void *Mptr = NULL;
+    
+    // make Gnu-compatible even if on a broken system:
+    if (Mamount == 0)
+	Mamount = 1;
   
-  // make Gnu-compatible even if on a broken system:
-  if (Mamount == 0)
-    Mamount = 1;
-  
-  if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
+    if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
     {
-      fprintf (stderr, " MyMalloc(%ld) did not succeed!\n", Mamount);
-      fflush (stderr);
-      Terminate(ERR);
+	fprintf (stderr, " MyMalloc(%ld) did not succeed!\n", Mamount);
+	fflush (stderr);
+	Terminate(ERR);
     }
-  
-  return Mptr;
-}				// void* MyMalloc(long Mamount)
+    
+    return Mptr;
+}; // void* MyMalloc ( long Mamount )
 
-/*@Function============================================================
-@Desc: This function is used for debugging purposes.  It writes the
-       given string either into a file, on the screen, or simply does
-       nothing according to currently set debug level.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used for debugging purposes.  It writes the
+ * given string either into a file, on the screen, or simply does
+ * nothing according to currently set debug level.
+ * ---------------------------------------------------------------------- */
 void
-DebugPrintf (int db_level, char *fmt, ...)
+DebugPrintf ( int db_level, char *fmt, ...)
 {
-  va_list args;
-  static char buffer[5000+1];
-  va_start (args, fmt);
-
-  if (db_level <= debug_level)
+    va_list args;
+    static char buffer[5000+1];
+    va_start (args, fmt);
+    
+    if (db_level <= debug_level)
     {
-      vsnprintf (buffer, 5000, fmt, args);
-      fprintf (stderr, buffer);
-      fflush (stderr);
+	vsnprintf (buffer, 5000, fmt, args);
+	fprintf (stderr, buffer);
+	fflush (stderr);
     }
-
-  va_end (args);
-}
+    
+    va_end (args);
+}; // void DebugPrintf ( int db_level, char *fmt, ...)
 
 /* ----------------------------------------------------------------------
  * This function should help to simplify and standardize the many error
@@ -159,41 +157,41 @@ we'll continue execution right now.\n" );
 void *
 MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen)
 {
-  unsigned char* NextFoundPointer;
-  void* MatchPointer;
-  size_t SearchPos=0;
-
-  DebugPrintf (3, "MyMemmem(): haystack = %d, len = %d, needle=%s\n", haystack, haystacklen, needle);
-
-  while ( haystacklen - SearchPos > 0 )
+    unsigned char* NextFoundPointer;
+    void* MatchPointer;
+    size_t SearchPos=0;
+    
+    DebugPrintf (3, "MyMemmem(): haystack = %d, len = %d, needle=%s\n", haystack, haystacklen, needle);
+    
+    while ( haystacklen - SearchPos > 0 )
     {
-      //--------------------
-      // We search for the first match OF THE FIRST CHARACTER of needle
-      //
-      NextFoundPointer = memchr ( haystack+SearchPos , needle[0] , haystacklen-SearchPos );
-      
-      //--------------------
-      // if not even that was found, we can immediately return and report our failure to find it
-      //
-      if ( NextFoundPointer == NULL ) return ( NULL );
-
-      //--------------------
-      // Otherwise we see, if also the rest of the strings match this time ASSUMING THEY ARE STRINGS!
-      // In case of a match, we can return immediately
-      //
-      DebugPrintf (3, "calling strstr()..");
-      MatchPointer = strstr( NextFoundPointer , needle );
-      if( MatchPointer) DebugPrintf (3, "..survived. MatchPointer = %d\n", MatchPointer);
-      else DebugPrintf (3, "survived, but nothing found\n");
-      if ( MatchPointer != NULL ) return ( MatchPointer );
-
-      //--------------------
-      // At this point, we know that we had no luck with this one occasion of a first-character-match
-      // and must continue after this one occasion with our search
-      SearchPos = NextFoundPointer - haystack + 1;
+	//--------------------
+	// We search for the first match OF THE FIRST CHARACTER of needle
+	//
+	NextFoundPointer = memchr ( haystack+SearchPos , needle[0] , haystacklen-SearchPos );
+	
+	//--------------------
+	// if not even that was found, we can immediately return and report our failure to find it
+	//
+	if ( NextFoundPointer == NULL ) return ( NULL );
+	
+	//--------------------
+	// Otherwise we see, if also the rest of the strings match this time ASSUMING THEY ARE STRINGS!
+	// In case of a match, we can return immediately
+	//
+	DebugPrintf (3, "calling strstr()..");
+	MatchPointer = strstr( NextFoundPointer , needle );
+	if( MatchPointer) DebugPrintf ( 3 , "..survived. MatchPointer = %d\n", MatchPointer );
+	else DebugPrintf ( 3 , "survived, but nothing found\n" );
+	if ( MatchPointer != NULL ) return ( MatchPointer );
+	
+	//--------------------
+	// At this point, we know that we had no luck with this one occasion of a first-character-match
+	// and must continue after this one occasion with our search
+	SearchPos = NextFoundPointer - haystack + 1;
     }
 
-  return( NULL );
+    return( NULL );
 }; // void *MyMemmem ( ... );
 
 
@@ -277,76 +275,63 @@ CountStringOccurences ( char* SearchString , char* TargetString )
 char* 
 ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
 {
-  FILE *DataFile;
-  char *Data;
-  char *ReadPointer;
-  long MemoryAmount;
+    FILE *DataFile;
+    char *Data;
+    char *ReadPointer;
+    long MemoryAmount;
 
-  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
+    DebugPrintf ( 1 , "\n%s() : The filename is: %s" , __FUNCTION__ , filename );
 
-  // Read the whole theme data to memory 
-  if ((DataFile = fopen ( filename , "rb")) == NULL)
+    //--------------------
+    // Read the whole theme data to memory.  We use binary mode, as we
+    // don't want to have to deal with any carriage return/line feed 
+    // convention mess on win32 or something...
+    // 
+    if ( ( DataFile = fopen ( filename , "rb") ) == NULL )
     {
-      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+	
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to open a given text file, that should be there and\n\
 should be accessible.\n\
 This indicates a serious bug in this installation of Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-  else
+    else
     {
-      DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
+	DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
     }
+    
+    MemoryAmount = FS_filelength( DataFile )  + 64*2 + 10000;
+    Data = (char *) MyMalloc ( MemoryAmount );
+    
+    fread ( Data, MemoryAmount, 1, DataFile);
 
-  // RP:Don't use fstat() any more, as it might cause problems of portability (->win32)
-/*   if (fstat (fileno (DataFile), &stbuf) == EOF) */
-/*     { */
-/*       fprintf( stderr, "\n\nfilename: '%s'\n" , filename ); */
-/*       GiveStandardErrorMessage ( __FUNCTION__  , "\ */
-/* Freedroid was unable to fstat a given text file, that should be there and\n\ */
-/* should be accessible.\n\ */
-/* This indicates a strange bug in this installation of Freedroid, that is\n\ */
-/* very likely a problem with the file/directory permissions of the files\n\ */
-/* belonging to Freedroid.", */
-/* 				 PLEASE_INFORM, IS_FATAL ); */
-/*     } */
-/*   else */
-/*     { */
-/*       DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded..."); */
-/*     } */
+    DebugPrintf ( 1 , "\n%s(): Reading file succeeded..." , __FUNCTION__ );
 
-  MemoryAmount = FS_filelength( DataFile )  + 64*2 + 10000;
-  Data = (char *) MyMalloc ( MemoryAmount );
-
-  fread ( Data, MemoryAmount, 1, DataFile);
-
-  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
-
-  if ( fclose ( DataFile ) == EOF)
+    if ( fclose ( DataFile ) == EOF)
     {
-      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to close a given text file, that should be there and\n\
 should be accessible.\n\
 This indicates a strange bug in this installation of Freedroid, that is\n\
 very likely a problem with the file/directory permissions of the files\n\
 belonging to Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-  else
+    else
     {
-      DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
+	DebugPrintf( 1 , "\n%s(): file closed successfully...\n" , __FUNCTION__ );
     }
-
-  // NOTE: Since we do not assume to always have pure text files here, we switched to
-  // MyMemmem, so that we can handle 0 entries in the middle of the file content as well
-  //
-  // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
-  if ( (ReadPointer=MyMemmem( Data, (size_t)MemoryAmount, File_End_String, (size_t)strlen( File_End_String ))) == NULL)
+    
+    // NOTE: Since we do not assume to always have pure text files here, we switched to
+    // MyMemmem, so that we can handle 0 entries in the middle of the file content as well
+    //
+    // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
+    if ( ( ReadPointer = MyMemmem ( Data, (size_t) MemoryAmount , File_End_String , (size_t)strlen( File_End_String ))) == NULL)
     {
-      DebugPrintf( 0, "\n\nfilename: '%s'\n" , filename );
+	DebugPrintf( 0, "\n\nfilename: '%s'\n" , filename );
       DebugPrintf( 0, "File_End_String: '%s'\n" , File_End_String );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to find the string, that should indicate the end of\n\
@@ -427,6 +412,411 @@ This indicates a corrupted or seriously outdated game data or saved game file.",
     EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
 
 }; // void ReadValueFromString( ... )
+
+
+/* ----------------------------------------------------------------------
+ * As soon as a file name is known, we can start to save the item 
+ * information from the item roster to this new file.
+ * ---------------------------------------------------------------------- */
+void
+save_item_roster_to_file ( char* filename )
+{
+    FILE *SaveGameFile;  // to this file we will save all the ship data...
+    char linebuf[10000];
+    int i;
+    
+    DebugPrintf ( 0 , "\n%s(): real function call confirmed." , __FUNCTION__ );
+    DebugPrintf ( 0 , "\n%s(): now opening the savegame file for writing ..." , __FUNCTION__ ); 
+    
+    //--------------------
+    // Now that we know which filename to use, we can open the save file for writing
+    //
+    if ( ( SaveGameFile = fopen ( filename , "wb" ) ) == NULL ) 
+    {
+
+	DebugPrintf( 0 , "\n\n%sError opening save game file for writing...\n\nTerminating...\n\n");
+	Terminate(ERR);
+    }
+    
+    //--------------------
+    // Now that the file is opend for writing, we can start writing.  And the first thing
+    // we will write to the file will be a fine header, indicating what this file is about
+    // and things like that...
+    //
+    strcpy ( linebuf , "\n\
+----------------------------------------------------------------------\n\
+ *\n\
+ *   Copyright (c) 2003 Johannes Prix\n\
+ *\n\
+ *\n\
+ *  This file is part of Freedroid\n\
+ *\n\
+ *  Freedroid is free software; you can redistribute it and/or modify\n\
+ *  it under the terms of the GNU General Public License as published by\n\
+ *  the Free Software Foundation; either version 2 of the License, or\n\
+ *  (at your option) any later version.\n\
+ *\n\
+ *  Freedroid is distributed in the hope that it will be useful,\n\
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *  GNU General Public License for more details.\n\
+ *\n\
+ *  You should have received a copy of the GNU General Public License\n\
+ *  along with Freedroid; see the file COPYING. If not, write to the \n\
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
+ *  MA  02111-1307  USA\n\
+ *\n\
+----------------------------------------------------------------------\n\
+\n\
+This file was generated using the FreedroidRPG item editor.\n\
+If you have questions concerning FreedroidRPG, please send mail to:\n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , "BEGIN OF AUTORS NOTES\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , authors_notes );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , "\nEND OF AUTORS NOTES\n\n\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    strcpy ( linebuf , "\n\
+----------------------------------------------------------------------\n\
+----------------------------------------------------------------------\n\
+----------------------------------------------------------------------\n\
+\n\
+*** Start of item data section: ***\n\
+\n\
+Common factor for all ranged weapons bullet speed values: 1.0\n\
+Common factor for all ranged weapons bullet damage values: 1.0\n\
+Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
+    fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+    
+    //--------------------
+    // Now it's time to proceed through the whole dialog roster and save
+    // each dialog option, one after the other, hopefully loosing no bit
+    // of information...
+    //
+    for ( i = 0 ; i < Number_Of_Item_Types ; i ++ )
+    {
+	
+	//--------------------
+	// We write out the new item section starter...
+	//
+	sprintf ( linebuf , "// Item No. %d\n** Start of new item specification subsection **\n" , i ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out the new item name...
+	//
+	sprintf ( linebuf , "Item name=\"%s\"\n" , ItemMap [ i ] . item_name ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out the position entries...
+	//
+	sprintf ( linebuf , "Position_X=%d\n" , ItemMap [ i ] . position_x ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "Position_Y=%d\n" , ItemMap [ i ] . position_y ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out applied in combat...
+	//
+	sprintf ( linebuf , "Item can be applied in combat=\"" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_can_be_applied_in_combat )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out can be installed in influ...
+	//
+	sprintf ( linebuf , "Item can be installed in influ=\"" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_can_be_installed_in_influ )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out can be installed in slot with name...
+	//
+	sprintf ( linebuf , "Item can be installed in slot with name=\"" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	if ( ItemMap [ i ] . item_can_be_installed_in_weapon_slot )
+	    sprintf ( linebuf , "weapon\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_can_be_installed_in_shield_slot )
+	    sprintf ( linebuf , "shield\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_can_be_installed_in_drive_slot )
+	    sprintf ( linebuf , "drive\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_can_be_installed_in_armour_slot )
+	    sprintf ( linebuf , "armour\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_can_be_installed_in_special_slot )
+	    sprintf ( linebuf , "special\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_can_be_installed_in_aux_slot )
+	    sprintf ( linebuf , "aux\"\n" ) ;		
+	else
+	    sprintf ( linebuf , "none\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out rotation series prefix...
+	//
+	sprintf ( linebuf , "Item uses rotation series with prefix=\"%s\"\n" , ItemMap [ i ] . item_rotation_series_prefix ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out collect together in inventory...
+	//
+	sprintf ( linebuf , "Items of this type collect together in inventory=\"" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_group_together_in_inventory )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out minimum strength, dex and magic....
+	//
+	sprintf ( linebuf , "Strength minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_strength  ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "Dexterity minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_dexterity  ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "Magic minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_magic  ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out defensive properties....
+	//
+	sprintf ( linebuf , "Item as defensive item: base_ac_bonus=%d\n" , ItemMap [ i ] . base_ac_bonus  ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "Item as defensive item: ac_bonus_modifier=%d\n" , ItemMap [ i ] . ac_bonus_modifier  ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out item duration properties....
+	//
+	sprintf ( linebuf , "Base item duration=%d plus duration modifier=%d\n" , ItemMap [ i ] . base_item_duration,
+		  ItemMap [ i ] . item_duration_modifier ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out the inventory image file name to use for this item
+	//
+	sprintf ( linebuf , ITEM_INVENTORY_IMAGE_FILE_NAME ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , ItemMap [ i ] . item_inv_file_name );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "\"\n" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	
+	//--------------------
+	// We write out the sound sample file name to use for this item
+	//
+	sprintf ( linebuf , ITEM_DROP_SOUND_FILE_NAME ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , ItemMap [ i ] . item_drop_sound_file_name );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "\"\n" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out base list price....
+	//
+	sprintf ( linebuf , "Base list price=%d\n" , ItemMap [ i ] . base_list_price ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out item description text....
+	//
+	sprintf ( linebuf , "Item description text=\"%s\"\n" , ItemMap [ i ] . item_description ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out start of 'weapons' part...
+	//
+	sprintf ( linebuf , "----- the following part is only relevant for weapons -----\n" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out recharging time....
+	//
+	sprintf ( linebuf , "Item as gun: recharging time=%f\n" , ItemMap [ i ] . item_gun_recharging_time ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out bullet speed....
+	//
+	sprintf ( linebuf , "Item as gun: speed of bullets=%f\n" , ItemMap [ i ] . item_gun_speed ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out bullet angle change....
+	//
+	sprintf ( linebuf , "Item as gun: angle change of bullets=%f\n" , ItemMap [ i ] . item_gun_angle_change ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out damage of bullets...
+	//
+	sprintf ( linebuf , "Item as gun: damage of bullets=%d\n" , ItemMap [ i ] . base_item_gun_damage ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	sprintf ( linebuf , "Item as gun: modifier for damage of bullets=%d\n" , ItemMap [ i ] . item_gun_damage_modifier ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out 'one shot only' property...
+	//
+	sprintf ( linebuf , "Item as gun: one_shot_only=%d\n" , ItemMap [ i ] . item_gun_oneshotonly ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out bullet image type...
+	//
+	sprintf ( linebuf , "Item as gun: bullet_image_type=%d\n" , ItemMap [ i ] . item_gun_bullet_image_type ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out bullet lifetime...
+	//
+	sprintf ( linebuf , "Item as gun: bullet_lifetime=%f\n" , ItemMap [ i ] . item_gun_bullet_lifetime ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out offset for melee weapon...
+	//
+	sprintf ( linebuf , "Item as gun: offset for melee weapon=%f\n" , ItemMap [ i ] . item_gun_fixed_offset ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out modifier for starting angle...
+	//
+	sprintf ( linebuf , "Item as gun: modifier for starting angle=%f\n" , ItemMap [ i ] . item_gun_start_angle_modifier ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out ignore collsins with wall...
+	//
+	sprintf ( linebuf , "Item as gun: ignore collisions with wall=\"" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_gun_bullet_ignore_wall_collisions )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out reflect other bullets...
+	//
+	sprintf ( linebuf , "Item as gun: reflect other bullets=\"" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_gun_bullet_reflect_other_bullets )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out pass through explosions...
+	//
+	sprintf ( linebuf , "Item as gun: pass through explosions=\"" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_gun_bullet_pass_through_explosions )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out pass through hit bodies...
+	//
+	sprintf ( linebuf , "Item as gun: pass through hit bodies=\"" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_gun_bullet_pass_through_hit_bodies )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out ammunition type used...
+	//
+	sprintf ( linebuf , "Item as gun: required ammunition type=\"" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	if ( ItemMap [ i ] . item_gun_use_ammunition == 0  )
+	    sprintf ( linebuf , "none\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_PLASMA_AMMUNITION )
+	    sprintf ( linebuf , "plasma_ammunition\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_LASER_AMMUNITION )
+	    sprintf ( linebuf , "laser_ammunition\"\n" ) ;		
+	else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_EXTERMINATOR_AMMUNITION )
+	    sprintf ( linebuf , "exterminator_ammunition\"\n" ) ;		
+	else
+	    GiveStandardErrorMessage ( __FUNCTION__  , "ILLEGAL AMMUNITION TYPE GIVEN!!!",
+				       PLEASE_INFORM, IS_FATAL );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out if this weapon strictly requires both hands for usage...
+	//
+	sprintf ( linebuf , "Item as gun: weapon requires both hands=\"" );
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	if ( ItemMap [ i ] . item_gun_requires_both_hands )
+	    sprintf ( linebuf , "yes\"\n" ) ;	
+	else
+	    sprintf ( linebuf , "no\"\n" ) ;	
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	//--------------------
+	// We write out the ene of 'weapons' part...
+	//
+	sprintf ( linebuf , "----- end of part only relevant for weapons -----\n" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+	
+	//--------------------
+	// We write out the end sequence to any item section...
+	//
+	sprintf ( linebuf , "** End of new item specification subsection **\n\n" ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	
+    }
+    
+    //--------------------
+    // Now finally, we can write out the certain string, that is still needed by
+    // the dialog loading function...
+    //
+    strcpy ( linebuf , "\n\n\
+*** End of item data section: ***\n\
+\n\
+----------------------------------------------------------------------\n\
+----------------------------------------------------------------------\n\
+----------------------------------------------------------------------\n\
+\n\
+*** End of this Freedroid data File ***\n\n\n\n" );
+    fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
+    
+    if( fclose( SaveGameFile ) == EOF) 
+    {
+	printf("\n\nClosing of dialog file failed in save_item_roster_to_file(...)\n\nTerminating\n\n");
+	Terminate(ERR);
+    }
+    
+    DebugPrintf ( 0 , "\n%s(): end of function reached." , __FUNCTION__ );
+    
+}; // void save_item_roster_to_file ( char* filename )
 
 
 /* ----------------------------------------------------------------------
@@ -1160,8 +1550,8 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_GROUP_TOGETHER_IN_INVENTORY "Items of this type collect together in inventory=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
-#define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
-#define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
+// #define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
+// #define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -1588,411 +1978,6 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
     }
 
 }; // void Get_Item_Data ( char* DataPointer );
-
-/* ----------------------------------------------------------------------
- * As soon as a file name is known, we can start to save the item 
- * information from the item roster to this new file.
- * ---------------------------------------------------------------------- */
-void
-save_item_roster_to_file ( char* filename )
-{
-  FILE *SaveGameFile;  // to this file we will save all the ship data...
-  char linebuf[10000];
-  int i;
-
-  DebugPrintf ( 0 , "\nvoid save_item_roster_to_file(...): real function call confirmed.");
-  DebugPrintf ( 0 , "\nvoid save_item_roster_to_file(...): now opening the savegame file for writing ..."); 
-
-  //--------------------
-  // Now that we know which filename to use, we can open the save file for writing
-  //
-  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) 
-    {
-      DebugPrintf( 0 , "\n\nError opening save game file for writing...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  
-  //--------------------
-  // Now that the file is opend for writing, we can start writing.  And the first thing
-  // we will write to the file will be a fine header, indicating what this file is about
-  // and things like that...
-  //
-  strcpy ( linebuf , "\n\
-----------------------------------------------------------------------\n\
- *\n\
- *   Copyright (c) 2003 Johannes Prix\n\
- *\n\
- *\n\
- *  This file is part of Freedroid\n\
- *\n\
- *  Freedroid is free software; you can redistribute it and/or modify\n\
- *  it under the terms of the GNU General Public License as published by\n\
- *  the Free Software Foundation; either version 2 of the License, or\n\
- *  (at your option) any later version.\n\
- *\n\
- *  Freedroid is distributed in the hope that it will be useful,\n\
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
- *  GNU General Public License for more details.\n\
- *\n\
- *  You should have received a copy of the GNU General Public License\n\
- *  along with Freedroid; see the file COPYING. If not, write to the \n\
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
- *  MA  02111-1307  USA\n\
- *\n\
-----------------------------------------------------------------------\n\
-\n\
-This file was generated using the FreedroidRPG item editor.\n\
-If you have questions concerning FreedroidRPG, please send mail to:\n\
-\n\
-freedroid-discussion@lists.sourceforge.net\n\
-\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-  strcpy ( linebuf , "BEGIN OF AUTORS NOTES\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-  strcpy ( linebuf , authors_notes );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-  
-  strcpy ( linebuf , "\nEND OF AUTORS NOTES\n\n\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-  strcpy ( linebuf , "\n\
-----------------------------------------------------------------------\n\
-----------------------------------------------------------------------\n\
-----------------------------------------------------------------------\n\
-\n\
-*** Start of item data section: ***\n\
-\n\
-Common factor for all ranged weapons bullet speed values: 1.0\n\
-Common factor for all ranged weapons bullet damage values: 1.0\n\
-Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
-  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
-
-  //--------------------
-  // Now it's time to proceed through the whole dialog roster and save
-  // each dialog option, one after the other, hopefully loosing no bit
-  // of information...
-  //
-  for ( i = 0 ; i < Number_Of_Item_Types ; i ++ )
-    {
-
-      //--------------------
-      // We write out the new item section starter...
-      //
-      sprintf ( linebuf , "// Item No. %d\n** Start of new item specification subsection **\n" , i ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out the new item name...
-      //
-      sprintf ( linebuf , "Item name=\"%s\"\n" , ItemMap [ i ] . item_name ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out the position entries...
-      //
-      sprintf ( linebuf , "Position_X=%d\n" , ItemMap [ i ] . position_x ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "Position_Y=%d\n" , ItemMap [ i ] . position_y ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out applied in combat...
-      //
-      sprintf ( linebuf , "Item can be applied in combat=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_can_be_applied_in_combat )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out can be installed in influ...
-      //
-      sprintf ( linebuf , "Item can be installed in influ=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_can_be_installed_in_influ )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out can be installed in slot with name...
-      //
-      sprintf ( linebuf , "Item can be installed in slot with name=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      if ( ItemMap [ i ] . item_can_be_installed_in_weapon_slot )
-	sprintf ( linebuf , "weapon\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_can_be_installed_in_shield_slot )
-	sprintf ( linebuf , "shield\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_can_be_installed_in_drive_slot )
-	sprintf ( linebuf , "drive\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_can_be_installed_in_armour_slot )
-	sprintf ( linebuf , "armour\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_can_be_installed_in_special_slot )
-	sprintf ( linebuf , "special\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_can_be_installed_in_aux_slot )
-	sprintf ( linebuf , "aux\"\n" ) ;		
-      else
-	sprintf ( linebuf , "none\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out rotation series prefix...
-      //
-      sprintf ( linebuf , "Item uses rotation series with prefix=\"%s\"\n" , ItemMap [ i ] . item_rotation_series_prefix ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out collect together in inventory...
-      //
-      sprintf ( linebuf , "Items of this type collect together in inventory=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_group_together_in_inventory )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out minimum strength, dex and magic....
-      //
-      sprintf ( linebuf , "Strength minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_strength  ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "Dexterity minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_dexterity  ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "Magic minimum required to wear/wield this item=%d\n" , ItemMap [ i ] . item_require_magic  ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out defensive properties....
-      //
-      sprintf ( linebuf , "Item as defensive item: base_ac_bonus=%d\n" , ItemMap [ i ] . base_ac_bonus  ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "Item as defensive item: ac_bonus_modifier=%d\n" , ItemMap [ i ] . ac_bonus_modifier  ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out item duration properties....
-      //
-      sprintf ( linebuf , "Base item duration=%d plus duration modifier=%d\n" , ItemMap [ i ] . base_item_duration,
-		ItemMap [ i ] . item_duration_modifier ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out the inventory image file name to use for this item
-      //
-      sprintf ( linebuf , ITEM_INVENTORY_IMAGE_FILE_NAME ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , ItemMap [ i ] . item_inv_file_name );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "\"\n" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-
-      //--------------------
-      // We write out the sound sample file name to use for this item
-      //
-      sprintf ( linebuf , ITEM_DROP_SOUND_FILE_NAME ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , ItemMap [ i ] . item_drop_sound_file_name );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "\"\n" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out base list price....
-      //
-      sprintf ( linebuf , "Base list price=%d\n" , ItemMap [ i ] . base_list_price ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out item description text....
-      //
-      sprintf ( linebuf , "Item description text=\"%s\"\n" , ItemMap [ i ] . item_description ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out start of 'weapons' part...
-      //
-      sprintf ( linebuf , "----- the following part is only relevant for weapons -----\n" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out recharging time....
-      //
-      sprintf ( linebuf , "Item as gun: recharging time=%f\n" , ItemMap [ i ] . item_gun_recharging_time ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out bullet speed....
-      //
-      sprintf ( linebuf , "Item as gun: speed of bullets=%f\n" , ItemMap [ i ] . item_gun_speed ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out bullet angle change....
-      //
-      sprintf ( linebuf , "Item as gun: angle change of bullets=%f\n" , ItemMap [ i ] . item_gun_angle_change ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out damage of bullets...
-      //
-      sprintf ( linebuf , "Item as gun: damage of bullets=%d\n" , ItemMap [ i ] . base_item_gun_damage ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      sprintf ( linebuf , "Item as gun: modifier for damage of bullets=%d\n" , ItemMap [ i ] . item_gun_damage_modifier ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out 'one shot only' property...
-      //
-      sprintf ( linebuf , "Item as gun: one_shot_only=%d\n" , ItemMap [ i ] . item_gun_oneshotonly ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out bullet image type...
-      //
-      sprintf ( linebuf , "Item as gun: bullet_image_type=%d\n" , ItemMap [ i ] . item_gun_bullet_image_type ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out bullet lifetime...
-      //
-      sprintf ( linebuf , "Item as gun: bullet_lifetime=%f\n" , ItemMap [ i ] . item_gun_bullet_lifetime ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out offset for melee weapon...
-      //
-      sprintf ( linebuf , "Item as gun: offset for melee weapon=%f\n" , ItemMap [ i ] . item_gun_fixed_offset ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out modifier for starting angle...
-      //
-      sprintf ( linebuf , "Item as gun: modifier for starting angle=%f\n" , ItemMap [ i ] . item_gun_start_angle_modifier ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out ignore collsins with wall...
-      //
-      sprintf ( linebuf , "Item as gun: ignore collisions with wall=\"" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_gun_bullet_ignore_wall_collisions )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out reflect other bullets...
-      //
-      sprintf ( linebuf , "Item as gun: reflect other bullets=\"" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_gun_bullet_reflect_other_bullets )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out pass through explosions...
-      //
-      sprintf ( linebuf , "Item as gun: pass through explosions=\"" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_gun_bullet_pass_through_explosions )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out pass through hit bodies...
-      //
-      sprintf ( linebuf , "Item as gun: pass through hit bodies=\"" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_gun_bullet_pass_through_hit_bodies )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out ammunition type used...
-      //
-      sprintf ( linebuf , "Item as gun: required ammunition type=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      if ( ItemMap [ i ] . item_gun_use_ammunition == 0  )
-	sprintf ( linebuf , "none\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_PLASMA_AMMUNITION )
-	sprintf ( linebuf , "plasma_ammunition\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_LASER_AMMUNITION )
-	sprintf ( linebuf , "laser_ammunition\"\n" ) ;		
-      else if ( ItemMap [ i ] . item_gun_use_ammunition == ITEM_EXTERMINATOR_AMMUNITION )
-	sprintf ( linebuf , "exterminator_ammunition\"\n" ) ;		
-      else
-	GiveStandardErrorMessage ( __FUNCTION__  , "ILLEGAL AMMUNITION TYPE GIVEN!!!",
-				   PLEASE_INFORM, IS_FATAL );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out if this weapon strictly requires both hands for usage...
-      //
-      sprintf ( linebuf , "Item as gun: weapon requires both hands=\"" );
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_gun_requires_both_hands )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out the ene of 'weapons' part...
-      //
-      sprintf ( linebuf , "----- end of part only relevant for weapons -----\n" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-
-      //--------------------
-      // We write out the end sequence to any item section...
-      //
-      sprintf ( linebuf , "** End of new item specification subsection **\n\n" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-    }
-
-  //--------------------
-  // Now finally, we can write out the certain string, that is still needed by
-  // the dialog loading function...
-  //
-  strcpy ( linebuf , "\n\n\
-*** End of item data section: ***\n\
-\n\
-----------------------------------------------------------------------\n\
-----------------------------------------------------------------------\n\
-----------------------------------------------------------------------\n\
-\n\
-*** End of this Freedroid data File ***\n\n\n\n" );
-  fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
-
-  if( fclose( SaveGameFile ) == EOF) 
-    {
-      printf("\n\nClosing of dialog file failed in save_item_roster_to_file(...)\n\nTerminating\n\n");
-      Terminate(ERR);
-    }
-  
-  DebugPrintf ( 0 , "\nsave_item_roster_to_file ( char* filename ): end of function reached.");
-
-}; // void save_item_roster_to_file ( char* filename )
-
-
 
 /*----------------------------------------------------------------------
  * Copyright (C) 1997-2001 Id Software, Inc., under GPL

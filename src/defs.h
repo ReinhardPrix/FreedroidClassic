@@ -718,7 +718,8 @@ enum
 #define HIT 1
 #define MISS 2
 
-
+#define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
+#define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
 
 #define PUSHSPEED 2 // speed at which influ will be pushed away from doors and such...
 

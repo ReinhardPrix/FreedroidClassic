@@ -6,7 +6,7 @@ endif
 
 ## compile Dialog-editor if gtk-libs were found
 if FOUND_GTK
-extra_prg = DialogEditor
+extra_prg = DialogEditor ItemEditor
 else
 extra_prg = 
 endif
@@ -14,18 +14,19 @@ endif
 
 bin_PROGRAMS = freedroidRPG $(extra_prg)
 
-EXTRA_PROGRAMS = DialogEditor
+EXTRA_PROGRAMS = DialogEditor ItemEditor
 
 freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c saveloadgame.c \
 	leveleditor.c blocks.c  graphics.c  map.c   init.c  ship.c \
 	takeover.c bullet.c  influ.c misc.c text.c text_public.c sound.c \
 	enemy.c   input.c  main.c  rahmen.c view.c automap.c BFont.c \
 	colodefs.h itemdefs.h defs.h map.h vars.h ship.h takeover.h global.h \
-	proto.h struct.h system.h BFont.h DialogEditor.h \
+	proto.h struct.h system.h BFont.h DialogEditor.h ItemEditor.h \
 	SDL_rotozoom.c SDL_rotozoom.h open_gl.c \
 	getopt.c getopt1.c getopt.h scandir.c scandir.h 
 
 DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
+ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
 
 INCLUDES        = @GTK_CFLAGS@
 LDADD           = @GTK_LIBS@
