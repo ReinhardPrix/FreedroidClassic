@@ -869,24 +869,6 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nOptionSample found : \"%s\"." , ChatRoster[ OptionIndex ] . option_sample_file_name );
 
       //--------------------
-      // For now we will just add some 'default' position here.  Later we might
-      // really load the current position of each dialog box, some information
-      // that will only be needed in the Dialog Editor anyway.
-      //
-      if ( strstr ( SectionPointer , "PositionX=" ) != NULL )
-	{
-	  ReadValueFromString( SectionPointer , "PositionX=" , "%d" , 
-			       & ( ChatRoster[ OptionIndex ] . position_x ) , TempEndPointer );
-	  ReadValueFromString( SectionPointer , "PositionY=" , "%d" , 
-			       & ( ChatRoster[ OptionIndex ] . position_y ) , TempEndPointer );
-	}
-      else
-	{
-	  ChatRoster [ OptionIndex ] . position_x = ( 2 + ( OptionIndex % 10 ) ) * 30 ;
-	  ChatRoster [ OptionIndex ] . position_y = ( 2 + ( OptionIndex / 10 ) ) * 30 ;
-	}
-
-      //--------------------
       // Now we can start to add all given Sample and Subtitle combinations
       // But first we must add a termination character in order to not use
       // the combinations of the next option section.
@@ -905,6 +887,23 @@ Therefore we must add a new temporary termination character in between." , Optio
 	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nThere is no more option section left in the file.  \n\
 Therefore we need not add an additional termination character now." );
 	  RestoreTempDamage = FALSE;
+	}
+
+      //--------------------
+      // Now that the temporary termination character has been inserted, we can 
+      // start to hunt for position and other strings in the new terminated area...
+      //
+      if ( strstr ( SectionPointer , "PositionX=" ) != NULL )
+	{
+	  ReadValueFromString( SectionPointer , "PositionX=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . position_x ) , TempEndPointer );
+	  ReadValueFromString( SectionPointer , "PositionY=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . position_y ) , TempEndPointer );
+	}
+      else
+	{
+	  ChatRoster [ OptionIndex ] . position_x = ( 2 + ( OptionIndex % 10 ) ) * 30 ;
+	  ChatRoster [ OptionIndex ] . position_y = ( 2 + ( OptionIndex / 10 ) ) * 30 ;
 	}
 
 #define NEW_REPLY_SAMPLE_STRING "ReplySample=\""
