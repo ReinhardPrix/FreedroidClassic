@@ -185,7 +185,8 @@
 // Now the new running power rectangle, that fits into the current hud
 //
 #define WHOLE_RUNNING_POWER_RECT_X 8
-#define WHOLE_RUNNING_POWER_RECT_Y ( GameConfig . screen_height - 86 ) 
+// #define WHOLE_RUNNING_POWER_RECT_Y ( GameConfig . screen_height - 86 ) 
+#define WHOLE_RUNNING_POWER_RECT_Y ( 480 - 86 ) 
 #define WHOLE_RUNNING_POWER_RECT_W 9
 #define WHOLE_RUNNING_POWER_RECT_H 61
 

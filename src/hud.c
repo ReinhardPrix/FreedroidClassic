@@ -70,7 +70,7 @@ char* game_message_protocol = NULL ;
  * ---------------------------------------------------------------------- */
 void
 blit_vertical_status_bar ( float max_value , float current_value , Uint32 filled_color_code ,
-			   Uint32 empty_color_code , int x , int y , int w , int h )
+			   Uint32 empty_color_code , int x , int y , int w , int h , int scale_to_screen_resolution )
 {
     SDL_Rect running_power_rect;
     SDL_Rect un_running_power_rect;
@@ -89,6 +89,29 @@ blit_vertical_status_bar ( float max_value , float current_value , Uint32 filled
 	( ( h * current_value ) / max_value ) ;
     if ( current_value < 0 ) un_running_power_rect . h = h ;
     
+    //--------------------
+    // If we are to scale the status bar, we do so :)
+    //
+    if ( scale_to_screen_resolution )
+    {
+	un_running_power_rect . x =
+	    un_running_power_rect . x * GameConfig.screen_width / 640.0 ;
+	un_running_power_rect . y = 
+	    un_running_power_rect . y * GameConfig.screen_height / 480.0 ;
+	un_running_power_rect . w = 
+	    un_running_power_rect . w * GameConfig.screen_width / 640.0 ;
+	un_running_power_rect . h = 
+	    un_running_power_rect . h * GameConfig.screen_height / 480.0 ;
+	running_power_rect . x =
+	    running_power_rect . x * GameConfig.screen_width / 640.0 ;
+	running_power_rect . y = 
+	    running_power_rect . y * GameConfig.screen_height / 480.0 ;
+	running_power_rect . w =
+	    running_power_rect . w * GameConfig.screen_width / 640.0 ;
+	running_power_rect . h = 
+	    running_power_rect . h * GameConfig.screen_height / 480.0 ;
+    }
+
     //--------------------
     // Now wthat all our rects are set up, we can start to display the current
     // running power status on screen...
@@ -858,8 +881,8 @@ to blit the 'experience countdown' bar.  Graphics will be suppressed for now..."
 			       experience_countdown_rect_color , un_experience_countdown_rect_color ,
 			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_X , 
 			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y , 
-			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_W , 
-			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_H );
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_W ,  
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_H , TRUE );
 
 }; // void blit_experience_countdown_bars ( void )
 
@@ -908,10 +931,10 @@ blit_running_power_bars ( void )
     {
 	blit_vertical_status_bar ( 2.0 , 2.0 , infinite_running_power_rect_color ,
 				   un_running_power_rect_color , 
-				   WHOLE_RUNNING_POWER_RECT_X , 
+				   WHOLE_RUNNING_POWER_RECT_X ,  
 				   WHOLE_RUNNING_POWER_RECT_Y , 
-				   WHOLE_RUNNING_POWER_RECT_W , 
-				   WHOLE_RUNNING_POWER_RECT_H );
+				   WHOLE_RUNNING_POWER_RECT_W ,  
+				   WHOLE_RUNNING_POWER_RECT_H , TRUE );
     }
     else
     {
@@ -919,10 +942,10 @@ blit_running_power_bars ( void )
 	    blit_vertical_status_bar ( Me [ 0 ] . max_running_power , Me [ 0 ] . running_power , 
 				       rest_running_power_rect_color ,
 				       un_running_power_rect_color , 
-				       WHOLE_RUNNING_POWER_RECT_X , 
-				       WHOLE_RUNNING_POWER_RECT_Y , 
-				       WHOLE_RUNNING_POWER_RECT_W , 
-				       WHOLE_RUNNING_POWER_RECT_H );
+				       WHOLE_RUNNING_POWER_RECT_X ,
+				       WHOLE_RUNNING_POWER_RECT_Y ,
+				       WHOLE_RUNNING_POWER_RECT_W ,
+				       WHOLE_RUNNING_POWER_RECT_H , TRUE );
 	else
 	    blit_vertical_status_bar ( Me [ 0 ] . max_running_power , Me [ 0 ] . running_power , 
 				       running_power_rect_color ,
@@ -930,7 +953,7 @@ blit_running_power_bars ( void )
 				       WHOLE_RUNNING_POWER_RECT_X , 
 				       WHOLE_RUNNING_POWER_RECT_Y , 
 				       WHOLE_RUNNING_POWER_RECT_W , 
-				       WHOLE_RUNNING_POWER_RECT_H );
+				       WHOLE_RUNNING_POWER_RECT_H , TRUE );
     }
 
 }; // void blit_running_power_bars ( void )
