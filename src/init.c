@@ -469,6 +469,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
+#define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
   
@@ -608,30 +609,16 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].sensor3, EndOfDataPointer );
 
       // Now we read in the armament of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, ARMAMENT_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf (1, "\nERROR! NO ARMAMENT ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( ARMAMENT_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].armament );
-	  // printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
-	}
+      ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].armament , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
-      if ( (ValuePointer = strstr ( RobotPointer, ADVANCED_FIGHTING_BEGIN_STRING ) ) == NULL )
-	{
-	  DebugPrintf (1, "\nERROR! NO ADVANCED FIGHTING ENTRY FOUND! TERMINATING!");
-	  Terminate(ERR);
-	}
-      else
-	{
-	  ValuePointer += strlen ( ADVANCED_FIGHTING_BEGIN_STRING );
-	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].AdvancedBehaviour );
-	  // printf("\nDroid AdvancedFighting entry found!  It reads: %d" , Druidmap[RobotIndex].AdvancedFighting );
-	}
+      ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].AdvancedBehaviour , EndOfDataPointer );
+
+      // Now we read in if the droid tends to go to call for reinforcements
+      ReadValueFromString( RobotPointer , GO_REQUEST_REINFORCEMENTS_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].CallForHelpAfterSufferingHit , EndOfDataPointer );
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.
@@ -658,8 +645,8 @@ Get_Robot_Data ( void* DataPointer )
     }
   
 
-  DebugPrintf (2, "\n\nThat must have been the last robot.  We're done reading the robot data.");
-  DebugPrintf (2, "\n\nApplying the calibration factors to all droids...");
+  DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
+  DebugPrintf ( 1 , "\n\nApplying the calibration factors to all droids...");
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
@@ -670,9 +657,6 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[i].aggression *= aggression_calibrator;
       Druidmap[i].score *= score_calibrator;
     }
-
-
-  Druidmap[ DRUID302 ].CallForHelpAfterSufferingHit = TRUE;
 
 
 } // int Get_Robot_Data ( void )
