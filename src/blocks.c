@@ -374,6 +374,8 @@ Load_Influencer_Surfaces( void )
       SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
       SDL_FreeSurface( tmp_surf );
     }
+
+
   SDL_FreeSurface( Whole_Image );
 }; // void Load_Influencer_Surfaces( void )
 
@@ -418,7 +420,7 @@ Load_Tux_Surfaces( void )
       SDL_SetAlpha( TuxSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
       SDL_FreeSurface( tmp_surf );
     }
-
+  
 
 
   SDL_FreeSurface( Whole_Image );
