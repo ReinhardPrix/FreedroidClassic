@@ -1,3 +1,9 @@
+## Process this file with automake to produce Makefile.in
+# $Id$
+
+## make sure rebuilding uses the right aclocal-switches
+ACLOCAL_AMFLAGS = -I m4
+
 if NONLINUX
 extradirs = 
 else
@@ -50,4 +56,5 @@ dist-win32: src/freedroidRPG.exe
 	   emacs -batch -q -l unix2dos.el --visit=$(win_dir)/$$i.txt -f unix2dos;\
 	done
 	zip -r $(win_dir).zip $(win_dir)
+
 
