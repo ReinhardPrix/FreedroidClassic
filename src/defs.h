@@ -592,7 +592,7 @@ enum _directions
 #define MAX_PASSWORDS 100
 #define MAX_PASSWORD_LENGTH 20
 #define MAX_COOKIES 100
-#define MAX_COOKIE_LENGTH 20
+#define MAX_COOKIE_LENGTH 200
 
 #define RIGHT_WALL_BIT 1
 #define LEFT_WALL_BIT 2

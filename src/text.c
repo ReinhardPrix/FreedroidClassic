@@ -99,6 +99,81 @@ dialogue_option, *Dialogue_option;
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 /* ----------------------------------------------------------------------
+ * This function plants a cookie, i.e. sets a new text string with the
+ * purpose of serving as a flag.  These flags can be set from the dialog
+ * file and used from within there and they get stored and loaded with
+ * every gave via the influence_t structure.
+ * ---------------------------------------------------------------------- */
+void
+PlantCookie ( char* CookieString , int PlayerNum )
+{
+  int i;
+
+  //--------------------
+  // First a security check against attempts to plant too long cookies...
+  //
+  if ( strlen ( CookieString ) >= MAX_COOKIE_LENGTH -1 )
+    {
+      fprintf( stderr, "\n\nCookieString: %s\n" , CookieString );
+      GiveStandardErrorMessage ( "PlantCookie(...)" , "\
+There was a cookie given that exceeds the maximal length allowed for a\n\
+cookie to be set in FreedroidRPG.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Check if maybe the cookie has already been set.  In this case we would
+  // not have to do anything...
+  //
+  for ( i = 0 ; i < MAX_COOKIES ; i ++ )
+    {
+      if ( strlen ( Me [ PlayerNum ] . cookie_list [ i ] ) <= 0 )
+	{
+	  if ( !strcmp ( Me [ PlayerNum ] . cookie_list [ i ] , CookieString ) )
+	    {
+	      DebugPrintf ( 0 , "\n\nTHAT COOKIE WAS ALREADY SET... DOING NOTHING...\n\n" );
+	      return;
+	    }
+	}
+    }
+
+  //--------------------
+  // Now we find a good new and free position for our new cookie...
+  //
+  for ( i = 0 ; i < MAX_COOKIES ; i ++ )
+    {
+      if ( strlen ( Me [ PlayerNum ] . cookie_list [ i ] ) <= 0 )
+	{
+	  break;
+	}
+    }
+
+  //--------------------
+  // Maybe the position we have found is the last one.  That would mean too
+  // many cookies, a case that should never occur in FreedroidRPG and that is
+  // a considered a fatal error...
+  //
+  if ( i >= MAX_COOKIES ) 
+    {
+      fprintf( stderr, "\n\nCookieString: %s\n" , CookieString );
+      GiveStandardErrorMessage ( "PlantCookie(...)" , "\
+There were no more free positions available to store this cookie.\n\
+This should not be possible without a severe bug in FreedroidRPG.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now that we know that we have found a good position for storing our
+  // new cookie, we can do it.
+  //
+  strcpy ( Me [ PlayerNum ] . cookie_list [ i ] , CookieString );
+  DebugPrintf ( 0 , "\n\nNEW COOKIE STORED:  Position=%d Text='%s'.\n\n" , 
+		i , CookieString );
+
+
+}; // void PlantCookie ( char* CookieString , int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * 
  * ---------------------------------------------------------------------- */
 void 
@@ -746,6 +821,12 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 		   ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) );
       ExecuteActionWithLabel ( ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) , 0 ) ;
     }
+  else if ( CountStringOccurences ( ExtraCommandString , "PlantCookie:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked planting of a cookie: %s. Doing it... " ,
+		   ExtraCommandString + strlen ( "PlantCookie:" ) );
+      PlantCookie ( ExtraCommandString + strlen ( "PlantCookie:" ) , 0 ) ;
+    }
   else if ( CountStringOccurences ( ExtraCommandString , "AssignMission:" ) )
     {
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked assigning of mission. --> have to decode... " );
@@ -810,6 +891,14 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
       Me [ 0 ] . Gold -= TempValue;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsWithCode:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked deletion of all inventory items with a certain code. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "DeleteAllInventoryItemsWithCode:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... code of item to delete found is: %d." , TempValue );
+      DeleteAllInventoryItemsOfType( TempValue , 0 );      
     }
   else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsOfType:" ) )
     {
@@ -952,6 +1041,8 @@ int
 TextConditionIsTrue ( char* ConditionString )
 {
   int TempValue;
+  char* CookieText;
+  int i ;
 
   if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
     {
@@ -1000,6 +1091,26 @@ TextConditionIsTrue ( char* ConditionString )
 	return ( TRUE );
       else
 	return ( FALSE );
+    }
+  else if ( CountStringOccurences ( ConditionString , "CookieIsPlanted" ) )
+    {
+      DebugPrintf ( 0 , "\nCondition String identified as question for cookie planted." );
+
+      CookieText = 
+	ReadAndMallocStringFromData ( ConditionString , "CookieIsPlanted:" , ":" ) ;
+      DebugPrintf ( 0 , "\nCookieText mentioned: '%s'." , CookieText );
+
+      for ( i = 0 ; i < MAX_COOKIES ; i ++ )
+	{
+	  if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
+	  if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
+	    return ( TRUE );
+	}
+
+      free ( CookieText );
+
+      return ( FALSE );
+
     }
 
   fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
@@ -1395,8 +1506,16 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
        ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
     {
-      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 2 ] = TRUE ; // we allow to give the crystals...
-      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 3 ] = TRUE ; // we allow to report no success yet...
+      if ( CountItemtypeInInventory( 79 , 0 ) )
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = TRUE ; // we allow to give the crystals...
+	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = FALSE ; // we allow to give the crystals...
+	}
+      else
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = TRUE ; // we allow to report no success yet...
+	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = FALSE ; // we allow to report no success yet...
+	}
     }
 
   //--------------------
