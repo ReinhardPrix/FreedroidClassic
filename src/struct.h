@@ -201,9 +201,8 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/05/23 19:33:53  prix
- * Sat May 22 18:21:16 1993: Soundblastertypen hizugefuegt
- * Sat May 22 18:52:08 1993: Zuruecknahmen
+ * Revision 1.4  1993/05/23 21:07:55  prix
+ * Sun May 23 16:15:04 1993: added druid and druidmodel structs: first concepts
  *
  * Revision 1.6  1993/09/30  17:57:20  prix
  * Fri Aug 06 14:56:25 1993: added first version of ship-struct
