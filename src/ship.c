@@ -76,6 +76,8 @@ EnterLift (void)
    * by turning off transfer mode as soon as the influ enters the lift */
   Me.status= ELEVATOR;
 
+  ResetMouseWheel ();  // forget previous mouse-wheel action
+
   curLevel = CurLevel->levelnum;
 
   if ((curLift = GetCurrentLift ()) == -1)
@@ -99,12 +101,12 @@ EnterLift (void)
 
   while (!SpacePressed ())
     {
-      if (UpPressed () && !DownPressed ())
+      if (UpPressed () || WheelUpPressed ())
 	if (upLift != -1)
 	  {			/* gibt es noch einen Lift hoeher ? */
 	    if (curShip.AllLifts[upLift].x == 99)
 	      {
-		printf ("Out of order, so sorry ..");
+		printf ("Lift out of order, so sorry ..");
 	      }
 	    else
 	      {
@@ -122,12 +124,12 @@ EnterLift (void)
 	  }			/* if uplevel */
 
 
-      if (DownPressed () && !UpPressed ())
+      if (DownPressed () || WheelDownPressed ())
 	if (downLift != -1)
 	  {			/* gibt es noch einen Lift tiefer ? */
 	    if (curShip.AllLifts[downLift].x == 99)
 	      {
-		printf ("Out of order, so sorry ..");
+		printf ("Lift Out of order, so sorry ..");
 	      }
 	    else
 	      {
@@ -173,10 +175,8 @@ EnterLift (void)
       ShuffleEnemys ();
 
       // set the position of the influencer to the correct locatiohn
-      Me.pos.x =
-	curShip.AllLifts[curLift].x; 
-      Me.pos.y =
-	curShip.AllLifts[curLift].y; 
+      Me.pos.x = curShip.AllLifts[curLift].x; 
+      Me.pos.y = curShip.AllLifts[curLift].y; 
 
       // We reset the time on this level and the position history
       Me.FramesOnThisLevel=0;
@@ -296,14 +296,15 @@ This function runs the consoles. This means the following duties:
 void
 EnterKonsole (void)
 {
-  int ReenterGame = 0;
-  int TasteOK;
+  int ReenterGame = FALSE;
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
   Me.status = CONSOLE;
+
+  ResetMouseWheel ();
 
   SetCurrentFont( Para_BFont );
 
@@ -317,66 +318,51 @@ EnterKonsole (void)
 
   while (!ReenterGame)
     {
-
       PaintConsoleMenu ();
       SDL_Flip (ne_screen);
 
-      /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
-      TasteOK = 0;
-      while (!TasteOK)
+      if (UpPressed () || WheelUpPressed())
 	{
-	  if (UpPressed ())
-	    {
-	      ConsoleMenuPos--;
-	      TasteOK = 1;
-	    }
-	  if (DownPressed ())
-	    {
-	      ConsoleMenuPos++;
-	      TasteOK = 1;
-	    }
-	  if (SpacePressed ())
-	    TasteOK = 1;
-	  if (EscapePressed())
-	    ReenterGame = TRUE;
+	  ConsoleMenuPos--;
+	  while (UpPressed());
 	}
-
-      /* Verhindern, da"s der Menucursor das Menu verl"a"st */
+      if (DownPressed () || WheelDownPressed())
+	{
+	  ConsoleMenuPos++;
+	  while (DownPressed());
+	}
+      if (EscapePressed())
+	{
+	  while (EscapePressed());
+	  break;
+	}
+      // cycle round at the ends
       if (ConsoleMenuPos < 0)
-	ConsoleMenuPos = 0;
-      if (ConsoleMenuPos > 3)
 	ConsoleMenuPos = 3;
+      if (ConsoleMenuPos > 3)
+	ConsoleMenuPos = 0;
 
-      /* gew"ahlte Menupunkte betreten */
-      if ((ConsoleMenuPos == 0) & (SpacePressed ()))
-	ReenterGame = TRUE;
-      if ((ConsoleMenuPos == 1) & (SpacePressed ()))
-	GreatDruidShow ();
-      if ((ConsoleMenuPos == 2) & (SpacePressed ()))
+      if (SpacePressed ())
 	{
-	  ShowDeckMap (CurLevel);
-	  /* this is not very elegant at the moment, but it works ok.. */
-	  while ( SpacePressed() );  /* wait for space-release */
-	  while (!SpacePressed () ); /* and wait for another space before leaving */
-	  // Now that we leave, we restore the combat screen scaling factor..
-	  // if ( CurrentCombatScaleFactor == 1 ) ReInitPictures();
-	  // else {
-	  // if ( CurrentCombatScaleFactor != 0.5 ) SetCombatScaleTo( CurrentCombatScaleFactor );
-	  // }
-	  SetCombatScaleTo(1.0);
-	  while ( SpacePressed() ); /* but also wait for the release before going on..*/
-	}
-      if ((ConsoleMenuPos == 3) & (SpacePressed ()))
-	{
-	  while (SpacePressed ());
-	  ClearGraphMem();
-	  ShowLifts (CurLevel->levelnum, -1);
-	  while (!SpacePressed ());
-	  while (SpacePressed ());
+	  while (SpacePressed());
+	  switch (ConsoleMenuPos)
+	    {
+	    case 0:
+	      ReenterGame = TRUE;
+	      break;
+	    case 1:
+	      GreatDruidShow ();
+	      break;
+	    case 2:
+	      ShowDeckMap (CurLevel);
+	      break;
+	    case 3:
+	      ClearGraphMem();
+	      ShowLifts (CurLevel->levelnum, -1);
+	      Wait4Fire();
+	    }
 	}
 
-      while (DownPressed ());
-      while (UpPressed ());
     }				/* (while !ReenterGane) */
 
   Me.status = MOBILE;
@@ -386,8 +372,6 @@ EnterKonsole (void)
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   SDL_Flip( ne_screen );
-
-  while (SpacePressed ());
 
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
@@ -491,7 +475,11 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  // ne_blocks=zwisch;
+  Wait4Fire();
+
+  SetCombatScaleTo (1.0);
+
+  return;
 } /* ShowDeckMap() */
 
 /*@Function============================================================

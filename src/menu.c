@@ -399,6 +399,8 @@ enum
 
   Me.status=MENU;
   
+  ResetMouseWheel ();
+  
   SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 

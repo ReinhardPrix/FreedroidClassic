@@ -48,6 +48,8 @@
 #define Copy_Rect(src, dst) do {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; } while(0)
 
+#define Wait4Fire() do { while (!SpacePressed()); while(SpacePressed());} while(0)
+
 
 // **********************************************************************
 // Constants influencing code generation and
