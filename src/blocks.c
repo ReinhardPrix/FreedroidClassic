@@ -748,6 +748,7 @@ LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
   char *fpath;
   static int FirstCallEver = TRUE ;
   static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+  int source_direction_code;
 
   //--------------------
   // Maybe this function has just been called for the first time ever.
@@ -793,6 +794,10 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
+      //--------------------
+      // If we don't have full animation cycles for this enemy yet, then of course we
+      // just load the old image, using the old file name.
+      //
       if ( last_death_animation_image [ ModelNr ] - first_walk_animation_image [ ModelNr ] == 0 )
 	{
 	  sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
@@ -801,52 +806,65 @@ Freedroid received a rotation model number that does not exist!",
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
 	}
+      //--------------------
+      // But if we have an animation, maybe not complete animation but at least walkcycle 
+      // and the like, then we can start loading these images.
+      //
       else
 	{
 	  for ( j = 0 ; j < last_death_animation_image [ ModelNr ] ; j ++ )
 	    {
-	      // sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-	      // ( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
+	      //--------------------
+	      // Depending on which file numbering convention is being used
+	      // for this model as far as directioning is concerned, we set
+	      // the proper direction number for the files on disk.  302 uses
+	      // the classical Tux direction number codes while the other ones
+	      // use the old one-image-animation direction codes for enemies.
+	      //
+	      if ( ModelNr == 6 )
+		source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
+	      else
+		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 1 ;
+
+	      //--------------------
+	      // Now we can proceed to load the images for each animation phase
+	      // asdf
+	      //
 	      if ( j + 1 <= last_walk_animation_image [ ModelNr ] )
 		{
 		  sprintf ( ConstructedFileName , "droids/%s/walk_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 );
+			    source_direction_code , j + 1 );
 		}
 	      else if ( j + 1 <= last_attack_animation_image [ ModelNr ] )
 		{
 		  sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
+			    source_direction_code , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
 		}
 	      else if ( j + 1 <= last_gethit_animation_image [ ModelNr ] )
 		{
 		  sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
+			    source_direction_code , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
 		}
 	      else if ( j + 1 <= last_death_animation_image [ ModelNr ] )
 		{
 		  sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    ( ModelMultiplier [ ModelNr ] * i ) * 2 , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
+			    source_direction_code , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
 		}
 	      else
 		{
 		  fprintf ( stderr , "\n\nModelNr=%d.\nj=%d.\n" , ModelNr , j );
-      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+		  GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
 Freedroid received a rotation model number that does not exist!",
-				 PLEASE_INFORM, IS_FATAL );
+					     PLEASE_INFORM, IS_FATAL );
 		}
-
-	      // sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-	      // ( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
-
-
+	      
+	      
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
 	    }
 	}
-
     }    
-
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
 
 /* ----------------------------------------------------------------------
