@@ -44,9 +44,9 @@ CFLAGS="$CFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 
 
-#AC_CHECK_LIB([SDL], [SDL_Init],, 
-#	AC_MSG_ERROR([SDL library needed for Freedroid!
-#see http://www.libsdl.org/]))
+AC_CHECK_LIB([SDL], [SDL_Init],, 
+	AC_MSG_ERROR([SDL library needed for Freedroid!
+see http://www.libsdl.org/]))
 
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,
@@ -74,19 +74,19 @@ you need the SDL_mixer library if you want sound!
 --> compiling without sound support]))
 
 
-# Checks for header files.
-#AC_HEADER_STDC
-#AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h unistd.h])
+ Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h unistd.h dirent.h])
 
-# Checks for typedefs, structures, and compiler characteristics.
-#AC_C_CONST
-#AC_TYPE_SIZE_T
-#AC_HEADER_TIME
+ Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
 
-# Checks for library functions.
-#AC_FUNC_MALLOC
-#AC_TYPE_SIGNAL
-#AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
+ Checks for library functions.
+AC_FUNC_MALLOC
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
 
 
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
