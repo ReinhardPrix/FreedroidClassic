@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.5  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.6  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.4  1994/06/19  16:18:12  prix
  * Mon Oct 25 14:26:49 1993: enemy-collision modifiziert
@@ -52,8 +52,8 @@
  *
  *-@Header------------------------------------------------------------*/
 
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _enemy_c
 
@@ -62,11 +62,8 @@ static const char RCSid[]=\
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <dos.h>
 #include <math.h>
 #include <time.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -177,7 +174,7 @@ void ShuffleEnemys(void)
 		else {
 			gotoxy(1,1);
 			printf("\nWeniger waypoints als \n Gegner hier !!");
-			getch();
+			getchar();
 			return;
 		}
 			
@@ -291,7 +288,7 @@ void MoveEnemys(void){
 					
 		if ( (Restweg.x == 0) && (Restweg.y == 0) ) {
 			Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-			Feindesliste[i].warten = random(ENEMYMAXWAIT)*18;
+			Feindesliste[i].warten = MyRandom(ENEMYMAXWAIT)*18;
 		
 		/* suche moegliche Verbindung von hier */
 		PossibleConnections = -1;
@@ -300,7 +297,7 @@ void MoveEnemys(void){
 
 			if( PossibleConnections > 0) {
 				do {
-					trywp = (WpList[nextwp]).connections[random(PossibleConnections)];
+					trywp = (WpList[nextwp]).connections[MyRandom(PossibleConnections)];
 				} while( trywp == -1 );
 			
 				/* setze neuen Waypoint */
@@ -343,10 +340,10 @@ void AttackInfluence(int enemynum)
 		( !Feindesliste[enemynum].firewait ) &&
 		IsVisible( &Feindesliste[enemynum].pos) )
 	{
- 		if( random(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
+ 		if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
  			/* Diesmal nicht schiessen */
 			Feindesliste[enemynum].firewait =
-				random(Druidmap[Feindesliste[enemynum].type].firewait)*18;
+				MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
 			return;
 		}
 		
@@ -399,7 +396,7 @@ void AttackInfluence(int enemynum)
 		/* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
 		Feindesliste[enemynum].firewait=
-			random(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
+			MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
 					
 		/* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
 		AllBullets[j].type=guntype;
@@ -512,7 +509,7 @@ void AnimateEnemys(void) {
 #ifdef ENEMYPHASEDEBUG			
 			if (Feindesliste[i].type == DRUID598) {
 				printf(" Broke at: %d ",Feindesliste[i].feindphase);
-				getch();
+				getchar();
 			}
 #endif			
 			Feindesliste[i].feindphase=0;

@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.4  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.2  1994/06/19  16:40:20  prix
  * Sat May 21 12:41:50 1994: FadeLevel bei Elevatoreintritt
@@ -24,17 +24,12 @@
  *
  *-@Header------------------------------------------------------------*/
 
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _ship_c
-#include <process.h>
 #include <stdio.h>
-#include <conio.h>
-#include <alloc.h>
-#include <dos.h>
 #include <math.h>
-#include <mem.h>
 #include <string.h>
 
 #include "defs.h"
@@ -102,125 +97,140 @@ byte ElevatorColors[ELEVATOR_HEIGHT][ELEVATOR_LEN] = {
 * $Function----------------------------------------------------------*/
 void EnterElevator(void)
 {
-	int i;
-	int curLevel;
-	int curElev, upElev, downElev, row;
+  int i;
+  int curLevel;
+  int curElev, upElev, downElev, row;
 
-	curLevel = CurLevel->levelnum;
+  printf("\nvoid EnterElevator(void): Function call confirmed.");
 
-	if( (curElev = GetCurrentElevator()) == -1) {
-		gotoxy(2,2);
-		printf("Elevator out of order, I'm so sorry !");
-		return;
-	}
+  curLevel = CurLevel->levelnum;
 
-	EnterElevatorSound();
-	FadeLevel();
+  if( (curElev = GetCurrentElevator()) == -1) {
+    gotoxy(2,2);
+    printf("Elevator out of order, I'm so sorry !");
+    return;
+  }
+
+  EnterElevatorSound();
+  FadeLevel();
    
-	upElev = curShip.AllElevators[curElev].up;
-	downElev = curShip.AllElevators[curElev].down;
+  upElev = curShip.AllElevators[curElev].up;
+  downElev = curShip.AllElevators[curElev].down;
    
-	row = curShip.AllElevators[curElev].elevator_row;
+  row = curShip.AllElevators[curElev].elevator_row;
 
-	ShowElevators();
-	HilightElevator(row);
+  ShowElevators();
+  HilightElevator(row);
 	
-	/* Warten, bis User Feuer auslaesst */
-	while( SpacePressed) JoystickControl();
-	SpaceReleased = FALSE;
-
-	while( !SpaceReleased ) {
-		JoystickControl();		/* Falls vorhanden einlesen */
-		if( kbhit() ) getch();		/* Tastatur-Buffer leeren */
+  /* Warten, bis User Feuer auslaesst */
+  while( SpacePressed()) {
+    JoystickControl();
+    keyboard_update();
+  }
+    
+  while( !SpacePressed() ) {
+    JoystickControl();		/* Falls vorhanden einlesen */
+    keyboard_update();
+    // if( kbhit() ) getchar();		/* Tastatur-Buffer leeren */
 	   
-		if( UpPressed && !DownPressed ) 
-			if( upElev != -1 ) { 	/* gibt es noch einen Lift hoeher ? */
-				if( curShip.AllElevators[upElev].x == 99 ) {
-					gotoxy(1,1);
-					printf("Out of order, so sorry ..");
-				} else {
-				   
-					downElev = curElev;
-					curElev = upElev;
-					curLevel = curShip.AllElevators[curElev].level;
-					upElev = curShip.AllElevators[curElev].up;
-				   
- 					AlleLevelsGleichFaerben();
-	 				HilightLevel(curLevel); 	/* highlight new level */
+    if( UpPressed() && !DownPressed() ) 
+      if( upElev != -1 ) { 	/* gibt es noch einen Lift hoeher ? */
+	if( curShip.AllElevators[upElev].x == 99 ) {
+	  gotoxy(1,1);
+	  printf("Out of order, so sorry ..");
+	} else {
+	  downElev = curElev;
+	  curElev = upElev;
+	  curLevel = curShip.AllElevators[curElev].level;
+	  upElev = curShip.AllElevators[curElev].up;
+	  
+	  AlleLevelsGleichFaerben();
+	  HilightLevel(curLevel); 	/* highlight new level */
 					   
-					/* Warten, bis user Taste auslaesst */
-					WaitElevatorCounter = WAIT_ELEVATOR;
-					MoveElevatorSound();
-					while( UpPressed && WaitElevatorCounter ) JoystickControl();
-				}
-			   
-			} /* if uplevel */
+	  /* Warten, bis user Taste auslaesst */
+	  WaitElevatorCounter = WAIT_ELEVATOR;
+	  MoveElevatorSound();
+	  //PORT while( UpPressed() && WaitElevatorCounter ) {
+	  while( UpPressed() ) {
+	    JoystickControl();
+	    keyboard_update();
+	  }
+	}
+      } /* if uplevel */
+    
+    
+    if( DownPressed() && !UpPressed() )
+      if( downElev != -1 ) {	/* gibt es noch einen Lift tiefer ? */
+	if( curShip.AllElevators[downElev].x == 99 ) {
+	  gotoxy(1,1);
+	  printf("Out of order, so sorry ..");
+	} else {
+	  upElev = curElev;
+	  curElev = downElev;
+	  curLevel = curShip.AllElevators[curElev].level;
+	  downElev = curShip.AllElevators[curElev].down;
+	  
+	  AlleLevelsGleichFaerben();
+	  HilightLevel(curLevel);
+	  
+	  /* Warten, bis User Taste auslaesst */
+	  WaitElevatorCounter = WAIT_ELEVATOR;
+	  MoveElevatorSound();
+	  // PORT while( DownPressed() && WaitElevatorCounter ) {
+	  while( DownPressed() ) {
+	    JoystickControl();
+	    keyboard_update();
+	  }
+	}
+      } /* if downlevel */
+  } /* while !SpaceReleased */
 
+  /* Neuen Level und Position setzen */
+  if( curLevel != CurLevel->levelnum )	{ /* wirklich neu ??? */
+    int array_num=0;
+    Level tmp;
+    
+    /* Aktuellen Level setzen */
+    while( (tmp=curShip.AllLevels[array_num]) != NULL) {
+      if( tmp->levelnum == curLevel ) break;
+      else array_num ++;
+    }
+    
+    CurLevel = curShip.AllLevels[array_num];
+    
+    /* Enemys gut verteilen: */
+    ShuffleEnemys();
+    
+    /* Position des Influencer richtig setzen */
+    Me.pos.x = curShip.AllElevators[curElev].x * BLOCKBREITE + BLOCKBREITE/2;
+    Me.pos.y = curShip.AllElevators[curElev].y * BLOCKHOEHE + BLOCKHOEHE/2;
+    
+    /* Alle Blasts und Bullets loeschen */
+    for( i=0; i<MAXBLASTS; i++) AllBlasts[i].type = OUT;
+    for( i=0; i<MAXBULLETS; i++) {
+      AllBullets[i].type = OUT;
+      AllBullets[i].mine = FALSE;
+    }
+    
+  } /* if neuer Level */
+  
+  LeaveElevatorSound();
+  ClearGraphMem(RealScreen);
+  DisplayRahmen(RealScreen);
+  
+  UnfadeLevel();
+  
+  /* Wenn Level leer: grau faerben */
+  if( CurLevel->empty ) LevelGrauFaerben();
+  
+  InitBars=TRUE;
 
-		if( DownPressed && !UpPressed )
-			if( downElev != -1 ) {	/* gibt es noch einen Lift tiefer ? */
-				if( curShip.AllElevators[downElev].x == 99 ) {
-						gotoxy(1,1);
-						printf("Out of order, so sorry ..");
-				} else {
-					upElev = curElev;
-					curElev = downElev;
-					curLevel = curShip.AllElevators[curElev].level;
-					downElev = curShip.AllElevators[curElev].down;
-   
-					AlleLevelsGleichFaerben();
-					HilightLevel(curLevel);
-					
-					/* Warten, bis User Taste auslaesst */
-					WaitElevatorCounter = WAIT_ELEVATOR;
-					MoveElevatorSound();
-					while( DownPressed && WaitElevatorCounter ) JoystickControl();
-				}
-			   
-			} /* if downlevel */
-
-	} /* while !SpaceReleased */
-
-	/* Neuen Level und Position setzen */
-	if( curLevel != CurLevel->levelnum )	{ /* wirklich neu ??? */
-		int array_num=0;
-		Level tmp;
-	   
-		/* Aktuellen Level setzen */
-		while( (tmp=curShip.AllLevels[array_num]) != NULL) {
-			if( tmp->levelnum == curLevel ) break;
-			else array_num ++;
-		}
-   
-		CurLevel = curShip.AllLevels[array_num];
-
-		/* Enemys gut verteilen: */
-		ShuffleEnemys();
-
-		/* Position des Influencer richtig setzen */
-		Me.pos.x = curShip.AllElevators[curElev].x * BLOCKBREITE + BLOCKBREITE/2;
-		Me.pos.y = curShip.AllElevators[curElev].y * BLOCKHOEHE + BLOCKHOEHE/2;
-
-		/* Alle Blasts und Bullets loeschen */
-		for( i=0; i<MAXBLASTS; i++) AllBlasts[i].type = OUT;
-		for( i=0; i<MAXBULLETS; i++) {
-			AllBullets[i].type = OUT;
-			AllBullets[i].mine = FALSE;
-		}
-	   
-	} /* if neuer Level */
-	   
-	LeaveElevatorSound();
-	ClearGraphMem(RealScreen);
-	DisplayRahmen(RealScreen);
-
-	UnfadeLevel();
-
-	/* Wenn Level leer: grau faerben */
-	if( CurLevel->empty ) LevelGrauFaerben();
-
-	InitBars=TRUE;
-	   
+  while( SpacePressed()) {
+    JoystickControl();
+    keyboard_update();
+  }
+    
+  printf("\nvoid EnterElevator(void): Usual end of function reached.");
 } /* EnterElevator */
 
 /*@Function============================================================
@@ -296,110 +306,115 @@ void ShowElevators(void)
 
 /*@Function============================================================
 @Desc: EnterKonsole(): does all konsole- duties
-
 This function runs the consoles. This means the following duties:
-
 	2	* Show a small-scale plan of the current deck
-
 	3	* Show a side-elevation on the ship
-
 	1	* Give all available data on lower druid types
-
 	0	* Reenter the game without squashing the colortable
-
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 void EnterKonsole(void)
 {
-	int MenuPoint=0;
-	int ReenterGame=0;
-	int i;
-	int TasteOK;
-	char LocalTaste;
+  int MenuPoint=0;
+  int ReenterGame=0;
+  int i;
+  int TasteOK;
+  char LocalTaste;
+  
+  printf("\nvoid EnterKonsole(void): Real function called.");
 
-	Me.status = CONSOLE;
+  Me.status = CONSOLE;
 	 
-	/* Initialisierung der Konsole */
+  /* Initialisierung der Konsole */
+  
+  InterruptInfolineUpdate = FALSE;
+  ClearGraphMem(RealScreen);
+  KillTastaturPuffer();
 
-	InterruptInfolineUpdate = FALSE;
-	ClearGraphMem(RealScreen);
-	KillTastaturPuffer();
+  while (SpacePressed()) {
+    keyboard_update();
+    JoystickControl();
+  }
 
-	/* Gleich zu Beginn die Farben richtig setzten */
-	if (MenuPoint == 0) SetPalCol(M1C,HR,HG,HB);
-	else SetPalCol(M1C,GR,GG,GB);
-	if (MenuPoint == 1) SetPalCol(M2C,HR,HG,HB);
-	else SetPalCol(M2C,GR,GG,GB);
-	if (MenuPoint == 2) SetPalCol(M3C,HR,HG,HB);
-	else SetPalCol(M3C,GR,GG,GB);
-	if (MenuPoint == 3) SetPalCol(M4C,HR,HG,HB);
-	else SetPalCol(M4C,GR,GG,GB);
+  /* Gleich zu Beginn die Farben richtig setzten */
+  if (MenuPoint == 0) SetPalCol(M1C,HR,HG,HB);
+  else SetPalCol(M1C,GR,GG,GB);
+  if (MenuPoint == 1) SetPalCol(M2C,HR,HG,HB);
+  else SetPalCol(M2C,GR,GG,GB);
+  if (MenuPoint == 2) SetPalCol(M3C,HR,HG,HB);
+  else SetPalCol(M3C,GR,GG,GB);
+  if (MenuPoint == 3) SetPalCol(M4C,HR,HG,HB);
+  else SetPalCol(M4C,GR,GG,GB);
 	
+  /* Gesamtkonsolenschleife */
+  
+  while (!ReenterGame) {
 
-	/* Gesamtkonsolenschleife */
-	
-	while (!ReenterGame) {
-
-		PaintConsoleMenu();
+    PaintConsoleMenu();
 		
-		/* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
-		TasteOK=0;
-		while (!TasteOK) {
-			JoystickControl();
-			if (UpPressed) {
-				MenuPoint--;
-				TasteOK=1;
-			}
-			if (DownPressed) {
-				MenuPoint++;
-				TasteOK=1;
-			}
-			if (SpacePressed) TasteOK=1;
-		}
-		
-		/* Verhindern, da"s der Menucursor das Menu verl"a"st */		
-		if (MenuPoint < 0) MenuPoint=0;
-		if (MenuPoint > 3) MenuPoint=3;
+    /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
+    TasteOK=0;
+    while (!TasteOK) {
+      JoystickControl();
+      if (UpPressed()) {
+	MenuPoint--;
+	TasteOK=1;
+      }
+      if (DownPressed()) {
+	MenuPoint++;
+	TasteOK=1;
+      }
+      if (SpacePressed()) TasteOK=1;
+    }
+    
+    /* Verhindern, da"s der Menucursor das Menu verl"a"st */		
+    if (MenuPoint < 0) MenuPoint=0;
+    if (MenuPoint > 3) MenuPoint=3;
+    
+    /* Anzeigen des aktuellen Menupunktes durch Palettenwertsetzen */
+    if (MenuPoint == 0) SetPalCol(M1C,HR,HG,HB);
+    else SetPalCol(M1C,GR,GG,GB);
+    if (MenuPoint == 1) SetPalCol(M2C,HR,HG,HB);
+    else SetPalCol(M2C,GR,GG,GB);
+    if (MenuPoint == 2) SetPalCol(M3C,HR,HG,HB);
+    else SetPalCol(M3C,GR,GG,GB);
+    if (MenuPoint == 3) SetPalCol(M4C,HR,HG,HB);
+    else SetPalCol(M4C,GR,GG,GB);
+    
+    /* gew"ahlte Menupunkte betreten */
+    if ( (MenuPoint == 0) & (SpacePressed()) ) ReenterGame=TRUE;
+    if ( (MenuPoint == 1) & (SpacePressed()) ) GreatDruidShow();
+    if ( (MenuPoint == 2) & (SpacePressed()) ) ShowDeckMap(CurLevel);
+    if ( (MenuPoint == 3) & (SpacePressed()) ) {
+      while (SpacePressed()) JoystickControl();
+      ShowElevators();
+      while (!SpacePressed()) JoystickControl();
+      while (SpacePressed()) JoystickControl();
+      KillTastaturPuffer();
+    }
+    
+    while (DownPressed()) JoystickControl();
+    while (UpPressed()) JoystickControl();
+    
+  } /* (while !ReenterGane) */
+  
+  KillTastaturPuffer();
+  Me.status=MOBILE;
+  /* Die Textfarben wieder setzen wie sie vorher waren */
+  SetTextColor(FONT_WHITE,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
+  UpdateInfoline();
+  InterruptInfolineUpdate = TRUE;
+  InitBars=TRUE;
 
-		/* Anzeigen des aktuellen Menupunktes durch Palettenwertsetzen */
-		if (MenuPoint == 0) SetPalCol(M1C,HR,HG,HB);
-			else SetPalCol(M1C,GR,GG,GB);
-		if (MenuPoint == 1) SetPalCol(M2C,HR,HG,HB);
-			else SetPalCol(M2C,GR,GG,GB);
-		if (MenuPoint == 2) SetPalCol(M3C,HR,HG,HB);
-			else SetPalCol(M3C,GR,GG,GB);
-		if (MenuPoint == 3) SetPalCol(M4C,HR,HG,HB);
-			else SetPalCol(M4C,GR,GG,GB);
+  while (SpacePressed()) {
+    keyboard_update();
+    JoystickControl();
+  }
 
-		/* gew"ahlte Menupunkte betreten */
-		if ( (MenuPoint == 0) & (SpacePressed) ) ReenterGame=TRUE;
-		if ( (MenuPoint == 1) & (SpacePressed) ) GreatDruidShow();
-		if ( (MenuPoint == 2) & (SpacePressed) ) ShowDeckMap(CurLevel);
-		if ( (MenuPoint == 3) & (SpacePressed) ) {
-			while (SpacePressed) JoystickControl();
-			ShowElevators();
-			while (!SpacePressed) JoystickControl();
-			while (SpacePressed) JoystickControl();
-			KillTastaturPuffer();
-		}
+  printf("\nvoid EnterKonsole(void): Normal end of function reached.");
 
-		while (DownPressed) JoystickControl();
-		while (UpPressed) JoystickControl();
-
-	} /* (while !ReenterGane) */
-	
-	KillTastaturPuffer();
-	SpacePressed=FALSE;
-	Me.status=MOBILE;
-	/* Die Textfarben wieder setzen wie sie vorher waren */
-	SetTextColor(FONT_WHITE,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
-	UpdateInfoline();
-	InterruptInfolineUpdate = TRUE;
-	InitBars=TRUE;
-}
-
-
+} // void EnterKonsole(void)
 
 /*@Function============================================================
 @Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
@@ -409,70 +424,71 @@ void EnterKonsole(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void PaintConsoleMenu(void){
-	char MenuText[200];
-	unsigned int fg,bg;
+  char MenuText[200];
+  unsigned int fg,bg;
 
-	ClearGraphMem(InternalScreen);
-	GetTextColor(&bg,&fg);           /* Diese Funktion soll die Schrift-
-													farben nicht ver"andern */
-	
-	/* Userfenster faerben */
-   SetUserfenster(KON_BG_COLOR, InternalScreen);
+  printf("\nvoid PaintConsoleMenu(void): Real function called.");
 
-	/* Darstellung des oberen Rahmen mit Inhalt */
-//   SetInfoline();
-//	strcpy(LeftInfo, "Console");
-	DisplayRahmen(InternalScreen);
-	SetTextColor(RAHMEN_BG_COLOR,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
-	SayLeftInfo(LeftInfo,InternalScreen);
-	SayRightInfo(RightInfo,InternalScreen);
+  ClearGraphMem(InternalScreen);
+  GetTextColor(&bg,&fg);           /* Diese Funktion soll die Schriftfarben nicht ver"andern */
 	
-	/* Konsolen-Menue Farbe setzen */
-	SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
+  /* Userfenster faerben */
+  SetUserfenster(KON_BG_COLOR, InternalScreen);
+
+  /* Darstellung des oberen Rahmen mit Inhalt */
+  //   SetInfoline();
+  //	strcpy(LeftInfo, "Console");
+  DisplayRahmen(InternalScreen);
+  SetTextColor(RAHMEN_BG_COLOR,FONT_RED);  /* BG: Rahmenwei"s FG: FONT_RED */
+  SayLeftInfo(LeftInfo,InternalScreen);
+  SayRightInfo(RightInfo,InternalScreen);
+	
+  /* Konsolen-Menue Farbe setzen */
+  SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
  
-   strcpy(MenuText,"Unit type ");
-   strcat(MenuText,Druidmap[Me.type].druidname);
-   strcat(MenuText," - ");
-   strcat(MenuText,Classname[Druidmap[Me.type].class]);
-   DisplayText(MenuText,USERFENSTERPOSX,USERFENSTERPOSY,InternalScreen,FALSE);
+  strcpy(MenuText,"Unit type ");
+  strcat(MenuText,Druidmap[Me.type].druidname);
+  strcat(MenuText," - ");
+  strcat(MenuText,Classname[Druidmap[Me.type].class]);
+  DisplayText(MenuText,USERFENSTERPOSX,USERFENSTERPOSY,InternalScreen,FALSE);
 
-   SetTextBorder(MENUTEXT_X, USERFENSTERPOSY,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,30);
+  SetTextBorder(MENUTEXT_X, USERFENSTERPOSY,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,30);
    
-   strcpy(MenuText,"\nAccess granted.\nShip : ");
-   strcat(MenuText,Shipnames[ThisShip]);
-	strcat(MenuText,"\nDeck : ");
-	strcat(MenuText,Decknames[CurLevel->levelnum]);
-   strcat(MenuText,"\n\nAlert: ");
-   strcat(MenuText,Alertcolor[Alert]);
+  strcpy(MenuText,"\nAccess granted.\nShip : ");
+  strcat(MenuText,Shipnames[ThisShip]);
+  strcat(MenuText,"\nDeck : ");
+  strcat(MenuText,Decknames[CurLevel->levelnum]);
+  strcat(MenuText,"\n\nAlert: ");
+  strcat(MenuText,Alertcolor[Alert]);
    
-   DisplayText(MenuText,MENUTEXT_X,USERFENSTERPOSY+15,InternalScreen,FALSE);
+  DisplayText(MenuText,MENUTEXT_X,USERFENSTERPOSY+15,InternalScreen,FALSE);
 
 
-   SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);
+  SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
-   /*
-    * Hier werden die Icons des Menus ausgegeben
-    *
-    */
-    
-   DisplayBlock(
-      MENUITEMPOSX, MENUITEMPOSY + BLOCKHOEHE,
-      MenuItemPointer,
-      MENUITEMLENGTH, MENUITEMHEIGHT,
-      InternalScreen);
+  /*
+   * Hier werden die Icons des Menus ausgegeben
+   *
+   */
+  
+  DisplayBlock(
+	       MENUITEMPOSX, MENUITEMPOSY + BLOCKHOEHE,
+	       MenuItemPointer,
+	       MENUITEMLENGTH, MENUITEMHEIGHT,
+	       InternalScreen);
       
-   DisplayMergeBlock(
-		MENUITEMPOSX+15, MENUITEMPOSY,
-		Influencepointer + BLOCKMEM * Me.phase,
-		BLOCKBREITE, BLOCKHOEHE,
-		InternalScreen);
+  DisplayMergeBlock(
+		    MENUITEMPOSX+15, MENUITEMPOSY,
+		    Influencepointer + BLOCKMEM * Me.phase,
+		    BLOCKBREITE, BLOCKHOEHE,
+		    InternalScreen);
 
-	SwapScreen();
-	UpdateInfoline();
-	SetTextColor(bg,fg);
-}
+  SwapScreen();
+  UpdateInfoline();
+  SetTextColor(bg,fg);
 
-
+  printf("\nvoid PaintConsoleMenu(void): Usual end of function reached.");
+} // void PaintConsoleMenu(void)
 
 /*@Function============================================================
 @Desc: Zeigt alle erlaubten Roboter.
@@ -481,189 +497,214 @@ void PaintConsoleMenu(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void GreatDruidShow(void){
-	char InfoText[200];
-	int Infodroid;
-	char PassOn=0;
-   
-	KillTastaturPuffer();	// Vorbeugung gegen vorzeigiges Verlassen
+  char InfoText[200];
+  int Infodroid;
+  char PassOn=0;
+  
+  printf("\nvoid GreadDruidShow(void): Function call confirmed.");
 
-   SetUserfenster(KON_BG_COLOR, InternalScreen);
-   SetTextColor(KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
+  /* Warte, bis User Space auslaesst */
+  while( SpacePressed() ) {
+    JoystickControl();
+    keyboard_update();
+  }
 
-	/*
-    * Beginn der gro"sen "Ubersicht "uber alle Roboter
-	 *
-	 */
+  // PORT KillTastaturPuffer();	// Vorbeugung gegen vorzeigiges Verlassen
 
-	while (SpacePressed) JoystickControl();
-    
-	for (Infodroid=Me.type;Infodroid > -1;) {
+  SetUserfenster(KON_BG_COLOR, InternalScreen);
+  SetTextColor(KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW
 
-		ClearUserFenster();
+  /*
+   * Beginn der gro"sen "Ubersicht "uber alle Roboter
+   *
+   */
+
+  for (Infodroid=Me.type;Infodroid > -1;) {
+
+    ClearUserFenster();
 		
 RebeginSequence:;
-		KillTastaturPuffer();
-		
-// Erste Seitet allein der anzeige der Nummer
 
+    /*
+     * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
+     *
+     */
 
-		/*
-		 * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
-		 *
-		 */
+    // PORT KillTastaturPuffer();
+    PassOn=0;
+    while (!PassOn) {
 
+      // Am Bildschirm anzeigen
+      ClearUserFenster();
+      strcpy(InfoText,"Unit type ");
+      strcat(InfoText,Druidmap[Infodroid].druidname);
+      strcat(InfoText," - ");
+      strcat(InfoText,Classname[Druidmap[Infodroid].class]);
+      
+      SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
+		    USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
+      DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+      ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY,Infodroid,RealScreen);
 
-		KillTastaturPuffer();
-		PassOn=0;
-		while (!PassOn) {
-
-		// Am Bildschirm anzeigen
-			strcpy(InfoText,"Unit type ");
-			strcat(InfoText,Druidmap[Infodroid].druidname);
-			strcat(InfoText," - ");
-			strcat(InfoText,Classname[Druidmap[Infodroid].class]);
-			
-			SetTextBorder(USERFENSTERPOSX,USERFENSTERPOSY,USERFENSTERPOSX+
-							  USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,36);
-			DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
- 		   ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY,Infodroid,RealScreen);
-
- 		   // Einem zu schnellen Weiterbl"attern vorbeugen
- 		   while (UpPressed || DownPressed) JoystickControl();
- 		   if (!GameAdapterPresent) while (!kbhit());
+      // PORT if (!GameAdapterPresent) while (!kbhit());
  		   
- 		// Eingabe behandeln
-			JoystickControl();
-			if (UpPressed) Infodroid--;
-			if (DownPressed) Infodroid++;
-			if ((RightPressed) || (LeftPressed)) PassOn=1;
+      // Eingabe behandeln
+      //PORT JoystickControl();
+
+      if (UpPressed()) {
+	Infodroid--;
+	// Einem zu schnellen Weiterbl"attern vorbeugen
+	while (UpPressed() || DownPressed()) {
+	  JoystickControl();
+	  keyboard_update();
+	}
+      }
+
+      if (DownPressed()) {
+	Infodroid++;
+	// Einem zu schnellen Weiterbl"attern vorbeugen
+	while (UpPressed() || DownPressed()) {
+	  JoystickControl();
+	  keyboard_update();
+	}
+      }
+
+      if ((RightPressed()) || (LeftPressed())) PassOn=1;
 			
-			if (Infodroid > Me.type) Infodroid=DRUID001;
-			if (Infodroid < DRUID001) Infodroid=Me.type;
-			if (SpacePressed) {
-				KillTastaturPuffer();
-				while (SpacePressed) JoystickControl();
-				SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-				return;
-			}
-			KillTastaturPuffer();
-		}
-		while (LeftPressed || UpPressed || DownPressed || RightPressed)
-			JoystickControl();
+      if (Infodroid > Me.type) Infodroid=DRUID001;
+      if (Infodroid < DRUID001) Infodroid=Me.type;
+      if (SpacePressed()) {
+	KillTastaturPuffer();
+	while (SpacePressed()) {
+	  JoystickControl();
+	  keyboard_update();
+	}
+	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
+	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space0.");
+	return;
+      }
+      KillTastaturPuffer();
+    }
+    while (LeftPressed() || UpPressed() || DownPressed() || RightPressed())
+      JoystickControl();
 
-		/*
-		 * Ausgabe der Liste von Werten dieses Druids
-		 *
-		 */
-		
-		ClearUserFenster();
+    /*
+     * Ausgabe der Liste von Werten dieses Druids
+     *
+     */
+    
+    ClearUserFenster();
 				
-		strcpy(InfoText,"Entry : ");
-		strcat(InfoText,Entry[Infodroid]);
-		strcat(InfoText,"\nClass : ");
-		strcat(InfoText,Classes[Druidmap[Infodroid].class]);
-		strcat(InfoText,"\nHeight: ");
-		strcat(InfoText,Height[Infodroid]);
-		strcat(InfoText,"\nWeight: ");
-		strcat(InfoText,Weight[Infodroid]);
-		strcat(InfoText,"\nDrive : ");
-		strcat(InfoText,Drivenames[Drive[Infodroid]]);
-		strcat(InfoText,"\nBrain : ");
-		strcat(InfoText,Brainnames[Brain[Infodroid]]);
-		
-		SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+
+    strcpy(InfoText,"Entry : ");
+    strcat(InfoText,Entry[Infodroid]);
+    strcat(InfoText,"\nClass : ");
+    strcat(InfoText,Classes[Druidmap[Infodroid].class]);
+    strcat(InfoText,"\nHeight: ");
+    strcat(InfoText,Height[Infodroid]);
+    strcat(InfoText,"\nWeight: ");
+    strcat(InfoText,Weight[Infodroid]);
+    strcat(InfoText,"\nDrive : ");
+    strcat(InfoText,Drivenames[Drive[Infodroid]]);
+    strcat(InfoText,"\nBrain : ");
+    strcat(InfoText,Brainnames[Brain[Infodroid]]);
+    
+    SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+
 						  USERFENSTERBREITE,USERFENSTERHOEHE+USERFENSTERPOSY,30);
-		DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
+    DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
 
 
-  		KillTastaturPuffer();
-		PassOn=0;
-		while (!PassOn) {
-			JoystickControl();
-			if ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed)) {
-				PassOn=1;
-				while ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed))
-					JoystickControl();
-			}
-			if (SpacePressed) {
-				KillTastaturPuffer();
-				while (SpacePressed) JoystickControl();
-				SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-				return;
-			}
-		}
+    KillTastaturPuffer();
+    PassOn=0;
+    while (!PassOn) {
+      JoystickControl();
+      if ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed())) {
+	PassOn=1;
+	while ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed()))
+	  JoystickControl();
+      }
+      if (SpacePressed()) {
+	KillTastaturPuffer();
+	while (SpacePressed()) JoystickControl();
+	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
+	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
+	return;
+      }
+    }
+    
 
+    /*
+     * Ausgabe der Liste von Ausr"ustung dieses Druids
+     *
+     */
 
-		/*
-		 * Ausgabe der Liste von Ausr"ustung dieses Druids
-		 *
-		 */
-
-		ClearUserFenster();
-				
-		strcpy(InfoText,"Armamant : ");
-		strcat(InfoText,Weaponnames[Armament[Infodroid]]);
-		strcat(InfoText,"\nSensors  1: ");
-		strcat(InfoText,Sensornames[Sensor1[Infodroid]]);
-		strcat(InfoText,"\n          2: ");
-		strcat(InfoText,Sensornames[Sensor2[Infodroid]]);
-		strcat(InfoText,"\n          3: ");
-		strcat(InfoText,Sensornames[Sensor3[Infodroid]]);
+    ClearUserFenster();
+    
+    strcpy(InfoText,"Armamant : ");
+    strcat(InfoText,Weaponnames[Armament[Infodroid]]);
+    strcat(InfoText,"\nSensors  1: ");
+    strcat(InfoText,Sensornames[Sensor1[Infodroid]]);
+    strcat(InfoText,"\n          2: ");
+    strcat(InfoText,Sensornames[Sensor2[Infodroid]]);
+    strcat(InfoText,"\n          3: ");
+    strcat(InfoText,Sensornames[Sensor3[Infodroid]]);
 		
-		SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+
-						  USERFENSTERBREITE,USERFENSTERHOEHE+USERFENSTERPOSY,30);
-		DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
+    SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+
+		  USERFENSTERBREITE,USERFENSTERHOEHE+USERFENSTERPOSY,30);
+    DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
+    
 
-
-  		KillTastaturPuffer();
-		PassOn=0;
-		while (!PassOn) {
-			JoystickControl();
-			if ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed)) {
-				PassOn=1;
-				while ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed))
-					JoystickControl();
-			}
-			if (SpacePressed) {
-				KillTastaturPuffer();
-				while (SpacePressed) JoystickControl();
-				SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-				return;
-			}
-		}
+    KillTastaturPuffer();
+    PassOn=0;
+    while (!PassOn) {
+      JoystickControl();
+      if ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed())) {
+	PassOn=1;
+	while ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed()))
+	  JoystickControl();
+      }
+      if (SpacePressed()) {
+	KillTastaturPuffer();
+	while (SpacePressed()) JoystickControl();
+	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
+	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space2.");
+	return;
+      }
+    }
 
 		
-		/*
-		 * Ausgabe der Informationen bezuglich des Druidhintergrundes
-		 *
-		 */
+    /*
+     * Ausgabe der Informationen bezuglich des Druidhintergrundes
+     *
+     */
 	
-		ClearUserFenster();
- 
-		strcpy(InfoText,"Notes: ");
-		strcat(InfoText,Druidmap[Infodroid].notes);
+    ClearUserFenster();
+    
+    strcpy(InfoText,"Notes: ");
+    strcat(InfoText,Druidmap[Infodroid].notes);
+    
+    SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERHOEHE+USERFENSTERPOSY,30);
+    DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
+    
+    KillTastaturPuffer();
+    PassOn=0;
+    while (!PassOn) {
+      JoystickControl();
+      if ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed())) {
+	PassOn=1;
+	while ((RightPressed()) || (LeftPressed()) || (UpPressed()) || (DownPressed()))
+	  JoystickControl();
+      }
+      if (SpacePressed()) {
+	KillTastaturPuffer();
+	while (SpacePressed()) JoystickControl();
+	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
+	printf("\nvoid GreadDruidShow(void): End of function reached.");
+	return;
+      }
+    }
+  }   /* for */
 	
-		SetTextBorder(MENUTEXT_X,USERFENSTERPOSX,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERHOEHE+USERFENSTERPOSY,30);
-		DisplayText(InfoText,MENUTEXT_X,USERFENSTERPOSY+17,RealScreen,FALSE);
-
-  		KillTastaturPuffer();
-		PassOn=0;
-		while (!PassOn) {
-			JoystickControl();
-			if ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed)) {
-				PassOn=1;
-				while ((RightPressed) || (LeftPressed) || (UpPressed) || (DownPressed))
-					JoystickControl();
-			}
-			if (SpacePressed) {
-				KillTastaturPuffer();
-				while (SpacePressed) JoystickControl();
-				SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-				return;
-			}
-		}
-	}   /* for */
-	
+  printf("\nvoid GreadDruidShow(void): End of function reached.");
 } /* GreatDruidShow() */
 
 
@@ -674,36 +715,48 @@ RebeginSequence:;
 @Int:
 * $Function----------------------------------------------------------*/
 void ShowDeckMap(Level deck){
-int i,j;
-int LX;
-int LY;
+  int i,j;
+  int LX;
+  int LY;
 
+  printf("\nvoid ShowDeckMap(Level deck): Function call confirmed.");
 
-	// Darstellung der Miniaturkarte
-	LX=USERFENSTERPOSX;
-	LY=USERFENSTERPOSY;
+  printf("\nvoid ShowDeckMap(Level deck): Printing map via printf!.\n\n");
+
+  // Darstellung der Miniaturkarte
+  LX=USERFENSTERPOSX;
+  LY=USERFENSTERPOSY;
 	
-	ClearUserFenster();
-	for(i=0;i<deck->ylen;i++) {
-		for(j=0;j<deck->xlen;j++) {
-			SmallBlock(LX,LY,GetMapBrick(deck, j*BLOCKBREITE,i*BLOCKHOEHE),
-				RealScreen,SCREENBREITE);
-			LX+=8;
-		}
-		LX=USERFENSTERPOSX;
-		LY+=8;
-	}
-
+  ClearUserFenster();
+  for(i=0;i<deck->ylen;i++) {
+    for(j=0;j<deck->xlen;j++) {
+      printf("%3d ", GetMapBrick(deck, j*BLOCKBREITE,i*BLOCKHOEHE));
+      SmallBlock(LX,LY,GetMapBrick(deck, j*BLOCKBREITE,i*BLOCKHOEHE),
+		 RealScreen,SCREENBREITE);
+      LX+=8;
+    }
+    LX=USERFENSTERPOSX;
+    LY+=8;
+    printf(" . \n");
+  }
 	
-	// Vorbeugung gegen vorzeitiges Verlassen
-	KillTastaturPuffer();
-	while (SpacePressed) JoystickControl();
-	JoystickControl();
-
-
-	while (!SpacePressed) JoystickControl();
-	while (SpacePressed) JoystickControl();
-}
+  // Vorbeugung gegen vorzeitiges Verlassen
+  // PORT KillTastaturPuffer();
+  while (SpacePressed()) {
+    JoystickControl();  
+    keyboard_update();
+  }
+  while (!SpacePressed()) {
+    JoystickControl();  
+    keyboard_update();
+    if (QPressed()) Terminate(0);
+  }
+  while (SpacePressed()) {
+    JoystickControl();  
+    keyboard_update();
+  }
+  printf("\nvoid ShowDeckMap(Level deck): Usual end of function reached.");
+} // void ShowDeckMap(Level deck)
 
 
 /*@Function============================================================
@@ -714,92 +767,93 @@ int LY;
 @Int:
 * $Function----------------------------------------------------------*/
 void AlleLevelsGleichFaerben(void){
-	static unsigned char* FarbFeldPointer=NULL;
-	int i;
-	unsigned char rot=0;
-	unsigned char gruen=0;
-	unsigned char blau=50;
-	static unsigned int FOfs;
-	static unsigned int FSeg;
+  static unsigned char* FarbFeldPointer=NULL;
+  int i;
+  unsigned char rot=0;
+  unsigned char gruen=0;
+  unsigned char blau=50;
+  static unsigned int FOfs;
+  static unsigned int FSeg;
+  
+  if (!FarbFeldPointer) {
+    FarbFeldPointer=MyMalloc(32*3);
+    if (!FarbFeldPointer) {
+      printf(" Kein Speicher fuer AlleLev.");
+      Terminate(-1);
+    }
+  }
+     
+  for (i=0;i<16;i++){
+    FarbFeldPointer[i*3]=rot;
+    FarbFeldPointer[i*3+1]=gruen;
+    FarbFeldPointer[i*3+2]=blau;
+  }
 
-	if (!FarbFeldPointer) {
-		FarbFeldPointer=MyMalloc(32*3);
-		if (!FarbFeldPointer) {
-			printf(" Kein Speicher fuer AlleLev.");
-			Terminate(-1);
-		}
-	}
-   
-	for (i=0;i<16;i++){
-		FarbFeldPointer[i*3]=rot;
-		FarbFeldPointer[i*3+1]=gruen;
-		FarbFeldPointer[i*3+2]=blau;
-	}
-	FSeg=FP_SEG(FarbFeldPointer);
-	FOfs=FP_OFF(FarbFeldPointer);
+  SetColors(EL_FIRSTCOLOR, 16, FarbFeldPointer);
 
-   
-	asm{
-		push es
-		mov ax,1012h
-		mov bx,EL_FIRSTCOLOR
-		mov cx,16
-		mov dx,FSeg
-		mov es,dx
-		mov dx,FOfs
-		int 10h
-		pop es
-	}
-}
+  //	FSeg=FP_SEG(FarbFeldPointer);
+  //	FOfs=FP_OFF(FarbFeldPointer);
+  //
+  //   
+  //	asm{
+  //		push es
+  //		mov ax,1012h
+  //		mov bx,EL_FIRSTCOLOR
+  //		mov cx,16
+  //		mov dx,FSeg
+  //		mov es,dx
+  //		mov dx,FOfs
+  //		int 10h
+  //		pop es
+  //	}
+}  // void AlleLevelsGleichFaerben(void)
 
 
 /*@Function============================================================
 @Desc: 	Alle Farben der Elevators in der Seitenansicht gleich setzen 
 
-
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 void AlleElevatorsGleichFaerben(void){
-	static unsigned char* FarbFeldPointer=NULL;
-	int i;
-	unsigned char rot=0;
-	unsigned char gruen=0;
-	unsigned char blau=30;
-	static unsigned int FOfs;
-	static unsigned int FSeg;
-
-	if (!FarbFeldPointer) {
-		FarbFeldPointer=MyMalloc(32*3);
-		if (!FarbFeldPointer) {
-			printf(" Kein Speicher fuer AlleLev.");
-			Terminate(-1);
-		}
-	}
-   
-	for (i=0;i<7;i++){
-		FarbFeldPointer[i*3]=rot;
-		FarbFeldPointer[i*3+1]=gruen;
-		FarbFeldPointer[i*3+2]=blau;
-	}
-	FSeg=FP_SEG(FarbFeldPointer);
-	FOfs=FP_OFF(FarbFeldPointer);
-
-   
-	asm{
-		push es
-		mov ax,1012h
-		mov bx,EL_FIRST_ELEVATOR_COLOR
-		mov cx,7
-		mov dx,FSeg
-		mov es,dx
-		mov dx,FOfs
-		int 10h
-		pop es
-	}
+  //	static unsigned char* FarbFeldPointer=NULL;
+  //	int i;
+  //	unsigned char rot=0;
+  //	unsigned char gruen=0;
+  //	unsigned char blau=30;
+  //	static unsigned int FOfs;
+  //	static unsigned int FSeg;
+  //
+  //	if (!FarbFeldPointer) {
+  //		FarbFeldPointer=MyMalloc(32*3);
+  //		if (!FarbFeldPointer) {
+  //			printf(" Kein Speicher fuer AlleLev.");
+  //			Terminate(-1);
+  //		}
+  //	}
+  //   
+  //	for (i=0;i<7;i++){
+  //		FarbFeldPointer[i*3]=rot;
+  //		FarbFeldPointer[i*3+1]=gruen;
+  //		FarbFeldPointer[i*3+2]=blau;
+  //	}
+  //	FSeg=FP_SEG(FarbFeldPointer);
+  //	FOfs=FP_OFF(FarbFeldPointer);
+  //
+  //   
+  //	asm{
+  //		push es
+  //		mov ax,1012h
+  //		mov bx,EL_FIRST_ELEVATOR_COLOR
+  //		mov cx,7
+  //		mov dx,FSeg
+  //		mov es,dx
+  //		mov dx,FOfs
+  //		int 10h
+  //		pop es
+  //	}
 }
 
-   
 
 
 /*@Function============================================================
@@ -903,11 +957,11 @@ int ShipEmpty(void){
 @Int:
 * $Function----------------------------------------------------------*/
 int NoKeyPressed(void){
-	if (SpacePressed) return (FALSE);
-	if (LeftPressed) return (FALSE);
-	if (RightPressed) return (FALSE);
-	if (UpPressed) return (FALSE);
-	if (DownPressed) return (FALSE);
+	if (SpacePressed()) return (FALSE);
+	if (LeftPressed()) return (FALSE);
+	if (RightPressed()) return (FALSE);
+	if (UpPressed()) return (FALSE);
+	if (DownPressed()) return (FALSE);
 	return (TRUE);
 }
 
@@ -919,11 +973,16 @@ int NoKeyPressed(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void ClearUserFenster(void){
-	int i;
+  int i;
 
-	for (i=USERFENSTERPOSY;i<(USERFENSTERPOSY+USERFENSTERHOEHE);i++){
-		setmem(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
-	}
-}
+  printf("\nvoid ClearUserFenster(void): Real function called.");
+
+  for (i=USERFENSTERPOSY;i<(USERFENSTERPOSY+USERFENSTERHOEHE);i++){
+    memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
+  }
+
+  printf("\nvoid ClearUserFenster(void): End of function reached.");
+
+} // void ClearUserFenster(void)
 
 #undef _ship_c

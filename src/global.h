@@ -27,6 +27,7 @@ EXTERN int Drive[];
 EXTERN int Brain[];
 EXTERN char* Brainnames[];
 EXTERN char* Drivenames[];
+EXTERN int ThisMessageTime;
 
 EXTERN shieldspec AllShields[];
 EXTERN FCU AllFCUs[];
@@ -88,13 +89,13 @@ EXTERN char RightInfo[50];
 
 EXTERN int taste;
 
-EXTERN int UpPressed;
-EXTERN int DownPressed;
-EXTERN int LeftPressed;
-EXTERN int RightPressed;
-EXTERN int SpacePressed;
-EXTERN int SpaceReleased;
-EXTERN int QPressed;
+// PORT EXTERN int UpPressed;
+// PORT EXTERN int DownPressed;
+// PORT EXTERN int LeftPressed;
+// PORT EXTERN int RightPressed;
+// PORT EXTERN int SpacePressed;
+// PORT EXTERN int SpaceReleased;
+// PORT EXTERN int QPressed;
 
 #undef EXTERN
 #ifdef _misc_c
@@ -102,9 +103,6 @@ EXTERN int QPressed;
 #else
 #define EXTERN extern
 #endif
-EXTERN void interrupt (*OldInt09h)(void);
-EXTERN void interrupt (*OldInt1Ch)(void);
-EXTERN void interrupt (*OldInt23h)(void);
 EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;
 
@@ -173,8 +171,8 @@ EXTERN unsigned char *ShieldBlocks;
  * $Author$
  *
  * $Log$
- * Revision 1.7  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.8  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.6  1994/06/19  16:20:13  prix
  * Fri May 28 16:56:52 1993: killed further vars

@@ -1,31 +1,14 @@
-/* 
- *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
- *
- *
- *  This file is part of FreeParadroid+
- *
- *  FreeParadroid+ is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  FreeParadroid+ is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with FreeParadroid+; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
-
 #include "colodefs.h"
 
 char Text1[]="Clear the freighter of Robots by\ndestroying them with twin lasers\nor by transferring control to them.\n\nControl is by Joystick and also\nby Keyboard as follows:\n\nAny time Joystick moves and holding\nfirebutton down will allow use of\nlifts and consoles. Diese Nachricht\nist noch nicht lang genug, und daher\nschreibe ich jetzt ein Par Extrazeilen, die, wenn \nsie nicht mehr am Bildschirm\nzu sehen sind von der Textausgaberoutine\nnicht mehr angezeigt werden.";
 
+char TitleText1[]="A fleet of Robo-freighters on\nits way to the Beta Ceti system\nreported entering an uncharted field\nof asteroids. Each ship carries a\ncargo of battle droids to reinforce\nthe outworld defences.\nTwo distress beacons have been\ndiscovered. Similar Messages were\nstored on each. The ships had been\nbombarded by a powerful radionic\nbeam from one of the asteroids.\nAll of the robots on the ships,\nincluding those in storage, became\nhyper-active. The crews report an\nattack by droids, isolating them on\nthe bridge. They cannot reach the\nshuttle and can hold out for only a\ncouple more hours.\n Since these beacons were located\ntwo days ago, we can only fear the\nworst.\n Some of the fleet was last seen\nheading for enemy space. In enemy\nhands the droids can be used against\nour forces.\nDocking would be impossible but\nwe can beam aboard a prototype\nInfluence Device.";
+
+
+char TitleText2[]="The 001 Influence Device consists\nof a helmet, which, when placed\nover a robots control unit can halt\nthe normal activities of that robot\nfor a short time. The helmet has\nits own energy supply and powers\nthe robot itself, at an upgraded\ncapability. The helmet also uses\nan energy cloak for protection of\nthe host.\nThe helmet is fitted with twin\nlasers mounted in a turret. These\ncan be focussed on any target inside\na range of eight metres.\nMost of the device's resources are\nchannelled towards holding control\nof the host robot, as it attempts\nto resume 'normal' operation.\nIt is therefore necessary to change\nthe host robot often to prevent the\ndevice from burning out. Transfer\nto a new robot requires the device\nto drain its host of energy in order\nto take ist over. Failure to achieve\ntransfer results in the device being\na free agent once more.\n\n        Press fire to play";
+
+char TitleText3[]="An Influence Device can transmitt\nconsole. A small-scale plan of the\nwhole deck is available, as well\nas a side elevation of the ship.\nRobots are represented on-screen\nas a symbol showing a three-digit\nnumber. The first digit shown is\nthe important one, the class of the\nrobot. It denotes the strength also.\nTo find out more about any given\nrobot, use the robot enquiry system\nat a console. Only data about units\nof a lower class than your current\nhost is available, since it is the\nhost's security clearance which is\nused to acces the console. \n  \n  \n  \n Press fire to play";
+      
 int Shieldcolors[BLOCKBREITE];
 
 int ShipEmptyCounter = 0;		/* counter to Message: you have won(this ship*/
@@ -178,46 +161,43 @@ shieldspec AllShields[]={
 
 druidspec Druidmap[ALLDRUIDTYPES]={
 /*
-                 accel.  lose_health          aggr.  fl.imm.
-name maxspeed cl.      energy     gun      vneut.  firewait score notes
+name maxspeed cl. accel. energy lose_health gun vneut. aggr.  firewait fl.imm. score notes
 ---------------------------------------------------------------------- */
-{"001", 30*5,  0, 1*30, 165, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
-{"123", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
-{"139", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
-{"247", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"249", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"296", 30*2,  2, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
-{"302", 30*7,  3, 2*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
-{"329", 30*1,  3, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
-{"420",	30*2,  4, 1*30,  60, 2,  PULSE,       1, 00,  0,  1, 100, NULL },
-{"476", 30*4,  4, 1*30,  70, 2, SINGLE_PULSE, 2, 65,  6,  0, 100, NULL },
-{"493", 30*4,  4, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 100, NULL },
-{"516",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"571",	30*4,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"598",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
-{"614",	30*3,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
-{"615",	30*4,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
-{"629",	30*2,  6, 1*30, 100, 3, MILITARY,     2, 60,  6,  0, 150, NULL },
-{"711",	30*5,  7, 1*30, 110, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
-{"742",	30*4,  7, 1*30, 130, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
-{"751",	30*5,  7, 1*30, 150, 3, SINGLE_PULSE, 2, 60,  5,  0, 175, NULL },
-{"821", 30*6,  8, 2*30, 160, 3,  MILITARY,    2, 70,  3,  1, 200, NULL },
-{"834", 30*7,  8, 1*30, 140, 3, SINGLE_PULSE, 2, 70,  5,  0, 200, NULL },
-{"883", 30*2,  8, 1*30, 180, 3, SINGLE_PULSE, 2, 80,  3,  0, 200, NULL },
-{"999", 30*6,  9, 2*30, 300, 5,  MILITARY,    2, 60,  3,  1, 225, NULL }
+{"001", 	5,0,	 	1, 	165, 		2, 	PULSE,1,			00,	0,	0,   0,NULL },
+{"123",  2,1,   	1,		 20,		2,		PULSE,1,			00,	0,	0,  25,NULL },
+{"139",  2,1,   	1,		 20,		2,		PULSE,1,			00,	0,	0,  25,NULL },
+{"247",  4,2,   	1,		 20,		2,		PULSE,1,			00,	0,	0,	 50,NULL },
+{"249",  4,2,   	1,		 20,		2,		PULSE,1,			00,	0,	0,	 50,NULL },
+{"296",  2,2,   	1,		 40,		2,		PULSE,1,			00,	0,	0,  50,NULL },
+{"302", 	7,3, 		2, 	 40, 		2, 	PULSE,1,			00,	0,	0,	 75,NULL },
+{"329",  1,3,		1,		 40,		2,		PULSE,1,			00,	0,	0,	 75,NULL },
+{"420",	2,4,		1,		 60,		2,		PULSE,1,			00,	0,	1,	100,NULL },
+{"476", 	4,4, 		1, 	 70, 		2, 	SINGLE_PULSE,2,65,	6,	0,	100,NULL },
+{"493",  4,4,		1,		 80,		3,		PULSE,2,			00,	0,	0,	100,NULL },
+{"516",	3,5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
+{"571",	4,5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
+{"598",	3,5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
+{"614",	3,6,		1,		100,		3,		SINGLE_PULSE,2,50,	6,	0,	150,NULL },
+{"615",	4,6,		1,		100,		3,		SINGLE_PULSE,2,50,	6,	0,	150,NULL },
+{"629",	2,6,		1,		100,		3,		MILITARY,2,		60,	6,	0,	150,NULL },
+{"711",	5,7,		1,		110,		3,		FLASH,2,			30,	5,	1,	175,NULL },
+{"742",	4,7,		1,		130,		3,		FLASH,2,			30,	5,	1,	175,NULL },
+{"751",	5,7,		1,		150,		3,		SINGLE_PULSE,2,60,	5,	0,	175,NULL },
+{"821", 	6,8, 		2, 	160, 		3, 	MILITARY,2,		70,	3,	1,	200,NULL },
+{"834", 	7,8, 		1, 	140, 		3, 	SINGLE_PULSE,2,70,	5,	0,	200,NULL },
+{"883", 	2,8, 		1, 	180, 		3, 	SINGLE_PULSE,2,80,	3,	0,	200,NULL },
+{"999", 	6,9, 		2, 	300, 		5, 	MILITARY,2,		60,	3,	1,	225,NULL }
 };
 
 
 bulletspec Bulletmap[ALLBULLETTYPES]={
 	
-/*  
-speed     salve         blast                 oneshotonly
-     damage 	phases	                pic.	
-------------------------------------------------------------*/
-{ 10*35,  25,    1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
-{ 10*35,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
-{ 10*35,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
-{ 10*35,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
+/*  speed damage	salve	phases	blast			pic.	oneshotonly
+------------------------------------------------------------ */
+	{ 10,	 	25, 		1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
+	{ 10,		40,		1,	 4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
+	{ 10,		55,		1,	 4,	BULLETBLAST,	NULL ,	FALSE, 34},  /* military */
+	{ 10,		30,		1,	 3,	BULLETBLAST,	NULL ,	FALSE, 44}   /* flash */  
 };
 
 blastspec Blastmap[ALLBLASTTYPES]={

@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.4  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.2  1994/06/19  16:15:51  prix
  * *** empty log message ***
@@ -21,14 +21,13 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _bullet_c
 
 #include <stdio.h>
 #include <math.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -167,7 +166,7 @@ int GetDirection(point robo,point bul){
 	if ((robo.x>bul.x) && (robo.y>bul.y)) return 3;
 	if ((robo.x==bul.x) && (robo.y==bul.y)) {
 		printf(" Center hit directy!");
-		getch();
+		getchar();
 	}
 	return 0;
 }

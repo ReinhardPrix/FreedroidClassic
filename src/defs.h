@@ -9,8 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.5  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.6  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.4  1994/06/19  16:17:44  prix
  * Sat May 21 07:52:34 1994: neues Rahmenbild
@@ -55,26 +55,26 @@
 #define OK		0
 
 /* Konstanten fuer die Dateinamen */
-#define SHIPNAME	".\\daten\\ship1"
-#define PALBILD	".\\daten\\palbild.lbm"
-#define COLORFILE ".\\daten\\levels.col"
-#define BLOCKBILD1 ".\\daten\\block.lbm"
+#define SHIPNAME "./daten/ship1"
+#define PALBILD	"./daten/palbild.lbm"
+#define COLORFILE "./daten/levels.col"
+#define BLOCKBILD1 "./daten/block.lbm"
 #define BLOCKBILD2 ""
-#define TITELBILD1 ".\\daten\\title.lbm"
-#define RAHMENBILD1 ".\\daten\\rahmen.lbm"
-#define PARAPLUSRAHMENBILD ".\\daten\\plusrah1.lbm"
-#define BLASTBILD ".\\daten\\blast.lbm"
-#define BULLETBILD ".\\daten\\bullet.lbm"
-#define INFLUENCEBILD ".\\daten\\influ.lbm"
-#define DATA70ZEICHENSATZ ".\\daten\\para8x8.fnt"
-#define DIGITBILD ".\\daten\\digits.lbm"
-#define ENEMYBILD ".\\daten\\enemy.lbm"
-#define SEITENANSICHTBILD ".\\daten\\ship.lbm"
-#define EL_BLOCKS_FILE 		".\\daten\\ship2.lbm"
-#define FONTBILD ".\\daten\\parafont.lbm"
-#define CONSOLENBILD ".\\daten\\console.lbm"
-#define ROBOTPICTUREBILD ".\\daten\\robots.lbm"
-#define SHIELDPICTUREBILD ".\\daten\\shield.lbm"
+#define TITELBILD1 "./daten/title.lbm"
+#define RAHMENBILD1 "./daten/rahmen.lbm"
+#define PARAPLUSRAHMENBILD "./daten/plusrah1.lbm"
+#define BLASTBILD "./daten/blast.lbm"
+#define BULLETBILD "./daten/bullet.lbm"
+#define INFLUENCEBILD "./daten/influ.lbm"
+#define DATA70ZEICHENSATZ "./daten/para8x8.fnt"
+#define DIGITBILD "./daten/digits.lbm"
+#define ENEMYBILD "./daten/enemy.lbm"
+#define SEITENANSICHTBILD "./daten/ship.lbm"
+#define EL_BLOCKS_FILE 		"./daten/ship2.lbm"
+#define FONTBILD "./daten/parafont.lbm"
+#define CONSOLENBILD "./daten/console.lbm"
+#define ROBOTPICTUREBILD "./daten/robots.lbm"
+#define SHIELDPICTUREBILD "./daten/shield.lbm"
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
@@ -112,10 +112,10 @@
 
 
 #define VIEWBREITE 9
-#define VIEWHOEHE 4
+#define VIEWHOEHE 6
 
 #define INTERNBREITE 11			/* 11 */
-#define INTERNHOEHE 7
+#define INTERNHOEHE 9
 
 /* Diese Konstanten geben die Groesse des unsichtbaren Bereiches links,rechts
 	und oberhalb des Userfensters an. */
@@ -238,7 +238,7 @@ enum _directions {
 #define SpeedX (Me.speed.x)
 #define SpeedY (Me.speed.y)
 
-#define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
+// #define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
 
 #define BREMSDREHUNG 3 		/* warte 3*, bevor Influencer weitergedreht wird */
 

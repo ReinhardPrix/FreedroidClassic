@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.4  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.2  1994/06/19  16:25:08  prix
  * Sat May 21 14:27:44 1994: PutMessages written
@@ -27,13 +27,14 @@
  *
  *-@Header------------------------------------------------------------*/
 
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _misc_c
 
 #undef DIAGONAL_KEYS_AUS
-#undef QUEUEDEBUG
+// #undef QUEUEDEBUG
+#define QUEUEDEBUG
 
 #define MESPOSX 0
 #define MESPOSY 64
@@ -45,11 +46,10 @@ static const char RCSid[]=\
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <conio.h>
-#include <alloc.h>
-#include <dos.h>
-#include <mem.h>
 #include <string.h>
+#include <vga.h>
+#include <vgagl.h>
+#include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -65,10 +65,6 @@ typedef struct {
 	char* MessageText;
 }message, Message;
 
-extern int ShipEmptyCounter;
-extern int WaitElevatorCounter;
-extern int TimerFlag;
-
 void CreateMessageBar(char* MText);
 void CleanMessageLine(void);
 void AdvanceQueue(void);
@@ -77,7 +73,7 @@ int VectsHaveBeenTurned=0;
 unsigned char* MessageBar;
 message* Queue=NULL;
 
-int ThisMessageTime=0;		/* Counter fuer Message-Timing */
+// int ThisMessageTime=0;		/* Counter fuer Message-Timing */
 
 
 /* **********************************************************************
@@ -89,7 +85,7 @@ void Armageddon(void){
 
 	gotoxy(0,0);
 	printf(" Really kill all droids on ship (y/n) ?");
-	while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getch();
+	while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getchar();
 	if (ATaste == 'n') return;
 	for (i=0;i<MAX_ENEMYS_ON_SHIP;i++){
 		Feindesliste[i].energy=0;
@@ -179,7 +175,7 @@ void Cheatmenu(void){
 	printf("\n <SPACE> RESUME game\n");
 
 	while (!Weiter) {
-		CTaste=getch();
+		CTaste=getchar();
 		switch (CTaste) {
 			case 'a': Weiter=1; Armageddon(); break;
 			case 'l': {
@@ -213,7 +209,7 @@ void Cheatmenu(void){
 					printf("%d\t%d\t%s\t%d\n",i,Feindesliste[i].levelnum,Druidmap[Feindesliste[i].type].druidname,Feindesliste[i].energy);
 					if ((i%22)==0) {
 						printf(" --- MORE --- \n");
-						getch();
+						getchar();
 					}
 				}
 				break;
@@ -279,23 +275,42 @@ void InsertNewMessage(void) {
 @Int:
 * $Function----------------------------------------------------------*/
 void Terminate(int ExitCode){
-	if (ExitCode) getch();
-	/* Interruptvektoren wieder restaurieren */
-	RestoreIntVects();
-	/* Soundblaster soll keine Toene mehr spucken */
-	sbfm_silence();
+
+  //
+  // THIS COMES IN FOR THE PORT AND IS NEW!
+  //
+
+  printf("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
+  printf("GameOver : %i\n",GameOver);
+  printf("Diese Meldung wurde durch PRINTF ausgegeben VOR dem Umschalten auf Textmode.\n");
+  keyboard_close();
+  vga_setmode(TEXT);
+  printf("Diese Meldung wurde durch PRINTF ausgegeben NACH dem Umschalten auf Textmode.\n");
+  exit(ExitCode);
+  return;
+
+  //
+  // THIS WAS IN BEFORE THE PORT AND WILL NO LONGER BE EXECUTED,
+  // EVEN IF IT IS NOT COMMENTED OUT
+  //
+
+  if (ExitCode) getchar();
+  /* Interruptvektoren wieder restaurieren */
+  RestoreIntVects();
+  /* Soundblaster soll keine Toene mehr spucken */
+  // PORT sbfm_silence();
 #ifdef MODSCHASEIN	
-	StopModPlayer();
+  // PORT StopModPlayer();
 #endif
-	/* Videomodus wieder restaurieren */
-	RestoreVideoMode();
-	
-	/* Tastaturwiederholung wieder schnell setzen */
-	SetTypematicRate(TYPEMATIC_FAST);
-	
-	/* Zur"uck nach DOS */
-	exit(ExitCode);
-}
+  /* Videomodus wieder restaurieren */
+  RestoreVideoMode();
+  
+  /* Tastaturwiederholung wieder schnell setzen */
+  SetTypematicRate(TYPEMATIC_FAST);
+  
+  /* Zur"uck nach DOS */
+  exit(ExitCode);
+} // void Terminate(int ExitCode)
 
 
 /*@Function============================================================
@@ -316,17 +331,21 @@ void KillQueue(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void AdvanceQueue(void) {
-	message *tmp;
+  message *tmp;
 	
-	if( Queue == NULL) return;
+  printf("\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
+
+  if( Queue == NULL) return;
 	
-	if(Queue->MessageText) free(Queue->MessageText);
-	tmp = Queue;
+  if(Queue->MessageText) free(Queue->MessageText);
+  tmp = Queue;
+	
+  Queue = Queue->NextMessage;
 
-	Queue = Queue->NextMessage;
+  free(tmp);
 
-	free(tmp);
-}
+  printf("\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
+} // void AdvanceQueue(void)
 	
 
 /*@Function============================================================
@@ -337,87 +356,102 @@ void AdvanceQueue(void) {
 * $Function----------------------------------------------------------*/
 void PutMessages(void)
 {
-	static int MesPos=0;				/* X-Position der Message-Bar */
-	static int Working=FALSE;		/* wird gerade eine Message bearbeitet ?? */
-	message* LQueue;					/* Bewegl. Queue-Pointer */
-	int i;
+  static int MesPos=0;				/* X-Position der Message-Bar */
+  static int Working=FALSE;		/* wird gerade eine Message bearbeitet ?? */
+  message* LQueue;					/* Bewegl. Queue-Pointer */
+  int i;
 
-	if (!PlusExtentionsOn) return;
-	
-	if (!Queue) return;						/* nichts liegt an */
-	if (!Working) ThisMessageTime = 0;  /* inaktiv, aber Queue->reset time */
+  printf("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
+
+  //  if (!PlusExtentionsOn) return;
+  
+  if (!Queue) return;						/* nichts liegt an */
+  if (!Working) ThisMessageTime = 0;  /* inaktiv, aber Queue->reset time */
 	
 	
 #ifdef QUEUEDEBUG
-	gotoxy(1, 10);
-	printf("Time: %d",ThisMessageTime);
+  gotoxy(1, 10);
+  printf("Time: %d",ThisMessageTime);
 #endif
 
 // Ausgabe der momentanen Liste:
 #ifdef QUEUEDEBUG
-	LQueue=Queue;
-	i=0;
-	gotoxy(1,5);
-	while	(LQueue != NULL) {
-		if ((LQueue->MessageText) == NULL) {
-			printf(" Textpointer is NULL !!!!!!\n");
-			getch();
-		}
-		printf("%d. '%s' %d\n",i,LQueue->MessageText,LQueue->MessageCreated);
-		i++;
-		LQueue=LQueue->NextMessage;
-	}
-	printf(" NULL reached !\n");
+  LQueue=Queue;
+  i=0;
+  gotoxy(1,5);
+  printf("\nvoid PutMessages(void): This is the Queue of Messages:\n");
+  while	(LQueue != NULL) {
+    if ((LQueue->MessageText) == NULL) {
+      printf("\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
+      getchar();
+    }
+    printf("%d. '%s' %d\n",i,LQueue->MessageText,LQueue->MessageCreated);
+    i++;
+    LQueue=LQueue->NextMessage;
+  }
+  printf(" NULL reached !\n");
 #endif
 
 	
-	// Wenn die Nachricht schon sehr alt ist, wird sie gel"oscht. 
-	if ( Working && (ThisMessageTime>MaxMessageTime) ) {
-		AdvanceQueue();
-		CleanMessageLine();
-		Working = FALSE;			// inaktiv
-		ThisMessageTime = 0;		// Counter init.
-		return;
-	}
+  // Wenn die Nachricht schon sehr alt ist, wird sie gel"oscht. 
+  if ( Working && (ThisMessageTime>MaxMessageTime) ) {
+    AdvanceQueue();
+    CleanMessageLine();
+    Working = FALSE;			// inaktiv
+    ThisMessageTime = 0;		// Counter init.
+    return;
+  }
 
 
-	/* Alte Mes. hat MinTime gelebt, neue wartet */
-	if((ThisMessageTime > MinMessageTime) && (Queue->NextMessage) ) {
-		AdvanceQueue();		/* Queue weiterbewegen */
-		Working = FALSE;		/* inaktiv setzen */
-		ThisMessageTime = 0;	/* counter neu init. */
-		return;
-	}
-
-	// Modul inaktiv und neue Message da --> aktivieren
-	if( (!Working) && Queue ) {
-		
-		// Wenn die neue Nachricht noch nicht erzeugt ist, dann erzeuge sie
-		if (!Queue->MessageCreated) {
-			CreateMessageBar(Queue->MessageText);
-			Queue->MessageCreated=TRUE;
-		}
-
-		ThisMessageTime = 0;			/* counter init. */
-		CleanMessageLine();			/* Zeile loeschen */
-		Working = TRUE;				/* aktiviert */
-	}
-
+  /* Alte Mes. hat MinTime gelebt, neue wartet */
+  if((ThisMessageTime > MinMessageTime) && (Queue->NextMessage) ) {
+    AdvanceQueue();		/* Queue weiterbewegen */
+    Working = FALSE;		/* inaktiv setzen */
+    ThisMessageTime = 0;	/* counter neu init. */
+    return;
+  }
+  
+  // Modul inaktiv und neue Message da --> aktivieren
+  if( (!Working) && Queue ) {
+    
+    // Wenn die neue Nachricht noch nicht erzeugt ist, dann erzeuge sie
+    if (!Queue->MessageCreated) {
+      CreateMessageBar(Queue->MessageText);
+      Queue->MessageCreated=TRUE;
+    }
+    
+    ThisMessageTime = 0;			/* counter init. */
+    CleanMessageLine();			/* Zeile loeschen */
+    Working = TRUE;				/* aktiviert */
+  }
+  
 	
-	// Modul ist gerade aktiv --> bewegen und anzeigen
-	if( Working  && Queue ) {
-		
-		MesPos=10*ThisMessageTime;		/* zeitl. synchronisierte Bewegung */
-
-		/* nicht ueber linken Rand fahren !! */
-		if (MesPos>(MESBARBREITE-2)) MesPos=MESBARBREITE-2;
-
-		for(i=0;i<MESHOEHE;i++) {
-			memcpy(RealScreen+MESPOSX+MESBARBREITE-MesPos+(MESPOSY+i)*SCREENBREITE,
-				MessageBar+i*MESBARBREITE,MesPos);
-		} /* for */
-		
-	} /* if aktiv + Message da */
+  // Modul ist gerade aktiv --> bewegen und anzeigen
+  if( Working  && Queue ) {
+    
+    MesPos=10*ThisMessageTime;		/* zeitl. synchronisierte Bewegung */
+    
+    /* nicht ueber linken Rand fahren !! */
+    if (MesPos>(MESBARBREITE-2)) MesPos=MESBARBREITE-2;
+    
+    // 
+    // SINCE 'REALSCREEN' NO LONGER RELEVANT, A NEW ROUTINE HAS TO BE FOUND FOR THE PORT
+    //
+    //    for(i=0;i<MESHOEHE;i++) {
+    //      memcpy(
+    //             RealScreen+MESPOSX+MESBARBREITE-MesPos+(MESPOSY+i)*SCREENBREITE,
+    //	           MessageBar+i*MESBARBREITE,
+    //             MesPos
+    //            );
+    //    } /* for */
+    
+    //
+    // THIS IS THE NEW ROUTINE.
+    //
+    for(i=0;i<MESHOEHE;i++) {
+      vga_drawscansegment(MessageBar+i*MESBARBREITE,MESPOSX-MesPos,MESPOSY+i,MesPos);
+    }
+  } /* if aktiv + Message da */
 		
 } /* Put Messages */
 
@@ -440,41 +474,44 @@ void CleanMessageLine(void)
 * $Function----------------------------------------------------------*/
 void CreateMessageBar(char* MText)
 {
-char Worktext[42];
-int i,j;
+  char Worktext[42];
+  int i,j;
 
+  printf("\nvoid CreateMessageBar(char* MText): Funktion echt aufgerufen.");
 
-// "Uberl"angen checken
-	if (strlen(MText)>40) {
-		printf(" Message hat mehr als 40 Zeichen !.\n");
-		getch();
-		Terminate(ERR);
-	}
+  // "Uberl"angen checken
+  if (strlen(MText)>40) {
+    printf("\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
+    getchar();
+    Terminate(ERR);
+  }
 	
-// Speicher anfordern, wenn noch keiner da
-	if (MessageBar == NULL)
-		if((MessageBar=MyMalloc(MESBAR_MEM)) == NULL) {
-			printf(" Bekomme keinen Speicher fuer MessageBar !!\n");
-			getch();
-			Terminate(ERR);
-		}
+  // Speicher anfordern, wenn noch keiner da
+  if (MessageBar == NULL)
+    if((MessageBar=MyMalloc(MESBAR_MEM)) == NULL) {
+      printf("\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
+      getchar();
+      Terminate(ERR);
+    }
 
-// Message auf 40 Zeichen erg"anzen
-	strcpy(Worktext,MText);
-	while (strlen(Worktext)<40) strcat(Worktext," ");
+  // Message auf 40 Zeichen erg"anzen
+  strcpy(Worktext,MText);
+  while (strlen(Worktext)<40) strcat(Worktext," ");
 	
-// Im internen Screen die Nachricht anzeigen und dann ausschneiden
-	for(i=0;i<40;i++){
-		for(j=0;j<8;j++){
-			memcpy( (MessageBar+i*8+j*SCREENBREITE),(Data70Pointer+Worktext[i]*8*8+j*8),8);
-		}
-	}
+  // Im internen Screen die Nachricht anzeigen und dann ausschneiden
+  for(i=0;i<40;i++){
+    for(j=0;j<8;j++){
+      memcpy( (MessageBar+i*8+j*SCREENBREITE),(Data70Pointer+Worktext[i]*8*8+j*8),8);
+    }
+  }
 
 // Am unteren Rand die Nachricht anzeigen und dann ausschneiden
 //	gotoxy(1,4);
 //	printf("%s",MText);
 //	memcpy(MessageBar,RealScreen+3*8*SCREENBREITE,8*SCREENBREITE);
-}
+
+  printf("\nvoid CreateMessageBar(char* MText): Funktion hat ihr natuerliches Ende erreicht.");
+}  // void CreateMessageBar(char* MText)
 
 /*@Function============================================================
 @Desc: 
@@ -518,7 +555,7 @@ void* MyMemcpy(void* Ziel,void* Quelle,unsigned int Laenge){
 	if (!DMAUseON) return(memcpy(Ziel,Quelle,Laenge));
 	else {
 		printf("ERror: NO DMA usable");
-		getch();
+		getchar();
 		Terminate(-1);
 		return(NULL);
 	}
@@ -534,7 +571,7 @@ void* MyMalloc(long Mamount){
 	
 	if ((Mptr=malloc((size_t)Mamount)) == NULL) {
 		printf(" MyMalloc(%d) did not succeed!\n",Mamount);
-		getch();
+		getchar();
 	}
 	return Mptr;
 }
@@ -546,10 +583,10 @@ void* MyMalloc(long Mamount){
  * ************************************************************** */
 
 int SetTypematicRate(unsigned char Rate){
-	outportb(0x60,0x0f3);
-	delay(1); 
-	outportb(0x60,Rate);
-	delay(1);
+  //	outportb(0x60,0x0f3);
+  //	delay(1); 
+  //	outportb(0x60,Rate);
+  //	delay(1);
 	return 0;
 }
 
@@ -624,49 +661,49 @@ void DirToVect(int dir, Vect vector) {
 void JoystickControl(void){
 	int JoyB, JoyX, JoyY;
 
-	if (!GameAdapterPresent)
-		return;
-		
-	asm{
-		mov ah,84h
-		mov dx,0
-		int 15h
-		jc NoJoy
-		and al,00110000b
-		mov cl,4
-		shr al,cl
-		xor al,00000011b
-		mov ah,0
-		mov JoyB,ax
-	
-		mov ah,84h
-		mov dx,1
-		int 15h
-		jc NoJoy
-		mov JoyX,ax
-		mov JoyY,bx
-		jmp AllOK
-	}
-NoJoy:
-	gotoxy(4,4);
-	printf(" No Joystick - kein Spieleadapter angeschlossen \n");
-	getch();
-	GameAdapterPresent=FALSE;
-
-AllOK:
-#ifdef SAYJOYPOS
-	gotoxy(3,3);
-	printf(" JoyX: %d JoyY: %d JoyB: %d !\n",JoyX,JoyY,JoyB);
-#endif
-
-
-	if ((SpacePressed) && (JoyB == FALSE)) SpaceReleased=TRUE;
-	SpacePressed=JoyB;
-	if (JoyX < 50) LeftPressed=TRUE; else LeftPressed=FALSE;
-	if (JoyX >200) RightPressed=TRUE; else RightPressed=FALSE;
-	if (JoyY < 50) UpPressed=TRUE; else UpPressed=FALSE;
-	if (JoyY >200) DownPressed=TRUE; else DownPressed=FALSE;
-
+	//	if (!GameAdapterPresent)
+	//		return;
+	//		
+	//	asm{
+	//		mov ah,84h
+	//		mov dx,0
+	//		int 15h
+	//		jc NoJoy
+	//		and al,00110000b
+	//		mov cl,4
+	//		shr al,cl
+	//		xor al,00000011b
+	//		mov ah,0
+	//		mov JoyB,ax
+	//	
+	//		mov ah,84h
+	//		mov dx,1
+	//		int 15h
+	//		jc NoJoy
+	//		mov JoyX,ax
+	//		mov JoyY,bx
+	//		jmp AllOK
+	//	}
+	//NoJoy:
+	//	gotoxy(4,4);
+	//	printf(" No Joystick - kein Spieleadapter angeschlossen \n");
+	//	getchar();
+	//	GameAdapterPresent=FALSE;
+	//
+	//AllOK:
+	//#ifdef SAYJOYPOS
+	//	gotoxy(3,3);
+	//	printf(" JoyX: %d JoyY: %d JoyB: %d !\n",JoyX,JoyY,JoyB);
+	//#endif
+	//
+	//
+	//	if ((SpacePressed) && (JoyB == FALSE)) SpaceReleased=TRUE;
+	//	SpacePressed=JoyB;
+	//	if (JoyX < 50) LeftPressed=TRUE; else LeftPressed=FALSE;
+	//	if (JoyX >200) RightPressed=TRUE; else RightPressed=FALSE;
+	//	if (JoyY < 50) UpPressed=TRUE; else UpPressed=FALSE;
+	//	if (JoyY >200) DownPressed=TRUE; else DownPressed=FALSE;
+	//
 }
 
 
@@ -684,43 +721,43 @@ AllOK:
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void interrupt Interrupt09(void){
+// void interrupt Interrupt09(void){
 
 //	if( GameAdapterPresent ) return;
 	
-	KeyCode=inportb(0x60);
-	switch (KeyCode){
-		case 0x48 : UpPressed=1; break;
-		case 0x50 : DownPressed=1; break;
-		case 0x4B : LeftPressed=1; break;
-		case 0x4D : RightPressed=1; break;
-
-#ifndef DIAGONAL_KEYS_AUS
-		case 0x47 : LeftPressed=1; UpPressed=1; break;
-		case 0x49 : RightPressed=1; UpPressed=1; break;
-		case 0x51 : RightPressed=1; DownPressed=1; break;
-		case 0x4F : LeftPressed=1; DownPressed=1; break;
-
-		case 0xC7 : LeftPressed=0; UpPressed=0; break;
-		case 0xC9 : RightPressed=0; UpPressed=0; break;
-		case 0xD1 : RightPressed=0; DownPressed=0; break;
-		case 0xCF : LeftPressed=0; DownPressed=0; break;
-#endif
-		
-		case 0xC8 : UpPressed=0; break;
-		case 0xD0 : DownPressed=0; break;
-		case 0xCB : LeftPressed=0; break;
-		case 0xCD : RightPressed=0; break;
-		case 0x39 : SpacePressed=1; break;
-		case 0xB9 : { if (SpacePressed == TRUE) SpaceReleased=TRUE;
-						  SpacePressed=0; break; }
-		case 0x10 : QPressed=1; break;
-		case 0x90 : QPressed=0; break;
-	} /* switch */
-
-
-	OldInt09h();
-}
+  //	KeyCode=inportb(0x60);
+  //	switch (KeyCode){
+  //		case 0x48 : UpPressed=1; break;
+  //		case 0x50 : DownPressed=1; break;
+  //		case 0x4B : LeftPressed=1; break;
+  //		case 0x4D : RightPressed=1; break;
+  //
+  //#ifndef DIAGONAL_KEYS_AUS
+  //		case 0x47 : LeftPressed=1; UpPressed=1; break;
+  //		case 0x49 : RightPressed=1; UpPressed=1; break;
+  //		case 0x51 : RightPressed=1; DownPressed=1; break;
+  //		case 0x4F : LeftPressed=1; DownPressed=1; break;
+  //
+  //		case 0xC7 : LeftPressed=0; UpPressed=0; break;
+  //		case 0xC9 : RightPressed=0; UpPressed=0; break;
+  //		case 0xD1 : RightPressed=0; DownPressed=0; break;
+  //		case 0xCF : LeftPressed=0; DownPressed=0; break;
+  //#endif
+  //		
+  //		case 0xC8 : UpPressed=0; break;
+  //		case 0xD0 : DownPressed=0; break;
+  //		case 0xCB : LeftPressed=0; break;
+  //		case 0xCD : RightPressed=0; break;
+  //		case 0x39 : SpacePressed=1; break;
+  //		case 0xB9 : { if (SpacePressed == TRUE) SpaceReleased=TRUE;
+  //						  SpacePressed=0; break; }
+  //		case 0x10 : QPressed=1; break;
+  //		case 0x90 : QPressed=0; break;
+  //	} /* switch */
+  //
+  //
+  //	OldInt09h();
+// }
 
 /*@Function============================================================
 @Desc: 
@@ -728,29 +765,29 @@ void interrupt Interrupt09(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void interrupt Interrupt1C(void){
-	int i;
+//void interrupt Interrupt1C(void){
+//	int i;
 //	static unsigned char Palwert;
 
-	TimerFlag = TRUE;
-
-	ThisMessageTime ++;			/* Message Timer */
-	
-	if (Me.firewait > 0) Me.firewait--;
-	
-	if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
-	if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
-	
-	if ( CurLevel->empty > 2) CurLevel->empty--;
-
-	if(RealScore > ShowScore) ShowScore++;
-	if(RealScore < ShowScore) ShowScore--;
-
-
-	if (InterruptInfolineUpdate) {
-		UpdateInfoline();
-		SetInfoline();
-	}
+	//	TimerFlag = TRUE;
+	//
+	//	ThisMessageTime ++;			/* Message Timer */
+	//	
+	//	if (Me.firewait > 0) Me.firewait--;
+	//	
+	//	if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
+	//	if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
+	//	
+	//	if ( CurLevel->empty > 2) CurLevel->empty--;
+	//
+	//	if(RealScore > ShowScore) ShowScore++;
+	//	if(RealScore < ShowScore) ShowScore--;
+	//
+	//
+	//	if (InterruptInfolineUpdate) {
+	//		UpdateInfoline();
+	//		SetInfoline();
+	//	}
 
 	
 	/*
@@ -758,8 +795,8 @@ void interrupt Interrupt1C(void){
 	 * h"alt aber schon zuvor installierte Interruptfunktionen
 	 * am laufenden
 	 */
-	OldInt1Ch();
-}
+	//	OldInt1Ch();
+//}
 
 /*@Function============================================================
 @Desc: 
@@ -767,11 +804,11 @@ void interrupt Interrupt1C(void){
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void interrupt Interrupt23(void){
-	GameOver=TRUE;
-	QuitProgram=TRUE;
-//	OldInt23h();
-}
+//void interrupt Interrupt23(void){
+//	GameOver=TRUE;
+//	QuitProgram=TRUE;
+////	OldInt23h();
+//}
 
 /*@Function============================================================
 @Desc:  This function drains the keyboard buffer of characters to
@@ -781,7 +818,8 @@ void interrupt Interrupt23(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void KillTastaturPuffer(void){
-	while (kbhit()) getch();
+
+  // PORT while (kbhit()) getchar();
 }
 
 
@@ -799,18 +837,18 @@ void KillTastaturPuffer(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void TurnIntVects(void){
-	if (!VectsHaveBeenTurned) {
-		OldInt09h=getvect(0x09);
-		OldInt1Ch=getvect(0x1C);
-		OldInt23h=getvect(0x23);
-		setvect(0x09,Interrupt09);
-		setvect(0x1C,Interrupt1C);
-		setvect(0x23,Interrupt23);
-		VectsHaveBeenTurned=1;
-	} else {
-		printf(" Die Interruptvektoren waren ja schon verbogen !\n");
-		getch();
-	}
+//	if (!VectsHaveBeenTurned) {
+//		OldInt09h=getvect(0x09);
+//		OldInt1Ch=getvect(0x1C);
+//		OldInt23h=getvect(0x23);
+//		setvect(0x09,Interrupt09);
+  //		setvect(0x1C,Interrupt1C);
+  //		setvect(0x23,Interrupt23);
+  //		VectsHaveBeenTurned=1;
+  //	} else {
+  //		printf(" Die Interruptvektoren waren ja schon verbogen !\n");
+  //		getchar();
+  //	}
 }
 
 /*@Function============================================================
@@ -821,14 +859,14 @@ void TurnIntVects(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void RestoreIntVects(void){
-	if (VectsHaveBeenTurned) {
-		setvect(0x09,OldInt09h);
-		setvect(0x1C,OldInt1Ch);
-		setvect(0x23,OldInt23h);
- 	} else {
-		printf(" Die Interruptvektoren waren noch gar nicht verbogen!\n");
-		getch();
-	}
+  //	if (VectsHaveBeenTurned) {
+  //		setvect(0x09,OldInt09h);
+  //		setvect(0x1C,OldInt1Ch);
+  //		setvect(0x23,OldInt23h);
+  // 	} else {
+  //		printf(" Die Interruptvektoren waren noch gar nicht verbogen!\n");
+  //		getchar();
+  //	}
 }
 
 

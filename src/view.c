@@ -1,5 +1,5 @@
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 /*
  * Dieses Modul enth"alt Funktionen, die dem Aufbau des Bildes dienen.
@@ -16,12 +16,8 @@ static const char RCSid[]=\
 
 //#define SHOWSTATS
 
-#include <mem.h>
 #include <stdio.h>
-#include <alloc.h>
-#include <dos.h>
 #include <math.h>
-#include <conio.h>
 #include <stdlib.h>
 
 #include "defs.h"
@@ -68,7 +64,7 @@ void RecFlashFill(
 
 //	gotoxy(1,1);
 //	printf(" RFF: X=%d Y=%d.\n",LX,LY);
-//	getch();
+//	getchar();
 
 	// Dieses Feld als Wirkungsbereich kenntzeichnen
 	Affected[LY/BLOCKHOEHE*CurLevel->xlen+LX/BLOCKBREITE]=TRUE;
@@ -135,57 +131,58 @@ int i;
 * $Function----------------------------------------------------------*/
 void GetView(void)
 {
-	int col, line;
+  int col, line;
+  point testpos;
+  int me_gx, me_gy;		/* influ- Grobkoord. */	
+  signed int mapX0, mapY0;
+  signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
 
-	point testpos;
-	int me_gx, me_gy;		/* influ- Grobkoord. */
+  printf("\nvoid GetView(void): Funktion echt aufgerufen.");
+  printf("\nvoid GetView(void): CurLevel->xlen: %d. CurLevel->ylen: %d.",CurLevel->xlen,CurLevel->ylen);
+
+  me_gx = Me.pos.x / BLOCKBREITE;
+  me_gy = Me.pos.y / BLOCKHOEHE;
+
+  mapX0 = me_gx - (INTERNBREITE/2);
+  mapY0 = me_gy - (INTERNHOEHE/2);
 	
-	signed int mapX0, mapY0;
-	signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
-
-	me_gx = Me.pos.x / BLOCKBREITE;
-	me_gy = Me.pos.y / BLOCKHOEHE;
-
-	mapX0 = me_gx - (INTERNBREITE/2);
-	mapY0 = me_gy - (INTERNHOEHE/2);
+  mapX = mapX0;
+  mapY = mapY0;
 	
-	mapX = mapX0;
-	mapY = mapY0;
-	
-	for (line=0;line<INTERNHOEHE;line++, mapY++) {
-		mapX = mapX0;
-   	for(col=0;col<INTERNBREITE;col++, mapX++) {
-
-			/* Achtung, falls map-brick nicht mehr sichtbar ! */
-			if( HideInvisibleMap ) {
-				testpos.x = mapX*BLOCKBREITE+BLOCKBREITE/2;
-				testpos.y = mapY*BLOCKHOEHE+BLOCKHOEHE/2;
+  for (line=0;line<INTERNHOEHE;line++, mapY++) {
+    mapX = mapX0;
+    for(col=0;col<INTERNBREITE;col++, mapX++) {
+      
+      /* Achtung, falls map-brick nicht mehr sichtbar ! */
+      if( HideInvisibleMap ) {
+	testpos.x = mapX*BLOCKBREITE+BLOCKBREITE/2;
+	testpos.y = mapY*BLOCKHOEHE+BLOCKHOEHE/2;
 
 				/* relative Lage des Blocks zum Influ. ber"ucksichtigen */
-				if( me_gx < mapX ) testpos.x -= BLOCKBREITE/2;
-				else if(me_gx > mapX) testpos.x += BLOCKBREITE/2;
-				if( me_gy < mapY) testpos.y -= BLOCKHOEHE/2;
-				else if( me_gy > mapY) testpos.y += BLOCKHOEHE/2;
+	if( me_gx < mapX ) testpos.x -= BLOCKBREITE/2;
+	else if(me_gx > mapX) testpos.x += BLOCKBREITE/2;
+	if( me_gy < mapY) testpos.y -= BLOCKHOEHE/2;
+	else if( me_gy > mapY) testpos.y += BLOCKHOEHE/2;
 				
-				if( !IsVisible(&testpos)){
-					View[line][col]= INVISIBLE_BRICK;
-					continue;
-				}
-			}
+	if( !IsVisible(&testpos)){
+	  View[line][col]= INVISIBLE_BRICK;
+	  continue;
+	}
+      }
 			
-			/* Achtung wenn Koordinate ausserhalb der Map */
-			if( mapX < 0 ||
-					mapY < 0 ||
-					mapX >= (CurLevel->xlen) ||
-					mapY >= (CurLevel->ylen))		
-				View[line][col] = VOID;
-			else
-	      	View[line][col]=CurLevel->map[mapY][mapX];
-      } /* for col */
-   } /* for line */
+      /* Achtung wenn Koordinate ausserhalb der Map */
+      if( mapX < 0 ||
+	  mapY < 0 ||
+	  mapX >= (CurLevel->xlen) ||
+	  mapY >= (CurLevel->ylen))		
+	View[line][col] = VOID;
+      else
+	View[line][col]=CurLevel->map[mapY][mapX];
+    } /* for col */
+  } /* for line */
 
-	return;
-
+  printf("\nvoid GetView(void): Funktionsende ordnungsgemaess erreicht.");
+  return;
 } /* GetView */
 
 
@@ -220,75 +217,78 @@ void DisplayView(void)
 * $Function----------------------------------------------------------*/
 void GetInternFenster(void)
 {
-	Blast CurBlast = &(AllBlasts[0]);
-	int MapBrick;
-	int line;
-	int col;
-	int i;
-	int LX,LY,j;
+  Blast CurBlast = &(AllBlasts[0]);
+  int MapBrick;
+  int line;
+  int col;
+  int i;
+  int LX,LY,j;
+  
+  unsigned char *source;		/* the current block to copy */
+  unsigned char *target;
+  
+  target=InternWindow;
+  printf("\nvoid GetInternFenster(void) wurde ECHT aufgerufen.\n");
+  
+  memset(target, 1 , INTERNHOEHE*INTERNBREITE*BLOCKMEM);
 
-	unsigned char *source;		/* the current block to copy */
-	unsigned char *target=InternWindow;
-
-	/* Intern-Window l"oschen */
-	memset(InternWindow, 0 , INTERNHOEHE*INTERNBREITE*BLOCKMEM);
-
-	if (Conceptview) {
-		GetConceptInternFenster();
-		return;
-	}
+  if (Conceptview) {
+    GetConceptInternFenster();
+    return;
+  }
 		
-	for (line=0;line<(INTERNHOEHE);line++) {
-		for (col=0;col<(INTERNBREITE);col++) {
-			if( (MapBrick=View[line][col]) != INVISIBLE_BRICK) {
-				source = MapBlocks + MapBrick*BLOCKMEM;
-				for(i=0; i<BLOCKHOEHE; i++) {
-					MyMemcpy(target, source, BLOCKBREITE);
-					target += INTERNBREITE*BLOCKBREITE;
-					source += BLOCKBREITE;
-				}
-			} else /* Pointer weiter ohne Block zu kopieren */
-				target += INTERNBREITE*BLOCKMEM;
-				
-			if(col<INTERNBREITE-1) target-=INTERNBREITE*BLOCKMEM-BLOCKBREITE;
-		}
-		target-=(INTERNBREITE-1)*BLOCKBREITE;
+  for (line=0;line<(INTERNHOEHE);line++) {
+    for (col=0;col<(INTERNBREITE);col++) {
+      if( (MapBrick=View[line][col]) != INVISIBLE_BRICK) {
+	source = MapBlocks + MapBrick*BLOCKMEM;
+	for(i=0; i<BLOCKHOEHE; i++) {
+	  MyMemcpy(target, source, BLOCKBREITE);
+	  target += INTERNBREITE*BLOCKBREITE;
+	  source += BLOCKBREITE;
 	}
+      } else //
+	target += INTERNBREITE*BLOCKMEM;
+      if(col<INTERNBREITE-1) target-=INTERNBREITE*BLOCKMEM-BLOCKBREITE;
+    } // for(col=0...
+    target-=(INTERNBREITE-1)*BLOCKBREITE;
+  } // for (line=0...
+  printf("\nvoid GetInternFenster(void): Doppelfor-Schleife scheint abgearbeitet zu sein...\n");
+
 
 #if ENEMYOFF == 0
-	for (i=0;i<NumEnemys;i++) PutEnemy(i);
+  for (i=0;i<NumEnemys;i++) PutEnemy(i);
 #endif
-
-	if (Me.energy > 0) PutInfluence();
+  
+  if (Me.energy > 0) PutInfluence();
 	
-   for (i=0;i<(MAXBULLETS);i++)
-		if (AllBullets[i].type != OUT)
-			PutBullet(i);
-
+  for (i=0;i<(MAXBULLETS);i++)
+    if (AllBullets[i].type != OUT)
+      PutBullet(i);
+  
 		
-   for (i=0;i<(MAXBLASTS);i++)
-		if (AllBlasts[i].type != OUT )
-			PutBlast(i);
-
-	// Sofortiger Check auf Bullet-Blast-Kollisionen
- 	for(j=0;j<MAXBLASTS;j++){
-	 	/* check Blast-Bullet Collisions and kill hit Bullets */
-		for( i=0; i<MAXBULLETS; i++ ) {
-			if( AllBullets[i].type == OUT ) continue;
-			if( CurBlast->phase > 4) break;
-		
-			if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-				 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
-				 {
-				 	/* KILL Bullet silently */
-				 	AllBullets[i].type = OUT;
-				 	AllBullets[i].mine = FALSE;
-				 }
-		} /* for */
-	 	CurBlast++;
-	} /* for */
-			
-}
+  for (i=0;i<(MAXBLASTS);i++)
+    if (AllBlasts[i].type != OUT )
+      PutBlast(i);
+   
+   // Sofortiger Check auf Bullet-Blast-Kollisionen
+   for(j=0;j<MAXBLASTS;j++){
+     /* check Blast-Bullet Collisions and kill hit Bullets */
+     for( i=0; i<MAXBULLETS; i++ ) {
+       if( AllBullets[i].type == OUT ) continue;
+       if( CurBlast->phase > 4) break;
+       
+       if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
+	 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+	   {
+	     /* KILL Bullet silently */
+	     AllBullets[i].type = OUT;
+	     AllBullets[i].mine = FALSE;
+	   }
+     } /* for */
+     CurBlast++;
+   } /* for */
+  printf("\nvoid GetInternFenster(void): Ende der Funktion fehlerfrei erreicht...\n");
+} // void GetInternFenster(void) 
 
 /*@Function============================================================
 @Desc: GetConceptInternFenster(): analoge Funktion zu GetInternFenster()
@@ -300,9 +300,9 @@ void GetInternFenster(void)
 * $Function----------------------------------------------------------*/
 void GetConceptInternFenster(void)
 {
-
-	LX=0;
-	LY=0;
+	int LX=0;
+	int LY=0;
+	int i,j;
 
 	// Darstellen der blo"sen Deckkarte 
 	for(i=0;i<CurLevel->ylen;i++) {
@@ -396,35 +396,56 @@ void GetConceptInternFenster(void)
 * $Function----------------------------------------------------------*/
 void PutInfluence(void)
 {
-	int InternFensterOffset;
-	unsigned char *target;
-	unsigned char *source;		/* the druid-block to copy */
-	int i,j;
-	static BeamDelay=1;
+  // MODIFIED FOR THE PORT!!!!!!!!!!!!!!!!!
 
-	source = Influencepointer+(Me.phase)*BLOCKMEM;
+  //
+  // ACHTUNG!! FUER DEN PORT HAB ICH DIE HALBE FUNKTION ABGESCHALTET!!!
+  // SONST GIBTS NACH CA. 10 BILDERN DEN ERSTEN SEGMENTATION FAULT!!!!
+  //
 
-	if (BeamLine > BLOCKBREITE/2) { BeamLine--; return; }
-	
-	if (!BeamLine) {
-		PutObject(Me.pos.x, Me.pos.y, source, FALSE);
-		
-	} else {
-		for (i=0;i<BLOCKHOEHE;i++) {
-//			MyMemcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
-			for (j=0;j<(BLOCKBREITE/2+1-BeamLine)*2;j++) {
-				if (*(source+BLOCKHOEHE*i+BeamLine+j) != TRANSPARENTCOLOR)
- 					*(target+BLOCKBREITE*INTERNBREITE*i+BeamLine+j)=*(source+BLOCKHOEHE*i+BeamLine+j);
-			}
-		}
-		
-		for(i=0;i<BLOCKHOEHE;i++) {
-			*(target+BLOCKBREITE*INTERNBREITE*i+BeamLine-1)=BULLETCOLOR;
-			*(target+BLOCKBREITE*INTERNBREITE*i+BLOCKBREITE/2+(BLOCKBREITE/2-BeamLine+1))=BULLETCOLOR;
-		}
-		if (BeamDelay) BeamDelay--; else {	BeamLine--; BeamDelay=1; }
-	}
-}
+  int InternFensterOffset;
+  unsigned char *target;
+  unsigned char *source;		/* the druid-block to copy */
+  int i,j;
+  static BeamDelay=1;
+
+  printf("\nvoid PutInfluence(void): REAL function called.");
+
+
+  source = Influencepointer+(Me.phase)*BLOCKMEM;
+
+  
+  // PORT
+  // PutObject(Me.pos.x, Me.pos.y, source, FALSE);
+  // return;
+  // PORT
+
+  BeamLine=0;
+  
+  if (BeamLine > BLOCKBREITE/2) { 
+    BeamLine--; 
+    return; 
+  }
+  
+  if (!BeamLine) {
+    PutObject(Me.pos.x, Me.pos.y, source, FALSE);
+  } else {
+    for (i=0;i<BLOCKHOEHE;i++) {
+      // MyMemcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
+      for (j=0;j<(BLOCKBREITE/2+1-BeamLine)*2;j++) {
+	if (*(source+BLOCKHOEHE*i+BeamLine+j) != TRANSPARENTCOLOR)
+	  *(target+BLOCKBREITE*INTERNBREITE*i+BeamLine+j)=*(source+BLOCKHOEHE*i+BeamLine+j);
+      }
+    }
+    
+    for(i=0;i<BLOCKHOEHE;i++) {
+      *(target+BLOCKBREITE*INTERNBREITE*i+BeamLine-1)=BULLETCOLOR;
+      *(target+BLOCKBREITE*INTERNBREITE*i+BLOCKBREITE/2+(BLOCKBREITE/2-BeamLine+1))=BULLETCOLOR;
+    }
+    if (BeamDelay) BeamDelay--; else {	BeamLine--; BeamDelay=1; }
+  }
+  printf("\nvoid PutInfluence(void): REAL function ended.");
+}  // void PutInfluence(void)
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
@@ -619,7 +640,7 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 		(target > InternWindow + INTERNBREITE*INTERNHOEHE*BLOCKMEM-BLOCKMEM) ) {
 		gotoxy(1,1);
 		printf("Memory violation by PutObject !!!");
-		getch();
+		getchar();
 		return FALSE;
 	}
 	
@@ -639,44 +660,41 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 * $Function----------------------------------------------------------*/
 void PutInternFenster(void)
 {
+  // MODIFIED FOR THE PORT!!!!!!!!!!!
+  int StartX, StartY;
+  int i,j;
 
-int StartX, StartY;
-int i;
+  unsigned char *target;
+  unsigned char *source;
 
-unsigned char *target;
-unsigned char *source;
+  printf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
 
-	if (Conceptview) {
-		for(i=0;i<USERFENSTERHOEHE;i++) {
-			memcpy(RealScreen+(USERFENSTERPOSY+i)*SCREENBREITE+USERFENSTERPOSX,
-			InternWindow+i*INTERNBREITE*BLOCKBREITE,USERFENSTERBREITE);
-		}
-		return;
-	}
+  //PORT	if (Conceptview) {
+  //		for(i=0;i<USERFENSTERHOEHE;i++) {
+  //			memcpy(RealScreen+(USERFENSTERPOSY+i)*SCREENBREITE+USERFENSTERPOSX,
+  //			InternWindow+i*INTERNBREITE*BLOCKBREITE,USERFENSTERBREITE);
+  //		}
+  //		return;
+  //	}
 			
    StartX=(Me.pos.x % BLOCKBREITE) - BLOCKBREITE/2;
    StartY=((Me.pos.y % BLOCKHOEHE) - BLOCKHOEHE/2) *
-		BLOCKBREITE * INTERNBREITE;
+     BLOCKBREITE * INTERNBREITE;
 
-//   WaitVRetrace();		/* dont waste time with this */
+   //   WaitVRetrace();		/* dont waste time with this */
 
-   source = InternWindow +
-		USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
-		USERFENSTERLINKS +
-		StartY +
-		StartX;
-					
-   target = RealScreen + USERFENSTERPOSY*SCREENBREITE+USERFENSTERPOSX;
-   
    for(i=0; i<USERFENSTERHOEHE; i++) {
-   	MyMemcpy(target, source, USERFENSTERBREITE);
-   	source += INTERNBREITE * BLOCKBREITE;
-   	target += SCREENBREITE;
-   }
-
-	
-}
-
+     source = InternWindow +
+       USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
+       USERFENSTERLINKS +
+       StartY + StartX + i * INTERNBREITE * BLOCKBREITE ;
+     for(j=0; j<USERFENSTERBREITE; j++) {
+       vga_setcolor(*source);
+       source++;
+       vga_drawpixel(USERFENSTERPOSX+j,USERFENSTERPOSY+i);
+     } // for(j=0; ...
+   } // for(i=0; ...
+};  // void PutInternFenster(void)
 
 /*@Function============================================================
 @Desc: 
@@ -735,7 +753,7 @@ void RotateBulletColor(void){
 	static color BulletColors[MAXBULCOL]=
 		{BULLETCOLOR1, BULLETCOLOR2, BULLETCOLOR3, BULLETCOLOR4, BULLETCOLOR5 };
 	BulColNum++;
-	BulColNum=random(MAXBULCOL);
+	BulColNum=MyRandom(MAXBULCOL);
 	
 	if (BulColNum > (MAXBULCOL-1)) BulColNum=0;
 
@@ -794,13 +812,17 @@ void SetUserfenster(int color, unsigned char *screen)
 #define ROBOTBILDBREITE SCREENBREITE/8
 
 void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
-	int j;
+  int j;
 
-	for(j=0;j<ROBOTBILDHOEHE;j++){
-		MyMemcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
-				 SCREENBREITE+(Number % 8)*ROBOTBILDBREITE,ROBOTBILDBREITE);
-	}
-}
+  printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
+
+  for(j=0;j<ROBOTBILDHOEHE;j++){
+    // PORT MyMemcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
+    // PORT	     SCREENBREITE+(Number % 8)*ROBOTBILDBREITE,ROBOTBILDBREITE);
+  }
+
+  printf("\nvoid ShowRobotPicture(...): Usual end of function reached.");
+} // void ShowRobotPicture(...)
 
 #undef _view_c
 
@@ -816,8 +838,8 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.8  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.9  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.7  1994/06/19  16:44:10  prix
  * Wed Jun 08 13:46:12 1994: Influence is beamed into the ship when the game starts

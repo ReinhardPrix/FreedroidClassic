@@ -9,8 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.4  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.2  1994/06/19  16:42:56  prix
  * ??
@@ -172,8 +172,8 @@ enum to_blocks {
 #define NUM_LAYERS		4			/* dimension of the playground */
 #define NUM_LINES			12
 
-#define PLAYGROUND_FILE	"daten\\to_ground.lbm"	/* graphics - files */
-#define ELEMENTS_FILE	"daten\\to_elem.lbm"
+#define PLAYGROUND_FILE	"./daten/to_ground.lbm"	/* graphics - files */
+#define ELEMENTS_FILE	"./daten/to_elem.lbm"
 
 /* the playground type */
 typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES]; 

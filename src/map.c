@@ -1,9 +1,10 @@
+// static const char RCSid[]=\
+// "$Id$";
+
 #define _map_c
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <conio.h>
 #include <math.h>
 #include <string.h>
 #include <sys/types.h>
@@ -21,15 +22,35 @@ extern SetDebugPos;
 
 /*@Function============================================================
 @Desc: unsigned char GetMapBrick(Level deck, int x, int y): liefert
-			intern-code des Elements, das sich auf (deck x/y) befindet
+intern-code des Elements, das sich auf (deck x/y) befindet
 
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 unsigned char GetMapBrick(Level deck, int x, int y)
 {
-	return deck->map[y/BLOCKHOEHE][x/BLOCKBREITE];
-}
+  if (y/BLOCKHOEHE >= deck->ylen) {
+    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler1! Terminiere...");
+    return VOID;
+    Terminate(-1);
+  }
+  if (x/BLOCKBREITE >= deck->xlen) {
+    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler2! Terminiere...");
+    return VOID;
+    Terminate(-1);
+  }
+  if (y/BLOCKHOEHE <0) {
+    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler3! Terminiere...");
+    return VOID;
+    Terminate(-1);
+  }
+  if (x/BLOCKBREITE <0) {
+    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler4! Terminiere...");
+    return VOID;
+    Terminate(-1);
+  }
+  return deck->map[y/BLOCKHOEHE][x/BLOCKBREITE];
+} // unsigned char GetMapBrick(Level deck, int x, int y)
 
 /*@Function============================================================
 @Desc: int GetCurrentElevator: finds Elevator-number to your position 
@@ -165,86 +186,85 @@ void AnimateRefresh(void)
 * $Function----------------------------------------------------------*/
 int LoadShip(char *shipname)
 {
-	struct stat stbuf;
-	char *filename;
-	FILE *ShipFile;
-	char *ShipData;
-	char *endpt;			/* Pointer to end-strings */
-	char *LevelStart[MAX_LEVELS_ON_SHIP];		/* Pointer to a level-start */
-	int level_anz;
-	int i;
+  struct stat stbuf;
+  char *filename;
+  FILE *ShipFile;
+  char *ShipData;
+  char *endpt;			/* Pointer to end-strings */
+  char *LevelStart[MAX_LEVELS_ON_SHIP];		/* Pointer to a level-start */
+  int level_anz;
+  int i;
 
 
-	/* build complete filename from ship-name */
-	filename = (char*)MyMalloc(strlen(shipname)+strlen(SHIP_EXT)+10);
+  /* build complete filename from ship-name */
+  filename = (char*)MyMalloc(strlen(shipname)+strlen(SHIP_EXT)+10);
 	
-	strcpy(filename, shipname);
-	strcat(filename, SHIP_EXT);
+  strcpy(filename, shipname);
+  strcat(filename, SHIP_EXT);
 
-	/* Read the whole ship-data to memory */
-	if( (ShipFile = fopen(filename, "r")) == NULL) {
-		printf("File Error ");
-		getch();
-		return ERR;
-	}
-	free(filename);
+  /* Read the whole ship-data to memory */
+  if( (ShipFile = fopen(filename, "r")) == NULL) {
+    printf("\nint LoadShip(char *shipname): Error opening file.... ");
+    getchar();
+    return ERR;
+  }
+  free(filename);
 	
 
-	if( fstat(fileno(ShipFile), &stbuf) == EOF) {
-		return ERR;
-	}
+  if( fstat(fileno(ShipFile), &stbuf) == EOF) {
+    printf("\nint LoadShip(char* shipname): Error fstat-ing File....");
+    return ERR;
+  }
 
-	if( (ShipData = (char far*)farmalloc(stbuf.st_size + 10)) == NULL) {
-		printf("\nOut of Memory in LoadShip()");
-		getch();
-		return ERR;
-	}
+  if( (ShipData = (char *)malloc(stbuf.st_size + 10)) == NULL) {
+    printf("\nint LoadShip(char *shipname): Out of Memory? ");
+    getchar();
+    return ERR;
+  }
 
-	fread(ShipData, (size_t)64, (size_t) (stbuf.st_size/64 + 1), ShipFile);
+  fread(ShipData, (size_t)64, (size_t) (stbuf.st_size/64 + 1), ShipFile);
 
-	/*  count the number of levels and remember their start-addresses */
-	level_anz = 0;
-	endpt = ShipData;
-	LevelStart[level_anz] = ShipData;
+  /*  count the number of levels and remember their start-addresses */
+  level_anz = 0;
+  endpt = ShipData;
+  LevelStart[level_anz] = ShipData;
 	
-	while( (endpt=strstr(endpt, LEVEL_END_STRING)) != NULL) {
-		endpt += strlen(LEVEL_END_STRING);
-		level_anz ++;
-		LevelStart[level_anz] = endpt+1;
-	}
+  while( (endpt=strstr(endpt, LEVEL_END_STRING)) != NULL) {
+    endpt += strlen(LEVEL_END_STRING);
+    level_anz ++;
+    LevelStart[level_anz] = endpt+1;
+  }
 
-	/* init the level-structs */
-	curShip.LevelsOnShip = level_anz;
+  /* init the level-structs */
+  curShip.LevelsOnShip = level_anz;
 	
-	for( i=0; i<MAX_LEVELS_ON_SHIP; i++) {
-		if( i<level_anz) {
-			if( (curShip.AllLevels[i] = LevelToStruct(LevelStart[i])) == NULL) {
-				return ERR;
-			} else {
-				TranslateMap(curShip.AllLevels[i]);
-			}
-			
-		} else curShip.AllLevels[i] = NULL;
-	}
+  for( i=0; i<MAX_LEVELS_ON_SHIP; i++) {
+    if( i<level_anz) {
+      if( (curShip.AllLevels[i] = LevelToStruct(LevelStart[i])) == NULL) {
+	return ERR;
+      } else {
+	TranslateMap(curShip.AllLevels[i]);
+      }
+      
+    } else curShip.AllLevels[i] = NULL;
+  }
 
-	/* Get the elevator connections */
-	if( GetElevatorConnections(shipname) == ERR) {
-		printf("\nErr in GetElevatorConnections ");
-		getch();
-		return ERR;
-	}
-
-
-	return OK;
-}
+  /* Get the elevator connections */
+  if( GetElevatorConnections(shipname) == ERR) {
+    printf("\nErr in GetElevatorConnections ");
+    getchar();
+    return ERR;
+  }
+  return OK;
+} // int LoadShip(char *shipname)
 
 
 /*@Function============================================================
 @Desc: Level LevelToStruct(char *data):
-				Extrahiert die Daten aus *data und schreibt sie in eine
-				Level-struct:
-					Map- Daten noch NICHT in interne Werte uebersetzt
-					Doors and Waypoints Arrays initialisiert
+Extrahiert die Daten aus *data und schreibt sie in eine
+Level-struct:
+Map- Daten noch NICHT in interne Werte uebersetzt
+Doors and Waypoints Arrays initialisiert
 
 @Ret:  Level or NULL
 @Int:
@@ -444,28 +464,37 @@ int GetRefreshes(Level Lev)
 
 /*@Function============================================================
 @Desc: int TranslateMap(Level Lev): uebersetzt die geladene Karte
-			in die internen Werte
+in die internen Werte
 
 @Ret: OK | ERR
 @Int:
 * $Function----------------------------------------------------------*/
 int TranslateMap(Level Lev)
 {
-	int xdim = Lev->xlen;
-	int ydim = Lev->ylen;
-	int row, col;
-	int i;
+  int xdim = Lev->xlen;
+  int ydim = Lev->ylen;
+  int row, col;
+  int i;
 
-	/* transpose these ascii -mapdata to internal numbers for map */
-	for( row=0; row<ydim; row++)
-		for(col=0; col<xdim; col++) {
-			for(i=0; (i<BLOCKANZAHL) &&
-				(Translator[i].ascii != Lev->map[row][col]); i++);
-			Lev->map[row][col] = Translator[i].intern;
-	}
+  printf("\nint TranslateMap(Level lev): Function call confirmed.");
 
-	return OK;
-} /* Translate Map */
+  /* transpose these ascii -mapdata to internal numbers for map */
+  for( row=0; row<ydim; row++)
+    for(col=0; col<xdim; col++) {
+      for(i=0; (i<BLOCKANZAHL) && (Translator[i].ascii != Lev->map[row][col]); i++);
+
+      Lev->map[row][col] = Translator[i].intern;
+
+      if (i==BLOCKANZAHL) {
+	printf("\nint TranslateMap(Level lev): Strange dos2unix? error encountered.. correction.. done.");
+	Lev->map[row][col] = H_WALL;
+	// Terminate(-1);
+      }
+    }
+
+  printf("\nint TranslateMap(Level lev): Usual end of function reached.....");
+  return OK;
+} // int Translate Map(Level lev)
 
 
 /*@Function============================================================
@@ -554,9 +583,9 @@ int GetCrew(char *shipname)
 			sscanf(pos, "%d", &(types[type_anz++]));
 			
 
-		this_limit = random(upper_limit-lower_limit) + lower_limit;
+		this_limit = MyRandom(upper_limit-lower_limit) + lower_limit;
 		while( this_limit --) {
-			Feindesliste[enemy_nr].type = types[random(type_anz)];
+			Feindesliste[enemy_nr].type = types[MyRandom(type_anz)];
 			Feindesliste[enemy_nr].levelnum = level_num;
 			Feindesliste[enemy_nr].Status = 0;
 			enemy_nr ++;
@@ -686,14 +715,14 @@ int DruidPassable(int x, int y)
 
 /*@Function============================================================
 @Desc: IsPassable(int x, int y, int Checkpos):
-			prueft, ob der Punkt x/y passierbar ist
-			Checkpos: Falls Druid gecheckt wird: aktuelle Check-position
-			Checkpos = CENTER means: No Druid check
+prueft, ob der Punkt x/y passierbar ist
+Checkpos: Falls Druid gecheckt wird: aktuelle Check-position
+Checkpos = CENTER means: No Druid check
 			
 @Ret: CENTER: 	TRUE
-		Directions + (-1) : FALSE
+Directions + (-1) : FALSE
 
-		Directions mean Push Druid if it is one, else is's not passable
+Directions mean Push Druid if it is one, else is's not passable
 @Int:
 * $Function----------------------------------------------------------*/
 int IsPassable(int x, int y, int Checkpos) {
@@ -963,43 +992,47 @@ int IsPassable(int x, int y, int Checkpos) {
 @Int:
 * $Function----------------------------------------------------------*/
 int IsVisible(Point objpos){
-	signed int a_x;		/* Vector Influencer->objectpos */
-	signed int a_y;
-	vect step;			/* effective step */
-	int step_len=7;		/* the approx. length of a step-vect. */
-	int step_num;		/* number of neccessary steps */
-	int a_len;		/* Lenght of a */
-	int i;
-	point testpos;
-	int influ_x = Me.pos.x;
-	int influ_y = Me.pos.y;
+  signed int a_x;		/* Vector Influencer->objectpos */
+  signed int a_y;
+  vect step;			/* effective step */
+  int step_len=7;		/* the approx. length of a step-vect. */
+  int step_num;		/* number of neccessary steps */
+  int a_len;		/* Lenght of a */
+  int i;
+  point testpos;
+  int influ_x = Me.pos.x;
+  int influ_y = Me.pos.y;
 
-	a_x = influ_x -objpos->x;
-	a_y = influ_y -objpos->y;
+  printf("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
-	a_len = (int)sqrt((float)((unsigned long)a_x*a_x+a_y*a_y));
+  a_x = influ_x -objpos->x;
+  a_y = influ_y -objpos->y;
 
-	step_num = a_len / step_len;
-	if( step_num == 0 ) step_num = 1;
+  a_len = (int)sqrt((float)((unsigned long)a_x*a_x+a_y*a_y));
+  
+  step_num = a_len / step_len;
+  if( step_num == 0 ) step_num = 1;
+  
+  step.x = a_x/step_num;
+  step.y = a_y/step_num;
 	
-	step.x = a_x/step_num;
-	step.y = a_y/step_num;
-	
-	testpos.x = objpos->x;
-	testpos.y = objpos->y;
+  testpos.x = objpos->x;
+  testpos.y = objpos->y;
 
-	for( i=0; i<step_num; i++) {
-	
-		testpos.x += step.x;
-		testpos.y += step.y;
+  for( i=0; i<step_num; i++) {
+    
+    testpos.x += step.x;
+    testpos.y += step.y;
 
-		if( IsPassable(testpos.x, testpos.y, LIGHT) != CENTER ) return FALSE;
-	}
+    if( IsPassable(testpos.x, testpos.y, LIGHT) != CENTER ) {
+      printf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
+      return FALSE;
+    }
+  }
+  printf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	
-	return TRUE;
-	
-
-} /* IsVisible */
+  return TRUE;
+} // int IsVisible(Point objpos)
 
 
 #undef _map_c
@@ -1017,8 +1050,8 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.7  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.8  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.6  1994/06/19  16:23:51  prix
  * Sat Oct 02 12:23:34 1993: moved header to end of file
@@ -1075,6 +1108,4 @@ int IsVisible(Point objpos){
  *
  *
  *-@Header------------------------------------------------------------*/
-static const char RCSid[]=\
-"$Id$";
 

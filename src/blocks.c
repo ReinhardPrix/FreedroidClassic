@@ -1,14 +1,10 @@
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _blocks_c
 
 #include <stdio.h>
-#include <alloc.h>
-#include <dos.h>
-#include <mem.h>
 #include <math.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -28,23 +24,30 @@ static const char RCSid[]=\
 * $Function----------------------------------------------------------*/
 void SmallBlock(int LX,int LY, int BlockN,unsigned char* Screen,int SBreite)
 {
-	int i,j;
-	unsigned char *source=MapBlocks+BLOCKBREITE*BLOCKHOEHE*BlockN;
-	unsigned char *target=Screen+LY*SBreite+LX;
+  int i,j;
+  unsigned char *source=MapBlocks+BLOCKBREITE*BLOCKHOEHE*BlockN;
+  unsigned char *target=Screen+LY*SBreite+LX;
 
-	if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
-	for(i=0;i<8;i++) {
-		for(j=0;j<8;j++) {
-			*target=*source;
-			target++;
-			source+=4;
-//			Screen[LX+j+(LY+i)*SBreite]=
-//				MapBlocks[BlockN*BLOCKBREITE*BLOCKHOEHE+j*4+i*BLOCKBREITE*4];
-		}
-		target+=SBreite-8;
-		source+=4*BLOCKBREITE-4*8;
-	}
-}
+  //printf("\nvoid SmallBlock(...): Function call confirmed.");
+  if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
+  for(i=0;i<8;i++) {
+    for(j=0;j<8;j++) {
+      *target=*source;
+      target++;
+      if (Screen == RealScreen) {
+	vga_setcolor(*source);
+	vga_drawpixel(LX+i,LY+j);
+      }
+      source+=4;
+      //Screen[LX+j+(LY+i)*SBreite]=
+      //MapBlocks[BlockN*BLOCKBREITE*BLOCKHOEHE+j*4+i*BLOCKBREITE*4];
+    }
+    target+=SBreite-8;
+    source+=4*BLOCKBREITE-4*8;
+  }
+
+  //printf("\nvoid SmallBlock(...): Usual end of function reached.");
+} // void SmallBlock(...)
 
 /*@Function============================================================
 @Desc: 
@@ -236,13 +239,13 @@ void GetShieldBlocks(void){
 	// Sicherheitsabfrage gegen doppeltes initialisieren
 	if (ShieldBlocks) {
 		printf(" Die Schildbloecke waren schon initialisiert !");
-		getch();
+		getchar();
 		Terminate(ERR);
 	}
 
 	if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
 		printf(" Keine Memory fuer ShieldBlocks !.");
-		getch();
+		getchar();
 		Terminate(ERR);
 	}
 	
@@ -296,25 +299,44 @@ unsigned char *GetBlocks(char *picfile, int line, int num)
 
 /*@function============================================================
 @Desc: void DisplayBlock(): gibt Block *block (len*height) an angegebener
-								Bildschirmposition x/y aus
-								auf screen
-
+Bildschirmposition x/y aus auf screen
 						
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void DisplayBlock(
-int x, int y,
-unsigned char *block,
-int len, int height,
-unsigned char *screen )
+		  int x, int y,
+		  unsigned char *block,
+		  int len, int height,
+		  unsigned char *screen )
 {
-	int row;
-	unsigned char *screenpos;
-	unsigned char *source = block;
+  int row,i,j;
+  unsigned char *screenpos;
+  unsigned char *source = block;
+  
+  
+  //
+  // THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER DIRECTLY ACCESSIBLE
+  //
 
-	if( screen == NULL ) return;
-	
+    if( screen == RealScreen ) {
+      // printf("\nvoid DisplayBlock(...): screen parameter is NULL... Outputing DIRECTLY!\n");
+      for(i=0;i<height;i++) {
+	for(j=0;j<len;j++) {
+	  vga_setcolor(*source);
+	  source++;
+	  vga_drawpixel(j+x,i+y);
+	}
+      }
+      return;
+    } // if (screen==RealScreen)
+  
+  
+
+  // 
+  // HERE COMES THE OLD STUFF FROM BEFORE THE PORT
+  //
+  
 	screenpos = screen + y*SCREENLEN + x;
 
 	for( row = 0; row < height; row++ ) {
@@ -448,8 +470,8 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.8  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.9  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.7  1994/06/19  15:59:08  prix
  * Mon May 23 16:32:14 1994: IsolateBlock hat jetzt screen als Parameter 1

@@ -201,8 +201,8 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.8  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.9  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.7  1994/06/19  16:41:38  prix
  * Thu Sep 30 13:57:49 1993: Header moved to end of file

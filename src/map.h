@@ -9,8 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  2002/04/08 09:48:23  rp
- * Remaining modifs of the original version (which had not yet been checked in). Date: ~09/07/1994
+ * Revision 1.5  2002/04/08 09:53:13  rp
+ * Johannes' initial linux PORT
  *
  * Revision 1.3  1994/06/19  16:43:06  prix
  * clean up
