@@ -1,0 +1,2 @@
+#!/bin/sh
+./configure CFLAGS="-g3 -ggdb -pg -Wall -W -Wmissing-prototypes -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Waggregate-return -fno-common -Wnested-externs" "$@" 
