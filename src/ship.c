@@ -585,12 +585,26 @@ EnterConsole (void)
 	{
 	  while (DownPressed());
 	  if (menu_pos < 3) menu_pos++;
+
+	  SDL_WarpMouse ( 47 , 265 + ( menu_pos -1 ) * 66 ) ;
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
 	  if (menu_pos > 0) menu_pos--;
 	  while (UpPressed());
+
+	  SDL_WarpMouse ( 47 , 265 + ( menu_pos -1 ) * 66 ) ;
 	}
+
+      if ( GetMousePos_y () <= 265 - 33 )
+	menu_pos = 0;
+      else if ( GetMousePos_y () <= 265 - 33 + 1 * 66 )
+	menu_pos = 1;
+      else if ( GetMousePos_y () <= 265 - 33 + 2 * 66 )
+	menu_pos = 2;
+      else
+	menu_pos = 3;
+
       if ( EscapePressed() ) 
 	{
 	  finished = TRUE ;
