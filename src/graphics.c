@@ -403,125 +403,111 @@ rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect )
 int
 do_graphical_number_selection_in_range ( int lower_range , int upper_range )
 {
-  static SDL_Surface* Background = NULL ;
-  static SDL_Surface* SelectionKnob = NULL ;
-  int ok_button_was_pressed = FALSE;
-  int left_mouse_pressed_previous_frame = FALSE;
-  int current_value ;
-  int knob_offset_x = 0 ;
-  int knob_start_x = 200 ;
-  int knob_end_x = 390 ;
-  int knob_is_grabbed = FALSE ;
-  char number_text[1000];
-  static SDL_Rect knob_target_rect;
-
-  if ( upper_range >= 1 ) current_value = 1 ; 
-  else 
+    static SDL_Surface* SelectionKnob = NULL ;
+    int ok_button_was_pressed = FALSE;
+    int left_mouse_pressed_previous_frame = FALSE;
+    int current_value ;
+    int knob_offset_x = 0 ;
+    int knob_start_x = 200 ;
+    int knob_end_x = 390 ;
+    int knob_is_grabbed = FALSE ;
+    char number_text[1000];
+    static SDL_Rect knob_target_rect;
+    
+    if ( upper_range >= 1 ) current_value = 1 ; 
+    else 
     {
-      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING BACKGROUND IMAGE FILE!",
-				 PLEASE_INFORM, IS_FATAL );
-      current_value = 0 ;
+				   PLEASE_INFORM, IS_FATAL );
+	current_value = 0 ;
     }
-
-  MakeGridOnScreen ( NULL );
-  
-  //--------------------
-  // Next we prepare the whole background for all later operations
-  //
-  if ( Background == NULL )
-    Background = our_IMG_load_wrapper( find_file ( "backgrounds/number_selector.png" , GRAPHICS_DIR, FALSE ) );
-  if ( Background == NULL )
+    
+    MakeGridOnScreen ( NULL );
+    
+    //--------------------
+    // Next we prepare the selection knob for all later operations
+    //
+    if ( SelectionKnob == NULL )
+	SelectionKnob = our_IMG_load_wrapper( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
+    if ( SelectionKnob == NULL )
     {
-      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
-ERROR LOADING BACKGROUND IMAGE FILE!",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-
-  //--------------------
-  // Next we prepare the selection knob for all later operations
-  //
-  if ( SelectionKnob == NULL )
-    SelectionKnob = our_IMG_load_wrapper( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
-  if ( SelectionKnob == NULL )
-    {
-      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING SELECTION KNOB IMAGE FILE!",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  knob_target_rect . w = SelectionKnob -> w;
-  knob_target_rect . h = SelectionKnob -> h;
-
-  while ( SpacePressed() );
-  while ( ! ok_button_was_pressed )
+    
+    knob_target_rect . w = SelectionKnob -> w;
+    knob_target_rect . h = SelectionKnob -> h;
+    
+    while ( SpacePressed() );
+    while ( ! ok_button_was_pressed )
     {
-      //--------------------
-      // Now we assemble and show the screen, which includes 
-      // 1. the background
-      // 2. the ok button
-      // 3. the knob of the scale
-      // 4. the writing in the number selector
-      //
-      // then: show it.
-      //
-      our_SDL_blit_surface_wrapper ( Background , NULL , Screen , NULL );
-      ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
-      knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
-      knob_target_rect . y = 260 - knob_target_rect . h / 2 ;
-      our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
-      sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
-      PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
-      our_SDL_flip_wrapper ( Screen );
-
-      if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
+	//--------------------
+	// Now we assemble and show the screen, which includes 
+	// 1. the background
+	// 2. the ok button
+	// 3. the knob of the scale
+	// 4. the writing in the number selector
+	//
+	// then: show it.
+	//
+	blit_special_background ( NUMBER_SELECTOR_BACKGROUND_CODE );
+	ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
+	knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
+	knob_target_rect . y = 260 - knob_target_rect . h / 2 ;
+	our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
+	sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
+	PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
+	our_SDL_flip_wrapper ( Screen );
+	
+	if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
 	{
-	  //--------------------
-	  // Maybe the user has just 'grabbed the knob?  Then we need to
-	  // mark the knob as grabbed.
-	  //
-	  if ( ( abs ( GetMousePos_x ( )  - ( knob_target_rect . x + knob_target_rect . w / 2 ) ) < knob_target_rect . w ) &&
-	       ( abs ( GetMousePos_y ( )  - ( knob_target_rect . y + knob_target_rect . h / 2 ) ) < knob_target_rect . h ) )
+	    //--------------------
+	    // Maybe the user has just 'grabbed the knob?  Then we need to
+	    // mark the knob as grabbed.
+	    //
+	    if ( ( abs ( GetMousePos_x ( )  - ( knob_target_rect . x + knob_target_rect . w / 2 ) ) < knob_target_rect . w ) &&
+		 ( abs ( GetMousePos_y ( )  - ( knob_target_rect . y + knob_target_rect . h / 2 ) ) < knob_target_rect . h ) )
 	    {
-	      knob_is_grabbed = TRUE ;
+		knob_is_grabbed = TRUE ;
 	    }
-
-	  //--------------------
-	  // OK pressed?  Then we can return the current scale value and
-	  // that's it...
-	  //
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
-	    ok_button_was_pressed = TRUE ;
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	    
+	    //--------------------
+	    // OK pressed?  Then we can return the current scale value and
+	    // that's it...
+	    //
+	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+		ok_button_was_pressed = TRUE ;
+	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-	      if ( knob_offset_x > 0 ) knob_offset_x -- ;
+		if ( knob_offset_x > 0 ) knob_offset_x -- ;
 	    }
-	  if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-	      if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
+		if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
 	    }
-
+	    
 	}
-      if ( ! ( SpacePressed() && axis_is_active ) ) knob_is_grabbed = FALSE ;
-
-      if ( knob_is_grabbed )
+	if ( ! ( SpacePressed() && axis_is_active ) ) knob_is_grabbed = FALSE ;
+	
+	if ( knob_is_grabbed )
 	{
-	  knob_offset_x = GetMousePos_x()  - knob_start_x ;
-	  if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x ;
-	  if ( knob_offset_x <= 0 ) knob_offset_x = 0 ; 
+	    knob_offset_x = GetMousePos_x()  - knob_start_x ;
+	    if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x ;
+	    if ( knob_offset_x <= 0 ) knob_offset_x = 0 ; 
 	}
-      
-
-      left_mouse_pressed_previous_frame = axis_is_active ;
-      SDL_Delay (1);
+	
+	
+	left_mouse_pressed_previous_frame = axis_is_active ;
+	SDL_Delay (1);
     }
-
-
-  return ( knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) ) ;
-
+    
+    
+    return ( knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) ) ;
+    
 }; // int do_graphical_number_selection_in_range ( int lower_range , int upper_range )
 
 /* ----------------------------------------------------------------------
