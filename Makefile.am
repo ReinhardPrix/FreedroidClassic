@@ -1,4 +1,4 @@
-SUBDIRS = src croppy 
+SUBDIRS = src croppy win32
 
 man_MANS = freedroidRPG.6
 

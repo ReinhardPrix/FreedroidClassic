@@ -135,6 +135,6 @@ esac
 dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
-AC_CONFIG_FILES([Makefile src/Makefile croppy/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile croppy/Makefile win32/Makefile])
 
 AC_OUTPUT
