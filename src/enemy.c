@@ -10,8 +10,21 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/07/29 17:28:02  prix
- * Initial revision
+ * Revision 1.2  1993/08/12 00:25:22  prix
+ * Fri Jul 30 07:30:17 1993: Enemys schiessen nicht immer wenn sie koennen
+ * Sat Jul 31 11:08:07 1993: renamed WAYPOINTMAX to MAXWAYPOINTS
+ * Sat Jul 31 12:39:30 1993: type instead of typennummer in enemy - struct
+ * Sat Jul 31 12:44:21 1993: no abgschossen in enemy but Status
+ * Sat Jul 31 18:08:36 1993: agression is type-specific, not individual for each enemy !
+ * Sat Jul 31 19:55:24 1993: only work on enemys that are alive and on current level
+ * Sun Aug 08 21:33:15 1993: changed MoveEnemys() to new Waypoint-management
+ * Mon Aug 09 17:18:36 1993: written ShuffleEnemys()
+ * Mon Aug 09 18:17:24 1993: written CheckEnemeyCollsion()
+ * Mon Aug 09 18:25:46 1993: renamed CheckEnemyCollsion to EnemyEnemyCollision()
+ * Mon Aug 09 18:58:38 1993: emergency: total collsion: trennt enemys
+ * Tue Aug 10 19:49:21 1993: enemys shoot only if dist is ok
+ * Tue Aug 10 20:07:55 1993: kein EnemyGetroffen mehr
+ * Tue Aug 10 21:04:24 1993: written AttackInfluence
  *
  * Revision 1.3  1993/10/25  18:18:57  prix
  * Wed Aug 11 20:33:40 1993: New EnemyEnmeyCollision handling
