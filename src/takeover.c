@@ -111,6 +111,7 @@ int LeaderColor = GELB;		/* momentary leading color */
 int YourColor = GELB;
 int OpponentColor = VIOLETT;
 int OpponentType;		/* The druid-type of your opponent */
+int DroidNum;
 
 /* the display  column */
 int DisplayColumn[NUM_LINES] = {
@@ -171,7 +172,7 @@ Takeover (int enemynum)
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
 
-  DisplayBanner ( BANNER_FORCE_UPDATE );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
   Fill_Rect (User_Rect, to_bg_color);
 
@@ -194,7 +195,8 @@ Takeover (int enemynum)
 
       CapsuleCurRow[GELB] = 0;
       CapsuleCurRow[VIOLETT] = 0;
-
+      
+      DroidNum = enemynum;
       OpponentType = AllEnemys[enemynum].type;
       NumCapsules[YOU] = 3 + ClassOfDruid (Me.type);
       NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
@@ -268,7 +270,7 @@ Takeover (int enemynum)
 	{
 	  usleep (30000);
 	  waiter--;
-	  SetInfoline( message, NULL , 0 );	
+	  DisplayBanner (message, NULL , 0 );	
 	  ShowPlayground ();
 	} /* WHILE waiter */
 
@@ -332,8 +334,8 @@ ChooseColor (void)
       countdown--;		/* Count down */
       sprintf (count_text, "Color? %d", countdown);
 
-      SetInfoline (count_text, NULL , 0);
-      ShowPlayground (); 
+      DisplayBanner (count_text, NULL , 0);
+      ShowPlayground ();
 
 
       if (countdown == 0)
@@ -404,7 +406,7 @@ PlayGame (void)
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
-	  SetInfoline (count_text, NULL , 0 );
+	  DisplayBanner (count_text, NULL , 0 );
 
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
@@ -466,7 +468,7 @@ PlayGame (void)
 	  ProcessPlayground ();
 	  ProcessPlayground ();
 	  ProcessPlayground ();
-	  ProcessPlayground ();	/* this has to be done some times to be sure */
+	  ProcessPlayground ();	/* this has to be done several times to be sure */
 
 	  ProcessDisplayColumn ();
 
@@ -494,7 +496,7 @@ PlayGame (void)
       ProcessPlayground ();
       ProcessPlayground ();
       ProcessPlayground ();
-      ProcessPlayground ();	/* this has to be done some times to be sure */
+      ProcessPlayground ();	/* this has to be done several times to be sure */
 
       ProcessDisplayColumn ();
 
@@ -647,7 +649,7 @@ GetTakeoverGraphics (void)
  *
  *-----------------------------------------------------------------*/
 void
-ShowPlayground (void)
+ShowPlayground ()
 {
 #ifdef NEW_ENGINE
   int i, j;
@@ -662,10 +664,11 @@ ShowPlayground (void)
 
   Fill_Rect (User_Rect, to_bg_color);
 
-  if (YourColor == GELB)
-    player = YOU;
-  else
-    player = ENEMY;
+  PutInfluence (DruidStart[YourColor].x, DruidStart[YourColor].y);
+
+  if (AllEnemys[DroidNum].Status != OUT)
+    PutEnemy (DroidNum, DruidStart[!YourColor].x, DruidStart[!YourColor].y);
+
 
   Set_Rect (Target_Rect, User_Rect.x + LEFT_OFFS_X, User_Rect.y + LEFT_OFFS_Y,
 	    User_Rect.w, User_Rect.h);
@@ -700,11 +703,6 @@ ShowPlayground (void)
 
   /* rechte Saeule */
   Set_Rect (Target_Rect, User_Rect.x + RIGHT_OFFS_X, User_Rect.y + RIGHT_OFFS_Y,0, 0);
-
-  if (player == YOU)
-    player = ENEMY;
-  else
-    player = YOU;
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
 		   ne_screen, &Target_Rect);
@@ -791,8 +789,6 @@ ShowPlayground (void)
   /* Display the two players */
   if (PlayerType == -1)
     Enemypic = NULL;
-
-    // NONSENSE FROM THE OLD ENGINE   else Enemypic = FeindZusammenstellen (Druidmap[OpponentType].druidname, 0);
 
   if (YourColor == GELB)
     {
