@@ -452,6 +452,9 @@ move_tux_thowards_mouse_move_target ( int PlayerNum )
 
   // accel *= 20.0 ; // we give the Tux unlimited acceleration...
 
+  accel = 5.0 * Frame_Time() ;
+
+
   //--------------------
   // Let's do some mathematics:  We compute how far we have to go still
   // and we also compute how far we will inevitably go even if we pull the breakes
@@ -787,6 +790,8 @@ CheckInfluenceWallCollisions ( int PlayerNum )
     maxspeed = ItemMap [ Me [ PlayerNum ] .drive_item.type ].item_drive_maxspeed ;
   else maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
 
+  maxspeed = 7.0 ;
+
   lastpos.x = Me [ PlayerNum ] .pos.x - SX;
   lastpos.y = Me [ PlayerNum ] .pos.y - SY;
 
@@ -914,6 +919,8 @@ AdjustTuxSpeed ( int PlayerNum )
     {
       maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
     }
+
+  maxspeed = 7.0 ;
 
   //--------------------
   // First we adjust the speed, so that the Tux can never go too fast
