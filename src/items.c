@@ -42,11 +42,13 @@
 
 /* ----------------------------------------------------------------------
  * This function calculates the price of a given item, taking into account
- * the items base list price and also the items given modifier, like
- * prefix and suffix, modifying the price greatly of course.
+ * (*) the items base list price 
+ * (*) the items given prefix modifier
+ * (*) the items given suffix modifier
+ * (*) AND THE CURRENT DURATION of the item in relation to its max duration.
  * ---------------------------------------------------------------------- */
 long
-CalculateItemPrice ( item* BuyItem )
+CalculateItemPrice ( item* BuyItem , int ForRepair )
 {
   float PrefixMultiplier = 1;
   float SuffixMultiplier = 1;
@@ -54,7 +56,34 @@ CalculateItemPrice ( item* BuyItem )
   if ( BuyItem -> suffix_code != (-1) )
     SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
 
-  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+  if ( !ForRepair )
+    {
+      if ( BuyItem->max_duration != (-1 ) )
+	{
+	  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+		   ( BuyItem->current_duration ) / BuyItem->max_duration ); 
+	}
+      else
+	{
+	  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+	}
+    }
+
+  // --------------------
+  // This is the price of the DAMAGE in the item, haha
+  // This can only be requested for repair items
+  //
+  if ( BuyItem->max_duration != (-1 ) )
+    {
+      return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+	       ( BuyItem->max_duration - BuyItem->current_duration ) / BuyItem->max_duration ); 
+    }
+  else
+    {
+      DebugPrintf( 0 , "\n\nERROR!! CALCULATING REPAIR PRICE FOR INDESTRUCTIBLE ITEM!! \n\n Terminating..." );
+      Terminate( ERR );
+    }
+  return 0;
 }; // long CalculateItemPrice ( item* BuyItem )
 
 /* ----------------------------------------------------------------------
