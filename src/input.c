@@ -1509,6 +1509,11 @@ keyboard_update(void)
 	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
 
+	  input_axis.x = event.button.x - UserCenter_x + 16; 
+	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
+	  CurrentMouseAbsPos.x = event.button.x;
+	  CurrentMouseAbsPos.y = event.button.y;
+
 	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
 
 	  if ( event.button.button == SDL_BUTTON_LEFT )
@@ -1519,7 +1524,7 @@ keyboard_update(void)
 	      // DebugPrintf ( 0 , "\nLeft button press registered..." );
 	    }
 
-	  if ( event.button.button == SDL_BUTTON_RIGHT )
+	  if ( event.button.button == SDL_BUTTON_RIGHT )	   
 	    CurrentlyMouseRightPressed = TRUE;
 
 	  //--------------------
@@ -1528,7 +1533,7 @@ keyboard_update(void)
 	  // still compiles without much trouble. (At least so we hope :)
 	  //
 #ifdef SDL_BUTTON_WHEELUP 	
-  if ( event.button.button == SDL_BUTTON_WHEELUP )
+	  if ( event.button.button == SDL_BUTTON_WHEELUP )
 	    {
 	      CurrentlyMouseWheelUpPressed = TRUE;
 	      MouseWheelUpMovesRecorded ++ ;
@@ -1545,6 +1550,11 @@ keyboard_update(void)
 	  break;
 
         case SDL_MOUSEBUTTONUP:
+
+	  input_axis.x = event.button.x - UserCenter_x + 16; 
+	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
+	  CurrentMouseAbsPos.x = event.button.x;
+	  CurrentMouseAbsPos.y = event.button.y;
 
 	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
 

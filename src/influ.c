@@ -1748,12 +1748,10 @@ translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y ,
   if ( give_x )
     {
       return ( Me [ player_num ] . pos . x + ( axis_x / ((float)iso_floor_tile_width) ) + ( axis_y / ((float)iso_floor_tile_height) ) ) ;
-      // return ( ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
   else
     {
       return ( Me [ player_num ] . pos . y - ( axis_x / ((float)iso_floor_tile_width) ) + ( axis_y / ((float)iso_floor_tile_height) ) ) ;
-      // return ( - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
     }
 	      
 }; // int translate_pixel_to_map_location ( int player_num , int axis_x , int axis_y , int give_x ) 
