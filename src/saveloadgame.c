@@ -1,0 +1,258 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: all Bullet AND Blast - related functions.
+ *	 
+ *
+ *----------------------------------------------------------------------*/
+
+/* 
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+ */
+#define _saveloadgame_c
+
+#include "system.h"
+
+#include "defs.h"
+#include "struct.h"
+#include "global.h"
+#include "proto.h"
+
+#define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
+#define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
+#define ALLBULLETS_RAW_DATA_STRING "\nNow the raw AllBullets data:\n"
+#define END_OF_SAVEDGAME_DATA_STRING "End of saved game data file."
+
+#define SAVEDGAME_EXT ".savegame"
+
+/* ----------------------------------------------------------------------
+ * This function saves the current game of Freedroid to a file.
+ * ---------------------------------------------------------------------- */
+int 
+SaveGame( void )
+{
+  char *SaveGameHeaderString;
+  FILE *SaveGameFile;  // to this file we will save all the ship data...
+  char filename[1000];
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  strcpy( filename , "../map/" );
+  strcat( filename , Me.character_name );
+  if ( SaveShip( filename ) != OK )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!!!\n\
+\n\
+This is either a bug in Freedroid or an indication, that the directory\n\
+permissions are somehow not right.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      Terminate(ERR);
+    } 
+  else
+    {
+      DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
+    }
+
+  //--------------------
+  // First, we must determine the save game file name
+  //
+  strcpy( filename , "../map/" );
+  strcat( filename , Me.character_name );
+  strcat( filename, ".savegame" );
+  
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ...");
+
+  //--------------------
+  // Now that we know which filename to use, we can open the save file for writing
+  //
+  if( ( SaveGameFile = fopen(filename, "w")) == NULL) {
+    printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
+    Terminate(ERR);
+    return ERR;
+  }
+  
+  //--------------------
+  // Now that the file is opend for writing, we can start writing.  And the first thing
+  // we will write to the file will be a fine header, indicating what this file is about
+  // and things like that...
+  //
+  SaveGameHeaderString="\n\
+----------------------------------------------------------------------\n\
+ *\n\
+ *   Copyright (c) 1994, 2002 Johannes Prix\n\
+ *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *\n\
+ *\n\
+ *  This file is part of Freedroid\n\
+ *\n\
+ *  Freedroid is free software; you can redistribute it and/or modify\n\
+ *  it under the terms of the GNU General Public License as published by\n\
+ *  the Free Software Foundation; either version 2 of the License, or\n\
+ *  (at your option) any later version.\n\
+ *\n\
+ *  Freedroid is distributed in the hope that it will be useful,\n\
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *  GNU General Public License for more details.\n\
+ *\n\
+ *  You should have received a copy of the GNU General Public License\n\
+ *  along with Freedroid; see the file COPYING. If not, write to the \n\
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
+ *  MA  02111-1307  USA\n\
+ *\n\
+----------------------------------------------------------------------\n\
+\n\
+This file was generated using the Freedroid save level option.\n\
+If you have questions concerning Freedroid, please send mail to:\n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n";
+  fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);  
+
+  // --------------------
+  // Now we write the influencer raw data start string out to the file and of course
+  // then the real raw influencer data follow suit afterwards.
+  //
+  fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
+	   sizeof(char), SaveGameFile );  
+  fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );  
+
+  // --------------------
+  // Now we write the enemy raw data start string out to the file and of course
+  // then the real raw enemy data follow suit afterwards.
+  //
+  fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ), 
+	   sizeof(char), SaveGameFile );  
+  fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );  
+
+  // --------------------
+  // Now we write the bullet raw data start string out to the file and of course
+  // then the real raw enemy data follow suit afterwards.
+  //
+  fwrite ( ALLBULLETS_RAW_DATA_STRING , strlen( ALLBULLETS_RAW_DATA_STRING ), 
+	   sizeof(char), SaveGameFile );  
+  fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );  
+
+
+  //--------------------
+  // Now that all the nescessary information has been written to the save game file
+  // (hopefully), we can finally add the 'end of saved game file'-marker string, that
+  // will be needed by the loading function to detect the end of the file and that the
+  // file is really there and complete.  So we add this last string to the file:
+  //
+  fwrite ( END_OF_SAVEDGAME_DATA_STRING , strlen( END_OF_SAVEDGAME_DATA_STRING ), 
+	   sizeof(char), SaveGameFile );
+
+  if( fclose( SaveGameFile ) == EOF) 
+    {
+      printf("\n\nClosing of ship file failed in SaveGame...\n\nTerminating\n\n");
+      Terminate(ERR);
+      return ERR;
+    }
+  
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
+  
+  return OK;
+}; // void SaveGame( void )
+
+
+/* ----------------------------------------------------------------------
+ * This function saves the current game of Freedroid to a file.
+ * ---------------------------------------------------------------------- */
+int 
+LoadGame( void )
+{
+  char *fpath;
+  char *LoadGameData;
+  char filename[1000];
+  unsigned char* InfluencerRawDataPointer;
+  unsigned char* EnemyRawDataPointer;
+  unsigned char* BulletRawDataPointer;
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
+
+  //--------------------
+  // First, we must determine the savedgame data file name
+  //
+  strcpy(filename, Me.character_name );
+  strcat(filename, SAVEDGAME_EXT );
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
+
+  //--------------------
+  // Now we can read the whole savegame data into memory with one big flush
+  //
+  fpath = find_file ( filename , MAP_DIR , FALSE );
+  LoadGameData = ReadAndMallocAndTerminateFile( fpath , END_OF_SAVEDGAME_DATA_STRING ) ;
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
+
+  //--------------------
+  // Now we start decoding our new game information and fill it into the apropriate structs
+  // We assume, that our target strings will be found, so we give 30000 as the search area
+  // length, since we do not know it exactly
+  //
+  InfluencerRawDataPointer = MyMemmem( LoadGameData , 300000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
+				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
+  InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
+  memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
+
+  //--------------------
+  // Now we decode the enemy information.
+  // We assume, that our target strings will be found, so we give 300000 as the search area
+  // length, since we do not know it exactly
+  //
+  EnemyRawDataPointer = MyMemmem( LoadGameData , 300000 , ALLENEMYS_RAW_DATA_STRING , 
+				  strlen ( ALLENEMYS_RAW_DATA_STRING ) );
+  EnemyRawDataPointer += strlen ( ALLENEMYS_RAW_DATA_STRING ) ;
+  memcpy( &(AllEnemys) , EnemyRawDataPointer , sizeof ( enemy ) * MAX_ENEMYS_ON_SHIP );
+
+  //--------------------
+  // Now we decode the bullet information.
+  // We assume, that our target strings will be found, so we give 300000 as the search area
+  // length, since we do not know it exactly
+  //
+  BulletRawDataPointer = MyMemmem( LoadGameData , 10000000 , ALLBULLETS_RAW_DATA_STRING , 
+				   strlen ( ALLBULLETS_RAW_DATA_STRING ) );
+  BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
+  memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
+
+
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
+  return OK;
+};
+
+#undef _saveloadgame_c
