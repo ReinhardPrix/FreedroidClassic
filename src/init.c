@@ -600,7 +600,7 @@ Get_Robot_Data ( void* DataPointer )
   double maxenergy_calibrator;
   double energyloss_calibrator;
   double aggression_calibrator;
-  double score_calibrator;
+  double experience_reward_calibrator;
   double range_of_vision_calibrator;
 
 #define MAXSPEED_CALIBRATOR_STRING "Common factor for all droids maxspeed values: "
@@ -608,7 +608,7 @@ Get_Robot_Data ( void* DataPointer )
 #define MAXENERGY_CALIBRATOR_STRING "Common factor for all droids maximum energy values: "
 #define ENERGYLOSS_CALIBRATOR_STRING "Common factor for all droids energyloss values: "
 #define AGGRESSION_CALIBRATOR_STRING "Common factor for all droids aggression values: "
-#define SCORE_CALIBRATOR_STRING "Common factor for all droids score values: "
+#define EXPERIENCE_REWARD_CALIBRATOR_STRING "Common factor for all droids experience_reward values: "
 #define RANGE_OF_VISION_CALIBRATOR_STRING "Common factor for all droids range of vision: "
 
 #define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
@@ -629,7 +629,7 @@ Get_Robot_Data ( void* DataPointer )
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
 #define BASE_PHYSICAL_DAMAGE_BEGIN_STRING "Physical (base) damage an attack of this droid will do: "
 #define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
-#define SCORE_BEGIN_STRING "Score gained for destroying one of this type: "
+#define EXPERIENCE_REWARD_BEGIN_STRING "Experience_Reward gained for destroying one of this type: "
 #define HEIGHT_BEGIN_STRING "Height of this droid : "
 #define WEIGHT_BEGIN_STRING "Weight of this droid : "
 #define DRIVE_BEGIN_STRING "Drive of this droid : "
@@ -684,9 +684,9 @@ Get_Robot_Data ( void* DataPointer )
   ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%lf" , 
 		       &aggression_calibrator , EndOfDataPointer );
 
-  // Now we read in the score calibration factor for all droids
-  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%lf" , 
-		       &score_calibrator , EndOfDataPointer );
+  // Now we read in the experience_reward calibration factor for all droids
+  ReadValueFromString( RobotPointer , EXPERIENCE_REWARD_CALIBRATOR_STRING , "%lf" , 
+		       &experience_reward_calibrator , EndOfDataPointer );
 
   // Now we read in the range of vision calibration factor for all droids
   ReadValueFromString( RobotPointer , RANGE_OF_VISION_CALIBRATOR_STRING , "%lf" , 
@@ -799,9 +799,9 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].flashimmune , EndOfDataPointer );
 
-      // Now we score to be had for destroying one droid of this type
-      ReadValueFromString( RobotPointer , SCORE_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].score, EndOfDataPointer );
+      // Now we experience_reward to be had for destroying one droid of this type
+      ReadValueFromString( RobotPointer , EXPERIENCE_REWARD_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].experience_reward, EndOfDataPointer );
 
       // Now we read in the monster level = maximum treasure chest to pick from
       ReadValueFromString( RobotPointer , "Monster Level and maximum treasure chest to pick from=" , "%d" , 
@@ -936,17 +936,16 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
   DebugPrintf ( 1 , "\n\nApplying the calibration factors to all droids...");
 
-  for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
+  for ( i = 0 ; i < Number_Of_Droid_Types ; i++ ) 
     {
-      Druidmap[i].maxspeed *= maxspeed_calibrator;
-      // Druidmap[i].accel *= maxenergy_calibrator;
-      Druidmap[i].maxenergy *= maxenergy_calibrator;
-      Druidmap[i].lose_health *= energyloss_calibrator;
-      Druidmap[i].aggression *= aggression_calibrator;
-      Druidmap[i].score *= score_calibrator;
-      Druidmap[i].range_of_vision *= range_of_vision_calibrator;
+      Druidmap [ i ] . maxspeed *= maxspeed_calibrator;
+      Druidmap [ i ] . maxenergy *= maxenergy_calibrator;
+      Druidmap [ i ] . lose_health *= energyloss_calibrator;
+      Druidmap [ i ] . aggression *= aggression_calibrator;
+      Druidmap [ i ] . experience_reward *= experience_reward_calibrator;
+      Druidmap [ i ] . range_of_vision *= range_of_vision_calibrator;
 
-      Druidmap[i].weapon_item.currently_held_in_hand = FALSE ;
+      Druidmap [ i ] . weapon_item . currently_held_in_hand = FALSE ;
     }
 }; // int Get_Robot_Data ( void )
 

@@ -225,14 +225,6 @@ enum _spell_names
 #define MAX_LENGTH_FOR_DIALOG_SECTION_NAME 100
 #define MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING 200
 
-//--------------------
-// Highscore related defines 
-// 
-#define HS_EMPTY_ENTRY  "--- empty ---"
-#define MAX_NAME_LEN 	15     /* max len of highscore name entry */
-#define MAX_HIGHSCORES  10     /* only keep Top10 */
-#define DATE_LEN	10     /* reserved for the date-string */
-
 // The flags for DisplayBanner are:
 enum
   { BANNER_FORCE_UPDATE=1 , BANNER_DONT_TOUCH_TEXT=2 , BANNER_NO_SDL_UPDATE=4 };
@@ -364,9 +356,6 @@ enum
 // Some definitions for the menus
 //
 #define SINGLE_PLAYER_MENU_POINTER_POS_X (INITIAL_BLOCK_WIDTH/2)
-enum
-  { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
-    SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
 //--------------------
 // The following is the definition of the sound file names used in freedroid

@@ -460,7 +460,7 @@ typedef struct
 
   int aggression;		// The aggressiveness of this druidtype 
   int flashimmune;		// is the droid immune to FLASH-bullets 
-  int score;			// score for the elimination of one droid of this type 
+  int experience_reward;			// experience_reward for the elimination of one droid of this type 
   double height;                // the height of this droid  
   double weight;                // the weight of this droid
   int brain;
@@ -551,7 +551,7 @@ typedef struct
   float base_damage; // the current damage the influencer does
   float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
-  float to_hit;
+  float to_hit;            // percentage chance, that Tux will hit a random lv 1 bot
   int lv_1_bot_will_hit_percentage; // percentage chance that a random lv 1 bot will hit
   int resist_force;        // percentage to reduce from force damage
   int resist_fire;         // percentage to reduce from fire damage

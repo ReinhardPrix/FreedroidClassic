@@ -1005,7 +1005,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       //--------------------
       // The Tux gains experience from this, only for non-friends
       //
-      Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].score;
+      Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].experience_reward;
     }
 
   ThisRobot->Status = OUT;

@@ -2444,7 +2444,16 @@ PerformTuxAttackRaw ( int player_num )
 	  if ( AllEnemys [ i ] . pos . z != Me [ player_num ] . pos . z ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
-	  AllEnemys[ i ] . energy -= Me [ player_num ] .base_damage + MyRandom( Me [ player_num ] .damage_modifier );
+
+	  //--------------------
+	  // So here we know, that the Tux weapon swing might actually hit something
+	  // as far as only 'area of attack' and position of possible target is 
+	  // concerned.  So now we check, whether this weapon swing really is a 'hit'
+	  // in the sense of AD&D games, that something can either hit or miss.
+	  //
+	  if ( MyRandom ( 100 ) > Me [ player_num ] . to_hit ) continue ; 
+
+	  AllEnemys [ i ] . energy -= Me [ player_num ] . base_damage + MyRandom ( Me [ player_num ] . damage_modifier );
 	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 
 	  melee_weapon_hit_something = TRUE;

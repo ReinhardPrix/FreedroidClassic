@@ -731,13 +731,8 @@ EXTERN int IsActive (int color, int row);
 EXTERN Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 EXTERN void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 
-#undef EXTERN
-#ifdef _highscore_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN void Init_Highscores (void);
-EXTERN void update_highscores (void);
-EXTERN void Show_Highscores (void);
+//--------------------
+// Leave this final endif in here!  It's the wrapper of the whole
+// file to prevent double-definitions.
+//
 #endif

@@ -306,7 +306,7 @@ Takeover (int enemynum)
 	  Me[0].type = AllEnemys[enemynum].type;
 	  Me[0].marker = AllEnemys [ enemynum ] . marker;
 
-	  Me[0].Experience += Druidmap[OpponentType].score;
+	  Me[0].Experience += Druidmap[OpponentType].experience_reward;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
 	  else				/* won the proper way */
