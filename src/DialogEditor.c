@@ -1805,6 +1805,7 @@ gui_show_tooltip ( int x , int y )
   static GtkWidget *frame;
   static GtkWidget *tip;
   static char popup_meta_tool_tip_text[20000];
+  int i;
   // char temp_text[20000];
   gint x_offs = 0 ;
   gint y_offs = 0 ;
@@ -1864,6 +1865,18 @@ gui_show_tooltip ( int x , int y )
       // label with the text
       sprintf( popup_meta_tool_tip_text , "Option Nr: %d\n" , DialogOptionCovered );
       strcat( popup_meta_tool_tip_text , ChatRoster [ DialogOptionCovered ] . option_text );
+      if (strcmp(ChatRoster [ DialogOptionCovered ] . on_goto_condition, "")) {
+	strcat (popup_meta_tool_tip_text, "\nBranch(");
+	strcat (popup_meta_tool_tip_text, ChatRoster [ DialogOptionCovered ] . on_goto_condition );
+	strcat (popup_meta_tool_tip_text, ")");
+      }
+      for (i = 0; i < MAX_EXTRAS_PER_OPTION; i++) {
+	if (strcmp(ChatRoster [ DialogOptionCovered ] . extra_list [ i ], "")) {
+	  strcat (popup_meta_tool_tip_text, "\nExtra(");
+	  strcat (popup_meta_tool_tip_text, ChatRoster [ DialogOptionCovered ] . extra_list [ i ]);
+	  strcat (popup_meta_tool_tip_text, ")");
+	}
+      }
       tip = gtk_label_new ( popup_meta_tool_tip_text );
 
 
