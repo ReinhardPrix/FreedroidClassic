@@ -236,7 +236,8 @@ EXTERN SDL_Surface *EnemyDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to t
 EXTERN SDL_Surface *MapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
 
-EXTERN SDL_Surface *iso_floor_surface_pointer [ ALL_ISOMETRIC_FLOOR_TILES ] ;   // A pointer to the surfaces containing the pictures of the
+// EXTERN SDL_Surface *iso_floor_surface_pointer [ ALL_ISOMETRIC_FLOOR_TILES ] ;   // A pointer to the surfaces containing the pictures of the
+EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;   
 
 
 EXTERN int BannerIsDestroyed;

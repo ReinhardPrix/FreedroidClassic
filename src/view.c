@@ -695,7 +695,6 @@ isometric_show_blocks_around_tux ( int mask )
 	{
 	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {
-
 	      /*
 	      TargetRectangle.x = UserCenter_x
 		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_WIDTH / 2 ) +
@@ -711,9 +710,11 @@ isometric_show_blocks_around_tux ( int mask )
 	      // TargetRectangle.y = UserCenter_y
 	      // + ( -Me[0].pos.y+line-0.5 )*Block_Height;
 
-	      SDL_BlitSurface( iso_floor_surface_pointer [ MapBrick % 5 ] , NULL ,
-			       Screen, &TargetRectangle);
+	      // SDL_BlitSurface( floor_iso_images [ MapBrick % 5 ] . surface , NULL ,
+	      // Screen, &TargetRectangle);
 	      
+	      blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % 5 ] , ((float)col)+0.5 , ((float)line) +0.5 );
+
 	      /*
 	      if ( ( !RespectVisibilityOnMap ) || MapBlockIsVisible ( col , line ) )
 		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
@@ -844,8 +845,6 @@ This indicates a severe error in the map insert handling of Freedroid.",
 void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
-  SDL_Rect target_rectangle;
-
   // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
   // our_obstacle -> pos . x , our_obstacle -> pos . y );
 
@@ -858,22 +857,9 @@ There was an obstacle type given, that exceeds the number of\n\
 
     }
 
-  //--------------------
-  // Maybe later we might insert a check, whether the obstacle
-  // has been loaded into memory already, here at this location...
-  // But for now, we'll do without such measures...  Later with
-  // dynamic loading, this might give a more efficient game...
-  //
-
-  //--------------------
-  // We blit the obstacle to the right position...
-  //
-  target_rectangle . x = translate_map_point_to_screen_pixel ( our_obstacle -> pos . x , our_obstacle -> pos . y , TRUE );
-  target_rectangle . y = translate_map_point_to_screen_pixel ( our_obstacle -> pos . x , our_obstacle -> pos . y , FALSE );
-
-  SDL_BlitSurface ( obstacle_map [ our_obstacle -> type ] . image . surface , NULL , Screen , &target_rectangle );
-
-};
+  blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+				   our_obstacle -> pos . x , our_obstacle -> pos . y );
+}; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
  * This function should display all obstacles around the Tux.  It might
@@ -890,6 +876,8 @@ show_obstacles_around_tux ( void )
     {
       if ( obstacle_level -> obstacle_list [ i ] . type != ( -1 ) )
 	blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
+      else 
+	break;
     }
 }; // void show_obstacles_around_tux ( void )
 

@@ -110,6 +110,7 @@
 void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
+int IsWallBlock ( int block );
 
 /* ----------------------------------------------------------------------
  * Now that we plan not to use hard-coded and explicitly human written 
@@ -577,6 +578,36 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
 
 }; // void DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+generate_wallobstacles_from_level_map ( int level_num )
+{
+  int x, y;
+  level* loadlevel = curShip . AllLevels [ level_num ] ;
+  int obstacle_counter = 2 ;
+
+  //--------------------
+  // Now we try to make obstacles out of the former 'wall' information,
+  // that was coded into the floor tiles.
+  //
+  for ( y = 0 ; y < loadlevel -> ylen ; y++ )
+    {
+      for ( x = 0 ; x < loadlevel -> xlen ; x++ )
+	{
+	  if ( IsWallBlock ( loadlevel -> map [ y ] [ x ] ) ) 
+	    {
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 4 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	      obstacle_counter ++ ;
+	    }
+	}
+    }
+  
+}; // void generate_wallobstacles_from_level_map ( int level_num )
 
 /* ----------------------------------------------------------------------
  * Next we extract the map labels of this level WITHOUT destroying
@@ -1282,6 +1313,11 @@ LoadShip (char *filename)
       // on all of the map during program runtime.
       //
       GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
+
+      //--------------------
+      // We generate obstacles out of the current map info...
+      //
+      generate_wallobstacles_from_level_map ( i );
 
       ShowSaveLoadGameProgressMeter( (100*(i+1)) / level_anz , FALSE )  ;
 
