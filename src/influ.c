@@ -3776,12 +3776,63 @@ handle_player_first_aid_command ( int player_num )
     int obstacle_index ;
     obstacle* our_obstacle;
     char game_message_text[ 2000 ] ;
+    int our_enemy_index;
+    enemy* this_enemy;
+    int heal_amount;
+    int reward = 35 ;
 
+    //--------------------
+    // Maybe there is a robot/character below the current mouse cursor.
+    // In this case we try to heal that bot/character.
+    //
+    our_enemy_index = GetLivingDroidBelowMouseCursor ( player_num ) ;
+    if ( our_enemy_index != (-1) )
+    {
+	this_enemy = & ( AllEnemys [ our_enemy_index ] );
+	
+	//--------------------
+	// Is it a hostile bot?  Then the bot will not let you do
+	// the first aid thing!  After all, he got no reason to trust
+	// you, right?
+	//
+	if ( ! this_enemy -> is_friendly )
+	{
+	    sprintf ( game_message_text , "The hostile %s won't let you apply your first aid skill.  Maybe it doesn't trust you?" , Druidmap [ this_enemy -> type ] . druidname );
+	    append_new_game_message ( game_message_text );
+	    return;
+	}
+
+	if ( (int) (this_enemy -> energy) < (int) (Druidmap [ this_enemy -> type ] . maxenergy ) )
+	{
+	    heal_amount = MyRandom ( 10 ) + 5 ;
+	    if ( heal_amount > Druidmap [ this_enemy -> type ] . maxenergy - this_enemy -> energy )
+		heal_amount = Druidmap [ this_enemy -> type ] . maxenergy - this_enemy -> energy ;
+
+	    this_enemy -> energy += heal_amount ;
+	    reward = heal_amount * 3 ;
+	    sprintf ( game_message_text , "You healed %d damage on the %s.  For successfully applying your first aid skill you receive %d experience." , heal_amount , Druidmap [ this_enemy -> type ] . druidname , reward );
+	    Me [ player_num ] . Experience += reward ;
+	    append_new_game_message ( game_message_text );
+	    return;
+	}
+	else
+	{
+	    sprintf ( game_message_text , "Any injury on %s is purely cosmetic and must heal over time." , Druidmap [ this_enemy -> type ] . druidname );
+	    append_new_game_message ( game_message_text );
+	    return;
+	}
+    }
+
+    //--------------------
+    // Now if there wasn't any enemy below the mouse cursor (and only then)
+    // we look for an obstacle to apply our first-aid skill to.  Most likely
+    // this will not do anything, but for completeness we handle the case.
+    //
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , 
-				   "First aid command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   "First aid command received, but there isn't any person or obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
 				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	return;
     }
