@@ -79,7 +79,9 @@ PrepareScaledSurface(void)
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  bpp have been determined...");
 
   /* Here s is the address to the pixel source */
-  s = (Uint8 *)screen->pixels;
+  // s = (Uint8 *)screen->pixels;
+  s = Outline320x200;
+
   /* Here p is the address to the pixel we want to set */
   p = (Uint8 *)ScaledSurface->pixels;
   pSecond=p+SCREENBREITE*SCALE_FACTOR*bpp;

@@ -527,6 +527,7 @@ InitParaplus (void)
 
   /* ScreenPointer setzen */
   RealScreen = malloc (SCREENBREITE * SCREENHOEHE + 10);
+  Outline320x200 = malloc (SCREENBREITE * SCREENHOEHE + 10);
   InternalScreen = (unsigned char *) malloc (SCREENHOEHE * SCREENBREITE + 10);
 
   DebugPrintf

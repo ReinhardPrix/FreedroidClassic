@@ -849,12 +849,14 @@ PutInternFenster (void)
 {
   int StartX, StartY;
   int i;
+#ifdef DRAW_TO_SCREEN_VARIABLE
   int j;
+#endif
 #ifdef SLOW_VIDEO_CALLS
   int j;
 #endif
-
   unsigned char *source;
+  unsigned char *target;
 
   DebugPrintf ("void PutInternFenster(void) wurde ECHT aufgerufen...");
 
@@ -890,11 +892,12 @@ PutInternFenster (void)
 	// USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
 	//       USERFENSTERLINKS +
 	StartY + StartX + i * INTERNBREITE * BLOCKBREITE;
+      target = Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+i) * SCREENBREITE;
 
 #define SLOW_VIDEO_CALLS
 #ifdef SLOW_VIDEO_CALLS
 
-#define DRAW_TO_SCREEN_VARIABLE
+#undef DRAW_TO_SCREEN_VARIABLE
 #ifdef DRAW_TO_SCREEN_VARIABLE
       for (j = 0; j < USERFENSTERBREITE; j++)
 	{
@@ -902,6 +905,8 @@ PutInternFenster (void)
 	  source++;
 	  putpixel (screen, USERFENSTERPOSX + j, USERFENSTERPOSY + i, *source );
 	}			// for(j=0; ...
+#else
+      memcpy(target, source, USERFENSTERBREITE);
 #endif
 
 #else

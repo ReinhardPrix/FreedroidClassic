@@ -215,7 +215,7 @@ DisplayRahmen (unsigned char *Parameter_Screen)
   SayRightInfo (RightInfo, InternalScreen);
   SayLeftInfo (LeftInfo, InternalScreen);
 
-  if ( screen == RealScreen )
+  if ( Parameter_Screen == RealScreen )
     DisplayMergeBlock (0, 0, InternalScreen, RAHMENBREITE, RAHMENHOEHE, RealScreen);
 
   /*    SetTextColor(bg,fg); */
