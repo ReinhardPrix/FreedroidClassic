@@ -2368,7 +2368,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LAMP ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_LAMP ] . is_smashable = FALSE ;
   obstacle_map [ ISO_LAMP ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_LAMP ] . emitted_light_strength = 10 ; // how much light emitted from here...
+  obstacle_map [ ISO_LAMP ] . emitted_light_strength = 5 ; // how much light emitted from here...
 
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.00 ;
@@ -2816,7 +2816,9 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . filename = "iso_rocks_n_plants_0000.png" ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . emitted_light_strength = -5 ;
 
+  
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_parm_1 = 1.5 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_parm_2 = 1.5 ;
@@ -3023,6 +3025,26 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BODY_RED_GUARD_W ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BODY_RED_GUARD_W ] . filename = "iso_body_0004.png" ;
   obstacle_map [ ISO_BODY_RED_GUARD_W ] . needs_pre_put = TRUE ;
+
+
+
+
+  obstacle_map [ ISO_CONFERENCE_TABLE_N ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_N ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_N ] . filename = "iso_conference_furniture_0001.png" ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_E ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_E ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_E ] . filename = "iso_conference_furniture_0000.png" ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_S ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_S ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_S ] . filename = "iso_conference_furniture_0003.png" ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_W ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_W ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_CONFERENCE_TABLE_W ] . filename = "iso_conference_furniture_0002.png" ;
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
