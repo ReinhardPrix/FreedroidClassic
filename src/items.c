@@ -967,7 +967,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     switch ( MyRandom ( TreasureChestRange ) )
     {
 	case 0:
-	    switch ( MyRandom ( 14 ) )
+	    switch ( MyRandom ( 15 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRACKS ;
@@ -1026,6 +1026,10 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 14:
+		    drop_item_type = ITEM_SCRIPT_OF_IDENTIFY ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 15:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1033,7 +1037,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 1:
-	    switch ( MyRandom ( 14 ) )
+	    switch ( MyRandom ( 15 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_WHEELS ;
@@ -1092,6 +1096,10 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 14:
+		    drop_item_type = ITEM_SCRIPT_OF_TELEPORT_HOME ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 15:
 		default:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1836,6 +1844,8 @@ requirements_for_item_application_met ( item* CurItem )
 void
 ApplyItem( item* CurItem )
 {
+    location HomeSpot;
+
     DebugPrintf( 1 , "\n%s(): function call confirmed." , __FUNCTION__ );
 
     // If the inventory slot is not at all filled, we need not do anything more...
@@ -1937,6 +1947,22 @@ ApplyItem( item* CurItem )
     else if ( CurItem->type == ITEM_MAGIC_PILL )
     {
 	Me [ 0 ] . base_magic ++ ;
+    }
+    else if ( CurItem->type == ITEM_SCRIPT_OF_IDENTIFY )
+    {
+	Play_Spell_ForceToEnergy_Sound( );
+	silently_unhold_all_items ( );
+	global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+    }	
+    else if ( CurItem->type == ITEM_SCRIPT_OF_TELEPORT_HOME )
+    {
+	Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
+	Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
+	Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
+	// Play_Spell_ForceToEnergy_Sound( );
+	teleport_arrival_sound ( );
+	ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+	Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
     }
     else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {

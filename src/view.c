@@ -2584,9 +2584,6 @@ Creation of an Tux SDL software surface from pixel data failed.",
 					       PLEASE_INFORM, IS_FATAL );
 		}
 
-		
-
-
 		//--------------------
 		// Depending on whether this is supposed to work with faster but less
 		// quality color key or slower but more quality alpha channel, we set

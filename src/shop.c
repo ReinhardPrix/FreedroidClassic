@@ -258,6 +258,9 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
     }
     else if ( ShopCharacterCode == PERSON_SORENSON )
     {
+	ListPointer->type = ITEM_SCRIPT_OF_IDENTIFY; ListPointer++;
+	ListPointer->type = ITEM_SCRIPT_OF_TELEPORT_HOME; ListPointer++;
+
 	ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
 	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
 	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;

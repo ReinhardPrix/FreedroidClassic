@@ -230,6 +230,12 @@ exist really (i.e. has a type = (-1) ).",
 		strcat( ItemDescText , linebuf );
 		break;
 		
+	    case ITEM_SCRIPT_OF_IDENTIFY:
+	    case ITEM_SCRIPT_OF_TELEPORT_HOME:
+		sprintf( linebuf , "Invokes a spell/skill once\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+		
 	    case ITEM_MEDIUM_MANA_POTION:
 	    case ITEM_FULL_MANA_POTION:
 	    case ITEM_SMALL_MANA_POTION:

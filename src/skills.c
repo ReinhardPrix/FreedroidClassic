@@ -309,7 +309,7 @@ TeleportHome ( void )
 	Me[0].TextToBeDisplayed = "Not enough force left within me.";
 	Not_Enough_Mana_Sound(  );
     }
-}; // void CreateTeleportal ( gps PortalTarget )
+}; // void TeleportHome ( void )
 
 /* ----------------------------------------------------------------------
  * This function handles the ForceExplosionCircle skill.
