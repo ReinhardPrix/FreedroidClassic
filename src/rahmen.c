@@ -1202,6 +1202,9 @@ DisplayBanner ( void )
   ShowCurrentTextWindow ( );
   ShowCurrentSkill ( );
 
+  RightPutStringFont ( Screen , FPS_Display_BFont , 2 , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
+
+
 }; // void DisplayBanner( void ) 
 
 
