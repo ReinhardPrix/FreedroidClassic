@@ -28,9 +28,11 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
 
-INCLUDES        = @GTK_CFLAGS@
+
 if WIN32
+INCLUDES	= -I/usr/i586-mingw32msvc @GTK_CFLAGS@
 LDADD           = -lgtk -lgdk
 else
 LDADD           = @GTK_LIBS@
+INCLUDES        = @GTK_CFLAGS@
 endif
