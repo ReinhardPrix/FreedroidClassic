@@ -853,6 +853,7 @@ PrepareFullItemEngramForPlayer ( int PlayerNum )
 void
 EnforcePlayersItemDrop ( int PlayerNum  ) 
 {
+
   Item SourceItemPointer;
 
   DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : real function call confirmed. " );
@@ -865,7 +866,8 @@ EnforcePlayersItemDrop ( int PlayerNum  )
 
   DebugPrintf ( 0 , "\nItem type of item to drop at the server : %d . " , SourceItemPointer -> type ) ;
 
-  DropItemToTheFloor ( SourceItemPointer , ItemDropEngram . pos . x , ItemDropEngram . pos . y ) ;
+  DropItemToTheFloor ( SourceItemPointer , ItemDropEngram . pos . x , 
+		       ItemDropEngram . pos . y , Me [ PlayerNum ] . pos . z ) ;
 
   DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : end of function reached. " );
   

@@ -281,7 +281,7 @@ EXTERN void DropHeldItemToWeaponSlot ( void );
 EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
-EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y ) ;
+EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum ) ;
 EXTERN void ShowQuickInventory ( void );
 EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
