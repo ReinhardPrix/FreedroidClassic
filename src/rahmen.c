@@ -122,7 +122,6 @@ Sorry...\n\
   // --------------------
   // If it's a weapon, then we give out the damage value of that weapon as well
   //
-  // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
   if ( CurItem->damage )
     {
       if ( ! ForShop ) 
@@ -152,7 +151,6 @@ Sorry...\n\
   // --------------------
   // If this item gives some armour bonus, we say so
   //
-  // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_armour_slot )
   if ( CurItem->ac_bonus )
     {
       sprintf( linebuf , "Armour: %d" , CurItem->ac_bonus );
@@ -163,6 +161,7 @@ Sorry...\n\
   // --------------------
   // If this is a destructible item, we finally give it's current condition
   // and if it can be equipped, but not destroyed, we will also say so
+  //
   if ( CurItem->max_duration != (-1) )
     {
       if ( ! ForShop ) 
@@ -217,68 +216,96 @@ Sorry...\n\
     }
 
   //--------------------
-  // If the item has some suffixes, we describe these as well
+  // If the item has some suffixes, we describe these as well, but ONLY IF
+  // THE ITEM HAS BEEN IDENTIFIED YET of course.
   //
-  if ( CurItem->suffix_code != (-1) )
+  if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) ) 
     {
-      // if ( !ForShop ) 
-      strcat ( ItemDescText , "\n" );
-      strcat ( ItemDescText , font_switchto_red );
-
-      if ( CurItem->bonus_to_str )
+      if ( CurItem->is_identified != TRUE )
 	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to Power\n" , CurItem->bonus_to_str );
-	  strcat( ItemDescText , linebuf );
+	  strcat ( ItemDescText , "\n" );
+	  strcat ( ItemDescText , font_switchto_red );
+	  
+	  if ( CurItem->bonus_to_str )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d to Power\n" , CurItem->bonus_to_str );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_dex )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d to Power Distribution\n" , CurItem->bonus_to_dex );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_mag )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d to Mind\n" , CurItem->bonus_to_mag );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_vit )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d to Vitality\n" , CurItem->bonus_to_vit );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_life )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d Energy\n" , CurItem->bonus_to_life );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_force )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d Force\n" , CurItem->bonus_to_force );
+	      strcat( ItemDescText , linebuf );
+	    }
+	  
+	  if ( CurItem->bonus_to_tohit )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d%% to hit\n" , CurItem->bonus_to_tohit );
+	      strcat( ItemDescText , linebuf );
+	    }
+
+	  if ( CurItem->bonus_to_all_attributes )
+	    {
+	      if ( ForShop ) strcat( ItemDescText , "             " );
+	      sprintf( linebuf , "+%d to all attributes \n" , CurItem->bonus_to_all_attributes );
+	      strcat( ItemDescText , linebuf );
+	    }
+
+	  // Now we display the percentage bonus to ac or damage
+	  if ( CurItem->bonus_to_ac_or_damage )
+	    {
+	      if ( ItemMap [ CurItem->type ].base_ac_bonus )
+		{
+		  if ( ForShop ) strcat( ItemDescText , "             " );
+		  sprintf( linebuf , "+%d%% to armour \n" , CurItem->bonus_to_ac_or_damage );
+		  strcat( ItemDescText , linebuf );
+		}
+	      if ( ItemMap [ CurItem->type ].base_item_gun_damage )
+		{
+		  if ( ForShop ) strcat( ItemDescText , "             " );
+		  sprintf( linebuf , "+%d%% to damage \n" , CurItem->bonus_to_ac_or_damage );
+		  strcat( ItemDescText , linebuf );
+		}
+	    }
+
+
 	}
-
-      if ( CurItem->bonus_to_dex )
+      else
 	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to Power Distribution\n" , CurItem->bonus_to_dex );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_mag )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to Mind\n" , CurItem->bonus_to_mag );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_vit )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to Vitality\n" , CurItem->bonus_to_vit );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_life )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d Energy\n" , CurItem->bonus_to_life );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_force )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d Force\n" , CurItem->bonus_to_force );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_tohit )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d%% to hit\n" , CurItem->bonus_to_tohit );
-	  strcat( ItemDescText , linebuf );
-	}
-
-      if ( CurItem->bonus_to_all_attributes )
-	{
-	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to all attributes \n" , CurItem->bonus_to_all_attributes );
-	  strcat( ItemDescText , linebuf );
+	  strcat ( ItemDescText , "\n" );
+	  strcat ( ItemDescText , font_switchto_red );
+	  strcat ( ItemDescText , " UNIDENTIFIED " );
 	}
     }
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )

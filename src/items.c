@@ -142,6 +142,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   ThisItem->bonus_to_dex = 0;
   ThisItem->bonus_to_mag = 0;
   ThisItem->bonus_to_vit = 0;
+  ThisItem->bonus_to_all_attributes = 0;
 
   ThisItem->bonus_to_life = 0;
   ThisItem->bonus_to_force = 0;
@@ -162,6 +163,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mag ) ;
       ThisItem->bonus_to_vit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_vit +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_vit ) ;
+      ThisItem->bonus_to_all_attributes += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_all_attributes +
+	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_all_attributes ) ;
 
       ThisItem->bonus_to_life += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
 	MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
@@ -190,6 +193,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mag ) ;
       ThisItem->bonus_to_vit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_vit +
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_vit ) ;
+      ThisItem->bonus_to_all_attributes += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_all_attributes +
+	MyRandom ( SuffixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_all_attributes ) ;
 
       ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
 	MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
@@ -338,7 +343,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 8 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf , TreasureChestRange );
@@ -363,6 +368,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 7:
 	  DropItemAt( ITEM_CAP , x , y , Pre , Suf , TreasureChestRange );
+	  break;
+	case 8:
+	  DropItemAt( ITEM_STAFF , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;

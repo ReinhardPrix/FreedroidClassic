@@ -139,7 +139,7 @@ typedef struct
 */
 
 
-//    NAME                      DEX  STR  VIT  MAG  HP  MANA  TOHIT ALL AC/DA FIR  ELE  FOR   PRICE-FACTOR
+//    NAME                      DEX-DEX   STR-STR   VIT-VIT      MAG-MAG  ALLATT-    HP - HP   MANA-MANA  TOHIT-    AC/DA-   FIR-FIR   ELE-ELE   FOR-FOR   DUMMY Alvl PRICE-FACTOR
 item_bonus PrefixList[] = {
   { "Cheap "                  ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 00 , 00 , 00 , 00 ,   0.5 }, // 0
   { "Expensive "              ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 00 , 00 , 00 , 00 ,   2.0 }, // 1
@@ -164,7 +164,7 @@ item_bonus PrefixList[] = {
   { "Stable "                 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 00 , 00 , 00 , 00 ,   3.0 }  // 2 
 };
 
-//    NAME                      DEX-DEX   STR-STR   VIT-VIT      MAG-MAG   HP-HP   MANA-MANA  TOHIT-TOHIT ALL-ALL  AC/DA     FIR-FIR   ELE-ELE   FOR-FOR   Alvl PRICE-FACTOR
+//    NAME                      DEX-DEX   STR-STR   VIT-VIT      MAG-MAG  ALLATT-    HP - HP   MANA-MANA  TOHIT-    AC/DA-   FIR-FIR   ELE-ELE   FOR-FOR   DUMMY Alvl PRICE-FACTOR
 item_bonus SuffixList[] = {
   { " of Closed Source"       ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 , -5 , 0 , -5 , 00 , 00 , 00 , 00 , 00 , 00 , 00 ,  0 ,  0 ,  0.1 }, 
   { " of Dexterity"           ,  5 ,  5 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 , 00 , 00 , 00 , 00 ,  0 ,  0 , 10.0 }, 
