@@ -41,6 +41,9 @@
 #include "global.h"
 #include "proto.h"
 
+char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+
 /* ----------------------------------------------------------------------
  * This function loads the Blast image and decodes it into the multiple
  * small Blast surfaces.
@@ -347,7 +350,65 @@ Load_SkillIcon_Surfaces( void )
 
 }; // void Load_SkillIcon_Surfaces( void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+LoadAndPrepareEnemyRotationModelNr ( int j )
+{
+  SDL_Surface* Whole_Image;
+  char ConstructedFileName[5000];
+  int i;
+  char *fpath;
 
+  //--------------------
+  // Now that we have the classic ball-shaped design completely done,
+  // we can start doing something new:  Let's try to use some pre-rotated
+  // enemy surfaces for a change.  That might work out to be cool.
+  //
+  for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+    {
+      sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ j ] , ( ModelMultiplier[j] * i) + 1 );
+      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+      // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
+      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+      
+      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+      if ( Whole_Image == NULL )
+	{
+	  fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a rotated image of a droid into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	  Terminate(ERR);
+	}
+      
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      
+      EnemyRotationSurfacePointer[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( EnemyRotationSurfacePointer[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
+      
+      SDL_FreeSurface( Whole_Image );
+  
+    }    
+
+}; // void LoadAndPrepareEnemyRotationModelNr ( int j )
+  
 /* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit the
  * 'head' and 'shoes' of an enemy.  The numbers are not dealt with here.
@@ -357,15 +418,29 @@ Load_Enemy_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
-  char ConstructedFileName[5000];
   SDL_Rect Source;
   SDL_Rect Target;
   int i;
   int j;
   char *fpath;
-  char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
-  int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
+  //--------------------
+  // We clean out the rotated enemy surface pointers, so that later we
+  // can judge securely which of them have been initialized (non-Null)
+  // and which of them have not.
+  //
+  for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
+    {
+      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+	{
+	  EnemyRotationSurfacePointer[j][i] = NULL ;
+	}
+    }
+
+  //--------------------
+  // This needs to be initialized once, and this just seems a good place
+  // to do this, so we can use the i++ syntax.
+  //
   i=0;
   PrefixToFilename [ i ] = "001" ; // 0
   ModelMultiplier  [ i ] = 1 ; i++;
@@ -459,50 +534,9 @@ Load_Enemy_Surfaces( void )
 
   for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
     {
-      //--------------------
-      // Now that we have the classic ball-shaped design completely done,
-      // we can start doing something new:  Let's try to use some pre-rotated
-      // enemy surfaces for a change.  That might work out to be cool.
-      //
-      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
-	{
-	  sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ j ] , ( ModelMultiplier[j] * i) + 1 );
-	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-	  // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  
-	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-	  if ( Whole_Image == NULL )
-	    {
-	      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Freedroid was unable to load a rotated image of a droid into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	      Terminate(ERR);
-	    }
-	  
-	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	  
-	  EnemyRotationSurfacePointer[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( EnemyRotationSurfacePointer[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  
-	  SDL_FreeSurface( Whole_Image );
-	  
-	}
+      LoadAndPrepareEnemyRotationModelNr ( j );
+
+      //}
 
       //--------------------
       // Now that we have our enemy surfaces ready, we can create some modified
