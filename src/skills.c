@@ -433,12 +433,60 @@ ShowSkillsScreen ( void )
   SkillName[  2 ] = "Force Explosion Ray";
   SkillName[  3 ] = "Force -> Energy ";
   SkillName[  4 ] = "Create Teleportal Home";
+
   SkillName[  5 ] = "Remote Strike";
   SkillName[  6 ] = "Cold Bolt";
   SkillName[  7 ] = "Mana Shield";
   SkillName[  8 ] = "Holy Bolt";
   SkillName[  9 ] = "Poison Bolt";
-  SkillName[ 10 ] = "Unknown yet";
+
+  SkillName[ 10 ] = "Detect Stuff";
+  SkillName[ 11 ] = "Force Explosion Circle";
+  SkillName[ 12 ] = "Force Explosion Ray";
+  SkillName[ 13 ] = "Force -> Energy ";
+  SkillName[ 14 ] = "Create Teleportal Home";
+
+  SkillName[ 15 ] = "Remote Strike";
+  SkillName[ 16 ] = "Cold Bolt";
+  SkillName[ 17 ] = "Mana Shield";
+  SkillName[ 18 ] = "Holy Bolt";
+  SkillName[ 19 ] = "Poison Bolt";
+
+  SkillName[ 20 ] = "Detect Stuff";
+  SkillName[ 21 ] = "Force Explosion Circle";
+  SkillName[ 22 ] = "Force Explosion Ray";
+  SkillName[ 23 ] = "Force -> Energy ";
+  SkillName[ 24 ] = "Create Teleportal Home";
+
+  SkillName[ 25 ] = "Remote Strike";
+  SkillName[ 26 ] = "Cold Bolt";
+  SkillName[ 27 ] = "Mana Shield";
+  SkillName[ 28 ] = "Holy Bolt";
+  SkillName[ 29 ] = "Poison Bolt";
+
+  SkillName[ 30 ] = "Detect Stuff";
+  SkillName[ 31 ] = "Force Explosion Circle";
+  SkillName[ 32 ] = "Force Explosion Ray";
+  SkillName[ 33 ] = "Force -> Energy ";
+  SkillName[ 34 ] = "Create Teleportal Home";
+
+  SkillName[ 35 ] = "Remote Strike";
+  SkillName[ 36 ] = "Cold Bolt";
+  SkillName[ 37 ] = "Mana Shield";
+  SkillName[ 38 ] = "Holy Bolt";
+  SkillName[ 39 ] = "Poison Bolt";
+
+  SkillName[ 40 ] = "Detect Stuff";
+  SkillName[ 41 ] = "Force Explosion Circle";
+  SkillName[ 42 ] = "Force Explosion Ray";
+  SkillName[ 43 ] = "Force -> Energy ";
+  SkillName[ 44 ] = "Create Teleportal Home";
+
+  SkillName[ 45 ] = "Remote Strike";
+  SkillName[ 46 ] = "Cold Bolt";
+  SkillName[ 47 ] = "Mana Shield";
+  SkillName[ 48 ] = "Holy Bolt";
+  SkillName[ 49 ] = "Poison Bolt";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -506,21 +554,22 @@ ShowSkillsScreen ( void )
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
-      SDL_BlitSurface ( SkillIconSurfacePointer[ i + 5 * GameConfig.spell_level_visible ] , NULL , Screen , &ButtonRect );
+      SDL_BlitSurface ( SkillIconSurfacePointer[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] , NULL , Screen , &ButtonRect );
 
       //--------------------
       // First we write the name of the skill to the screen
       //
-      DisplayText( SkillName[i] , 16 + 64 + 16 + SkillScreenRect.x , 
+      DisplayText( SkillName[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] , 
+		   16 + 64 + 16 + SkillScreenRect.x , 
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y , &SkillScreenRect );
       
       //--------------------
       // Now we write the competence of the players character in that skill to the screen
       //
-      sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[i] );
+      sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      sprintf( CharText , "Mana cost: %d " , ManaCostTable[i][Me[0].SkillLevel[i]] );
+      sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ]] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       
