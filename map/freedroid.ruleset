@@ -378,7 +378,7 @@ Sound number=1
 
 // Item No. 6
 ** Start of new item specification subsection **
-Item name="100 Cyberbucks"
+Item name="Cyberbucks"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
@@ -406,8 +406,8 @@ Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=10
-Item duration modifier=10
+Base item duration=-1
+Item duration modifier=0
 Picture number=1
 Sound number=2 
 ** End of new item specification subsection **

@@ -38,6 +38,53 @@
 
 #include "items.h"
 
+
+/* ----------------------------------------------------------------------
+ * When the influencer gets hit, all of his equipment suffers some damage.
+ * This is exactly what this function does:  apply the damage.
+ * ---------------------------------------------------------------------- */
+void 
+DamageItem( item* CurItem )
+{
+
+  //--------------------
+  // If the item mentioned as parameter exists and if it is of 
+  // a destructable sort, then we apply the usual damage to it
+  // (which is currently a bit high)
+  //
+  if ( ( CurItem->type != (-1) ) &&
+       ( CurItem->max_duration != (-1) ) )
+    {
+      CurItem->current_duration -= 0.003 * MyRandom( 100 ) ;
+
+      //--------------------
+      // If the item has gone over it's threshhold of duration, it finally
+      // breaks and vaporizes
+      //
+      if ( rintf( CurItem->current_duration ) <= 0 )
+	{
+	  DeleteItem( CurItem );
+	}
+    }
+
+}; // void DamageItem( item* CurItem )
+
+/* ----------------------------------------------------------------------
+ * When the influencer gets hit, all of his equipment suffers some damage.
+ * This is exactly what this function does:  apply the damage.
+ * ---------------------------------------------------------------------- */
+void 
+DamageAllEquipment( void )
+{
+  DamageItem( & ( Druidmap[ DRUID001 ].weapon_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].armour_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].shield_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].drive_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].special_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].aux1_item ) );
+  DamageItem( & ( Druidmap[ DRUID001 ].aux2_item ) );
+}; // void DamageAllEquipment( void )
+
 /* ----------------------------------------------------------------------
  *
  *
