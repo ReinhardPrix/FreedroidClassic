@@ -2061,18 +2061,30 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 }; // void ImprovedCheckUmbruch(void)
 
 /* -----------------------------------------------------------------
- * This function reads a string of "MaxLen" from User-input, and echos it 
- * either to stdout or using graphics-text, depending on the
- * parameter "echo":	echo=0    no echo
+ * This function reads a string of "MaxLen" from User-input, and 
+ * echos it either to stdout or using graphics-text, depending on 
+ * the parameter "echo":
+ *                      echo=0    no echo
  *                      echo=1    print using printf
  *                      echo=2    print using graphics-text
  *
  * values of echo > 2 are ignored and treated like echo=0
  *
+ * The function does have some extra complicating elelments coming 
+ * from the potential slowness of machines with pure SDL and no
+ * OpenGL.  These machines might not re-blit the whole background
+ * fast enough for swiftly typed keystrokes, resulting in some
+ * keypresses not being detected by the game.  To avoid that when
+ * using SDL, not the whole screen will be re-blitted but only some
+ * relevant parts, so that the CPU can save some time.  With OpenGL,
+ * a complete re-blit is done in every cycle.
+ *
  * NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
  * 
  * @Ret: char *: String is allocated _here_!!!
- *       (dont forget to free it !)
+ *       (but since it isn't such a huge amount of memory and since 
+ *        it requires manual user input and therefore can't be done
+ *        very often anyway, you can as well forget to free it...)
  * 
  * ----------------------------------------------------------------- */
 char *
@@ -2094,6 +2106,7 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 
   height = FontHeight (GetCurrentFont());
 
+  DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
   x0 = MyCursorX;
   y0 = MyCursorY;
   
@@ -2102,7 +2115,7 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
   else
     {
       store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
-      Set_Rect (store_rect, x0, y0, SCREEN_WIDTH, height);
+      Set_Rect ( store_rect , x0 , y0 , SCREEN_WIDTH , height );
       our_SDL_blit_surface_wrapper (Screen, &store_rect, store, NULL);
     }
 
@@ -2121,14 +2134,13 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 	{
 	  // RestoreMenuBackground ( 0 );
 	  blit_special_background ( background_code );
+	  DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
 	}
       else
 	{
 	  Copy_Rect( store_rect, tmp_rect);
 	  our_SDL_blit_surface_wrapper (store, NULL, Screen, &tmp_rect);
 	}
-
-      DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
 
       x0 = MyCursorX;
       y0 = MyCursorY;

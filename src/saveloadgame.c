@@ -107,13 +107,17 @@ I need to know that for saving. Abort.\n");
   //
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
 
+  
+
   NewThumbnail = our_IMG_load_wrapper ( filename );
   if ( NewThumbnail == NULL ) return;
+
 
   // TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
   TargetRectangle.x = 10 ;
   TargetRectangle.y = SCREEN_HEIGHT - NewThumbnail ->h - 10 ;
-  
+
+  if ( use_open_gl ) swap_red_and_blue_for_open_gl ( NewThumbnail );  
   our_SDL_blit_surface_wrapper ( NewThumbnail , NULL , Screen , &TargetRectangle );
 
   SDL_FreeSurface( NewThumbnail );
@@ -270,6 +274,7 @@ I need to know that for saving. Abort.\n");
       // dealt with is several times, using the following flipping code.
       //
       flip_image_horizontally ( NewThumbnail );
+      swap_red_and_blue_for_open_gl ( NewThumbnail );
 
       SDL_FreeSurface ( FullView ) ;
     }
