@@ -1817,6 +1817,30 @@ SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
 }; // void SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
 
 /* ----------------------------------------------------------------------
+ * Enemies act as groups.  If one is hit, all will attack and the like.
+ * Similarly, if you attack one peaceful guard, all other guards will be
+ * pissed as well...
+ * ---------------------------------------------------------------------- */
+void 
+robot_group_turn_hostile ( int enemy_num )
+{
+  int MarkerCode;
+  int i;
+  enemy* ThisRobot = & ( AllEnemys [ enemy_num ] ) ;
+
+  MarkerCode = ThisRobot -> marker ;
+
+  // if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
+
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    {
+      if ( AllEnemys [ i ] . marker == MarkerCode )
+	AllEnemys [ i ] . is_friendly = FALSE ;
+    }
+
+}; // void robot_group_turn_hostile ( int enemy_num )
+
+/* ----------------------------------------------------------------------
  * This function sometimes fires a bullet from enemy number enemynum 
  * directly into the direction of the influencer, but of course only if 
  * the odds are good i.e. requirements are met.

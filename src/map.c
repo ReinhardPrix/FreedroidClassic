@@ -4673,10 +4673,9 @@ IsVisible ( GPS objpos , int PlayerNum )
   a_y = influ_y - objpos->y;
 
   a_len = sqrt (  a_x * a_x + a_y * a_y );
-  step_num = a_len * 3;
+  step_num = a_len * 4 + 1 ;
 
-  if (step_num == 0)
-    step_num = 1;
+  // if (step_num == 0) step_num = 1;
 
   step.x = a_x / step_num;
   step.y = a_y / step_num;

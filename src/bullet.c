@@ -756,8 +756,11 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		  //
 		  if ( CurBullet -> mine ) 
 		    {
-		      AllEnemys [ i ] . is_friendly = FALSE ;
-		      AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
+
+		      // SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+		      robot_group_turn_hostile ( i );
+		      // AllEnemys [ i ] . is_friendly = FALSE ;
+		      // AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
 		      
 		    }
 		  
