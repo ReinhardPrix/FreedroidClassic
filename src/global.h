@@ -194,10 +194,11 @@ EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILL_ICONS ]; // A pointer all skill icon surfaces
-EXTERN SDL_Surface *EnemySurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
+EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
-EXTERN SDL_Surface *InfluencerSurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
+EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
+EXTERN SDL_Surface *TuxSurfacePointer[ TUX_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *InfluDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *EnemyDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the

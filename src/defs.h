@@ -358,8 +358,8 @@ enum _sounds
 
 #define ALLSHIPS 		4
 
-#define ENEMYPHASES 		8
-#define DROID_PHASES            ENEMYPHASES
+#define DROID_PHASES            8
+#define TUX_PHASES 		1
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
 
