@@ -66,7 +66,7 @@ char* chat_protocol = NULL ;
 // This is the droid window we used before Bastian reshaped
 // the chat interface:
 //
-static SDL_Rect Droid_Image_Window = { 48 , 44 , 130 , 172 } ;
+static SDL_Rect Droid_Image_Window = { 48*SCREEN_WIDTH/640 , 44*SCREEN_HEIGHT/480 , 130*SCREEN_WIDTH/640 , 172*SCREEN_HEIGHT/480 } ;
 
 #define PUSH_ROSTER 2
 #define POP_ROSTER 3 
