@@ -780,7 +780,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	if ( WpList[nextwp].connections[j] == -1 )
 	  break;
 
-      DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  Found %d possible targets." , j );
+      DebugPrintf ( 2 , "\nSelectNextWaypointAdvanced:  Found %d possible targets." , j );
 
       // Of course, only if such connections exist at all, we do the
       // following change of target waypoint procedure
@@ -807,7 +807,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 
 	  if ( i == j )
 	    {
-	      DebugPrintf( 0 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
+	      DebugPrintf( 2 , "\n Sorry, there seems no free way out.  I'll wait then... , j was : %d ." , j);
 	      ThisRobot->warten = 1;
 	      return;
 	    }
@@ -841,7 +841,7 @@ This is an error in the waypoint structure of this level.",
       
       // set new waypoint...
       ThisRobot->nextwaypoint = trywp;
-      DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
+      DebugPrintf ( 2 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
 
     } // if
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
@@ -983,13 +983,6 @@ IsActiveLevel ( int levelnum )
 void
 DropEnemyTreasure ( Enemy ThisRobot )
 {
-  /*
-  SPELL_EXTRACT_PLASMA_TRANSISTORS,
-  SPELL_EXTRACT_SUPERCONDUCTORS,
-  SPELL_EXTRACT_ANTIMATTER_CONVERTERS,
-  SPELL_EXTRACT_ENTROPY_INVERTERS,
-  SPELL_EXTRACT_TACHYON_CONDENSATORS
-  */
 
   if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
     {
@@ -1016,40 +1009,6 @@ DropEnemyTreasure ( Enemy ThisRobot )
       if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
 	DropChestItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 );
     }
-
-  /*
-  int i;
-
-  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
-		   ! ( MyRandom ( 6 ) ) , FALSE ) ;
-  for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
-    {
-      switch ( i )
-	{
-	case 0:
-	  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y + 0.5 , 
-			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	  break;
-	case 1:
-	  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y - 0.5 , 
-			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	  break;
-	case 2:
-	  DropRandomItem ( ThisRobot->pos.x + 0.5 , ThisRobot->pos.y , 
-			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	  break;
-	case 3:
-	  DropRandomItem ( ThisRobot->pos.x - 0.5 , ThisRobot->pos.y , 
-			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	  break;
-	default:
-	  DropRandomItem ( ThisRobot->pos.x -0.7 + 0.07 * MyRandom(20) , 
-			   ThisRobot->pos.y -0.7 + 0.07 * MyRandom(20) , 
-			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	  break;
-	}
-    }
-  */
 
 }; // void DropEnemyTreasure ( Enemy ThisRobot )
 
