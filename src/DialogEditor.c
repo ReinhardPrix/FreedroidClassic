@@ -215,6 +215,10 @@ load_item_surfaces_for_item_type ( int item_type )
 {
 
 };
+void
+print_trace ( int signum )
+{
+};
 
 /* ----------------------------------------------------------------------
  *

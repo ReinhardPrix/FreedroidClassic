@@ -1881,161 +1881,135 @@ Sound_Options_Menu (void)
 void
 PerformanceTweaksOptionsMenu (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char Options4[1000];
-  char Options5[1000];
-  char Options6[1000];
-  char* MenuTexts[10];
-  enum
-    { 
-      SET_HOG_CPU_FLAG = 1,
-      SET_HIGHLIGHTING_MODE,
-      SET_MENU_HANDLING_MODE,
-      SHOW_QUICK_INVENTORY_MODE,
-      SKIP_LIGHT_RADIUS_MODE,
-      USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
-      TUX_IMAGE_UPDATE_POLICY,
-      LEAVE_PERFORMANCE_TWEAKS_MENU 
-    };
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
-  while ( EscapePressed() );
-
-  while (!Weiter)
+    int Weiter = 0;
+    int MenuPosition=1;
+    char Options0[1000];
+    char Options1[1000];
+    char Options2[1000];
+    char Options3[1000];
+    char Options4[1000];
+    char Options5[1000];
+    char Options6[1000];
+    char* MenuTexts[10];
+    enum
+	{ 
+	    SET_HOG_CPU_FLAG = 1,
+	    SET_HIGHLIGHTING_MODE,
+	    SET_MENU_HANDLING_MODE,
+	    SHOW_QUICK_INVENTORY_MODE,
+	    SKIP_LIGHT_RADIUS_MODE,
+	    USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
+	    SKIP_SHADOWS,
+	    LEAVE_PERFORMANCE_TWEAKS_MENU 
+	};
+    
+    // This is not some Debug Menu but an optically impressive 
+    // menu for the player.  Therefore I suggest we just fade out
+    // the game screen a little bit.
+    
+    while ( EscapePressed() );
+    
+    while (!Weiter)
     {
-
-      sprintf ( Options0 , "Hog CPU for max. performance: %s", 
-	        GameConfig.hog_CPU ? "YES" : "NO" );
-      sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
-      sprintf ( Options3 , "Show quick inventory: %s", GameConfig . show_quick_inventory ? "YES" : "NO" );
-      sprintf ( Options4 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
-      sprintf ( Options5 , "Use bars for energy display: %s", 
-		GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
-
-      strcpy ( Options2 , "Menu handling: " );
-      switch ( GameConfig . menu_mode )
+	
+	sprintf ( Options0 , "Hog CPU for max. performance: %s", 
+		  GameConfig.hog_CPU ? "YES" : "NO" );
+	sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
+	sprintf ( Options3 , "Show quick inventory: %s", GameConfig . show_quick_inventory ? "YES" : "NO" );
+	sprintf ( Options4 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
+	sprintf ( Options5 , "Use bars for energy display: %s", 
+		  GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
+	sprintf ( Options6 , "Skip shadow blitting: %s", 
+		  GameConfig . skip_shadow_blitting ? "YES" : "NO" );
+	
+	strcpy ( Options2 , "Menu handling: " );
+	switch ( GameConfig . menu_mode )
 	{
-	case MENU_MODE_FAST:
-	  strcat ( Options2, "FAST" );
-	  break;
-	case MENU_MODE_DEFAULT:
-	  strcat ( Options2, "DEFAULT" );
-	  break;
-	case MENU_MODE_DOUBLE:
-	  strcat ( Options2, "DOUBLE" );
-	  break;
-	default:
-	  break;
+	    case MENU_MODE_FAST:
+		strcat ( Options2, "FAST" );
+		break;
+	    case MENU_MODE_DEFAULT:
+		strcat ( Options2, "DEFAULT" );
+		break;
+	    case MENU_MODE_DOUBLE:
+		strcat ( Options2, "DOUBLE" );
+		break;
+	    default:
+		break;
 	}
-      
-      strcpy ( Options6 , "Tux image update:" );
-      switch ( GameConfig . tux_image_update_policy )
+	
+	MenuTexts[0]=Options0;
+	MenuTexts[1]=Options1;
+	MenuTexts[2]=Options2;
+	MenuTexts[3]=Options3;
+	MenuTexts[4]=Options4;
+	MenuTexts[5]=Options5;
+	MenuTexts[6]=Options6;
+	MenuTexts[7]="Back";
+	MenuTexts[8]="";
+	
+	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+	
+	switch (MenuPosition) 
 	{
-	case TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE:
-	  strcat ( Options6 , " AT ONCE" );
-	  break;
-	case TUX_IMAGE_UPDATE_CONTINUOUSLY:
-	  strcat ( Options6, " CONTINUOUS" );
-	  break;
-	default:
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
-Unhandles Tux image update policy encountered!",
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
-	}
+	    case (-1):
+		Weiter=!Weiter;
+		break;
+		
+	    case SET_HOG_CPU_FLAG:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . hog_CPU = ! GameConfig . hog_CPU ;
+		break;
+		
+	    case SET_HIGHLIGHTING_MODE:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . highlighting_mode_full = ! GameConfig . highlighting_mode_full ;
+		break;
+		
+	    case SET_MENU_HANDLING_MODE:
+		while (EnterPressed() || SpacePressed() );
+		if ( GameConfig . menu_mode == MENU_MODE_FAST )
+		    GameConfig . menu_mode = MENU_MODE_DEFAULT;
+		else if ( GameConfig . menu_mode == MENU_MODE_DEFAULT )
+		    GameConfig . menu_mode = MENU_MODE_DOUBLE;
+		else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
+		    GameConfig . menu_mode = MENU_MODE_FAST;
+		break;
+		
+	    case SHOW_QUICK_INVENTORY_MODE:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . show_quick_inventory = ! GameConfig . show_quick_inventory ;
+		break;
+		
+	    case SKIP_LIGHT_RADIUS_MODE:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . skip_light_radius = ! GameConfig . skip_light_radius ;
+		break;
+		
+	    case USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . use_bars_instead_of_energy_o_meter = ! GameConfig . use_bars_instead_of_energy_o_meter ;
+		break;
+		
+	    case SKIP_SHADOWS:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . skip_shadow_blitting = ! GameConfig . skip_shadow_blitting ;
+		break;
 
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]=Options3;
-      MenuTexts[4]=Options4;
-      MenuTexts[5]=Options5;
-      MenuTexts[6]=Options6;
-      MenuTexts[7]="Back";
-      MenuTexts[8]="";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
-
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-
-	case SET_HOG_CPU_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . hog_CPU = ! GameConfig . hog_CPU ;
-	  break;
-
-	case SET_HIGHLIGHTING_MODE:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . highlighting_mode_full = ! GameConfig . highlighting_mode_full ;
-	  break;
-
-	case SET_MENU_HANDLING_MODE:
-	  while (EnterPressed() || SpacePressed() );
-	  if ( GameConfig . menu_mode == MENU_MODE_FAST )
-	    GameConfig . menu_mode = MENU_MODE_DEFAULT;
-	  else if ( GameConfig . menu_mode == MENU_MODE_DEFAULT )
-	    GameConfig . menu_mode = MENU_MODE_DOUBLE;
-	  else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
-	    GameConfig . menu_mode = MENU_MODE_FAST;
-	  break;
-
-	case SHOW_QUICK_INVENTORY_MODE:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . show_quick_inventory = ! GameConfig . show_quick_inventory ;
-	  break;
-
-	case SKIP_LIGHT_RADIUS_MODE:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . skip_light_radius = ! GameConfig . skip_light_radius ;
-	  break;
-
-	case USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . use_bars_instead_of_energy_o_meter = ! GameConfig . use_bars_instead_of_energy_o_meter ;
-	  break;
-
-	case TUX_IMAGE_UPDATE_POLICY:
-	  while (EnterPressed() || SpacePressed() );
-	  if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE )
-	    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_CONTINUOUSLY ;
-	  else if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_CONTINUOUSLY )
-	    {
-	      GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
-	      strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
-	      strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
-	      strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
-	      strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
-	      strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
-	      strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
-	    }  
-
-	  break;
-
-	case LEAVE_PERFORMANCE_TWEAKS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-
-	default: 
-	  break;
-
+	    case LEAVE_PERFORMANCE_TWEAKS_MENU:
+		while (EnterPressed() || SpacePressed() );
+		Weiter=TRUE;
+		break;
+		
+	    default: 
+		break;
+		
 	} 
     }
-
-  ClearGraphMem ();
-  DisplayBanner ( );
-
+    
+    ClearGraphMem ();
+    DisplayBanner ( );
+    
 }; // void PerformanceTweaksOptionsMenu (void)
 
 /* ----------------------------------------------------------------------

@@ -1326,28 +1326,31 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 	    // If the obstacle has a shadow, it seems like now would be a good time
 	    // to blit it.
 	    //
-	    our_obstacle = blitting_list [ i ] . element_pointer ;
-	    if ( use_open_gl )
+	    if ( ! GameConfig . skip_shadow_blitting )
 	    {
-		if ( obstacle_map [ our_obstacle -> type ] . shadow_image . texture_has_been_created )
+		our_obstacle = blitting_list [ i ] . element_pointer ;
+		if ( use_open_gl )
 		{
-		    blit_open_gl_texture_to_map_position ( 
-			obstacle_map [ our_obstacle -> type ] . shadow_image , 
-			our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			0.5 , 0.5, 0.5 , FALSE, TRUE );
-		    // DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
+		    if ( obstacle_map [ our_obstacle -> type ] . shadow_image . texture_has_been_created )
+		    {
+			blit_open_gl_texture_to_map_position ( 
+			    obstacle_map [ our_obstacle -> type ] . shadow_image , 
+			    our_obstacle -> pos . x , our_obstacle -> pos . y , 
+			    0.5 , 0.5, 0.5 , FALSE, TRUE );
+			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
+		    }
+		}
+		else
+		{
+		    if ( obstacle_map [ our_obstacle -> type ] . shadow_image . surface != NULL )
+		    {
+			blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . shadow_image , 
+							 our_obstacle -> pos . x , our_obstacle -> pos . y );
+			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
+		    }
 		}
 	    }
-	    else
-	    {
-		if ( obstacle_map [ our_obstacle -> type ] . shadow_image . surface != NULL )
-		{
-		    blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . shadow_image , 
-						     our_obstacle -> pos . x , our_obstacle -> pos . y );
-		    // DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
-		}
-	    }
-	    
+
 	    //--------------------
 	    // If the obstacle isn't otherwise a preput obstacle, we're done here and can 
 	    // move on to the next list element

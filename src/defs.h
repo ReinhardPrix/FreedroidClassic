@@ -49,6 +49,7 @@
 
 #define ERR 	-1
 #define OK		0
+#define FREEDROID_INTERNAL_ERROR_SIGNAL -7890
 
 #ifndef max
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 

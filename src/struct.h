@@ -122,6 +122,7 @@ typedef struct
     int next_time_width_of_screen;
     int next_time_height_of_screen;
     float automap_display_scale ;
+    int skip_shadow_blitting ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

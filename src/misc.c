@@ -286,6 +286,8 @@ print_trace ( int signum )
     }
     else if ( signum == SIGFPE )
 	fprintf ( stderr , "\n%s():  received SIGFPE!\n" , __FUNCTION__ );
+    else if ( signum == FREEDROID_INTERNAL_ERROR_SIGNAL )
+	fprintf ( stderr , "\n%s():  received INTERNAL FREEDROID ERROR SIGNAL!\n" , __FUNCTION__ );
     else
     {
     	fprintf ( stderr , "\n%s():  received UNKNOWN SIGNAL!  ERROR! \n" , __FUNCTION__ );
@@ -295,6 +297,7 @@ print_trace ( int signum )
     Terminate ( ERR );
 
 }; // void print_trace ( int sig_num )
+
 
 /* ---------------------------------------------------------------------- 
  * In this function, we move the normal SIGSEGV handler (and other signal
