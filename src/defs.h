@@ -825,7 +825,11 @@ enum
   LAST_BLOCK_IN_LIST_DUMMY_ENTRY
 };
 
+#define BLUE_BLOCKS_OFFSET 100
+#define GREEN_BLOCKS_OFFSET 200
+
 // #define NUM_MAP_BLOCKS		80  // total number of map-blocks 
-#define NUM_MAP_BLOCKS LAST_BLOCK_IN_LIST_DUMMY_ENTRY // total number of map-blocks 
+#define NUM_MAP_BLOCKS (3*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
+
 
 #endif

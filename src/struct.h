@@ -841,7 +841,7 @@ typedef struct
   int xlen;		/* X dimension */
   int ylen;
   int color;
-  char *map[MAX_MAP_LINES];	/* this is a vector of pointers ! */
+  Uint16 *map[MAX_MAP_LINES];	/* this is a vector of pointers ! */
   int jump_threshold_north;
   int jump_threshold_south;
   int jump_threshold_east;

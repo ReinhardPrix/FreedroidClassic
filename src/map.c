@@ -107,7 +107,7 @@
 
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
-void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
 
@@ -628,6 +628,93 @@ IsWallBlock (int block)
     case CAVE_CORNER_RU:
     case CAVE_CORNER_LD:
     case CAVE_CORNER_RD:
+
+
+    case ( BLUE_BLOCKS_OFFSET + KREUZ ) :
+    case ( GREEN_BLOCKS_OFFSET + KREUZ ) :
+    case ( BLUE_BLOCKS_OFFSET + H_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + H_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + V_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + V_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + H_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + H_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + V_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + V_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + CORNER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_LD ) :
+    case ( BLUE_BLOCKS_OFFSET + T_D ) :
+    case ( GREEN_BLOCKS_OFFSET + T_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CORNER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_RD ) :
+    case ( BLUE_BLOCKS_OFFSET + T_L ) :
+    case ( GREEN_BLOCKS_OFFSET + T_L ) :
+    case ( BLUE_BLOCKS_OFFSET + T_R ) :
+    case ( GREEN_BLOCKS_OFFSET + T_R ) :
+    case ( BLUE_BLOCKS_OFFSET + CORNER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_LU ) :
+    case ( BLUE_BLOCKS_OFFSET + T_U ) :
+    case ( GREEN_BLOCKS_OFFSET + T_U ) :
+    case ( BLUE_BLOCKS_OFFSET + CORNER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_RU ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LD ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RD ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LU ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RU ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK1 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK1 ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK2 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK2 ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK3 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK3 ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_L ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_L ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_R ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_R ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_U ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_U ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_D ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_D ) :
+    case ( BLUE_BLOCKS_OFFSET + ALERT ) :
+    case ( GREEN_BLOCKS_OFFSET + ALERT ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_L ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_L ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_R ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_R ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_U ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_U ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_D ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_1 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_1 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_2 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_2 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_3 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_3 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_4 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_4 ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_V_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_V_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_H_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_H_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
+
+
+
       return (TRUE);
     default:
       return (FALSE);
@@ -771,12 +858,11 @@ SmashBox ( float x , float y )
  * This function returns the map brick code of the tile that occupies the
  * given position.
  * ---------------------------------------------------------------------- */
-unsigned char
+Uint16
 GetMapBrick (Level deck, float x, float y)
 {
-  int BrickWanted;
+  Uint16 BrickWanted;
   int RoundX, RoundY;
-
   
   /* 
    * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
@@ -1559,7 +1645,7 @@ EncodeLevelForSaving(Level Lev)
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
   char linebuf[5000];		/* Buffer */
-  char HumanReadableMapLine[10000]="Hello, this is gonna be a made into a readable map-string.";
+  Uint16 HumanReadableMapLine[10000];
   
   /* Get the number of waypoints */
   anz_wp = 0;
@@ -1624,7 +1710,7 @@ jump target west: %d\n",
     // But before we can write this line of the map to the disk, we need to
     // convert is back to human readable format.
     TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
-    strncat(LevelMem, HumanReadableMapLine , xlen * 4 ); // We need FOUR chars per map tile
+    strncat( LevelMem, (char*) HumanReadableMapLine , xlen * 4 * 2 ); // We need FOUR , no EIGHT chars per map tile
     strcat(LevelMem, "\n");
   }
 
@@ -2109,7 +2195,7 @@ DecodeLoadedLeveldata ( char *data )
 
   /* read MapData */
   for (i = 0; i < loadlevel->ylen; i++)
-    if ((loadlevel->map[i] = strtok (NULL, "\n")) == NULL)
+    if ( ( (char*)loadlevel -> map[i] = strtok ( NULL, "\n") ) == NULL)
       return NULL;
 
   /* Get Waypoints */
@@ -2317,7 +2403,7 @@ of doors currently allowed in a Freedroid map.",
  * can later be written to the map file on disk.
  * ---------------------------------------------------------------------- */
 void
-TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
+TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
   int col;
   int i;
@@ -2370,8 +2456,6 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	}
     }
 
-
-
   // transpose the game-engine mapdata line to human readable format 
 
   HumanReadable[0]=0;  // Add a terminator at the beginning
@@ -2379,7 +2463,7 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
   for (col = 0; col < LineLength; col++)
     {
       sprintf( Buffer , "%3d " , MapInfo[col] );
-      strcat ( HumanReadable , Buffer );
+      strcat ( (char*)HumanReadable , Buffer );
     }
 
 }; // void TranslateToHumanReadable( ... )
@@ -2402,7 +2486,7 @@ TranslateMap (Level Lev)
   int xdim = Lev->xlen;
   int ydim = Lev->ylen;
   int row, col;
-  char *Buffer;
+  Uint16 *Buffer;
   int tmp;
 
   DebugPrintf (2, "\n\nStarting to translate the map from human readable disk format into game-engine format.");
@@ -2411,12 +2495,12 @@ TranslateMap (Level Lev)
   for (row = 0; row < ydim  ; row++)
     {
 
-      Buffer = MyMalloc( xdim + 10 );
+      Buffer = MyMalloc( sizeof ( Uint16 ) * ( xdim + 10 ) );
 
       for (col = 0; col < xdim  ; col++)
 	{
-	  sscanf( Lev->map[row]+4*col , "%d " , &tmp);
-	  Buffer[col] = (char)tmp;
+	  sscanf( (char*)(Lev->map[row] + 4 / 2 * col) , "%d " , &tmp);
+	  Buffer[col] = tmp;
 	}
 
       Lev->map[row]=Buffer;
@@ -2814,7 +2898,7 @@ MoveLevelDoors ( int PlayerNum )
   int doorx, doory;
   float xdist, ydist;
   float dist2;
-  char *Pos;
+  Uint16 *Pos;
   Level DoorLevel;
   int one_player_close_enough = FALSE;
   int PlayerIndex ;
@@ -2944,7 +3028,7 @@ void
 WorkLevelGuns ( int PlayerNum )
 {
   int i, autogunx, autoguny;
-  char *Pos;
+  Uint16 *Pos;
   Level GunLevel;
 
   //--------------------
@@ -3240,10 +3324,91 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case TELE_3:
     case TELE_4:
     case CAVE_WITH_WAY_TILE:
+
+
+    case ( BLUE_BLOCKS_OFFSET + FLOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_FLOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_FLOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CARPET_L ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CARPET_L ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CARPET_R ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CARPET_R ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CARPET_U ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CARPET_U ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CARPET_D ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CARPET_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_WITH_GRASS_1 ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_WITH_GRASS_1 ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_WITH_GRASS_2 ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_WITH_GRASS_2 ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_WITH_GRASS_3 ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_WITH_GRASS_3 ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_WITH_GRASS_4 ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_WITH_GRASS_4 ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CAVE_L ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CAVE_L ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CAVE_R ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CAVE_R ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CAVE_U ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CAVE_U ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CAVE_D ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CAVE_D ) :
+    case ( BLUE_BLOCKS_OFFSET + FLOOR_CARPET ) :
+    case ( GREEN_BLOCKS_OFFSET + FLOOR_CARPET ) :
+    case ( BLUE_BLOCKS_OFFSET + FINE_GRID ) :
+    case ( GREEN_BLOCKS_OFFSET + FINE_GRID ) :
+    case ( BLUE_BLOCKS_OFFSET + LIFT ) :
+    case ( GREEN_BLOCKS_OFFSET + LIFT ) :
+    case ( BLUE_BLOCKS_OFFSET + VOID ) :
+    case ( GREEN_BLOCKS_OFFSET + VOID ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK4 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK4 ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK5 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK5 ) :
+    case ( BLUE_BLOCKS_OFFSET + REFRESH1 ) :
+    case ( GREEN_BLOCKS_OFFSET + REFRESH1 ) :
+    case ( BLUE_BLOCKS_OFFSET + REFRESH2 ) :
+    case ( GREEN_BLOCKS_OFFSET + REFRESH2 ) :
+    case ( BLUE_BLOCKS_OFFSET + REFRESH3 ) :
+    case ( GREEN_BLOCKS_OFFSET + REFRESH3 ) :
+    case ( BLUE_BLOCKS_OFFSET + REFRESH4 ) :
+    case ( GREEN_BLOCKS_OFFSET + REFRESH4 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_1 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_1 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_2 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_2 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_3 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_3 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSUMER_4 ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSUMER_4 ) :
+    case ( BLUE_BLOCKS_OFFSET + CONVEY_L ) :
+    case ( GREEN_BLOCKS_OFFSET + CONVEY_L ) :
+    case ( BLUE_BLOCKS_OFFSET + CONVEY_D ) :
+    case ( GREEN_BLOCKS_OFFSET + CONVEY_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CONVEY_R ) :
+    case ( GREEN_BLOCKS_OFFSET + CONVEY_R ) :
+    case ( BLUE_BLOCKS_OFFSET + CONVEY_U ) :
+    case ( GREEN_BLOCKS_OFFSET + CONVEY_U ) :
+    case ( BLUE_BLOCKS_OFFSET + TELE_1 ) :
+    case ( GREEN_BLOCKS_OFFSET + TELE_1 ) :
+    case ( BLUE_BLOCKS_OFFSET + TELE_2 ) :
+    case ( GREEN_BLOCKS_OFFSET + TELE_2 ) :
+    case ( BLUE_BLOCKS_OFFSET + TELE_3 ) :
+    case ( GREEN_BLOCKS_OFFSET + TELE_3 ) :
+    case ( BLUE_BLOCKS_OFFSET + TELE_4 ) :
+    case ( GREEN_BLOCKS_OFFSET + TELE_4 ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_WITH_WAY_TILE ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_WITH_WAY_TILE ) :
+
+
       ret = CENTER;		/* these are passable */
       break;
 
     case ALERT:
+    case ( BLUE_BLOCKS_OFFSET + ALERT ) :
+    case ( GREEN_BLOCKS_OFFSET + ALERT ) :
+
       if (Checkpos == LIGHT)
 	ret = CENTER;
       else
@@ -3258,6 +3423,16 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case CONSOLE_L:
     case CODEPANEL_L:
     case IDENTIFY_L:
+
+    case ( BLUE_BLOCKS_OFFSET + CHEST_L ) :
+    case ( GREEN_BLOCKS_OFFSET + CHEST_L ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSOLE_L ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSOLE_L ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_L ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_L ) :
+    case ( BLUE_BLOCKS_OFFSET + IDENTIFY_L ) :
+    case ( GREEN_BLOCKS_OFFSET + IDENTIFY_L ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -3273,6 +3448,16 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case CONSOLE_R:
     case CODEPANEL_R:
     case IDENTIFY_R:
+
+    case ( BLUE_BLOCKS_OFFSET + CHEST_R ) :
+    case ( GREEN_BLOCKS_OFFSET + CHEST_R ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSOLE_R ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSOLE_R ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_R ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_R ) :
+    case ( BLUE_BLOCKS_OFFSET + IDENTIFY_R ) :
+    case ( GREEN_BLOCKS_OFFSET + IDENTIFY_R ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -3288,6 +3473,16 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case CONSOLE_U:
     case CODEPANEL_U:
     case IDENTIFY_U:
+
+    case ( BLUE_BLOCKS_OFFSET + CHEST_U ) :
+    case ( GREEN_BLOCKS_OFFSET + CHEST_U ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSOLE_U ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSOLE_U ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_U ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_U ) :
+    case ( BLUE_BLOCKS_OFFSET + IDENTIFY_U ) :
+    case ( GREEN_BLOCKS_OFFSET + IDENTIFY_U ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -3303,6 +3498,16 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case CONSOLE_D:
     case CODEPANEL_D:
     case IDENTIFY_D:
+
+    case ( BLUE_BLOCKS_OFFSET + CHEST_D ) :
+    case ( GREEN_BLOCKS_OFFSET + CHEST_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CONSOLE_D ) :
+    case ( GREEN_BLOCKS_OFFSET + CONSOLE_D ) :
+    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_D ) :
+    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_D ) :
+    case ( BLUE_BLOCKS_OFFSET + IDENTIFY_D ) :
+    case ( GREEN_BLOCKS_OFFSET + IDENTIFY_D ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -3326,6 +3531,30 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case AUTOGUN_D:
     case AUTOGUN_L:
     case AUTOGUN_U:
+
+    case ( BLUE_BLOCKS_OFFSET + BLOCK1 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK1 ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK2 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK2 ) :
+    case ( BLUE_BLOCKS_OFFSET + BLOCK3 ) :
+    case ( GREEN_BLOCKS_OFFSET + BLOCK3 ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LD ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RD ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_LU ) :
+    case ( BLUE_BLOCKS_OFFSET + ENHANCER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + ENHANCER_RU ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_R ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_R ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_D ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_D ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_L ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_L ) :
+    case ( BLUE_BLOCKS_OFFSET + AUTOGUN_U ) :
+    case ( GREEN_BLOCKS_OFFSET + AUTOGUN_U ) :
+
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS) || (fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -3335,6 +3564,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case H_WALL:
     case CAVE_H_WALL:
+
+    case ( BLUE_BLOCKS_OFFSET + H_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + H_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_H_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_H_WALL ) :
+
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -3343,6 +3578,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case V_WALL:
     case CAVE_V_WALL:
+
+    case ( BLUE_BLOCKS_OFFSET + V_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + V_WALL ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_V_WALL ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_V_WALL ) :
+
       if ((fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -3351,6 +3592,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case CORNER_RU:
     case CAVE_CORNER_RU:
+
+    case ( BLUE_BLOCKS_OFFSET + CORNER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_RU ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RU ) :
+
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
@@ -3360,6 +3607,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case CORNER_RD:
     case CAVE_CORNER_RD:
+
+    case ( BLUE_BLOCKS_OFFSET + CORNER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_RD ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_RD ) :
+
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3369,6 +3622,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case CORNER_LD:
     case CAVE_CORNER_LD:
+
+    case ( BLUE_BLOCKS_OFFSET + CORNER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_LD ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LD ) :
+
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3378,6 +3637,12 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
     case CORNER_LU:
     case CAVE_CORNER_LU:
+
+    case ( BLUE_BLOCKS_OFFSET + CORNER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + CORNER_LU ) :
+    case ( BLUE_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
+    case ( GREEN_BLOCKS_OFFSET + CAVE_CORNER_LU ) :
+
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
@@ -3386,6 +3651,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_U:
+
+    case ( BLUE_BLOCKS_OFFSET + T_U ) :
+    case ( GREEN_BLOCKS_OFFSET + T_U ) :
+
       if ((fy < WALLPASS) ||
 	  ((fy > 1 - WALLPASS) &&
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
@@ -3395,6 +3664,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_R:
+
+    case ( BLUE_BLOCKS_OFFSET + T_R ) :
+    case ( GREEN_BLOCKS_OFFSET + T_R ) :
+
       if ((fx > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) &&
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
@@ -3404,6 +3677,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_D:
+
+    case ( BLUE_BLOCKS_OFFSET + T_D ) :
+    case ( GREEN_BLOCKS_OFFSET + T_D ) :
+
       if ((fy > 1 - WALLPASS) ||
 	  ((fy < WALLPASS) &&
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
@@ -3413,6 +3690,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case T_L:
+
+    case ( BLUE_BLOCKS_OFFSET + T_L ) :
+    case ( GREEN_BLOCKS_OFFSET + T_L ) :
+
       if ((fx < WALLPASS) ||
 	  ((fx > 1 - WALLPASS) &&
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
@@ -3424,14 +3705,30 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case H_OPEN_DOOR:
     case H_HALF_DOOR3:
     case H_HALF_DOOR2:
+
+    case ( BLUE_BLOCKS_OFFSET + H_OPEN_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + H_OPEN_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + H_HALF_DOOR3 ) :
+    case ( GREEN_BLOCKS_OFFSET + H_HALF_DOOR3 ) :
+    case ( BLUE_BLOCKS_OFFSET + H_HALF_DOOR2 ) :
+    case ( GREEN_BLOCKS_OFFSET + H_HALF_DOOR2 ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
+
     case H_HALF_DOOR1:
     case H_SHUT_DOOR:
     case LOCKED_H_SHUT_DOOR:
+
+    case ( BLUE_BLOCKS_OFFSET + H_HALF_DOOR1 ) :
+    case ( GREEN_BLOCKS_OFFSET + H_HALF_DOOR1 ) :
+    case ( BLUE_BLOCKS_OFFSET + H_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + H_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + LOCKED_H_SHUT_DOOR ) :
 
       /*
       if (Checkpos == LIGHT)
@@ -3486,17 +3783,34 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}			// directly in the door
 
       break;
+
     case V_OPEN_DOOR:
     case V_HALF_DOOR3:
     case V_HALF_DOOR2:
+
+    case ( BLUE_BLOCKS_OFFSET + V_OPEN_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + V_OPEN_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + V_HALF_DOOR3 ) :
+    case ( GREEN_BLOCKS_OFFSET + V_HALF_DOOR3 ) :
+    case ( BLUE_BLOCKS_OFFSET + V_HALF_DOOR2 ) :
+    case ( GREEN_BLOCKS_OFFSET + V_HALF_DOOR2 ) :
+
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
+
     case V_HALF_DOOR1:
     case V_SHUT_DOOR:
     case LOCKED_V_SHUT_DOOR:
+
+    case ( BLUE_BLOCKS_OFFSET + V_HALF_DOOR1 ) :
+    case ( GREEN_BLOCKS_OFFSET + V_HALF_DOOR1 ) :
+    case ( BLUE_BLOCKS_OFFSET + V_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + V_SHUT_DOOR ) :
+    case ( BLUE_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
+    case ( GREEN_BLOCKS_OFFSET + LOCKED_V_SHUT_DOOR ) :
 
       /*
       if (Checkpos == LIGHT)

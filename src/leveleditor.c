@@ -445,7 +445,7 @@ void
 InsertColumnVeryEast ( Level EditLevel )
 {
   int i;
-  char* OldMapPointer;
+  Uint16* OldMapPointer;
 
   EditLevel->xlen++;
   // In case of enlargement, we need to do more:
@@ -638,7 +638,7 @@ RemoveColumnVeryWest ( Level EditLevel )
 void
 InsertLineSouthernInterface ( Level EditLevel )
 {
-  char* temp;
+  Uint16* temp;
   int i;
 
   //--------------------
@@ -2822,8 +2822,16 @@ show_button_tooltip ( char* tooltip_text )
 void
 show_level_editor_tooltips ( void )
 {
+  static float time_spent_on_some_button = 0 ;
+
+  static float previous_function_call_time = 0 ;
+
+  time_spent_on_some_button += SDL_GetTicks() - previous_function_call_time ; 
+
+
   if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
+      
       show_button_tooltip ( "Use this button to move one level north, i.e. to the level that is glued to the northern side of this level." );
     }
   else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
@@ -2877,6 +2885,10 @@ show_level_editor_tooltips ( void )
   else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
+    }
+  else
+    {
+      time_spent_on_some_button = 0 ;
     }
 
 }; // void show_level_editor_tooltips ( void )

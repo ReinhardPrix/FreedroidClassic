@@ -1273,7 +1273,7 @@ LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
   //
   strcpy ( ConstructedFileName , "single_map_tiles/map_tile_" );
   strcat ( ConstructedFileName , "red_" );
-  sprintf ( NumberBuffer , "%d" , BlockNr );
+  sprintf ( NumberBuffer , "%04d" , BlockNr );
   strcat ( ConstructedFileName , NumberBuffer );
   strcat ( ConstructedFileName , ".png" );
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , TRUE );
@@ -1327,6 +1327,8 @@ LoadAllMapTilesThatAreNotYetLoaded( void )
 	}
     }
 
+  DebugPrintf ( 0 , "\n %d map blocks loaded... " , NUM_MAP_BLOCKS );
+
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 
 /* ----------------------------------------------------------------------
@@ -1342,50 +1344,6 @@ Load_MapBlock_Surfaces( void )
 
   LoadAllMapTilesThatAreNotYetLoaded( );
 
-  /*
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int color;
-  char *fpath;
-
-  char *fname = "map_blocks.png";
-
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-  
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-  fpath = find_file ( fname, GRAPHICS_DIR, TRUE);
-  for ( color = 0 ; color < NUM_COLORS ; color ++ )
-    {
-      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-      
-      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=i*(Block_Height+2);
-	  Source.y=color*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
-	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
-	}
-      SDL_FreeSurface( Whole_Image );
-    }
-
-  SDL_FreeSurface( tmp_surf );
-  */
 
 }; // void Load_MapBlock_Surfaces( void )
 
