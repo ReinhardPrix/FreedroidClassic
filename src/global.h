@@ -160,7 +160,7 @@ EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
 
-EXTERN SDL_Surface* MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
+EXTERN iso_image MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
 // EXTERN SDL_Surface* SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
 EXTERN iso_image SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
 

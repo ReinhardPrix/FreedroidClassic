@@ -1697,34 +1697,60 @@ PutMouseMoveCursor ( void )
   if ( ( Me [ 0 ] . mouse_move_target . x == (-1) ) &&
        ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) ) )
     {
-      // DebugPrintf ( 0 , "\nMouse Move Target: x == (-1) ! and NO ENEMY TARGETED!! " );
       return;
     }
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
     {
-      TargetRectangle . x = - Block_Width  / 2 +
+      TargetRectangle . x = 
 	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
-      TargetRectangle . y = - Block_Height  / 2 +
+      TargetRectangle . y = 
 	translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
-
     }
   else
     {
       // translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
-      TargetRectangle . x = - Block_Width  / 2 +
+      TargetRectangle . x = 
 	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
 					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , TRUE );
-      TargetRectangle . y = - Block_Height  / 2 +
+      TargetRectangle . y = 
 	translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
 					      AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
     }
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
-    our_SDL_blit_surface_wrapper ( MouseCursorImageList[ 0 ] , NULL , Screen , &TargetRectangle);
+    {
+      if ( use_open_gl )
+	{
+	  TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
+	  TargetRectangle . y -= MouseCursorImageList [ 0 ] . original_image_height / 2 ;
+	  blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 0 ] , 
+						    TargetRectangle . x , TargetRectangle . y , TRUE );
+	}
+      else
+	{
+	  TargetRectangle . x -= MouseCursorImageList [ 0 ] . surface -> w / 2 ;
+	  TargetRectangle . y -= MouseCursorImageList [ 0 ] . surface -> h / 2 ;
+	  our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 0 ] . surface , NULL , Screen , &TargetRectangle);
+	}
+    }
   else
-    our_SDL_blit_surface_wrapper ( MouseCursorImageList[ 1 ] , NULL , Screen , &TargetRectangle);
+    {
+      if ( use_open_gl )
+	{
+	  TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
+	  TargetRectangle . y -= MouseCursorImageList [ 1 ] . original_image_height / 2 ;
+	  blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 1 ] , 
+						    TargetRectangle . x , TargetRectangle . y , TRUE );
+	}
+      else
+	{
+	  TargetRectangle . x -= MouseCursorImageList [ 1 ] . surface -> w / 2 ;
+	  TargetRectangle . y -= MouseCursorImageList [ 1 ] . surface -> h / 2 ;
+	  our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 1 ] . surface , NULL , Screen , &TargetRectangle);
+	}
+    }
 
 }; // void PutMouseMoveCursor ( void )
 

@@ -279,44 +279,20 @@ item surface will be used as a substitute for now.",
 void 
 Load_Mouse_Move_Cursor_Surfaces( void )
 {
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i=0;
   int j;
   char *fpath;
+  char our_filename[2000] = "";
 
-  fpath = find_file ( MOUSE_CURSOR_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-  // SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
-
-  // tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width , Block_Height , 32 , 0x0FF000000 , 0x0FF0000 , 0x0FF00 , 0x0FF );
-  tmp_surf = SDL_CreateRGBSurface( 0 , 64 , 64 , vid_bpp , 0 , 0 , 0 , 0 );
-
-  for ( j=0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
+  for ( j = 0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
     {
-      Source.x = j * ( 64 + 2 );
-      Source.y = i * ( 64 + 2 );
-      Source.w = 64 ;
-      Source.h = 64 ;
-      Target.x = 0;
-      Target.y = 0;
-      Target.w = Source.w;
-      Target.h = Source.h;
+      sprintf ( our_filename , "mouse_move_cursor_%d.png" , j );
+      fpath = find_file ( our_filename , GRAPHICS_DIR , FALSE );
+      
+      get_iso_image_from_file_and_path ( fpath , & ( MouseCursorImageList [ j ] ) , TRUE ) ;
 
-      MouseCursorImageList[ j ] = our_SDL_display_format_wrapperAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( MouseCursorImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , MouseCursorImageList[ j ] , &Target );
-      SDL_SetAlpha( MouseCursorImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
+      if ( use_open_gl )
+	make_texture_out_of_surface ( & ( MouseCursorImageList [ j ] ) );
     }
-
-  SDL_FreeSurface( tmp_surf );
-  SDL_FreeSurface( Whole_Image );
 
 }; // void Load_Mouse_Move_Cursor_Surfaces( void )
 
