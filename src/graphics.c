@@ -724,18 +724,18 @@ void FadeColors2(void)
 
 void WaitVRetrace(void)
 {
-/*
-	Diese Prozedur wartet darauf, daá der Elektronenstrahl des Monitors den
-   naechsten vertikalen Strahlruecklauf antritt. Sollte der Elektronenstrahl
-   zu Beginn der Funktion gerade mit einem Ruecklauf beschaeftigt sein, so
-   wird die naechste Ruecklaufperiode abgewartet.
+  /*
+    Diese Prozedur wartet darauf, daá der Elektronenstrahl des Monitors den
+    naechsten vertikalen Strahlruecklauf antritt. Sollte der Elektronenstrahl
+    zu Beginn der Funktion gerade mit einem Ruecklauf beschaeftigt sein, so
+    wird die naechste Ruecklaufperiode abgewartet.
+    
+    Parameter: keine
+  */
 
-   Parameter: keine
-*/
+  vga_waitretrace();
 
-  //	while ((inport(*CRTC+6) & 0x08) != 0);
-  //	while ((inport(*CRTC+6) & 0x08) <= 0);
-}
+} // void WaitVRetrace(void)
 
 
 /* *********************************************************************** */

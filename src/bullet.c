@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.10  1997/06/09 23:08:58  jprix
+ * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *
  * Revision 1.9  1997/06/09 13:42:17  jprix
  * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
  * Modified makefile to depend also on the important paravars.h .
@@ -154,19 +157,20 @@ void StartBlast(int x, int y, int type)
 @Int: keiner
 * $Function----------------------------------------------------------*/
 void ExplodeBlasts(void){
-	int i;
-	Blast CurBlast = AllBlasts;
+  int i;
+  Blast CurBlast = AllBlasts;
 	
-	for (i=0;i<MAXBLASTS;i++, CurBlast ++)
-    	if (CurBlast->type != OUT )  {
+  for (i=0;i<MAXBLASTS;i++, CurBlast ++)
+    if (CurBlast->type != OUT )  {
     		
-    		/* Druidblasts sind gefaehrlich !! */
-    		if( CurBlast->type == DRUIDBLAST) CheckBlastCollisions(i);
-    		
-			CurBlast->phase++;
-			if (CurBlast->phase >= Blastmap[CurBlast->type].phases) 
-				DeleteBlast(i);
-  		} /* if */
+      /* Druidblasts sind gefaehrlich !! */
+      if( CurBlast->type == DRUIDBLAST) CheckBlastCollisions(i);
+      
+      // CurBlast->phase++;
+      CurBlast->phase += Frame_Time() * BLASTPHASES_PER_SECOND;
+      if ( ((int)rintf(CurBlast->phase)) >= Blastmap[CurBlast->type].phases ) 
+	DeleteBlast(i);
+    } /* if */
 } /* ExplodeBlasts */
 
 /*@Function============================================================

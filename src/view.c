@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.20  1997/06/09 23:08:59  jprix
+ * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *
  * Revision 1.19  1997/06/09 21:53:49  jprix
  * Rotation of enemys and influencer now independant of the framerate.
  *
@@ -608,20 +611,20 @@ void PutBullet(int BulletNummer)
 * $Function----------------------------------------------------------*/
 void PutBlast(int BlastNummer)
 {
-	Blast CurBlast = &AllBlasts[BlastNummer];
-	unsigned char *blastpic;
+  Blast CurBlast = &AllBlasts[BlastNummer];
+  unsigned char *blastpic;
 
 #if BLASTOFF == 1
-	return;
+  return;
 #endif
 
-	/* Wenn Blast OUT ist sofort naechsten bearbeiten */
-	if (CurBlast->type == OUT) return;
+  /* Wenn Blast OUT ist sofort naechsten bearbeiten */
+  if (CurBlast->type == OUT) return;
 	
-   blastpic = Blastmap[CurBlast->type].picpointer + (CurBlast->phase)*BLOCKMEM;
-
-	PutObject(CurBlast->PX, CurBlast->PY, blastpic, FALSE);
-}
+  blastpic = Blastmap[CurBlast->type].picpointer + ((int)rintf(CurBlast->phase))*BLOCKMEM;
+  
+  PutObject(CurBlast->PX, CurBlast->PY, blastpic, FALSE);
+} // void PutBlast(int BlastNummer)
 
 /*@Function============================================================
 @Desc: PutObject: Puts object with center-coordinates x/y and the
@@ -712,7 +715,7 @@ void PutInternFenster(void)
   StartX=(((int)Me.pos.x) % BLOCKBREITE)-BLOCKBREITE/2;
   StartY=((((int)Me.pos.y) % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
 
-   //   WaitVRetrace();		/* dont waste time with this */
+   WaitVRetrace();		//
 
    for(i=0; i<USERFENSTERHOEHE; i++) {
      source = InternWindow +

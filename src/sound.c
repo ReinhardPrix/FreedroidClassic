@@ -11,6 +11,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.15  1997/06/09 23:08:59  jprix
+ * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *
  * Revision 1.14  1997/06/09 19:44:13  jprix
  * Improved the Title.
  *
@@ -286,16 +289,13 @@ void YIFF_Server_Check_Events(void){
   // definition.
 #ifdef PARADROID_SOUND_SUPPORT_ON
 
-  // FIRST CHECK EVENTS FOR THE FIRST CHANNEL
 
-  // Get the next event (if any) in the first Channel 
-
-  if(YGetNextEvent( con, &event, False ) > 0)
+  if(YGetNextEvent( BackgroundMusic_con , &event , False ) > 0)
     {
-                                /* Sound object stopped playing? */
+      // Sound object stopped playing? 
       if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
 	{
-	  /* Our play has stopped. */
+	  // Our play has stopped. 
 	  printf("Done playing.\n");
 	}
       // Server disconnected us? 
@@ -311,20 +311,59 @@ void YIFF_Server_Check_Events(void){
       // Server shutdown? 
       else if(event.type == YShutdown)
 	{
-	  /* Server shutdown. */
+	  // Server shutdown. 
 	  printf( "Y server shutdown, reason %i.\n", event.shutdown.reason );
 	  Terminate(ERR);
 	}
       else
 	{
-	  /* Some other Y event, ignore. */
+	  // Some other Y event, ignore. 
 	}
     }
-  
+
+
+  // FIRST CHECK EVENTS FOR THE FIRST CHANNEL
+
+  // Get the next event (if any) in the first Channel 
+
+  /* TEST
+  if(YGetNextEvent( con, &event, False ) > 0)
+    {
+      // Sound object stopped playing? 
+      if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
+	{
+	  // Our play has stopped. 
+	  printf("Done playing.\n");
+	}
+      // Server disconnected us? 
+      else if(event.type == YDisconnect)
+	{
+	  // Got disconnected.
+	  printf(
+		 "Y server disconnected us, reason %i.\n",
+		 event.disconnect.reason
+		 );
+	  Terminate(ERR);
+	}
+      // Server shutdown? 
+      else if(event.type == YShutdown)
+	{
+	  // Server shutdown. 
+	  printf( "Y server shutdown, reason %i.\n", event.shutdown.reason );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  // Some other Y event, ignore. 
+	}
+    }
+  TEST */ 
 
   // NOW CHECK FOR EVENTS OF THE SECOND CHANNEL
   
   // Get the next event (if any) in the second channel 
+
+  /* TEST
 
   if(YGetNextEvent( con2, &event2, False ) > 0)
     {
@@ -333,7 +372,7 @@ void YIFF_Server_Check_Events(void){
 	 (event2.kill.yid == play_id2)
 	 )
 	{
-	  /* Our play has stopped. */
+	  // Our play has stopped. 
 	  printf("Done playing in the second channel.\n");
 	}
       // Server disconnected us? 
@@ -356,6 +395,8 @@ void YIFF_Server_Check_Events(void){
 	}
     }
     
+  */
+
 #endif
 
 } // void YIFF_Server_Check_Events(void)
@@ -394,11 +435,13 @@ void YIFF_Server_Close_Connections(void){
   YCloseConnection(BackgroundMusic_con, False);
   BackgroundMusic_con = NULL;
 
+  /* TEST
   YCloseConnection(con, False);
   con = NULL;
 
   YCloseConnection(con2, False);
   con2 = NULL;
+  */
 
 #endif
 
@@ -455,6 +498,7 @@ void Play_YIFF_BackgroundMusic(int Tune){
   YEventSoundPlay Music_Parameters;
 
   printf("\nvoid Play_YIFF_BackgroundMusic(int Tune):  Real function call confirmed.\n");
+
   if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedBackgroundMusicSampleFilename, 
 				 &BackgroundMusic_sndobj_attrib ) )
     {
@@ -497,29 +541,33 @@ void Play_YIFF_Server_Sound(int Tune){
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
   if (Tune == FIRESOUND) {
-    if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
-      {
+    // TEST   if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
+    //    if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
+    //      {
 	// Can't get sound object attributes.
-  	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
-  		 ExpandedFireSoundSampleFilename );
-	printf(" CWD: %s \n\n",getcwd(NULL,0));
-  	Terminate(ERR);
-      }
-    else
-      {
-	play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
-      }
+    //  	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
+    //  		 ExpandedFireSoundSampleFilename );
+    //	printf(" CWD: %s \n\n",getcwd(NULL,0));
+    //  	Terminate(ERR);
+    //      }
+    //    else
+    //      {
+    //TEST	play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
+    //      }
   }
 
 
 
   if (Tune == COLLISIONSOUND) {
-    play_id = YStartPlaySoundObjectSimple( con, ExpandedCollisionSoundSampleFilename );
+    //TEST play_id = YStartPlaySoundObjectSimple( con, ExpandedCollisionSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedCollisionSoundSampleFilename );
     // write(handle, CollisionSoundSamplePointer, FragmentRoundUp(CollisionSoundSampleLength));
   }
 
   if (Tune == BLASTSOUND) {
-    play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedBlastSoundSampleFilename );
   }
 
 #endif
@@ -573,10 +621,11 @@ int Init_YIFF_Sound_Server(void){
 
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
   // therefore a yiff server will be started even if none is running!!  great!!
-  con = YOpenConnection(
-			"yiff",
-			CON_ARG
-			);
+  /* TEST
+    con = YOpenConnection(
+  			"yiff",
+  			CON_ARG
+  			);
 
   // Attention!! First channel is to be opend now!
   if(con == NULL) {
@@ -598,7 +647,10 @@ int Init_YIFF_Sound_Server(void){
     // Failed to connect to the Y server. 
     fprintf( stderr, "%s: Cannot connect the YIFF server for second channel.\n", CON_ARG );
       Terminate(ERR);
+
     }
+
+  */
 
   // The connection to the sound server should now be established...
   // Printing debug message and going on...
@@ -714,11 +766,11 @@ void GotHitSound(void){
 * $Function----------------------------------------------------------*/
 void GotIntoBlastSound(void){
 
-	/* Sound "uber FM-Generatoren */
-	MakeSound(&GotIntoBlastTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+  /* Sound "uber FM-Generatoren */
+  MakeSound(&GotIntoBlastTune);
+  /* oder "uber MOD-Abspielroutine */
+  return;
+} // void GotIntoBlastSound(void)
 
 /*@Function============================================================
 @Desc: 
@@ -728,12 +780,12 @@ void GotIntoBlastSound(void){
 * $Function----------------------------------------------------------*/
 void RefreshSound(void){
 
-	/* Sound "uber FM-Generatoren */
-//	MakeSound(&MoveElevatorTune);
-	MakeSound(&TankenTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+  /* Sound "uber FM-Generatoren */
+  //	MakeSound(&MoveElevatorTune);
+  MakeSound(&TankenTune);
+  /* oder "uber MOD-Abspielroutine */
+  return;
+} // void RefreshSound(void)
 
 
 /*@Function============================================================
@@ -744,11 +796,11 @@ void RefreshSound(void){
 * $Function----------------------------------------------------------*/
 void MoveElevatorSound(void){
 
-	/* Sound "uber FM-Generatoren */
-	MakeSound(&MoveElevatorTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+  /* Sound "uber FM-Generatoren */
+  MakeSound(&MoveElevatorTune);
+  /* oder "uber MOD-Abspielroutine */
+  return;
+} // void MoveElevatorSound(void)
 
 
 /*@Function============================================================
@@ -759,11 +811,11 @@ void MoveElevatorSound(void){
 * $Function----------------------------------------------------------*/
 void EnterElevatorSound(void){
 
-	/* Sound "uber FM-Generatoren */
-	MakeSound(&MoveElevatorTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+  /* Sound "uber FM-Generatoren */
+  MakeSound(&MoveElevatorTune);
+  /* oder "uber MOD-Abspielroutine */
+  return;
+} // void EnterElevatorSound(void)
 
 
 /*@Function============================================================

@@ -100,9 +100,16 @@ void ShowHighscoreList(void);
 void Pause(void);
 void UpdateCountersForThisFrame(void);
 
+// This function is the key to independance of the framerate for various game elements.
+// It returns the average time needed to draw one frame.
+// Other functions use this to calculate new positions of moving objects, etc..
+//
+// BEWARE!  Using the average over 1 frame (the previous frame that is) is no good.
+// The sound server tends to
+//
 float Frame_Time(void){
-  if (FPSover1 > 10) {
-    return (1/FPSover1);
+  if (FPSover10 > 10) {
+    return (1/FPSover10);
   } else {
     return (1/10);
   }
@@ -190,6 +197,7 @@ int main(void)
       GetView();      /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 
       GetInternFenster();
+      
       PutInternFenster();
 
 #ifdef PARADROID_SOUND_SUPPORT_ON

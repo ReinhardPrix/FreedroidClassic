@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/09 23:08:59  jprix
+ * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *
  * Revision 1.7  1997/06/09 21:00:56  jprix
  * The constants for the druids have been largely rescaled to MUCH larger values.
  * This is for the new float and framedependent movement of the enemys.  It works nicley
@@ -194,6 +197,7 @@ void InitNewGame(void)
   Me.health = Me.energy;		/* start with max. health */
   Me.autofire = FALSE;
   Me.status = MOBILE;
+  Me.phase = 0;
   RedrawInfluenceNumber();
 	
 

@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.16  1997/06/09 23:08:59  jprix
+ * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *
  * Revision 1.15  1997/06/09 21:53:49  jprix
  * Rotation of enemys and influencer now independant of the framerate.
  *
@@ -304,7 +307,7 @@ void AnimateInfluence(void) {
    */
 	 
 
-  Me.phase += (Me.energy/(Druidmap[Me.type].maxenergy)) * Frame_Time() * ENEMYPHASES * 3;
+  Me.phase += (Me.energy/(Druidmap[DRUID001].maxenergy)) * Frame_Time() * ENEMYPHASES * 3;
   if ( ((int) rintf(Me.phase)) >= ENEMYPHASES) {
     Me.phase=0;
   }
