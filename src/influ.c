@@ -599,9 +599,9 @@ ExplodeInfluencer (void)
 	  Terminate(ERR);
 	}
       AllBlasts[counter].type = DRUIDBLAST;
-      AllBlasts[counter].PX =
+      AllBlasts[counter].pos.x =
 	Me.pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
-      AllBlasts[counter].PY =
+      AllBlasts[counter].pos.y =
 	Me.pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
       AllBlasts[counter].phase = i;
     }

@@ -288,8 +288,8 @@ StartBlast (float x, float y, int type)
   NewBlast = &(AllBlasts[i]);
 
   // create a blast at the specified x/y coordinates
-  NewBlast->PX = x;
-  NewBlast->PY = y;
+  NewBlast->pos.x = x;
+  NewBlast->pos.y = y;
 
   NewBlast->type = type;
   NewBlast->phase = 0;
@@ -322,8 +322,8 @@ ExplodeBlasts (void)
 	// cause a SEGFAULT directly afterwards, when the map is queried.
 	// Therefore we introduce some extra security here...
 	//
-	map_x= (int) rintf( CurBlast->PX );
-	map_y= (int) rintf( CurBlast->PY );
+	map_x= (int) rintf( CurBlast->pos.x );
+	map_y= (int) rintf( CurBlast->pos.y );
 	if ( ( map_x < 0 ) || ( map_x >= CurLevel->xlen ) ||
 	     ( map_y < 0 ) || ( map_y >= CurLevel->ylen ) )
 	  {
@@ -685,8 +685,8 @@ CheckBlastCollisions (int num)
       if (CurBlast->phase > 4)
 	break;
 
-      if (abs (AllBullets[i].pos.x - CurBlast->PX) < Blast_Radius)
-	if (abs (AllBullets[i].pos.y - CurBlast->PY) < Blast_Radius)
+      if (abs (AllBullets[i].pos.x - CurBlast->pos.x ) < Blast_Radius)
+	if (abs (AllBullets[i].pos.y - CurBlast->pos.y ) < Blast_Radius)
 	  {
 	    if ( ! AllBullets[i].pass_through_explosions )
 	      {
@@ -706,8 +706,8 @@ CheckBlastCollisions (int num)
 	  || (AllEnemys[i].levelnum != level))
 	continue;
 
-      if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius ) &&
-	   ( fabsf (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius ) )
+      if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
+	   ( fabsf (AllEnemys[i].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
 	  {
 	    /* drag energy of enemy */
 	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
@@ -719,8 +719,8 @@ CheckBlastCollisions (int num)
   // of effect of this one blast.  Then he'll get burnt ;)
   // 
   if ( (Me.status != OUT) && 
-       ( fabsf (Me.pos.x - CurBlast->PX) < Blast_Radius ) &&
-       ( fabsf (Me.pos.y - CurBlast->PY) < Blast_Radius ) )
+       ( fabsf (Me.pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
+       ( fabsf (Me.pos.y - CurBlast->pos.y ) < Blast_Radius ) )
     {
       if (!InvincibleMode)
 	{

@@ -446,19 +446,17 @@ typedef struct
 
 typedef struct
 {
-  int type;			/* gibt die Nummer in Druidmap an */
-  int levelnum;			/* Level in dem sich enemy befindet */
-  finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
-  finepoint speed;		/* current speed  */
-  double energy;		/* gibt die Energie dieses Robots an */
-  double feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
-  int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
-  int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
-  int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  int type;			// the number of the droid specifications in Druidmap 
+  int levelnum;			// level where this droid is located on the ship
+  finepoint pos;		// coordinates of the current position in the level
+  finepoint speed;		// current speed  
+  double energy;		// current energy of this droid
+  double feindphase;		// current phase of rotation of this droid
+  int nextwaypoint;		// the next waypoint target
+  int lastwaypoint;		// the waypoint from whence this robot just came
+  int Status;			// current status like OUT=TERMINATED or not OUT
   double warten;		// time till the droid will start to move again
-  byte passable;		/* Zeit (counter), in der druid passable ist */
-  double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
-  // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+  double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
   int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
   int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
@@ -485,7 +483,6 @@ enemy, *Enemy;
 
 typedef struct
 {
-  // double recharging_time;       // time until the next shot can be made, measures in seconds
   int phases;			/* how many phases in motion to show */
   double phase_changes_per_second; // how many different phases to display every second
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
@@ -540,12 +537,12 @@ blastspec, *Blastspec;
 
 typedef struct
 {
-  double PX;			/* PosX */
-  double PY;			/* PosY */
+  moderately_finepoint pos;
+  // double PX;			/* PosX */
+  // double PY;			/* PosY */
   int type;
   double phase;
   int MessageWasDone;
-  
 }
 blast, *Blast;
 
