@@ -607,7 +607,15 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
       ThisRobot->speed.y = 0;
     }
 
-}; // void
+  //--------------------
+  // Since this robot is moving, we set the animation type to 
+  // walking...
+  //
+  ThisRobot -> animation_type = WALK_ANIMATION ; 
+  if ( ThisRobot -> animation_phase == 0 )
+    ThisRobot -> animation_phase = 0.1 ;
+
+}; // void RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
 
 /* ----------------------------------------------------------------------
  * This function moves one robot thowards his next waypoint.  If already
@@ -1055,8 +1063,10 @@ DropEnemyTreasure ( Enemy ThisRobot )
 int
 MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot )
 {
-
-  // if the enemy is outside of the current map, that's an error and needs to be correted.
+  //--------------------
+  // If the enemy is outside of the current map, 
+  // that's an error and needs to be correted.
+  //
   if ( ( ThisRobot -> pos . x <= 0 ) || 
        ( ThisRobot -> pos . x >= curShip.AllLevels[ ThisRobot -> pos . z ] -> xlen ) ||
        ( ThisRobot -> pos . y <= 0 ) || 
@@ -1133,9 +1143,9 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       // Maybe this robot is already fully animated or has at least one
       // 'death' image.  Then we'll activate it.
       //
-      if ( ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
+      if ( last_death_animation_image [ ThisRobot -> type ] != 1 )
 	{
-	  ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) + 0.1 ;
+	  ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) - 1 + 0.1 ;
 	  ThisRobot -> animation_type = DEATH_ANIMATION;
 	  play_death_sound_for_bot ( ThisRobot );
 	}
@@ -1304,7 +1314,8 @@ MoveEnemys ( void )
        //--------------------
        // Ignore robots, that are in the middle of their attack movement
        //
-       if ( ThisRobot -> animation_phase > 0 ) continue ;
+       // if ( ThisRobot -> animation_phase > 0 ) continue ;
+       if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) continue ;
 
        //--------------------
        // Now we do the movement, either to the next waypoint OR if one
@@ -2503,7 +2514,7 @@ AnimateEnemys (void)
 		}
 	      break;
 	    case DEATH_ANIMATION:
-	      if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] )
+	      if ( ( (int) our_enemy -> animation_phase ) >= last_death_animation_image [ our_enemy -> type ] )
 		{
 		  our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
 		  our_enemy -> animation_type = DEATH_ANIMATION ;

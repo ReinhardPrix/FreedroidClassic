@@ -2670,7 +2670,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
   // version.
   //
   if ( ( phase != DROID_PHASES ) || 
-       ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
+       ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] > 0 ) )
     {
       
       //--------------------
@@ -2720,7 +2720,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 
 	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
 	    {
-	      our_SDL_blit_surface_wrapper( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle);
+	      our_SDL_blit_surface_wrapper ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle );
 	      if ( GameConfig . enemy_energy_bars_visible )
 		PutEnemyEnergyBar ( Enum , TargetRectangle );
 	      return;

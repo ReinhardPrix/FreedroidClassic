@@ -824,7 +824,7 @@ Freedroid received a rotation model number that does not exist!",
 	      if ( ModelNr == 6 )
 		source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
 	      else
-		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 1 ;
+		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 0 ;
 
 	      //--------------------
 	      // Now we can proceed to load the images for each animation phase
@@ -837,18 +837,60 @@ Freedroid received a rotation model number that does not exist!",
 		}
 	      else if ( j + 1 <= last_attack_animation_image [ ModelNr ] )
 		{
-		  sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    source_direction_code , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
+		  //--------------------
+		  // If there is no attack animation cycle yet, then we need to use the first
+		  // walk animation image for the attack cycle and that's it.
+		  // But if there is some animation done and available, then we can use these
+		  // images of course.
+		  //
+		  if ( use_default_attack_image [ ModelNr ] )
+		    {
+		      sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , PrefixToFilename [ ModelNr ] ,
+				source_direction_code );
+		    }
+		  else
+		    {
+		      sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+				source_direction_code , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
+		    }
 		}
 	      else if ( j + 1 <= last_gethit_animation_image [ ModelNr ] )
 		{
-		  sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    source_direction_code , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
+		  //--------------------
+		  // If there is no gethit animation cycle yet, then we need to use the first
+		  // walk animation image for the attack cycle and that's it.
+		  // But if there is some animation done and available, then we can use these
+		  // images of course.
+		  //
+		  if ( use_default_gethit_image [ ModelNr ] )
+		    {
+		      sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , PrefixToFilename [ ModelNr ] ,
+				source_direction_code );
+		    }
+		  else
+		    {
+		      sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+				source_direction_code , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
+		    }
 		}
 	      else if ( j + 1 <= last_death_animation_image [ ModelNr ] )
 		{
-		  sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    source_direction_code , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
+		  //--------------------
+		  // If there is no gethit animation cycle yet, then we need to use the first
+		  // walk animation image for the attack cycle and that's it.
+		  // But if there is some animation done and available, then we can use these
+		  // images of course.
+		  //
+		  if ( use_default_death_image [ ModelNr ] )
+		    {
+		      sprintf ( ConstructedFileName , "droids/default_dead_body_%02d_0001.png" , 
+				ModelMultiplier [ ModelNr ] * i * 2 );
+		    }
+		  else
+		    {
+		      sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+				source_direction_code , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
+		    }
 		}
 	      else
 		{
@@ -1095,16 +1137,22 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ; i++;
   PrefixToFilename [ i ] = "123" ; // 1
   first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
+  last_walk_animation_image [ i ] = 5 ;
+  first_attack_animation_image [ i ] = 6 ;
+  last_attack_animation_image [ i ] = 6 ;
+  first_gethit_animation_image [ i ] = 7 ;
+  last_gethit_animation_image [ i ] = 7 ;
+  first_death_animation_image [ i ] = 8 ;
+  last_death_animation_image [ i ] = 8 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ; i++;
   PrefixToFilename [ i ] = "139" ; // 2
   first_walk_animation_image [ i ] = 1 ;
@@ -1115,26 +1163,35 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "247" ; // 3 
   first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
+  last_walk_animation_image [ i ] = 5 ;
+  first_attack_animation_image [ i ] = 6 ;
+  last_attack_animation_image [ i ] = 6 ;
+  first_gethit_animation_image [ i ] = 7 ;
+  last_gethit_animation_image [ i ] = 7 ;
+  first_death_animation_image [ i ] = 8 ;
+  last_death_animation_image [ i ] = 8 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "249" ; // 4
   first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
+  last_walk_animation_image [ i ] = 5 ;
+  first_attack_animation_image [ i ] = 6 ;
+  last_attack_animation_image [ i ] = 6 ;
+  first_gethit_animation_image [ i ] = 7 ;
+  last_gethit_animation_image [ i ] = 7 ;
+  first_death_animation_image [ i ] = 8 ;
+  last_death_animation_image [ i ] = 8 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "296" ; // 5
   first_walk_animation_image [ i ] = 1 ;
@@ -1145,6 +1202,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++; 
   PrefixToFilename [ i ] = "302" ; // 6
   first_walk_animation_image[ i ] = 1 ;
@@ -1155,6 +1215,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image[ i ] = 24 ;
   first_death_animation_image[ i ] = 25 ;
   last_death_animation_image[ i ] = 31 ;
+  use_default_attack_image [ i ] = FALSE ;
+  use_default_gethit_image [ i ] = FALSE ;
+  use_default_death_image [ i ] = FALSE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "329" ; // 7
   first_walk_animation_image [ i ] = 1 ;
@@ -1165,6 +1228,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "420" ; // 8 
   first_walk_animation_image [ i ] = 1 ;
@@ -1175,6 +1241,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "476" ; // 9 
   first_walk_animation_image [ i ] = 1 ;
@@ -1185,6 +1254,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "493" ; // 10
   first_walk_animation_image [ i ] = 1 ;
@@ -1195,6 +1267,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++; 
   PrefixToFilename [ i ] = "516" ; // 11
   first_walk_animation_image [ i ] = 1 ;
@@ -1205,6 +1280,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "571" ; // 12
   first_walk_animation_image [ i ] = 1 ;
@@ -1215,6 +1293,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "598" ; // 13
   first_walk_animation_image [ i ] = 1 ;
@@ -1225,6 +1306,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "614" ; // 14
   first_walk_animation_image [ i ] = 1 ;
@@ -1235,6 +1319,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "615" ; // 15
   first_walk_animation_image [ i ] = 1 ;
@@ -1245,6 +1332,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "629" ; // 16
   first_walk_animation_image [ i ] = 1 ;
@@ -1255,6 +1345,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "711" ; // 17
   first_walk_animation_image [ i ] = 1 ;
@@ -1265,6 +1358,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "742" ; // 18
   first_walk_animation_image [ i ] = 1 ;
@@ -1275,6 +1371,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "751" ; // 19
   first_walk_animation_image [ i ] = 1 ;
@@ -1285,6 +1384,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "821" ; // 20
   first_walk_animation_image [ i ] = 1 ;
@@ -1295,6 +1397,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "834" ; // 21
   first_walk_animation_image [ i ] = 1 ;
@@ -1305,6 +1410,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "883" ; // 22
   first_walk_animation_image [ i ] = 1 ;
@@ -1315,6 +1423,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ; // 23
   first_walk_animation_image [ i ] = 1 ;
@@ -1325,6 +1436,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "professor" ; // 24
   first_walk_animation_image [ i ] = 1 ;
@@ -1335,6 +1449,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "red_guard" ; // 25
   first_walk_animation_image [ i ] = 1 ;
@@ -1345,6 +1462,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "brown_worker" ; // 26
   first_walk_animation_image [ i ] = 1 ;
@@ -1355,6 +1475,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "blue_guard" ; // 27
   first_walk_animation_image [ i ] = 1 ;
@@ -1365,6 +1488,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "green_guard" ; // 28
   first_walk_animation_image [ i ] = 1 ;
@@ -1375,6 +1501,9 @@ Load_Enemy_Surfaces( void )
   last_gethit_animation_image [ i ] = 1 ;
   first_death_animation_image [ i ] = 1 ;
   last_death_animation_image [ i ] = 1 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   ModelMultiplier  [ i ] = 1 ;i++;
 
 }; // void LoadEnemySurfaces( void )
