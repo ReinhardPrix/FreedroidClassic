@@ -1473,6 +1473,7 @@ void
 DropHeldItemToSlot ( item* SlotItem )
 {
   item* DropItemPointer;
+  int SourcePositionCode , DestPositionCode;
 
   // --------------------
   // First we find out which item we want to drop into the weapon slot
@@ -1507,7 +1508,21 @@ DropHeldItemToSlot ( item* SlotItem )
   // Now the item is removed from the source location and no longer held in hand as well, 
   // but of course only if it is not the same as the original item
   if ( DropItemPointer != SlotItem )
-    DeleteItem( DropItemPointer );
+    {
+
+      DeleteItem( DropItemPointer );
+
+      //--------------------
+      // Now we inform the server of our performed move....
+      //
+      if ( ClientMode && ! ServerMode ) 
+	{
+	  SourcePositionCode = GetPositionCode ( DropItemPointer );
+	  DestPositionCode = GetPositionCode ( SlotItem  ) ;
+	  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , -1 , -1  ) ;
+	}
+
+    }
 
 }; // void DropHeldItemToSlot ( item* SlotItem )
 
