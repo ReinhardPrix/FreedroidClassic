@@ -28,7 +28,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _freedroid_c
+#define _main_c
 
 #include "system.h"
 
@@ -708,4 +708,4 @@ UpdateCountersForThisFrame (void)
 } /* UpdateCountersForThisFrame() */
 
 
-#undef _freedroid_c
+#undef _main_c
