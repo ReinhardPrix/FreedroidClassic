@@ -428,16 +428,17 @@ ShowSkillsScreen ( void )
   char* SkillName[ NUMBER_OF_SKILLS ];
   SDL_Rect SpellLevelRect;
 
-  SkillName[ 0 ] = "Takeover/Talk Skill";
-  SkillName[ 1 ] = "Force Explosion Circle";
-  SkillName[ 2 ] = "Force Explosion Ray";
-  SkillName[ 3 ] = "Force -> Energy ";
-  SkillName[ 4 ] = "Create Teleportal Home";
-  SkillName[ 5 ] = "Firey Bolt";
-  SkillName[ 6 ] = "Holy Bolt";
-  SkillName[ 7 ] = "Mana Shield";
-  SkillName[ 8 ] = "Cold Bolt";
-  SkillName[ 9 ] = "Unknown yet";
+  SkillName[  0 ] = "Takeover/Talk Skill";
+  SkillName[  1 ] = "Force Explosion Circle";
+  SkillName[  2 ] = "Force Explosion Ray";
+  SkillName[  3 ] = "Force -> Energy ";
+  SkillName[  4 ] = "Create Teleportal Home";
+  SkillName[  5 ] = "Remote Strike";
+  SkillName[  6 ] = "Cold Bolt";
+  SkillName[  7 ] = "Mana Shield";
+  SkillName[  8 ] = "Holy Bolt";
+  SkillName[  9 ] = "Poison Bolt";
+  SkillName[ 10 ] = "Unknown yet";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 

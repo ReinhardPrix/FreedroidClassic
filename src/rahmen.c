@@ -213,6 +213,27 @@ Sorry...\n\
   //
   if ( ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat ) && ( !ForShop ) )
     {
+      switch ( CurItem->type )
+	{
+	case ITEM_SMALL_HEALTH_POTION:
+	case ITEM_MEDIUM_HEALTH_POTION:
+	case ITEM_FULL_HEALTH_POTION:
+	  sprintf( linebuf , "Recover Health\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
+	case ITEM_MEDIUM_MANA_POTION:
+	case ITEM_FULL_MANA_POTION:
+	case ITEM_SMALL_MANA_POTION:
+	  sprintf( linebuf , "Recover Force\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
+	default:
+	  sprintf( linebuf , "USE UNDESCRIBED YET\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+	}
       sprintf( linebuf , "Right click to use" );
       strcat( ItemDescText , linebuf );
     }
