@@ -79,27 +79,15 @@ int rate = 8000;
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
 // The order of appearance here should match the order of appearance 
-// in the SoundSampleFilenames definition
+// in the enum-Environment located in defs.h!
 
-enum _sounds {
-  ERRORSOUND=0,
-  BACKGROUND_MUSIC_SOUND,
-  BLASTSOUND,
-  COLLISIONSOUND,
-  FIRESOUND,
-  GOT_INTO_BLAST_SOUND,
-  MOVE_ELEVATOR_SOUND,
-  REFRESH_SOUND,
-  LEAVE_ELEVATOR_SOUND,
-  ENTER_ELEVATOR_SOUND,
-  THOU_ART_DEFEATED_SOUND,
-  GOT_HIT_SOUND,
-};
-
-#define ALL_SOUNDS 12
+#define ALL_SOUNDS 15
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ERRORSOUND_NILL",
-  "/../sound/BackgroundMusic1.wav",
+  "/../sound/Combat_Background_Music.wav",
+  "/../sound/Takeover_Background_Music.wav",
+  "/../sound/Console_Background_Music.wav",
+  "/../sound/Classical_Beep_Beep_Background_Music.wav",
   "/../sound/BlastSound1.wav",
   "/../sound/CollisionSound1.wav",
   "/../sound/FireSound1.wav",
@@ -111,6 +99,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ThouArtDefeatedSound2.wav",
   "/../sound/Got_Hit_Sound_1.wav"
 };
+
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
 long BlastSoundSampleLength=0;
@@ -275,26 +264,68 @@ void CrySound(void)
 
 }
 
+/*@Function============================================================
+@Desc: 
 
-void Play_YIFF_BackgroundMusic(int Tune){
+This function is intended to provide a convenient way of switching
+between different backround sounds in freedroid.
+If no background sound was yet running, the function should start playing
+the given background music.
+If some background sound was already playing, the function should shut down
+the old background music and start playing the new one.
+
+Technical details:
+
+
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void 
+Switch_Background_Music_To(int Tune)
+{
 #if HAVE_LIBY2
+
+  static int Current_Tune=SILENCE;
   YEventSoundPlay Music_Parameters;
 
-  printf("\nvoid Play_YIFF_BackgroundMusic(int Tune):  Real function call confirmed.\n");
 
-  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND], 
+  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Real function call confirmed.\n");
+
+  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Shutting down old background music track...\n");
+  
+  if ( Current_Tune == SILENCE ) 
+    {
+
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  No old music there to be shut down...\n");
+
+    } 
+  else
+    {
+
+      YDestroyPlaySoundObject( BackgroundMusic_con , BackgroundMusic_play_id );
+
+      DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
+      
+    }
+
+  Current_Tune=SILENCE;
+
+  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedSoundSampleFilenames[ Tune ], 
 				 &BackgroundMusic_sndobj_attrib ) )
     {
       // Can't get sound object attributes.
       fprintf( stderr, "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n", 
-	       ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND] );
+	       ExpandedSoundSampleFilenames[ Tune ] );
       printf(" CWD: %s \n\n",getcwd(NULL,0));
       Terminate(ERR);
     }
   else
     {
       BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, 
-							     ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND] );
+							     ExpandedSoundSampleFilenames[ Tune ] );
+
+      Current_Tune = Tune;
 
       Music_Parameters.repeats=0;
       Music_Parameters.total_repeats=-1; // -1 here means to repeat indefinately
@@ -307,10 +338,19 @@ void Play_YIFF_BackgroundMusic(int Tune){
       Music_Parameters.flags=0xFFFFFFFF;
       YSetPlaySoundObjectValues( BackgroundMusic_con, BackgroundMusic_play_id, &Music_Parameters );
     }
+
+  DebugPrintf("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
+
 #endif  /* HAVE_LIBY2 */
-} // Play_YIFF_BackgroundMusic(int Tune)
+} // void Switch_Background_Music_To(int Tune)
 
 
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
 void Play_YIFF_Server_Sound(int Tune){
 
   // This function can and should only be compiled on machines, that have the YIFF sound

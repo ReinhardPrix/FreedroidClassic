@@ -172,7 +172,14 @@ Takeover (int enemynum)
   static int RejectEnergy=0;		/* your energy if you're rejected */
   char *message;
 
-  printf("\nvoid Takeover(int enemynum): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid Takeover(int enemynum): Funktion echt aufgerufen.");
+
+  if (sound_on)
+    {
+      Switch_Background_Music_To( TAKEOVER_BACKGROUND_MUSIC_SOUND );
+      DebugPrintf("\nvoid Takeover(int enemynum):  Takeover background music started...");
+    }
+
 
   /* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
      kommt, wird diese Funktion tempor"ar desaktiviert. */
@@ -216,13 +223,13 @@ Takeover (int enemynum)
     
     ShowPlayground();
 
-    printf("\nvoid Takeover(int enemynum): Erstmalige Darstellung ist erfolgt.");
+    DebugPrintf("\nvoid Takeover(int enemynum): Erstmalige Darstellung ist erfolgt.");
 	
     ChooseColor();
 
     PlayGame();
 
-    printf("\nvoid Takeover(int enemynum): PlayGames ist wieder zurueckgekehrt.");
+    DebugPrintf("\nvoid Takeover(int enemynum): PlayGames ist wieder zurueckgekehrt.");
 	
     /* Ausgang beurteilen und returnen */
     if (InvincibleMode || (LeaderColor == YourColor) ) 
@@ -292,9 +299,15 @@ Takeover (int enemynum)
   /* Die Rahmenupdatefunktion kann wieder aktiviert werden. */
   InterruptInfolineUpdate = 1;
 
-  printf("\nvoid Takeover(int enemynum): Funktionsende ordnungsgemaess erreicht....");
+  DebugPrintf("\nvoid Takeover(int enemynum): Funktionsende ordnungsgemaess erreicht....");
   
   ClearVGAScreen();
+
+  if (sound_on)
+    {
+      Switch_Background_Music_To( COMBAT_BACKGROUND_MUSIC_SOUND );
+      DebugPrintf("\nvoid Takeover(int enemynum):  Takeover background music stopped.");
+    }
 
   if( LeaderColor == YourColor ) return TRUE;
   else return FALSE;

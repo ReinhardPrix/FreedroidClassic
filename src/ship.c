@@ -324,9 +324,16 @@ void EnterKonsole(void)
   int ReenterGame=0;
   int TasteOK;
   
-  printf("\nvoid EnterKonsole(void): Real function called.");
+  DebugPrintf("\nvoid EnterKonsole(void): real function call confirmed.");
 
   Me.status = CONSOLE;
+
+  if (sound_on)
+    {
+      Switch_Background_Music_To( CONSOLE_BACKGROUND_MUSIC_SOUND );
+      DebugPrintf("\nvoid EnterKonsole(void):  Console background music started.");
+    }
+
 	 
   /* Initialisierung der Konsole */
   
@@ -348,7 +355,7 @@ void EnterKonsole(void)
   else SetPalCol(M3C,GR,GG,GB);
   if (MenuPoint == 3) SetPalCol(M4C,HR,HG,HB);
   else SetPalCol(M4C,GR,GG,GB);
-	
+
   /* Gesamtkonsolenschleife */
   
   while (!ReenterGame) {
@@ -413,6 +420,12 @@ void EnterKonsole(void)
     keyboard_update();
     JoystickControl();
   }
+
+  if (sound_on)
+    {
+      Switch_Background_Music_To( COMBAT_BACKGROUND_MUSIC_SOUND );
+      DebugPrintf("\nvoid EnterKonsole(void):  Console background music stopped.");
+    }
 
   printf("\nvoid EnterKonsole(void): Normal end of function reached.");
 } // void EnterKonsole(void)

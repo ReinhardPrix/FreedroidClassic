@@ -325,6 +325,11 @@ void InitNewGame(void)
 #endif
   InitBars=TRUE;
 
+  if (sound_on)
+    {
+      Switch_Background_Music_To( COMBAT_BACKGROUND_MUSIC_SOUND );
+    }
+
   DebugPrintf("\nvoid InitNewGame(void): end of function reached.");
 
 } /* InitNewGame */
@@ -340,14 +345,11 @@ void InitParaplus(void) {
   printf("void InitParaplus(void) wurde echt aufgerufen....\n");
 
   Set_SVGALIB_Video_ON(); 
+  
+  if ( sound_on ) Init_YIFF_Sound_Server();
 
 
   // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
-  if (sound_on)
-    {
-      Init_YIFF_Sound_Server();
-      Play_YIFF_BackgroundMusic(0);
-    }
 
   /* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */
   // #ifdef NOJUNKWHILEINIT
@@ -523,6 +525,11 @@ void Title(void)
   int OldUpdateStatus = InterruptInfolineUpdate;
 
   DebugPrintf("\nvoid Title(void): real function call confirmed...:");
+
+  if (sound_on)
+    {
+      Switch_Background_Music_To( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+    }
 
   InterruptInfolineUpdate=FALSE;
 #ifdef NOJUNKWHILEINIT

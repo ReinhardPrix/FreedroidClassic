@@ -47,6 +47,30 @@
 // #undef PARADROID_SOUND_SUPPORT_ON
 #define PARADROID_SOUND_SUPPORT_ON
 
+// The following is the definition of the sound file names used in freedroid
+// DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
+// The order of appearance here should match the order of appearance 
+// in the SoundSampleFilenames definition located in sound.c!
+
+#define SILENCE (-1)
+enum _sounds {
+  ERRORSOUND=0,
+  COMBAT_BACKGROUND_MUSIC_SOUND,
+  TAKEOVER_BACKGROUND_MUSIC_SOUND,
+  CONSOLE_BACKGROUND_MUSIC_SOUND,
+  CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC,
+  BLASTSOUND,
+  COLLISIONSOUND,
+  FIRESOUND,
+  GOT_INTO_BLAST_SOUND,
+  MOVE_ELEVATOR_SOUND,
+  REFRESH_SOUND,
+  LEAVE_ELEVATOR_SOUND,
+  ENTER_ELEVATOR_SOUND,
+  THOU_ART_DEFEATED_SOUND,
+  GOT_HIT_SOUND,
+};
+
 // **********************************************************************
 
 #define PARA64 						TRUE
