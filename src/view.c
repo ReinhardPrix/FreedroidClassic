@@ -607,7 +607,7 @@ ShowPureMapBlocksAroundTux ( int mask )
 	      TargetRectangle.y = UserCenter_y
 		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
 	      
-	      if ( ( mask && ONLY_SHOW_MAP_AND_TEXT ) || MapBlockIsVisible ( col , line ) )
+	      if ( ( !RespectVisibilityOnMap ) || MapBlockIsVisible ( col , line ) )
 		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
 				 Screen, &TargetRectangle);
 	      else

@@ -63,14 +63,7 @@ EXTERN char *Weaponnames[];
 EXTERN char *Sensornames[];
 EXTERN char *AllSkillTexts[];
 EXTERN char *SkillName[];
-EXTERN int Sensor1[];
-EXTERN int Sensor2[];
-EXTERN int Sensor3[];
-EXTERN int Armament[];
-EXTERN int Drive[];
-EXTERN int Brain[];
 EXTERN char *Brainnames[];
-EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
 EXTERN int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] ;
@@ -113,6 +106,7 @@ EXTERN int PlusExtentionsOn;
 EXTERN int Alert;
 EXTERN int ThisShip;
 EXTERN long ShowScore;
+EXTERN int RespectVisibilityOnMap;
 
 EXTERN int ServerMode;
 EXTERN int ClientMode;

@@ -3136,6 +3136,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
   switch (MapBrick)
     {
     case FLOOR:
+    case CAVE_FLOOR:
     case FLOOR_CARPET_L:
     case FLOOR_CARPET_R:
     case FLOOR_CARPET_U:
@@ -3256,6 +3257,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
 
     case H_WALL:
+    case CAVE_H_WALL:
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -3263,6 +3265,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case V_WALL:
+    case CAVE_V_WALL:
       if ((fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -3270,6 +3273,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case CORNER_RU:
+    case CAVE_CORNER_RU:
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
@@ -3278,6 +3282,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case CORNER_RD:
+    case CAVE_CORNER_RD:
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3286,6 +3291,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case CORNER_LD:
+    case CAVE_CORNER_LD:
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3294,6 +3300,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
     case CORNER_LU:
+    case CAVE_CORNER_LU:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;

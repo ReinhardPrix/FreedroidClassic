@@ -294,7 +294,7 @@ ReactToSpecialKeys(void)
   static int Number8PressedLastFrame;
   static int Number9PressedLastFrame;
   influence_t Zwisch_Me;
-  char MessageBuffer[1024];
+  //  char MessageBuffer[1024];
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
@@ -639,6 +639,7 @@ ReactToSpecialKeys(void)
   //
   if ( GPressed () )
     {
+      /*
       Me[0].TextToBeDisplayed="Hello!  Greetings to the Server.";
       Me[0].TextVisibleTime=0;
 
@@ -652,6 +653,7 @@ ReactToSpecialKeys(void)
 	{
 	  ServerSendMessageToAllClients ( "\nThis is a message from the server to all clients. " );
 	}
+      */
     }
 
   //--------------------

@@ -1674,7 +1674,7 @@ InitNewMissionList ( char *MissionName )
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
-
+  RespectVisibilityOnMap = TRUE ;
   Me[0].Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
 

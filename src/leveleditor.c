@@ -2520,6 +2520,39 @@ EditMapLabelData ( Level EditLevel )
 }; // void EditMapLabelData ( EditLevel )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+RecFillMap ( Level EditLevel , int BlockY , int BlockX , int SpecialMapValue )
+{
+  int SourceAreaTileType=EditLevel->map[BlockY][BlockX];
+
+  EditLevel->map[BlockY][BlockX] = SpecialMapValue ;
+
+  if ( BlockX > 0 )
+    {
+      if ( EditLevel->map[BlockY][BlockX-1] == SourceAreaTileType )
+	RecFillMap ( EditLevel , BlockY , BlockX -1 , SpecialMapValue );
+    }
+  if ( BlockX < EditLevel->xlen -1 )
+    {
+      if ( EditLevel->map[BlockY][BlockX+1] == SourceAreaTileType )
+	RecFillMap ( EditLevel , BlockY , BlockX +1 , SpecialMapValue );
+    }
+  if ( BlockY > 0 )
+    {
+      if ( EditLevel->map[BlockY-1][BlockX] == SourceAreaTileType )
+	RecFillMap ( EditLevel , BlockY-1 , BlockX , SpecialMapValue );
+    }
+  if ( BlockY < EditLevel->ylen -1 )
+    {
+      if ( EditLevel->map[BlockY+1][BlockX] == SourceAreaTileType )
+	RecFillMap ( EditLevel , BlockY+1 , BlockX , SpecialMapValue );
+    }
+};
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -2548,6 +2581,7 @@ LevelEditor(void)
   GameConfig.Inventory_Visible = FALSE;
   GameConfig.CharacterScreen_Visible = FALSE;
   GameConfig.SkillScreen_Visible = FALSE;
+  RespectVisibilityOnMap = FALSE ;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
@@ -2688,7 +2722,15 @@ LevelEditor(void)
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
-	      EditLevel->map[BlockY][BlockX]=SpecialMapValue;
+
+	      if ( Shift_Was_Pressed() )
+		{
+		  RecFillMap ( EditLevel , BlockY , BlockX , SpecialMapValue );
+		}
+	      else
+		{
+		  EditLevel->map[BlockY][BlockX]=SpecialMapValue;
+		}
 	    }
 
 	  //--------------------
@@ -2810,6 +2852,8 @@ LevelEditor(void)
       Done = DoLevelEditorMainMenu ( EditLevel );
       
     } // while (!Done)
+
+  RespectVisibilityOnMap = TRUE ;
 
 }; // void LevelEditor ( void )
 
