@@ -271,9 +271,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       SDL_Flip (ne_screen);
 
       /* Nicht bel. nach unten wegscrollen */
-      if (InsertLine > SCREENHOEHE - 10 && (speed < 0))
+      if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
 	{
-	  InsertLine = SCREENHOEHE - 10;
+	  InsertLine = SCREENHEIGHT - 10;
 	  speed = 0;
 	}
 
@@ -437,11 +437,12 @@ char *
 GetString (int MaxLen, int echo)
 {
   char *input;		/* Pointer auf eingegebenen String */
-  char *clear_str;     /* string used to clear echo-arear with DisplayText */
   int key;             /* last 'character' entered */
   int curpos;		/* zaehlt eingeg. Zeichen mit */
   int finished;
-  SDL_Rect char_rect;
+  int x0, y0, height;
+  SDL_Rect store_rect, tmp_rect;
+  SDL_Surface *store = NULL;
 
   if (echo == 1)		/* echo to stdout */
     {
@@ -449,40 +450,48 @@ GetString (int MaxLen, int echo)
       return NULL;
     }
 
+  x0 = MyCursorX;
+  y0 = MyCursorY;
+  height = FontHeight (GetCurrentFont());
+  
+  store = SDL_CreateRGBSurface(0, SCREENLEN, height, ne_bpp, 0, 0, 0, 0);
+  Set_Rect (store_rect, x0, y0, SCREENLEN, height);
+  SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
+
   /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
-  clear_str = MyMalloc (MaxLen + 5);
 
-  memset (clear_str, ' ', MaxLen);
-  clear_str[MaxLen] = 0;
+  memset (input, '.', MaxLen);
+  input[MaxLen] = 0;
   
   finished = FALSE;
   curpos = 0;
-  
+
   while ( !finished  )
     {
-      input[curpos] = '\0';  /* terminate current input-string correctly for echo */
-
+      Copy_Rect( store_rect, tmp_rect);
+      SDL_BlitSurface (store, NULL, ne_screen, &tmp_rect);
+      PutString (ne_screen, x0, y0, input);
+      SDL_Flip (ne_screen);
+      
       key = getchar_raw ();  
       
       if (key == SDLK_RETURN) 
-	finished = TRUE;
+	{
+	  input[curpos] = 0;
+	  finished = TRUE;
+	}
       else if (isprint (key) && (curpos < MaxLen) )  
-	{  /* printable characters are entered in string */
-	  input[curpos ++] = (char) key;   
-	  putchar_SDL (ne_screen, -1, -1, input[curpos-1]);
+	{
+	  /* printable characters are entered in string */
+	  input[curpos] = (char) key;   
+	  curpos ++;
 	}
       else if (key == SDLK_BACKSPACE)
-	if (curpos > 0) 
-	  {
-	    Copy_Rect(GetCurrentFont()->Chars[(int)input[curpos-1]], char_rect);
-	    MyCursorX -= char_rect.w;
-	    char_rect.x = MyCursorX;
-	    char_rect.y = MyCursorY;
-	    SDL_FillRect (ne_screen, &char_rect, 1);
-	    SDL_Flip (ne_screen);
-  	    curpos --;
-	  }
+	{
+	  if ( curpos > 0 ) curpos --;
+	  input[curpos] = '.';
+	}
       
     } /* while(!finished) */
 
@@ -516,6 +525,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
   ret = PutChar (Surface, x, y, c);
 
   SDL_Flip (Surface);
+
   return (ret);
 }
 
@@ -549,13 +559,8 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   else MyCursorY = y;
 
   tmp = (char *) MyMalloc (1000 + 1);
-    {
-      vsprintf (tmp, fmt, args);
-
-      PutString (screen, x, y, tmp);
-
-      free (tmp);
-    }
+  vsprintf (tmp, fmt, args);
+  PutString (screen, x, y, tmp);
 
   SDL_Flip (screen);
 
@@ -571,6 +576,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
       MyCursorY = y;
     }
 
+  free (tmp);
   va_end (args);
 }
 
