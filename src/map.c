@@ -98,12 +98,6 @@
 #define OBSTACLE_LABEL_ANNOUNCE_STRING "obstacle_label_name=\""
 #define INDEX_OF_OBSTACLE_NAME "obstacle_label.index="
 
-#define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
-#define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
-#define CODEPANEL_CODE_ANNOUNCE_STRING "Secret Code=\""
-#define POSITION_X_OF_CODEPANEL_STRING "PanelposX="
-#define POSITION_Y_OF_CODEPANEL_STRING "PanelposY="
-
 #define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
 #define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
 #define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
@@ -380,70 +374,6 @@ DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer )
   StatementSectionEnd[0]=PreservedLetter;
 
 }; // void DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer );
-
-/* ----------------------------------------------------------------------
- * Next we extract the codepanels of this level WITHOUT destroying
- * or damaging the data in the process!
- * ---------------------------------------------------------------------- */
-void 
-DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer )
-{
-  int i;
-  char PreservedLetter;
-  char* CodepanelPointer;
-  char* CodepanelSectionBegin;
-  char* CodepanelSectionEnd;
-  int NumberOfCodepanelsInThisLevel;
-
-  //--------------------
-  // First we initialize the codepanel arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  CodepanelSectionBegin = LocateStringInData( DataPointer , CODEPANEL_SECTION_BEGIN_STRING );
-  CodepanelSectionEnd = LocateStringInData( DataPointer , CODEPANEL_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=CodepanelSectionEnd[0];
-  CodepanelSectionEnd[0]=0;
-  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  CodepanelPointer=CodepanelSectionBegin;
-  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
-    {
-      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
-      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
-      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
-      loadlevel->CodepanelList[ i ].Secret_Code = 
-	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
-		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  CodepanelSectionEnd[0]=PreservedLetter;
-
-}; // void DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
  *
@@ -1168,10 +1098,6 @@ IsWallBlock (int block)
     case AUTOGUN_U:
     case AUTOGUN_D:
     case ALERT:
-    case CODEPANEL_L:
-    case CODEPANEL_R:
-    case CODEPANEL_U:
-    case CODEPANEL_D:
     case CONSUMER_1:
     case CONSUMER_2:
     case CONSUMER_3:
@@ -1238,14 +1164,6 @@ IsWallBlock (int block)
     case ( GREEN_BLOCKS_OFFSET + AUTOGUN_D ) :
     case ( BLUE_BLOCKS_OFFSET + ALERT ) :
     case ( GREEN_BLOCKS_OFFSET + ALERT ) :
-    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_L ) :
-    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_L ) :
-    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_R ) :
-    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_R ) :
-    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_U ) :
-    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_U ) :
-    case ( BLUE_BLOCKS_OFFSET + CODEPANEL_D ) :
-    case ( GREEN_BLOCKS_OFFSET + CODEPANEL_D ) :
     case ( BLUE_BLOCKS_OFFSET + CONSUMER_1 ) :
     case ( GREEN_BLOCKS_OFFSET + CONSUMER_1 ) :
     case ( BLUE_BLOCKS_OFFSET + CONSUMER_2 ) :
@@ -1713,157 +1631,6 @@ Error:  A teleporter index pointing not to a teleporter obstacle found.",
 }; // void AnimateTeleports ( void )
 
 /* ----------------------------------------------------------------------
- * Now we change the floor, so that everything gets below the new number
- * of isometric floor tiles...
- * ---------------------------------------------------------------------- */
-void
-recode_floor_tiles_of_this_level ( Level our_level ) 
-{
-  int line, col;
-
-  return;
-
-  for ( line = 0 ; line < our_level -> ylen ; line ++ )
-    {
-      for ( col = 0 ; col < our_level -> xlen ; col ++ )
-	{
-	  switch ( our_level -> map [ line ] [ col ] . floor_value )
-	    {
-	    case FLOOR:
-	    case CORNER_LD:
-	    case T_D:
-	    case CORNER_RD:
-	    case T_L:
-	    case KREUZ:
-	    case T_R:
-	    case CORNER_LU:
-	    case T_U:
-	    case CORNER_RU:
-	    case H_WALL:
-	    case V_WALL:
-	    case ALERT:        
-	    case BLOCK1:
-	    case BLOCK2:
-	    case BLOCK3:
-	    case H_SHUT_DOOR:
-	    case H_HALF_DOOR1:
-	    case H_HALF_DOOR2:
-	    case H_HALF_DOOR3:
-	    case H_OPEN_DOOR:
-	    case CONSOLE_L:
-	    case CONSOLE_R:
-	    case CONSOLE_U:
-	    case CONSOLE_D:
-	    case V_SHUT_DOOR:
-	    case V_HALF_DOOR1:
-	    case V_HALF_DOOR2:
-	    case V_HALF_DOOR3:
-	    case V_OPEN_DOOR:
-	    case LIFT:
-	    case REFRESH1:
-	    case REFRESH2:
-	    case REFRESH3:
-	    case REFRESH4:
-	    case TELE_1:
-	    case TELE_2:
-	    case TELE_3:
-	    case TELE_4:
-	    case INVISIBLE_BRICK:
-	    case LOCKED_H_SHUT_DOOR:
-	    case LOCKED_V_SHUT_DOOR:
-	    case CODEPANEL_L:
-	    case CODEPANEL_R:
-	    case CODEPANEL_U:
-	    case CODEPANEL_D:
-	    case BOX_1:
-	    case BOX_2:
-	    case BOX_3:
-	    case BOX_4:
-	    case UNUSED_BRICK:
-	    case CONVEY_L:
-	    case CONVEY_D:
-	    case CONVEY_R:
-	    case CONVEY_U:
-	    case AUTOGUN_R:
-	    case AUTOGUN_D:
-	    case AUTOGUN_L:
-	    case AUTOGUN_U:
-	    case ENHANCER_RU:
-	    case ENHANCER_LU:
-	    case ENHANCER_RD:
-	    case ENHANCER_LD:
-	    case CONSUMER_1:
-	    case CONSUMER_2:
-	    case CONSUMER_3:
-	    case CONSUMER_4:
-	    case CHEST_U:
-	    case CHEST_L:
-	    case CHEST_D:
-	    case CHEST_R:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR ;
-	      break;
-
-	    case BLOCK4:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR_WITH_GRATE ;
-	      break;
-
-	    case BLOCK5:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_STONE_FLOOR_WITH_DOT ;
-	      break;
-
-	    case VOID:
-	    case FINE_GRID:
-	    case FLOOR_CARPET_L:
-	    case FLOOR_CARPET_R:
-	    case FLOOR_CARPET_U:
-	    case FLOOR_CARPET_D:
-	    case FLOOR_CARPET:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_PARQUET ;
-	      break;
-
-	    case CAVE_FLOOR:
-	    case CAVE_V_WALL:
-	    case CAVE_H_WALL:
-	    case CAVE_CORNER_LU:
-	    case CAVE_CORNER_RU:
-	    case CAVE_CORNER_LD:
-	    case CAVE_CORNER_RD:
-	    case FLOOR_CAVE_L:
-	    case FLOOR_CAVE_R:
-	    case FLOOR_CAVE_U:
-	    case FLOOR_CAVE_D:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND ;
-	      break;
-
-	    case CAVE_WITH_WAY_TILE:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_DOT ;
-	      break;
-
-	    case CAVE_WITH_GRASS_1:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_1 ;
-	      break;
-	    case CAVE_WITH_GRASS_2:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_2 ;
-	      break;
-	    case CAVE_WITH_GRASS_3:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_3 ;
-	      break;
-	    case CAVE_WITH_GRASS_4:
-	      our_level -> map [ line ] [ col ] . floor_value = ISO_FLOOR_SAND_WITH_GRASS_4 ;
-	      break;
-
-	    default:
-	      fprintf( stderr , "\nBrick code: %d." , our_level -> map [ line ] [ col ] . floor_value );
-	      GiveStandardErrorMessage ( "recode_floor_tiles_of_this_level ( ... )" , "\
-Unandles code given to floor recode function.",
-					 PLEASE_INFORM, IS_FATAL );
-	      break;
-	    }
-	}
-    }
-}; // void recode_floor_tiles_of_this_level ( Level our_level ) 
-
-/* ----------------------------------------------------------------------
  * This function loads the data for a whole ship
  * Possible return values are : OK and ERR
  * ---------------------------------------------------------------------- */
@@ -1912,8 +1679,6 @@ LoadShip (char *filename)
       curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
       decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
-
-      recode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
 
       //--------------------
       // We generate obstacles out of the current map info...
@@ -2182,47 +1947,6 @@ EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
   strcat(LevelMem, "\n\n");
   
 }; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
-
-/* ----------------------------------------------------------------------
- * This function adds the statement data of this level to the chunk of 
- * data that will be written out to a file later.
- * ---------------------------------------------------------------------- */
-void
-EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
-{
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the codepanel data
-  //
-  strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  //--------------------
-  // Now we write out the bulk of codepanel infos
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
-      strcat( LevelMem , "\"\n" );
-    }
-
-  strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
-  strcat(LevelMem, "\n\n");
-  
-}; // void EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
  *
@@ -2500,8 +2224,6 @@ jump target west: %d\n",
   encode_obstacle_names_of_this_level ( LevelMem , Lev );
 
   EncodeStatementsOfThisLevel ( LevelMem , Lev );
-
-  EncodeCodepanelsOfThisLevel ( LevelMem , Lev );
 
   EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
 
@@ -2942,12 +2664,6 @@ DecodeLoadedLeveldata ( char *data )
   // or damaging the data in the process!
   //
   DecodeStatementsOfThisLevel ( loadlevel , DataPointer );
-
-  //--------------------
-  // Next we extract the codepanels of this level WITHOUT destroying
-  // or damaging the data in the process!
-  //
-  DecodeCodepanelsOfThisLevel ( loadlevel , DataPointer );
 
   DecodeItemSectionOfThisLevel ( loadlevel , data );
 

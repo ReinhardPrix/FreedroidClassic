@@ -391,7 +391,6 @@ MoveTuxAccordingToHisSpeed ( PlayerNum )
 {
   float planned_step_x;
   float planned_step_y;
-  Level MoveLevel = curShip.AllLevels[ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
@@ -419,28 +418,6 @@ MoveTuxAccordingToHisSpeed ( PlayerNum )
   if ( fabsf( planned_step_y ) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
-    }
-
-  //--------------------
-  // Now if the influencer is on some form of conveyor belt, we adjust the planned step
-  // accoringly
-  //
-  switch ( MoveLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ]  . floor_value )
-    {
-    case CONVEY_L:
-      planned_step_x += Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_D:
-      planned_step_y += Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_R:
-      planned_step_x -= Conveyor_Belt_Speed*Frame_Time();
-      break;
-    case CONVEY_U:
-      planned_step_y -= Conveyor_Belt_Speed*Frame_Time();
-      break;
-    default:
-      break;
     }
 
   Me [ PlayerNum ] .pos.x += planned_step_x;

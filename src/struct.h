@@ -246,13 +246,6 @@ typedef struct
 
 typedef struct
 {
-  int x;
-  int y;
-  char* Secret_Code;
-} codepanel , *Codepanel;
-
-typedef struct
-{
   SDL_Surface* surface;
   int offset_x;
   int offset_y;
@@ -862,7 +855,7 @@ typedef struct
   char *Background_Song_Name;
   char *Level_Enter_Comment;
   map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
-  codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
+  // codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
   char *obstacle_name_list[ MAX_OBSTACLE_NAMES_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;

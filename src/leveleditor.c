@@ -1876,16 +1876,6 @@ CreateNewMapLevel( void )
   NewLevel->jump_threshold_west = (-1) ;
 
   //--------------------
-  // First we initialize the codepanel arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      NewLevel->CodepanelList[ i ].x = ( -1 ) ;
-      NewLevel->CodepanelList[ i ].y = ( -1 ) ;
-      NewLevel->CodepanelList[ i ].Secret_Code = "nonono" ;
-    }
-
-  //--------------------
   // First we initialize the items arrays with 'empty' information
   //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
@@ -1963,48 +1953,6 @@ CreateNewMapLevel( void )
 }; // Level CreateNewMapLevel( void )
 
 /* ----------------------------------------------------------------------
- * Now we print out the codepanel information about this tile
- * just in case it is really a codepanel.
- * ---------------------------------------------------------------------- */
-void
-PrintCodepanelInformationOfThisSquare ( Level EditLevel )
-{
-  int CodepanelIndex;
-  char PanelText[5000]="";
-
-  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ]  . floor_value )
-    {
-    case CODEPANEL_L:
-    case CODEPANEL_R:
-    case CODEPANEL_U:
-    case CODEPANEL_D:
-
-      for ( CodepanelIndex = 0 ; CodepanelIndex < MAX_CODEPANELS_PER_LEVEL ; CodepanelIndex ++ )
-	{
-	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel->CodepanelList[ CodepanelIndex ].x ) && 
-	       ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel->CodepanelList[ CodepanelIndex ].y ) )
-	    break;
-	}
-
-      if ( CodepanelIndex >= MAX_CODEPANELS_PER_LEVEL )
-	{
-	  sprintf( PanelText , "\nWARNING!  Either no codepanel code present or last entry used.\n" );
-	}
-      else
-	{
-	  sprintf( PanelText , "\nCode Panel Information: \n Codeword=\"%s\"." , 
-		   EditLevel->CodepanelList[ CodepanelIndex ].Secret_Code );
-	}
-
-      DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect );
-      break;
-    default:
-      break;
-    }
-}; // void PrintCodepanelInformationOfThisSquare ( Level EditLevel )
-
-
-/* ----------------------------------------------------------------------
  * Now we print out the map label information about this map location.
  * ---------------------------------------------------------------------- */
 void
@@ -2062,12 +2010,6 @@ Unable to load the level editor floor cursor.",
     }
 
   blit_iso_image_to_map_position ( level_editor_cursor , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
-
-  //--------------------
-  // Now we print out the codepanel information about this tile
-  // just in case it is really a codepanel.
-  //
-  PrintCodepanelInformationOfThisSquare ( EditLevel );
 
   PrintMapLabelInformationOfThisSquare ( EditLevel );
 
@@ -2335,12 +2277,8 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_D;
-      else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_D;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_D;
-      else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_D;
       else if ( RightAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_D;
       else EditLevel->map[BlockY][BlockX] . floor_value =T_D;
@@ -2357,12 +2295,8 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_L;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_L;
-      else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_L;
       else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_R;
-      else if ( RightAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_R;
       else EditLevel->map[BlockY][BlockX] . floor_value =T_L;
     }
@@ -2381,11 +2315,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       if ( LeftShiftWasPressed() )
 	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_R;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_R;
-      else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_R;
-      else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_L;
       else if ( RightAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_L;
       else EditLevel->map[BlockY][BlockX] . floor_value =T_R;
@@ -2402,11 +2332,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_U;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_U;
-      else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_U;
-      else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_U;
       else if ( RightAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_U;
       else EditLevel->map[BlockY][BlockX] . floor_value =T_U;
@@ -2622,82 +2548,6 @@ ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 }; // void ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 
 /* ----------------------------------------------------------------------
- * With the 'P' key, you can edit the codepanel codeword attached to any 
- * codepanel.  Of course the cursor must be positioned at this codepanel
- * so the feature can work.  This function does all this.
- * ---------------------------------------------------------------------- */
-void 
-EditCodepanelData ( Level EditLevel )
-{
-  char* NewCommentOnThisSquare;
-  int i;
-
-  while (PPressed());
-  SetCurrentFont( FPS_Display_BFont );
-
-  // First we check if we really are directly on a codepanel:
-  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ]  . floor_value )
-    {
-    case CODEPANEL_L:
-    case CODEPANEL_R:
-    case CODEPANEL_U:
-    case CODEPANEL_D:
-      
-      // If yes, we ask for the new codepanel keyword
-      NewCommentOnThisSquare = 
-	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new codepanel codeword: \n\n" ,
-					 "" );
-      
-      // Now we see if a codepanel entry is existing already for this square
-      for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-	{
-	  if ( ( EditLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
-	       ( EditLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
-	}
-      if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
-	{
-	  DisplayText ( "\nNo existing codepanel entry found...\n" , -1 , -1 , &User_Rect );
-	  i=0;
-	  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-	    {
-	      if ( EditLevel->CodepanelList[ i ].x == (-1) )
-		break;
-	    }
-	  if ( i >= MAX_CODEPANELS_PER_LEVEL )
-	    {
-	      DisplayText ( "\nNo more free codepanel entry found... using first\n" , -1 , -1 , &User_Rect );
-	      i = 0;
-	    }
-	  else
-	    {
-	      DisplayText ( "\nUsing new codepanel list entry...\n" , -1 , -1 , &User_Rect );
-	    }
-	  // Terminate( ERR );
-	}
-      else
-	{
-	  DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
-	  
-	}
-      EditLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
-      EditLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
-      EditLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
-      
-      
-      SDL_Flip ( Screen );
-      getchar_raw();
-      
-      break;
-    default:
-      DisplayText ( "\nBut you are not on a codepanel!!\n" , -1 , -1 , &User_Rect );
-      SDL_Flip( Screen );
-      getchar_raw();
-      break;
-    }
-  
-}; // void EditCodepanelData ( EditLevel )
-
-/* ----------------------------------------------------------------------
  * With the 'M' key, you can edit the map labels.
  * The label will be assumed to be directly under the map cursor.
  * ---------------------------------------------------------------------- */
@@ -2734,7 +2584,7 @@ EditMapLabelData ( Level EditLevel )
 	  if ( EditLevel -> labels [ i ] . pos . x == (-1) )
 	    break;
 	}
-      if ( i >= MAX_CODEPANELS_PER_LEVEL )
+      if ( i >= MAX_MAP_LABELS_PER_LEVEL )
 	{
 	  DisplayText ( "\nNo more free map label entry found... using first on instead ...\n" , -1 , -1 , &User_Rect );
 	  i = 0;
@@ -3357,13 +3207,6 @@ LevelEditor(void)
 	      EditLevel->StatementList[ i ].x = rintf( Me[0].pos.x );
 	      EditLevel->StatementList[ i ].y = rintf( Me[0].pos.y );
 	    }
-
-	  //--------------------
-	  // With the 'P' key, you can edit the codepanel codeword attached to any 
-	  // codepanel.  Of course the cursor must be positioned at this codepanel
-	  // so the feature can work.
-	  //
-	  if ( PPressed () ) EditCodepanelData ( EditLevel );
 
 	  //--------------------
 	  // With the 'M' key, you can edit the current map label.

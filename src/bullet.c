@@ -190,23 +190,6 @@ This problem is not severe, so this is a warning message only.",
 	  Terminate(ERR);
 	}
       
-      switch ( BulletLevel->map[ map_y ] [ map_x ]  . floor_value )
-	{
-	case CONVEY_L:
-	  CurBullet->pos.x += Conveyor_Belt_Speed * Frame_Time();
-	  break;
-	case CONVEY_R:
-	  CurBullet->pos.x -= Conveyor_Belt_Speed * Frame_Time();
-	  break;
-	case CONVEY_U:
-	  CurBullet->pos.y -= Conveyor_Belt_Speed * Frame_Time();
-	  break;
-	case CONVEY_D:
-	  CurBullet->pos.y += Conveyor_Belt_Speed * Frame_Time();
-	  break;
-	default:
-	  break;
-	}
     }				/* for */
 }; // void MoveBullets(void)
 
