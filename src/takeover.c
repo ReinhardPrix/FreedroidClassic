@@ -42,6 +42,7 @@
 
 Uint32 cur_time;  		/* current time in ms */
 SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
+SDL_Surface *to_background;
 
 /* the rectangles containing the blocks */
 SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
@@ -580,7 +581,14 @@ GetTakeoverGraphics (void)
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
   if (to_blocks)   /* this happens when we do theme-switching */
-    free(to_blocks);
+    free (to_blocks);
+  if (to_background)
+    free (to_background);
+  
+  to_background = IMG_Load (find_file (TO_BG_FILE, GRAPHICS_DIR, TRUE));
+  if (to_background == NULL)
+    DebugPrintf (0, "\nWARNING: Takeover Background file %s missing for theme %s\n", 
+		 TO_BG_FILE, GameConfig.Theme_SubPath);
 
   TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
   to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
@@ -653,10 +661,11 @@ ShowPlayground ()
   xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
   yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*140)/2;
 
-  SDL_SetColorKey (ne_screen, 0, 0);
+  //  SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  Fill_Rect (User_Rect, to_bg_color);
+  //  Fill_Rect (User_Rect, to_bg_color);
+  SDL_BlitSurface (to_background, NULL, ne_screen, NULL);
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y);
