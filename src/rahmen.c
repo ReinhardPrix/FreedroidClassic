@@ -173,7 +173,7 @@ exist really (i.e. has a type = (-1) ).",
 	    if ( ForShop )
 		sprintf( linebuf , "   Dis: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
 	    else
-		sprintf( linebuf , " Power Distribution: %d " ,  ItemMap[ CurItem->type ].item_require_dexterity );
+		sprintf( linebuf , " Dexterity: %d " ,  ItemMap[ CurItem->type ].item_require_dexterity );
 	    strcat( ItemDescText , linebuf );
 	}
     }
@@ -319,7 +319,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_dex > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to Power Distribution" , CurItem->bonus_to_dex );
+		sprintf( linebuf , "%d to Dexterity" , CurItem->bonus_to_dex );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
