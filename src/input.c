@@ -440,6 +440,7 @@ ReactToSpecialKeys(void)
 	{
 	  GameConfig.SkillScreen_Visible_Time = 0;
 	  GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
+	  if ( GameConfig.SkillScreen_Visible ) GameConfig.CharacterScreen_Visible = FALSE ;
 	}
 
       SPressed_LastFrame = TRUE;
@@ -488,6 +489,7 @@ ReactToSpecialKeys(void)
 	{
 	  GameConfig.CharacterScreen_Visible_Time = 0;
 	  GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
+	  if ( GameConfig.CharacterScreen_Visible ) GameConfig.SkillScreen_Visible = FALSE ;
 	}
 
       CPressed_LastFrame = TRUE;
