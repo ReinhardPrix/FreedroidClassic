@@ -65,10 +65,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , FALSE } ,
-    { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , FALSE } ,
-    { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , FALSE } ,
-    { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , FALSE } ,
-    { NULL , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } , FALSE } ,
+    { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE } ,
+    { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE } ,
+    { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE } ,
+    { NULL , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } , TRUE } ,
     { NULL , "mouse_buttons/MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } , FALSE } ,
     { NULL , "mouse_buttons/MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } , FALSE } ,
     { NULL , "mouse_buttons/MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } , FALSE } ,
@@ -193,11 +193,22 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 311 , 47 , 47 } , FALSE } ,
+    //--------------------
+    // Druidshow exit button...
+    //
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 311 , 47 , 47 } , TRUE } ,
 
+    //--------------------
+    // These are the scrollbuttons for the chat protocal inside the
+    // chat window, like when talking to a character/bot.
+    //
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE } ,
-    
+
+    //--------------------
+    // These 7 buttons are for the level editor and will not need
+    // any scaling...
+    //
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 203 , 3 , 99 ,  14 } , FALSE } ,

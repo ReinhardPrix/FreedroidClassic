@@ -262,118 +262,118 @@ PaintConsoleMenu (int menu_pos)
 void
 GreatDruidShow (void)
 {
-  int droidtype;
-  int Displacement;
-  bool finished = FALSE;
-  static int WasPressed = FALSE ;
-  int ClearanceIndex = 0;
-  int NumberOfClearances = 0;
-  int i;
-
-  //--------------------
-  // First we find out how many clearances the Tux has gained
-  // so far.
-  //
-  for ( i = 0 ; i < MAX_CLEARANCES ; i ++ )
+    int droidtype;
+    int Displacement;
+    bool finished = FALSE;
+    static int WasPressed = FALSE ;
+    int ClearanceIndex = 0;
+    int NumberOfClearances = 0;
+    int i;
+    
+    //--------------------
+    // First we find out how many clearances the Tux has gained
+    // so far.
+    //
+    for ( i = 0 ; i < MAX_CLEARANCES ; i ++ )
     {
-      if ( Me [ 0 ] . clearance_list [ i ] == 0 ) break;
+	if ( Me [ 0 ] . clearance_list [ i ] == 0 ) break;
     }
-  NumberOfClearances = i;
-
-  droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
-
-  Displacement = 0;
-
-  while (!finished)
+    NumberOfClearances = i;
+    
+    droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+    
+    Displacement = 0;
+    
+    while (!finished)
     {
-      SDL_Delay (1);
-
-      //--------------------
-      // We show all the info and the buttons that should be in this
-      // interface...
-      //
-      droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
-      ShowDroidInfo ( droidtype , Displacement , TRUE );
-
-      // PutPasswordButtonsAndPassword ( PasswordIndex );
-      // PutSecurityButtonsAndClearance ( ClearanceIndex );
-
-      our_SDL_flip_wrapper( Screen );
-
-      if (SpacePressed() || EscapePressed() || axis_is_active )
+	SDL_Delay (1);
+	
+	//--------------------
+	// We show all the info and the buttons that should be in this
+	// interface...
+	//
+	droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+	ShowDroidInfo ( droidtype , Displacement , TRUE );
+	
+	// PutPasswordButtonsAndPassword ( PasswordIndex );
+	// PutSecurityButtonsAndClearance ( ClearanceIndex );
+	
+	our_SDL_flip_wrapper( Screen );
+	
+	if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      if ( ClearanceIndex < NumberOfClearances -1 ) 
+		if ( ClearanceIndex < NumberOfClearances -1 ) 
 		{
-		  ClearanceIndex ++;	    
-		  MoveMenuPositionSound();
-		  Displacement = 0 ;
+		    ClearanceIndex ++;	    
+		    MoveMenuPositionSound();
+		    Displacement = 0 ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      if ( ClearanceIndex > 0) 
+		if ( ClearanceIndex > 0) 
 		{
-		  ClearanceIndex --;	      
-		  MoveMenuPositionSound();
-		  Displacement = 0 ;
+		    ClearanceIndex --;	      
+		    MoveMenuPositionSound();
+		    Displacement = 0 ;
 		}
 	    }
-	  else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      MoveMenuPositionSound();
-	      Displacement += FontHeight ( GetCurrentFont () );
+		MoveMenuPositionSound();
+		Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
 	    {
-	      MoveMenuPositionSound();
-	      Displacement -= FontHeight ( GetCurrentFont () );
+		MoveMenuPositionSound();
+		Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y( )  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y( )  ) && axis_is_active && !WasPressed )
 	    {
-	      finished = TRUE;
-	      while ( SpacePressed ( ) || EscapePressed ( ) );
+		finished = TRUE;
+		while ( SpacePressed ( ) || EscapePressed ( ) );
 	    }
 	}
-
-      WasPressed = axis_is_active;
-
-      if (UpPressed() || MouseWheelUpPressed())
+	
+	WasPressed = axis_is_active;
+	
+	if (UpPressed() || MouseWheelUpPressed())
 	{
-	  // MoveMenuPositionSound();
-	  Displacement += FontHeight ( GetCurrentFont () );
-	  while (UpPressed());
+	    // MoveMenuPositionSound();
+	    Displacement += FontHeight ( GetCurrentFont () );
+	    while (UpPressed());
 	}
-      if (DownPressed() || MouseWheelDownPressed())
+	if (DownPressed() || MouseWheelDownPressed())
 	{
-	  // MoveMenuPositionSound();
-	  Displacement -= FontHeight ( GetCurrentFont () );
-	  while (DownPressed());
+	    // MoveMenuPositionSound();
+	    Displacement -= FontHeight ( GetCurrentFont () );
+	    while (DownPressed());
 	}
-      if (RightPressed() )
+	if (RightPressed() )
 	{
-	  if ( ClearanceIndex < NumberOfClearances -1 ) 
+	    if ( ClearanceIndex < NumberOfClearances -1 ) 
 	    {
-	      ClearanceIndex ++;	    
-	      MoveMenuPositionSound();
-	      Displacement = 0 ;
+		ClearanceIndex ++;	    
+		MoveMenuPositionSound();
+		Displacement = 0 ;
 	    }
-	  while ( RightPressed() );
+	    while ( RightPressed() );
 	}
-      if (LeftPressed() )
+	if (LeftPressed() )
 	{
-	  if ( ClearanceIndex > 0) 
+	    if ( ClearanceIndex > 0) 
 	    {
-	      ClearanceIndex --;	      
-	      MoveMenuPositionSound();
-	      Displacement = 0 ;
+		ClearanceIndex --;	      
+		MoveMenuPositionSound();
+		Displacement = 0 ;
 	    }
-	  while ( LeftPressed() );
+	    while ( LeftPressed() );
 	}
-
+	
     } // while !finished 
-
+    
 }; // void GreatDroidShow( void ) 
 
 /* ----------------------------------------------------------------------
@@ -537,31 +537,34 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 void 
 ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
 {
-  char *item_name;
-  int type;
-  char InfoText[10000];
-  char TextChunk[2000];
-
-  //--------------------
-  // We initialize the text rectangle
-  //
-  Cons_Text_Rect . x = 258 ; Cons_Text_Rect . y = 89 ; Cons_Text_Rect . w = 346 ; Cons_Text_Rect . h = 282 ;
-
-  SDL_SetClipRect ( Screen , NULL );
-
-  blit_special_background ( ITEM_BROWSER_BG_PIC_BACKGROUND_CODE ) ;
-
-  ShowDroidPicture ( 45 , 190 , droidtype );
-
-  //--------------------
-  // We fill out the header area of the items browser.
-  //
-  SetCurrentFont ( Menu_BFont );
-  strcpy ( TextChunk , Druidmap [ droidtype ] . druidname );
-  CutDownStringToMaximalSize ( TextChunk , 225 );
-  PutString ( Screen , 330, 38, TextChunk );
-
-  sprintf( InfoText, "\
+    char *item_name;
+    int type;
+    char InfoText[10000];
+    char TextChunk[2000];
+    
+    //--------------------
+    // We initialize the text rectangle
+    //
+    Cons_Text_Rect . x = 258 * SCREEN_WIDTH / 640 ; 
+    Cons_Text_Rect . y = 89 * SCREEN_HEIGHT / 480 ; 
+    Cons_Text_Rect . w = 346 * SCREEN_WIDTH / 640 ; 
+    Cons_Text_Rect . h = 282 * SCREEN_HEIGHT / 480 ;
+    
+    SDL_SetClipRect ( Screen , NULL );
+    
+    blit_special_background ( ITEM_BROWSER_BG_PIC_BACKGROUND_CODE ) ;
+    
+    ShowDroidPicture ( 45 * SCREEN_WIDTH / 640 , 190 * SCREEN_HEIGHT / 480 , droidtype );
+    
+    //--------------------
+    // We fill out the header area of the items browser.
+    //
+    SetCurrentFont ( Menu_BFont );
+    strcpy ( TextChunk , Druidmap [ droidtype ] . druidname );
+    CutDownStringToMaximalSize ( TextChunk , 225 );
+    PutString ( Screen , 330 * SCREEN_WIDTH / 640 , 38 * SCREEN_HEIGHT / 480 , TextChunk );
+    
+    sprintf( InfoText, "\
 Unit type %s - %s\n\
 Entry : %d\n\
 Class : %s\n\
@@ -569,36 +572,36 @@ Height : %f\n\
 Weight: %f \n\
 Drive : %s \n\
 Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].class],
-	       droidtype+1, Classes[Druidmap[droidtype].class],
-	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
-	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
-	       Brainnames[ Druidmap[droidtype].brain ]);
-
-  if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
-    item_name = ItemMap[type].item_name;                     /* does not segfault */
-  else 
-    item_name = "none";
-
-  sprintf( TextChunk , "\nArmamant : %s\n\
+	     droidtype+1, Classes[Druidmap[droidtype].class],
+	     Druidmap[droidtype].height, Druidmap[droidtype].weight,
+	     ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
+	     Brainnames[ Druidmap[droidtype].brain ]);
+    
+    if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) /* make sure item=-1 */
+	item_name = ItemMap[type].item_name;                     /* does not segfault */
+    else 
+	item_name = "none";
+    
+    sprintf( TextChunk , "\nArmamant : %s\n\
 Sensors  1: %s\n          2: %s\n          3: %s", 
-	       item_name,
-	       Sensornames[ Druidmap[droidtype].sensor1 ],
-	       Sensornames[ Druidmap[droidtype].sensor2 ],
-	       Sensornames[ Druidmap[droidtype].sensor3 ]);
-  strcat ( InfoText , TextChunk );
-
-  sprintf ( TextChunk , "\nNotes: %s\n", Druidmap[droidtype].notes);
-  strcat ( InfoText , TextChunk );
-
-  SetCurrentFont( FPS_Display_BFont );
-  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
-
-  if ( ShowArrows ) 
+	     item_name,
+	     Sensornames[ Druidmap[droidtype].sensor1 ],
+	     Sensornames[ Druidmap[droidtype].sensor2 ],
+	     Sensornames[ Druidmap[droidtype].sensor3 ]);
+    strcat ( InfoText , TextChunk );
+    
+    sprintf ( TextChunk , "\nNotes: %s\n", Druidmap[droidtype].notes);
+    strcat ( InfoText , TextChunk );
+    
+    SetCurrentFont( FPS_Display_BFont );
+    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
+    
+    if ( ShowArrows ) 
     {
-      ShowGenericButtonFromList ( UP_BUTTON );
-      ShowGenericButtonFromList ( DOWN_BUTTON );
+	ShowGenericButtonFromList ( UP_BUTTON );
+	ShowGenericButtonFromList ( DOWN_BUTTON );
     }
-
+    
 }; // void ShowDroidInfo ( ... )
 
 /* ----------------------------------------------------------------------
@@ -764,93 +767,91 @@ trying to make the ultra-fine item rotation series.  Strange.",
 void
 ShowDroidPicture (int PosX, int PosY, int Number )
 {
-  SDL_Surface *tmp;
-  SDL_Rect target;
-  char ConstructedFileName[5000];
-  char* fpath;
-
-  static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
-
+    SDL_Surface *tmp;
+    SDL_Rect target;
+    char ConstructedFileName[5000];
+    char* fpath;
+    
+    static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
+    
 #define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 32
-  static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
-  SDL_Surface *Whole_Image;
-  int i;
-  int RotationIndex;
-
-  DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Function call confirmed.");
-
-  if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
-    return; // later this should be a default-correction instead
-
-  //--------------------
-  // Maybe we have to reload the whole image series
-  //
-  if ( strcmp ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix ) )
+    static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
+    SDL_Surface *Whole_Image;
+    int i;
+    int RotationIndex;
+    
+    DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Function call confirmed.");
+    
+    if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+	return; // later this should be a default-correction instead
+    
+    //--------------------
+    // Maybe we have to reload the whole image series
+    //
+    if ( strcmp ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix ) )
     {
-      //--------------------
-      // Maybe we have to free the series from an old item display first
-      //
-      if ( DroidRotationSurfaces[ 0 ] != NULL )
+	//--------------------
+	// Maybe we have to free the series from an old item display first
+	//
+	if ( DroidRotationSurfaces[ 0 ] != NULL )
 	{
-	  for ( i = 1 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i ++ )
+	    for ( i = 1 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i ++ )
 	    {
-	      SDL_FreeSurface ( DroidRotationSurfaces[ i ] ) ;
+		SDL_FreeSurface ( DroidRotationSurfaces[ i ] ) ;
 	    }
 	}
-
-      //--------------------
-      // Now we can start to load the whole series into memory
-      //
-      for ( i=0 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i++ )
+	
+	//--------------------
+	// Now we can start to load the whole series into memory
+	//
+	for ( i=0 ; i < NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ; i++ )
 	{
-	  if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+	    if ( !strcmp ( Druidmap[ Number ] . droid_portrait_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
 	    {
-	      Terminate ( ERR );
+		Terminate ( ERR );
 	    }
-	  else
+	    else
 	    {
-	      sprintf ( ConstructedFileName , "droids/%s/portrait_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
-	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+		sprintf ( ConstructedFileName , "droids/%s/portrait_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
+		DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	    }
-
-	  // We must remember, that his is already loaded of course
-	  strcpy ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix );
-
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  
-	  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-	  if ( Whole_Image == NULL )
+	    
+	    // We must remember, that his is already loaded of course
+	    strcpy ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix );
+	    
+	    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	    
+	    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	    if ( Whole_Image == NULL )
 	    {
-	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to load an image of a rotated droid into memory.\n\
 This error indicates some installation problem with freedroid.",
-					 PLEASE_INFORM, IS_FATAL );
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-	  
-	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	  
-	  DroidRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( DroidRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  
-	  SDL_FreeSurface( Whole_Image );
-	  
+	    
+	    SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+	    
+	    DroidRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	    SDL_SetColorKey( DroidRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
+	    
+	    SDL_FreeSurface( Whole_Image );
 	}
-
     }
 
-  RotationIndex = ( SDL_GetTicks() / 50 ) ;
-
-  RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ) * NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ;
-
-  tmp = DroidRotationSurfaces[ RotationIndex ] ;
-
-  SDL_SetClipRect( Screen , NULL );
-  Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
-  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
-
-  DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Usual end of function reached.");
-
+    RotationIndex = ( SDL_GetTicks() / 50 ) ;
+    
+    RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ) * NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ;
+    
+    tmp = DroidRotationSurfaces[ RotationIndex ] ;
+    
+    SDL_SetClipRect( Screen , NULL );
+    Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+    our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
+    
+    DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Usual end of function reached.");
+    
 }; // void ShowDroidPicture ( ... )
 
 /* ----------------------------------------------------------------------
