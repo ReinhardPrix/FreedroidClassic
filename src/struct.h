@@ -45,10 +45,8 @@ typedef struct
   long score;                  /* use -1 for an empty entry */
   char date[DATE_LEN+5];
   int mission;    /* classic mission or extensions? */
-  void *next;    /* a list is easier to handle than an array !*/
-  void *prev;
 }
-hall_entry, *Hall_entry;
+highscore_entry, *Highscore_entry;
 
 typedef struct
 {
