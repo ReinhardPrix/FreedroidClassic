@@ -262,6 +262,8 @@ typedef struct
   SDL_Surface* zoomed_out_surface;
   int texture_width;
   int texture_height;
+  int original_image_width;
+  int original_image_height;
   int force_color_key;
   int texture_has_been_created;
 #ifdef HAVE_LIBGL

@@ -502,7 +502,7 @@ blit_energy_o_meter( void )
   // done then to prevent framerate-distortion later, when the first
   // real-game-frame is drawn.
   //
-  if ( speed_meter_iso_image . surface == NULL )
+  if ( ( speed_meter_iso_image . surface == NULL ) && ( ! speed_meter_iso_image . texture_has_been_created ) )
     {
       fpath = find_file ( "speed_o_meter.png" , GRAPHICS_DIR, FALSE);
       get_iso_image_from_file_and_path ( fpath , & ( speed_meter_iso_image ) , FALSE ) ;
@@ -552,15 +552,17 @@ blit_energy_o_meter( void )
       prepare_open_gl_for_blending_textures ( );
 
       blit_open_gl_texture_to_screen_position ( speed_meter_iso_image , 
-						SCREEN_WIDTH - speed_meter_iso_image . surface -> w , 0 , FALSE );
+						SCREEN_WIDTH - speed_meter_iso_image . original_image_width , 0 , FALSE );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
-						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
-						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
+						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 
+						 0 + PivotPosition . y  , 
+						 - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
-						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
-						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].mana / Me[0].maxmana );
+						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 
+						 0 + PivotPosition . y  , 
+						 - 360 * 3 / 4 * Me [ 0 ] . mana / Me [ 0 ] . maxmana );
 
       remove_open_gl_blending_mode_again ( );
 

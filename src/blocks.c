@@ -815,6 +815,7 @@ Freedroid received a rotation model number that does not exist!",
 	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
+	  
 	}
       //--------------------
       // But if we have an animation, maybe not complete animation but at least walkcycle 

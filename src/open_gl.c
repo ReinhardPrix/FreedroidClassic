@@ -433,8 +433,11 @@ make_texture_out_of_surface ( iso_image* our_image )
   if ( our_image -> texture_has_been_created )
     {
       GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
-Texture has been created already according to flag... hmmm... something is not right here...",
-				 PLEASE_INFORM, IS_FATAL );
+Texture has been created already according to flag...\n\
+hmmm... either the surface has been freed and the pointer moved cleanly to NULL\n\
+(which is good for bug detection) or something is not right here...",
+				 PLEASE_INFORM, IS_WARNING_ONLY );
+      return;
     }
 
   //--------------------
@@ -446,6 +449,8 @@ Texture has been created already according to flag... hmmm... something is not r
   
   our_image -> texture_width = right_sized_image -> w ;
   our_image -> texture_height = right_sized_image -> h ;
+  our_image -> original_image_width = our_image -> surface -> w ;
+  our_image -> original_image_height = our_image -> surface -> h ;
 
   //--------------------
   // Having prepared the raw image it's now time to create the real
@@ -512,7 +517,13 @@ Ran out of initialized texture positions to use for new textures.",
   // not needed any more and can be freed now!  BEWARE!  Keep this in mind,
   // that creating the texture now removes the surface...
   //
-  // SDL_FreeSurface ( our_image -> surface );
+  // So as to detect any occurances of access to the surface once the 
+  // texture has been created, we set the surface to the NULL pointer to
+  // ENCOURAGE SEGMENTATION FAULTS when doing this so as to eliminate
+  // these occurances with the debugger...
+  //
+  SDL_FreeSurface ( our_image -> surface );
+  our_image -> surface = NULL ;
 
 #endif
 
@@ -912,14 +923,14 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   image_start_y = target_rectangle . y ;
   image_end_y = target_rectangle . y + our_iso_image . texture_height ;
 
-  corner1 . x = 0 - our_iso_image . surface -> w / 2 ;
-  corner1 . y = 0 - our_iso_image . surface -> h / 2 ;
-  corner2 . x = 0 - our_iso_image . surface -> w / 2 ;
-  corner2 . y = 0 + our_iso_image . surface -> h / 2 + ( our_iso_image . texture_height - our_iso_image . surface -> h );
-  corner3 . x = 0 + our_iso_image . surface -> w / 2 + ( our_iso_image . texture_width - our_iso_image . surface -> w );
-  corner3 . y = 0 + our_iso_image . surface -> h / 2 + ( our_iso_image . texture_height - our_iso_image . surface -> h );
-  corner4 . x = 0 + our_iso_image . surface -> w / 2 + ( our_iso_image . texture_width - our_iso_image . surface -> w );
-  corner4 . y = 0 - our_iso_image . surface -> h / 2 ;
+  corner1 . x = 0 - our_iso_image . original_image_width / 2 ;
+  corner1 . y = 0 - our_iso_image . original_image_height / 2 ;
+  corner2 . x = 0 - our_iso_image . original_image_width / 2 ;
+  corner2 . y = 0 + our_iso_image . original_image_height / 2 + ( our_iso_image . texture_height - our_iso_image . original_image_height );
+  corner3 . x = 0 + our_iso_image . original_image_width / 2 + ( our_iso_image . texture_width - our_iso_image . original_image_width );
+  corner3 . y = 0 + our_iso_image . original_image_height / 2 + ( our_iso_image . texture_height - our_iso_image . original_image_height );
+  corner4 . x = 0 + our_iso_image . original_image_width / 2 + ( our_iso_image . texture_width - our_iso_image . original_image_width );
+  corner4 . y = 0 - our_iso_image . original_image_height / 2 ;
 
   RotateVectorByAngle ( & corner1 , angle_in_degree );
   RotateVectorByAngle ( & corner2 , angle_in_degree );
@@ -940,7 +951,7 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   if ( image_start_y > 480 ) return;
   if ( image_end_y < 0 ) return;
 
-  texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . original_image_height)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
 
   glBindTexture( GL_TEXTURE_2D, * ( our_iso_image . texture ) );
