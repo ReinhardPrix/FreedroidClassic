@@ -1157,6 +1157,57 @@ show_obstacle_labels ( int mask )
 
 }; // void show_obstacle_labels ( int mask )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_light_radius ( void )
+{
+  static int first_call = TRUE ;
+  int i;
+  static iso_image light_radius_chunk[10];
+  char* fpath;
+  char constructed_file_name[2000];
+  int our_height, our_width, our_max_height, our_max_width;
+  int light_strength;
+  moderately_finepoint target_pos;
+
+  //--------------------
+  // If the darkenss chunks have not yet been loaded, we load them...
+  //
+  if ( first_call )
+    {
+      first_call = FALSE;
+      for ( i = 0 ; i < 10 ; i ++ )
+	{
+	  sprintf ( constructed_file_name , "iso_light_radius_darkness_%04d.png" , i );
+	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
+	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
+	}
+    }
+
+  //--------------------
+  // Now it's time to apply the light radius
+  //
+  our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * 5.0 * 2 ;
+  our_max_height = our_max_width;
+
+
+  for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
+    {
+      for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
+	{
+	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * ( 1.0 / 5.0 ) ;
+	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * ( 1.0 / 5.0 ) ;
+	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 2.0 ) ;
+	  if ( light_strength >= 10 ) light_strength = 9 ;
+	  if ( light_strength <= 0 ) continue ;
+	  blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
+	}
+    }
+}; // void blit_light_radius ( void )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -1197,6 +1248,8 @@ AssembleCombatPicture (int mask)
 	  PutItem( i , mask );
 	}
     }
+
+  blit_light_radius();
 
   PutMiscellaneousSpellEffects ( );
       
