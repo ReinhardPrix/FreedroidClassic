@@ -963,6 +963,22 @@ ApplyItem( item* CurItem )
     {
       Me[0].mana += Me[0].maxmana;
     }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
+    {
+      Me [ 0 ] . SkillLevel [ 3 ] ++ ;
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
+    {
+      Me [ 0 ] . SkillLevel [ 1 ] ++ ;
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
+    {
+      Me [ 0 ] . SkillLevel [ 2 ] ++ ;
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
+    {
+      Me [ 0 ] . SkillLevel [ 4 ] ++ ;
+    }
 
   if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
   if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
