@@ -853,8 +853,7 @@ void JoystickControl(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void KillTastaturPuffer(void){
-
-  // PORT while (kbhit()) getchar();
+  //PORT: nix tun hier!
 }
 
 
@@ -968,10 +967,13 @@ int my_abs(int wert)
 * $Function----------------------------------------------------------*/
 void ShowDebugInfos(void)
 {
-	gotoxy(0,0);
-	printf("\nMe.energy: %d", Me.energy);
-	printf("\nMe.pos: %d %d", Me.pos.x, Me.pos.y);
-	return;
+  vga_clear();
+  gl_printf(20,5, "\nMe.energy: %d", Me.energy);
+  gl_printf(-1,-1,"\nMe.pos: %d %d", Me.pos.x, Me.pos.y);
+  keyboard_close();
+  getchar();
+  keyboard_init();
+  return;
 }
 #undef _misc_c
 

@@ -1,0 +1,18 @@
+Rough overview of involved developers and their attributed tasks :
+(for better orientation only!)
+
+jp
+--
+- "low level" graphics (svgalib) and sound functions
+- ...
+
+rp
+--
+- cvs archive mangagement
+- Takeover game
+- map-editor (maped)
+
+limo
+----
+- play& find bugs? ;-)
+- ... ?

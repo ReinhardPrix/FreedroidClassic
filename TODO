@@ -1,8 +1,6 @@
 #-*- mode: text -*-
 Bugs
 ----
-- (jp?,rp): Spielfenster zu weit oben 
-- (rp): Takeover graphic zu weit oben...
 - (rp): Invincible mode sollte auch Burn-out ueberleben
 - funktioniert Energy-charger??
 - Druidmap.notes sollten besser von file eingelesen werden oder
@@ -14,5 +12,6 @@ Missing features
 -----------------
 - use multitasking (fork()) for background processes... (update counters etc)
 - mouse-support (should be good with touchstick on laptop!)
-- (rp): PORT maped 
-- include GNU-type configure 
+- (rp): PORT the map-editor 'maped'
+- use GNU-type configure scripts
+- "Encapsulate" all graphic-function calls, so that porting to X becomes easier?!

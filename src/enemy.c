@@ -9,48 +9,10 @@
  *
  * $Author$
  *
- * $Log$
- * Revision 1.4  1994/06/19 16:18:12  prix
- * Mon Oct 25 14:26:49 1993: enemy-collision modifiziert
- * Mon Oct 25 14:30:47 1993: ShuffleEnemys() modifiziert
- * Mon Oct 25 20:21:05 1993: debugroutine hinzugef"ugt
- * Tue Oct 26 10:27:40 1993: enemys haben nun eine Speed !! (fuer collisions)
- *
- * Revision 1.3  1993/10/25  18:18:57  prix
- * Wed Aug 11 20:33:40 1993: New EnemyEnmeyCollision handling
- * Sat Aug 14 09:23:30 1993: enemys warten nicht
- * Sat Aug 14 09:31:18 1993: firewait doesnt depend on guntype but on druid !!
- * Sat Aug 14 16:05:19 1993: Neues Tuning der Feind-aggressivitaet
- * Tue Aug 24 10:31:19 1993: better shuffleEnemys
- * Tue Aug 24 16:46:41 1993: written InitEnemys()
- * Sun Aug 29 10:49:57 1993: enemys shoot only if visible
- * Fri Sep 17 11:47:56 1993: waypoint - Suche beschleunigt
- * Thu Sep 30 14:14:28 1993: written ClassOfDruid()
- *
- * Revision 1.2  1993/08/12  00:25:22  prix
- * Fri Jul 30 07:30:17 1993: Enemys schiessen nicht immer wenn sie koennen
- * Sat Jul 31 11:08:07 1993: renamed WAYPOINTMAX to MAXWAYPOINTS
- * Sat Jul 31 12:39:30 1993: type instead of typennummer in enemy - struct
- * Sat Jul 31 12:44:21 1993: no abgschossen in enemy but Status
- * Sat Jul 31 18:08:36 1993: agression is type-specific, not individual for each enemy !
- * Sat Jul 31 19:55:24 1993: only work on enemys that are alive and on current level
- * Sun Aug 08 21:33:15 1993: changed MoveEnemys() to new Waypoint-management
- * Mon Aug 09 17:18:36 1993: written ShuffleEnemys()
- * Mon Aug 09 18:17:24 1993: written CheckEnemeyCollsion()
- * Mon Aug 09 18:25:46 1993: renamed CheckEnemyCollsion to EnemyEnemyCollision()
- * Mon Aug 09 18:58:38 1993: emergency: total collsion: trennt enemys
- * Tue Aug 10 19:49:21 1993: enemys shoot only if dist is ok
- * Tue Aug 10 20:07:55 1993: kein EnemyGetroffen mehr
- * Tue Aug 10 21:04:24 1993: written AttackInfluence
- *
- * Revision 1.1  1993/07/29  17:28:02  prix
- * Initial revision
- *
- *
  *-@Header------------------------------------------------------------*/
 
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _enemy_c
 
@@ -59,11 +21,8 @@ static const char RCSid[]=\
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <dos.h>
 #include <math.h>
 #include <time.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -174,7 +133,7 @@ void ShuffleEnemys(void)
 		else {
 			gotoxy(1,1);
 			printf("\nWeniger waypoints als \n Gegner hier !!");
-			getch();
+			getchar();
 			return;
 		}
 			
@@ -288,7 +247,7 @@ void MoveEnemys(void){
 					
 		if ( (Restweg.x == 0) && (Restweg.y == 0) ) {
 			Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-			Feindesliste[i].warten = random(ENEMYMAXWAIT)*18;
+			Feindesliste[i].warten = MyRandom(ENEMYMAXWAIT)*18;
 		
 		/* suche moegliche Verbindung von hier */
 		PossibleConnections = -1;
@@ -297,7 +256,7 @@ void MoveEnemys(void){
 
 			if( PossibleConnections > 0) {
 				do {
-					trywp = (WpList[nextwp]).connections[random(PossibleConnections)];
+					trywp = (WpList[nextwp]).connections[MyRandom(PossibleConnections)];
 				} while( trywp == -1 );
 			
 				/* setze neuen Waypoint */
@@ -340,10 +299,10 @@ void AttackInfluence(int enemynum)
 		( !Feindesliste[enemynum].firewait ) &&
 		IsVisible( &Feindesliste[enemynum].pos) )
 	{
- 		if( random(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
+ 		if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
  			/* Diesmal nicht schiessen */
 			Feindesliste[enemynum].firewait =
-				random(Druidmap[Feindesliste[enemynum].type].firewait)*18;
+				MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
 			return;
 		}
 		
@@ -396,7 +355,7 @@ void AttackInfluence(int enemynum)
 		/* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
 		Feindesliste[enemynum].firewait=
-			random(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
+			MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
 					
 		/* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
 		AllBullets[j].type=guntype;
@@ -486,36 +445,36 @@ int EnemyEnemyCollision(int enemynum)
 @Int:
 * $Function----------------------------------------------------------*/
 void AnimateEnemys(void) {
-	int i;
-	gotoxy(1,1);
-	for (i=0;i<NumEnemys;i++) {
-		if (Feindesliste[i].type == DRUID598) {
-	//			printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
-	//			Feindesliste[i].feindrehcode,
-	//			Druidmap[Feindesliste[i].type].maxenergy,
-	//			Feindesliste[i].energy,
-	//			Feindesliste[i].feindphase);
-		}
+  int i;
+
+  for (i=0;i<NumEnemys;i++) {
+    if (Feindesliste[i].type == DRUID598) {
+      //   printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
+      //   Feindesliste[i].feindrehcode,
+      //   Druidmap[Feindesliste[i].type].maxenergy,
+      //   Feindesliste[i].energy,
+      //  Feindesliste[i].feindphase);
+    }
 			
-		/* ignore enemys that are dead or on other levels or dummys */
-		if( Feindesliste[i].type == DEBUG_ENEMY) continue;
-		if ( Feindesliste[i].levelnum != CurLevel->levelnum) continue;
-		if ( Feindesliste[i].Status == OUT ) continue;
+    /* ignore enemys that are dead or on other levels or dummys */
+    if( Feindesliste[i].type == DEBUG_ENEMY) continue;
+    if ( Feindesliste[i].levelnum != CurLevel->levelnum) continue;
+    if ( Feindesliste[i].Status == OUT ) continue;
 		
-		Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
-		Feindesliste[i].feindphase=Feindesliste[i].feindrehcode/Druidmap[Feindesliste[i].type].maxenergy;
+    Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
+    Feindesliste[i].feindphase=Feindesliste[i].feindrehcode/Druidmap[Feindesliste[i].type].maxenergy; 
 			
-		if (Feindesliste[i].feindphase>=ENEMYPHASES) {
+    if (Feindesliste[i].feindphase>=ENEMYPHASES) {
 #ifdef ENEMYPHASEDEBUG			
-			if (Feindesliste[i].type == DRUID598) {
-				printf(" Broke at: %d ",Feindesliste[i].feindphase);
-				getch();
-			}
+      if (Feindesliste[i].type == DRUID598) {
+	printf(" Broke at: %d ",Feindesliste[i].feindphase);
+	getchar();
+      }
 #endif			
-			Feindesliste[i].feindphase=0;
-			Feindesliste[i].feindrehcode=0;
-		}
-	}
+      Feindesliste[i].feindphase=0;
+      Feindesliste[i].feindrehcode=0;
+    }
+  }
 	
 }
 
