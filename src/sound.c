@@ -92,7 +92,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/CollisionSound1.wav",
   "/../sound/GotIntoBlastSound.wav",
   "/../sound/MoveElevatorSound1.wav",
-  "/../sound/RefreshSound.wav",
+  "/../sound/Refresh_Sound_0.wav",
   "/../sound/LeaveElevatorSound3.wav",
   "/../sound/EnterElevatorSound2.wav",
   "/../sound/ThouArtDefeatedSound2.wav",
@@ -183,7 +183,7 @@ YIFF_Server_Check_Events(void)
     }
 
 #endif /* HAVE_LIBY2 */
-}				// void YIFF_Server_Check_Events(void)
+}  // void YIFF_Server_Check_Events(void)
 
 
 /*@Function============================================================
@@ -325,6 +325,11 @@ Switch_Background_Music_To (int Tune)
       DebugPrintf
 	("\nvoid Switch_Background_Music_To(int Tune):  Old music track stopped..\n");
 
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  SILENCE --> end of function reached.\n");
+
+      if ( Tune == SILENCE ) return;
+
     }
 
   Current_Tune = SILENCE;
@@ -383,7 +388,7 @@ Switch_Background_Music_To (int Tune)
     ("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
 
 #endif /* HAVE_LIBY2 */
-}				// void Switch_Background_Music_To(int Tune)
+} // void Switch_Background_Music_To(int Tune)
 
 
 /*@Function============================================================
@@ -395,8 +400,9 @@ Switch_Background_Music_To (int Tune)
 void
 Play_YIFF_Server_Sound (int Tune)
 {
-  
-  if (!sound_on) return;
+  YEventSoundPlay Music_Parameters;
+
+  if ( !sound_on ) return;
 
   /* This function can and should only be compiled on machines, that have */
   /* the YIFF sound server installed.  Compilation therefore is optional and */
@@ -408,13 +414,65 @@ Play_YIFF_Server_Sound (int Tune)
   DebugPrintf
     ("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
+
+/*
+  This part takes A LOT OF TIME and destroys game flow.
+  Therefore it remains commented out
+
+  if (YGetSoundObjectAttributes
+      (BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune],
+       &BackgroundMusic_sndobj_attrib))
+    {
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
+      // Can't get sound object attributes.
+      fprintf (stderr,
+	       "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n",
+	       ExpandedSoundSampleFilenames[Tune]);
+      printf (" CWD: %s \n\n", getcwd (NULL, 0));
+      Terminate (ERR);
+    }
+  else
+    {
+
+      DebugPrintf 
+	("\nvoid Play_YIFF_Server_Sound(int Tune):  Now starting new background tune...\n");
+      DebugPrintf 
+	("\nvoid Play_YIFF_Server_Sound(int Tune):  The following file will be loaded: ");
+      DebugPrintf (ExpandedSoundSampleFilenames[ Tune ]);
+
+      BackgroundMusic_play_id = YStartPlaySoundObjectSimple (BackgroundMusic_con, 
+							     ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf ("\nvoid Play_YIFF_Server_Sound(int Tune):  Tune has been loaded: ");
+      DebugPrintf ( ExpandedSoundSampleFilenames[ Tune ] );
+
+      Music_Parameters.repeats = 0;
+      Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+      Music_Parameters.left_volume = 0.5;
+      Music_Parameters.right_volume = 0.5;
+      Music_Parameters.sample_rate = BackgroundMusic_sndobj_attrib.sample_rate;
+      Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+      Music_Parameters.position = 0;
+      Music_Parameters.yid = BackgroundMusic_play_id;
+      Music_Parameters.flags = 0xFFFFFFFF;
+
+
+      YSetPlaySoundObjectValues (BackgroundMusic_con, BackgroundMusic_play_id,
+				 &Music_Parameters);
+
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
+
+    }
+*/
+
   play_id =
     YStartPlaySoundObjectSimple (BackgroundMusic_con,
 				 ExpandedSoundSampleFilenames[Tune]);
 
 #endif /* HAVE_LIBY2 */
 
-}				// void Play_YIFF_Server_Sound(int Tune)
+}  // void Play_YIFF_Server_Sound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -474,7 +532,7 @@ Init_YIFF_Sound_Server (void)
 
 #endif
   return (OK);
-}				// void Init_YIFF_Sound_Server(void)
+} // void Init_YIFF_Sound_Server(void)
 
 
 /*@Function============================================================

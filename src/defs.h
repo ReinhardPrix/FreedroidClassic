@@ -231,7 +231,7 @@ enum _sounds
 #define ENEMYMAXWAIT 2		  // after each robot has reached its current destination waypoint is waits a
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
-
+#define FLASH_DURATION_IN_FRAMES 10
 
 
 /* Soundblasterkonstanten */

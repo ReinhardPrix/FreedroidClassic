@@ -162,7 +162,7 @@ typedef struct
 {
   int speed;			/* speed of the bullet */
   int damage;			/* damage done by this bullettype */
-  int time;			/* how long does bullet exist */
+  int time;		        // ??? SENSELESS VARIABLE?  how long does bullet exist, measured in number of frames
   byte phases;			/* how many phases in motion to show */
   byte blast;			/* which blast does this bullet create */
   unsigned char *picpointer;	/* pointer to picture of bullet */
@@ -177,7 +177,8 @@ typedef struct
   finepoint speed;
   byte type;
   byte phase;
-  byte time;
+  int time_in_frames;           // how long does the bullet exist, measured in number of frames
+  float time_in_seconds;        // how long does the bullet exist in seconds
   signed char mine;
   int owner;
 }

@@ -432,9 +432,10 @@ GetConceptInternFenster (void)
       if (AllBullets[i].type == FLASH)
 	{
 	  // Wenn der FLASH vorbei ist, l"oschen und fertig
-	  if (AllBullets[i].time > 2)
+	  if ( AllBullets[i].time_in_frames > FLASH_DURATION_IN_FRAMES )
 	    {
-	      AllBullets[i].time = 0;
+	      AllBullets[i].time_in_frames = 0;
+	      AllBullets[i].time_in_seconds = 0;
 	      AllBullets[i].type = OUT;
 	      AllBullets[i].mine = FALSE;
 	      return;
@@ -444,14 +445,14 @@ GetConceptInternFenster (void)
 	  Affected = MyMalloc (CurLevel->xlen * CurLevel->ylen + 100);
 	  memset (Affected, CurLevel->xlen * CurLevel->ylen, FALSE);
 
-	  if (AllBullets[i].time == 1)
+	  if ( (AllBullets[i].time_in_frames % 2) == 1)
 	    {
 //                                      FlashWindow(0);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
 			    FLASHCOLOR1, InternWindow,
 			    INTERNBREITE * BLOCKBREITE);
 	    }
-	  if (AllBullets[i].time == 2)
+	  if ( (AllBullets[i].time_in_frames % 2) == 0)
 	    {
 //                                      FlashWindow(15);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
@@ -670,9 +671,10 @@ PutBullet (int BulletNummer)
        * Wenn der FLASH vorbei ist, l"oschen und fertig
        */
 
-      if (CurBullet->time > 2)
+      if ( CurBullet->time_in_frames > FLASH_DURATION_IN_FRAMES )
 	{
-	  CurBullet->time = 0;
+	  CurBullet->time_in_frames = 0;
+	  CurBullet->time_in_seconds = 0;
 	  CurBullet->type = OUT;
 	  CurBullet->mine = FALSE;
 	  return;
@@ -700,12 +702,12 @@ PutBullet (int BulletNummer)
        * Das ganze Fenster entweder schwarz oder weiss f"arben
        */
 
-      if (CurBullet->time == 1)
+      if ( (CurBullet->time_in_frames % 2) == 1)
 	{
 	  FlashWindow (0);
 	  return;
 	}
-      if (CurBullet->time == 2)
+      if ( (CurBullet->time_in_frames % 2) == 0)
 	{
 	  FlashWindow (15);
 	  return;

@@ -73,7 +73,8 @@ MoveBullets (void)
       CurBullet->pos.x += CurBullet->speed.x * Frame_Time ();
       CurBullet->pos.y += CurBullet->speed.y * Frame_Time ();
 
-      CurBullet->time++;
+      CurBullet->time_in_frames++;
+      CurBullet->time_in_seconds += Frame_Time();
 
       /*
          UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
@@ -100,7 +101,8 @@ DeleteBullet (int Bulletnummer)
 
   /* Das Bullet loeschen */
   CurBullet->type = OUT;
-  CurBullet->time = 0;
+  CurBullet->time_in_seconds = 0;
+  CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
 
   /* Blast erzeugen: type BULLETBLAST */

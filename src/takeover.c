@@ -182,7 +182,7 @@ Takeover (int enemynum)
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
+  Switch_Background_Music_To ( TAKEOVER_BACKGROUND_MUSIC_SOUND );
   DebugPrintf
     ("\nvoid Takeover(int enemynum):  Takeover background music started...");
 
@@ -248,6 +248,7 @@ Takeover (int enemynum)
       /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
+	  Switch_Background_Music_To ( SILENCE );
 	  Takeover_Game_Won_Sound();
 	  if (Me.type == DRUID001)
 	    {
@@ -269,6 +270,7 @@ Takeover (int enemynum)
 	}			/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
+	  Switch_Background_Music_To ( SILENCE );
 	  Takeover_Game_Lost_Sound();
 	  if (Me.type != DRUID001)
 	    {
