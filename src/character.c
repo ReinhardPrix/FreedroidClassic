@@ -360,8 +360,10 @@ ShowCharacterScreen ( void )
 
   //--------------------
   // Now we can start to fill in the character values:
-  // Level, Exp, Strength, Dex, ...
+  // Name, Level, Exp, Strength, Dex, ...
   //
+  DisplayText( Me.character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
+
   sprintf( CharText , "%d", Me.exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
 

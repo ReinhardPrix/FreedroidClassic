@@ -706,7 +706,7 @@ Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
 Item as gun: bullet_lifetime=-1
-Item as armour: ac_bonus=100
+Item as armour: ac_bonus=60
 Picture number=15
 Sound number=0 
 ** End of new item specification subsection **
