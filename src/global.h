@@ -9,8 +9,10 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  1993/05/23 21:08:14  prix
- * Sun May 23 16:31:46 1993: added new-struct variables to replace old ones
+ * Revision 1.5  1993/05/28 20:53:58  prix
+ * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
+ * Tue May 25 07:19:29 1993: killed KRIT(geht nicht). some extern decl. in #extern clause
+ * Thu May 27 09:41:35 1993: SpeedX, SpeedY now macros -> Me.speed.x...
  *
  * Revision 1.5  1993/05/28  20:53:58  prix
  * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
