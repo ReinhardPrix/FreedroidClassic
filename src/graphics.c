@@ -1,11 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: Graphics primitived, such as functions to load LBM or PCX images,
- * 	 to change the vga color table, to activate or deachtivate monitor
- *	 signal, to set video modes etc.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,7 +20,14 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
+ */
+/* ----------------------------------------------------------------------
+ * This file contains graphics primitives, such as initialisation of SDL
+ * and video modes and fonts.
+ * ---------------------------------------------------------------------- */
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please just kill it mercilessly.
  */
 #define _graphics_c
 
@@ -88,17 +87,14 @@ static const char *arrow[] = {
 };
 
 
-/*
-----------------------------------------------------------------------
-This function was taken directly from the example in the SDL docu.
-Even there they say they have stolen if from the mailing list.
-Anyway it should create a new mouse cursor from an XPM.
-The XPM is defined above and not read in from disk or something.
-----------------------------------------------------------------------
-*/
-
-
-static SDL_Cursor *init_system_cursor(const char *image[])
+/* ----------------------------------------------------------------------
+ * This function was taken directly from the example in the SDL docu.
+ * Even there they say they have stolen if from the mailing list.
+ * Anyway it should create a new mouse cursor from an XPM.
+ * The XPM is defined above and not read in from disk or something.
+ * ---------------------------------------------------------------------- */
+static SDL_Cursor *
+init_system_cursor(const char *image[])
 {
   int i, row, col;
   Uint8 data[4*32];
@@ -132,11 +128,11 @@ static SDL_Cursor *init_system_cursor(const char *image[])
   return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
 };
 
-/*
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
-
+/* ----------------------------------------------------------------------
+ * This function is used to draw a line between given map tiles.  It is
+ * mainly used for the map editor to highlight connections and the 
+ * current map tile target.
+ * ---------------------------------------------------------------------- */
 void 
 DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 {
@@ -187,6 +183,7 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
   // Now we start the drawing process
   //
   // SDL_LockSurface( Screen );
+  //
 
   slope = ( y2 - y1 ) / (x2 - x1) ;
   for ( i=0 ; i<(x2-x1)*Block_Width ; i++ )
@@ -200,13 +197,10 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
       putpixel( Screen , pixx , pixy , Color );
       putpixel( Screen , pixx , pixy -1 , Color );
     }
-
   // SDL_UnlockSurface( Screen );
+}; // void DrawLineBetweenTiles
 
-} // void DrawLineBetweenTiles
-
-
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * This function saves a screenshot to disk.
  * The screenshots are names "Screenshot_XX.bmp" where XX is a
  * running number.  
@@ -215,7 +209,7 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
  *        but will silently overwrite them.  No problem in most
  *        cases I think.
  *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 TakeScreenshot(void)
 {
@@ -230,18 +224,14 @@ TakeScreenshot(void)
   Number_Of_Screenshot++;
   free(Screenshoot_Filename);
 
-} // void TakeScreenshot(void)
+}; // void TakeScreenshot(void)
 
-/*
-----------------------------------------------------------------------
-@Desc: This function draws a "grid" on the screen, that means every
-       "second" pixel is blacked out, thereby generation a fading 
-       effect.  This function was created to fade the background of the 
-       Escape menu and its submenus.
-
-@Ret: none
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function draws a "grid" on the screen, that means every
+ * "second" pixel is blacked out, thereby generation a fading 
+ * effect.  This function was created to fade the background of the 
+ * Escape menu and its submenus.
+ * ---------------------------------------------------------------------- */
 void 
 MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 {
@@ -264,17 +254,15 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
   
   SDL_UnlockSurface( Screen );
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): end of function reached.");
-} // void MakeGridOnSchreen(void)
+}; // void MakeGridOnSchreen(void)
 
-
-/*----------------------------------------------------------------------
+/* ----------------------------------------------------------------------
  * This function load an image and displays it directly to the Screen
  * but without updating it.
  * This might be very handy, especially in the Title() function to 
  * display the title image and perhaps also for displaying the ship
  * and that.
- *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void DisplayImage( char *datafile )
 {
   SDL_Surface *image;
@@ -289,7 +277,7 @@ void DisplayImage( char *datafile )
   SDL_BlitSurface(image, NULL, Screen, NULL);
 
   SDL_FreeSurface(image);
-}
+}; // void DisplayImage( char *datafile )
 
 
 /*
@@ -304,19 +292,14 @@ void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
       ; /* ok, I'll do that later ; */
 
   return;
-}
+}; // void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
 
-/*
-----------------------------------------------------------------------
-@Desc: This function initializes ALL the graphics again, propably after 
-they have been destroyed by resizing operations.
-This is done via freeing the old structures and starting the classical
-allocations routine again.
-
-@Ret: TRUE/FALSE, same as InitPictures() returns
-
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function initializes ALL the graphics again, propably after 
+ * they have been destroyed by resizing operations.
+ * This is done via freeing the old structures and starting the classical
+ * allocations routine again.
+ * ---------------------------------------------------------------------- */
 int
 ReInitPictures (void)
 {
@@ -368,9 +351,8 @@ ReInitPictures (void)
   SDL_FreeSurface ( console_pic );
   SDL_FreeSurface ( static_blocks );
 
-  // return ( OK );
   return (InitPictures());
-} // int ReInitPictures(void)
+}; // int ReInitPictures(void)
 
 
 /* ----------------------------------------------------------------------
@@ -414,10 +396,11 @@ SetCombatScaleTo(float ResizeFactor)
 
 } // void SetCombatScaleTo(float new_scale);
 
-/*
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function loads the configuration file for a theme, containing 
+ * such things as the number of bullet phases and the position for droid
+ * digits in that theme.
+ * ---------------------------------------------------------------------- */
 void 
 LoadThemeConfigurationFile(void)
 {
@@ -518,23 +501,6 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 #define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
 #define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
-  /*
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
-		       &First_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
-		       &First_Digit_Pos_Y , EndOfThemesDigitData );
-
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_X_STRING , "%d" , 
-		       &Second_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_Y_STRING , "%d" , 
-		       &Second_Digit_Pos_Y , EndOfThemesDigitData );
-
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_X_STRING , "%d" , 
-		       &Third_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
-		       &Third_Digit_Pos_Y , EndOfThemesDigitData );
-  */
-
   ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
 		       & ( Digit_Pos[0].x ) , EndOfThemesDigitData );
   ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
@@ -552,15 +518,11 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 }; // void LoadThemeConfigurationFile ( void )
 
-/*-----------------------------------------------------------------
- * @Desc: get the pics for: druids, bullets, blasts
- * 				
- * 	reads all blocks and puts the right pointers into
- * 	the various structs
- *
- * @Ret: TRUE/FALSE
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function does all the bitmap initialisation, so that you
+ * later have the bitmaps in perfect form in memory, ready for blitting
+ * them to the screen.
+ * ----------------------------------------------------------------- */
 int
 InitPictures (void)
 {
@@ -583,8 +545,6 @@ InitPictures (void)
   LoadThemeConfigurationFile();
 
   SDL_SetCursor( init_system_cursor( arrow ) );
-
-
 
   //--------------------
   // Now we create the internal storage for all our blocks 
@@ -655,43 +615,19 @@ InitPictures (void)
   GetTakeoverGraphics();
   
   return (TRUE);
-}  // int InitPictures ( void )
+};  // int InitPictures ( void )
 
-void PlusDrawEnergyBar (void);
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetColors (int FirstCol, int PalAnz, char *PalPtr)
-{
-  char *MyPalPtr;
-  int i;
-
-  MyPalPtr = PalPtr;
-
-  for (i = FirstCol; i < FirstCol + PalAnz; i++)
-    {
-      SetPalCol(i, MyPalPtr[0], MyPalPtr[1], MyPalPtr[2]);
-      MyPalPtr += 3;
-    }
-}				// void SetColors(...)
-
-/*-----------------------------------------------------------------
- * Initialise the Video display and graphics engine
- *
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This funciton initialises the video display and opens up a 
+ * window for graphics display.
+ * -----------------------------------------------------------------*/
 void
 Init_Video (void)
 {
   const SDL_VideoInfo *vid_info;
   SDL_Rect **vid_modes;
   char vid_driver[81];
-  Uint32 flags;  /* flags for SDL video mode */
+  Uint32 flags;  // flags for SDL video mode 
   char *fpath;
 
   /* Initialize the SDL library */
@@ -875,97 +811,24 @@ Sorry...\n\
 
   return;
 
-} /* InitVideo () */
+}; /* InitVideo () */
 
-/* *********************************************************************** */
-
-void
-LadeZeichensatz (char *Zeichensatzname)
-{
-  char *fpath;
-/*
-  Diese Prozedur laedt einen Zeichensatz in den Standardzeichensatzbereich
-  und verwendet dazu das BIOS.
-
-  Parameter sind ein Zeiger auf den Zeichensatznamen
-  Returnwert: keiner
-*/
-
-  /* lokale Variablen der Funktion */
-  unsigned char *Zeichensatzpointer;
-  FILE *CharDateiHandle;
-  int i, j, k;
-
-  DebugPrintf (1, "\nLadeZeichensatz() called... is that not obsolete?\n");
-
-  /* Speicher fuer die zu ladende Datei reservieren */
-  Zeichensatzpointer = MyMalloc (256 * 8 + 10);
-
-  /* Datei in den Speicher laden */
-  fpath = find_file (Zeichensatzname, GRAPHICS_DIR, FALSE);
-  if ((CharDateiHandle = fopen (fpath, "rb")) == NULL)
-    {
-      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname):  Konnte die Datei %s nicht oeffnen !\n",
-	 Zeichensatzname);
-      getchar ();
-      Terminate (-1);
-    }
-  fread (Zeichensatzpointer, 1, 30000, CharDateiHandle);
-  if (fclose (CharDateiHandle) == EOF)
-    {
-      DebugPrintf (1, "\nvoid LadeZeichensatz(char* Zeichensatzname): Konnte die Datei %s nicht schlie3en !\n",
-	 Zeichensatzname);
-      getchar ();
-      Terminate (-1);
-    }
-
-  /* Eventuell Report erstatten das der Zeichensatz installiert ist */
-#ifdef REPORTDEBUG
-  DebugPrintf
-    ("\nvoid LadeZeichensatz(char* Zeichensatzname): Der Zeichensatz ist installiert ! ");
-#endif
-
-  if (Data70Pointer)
-    {
-      DebugPrintf (2, " Der Zeichensatz war schon installiert !.\n");
-      getchar ();
-      Terminate (-1);
-    }
-  Data70Pointer = malloc (256 * 8 * 8 + 10);
-  for (i = 0; i < 256; i++)
-    {
-      for (j = 0; j < 8; j++)
-	{
-	  for (k = 0; k < 8; k++)
-	    {
-	      if (((int) Zeichensatzpointer[i * 8 + j]) & (1 << (7 - k)))
-		Data70Pointer[i * 8 * 8 + j * 8 + k] = DATA70FONTCOLOR;
-	      else
-		Data70Pointer[i * 8 * 8 + j * 8 + k] = DATA70BGCOLOR;
-	    }
-	}
-    }
-}  // void LadeZeichensatz(char* Zeichensatzname)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function changes the level color to grey.  It is used mainly
+ * after a level has been cleared of all other robots, as it was the
+ * case in the classical paradroid game.
+ * ---------------------------------------------------------------------- */
 void
 LevelGrauFaerben (void)
 {
   CurLevel->color = PD_DARK;
-}; 
+}; // void LevelGrauFaerben (void)
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function fills all the screen or the freedroid window with a 
+ * black color.  The name of the function originates from earlier, when
+ * we still wrote directly to the vga memory using memset under ms-dos.
+ * ---------------------------------------------------------------------- */
 void
 ClearGraphMem ( void )
 {
@@ -979,42 +842,14 @@ ClearGraphMem ( void )
 
   // Now we fill the screen with black color...
   SDL_FillRect( Screen , NULL , 0 );
-} // ClearGraphMem( void )
+}; // void ClearGraphMem( void )
 
-
-/*@Function============================================================
-@Desc: This function sets a selected colorregister to a specified
-		RGB value
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
-	   unsigned char blau)
-{
-  SDL_Color ThisOneColor;
-
-  ThisOneColor.r=rot;
-  ThisOneColor.g=gruen;
-  ThisOneColor.b=blau;
-  ThisOneColor.unused=0;
-
-  return;
-
-  // DebugPrintf (2, "\nvoid SetPalCol(...): Real function called.");
-  // vga_setpalette (palpos, rot, gruen, blau);
-
-  SDL_SetColors( Screen , &ThisOneColor, palpos, 1 );
-  // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
-  // DebugPrintf (2, "\nvoid SetPalCol(...): Usual end of function reached.");
-}				// void SetPalCol(...)
-
-
-/*
- * Return the pixel value at (x, y)
+/* ----------------------------------------------------------------------
+ * This function was taken directly from the SDL documentation.  It 
+ * returns the pixel value at a given pixel coordinate (x, y).
+ *
  * NOTE: The surface must be locked before calling this!
- */
+ * ---------------------------------------------------------------------- */
 Uint32 
 getpixel(SDL_Surface *surface, int x, int y)
 {
@@ -1043,13 +878,17 @@ getpixel(SDL_Surface *surface, int x, int y)
       return 0;       /* shouldn't happen, but avoids warnings */
     }
 
-} // Uint32 getpixel(...)
+}; // Uint32 getpixel(...)
 
 
-/*
- * Set the pixel at (x, y) to the given value
+/* ----------------------------------------------------------------------
+ * This function was taken directly from the SDL documentation.
+ * It sets the pixel in a given surface at pixel coordinates (x, y) to the 
+ * given value.
+ *
  * NOTE: The surface must be locked before calling this!
- */
+ *
+ * ---------------------------------------------------------------------- */
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
     int bpp = surface->format->BytesPerPixel;
@@ -1081,7 +920,7 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         *(Uint32 *)p = pixel;
         break;
     }
-} // void putpixel(...)
+}; // void putpixel(...)
 
 
 #undef _graphics_c
