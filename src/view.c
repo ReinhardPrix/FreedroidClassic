@@ -418,8 +418,6 @@ GetConceptInternFenster (void)
 
   char* OutputPointer=InternWindow;
 
-  Terminate(ERR);
-
   // Darstellen der blo"sen Deckkarte 
   for (i = 0; i < CurLevel->ylen; i++)
     {
@@ -440,6 +438,8 @@ GetConceptInternFenster (void)
       if (Feindesliste[i].levelnum != CurLevel->levelnum)
 	continue;
       if (Feindesliste[i].Status == OUT)
+	continue;
+      if ( !IsVisible (&Feindesliste[i].pos) )
 	continue;
       SmallEnemy (Feindesliste[i].pos.x / 4, Feindesliste[i].pos.y / 4,
 		  Druidmap[Feindesliste[i].type].class, OutputPointer,
@@ -592,14 +592,10 @@ PutEnemy (int Enum)
   /* Wenn Feind nicht sichtbar: weiter */
   if (!IsVisible (&Feindesliste[Enum].pos))
     {
-      Feindesliste[Enum].onscreen = FALSE;
       DebugPrintf
 	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
-
     }
-  else
-    Feindesliste[Enum].onscreen = TRUE;
 
   DebugPrintf
     ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");

@@ -661,7 +661,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if (MenuPosition < 5) MenuPosition++;
+	  if ( MenuPosition < QUIT_POSITION ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -729,7 +729,7 @@ enum
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    
 		       "Show Framerate: %s", Draw_Framerate? "ON" : "OFF");
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    
-		       "Show Energy: %s", Draw_Framerate? "ON" : "OFF");
+		       "Show Energy: %s", Draw_Energy? "ON" : "OFF");
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 10*FontHeight(Font1),    
 		       "Back");
 
@@ -828,13 +828,13 @@ enum
 	}
       if (UpPressed()) 
 	{
-	  if (MenuPosition > 1) MenuPosition--;
+	  if ( MenuPosition > 1 ) MenuPosition--;
 	  MoveMenuPositionSound();
 	  while (UpPressed());
 	}
       if (DownPressed()) 
 	{
-	  if (MenuPosition < 6) MenuPosition++;
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -929,7 +929,7 @@ Single_Player_Menu (void)
 	}
       if (DownPressed()) 
 	{
-	  if (MenuPosition < 5) MenuPosition++;
+	  if ( MenuPosition < BACK_POSITION ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}
@@ -1798,43 +1798,5 @@ my_abs (int wert)
   return (wert < 0) ? -wert : wert;
 
 }
-
-/*@Function============================================================
-@Desc: ShowDebugInfos()
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ShowDebugInfos (void)
-{
-  printf ("\n\n\n\n\n\n\n");
-  printf ("Me.energy: %f \n", Me.energy);
-  printf ("Me.pos: %f %f \n", Me.pos.x, Me.pos.y);
-  getchar_raw ();
-  return;
-}
-
-
-/* **********************************************************************
- *	Diese Funktion gibt die momentane Highscoreliste aus
- *	Derweil ist sie noch im Textmodus.
- *	Wenn sie fertig ist, soll sie die Liste in Paraplusart nach oben
- *	scrollen.
- ***********************************************************************/
-void
-ShowHighscoreList (void)
-{
-  DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
-
-  // DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
-  printf (" Ok Score:      %10s : %f\n", GreatScoreName, GreatScore);
-  printf (" Lowest Score:  %10s : %f\n", LowestName, LowestScoreOfDay);
-
-  PrepareScaledSurface (TRUE);
-  getchar_raw ();
-
-  return;
-} /* ShowHighscoreList () */
 
 #undef _misc_c

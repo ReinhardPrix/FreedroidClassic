@@ -256,8 +256,8 @@ CheckBulletCollisions (int num)
       
       for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
 	{
-	  if ((Feindesliste[i].onscreen) &
-	      (!Druidmap[Feindesliste[i].type].flashimmune))
+	  if ( IsVisible (&Feindesliste[i].pos) &
+	       (!Druidmap[Feindesliste[i].type].flashimmune) )
 	    {
 	      Feindesliste[i].energy -= Bulletmap[FLASH].damage / 2;
 	    }

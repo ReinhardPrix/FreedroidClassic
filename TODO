@@ -14,60 +14,25 @@ Outstanding release-critical bugs (priority: high)
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-- (DONE) (jp:) wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
-               steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
-               an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
-               Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr 
-               fragwuerdig
-         (jp:) appearently this bug has been resolved somewhere since it was encounteres
-               while using SVGALIB and might have been resolved with the new and corrected
-               get-ship-routines of rp or so.  At least this bug cannot be found on my
-               machine any more.
+
+- (rp!) Saving of Ships does NOT work correctly in the LevelEditor integrated in the game
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
 - Colors sind allgemein ein wenig verdreht seit SDL Port
-
-- Debriefing ordentlich
-
-- Lift-entry: man muss zu lange auf Space sein bis man in den Lift
-  kommt. Das "Lift-fahren" ist auch zu schwerfaellig.
-
-- Pause stopped working with SDL-port
-  (rp) PAUSE works now ok, but not perfectly yet (-> better keyboard-handling)
+  (wird automatisch behoben mit dem Umstieg auf TrueColor mode,
+   wo es dann ohnehin keine Farbpalette mehr gibt...)
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
 
-- (rp) should have maximally one 999 on commando-bridge
-  (jp: I think I've encountered 0 often, later 2 on other ships,
-       so I think thats not really so serious)
-
 - hide mouse pointer
-
-- Blitz-schuesse flimmern jetzt zu stark/lang	
-  (nicht mehr, seit die Framerate durch weniger debug-messages generell hoch ist)
 
 - level 11: console rechts unten ist verkehrt
 
-- proper Highscore list 
-  (DONE):  Highscore list is accessible via the ESCAPE menu (single player submenu)
-
-- Endscreen after being killed ("Flimmern4") is too slow
-  (rp: now speeded up a bit, but should write a new one)
-
 - (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
 
-- Levelnumber should be the index in curShip.AllLevels for simplicity
-
-- Uebernommener 302 is zu schnell, 420 is zu langsam..., etc etc
-  (jp: finde ich nicht.  Ist zwar nicht 100% Originalgetreu, aber ich finde schon,
-  dann die Geschwindigkeit des entsprechenden Robots dann auch fuer den 001 gelten
-  sollte, wenn er einen dieser Robots uebernommen hat.)
-
-- Enemey visibility is a bit shakey (revisit visibility calcuations...)
-
-- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
+- (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
 
 Wishlist
 --------
@@ -98,12 +63,14 @@ Wishlist
 
 Resolved bugs
 -------------
-- make sure all svgalib references are removed
+- (DONE) make sure all svgalib references are removed
 - (rp) autoconf/automake: complete SDL checks 
-- Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
-  (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
-  hoffe dass niemand sie doch gebraucht haette...
-- (rp) "Ghosts" (i.e. Enemeys go throught walls...)
+- (DONE) Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
+         (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
+         hoffe dass niemand sie doch gebraucht haette...
+	 (jp:) War fuer eine PlusExtension, die noch dazu instabil war.  Wir
+	       koennen problemlos darauf verzichen bis auf weiteres.
+- (DONE) "Ghosts" (i.e. Enemeys go throught walls...)
 - NEW! but DONE! 
         There is a very strange bug:  When the influ switches to weapon
         mode or just is in WEAPON mode, the framerate GOES UP AND ALMOST
@@ -118,6 +85,15 @@ Resolved bugs
 	and the SDL.  Now Influ-color is not set every frame.  This was the
         default in WEAPON mode only.  Now we have DOUBLE framerate!  coool!
 
+- (DONE) (jp:) wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
+               steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
+               an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
+               Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr 
+               fragwuerdig
+         (jp:) appearently this bug has been resolved somewhere since it was encounteres
+               while using SVGALIB and might have been resolved with the new and corrected
+               get-ship-routines of rp or so.  At least this bug cannot be found on my
+               machine any more.
 - DONE     (rp:) game should be able to check if yiff is actually _running_ and
                  complain if not and/or continue  
            (jp:) I do not see this problem.  If yiff is not started, it will be
@@ -125,6 +101,7 @@ Resolved bugs
    	         So why check if yiff is already running?
 	         Also I have added extensive error handling and error documentation 
 	         for the user, so I consider the problem now fixed.
+           (jp:) YIFF has been entirely removed, to this really is handled...
 - (DONE)   Schussfrequenz des 001 zu hoch
 - (DONE)   gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
            --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
@@ -157,4 +134,30 @@ Resolved bugs
            least once before!  Very strange!
            (rp: this should now work ok)
 - (rp)     Timing in takeover game 
--          Concept view is ugly
+- (DONE)   Concept view is ugly
+- (DONE)   Pause stopped working with SDL-port
+- (DONE)   Uebernommener 302 is zu schnell, 420 is zu langsam..., etc etc
+           (jp: finde ich nicht.  Ist zwar nicht 100% Originalgetreu, aber ich finde schon,
+           dann die Geschwindigkeit des entsprechenden Robots dann auch fuer den 001 gelten
+           sollte, wenn er einen dieser Robots uebernommen hat.)
+- (DONE)   proper Highscore list 
+           --> Highscore list is accessible via the ESCAPE menu (single player submenu)
+- (DONE)   Debriefing ordentlich
+           debriefing sieht jetzt gar nicht so schlecht aus.
+- (DONE)   Lift-entry: man muss zu lange auf Space sein bis man in den Lift
+           kommt. Das "Lift-fahren" ist auch zu schwerfaellig.
+- (DONE)   Blitz-schuesse flimmern jetzt zu stark/lang	
+           --> nicht mehr, seit die Framerate durch weniger debug-messages 
+           generell hoch ist und Flashes Framerate-abhaengig lang leben
+- (rp) should have maximally one 999 on commando-bridge
+  (jp: I think I've encountered 0 often, later 2 on other ships,
+       so I think thats not really so serious)
+- (DONE) Endscreen after being killed ("Flimmern4") is too slow
+         (rp: now speeded up a bit, but should write a new one)
+- (DONE) put all "cheat"-keys in cheat-menu (some are still accessible outside)
+- (DONE) Enemey visibility is a bit shakey (revisit visibility calcuations...)
+         Test with concept view:  VISIBILITY seems to work perfectly well.
+	 The variable onscreen is not updated except for in PutEnemys and should
+	 perhaps be removed:  We HAVE the time to calculate visibility every
+	 time we want to use it and DO NOT NEED to store is somewhere.
+

@@ -273,10 +273,12 @@ main (int argc, char *const argv[])
 	    Terminate (OK);
 	  if ( DPressed() )
 	    Me.energy = 0;
-	  if ( LPressed() ) 
-	    ShowHighscoreList ();
-	  if ( IPressed() )
-	    ShowDebugInfos ();
+
+	  // To debug the Debriefing() I added a function to add or subtract
+	  // a thousand points of score via numerical keyboard functions.
+	  // Activate this if you want to test that.  Since the error hasnt
+	  // occured lately, I deactivate this code now.
+	  /*
 	  if ( KP0Pressed() )
 	    {
 	      while (KP0Pressed());
@@ -287,6 +289,9 @@ main (int argc, char *const argv[])
 	      while (KP1Pressed());
 	      RealScore+=1000;
 	    }
+	  */
+
+
 	  if ( CPressed() && Alt_Was_Pressed()
 	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
 	    Cheatmenu ();
@@ -618,6 +623,8 @@ void
 Pause (void)
 {
   int Pause = TRUE;
+
+  Activate_Conservative_Frame_Computation();
 
   Me.status = PAUSE;
   SetInfoline (NULL, NULL);

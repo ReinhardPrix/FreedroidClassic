@@ -92,12 +92,12 @@ Init_Audio(void)
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
 
-  // At first we set audio volume to medium value.
+  // At first we set audio volume to maximum value.
   // This might be replaced later with values from a 
   // private user Freedroid config file.  But for now
   // this code is good enough...
-  Current_BG_Music_Volume=0.5;
-  Current_Sound_FX_Volume=0.5;
+  Current_BG_Music_Volume=1.0;
+  Current_Sound_FX_Volume=1.0;
 
   /* Because the yiff does not nescessarily have the same origin for */
   /* relative paths as paradroid does, it is nescessary to first translate */

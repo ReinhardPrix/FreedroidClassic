@@ -154,7 +154,7 @@ typedef struct
   float warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
   float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
-  byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
+  // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
   int Shield[4];		// Status of Partial shields
 }
 enemy, *Enemy;

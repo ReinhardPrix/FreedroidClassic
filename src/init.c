@@ -187,8 +187,8 @@ InitNewGame (void)
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
-  Draw_Framerate=TRUE;
-  Draw_Energy=TRUE;
+  Draw_Framerate=FALSE;
+  Draw_Energy=FALSE;
 
 
   /*
@@ -413,20 +413,13 @@ InitParaplus (void)
   /* InternWindow */
   InternWindow = MyMalloc (INTERNBREITE * INTERNHOEHE * BLOCKMEM + 100);
 
-  /* eigenen Zeichensatz installieren */
-  //  LadeZeichensatz (DATA70ZEICHENSATZ);
-
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();
 
   /* richtige Paletten-Werte einstellen */
   //  InitPalette ();
 
-  /* Tastaturwiederholrate auf den geringsten Wert setzen */
-  //  SetTypematicRate (TYPEMATIC_SLOW);
-
   return;
-
 } /* InitParaplus() */
 
 /*-----------------------------------------------------------------

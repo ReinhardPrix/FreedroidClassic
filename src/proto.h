@@ -348,7 +348,6 @@ EXTERN long my_sqrt (long);
 EXTERN int my_abs (int);
 
 EXTERN void ShowDebugInfos (void);
-EXTERN void ShowHighscoreList (void);
 
 /* enemy.c */
 #undef EXTERN
