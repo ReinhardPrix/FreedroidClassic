@@ -195,6 +195,13 @@ Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 571
 Allowed Type of Random Droid for this level: 598
 Allowed Type of Random Droid for this level: 614
+
+SpecialForce: Type=248 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard1StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Mean Bone Crusher"
+SpecialForce: Type=250 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard2StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Vile Sniper"
+SpecialForce: Type=248 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard3StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Mean Bone Crusher"
+SpecialForce: Type=250 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard4StartGameSquare" RushTux="no" DialogSectionToUse="GOT" ShortLabel="Vile Sniper"
+
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **
