@@ -79,6 +79,12 @@ int attack_object_phases = -1 ;
 int gethit_object_phases = -1 ;
 int death_object_phases = -1 ;
 int stand_object_phases = -1 ;
+Sint16 cooked_walk_object_phases;
+Sint16 cooked_attack_object_phases;
+Sint16 cooked_gethit_object_phases;
+Sint16 cooked_death_object_phases;
+Sint16 cooked_stand_object_phases;
+
 int tux_direction_numbering = FALSE ;
 int open_gl_sized_images = FALSE ;
 
@@ -561,6 +567,18 @@ auto_probe_max_object_phases ( void )
 	if ( stand_object_phases == 0 ) max_object_phases ++ ;
     }
 
+    cooked_walk_object_phases   = walk_object_phases   ;
+    cooked_attack_object_phases = attack_object_phases ; 
+    cooked_gethit_object_phases = gethit_object_phases ; 
+    cooked_death_object_phases  = death_object_phases  ; 
+    cooked_stand_object_phases  = stand_object_phases  ; 
+    
+    if ( ! cooked_walk_object_phases ) cooked_walk_object_phases = 1 ;
+    if ( ! cooked_attack_object_phases ) cooked_attack_object_phases = 1 ;
+    if ( ! cooked_gethit_object_phases ) cooked_gethit_object_phases = 1 ;
+    if ( ! cooked_death_object_phases ) cooked_death_object_phases = 1 ;
+    if ( ! cooked_stand_object_phases ) cooked_stand_object_phases = 1 ;
+
 }; // void auto_probe_max_object_phases ( void )
     
 /* -----------------------------------------------------------------
@@ -932,11 +950,6 @@ main (int argc, char *const argv[])
     int i, j;
     char output_file_filename[10000]="/home/johannes/FreeDroid/gluem/test.tux_image_archive" ;
     char* local_prefix;
-    int cooked_walk_object_phases;
-    int cooked_attack_object_phases;
-    int cooked_gethit_object_phases;
-    int cooked_death_object_phases;
-    int cooked_stand_object_phases;
     int local_index;
 
 #define MAIN_DEBUG 1 
@@ -986,14 +999,25 @@ main (int argc, char *const argv[])
     {
 	fwrite ( "sdlX" , 1 , strlen ( "sdlX" ) , output_file );
     }
-    
+
     //--------------------
     // At this point (when reading the file in the game) the file format
     // is clear, so we may do some case-dependent writing into the post-header
     // area here already without getting into trouble...
     //
-    
+    // We write out the number of phases in each cycle, i.e. the number of
+    // images in walk, attack, gethit, death and stand cycle.
+    //
+    fwrite ( & ( cooked_walk_object_phases ) , 1 , sizeof ( Sint16 ) , output_file );
+    fwrite ( & ( cooked_attack_object_phases ) , 1 , sizeof ( Sint16 ) , output_file );
+    fwrite ( & ( cooked_gethit_object_phases ) , 1 , sizeof ( Sint16 ) , output_file );
+    fwrite ( & ( cooked_death_object_phases ) , 1 , sizeof ( Sint16 ) , output_file );
+    fwrite ( & ( cooked_stand_object_phases ) , 1 , sizeof ( Sint16 ) , output_file );
 
+    //--------------------
+    // Now we can start to write out the raw image and offset information in one
+    // long saucage...
+    //
     for ( j = 0 ; j < all_object_directions ; j ++ )
     {
 	for ( i = 0 ; i < max_object_phases ; i ++ )
@@ -1006,18 +1030,6 @@ main (int argc, char *const argv[])
 	    }
 	    else 
 	    {
-		cooked_walk_object_phases   = walk_object_phases   ;
-		cooked_attack_object_phases = attack_object_phases ; 
-		cooked_gethit_object_phases = gethit_object_phases ; 
-		cooked_death_object_phases  = death_object_phases  ; 
-		cooked_stand_object_phases  = stand_object_phases  ; 
-
-		if ( ! cooked_walk_object_phases ) cooked_walk_object_phases = 1 ;
-		if ( ! cooked_attack_object_phases ) cooked_attack_object_phases = 1 ;
-		if ( ! cooked_gethit_object_phases ) cooked_gethit_object_phases = 1 ;
-		if ( ! cooked_death_object_phases ) cooked_death_object_phases = 1 ;
-		if ( ! cooked_stand_object_phases ) cooked_stand_object_phases = 1 ;
-
 		if ( i < cooked_walk_object_phases )
 		{
 		    //--------------------
@@ -1064,7 +1076,7 @@ main (int argc, char *const argv[])
 		    else
 		    {
 			local_prefix = "death" ;
-			local_index = i - cooked_walk_object_phases - cooked_attack_object_phases - cooked_death_object_phases + 1 ;
+			local_index = i - cooked_walk_object_phases - cooked_attack_object_phases - cooked_gethit_object_phases + 1 ;
 		    }
 		}
 		else if ( i < cooked_walk_object_phases + cooked_attack_object_phases + cooked_gethit_object_phases + cooked_death_object_phases + cooked_stand_object_phases )
