@@ -349,7 +349,7 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   // item, wich is also not always the same.
   //
   TargetRect.x = GetMousePos_x() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
-  TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
+  TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.y * 16;
 
   SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
@@ -1425,12 +1425,16 @@ ShowInventoryScreen( void )
 
   //--------------------
   // Now we display the item in the influencer weapon slot
+  // At this point we have to pay extra care, cause the weapons in Freedroid
+  // really come in many different sizes.
   //
   TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
   TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
   if ( ( ! Me[0].weapon_item.currently_held_in_hand ) && ( Me[0].weapon_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      TargetRect.x += 32 * 0.5 * ( 2 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . x ) ;
+      TargetRect.y += 32 * 0.5 * ( 3 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . y ) ;
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ] . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
