@@ -1704,6 +1704,8 @@ AssembleCombatPicture (int mask)
 
   blit_preput_objects_according_to_blitting_list ( mask );
 
+  PutMouseMoveCursor ( );
+
   if ( mask & SHOW_ITEMS )
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
@@ -1724,8 +1726,6 @@ AssembleCombatPicture (int mask)
   
   PutMiscellaneousSpellEffects ( );
       
-  PutMouseMoveCursor ( );
-
   if (mask & ONLY_SHOW_MAP) 
     {
       // in case we only draw the map, we are done here.  But
