@@ -2007,6 +2007,12 @@ blit_open_gl_stretched_texture_light_radius ( void )
     local_iso_image . offset_x = 0 ;    
     local_iso_image . offset_y = 0 ;
 
+    glEnable ( GL_BLEND ) ;
+    glDisable( GL_ALPHA_TEST );  
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+    glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+
     blit_zoomed_open_gl_texture_to_screen_position ( 
 	& local_iso_image , 
 	0,

@@ -619,13 +619,35 @@ There was an obstacle type given, that exceeds the number of\n\
 	    darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
 	    if ( darkness > 1 ) darkness = 1.0 ;
 	    if ( darkness < 0 ) darkness = 0 ;
-	    if ( FALSE )
+
+	    //--------------------
+	    // Not in all cases does it make sense to make the walls transparent.
+	    // Only those walls, that are really blocking the Tux from view should
+	    // be made transparent.
+	    //
+	    if ( obstacle_map [ our_obstacle -> type ] . transparent == TRANSPARENCY_FOR_WALLS ) 
 	    {
-		blit_open_gl_texture_to_map_position ( 
-		    obstacle_map [ our_obstacle -> type ] . image , 
-		    our_obstacle -> pos . x , our_obstacle -> pos . y , 
-		    darkness , darkness, darkness , FALSE, 
-		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
+		if ( ( our_obstacle -> pos . x > Me [ 0 ] . pos . x - 0.5 ) &&
+		     ( our_obstacle -> pos . y > Me [ 0 ] . pos . y - 0.5 ) &&
+		     ( our_obstacle -> pos . x < 
+		       Me [ 0 ] . pos . x + 1.5 ) &&
+		     ( our_obstacle -> pos . y < 
+		       Me [ 0 ] . pos . y + 1.5 ) )
+		{
+		    blit_open_gl_texture_to_map_position ( 
+			obstacle_map [ our_obstacle -> type ] . image , 
+			our_obstacle -> pos . x , our_obstacle -> pos . y , 
+			darkness , darkness, darkness , FALSE, 
+			obstacle_map [ our_obstacle -> type ] . transparent ) ;
+		}
+		else
+		{
+		    blit_open_gl_texture_to_map_position ( 
+			obstacle_map [ our_obstacle -> type ] . image , 
+			our_obstacle -> pos . x , our_obstacle -> pos . y , 
+			darkness , darkness, darkness , FALSE, 
+			0 ) ;
+		}
 	    }
 	    else
 	    {
@@ -4267,81 +4289,80 @@ There was a bullet to be blitted of a type that does not really exist.",
 void
 PutItem( int ItemNumber , int mask , int put_thrown_items_flag , int highlight_item )
 {
-  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
-  // gps ItemGPS;
+    Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
 
-  //--------------------
-  // The unwanted cases MUST be handled first...
-  //
-  if ( CurItem->type == ( -1 ) ) 
+    //--------------------
+    // The unwanted cases MUST be handled first...
+    //
+    if ( CurItem->type == ( -1 ) ) 
     {
-      return;
-      fprintf( stderr, "\n\nItemNumber '%d'\n" , ItemNumber );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	return;
+	fprintf( stderr, "\n\nItemNumber '%d'\n" , ItemNumber );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was -1 item type given to blit.  This must be a mistake! ",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-  // We don't blit any item, that we're currently holding in our hand, do we?
-  if ( CurItem->currently_held_in_hand == TRUE ) return;
-
-  //--------------------
-  // In case the flag filters this item, we don't blit it
-  //
-  if ( ( put_thrown_items_flag == PUT_ONLY_THROWN_ITEMS ) &&
-       ( CurItem -> throw_time <= 0 ) ) 
-    return;
-  if ( ( put_thrown_items_flag == PUT_NO_THROWN_ITEMS ) &&
-       ( CurItem -> throw_time > 0 ) ) 
-    return;
-
-  //--------------------
-  // Now we can go take a look if maybe there is an ingame surface 
-  // for this item available.  If not, the function will automatically
-  // load the inventory surface instead, so we really can assume that
-  // we have something to use afterwards.
-  //
-  if ( ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . surface == NULL ) &&
-       ( ! ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . texture_has_been_created ) )
-    try_to_load_ingame_item_surface ( CurItem -> type );
-
-  //--------------------
-  // When zoomed out, you can't see any items clearly anyway...
-  //
-  if ( mask & ZOOM_OUT )
+    // We don't blit any item, that we're currently holding in our hand, do we?
+    if ( CurItem->currently_held_in_hand == TRUE ) return;
+    
+    //--------------------
+    // In case the flag filters this item, we don't blit it
+    //
+    if ( ( put_thrown_items_flag == PUT_ONLY_THROWN_ITEMS ) &&
+	 ( CurItem -> throw_time <= 0 ) ) 
+	return;
+    if ( ( put_thrown_items_flag == PUT_NO_THROWN_ITEMS ) &&
+	 ( CurItem -> throw_time > 0 ) ) 
+	return;
+    
+    //--------------------
+    // Now we can go take a look if maybe there is an ingame surface 
+    // for this item available.  If not, the function will automatically
+    // load the inventory surface instead, so we really can assume that
+    // we have something to use afterwards.
+    //
+    if ( ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . surface == NULL ) &&
+	 ( ! ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . texture_has_been_created ) )
+	try_to_load_ingame_item_surface ( CurItem -> type );
+    
+    //--------------------
+    // When zoomed out, you can't see any items clearly anyway...
+    //
+    if ( mask & ZOOM_OUT )
     {
-      if ( use_open_gl )
+	if ( use_open_gl )
 	{
-	  blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
-							CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25, FALSE );
+	    blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
+							  CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25, FALSE );
 	}
-      else
+	else
 	{
-	  blit_zoomed_iso_image_to_map_position ( & ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image ) , 
-						  CurItem -> pos . x , CurItem -> pos . y );
+	    blit_zoomed_iso_image_to_map_position ( & ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image ) , 
+						    CurItem -> pos . x , CurItem -> pos . y );
 	}
     }
-  else
+    else
     {
-      if ( use_open_gl )
+	if ( use_open_gl )
 	{
-	  blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
-						 CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-						 CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-						 1.0 , 1.0 , 1.0 , highlight_item , FALSE);
+	    blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
+						   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+						   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+						   1.0 , 1.0 , 1.0 , highlight_item , FALSE);
 	}
-      else
+	else
 	{
-	  blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
-					   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-					   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
-	  if ( highlight_item )
-	    blit_outline_of_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
-					   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-					   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+	    blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+					     CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+					     CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+	    if ( highlight_item )
+		blit_outline_of_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+							    CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+							    CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
 	}
     }
-
+    
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------
@@ -4597,25 +4618,24 @@ function used for this did not succeed.",
 void
 PutBlast (int Blast_number)
 {
-  Blast CurBlast = &AllBlasts[Blast_number];
-  // SDL_Rect TargetRectangle;
-
-  // If the blast is already long dead, we need not do anything else here
-  if (CurBlast->type == OUT)
-    return;
-
-  // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
-  if ( CurBlast->type >= ALLBLASTTYPES ) 
+    Blast CurBlast = &AllBlasts[Blast_number];
+    
+    // If the blast is already long dead, we need not do anything else here
+    if ( CurBlast -> type == OUT )
+	return;
+    
+    // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
+    if ( CurBlast->type >= ALLBLASTTYPES ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The PutBlast function should blit a blast of a type that does not\n\
 exist at all.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     };
-  
-  blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ (int)floorf(CurBlast->phase) ] , 
-				   CurBlast -> pos . x , CurBlast -> pos . y  );
-
+    
+    blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ (int)floorf(CurBlast->phase) ] , 
+				     CurBlast -> pos . x , CurBlast -> pos . y  );
+    
 };  // void PutBlast(int Blast_number)
 
 /* ----------------------------------------------------------------------
@@ -4625,7 +4645,7 @@ exist at all.",
 void
 FlashWindow (SDL_Color Flashcolor)
 {
-  FillRect( User_Rect, Flashcolor);
+    FillRect( User_Rect, Flashcolor);
 }; // void FlashWindow(int Flashcolor)
 
 
@@ -4635,16 +4655,15 @@ FlashWindow (SDL_Color Flashcolor)
 void
 FillRect (SDL_Rect rect, SDL_Color color)
 {
-  Uint32 pixcolor;
-  SDL_Rect tmp;
-
-  Set_Rect (tmp, rect.x, rect.y, rect.w, rect.h);
-
-  pixcolor = SDL_MapRGB (Screen->format, color.r, color.g, color.b);
-
-  our_SDL_fill_rect_wrapper (Screen, &tmp, pixcolor);
-  
-  return;
+    Uint32 pixcolor;
+    SDL_Rect tmp;
+    
+    Set_Rect (tmp, rect.x, rect.y, rect.w, rect.h);
+    
+    pixcolor = SDL_MapRGB (Screen->format, color.r, color.g, color.b);
+    
+    our_SDL_fill_rect_wrapper (Screen, &tmp, pixcolor);
+    
 }; // void FillRect (SDL_Rect rect, SDL_Color color)
 
 /* ----------------------------------------------------------------------
@@ -4692,77 +4711,80 @@ A droid portrait failed to load.",
 }; // void ShowRobotPicture ( ... )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When the inventory screen is visible, we do not only show the items
+ * present in inventory, but we also show the inventory squares, that each
+ * item in the item pool takes away for storage.  This function blits a
+ * part-transparent colored shadow under the item, such that the inventory
+ * dimensions become apparent to the player immediately.
  * ---------------------------------------------------------------------- */
 void
 draw_inventory_occupied_rectangle ( SDL_Rect TargetRect , int all_stat_requirements_are_met )
 {
 #define RED_INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentRedPlate.png"
 #define BLUE_INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentBluePlate.png"
-
-  static SDL_Surface *TransparentRedPlateImage = NULL;
-  static SDL_Surface *TransparentBluePlateImage = NULL;
-  SDL_Surface *tmp;
-  char *fpath;
-  char fname1 [ ] = RED_INVENTORY_SQUARE_OCCUPIED_FILE;
-  char fname2 [ ] = BLUE_INVENTORY_SQUARE_OCCUPIED_FILE;
-
-  if ( use_open_gl )
+    
+    static SDL_Surface *TransparentRedPlateImage = NULL;
+    static SDL_Surface *TransparentBluePlateImage = NULL;
+    SDL_Surface *tmp;
+    char *fpath;
+    char fname1 [ ] = RED_INVENTORY_SQUARE_OCCUPIED_FILE;
+    char fname2 [ ] = BLUE_INVENTORY_SQUARE_OCCUPIED_FILE;
+    
+    if ( use_open_gl )
     {
-      if ( all_stat_requirements_are_met )
-	GL_HighlightRectangle ( Screen , TargetRect , 0 , 0 , 255 , 100 );
-      else
-	GL_HighlightRectangle ( Screen , TargetRect , 255 , 0 , 0 , 100 );
+	if ( all_stat_requirements_are_met )
+	    GL_HighlightRectangle ( Screen , TargetRect , 0 , 0 , 255 , 100 );
+	else
+	    GL_HighlightRectangle ( Screen , TargetRect , 255 , 0 , 0 , 100 );
     }
-  else
+    else
     {
-      // --------------------
-      // Some things like the loading of the inventory and initialisation of the
-      // inventory rectangle need to be done only once at the first call of this
-      // function. 
-      //
-      if ( TransparentRedPlateImage == NULL )
+	// --------------------
+	// Some things like the loading of the inventory and initialisation of the
+	// inventory rectangle need to be done only once at the first call of this
+	// function. 
+	//
+	if ( TransparentRedPlateImage == NULL )
 	{
-	  //--------------------
-	  // Now we load the red intentory plate
-	  //
-	  fpath = find_file ( fname1 , GRAPHICS_DIR, FALSE);
-	  tmp = our_IMG_load_wrapper( fpath );
-	  if ( !tmp )
+	    //--------------------
+	    // Now we load the red intentory plate
+	    //
+	    fpath = find_file ( fname1 , GRAPHICS_DIR, FALSE);
+	    tmp = our_IMG_load_wrapper( fpath );
+	    if ( !tmp )
 	    {
-	      fprintf( stderr, "\n\nfname1: '%s'\n" , fname1 );
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		fprintf( stderr, "\n\nfname1: '%s'\n" , fname1 );
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 The red transparent plate for the inventory could not be loaded.  This is a fatal error.",
-					 PLEASE_INFORM, IS_FATAL );
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-	  TransparentRedPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
-	  SDL_FreeSurface ( tmp );
-
-	  //--------------------
-	  // Now we load the blue intentory plate
-	  //
-	  fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
-	  tmp = our_IMG_load_wrapper( fpath );
-	  if ( !tmp )
+	    TransparentRedPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
+	    SDL_FreeSurface ( tmp );
+	    
+	    //--------------------
+	    // Now we load the blue intentory plate
+	    //
+	    fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
+	    tmp = our_IMG_load_wrapper( fpath );
+	    if ( !tmp )
 	    {
-	      fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 The red transparent plate for the inventory could not be loaded.  This is a fatal error.",
-					 PLEASE_INFORM, IS_FATAL );
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-	  TransparentBluePlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
-	  SDL_FreeSurface ( tmp );
-
+	    TransparentBluePlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
+	    SDL_FreeSurface ( tmp );
+	    
 	}
-
-      if ( all_stat_requirements_are_met )
-	our_SDL_blit_surface_wrapper( TransparentBluePlateImage , NULL , Screen , &TargetRect );
-      else
-	our_SDL_blit_surface_wrapper( TransparentRedPlateImage , NULL , Screen , &TargetRect );
+	
+	if ( all_stat_requirements_are_met )
+	    our_SDL_blit_surface_wrapper( TransparentBluePlateImage , NULL , Screen , &TargetRect );
+	else
+	    our_SDL_blit_surface_wrapper( TransparentRedPlateImage , NULL , Screen , &TargetRect );
     }
-
-
+    
+    
 }; // void draw_inventory_occupied_rectangle ( SDL_Rect TargetRect )
 
 /* ----------------------------------------------------------------------
