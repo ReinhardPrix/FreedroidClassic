@@ -1059,7 +1059,7 @@ Freedroid received a rotation model number that does not exist!",
 	      // the classical Tux direction number codes while the other ones
 	      // use the old one-image-animation direction codes for enemies.
 	      //
-	      if ( ( ModelNr == 6 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
+	      if ( ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
 		source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
 	      else
 		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 0 ;
@@ -1710,28 +1710,30 @@ Load_Enemy_Surfaces( void )
   droid_death_animation_speed_factor [ i ] = 5 ;
   droid_stand_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
+
   PrefixToFilename [ i ] = "614" ; // 14
   first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
+  last_walk_animation_image [ i ] = 5 ;
+  first_attack_animation_image [ i ] = 6 ;
+  last_attack_animation_image [ i ] = 6 ;
+  first_gethit_animation_image [ i ] = 7 ;
+  last_gethit_animation_image [ i ] = 7 ;
+  first_death_animation_image [ i ] = 8 ;
+  last_death_animation_image [ i ] = 8 ;
+  first_stand_animation_image [ i ] = 9 ;
+  last_stand_animation_image [ i ] = 18 ;
   use_default_attack_image [ i ] = TRUE ;
   use_default_gethit_image [ i ] = TRUE ;
   use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
+  use_default_stand_image [ i ] = FALSE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
+  droid_walk_animation_speed_factor [ i ] = 16 ;
   droid_attack_animation_speed_factor [ i ] = 5 ;
   droid_gethit_animation_speed_factor [ i ] = 5 ;
   droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
+  droid_stand_animation_speed_factor [ i ] = 3 ;
   ModelMultiplier  [ i ] = 1 ;i++;
+
   PrefixToFilename [ i ] = "615" ; // 15
   first_walk_animation_image [ i ] = 1 ;
   last_walk_animation_image [ i ] = 1 ;
