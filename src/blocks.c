@@ -2847,17 +2847,17 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_1 = 1.5 ;
   obstacle_map [ ISO_SHOP_FURNITURE_2 ] . block_area_parm_2 = 3.5 ;
   obstacle_map [ ISO_SHOP_FURNITURE_2 ] . filename = "iso_shop_furniture_0002.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_1 = 2.3 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_3 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . filename = "iso_shop_furniture_0003.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . filename = "iso_shop_furniture_0004.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_1 = 2.3 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . filename = "iso_shop_furniture_0005.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . filename = "iso_shop_furniture_0006.png" ;
 
   //--------------------
