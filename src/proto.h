@@ -283,6 +283,7 @@ EXTERN Item FindPointerToPositionCode ( int PositionCode , int PlayerNum ) ;
 EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
 EXTERN int CursorIsInUserRect( int x , int y );
+EXTERN int CursorIsInInvRect( int x , int y );
 EXTERN int CursorIsInWeaponRect( int x , int y );
 EXTERN int CursorIsInDriveRect( int x , int y );
 EXTERN int CursorIsInShieldRect( int x , int y );

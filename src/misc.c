@@ -50,37 +50,31 @@ typedef struct
 }
 message, Message;
 
-typedef struct
-{
-  SDL_Surface *button_surface;
-  char *button_image_file_name;
-  SDL_Rect button_rect;
-}
-mouse_press_button, Mouse_press_button;
-
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "CHAButton.png"                  , { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "INVButton.png"                  , { 600 , 400 ,  38 ,  22 } } ,
-    { NULL , "SKIButton.png"                  , { 600 , 370 ,  38 ,  22 } } ,
-    { NULL , "PlusButton.png"                 , { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "UPButton.png"                   , { 580 , 180 ,  50 , 100 } } ,
-    { NULL , "DOWNButton.png"                 , { 580 , 330 ,  50 , 100 } } ,
-    { NULL , "LEFTButton.png"                 , { 300 , 420 , 100 ,  50 } } ,
-    { NULL , "RIGHTButton.png"                , { 450 , 420 , 100 ,  50 } } ,
-    { NULL , "MapExitButton.png"              , {  50 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_gray.png"   , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_yellow.png" , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_red.png"    , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_gray.png"     , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_yellow.png"   , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_red.png"      , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapSecurityButtonMiddle.png"    , {  40 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"      , {   5 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"     , { 170 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapPasswordButtonMiddle.png"    , { 310 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"      , { 280 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"     , { 440 , 425 ,  30 ,  50 } }
+    { NULL , "CHAButton.png"                    , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "INVButton.png"                    , { 600 , 400 ,  38 ,  22 } } ,
+    { NULL , "SKIButton.png"                    , { 600 , 370 ,  38 ,  22 } } ,
+    { NULL , "PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "UPButton.png"                     , { 580 , 180 ,  50 , 100 } } ,
+    { NULL , "DOWNButton.png"                   , { 580 , 330 ,  50 , 100 } } ,
+    { NULL , "LEFTButton.png"                   , { 300 , 420 , 100 ,  50 } } ,
+    { NULL , "RIGHTButton.png"                  , { 450 , 420 , 100 ,  50 } } ,
+    { NULL , "MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_red.png"      , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_gray.png"       , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_yellow.png"     , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_red.png"        , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapSecurityButtonMiddle.png"      , {  40 , 425 , 120 ,  50 } } ,
+    { NULL , "MapSecurityButtonLeft.png"        , {   5 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapSecurityButtonRight.png"       , { 170 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapPasswordButtonMiddle.png"      , { 310 , 425 , 120 ,  50 } } ,
+    { NULL , "MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } } ,
+    { NULL , "MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } }
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------

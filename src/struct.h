@@ -58,6 +58,14 @@ color, *Color;
 
 typedef struct
 {
+  SDL_Surface *button_surface;
+  char *button_image_file_name;
+  SDL_Rect button_rect;
+}
+mouse_press_button, Mouse_press_button;
+
+typedef struct
+{
   float WantedTextVisibleTime;
   int Draw_Framerate;
   int Draw_Energy;

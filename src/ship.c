@@ -882,6 +882,21 @@ enum
     GUNONOFF_FUNCTION
   };
 
+/* ----------------------------------------------------------------------
+ * This function should delect a certain security clearance and reorder 
+ * the security clearances array afterwards.
+ * ---------------------------------------------------------------------- */
+void 
+DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
+{
+  int i;
+  
+  for ( i = ClearanceIndex ; i < MAX_CLEARANCES-1 ; i ++ )
+    {
+      Me [ PlayerNum ] . clearance_list [ i ] = Me [ PlayerNum ] . clearance_list [ i + 1 ] ;
+    }
+}; // void DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
+
 /* -----------------------------------------------------------------
  * This function displays the map of the current level and also 
  * affers some menu choices that do some functions of this console:
@@ -901,6 +916,8 @@ ShowDeckMap (Level deck)
   int PasswordIndex = -1 ;
   int UnlockAllowed = FALSE ;
   int GunOnOffAllowed = FALSE ;
+  int EnergyRate;
+  char EnergyRationString[100];
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -930,6 +947,10 @@ ShowDeckMap (Level deck)
 	      GunOnOffAllowed = TRUE ;
 	    } 
 	}
+      if ( ClearanceIndex < 0 ) EnergyRate = 0 ; // no energy except with clearance
+      else EnergyRate = (int)Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . maxenergy ;
+      if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Energy" ) ) EnergyRate = 10 ;
+
 
       ExitNow = EscapePressed();
 
@@ -1002,6 +1023,26 @@ ShowDeckMap (Level deck)
 	      else
 		{
 		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON , 
+				      GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( EnergyRate > 0 )
+		{
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Energy_Transferred_0.wav" , FALSE );		  
+		  Me [ 0 ] . energy += EnergyRate ;
+
+		  //--------------------
+		  // If this was done via a clearance, we will delete this
+		  // clearance now, cause it was used up.
+		  //
+		  if ( ClearanceIndex != (-1) )
+		    {
+		      Me [ 0 ] . clearance_list [ ClearanceIndex ] = 0; 
+		      DeleteSecurityClearances( 0 , ClearanceIndex );
+		      ClearanceIndex = (-1) ; // do not ever leave the allowed range, so do this to be safe!
+		    }
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
@@ -1164,6 +1205,20 @@ ShowDeckMap (Level deck)
 	{
 	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
 	}
+
+      //--------------------
+      // Now we print out the energy ration request button and energy amout
+      // that can be obtained.
+      //
+      if ( !EnergyRate ) ShowGenericButtonFromList ( MAP_REQUEST_ENERGY_RATION_RED_BUTTON );
+      else ShowGenericButtonFromList ( MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON );
+      sprintf( EnergyRationString , "%d" , EnergyRate );
+      PutString ( Screen , AllMousePressButtons [ MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON ] . button_rect . x +
+		  AllMousePressButtons [ MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON ] . button_rect . w + 10 , 
+		  AllMousePressButtons [ MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON ] . button_rect . y + 
+		  ( ( AllMousePressButtons [ MAP_REQUEST_ENERGY_RATION_GREEN_BUTTON ] . button_rect . h - 
+		      FontHeight ( GetCurrentFont() ) ) / 2 ) , EnergyRationString ); 
+
 
       ShowGenericButtonFromList ( MAP_SECURITYMIDDLE_BUTTON );
       ShowGenericButtonFromList ( MAP_SECURITYRIGHT_BUTTON );

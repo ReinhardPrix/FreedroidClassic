@@ -1875,6 +1875,7 @@ InitNewMissionList ( char *MissionName )
   strcpy ( Me [ 0 ] . password_list [ 0 ] , "Tux Himself" ) ;
   strcpy ( Me [ 0 ] . password_list [ 1 ] , "Tux Dummy1" ) ;
   strcpy ( Me [ 0 ] . password_list [ 2 ] , "Tux Dummy2" ) ;
+  strcpy ( Me [ 0 ] . password_list [ 3 ] , "Tux Energy" ) ;
 
   //--------------------
   // When the Tux arrives, he also should be at perfect health
