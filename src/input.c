@@ -37,7 +37,7 @@
 #include "global.h"
 #include "proto.h"
 
-
+int CurrentlyMouseRightPressed=0;
 SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
@@ -102,7 +102,10 @@ int CurrentlyKP9Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
-
+int sgn (int x)
+{
+  return (x ? ((x)/abs(x)) : 0);
+}
 
 void Init_Joy (void)
 {
@@ -632,7 +635,8 @@ keyboard_update(void)
 	  axis = event.jaxis.axis;
 	  if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
 	    {
-	      joy_ax_values.x = event.jaxis.value;
+	      input_axis.x = event.jaxis.value;
+
 	      if (event.jaxis.value > joy_sensitivity*1000)   /* about half tilted */
 		{
 		  CurrentlyRightPressed = TRUE;
@@ -651,7 +655,8 @@ keyboard_update(void)
 	    }
 	  else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
 	    {
-	      joy_ax_values.y = event.jaxis.value;
+	      input_axis.y = event.jaxis.value;
+
 	      if (event.jaxis.value > joy_sensitivity*1000)  
 		{
 		  CurrentlyDownPressed = TRUE;
@@ -679,10 +684,42 @@ keyboard_update(void)
 	  CurrentlySpacePressed = FALSE;
 	  break;
 
-	default:
+
+
+	  /* Mouse control */
+	case SDL_MOUSEBUTTONDOWN:
+	  if (mouse_control)
+	    {
+	      if (event.button.button == SDL_BUTTON_LEFT)
+		{
+		  CurrentlySpacePressed = TRUE;
+		  input_axis.x = event.button.x - USER_FENSTER_CENTER_X; 
+		  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y; 
+		}
+	      if (event.button.button == SDL_BUTTON_RIGHT)
+		CurrentlyMouseRightPressed = TRUE;
+	      
+	    }
 	  break;
-	}
+
+        case SDL_MOUSEBUTTONUP:
+	  if (event.button.button == SDL_BUTTON_LEFT)
+	    {
+	      CurrentlySpacePressed = FALSE;
+	      input_axis.x = 0;
+	      input_axis.y = 0;
+	    }
+	  if (event.button.button == SDL_BUTTON_RIGHT)
+	    CurrentlyMouseRightPressed = FALSE;
+	
+	  break;
+
+ 	default:
+ 	  break;
+ 	}
+
     }
+
   return 0;
 }
 
@@ -1146,10 +1183,20 @@ EscapePressed (void)
 int
 NoDirectionPressed (void)
 {
-  if (DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
+  if (input_axis.x || input_axis.y ||
+      DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
     return ( FALSE );
-  return ( TRUE );
+  else
+    return ( TRUE );
 } // int NoDirectionPressed(void)
+
+
+int
+MouseRightPressed(void)
+{
+  keyboard_update();
+  return CurrentlyMouseRightPressed;
+}
 
 
 #undef _intput_c

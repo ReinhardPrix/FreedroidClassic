@@ -233,7 +233,7 @@ Assemble_Combat_Picture (int mask)
 
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x + 100, 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Joy: %d %d" , joy_ax_values.x, joy_ax_values.y);
+		       "Axis: %d %d" , input_axis.x, input_axis.y);
     }
 
   if ( GameConfig.Draw_Energy )

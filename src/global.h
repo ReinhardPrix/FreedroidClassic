@@ -120,6 +120,8 @@ EXTERN int debug_level;       	/* 0=no debug 1=some debug messages 2=...etc */
 				/* (currently only 0 or !=0 is implemented) */
 EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
 EXTERN int show_all_droids;     /* display enemys regardless of IsVisible() */
+EXTERN int stop_influencer;     /* for bullet debugging: stop where u are */
+EXTERN int mouse_control;       /* allow for mouse control */
 
 #undef EXTERN
 #ifdef _misc_c
@@ -238,6 +240,6 @@ EXTERN SDL_Surface *ScaledSurface;
 EXTERN SDL_Joystick *joy;
 EXTERN int joy_num_axes; /* number of joystick axes */ 
 EXTERN int joy_sensitivity;
-EXTERN point joy_ax_values;
+EXTERN point input_axis;  /* joystick (and mouse) axis values */
 
 #endif  // _global_h

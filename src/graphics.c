@@ -642,7 +642,8 @@ Sorry...\n\
       exit(-1);
     }
 
-  SDL_ShowCursor (SDL_DISABLE);
+  if (!mouse_control)  /* hide mouse pointer if not needed */
+    SDL_ShowCursor (SDL_DISABLE);
 
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
   /* RGB of transparent color in our pics */

@@ -29,8 +29,6 @@ Outstanding release-critical bugs (priority: high)
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-- (rp) Joystick shooting should determine direction more precisely
-       (difficult to shoot "straight")
 
 - (rp) missing "takeover announcement" of droid opponent
 
@@ -232,3 +230,7 @@ Resolved bugs
   Framerate verschlingt!! (we should check that first, though)
   (wird sowieso automatisch behoben bzw. automatisch umgestellt, 
   wenn wir mit der neuen Engine dann auf TrueColor-Modus umstellen.
+
+- (rp) Joystick shooting should determine direction more precisely
+       (difficult to shoot "straight")
+       (DONE)

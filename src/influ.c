@@ -50,29 +50,9 @@
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
-long MyAbs (long);
 
-int
-isignf (float Wert)
-{
-  if (Wert == 0)
-    return 0;
-  return (Wert / fabsf (Wert));
-}				// int sign
+#define max(x,y) ((x) < (y) ? (y) : (x) ) 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-signed long
-MyAbs (signed long Wert)
-{
-  if (Wert < 0)
-    return (-Wert);
-  return Wert;
-}
 
 /*@Function============================================================
 @Desc: Fires Bullets automatically
@@ -230,6 +210,7 @@ MoveInfluence (void)
   static int counter = -1;
   int i;
 
+ 
   DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
   for (i=0; i<10; i++)
@@ -292,6 +273,10 @@ MoveInfluence (void)
       TransferCounter = 0;
     }
 
+  if (MouseRightPressed() == 1)
+    Me.status = TRANSFERMODE;
+    
+
   if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
        (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
@@ -300,12 +285,27 @@ MoveInfluence (void)
        (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
 
+
+  if (stop_influencer)
+    {
+      Me.speed.x = 0.0;
+      Me.speed.y = 0.0;
+      if (SpacePressed())
+	{
+	  Me.firewait = 0;
+	  FireBullet ();
+	}
+    }
+  else
+    {
   if (Me.autofire)
     AutoFireBullet ();
   else
     if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
 	&& (Me.firewait == 0) && (NoInfluBulletOnWay ()))
     FireBullet ();
+    }
+
 
   InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed
 
@@ -893,7 +893,8 @@ FireBullet (void)
   double BulletSpeed = Bulletmap[guntype].speed;
   double speed_norm;
   finepoint speed;
-  double dir, dir8; 
+  double dir, dir8;
+  int max_val;
 
   dir8 = M_PI/8.0;
 
@@ -934,11 +935,12 @@ FireBullet (void)
   if (RightPressed ())
     speed.x = 1.0;
 
-  /* if using a joystick, allow exact directional shots! */
-  if (joy_ax_values.x || joy_ax_values.y)
+  /* if using a joystick/mouse, allow exact directional shots! */
+  if (input_axis.x || input_axis.y)
     {
-      speed.x = 1.0*joy_ax_values.x/JOY_MAX_VAL;
-      speed.y = 1.0*joy_ax_values.y/JOY_MAX_VAL;
+      max_val = max (abs(input_axis.x), abs(input_axis.y));
+      speed.x = 1.0*input_axis.x/max_val;
+      speed.y = 1.0*input_axis.y/max_val;
     }
 
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
@@ -972,47 +974,10 @@ FireBullet (void)
   CurBullet->speed.x *= BulletSpeed;
   CurBullet->speed.y *= BulletSpeed;
 
-  CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
-  CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
-
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
-
-
-    //  CurBullet->pos.x += isignf (CurBullet->speed.x) * 0.5;
-    //  CurBullet->pos.y += isignf (CurBullet->speed.y) * 0.5;
-
-    //  if ((fabsf (BulletSpeed) < (26/64.0)) && (fabsf (BulletSpeed) < (26/64.0)) )
-    //    {
-      //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
-    //      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3.0;
-      //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
-    //      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3.0;
-  //    }
-
-  /*
-   * F"ur Geschosse gilt die alsolute Gescho"sgeschwindigkeit am c-64
-   * und die Newtonsche Physik mit Vektoraddition bei Paraplus.
-   *
-   * Allerdings wird nicht die ganze Fahrt auf den Schu"s "ubertragen
-   * Die Robotter sollen einen Wert haben, der angibt ob durch einen
-   * "Velocityneutralisator" die Fahrt ganz, halb ect. oder gar keine
-   * auswirkungen hat.
-   *
-   * Eventuell sollte dieser Menupunkt auch ausschaltbar sein.
-   *
-   */
-
-  /*
-  if (PlusExtentionsOn)
-    {
-      if (!Me.vneut)
-	{
-	  CurBullet->speed.x += Me.speed.x / Druidmap[Me.type].vneutral;
-	  CurBullet->speed.y += Me.speed.y / Druidmap[Me.type].vneutral;
-	}
-    }
-  */
+  CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
+  CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
 
 
   return;

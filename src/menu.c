@@ -132,10 +132,16 @@ Cheatmenu (void)
 		  fullscreen_on ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
       printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
+      printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
+		  stop_influencer ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
 
       switch (getchar_raw ())
 	{
+	case 'f':
+	  stop_influencer = !stop_influencer;
+	  break;
+
 	case 'z':
 	  ClearGraphMem();
 	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",

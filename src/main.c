@@ -65,6 +65,7 @@ main (int argc, char *const argv[])
   debug_level = 0;       /* 0=no debug 1=first debug level (at the moment=all) */
   fullscreen_on = FALSE; /* use X11-window or full screen */
   joy_sensitivity = 1;
+  mouse_control = TRUE;
 
   /*
    *  Parse command line and set global switches 
