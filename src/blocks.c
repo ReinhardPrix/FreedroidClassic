@@ -445,8 +445,9 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:54:54  rp
- * Initial revision
+ * Revision 1.2  1993/05/23 21:07:07  prix
+ * Sun May 23 08:17:27 1993: internal
+ * Sun May 23 08:20:01 1993: Internal
  *
  * Revision 1.6  1993/08/29  23:37:44  prix
  * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
