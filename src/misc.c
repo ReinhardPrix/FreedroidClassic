@@ -630,6 +630,8 @@ StartTakingTimeForFPSCalculation(void)
 void 
 ComputeFPSForThisFrame(void)
 {
+  static int time;
+  static int FPS_Displayed;
 
   // In the following paragraph the framerate calculation is done.
   // There are basically two ways to do this:
@@ -687,6 +689,20 @@ ComputeFPSForThisFrame(void)
   FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
   
 #endif
+
+  time++;
+  if ( time > 100 )
+    {
+      time = 0 ;
+      if ( Frame_Time() > 0 )
+	FPS_Displayed=(int)(1.0/Frame_Time());
+      else
+	FPS_Displayed=(int)9999;
+      // TimeSinceLastFPSUpdate=0;
+      
+      DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
+    }
+
 
 }; // void ComputeFPSForThisFrame(void)
 
