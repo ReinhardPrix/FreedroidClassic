@@ -38,6 +38,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 1
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -2676,6 +2677,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -3871,6 +3873,7 @@ xlen of this level: 60
 ylen of this level: 30
 light radius bonus of this level: 1
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -4546,6 +4549,7 @@ xlen of this level: 38
 ylen of this level: 22
 light radius bonus of this level: 5
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -5068,6 +5072,7 @@ xlen of this level: 44
 ylen of this level: 41
 light radius bonus of this level: 4
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -5992,6 +5997,7 @@ xlen of this level: 40
 ylen of this level: 40
 light radius bonus of this level: 3
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -6759,6 +6765,7 @@ xlen of this level: 40
 ylen of this level: 40
 light radius bonus of this level: 5
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -7333,6 +7340,7 @@ xlen of this level: 44
 ylen of this level: 47
 light radius bonus of this level: 1
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -8052,6 +8060,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
 jump threshold east: 13
@@ -8380,7 +8389,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8391,14 +8400,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8854,7 +8863,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=23 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=25 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=50 ob_x=39.50 ob_y=88.50 ob_na=-1 
@@ -8904,7 +8913,7 @@ ob_type=2 ob_x=55.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=56.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=25 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9416,6 +9425,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: -3
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -10517,6 +10527,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -11236,6 +11247,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -12505,6 +12517,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -13231,6 +13244,7 @@ xlen of this level: 58
 ylen of this level: 58
 light radius bonus of this level: 2
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -14054,6 +14068,7 @@ xlen of this level: 51
 ylen of this level: 26
 light radius bonus of this level: 5
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -14801,6 +14816,7 @@ xlen of this level: 50
 ylen of this level: 55
 light radius bonus of this level: 5
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -15324,6 +15340,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
 jump threshold east: 13
@@ -15961,6 +15978,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
 jump threshold east: 13
@@ -16756,6 +16774,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
 jump threshold east: 13
@@ -17270,6 +17289,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -17582,6 +17602,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -18223,6 +18244,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
 jump threshold east: 13
@@ -19769,6 +19791,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
 jump threshold east: 13
@@ -20841,6 +20864,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
 jump threshold east: 13
@@ -21422,6 +21446,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
 jump threshold east: 13
@@ -22436,6 +22461,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: -1
 jump threshold east: -1
@@ -23166,6 +23192,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: -7
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: -1
@@ -23804,6 +23831,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: -1
@@ -24326,6 +24354,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 0
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: 13
 jump threshold east: -1
@@ -24813,6 +24842,7 @@ xlen of this level: 25
 ylen of this level: 21
 light radius bonus of this level: 1
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -25066,6 +25096,7 @@ xlen of this level: 25
 ylen of this level: 21
 light radius bonus of this level: 1
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -25316,6 +25347,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: 13
 minimal light on this level: 0
+infinite_running_on_this_level: 0
 jump threshold north: 13
 jump threshold south: 13
 jump threshold east: 13
@@ -26608,6 +26640,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: -20
 minimal light on this level: -14
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
@@ -26947,6 +26980,7 @@ xlen of this level: 90
 ylen of this level: 90
 light radius bonus of this level: -24
 minimal light on this level: -48
+infinite_running_on_this_level: 0
 jump threshold north: -1
 jump threshold south: -1
 jump threshold east: -1
