@@ -582,6 +582,8 @@ enum
     SET_THEME,
     LEVEL_EDITOR_POSITION, 
     CREDITS_POSITION,
+    LOAD_GAME_POSITION,
+    SAVE_GAME_POSITION,
     QUIT_POSITION
   };
 
@@ -616,9 +618,9 @@ enum
       MenuTexts[3]=theme_string;
       MenuTexts[4]="Level Editor";
       MenuTexts[5]="Credits";
-      MenuTexts[6]="Quit Game";
-      MenuTexts[7]="";
-      MenuTexts[8]="";
+      MenuTexts[8]="Quit Game";
+      MenuTexts[6]="Load Game";
+      MenuTexts[7]="Save Game";
       MenuTexts[9]="";
 
       MenuPosition = DoMenuSelection( MenuTexts );
@@ -679,6 +681,13 @@ enum
 	  while (EnterPressed() || SpacePressed() );
 	  Credits_Menu();
 	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case LOAD_GAME_POSITION:
+	  LoadGame(  );
+	  Weiter = TRUE;
+	  break;
+	case SAVE_GAME_POSITION:
+	  SaveGame(  );
 	  break;
 	case QUIT_POSITION:
 	  DebugPrintf (2, "\nvoid EscapeMenu( void ): Quit Requested by user.  Terminating...");

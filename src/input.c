@@ -450,6 +450,7 @@ ReactToSpecialKeys(void)
       RealScore *= 2;
     }
 
+  /*
   if ( KP8Pressed() )
     {
       LoadGame(  );
@@ -461,7 +462,7 @@ ReactToSpecialKeys(void)
       SaveGame(  );
       while ( KP9Pressed(  ) );
     }
-
+  */
   
   if ( CPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
