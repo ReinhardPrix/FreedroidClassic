@@ -155,7 +155,6 @@
 //--------------------
 // And now we put here all the rectangle definitions and that...
 //
-
 #define INVENTORY_RECT_Y 264
 #define INVENTORY_RECT_X 15
 
@@ -164,55 +163,28 @@
 #define CURRENT_SKILL_RECT_W 64
 #define CURRENT_SKILL_RECT_H 64
 
-#define LEFT_WHOLE_HEALTH_RECT_X 15
-#define WHOLE_HEALTH_RECT_Y 1
-#define WHOLE_HEALTH_RECT_W 27
-#define WHOLE_HEALTH_RECT_H 45
-#define RIGHT_WHOLE_HEALTH_RECT_X ( GameConfig . screen_width - LEFT_WHOLE_HEALTH_RECT_X - WHOLE_HEALTH_RECT_W )
+#define WHOLE_HEALTH_RECT_Y (480-90)
+#define WHOLE_HEALTH_RECT_W 12
+#define WHOLE_HEALTH_RECT_H 63
+#define WHOLE_HEALTH_RECT_X 606
 #define HEALTH_RECT_COLOR (63*64*64 + 64*8)
 
 #define GOLDEN_SCHNITT ((sqrt(5)-1)/2)
 
-//--------------------
-// Here, the old running power rectangle before the introduction 
-// of the new hud.
-//
-// #define WHOLE_RUNNING_POWER_RECT_X 8
-// #define WHOLE_RUNNING_POWER_RECT_Y ((1.0-GOLDEN_SCHNITT)*GameConfig . screen_height)/2
-// #define WHOLE_RUNNING_POWER_RECT_W 5
-// #define WHOLE_RUNNING_POWER_RECT_H (GOLDEN_SCHNITT*GameConfig . screen_height)
-//
-// Now the new running power rectangle, that fits into the current hud
-//
 #define WHOLE_RUNNING_POWER_RECT_X 8
-// #define WHOLE_RUNNING_POWER_RECT_Y ( GameConfig . screen_height - 86 ) 
 #define WHOLE_RUNNING_POWER_RECT_Y ( 480 - 86 ) 
 #define WHOLE_RUNNING_POWER_RECT_W 9
 #define WHOLE_RUNNING_POWER_RECT_H 61
 
-
-//--------------------
-// Here, the exp bar rectangle before the introduction 
-// of the new hud.
-//
-// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ((1.0-GOLDEN_SCHNITT)*GameConfig . screen_width)/2
-// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X (1.0)
-// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y 8
-// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_W (GOLDEN_SCHNITT*GameConfig . screen_width)
-// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_H 5
-//
-// Now the new exp rectangle, that fits into the current hud
-//
 #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X 19
 #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y WHOLE_RUNNING_POWER_RECT_Y
 #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_W WHOLE_RUNNING_POWER_RECT_W
 #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_H WHOLE_RUNNING_POWER_RECT_H
 
-#define LEFT_WHOLE_FORCE_RECT_X ( LEFT_WHOLE_HEALTH_RECT_X * 2 + WHOLE_HEALTH_RECT_W )
 #define WHOLE_FORCE_RECT_Y ( WHOLE_HEALTH_RECT_Y )
 #define WHOLE_FORCE_RECT_W ( WHOLE_HEALTH_RECT_W )
 #define WHOLE_FORCE_RECT_H ( WHOLE_HEALTH_RECT_H )
-#define RIGHT_WHOLE_FORCE_RECT_X ( GameConfig . screen_width - LEFT_WHOLE_FORCE_RECT_X - WHOLE_FORCE_RECT_W )
+#define WHOLE_FORCE_RECT_X (640-19)
 #define FORCE_RECT_COLOR ( 0 * 64 * 64 + 64 * 0 + 63 )
 
 //--------------------

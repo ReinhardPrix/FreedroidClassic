@@ -1733,7 +1733,7 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . omit_obstacles_in_level_editor = FALSE ;
     GameConfig . omit_enemies_in_level_editor = TRUE ;
     GameConfig . zoom_is_on = FALSE ;
-    GameConfig . use_bars_instead_of_energy_o_meter = FALSE ;
+    GameConfig . use_bars_instead_of_energy_o_meter = TRUE ;
     GameConfig . show_blood = TRUE ;
     GameConfig . show_tooltips = TRUE;
     GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
