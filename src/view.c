@@ -1544,8 +1544,10 @@ blit_all_item_slots ( void )
 	    our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
 					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x099 ) );
 	else
-	    our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
-					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+	{
+	    // our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
+	    //			SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+	}
 
 	//--------------------
 	// Finally it's time to insert the font into the item slot.  We

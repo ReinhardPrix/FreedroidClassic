@@ -1768,53 +1768,53 @@ void
 blit_open_gl_cheap_light_radius ( void )
 {
 #ifdef HAVE_LIBGL
-  int our_height, our_width;
-  int light_strength;
-  int window_offset_x;
-  Uint8 r , g , b , a ;
-  moderately_finepoint target_pos;
-
-  prepare_open_gl_for_light_radius ();
-
-  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
-
+    int our_height, our_width;
+    int light_strength;
+    int window_offset_x;
+    Uint8 r , g , b , a ;
+    moderately_finepoint target_pos;
+    
+    prepare_open_gl_for_light_radius ();
+    
+    window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+    
 #define SHADOW_SQUARE_HEIGHT 12
 #define SHADOW_SQUARE_WIDTH 16
-
-  for ( our_height = 0 ; our_height < SCREEN_HEIGHT/SHADOW_SQUARE_HEIGHT ; our_height ++ )
+    
+    for ( our_height = 0 ; our_height < SCREEN_HEIGHT/SHADOW_SQUARE_HEIGHT ; our_height ++ )
     {
-      for ( our_width = 0 ; our_width < SCREEN_WIDTH/SHADOW_SQUARE_WIDTH ; our_width ++ )
+	for ( our_width = 0 ; our_width < SCREEN_WIDTH/SHADOW_SQUARE_WIDTH ; our_width ++ )
 	{
-	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
-	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
-
-	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
-							   ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , TRUE );
-	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
-							   ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , FALSE );
-
-	  light_strength = get_light_strength ( target_pos );
-
-	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
-	  if ( light_strength <= 0 ) continue ;
-
-	  r = 0 ; b = 0 ; g = 0 ; a = ( 255.0 / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) * ( (float) light_strength ) ; 
-
-	  glDisable ( GL_ALPHA_TEST );
-	  glColor4ub( r , g , b , a );
-	  
-	  glBegin(GL_QUADS);
-	  glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
-	  glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
-	  glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
-	  glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
-	  glEnd( );
-
+	    if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	    if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	    
+	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
+							       ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , TRUE );
+	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * SHADOW_SQUARE_WIDTH - UserCenter_x + SHADOW_SQUARE_WIDTH ,
+							       ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT - UserCenter_y + SHADOW_SQUARE_WIDTH , FALSE );
+	    
+	    light_strength = get_light_strength ( target_pos );
+	    
+	    if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
+	    if ( light_strength <= 0 ) continue ;
+	    
+	    r = 0 ; b = 0 ; g = 0 ; a = ( 255.0 / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) * ( (float) light_strength ) ; 
+	    
+	    glDisable ( GL_ALPHA_TEST );
+	    glColor4ub( r , g , b , a );
+	    
+	    glBegin(GL_QUADS);
+	    glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	    glVertex2i( ( 0 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	    glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 0 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	    glVertex2i( ( 1 + our_width ) * SHADOW_SQUARE_WIDTH , ( 1 + our_height ) * SHADOW_SQUARE_HEIGHT ) ;
+	    glEnd( );
+	    
 	}
     }
-
-  remove_open_gl_blending_mode_again ( ) ;
-
+    
+    remove_open_gl_blending_mode_again ( ) ;
+    
 #endif
 
 }; // void blit_open_gl_cheap_light_radius ( void )
