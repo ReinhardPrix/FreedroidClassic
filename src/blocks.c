@@ -2125,6 +2125,7 @@ init_obstacle_data( void )
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
+      obstacle_map [ i ] . emitted_light_strength = 0 ; // how much light emitted from here...
       obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
       sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
     }
@@ -2973,18 +2974,22 @@ init_obstacle_data( void )
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . filename = "iso_chairs_0004.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_N ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . filename = "iso_chairs_0001.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_E ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . filename = "iso_chairs_0002.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_S ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . filename = "iso_chairs_0003.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_W ] . emitted_light_strength = 10 ; // how much light emitted from here...
 
   obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_1 = 1.6 ;
   obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_2 = 0.8 ;

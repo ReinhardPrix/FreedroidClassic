@@ -283,19 +283,41 @@ iso_image, *Iso_image;
 
 typedef struct
 {
-  iso_image image;
-  int block_area_type;
-  int block_vision_too;
-  float block_area_parm_1;
-  float block_area_parm_2;
-  float upper_border ;
-  float lower_border ;
-  float left_border ;
-  float right_border ;
-  int is_smashable;
-  int needs_pre_put; // this is a special property for obstacles, that can be stepped on, like a rug or floor plate.
-  int drop_random_treasure;
-  char* filename;
+    iso_image image;
+    //--------------------
+    // Some obstacles will block the Tux from walking through them.
+    // Currently only rectangles are supported block areas.  The width
+    // (i.e. east-west=parm1) and height (i.e. north-south=parm2) of
+    // the blocking rectangle can ge specified below.
+    //
+    int block_area_type;
+    int block_vision_too;
+    float block_area_parm_1;
+    float block_area_parm_2;
+    float upper_border ;
+    float lower_border ;
+    float left_border ;
+    float right_border ;
+
+    //--------------------
+    // Some obstacles will explode when hit by a weapon swing or bullet
+    // and maybe they will even occasionally drop some treasure too...
+    //
+    int is_smashable;
+    int drop_random_treasure;
+
+    //--------------------
+    // Some obstacles will emitt light.  Specify light strength here.
+    // A value of 0 light will be sufficient in most cases...
+    //
+    int emitted_light_strength;
+
+    //--------------------
+    // This is a special property for obstacles, that can be 
+    // stepped on, like a rug or floor plate, for proper visibility...
+    //
+    int needs_pre_put; 
+    char* filename;
 }
 obstacle_spec, *Obstacle_spec;
 

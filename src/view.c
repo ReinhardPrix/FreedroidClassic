@@ -107,6 +107,12 @@ blitting_list_element, *Blitting_list_element;
 blitting_list_element blitting_list [ MAX_ELEMENTS_IN_BLITTING_LIST + 10 ] ;
 int number_of_objects_currently_in_blitting_list ;
 
+//--------------------
+// 
+#define MAX_NUMBER_OF_LIGHT_SOURCES 10
+moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
+int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
+
 enum
   {
     BLITTING_TYPE_NONE = 0 ,
@@ -1354,50 +1360,60 @@ show_obstacle_labels ( int mask )
 }; // void show_obstacle_labels ( int mask )
 
 /* ----------------------------------------------------------------------
+ * There might be some obstacles that emit some light.  Yet, we can't
+ * go through all the obstacle list of a level every frame at sufficiently
+ * low cost.  Therefore we create a reduced list of light emitters for
+ * usage in the light computation code.
+ * ---------------------------------------------------------------------- */
+void 
+update_light_list ( int player_num )
+{
+    int i;
+    Level light_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+
+    //--------------------
+    // At first we fill out the light sources array with 'empty' information,
+    // i.e. such positions, that won't affect our location for sure.
+    //
+    for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    {
+	light_sources [ i ] . x = -200 ;
+	light_sources [ i ] . y = -200 ;
+	light_source_strengthes [ i ] = 0 ;
+    }
+    
+    //--------------------
+    // Now we fill in the Tux position as the very first light source, that will
+    // always be present.
+    //
+    light_sources [ 0 ] . x = Me [ player_num ] . pos . x ;
+    light_sources [ 0 ] . y = Me [ player_num ] . pos . y ;
+    light_source_strengthes [ 0 ] = light_level -> light_radius_bonus ;
+    
+    //--------------------
+    // Now we can fill in the remaining light sources of this level
+    //
+    for ( i = 1 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    {
+	if ( light_level -> teleporter_obstacle_indices [ i-1 ] != (-1) )
+	{
+	    light_sources [ i ] . x = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . x ;
+	    light_sources [ i ] . y = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . y ;
+	    light_source_strengthes [ i ] = 10 ;
+	}
+    }
+    
+}; // void update_light_list ( int player_num )
+
+/* ----------------------------------------------------------------------
  * This function is used to find the light intensity at any given point
  * on the map.
  * ---------------------------------------------------------------------- */
 int 
 get_light_strength ( moderately_finepoint target_pos )
 {
-#define MAX_NUMBER_OF_LIGHT_SOURCES 10
   int final_darkness = NUMBER_OF_SHADOW_IMAGES;
-  moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
-  int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
   int i;
-  Level light_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  //--------------------
-  // At first we fill out the light sources array with 'empty' information,
-  // i.e. such positions, that won't affect our location for sure.
-  //
-  for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
-    {
-      light_sources [ i ] . x = -200 ;
-      light_sources [ i ] . y = -200 ;
-      light_source_strengthes [ i ] = 0 ;
-    }
-
-  //--------------------
-  // Now we fill in the Tux position as the very first light source, that will
-  // always be present.
-  //
-  light_sources [ 0 ] . x = Me [ 0 ] . pos . x ;
-  light_sources [ 0 ] . y = Me [ 0 ] . pos . y ;
-  light_source_strengthes [ 0 ] = light_level -> light_radius_bonus ;
-
-  //--------------------
-  // Now we can fill in the remaining light sources of this level
-  //
-  for ( i = 1 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
-    {
-      if ( light_level -> teleporter_obstacle_indices [ i-1 ] != (-1) )
-	{
-	  light_sources [ i ] . x = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . x ;
-	  light_sources [ i ] . y = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . y ;
-	  light_source_strengthes [ i ] = 10 ;
-	}
-    }
 
   //--------------------
   // Now that the light sources array is fully set up, we can start
@@ -1420,20 +1436,6 @@ get_light_strength ( moderately_finepoint target_pos )
 					( light_sources [ i ] . y - target_pos . y ) * 
 					( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
 	  - light_source_strengthes [ i ] ;
-      
-      /*
-      if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-			    ( light_sources [ i ] . x - target_pos . x ) + 
-			    ( light_sources [ i ] . y - target_pos . y ) * 
-			    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-	     - light_bonus ) < NUMBER_OF_SHADOW_IMAGES )
-	final_darkness -= ( NUMBER_OF_SHADOW_IMAGES -  ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-									( light_sources [ i ] . x - target_pos . x ) + 
-									( light_sources [ i ] . y - target_pos . y ) * 
-									( light_sources [ i ] . y - target_pos . y ) ) * 
-								 4.0 )
-							 - light_bonus ) ) ;
-      */
     }
 
   return ( final_darkness );
@@ -1547,8 +1549,6 @@ blit_light_radius ( void )
 
 }; // void blit_light_radius ( void )
 
-
-
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -1573,6 +1573,14 @@ AssembleCombatPicture (int mask)
 {
   int i;
   int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+
+  //--------------------
+  // We generate a list of obstacles (and other stuff) that might
+  // emitt some light.  It should be sufficient to establish this
+  // list once in the code and the to use it for all light computations
+  // of this frame.
+  //
+  update_light_list ( 0 );
 
   //--------------------
   // Within all of this display code, we only check for LIGHT as far
