@@ -338,6 +338,7 @@ enum
 #define QUEST_BROWSER_BACKGROUND_CODE 29
 #define NUMBER_SELECTOR_BACKGROUND_CODE 30
 #define GAME_MESSAGE_WINDOW_BACKGROUND_CODE 31
+#define HUD_BACKGROUND_CODE 32
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 #define ICON_FILE		"paraicon.bmp"

@@ -62,6 +62,44 @@ int best_banner_pos_x, best_banner_pos_y;
 char* game_message_protocol = NULL ;
 
 /* ----------------------------------------------------------------------
+ * The hud contains several status graphs.  These graphs appear as 
+ * vertical columns, that are more or less filled, like liquid in a tube.
+ * Since these appear multiple times, it appears sensible to make a 
+ * function to draw such bars in a convenient way, which is what this
+ * function is supposed to do.
+ * ---------------------------------------------------------------------- */
+void
+blit_vertical_status_bar ( float max_value , float current_value , Uint32 filled_color_code ,
+			   Uint32 empty_color_code , int x , int y , int w , int h )
+{
+    SDL_Rect running_power_rect;
+    SDL_Rect un_running_power_rect;
+
+    running_power_rect.x = x ;
+    running_power_rect.y = y 
+	+  ( ( h * ( max_value - current_value ) ) / max_value ) ;
+    running_power_rect.w = w ;
+    running_power_rect.h = ( h * current_value ) / max_value ;
+    if ( current_value < 0 ) running_power_rect . h = 0;
+    
+    un_running_power_rect . x = running_power_rect . x ;
+    un_running_power_rect . y = y ;
+    un_running_power_rect . w = w ;
+    un_running_power_rect . h = h - 
+	( ( h * current_value ) / max_value ) ;
+    if ( current_value < 0 ) un_running_power_rect . h = h ;
+    
+    //--------------------
+    // Now wthat all our rects are set up, we can start to display the current
+    // running power status on screen...
+    //
+    SDL_SetClipRect( Screen , NULL );
+    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , filled_color_code );
+    our_SDL_fill_rect_wrapper( Screen , & ( un_running_power_rect ) , empty_color_code );
+
+}; // void blit_vertical_status_bar ( ... )
+
+/* ----------------------------------------------------------------------
  * This function writes the description of an item into the item description
  * string.
  * ---------------------------------------------------------------------- */
@@ -785,8 +823,6 @@ blit_energy_o_meter( void )
 void
 blit_experience_countdown_bars ( void )
 {
-    SDL_Rect experience_countdown_rect;
-    SDL_Rect un_experience_countdown_rect;
     static Uint32 experience_countdown_rect_color = 0 ;
     static Uint32 un_experience_countdown_rect_color = 0 ;
     int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
@@ -815,35 +851,16 @@ to blit the 'experience countdown' bar.  Graphics will be suppressed for now..."
     if ( experience_countdown_rect_color == 0 )
     {
 	un_experience_countdown_rect_color = SDL_MapRGBA( Screen->format , 50 , 50 , 50 , 80 );
-	experience_countdown_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 120 , 80 );
+	experience_countdown_rect_color = SDL_MapRGBA( Screen->format , 255 , 120 , 120 , 80 );
     }
     
-    //--------------------
-    // We set the 'full' bar or the experience rect...
-    //
-    experience_countdown_rect . x = WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ;
-    experience_countdown_rect . y = WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y ;
-    experience_countdown_rect . w = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_W * exp_achieved ) / exp_range ;
-    if ( exp_achieved < 0 ) experience_countdown_rect . w = 0;
-    experience_countdown_rect . h = WHOLE_EXPERIENCE_COUNTDOWN_RECT_H ;
+    blit_vertical_status_bar ( exp_range , exp_achieved , 
+			       experience_countdown_rect_color , un_experience_countdown_rect_color ,
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_X , 
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y , 
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_W , 
+			       WHOLE_EXPERIENCE_COUNTDOWN_RECT_H );
 
-    //--------------------
-    // We set the 'empty' part of the experience rect...
-    //
-    un_experience_countdown_rect . x = experience_countdown_rect . x + experience_countdown_rect . w ;
-    un_experience_countdown_rect . y = experience_countdown_rect . y ;
-    un_experience_countdown_rect . w = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_W * 
-					 ( exp_range - exp_achieved ) ) / exp_range ;
-    un_experience_countdown_rect . h = WHOLE_EXPERIENCE_COUNTDOWN_RECT_H ;
-
-    //--------------------
-    // Now wthat all our rects are set up, we can start to display the current
-    // running power status on screen...
-    //
-    SDL_SetClipRect( Screen , NULL );
-    our_SDL_fill_rect_wrapper( Screen , & ( experience_countdown_rect ) , experience_countdown_rect_color );
-    our_SDL_fill_rect_wrapper( Screen , & ( un_experience_countdown_rect ) , un_experience_countdown_rect_color );
-    
 }; // void blit_experience_countdown_bars ( void )
 
 /* ----------------------------------------------------------------------
@@ -853,8 +870,6 @@ to blit the 'experience countdown' bar.  Graphics will be suppressed for now..."
 void
 blit_running_power_bars ( void )
 {
-    SDL_Rect running_power_rect;
-    SDL_Rect un_running_power_rect;
     static Uint32 running_power_rect_color = 0 ;
     static Uint32 un_running_power_rect_color = 0 ;
     static Uint32 rest_running_power_rect_color = 0 ;
@@ -884,20 +899,6 @@ blit_running_power_bars ( void )
 	return ;
     }
     
-    running_power_rect.x = WHOLE_RUNNING_POWER_RECT_X;
-    running_power_rect.y = WHOLE_RUNNING_POWER_RECT_Y 
-	+  ( ( WHOLE_RUNNING_POWER_RECT_H * ( Me [ 0 ] . max_running_power - Me [ 0 ] . running_power ) ) / Me [ 0 ] . max_running_power ) ;
-    running_power_rect.w = WHOLE_RUNNING_POWER_RECT_W;
-    running_power_rect.h = ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ;
-    if ( Me [ 0 ] . running_power < 0 ) running_power_rect . h = 0;
-    
-    un_running_power_rect . x = running_power_rect . x ;
-    un_running_power_rect . y = WHOLE_RUNNING_POWER_RECT_Y ;
-    un_running_power_rect . w = WHOLE_RUNNING_POWER_RECT_W;
-    un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H - 
-	( ( WHOLE_RUNNING_POWER_RECT_H * Me [ 0 ] . running_power ) / Me [ 0 ] . max_running_power ) ;
-    if ( Me [ 0 ] . running_power < 0 ) un_running_power_rect . h = WHOLE_RUNNING_POWER_RECT_H ;
-    
     //--------------------
     // Now wthat all our rects are set up, we can start to display the current
     // running power status on screen...
@@ -905,17 +906,36 @@ blit_running_power_bars ( void )
     SDL_SetClipRect( Screen , NULL );
     if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> infinite_running_on_this_level )
     {
-	our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , infinite_running_power_rect_color );
+	blit_vertical_status_bar ( 2.0 , 2.0 , infinite_running_power_rect_color ,
+				   un_running_power_rect_color , 
+				   WHOLE_RUNNING_POWER_RECT_X , 
+				   WHOLE_RUNNING_POWER_RECT_Y , 
+				   WHOLE_RUNNING_POWER_RECT_W , 
+				   WHOLE_RUNNING_POWER_RECT_H );
     }
     else
     {
 	if ( Me [ 0 ] . running_must_rest )
-	    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , rest_running_power_rect_color );
+	    blit_vertical_status_bar ( Me [ 0 ] . max_running_power , Me [ 0 ] . running_power , 
+				       rest_running_power_rect_color ,
+				       un_running_power_rect_color , 
+				       WHOLE_RUNNING_POWER_RECT_X , 
+				       WHOLE_RUNNING_POWER_RECT_Y , 
+				       WHOLE_RUNNING_POWER_RECT_W , 
+				       WHOLE_RUNNING_POWER_RECT_H );
 	else
-	    our_SDL_fill_rect_wrapper( Screen , & ( running_power_rect ) , running_power_rect_color );
-	our_SDL_fill_rect_wrapper( Screen , & ( un_running_power_rect ) , un_running_power_rect_color );
+	    blit_vertical_status_bar ( Me [ 0 ] . max_running_power , Me [ 0 ] . running_power , 
+				       running_power_rect_color ,
+				       un_running_power_rect_color , 
+				       WHOLE_RUNNING_POWER_RECT_X , 
+				       WHOLE_RUNNING_POWER_RECT_Y , 
+				       WHOLE_RUNNING_POWER_RECT_W , 
+				       WHOLE_RUNNING_POWER_RECT_H );
     }
+
 }; // void blit_running_power_bars ( void )
+
+
 
 /* ----------------------------------------------------------------------
  * Basically there are currently two methods of displaying the current
@@ -1592,8 +1612,8 @@ display_current_game_message_window ( void )
 	protocol_offset = 0 ;
     }
 
-    blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
-
+    // blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
+    blit_special_background ( HUD_BACKGROUND_CODE );
     
     //--------------------
     // Now we can display the text and update the screen...
@@ -1620,32 +1640,6 @@ display_current_game_message_window ( void )
     // if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
 }; // void display_current_game_message_window ( int background_picture_code , int with_update )
-
-/* ----------------------------------------------------------------------
- * We need a window with the current text messages.  Since the window 
- * will be displayed again and again, it might be good to keep it 
- * internally as an OpenGL texture (which will also allow for faster
- * and smoother resizing, if nescessary).
- * ---------------------------------------------------------------------- */
-void
-ShowCurrentGameMessageWindow ( void )
-{
-
-    //--------------------
-    // We blit the background
-    //
-    blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
-
-    //--------------------
-    // Then we insert the text.  This would make sense for SDL
-    // graphics output.  But even there, it would be better concerning
-    // performance to have a buffer surface with background and text
-    // and to use that and ONLY UPDATE IT WHEN THE TEXT HAS CHANGED.
-    //
-    
-    
-    
-}; // void ShowCurrentGameMessageWindow ( void )
 
 /* ----------------------------------------------------------------------
  * This function updates the various displays that are usually blitted

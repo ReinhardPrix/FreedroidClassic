@@ -173,16 +173,39 @@
 
 #define GOLDEN_SCHNITT ((sqrt(5)-1)/2)
 
+//--------------------
+// Here, the old running power rectangle before the introduction 
+// of the new hud.
+//
+// #define WHOLE_RUNNING_POWER_RECT_X 8
+// #define WHOLE_RUNNING_POWER_RECT_Y ((1.0-GOLDEN_SCHNITT)*GameConfig . screen_height)/2
+// #define WHOLE_RUNNING_POWER_RECT_W 5
+// #define WHOLE_RUNNING_POWER_RECT_H (GOLDEN_SCHNITT*GameConfig . screen_height)
+//
+// Now the new running power rectangle, that fits into the current hud
+//
 #define WHOLE_RUNNING_POWER_RECT_X 8
-#define WHOLE_RUNNING_POWER_RECT_Y ((1.0-GOLDEN_SCHNITT)*GameConfig . screen_height)/2
-#define WHOLE_RUNNING_POWER_RECT_W 5
-#define WHOLE_RUNNING_POWER_RECT_H (GOLDEN_SCHNITT*GameConfig . screen_height)
+#define WHOLE_RUNNING_POWER_RECT_Y ( GameConfig . screen_height - 86 ) 
+#define WHOLE_RUNNING_POWER_RECT_W 9
+#define WHOLE_RUNNING_POWER_RECT_H 61
 
+
+//--------------------
+// Here, the exp bar rectangle before the introduction 
+// of the new hud.
+//
 // #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ((1.0-GOLDEN_SCHNITT)*GameConfig . screen_width)/2
-#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X (1.0)
-#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y 8
-#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_W (GOLDEN_SCHNITT*GameConfig . screen_width)
-#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_H 5
+// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X (1.0)
+// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y 8
+// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_W (GOLDEN_SCHNITT*GameConfig . screen_width)
+// #define WHOLE_EXPERIENCE_COUNTDOWN_RECT_H 5
+//
+// Now the new exp rectangle, that fits into the current hud
+//
+#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_X 19
+#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y WHOLE_RUNNING_POWER_RECT_Y
+#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_W WHOLE_RUNNING_POWER_RECT_W
+#define WHOLE_EXPERIENCE_COUNTDOWN_RECT_H WHOLE_RUNNING_POWER_RECT_H
 
 #define LEFT_WHOLE_FORCE_RECT_X ( LEFT_WHOLE_HEALTH_RECT_X * 2 + WHOLE_HEALTH_RECT_W )
 #define WHOLE_FORCE_RECT_Y ( WHOLE_HEALTH_RECT_Y )
