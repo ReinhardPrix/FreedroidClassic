@@ -695,6 +695,19 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 	    speed = maxspeed;
 	}
 
+      if ( MouseWheelDownPressed() )
+	{
+	  speed++;
+	  if (speed > maxspeed)
+	    speed = maxspeed;
+	}
+      if ( MouseWheelUpPressed() )
+	{
+	  speed--;
+	  if (speed < -maxspeed)
+	    speed = -maxspeed;
+	}
+
       usleep (30000);
 
       // DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );

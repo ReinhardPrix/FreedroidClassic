@@ -329,6 +329,9 @@ EXTERN void HandleCurrentlyActivatedSkill( void );
 #else
 #define EXTERN extern
 #endif
+
+EXTERN int MouseWheelUpPressed(void);
+EXTERN int MouseWheelDownPressed(void);
 EXTERN int MouseRightPressed(void);
 EXTERN int GetMousePos_x(void);
 EXTERN int GetMousePos_y(void);

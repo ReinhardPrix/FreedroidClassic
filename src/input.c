@@ -40,6 +40,10 @@ point CurrentMouseAbsPos;
 SDL_Event event;
 
 int CurrentlyMouseRightPressed=0;
+int CurrentlyMouseWheelUpPressed=0;
+int CurrentlyMouseWheelDownPressed=0;
+int MouseWheelUpMovesRecorded=0;
+int MouseWheelDownMovesRecorded=0;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
 int AltWasPressedInAddition=FALSE;
@@ -1259,6 +1263,26 @@ keyboard_update(void)
 
 	  if ( event.button.button == SDL_BUTTON_RIGHT )
 	    CurrentlyMouseRightPressed = TRUE;
+
+	  //--------------------
+	  // We need to add come conditional compilation here, so that 
+	  // on some systems, where the SDL version is < 1.2.5 the code
+	  // still compiles without much trouble. (At least so we hope :)
+	  //
+#ifdef SDL_BUTTON_WHEELUP 	
+  if ( event.button.button == SDL_BUTTON_WHEELUP )
+	    {
+	      CurrentlyMouseWheelUpPressed = TRUE;
+	      MouseWheelUpMovesRecorded ++ ;
+	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP DETECTED!!!");
+	    }
+	  if ( event.button.button == SDL_BUTTON_WHEELDOWN )
+	    {
+	      CurrentlyMouseWheelDownPressed = TRUE;
+	      MouseWheelDownMovesRecorded ++ ;
+	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
+	    }
+#endif
 	  
 	  break;
 
@@ -1274,8 +1298,27 @@ keyboard_update(void)
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = FALSE;
-	
+
+	  //--------------------
+	  // We need to add come conditional compilation here, so that 
+	  // on some systems, where the SDL version is < 1.2.5 the code
+	  // still compiles without much trouble. (At least so we hope :)
+	  //
+#ifdef SDL_BUTTON_WHEELUP 
+	  if ( event.button.button == SDL_BUTTON_WHEELUP )
+	    {
+	      CurrentlyMouseWheelUpPressed = FALSE ;
+	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP STOPPED!!!");
+	    }
+	  if ( event.button.button == SDL_BUTTON_WHEELDOWN )
+	    {
+	      CurrentlyMouseWheelDownPressed = FALSE;
+	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN STOPPED!!!");
+	    }
+#endif
+
 	  break;
+
 
  	default:
  	  break;
@@ -1864,8 +1907,37 @@ MouseRightPressed(void)
   return CurrentlyMouseRightPressed;
 }
 
+int
+MouseWheelUpPressed(void)
+{
+  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
 
+  if ( MouseWheelUpMovesRecorded )
+    {
+      MouseWheelUpMovesRecorded--;
+      return ( TRUE );
+    }
+  else
+    return ( FALSE );
+  // return CurrentlyMouseWheelUpPressed;
+}
 
+int
+MouseWheelDownPressed(void)
+{
+  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+
+  if ( MouseWheelDownMovesRecorded )
+    {
+      MouseWheelDownMovesRecorded--;
+      return ( TRUE );
+    }
+  else
+    return ( FALSE );
+  // return CurrentlyMouseWheelDownPressed;
+}
 
 
 #undef _intput_c
