@@ -610,16 +610,11 @@ EnterConsole (void)
 	    case 2:
 	      ClearGraphMem();
 	      ShowDeckMap (CurLevel);
-	      // getchar_raw();
 	      SetCombatScaleTo( 1 );
 	      break;
 	    case 3:
 	      ClearGraphMem();
-	      // ShowLifts (CurLevel->levelnum, -1);
-	      // getchar_raw();
 	      GreatItemShow ();
-	      // while ( !SpacePressed() );
-	      // while ( SpacePressed() );
 	      break;
 	    default:
 	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
@@ -1307,7 +1302,8 @@ enum
   {
     NO_FUNCTION,
     UNLOCK_FUNCTION,
-    GUNONOFF_FUNCTION
+    GUNON_FUNCTION,
+    GUNOFF_FUNCTION
   };
 
 /* ----------------------------------------------------------------------
@@ -1342,8 +1338,10 @@ ShowDeckMap (Level deck)
   char MapValue;
   int ClearanceIndex = -1 ;
   int PasswordIndex = -1 ;
+  int GunTypeSelected = -1 ;
   int UnlockAllowed = FALSE ;
-  int GunOnOffAllowed = FALSE ;
+  int GunOnAllowed = FALSE ;
+  int GunOffAllowed = FALSE ;
   int ReadEmailAllowed = FALSE ;
   int EnergyRate;
   char EnergyRationString[100];
@@ -1378,7 +1376,8 @@ ShowDeckMap (Level deck)
       // current login configuration of the Tux.
       //
       UnlockAllowed = FALSE ;
-      GunOnOffAllowed = FALSE ;
+      GunOnAllowed = FALSE ;
+      GunOffAllowed = FALSE ;
       ReadEmailAllowed = FALSE ;
       if ( PasswordIndex != (-1) )
 	{
@@ -1388,11 +1387,12 @@ ShowDeckMap (Level deck)
 	    } 
 	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Dummy2" )  )
 	    {
-	      GunOnOffAllowed = TRUE ;
+	      GunOffAllowed = TRUE ;
 	    } 
 	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Himself" )  )
 	    {
 	      ReadEmailAllowed = TRUE ;
+	      GunOnAllowed = TRUE ;
 	    }
 	}
       if ( ClearanceIndex < 0 ) EnergyRate = 0 ; // no energy except with clearance
@@ -1457,14 +1457,30 @@ ShowDeckMap (Level deck)
 		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );
 		}
 	    }
-	  else if ( CursorIsOnButton( MAP_GUNONOFF_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	  else if ( CursorIsOnButton( MAP_GUNOFF_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
-	      if ( GunOnOffAllowed )
+	      if ( GunOffAllowed )
 		{
-		  if ( SelectedFunction == GUNONOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
+		  if ( SelectedFunction == GUNOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
 		  else 
 		    {
-		      SelectedFunction = GUNONOFF_FUNCTION;
+		      SelectedFunction = GUNOFF_FUNCTION;
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE );
+		    }
+		}
+	      else
+		{
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_GUNON_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( GunOnAllowed )
+		{
+		  if ( SelectedFunction == GUNON_FUNCTION ) SelectedFunction = NO_FUNCTION;
+		  else 
+		    {
+		      SelectedFunction = GUNON_FUNCTION;
 		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE );
 		    }
 		}
@@ -1630,7 +1646,7 @@ ShowDeckMap (Level deck)
 			}                                         
 		    }
 		}
-	      else if ( SelectedFunction == GUNONOFF_FUNCTION )
+	      else if ( SelectedFunction == GUNOFF_FUNCTION )
 		{
 		  //--------------------
 		  // Now we try to turn off the gun turret that should be present at the
@@ -1656,8 +1672,75 @@ ShowDeckMap (Level deck)
 			}
 		    }
 		}
+	      else if ( SelectedFunction == GUNON_FUNCTION )
+		{
+		  //--------------------
+		  // If the mouse button is just over a gun turret type, then
+		  // this turret type will be the new seceted turret type.
+		  //
+		  if ( CursorIsOnButton( MAP_GUN_TYPE_1_BUTTON_RED , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+		    {
+		      GunTypeSelected = 1 ;
+		    }
+		  else if ( CursorIsOnButton( MAP_GUN_TYPE_2_BUTTON_RED , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+		    {
+		      GunTypeSelected = 2 ;
+		    }
+		  else if ( CursorIsOnButton( MAP_GUN_TYPE_3_BUTTON_RED , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+		    {
+		      GunTypeSelected = 3 ;
+		    }
+		  else if ( CursorIsOnButton( MAP_GUN_TYPE_4_BUTTON_RED , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+		    {
+		      GunTypeSelected = 4 ;
+		    }
+		  else
+		    {
+
+		      //--------------------
+		      // Some sanity check again against clicks ouside of the bounds of the map...
+		      //
+		      if ( ! ( ( TargetSquare.x < 0 ) || ( TargetSquare.y < 0 ) ||
+			       ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
+			       ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
+			{
+			  MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+			  DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
+			  
+			  if ( ( MapValue == BLOCK1 ) || ( GunTypeSelected > 0 ) )
+			    {
+			      switch ( GunTypeSelected )
+				{
+				case 1:
+				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_R ;
+				  break;
+				case 2:
+				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_D ;
+				  break;
+				case 3:
+				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_L ;
+				  break;
+				case 4:
+				  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_U ;
+				  break;
+				default:
+				  break;
+				}
+
+			      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
+			      SelectedFunction = NO_FUNCTION;
+			      GetAutoguns( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			    }
+			}
+		    }
+		}
 	    }
 	}
+
+      //--------------------
+      // From here on we only do display work, no more checking for which
+      // buttons pressed or so.
+      //
 
       ClearUserFenster();
       Assemble_Combat_Picture( ONLY_SHOW_MAP );
@@ -1674,18 +1757,70 @@ ShowDeckMap (Level deck)
 	  ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_YELLOW );
 	}
 
-      if ( SelectedFunction != GUNONOFF_FUNCTION ) 
+      if ( SelectedFunction != GUNOFF_FUNCTION ) 
 	{
-	  if ( GunOnOffAllowed ) ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_GREEN );
-	  else ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_RED );
+	  if ( GunOffAllowed ) 
+	    {
+	      ShowGenericButtonFromList ( MAP_GUNOFF_BUTTON_GREEN );
+	    }
+	  else 
+	    {
+	      ShowGenericButtonFromList ( MAP_GUNOFF_BUTTON_RED );
+	    }
 	}
       else
 	{
-	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
+	  ShowGenericButtonFromList ( MAP_GUNOFF_BUTTON_YELLOW );
+	}
+
+      if ( SelectedFunction != GUNON_FUNCTION ) 
+	{
+	  if ( GunOnAllowed ) 
+	    {
+	      ShowGenericButtonFromList ( MAP_GUNON_BUTTON_GREEN );
+	    }
+	  else 
+	    {
+	      ShowGenericButtonFromList ( MAP_GUNON_BUTTON_RED );
+	    }
+	}
+      else
+	{
+	  ShowGenericButtonFromList ( MAP_GUNON_BUTTON_YELLOW );
 	}
 
       if ( ReadEmailAllowed ) ShowGenericButtonFromList ( MAP_READ_EMAIL_GREEN_BUTTON );
       else ShowGenericButtonFromList ( MAP_READ_EMAIL_RED_BUTTON );
+
+      //--------------------
+      // Now we print out the autocannon type buttons to allow for selection 
+      // of a new autocannon direction setting.
+      //
+      if ( SelectedFunction == GUNON_FUNCTION )
+	{
+	  ShowGenericButtonFromList ( MAP_GUN_TYPE_1_BUTTON_RED );
+	  ShowGenericButtonFromList ( MAP_GUN_TYPE_2_BUTTON_RED );
+	  ShowGenericButtonFromList ( MAP_GUN_TYPE_3_BUTTON_RED );
+	  ShowGenericButtonFromList ( MAP_GUN_TYPE_4_BUTTON_RED );
+	  switch ( GunTypeSelected )
+	    {
+	    case 1:
+	      ShowGenericButtonFromList ( MAP_GUN_TYPE_1_BUTTON_YELLOW );
+	      break;
+	    case 2:
+	      ShowGenericButtonFromList ( MAP_GUN_TYPE_2_BUTTON_YELLOW );
+	      break;
+	    case 3:
+	      ShowGenericButtonFromList ( MAP_GUN_TYPE_3_BUTTON_YELLOW );
+	      break;
+	    case 4:
+	      ShowGenericButtonFromList ( MAP_GUN_TYPE_4_BUTTON_YELLOW );
+	      break;
+	    default:
+	    case (-1):
+	      break;
+	    }
+	}
 
       //--------------------
       // Now we print out the energy ration request button and energy amout

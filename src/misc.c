@@ -76,7 +76,20 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } } ,
     { NULL , "MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } } ,
     { NULL , "MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } } ,
-    { NULL , "MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } }
+    { NULL , "MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } } ,
+
+    { NULL , "MapGunTypeButton1_red.png"        , { 570 ,  64 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton2_red.png"        , { 570 , 128 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton3_red.png"        , { 570 , 192 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton4_red.png"        , { 570 , 256 ,  64 ,  64 } } ,
+    { NULL , "MapGunOnButton_gray.png"          , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunOnButton_yellow.png"        , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunOnButton_red.png"           , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } } ,
+    { NULL , "MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } 
+
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------
@@ -149,6 +162,7 @@ button index given exceeds the number of buttons defined in freedroid.\n\
 \n\
 Freedroid will terminate now to draw attention to the problem...\n\
 ----------------------------------------------------------------------\n" );
+      Terminate ( ERR );
     }
 
   //--------------------
@@ -159,6 +173,25 @@ Freedroid will terminate now to draw attention to the problem...\n\
     {
       fpath = find_file ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
+      if ( tmp == NULL )
+	{
+	  fprintf (stderr,
+		   "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+An image file for a button that should be displayed on the screen couldn't\n\
+be successfully loaded into memory.\n\
+\n\
+The name of the problematic file is: %s\n\
+\n\
+This is an indication of a severe bug/installation problem of freedroid.\n\
+If you encounter this message, please inform the developers about it, as\n\
+always, best via e-mail to freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+Now Freedroid will terminate to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" , fpath );
+	  Terminate ( ERR );
+	}
       AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
     }
@@ -620,7 +653,17 @@ find_file (char *fname, char *subdir, int use_theme)
 
   if (!fname)
     {
-      printf ("\nError. find_file() called with empty filename!\n");
+      // printf ("\nError. find_file() called with empty filename!\n");
+      fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A find_file call has been issued to generate the full path name of a\n\
+certain file, but the file name given is an empty string!\n\
+This is indicates a severe bug in Freedroid.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" );
+      Terminate ( ERR );
       return (NULL);
     }
   if (!subdir)
