@@ -1348,6 +1348,14 @@ set_up_intermediate_course_for_tux ( int player_num )
     }
 
   //--------------------
+  // By default, we clear out any combo action for the target position.
+  // The calling function must set the combo action it has in mind.
+  //
+  // Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+  Me [ player_num ] . mouse_move_target_combo_action_parameter = -1 ;
+
+  //--------------------
   // We give out a well visible debug message, so that the heavy process
   // can easily be seen as redundant if that's really the case.
   //
