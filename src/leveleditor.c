@@ -3110,23 +3110,16 @@ Unable to find the obstacle in question within the obstacle list!",
   //
   our_obstacle -> type = ( -1 ) ;
 
-  /*
   //--------------------
-  // Now that we maybe have torn a gap into the current list of obstacles,
-  // we must see to fill this gap again...
+  // Maybe filling out the gap isn't so desireable after all.  Might that cause
+  // problems with keeping track of the indices when obstacles are named?  Should
+  // we do away with this?  But then we also need to go over -1 entried in the
+  // loops coursing throught he whole list in other places...  So it will stay for
+  // now I guess...
   //
-  for ( j = obstacle_index ; j < MAX_OBSTACLES_ON_MAP - 1 ; j ++ )
-    {
-      memmove ( & ( EditLevel -> obstacle_list [ j ] ) , 
-	        & ( EditLevel -> obstacle_list [ j + 1 ] ) ,
-	        sizeof ( obstacle ) );
-    }
-  */
   memmove ( & ( EditLevel -> obstacle_list [ obstacle_index ] ) , 
 	    & ( EditLevel -> obstacle_list [ obstacle_index + 1 ] ) ,
 	    ( MAX_OBSTACLES_ON_MAP - obstacle_index - 2 ) * sizeof ( obstacle ) );
-  
-
 
   //--------------------
   // Now doing that must have shifted the glue!  That is a problem.  We need to

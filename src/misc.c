@@ -704,6 +704,179 @@ Armageddon (void)
 }; // void Armageddon(void)
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_all_items_in_area ( Level source_level ,
+			 float source_start_x , float source_start_y , 
+			 float source_area_width , float source_area_height ,
+			 Level target_level ,
+			 float target_start_x , float target_start_y )
+{
+    int i;
+    int j;
+
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+      {
+	if ( source_level -> ItemList [ i ] . type <= (-1) ) continue;
+	if ( source_level -> ItemList [ i ] . pos . x < source_start_x ) continue;
+	if ( source_level -> ItemList [ i ] . pos . y < source_start_y ) continue;
+	if ( source_level -> ItemList [ i ] . pos . x > source_start_x + source_area_width ) continue;
+	if ( source_level -> ItemList [ i ] . pos . y > source_start_y + source_area_height ) continue;
+
+	//--------------------
+	// So now we know that we must copy this item.  So we go and find a new free
+	// item entry on the target level.
+	//
+	for ( j = 0 ; j < MAX_ITEMS_PER_LEVEL ; j ++ )
+	  {
+	    if ( target_level -> ItemList [ j ] . type == (-1) ) break;
+	  }
+	if ( j >= MAX_ITEMS_PER_LEVEL )
+	  {
+	    GiveStandardErrorMessage ( "move_all_items_in_area(...)" , 
+				       "No more free item entries in target level!" ,
+				       PLEASE_INFORM, IS_FATAL );
+	  }
+
+	memcpy ( & ( target_level -> ItemList [ j ] ) , & ( source_level -> ItemList [ i ] ) , sizeof ( item ) );
+	target_level -> ItemList [ j ] . pos . x = target_start_x  + source_level -> ItemList [ i ] . pos . x - source_start_x ;
+	target_level -> ItemList [ j ] . pos . y = target_start_y  + source_level -> ItemList [ i ] . pos . y - source_start_y ;
+
+	DeleteItem ( & ( source_level -> ItemList [ i ] ) );
+
+    }
+  
+
+}; // void move_all_items_in_area ( ... )
+
+/* ----------------------------------------------------------------------
+ * It might be the case that some items come to lie on the floor inside
+ * the interface area of two levels.  That might cause strange problems
+ * when trying to get close in order to pick up the items.  In face we've
+ * had a bug report concerning exactly this case.  So we'll fix this with
+ * the following solution:  Whenever the Tux changes level, all items in
+ * interface areas will be moved to the level where the Tux is.  This is
+ * not compatible with multi-player game.  But multiplayer game is so far
+ * away that we need not worry about this possibility right now...
+ * ---------------------------------------------------------------------- */
+void
+move_all_items_to_level ( int target_level )
+{
+  int source_level_num ;
+  int AreaWidth;
+  int AreaHeight;
+  int TargetStartLine;
+
+  //--------------------
+  // We must check all four interface areas and maybe grab the items from
+  // there...
+  //
+
+  //--------------------
+  // Start to check north interface area
+  //
+  source_level_num = curShip . AllLevels [ target_level ] -> jump_target_north ;
+  if ( source_level_num != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ source_level_num ] -> xlen < curShip . AllLevels [ target_level ] -> xlen )
+	AreaWidth = curShip . AllLevels [ source_level_num ] -> xlen;
+      else 
+	AreaWidth = curShip . AllLevels [ target_level ] -> xlen ;
+      
+      AreaHeight = curShip . AllLevels [ target_level ] -> jump_threshold_north;
+      
+      if ( AreaHeight <= 0 ) return;
+      
+      move_all_items_in_area ( curShip . AllLevels [ source_level_num ] , 0 , curShip . AllLevels [ source_level_num ] -> ylen-AreaHeight , 
+			       AreaWidth , AreaHeight ,
+			       curShip . AllLevels [ target_level ] , 0 , 0 ) ;
+
+    }
+
+  //--------------------
+  // Start to check south interface area
+  //
+  source_level_num = curShip . AllLevels [ target_level ] -> jump_target_south ;
+  if ( source_level_num != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ source_level_num ] -> xlen < curShip . AllLevels [ target_level ] -> xlen )
+	AreaWidth = curShip . AllLevels [ source_level_num ] -> xlen;
+      else 
+	AreaWidth = curShip . AllLevels [ target_level ] -> xlen ;
+      
+      AreaHeight = curShip . AllLevels [ target_level ] -> jump_threshold_south;
+      
+      if ( AreaHeight <= 0 ) return;
+      
+      move_all_items_in_area ( curShip . AllLevels [ source_level_num ] , 0 , 0 , 
+			       AreaWidth , AreaHeight ,
+			       curShip . AllLevels [ target_level ] , 0 , 
+			       curShip . AllLevels [ target_level ] -> ylen-AreaHeight ) ;
+
+    }
+
+  //--------------------
+  // Start to check east interface area
+  //
+  source_level_num = curShip . AllLevels [ target_level ] -> jump_target_east ;
+  if ( source_level_num != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ source_level_num ] -> ylen < curShip . AllLevels [ target_level ] -> ylen )
+	AreaHeight = curShip . AllLevels [ source_level_num ] -> ylen;
+      else 
+	AreaHeight = curShip . AllLevels [ target_level ] -> ylen ;
+      
+      AreaWidth = curShip . AllLevels [ target_level ] -> jump_threshold_east;
+      
+      if ( AreaWidth <= 0 ) return;
+      
+      move_all_items_in_area ( curShip . AllLevels [ source_level_num ] , 0 , 0 , 
+			       AreaWidth , AreaHeight ,
+			       curShip . AllLevels [ target_level ] ,
+			       curShip . AllLevels [ target_level ] -> xlen - AreaWidth , 0 ) ;
+
+    }
+
+  //--------------------
+  // Start to check west interface area
+  //
+  source_level_num = curShip . AllLevels [ target_level ] -> jump_target_west ;
+  if ( source_level_num != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ source_level_num ] -> ylen < curShip . AllLevels [ target_level ] -> ylen )
+	AreaHeight = curShip . AllLevels [ source_level_num ] -> ylen;
+      else 
+	AreaHeight = curShip . AllLevels [ target_level ] -> ylen ;
+      
+      AreaWidth = curShip . AllLevels [ target_level ] -> jump_threshold_west;
+      
+      if ( AreaWidth <= 0 ) return;
+      
+      move_all_items_in_area ( curShip . AllLevels [ source_level_num ] , 
+			       curShip . AllLevels [ source_level_num ] -> xlen - AreaWidth , 0 , 
+			       AreaWidth , AreaHeight ,
+			       curShip . AllLevels [ target_level ] ,
+			       0 , 0 ) ;
+
+    }
+
+}; // void move_all_items_to_level ( int levelnum )
+
+/* ----------------------------------------------------------------------
  * This function teleports the influencer to a new position on the
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
@@ -747,6 +920,10 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
       Me [ PlayerNum ] . pos . x = X;
       Me [ PlayerNum ] . pos . y = Y;
       Me [ PlayerNum ] . pos . z = array_num; 
+
+      silently_unhold_all_items ();
+      move_all_items_to_level ( Me [ 0 ] . pos . z );
+      silently_unhold_all_items ();
 
       //--------------------
       // We add some sanity check against teleporting to non-allowed
