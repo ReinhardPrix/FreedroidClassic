@@ -1254,7 +1254,7 @@ MakeSureEnemyIsInsideHisLevel ( Enemy ThisRobot )
     {
 	
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
-There was a droid found outside the bounds of this level.\n\
+There was a droid found outside the bounds of this level (when dying).\n\
 This is an error and should not occur, but most likely it does since\n\
 the bots are allowed some motion without respect to existing waypoints\n\
 in Freedroid RPG.\n\
@@ -3048,10 +3048,9 @@ ProcessAttackStateMachine ( int enemynum )
  * with number enemynum collided with another enemy from the list.
  * ---------------------------------------------------------------------- */
 int
-CheckEnemyEnemyCollision (int enemynum)
+CheckEnemyEnemyCollision ( int enemynum )
 {
     int i;
-    int curlev = Me [ 0 ] . pos . z ; // CurLevel->levelnum;
     float check_x, check_y;
     int swap;
     float xdist, ydist;
@@ -3068,8 +3067,8 @@ CheckEnemyEnemyCollision (int enemynum)
     //
     // if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
     
-    check_x = OurBot->pos.x;
-    check_y = OurBot->pos.y;
+    check_x = OurBot -> pos . x ;
+    check_y = OurBot -> pos . y ;
     
     //--------------------
     // Now we check through all the other enemys on the ship if there is
@@ -3077,10 +3076,13 @@ CheckEnemyEnemyCollision (int enemynum)
     //
     
     // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
-    for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++)
+    for ( i = first_index_of_bot_on_level [ OurBot -> pos . z ] ; i <= first_index_of_bot_on_level [ OurBot -> pos . z ] ; i++)
     {
 	// check only collisions of LIVING enemys on this level
-	if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != curlev)
+	if ( AllEnemys [ i ] . Status == OUT )
+	    continue;
+	if ( AllEnemys [ i ] . pos . z != OurBot -> pos . z )
 	    continue;
 	// dont check yourself...
 	if (i == enemynum)
@@ -3138,6 +3140,8 @@ CheckEnemyEnemyCollision (int enemynum)
 	    if (speed_x) OurBot->pos.x -= Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
 	    if (speed_y) OurBot->pos.y -= Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
 	    
+	    DebugPrintf ( 1 , "\n%s(): enemy-enemy collision detected.  moving things..." , __FUNCTION__ );
+
 	    return TRUE;
 	} // if collision distance reached
     } // for all the bots...

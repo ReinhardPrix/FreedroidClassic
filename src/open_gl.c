@@ -60,106 +60,106 @@ int
 our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect)
 {
 #ifdef HAVE_LIBGL
-  int bytes;
-  int target_x, target_y ;
+    int bytes;
+    int target_x, target_y ;
 #endif
-
-  if ( use_open_gl )
+    
+    if ( use_open_gl )
     {
 #ifdef HAVE_LIBGL
-      if ( src == NULL ) 
+	if ( src == NULL ) 
 	{
-	  DebugPrintf ( -4 , "\nNull source surface received. --> doing nothing." );
-	  fflush ( stdout );
-	  raise ( SIGSEGV );
-	  return ( 0 );
+	    DebugPrintf ( -4 , "\nNull source surface received. --> doing nothing." );
+	    fflush ( stdout );
+	    raise ( SIGSEGV );
+	    return ( 0 );
 	}
-
-      if ( dst == Screen )
+	
+	if ( dst == Screen )
 	{
-	  
-	  // DebugPrintf ( -1 , "\nReached our_SDL_blit_surface_wrapper." );
-	  // fflush ( stdout );
-
-	  if ( dstrect == NULL )
-	    // glRasterPos2f( 0 , 480 );
-	    glRasterPos2f( 1 , 479 );
-	  else
+	    
+	    // DebugPrintf ( -1 , "\nReached our_SDL_blit_surface_wrapper." );
+	    // fflush ( stdout );
+	    
+	    if ( dstrect == NULL )
+		// glRasterPos2f( 0 , 480 );
+		glRasterPos2f( 1 , 479 );
+	    else
 	    {
-	      if ( dstrect -> x == 0 )
-		target_x = 1 ;
-	      else
-		target_x = dstrect -> x ;
-
-	      target_y = dstrect -> y + src -> h ;
-	      // target_y = 479 - dstrect -> y ;
-
-	      //--------------------
-	      // Here we add some extra security against raster positions (e.g. for
-	      // character screen and the like) SLIGHTLY out of bounds, which would
-	      // cause the entire blit to be canceled due to OpenGL internal policy.
-	      //
-	      if ( ( target_y >= 480 ) && ( target_y <= 482 ) ) target_y = 478 ; 
-
-	      glRasterPos2i( target_x , target_y ) ;
+		if ( dstrect -> x == 0 )
+		    target_x = 1 ;
+		else
+		    target_x = dstrect -> x ;
+		
+		target_y = dstrect -> y + src -> h ;
+		// target_y = 479 - dstrect -> y ;
+		
+		//--------------------
+		// Here we add some extra security against raster positions (e.g. for
+		// character screen and the like) SLIGHTLY out of bounds, which would
+		// cause the entire blit to be canceled due to OpenGL internal policy.
+		//
+		if ( ( target_y >= 480 ) && ( target_y <= 482 ) ) target_y = 478 ; 
+		
+		glRasterPos2i( target_x , target_y ) ;
 	    }
-
-	  if ( src -> w != 0 )
-	    bytes = src -> pitch / src -> w ;
-	  else
+	    
+	    if ( src -> w != 0 )
+		bytes = src -> pitch / src -> w ;
+	    else
 	    {
-	      DebugPrintf ( -4 , "\nSurface of width 0 encountered. --> doing nothing." );
-	      fflush ( stdout );
-	      return ( 0 ) ;
+		DebugPrintf ( -4 , "\nSurface of width 0 encountered. --> doing nothing." );
+		fflush ( stdout );
+		return ( 0 ) ;
 	    }
-
-	  // DebugPrintf ( -1 , "\nSurface has bytes: %d. " , bytes );
-	  // fflush ( stdout );
-	  
-	  if ( srcrect != NULL )
+	    
+	    // DebugPrintf ( -1 , "\nSurface has bytes: %d. " , bytes );
+	    // fflush ( stdout );
+	    
+	    if ( srcrect != NULL )
 	    {
-	      DebugPrintf ( -4 , "\nNon-Null source rect encountered. --> doing nothing." );
-	      fflush ( stdout );
-	      return ( 0 ) ;
+		DebugPrintf ( -4 , "\nNon-Null source rect encountered. --> doing nothing." );
+		fflush ( stdout );
+		return ( 0 ) ;
 	    }
-
-	  if ( bytes == 4 )
+	    
+	    if ( bytes == 4 )
 	    {
-	      glEnable( GL_ALPHA_TEST );  
-	      glAlphaFunc ( GL_GREATER , 0.5 ) ;
-	      glDrawPixels( src -> w , src -> h, GL_BGRA , GL_UNSIGNED_BYTE , src -> pixels );
+		glEnable( GL_ALPHA_TEST );  
+		glAlphaFunc ( GL_GREATER , 0.5 ) ;
+		glDrawPixels( src -> w , src -> h, GL_BGRA , GL_UNSIGNED_BYTE , src -> pixels );
 	    }
-	  else if ( bytes == 3 )
+	    else if ( bytes == 3 )
 	    {
-	      DebugPrintf ( 1 , "\nSurface has bytes: %d. " , bytes );
-	      fflush ( stdout );
-	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
+		DebugPrintf ( 1 , "\nSurface has bytes: %d. " , bytes );
+		fflush ( stdout );
+		glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
 	    }
-	  else if ( bytes == 2 )
+	    else if ( bytes == 2 )
 	    {
-	      DebugPrintf ( 1 , "\nSurface has bytes: %d. --> using GL_UNSIGNED_SHORT_5_6_5. " , bytes );
-	      fflush ( stdout );
-	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_SHORT_5_6_5 , src -> pixels );
+		DebugPrintf ( 1 , "\nSurface has bytes: %d. --> using GL_UNSIGNED_SHORT_5_6_5. " , bytes );
+		fflush ( stdout );
+		glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_SHORT_5_6_5 , src -> pixels );
 	    }
-	  else
+	    else
 	    {
-	      DebugPrintf ( -4 , "\nSurface has bytes: %d.--> doing nothing. " , bytes );
-	      fflush ( stdout );
+		DebugPrintf ( -4 , "\nSurface has bytes: %d.--> doing nothing. " , bytes );
+		fflush ( stdout );
 	    }
-
-	  return ( 0 ) ;
+	    
+	    return ( 0 ) ;
 	}
-
-      return SDL_BlitSurface ( src, srcrect, dst, dstrect);
+	
+	return SDL_BlitSurface ( src, srcrect, dst, dstrect);
 #endif
     }
-  else
+    else
     {
-      return SDL_BlitSurface ( src, srcrect, dst, dstrect);
+	return SDL_BlitSurface ( src, srcrect, dst, dstrect);
     }
-
-  return 0 ;
-
+    
+    return 0 ;
+    
 }; // void our_SDL_blit_surface_wrapper(image, NULL, Screen, NULL)
 
 /* ----------------------------------------------------------------------

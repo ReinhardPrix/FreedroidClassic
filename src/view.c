@@ -71,8 +71,6 @@ int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] =
     { 1 , 1 } , // weaponarm
 } ;
 
-char previous_part_strings_for_each_phase_and_direction [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] [ 200 ] ;
-
 char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
 int previously_used_motion_class = -4 ; // something we'll never really use...
 
@@ -2200,9 +2198,7 @@ PutMouseMoveCursor ( void )
 void
 clear_all_loaded_tux_images ( int with_free )
 {
-    int i;
-    int j;
-    int k;
+    int i , j , k;
 
     //--------------------
     // We clear the Tux part strings
@@ -2212,6 +2208,11 @@ clear_all_loaded_tux_images ( int with_free )
 	strcpy ( previous_part_strings [ i ] , NOT_LOADED_MARKER );
     }
     
+    //--------------------
+    // Some more debug output...
+    //
+    DebugPrintf ( -4 , "\n%s(): clearing tux surfaces.  with_free=%d." , __FUNCTION__ , with_free );
+
     //--------------------
     // We clear all the surfaces currently in use
     //
@@ -2228,21 +2229,6 @@ clear_all_loaded_tux_images ( int with_free )
 	}
     }
     
-    //--------------------
-    // If we're using continuous tux update policy, we'll also need
-    // the following...
-    //
-    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-    {
-	for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
-	{
-	    for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
-	    {
-		strcpy ( previous_part_strings_for_each_phase_and_direction [ i ] [ j ] [ k ] , NOT_LOADED_MARKER );
-	    }
-	}
-    }
-    
 }; // void clear_all_loaded_tux_images ( int force_free )
 
 /* ----------------------------------------------------------------------
@@ -2252,9 +2238,9 @@ clear_all_loaded_tux_images ( int with_free )
 void 
 free_single_tux_image ( tux_part_group , our_phase , rotation_index )
 {
-  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
-    SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
-  loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = NULL ;
+    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
+	SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
+    loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = NULL ;
 }; // free_single_tux_image ( tux_part_group , our_phase , rotation_index )
 
 /* ----------------------------------------------------------------------
@@ -2264,21 +2250,24 @@ free_single_tux_image ( tux_part_group , our_phase , rotation_index )
 void
 free_one_loaded_tux_image_series ( int tux_part_group )
 {
-  int j;
-  int k;
+    int j;
+    int k;
+    
+    // DebugPrintf ( -3 , "\nfree_one_loaded_tux_image_series:  part_group = %d." , tux_part_group );
+    
+    strcpy ( previous_part_strings [ tux_part_group ] , NOT_LOADED_MARKER );
 
-  // DebugPrintf ( -3 , "\nfree_one_loaded_tux_image_series:  part_group = %d." , tux_part_group );
-
-  for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
+    for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
     {
-      for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 	{
-	  if ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface != NULL )
-	    SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface ) ;
-	  loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
+	    // if ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface != NULL )
+	    // SDL_FreeSurface ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface ) ;
+	    // loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
+	    free_single_tux_image ( tux_part_group , j , k );
 	}
     }
-  
+    
 }; // void free_one_loaded_tux_image_series ( int tux_part_group )
 
 /* ----------------------------------------------------------------------
@@ -2319,36 +2308,32 @@ get_current_phase ( int tux_part_group , int player_num , int motion_class )
 int
 get_motion_class ( player_num ) 
 {
-  int weapon_type = Me [ player_num ] . weapon_item . type ;
-  int motion_class;
-  int i;
-
-  if ( weapon_type == (-1) )
+    int weapon_type = Me [ player_num ] . weapon_item . type ;
+    int motion_class;
+    
+    if ( weapon_type == (-1) )
     {
-      motion_class = 0 ;
-    }
-  else
-    {
-      if ( ItemMap [ weapon_type ] . item_gun_angle_change != 0 )
 	motion_class = 0 ;
-      else
-	motion_class = 1 ;
     }
-
-  //--------------------
-  // If the motion class has changed, then everything needs to be reloaded...
-  //
-  if ( motion_class != previously_used_motion_class )
+    else
     {
-      previously_used_motion_class = motion_class ;
-      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-	{
-	  clear_all_loaded_tux_images ( TRUE ) ;
-	}
+	if ( ItemMap [ weapon_type ] . item_gun_angle_change != 0 )
+	    motion_class = 0 ;
+	else
+	    motion_class = 1 ;
     }
-
-  return ( motion_class );
-
+    
+    //--------------------
+    // If the motion class has changed, then everything needs to be reloaded...
+    //
+    if ( motion_class != previously_used_motion_class )
+    {
+	previously_used_motion_class = motion_class ;
+	clear_all_loaded_tux_images ( TRUE ) ;
+    }
+    
+    return ( motion_class );
+    
 }; // int get_motion_class ( player_num ) 
 
 /* ----------------------------------------------------------------------
@@ -2460,12 +2445,6 @@ Reading the image archive file met an unexpected lack of read data.",
 		    flip_image_horizontally ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
 
 		strcpy ( previous_part_strings [ tux_part_group ] , part_string );
-		
-		//--------------------
-		// If we're using the continuous tux image update policy, we'll also need to set
-		// the individual strings for previous tux parts...
-		//
-		strcpy ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string );
 	    }
 	}
     }
