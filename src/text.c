@@ -124,7 +124,6 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Large_Droid;
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
-  // SDL_Rect Input_Window;
   SDL_Rect Droid_Image_Window;
   
   Chat_Window.x=242;
@@ -132,22 +131,12 @@ ChatWithFriendlyDroid( int Enum )
   Chat_Window.w=380;
   Chat_Window.h=314;
 
-  //  Input_Window.x=15;
-  //  Input_Window.y=434;
-  //  Input_Window.w=606;
-  //  Input_Window.h=37;
-
   Droid_Image_Window.x=15;
   Droid_Image_Window.y=82;
   Droid_Image_Window.w=215;
   Droid_Image_Window.h=330;
 
   Activate_Conservative_Frame_Computation( );
-  // MakeGridOnScreen( NULL );
-  // Now the background is basically there as we need it.  We store it
-  // in its current pure form for later use as background for scrolling
-  //
-  // Background = SDL_DisplayFormat( ne_screen );
   Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
@@ -170,7 +159,32 @@ ChatWithFriendlyDroid( int Enum )
 			    "Transfer channel protocol set up for text transfer...\n\n" , 
 			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
 
-  printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
+      //--------------------
+      // In some cases we will not want the default answers to be given,
+      // cause they are the same for all droids.
+      //
+      // We therefore will search this robots question-answer-list FIRST
+      // and look for a 
+      // match in the question entries and if applicable print out the
+      // matching answer of course, and if that is wo, we will continue
+      // and not proceed to the default answers.
+      //
+      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+	{
+	  if ( !strcmp ( "DESCRIPTION" , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
+	    {
+	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
+					 -1 , -1 , &Chat_Window , Background );
+	      break;
+	    }
+	}
+      //--------------------
+      // If a keyword matched already, we do not process the default keywords any more
+      // so that some actions can be caught!
+      //
+      // if ( i != MAX_CHAT_KEYWORDS_PER_DROID ) continue;
+
+      // printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
 
   while (1)
     {
@@ -376,6 +390,10 @@ Of course you can ask the droid about anything else it has told you or about wha
 
 }; // void ChatWithFriendlyDroid( int Enum );
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 EnemyHitByBulletText( int Enum )
 {
