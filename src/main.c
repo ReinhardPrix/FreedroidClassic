@@ -159,8 +159,6 @@ main (int argc, char * argv[])
 	  if ( ! ClientMode ) MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
 
-	  for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) CheckInfluenceWallCollisions ( i );	// test if influs way is blocked by walls...
-
 	  CheckInfluenceEnemyCollision ();
 
 	  CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that

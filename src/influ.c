@@ -692,17 +692,6 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   planned_step_x = Me [ player_num ] . speed . x * Frame_Time ();
   planned_step_y = Me [ player_num ] . speed . y * Frame_Time ();
 
-  /*
-  if ( fabsf( planned_step_x ) >= MAXIMAL_STEP_SIZE )
-    {
-      planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
-    }
-  if ( fabsf( planned_step_y ) >= MAXIMAL_STEP_SIZE )
-    {
-      planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
-    }
-  */
-
   //--------------------
   // Maybe the Tux is just executing a weapon strike.  In this case, there should
   // be no movement at all, so in this case we'll just not go anywhere...
@@ -714,17 +703,13 @@ MoveTuxAccordingToHisSpeed ( int player_num )
     }
 
   //--------------------
-  // Now we can make the actual move, BUT OF COURSE ONLY IF THE TARGET POSITION
-  // IS ALSO COMPLETELY NON-BLOCKED BY ALL OBSTACLES AROUND!!!
+  // Now we can make the actual move, AND WE DO SO REGARDLESS
+  // OF ANY BLOCKING BY OBSTACLES, SINCE THE POSSIBILITY OF GOING
+  // THROUGH WALLS HAS BEEN RULES OUT BY THE PATHFINDING FUNCTION
+  // ANYWAY.
   //
-  // If that isn't the case, then we simply don't make the move :)
-  //
-  if ( IsPassable ( Me [ player_num ] . pos . x + planned_step_x , Me [ player_num ] . pos . y + planned_step_y ,
-		    Me [ player_num ] . pos . z , CENTER ) == CENTER )
-    {
-      Me [ player_num ] . pos . x += planned_step_x;
-      Me [ player_num ] . pos . y += planned_step_y;
-    }
+  Me [ player_num ] . pos . x += planned_step_x;
+  Me [ player_num ] . pos . y += planned_step_y;
 
   //--------------------
   // Even the Tux must not leave the map!  A sanity check is done
@@ -1218,7 +1203,7 @@ set_up_intermediate_course_for_tux ( int player_num )
   //
   if ( IsPassable ( Me [ player_num ] . mouse_move_target . x ,
 		    Me [ player_num ] . mouse_move_target . y ,
-		    Me [ player_num ] . mouse_move_target . z , CENTER ) != CENTER )
+		    Me [ player_num ] . mouse_move_target . z ) != CENTER )
     {
       DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
       return;
@@ -1626,171 +1611,6 @@ AnimateInfluence ( int player_num )
 }; // void AnimateInfluence ( void )
 
 /* ----------------------------------------------------------------------
- * This function checks for collisions of the influencer with walls,
- * doors, consoles, boxes and all other map elements.
- * In case of a collision, the position and speed of the influencer are
- * adapted accordingly.
- * ---------------------------------------------------------------------- */
-void
-CheckInfluenceWallCollisions ( int player_num )
-{
-  double SX = Me [ player_num ] .speed.x * Frame_Time ();
-  double SY = Me [ player_num ] .speed.y * Frame_Time ();
-  finepoint lastpos;
-  int res; 
-  int NorthSouthAxisBlocked=FALSE;
-  int EastWestAxisBlocked=FALSE;
-  int H_Door_Sliding_Active = FALSE;
-  double maxspeed;
-  Level InfluencerLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
-
-  return;
-
-  //--------------------
-  // First we introduce some security against later segfaults
-  // due to calculation with properties of items of type -1.
-  //
-  if ( Me [ player_num ] . status == OUT ) return;
-  if ( Me [ player_num ] . energy <= 0   ) return;
-
-  maxspeed = 7.0 ;
-
-  lastpos.x = Me [ player_num ] .pos.x - SX;
-  lastpos.y = Me [ player_num ] .pos.y - SY;
-
-  // res = DruidPassable ( Me [ player_num ] .pos.x , Me [ player_num ] .pos.y , Me [ player_num ] . pos . z );
-  res = IsPassable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . pos . z , CENTER ); 
-
-  /*
-  if (res != CENTER )
-    {
-      Me [ player_num ] .pos.x = GetInfluPositionHistoryX( 2 );
-      Me [ player_num ] .pos.y = GetInfluPositionHistoryY( 2 );
-      DebugPrintf ( 1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
-      return ;
-    }
-  */
-
-  //--------------------
-  // Influence-Wall-Collision only has to be checked in case of
-  // a collision of course, which is indicated by res not CENTER.
-  if (res != CENTER )
-    {
-
-      //--------------------
-      // At first we just check in which directions (from the last position)
-      // the ways are blocked and in which directions the ways are open.
-      //
-      // if ( ! ( ( DruidPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ||
-      // ( DruidPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ) )
-      if ( ! ( ( IsPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ player_num ] . pos . z , CENTER ) != CENTER ) ||
-	       ( IsPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ player_num ] . pos . z , CENTER ) != CENTER ) ) )
-	{
-	  DebugPrintf(1, "\nNorth-south-Axis seems to be free.");
-	  NorthSouthAxisBlocked = FALSE;
-	}
-      else
-	{
-	  NorthSouthAxisBlocked = TRUE;
-	}
-
-      // if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) &&
-      // ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) )
-      if ( ( IsPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z , CENTER ) == CENTER ) &&
-	   ( IsPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z , CENTER ) == CENTER ) )
-	{
-	  EastWestAxisBlocked = FALSE;
-	}
-      else 
-	{
-	  EastWestAxisBlocked = TRUE;
-	}
-
-      //--------------------
-      // Now we try to handle the sitution:
-      //
-
-      if ( NorthSouthAxisBlocked )
-	{
-	  // NorthSouthCorrectionDone=TRUE;
-	  Me [ player_num ] .pos.y = lastpos.y;
-	  Me [ player_num ] .speed.y = 0;
-	  
-	  // if its an open door, we also correct the east-west position, in the
-	  // sense that we move thowards the middle
-	  if ( ( GetMapBrick ( InfluencerLevel , Me [ player_num ] .pos.x , Me [ player_num ] .pos.y - 0.5  ) == H_OPEN_DOOR ) || 
-	       ( GetMapBrick ( InfluencerLevel , Me [ player_num ] .pos.x , Me [ player_num ] .pos.y + 0.5  ) == H_OPEN_DOOR ) )
-	    {
-	      Me [ player_num ] .pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me [ player_num ] .pos.x) - Me [ player_num ] .pos.x ));
-	      H_Door_Sliding_Active = TRUE;
-	    }
-	}
-
-      if ( EastWestAxisBlocked )
-	{
-	  // EastWestCorrectionDone=TRUE;
-	  if ( !H_Door_Sliding_Active ) Me [ player_num ] .pos.x = lastpos.x;
-	  Me [ player_num ] .speed.x = 0;
-
-	  // if its an open door, we also correct the north-south position, in the
-	  // sense that we move thowards the middle
-	  if ( ( GetMapBrick ( InfluencerLevel , Me [ player_num ] . pos . x + 0.5 , Me [ player_num ] . pos . y ) == V_OPEN_DOOR ) || 
-	       ( GetMapBrick ( InfluencerLevel , Me [ player_num ] . pos . x - 0.5 , Me [ player_num ] . pos . y ) == V_OPEN_DOOR ) )
-	    Me [ player_num ] .pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me [ player_num ] .pos.y) - Me [ player_num ] .pos.y ));
-	}
-
-      if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
-	{
-	  // printf("\nBOTH AXES BLOCKED... Corner handling activated...");
-	  // in case both axes were blocked, we must be at a corner.  
-	  // both axis-blocked-routines have been executed, so the speed has
-	  // been set to absolutely zero and we are at the previous position.
-	  //
-	  // But perhaps everything would be fine,
-	  // if we just restricted ourselves to moving in only ONE direction.
-	  // try if this would make sense...
-	  // (Of course we may only move into the one direction that is free)
-	  //
-	  
-	  // if ( DruidPassable( Me [ player_num ] . pos . x + SX , 
-	  // Me [ player_num ] . pos . y ,
-	  // Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.x += SX;
-	  // if ( DruidPassable( Me [ player_num ] . pos . x      , 
-	  // Me [ player_num ] . pos . y + SY ,
-	  // Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.y += SY;
-	  if ( IsPassable( Me [ player_num ] . pos . x + SX , 
-			   Me [ player_num ] . pos . y ,
-			   Me [ player_num ] . pos . z , CENTER ) == CENTER ) Me [ player_num ] .pos.x += SX;
-	  if ( IsPassable( Me [ player_num ] . pos . x      , 
-			   Me [ player_num ] . pos . y + SY ,
-			   Me [ player_num ] . pos . z , CENTER ) == CENTER ) Me [ player_num ] .pos.y += SY;
-	}
-
-      //--------------------
-      // Here I introduce some extra security as a fallback:  Obviously
-      // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
-      // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
-      // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
-      // For this reason, a history of influ-coordinates has been introduced.  This will all
-      // be done here and now:
-      
-      // if ( ( DruidPassable ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y , Me [ player_num ] . pos . z ) != CENTER) && 
-      // ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) ) != CENTER) &&
-      // ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) ) != CENTER) )
-      if ( ( IsPassable ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y , Me [ player_num ] . pos . z , CENTER ) != CENTER) && 
-	   ( IsPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) , CENTER ) != CENTER) &&
-	   ( IsPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) , CENTER ) != CENTER) )
-	{
-	  Me [ player_num ] .pos.x = GetInfluPositionHistoryX( 2 );
-	  Me [ player_num ] .pos.y = GetInfluPositionHistoryY( 2 );
-	  DebugPrintf ( 1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
-	}
-
-    }
-
-} /* CheckInfluenceWallCollisions */
-
-/* ----------------------------------------------------------------------
  * This function adapts the influencers current speed to the maximal speed
  * possible for the influencer (determined by the currely used drive type).
  * ---------------------------------------------------------------------- */
@@ -1978,9 +1798,6 @@ CheckInfluenceEnemyCollision (void)
 	  Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
 	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
 	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
-	  
-	  // there might be walls close too, so lets check again for collisions with them
-	  CheckInfluenceWallCollisions ( 0 );
 	  
 	  BounceSound ();
 	  

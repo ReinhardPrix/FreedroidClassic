@@ -1657,6 +1657,7 @@ void
 init_obstacle_data( void )
 {
   int i;
+  float standard_wall_thickness = 0.5 ;
 
   //--------------------
   // First we enter some default values.  The exceptions from the default values
@@ -1670,31 +1671,35 @@ init_obstacle_data( void )
       //
       obstacle_map [ i ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
       obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
-      obstacle_map [ i ] . block_area_parm_2 = 0.25 ;
+      obstacle_map [ i ] . block_area_parm_2 = standard_wall_thickness ;
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
       obstacle_map [ i ] . needs_pre_put = FALSE ;
       // obstacle_map [ i ] . filename = "ERROR_FILENAME_UNDEFINED" ;
     }
 
+
+  obstacle_map [ ISO_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_ANOTHER_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;
+  
   //--------------------
   // Now we define all exceptions from the default values
   //
-  obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
   obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
-  obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . filename = "iso_walls_0003.png"; 
-  obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
 
 
-  obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . filename = "iso_doors_0006.png" ;
   obstacle_map [ ISO_V_DOOR_025_OPEN ] . is_smashable = FALSE ;
@@ -1707,13 +1712,13 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . filename = "iso_doors_0010.png" ;
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
 
-  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . filename = "iso_doors_0012.png" ;
 
   obstacle_map [ ISO_H_DOOR_LOCKED ] . filename = "iso_doors_0011.png" ;
   obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_2 = standard_wall_thickness ;
 
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . filename = "iso_doors_0001.png" ;
@@ -1794,23 +1799,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TELEPORTER_5 ] . is_smashable = FALSE ;
 
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . filename = "iso_container_0004.png" ;
 
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . filename = "iso_container_0002.png" ;
 
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . filename = "iso_container_0003.png" ;
 
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . filename = "iso_container_0001.png" ;
 
 
@@ -1859,21 +1864,21 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_CONSOLE_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_CONSOLE_N ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_CONSOLE_S ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_E ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_W ] . is_smashable = TRUE ;
 
@@ -2076,10 +2081,10 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_2 = 0.3 ;
+  obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_H_WASHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_V_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_WASHTUB ] . block_area_parm_1 = 0.3 ;
+  obstacle_map [ ISO_V_WASHTUB ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_V_WASHTUB ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_V_WASHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_V_CURTAIN ] . block_area_type = COLLISION_TYPE_NONE ;

@@ -102,9 +102,50 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   int i;
   finepoint step;
   finepoint CheckPosition;
+  static int first_call = TRUE;
+  static int step_multiplier = -1 ; // something completely absurd...
+  int steps_for_this_obstacle;
+  static int key_obstacle_type = -1 ;
+  //--------------------
+  // On the very first call of this function, we find out how much of
+  // a stepsize will be possible for the purpose of finding out, if any
+  // given line is directly walkable or not.  Depending on the collision
+  // rectangles defined for each obstacle, we'll find out the maximum
+  // step distance we can take.
+  //
+  if ( first_call )
+    {
+      first_call = FALSE;
+      
+      DebugPrintf ( -2 , "\nNow calibrating passability check maximum stepsize..." );
 
-  DebugPrintf( 1 , "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
-  fflush(stdout);
+      for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+	{
+	  if ( obstacle_map [ i ] . block_area_type == COLLISION_TYPE_RECTANGLE )
+	    {
+	      steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_1 ) + 1 ;
+	      if ( steps_for_this_obstacle > step_multiplier )
+		{
+		  step_multiplier = steps_for_this_obstacle;
+		  key_obstacle_type = i ;
+		}
+
+	      steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_2 ) + 1 ;
+	      if ( steps_for_this_obstacle > step_multiplier )
+		{
+		  step_multiplier = steps_for_this_obstacle;
+		  key_obstacle_type = i ;
+		}
+	    }
+	}
+
+      DebugPrintf ( -2 , "\nFinal calibration for passablilit check produced multiplier : %d." , 
+		    step_multiplier );
+      DebugPrintf ( -2 , "\nThe key obstacle type for this calibration was : %d." , 
+		    key_obstacle_type );
+      
+    }
+  
 
   //--------------------
   // First we determine the amount of steps we need to take
@@ -113,7 +154,16 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance = fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
-  Steps=LargerDistance * 12 ;   // We check 6 times on each map tile...
+  //--------------------
+  // The larger distance must be used to compute the steps nescessary
+  // for good passability check. i.e. passability check such that no
+  // movement completely through an obstacle will be possible.
+  //
+  // The number of steps must of course be multiplied with the minimum
+  // number of steps for one floor tile, which has been calibrated
+  // (hopefully sensibly) above.
+  //
+  Steps = LargerDistance * step_multiplier ; 
   if ( Steps == 0 ) return TRUE;
 
   //--------------------
@@ -133,7 +183,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
     {
 
 
-      if ( IsPassable ( CheckPosition.x , CheckPosition.y , z , CENTER ) != CENTER ) 
+      if ( IsPassable ( CheckPosition.x , CheckPosition.y , z ) != CENTER ) 
 	{
 	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
@@ -1654,9 +1704,9 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 int
 ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , int enemynum )
 {
-  if ( ( DruidPassable ( ThisRobot -> pos.x + StepVector.x , 
-			 ThisRobot -> pos.y + StepVector.y ,
-			 ThisRobot -> pos.z ) == CENTER ) &&
+  if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
+		      ThisRobot -> pos.y + StepVector.y ,
+		      ThisRobot -> pos.z ) == CENTER ) &&
        ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 				    ThisRobot->pos.x + StepVector . x , 
 				    ThisRobot->pos.y + StepVector . y ,
@@ -1791,7 +1841,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
       // cause otherwise the move out of the colleague will never
       // be allowed.
       //
-      if ( DruidPassable ( ThisRobot -> pos.x + StepVector.x , 
+      if ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 			   ThisRobot -> pos.y + StepVector.y ,
 			   ThisRobot -> pos.z ) == CENTER )
 	{

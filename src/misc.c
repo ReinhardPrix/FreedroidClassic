@@ -630,8 +630,8 @@ StartTakingTimeForFPSCalculation(void)
 void 
 ComputeFPSForThisFrame(void)
 {
-  static int time;
-  static int FPS_Displayed;
+  // static int time;
+  // static int FPS_Displayed;
 
   // In the following paragraph the framerate calculation is done.
   // There are basically two ways to do this:
@@ -690,6 +690,7 @@ ComputeFPSForThisFrame(void)
   
 #endif
 
+  /*
   time++;
   if ( time > 100 )
     {
@@ -702,7 +703,7 @@ ComputeFPSForThisFrame(void)
       
       DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
     }
-
+  */
 
 }; // void ComputeFPSForThisFrame(void)
 
@@ -776,7 +777,7 @@ Activate_Conservative_Frame_Computation(void)
   // so we set this variable...
   BannerIsDestroyed=TRUE;
 
-  DebugPrintf ( -2 , "\nConservative_Frame_Computation activated!" );
+  DebugPrintf ( 1 , "\nConservative_Frame_Computation activated!" );
 
 }; // void Activate_Conservative_Frame_Computation(void)
 

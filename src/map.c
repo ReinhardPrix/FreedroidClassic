@@ -612,6 +612,8 @@ CollectAutomapData ( void )
   if ( TimePassed == (int) Me[0].MissionTimeElapsed ) return;
   TimePassed = (int) Me[0].MissionTimeElapsed;
 
+  // DebugPrintf ( -3 , "\nCollecting Automap data... " );
+
   //--------------------
   // Also if there is no map-maker present in inventory, then we need not
   // do a thing here...
@@ -3042,58 +3044,6 @@ is not really an autogun.  Instead it's something else.",
 }; // void WorkLevelGuns ( void )
 
 /* ----------------------------------------------------------------------
- * This function checks if the given position is passable for a droid,
- * i.e. if there is enough space to the left right up and down, so that
- * a droids center might be at this point without colliding with a wall.
- *
- * In case of a door, the direction into which the influencer has to
- * be moved in order to 'glide' through the door will be returned.
- *
- * In case of an inpassable location, a value of (-1) will be returned.
- *
- * In case of a completely passable location, the CENTER constant will
- * be returned.
- * ---------------------------------------------------------------------- */
-int
-DruidPassable ( float x , float y , int z )
-{
-  finepoint testpos[DIRECTIONS + 1];
-  int ret = -1;
-  int i;
-
-  /* get 8 Check-Points on the druidsurface */
-  testpos[OBEN].x = x;
-  testpos[OBEN].y = y - Druid_Radius_Y;
-  testpos[RECHTSOBEN].x = x + DRUIDRADIUSXY;
-  testpos[RECHTSOBEN].y = y - DRUIDRADIUSXY;
-  testpos[RECHTS].x = x + Druid_Radius_X;
-  testpos[RECHTS].y = y;
-  testpos[RECHTSUNTEN].x = x + DRUIDRADIUSXY;
-  testpos[RECHTSUNTEN].y = y + DRUIDRADIUSXY;
-  testpos[UNTEN].x = x;
-  testpos[UNTEN].y = y + Druid_Radius_Y;
-  testpos[LINKSUNTEN].x = x - DRUIDRADIUSXY;
-  testpos[LINKSUNTEN].y = y + DRUIDRADIUSXY;
-  testpos[LINKS].x = x - Druid_Radius_X;
-  testpos[LINKS].y = y;
-  testpos[LINKSOBEN].x = x - DRUIDRADIUSXY;
-  testpos[LINKSOBEN].y = y - DRUIDRADIUSXY;
-
-  for (i = 0; i < DIRECTIONS; i++)
-    {
-
-      ret = IsPassable ( testpos[i].x , testpos[i].y , z , i );
-
-      if (ret != CENTER)
-	break;
-
-    }				/* for */
-
-  return ret;
-
-}; // int DruidPassable( ... )
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -3104,7 +3054,6 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   float lower_border;
   float left_border;
   float right_border;
-
   int obs_type = our_obstacle -> type ;
 
   //--------------------
@@ -3200,16 +3149,13 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
 /* ---------------------------------------------------------------------- 
  * This function checks if a given location lies within a wall or not.
  *
- *
- *
- *
  * A return value of CENTER means that the location is passable in that sense.
  * while any directions and (-1) indicate that it is not so and in case
  * of a direction returned, it's the direction into which the droid
  * should be pushed to resolve the collision (with a door).
  * ---------------------------------------------------------------------- */
 int
-IsPassable ( float x , float y , int z , int Checkpos)
+IsPassable ( float x , float y , int z )
 {
   Level PassLevel = curShip . AllLevels [ z ] ;
   int x_tile_start, y_tile_start;
@@ -3220,8 +3166,8 @@ IsPassable ( float x , float y , int z , int Checkpos)
   // We take a look whether the position given in the parameter is 
   // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
   //
-  x_tile_start = rintf ( x ) -3         ; y_tile_start = rintf ( y ) -3 ;
-  x_tile_end   = x_tile_start + 5       ; y_tile_end   = y_tile_start + 5 ;
+  x_tile_start = rintf ( x ) -1         ; y_tile_start = rintf ( y ) -1 ;
+  x_tile_end   = x_tile_start + 2       ; y_tile_end   = y_tile_start + 2 ;
   if ( x_tile_start < 0 ) x_tile_start = 0 ; 
   if ( y_tile_start < 0 ) y_tile_start = 0 ; 
   if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
@@ -3233,17 +3179,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
       // DebugPrintf ( 0 , " %d " , x_tile );
       for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
 	{
-
-	  if ( position_collides_with_obstacles_on_square ( x        , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
-	  /*
-
-	  if ( position_collides_with_obstacles_on_square ( x + 0.24 , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
-	  if ( position_collides_with_obstacles_on_square ( x - 0.24 , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
-	  if ( position_collides_with_obstacles_on_square ( x        , y + 0.24 , x_tile , y_tile , PassLevel ) ) return ( -1 );
-	  if ( position_collides_with_obstacles_on_square ( x        , y - 0.24 , x_tile , y_tile , PassLevel ) ) return ( -1 );
-
-	  */
-
+	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( -1 );
 	}
     }
 
@@ -3261,57 +3197,11 @@ IsPassable ( float x , float y , int z , int Checkpos)
 int
 IsVisible ( GPS objpos , int PlayerNum )
 {
-  float a_x;		/* Vector Influencer->objectpos */
-  float a_y;
-  finepoint step;			/* effective step */
-  int step_num;			/* number of neccessary steps */
-  float a_len;			/* Lenght of a */
-  int i;
-  finepoint testpos;
-  double influ_x = Me [ PlayerNum ] . pos . x ;
-  double influ_y = Me [ PlayerNum ] . pos . y ;
 
-  DebugPrintf (2, "\nint IsVisible ( ... ) : real function call confirmed.");
+  return ( DirectLineWalkable( objpos -> x , objpos -> y , 
+			       Me [ PlayerNum ] . pos . x , Me [ PlayerNum ] . pos . y , 
+			       objpos -> z ) )  ;
 
-  //--------------------
-  // If the object and this player are on different levels, we
-  // don't need to check anything.
-  //
-  if ( objpos -> z != Me [ PlayerNum ] . pos . z ) return FALSE;
-
-  //--------------------
-  // Otherwise we have to check visibility...
-  //
-  a_x = influ_x - objpos->x;
-  a_y = influ_y - objpos->y;
-
-  a_len = sqrt (  a_x * a_x + a_y * a_y );
-  step_num = a_len * 4 + 1 ;
-
-  // if (step_num == 0) step_num = 1;
-
-  step.x = a_x / step_num;
-  step.y = a_y / step_num;
-
-  testpos.x = objpos->x;
-  testpos.y = objpos->y;
-
-  for (i = 0; i < step_num + 1 ; i++)
-    {
-
-      if ( IsPassable ( testpos.x , testpos.y , objpos->z , LIGHT ) != CENTER)
-	{
-	  // DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
-	  return FALSE;
-	}
-
-      testpos.x += step.x;
-      testpos.y += step.y;
-
-    }
-  // DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
-
-  return TRUE;
 }; // int IsVisible( Point objpos )
 
 /* ----------------------------------------------------------------------

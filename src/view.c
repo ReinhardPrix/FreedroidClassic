@@ -586,52 +586,6 @@ ShowCombatScreenTexts ( int mask )
 
 /* ----------------------------------------------------------------------
  *
- * ---------------------------------------------------------------------- */
-int
-MapBlockIsVisible ( int col , int line )
-{
-  gps CheckPos;
-
-  CheckPos . z = Me [ 0 ] . pos . z ;
-  CheckPos . x = col ;
-  CheckPos . y = line ;
-
-#define VISION_OFFSET 0.5
-
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-
-  /*
-  CheckPos . x += VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-  CheckPos . x -= 2*VISION_OFFSET ;
-
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-  CheckPos . x += VISION_OFFSET ;
-  CheckPos . y += VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-  CheckPos . y -= 2 * VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE; 
-  */
-
-  CheckPos . x += VISION_OFFSET; 
-  CheckPos . y += VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-
-  CheckPos . x -= 2 * VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-
-  CheckPos . y -= 2 * VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE ;
-
-  CheckPos . x += 2 * VISION_OFFSET ;
-  if ( IsVisible ( &CheckPos , 0 ) ) return TRUE; 
-
-  return ( FALSE );
-
-}; // int MapBlockIsVisible ( int col , int line )
-
-/* ----------------------------------------------------------------------
- *
  *
  * ---------------------------------------------------------------------- */
 void
@@ -2878,16 +2832,6 @@ There was an item type given, that exceeds the range of item images loaded.",
   if ( ( put_thrown_items_flag == PUT_NO_THROWN_ITEMS ) &&
        ( CurItem -> throw_time > 0 ) ) 
     return;
-
-
-  //--------------------
-  // A visibility check for items on the floor.  We'll omit that for now...
-  //
-  // ItemGPS . x = CurItem -> pos . x ;
-  // ItemGPS . y = CurItem -> pos . y ;
-  // ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
-  // if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap && ( CurItem -> throw_time == 0 ) ) return;
-  //
 
   //--------------------
   // Now we can go take a look if maybe there is an ingame surface 
