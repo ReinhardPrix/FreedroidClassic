@@ -1179,10 +1179,8 @@ Show_Waypoints(void)
 	  
   SDL_LockSurface( ne_screen );
 
-  for (wp=0; wp<MAXWAYPOINTS; wp++)
+  for (wp=0; wp<CurLevel->num_waypoints; wp++)
     {
-
-      if ( CurLevel->AllWaypoints[wp].x == 0) continue;
 
       //--------------------
       // Draw the cross in the middle of the middle of the tile
@@ -1219,20 +1217,18 @@ Show_Waypoints(void)
       //
       for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
 	{
-	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
-	    {
-	       if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
-		 // color = ACTIVE_WP_COLOR ;
-		 // else color = HIGHLIGHTCOLOR ; 
-		 // printf(" Found a connection!! ");
-		 DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
-				       color );
-	    }
+	  if ( CurLevel->AllWaypoints[wp].connections[i] == -1 )
+	    break;
+	  else if ( (BlockX == CurLevel->AllWaypoints[wp].x) && (BlockY == CurLevel->AllWaypoints[wp].y) )
+	    DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
+				  CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+				  CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+				  color );
 	}
     }
   SDL_UnlockSurface( ne_screen );
+
+  return;
 
 } // void Show_Waypoints(void);
 

@@ -277,6 +277,7 @@ typedef struct
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
+  int num_waypoints;
   waypoint AllWaypoints[MAXWAYPOINTS];
 }
 level, *Level;

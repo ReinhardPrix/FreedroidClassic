@@ -201,22 +201,15 @@ ShuffleEnemys (void)
   int curlevel = CurLevel->levelnum;
   int i;
   int nth_enemy;
-  int num_wp, wp;
+  int wp, num_wp;
   bool used_wp[MAXWAYPOINTS];
-  finepoint influ_coord;
 
-  /* Anzahl der Waypoints auf CurLevel abzaehlen */
-  num_wp = 0;
+  num_wp = CurLevel->num_waypoints;
 
-  for ( i=0 ; i<MAXWAYPOINTS ; i++ )
-    {
-      if ( CurLevel->AllWaypoints[i].x != 0 ) {
-	used_wp[i] = FALSE;
-	num_wp ++;
-      }
-    }
+  // keep a little list of which waypoints have already been used
+  for ( i=0 ; i < num_wp; i++)
+    used_wp[i] = FALSE;
   
-
   nth_enemy = 0;
   for (i = 0; i < NumEnemys ; i++)
     {
@@ -226,8 +219,8 @@ ShuffleEnemys (void)
       nth_enemy++;
       if (nth_enemy > num_wp)
 	{
-	  DebugPrintf (0, "\nNumber of waypoints found: %d." , num_wp );
-	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
+	  DebugPrintf (0, "\nERROR: Less waypoints (%d) than enemys on level %d? !", 
+		       num_wp, CurLevel->levelnum );
 	  Terminate (ERR);
 	}
       do { wp = MyRandom(num_wp-1);} while(used_wp[wp]);
@@ -241,18 +234,7 @@ ShuffleEnemys (void)
 
     }/* for NumEnemys */
 
-  /* enemys ein bisschen sich selbst ueberlassen */
-
-  /* Influencer zuerst entfernen */
-  influ_coord.x = Me.pos.x;
-  influ_coord.y = Me.pos.y;
-  Me.pos.x = Me.pos.y = 0;
-
-  for (i = 0; i < 30; i++)     MoveEnemys ();
-
-  /* influencer wieder her */
-  Me.pos.x = influ_coord.x;
-  Me.pos.y = influ_coord.y;
+  return;
 
 }	/* ShuffleEnemys() */
 
@@ -270,21 +252,15 @@ SelectNextWaypointClassical( int EnemyNum )
   finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
-  finepoint nextwp_pos;
-  int trywp;
-  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  Enemy ThisRobot=&AllEnemys[EnemyNum];
 
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
-
 
   // determine the remaining way until the target point is reached
-  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
-  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
+  Restweg.x = WpList[nextwp].x - ThisRobot->pos.x;
+  Restweg.y = WpList[nextwp].y - ThisRobot->pos.y;
 
   //--------------------
   // Now we can see if we are perhaps already there?
@@ -299,19 +275,15 @@ SelectNextWaypointClassical( int EnemyNum )
       DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
       /* but only if there are connections possible */
       for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
-	if ( WpList[nextwp].connections[j] != -1 )
+	if ( WpList[nextwp].connections[j] == -1 )
 	  break;
-      if ( j < MAX_WP_CONNECTIONS )
-	while ( (trywp = WpList[nextwp].
-		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
-      else
-	{
-	  DebugPrintf ( 0, "\nvoid MoveThisRobotClassical() : Weird waypoint %d has no connections!\n", nextwp);
-	}
-      
+            
       /* setze neuen Waypoint */
-      ThisRobot->nextwaypoint = trywp;
+      if (j>0)
+	ThisRobot->nextwaypoint = WpList[nextwp].connections[MyRandom(j-1)];
     }			/* if */
+
+  return;
 
 } // void MoveThisRobotClassical ( int Enemynum );
 
@@ -584,11 +556,7 @@ MoveThisEnemy( int EnemyNum )
   //
 
   // ignore robots on other levels, except, it it's following influ's trail
-  if ( ThisRobot->levelnum != CurLevel->levelnum )
-    return;
-
-  // ignore dead robots as well...
-  if ( ThisRobot->status == OUT ) 
+  if ( (ThisRobot->status == OUT) || (ThisRobot->levelnum != CurLevel->levelnum) )
     return;
 
   // Now check if the robot is still alive
@@ -794,7 +762,7 @@ CheckEnemyEnemyCollision (int enemynum)
   float check_x, check_y;
   int swap;
   float xdist, ydist;
-  float dist2;
+  float dist;
   float speed_x, speed_y;
 
   check_x = AllEnemys[enemynum].pos.x;
@@ -813,22 +781,22 @@ CheckEnemyEnemyCollision (int enemynum)
       xdist = check_x - AllEnemys[i].pos.x;
       ydist = check_y - AllEnemys[i].pos.y;
 
-      dist2 = sqrt(xdist * xdist + ydist * ydist);
+      dist = sqrt(xdist * xdist + ydist * ydist);
 
       // Is there a Collision?
-      if ( dist2 <= 2*Droid_Radius)
+      if ( dist <= 2*Droid_Radius)
 	{
 
 	  // am I waiting already?  If so, keep waiting... 
 	  if (AllEnemys[enemynum].warten)
 	    {
 	      /* weiter warten */
-	      AllEnemys[enemynum].warten = WAIT_COLLISION;
+	      AllEnemys[enemynum].warten = MyRandom(2*WAIT_COLLISION);
 	      continue;
 	    }
 
 	  /* Sonst: Feind stoppen und selbst umdrehen */
-	  AllEnemys[i].warten = WAIT_COLLISION;
+	  AllEnemys[i].warten = MyRandom(2*WAIT_COLLISION);
 
 	  /* gestoppten gegner ein wenig zurueckstossen */
 	  if (xdist)

@@ -482,38 +482,25 @@ char *StructToMem(Level Lev)
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
-  for(i=0; i< MAXWAYPOINTS ; i++)
-  // for(i=0; i< 100 ; i++) THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
+  for(i=0; i< Lev->num_waypoints ; i++)
     {
-      // if ( Lev->AllWaypoints[i].x == 0 ) continue;
-
-      if (i>=MAXWAYPOINTS) sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, 0 , 0 );
-      else sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
+      sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
       strcat( LevelMem, "\t connections: ");
 
       for( j=0; j<MAX_WP_CONNECTIONS; j++) 
-      // for( j=0; j< 12 ; j++)  THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
 	{
-	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, " %3d", -1 );
-	  else 
-	    {
-	      if (Lev->AllWaypoints[i].x == 0 )
-		sprintf(linebuf, " %3d", (-1) );
-	      else 
-		sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
-	    }
+	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	  if (Lev->AllWaypoints[i].connections[j] == -1)
+	    break;
+	  
 	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");
     } /* for waypoints */
   
   strcat(LevelMem, LEVEL_END_STRING);
-  strcat(LevelMem, 
-"\n\
-\n\
-----------------------------------------------------------------------\n\
-\n");
+  strcat(LevelMem, "\n----------------------------------------------------------------------\n");
   
   /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
   /* wenn nicht: :-(  */
@@ -776,6 +763,11 @@ LevelToStruct (char *data)
       sscanf( ThisLine , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
       // printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
 
+      if (x == -1) 
+	{
+	  loadlevel->num_waypoints = i;
+	  break;
+	}
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
@@ -787,6 +779,8 @@ LevelToStruct (char *data)
 	  // printf(", con=%d" , connection );
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
 	  ThisLinePointer+=4;
+	  if (connection == -1)
+	    break;
 	}
 
       // getchar();
