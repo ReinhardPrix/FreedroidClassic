@@ -1271,7 +1271,7 @@ InitPictures (void)
  * window for graphics display.
  * -----------------------------------------------------------------*/
 void
-Init_Video (void)
+InitVideo (void)
 {
   const SDL_VideoInfo *vid_info;
   SDL_Rect **vid_modes;
@@ -1489,7 +1489,7 @@ Sorry...\n\
 
   return;
 
-}; /* InitVideo () */
+}; // InitVideo () 
 
 /* ----------------------------------------------------------------------
  * This function changes the level color to grey.  It is used mainly

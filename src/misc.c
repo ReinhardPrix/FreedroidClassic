@@ -75,9 +75,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapGunOnOffButton_gray.png"     , { 350 ,   5 , 100 ,  50 } } ,
     { NULL , "MapGunOnOffButton_yellow.png"   , { 350 ,   5 , 100 ,  50 } } ,
     { NULL , "MapGunOnOffButton_red.png"      , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapSecurityButtonMiddle.png"    , { 100 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"      , {  50 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"     , { 240 , 425 ,  30 ,  50 } }
+    { NULL , "MapSecurityButtonMiddle.png"    , {  40 , 425 , 120 ,  50 } } ,
+    { NULL , "MapSecurityButtonLeft.png"      , {   5 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapSecurityButtonRight.png"     , { 170 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapPasswordButtonMiddle.png"    , { 335 , 425 , 120 ,  50 } } ,
+    { NULL , "MapSecurityButtonLeft.png"      , { 305 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapSecurityButtonRight.png"     , { 465 , 425 ,  30 ,  50 } }
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------
@@ -1052,7 +1055,7 @@ Teleport (int LNum, int X, int Y, int PlayerNum , int Shuffling )
 
   // UnfadeLevel ();
 
-  Switch_Background_Music_To( CurLevel->Background_Song_Name );
+  SwitchBackgroundMusicTo( CurLevel->Background_Song_Name );
 
   //--------------------
   // Since we've mightily changed position now, we should clear the

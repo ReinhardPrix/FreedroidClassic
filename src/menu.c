@@ -1090,7 +1090,7 @@ New_GraphicsSound_Options_Menu (void)
 	    {
 	      while ( RightPressed());
 	      if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
-	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	      SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
 	    }
 
 
@@ -1098,7 +1098,7 @@ New_GraphicsSound_Options_Menu (void)
 	    {
 	      while (LeftPressed());
 	      if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
-	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	      SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
 	    }
 
 	  break;
@@ -1109,14 +1109,14 @@ New_GraphicsSound_Options_Menu (void)
 	    {
 	      while ( RightPressed());
 	      if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
-	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+	      SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
 	    }
 
 	  if ( LeftPressed() ) 
 	    {
 	      while (LeftPressed());
 	      if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
-	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+	      SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
 	    }
 
 	  break;
@@ -2121,7 +2121,7 @@ Credits_Menu (void)
 
   // InitiateMenu();
 
-  Switch_Background_Music_To ( CREDITS_BACKGROUND_MUSIC_SOUND );
+  SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
 
   ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_FILE );
 

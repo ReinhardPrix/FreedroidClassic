@@ -1797,7 +1797,7 @@ InitNewMissionList ( char *MissionName )
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   InitBars = TRUE;
 
-  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+  SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
 
   //--------------------
   // Now that the briefing and all that is done,
@@ -1865,10 +1865,16 @@ InitNewMissionList ( char *MissionName )
     {
       Me [ 0 ] . clearance_list [ j ] = 0 ;
     }
+  Me [ 0 ] . clearance_list [ 0 ] = 4 ;
+  Me [ 0 ] . clearance_list [ 1 ] = 5 ;
+  Me [ 0 ] . clearance_list [ 2 ] = 6 ;
   for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
     {
       strcpy ( Me [ 0 ] . password_list [ j ] , "" ) ;
     }
+  strcpy ( Me [ 0 ] . password_list [ 0 ] , "Tux Himself" ) ;
+  strcpy ( Me [ 0 ] . password_list [ 1 ] , "Tux Dummy1" ) ;
+  strcpy ( Me [ 0 ] . password_list [ 2 ] , "Tux Dummy2" ) ;
 
   //--------------------
   // When the Tux arrives, he also should be at perfect health
@@ -2042,11 +2048,11 @@ InitFreedroid ( void )
 
   Copy_Rect (Full_User_Rect, User_Rect);
 
-  Init_Video ();
+  InitVideo ();
 
   ShowStartupPercentage ( 2 ) ; 
 
-  Init_Audio ();
+  InitAudio ();
 
   ShowStartupPercentage ( 4 ) ; 
   
@@ -2125,13 +2131,13 @@ Title ( char *MissionBriefingPointer )
 
   // STRANGE!! This command will be silently ignored by SDL?
   // WHY?? DONT KNOW!!!
-  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  // PlaySound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // PlaySound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // SwitchBackgroundMusicTo ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
   TitleSongName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_SONG_STRING , "\n" ) ;
 
-  Switch_Background_Music_To ( TitleSongName );
+  SwitchBackgroundMusicTo ( TitleSongName );
 
   TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
@@ -2190,7 +2196,7 @@ EndTitle (void)
 
   DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
 
-  Switch_Background_Music_To ( DebriefingSong );
+  SwitchBackgroundMusicTo ( DebriefingSong );
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 

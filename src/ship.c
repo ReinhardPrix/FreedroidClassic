@@ -524,7 +524,7 @@ EnterConsole (void)
 
   Me[0].status = CONSOLE;
 
-  Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
+  SwitchBackgroundMusicTo (CONSOLE_BACKGROUND_MUSIC_SOUND);
 
   SetCurrentFont( Para_BFont );
   SDL_SetClipRect ( Screen , NULL );
@@ -590,8 +590,8 @@ EnterConsole (void)
 
   while (SpacePressed ());
 
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
-  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+  // SwitchBackgroundMusicTo ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
 
   return;
 
@@ -857,10 +857,10 @@ enum
   };
 
 /* -----------------------------------------------------------------
- * Displays the concept view of Level "deck" in Userfenster
- * 	  
- * Note: we no longer wait here for a key-press, but return
- *       immediately 
+ * This function displays the map of the current level and also 
+ * affers some menu choices that do some functions of this console:
+ *  * You can unlock doors
+ *  * You can turn on/off autoguns
  * ----------------------------------------------------------------- */
 void
 ShowDeckMap (Level deck)
@@ -872,13 +872,12 @@ ShowDeckMap (Level deck)
   grob_point TargetSquare;
   char MapValue;
   int ClearanceIndex = 0 ;
+  int PasswordIndex = 0 ;
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
 
   ClearUserFenster ();
-  // Me[0].pos.x = CurLevel->xlen/2;
-  // Me[0].pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
@@ -940,13 +939,41 @@ ShowDeckMap (Level deck)
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
-	      if ( ClearanceIndex > 0 ) ClearanceIndex --;
-	      MenuItemSelectedSound();
+	      if ( ClearanceIndex > 0 ) 
+		{
+		  ClearanceIndex --;
+		  MenuItemSelectedSound ( ) ;
+		}
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
-	      if ( ClearanceIndex < MAX_CLEARANCES - 1 ) ClearanceIndex ++;
-	      MenuItemSelectedSound();
+	      if ( ClearanceIndex < MAX_CLEARANCES - 1 )
+		{
+		  if ( Me [ 0 ] . clearance_list [ ClearanceIndex + 1 ] ) 
+		    {
+		      ClearanceIndex ++;
+		      MenuItemSelectedSound();
+		    }
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_PASSWORDLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( PasswordIndex > 0 ) 
+		{
+		  PasswordIndex --;
+		  MenuItemSelectedSound ( ) ;
+		}
+	    }
+	  else if ( CursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( PasswordIndex < MAX_PASSWORDS - 1 )
+		{
+		  if ( strlen ( Me [ 0 ] . password_list [ PasswordIndex + 1 ] ) > 0 ) 
+		    {
+		      PasswordIndex ++;
+		      MenuItemSelectedSound();
+		    }
+		}
 	    }
 	  //--------------------
 	  // The remaining case is that no particular button but rather some
@@ -1027,8 +1054,24 @@ ShowDeckMap (Level deck)
       ShowGenericButtonFromList ( MAP_SECURITYRIGHT_BUTTON );
       ShowGenericButtonFromList ( MAP_SECURITYLEFT_BUTTON );
 
-      SetCurrentFont ( Menu_BFont );
-      PutString ( Screen , 380 , 440 , Druidmap [ ClearanceIndex ] . druidname );      
+      ShowGenericButtonFromList ( MAP_PASSWORDMIDDLE_BUTTON );
+      ShowGenericButtonFromList ( MAP_PASSWORDRIGHT_BUTTON );
+      ShowGenericButtonFromList ( MAP_PASSWORDLEFT_BUTTON );
+
+      //--------------------
+      // Now we print out the currently selected password AND
+      // the currently selected security clearance.
+      //
+      // SetCurrentFont ( Menu_BFont );
+      if ( ClearanceIndex >= 0 )
+	{
+	  PutString ( Screen , 220 , 440 , Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . druidname );      
+	}
+
+      if ( PasswordIndex >= 0 )
+	{
+	  PutString ( Screen , 380 , 440 , Me [ 0 ] . password_list [ PasswordIndex ] );      
+	}
 
       SDL_Flip (Screen);
 
@@ -1037,8 +1080,8 @@ ShowDeckMap (Level deck)
     }
   while (EscapePressed());
 
-  Me[0].pos.x=tmp.x;
-  Me[0].pos.y=tmp.y;
+  Me [ 0 ] . pos . x = tmp . x ;
+  Me [ 0 ] . pos . y = tmp . y ;
 
 }; // void ShowDeckMap( ... )
 

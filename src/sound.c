@@ -431,7 +431,7 @@ Sorry for interrupting your game.  \n\
 // longer with any form of sound engine like the YIFF.
 // ----------------------------------------------------------------------
 void 
-Init_Audio(void)
+InitAudio(void)
 {
 #ifndef HAVE_LIBSDL_MIXER  
   return;
@@ -601,7 +601,7 @@ Sorry...\n\
   // the music and sound volumes accoridingly, i.e. as specifies by the users
   // configuration.
   //
-  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+  SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);
@@ -615,7 +615,7 @@ unsigned char v = 128;
 int SampleLaenge;
 
 void 
-Set_BG_Music_Volume(float NewVolume)
+SetBGMusicVolume(float NewVolume)
 {
 
 #ifndef HAVE_LIBSDL_MIXER
@@ -634,12 +634,12 @@ Set_BG_Music_Volume(float NewVolume)
 
   Mix_VolumeMusic( (int) rintf( NewVolume * MIX_MAX_VOLUME ) );
 
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  // SwitchBackgroundMusicTo ( COMBAT_BACKGROUND_MUSIC_SOUND );
 #endif // HAVE_LIBSDL_MIXER
-} // void Set_BG_Music_Volume(float NewVolume)
+} // void SetBGMusicVolume(float NewVolume)
 
 void 
-Set_Sound_FX_Volume(float NewVolume)
+SetSoundFXVolume(float NewVolume)
 {
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -656,7 +656,7 @@ Set_Sound_FX_Volume(float NewVolume)
 
 #endif // HAVE_LIBSDL_MIXER
 
-} // void Set_BG_Music_Volume(float NewVolume)
+} // void SetBGMusicVolume(float NewVolume)
 
 
 /*@Function============================================================
@@ -680,7 +680,7 @@ StartSound (int Tune)
 void
 CrySound (void)
 {
-  Play_Sound ( CRY_SOUND );
+  PlaySound ( CRY_SOUND );
 }
 
 /* ----------------------------------------------------------------------
@@ -689,7 +689,7 @@ CrySound (void)
 void
 Play_Shop_ItemSoldSound( )
 {
-  Play_Sound ( SHOP_ITEM_SOLD_SOUND_0 ) ;
+  PlaySound ( SHOP_ITEM_SOLD_SOUND_0 ) ;
 };  // void Play_Shop_ItemSoldSound( )
 
 /* ----------------------------------------------------------------------
@@ -698,7 +698,7 @@ Play_Shop_ItemSoldSound( )
 void
 Play_Shop_ItemBoughtSound( )
 {
-  Play_Sound ( SHOP_ITEM_BOUGHT_SOUND_0 ) ;
+  PlaySound ( SHOP_ITEM_BOUGHT_SOUND_0 ) ;
 };  // void Play_Shop_ItemBoughtSound( )
 
 /* ----------------------------------------------------------------------
@@ -707,7 +707,7 @@ Play_Shop_ItemBoughtSound( )
 void
 Play_Shop_ItemRepairedSound( )
 {
-  Play_Sound ( SHOP_ITEM_REPAIRED_SOUND_0 ) ;
+  PlaySound ( SHOP_ITEM_REPAIRED_SOUND_0 ) ;
 };  // void Play_Shop_ItemRepairedSound( )
 
 /* ----------------------------------------------------------------------
@@ -716,7 +716,7 @@ Play_Shop_ItemRepairedSound( )
 void
 Play_Shop_ItemIdentifiedSound( )
 {
-  Play_Sound ( SHOP_ITEM_IDENTIFIED_SOUND_0 ) ;
+  PlaySound ( SHOP_ITEM_IDENTIFIED_SOUND_0 ) ;
 };  // void Play_Shop_ItemIdentifiedSound( )
 
 /* ----------------------------------------------------------------------
@@ -726,7 +726,7 @@ Play_Shop_ItemIdentifiedSound( )
 void
 Play_Spell_ForceToEnergy_Sound( )
 {
-  Play_Sound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+  PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
 };  // void Play_Spell_ForceToEnergy_Sound( )
 
 /* ----------------------------------------------------------------------
@@ -736,7 +736,7 @@ Play_Spell_ForceToEnergy_Sound( )
 void
 Play_Spell_DetectItems_Sound( )
 {
-  Play_Sound ( SPELL_DETECTITEMS_SOUND_0 ) ;
+  PlaySound ( SPELL_DETECTITEMS_SOUND_0 ) ;
 };  // void Play_Spell_ForceToEnergy_Sound( )
 
 /* ----------------------------------------------------------------------
@@ -756,7 +756,7 @@ Not_Enough_Power_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
     {
-      Play_Sound ( NOT_ENOUGH_POWER_SOUND );
+      PlaySound ( NOT_ENOUGH_POWER_SOUND );
       PreviousNotEnoughSound = now;
     }
 }; // void Not_Enough_Power_Sound ( void )
@@ -778,7 +778,7 @@ Not_Enough_Dist_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
     {
-      Play_Sound ( NOT_ENOUGH_DIST_SOUND );
+      PlaySound ( NOT_ENOUGH_DIST_SOUND );
       PreviousNotEnoughSound = now;
     }
 }
@@ -801,7 +801,7 @@ Not_Enough_Mana_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughForceSound >= 1.15 * 1000 )
     {
-      Play_Sound ( NOT_ENOUGH_FORCE_SOUND );
+      PlaySound ( NOT_ENOUGH_FORCE_SOUND );
       PreviousNotEnoughForceSound = now;
     }
 
@@ -822,16 +822,16 @@ PlayGreetingSound ( int SoundCode )
       return;
       break;
     case 0:
-      Play_Sound( FIRST_CONTACT_SOUND_0 );
+      PlaySound( FIRST_CONTACT_SOUND_0 );
       break;
     case 1:
-      Play_Sound( FIRST_CONTACT_SOUND_1 );
+      PlaySound( FIRST_CONTACT_SOUND_1 );
       break;
     case 2:
-      Play_Sound( FIRST_CONTACT_SOUND_2 );
+      PlaySound( FIRST_CONTACT_SOUND_2 );
       break;
     case 3:
-      Play_Sound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
+      PlaySound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
@@ -852,28 +852,28 @@ PlayItemSound ( int SoundCode )
   switch ( SoundCode )
     {
     case 0:
-      Play_Sound( ITEM_DROP_SOUND_0 );
+      PlaySound( ITEM_DROP_SOUND_0 );
       break;
     case 1:
-      Play_Sound( ITEM_DROP_SOUND_1 );
+      PlaySound( ITEM_DROP_SOUND_1 );
       break;
     case 2:
-      Play_Sound( ITEM_DROP_SOUND_2 );
+      PlaySound( ITEM_DROP_SOUND_2 );
       break;
     case 3:
-      Play_Sound( ITEM_DROP_SOUND_3 );
+      PlaySound( ITEM_DROP_SOUND_3 );
       break;
     case 4:
-      Play_Sound( ITEM_DROP_SOUND_4 );
+      PlaySound( ITEM_DROP_SOUND_4 );
       break;
     case 5:
-      Play_Sound( ITEM_ARMOUR_PUT_SOUND );
+      PlaySound( ITEM_ARMOUR_PUT_SOUND );
       break;
     case 6:
-      Play_Sound( ITEM_WHEELS_PUT_SOUND );
+      PlaySound( ITEM_WHEELS_PUT_SOUND );
       break;
     case 7:
-      Play_Sound( ITEM_RANGE_WEAPON_PUT_SOUND );
+      PlaySound( ITEM_RANGE_WEAPON_PUT_SOUND );
       break;
     default:
       break;
@@ -883,7 +883,7 @@ PlayItemSound ( int SoundCode )
 void
 ItemTakenSound (void)
 {
-  Play_Sound ( ITEM_TAKEN_SOUND );
+  PlaySound ( ITEM_TAKEN_SOUND );
 }
 
 /* ----------------------------------------------------------------------
@@ -903,13 +903,13 @@ CantCarrySound (void)
       switch( MyRandom( 2 ) )
 	{
 	case 0 :
-	  Play_Sound ( CANT_CARRY_SOUND_0 );
+	  PlaySound ( CANT_CARRY_SOUND_0 );
 	  break;
 	case 1 :
-	  Play_Sound ( CANT_CARRY_SOUND_1 );
+	  PlaySound ( CANT_CARRY_SOUND_1 );
 	  break;
 	case 2 :
-	  Play_Sound ( CANT_CARRY_SOUND_2 );
+	  PlaySound ( CANT_CARRY_SOUND_2 );
 	  break;
 	default:
 	  break;
@@ -926,7 +926,7 @@ CantCarrySound (void)
 void
 TransferSound (void)
 {
-  Play_Sound ( TRANSFER_SOUND );
+  PlaySound ( TRANSFER_SOUND );
 }
 
 /*@Function============================================================
@@ -938,7 +938,7 @@ TransferSound (void)
 void
 Mission_Status_Change_Sound (void)
 {
-  Play_Sound ( MISSION_STATUS_CHANGE_SOUND );
+  PlaySound ( MISSION_STATUS_CHANGE_SOUND );
 }
 
 /* ----------------------------------------------------------------------
@@ -951,7 +951,7 @@ Mission_Status_Change_Sound (void)
  *
  * ---------------------------------------------------------------------- */
 void
-Switch_Background_Music_To ( char* filename_raw_parameter )
+SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 {
   static int MOD_Music_Channel = -1;
   char* fpath;
@@ -976,7 +976,7 @@ Switch_Background_Music_To ( char* filename_raw_parameter )
   //--------------------
   // Now we LOAD the music file from disk into memory!!
   // But before we free the old music.  This is not a danger, cause the music
-  // is first initialized in Init_Audio with some dummy mod files, so that there
+  // is first initialized in InitAudio with some dummy mod files, so that there
   // is always something allocated, that we can free here.
   //
   // The loading of music and sound files is
@@ -1036,7 +1036,7 @@ Sorry...\n\
 
 #endif // HAVE_LIBSDL_MIXER
 
-}; // void Switch_Background_Music_To(int Tune)
+}; // void SwitchBackgroundMusicTo(int Tune)
 
 
 /*@Function============================================================
@@ -1046,7 +1046,7 @@ Sorry...\n\
 @Int:
 * $Function----------------------------------------------------------*/
 void
-Play_Sound (int Tune)
+PlaySound (int Tune)
 {
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -1092,7 +1092,7 @@ with game performance in any way.  I think this is really not dangerous.\n\
 
 #endif // HAVE_LIBSDL_MIXER
   
-}  // void Play_Sound(int Tune)
+}  // void PlaySound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -1105,7 +1105,7 @@ GotHitSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (GOT_HIT_SOUND);
+  PlaySound (GOT_HIT_SOUND);
 }				// void GotHitSound(void)
 
 
@@ -1124,25 +1124,25 @@ Influencer_Scream_Sound (void)
   // For a test, let's try using not my samples but rather this
   // one and only sound sample, formerly used for got-into-blast
   // occasions.
-  Play_Sound (GOT_INTO_BLAST_SOUND);
+  PlaySound (GOT_INTO_BLAST_SOUND);
   return;
 
   switch( MyRandom( 4 ) )
     {
     case 0 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
+      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
       break;
     case 1 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_1 );
+      PlaySound ( INFLUENCER_SCREAM_SOUND_1 );
       break;
     case 2 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
+      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
       break;
     case 3 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
+      PlaySound ( INFLUENCER_SCREAM_SOUND_3 );
       break;
     case 4 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_4 );
+      PlaySound ( INFLUENCER_SCREAM_SOUND_4 );
       break;
     default:
       break;
@@ -1161,7 +1161,7 @@ GotIntoBlastSound (void)
 {
   if (!sound_on) return;
 
-  // Play_Sound (GOT_INTO_BLAST_SOUND);
+  // PlaySound (GOT_INTO_BLAST_SOUND);
   return;
 }				// void GotIntoBlastSound(void)
 
@@ -1176,7 +1176,7 @@ RefreshSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (REFRESH_SOUND);
+  PlaySound (REFRESH_SOUND);
   return;
 }				// void RefreshSound(void)
 
@@ -1192,7 +1192,7 @@ MoveLiftSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (MOVE_ELEVATOR_SOUND);
+  PlaySound (MOVE_ELEVATOR_SOUND);
 }				// void MoveLiftSound(void)
 
 /*@Function============================================================
@@ -1206,7 +1206,7 @@ MenuItemSelectedSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( MENU_ITEM_SELECTED_SOUND );
+  PlaySound ( MENU_ITEM_SELECTED_SOUND );
 
 }; // void MenuItemSelectedSound ( void )
 
@@ -1221,7 +1221,7 @@ MenuItemDeselectedSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( MENU_ITEM_DESELECTED_SOUND );
+  PlaySound ( MENU_ITEM_DESELECTED_SOUND );
 
 }; // void MenuItemSelectedSound ( void )
 
@@ -1236,7 +1236,7 @@ MoveMenuPositionSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( MOVE_MENU_POSITION_SOUND );
+  PlaySound ( MOVE_MENU_POSITION_SOUND );
 }				// void MoveLiftSound(void)
 
 
@@ -1250,7 +1250,7 @@ void
 ThouArtDefeatedSound (void)
 {
   if (!sound_on) return;
-  Play_Sound (THOU_ART_DEFEATED_SOUND);
+  PlaySound (THOU_ART_DEFEATED_SOUND);
 }				// void MoveLiftSound(void)
 
 
@@ -1265,7 +1265,7 @@ EnterLiftSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (ENTER_ELEVATOR_SOUND);
+  PlaySound (ENTER_ELEVATOR_SOUND);
   return;
 }				// void EnterLiftSound(void)
 
@@ -1281,7 +1281,7 @@ LeaveLiftSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (LEAVE_ELEVATOR_SOUND);
+  PlaySound (LEAVE_ELEVATOR_SOUND);
 
   return;
 }				// void LeaveLiftSound(void)
@@ -1301,42 +1301,42 @@ Fire_Bullet_Sound (int BulletType)
   switch (BulletType)
     {
     case PULSE:
-      Play_Sound ( FIRE_BULLET_PULSE_SOUND );
+      PlaySound ( FIRE_BULLET_PULSE_SOUND );
       break;
 
     case SINGLE_PULSE:
-      Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+      PlaySound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
       break;
 
     case MILITARY:
-      Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
+      PlaySound ( FIRE_BULLET_MILITARY_SOUND );
       break;
 
     case FLASH:
-      Play_Sound ( FIRE_BULLET_FLASH_SOUND );
+      PlaySound ( FIRE_BULLET_FLASH_SOUND );
       break;
 
     case EXTERMINATOR:
-      Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
+      PlaySound ( FIRE_BULLET_EXTERMINATOR_SOUND );
       break;
 
     case LASER_RIFLE:
-      Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
+      PlaySound ( FIRE_BULLET_LASER_RIFLE_SOUND );
       break;
 
     case SINGLE_LASER:
-      Play_Sound ( FIRE_BULLET_SINGLE_LASER_SOUND );
+      PlaySound ( FIRE_BULLET_SINGLE_LASER_SOUND );
       break;
 
     case PLASMA_PISTOL:
-      Play_Sound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
+      PlaySound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
       break;
 
     case LASER_SWORD_1:
     case LASER_AXE:
     case LASER_SWORD_2:
     default:
-      Play_Sound ( FIRE_BULLET_SWORD_SOUND );
+      PlaySound ( FIRE_BULLET_SWORD_SOUND );
       break;
     }
 }; // void FireBulletSound(void)
@@ -1353,7 +1353,7 @@ Takeover_Set_Capsule_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (TAKEOVER_SET_CAPSULE_SOUND);
+  PlaySound (TAKEOVER_SET_CAPSULE_SOUND);
 
 }; // void Takeover_Set_Capsule_Sound ( void )
 
@@ -1368,7 +1368,7 @@ Takeover_Game_Won_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( TAKEOVER_GAME_WON_SOUND );
+  PlaySound ( TAKEOVER_GAME_WON_SOUND );
 
 }; // void Takeover_Game_Won_Sound ( void ) 
 
@@ -1383,7 +1383,7 @@ Takeover_Game_Deadlock_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
+  PlaySound ( TAKEOVER_GAME_DEADLOCK_SOUND );
 
 }; // void Takeover_Game_Deadlock_Sound ( void )
 
@@ -1398,7 +1398,7 @@ Takeover_Game_Lost_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( TAKEOVER_GAME_LOST_SOUND );
+  PlaySound ( TAKEOVER_GAME_LOST_SOUND );
 }; // void Takeover_Game_Lost_Sound ( void )
 
 
@@ -1413,7 +1413,7 @@ BounceSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( COLLISIONSOUND );
+  PlaySound ( COLLISIONSOUND );
 
 }; // void BounceSound ( void )
 
@@ -1428,7 +1428,7 @@ DruidBlastSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (BLASTSOUND);
+  PlaySound (BLASTSOUND);
 
 }; // void DruidBlastSound (void)
 
@@ -1447,7 +1447,7 @@ PlayLevelCommentSound ( int levelnum )
       break;
     case 3:
       // I can feel the MS Machines close now!
-      Play_Sound ( MS_MACHINES_CLOSE_NOW_SOUND );
+      PlaySound ( MS_MACHINES_CLOSE_NOW_SOUND );
       break;
     default: 
       break;
@@ -1468,7 +1468,7 @@ PlayEnemyGotHitSound ( int enemytype )
       break;
     case 0:
       // Play a grunting enemy got hit sound...
-      Play_Sound ( ENEMY_GOT_HIT_SOUND_0 );
+      PlaySound ( ENEMY_GOT_HIT_SOUND_0 );
       break;
     default: 
       break;
@@ -1484,7 +1484,7 @@ BulletReflectedSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( BULLET_REFLECTED_SOUND);
+  PlaySound ( BULLET_REFLECTED_SOUND);
 
 }; // void DruidBlastSound (void)
 

@@ -385,7 +385,7 @@ The game however could NOT be saved.\n\
   //
   CountNumberOfDroidsOnShip (  ) ;
 
-  Switch_Background_Music_To( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
+  SwitchBackgroundMusicTo( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
 

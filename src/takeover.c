@@ -150,7 +150,7 @@ Takeover (int enemynum)
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
-  Switch_Background_Music_To ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
+  SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
   /* Get a new Internfenster without any robots, blasts bullets etc
      for use as background in transparent version of Takeover-game */
@@ -207,7 +207,7 @@ Takeover (int enemynum)
       // evaluate the final score of the game and return it
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
-	  // Switch_Background_Music_To (SILENCE);
+	  // SwitchBackgroundMusicTo (SILENCE);
 	  Takeover_Game_Won_Sound ();
 	  if (Me[0].type == DRUID001)
 	    {
@@ -239,7 +239,7 @@ Takeover (int enemynum)
 	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
-	  // Switch_Background_Music_To (SILENCE);
+	  // SwitchBackgroundMusicTo (SILENCE);
 	  Takeover_Game_Lost_Sound ();
 	  if (Me[0].type != DRUID001)
 	    {
@@ -284,8 +284,8 @@ Takeover (int enemynum)
 
   ClearGraphMem();
 
-  // Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
-  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+  // SwitchBackgroundMusicTo (COMBAT_BACKGROUND_MUSIC_SOUND);
+  SwitchBackgroundMusicTo ( CurLevel->Background_Song_Name );
 
   if (LeaderColor == YourColor)
     return TRUE;

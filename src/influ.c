@@ -1527,7 +1527,7 @@ FireBullet ( int PlayerNum )
       // or something that can be smashed up, cause in this case, we
       // must open pendoras box now.
       //
-      Smash_Box ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
+      SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
       
       //--------------------
       // Finally we add a new wait-counter, so that bullets or swings

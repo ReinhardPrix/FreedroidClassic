@@ -261,7 +261,7 @@ StartBlast ( float x, float y, int level , int type)
   //--------------------
   // Maybe there is a box under the blast.  In this case, the box will
   // get smashed and perhaps an item will drop.
-  Smash_Box ( x , y );
+  SmashBox ( x , y );
 
   // find out the position of the next free blast
   for (i = 0; i < MAXBLASTS; i++)

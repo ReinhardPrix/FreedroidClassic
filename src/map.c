@@ -216,7 +216,7 @@ CollectAutomapData ( void )
  * possibly leaving some goods behind.
  * ---------------------------------------------------------------------- */
 void 
-Smash_Box ( float x , float y )
+SmashBox ( float x , float y )
 {
   int map_x, map_y;
 
@@ -241,7 +241,7 @@ Smash_Box ( float x , float y )
       break;
     }
 
-}; // void Smash_Box ( float x , float y );
+}; // void SmashBox ( float x , float y );
 
 /* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the
