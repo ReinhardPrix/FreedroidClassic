@@ -60,10 +60,10 @@
 #include <stdarg.h>
 #include <ctype.h>
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include "SDL.h"
+#include "SDL_image.h"
 
-#ifdef HAVE_SDL_SDL_MIXER_H
-#include <SDL/SDL_mixer.h>
+#ifdef HAVE_LIBSDL_MIXER
+#include "SDL_mixer.h"
 #endif
 

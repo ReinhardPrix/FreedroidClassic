@@ -32,23 +32,12 @@
 #define _sound_c
 #endif
 
-/* 
- * we can do sound-compilation if and only if _both_ the 
- * SDL_mixer library _and_ the header file are present !!
- */
-
 #include "system.h"
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-
-#if defined HAVE_SDL_SDL_MIXER_H && defined HAVE_LIBSDL_MIXER
-#define HAS_SDL_SOUND
-#else
-#undef HAS_SDL_SOUND
-#endif
 
 
 // The following is the definition of the sound file names used in freedroid
@@ -84,14 +73,14 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   SOUND_DIR "Fire_Bullet_Flash_Sound_0.wav"
 };
 
-#ifdef HAS_SDL_SOUND
+#ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
 void 
 Init_Audio(void)
 {
-#ifndef HAS_SDL_SOUND  
+#ifndef HAVE_LIBSDL_MIXER  
   return;
 #else
   int i;
@@ -226,7 +215,7 @@ int SampleLaenge;
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
-#ifndef HAS_SDL_SOUND
+#ifndef HAVE_LIBSDL_MIXER
   return;
 #else
   if ( !sound_on ) return;
@@ -238,13 +227,13 @@ Set_BG_Music_Volume(float NewVolume)
     }
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
-#endif // HAS_SDL_SOUND
+#endif // HAVE_LIBSDL_MIXER
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void 
 Set_Sound_FX_Volume(float NewVolume)
 {
-#ifndef HAS_SDL_SOUND
+#ifndef HAVE_LIBSDL_MIXER
   return;
 #else
   if ( !sound_on ) return;
@@ -257,7 +246,7 @@ Set_Sound_FX_Volume(float NewVolume)
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
 
-#endif // HAS_SDL_SOUND
+#endif // HAVE_LIBSDL_MIXER
 
 } // void Set_BG_Music_Volume(float NewVolume)
 
@@ -306,7 +295,7 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
-#ifndef HAS_SDL_SOUND
+#ifndef HAVE_LIBSDL_MIXER
   return;
 #else
 
@@ -377,7 +366,7 @@ Sorry...\n\
 
   // Play_Sound ( Tune );
 
-#endif // HAS_SDL_SOUND
+#endif // HAVE_LIBSDL_MIXER
 
 } // void Switch_Background_Music_To(int Tune)
 
@@ -391,7 +380,7 @@ Sorry...\n\
 void
 Play_Sound (int Tune)
 {
-#ifndef HAS_SDL_SOUND
+#ifndef HAVE_LIBSDL_MIXER
   return;
 #else
   int Newest_Sound_Channel=0;
@@ -432,7 +421,7 @@ with game performance in any way.  I think this is really not dangerous.\n\
       printf("\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
     }
 
-#endif // HAS_SDL_SOUND
+#endif // HAVE_LIBSDL_MIXER
   
 }  // void Play_Sound(int Tune)
 
