@@ -43,7 +43,10 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
-
+/*
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
 
 void 
 DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
@@ -356,8 +359,6 @@ SetCombatScaleTo(float ResizeFactor)
 void 
 LoadThemeConfigurationFile(void)
 {
-  struct stat stbuf;
-  FILE *DataFile;
   char *Data;
   char *ReadPointer;
   char *fpath;
@@ -365,51 +366,8 @@ LoadThemeConfigurationFile(void)
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
-  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( void ) : The filename is: %s" , fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 
-  // Read the whole theme data to memory 
-  if ((DataFile = fopen (fpath, "r")) == NULL)
-    {
-      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile( void ): Error opening file.... ");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 1 , "\nOpening theme config file succeeded...");
-    }
-
-  if (fstat (fileno (DataFile), &stbuf) == EOF)
-    {
-      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( void ): Error fstat-ing File....");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 1 , "\nfstating theme config file succeeded...");
-    }
-
-  if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
-    {
-      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( char * constantsname ) : Out of Memory? ");
-      Terminate(ERR);
-    }
-
-  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
-
-  DebugPrintf (1, "\nReading theme data file succeeded... Adding a 0 at the end of read data....");
-
-  if ( (ReadPointer = strstr( Data , END_OF_THEME_DATA_STRING ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR!  END OF THEME DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  else
-    {
-      ReadPointer[0]=0; // we want to handle the file like a string, even if it is not zero
-                       // terminated by nature.  We just have to add the zero termination.
-    }
-
-  DebugPrintf( 1 , "\n\nvoid LoadThemeConfigurationFile ( void ) : The content of the read file: \n%s" , Data );
 
   //--------------------
   // Now the file is read in entirely and

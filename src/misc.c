@@ -75,6 +75,86 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+
+/*
+----------------------------------------------------------------------
+This function read in a file with the specified name, allocated 
+memory for it of course, looks for the file end string and then
+terminates the whole read in file with a 0 character, so that it
+can easily be treated like a common string.
+----------------------------------------------------------------------
+*/
+char* 
+ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
+{
+  struct stat stbuf;
+  FILE *DataFile;
+  char *Data;
+  char *ReadPointer;
+  // char *fpath;
+
+  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
+
+  // Read the whole theme data to memory 
+  if ((DataFile = fopen ( filename , "r")) == NULL)
+    {
+      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error opening file.... ");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
+    }
+
+  if (fstat (fileno (DataFile), &stbuf) == EOF)
+    {
+      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded...");
+    }
+
+  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2 + 100 )) == NULL)
+    {
+      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
+
+  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
+
+  if (fclose ( DataFile ) == EOF)
+    {
+      DebugPrintf( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error while trying to close lift file....Terminating....\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...");
+    }
+
+  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Adding a 0 at the end of read data....");
+
+  if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
+    {
+      DebugPrintf ( 0 , "\nERROR!  END OF FILE STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      ReadPointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The content of the read file: \n%s" , Data );
+
+  return ( Data );
+}; // char* ReadAndMallocAndTerminateFile( char* filename) 
+
+
 /*-----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 
  * using theme subdir if use_theme==TRUE
@@ -91,7 +171,7 @@ char *
 find_file (char *fname, char *subdir, int use_theme)
 {
   static char File_Path[5000];   /* hope this will be enough */
-  FILE *fp;
+  FILE *fp;  // this is the file we want to find?
   int i;
 
   if (!fname)

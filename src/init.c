@@ -1148,10 +1148,7 @@ void
 Init_Game_Data ( char * Datafilename )
 {
   char *fpath;
-  struct stat stbuf;
-  FILE *DataFile;
   char *Data;
-  char *EndPointer;
 
 #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 
@@ -1159,48 +1156,8 @@ Init_Game_Data ( char * Datafilename )
 
   /* Read the whole game data to memory */
   fpath = find_file (Datafilename, MAP_DIR, FALSE);
-  if ((DataFile = fopen (fpath, "r")) == NULL)
-    {
-      DebugPrintf ( 0 , "\nint Init_Game_Data( void ): Error opening file.... ");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\nOpening game data file succeeded...");
-    }
 
-  if (fstat (fileno (DataFile), &stbuf) == EOF)
-    {
-      DebugPrintf ( 0 , "\nint Init_Game_Data ( void ): Error fstat-ing File....");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\nfstating game data file succeeded...");
-    }
-
-  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
-    {
-      DebugPrintf ( 0 , "\nint Init_Game_Data ( char * constantsname ) : Out of Memory? ");
-      Terminate(ERR);
-    }
-
-  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
-
-  DebugPrintf ( 2 , "\nReading dat file succeeded... Adding a 0 at the end of read data....");
-
-  if ( (EndPointer = strstr( Data , END_OF_GAME_DAT_STRING ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR!  END OF GAME.DAT STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  else
-    {
-      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
-                       // terminated by nature.  We just have to add the zero termination.
-    }
-
-  // printf("\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_GAME_DAT_STRING ) ;
 
   Get_General_Game_Constants( Data );
 
@@ -1212,6 +1169,8 @@ Init_Game_Data ( char * Datafilename )
   // DROIDNAMES EVERY TIME!!!
 
 } // int Init_Game_Data ( void )
+
+
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
@@ -1356,12 +1315,9 @@ InitNewMission ( char *MissionName )
 {
   char *fpath;
   int i;
-  struct stat stbuf;
-  FILE *MissionFile;
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EventSectionPointer;
-  char *EndPointer;
   char *ShipnamePointer;
   char *ShipOnPointer;
   char *ShipOffPointer;
@@ -1460,49 +1416,10 @@ InitNewMission ( char *MissionName )
   //The procedure is the same as with LoadShip
 
   /* Read the whole mission data to memory */
+
   fpath = find_file (MissionName, MAP_DIR, FALSE);
-  if ((MissionFile = fopen ( fpath , "r")) == NULL)
-    {
-      DebugPrintf (2, "\nint InitNewMission( ... ): Error opening file.... ");
-      Terminate(ERR);
-    }
-  else
-    {
-      // printf("\nOpening %s file succeeded..." , MissionName );
-    }
 
-  if (fstat (fileno (MissionFile), &stbuf) == EOF)
-    {
-      DebugPrintf (1, "\nint InitNewMission ( void ): Error fstat-ing File....");
-      Terminate(ERR);
-    }
-  else
-    {
-      // printf("\nfstating %s file succeeded..." , MissionName );
-    }
-
-  if (( MainMissionPointer = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
-    {
-      DebugPrintf (2, "\nint InitNewMission ( char * constantsname ) : Out of Memory? ");
-      Terminate(ERR);
-    }
-
-  fread ( MainMissionPointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), MissionFile);
-
-  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
-
-  if ( (EndPointer = strstr( MainMissionPointer , END_OF_MISSION_DATA_STRING ) ) == NULL )
-    {
-      DebugPrintf (1, "\nERROR!  END OF MISSION DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  else
-    {
-      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
-                       // terminated by nature.  We just have to add the zero termination.
-    }
-
-  DebugPrintf( 2, "\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
+  MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
 
   //--------------------
   //Now the mission file is read into memory

@@ -306,43 +306,27 @@ int
 LoadShip (char *filename)
 {
   char *fpath;
-  struct stat stbuf;
-  FILE *ShipFile;
   char *ShipData;
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
   int i;
 
+#define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
+
   /* Read the whole ship-data to memory */
+
   fpath = find_file (filename, MAP_DIR, FALSE);
-  if ((ShipFile = fopen (fpath, "r")) == NULL)
-    {
-      // DebugPrintf (2, "\nint LoadShip(char *shipname): Error opening file.... ");
-      DebugPrintf (1, "\n\nint LoadShip(char *filename): Error opening file....Terminating.... ");
-      Terminate(ERR);
-    }
 
-  if (fstat (fileno (ShipFile), &stbuf) == EOF)
-    {
-      DebugPrintf (2, "\nint LoadShip(char* filename): Error fstat-ing File....");
-      return ERR;
-    }
+  ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
-  if ((ShipData = (char *) malloc (stbuf.st_size + 10)) == NULL)
-    {
-      DebugPrintf (2, "\nint LoadShip(char *filename): Out of Memory? ");
-      getchar ();
-      return ERR;
-    }
 
-  fread (ShipData, (size_t) 64, (size_t) (stbuf.st_size / 64 + 1), ShipFile);
+  //--------------------
+  // Now we count the number of levels and remember their start-addresses.
+  // This is done by searching for the LEVEL_END_STRING again and again
+  // until it is no longer found in the ship file.  good.
+  //
 
-  /* 
-   *  Now we count the number of levels and remember their start-addresses.
-   *  This is done by searching for the LEVEL_END_STRING again and again
-   *  until it is no longer found in the ship file.  good.
-   */
   level_anz = 0;
   endpt = ShipData;
   LevelStart[level_anz] = ShipData;
@@ -637,7 +621,7 @@ int SaveShip(char *shipname)
 {
   char *LevelMem;		/* linear memory for one Level */
   char *MapHeaderString;
-  FILE *ShipFile;
+  FILE *ShipFile;  // to this file we will save all the ship data...
   char filename[FILENAME_LEN+1];
   int level_anz;
   int array_i, array_num;
@@ -749,6 +733,17 @@ freedroid-discussion@lists.sourceforge.net\n\
     
       free(LevelMem);
     }
+
+  //--------------------
+  // Now we are almost done writing.  Everything that is missing is
+  // the termination string for the ship file.  This termination string
+  // is needed later for the ship loading functions to find the end of
+  // the data and to be able to terminate the long file-string with a
+  // null character at the right position.
+  //
+  fwrite( END_OF_SHIP_DATA_STRING , strlen( END_OF_SHIP_DATA_STRING ) , sizeof(char) , ShipFile );
+  fwrite( "\n\n  ", strlen( "\n\n  " ) , sizeof(char) , ShipFile );
+
   
   DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
 
@@ -1221,10 +1216,7 @@ int
 GetLiftConnections (char *filename)
 {
   char *fpath;
-  FILE *Lift_file;
-  struct stat stbuf;
   char *Data;
-  char *EndPointer;
   char *EntryPointer;
   int Label;
   Lift CurLift;
@@ -1233,49 +1225,10 @@ GetLiftConnections (char *filename)
 #define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
 
   /* Now get the lift-connection data from "FILE.elv" file */
+
   fpath = find_file (filename, MAP_DIR, FALSE);
-  if ((Lift_file = fopen (fpath, "r")) == NULL)
-    {
-      printf("\n\nCouldn't open lift file...Terminating....\n");
-      Terminate (ERR);
-    }
-  else 
-    {
-      DebugPrintf (2, "\n\nLift file successfully opened.");
-    }
 
-  if (fstat (fileno (Lift_file), &stbuf) == EOF)
-    {
-      DebugPrintf ( 0 , "\nint GetLiftConnections ( char* filename ): Error fstat-ing File....");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\nfstating lift file succeeded...");
-    }
-
-  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2)) == NULL)
-    {
-      DebugPrintf ( 0 , "\nvoid GetLiftConnections ( char *filename ) : Out of Memory? ");
-      Terminate(ERR);
-    }
-
-  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), Lift_file );
-
-  DebugPrintf ( 2 , "\nReading dat file succeeded... Adding a 0 at the end of read data....");
-
-  if ( (EndPointer = strstr( Data , END_OF_LIFT_DATA_STRING ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR!  END OF LIFT DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  else
-    {
-      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
-                       // terminated by nature.  We just have to add the zero termination.
-    }
-
-  DebugPrintf( 1 , "\n\nvoid Init_Game_Data: The content of the read file: \n%s" , Data );
+  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_LIFT_DATA_STRING ) ;
 
   if ( (EntryPointer = strstr( Data , START_OF_LIFT_DATA_STRING ) ) == NULL )
     {
@@ -1317,40 +1270,8 @@ GetLiftConnections (char *filename)
 
   curShip.num_lifts = Label;
 
-  /*
-
-  for (i = 0; i < MAX_LIFTS; i++)
-    {
-      EntryPointer = strstr ( EntryPointer, "\n" ) + 1;
-      if ( EntryPointer == NULL ) break;
-
-      //if ( sscanf ( EntryPointer, "%d %d %d %d %d %d",
-      //&cur_lev, &cur_x, &cur_y, &up, &down, &lift_row) == EOF)
-      //{
-      //curShip.num_lifts = i;
-      //break;
-      //	}
-
-      CurLift = &(curShip.AllLifts[i]);
-      CurLift->level = cur_lev;
-      CurLift->x = cur_x;
-      CurLift->y = cur_y;
-      CurLift->up = up;
-      CurLift->down = down;
-      CurLift->lift_row = lift_row;
-    }
-
-      */
-
-
-  if (fclose (Lift_file) == EOF)
-    {
-      DebugPrintf( 0 , "\n\nError while trying to close lift file....Terminating....\n\n");
-      Terminate(ERR);
-    }
-
   return OK;
-}				// int GetLiftConnections(char *shipname)
+}; // int GetLiftConnections(char *shipname)
 
 /*-----------------------------------------------------------------
  * @Desc: This function initializes all enemys
@@ -1363,12 +1284,9 @@ int
 GetCrew (char *filename)
 {
   char *fpath;
-  FILE *DroidsFile;
   char *MainDroidsFilePointer;
-  char *EndOfDroidsFilePointer;
   char *DroidSectionPointer;
   char *EndOfThisDroidSectionPointer;
-  struct stat stbuf;
   int i, type;
 
 #define START_OF_DROID_DATA_STRING "*** Beginning of Droid Data ***"
@@ -1385,61 +1303,8 @@ GetCrew (char *filename)
   //The procedure is the same as with LoadShip
   //
   fpath = find_file (filename, MAP_DIR, FALSE);
-  if (( DroidsFile = fopen (fpath , "r")) == NULL)
-    {
-      DebugPrintf (2, "\nint GetCrew( ... ): Error opening file.... ");
-      Terminate(ERR);
-    }
-  else
-    {
-      // printf("\nOpening %s file succeeded..." , filename );
-    }
 
-  if ( fstat (fileno ( DroidsFile ), &stbuf) == EOF )
-    {
-      printf
-	("\nint GetCrew ( void ): Error fstat-ing File....");
-      Terminate(ERR);
-    }
-  else
-    {
-      // printf("\nfstating %s file succeeded..." , filename );
-    }
-
-  if (( MainDroidsFilePointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
-    {
-      DebugPrintf (2, "\nint GetCrew ( char * constantsname ) : Out of Memory? ");
-      Terminate(ERR);
-    }
-
-  fread ( MainDroidsFilePointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DroidsFile);
-
-  DebugPrintf (2, "\nReading dat file succeeded... Adding a 0 at the end of read data....");
-
-  if ( ( EndOfDroidsFilePointer = strstr( MainDroidsFilePointer , END_OF_DROID_DATA_STRING ) ) == NULL )
-    {
-      printf("\nERROR!  END OF DROID DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  else
-    {
-      EndOfDroidsFilePointer[0]=0; // we want to handle the file like a string, even if it is not zero
-                       // terminated by nature.  We just have to add the zero termination.
-    }
-
-  // printf("\n\nvoid GetCrew: The content of the read file: \n%s" , MainDroidsFilePointer );
-
-  if( fclose(DroidsFile) == EOF) 
-    {
-      printf("\n\nClosing of droids file failed in GetCrew...\n\nTerminating\n\n");
-      fflush(stdout);
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf (2, "\n\nDroids file closed successfully.");
-      // fflush(stdout);
-    }
+  MainDroidsFilePointer = ReadAndMallocAndTerminateFile( fpath , END_OF_DROID_DATA_STRING ) ;
 
   //--------------------
   // The Droid crew file for this map is now completely read into memory

@@ -339,6 +339,7 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
 EXTERN char * find_file (char *fname, char *datadir, int use_theme);
 EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
