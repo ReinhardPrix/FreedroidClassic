@@ -63,8 +63,6 @@ main (int argc, char *const argv[])
   Uint32 now;
   bool first_time = TRUE;
 
-  bool just_lost = FALSE;
-
   GameOver = FALSE;
   QuitProgram = FALSE;
 
@@ -131,20 +129,8 @@ main (int argc, char *const argv[])
 	                        // also change his status and position and "phase" of rotation
 
 
-	  if (just_lost)
-	    {
-	      DebugPrintf (0, "Before MoveEnemys(): "); 
-	      CheckDroidDistribution(CurLevel->levelnum);
-	    }
-
 	  MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
-
-	  if (just_lost)
-	    {
-	      DebugPrintf (0, "After MoveEnemys(): "); 
-	      CheckDroidDistribution(CurLevel->levelnum);
-	    }
 
 
 	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
@@ -161,11 +147,8 @@ main (int argc, char *const argv[])
 
 	  ComputeFPSForThisFrame();
 
-	  just_lost = FALSE;
-
 	} /* while !GameOver */
 
-      just_lost = TRUE;
     } /* while !QuitProgram */
 
 
