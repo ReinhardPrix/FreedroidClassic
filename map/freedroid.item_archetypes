@@ -33,6 +33,8 @@ BEGIN OF AUTORS NOTES
 
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+THIS IS A TEST...
+asdf
 
 END OF AUTORS NOTES
 
@@ -52,8 +54,8 @@ Common factor for all melee weapons damage values: 1.0
 // Item No. 0
 ** Start of new item specification subsection **
 Item name="none present"
-Position_X=50
-Position_Y=50
+Position_X=245
+Position_Y=20
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -82,7 +84,7 @@ Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
 Item as gun: blast type to create=-1
-Item as gun: one_shot_only=135365496
+Item as gun: one_shot_only=135306176
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -98,8 +100,8 @@ Item as gun: required ammunition type="none"
 // Item No. 1
 ** Start of new item specification subsection **
 Item name="Minor Health Capsule"
-Position_X=90
-Position_Y=50
+Position_X=57
+Position_Y=182
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -144,8 +146,8 @@ Item as gun: required ammunition type="none"
 // Item No. 2
 ** Start of new item specification subsection **
 Item name="Major Health Capsule"
-Position_X=130
-Position_Y=50
+Position_X=42
+Position_Y=239
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -173,8 +175,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=168
-Item as gun: one_shot_only=7
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -215,12 +217,12 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=16
-Item as gun: modifier for damage of bullets=32
-Item as gun: blast type to create=1702127918
-Item as gun: one_shot_only=1684631410
+Item as gun: damage of bullets=32
+Item as gun: modifier for damage of bullets=64
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=-1.000000
 Item as gun: offset for melee weapon=0.000000
@@ -236,8 +238,8 @@ Item as gun: required ammunition type="laser_ammunition"
 // Item No. 4
 ** Start of new item specification subsection **
 Item name="Droid Energetic Heart Class Beta"
-Position_X=210
-Position_Y=50
+Position_X=141
+Position_Y=118
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
@@ -265,8 +267,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=808
-Item as gun: one_shot_only=1169383
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -282,8 +284,8 @@ Item as gun: required ammunition type="none"
 // Item No. 5
 ** Start of new item specification subsection **
 Item name="Anti-Grav Class A"
-Position_X=633
-Position_Y=283
+Position_X=660
+Position_Y=245
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -311,8 +313,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=1949197677
-Item as gun: one_shot_only=1632069199
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -328,8 +330,8 @@ Item as gun: required ammunition type="none"
 // Item No. 6
 ** Start of new item specification subsection **
 Item name="Cyberbucks"
-Position_X=290
-Position_Y=50
+Position_X=118
+Position_Y=119
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -357,8 +359,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=1953391990
-Item as gun: one_shot_only=1158152240
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -374,8 +376,8 @@ Item as gun: required ammunition type="none"
 // Item No. 7
 ** Start of new item specification subsection **
 Item name="Wheel Drive"
-Position_X=631
-Position_Y=147
+Position_X=654
+Position_Y=137
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -403,8 +405,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=2116973413
-Item as gun: one_shot_only=1887007845
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -420,8 +422,8 @@ Item as gun: required ammunition type="none"
 // Item No. 8
 ** Start of new item specification subsection **
 Item name="Tripedal Drive"
-Position_X=632
-Position_Y=103
+Position_X=664
+Position_Y=91
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -449,8 +451,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=1919248231
-Item as gun: one_shot_only=1769100404
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -466,8 +468,8 @@ Item as gun: required ammunition type="none"
 // Item No. 9
 ** Start of new item specification subsection **
 Item name="Bipedal Drive"
-Position_X=629
-Position_Y=55
+Position_X=650
+Position_Y=50
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -512,8 +514,8 @@ Item as gun: required ammunition type="none"
 // Item No. 10
 ** Start of new item specification subsection **
 Item name="Tracks"
-Position_X=632
-Position_Y=201
+Position_X=660
+Position_Y=176
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -558,8 +560,8 @@ Item as gun: required ammunition type="none"
 // Item No. 11
 ** Start of new item specification subsection **
 Item name="Anti-Grav Class B"
-Position_X=629
-Position_Y=243
+Position_X=662
+Position_Y=214
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -629,10 +631,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=32
-Item as gun: modifier for damage of bullets=32
+Item as gun: damage of bullets=64
+Item as gun: modifier for damage of bullets=64
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=5
@@ -675,10 +677,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=3.000000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=24
-Item as gun: modifier for damage of bullets=120
+Item as gun: damage of bullets=48
+Item as gun: modifier for damage of bullets=240
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
@@ -696,8 +698,8 @@ Item as gun: required ammunition type="exterminator_ammunition"
 // Item No. 14
 ** Start of new item specification subsection **
 Item name="Droid Disruptor Class Alpha"
-Position_X=546
-Position_Y=220
+Position_X=555
+Position_Y=276
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -721,10 +723,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.000000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=320
-Item as gun: modifier for damage of bullets=96
+Item as gun: damage of bullets=640
+Item as gun: modifier for damage of bullets=192
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=3
@@ -742,8 +744,8 @@ Item as gun: required ammunition type="none"
 // Item No. 15
 ** Start of new item specification subsection **
 Item name="Advanced Twin Laser"
-Position_X=550
-Position_Y=269
+Position_X=573
+Position_Y=299
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -767,10 +769,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.400000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=40
-Item as gun: modifier for damage of bullets=48
+Item as gun: damage of bullets=80
+Item as gun: modifier for damage of bullets=96
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=2
@@ -788,8 +790,8 @@ Item as gun: required ammunition type="laser_ammunition"
 // Item No. 16
 ** Start of new item specification subsection **
 Item name="Advanced Single Laser"
-Position_X=550
-Position_Y=318
+Position_X=562
+Position_Y=329
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -813,10 +815,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.200000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=24
-Item as gun: modifier for damage of bullets=72
+Item as gun: damage of bullets=48
+Item as gun: modifier for damage of bullets=144
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=1
@@ -834,8 +836,8 @@ Item as gun: required ammunition type="laser_ammunition"
 // Item No. 17
 ** Start of new item specification subsection **
 Item name="The Super Exterminator!!!"
-Position_X=548
-Position_Y=355
+Position_X=543
+Position_Y=311
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -859,10 +861,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.150000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=640
-Item as gun: modifier for damage of bullets=160
+Item as gun: damage of bullets=1280
+Item as gun: modifier for damage of bullets=320
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
@@ -972,8 +974,8 @@ Item as gun: required ammunition type="none"
 // Item No. 20
 ** Start of new item specification subsection **
 Item name="Cap"
-Position_X=50
-Position_Y=130
+Position_X=457
+Position_Y=199
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="special"
@@ -1018,8 +1020,8 @@ Item as gun: required ammunition type="none"
 // Item No. 21
 ** Start of new item specification subsection **
 Item name="Warrior Wristband"
-Position_X=198
-Position_Y=96
+Position_X=438
+Position_Y=179
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
@@ -1064,8 +1066,8 @@ Item as gun: required ammunition type="none"
 // Item No. 22
 ** Start of new item specification subsection **
 Item name="Single laser Class A"
-Position_X=570
-Position_Y=372
+Position_X=567
+Position_Y=367
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1089,10 +1091,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.800000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=8
-Item as gun: modifier for damage of bullets=24
+Item as gun: damage of bullets=16
+Item as gun: modifier for damage of bullets=48
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=6
@@ -1110,8 +1112,8 @@ Item as gun: required ammunition type="laser_ammunition"
 // Item No. 23
 ** Start of new item specification subsection **
 Item name="Single substandard plasma pistol"
-Position_X=532
-Position_Y=415
+Position_X=536
+Position_Y=414
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1135,10 +1137,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.850000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=8
-Item as gun: modifier for damage of bullets=24
+Item as gun: damage of bullets=16
+Item as gun: modifier for damage of bullets=48
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=7
@@ -1478,8 +1480,8 @@ Item as gun: required ammunition type="none"
 // Item No. 31
 ** Start of new item specification subsection **
 Item name="Leather Armour"
-Position_X=479
-Position_Y=252
+Position_X=445
+Position_Y=221
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
@@ -1507,8 +1509,8 @@ Item as gun: speed of bullets=0.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=0
 Item as gun: modifier for damage of bullets=0
-Item as gun: blast type to create=1177514853
-Item as gun: one_shot_only=1852727656
+Item as gun: blast type to create=0
+Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
 Item as gun: bullet_lifetime=0.000000
 Item as gun: offset for melee weapon=0.000000
@@ -1662,8 +1664,8 @@ Item as gun: required ammunition type="none"
 // Item No. 35
 ** Start of new item specification subsection **
 Item name="Lasersaber"
-Position_X=574
-Position_Y=334
+Position_X=584
+Position_Y=342
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1708,8 +1710,8 @@ Item as gun: required ammunition type="none"
 // Item No. 36
 ** Start of new item specification subsection **
 Item name="Laserfalchion"
-Position_X=515
-Position_Y=342
+Position_X=547
+Position_Y=350
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1754,8 +1756,8 @@ Item as gun: required ammunition type="none"
 // Item No. 37
 ** Start of new item specification subsection **
 Item name="Laserdagger"
-Position_X=523
-Position_Y=386
+Position_X=573
+Position_Y=256
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1938,8 +1940,8 @@ Item as gun: required ammunition type="none"
 // Item No. 41
 ** Start of new item specification subsection **
 Item name="Minor Force Capsule"
-Position_X=109
-Position_Y=120
+Position_X=38
+Position_Y=297
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1984,8 +1986,8 @@ Item as gun: required ammunition type="none"
 // Item No. 42
 ** Start of new item specification subsection **
 Item name="Major Force Capsule"
-Position_X=137
-Position_Y=120
+Position_X=53
+Position_Y=343
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2076,8 +2078,8 @@ Item as gun: required ammunition type="none"
 // Item No. 44
 ** Start of new item specification subsection **
 Item name="Source Book of the Healing spell"
-Position_X=210
-Position_Y=210
+Position_X=43
+Position_Y=42
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2122,8 +2124,8 @@ Item as gun: required ammunition type="none"
 // Item No. 45
 ** Start of new item specification subsection **
 Item name="Source Book of Teleport Home"
-Position_X=250
-Position_Y=210
+Position_X=44
+Position_Y=83
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2168,8 +2170,8 @@ Item as gun: required ammunition type="none"
 // Item No. 46
 ** Start of new item specification subsection **
 Item name="Source Book of Explosion Circle"
-Position_X=290
-Position_Y=210
+Position_X=43
+Position_Y=123
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2214,8 +2216,8 @@ Item as gun: required ammunition type="none"
 // Item No. 47
 ** Start of new item specification subsection **
 Item name="Source Book of Explosion Ray"
-Position_X=330
-Position_Y=210
+Position_X=42
+Position_Y=163
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2260,8 +2262,8 @@ Item as gun: required ammunition type="none"
 // Item No. 48
 ** Start of new item specification subsection **
 Item name="Medium Health Capsule"
-Position_X=370
-Position_Y=210
+Position_X=43
+Position_Y=204
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2306,8 +2308,8 @@ Item as gun: required ammunition type="none"
 // Item No. 49
 ** Start of new item specification subsection **
 Item name="Medium Force Capsule"
-Position_X=410
-Position_Y=210
+Position_X=41
+Position_Y=271
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2536,8 +2538,8 @@ Item as gun: required ammunition type="none"
 // Item No. 54
 ** Start of new item specification subsection **
 Item name="Iron Helm"
-Position_X=474
-Position_Y=310
+Position_X=441
+Position_Y=261
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="special"
@@ -2582,8 +2584,8 @@ Item as gun: required ammunition type="none"
 // Item No. 55
 ** Start of new item specification subsection **
 Item name="Pot-Helm"
-Position_X=465
-Position_Y=269
+Position_X=434
+Position_Y=292
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="special"
@@ -2628,8 +2630,8 @@ Item as gun: required ammunition type="none"
 // Item No. 56
 ** Start of new item specification subsection **
 Item name="Large Shield"
-Position_X=479
-Position_Y=284
+Position_X=461
+Position_Y=276
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="shield"
@@ -2674,8 +2676,8 @@ Item as gun: required ammunition type="none"
 // Item No. 57
 ** Start of new item specification subsection **
 Item name="Eating fork"
-Position_X=330
-Position_Y=250
+Position_X=161
+Position_Y=185
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2720,8 +2722,8 @@ Item as gun: required ammunition type="none"
 // Item No. 58
 ** Start of new item specification subsection **
 Item name="Eating Plate"
-Position_X=370
-Position_Y=250
+Position_X=131
+Position_Y=145
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2766,8 +2768,8 @@ Item as gun: required ammunition type="none"
 // Item No. 59
 ** Start of new item specification subsection **
 Item name="Dixon's Toolbox"
-Position_X=410
-Position_Y=250
+Position_X=131
+Position_Y=98
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2837,10 +2839,10 @@ Item drive acceleration=0.000000
 ----- end of part that is only relevant for weapons -----
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.350000
-Item as gun: speed of bullets=64.000000
+Item as gun: speed of bullets=128.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=320
-Item as gun: modifier for damage of bullets=80
+Item as gun: damage of bullets=640
+Item as gun: modifier for damage of bullets=160
 Item as gun: blast type to create=0
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
@@ -2858,8 +2860,8 @@ Item as gun: required ammunition type="exterminator_ammunition"
 // Item No. 61
 ** Start of new item specification subsection **
 Item name="Plasma Transistor"
-Position_X=90
-Position_Y=290
+Position_X=146
+Position_Y=209
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2904,8 +2906,8 @@ Item as gun: required ammunition type="none"
 // Item No. 62
 ** Start of new item specification subsection **
 Item name="Superconducting Relay Unit"
-Position_X=130
-Position_Y=290
+Position_X=129
+Position_Y=224
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2950,8 +2952,8 @@ Item as gun: required ammunition type="none"
 // Item No. 63
 ** Start of new item specification subsection **
 Item name="Antimatter-Matter Converter (AMC)"
-Position_X=170
-Position_Y=290
+Position_X=148
+Position_Y=240
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2996,8 +2998,8 @@ Item as gun: required ammunition type="none"
 // Item No. 64
 ** Start of new item specification subsection **
 Item name="Entropy Inverter"
-Position_X=210
-Position_Y=290
+Position_X=132
+Position_Y=289
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3042,8 +3044,8 @@ Item as gun: required ammunition type="none"
 // Item No. 65
 ** Start of new item specification subsection **
 Item name="Tachyon Condensator"
-Position_X=250
-Position_Y=290
+Position_X=149
+Position_Y=306
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3088,8 +3090,8 @@ Item as gun: required ammunition type="none"
 // Item No. 66
 ** Start of new item specification subsection **
 Item name="3 mm Plasma Ammunition"
-Position_X=290
-Position_Y=290
+Position_X=47
+Position_Y=372
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3134,8 +3136,8 @@ Item as gun: required ammunition type="none"
 // Item No. 67
 ** Start of new item specification subsection **
 Item name="4 MW Laser Weapon Ammunition"
-Position_X=330
-Position_Y=290
+Position_X=63
+Position_Y=256
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3180,8 +3182,8 @@ Item as gun: required ammunition type="none"
 // Item No. 68
 ** Start of new item specification subsection **
 Item name="2 mm Exterminator Ammunition"
-Position_X=370
-Position_Y=290
+Position_X=60
+Position_Y=223
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3226,8 +3228,8 @@ Item as gun: required ammunition type="none"
 // Item No. 69
 ** Start of new item specification subsection **
 Item name="VMX Gas Grenade"
-Position_X=410
-Position_Y=290
+Position_X=60
+Position_Y=64
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3272,8 +3274,8 @@ Item as gun: required ammunition type="none"
 // Item No. 70
 ** Start of new item specification subsection **
 Item name="EMP Shock Granade"
-Position_X=50
-Position_Y=330
+Position_X=37
+Position_Y=325
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3318,8 +3320,8 @@ Item as gun: required ammunition type="none"
 // Item No. 71
 ** Start of new item specification subsection **
 Item name="Common Desk Lamp"
-Position_X=90
-Position_Y=330
+Position_X=134
+Position_Y=187
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3364,8 +3366,8 @@ Item as gun: required ammunition type="none"
 // Item No. 72
 ** Start of new item specification subsection **
 Item name="Plasma Grenade"
-Position_X=130
-Position_Y=330
+Position_X=57
+Position_Y=312
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3410,8 +3412,8 @@ Item as gun: required ammunition type="none"
 // Item No. 73
 ** Start of new item specification subsection **
 Item name="Common Monkey Wrench"
-Position_X=170
-Position_Y=330
+Position_X=136
+Position_Y=259
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3456,8 +3458,8 @@ Item as gun: required ammunition type="none"
 // Item No. 74
 ** Start of new item specification subsection **
 Item name="Red Dilitium Crystal"
-Position_X=210
-Position_Y=330
+Position_X=149
+Position_Y=271
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3502,8 +3504,8 @@ Item as gun: required ammunition type="none"
 // Item No. 75
 ** Start of new item specification subsection **
 Item name="Map Maker"
-Position_X=250
-Position_Y=330
+Position_X=150
+Position_Y=83
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3548,8 +3550,8 @@ Item as gun: required ammunition type="none"
 // Item No. 76
 ** Start of new item specification subsection **
 Item name="Strength Pill"
-Position_X=290
-Position_Y=330
+Position_X=62
+Position_Y=283
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3594,8 +3596,8 @@ Item as gun: required ammunition type="none"
 // Item No. 77
 ** Start of new item specification subsection **
 Item name="Dexterity Pill"
-Position_X=330
-Position_Y=330
+Position_X=56
+Position_Y=145
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3640,8 +3642,8 @@ Item as gun: required ammunition type="none"
 // Item No. 78
 ** Start of new item specification subsection **
 Item name="Magic Pill"
-Position_X=370
-Position_Y=330
+Position_X=60
+Position_Y=104
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3686,8 +3688,8 @@ Item as gun: required ammunition type="none"
 // Item No. 79
 ** Start of new item specification subsection **
 Item name="Brain Enlargement Antidote"
-Position_X=410
-Position_Y=330
+Position_X=163
+Position_Y=105
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3732,8 +3734,8 @@ Item as gun: required ammunition type="none"
 // Item No. 80
 ** Start of new item specification subsection **
 Item name="Fork"
-Position_X=50
-Position_Y=370
+Position_X=147
+Position_Y=163
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3778,8 +3780,8 @@ Item as gun: required ammunition type="none"
 // Item No. 81
 ** Start of new item specification subsection **
 Item name="(Eating) Plate"
-Position_X=90
-Position_Y=370
+Position_X=157
+Position_Y=135
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3824,8 +3826,8 @@ Item as gun: required ammunition type="none"
 // Item No. 82
 ** Start of new item specification subsection **
 Item name="Mug"
-Position_X=130
-Position_Y=370
+Position_X=166
+Position_Y=223
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3870,8 +3872,8 @@ Item as gun: required ammunition type="none"
 // Item No. 83
 ** Start of new item specification subsection **
 Item name="Source Book of Plasma Bolt"
-Position_X=170
-Position_Y=370
+Position_X=28
+Position_Y=104
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3916,8 +3918,8 @@ Item as gun: required ammunition type="none"
 // Item No. 84
 ** Start of new item specification subsection **
 Item name="Source Book of Ice Bolt"
-Position_X=210
-Position_Y=370
+Position_X=79
+Position_Y=48
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -3962,8 +3964,8 @@ Item as gun: required ammunition type="none"
 // Item No. 85
 ** Start of new item specification subsection **
 Item name="Source Book of Poison Bolt"
-Position_X=250
-Position_Y=370
+Position_X=27
+Position_Y=63
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4008,8 +4010,8 @@ Item as gun: required ammunition type="none"
 // Item No. 86
 ** Start of new item specification subsection **
 Item name="Source Book of Petrification"
-Position_X=290
-Position_Y=370
+Position_X=64
+Position_Y=31
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4054,8 +4056,8 @@ Item as gun: required ammunition type="none"
 // Item No. 87
 ** Start of new item specification subsection **
 Item name="Source Book of Radial EMP Wave"
-Position_X=330
-Position_Y=370
+Position_X=72
+Position_Y=84
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4100,8 +4102,8 @@ Item as gun: required ammunition type="none"
 // Item No. 88
 ** Start of new item specification subsection **
 Item name="Source Book of Radial VMX Wave"
-Position_X=370
-Position_Y=370
+Position_X=72
+Position_Y=165
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4146,8 +4148,8 @@ Item as gun: required ammunition type="none"
 // Item No. 89
 ** Start of new item specification subsection **
 Item name="Source Book of Radial Plasma Wave"
-Position_X=410
-Position_Y=370
+Position_X=71
+Position_Y=201
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4192,8 +4194,8 @@ Item as gun: required ammunition type="none"
 // Item No. 90
 ** Start of new item specification subsection **
 Item name="Source Book of Detect Items"
-Position_X=50
-Position_Y=410
+Position_X=34
+Position_Y=355
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4238,8 +4240,8 @@ Item as gun: required ammunition type="none"
 // Item No. 91
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=90
-Position_Y=410
+Position_X=247
+Position_Y=58
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4284,8 +4286,8 @@ Item as gun: required ammunition type="none"
 // Item No. 92
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=130
-Position_Y=410
+Position_X=244
+Position_Y=91
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4330,8 +4332,8 @@ Item as gun: required ammunition type="none"
 // Item No. 93
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=170
-Position_Y=410
+Position_X=245
+Position_Y=126
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4376,8 +4378,8 @@ Item as gun: required ammunition type="none"
 // Item No. 94
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=210
-Position_Y=410
+Position_X=244
+Position_Y=161
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4422,8 +4424,8 @@ Item as gun: required ammunition type="none"
 // Item No. 95
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=250
-Position_Y=410
+Position_X=242
+Position_Y=200
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4468,8 +4470,8 @@ Item as gun: required ammunition type="none"
 // Item No. 96
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=290
-Position_Y=410
+Position_X=242
+Position_Y=235
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4514,8 +4516,8 @@ Item as gun: required ammunition type="none"
 // Item No. 97
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=330
-Position_Y=410
+Position_X=239
+Position_Y=267
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4560,8 +4562,8 @@ Item as gun: required ammunition type="none"
 // Item No. 98
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=370
-Position_Y=410
+Position_X=239
+Position_Y=301
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4606,8 +4608,8 @@ Item as gun: required ammunition type="none"
 // Item No. 99
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=410
-Position_Y=410
+Position_X=238
+Position_Y=333
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4652,8 +4654,8 @@ Item as gun: required ammunition type="none"
 // Item No. 100
 ** Start of new item specification subsection **
 Item name="Dummy Entry For Replacement"
-Position_X=50
-Position_Y=450
+Position_X=238
+Position_Y=367
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -5020,8 +5022,8 @@ Item as gun: required ammunition type="none"
 // Item No. 108
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword H"
-Position_X=483
-Position_Y=498
+Position_X=302
+Position_Y=490
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -5066,8 +5068,8 @@ Item as gun: required ammunition type="none"
 // Item No. 109
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword I"
-Position_X=452
-Position_Y=502
+Position_X=271
+Position_Y=489
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -5158,8 +5160,8 @@ Item as gun: required ammunition type="none"
 // Item No. 111
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"
-Position_X=90
-Position_Y=490
+Position_X=268
+Position_Y=40
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"

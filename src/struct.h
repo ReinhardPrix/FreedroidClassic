@@ -306,8 +306,9 @@ typedef struct
   int position_y;
 
   char* item_name;
-  // char* item_class;  // class of the item, e.g. weapon, drive, shield, other
+  char* item_rotation_series_prefix;
   char* item_description;
+
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
   int item_can_be_installed_in_weapon_slot;
@@ -319,11 +320,6 @@ typedef struct
 
   int item_can_be_bought_in_shop;
   int item_group_together_in_inventory;
-
-  char* item_rotation_series_prefix;
-
-  // double energy_gain_uppon_application_in_combat;
-  // double item_weight;
 
   // How good is the item as drive???
   double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
