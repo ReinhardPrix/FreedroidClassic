@@ -52,10 +52,10 @@ message, Message;
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "mouse_buttons/CHAButton.png"                    , { 560 , 435 ,  38 ,  45 } } ,
+    { NULL , "mouse_buttons/CHAButton.png"                    , { 560 , 434 ,  38 ,  45 } } ,
     { NULL , "mouse_buttons/INVButton.png"                    , { 600 , 420 ,  38 ,  40 } } ,
     { NULL , "mouse_buttons/SKIButton.png"                    , { 590 , 376 ,  38 ,  47 } } ,
-    { NULL , "mouse_buttons/PLUSButton.png"                   , { 560 , 435 ,  38 ,  45 } } ,
+    { NULL , "mouse_buttons/PLUSButton.png"                   , { 560 , 434 ,  38 ,  45 } } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,

@@ -197,9 +197,15 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 #ifdef HAVE_LIBGL
       if ( dst == Screen )
 	{
+	  glDisable( GL_TEXTURE_2D );
+	  glDisable(GL_DEPTH_TEST);
+	  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+	  glDisable( GL_ALPHA_TEST );  
+	  glEnable(GL_BLEND);
+	  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+	  
 	  SDL_GetRGBA( color, Screen -> format , &r, &g, &b, &a);
 	  glRasterPos2i ( 0 , 0 ); 
-	  glDisable ( GL_ALPHA_TEST );
 	  glColor4ub( r , g , b , a );
 	  if ( dstrect == NULL )
 	    {

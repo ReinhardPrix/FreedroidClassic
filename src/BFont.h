@@ -16,6 +16,7 @@ typedef struct
   SDL_Surface *Surface;
   /* characters width */
   SDL_Rect Chars [ MAX_CHARS_IN_FONT ];
+  SDL_Surface* char_surface [ MAX_CHARS_IN_FONT ];
 }
 BFont_Info;
 

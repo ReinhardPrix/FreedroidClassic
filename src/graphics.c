@@ -869,6 +869,18 @@ MakeGridOnScreen( SDL_Rect* GridRectangle )
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
 
   //--------------------
+  // It's not very convenient to put a real grid over the screen using 
+  // OpenGL.  We do something similar but not quite as expensive in function
+  // overhead here.
+  //
+  if ( use_open_gl )
+    {
+      // our_SDL_fill_rect_wrapper ( Screen , & User_Rect , SDL_MapRGBA( Screen -> format , 0, 0, 0, 0x050 ) ) ;
+      return;
+    }
+
+
+  //--------------------
   // We store the grid rectangle for later restoration.
   //
   Copy_Rect ( *GridRectangle , TempRect );

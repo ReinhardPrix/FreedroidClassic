@@ -18,14 +18,20 @@
 /* Current font */
 BFont_Info *CurrentFont;
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 InitFont (BFont_Info * Font)
 {
   int x = 0, i = 0;
   Uint32 sentry;
+  SDL_Surface* tmp_char1;
+
+  Font->h = Font->Surface->h;
 
   i = '!';
-
   sentry = GetPixel (Font->Surface, 0, 0);
   /* sentry = SDL_MapRGB(Font->Surface->format, 255, 0, 255); */
 
@@ -48,12 +54,33 @@ InitFont (BFont_Info * Font)
 	       GetPixel (Font->Surface, x, 0) != sentry
 	       && x < (Font->Surface->w); ++x);
 	  Font->Chars[i].w = (x - Font->Chars[i].x);
+
+	  //--------------------
+	  // Now we make a copy for later reference when we do OpenGL based
+	  // output of this character.
+	  //
+	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
+	  // tmp_char1 = SDL_DisplayFormatAlpha ( Font -> Surface );
+	  // SDL_SetAlpha( tmp_char1 , SDL_SRCALPHA, 255);
+	  SDL_SetAlpha( Font->Surface , 0 , 255 );
+	  // SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY, GetPixel (Font->Surface, 0, Font->Surface->h - 1));
+	  SDL_SetColorKey( Font->Surface , 0 , 0 );
+	  Font -> char_surface [ i ] = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
+	  our_SDL_blit_surface_wrapper ( Font->Surface, & ( Font -> Chars [ i ] ) , Font -> char_surface [ i ] , NULL );
+	  SDL_SetAlpha( Font -> char_surface [ i ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  
+	  flip_image_horizontally ( Font -> char_surface [ i ] ) ;
+
+	  //--------------------
+	  // Now we can go on to the next char
+	  
 	  i++;
 	}
       else
 	{
 	  x++;
 	}
+
     }
   Font->Chars[' '].x = 0;
   Font->Chars[' '].y = 0;
@@ -63,14 +90,13 @@ InitFont (BFont_Info * Font)
   if (SDL_MUSTLOCK (Font->Surface))
     SDL_UnlockSurface (Font->Surface);
 
-  Font->h = Font->Surface->h;
-
   SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY,
 		   GetPixel (Font->Surface, 0, Font->Surface->h - 1));
-}
+}; // void InitFont (BFont_Info * Font)
 
-
-/* Load the font and stores it in the BFont_Info structure */
+/* ----------------------------------------------------------------------
+ * Load the font and stores it in the BFont_Info structure 
+ * ---------------------------------------------------------------------- */
 BFont_Info *
 LoadFont (char *filename)
 {
@@ -110,11 +136,12 @@ LoadFont (char *filename)
 	      /* Set the font as the current font */
 	      SetCurrentFont (Font);
 	      
+	      /*
 	      if ( use_open_gl )
 		{
 		  flip_image_horizontally ( Font -> Surface ) ;
 		}
-
+	      */
 	    }
 	  else
 	    {
@@ -128,14 +155,21 @@ LoadFont (char *filename)
   return Font;
 }
 
-
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 FreeFont (BFont_Info * Font)
 {
   SDL_FreeSurface (Font->Surface);
   free (Font);
-}
+}; // void FreeFont (BFont_Info * Font)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 BFont_Info *
 SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 {
@@ -211,14 +245,16 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
       newfont->Surface = surface;
     }
   return newfont;
-}
+}; // BFont_Info* SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 
-/* Set the current font */
+/* ----------------------------------------------------------------------
+ * Set the current font 
+ * ---------------------------------------------------------------------- */
 void
 SetCurrentFont (BFont_Info * Font)
 {
   CurrentFont = Font;
-}
+}; // void SetCurrentFont (BFont_Info * Font)
 
 /* Returns the pointer to the current font strucure in use */
 BFont_Info *
@@ -261,12 +297,14 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 {
   int r = 0;
   SDL_Rect dest;
-  SDL_Surface* tmp_char1;
-  SDL_Surface* tmp_char2;
+  // SDL_Surface* tmp_char1;
+  // SDL_Surface* tmp_char2;
   static int first_call = TRUE;
 
   if ( use_open_gl )
     {
+      /*
+
       tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth (Font, c ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
       // tmp_char1 = SDL_DisplayFormatAlpha ( Font -> Surface );
       // SDL_SetAlpha( tmp_char1 , SDL_SRCALPHA, 255);
@@ -277,7 +315,8 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
       our_SDL_blit_surface_wrapper ( Font->Surface, &Font->Chars[c], tmp_char2 , NULL );
       // tmp_char2 -> flags = tmp_char2 -> flags | SDL_SRCALPHA; 
       SDL_SetAlpha( tmp_char2 , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      
+      */
+
       //--------------------
       //
       dest.w = CharWidth (Font, ' ');
@@ -287,11 +326,12 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
       if (c != ' ')
 	{
 	  // our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
-	  our_SDL_blit_surface_wrapper ( tmp_char2 , NULL , Surface, &dest);
+	  // our_SDL_blit_surface_wrapper ( tmp_char2 , NULL , Surface, &dest);
+	  our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
 	}
       
-      SDL_FreeSurface ( tmp_char1 );
-      SDL_FreeSurface ( tmp_char2 );
+      // SDL_FreeSurface ( tmp_char1 );
+      // SDL_FreeSurface ( tmp_char2 );
 
     }
   else

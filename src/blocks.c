@@ -132,7 +132,10 @@ Load_Item_Surfaces( void )
       // Now we can copy the image Information
       our_SDL_blit_surface_wrapper ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
       SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      flip_image_horizontally ( ItemImageList[ j ].Surface );
+
+      if ( use_open_gl )
+	flip_image_horizontally ( ItemImageList[ j ].Surface );
+
       SDL_FreeSurface( tmp_surf );
 
       //--------------------
