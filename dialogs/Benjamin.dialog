@@ -57,7 +57,7 @@ PositionX=196  PositionY=249
 Subtitle="Sure I can.  Let's say 100 bucks each lesson, ok?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And as a bonus, I can show you enhance your dexterity.  And that's completely for free."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=1
 ChangeOption=4 ChangeToValue=1
 ChangeOption=5 ChangeToValue=1
