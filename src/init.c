@@ -1193,6 +1193,10 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , GETTING_HIT_MODIFIER_STRING , "%d" , 
 			   &Druidmap[RobotIndex].getting_hit_modifier , EndOfDataPointer );
 
+      // Now we read in the modifier, that increases/decreases the chance of this robot getting hit
+      ReadValueFromString( RobotPointer , "Time to recover after getting hit=" , "%lf" , 
+			   &Druidmap[RobotIndex] . recover_time_after_getting_hit , EndOfDataPointer );
+
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].advanced_behaviour , EndOfDataPointer );

@@ -2588,7 +2588,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   int InvPos;
   int item_height;
   int item_width;
-  grob_point Inv_Loc;
+  point Inv_Loc;
   char TempText[1000];
   int SourceCode , DestCode ;
 

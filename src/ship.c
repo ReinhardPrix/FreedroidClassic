@@ -1087,7 +1087,7 @@ ShowDeckMap (Level deck)
   static char LeftMouseWasPressed = FALSE;
   int ExitNow;
   int SelectedFunction = NO_FUNCTION ;
-  grob_point TargetSquare;
+  point TargetSquare;
   char MapValue;
   int ClearanceIndex = -1 ;
   int PasswordIndex = -1 ;

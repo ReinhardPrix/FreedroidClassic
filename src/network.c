@@ -93,7 +93,7 @@ typedef struct
   int max_duration;     // the maximum item durability reachable for this item
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
   float current_duration; // the currently remaining durability for this item
-  grob_point inventory_position;
+  point inventory_position;
 } item_engram , *Item_Engram ;
 
 item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
@@ -142,7 +142,7 @@ typedef struct
 {
   int source_item_slot_code; // which slot to put the item to 
   int dest_item_slot_code; // which slot to place the item 
-  grob_point dest_inv_pos; // where in inventory shall this item now appear
+  point dest_inv_pos; // where in inventory shall this item now appear
 }
 item_move_engram, *Item_Move_Engram;
 

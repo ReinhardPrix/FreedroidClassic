@@ -553,6 +553,17 @@ AssembleCombatPicture (int mask)
   for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
     {
       if ( DisplayLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue;
+      if ( ( DisplayLevel->MapInsertList [ MapInsertNr ] . type < ( -1 ) ) ||
+	   ( DisplayLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS ) )
+	{
+	  fprintf ( stderr , "\n\nDisplayLevel->MapInsertList [ MapInsertNr ] . type: %d.\n" ,
+		    DisplayLevel->MapInsertList [ MapInsertNr ] . type );
+	  GiveStandardErrorMessage ( "AssembleCombatPicture(...)" , "\
+There is a map insert on this level, that is of an illegal type.\n\
+This indicates a severe error in the map insert handling of Freedroid.",
+				     PLEASE_INFORM , IS_FATAL );
+	}
+
       TargetRectangle.x = UserCenter_x 
 	+ ( - Me [ 0 ] . pos . x + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x - 0.5 ) * Block_Width;
       TargetRectangle.y = UserCenter_y

@@ -1246,7 +1246,7 @@ jump target west: %d\n",
   for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
     {
 
-      if ( Lev -> MapInsertList [ i ] . type == ( -1 ) ) continue;
+      if ( Lev -> MapInsertList [ i ] . type <= ( -1 ) ) continue;
 
       strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
       sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
@@ -1727,6 +1727,18 @@ DecodeLoadedLeveldata ( char *data )
       DebugPrintf( 1 , "\nPosX=%d PosY=%d MapInsertType=%d" , loadlevel->MapInsertList[ i ].pos.x , 
 		   loadlevel->MapInsertList[ i ].pos.y , loadlevel->MapInsertList[ i ].type );
     }
+
+  //--------------------
+  // For debugging purposes now the complete list of map inserts:
+  //
+  /*
+  DebugPrintf( 0 , "\n\nNOW THE COMPLETE LIST: \n\n" );
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+      DebugPrintf( 0 , "\nPosX=%d PosY=%d MapInsertType=%d" , loadlevel->MapInsertList[ i ].pos.x , 
+		   loadlevel->MapInsertList[ i ].pos.y , loadlevel->MapInsertList[ i ].type );
+    }
+  */
 
   //--------------------
   // Now we repair the damage done to the loaded level data

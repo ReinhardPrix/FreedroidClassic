@@ -632,7 +632,7 @@ ShowCurrentTextWindow ( void )
   point CurPos;
   char ItemDescText[5000]=" ";
   char TextLine[10][1000];
-  grob_point inv_square;
+  point inv_square;
   int InvIndex;
   int i;
   int NumberOfLinesInText = 1;

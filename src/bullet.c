@@ -421,6 +421,7 @@ MoveActiveSpells (void)
 	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
 		{
 		  AllEnemys [ j ] . energy -= 200.0 * Frame_Time();
+		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		}
 	    }
 
@@ -664,8 +665,10 @@ CheckBulletCollisions (int num)
 
 		      AllEnemys[i].paralysation_duration_left += CurBullet->paralysation_duration;
 		      
-		      AllEnemys[i].firewait =
-			1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+		      // AllEnemys[i].firewait =
+		      // 1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+
+		      AllEnemys [ i ] . firewait = Druidmap [ AllEnemys [ i ] . type ] . recover_time_after_getting_hit ;
 
 		      // Maybe he will also stop doing his fixed routine and return to normal
 		      // operation as well

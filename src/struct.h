@@ -143,19 +143,9 @@ location, *Location;
 
 typedef struct
 {
-  signed char x;
-  signed char y;
-}
-grob_point, *grob_Point;
-
-typedef grob_point vect;
-typedef grob_Point Vect;
-
-typedef struct
-{
   char* map_insert_name;
   char* map_insert_file_name;
-  grob_point map_insert_size_in_blocks; // how many blocks does this big map insert cover?
+  point map_insert_size_in_blocks; // how many blocks does this big map insert cover?
   SDL_Surface* insert_surface;
 }
 map_insert_spec, *Map_Insert_Spec;
@@ -163,14 +153,14 @@ map_insert_spec, *Map_Insert_Spec;
 typedef struct
 {
   int type;
-  grob_point pos; // how many blocks does this big map insert cover?
+  point pos;
 }
 map_insert, *Map_Insert;
 
 typedef struct
 {
   char* label_name;
-  grob_point pos; // how many blocks does this big map insert cover?
+  point pos; // how many blocks does this big map insert cover?
 }
 map_label, *Map_Label;
 
@@ -265,7 +255,7 @@ typedef struct
 
 typedef struct
 {
-  grob_point inv_size;
+  point inv_size;
   SDL_Surface* Surface;
 } item_image_spec , *Item_image_spec;
 
@@ -402,7 +392,7 @@ typedef struct
   int damage; // how much damage does this item
   int damage_modifier; // how much additional damage can add to the base damage
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
-  grob_point inventory_position;
+  point inventory_position;
 } item, *Item;
 
 typedef struct
@@ -438,6 +428,7 @@ typedef struct
   int got_hit_sound_type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target
   int getting_hit_modifier; // modifier for this droid to receive a hit from the player
+  float recover_time_after_getting_hit;
   int advanced_behaviour;        // Does this droid behave better that in the original paradroid?
   int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
@@ -795,7 +786,7 @@ lift, *Lift;
 
 typedef struct
 {
-  byte x;			/* Grob */
+  byte x;			
   byte y;
   signed char connections[MAX_WP_CONNECTIONS];
 }
@@ -823,15 +814,15 @@ typedef struct
   int jump_target_south;
   int jump_target_east;
   int jump_target_west;
-  grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
-  grob_point consumers[MAX_CONSUMERS_ON_LEVEL];
-  grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
-  grob_point doors[MAX_DOORS_ON_LEVEL];
+  point refreshes[MAX_REFRESHES_ON_LEVEL];
+  point consumers[MAX_CONSUMERS_ON_LEVEL];
+  point teleporters[MAX_TELEPORTERS_ON_LEVEL];
+  point doors[MAX_DOORS_ON_LEVEL];
   map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
-  grob_point autoguns[MAX_AUTOGUNS_ON_LEVEL];
+  point autoguns[MAX_AUTOGUNS_ON_LEVEL];
 }
 level, *Level;
 

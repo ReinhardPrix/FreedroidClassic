@@ -67,6 +67,7 @@ Common factor for all droids maximum energy values: 3.0
 Common factor for all droids energyloss values: 0.05
 Common factor for all droids aggression values: 1.0
 Common factor for all droids score values: 2.0
+Common factor for all droids recovery time after hit: 1.0
 
 Now we come to the description of all the droids:
 
@@ -104,6 +105,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -144,6 +146,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -184,6 +187,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -224,6 +228,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -264,6 +269,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -304,6 +310,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -344,6 +351,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -384,6 +392,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -424,6 +433,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -464,6 +474,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=70
 Chance modifier, that this robot gets hit=10
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -504,6 +515,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -544,6 +556,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -584,6 +597,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -624,6 +638,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -664,6 +679,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 12
@@ -704,6 +720,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -744,6 +761,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -784,6 +802,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -824,6 +843,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -864,6 +884,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -904,6 +925,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -944,6 +966,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -984,6 +1007,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1024,6 +1048,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1065,6 +1090,7 @@ Greeting Sound number=0
 Got Hit Sound number=0
 Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1105,6 +1131,7 @@ Greeting Sound number=1
 Got Hit Sound number=1
 Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 1
@@ -1145,6 +1172,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 2
@@ -1185,6 +1213,7 @@ Greeting Sound number=-1
 Got Hit Sound number=0
 Chance of this robot scoring a hit=82
 Chance modifier, that this robot gets hit=10
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 3
@@ -1225,6 +1254,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 4
@@ -1265,6 +1295,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=15
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 5
@@ -1304,6 +1335,7 @@ Greeting Sound number=3
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=90
 Chance modifier, that this robot gets hit=-30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1345,6 +1377,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=-25
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 6
@@ -1385,6 +1418,7 @@ Greeting Sound number=2
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 22
@@ -1425,6 +1459,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=92
 Chance modifier, that this robot gets hit=-50
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1465,6 +1500,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1505,6 +1541,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1545,6 +1582,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1585,6 +1623,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1625,6 +1664,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1665,6 +1705,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1705,6 +1746,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=95
 Chance modifier, that this robot gets hit=-30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1745,6 +1787,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=95
 Chance modifier, that this robot gets hit=-30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1785,6 +1828,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=95
 Chance modifier, that this robot gets hit=-30
+Time to recover after getting hit=0.30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1826,6 +1870,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1866,6 +1911,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1906,6 +1952,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1946,6 +1993,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -1986,6 +2034,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -2026,6 +2075,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -2066,6 +2116,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -2106,6 +2157,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
@@ -2146,6 +2198,7 @@ Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
