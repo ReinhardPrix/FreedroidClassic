@@ -196,7 +196,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  // We load the thumbnail, or at least we try to do it...
 	  //
 	  LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
-	  
+	  LoadAndShowStats ( MenuTexts [ MenuPosition - 1 ] );
 	}
       //--------------------
       // We highlight the currently selected option with an 

@@ -273,6 +273,7 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 {
   int i = 0;
 
+  //--------------------
   // I added little hack to kern MenuFont..
   // This basicly just prints them more tight on the screen.
   // basse, 15.2.03
@@ -302,17 +303,26 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 int
 TextWidth (char *text)
 {
-  return TextWidthFont (CurrentFont, text);
+  return ( TextWidthFont (CurrentFont, text) ) ;
 }
 
 int
 TextWidthFont (BFont_Info * Font, char *text)
 {
   int i = 0, x = 0;
+  //--------------------
+  // Based on Bastians hack: 'I added little hack to kern MenuFont..
+  // This basicly just prints them more tight on the screen.
+  // basse, 15.2.03'
+  //
+  // I extend this to give new text width results...
+  //
+  int kerning = 0;
+  if ( CurrentFont == Menu_BFont ) kerning = -4;
 
   while (text[i] != '\0')
     {
-      x += CharWidth (Font, text[i]);
+      x += CharWidth (Font, text[i]) + kerning ;
       i++;
     }
   return x;

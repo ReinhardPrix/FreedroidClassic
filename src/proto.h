@@ -177,6 +177,7 @@ EXTERN void LoadAndShowThumbnail ( char* CoreFilename );
 EXTERN int SaveGame( void );
 EXTERN int LoadGame( void );
 EXTERN int DeleteGame( void );
+EXTERN void LoadAndShowStats ( char* CoreFilename );
 
 // map.c 
 #undef EXTERN

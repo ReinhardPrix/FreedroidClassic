@@ -42,6 +42,7 @@
 #include "global.h"
 #include "proto.h"
 #include "SDL_rotozoom.h"
+#include "sys/stat.h"
 
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
 #define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
@@ -97,6 +98,124 @@ I need to know that for saving. Abort.\n");
   SDL_FreeSurface( NewThumbnail );
 
 }; // void LoadAndShowThumbnail ( char* CoreFilename )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAndShowStats ( char* CoreFilename )
+{
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
+  char filename[1000];
+  struct stat FileInfoBuffer;
+  char InfoString[5000];
+  struct tm *LocalTimeSplitup;
+  long int FileSize;
+
+  DebugPrintf ( 2 , "\nTrying to get file stats for character '%s'. " , CoreFilename );
+
+  //--------------------
+  // get home-directory to save in
+  if ( ( homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      // return (ERR);
+    }
+
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVEDGAME_EXT );
+
+  if ( stat ( filename , & ( FileInfoBuffer) ) )
+    {
+      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to determine the time of the last modification on\n\
+your saved game file.\n\
+\n\
+The file in question was named: %s.\n\
+\n\
+This is either a bug in Freedroid or an indication, that the directory\n\
+or file permissions are somehow not right.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , filename );
+      Terminate(ERR);
+    };
+
+  DebugPrintf ( 0 , "\nRawDateResult : %ld. " , FileInfoBuffer.st_atime );
+
+  LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
+
+  sprintf( InfoString , "%d/%02d/%02d %02d:%02d" , 
+	   1900 + LocalTimeSplitup->tm_year ,
+	   LocalTimeSplitup->tm_mon ,
+	   LocalTimeSplitup->tm_mday ,
+	   LocalTimeSplitup->tm_hour ,
+	   LocalTimeSplitup->tm_min );
+
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 4 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 3 * FontHeight ( GetCurrentFont () ) , InfoString );
+
+  //--------------------
+  // Now that the modification time has been set up, we can start to compute
+  // the overall disk space of all files in question.
+  //
+  FileSize = FileInfoBuffer.st_size;
+
+  //--------------------
+  // The saved ship must exist.  On not, it's a sever error!
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , ".shp" );
+  if ( stat ( filename , & ( FileInfoBuffer) ) )
+    {
+      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to determine the time of the last modification on\n\
+your saved game file.\n\
+\n\
+The file in question was named: %s.\n\
+\n\
+This is either a bug in Freedroid or an indication, that the directory\n\
+or file permissions are somehow not right.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , filename );
+      Terminate(ERR);
+    };
+  FileSize += FileInfoBuffer.st_size;
+
+  //--------------------
+  // A thumbnail may not yet exist.  We won't make much fuss if it doesn't.
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+  if ( ! stat ( filename , & ( FileInfoBuffer) ) )
+    {
+        FileSize += FileInfoBuffer.st_size;
+    }
+
+  sprintf( InfoString , "%2.3f MB" , 
+	   ((float)FileSize) / ( 1024.0 * 1024.0 ) );
+
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
+  PutString ( Screen , 240 , SCREEN_HEIGHT - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
+
+}; // void LoadAndShowStats ( char* filename );
 
 /* ----------------------------------------------------------------------
  * This function stores a thumbnail of the currently running game, so that
