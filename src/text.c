@@ -483,8 +483,8 @@ ChatWithFriendlyDroid( int Enum )
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
 	      GiveSubtitleNSample( "That depends.  What would you like to learn?" , "SOR_That_Depends_What_0.wav" );
-	      GiveSubtitleNSample( "I could help to enhance the force-capacity of your mind." , "SOR_I_could_help_0.wav" );
-	      GiveSubtitleNSample( "I could also teach you how to become more adapt at spellcasting." , "SOR_I_could_also_0.wav" );
+	      GiveSubtitleNSample( "I could help to enhance the force-capacity of your mind." , "SOR_I_Could_Help_0.wav" );
+	      GiveSubtitleNSample( "I could also teach you how to become more adapt at spellcasting." , "SOR_I_Could_Also_0.wav" );
 	      GiveSubtitleNSample( "Now, what will it be?" , "SOR_Now_What_Will_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
@@ -727,7 +727,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      PlayOnceNeededSoundSample( "SOR_Goodbye_Love_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "STO_Goodbye_Love_0.wav" , TRUE );
 	      return;
 	      break;
 	    }
