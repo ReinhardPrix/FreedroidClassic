@@ -31,8 +31,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 END OF AUTORS NOTES
 
@@ -232,14 +234,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=15  OptionText="DO NOTHING AT ALL..."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=71  PositionY=45  
+PositionX=198  PositionY=130  
+ChangeOption=15 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
 OptionSample="Tux_See_You_Later_0.wav"
-PositionX=322  PositionY=404  
+PositionX=323  PositionY=423  
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
