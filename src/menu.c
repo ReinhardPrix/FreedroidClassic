@@ -2422,8 +2422,6 @@ enum
 void
 Credits_Menu (void)
 {
-  // BFont_Info* Credits_BFont = FPS_Display_BFont;
-  // int i;
   char* CreditsText = "\n\n\n\
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
@@ -2432,8 +2430,9 @@ Credits_Menu (void)
    ADDITIONAL PROGRAMMING:\n\n\
                                       Leslie Viljonen\n\n\n\
    ARTWORK:\n\n\
-                                      Bastian Salmela\n\n\
-                                      Lanzz\n\n\n\
+                                      Bastian Salmela\n\n\n\
+   ADDITIONAL ARTWORK:\n\n\
+                                      Johannes Prix\n\n\n\
    STORY AND CHARACTERS:\n\n\
                                       Johannes Prix\n\n\n\
    OPENING TEXT:\n\n\
@@ -2465,6 +2464,11 @@ Credits_Menu (void)
    .rpm AND .deb PACKAGING:\n\n\
                                       Ted Cipicchio\n\n\
                                       The Doctor\n\n\n\n\n";
+
+  User_Rect . x = Full_Screen_Rect . x ;
+  User_Rect . y = Full_Screen_Rect . y ;
+  User_Rect . w = Full_Screen_Rect . w ;
+  User_Rect . h = Full_Screen_Rect . h ;
 
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
