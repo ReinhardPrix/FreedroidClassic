@@ -1,9 +1,1534 @@
+2003-04-24  rprix  <rprix@users.sourceforge.net>
+
+	* src/init.c:
+	FindAllThemes() used a non-POSIX compliant GNU extension of readdir(), which
+	only exists for libc6 >= 2.1, but strangely also failed on my other Debian3
+	machine with libc6 2.2.5...
+	For better portability this now uses POSIX-compliant stat() and S_ISDIR()
+	to find all subdirs in ./graphics/.
+
+	* configure.ac: official classic-version set to 1.0.1
+
+	* map/freedroid.ruleset: adjusted alert-settings a bit
+
+2003-04-17  rprix  <rprix@users.sourceforge.net>
+
+	added the whole of Jason's Mac OSX ProjectBuilder subdirectory structure.
+
+	* src/defs.h: adjusted DATADIR fallback for MacOSX ProjectBuilder
+
+	* AUTHORS: added Jason's contribution to MacOSX port
+
+2003-04-17  rprix  <rprix@users.sourceforge.net>
+
+	* src/system.h, src/ship.c, src/menu.c, src/map.c, src/main.c, src/defs.h:
+	* applied Jason's MacOS X patch. Worked fine and still runs perfectly
+	  under Linux. Of course I have no clue yet if it will work under Mac OSX
+	  but I'll try that on SF's compile-farm, as soon as I've got access...
+
+	* src/view.c, src/ship.c, src/menu.c, src/misc.c, src/defs.h, src/init.c:
+	* new (mini-)feature added: partial map visibility
+	* restructured menus a bit: all "classic" legacy options are now in one
+	  submenu, and there is a switch to set all otpions to "strictly classic" ;)
+2003-03-27  rprix  <rprix@users.sourceforge.net>
+
+	fixed bugs introduced by new TERMINATED-status for droids:
+	doors, LevelEmpty() and MoveEnemy() now know about it...
+	(hope I didn't forget anytying...)
+
+2003-03-25  rprix  <rprix@users.sourceforge.net>
+
+	* TODO: updated... not so much left now ;)
+
+	* game-config now uses human-readable variable = value format (using read_variable())
+	* added switchable "decal" feature, i.e. droid-ashes after explosions
+	* moved "blast duration" variable from config.theme into freedroid.config
+	* fixed bug in Area-name reading
+	* fixed bug of exploding enemys at game-restart
+
+2003-03-24  rprix  <rprix@users.sourceforge.net>
+
+	* src/init.c:
+	- removed the brain-dead freeing() of Me.TextToBeDisplayed, which
+	   obviously leads to SegFaults...
+	- clean the enemy-array at new game-start, to avoid "dying droids" when
+	  restarting....
+2003-03-17  rprix  <rprix@users.sourceforge.net>
+
+	* TODO: updated TODO... seems to get longer the more I do... mhh
+
+	* configure.ac:
+	restored to its former glory... (had only used a cut-down version for developing)
+
+	* map/freedroid.ruleset, map/Paradroid.maps:
+	* updated map with new ALERT_GREEN code
+	* added Alert-related params in freedroid.ruleset
+	  -> current values are for debugging purposes, not really tuned yet!
+
+	* added Alert-tiles for 4 different Alert states (replacing Teleporter-tiles ;)
+	* tried to improve '=' character in parafont... well
+
+	* sound/Alert.wav: New file.
+
+	* sound/Alert.wav, sound/ThouArtDefeated_Sound_0.wav:
+	added Alert siren, shortened game-over sound somewhat
+
+	summary checkin of the weekend:
+	*) themes are now looked for as "graphics/*_theme/" and have to contain a
+	   valid 'config.theme'.
+	*) Alert feature fully implemented, adjustable by the following parameters
+	   in 'freedroid.ruleset':
+		Deathcount drain speed = 10.0
+		First alert threshold = 300
+		Alert bonus per second = 5
+	   Deathcount is increased in a droid-kill by droidtype^2
+	*) fixed about a billion memory-leaks (and gaping holes...), mainly in
+	   InitPictures() and game+mission parameter-reading...
+	*) lots of minor code-fiddling and cleanup
+2003-03-13  rprix  <rprix@users.sourceforge.net>
+
+	* LevelEditor can now correctly insert/remove waypoints+connections again,
+	    using the slightly simplified waypoint/connection format
+	+ minor improvement to inserting connections: line between "point" and "mark"
+	(emacs slang...) is now drawn as well, which makes connection-building more
+	"graphic".
+
+2003-03-12  rprix  <rprix@users.sourceforge.net>
+
+	* map/Paradroid.mission:
+	updated version of intro + key-descriptions. Forgot to check this in earlier,
+	this is still far from perfect but it's a bit more up-to-date.
+
+	* map/Paradroid.maps:
+	(slightly) modified map-file using new format. This has actually been
+	saved with level-editor and seems to work ok and is "stable", i.e. load and
+	save produce an identical map-file again.
+
+	* use the 999.png for the end-of-game display which needs transparency
+	* slight improvements of map+waypoints file-format + reading/writing
+	--> level-editor now (again) correctly reads/writes map+waypoints+connections,
+	    no more "-1" markers are used in waypoints/connections
+
+2003-03-05  rprix  <rprix@users.sourceforge.net>
+
+	* src/takeover.c, src/defs.h, src/global.h, src/graphics.c, src/ship.c:
+	activated new takeover background. Takeover game is now made _transparent_
+	(using alpha, don't worry Bastian ;) on this great background setting...
+	--> looks terrific!!
+2003-03-04  rprix  <rprix@users.sourceforge.net>
+
+	* src/ship.c, src/graphics.c, src/defs.h:
+	fiddled a bit with the droid-animations, no real changes...
+	Commented out the colorkey-use for .jpg animations, as it's rather useless now.
+
+	all current droid-rotations in .jpg strips (will be loaded with priority to .pngs)
+
+	* src/ship.c, src/graphics.c, src/global.h:
+	jpg droid-portraits are now rendered using colorkey-transparency.
+	This is experimental and doesn't actually work too well, so it might
+	be dropped again.... (is just one line to comment so...)
+
+	new show_droid_portrait() function that does dynamic unpacking of droid-portraits
+	an displays them animated (if available) or not. jpeg-transparency not yet implemented.
+
+2003-03-03  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/Makefile.am, configure.ac:
+	put a Makefile.am into mouse_buttons + re-inserted it into configure.ac.
+
+	* configure.ac, graphics/Makefile.am:
+	quick-fix for non-existent mouse_buttons directory contents: removed from
+	autoconf/automake structure: seems to work now.
+
+2003-02-28  rprix  <rprix@users.sourceforge.net>
+
+	ok, here my first go at the droid-rotations. Currently all droid-pics are
+	still loaded at startup, which will be changed soon...
+
+	* graphics/classic_theme/bullet.png, graphics/571_rot.jpg:
+	two 24-frame droid rotations for testing purposes, both are actually 571 ;)
+
+2003-02-27  rprix  <rprix@users.sourceforge.net>
+
+	* secured all file-reading by implementing a 'critical' parameter in find_file():
+	    if critical=CRITICAL then find_file will give an ERROR and Terminate() if file not found,
+	    if critical=WARNONLY it will do just that and return NULL,
+	    if critical=IGNORE, NULL is returned and that's it
+
+	* added a new Influ-Status: "Activate" wich is used for Konsoles and Lifts,
+	    to activate, press 'e', 'RightShift', Middle-mouse button or joy-button 3
+
+	* removed the redundant "armament" category, which is taken care of by "gun"
+
+	* consistently switch off sound and continue game if any sound-files are not found
+2003-02-24  rprix  <rprix@users.sourceforge.net>
+
+	* map/freedroid.ruleset:
+	changed blast-radius to make blast-damage more effective (as is in Paradroid...)
+
+	* yep, lots of sox'ed or even new sounds! Hope you like them!
+
+	* src/view.c:  improved "flash" effect.
+
+	* src/menu.c:
+	slightly cleared up LevelEditor menu-code, and made LevelEditor use the full
+	screen, as the Freedroid banner is really not needed here...
+
+	* src/init.c, src/influ.c, src/graphics.c:
+	added new InfluExplosion sound and white-noise sound.
+
+	* src/defs.h, src/sound.c:
+	* added new sounds for Influ-explosion, and white-noise.
+
+	* src/bullet.c: slightly improved blast-damage handling to droids
+
+	* src/input.c:
+	* extended joystick-code to allow joystick directions to be
+	  soft-released as well
+	* fixed the funny bug in ModIsPressed() that would not show if Alt was
+	  pressed!!
+
+2003-02-21  rprix  <rprix@users.sourceforge.net>
+
+	* map/freedroid.ruleset, map/Paradroid.mission:
+	adapted some parameters to move the game closer to Paradroid.
+
+	* Here's some work from yesterday's nightshift (-2am!), namely a new keyboard-code: ;)
+	I've taken the much more convenient and elegant DroidWorld keyboard function
+	KeyIsPressed(key) to replace the old One-function-per-key() handling.
+	This also has the practical advantage that it's now more easily possible to
+	'release' a key via ReleaseKey(key). Moreover, new functions KeyIsPressedR()
+	check a key _and_ release it!
+	Bottom-line of all this is: there is no more while(SomeKeyPressed()); loops in
+	the code to wait for a key-release, which had the annoying side-effect that
+	the game stopped while you've not released a key!
+
+2003-02-18  rprix  <rprix@users.sourceforge.net>
+
+	* src/misc.c, src/bullet.c:
+	fixed SegFault bug cause by non-initialisation of memory by malloc:
+
+2003-02-14  rprix  <rprix@users.sourceforge.net>
+
+	* src/graphics.c, src/influ.c, src/init.c, src/main.c, src/sound.c, src/takeover.c
+	some minor stuff:
+	- set sound-channels a bit lower (only 20 should be enough), +
+	   print warning (level=0) when all channels used
+	- Assemble_Combat_Picture() now SDL_updates User_Rect and TxtRect separately, which
+	  increases FPS when using the ClassicUserRect.
+	- add some blast sounds when influ finally explodes
+
+2003-02-12  rprix  <rprix@users.sourceforge.net>
+
+	* src/defs.h, src/influ.c, src/init.c, src/map.c, src/menu.c, src/misc.c:
+	* Improved GameOver behaviour + 'slow motion' explosion of the influ.
+	* LevelEditor: background pic is now updated for level- and color-changes.
+	The SaveShip() function is now _partially_ adapted to the modified
+	waypoint/connection handling, i.e. at least it doesn't mess up the waypoints
+	any more when saving. Still, adding removing waypoints needs to be adapted,
+	as this will currently not work properly.
+2003-02-06  rprix  <rprix@users.sourceforge.net>
+
+	* src/ship.c, src/menu.c, src/init.c, src/graphics.c:
+	console & level-editor are now "cpu-cycle friendly" as well.
+
+	* map/Paradroid.maps:
+	removed unneeded waypoint/connection entries, which are no longer required
+	in the new improved waypoint/connection handling.
+	Also removed "gaps" in the waypoint-list, which are no longer allowed!
+	-> LevelEditor still needs to be adapted to write in the same new format as well...
+
+	* src/struct.h, src/map.c, src/menu.c, src/enemy.c:
+	new ShuffleEnemys() function has uncovered some shortcomings of the
+	current waypoint/connection handling, so I've improved that a little bit.
+	Please test, hope everythings works fine again.
+
+	* src/highscore.c, src/menu.c, src/view.c:
+	"slowed down" the game menus to reduce unneccessary CPU use.
+
+2003-02-05  rprix  <rprix@users.sourceforge.net>
+
+	* map/Paradroid.maps:
+	- corrected a bug in waypoints of level 8: wp 11 and 12 were unconnected.
+	   (this only showed up now that ShuffleEnemys() uses all waypoints!)
+
+	*) made ShuffleEnemys() produce really random droid distributions (on waypoints)
+	   as the previous function tended to fill the waypoints sequentially
+	*) added an acoustic countdown sound to the takeover game, which should make
+	   it easier to know how much time is left
+	*) hard-linked 'a,d,s,w' onto Left,Right,Up,Down, to allow Quake/HL like steering.
+	*) some cleanup.
+
+	* graphics/711.png: incorporated new 711 into classic branch.
+
+2003-02-04  rprix  <rprix@users.sourceforge.net>
+
+	* src/graphics.c, src/text.c:
+	some improvements to printf_SDL() and InitPictures(), which speeds up the
+	Picture-loading and theme-switching process.
+	(--> I noticed that 0.8.4 used to be much faster with these, dunno why,
+	  but now we're  approximately just as fast, I think)
+
+	  - improved mouse-handling and mouse-cursor display throughout the game.
+	(hope I didnt forget anything)
+	Most important change: MouseLeftPressed is no longer mapped to SpacePressed,
+	to allow to distinguish between these two. That means, however, that we need
+	to test for both of these in most places...
+
+2003-02-03  rprix  <rprix@users.sourceforge.net>
+
+	* src/vars.h, src/main.c, src/ship.c, src/init.c:
+	removed remaining references to "ship.h"
+
+	* src/ship.h: no longer used. Goodbye.
+
+	* src/ship.c, src/proto.h:
+	used some more mouse-tricks in the console menu. is quite cool now, I think.
+	Maybe we should also have a similar mouse-interface for the Game menus?...
+
+2003-02-02  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/arrow_right.png, graphics/arrow_up.png, graphics/arrow_down.png
+	crop'ed arrows down to minimal size, in order to allow more precise
+	mouse-click use.
+
+	* generalized jp's recent mouse-click-code in the Console-menu, in order to allow
+	for even more mouse-click support in the console menu.
+	Seems to work ok so far, but some minor inconsistencies in the 'user interface'
+	still have to be fixed.
+	+ some general code-cleanup here and there...
+
+
+2003-01-30  rprix  <rprix@users.sourceforge.net>
+
+	* src/main.c:
+	removed some of the debug-clutter I put in for chasing the "droid pile bug"
+
+	* src/ship.c, src/main.c, src/map.c, src/init.c, src/enemy.c:
+	YIPPIEE!! Seems I found the "enemy pile bug", which appeared only after
+	having been killed: Reason: ThouArtDefeated() didnt call
+	ActivateConservativeFrameComputation() ==> First step in new game had a
+	_huge_ Frame_Time(), which would just set droids to their next waypoints
+	resulting in piles....
+	:| this took me about 2 hours to figure out !! arghahhahhhaaaa
+	Good night ;)
+
+	* TODO: updated BUG list with recently fixed "hanging flash" bug.
+
+	fixed nasty bug: Flash would hurt droids on all levels!! Only IsVisible(pos) check
+	was done, which does not take levelnum into account... well, one bug fixed! ;)
+	+ some minor polishings
+
+2003-01-24  rprix  <rprix@users.sourceforge.net>
+
+	* TODO:
+	the mouse-glitch bug only seems to occur in my ATI 3D driver, not with
+	the standard one... so I think it's maybe ATI's fault, not ours...Strange
+
+2003-01-21  rprix  <rprix@users.sourceforge.net>
+
+	* map/Paradroid.mission: removed some unused option lines.
+
+	* graphics/banner.png, graphics/console_fg.png:
+	better cutting of picture borders.
+
+	In an effort to make the code more stable:
+	* rewritten the whole InitPicture() function based on the more modern and
+	  unified DroidWorld code: All blocks are loaded via LoadBlock()
+	* general code cleanup: cut out so much dead code that I got rid of 3 files!!
+
+2003-01-20  rprix  <rprix@users.sourceforge.net>
+
+	* src/input.c:
+	made mouse-wheel to work also for SDL-versions prior to 1.2.5
+
+	* src/graphics.c, src/influ.c, src/init.c, src/input.c, src/ship.c, src/struct.h:
+	* removed possiblity to shortcut the EndTitle & white_noise sequence
+	* joy-button 1= fire, joy-button > 1 = takeover (mapped onto right mouse button)
+	* minor cleanup and improvements in console.
+
+2003-01-19  rprix  <rprix@users.sourceforge.net>
+
+	* improved line-break handling in DisplayText()
+	* added "navigation arrows" to DroidShow(), to make it more intuitive..
+
+2003-01-15  rprix  <rprix@users.sourceforge.net>
+
+	* src/sound.c:
+	More flexible error-treatment in sound: in case of any error, we just print
+	a warning and deactivate sound instead of Terminating...
+
+	* src/misc.c:
+	fixed bug in Terminate(): only save config and highscores if ExitCode==OK!
+	to avoid messing up these files when things went wrong...
+
+	* More continuous music-playing (i.e. don't start again each time you step into a lift):
+	  SwitchBackgroundMusic (NULL) now _pauses_ music, and resumes it the next time if
+	   you switch to the same one.
+	   So: if stepping into a lift and stepping back out again, music is _resumed_
+	   or: if going from one gray level to another one, music plays on where it stopped.
+
+	* fixed bug: command-line options have the highest priority, overriding defaults and config-file
+
+2003-01-13  rprix  <rprix@users.sourceforge.net>
+
+	* fullscreen now in GameConfig.UseFullscreen (gets saved). Default=off.
+	* when Mission accomplished, Game starts again, but Score is not reset to 0!
+	   (allows you to continue with score until killed)
+	* some improvements in menu-display
+
+2003-01-01  rprix  <rprix@users.sourceforge.net>
+
+	*) 'd'-key deactivated, QuitGame now asks for confirmation
+	*) Removed experimental mission from Menu
+	*) When mission accomplished, game should start again with score not reset
+
+2002-12-30  rprix  <rprix@users.sourceforge.net>
+
+	fixed some finer points found in jp's test-playing:
+	*) higher scroll-speed and MouseWheel in ScrollText()
+	*) energy-increase in collisions now impossible
+	*) Frame-rate was not respected in Pause-mode
+	*) 'reject' explosion now does not harm the 001, to avoid destroying it
+
+	* sound/Fire_Bullet_Laser_Rifle_Sound_0.wav, sound/phaser.wav:
+	replaced the ridiculous Laser_Rifle sound of the 614 with sth better...
+
+2002-12-28  rprix  <rprix@users.sourceforge.net>
+
+	* map/Paradroid.mission:
+	EndTitle music now android-commando. Re-written 'debriefing' text: no further
+	mission is announced, but our further games: RPG + DroidWorld.
+	Game restarts when mission is completed.
+
+	* src/init.c, src/menu.c:
+	EndTitle() scrolling corrected. Added Credits for android-commando mod used in EndTitle.
+
+	* sound/android-commando_hiscore.mod:
+	added Commando-highscore mod as "victory music".
+
+	mass commit: main changes are: new function ApplyFilter() allows coloring
+	influence-device for takeover-mode and low-energy fading.
+	Started cleanup of unused "extensions" to freedroid, which are no longer
+	supported and/or live on in RPGFreedroid.
+2002-12-25  rprix  <rprix@users.sourceforge.net>
+
+	level background music now consists of 'C64 legacy mods'.
+	(still have to credit the authors...)
+
+2002-12-22  rprix  <rprix@users.sourceforge.net>
+
+	* configure.ac:
+	adapted message when failing SDL_Mixer check correspondingly.
+
+	* configure.ac:
+	now we check for Mix_ChannelFinished, which exists only since SDL_Mixer 1.2.1
+
+2002-12-19  rprix  <rprix@users.sourceforge.net>
+
+	* changed droid inertia and friction to more resemble paradroid
+
+2002-12-15  rprix  <rprix@users.sourceforge.net>
+
+	* sound/Paradroid.ogg:
+	here is the paradroid.ogg sound-file I've mentioned earlier.
+	changed title-music entry to use the .ogg paradroid 'FeepBeep' sounds.
+	removed that low-quality wav, which is now provided as a high-quality .ogg!
+
+	* src/sound.c, src/graphics.c, src/defs.h:
+	fixed bug in white_noise() that would screw up User_Rect when using
+	'Classic' (i.e. small) Combat window. (dunno why that hasn't shown up before)
+
+2002-12-02  rprix  <rprix@users.sourceforge.net>
+
+	* improved info-line display when Classic_User_Rect is used
+	* default User_Rect is now Classic_ ... hehe, this is the classic version
+
+	Sound-modifs:
+	* title-music is original "Feep-Beep" now ;)
+	* level background-music is "color coded": i.e. one background-song/color
+	(see beginning of color.c)
+
+	* graphics/571.png, graphics/614.png, graphics/742.png, graphics/751.png, graphics/834.png:
+	backported Bastian's latests creatures ;)
+
+2002-11-21  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/classic_theme/digits.png, src/graphics.c:
+	ok, forgot about the digits in lanzz's theme for a moment, now both work ok.
+
+2002-11-20  rprix  <rprix@users.sourceforge.net>
+
+	* src/init.c, src/graphics.c, graphics/classic_theme/digits.png:
+	changed classic digits back to non anti-aliased, looks better on the droids.
+
+	Ok, couple of (minor) changes and things to make the "Classic" branch
+	more (or fully) compatible with RPGFreeDroid and DroidWorld:
+	*) all colors of map-blocks are now in map_blocks.png
+	*) removed "ne_" prefixes in graphics-filenames
+	*) moved "default_theme" to "classic_theme"
+	*) made colors in 'classic theme' less bright and over-saturated
+	     (looks better, I hope)
+	*) adapted automake/autoconf structure correspondingly.
+
+2002-11-13  rprix  <rprix@users.sourceforge.net>
+
+	* src/main.c, src/bullet.c:
+	"back to the roots": bullets no longer 'explode' on droids, only on walls.
+	The logic being that the energy gets absorbed by droids.. of course there
+	should be a nice "absorb" sound accomanying this, but I still don't have
+	any sound... :(
+
+	* src/bullet.c:
+	fixed small bug in DeleteBullet() that would cause a blast in (0,0)
+	when changing levels.
+
+2002-11-10  rprix  <rprix@users.sourceforge.net>
+
+	* src/bullet.c, src/init.c, src/misc.c:
+	improved bullet collision now also for influ, enemys and bullet-bullet.
+	Collision is checked forwards in steps of 0.1*blocksize, this way
+	even with 10 FPS its awsomely precise and well playable!!
+
+	* improved Bullet-Wall collision check: no more shooting through walls
+	   on my 15FPS machine!!
+	* fixed bug that EndTitle was not properly displayed when fire was pressed
+	* added MISSION_COMPLETE_BONUS of 1000, + highscore entry when finished
+
+2002-11-09  rprix  <rprix@users.sourceforge.net>
+
+	* src/graphics.c, src/init.c, src/main.c, src/ship.c, src/takeover.c, src/view.c:
+	improvements to takeover and lift plus other minor stuff
+
+	various optimizations to make the Menu and Console-menu more responsive
+	on my antique 120MHz 32MB at home.
+	(... not even thinking of trying to start RPGFreedroid here.. ;-)
+
+2002-11-08  rprix  <rprix@users.sourceforge.net>
+
+	* src/ship.c, src/menu.c, src/defs.h:
+	mouse wheel support now also in lifts and console.
+	Some small inconsistencies remain.
+
+	* src/input.c:
+	middle mouse-button mapped to Escape ... hardcoded, but kinda usefull
+
+	Mouse button+wheel support in menus now... + cycling in menu.
+	(arghhh... this menu code should really not exist, but I don't care now,
+	Classic Freedroid just has to work, so I close my eyes...;)
+
+	* src/input.c, src/proto.h, src/takeover.c:
+	added Mouse Wheel support. Only used in takeover so far.
+
+2002-11-07  rprix  <rprix@users.sourceforge.net>
+
+	* src/init.c, src/menu.c, src/view.c, src/graphics.c:
+	FPS/Energy/GPS display always on bottom of Window now, not of User_Rect.
+
+	* src/vars.h, src/menu.c, src/ship.c, src/struct.h, src/defs.h, src/global.h, src/init.c:
+	More transparent User_Rect handling: switching between "classic" and "full"
+	User_Rect now better. ShowDeckMap() always uses "Full" User_Rect to avoid
+	clipping of deck-view.
+
+	* src/ship.c, src/global.h, src/graphics.c:
+	fixed SetCombatScale() function such that no reloading of map-blocks
+	from disk is needed (which is very slow).
+	This is done by always keeping a copy of the unzoomed map-blocks in mem.
+
+	* src/takeover.c, src/view.c, src/init.c:
+	deactivated "Resistance factor" extension.
+	Will not be part of "Classic release".
+
+	* graphics/lanzz_theme/asteroid_off.png, graphics/lanzz_theme/asteroid_on.png:
+	adapted "asteroid" lift-pics to standard size, such that they would be
+	correctly displayed also in "classic" User_Rect.
+
+	* src/graphics.c:
+	fixed bug in MakeGridOnScreen(): would not fill whole of given Rect.
+
+	* src/ship.c, src/init.c, src/highscore.c, src/defs.h:
+	fixed bugs in ShowLift() such that lift-display works correctly
+	also when User_Rect is rescaled, eg. for the "classic" small Rect.
+
+	* 
+	several hacks (some a bit quick-and-dirty, but robust I think)
+	to make the whole thing look&behave more like the original.
+	This is aimed towards a final "Classic" release of Freedroid,
+	which is not too far away I think.
+
+2002-11-06  rprix  <rprix@users.sourceforge.net>
+
+	* incorporated the new "GreatDruidShow()" from the main CVS tree
+	* slightly improved + speed up Title scrolling
+
+2002-11-05  rprix  <rprix@users.sourceforge.net>
+
+	* src/graphics.c:
+	fixed bug in noise-function. Now it really looks random.
+2002-11-01  rprix  <rprix@users.sourceforge.net>
+
+	adapted configure system to new subdirectory structure.
+	Tested 'make dist', which produced an ok dist (couldnt check sound though).
+
+2002-10-30  rprix  <rprix@users.sourceforge.net>
+
+	* src/graphics.c, src/proto.h:
+	got a nice white-noise "static" effect now, basically ripped off the idea
+	from Greg Knauss's "xteevee" hack in xscreensavers.
+	Only problem now is the time it needs to prepare the noise-tiles.
+	Maybe one could do that in InitFreedroid() or so, than the user doesnt
+	have when we want to put the noise-effect.
+
+2002-10-28  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/516.png, graphics/598.png, graphics/821.png, graphics/999.png
+	updated Droid-pics with Bastian's great Creatures
+
+2002-10-27  rprix  <rprix@users.sourceforge.net>
+
+	* added some loading-progess display in picture loading
+	* first try on "white noise" effect. Too slow for my 120MHz machine..
+	* changed defaults: Menu-font = Parafont, Robot-speed = off.
+2002-10-25  rprix  <rprix@users.sourceforge.net>
+
+	* NEWS: first checking on new branch: rel-0-8-4-patches
+
+2002-10-24  rprix  <rprix@users.sourceforge.net>
+
+	* src/takeover.c, src/takeover.h:
+	Fixed broken Takeover-counter. Not very stylish, but works/looks ok I think.
+	Yeah, my first FD contribution for months!! :)
+
+2002-07-29  rprix  <rprix@users.sourceforge.net>
+
+	* src/blocks.c: new map-block reading from map_blocks.png.
+
+	* graphics/lanzz_theme/map_blocks.png:
+	proposed new map-block file: contains all colors, one per line.
+
+2002-07-17  rprix  <rprix@users.sourceforge.net>
+
+	* src/ship.c:
+	fixed bug in GreatDroidShow() that would make it crash when droid had
+	weapon_item.type = -1.
+
+2002-07-13  rprix  <rprix@users.sourceforge.net>
+
+	* src/proto.h, src/ship.c, src/takeover.c, src/main.c:
+	rudimentary "takeover announcement" implemented.
+
+	* src/proto.h, src/ship.c: Rewritten GreatDroidShow().
+
+2002-07-12  rprix  <rprix@users.sourceforge.net>
+
+	* src/ship.c, src/vars.h, graphics/console_fg.png, src/defs.h, src/global.h
+	console is beginning to take shape again... but not finished yet.
+	# I have to do some proper work now ... ;)
+
+	* src/view.c:
+	haha, ShowRobotPicture() didn't give a damn about its coordinate argument !!
+	(changed that ;)
+
+	* src/text.c:
+	improved the ImprovedCheckUmbruch() function: takes into account \n as
+	word-ending now.
+
+2002-07-11  rprix  <rprix@users.sourceforge.net>
+
+	completely removed all USERFENSTER** defines.. ouff, that was tough...
+	Now the console is messed up a bit, sorry, I'll fix that later... ;)
+
+	* src/view.c, src/init.c, src/menu.c, src/ship.c:
+	replaced some USERFENSTERPOSX/Y by User_Rect.x/y
+
+2002-07-11  rprix  <rprix@users.sourceforge.net>
+
+	renamed/removed all old "ne_*" variables.
+	(new engine isn't that new any more ;)
+
+2002-07-11  rprix  <rprix@users.sourceforge.net>
+
+	* src/blocks.c, src/graphics.c, src/proto.h:
+	* removed obsolete ne_get_*_block() functions,
+	* moved new Load_*_Surfaces() into blocks.c
+
+	* src/view.c, src/colodefs.h, src/proto.h, src/ship.c, src/takeover.c:
+	* FlashWindow() now uses Fill_Rect() instead of obsolete SetUserfenster()
+	* SetUserfenster() dumped from code.
+
+	* src/takeover.c:
+	if Takeover background pic is not found, only a level0 warning is printed
+	to stdout and a default background color is used instead.
+
+	Themes can now contain a background image "to_background.jpg" for the
+	Takeover game.
+
+
+	renamed the whole "default-theme" into "classic_theme", which makes more
+	sense I think. (sorry to the modem users ;)
+
+
+2002-07-11  rprix  <rprix@users.sourceforge.net>
+
+
+	*) changed theme-independent filenames "ne_*" into more canonical ones
+	*) started coding of more flexible takeover background 'picture'
+
+2002-07-02  rprix  <rprix@users.sourceforge.net>
+
+	* INSTALL: updated installation instructions.
+
+	* src/ship.c:
+	improved display of lifts with flexible User-rect. Background now black.
+
+2002-06-27  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/Paradroid.mission, map/The_Outbreak.mission, src/init.c
+	Debriefing song can now be conveniently specified from each mission file.
+	Added song entries for each mission files as well of course.
+
+2002-06-26  rprix  <rprix@users.sourceforge.net>
+
+	* GetTakeoverGraphics() is now called from Init_Pictures(), which allows
+	  theme-switching to take effect for takeover too
+
+	* Adapted takeover to the now apparently more flexible User_Rect.
+	   placement is still rather poor now, but at least it's consistent again.
+
+2002-06-26  jprix  <johannesprix@users.sourceforge.net>
+
+	* sound/ARDA.MOD, sound/Intro-Music.mod, src/defs.h, src/sound.c:
+	Paid a bit more attention to the selection of mod files and rearranged
+	a better structured reference to the file names, though not yet via
+	reading them from external files.  But thats to come, tomorrow.
+
+	* src/defs.h, src/proto.h, src/sound.c, src/takeover.c:
+	Preparatory work:  Now the loading is done at request for the background
+	music specified only at the time of request.  This will soon enable us
+	to specify background music to be played dynamically in the mission and
+	map files.  That will be cool.
+
+	* src/global.h, src/sound.c:
+	Eliminated some warnings and inconsistencys.
+
+	* src/init.c, src/sound.c:
+	Sound and Music volume now configurable via the options menu again.
+	Control is now even better than before.
+
+	* src/input.c, src/menu.c, src/text.c:
+	Added options to change the width and the height of the combat window in
+	the options menu instead of via keys.
+	Added some extra speech options for the influencer.
+
+	* src/init.c:
+	Full size combat window now enabled by default.  I hope your machine is
+	fast or at least of 'normal' speed.
+
+	* src/input.c, src/vars.h:
+	Added switch (H-Key and W-Key) to turn on/off full screen for combat window.
+
+	* src/takeover.c, configure.ac:
+	Corrected the bug, that health would rise indefinately after rapid succession
+	of successful takeover attempts.
+
+	* src/sound.c:
+	Background music is now MOD file based, i.e. the code now uses the SDL
+	mixers music functions.  This means you can use ogg or mp3 or it or xm
+	files as well without changing anything in the code but the music file
+	name.  Seems to work quite well, though a little bit more care has to
+	be taken in which music file to play when.  I've just filled in the
+	music files as I found them.
+
+	Added some mod files, mainly for testing purposes, but they could also be
+	used in game as well, if we assume that we have the right to do that.
+
+2002-06-25  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/parafont.png: lanzz' new version of parafont.
+
+2002-06-25  jprix  <johannesprix@users.sourceforge.net>
+
+	Removed old gif variants of the tileset images from both themes.
+
+	* src/map.c:
+	Included png versions of the old themes block files as well, since the
+	block reading function only looks for png now.  Speeded up the
+	teleporter animation.  Speed should be placed under control of the themes
+	config files.
+
+	Added Lanzz's fantastic new tilesets with the teleporters.
+	Changes block-reading function to take pngs instead of gifs.
+
+2002-06-24  rprix  <rprix@users.sourceforge.net>
+
+	* src/defs.h, src/ship.c:
+	use of two different console backgrounds with/without window ... looks better.
+
+	* graphics/console_bg.jpg, graphics/console_bg1.jpg, graphics/console_bg2.jpg:
+	added console backgrounds with and without the "window"
+
+	* graphics/parafont.png: lanzz' "outline" parafont, better readable.
+
+2002-06-24  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/freedroid.ruleset, src/menu.c:
+	Door opening/closing speed now 0.05 (half of value before).
+	Removed the blank line in the options menu.
+	Ok, I'll make an archive and sent it to the university from where
+	I can conveniently do the final upload.
+
+2002-06-23  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/lanzz_theme/ship_off.png:
+	stretched background further down, in order to fill User-Rect in ShowLift()
+
+	* src/menu.c, src/ship.c, src/ship.h:
+	- improved placement of console-menu bar
+	- moved theme-switch to main-menu
+
+	* src/view.c:
+	fixed bug: droids would still try to babble in takeover game..
+
+	* TODO, src/global.h, src/influ.c, src/input.c:
+	improved mouse-control: allow continuous shooting to follow mouse-point.
+
+2002-06-23  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/ship.c, src/text.c:
+	Fixed that the black border is restored after the console menu.
+	Fixed the Briefing and Debriefing texts not displaying anything.
+
+	* Releasetext, TODO:
+	Updated the releasetext and the TODO files to reflect current status.
+
+	* src/ship.c:
+	Fixed the bug, that the map would still be shrunk after having visited the
+	map of the current deck at the console.
+
+	* graphics/console_bg.jpg, src/defs.h, src/init.c, src/ship.c:
+	Added structures for the new background for the console picture.
+	Used file console_bg_2.jpg supplied by Bastian for the first console_bg.jpg.
+	That's quite a difference to before, especially with the droids without
+	their white ugly boxes surrounding them.  Thanks a lot!!!
+
+	More modifications and updates to the levels and the elevators connecting
+	them all in the new maps.
+	Enlarged a few constants in the code to allow for the new levels needs.
+
+2002-06-23  basse  <bastiansalmela@users.sourceforge.net>
+
+	transparent versions of droid png's
+
+2002-06-23  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/Asteroid.maps, map/The_Outbreak.elevators, map/The_Outbreak.mission
+	Elevator connections, rectangles and maps further refined for new missions.
+
+	Removed the old jpg variants of the droid portraits.  Changed code to
+	reflect the new file format and that seems to work as well as before.
+
+	Added png variants of the former jpg droid portraits.
+
+	* map/Asteroid.maps, map/Invading_Asteroid_Command_Central.elevators
+	Added a new level to the new maps and corrected part of the elevator
+	connections and rectangle specifications.
+
+	Replaced the old bmp asteroid picture files with png files, that are only
+	as big as 1% of the size of the Windows bmp formated images of the same
+	content.  Added new decks to these maps as well, though they cannot be
+	reached via elevators yet...
+
+	* map/Asteroid.maps, map/Invading_Asteroid_Command_Central.mission:
+	Starting point for the second new mission fixed.  Map changes.
+
+	* map/Asteroid.maps, map/The_Outbreak.droids, src/defs.h:
+	More changes to the new missions map files (though only in the part that is
+	not accessible to the player yet):  added Main Reactor Deck, added Scientists
+	quarters deck.
+
+	* Releasetext:
+	Added a file that contains the text specified in the summary of changes
+	and announcements of new releases on public news pages on the web, i.e.
+	containing the 'new features' not as detailes as in the Changelog of
+	course but as we paste it to the release news.
+
+	* map/freedroid.ruleset, src/influ.c:
+	Added even more security against jumps through walls after collisions with
+	enemys.
+	Adapted some small constants in the ruleset file.
+
+2002-06-23  basse  <bastiansalmela@users.sourceforge.net>
+
+	* graphics/ne_credits.jpg:
+
+	well I saw you guys used this picture as credit background..
+	so here's a new version for you, without stupid (C) text in the bottom,
+	and rendered to correct size..
+
+2002-06-22  basse  <bastiansalmela@users.sourceforge.net>
+
+	* graphics/476.jpg:
+
+	portrait of 476
+
+	* graphics/420.jpg:
+
+	portrait of 420
+
+	* graphics/329.jpg:
+
+
+	portrait of droid 329
+
+2002-06-22  jprix  <johannesprix@users.sourceforge.net>
+
+	* TODO, graphics/lanzz_theme/config.theme, map/freedroid.ruleset, src/influ.c
+	Made acceleration now (almost) framerate independent.  Adapted acceleration
+	calibration values accordingly.  Removed extra behaviour of 302 type.
+	Set phases of standard influ shot back to 1 in lanzz_theme.
+	Removed the bug, that Freedroid would segfault when changing lever while
+	some bullets were still flying around.
+
+	* TODO, graphics/001.jpg, src/view.c:
+	Corrected the bug, that the droid image loading in the console menu would
+	cause a crash:  reason:  local string constant was used uninitialized.
+
+	* graphics/lanzz_theme/ne_bullet.png: Cut out a few black pixels.
+
+	* src/menu.c:
+	Fixed the bug that the game would segfault when changing theme while a
+	bullet is still flying around, which has different number of phases in
+	one theme than in the other.
+
+	* graphics/parafont.png: Added the new parafont.png.  Thanks Lanzz!
+
+	* graphics/ne_cons.gif, graphics/ne_cons.png, src/defs.h, src/init.c, src/misc.c:
+	Replaced the old ne_cons.gif with lanzzs fantastic ne_cons.png and adaped
+	the code accordingly too of course.  Wow! That's quite a difference!!!
+
+	* TASK_CHART, TODO, src/graphics.c, src/input.c:
+	Added crosshair mouse cursor to the game.  Looks better than expected.
+	Adapted input function to reflect the new changed location of the actual
+	spot the mouse cursor is pointing to.
+
+	* src/input.c: getchar_raw is now case sensitive.
+
+	* map/freedroid.ruleset, src/influ.c, src/proto.h:
+	Added an extra sanitiy check, that really should prevent the influencer
+	from ever stepping through walls and even outside the ship (without the
+	help of the level editor ;), but that will alter game behaviour on machines
+	with framerates of less than 20 fps.
+
+2002-06-21  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/influ.c, src/init.c, src/main.c, src/misc.c, src/proto.h, src/view.c:
+	Removed lots of obsolete function prototypes and some obsolete functions too.
+	There are surely still a lot of them in the code!
+
+	* TODO, src/view.c:
+	Fixed the bug that the bullets would not appear where they really are, but
+	with a slight shift.  Taking a look at the rotozoom code revealed the reason
+	and it's not a bug in the rotozoom but their justified refusal to crop the image.
+
+	* src/bullet.c, src/influ.c, src/view.c:
+	Removed warnings and debug messages.
+
+	* src/bullet.c:
+	Fixed the bug, that wrong bullet types occured after bullet-bullet or
+	bullet-blast collisions.
+
+	* src/view.c, src/enemy.c, src/global.h, src/map.c:
+	Reactivated the fading effect for low energy.  Activated the same effect
+	for friendly droids too, which came along easily.
+
+	* src/graphics.c, src/init.c, src/main.c, src/text.c:
+	Changed the defaults to full-screen mode and lanzz-theme.
+
+	Corrected second new mission files, so that the mission would at least load
+	successfully, though the maps and action are only drafted.
+
+	* src/graphics.c:
+	SetCombatScale is now working again and apart of that much faster than it
+	was before.  Also swtiching tilesets hardly takes any time any more, since
+	it only means taking a different pointer for blitting map tiles.
+
+	* src/bullet.c, src/view.c:
+	Removed the stupid bug, that occured with the computation saving bullet
+	rotation method yesterday.  Now it works ok and stays enabled.
+
+2002-06-20  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/influ.c, src/struct.h, src/view.c:
+	Deactivated one-rotation-routine due to bugs I don't completely understand.
+
+	* src/blocks.c, src/global.h, src/graphics.c, src/init.c, src/misc.c, src/ship.c
+	ne_blocks now completely thrown out as well as 'SetLevelColor', 'UnfadeLevel'
+	and ne_droids, ne_influ and some others.
+
+	* src/defs.h, src/global.h, src/graphics.c, src/view.c:
+	Reorganized the map_blocks:  All tilesets are now kept in memory at the
+	same time:  No need to load tilesets again when changing to a different
+	level or turning off the light.
+	Also different organisation of the map tiles in many small surfaces.
+	So, we are a bit faster again now.
+	Rescaling must be completely rewritten I fear, but 'SetLevelColor(..)'
+	will drop out completely.
+
+	* src/graphics.c: Deactivated rescaling for now to avoid SegFault.
+
+	* src/graphics.c:
+	The robot digits are now without background again.  Much more work is still
+	ahead.
+
+	* src/global.h, src/graphics.c, src/view.c:
+	More work on the reshaping of the InitPictures and its consequences.
+	Currently the numbers have a red background.  Please ignore.
+
+	* src/bullet.c, src/graphics.c:
+	Halfway through with restructuring InitPictures.  All still running.
+
+	* src/bullet.c, src/init.c, src/struct.h, src/view.c:
+	Added extra security against segfaults with the new bullet routine, though
+	that has never happend on my machine.  Game instructions now also speak of the
+	mouse control.
+
+	* src/bullet.c, src/main.c, src/struct.h, src/view.c:
+	Changed the code, so that the bullet rotation is now done only once for
+	every bullet (and every phases then of course).  I think this saves a
+	lot of redundant computation if not time.
+
+	* src/influ.c, src/text.c:
+	Fixed the bug, that the influencer would not respond to switches in GameConfig
+	concerning 'speech' text messages.
+
+	* src/menu.c, src/view.c:
+	Droid talk of the influencer is now correctly arranged to always fit into
+	the combat window.
+
+
+	The speed with which bullet phases are rotated can now be conveniently
+	specified in each themes configuration file.
+	Set the animation of classic standardbullet to 100 phases per second.
+
+	* map/The_Outbreak.elevators, src/map.c:
+	More code cleanup in the droid crew specification reading function.
+	Corrected the rectangle specification for the asteroid areas lift.
+
+2002-06-20  rprix  <rprix@users.sourceforge.net>
+
+	globally replaced SCREENHOEHE -> SCREENHEIGHT, SCREENBREITE-> SCREENLEN
+
+	* src/menu.c:
+	* fixed bug in MissionSelectMenu(): Esc would try to return to nowhere
+	     (+ uses getchar_raw() now, which is simpler)
+	* slightly polished Credits-display
+
+	* src/struct.h:
+	changed highscore-list from a "list" to an array (easier, more stable..)
+
+	* src/takeover.c:
+	increased wait-before-keyboard-repeat, and accelerated end of
+	takeover-game (after timeout), but seems a bit too fast now...
+
+	* src/input.c: tried to make getchar_raw() more responsive
+
+	* src/text.c:
+	revised and improved the GetString() function (used for highscore entries)
+
+	* src/Makefile.am, src/highscore.c:
+	new file for highscore management (didn't fit anywhere else...)
+
+2002-06-19  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/Paradroid.elevators, map/The_Outbreak.elevators, src/map.c:
+	More code cleanup and security in the elevator reading function.
+
+	Moved rectangle specification for highlighting decks and elevators into
+	the existing elevators file and this file is now properly read in.
+	Added missing asteroid research facility pictures to both themes.
+
+	* IDEAS: Added some ideas for possible extensions to the IDEAS file.
+
+	* map/freedroid.ruleset, src/init.c:
+	Put the flag, that you cannot fire until your previous shot has expired under
+	control of the freedroid.ruleset and set it to 0 there for all bullet types.
+
+	* graphics/lanzz_theme/config.theme, src/graphics.c:
+	More code cleanup and security for the theme files.
+
+	Continued code cleanup.
+	Corrected digit position in classic theme.
+	Number of each bullets phases now specified in config.theme instead of freedroid.ruleset.
+
+	* map/game.dat:
+	Forgot to remove game.dat yesterday.  The name is now freedroid.ruleset.
+
+2002-06-18  rprix  <rprix@users.sourceforge.net>
+
+	* TODO:
+	added bug: diagonal up/right and down/left bullets are badly positioned
+
+	* map/game.dat:
+	changed all bullet phases to 4 ... doesn't seem to be taken into account
+	by the game though... :(
+
+	removed theme-independent ship/lift pics, there is now a ship/lift
+	pic per theme. (+removed some more old pics...)
+
+	* src/ship.c: ship/lift picture is now theme-dependent.
+
+2002-06-18  basse  <bastiansalmela@users.sourceforge.net>
+
+	* graphics/transfer.jpg:
+
+	first version (not ready yet don't worry) of entity-transfering picture..
+	to be used.. hmm.. after successful match?
+
+	what do you think?
+
+	.b
+
+2002-06-18  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/The_Outbreak.mission: And another thing I had forgotten.  Sorry.
+
+	* map/Paradroid.mission, src/init.c, src/misc.c:
+	More code cleanup with the file reading.
+
+	* map/Makefile.am, map/Paradroid.mission, map/The_Outbreak.mission, src/init.c:
+	renamed game.dat to freedroid.ruleset.
+
+	* map/game.dat, src/init.c: More code cleanup.
+	Added flag for going to request reinforcements for all droids in game.dat
+	and the nescessary reading in the code.  Currently, only 302 units will go
+	to request reinforcments (thereby possibly passing THROUGH walls).
+
+	* map/game.dat, src/init.c:
+	Move code cleanup and game.dat file augmented for additional security.
+
+	* src/map.c, map/Asteroid.maps:
+	Corrected the bug in SaveLevel routine, that teleports were not properly stored.
+	Corrected the way the one teleporter in the new map is stored.  Animation therefore
+	now is well working again, though not very beautiful.
+
+	* graphics/lanzz_theme/ne_bullet.png:
+	Checked in Lanzz's latest graphics with the alpha-channeled bullets.
+
+	* graphics/parafont.png, graphics/ship_off.png, graphics/ship_on.png:
+	Added Lanzz's latest graphics, the ship pictures and the parafont.
+
+2002-06-18  rprix  <rprix@users.sourceforge.net>
+
+	* TODO: *** empty log message ***
+
+	* TODO: some updates.
+
+2002-06-18  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/proto.h, map/The_Outbreak.mission, src/init.c, src/misc.c:
+	Almost halfway through with the code cleanup.  There is still *a lot* to
+	be done though.  New functions look cool nevertheless.
+
+2002-06-17  rprix  <rprix@users.sourceforge.net>
+
+	* map/Paradroid.mission: changed name of ship-on/off pics to .png
+
+	* graphics/para_font_for_BFont_01.png, graphics/ship_off.png, graphics/ship_on.png:
+	lift-pics now png + alpha channel.
+
+	* ChangeLog: log-mailing is now directed to sourceforge mailing list!!
+
+	* ChangeLog:
+	finally found a way of adding user-info to cvs-log mailing. yippih!!
+	This is just a test!
+
+2002-06-17  jprix  <johannesprix@users.sourceforge.net>
+
+	First part of code cleanup done:  File reading, memory allocation, finding
+	the end, putting a termination 0 character and closing again now in one line.
+
+	* src/global.h, src/graphics.c, src/view.c:
+	Influencer and friendly enemys are now also properly displayed with the alpha channel.
+	Hat and shoes of the influencer are not touched by the 'blinking' effect any more, but
+	the number in the middle is, and that is also a quite acceptable solution I think.
+
+	* src/enemy.c, src/global.h, src/graphics.c, src/view.c:
+	Enemys are now displayed properly again with the alpha channel.
+
+	* src/struct.h, src/view.c, src/graphics.c:
+	The blast png alpha channel is now properly handled!  Looks real cool this way!
+
+	Added Lanzz's latest blast and droids png files.
+	Removed the old gifs accordingly.
+	Acicated the new file names in defs.h.
+	The code does not properly react to this yet.
+
+2002-06-16  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/defs.h, src/global.h, src/graphics.c, src/init.c:
+	Corrected the bug with the too short constant.  Now there is no more
+	constant ALLBULLETTYPES at all in the code.  All dynamically.  Thats fine,
+	cause the number of bullettypes is unpredictably set in game.dat.
+
+	* src/defs.h, src/enemy.c, src/struct.h:
+	Added new robot behaviour, that they go and report at a console after they
+	have been shot for the first time.
+
+2002-06-16  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/lanzz_theme/ne_to_elem.bmp, graphics/lanzz_theme/ne_to_elem.png:
+	changed takover block-file to .png, and added (alpha) transparency.
+
+	* summary checkin: ALL FILE-READING now uses find_file () !!!!!
+	Note its usage when adding new file-reading!!
+	# ... this was _a lot_ of modifications, please test!
+
+	* New feature: find_file() will first look in "../" before "DATADIR",
+	making it playable without always needing "make install" when
+	pics are modfied. Finally! ;)
+
+	Theme fallback is not yet implemented.
+
+	* rudimentary Highscore list. Carful, this is still buggy and might
+	  probably cause SegFaults at the moment. Sorry for that, will be
+	  fixed hopefully soon.
+
+2002-06-16  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/struct.h, TASK_CHART, src/bullet.c, src/enemy.c, src/init.c, src/proto.h:
+	Improved the robot behaviour, especially 302 report behaviour (halfway).
+	Added our mailing list address to the homepage source.
+	Added more flags and state-switches to the droid-structures.
+
+	Added new weapon type 'laser rifle' that is also nominally present in the
+	original game.  New bullet image copied from some screenshot of some other game.
+
+	Added new and deadly weapon exterminator.
+	Added 'graphics' tiles for the Teleporter in one tileset in lanzz_theme
+	Added animation and structures for teleporters.  Works well.
+
+	* map/Asteroid.maps, map/Invading_Asteroid_Command_Central.elevators
+	Improved the elevators and new map file a bit.
+
+	I've completely reworked the elevators file.
+	Now it's better readable, has a preamble and documentation and works again.
+	Added a few test-images to one of the tilesets in lanzz_theme.
+	No real use yet.
+
+	* src/bullet.c:
+	Corrected the stupid mistake, that distance to blast center was rounded to
+	whole ints before comparison, doing blast damage far to often and in a
+	crude 0.5 radius.
+
+	* src/graphics.c, src/influ.c, src/init.c, src/menu.c, src/ship.c:
+	Corrected the clipped mission selection menus to non-clipped.
+	Changed the default values for which texts are enabled from the beginning.
+
+	* map/The_Outbreak.droids:
+	Improved the difficulty of 'The Outbreak' mission.
+
+	* map/Paradroid.mission:
+	Corrected the wrong pointer in Paradroid.mission.
+
+	Restructured and renamed our mission/maps/droids/elevators files.
+
+	Made ne_bullet into an element of Bulletspec.
+	Reactivated the concept of bullet phases, but not in the old sense of
+	giving the raw direction of the shot but in an alteration of pictures
+	to be used.  Fully functional, but nothing much in the png yet.
+
+2002-06-15  rprix  <rprix@users.sourceforge.net>
+
+	* src/blocks.c: removed obsolete function IsolateBlock()
+
+	* src/takeover.c: use find_file() now for reading takeover-blocks.
+
+	* src/graphics.c:
+	replaced 'by hand' construction of filename by calls to find_file()
+
+	* src/misc.c, src/proto.h: new function:
+	char * find_file (char *fname, char *datadir, int use_theme)
+	you give the filename, the data-directory and a switch if the current
+	theme should be used. Returns pointer to (global) string array
+	containing the full path-name of the file. (Dont' ever free this!!)
+	In the future, this function could incorporate the "theme fallback"
+	behaviour, if we want to.
+
+	* configure.ac, graphics/Makefile.am, graphics/lanzz_theme/Makefile.am:
+	adapted build structure to incorporate new theme subdirs.
+	#make install, make dist seem to work ok, please test!
+	#! remember to re-run automake,autoconf and configure !
+
+2002-06-15  jprix  <johannesprix@users.sourceforge.net>
+
+	* map/new_ship_1.maps, map/ship_1.maps, src/global.h, src/map.c, src/menu.c:
+	Added display and changing option for the deck names to the level editor.
+	Improved the readability of the maps files a bit.
+
+	* map/new_ship_1.maps, map/ship_1.maps, src/map.c, src/ship.c, src/vars.h:
+	Level names are now integrated into the maps files.
+	The decknames definition in vars.h was removed.
+
+	* map/new_ship_1.maps, map/ship_1.maps, src/defs.h, src/map.c, src/struct.h:
+	Modified the level editor to put the standard GNU GPL preambe in front of
+	every saved level.  This doesn't hurt or modify the loading process in any
+	way.
+
+	* TASK_CHART, src/defs.h, src/map.c, src/menu.c:
+	Added a feature to enter new map tiles into the level editor via just their
+	numbers, so we can enter map tiles, that don't have a key assigned yet.
+
+	* map/game.dat, src/defs.h, src/global.h, src/init.c, src/map.c, src/vars.h:
+	Movement speed for the doors now under control of the game.dat file.
+
+	* TASK_CHART, map/game.dat, src/bullet.c, src/defs.h, src/global.h, src/init.c:
+	Blast damage is now under control of the game.dat file.
+
+	Put droidradius and blast radius under control of game.dat.
+	Old constants were removed accordingly.
+
+	Bullet specifications now completely under the control of the game.dat file.
+	Removed some old structure elements.
+
+	* graphics/lanzz_theme/config.theme, src/blocks.c, src/global.h, src/graphics.c
+	The position of digits is now put under the control of the theme config
+	files as well.  Pleae substitute something more apropriate for the values
+	I filled in (rather mindlessly) as you feel apropriate.
+
+	* graphics/lanzz_theme/config.theme:
+	Added the theme files as well.  Currently animation times are all set to
+	one second.  Thats a bit slow, but good for testing purposes.
+
+	* graphics/Makefile.am, src/bullet.c, src/graphics.c, src/init.c, src/struct.h
+	Added a config.theme file for every theme.
+	In there the number of pictures for each blast and also the total amount
+	of time intended for the animation are specified.
+
+	* src/bullet.c, src/enemy.c:
+	Small explosions after bullet-enemy collisions now enabled.
+
+	* src/enemy.c:
+	Corrected the direction angle the enemy bullets are heading.
+	The code for determining the "phase" is now obsolete and can be removed.
+
+2002-06-15  basse  <bastiansalmela@users.sourceforge.net>
+
+	* graphics/scientist.jpg:
+
+
+	new version of scientist.jpg
+	no more copyright messages
+	correct(?) size 640x480
+	droid also has now number, and some texture
+
+2002-06-14  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/graphics.c, src/influ.c, src/struct.h, src/view.c, src/global.h:
+	Added rotation of bullets by arbitrary angles.  Bullet structures were equipped
+	with an 'angle' entry for this purpose.  Seems to work quite well.
+	The ne_blocks surface is restored to alpha-channel-less mode after the reading
+	is done, which restored the framerate as well.  See ya, jp.
+
+	* graphics/Makefile.am, graphics/lanzz_theme/ne_bullet.png, src/blocks.c,
+	Activated alpha channel for the bullets.  Transparency is working well.
+	The rest of the transparency currently is not working due to the changes.
+	Added the new bullet pictures that feature an alpha channel to both themes.
+
+	* TASK_CHART, src/global.h, src/init.c, src/main.c, src/map.c:
+	Animation of doors now respects the framerate:  Currently, the doors move
+	one picture every 0.15 seconds.  This constant will be replaced when we
+	give more power to each theme's configuration file, that must be created
+	from scratch still...
+
+	* graphics/lanzz_theme/ne_bullet.gif, src/graphics.c:
+	Added missing bullet directions that are currently still required by the
+	graphics engine.  Experimented a bit with the rotozoom possibilietes, but
+	it's not yet convincing and for how the code remains commented out.  This
+	has to be done a bit more thorough.
+
+	Adapted the structures, so that the current theme as specied in GameConfig.Theme_SubPath
+	is used to read in all graphics blocks.
+	Added an option to switch between themes in the Graphics/Sound submenu of the options menu.
+	Added of course two pathes for the themes and the files under these pathes.
+	A fallback routine in case of a missing file in non-default theme does NOT EXIST currently.
+
+2002-06-13  jprix  <johannesprix@users.sourceforge.net>
+
+	* TODO: Added the "cut droid image in takeover" bug to the TODO list.
+
+2002-06-13  rprix  <rprix@users.sourceforge.net>
+
+	* graphics/001.jpg:
+	Bastian's 001 - droid pic, scaled to proper dimensions.
+
+	* CREDITS:
+	this is intended to be a more exhaustive 'credits' sections, as
+	we cannot list everyone in the in-game credits.
+
+2002-06-13  jprix  <johannesprix@users.sourceforge.net>
+
+	* IDEAS:
+	Added ideas file for open discussion of freedroid topics and future development.
+	Bastian really should be given cvs write access to participate better in this discussion.
+
+	* src/map.c, map/new_ship_1.maps, map/ship_1.maps:
+	Added a correction function, that checks the integrity of waypoint connection
+	entries and eliminates leading -1 entries.  Such leading -1 entries could prevent
+	droids from using connections that were otherwise completely ok.
+	That corrects a really very minor problem.  Six or so incidents, where this little
+	bug actually was in the maps files, were corrected.
+
+2002-06-12  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/init.c, src/menu.c, src/struct.h, src/text.c, src/view.c:
+	Restructured the options menu and submenus.
+	Text can now be turned on off as a whole and with individual switches
+	for the different text types.
+
+	* TASK_CHART, graphics/ne_bullet2.gif, graphics/ne_droids_2.png, src/defs.h:
+	Added new droid image as an experiment.  Wow, it looks terriffic! And
+	especially so on darker backgrounds like the blue tileset!  That does
+	make quite a difference!  Perhaps we do not need to go as far as to use
+	individual renderings for the in-game-droid representaions so soon...
+
+	* graphics/scientist.jpg:
+	Added Bastians latest update with the fleeing scientist.  Thanks
+	for the great work, Bastian. Absolutely cool. 
+
+	* TASK_CHART: Added my newest tasks. jp.
+
+	* graphics/ne_block_blue.gif, graphics/ne_block_green.gif, graphics/ne_block_red.gif:
+	Added rotation for the inside of the refresh fields for some tilesets.
+
+	Background for the mission briefing can now be conveniently selected from the
+	mission file.  Added specifications to the mission files accordingly.
+
+2002-06-11  jprix  <johannesprix@users.sourceforge.net>
+
+	Added the bastians latest preview of his newest work.
+	Corrected the bug in the new "bullet phase" determination.
+	Added nonsymmetrical bullet images in "ne_bullet2.gif" for testing purposes.
+	Seems to work now, finally.  I'm off for some sleep now.  Have fun.
+
 2002-06-09  rprix  <rprix@users.sourceforge.net>
 
-	* menu.c, view.c, global.h, graphics.c, influ.c, input.c, main.c:
+	* src/influ.c:
+	fixed bug in keyboard firing in FireBullet(). Sorry I had tested
+	mostly joystick+mouse and overlooked this one ;)
+
+2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+
+	Completely reworked the map format: No longer some strange nonportable ascii
+	chars but now only the numbers in clear text for the map tiles.  That will
+	also allow for easier extension than having to find a new char for every
+	newly introduced map tile.  Loading and saving works.  Replaced all map files
+	accordingly.
+	Added bastians latest creations in the format matching the needs of the
+	console droid show as it is now.  We should arrange for a bigger console
+	style though.
+	All in all, what a day for the freedroid project! Have fun, Johannes.
+
+2002-06-09  rprix  <rprix@users.sourceforge.net>
+
+	* src/defs.h, src/graphics.c, src/init.c, src/menu.c, src/ship.c, src/takeover.c
+	cleanup: Removed PrepareScaledSurface(), replaced calls by SDL_Flip(ne_screen)
+	#removed obsolete + empty Update_SDL_Screen().
+	#removed last remaining references to NEW_ENGINE.
+
+	* src/Makefile.am, src/global.h, src/proto.h, src/svgaemu.c:
+	cleanup: removed svgaemu.c (nothing left to 'emulate').
+	# ! NOTE: you have to automake+configure before make'ing!
+
+2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+
+	* TASK_CHART, map/new_mission_1.mission, map/new_mission_2.mission, src/menu.c
+	Added feature to enlarge any level in x or y direction from the level editor.
+	Added another new trigger and action to the first two new mission files.
+
+2002-06-09  rprix  <rprix@users.sourceforge.net>
+
+	* ChangeLog: updated + some cleanup.
+
+	!! Please use lines starting with '#' for log-messages that are too
+	minor/unimportant to appear in the ChangeLog !!
+
+	* src/menu.c, src/view.c, TODO, src/global.h, src/graphics.c, src/influ.c
 	o) further improvements of the joystick fireing
 	o) incorporated "Nighthawk"-type mouse control
 	   based on a patch sent in by Tanel Kylaots <mou@tdl.ee>
+
+2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+
+	* configure.ac, map/game.dat, src/global.h, src/influ.c, src/init.c:
+	Improved (I hope) the collision-damage handling:  Now not the difference in
+	class of droid but in weight of droid is taken as the basis of the calculation.
+	Further a constants section in game.dat has been added, where the player can
+	also calibrate the collision damage via a constant for his own mod.
+	The "sucking in" problem has also been addressed:  Getting sucked into another
+	robot should now occur less likely (i.e. not on my machine, as usual). jp.
+
+	* map/new_mission_2.mission, src/text.c:
+	Added missing events section to the second new mission too.
+	Game looks pretty cool to me right now.  We should release 0.8.2 I think.
+
+	* map/classical_paradroid_mission.mission, src/bullet.c, src/proto.h, src/text.c:
+	Added more text for hit droids.
+	Added the missing event section to the classical mission.
+
+	Events fully functional implemented and read from the mission file.
+	There are event triggers and event actions.
+	Of course more than one trigger can be used to trigger one action.
+	Put the triggers to good use on the first new mission.
+	Also adapted the map file a little bit more so that it is not so empty.
+	Clasical mission currently not functional due to missing event section.
+
+2002-06-09  rprix  <rprix@users.sourceforge.net>
+
+	* Patches/mouse-patch.1:
+	patch submitted by Tanel Kylaots <mou@tdl.ee> to add mouse
+	functionality similar to Nighthawk.
+
+2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+
+	* src/init.c, src/misc.c, src/view.c:
+	TestEvent: Mapchange on Level 4 at (6,2): Seems to work!! cool!
+
+	* src/init.c, src/misc.c, src/view.c:
+	Added a test event.  Trigger seems to work so far. Good.
+
+	* src/defs.h, src/global.h, src/init.c, src/main.c, src/misc.c, src/proto.h
+	Added more structures for events.
+	Added more structures for event triggers.
+
+	* map/new_ship_1.maps, map/new_ship_2.maps, src/struct.h:
+	Corrected some bugs in the new maps.
+	Added some additional structure elements to the new rather empty maps.
+	Added structures for special periodic statements of some special droids.
+
+	* src/bullet.c, src/enemy.c, src/influ.c, src/init.c, src/proto.h, src/struct.h
+	Added text for influs blast damage and also more flexibility:  When influ
+	received damage from a blast he says one of three possible messages.
+	That seems quite fine.
+
+	* src/enemy.c, src/influ.c, src/main.c, src/view.c:
+	Added text for the refreshes, haha.
+	Added text for collisions, haha.
+
+	* src/global.h, src/graphics.c, src/menu.c, src/sound.c, src/struct.h:
+	Integrated music/sound volume and gamma correction into the new GameConfig.
+	Added structures for other droids texts as well.
+
+	* src/menu.c, src/struct.h, src/view.c, TODO, src/defs.h, src/enemy.c
+	Added Draw_Position and drawing of current position similar to drawing FPS.
+	Added structure "configuration_for_freedroid" and a variable "GameConfig", that
+	now collects together the desired Draw_Framerate, Draw_Energy and Draw_Position.
+
+	* src/global.h, src/init.c, src/input.c, src/main.c, src/struct.h, src/view.c:
+	Added text for the 001 to say.  Very useful!
+
+	* src/map.c, src/misc.c, src/rahmen.c:
+	Removed obsolete functions itoa and ltoa.
+	(sprintf is a much more powerful tool!)
 
 2002-06-09  rprix  <rprix@users.sourceforge.net>
 
@@ -157,13 +1682,13 @@
 
 	* TASK_CHART, enemy.c, map.c, proto.h:
 	Removed some obsolete code.
-	Corrected the bug, that enemys were always moving the speed the influencer could go.  Looks much better now.
+	Corrected the bug, that enemys were always moving the speed the
+	influencer could go.  Looks much better now. 
 
 	* influ.c, new_ship_1.maps, new_ship_2.maps:
 	Corrected some minor bugs in the new maps.
 	Removed some warnings.
 
-	* main.c, proto.h, sound.c, struct.h, view.c, Homepage/Freedroid_Manual.tex, TASK_CHART, bullet.c, defs.h, global.h, init.c:
 	Updated my TASK_CHART.
 	Implemented the takeover sound.
 	Added documentation about the new keys in the Level Editor to the manual.
@@ -180,14 +1705,14 @@
 	Improved mission instructions dispaly.
 	Improved the handling of nonfixed special forces.
 
-	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac, new_ship_1.droids, new_ship_1.maps:
+	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac, new_ship_1.droids
 	Added friendly droids.  Modified maps and drois file of the first new mission
 	to contain one, but contact is not possible.
 
 	* TASK_CHART, game.dat, vars.h:
 	Added a few new tasks.
 
-	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h, main.c, sound.c, struct.h, view.c:
+	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h, main.c, sound.c
 	Implemented the "cry sound", when influs energy is low.
 	Added sounds for the cry sound and the transfer mode sound.
 
@@ -233,13 +1758,13 @@
 
 	* TASK_CHART, enemy.c, map.c, proto.h:
 	Removed some obsolete code.
-	Corrected the bug, that enemys were always moving the speed the influencer could go.  Looks much better now.
+	Corrected the bug, that enemys were always moving the speed the
+	influencer could go.  Looks much better now. 
 
 	* influ.c, new_ship_1.maps, new_ship_2.maps:
 	Corrected some minor bugs in the new maps.
 	Removed some warnings.
 
-	* main.c, proto.h, sound.c, struct.h, view.c, Homepage/Freedroid_Manual.tex, TASK_CHART, bullet.c, defs.h, global.h, init.c:
 	Updated my TASK_CHART.
 	Implemented the takeover sound.
 	Added documentation about the new keys in the Level Editor to the manual.
@@ -256,14 +1781,14 @@
 	Improved mission instructions dispaly.
 	Improved the handling of nonfixed special forces.
 
-	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac, new_ship_1.droids, new_ship_1.maps:
+	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac,
 	Added friendly droids.  Modified maps and drois file of the first new mission
 	to contain one, but contact is not possible.
 
 	* TASK_CHART, game.dat, vars.h:
 	Added a few new tasks.
 
-	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h, main.c, sound.c, struct.h, view.c:
+	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h,
 	Implemented the "cry sound", when influs energy is low.
 	Added sounds for the cry sound and the transfer mode sound.
 
@@ -279,7 +1804,6 @@
 
 2002-06-07  rprix  <rprix@users.sourceforge.net>
 
-	* text.c, view.c, BFont.c, bullet.c, enemy.c, graphics.c, influ.c, init.c, joy.c, map.c, menu.c, misc.c, proto.h, rahmen.c, ship.c, takeover.c:
 	DebugPrintf () now takes a debug-level and standard printf()-arguments.
 	Put all existing DebugPrintf() to debug-level2, and all current
 	printf() statements are now DebugPrintf (1, ..).
@@ -294,25 +1818,20 @@
 	* Makefile.am, new_ship_2.droids, new_ship_2.elevators, new_ship_2.maps:
 	Added files for second new mission.  Are the same as for first new misson.
 
-	* struct.h, view.c, new_mission_1.mission, new_mission_2.mission, new_ship_1.droids, enemy.c, init.c, main.c, map.c, menu.c, misc.c, sound.c:
 	Removed most of the obsolete messages flushing the text screen.
 	Worked a bit to improve the mission files.
 
-	* new_mission_1.mission, new_ship_1.droids, new_ship_1.maps, defs.h, enemy.c, influ.c, ship.c:
+	* new_mission_1.mission, new_ship_1.droids, new_ship_1.maps, defs.h, enemy.c
 	Improved the alternative mission, maps and droids files.
 
 	* graphics/990.jpg:
 	Arg, that one I forgot...
 
-	* global.h, graphics.c, influ.c, init.c, ship.c, graphics/991.jpg, graphics/992.jpg, graphics/993.jpg, graphics/994.jpg, graphics/995.jpg, graphics/996.jpg, graphics/997.jpg, graphics/998.jpg, classical_paradroid_mission.mission, new_mission_1.mission, new_ship_1.droids, new_ship_1.maps, enemy.c:
 	Added pictures for new droids.
 	Corrected bug in waypoint count in GetLiftConnections.
 	Reshaped another level of the new ship.
 
-	* graphics/ne_level_0.gif, graphics/ne_level_1.gif, graphics/ne_level_10.gif, graphics/ne_level_11.gif, graphics/ne_level_12.gif, graphics/ne_level_13.gif, graphics/ne_level_14.gif, graphics/ne_level_15.gif, graphics/ne_level_2.gif, graphics/ne_level_3.gif, graphics/ne_level_4.gif, graphics/ne_level_5.gif, graphics/ne_level_6.gif, graphics/ne_level_7.gif, graphics/ne_level_8.gif, graphics/ne_level_9.gif, graphics/ne_lift_0.gif, graphics/ne_lift_1.gif, graphics/ne_lift_2.gif, graphics/ne_lift_3.gif, graphics/ne_lift_4.gif, graphics/ne_lift_5.gif, graphics/ne_lift_6.gif, graphics/ne_lift_7.gif:
-	Removed old and unused ship pictures.
-
-	* init.c, classical_paradroid_mission.mission, game.dat, ship_1.droids, ship_1.maps:
+	* init.c, classical_paradroid_mission.mission, game.dat, ship_1.droids
 	Implemented calibrating constants withing game dat for bullet speed and damage.
 	Used these constants to get bullet speed back to paradroid normal.
 	Corrected the minor mistakes that were introduced into the paradroid map in the
@@ -324,7 +1843,6 @@
 	Corrected the bug, that junked the screen when changing tileset in the
 	Level Editor while combat windows is rescaled to something != 1.
 
-	* map.c, proto.h, struct.h, takeover.c, TASK_CHART, classical_paradroid_mission.mission, new_mission_1.mission, ship_1.droids, init.c:
 	Implemented markers for special forces in the droids file.
 	Implemented mission target kill all marked droids.
 	Implemented mission target become one of the marked droids.
@@ -348,7 +1866,6 @@
 	if he controls a 249 or below robot, which wasn't the case in the C64 version
 	and which makes the game MUCH more playable and also more fun I think. jp.
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, new_mission_2.mission, defs.h, enemy.c, init.c, main.c, misc.c, struct.h, view.c:
 	Implemented mission target MustReachLevel.
 	Implemented mission target MustReachPoint.x/y.
 	Implemented mission target MustLiveTime.
@@ -358,12 +1875,10 @@
 	* Homepage/Freedroid_Manual.tex, TASK_CHART, menu.c:
 	Allowed for finer steps when rescaling tiles in Level Editor.
 
-	* Homepage/Freedroid_Home_Page.tex, Homepage/Freedroid_Manual.tex, classical_paradroid_mission.mission, new_mission_1.mission, new_mission_2.mission, ship_1.droids:
 	Added new mission new_mission_2.mission, though its identical to mission 1 still.
 	Added copyright/licence remark in mission files and droid file.
 	Added a section concerning the Freedroid game rules in the manual.  Needs more though.
 
-	* ship_1.crew, ship_1.droids, init.c, map.c, struct.h, Makefile.am, classical_paradroid_mission.mission, new_mission_1.mission, new_ship_1.crew, new_ship_1.droids:
 	Completely reworked the shape of crew files.
 	They are now well readable.
 	Droid types can be entered by typing their name instead of their number.
@@ -382,7 +1897,6 @@
 	Added mission target MustBeType, fully functional.
 	All mission targets are always AND connceted to see if mission is complete.
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, init.c, main.c, menu.c, struct.h, vars.h:
 	End Title text is now specified in the mission file.
 	Mission target is now specified in the mission file and checked in a separate function.
 	Added simple mission targets for Classical Paradroid and New Mission.
@@ -431,7 +1945,7 @@
 	Added "color change" (="change tileset") option for the level editor.
 	Gave the first new level in the new map a new color.
 
-	* Homepage/Freedroid_Manual.tex, new_mission_1.mission, new_ship_1.maps, enemy.c, menu.c, TASK_CHART:
+	* Homepage/Freedroid_Manual.tex, new_mission_1.mission, new_ship_1.maps, enemy.c,
 	Added more doku on the level editor for the manual.
 	Added protection against moving out of the map in the level editor.
 	Added level changing option for the level editor.
@@ -522,7 +2036,6 @@
 
 2002-06-04  jprix  <johannesprix@users.sourceforge.net>
 
-	* ship.c, vars.h, TASK_CHART, graphics/001.jpg, graphics/123.jpg, graphics/139.jpg, graphics/247.jpg, graphics/249.jpg, graphics/296.jpg, graphics/parafont.png, ship_1.maps:
 	Resized Bastians droids to fit into the console.  For now, thats the
 	easiest way to get the console working again.
 	Repaired the console text format to fit into the window.  Good. jp.
@@ -593,7 +2106,7 @@
 
 2002-06-03  rprix  <rprix@users.sourceforge.net>
 
-	* blocks.c, defs.h, global.h, graphics.c, init.c, map.c, proto.h, ship.c, ship.h, struct.h, takeover.c:
+	* blocks.c, defs.h, global.h, graphics.c, init.c, map.c, proto.h,
 	new method for ShowElevators():
 	show ship-picture "lights off" first, update screen, then Blit in the
 	ship picture "lights on", but update only the rectangles for the current
@@ -2258,11 +3771,3 @@
 	* Makefile.am:
 	Main source-files of the GNU build environement.
 	Run autoconf and automake to obtain the configure-script.
-
-
-
-
-
-
-
-
