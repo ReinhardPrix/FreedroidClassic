@@ -2938,6 +2938,37 @@ init_obstacle_data( void )
   obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . filename = "iso_outer_walls_0016.png" ;
 
+
+  obstacle_map [ ISO_OUTER_DOOR_V_00 ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_OUTER_DOOR_V_00 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_V_00 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_OUTER_DOOR_V_00 ] . filename = "iso_doors_0018.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_25  ] . filename = "iso_doors_0019.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_50  ] . filename = "iso_doors_0020.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_75  ] . filename = "iso_doors_0021.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_100 ] . filename = "iso_doors_0022.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_100 ] . block_area_type = COLLISION_TYPE_NONE ;
+
+  obstacle_map [ ISO_OUTER_DOOR_H_00 ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_OUTER_DOOR_H_00 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_H_00 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_OUTER_DOOR_H_00 ] . filename = "iso_doors_0013.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_25  ] . filename = "iso_doors_0014.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_50  ] . filename = "iso_doors_0015.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_75  ] . filename = "iso_doors_0016.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_100 ] . filename = "iso_doors_0017.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_100 ] . block_area_type = COLLISION_TYPE_NONE ;
+
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . filename = "iso_doors_0018.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_vision_too = FALSE ;
+
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . filename = "iso_doors_0013.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_vision_too = FALSE ;
+
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets

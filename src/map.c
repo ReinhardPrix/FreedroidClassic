@@ -2325,7 +2325,19 @@ GetAllAnimatedMapTiles ( Level Lev )
 	case ISO_V_DOOR_050_OPEN:
 	case ISO_V_DOOR_075_OPEN:
 	case ISO_V_DOOR_100_OPEN:
-	  
+	
+	case ISO_OUTER_DOOR_V_00:
+	case ISO_OUTER_DOOR_V_25:
+	case ISO_OUTER_DOOR_V_50:
+	case ISO_OUTER_DOOR_V_75:
+	case ISO_OUTER_DOOR_V_100:
+
+	case ISO_OUTER_DOOR_H_00:
+	case ISO_OUTER_DOOR_H_25:
+	case ISO_OUTER_DOOR_H_50:
+	case ISO_OUTER_DOOR_H_75:
+	case ISO_OUTER_DOOR_H_100:
+
 	  //--------------------
 	  // We've found another door obstacle, so we add it's index
 	  // into the door obstacle index list of this level...
@@ -2923,6 +2935,19 @@ MoveLevelDoors ( int PlayerNum )
 	case ISO_V_DOOR_050_OPEN:
 	case ISO_V_DOOR_075_OPEN:
 	case ISO_V_DOOR_100_OPEN:
+
+	case ISO_OUTER_DOOR_V_00:
+	case ISO_OUTER_DOOR_V_25:
+	case ISO_OUTER_DOOR_V_50:
+	case ISO_OUTER_DOOR_V_75:
+	case ISO_OUTER_DOOR_V_100:
+
+	case ISO_OUTER_DOOR_H_00:
+	case ISO_OUTER_DOOR_H_25:
+	case ISO_OUTER_DOOR_H_50:
+	case ISO_OUTER_DOOR_H_75:
+	case ISO_OUTER_DOOR_H_100:
+
 	  break;
 	  
 	default:
@@ -2965,7 +2990,8 @@ Error:  Doors pointing not to door obstacles found.",
       //
       if ( one_player_close_enough )
 	{
-	  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN ) )
+	  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN )
+		 && ( *Pos != ISO_OUTER_DOOR_H_100 ) && ( *Pos != ISO_OUTER_DOOR_V_100 ) )
 	    *Pos += 1;
 	}
       else 
@@ -3006,7 +3032,8 @@ Error:  Doors pointing not to door obstacles found.",
 		      dist2 = xdist * xdist + ydist * ydist;
 		      if ( dist2 < DOOROPENDIST2_FOR_DROIDS )
 			{
-			  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN ) )
+			  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN )
+				 && ( *Pos != ISO_OUTER_DOOR_H_100 ) && ( *Pos != ISO_OUTER_DOOR_V_100 ) )
 			    *Pos += 1;
 
 			  //--------------------
@@ -3027,7 +3054,8 @@ Error:  Doors pointing not to door obstacles found.",
 	  // more...
 	  //
 	  if ( ! some_bot_was_close_to_this_door )
-	    if ( ( *Pos != ISO_V_DOOR_000_OPEN ) && ( *Pos != ISO_H_DOOR_000_OPEN ) )
+	    if ( ( *Pos != ISO_V_DOOR_000_OPEN ) && ( *Pos != ISO_H_DOOR_000_OPEN )
+		   && ( *Pos != ISO_OUTER_DOOR_V_00 ) && ( *Pos != ISO_OUTER_DOOR_H_00 ) )
 	      *Pos -= 1;
 
 	}			/* else */
