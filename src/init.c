@@ -1717,7 +1717,8 @@ InitNewMissionList ( char *MissionName )
   Me.PointsToDistribute = 15;
   Me.ExpRequired = 1500;
   Me.exp_level = 1;
-  strcpy ( Me.character_name , "R2D2 v.0.8.5." );
+  // strcpy ( Me.character_name , "R2D2 v.0.8.5." );
+  strcpy ( Me.character_name , "character_name" );
   // strcpy ( Me.class_name , "Force bot" );
 
   Druidmap[ Me.type ].weapon_item.currently_held_in_hand = FALSE;

@@ -155,6 +155,17 @@ EXTERN void ClearGraphMem ( void );
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
+// saveloadgame.c 
+#undef EXTERN
+#ifdef _saveloadgame_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN int SaveGame( void );
+EXTERN int LoadGame( void );
+
+
 /* map.c */
 #undef EXTERN
 #ifdef _map_c
@@ -375,6 +386,7 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
 EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );

@@ -38,10 +38,6 @@
 
 #include "items.h"
 
-
-#define RECT_DEBUG 2 
-
-
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
@@ -343,11 +339,11 @@ CursorIsInWeaponRect( int x , int y )
 
   if ( ( CurPos.x >= 20 ) && ( CurPos.x <= 20 + WEAPON_RECT_WIDTH ) )
     {
-      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 10 ) && 
 	   ( CurPos.y <= User_Rect.y + 10 + WEAPON_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -369,11 +365,11 @@ CursorIsInDriveRect( int x , int y )
 
   if ( ( CurPos.x >= 240 ) && ( CurPos.x <= 240 + DRIVE_RECT_WIDTH ) )
     {
-      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 93 ) && 
 	   ( CurPos.y <= User_Rect.y + 93 + DRIVE_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in drive rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -393,11 +389,13 @@ CursorIsInArmourRect( int x , int y )
 
   if ( ( CurPos.x >= ARMOUR_POS_X ) && ( CurPos.x <= ARMOUR_POS_X + ARMOUR_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + ARMOUR_POS_Y ) && 
 	   ( CurPos.y <= User_Rect.y + ARMOUR_POS_Y + ARMOUR_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -417,11 +415,13 @@ CursorIsInShieldRect( int x , int y )
 
   if ( ( CurPos.x >= SHIELD_POS_X ) && ( CurPos.x <= SHIELD_POS_X + SHIELD_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + SHIELD_POS_Y ) && 
 	   ( CurPos.y <= User_Rect.y + SHIELD_POS_Y + SHIELD_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -441,11 +441,13 @@ CursorIsInSpecialRect( int x , int y )
 
   if ( ( CurPos.x >= SPECIAL_POS_X ) && ( CurPos.x <= SPECIAL_POS_X + SPECIAL_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		   "\nMight be grabbing in armour rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + SPECIAL_POS_Y ) && 
 	   ( CurPos.y <= User_Rect.y + SPECIAL_POS_Y + SPECIAL_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		       "\nMight be grabbing in armour rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -465,11 +467,13 @@ CursorIsInAux1Rect( int x , int y )
 
   if ( ( CurPos.x >= AUX1_POS_X ) && ( CurPos.x <= AUX1_POS_X + AUX1_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		   "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + AUX1_POS_Y ) && 
 	   ( CurPos.y <= User_Rect.y + AUX1_POS_Y + AUX1_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		       "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -489,11 +493,13 @@ CursorIsInAux2Rect( int x , int y )
 
   if ( ( CurPos.x >= AUX2_POS_X ) && ( CurPos.x <= AUX2_POS_X + AUX2_RECT_WIDTH ) )
     {
-      DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		   "\nMight be grabbing in aux1 rectangle, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + AUX2_POS_Y ) && 
 	   ( CurPos.y <= User_Rect.y + AUX2_POS_Y + AUX2_RECT_HEIGHT ) )
 	{
-	  DebugPrintf( 0 , "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , 
+		       "\nMight be grabbing in aux1 rectangle, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -513,11 +519,11 @@ CursorIsInInventoryGrid( int x , int y )
 
   if ( ( CurPos.x >= 16 ) && ( CurPos.x <= 16 + INVENTORY_GRID_WIDTH * 32 ) )
     {
-      DebugPrintf( RECT_DEBUG , "\nMight be grabbing in inventory, as far as x is concerned.");
+      DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
       if ( ( CurPos.y >= User_Rect.y + 480 -16 - 64 - 32 * INVENTORY_GRID_HEIGHT ) && 
 	   ( CurPos.y <= User_Rect.y + 480 - 64 -16 ) )
 	{
-	  DebugPrintf( RECT_DEBUG , "\nMight be grabbing in inventory, as far as y is concerned.");
+	  DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
 	  return( TRUE );
 	}
     }
@@ -1136,7 +1142,7 @@ ManageInventoryScreen ( void )
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
-  DebugPrintf ( 0 , "\nRight: %d Left: %d Held: %d ", 
+  DebugPrintf ( INVENTORY_MOUSE_BUTTON_DEBUG , "\nRight: %d Left: %d Held: %d ", 
 		RightPressedPreviousFrame , MouseButtonPressedPreviousFrame , Item_Held_In_Hand );
 
 
@@ -1155,7 +1161,7 @@ ManageInventoryScreen ( void )
   //
   if ( GameConfig.Inventory_Visible == FALSE ) 
     {
-      DebugPrintf( 0 , "\nINVENTORY NOT VISIBLE!!" );
+      // DebugPrintf( 2 , "\nINVENTORY NOT VISIBLE!!" );
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
