@@ -1847,13 +1847,13 @@ ClearAutomapData( void )
 
 }; // void ClearAutomapData ( void )
 
-/*-----------------------------------------------------------------
- * @Desc: This function initializes the whole Freedroid game.
+/* -----------------------------------------------------------------
+ * This function initializes the whole Freedroid game.
  * 
  * THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
  * ONLY INITIALIZES A NEW MISSION FOR THE GAME.
  *  
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 InitFreedroid ( void )
 {
@@ -2175,9 +2175,12 @@ CheckIfMissionIsComplete (void)
   int Robot_Counter;
   int MissNum;
   int ActionNum;
-  static int CheckMissionGrid; // We do not need to check for mission completed EVERY frame
-                               // It will be enough to do it now and then..., e.g. every 50th frame
-
+  static int CheckMissionGrid; 
+  
+  //--------------------
+  // We do not need to check for mission completed EVERY frame
+  // It will be enough to do it now and then..., e.g. every 50th frame
+  //
   CheckMissionGrid++;
   if ( ( CheckMissionGrid % 50 ) != 0 ) return;
 

@@ -233,13 +233,11 @@ enum
 #define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
 
 
-#define STANDARD_MISSION        "Paradroid.mission"
-#define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
+#define NEW_MISSION             "ReturnOfTux.mission"
 
 #define PARA_FONT_FILE 		"font/parafont.png"
 #define MENU_FONT_FILE 		"font/ArialGold_Depleted.png"
 #define MENU_FILLED_FONT_FILE 	"font/ArialGold.png"
-// #define RED_FONT_FILE 	"font/redfont.png"
 #define RED_FONT_FILE 		"font/font05_red.png"
 #define BLUE_FONT_FILE 		"font/font05_white.png"
 #define FPS_FONT_FILE 		"font/font05.png"
