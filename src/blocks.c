@@ -3397,12 +3397,14 @@ init_obstacle_data( void )
   obstacle_map [ ISO_EXIT_3 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_EXIT_3 ] . filename = "iso_exits_0003.png" ;
   obstacle_map [ ISO_EXIT_3 ] . needs_pre_put = FALSE ;
+  obstacle_map [ ISO_EXIT_3 ] . emitted_light_strength = 10 ;
 
   obstacle_map [ ISO_EXIT_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_EXIT_4 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_EXIT_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_EXIT_4 ] . filename = "iso_exits_0004.png" ;
   obstacle_map [ ISO_EXIT_4 ] . needs_pre_put = FALSE ;
+  obstacle_map [ ISO_EXIT_4 ] . emitted_light_strength = 10 ;
 
 
 
